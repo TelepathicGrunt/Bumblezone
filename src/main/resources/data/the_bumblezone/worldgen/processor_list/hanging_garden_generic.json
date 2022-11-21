@@ -43,6 +43,24 @@
       "seed_random_addition": 356
     },
     {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:birch_log",
+      "output_block_tag": "the_bumblezone:allowed_hanging_garden_logs",
+      "blacklisted_output_block_tag": "the_bumblezone:blacklisted_hanging_garden_logs",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 1000
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:birch_leaves",
+      "output_block_tag": "the_bumblezone:allowed_hanging_garden_leaves",
+      "blacklisted_output_block_tag": "the_bumblezone:blacklisted_hanging_garden_leaves",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 1317
+    },
+    {
       "rules": [
         {
           "output_state": {

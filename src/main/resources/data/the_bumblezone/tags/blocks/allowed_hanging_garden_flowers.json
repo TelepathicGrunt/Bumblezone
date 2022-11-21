@@ -33,6 +33,50 @@
     {
       "id": "twilightforest:thorn_rose",
       "required": false
+    },
+    {
+      "id": "twigs:azalea_flowers",
+      "required": false
+    },
+    {
+      "id": "fruittrees:redlove_sapling",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "broglisplants:deadly_nightshade_block",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_poppy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_oxeye_daisy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:white_dandelion",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_sapling",
+      "required": false
     }
   ]
 }

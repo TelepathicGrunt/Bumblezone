@@ -9,6 +9,7 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.BzNbtPredicate;
+import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -39,14 +40,15 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
     }
 
     public static final Codec<Map<EntityType<?>, List<EntryObject>>> CODEC =
-            Codec.unboundedMap(ResourceLocation.CODEC.comapFlatMap(r -> {
+            new LenientUnboundedMapCodec<>(ResourceLocation.CODEC.comapFlatMap(r -> {
                 Optional<EntityType<?>> entityTypeOptional = Registry.ENTITY_TYPE.getOptional(r);
                 if (entityTypeOptional.isPresent()) {
                     return DataResult.success(entityTypeOptional.get());
                 }
                 else if (QuiltLoader.isModLoaded(r.getNamespace())) {
+                    Bumblezone.LOGGER.error("Bz Pollination File Reading Error - Unknown EntityType:  " + r);
                     return DataResult.error("Bz Error - Unknown EntityType:  " + r + "  - ");
-                }
+                } 
                 else {
                     return DataResult.error("Bz Error - Target mod not present");
                 }
@@ -69,7 +71,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                         Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse pollen puff entity to flower file {} - Error: {}", fileIdentifier, e);
                     }
                 });
-                Map<EntityType<?>, List<EntryObject>> newMap = mapDataResult.result().orElse(new HashMap<>());
+                Map<EntityType<?>, List<EntryObject>> newMap = mapDataResult.resultOrPartial((s) -> {}).orElse(new HashMap<>());
 
                 newMap.forEach((e, v) -> {
                     // Combine existing entries
