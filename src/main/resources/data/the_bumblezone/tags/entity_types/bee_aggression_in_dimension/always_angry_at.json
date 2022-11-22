@@ -148,6 +148,10 @@
     {
       "id": "pokecube:pangoro",
       "required": false
+    },
+    {
+      "id": "swampier_swamps:dragonfly",
+      "required": false
     }
   ]
 }
