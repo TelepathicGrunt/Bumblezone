@@ -108,6 +108,10 @@
     {
       "id": "whisperwoods:moth",
       "required": false
+    },
+    {
+      "id": "wonderouswilds:firefly",
+      "required": false
     }
   ]
 }
