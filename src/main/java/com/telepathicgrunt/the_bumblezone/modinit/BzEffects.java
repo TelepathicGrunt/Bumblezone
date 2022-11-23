@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.ProtectionOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -21,10 +22,10 @@ public class BzEffects {
     public static final MobEffect PARALYZED = new ParalyzedEffect(MobEffectCategory.HARMFUL, 15662848);
 
     public static void registerEffects() {
-        Registry.register(Registry.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "wrath_of_the_hive"), WRATH_OF_THE_HIVE);
-        Registry.register(Registry.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "protection_of_the_hive"), PROTECTION_OF_THE_HIVE);
-        Registry.register(Registry.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "beenergized"), BEENERGIZED);
-        Registry.register(Registry.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "hidden"), HIDDEN);
-        Registry.register(Registry.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "paralyzed"), PARALYZED);
+        Registry.register(BuiltInRegistries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "wrath_of_the_hive"), WRATH_OF_THE_HIVE);
+        Registry.register(BuiltInRegistries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "protection_of_the_hive"), PROTECTION_OF_THE_HIVE);
+        Registry.register(BuiltInRegistries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "beenergized"), BEENERGIZED);
+        Registry.register(BuiltInRegistries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "hidden"), HIDDEN);
+        Registry.register(BuiltInRegistries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "paralyzed"), PARALYZED);
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -31,7 +32,7 @@ public class FluidRender {
             registry.register(flowTextureFluidId);
         });
 
-        final ResourceLocation fluidId = Registry.FLUID.getKey(still);
+        final ResourceLocation fluidId = BuiltInRegistries.FLUID.getKey(still);
         final ResourceLocation listenerId = new ResourceLocation(fluidId.getNamespace(), fluidId.getPath() + "_reload_listener");
 
         final TextureAtlasSprite[] fluidSprites = { null, null };

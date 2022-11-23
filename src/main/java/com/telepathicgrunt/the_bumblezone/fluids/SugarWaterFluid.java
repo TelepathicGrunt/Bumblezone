@@ -171,7 +171,7 @@ public abstract class SugarWaterFluid extends FlowingFluid {
         }
 
         @Override
-        protected boolean canConvertToSource() {
+        protected boolean canConvertToSource(Level level) {
             return true;
         }
     }
@@ -189,7 +189,7 @@ public abstract class SugarWaterFluid extends FlowingFluid {
         }
 
         @Override
-        protected boolean canConvertToSource() {
+        protected boolean canConvertToSource(Level level) {
             return false;
         }
     }

@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -146,7 +147,7 @@ public class MiscComponent implements Component {
                 rootAdvancementDone(serverPlayer))
             {
                 MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
-                ResourceLocation killedEntity = Registry.ENTITY_TYPE.getKey(victim.getType());
+                ResourceLocation killedEntity = BuiltInRegistries.ENTITY_TYPE.getKey(victim.getType());
                 int killedCount = capability.mobsKilledTracker.getOrDefault(killedEntity, 0);
                 killedCount += 1;
 
