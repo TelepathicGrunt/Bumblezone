@@ -51,6 +51,10 @@ public class BeeDungeon extends NbtFeature {
             }
         }
 
+        if (!context.level().getBlockState(context.origin()).canOcclude()) {
+            return false;
+        }
+
         boolean validSpot = false;
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         mutable.set(context.origin());
@@ -78,6 +82,6 @@ public class BeeDungeon extends NbtFeature {
             }
         }
 
-        return validSpot && context.level().getBlockState(mutable).canOcclude();
+        return validSpot;
     }
 }
