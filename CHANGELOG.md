@@ -1,5 +1,9 @@
 ### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Set the base of lit Super Candles/Incense Candles to return fire damage type for pathfinding.
+ Should help stop other mod's mobs from pathfinding through the lit candles and burning.
+
 ##### Mod Compat:
 Cyclic Honey Apple can be fed to bees and traded with Bee Queen now.
 
