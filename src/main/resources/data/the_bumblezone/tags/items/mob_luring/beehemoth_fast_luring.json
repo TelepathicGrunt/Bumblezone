@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:buckets/royal_jelly",
+      "required": false
+    },
+    {
+      "id": "#forge:buckets/royal_jelly",
+      "required": false
+    }
+  ]
+}

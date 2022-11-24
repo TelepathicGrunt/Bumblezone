@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:sugar",
+    {
+      "id": "charm:sugar_block",
+      "required": false
+    },
+    {
+      "id": "#c:sugar",
+      "required": false
+    },
+    {
+      "id": "#forge:sugar",
+      "required": false
+    }
+  ]
+}
