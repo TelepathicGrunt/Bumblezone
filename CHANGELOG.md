@@ -4,6 +4,9 @@
 Set the base of lit Super Candles/Incense Candles to return fire damage type for pathfinding.
  Should help stop other mod's mobs from pathfinding through the lit candles and burning.
 
+##### Items:
+Increased the durability for all Bumblezone bee armor by 2.4x.
+
 ##### Features:
 Fixed checks for valid spot for Bee Dungeons/Spider Infested Bee Dungeons.
 
@@ -13,6 +16,9 @@ Added three tags to make it easier to define what items will lure Beehemoth and 
  `the_bumblezone:mob_luring/beehemoth`
  `the_bumblezone:mob_luring/beehemoth_fast_luring`
  `the_bumblezone:mob_luring/honey_slime`
+
+##### Advancements:
+Mention that Honey Slime requires Sugar to breed in the Queen's Desire advancement for it.
 
 
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
