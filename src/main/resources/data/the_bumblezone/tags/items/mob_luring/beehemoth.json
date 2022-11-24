@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:buckets/honey",
+      "required": false
+    },
+    {
+      "id": "#forge:buckets/honey",
+      "required": false
+    }
+  ]
+}
