@@ -4,6 +4,8 @@
 Set the base of lit Super Candles/Incense Candles to return fire damage type for pathfinding.
  Should help stop other mod's mobs from pathfinding through the lit candles and burning.
 
+Fixed weird lighting on Porous Honeycomb Block when it is in item form.
+
 ##### Items:
 Increased the durability for all Bumblezone bee armor by 2.4x.
 
