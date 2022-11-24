@@ -278,6 +278,14 @@
     {
       "id": "naturaldecormod:wither_rose_bundle",
       "required": false
+    },
+    {
+      "id": "cyclic:flower_lime_carnation",
+      "required": false
+    },
+    {
+      "id": "undergarden:shimmerweed",
+      "required": false
     }
   ]
 }
