@@ -55,6 +55,9 @@ public class BzTags {
     public static final TagKey<Item> CAN_BE_ENCHANTED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/can_be_enchanted"));
     public static final TagKey<Item> ENDERPEARL_TARGET_ARMOR = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_armor"));
     public static final TagKey<Item> ENDERPEARL_TARGET_HELD_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_held_item"));
+    public static final TagKey<Item> BEEHEMOTH_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/beehemoth"));
+    public static final TagKey<Item> BEEHEMOTH_FAST_LURING_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/beehemoth_fast_luring"));
+    public static final TagKey<Item> HONEY_SLIME_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/honey_slime"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("c", "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
