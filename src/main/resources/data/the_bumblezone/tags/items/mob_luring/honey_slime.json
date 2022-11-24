@@ -7,6 +7,14 @@
       "required": false
     },
     {
+      "id": "supplementaries:sugar_block",
+      "required": false
+    },
+    {
+      "id": "vanillatweaks:sugar_block",
+      "required": false
+    },
+    {
       "id": "#c:sugar",
       "required": false
     },
