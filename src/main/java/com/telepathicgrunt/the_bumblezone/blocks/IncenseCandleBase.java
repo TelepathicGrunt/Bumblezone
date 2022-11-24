@@ -333,12 +333,4 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
-
-    @Override
-    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
-        if (state.hasProperty(LIT) && state.getValue(LIT)) {
-            return BlockPathTypes.DAMAGE_FIRE;
-        }
-        return null;
-    }
 }
