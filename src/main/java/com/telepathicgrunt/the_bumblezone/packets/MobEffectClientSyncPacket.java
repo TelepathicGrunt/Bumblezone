@@ -40,7 +40,6 @@ public class MobEffectClientSyncPacket {
                         MobEffect mobeffect = MobEffect.byId(effectId & 0xFF);
                         if (mobeffect != null) {
                             MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, effectDurationTicks, effectAmplifier, (flags & 1) == 1, (flags & 2) == 2, (flags & 4) == 4);
-                            mobeffectinstance.setNoCounter(effectDurationTicks == 32767);
                             ((LivingEntity)entity).forceAddEffect(mobeffectinstance, null);
                         }
                     }

@@ -7,6 +7,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
@@ -26,7 +28,7 @@ import java.util.List;
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 
     public static final Codec<SpawnerRandomizingProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.mapPair(Registry.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor)
+            Codec.mapPair(BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor)
     ).apply(instance, instance.stable(SpawnerRandomizingProcessor::new)));
 
     public final List<Pair<EntityType<?>, Integer>> spawnerRandomizingProcessor;
@@ -66,10 +68,10 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
                     entityTag = new CompoundTag();
                     spawnDataTag.put("entity", entityTag);
                 }
-                entityTag.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
+                entityTag.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
 
                 CompoundTag spawnEntityDataTag = new CompoundTag();
-                spawnEntityDataTag.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
+                spawnEntityDataTag.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
                 CompoundTag spawnPotentialDataEntryTag = new CompoundTag();
                 spawnPotentialDataEntryTag.put("entity", spawnEntityDataTag);
                 CompoundTag spawnPotentialEntryTag = new CompoundTag();
@@ -89,13 +91,13 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
                 compound.putShort("SpawnRange", (short) 4);
 
                 CompoundTag spawnDataEntity = new CompoundTag();
-                spawnDataEntity.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
+                spawnDataEntity.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
                 CompoundTag spawnData = new CompoundTag();
                 spawnData.put("entity", spawnDataEntity);
                 compound.put("SpawnData", spawnData);
 
                 CompoundTag entityData = new CompoundTag();
-                entityData.putString("id", Registry.ENTITY_TYPE.getKey(entity).toString());
+                entityData.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
 
                 CompoundTag spawnPotentialData = new CompoundTag();
                 spawnPotentialData.put("entity", entityData);
