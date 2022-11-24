@@ -4,6 +4,10 @@
     {
       "id": "biomemakeover:black_thistle",
       "required": false
+    },
+    {
+      "id": "undergarden:tall_shimmerweed",
+      "required": false
     }
   ]
 }
