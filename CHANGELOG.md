@@ -7,6 +7,12 @@ Set the base of lit Super Candles/Incense Candles to return fire damage type for
 ##### Features:
 Fixed checks for valid spot for Bee Dungeons/Spider Infested Bee Dungeons.
 
+##### Entities:
+Added three tags to make it easier to define what items will lure Beehemoth and what item can lure/breed Honey Slime.
+ `the_bumblezone:mob_luring/beehemoth`
+ `the_bumblezone:mob_luring/beehemoth_fast_luring`
+ `the_bumblezone:mob_luring/honey_slime`
+
 ##### Mod Compat:
 Cyclic Honey Apple can be fed to bees and traded with Bee Queen now.
 
