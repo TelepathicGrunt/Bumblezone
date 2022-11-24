@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 public class BeeArmorMaterial implements ArmorMaterial {
     public static final ArmorMaterial BEE_MATERIAL =
             new BeeArmorMaterial(Bumblezone.MODID + ":bee_material",
-                    10,
+                    24,
                     new int[]{1, 2, 4, 2},
                     25,
                     SoundEvents.ARMOR_EQUIP_LEATHER,
