@@ -2,7 +2,14 @@
 
 ##### Blocks:
 Set the base of lit Super Candles/Incense Candles to return fire damage type for pathfinding.
-Should help stop other mod's mobs from pathfinding through the lit candles and burning.
+ Should help stop other mod's mobs from pathfinding through the lit candles and burning.
+
+##### Mod Compat:
+Cyclic Honey Apple can be fed to bees and traded with Bee Queen now.
+
+Cyclic's Lime Carnation Flower and Undergarden's Shimmerweeds cannot spawn in Hanging Gardens anymore.
+
+Creatures and Beasts's Minipad and Lizard can spawn in Hanging Gardens along with Infernal Expansion's Glowsilk Moth
 
 
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**

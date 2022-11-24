@@ -64,6 +64,10 @@
     {
       "id": "createaddition:honey_cake",
       "required": false
+    },
+    {
+      "id": "cyclic:apple_honey",
+      "required": false
     }
   ]
 }
