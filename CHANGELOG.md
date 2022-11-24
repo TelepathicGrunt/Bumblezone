@@ -1,3 +1,10 @@
+### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Set the base of lit Super Candles/Incense Candles to return fire damage type for pathfinding.
+Should help stop other mod's mobs from pathfinding through the lit candles and burning.
+
+
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
