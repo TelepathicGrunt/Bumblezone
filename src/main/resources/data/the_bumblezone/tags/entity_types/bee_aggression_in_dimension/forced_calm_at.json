@@ -112,6 +112,10 @@
     {
       "id": "wonderouswilds:firefly",
       "required": false
+    },
+    {
+      "id": "infernalexp:glowsilk_moth",
+      "required": false
     }
   ]
 }

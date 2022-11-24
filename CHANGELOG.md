@@ -1,3 +1,13 @@
+### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Cyclic Honey Apple can be fed to bees and traded with Bee Queen now.
+
+Cyclic's Lime Carnation Flower and Undergarden's Shimmerweeds cannot spawn in Hanging Gardens anymore.
+
+Creatures and Beasts's Minipad and Lizard can spawn in Hanging Gardens along with Infernal Expansion's Glowsilk Moth
+
+
 ### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
