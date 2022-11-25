@@ -127,6 +127,10 @@
     {
       "id": "cyclic:apple_honey",
       "required": false
+    },
+    {
+      "id": "duneons:waxblock",
+      "required": false
     }
   ],
   "possible_rewards": [
