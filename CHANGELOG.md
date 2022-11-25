@@ -1,5 +1,8 @@
 ### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
 
+##### Entities:
+Fixed Bee Queen reward item being spawned too far off to the side.
+
 ##### Enchantments:
 Condensed Bumblezone's enchantment descriptions that gets shown by Enchantment Description mod.
 
