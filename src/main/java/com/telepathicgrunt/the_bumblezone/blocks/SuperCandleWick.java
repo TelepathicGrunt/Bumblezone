@@ -14,6 +14,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -271,6 +273,13 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return !(state.is(BzBlocks.SUPER_CANDLE_WICK) && state.getValue(LIT));
+        return !(state.hasProperty(LIT) && state.getValue(LIT));
+    }
+
+    public static BlockPathTypes getBlockPathType(BlockState state) {
+        if (state.hasProperty(LIT) && state.getValue(LIT)) {
+            return BlockPathTypes.DAMAGE_FIRE;
+        }
+        return null;
     }
 }
