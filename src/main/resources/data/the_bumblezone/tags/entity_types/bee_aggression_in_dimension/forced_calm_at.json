@@ -108,6 +108,14 @@
     {
       "id": "whisperwoods:moth",
       "required": false
+    },
+    {
+      "id": "wonderouswilds:firefly",
+      "required": false
+    },
+    {
+      "id": "infernalexp:glowsilk_moth",
+      "required": false
     }
   ]
 }

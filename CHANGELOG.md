@@ -1,3 +1,38 @@
+### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Set the base of lit Super Candles/Incense Candles to return fire damage type for pathfinding.
+ Should help stop other mod's mobs from pathfinding through the lit candles and burning.
+
+Fixed weird lighting on Porous Honeycomb Block when it is in item form.
+
+##### Items:
+Increased the durability for all Bumblezone bee armor by 2.4x.
+
+##### Features:
+Fixed checks for valid spot for Bee Dungeons/Spider Infested Bee Dungeons.
+
+##### Entities:
+Added three tags to make it easier to define what items will lure Beehemoth and what item can lure/breed Honey Slime.
+ Honey Slime will now follow players holding VanillaTweaks or Supplementaries's Sugar Block and can be bred with that along with vanilla's Sugar item.
+ Candylands's Sugar brick, Crystalized Sugar, and Glazed Sugar can be used with Honey Slime too now.
+ `the_bumblezone:mob_luring/beehemoth`
+ `the_bumblezone:mob_luring/beehemoth_fast_luring`
+ `the_bumblezone:mob_luring/honey_slime`
+
+##### Advancements:
+Mention that Honey Slime requires Sugar to breed in the Queen's Desire advancement for it.
+
+##### Mod Compat:
+Cyclic Honey Apple can be fed to bees and traded with Bee Queen now.
+
+Cyclic's Lime Carnation Flower and Undergarden's Shimmerweeds cannot spawn in Hanging Gardens anymore.
+
+Alchemist's garden's Cloudelion flower cannot be found in Hanging Gardens anymore.
+
+Creatures and Beasts's Minipad and Lizard can spawn in Hanging Gardens along with Infernal Expansion's Glowsilk Moth
+
+
 ### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:

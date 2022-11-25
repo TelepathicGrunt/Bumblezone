@@ -104,6 +104,18 @@
     {
       "id": "natural_decoration:snailthree",
       "required": false
+    },
+    {
+      "id": "cnb:minipad",
+      "required": false
+    },
+    {
+      "id": "cnb:lizard",
+      "required": false
+    },
+    {
+      "id": "infernalexp:glowsilk_moth",
+      "required": false
     }
   ]
 }

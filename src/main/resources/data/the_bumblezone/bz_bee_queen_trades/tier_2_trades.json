@@ -123,6 +123,10 @@
     {
       "id": "extendedmushrooms:honey_fungus_cap",
       "required": false
+    },
+    {
+      "id": "cyclic:apple_honey",
+      "required": false
     }
   ],
   "possible_rewards": [

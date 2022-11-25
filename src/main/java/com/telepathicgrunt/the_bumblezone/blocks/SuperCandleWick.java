@@ -275,12 +275,12 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return !(state.is(BzBlocks.SUPER_CANDLE_WICK.get()) && state.getValue(LIT));
+        return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
 
     @Override
     public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
-        if (state.is(BzBlocks.SUPER_CANDLE_WICK.get()) && state.getValue(SuperCandleWick.LIT)) {
+        if (state.hasProperty(LIT) && state.getValue(LIT)) {
             return BlockPathTypes.DAMAGE_FIRE;
         }
         return null;

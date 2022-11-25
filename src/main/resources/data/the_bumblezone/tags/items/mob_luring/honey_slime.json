@@ -1,0 +1,42 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:sugar",
+    {
+      "id": "charm:sugar_block",
+      "required": false
+    },
+    {
+      "id": "supplementaries:sugar_block",
+      "required": false
+    },
+    {
+      "id": "vanillatweaks:sugar_block",
+      "required": false
+    },
+    {
+      "id": "candylands:sugar_brick",
+      "required": false
+    },
+    {
+      "id": "candylands:crystalized_sugar",
+      "required": false
+    },
+    {
+      "id": "candylands:crystalized_sugar_pile",
+      "required": false
+    },
+    {
+      "id": "candylands:glazed_sugar",
+      "required": false
+    },
+    {
+      "id": "#c:sugar",
+      "required": false
+    },
+    {
+      "id": "#forge:sugar",
+      "required": false
+    }
+  ]
+}

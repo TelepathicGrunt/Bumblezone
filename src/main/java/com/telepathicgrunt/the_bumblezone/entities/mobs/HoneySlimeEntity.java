@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -72,7 +73,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    private static final EntityDataAccessor<Integer> IN_HONEY_GROWTH_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
    private static final EntityDataAccessor<Integer> ANGRY_TIMER = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
    private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
-   private static final Ingredient BREEDING_ITEM = Ingredient.of(Items.SUGAR);
+   private static final Ingredient LURING_BREEDING_ITEM = Ingredient.of(BzTags.HONEY_SLIME_DESIRED_ITEMS);
    private UUID target_UUID;
 
 
@@ -97,7 +98,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       this.goalSelector.addGoal(1, new HoneySlimeFloatGoal(this));
       this.targetSelector.addGoal(1, new HoneySlimeFacingRevengeGoal(this));
       this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-      this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this, 1.2D, BREEDING_ITEM));
+      this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this, 1.2D, LURING_BREEDING_ITEM));
       this.goalSelector.addGoal(4, new HoneySlimeHopGoal(this));
       this.goalSelector.addGoal(4, new HoneySlimeFaceRandomGoal(this));
    }
@@ -302,7 +303,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    public boolean isFood(ItemStack stack) {
-      return BREEDING_ITEM.test(stack);
+      return LURING_BREEDING_ITEM.test(stack);
    }
 
    @Override

@@ -2,11 +2,11 @@
   "replace": false,
   "values": [
     {
-      "id": "biomemakeover:black_thistle",
+      "id": "#c:buckets/honey",
       "required": false
     },
     {
-      "id": "undergarden:tall_shimmerweed",
+      "id": "#forge:buckets/honey",
       "required": false
     }
   ]
