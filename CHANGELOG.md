@@ -7,6 +7,9 @@ Fixed Bee Queen reward item being spawned too far off to the side.
 Condensed Bumblezone's enchantment descriptions that gets shown by Enchantment Description mod.
 
 ##### Mod Compat:
+Added Bee Queen randomization trades for dyed items from Applied Energistics 2, Supplementaries, Quark, Farmer's Delight,
+ Snowy Spirit, Chalk, Bontany Pots, Silent Gear, Comforts, Elevatorid
+
 Pollen Puff can spawn nearby Red/Brown Mushrooms when it hits Alchemist's Garden's Alpha Shroom mob.
 
 Make Pollen Puff cannot multiply Undergarden's Shimmerweed anymore.
