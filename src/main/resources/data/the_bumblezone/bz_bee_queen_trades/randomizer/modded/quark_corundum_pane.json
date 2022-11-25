@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#quark:corundum_pane",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#quark:corundum_pane",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}
