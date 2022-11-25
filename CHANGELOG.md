@@ -1,3 +1,9 @@
+### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
+
+##### Enchantments:
+Condensed Neurotoxin enchantment description that gets shown by Enchantment Description mod.
+
+
 ### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
