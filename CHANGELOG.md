@@ -1,5 +1,8 @@
 ### **(V.6.4.7 Changes) (1.19.2 Minecraft)**
 
+##### Enchantments:
+Condensed Neurotoxin enchantment description that gets shown by Enchantment Description mod.
+
 ##### Mod Compat:
 Pollen Puff can spawn nearby Red/Brown Mushrooms when it hits Alchemist's Garden's Alpha Shroom mob.
 
