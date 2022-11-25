@@ -112,6 +112,7 @@ public class Bumblezone{
         modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
         modEventBus.addListener(EventPriority.NORMAL, this::setupBuiltInResourcePack);
         modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
+        modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntitySpawnRestrictions);
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
         BzFluids.FLUIDS.register(modEventBus);
@@ -166,7 +167,6 @@ public class Bumblezone{
     private void setup(final FMLCommonSetupEvent event) {
     	event.enqueueWork(() -> {
             BzCriterias.registerCriteriaTriggers();
-			BzEntities.registerAdditionalEntityInformation();
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
             BzRecipes.registerBrewingStandRecipes();
