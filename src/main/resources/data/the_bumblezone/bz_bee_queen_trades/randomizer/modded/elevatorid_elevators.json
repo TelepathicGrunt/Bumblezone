@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#elevatorid:elevators",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#elevatorid:elevators",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#silentgear:fluffy_blocks",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#silentgear:fluffy_blocks",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}
