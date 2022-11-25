@@ -12,7 +12,7 @@ Fixed checks for valid spot for Bee Dungeons/Spider Infested Bee Dungeons.
 
 ##### Entities:
 Added three tags to make it easier to define what items will lure Beehemoth and what item can lure/breed Honey Slime.
- Honey Slime will now follow players hold Charm, Vanilla Tweaks, or Supplementary's Sugar Block and can be bred with that along with vanilla's Sugar item.
+ Honey Slime will now follow players holding Charm, VanillaTweaks, or Supplementaries's Sugar Block and can be bred with that along with vanilla's Sugar item.
  `the_bumblezone:mob_luring/beehemoth`
  `the_bumblezone:mob_luring/beehemoth_fast_luring`
  `the_bumblezone:mob_luring/honey_slime`
