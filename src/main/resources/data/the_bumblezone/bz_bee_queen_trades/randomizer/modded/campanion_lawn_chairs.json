@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#campanion:lawn_chairs",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#campanion:lawn_chairs",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}
