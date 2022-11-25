@@ -11,6 +11,10 @@
     "#minecraft:wooden_slabs",
     "#minecraft:wooden_stairs",
     "#minecraft:beehives",
-    "#the_bumblezone:honeycombs_that_features_can_carve"
+    "#the_bumblezone:honeycombs_that_features_can_carve",
+    {
+      "id": "duneons:waxblock",
+      "required": false
+    }
   ]
 }

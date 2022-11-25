@@ -53,6 +53,14 @@
     {
       "id": "extendedmushrooms:infested_flower",
       "required": false
+    },
+    {
+      "id": "undergarden:shimmerweed",
+      "required": false
+    },
+    {
+      "id": "undergarden:tall_shimmerweed",
+      "required": false
     }
   ]
 }

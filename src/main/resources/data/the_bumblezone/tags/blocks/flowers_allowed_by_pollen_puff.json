@@ -37,6 +37,130 @@
     {
       "id": "twigs:azalea_flowers",
       "required": false
+    },
+    {
+      "id": "fruittrees:redlove_sapling",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "broglisplants:deadly_nightshade_block",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_poppy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_oxeye_daisy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:white_dandelion",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:foxglove",
+      "required": false
+    },
+    {
+      "id": "duneons:houstonia",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerpatch",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactusred",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactuspink",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactuswhite",
+      "required": false
+    },
+    {
+      "id": "duneons:flowersheatherblue",
+      "required": false
+    },
+    {
+      "id": "duneons:flowersheatherorange",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsplaynt_1",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsplant_1",
+      "required": false
+    },
+    {
+      "id": "duneons:pink_jungle_plant",
+      "required": false
+    },
+    {
+      "id": "duneons:large_jungle_plant",
+      "required": false
+    },
+    {
+      "id": "duneons:bloomingflare",
+      "required": false
+    },
+    {
+      "id": "duneons:netherflower",
+      "required": false
+    },
+    {
+      "id": "duneons:warpedputridpetals",
+      "required": false
+    },
+    {
+      "id": "duneons:warpedflower",
+      "required": false
+    },
+    {
+      "id": "duneons:endpinkflower",
+      "required": false
+    },
+    {
+      "id": "duneons:purplefaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:pinkfaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerswamp",
+      "required": false
+    },
+    {
+      "id": "duneons:jungle_flower_leafy",
+      "required": false
     }
   ]
 }
