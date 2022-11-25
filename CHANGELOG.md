@@ -3,6 +3,18 @@
 ##### Mod Compat:
 Pollen Puff can spawn nearby Red/Brown Mushrooms when it hits Alchemist's Garden's Alpha Shroom mob.
 
+Make Pollen Puff cannot multiply Undergarden's Shimmerweed anymore.
+
+Pollen Puff will multiply flowers and flower-like saplings from Biomes o Plenty, Fruit Trees, Cherry Blossom Grotto, Broglis Plants, Oaks Nature, Dungeons Content.
+
+Pollen Puff hitting many of Dungeons Content's vine/flower based mobs will spawn certain flowers or vines nearby.
+
+Some of Dungeons Content's flowers will now spawn in Hanging Gardens structure.
+
+Enderpearls hitting Dungeons Content's Beenest mob will teleport player to Bumblezone dimension.
+
+Carpenter Bee Boots can mine Dungeons Content's Wax Block.
+
 
 ### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
 
