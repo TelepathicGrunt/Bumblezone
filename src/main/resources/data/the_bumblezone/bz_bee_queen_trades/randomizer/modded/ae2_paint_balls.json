@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#ae2:paint_balls",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#ae2:paint_balls",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

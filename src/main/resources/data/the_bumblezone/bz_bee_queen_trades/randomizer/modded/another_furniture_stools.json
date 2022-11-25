@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#another_furniture:stools",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#another_furniture:stools",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

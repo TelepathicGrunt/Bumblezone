@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#farmersdelight:canvas_signs",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#farmersdelight:canvas_signs",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}
