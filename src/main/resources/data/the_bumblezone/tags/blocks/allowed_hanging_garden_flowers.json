@@ -77,6 +77,66 @@
     {
       "id": "biomesoplenty:flowering_oak_sapling",
       "required": false
+    },
+    {
+      "id": "duneons:houstonia",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerpatch",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactusred",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactuspink",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactuswhite",
+      "required": false
+    },
+    {
+      "id": "duneons:flowersheatherblue",
+      "required": false
+    },
+    {
+      "id": "duneons:flowersheatherorange",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsplaynt_1",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsplant_1",
+      "required": false
+    },
+    {
+      "id": "duneons:pink_jungle_plant",
+      "required": false
+    },
+    {
+      "id": "duneons:large_jungle_plant",
+      "required": false
+    },
+    {
+      "id": "duneons:bloomingflare",
+      "required": false
+    },
+    {
+      "id": "duneons:netherflower",
+      "required": false
+    },
+    {
+      "id": "duneons:warpedputridpetals",
+      "required": false
+    },
+    {
+      "id": "duneons:warpedflower",
+      "required": false
     }
   ]
 }

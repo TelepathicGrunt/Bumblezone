@@ -290,6 +290,54 @@
     {
       "id": "alchemists_garden:cloudelion",
       "required": false
+    },
+    {
+      "id": "duneons:lobby_plantssmall",
+      "required": false
+    },
+    {
+      "id": "duneons:popflower",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsallium",
+      "required": false
+    },
+    {
+      "id": "duneons:purplefaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:pinkfaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerswamp",
+      "required": false
+    },
+    {
+      "id": "duneons:junglebush",
+      "required": false
+    },
+    {
+      "id": "duneons:jungle_flower_leafy",
+      "required": false
+    },
+    {
+      "id": "duneons:nethertulip",
+      "required": false
+    },
+    {
+      "id": "duneons:torchflower",
+      "required": false
+    },
+    {
+      "id": "duneons:fortune_flower",
+      "required": false
+    },
+    {
+      "id": "duneons:endpinkflower",
+      "required": false
     }
   ]
 }

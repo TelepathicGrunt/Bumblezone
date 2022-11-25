@@ -68,6 +68,22 @@
     {
       "id": "dungeons_gear:beehive_boots",
       "required": false
+    },
+    {
+      "id": "duneons:beenest_helmet",
+      "required": false
+    },
+    {
+      "id": "duneons:beenest_chestplate",
+      "required": false
+    },
+    {
+      "id": "duneons:beehive_helmet",
+      "required": false
+    },
+    {
+      "id": "duneons:beehive_chestplate",
+      "required": false
     }
   ]
 }
