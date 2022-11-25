@@ -286,6 +286,10 @@
     {
       "id": "undergarden:shimmerweed",
       "required": false
+    },
+    {
+      "id": "alchemists_garden:cloudelion",
+      "required": false
     }
   ]
 }
