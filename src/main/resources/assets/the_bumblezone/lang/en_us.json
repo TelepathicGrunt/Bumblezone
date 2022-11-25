@@ -164,11 +164,11 @@
   "entity.the_bumblezone.beehemoth_queen.mention_reset": "Congrats on your accomplishments! To redo the Queen's Desire quest-line, right click Bee Queen with empty hand to reset those advancements",
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
-  "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster. Doubles the output of BeeNest and BeeHive blocks including Resourceful Bee's hives.",
+  "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster. Doubles the output of vanilla/modded BeeNest or BeeHive blocks.",
   "enchantment.the_bumblezone.potent_poison": "Potent Poison",
   "enchantment.the_bumblezone.potent_poison.desc": "Makes the weapon inflict poison when it hits a non-undead mob. Higher level increase duration and poison level.",
   "enchantment.the_bumblezone.neurotoxins": "Neurotoxins",
-  "enchantment.the_bumblezone.neurotoxins.desc": "Gives the weapon a chance to inflict Paralysis effect on the hit non-undead mob which makes them immobile for a few seconds. Higher health mob have a lower chance of getting Paralysis. Hits that do not inflict Paralysis increases chances of inflicting it in future hits. Higher level increases duration and chances of Paralysis.",
+  "enchantment.the_bumblezone.neurotoxins.desc": "Chance to inflict Paralysis effect on non-undead mob. Higher health mobs decreases chance.",
 
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall",
