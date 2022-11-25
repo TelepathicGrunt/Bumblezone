@@ -42,5 +42,20 @@
         }
       ]
     }
+  }],
+  "alchemists_garden:alpha_shroom": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
   }]
 }

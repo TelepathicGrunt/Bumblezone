@@ -1,3 +1,9 @@
+### **(V.6.4.7 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Pollen Puff can spawn nearby Red/Brown Mushrooms when it hits Alchemist's Garden's Alpha Shroom mob.
+
+
 ### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
