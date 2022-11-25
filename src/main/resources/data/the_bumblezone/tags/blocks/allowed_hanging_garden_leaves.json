@@ -98,6 +98,10 @@
     {
       "id": "blossom:flowering_oak_leaves",
       "required": false
+    },
+    {
+      "id": "duneons:towerleavesflowers",
+      "required": false
     }
   ]
 }

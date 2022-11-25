@@ -1,0 +1,243 @@
+{
+  "duneons:leaper": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:large_jungle_plant" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:pink_jungle_plant" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:quickgrowingvine": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:poisonquillvineattack": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:large_jungle_plant" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:pink_jungle_plant" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:abominationsleep": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:large_jungle_plant" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:pink_jungle_plant" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:jungleabominationattack": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:large_jungle_plant" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:pink_jungle_plant" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:abominationdeath": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:large_jungle_plant" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:pink_jungle_plant" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:jungleabomination": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:large_jungle_plant" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:pink_jungle_plant" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:jungleabominationup": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:large_jungle_plant" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "duneons:pink_jungle_plant" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:whisperermob": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:allium" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:junglezombie": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:vine" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "duneons:miniabomination": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:allium" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}
