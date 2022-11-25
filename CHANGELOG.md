@@ -3,6 +3,10 @@
 ##### Enchantments:
 Condensed Bumblezone's enchantment descriptions that gets shown by Enchantment Description mod.
 
+##### Mod Compat:
+Added Bee Queen randomization trades for dyed items from Applied Energistics 2, Another Furniture, Bontany Pots, Companion,
+ Cat Walks Inc, Farmer's Delight, Kibe, Modern Industrialization, Snowy Spirit, and Supplementaries.
+
 
 ### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
 
