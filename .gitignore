@@ -30,3 +30,6 @@ backup/
 # songs
 *.ogg
 *.launch
+
+# Misc
+CHANGELOG_OLD.md
