@@ -54,16 +54,19 @@ export default async function generate ( page ){
             parts.push(`##### ${ section }`)
             
             for ( const point of version.Sections[section] )
-                parts.push(`-   ${ point }`)
+                parts.push(`-   ${ toSection(point) }`)
         }
         
         parts.push('<br>\n<br>')
     }
     
+    parts.push(`<!${ '-'.repeat(77) }>`)
     
     
-    for ( const version of page.versions )
-        parts.push(`[🎮 ${ version.Minecraft }]: ${ wikiLink(version.Minecraft) }`)
+    const mcVersions = new Set(page.versions.map(({ Minecraft }) => Minecraft)).values();
+    
+    for ( const version of mcVersions )
+        parts.push(`[🎮 ${ version }]: ${ wikiLink(version) }`)
     
     
     const path = join(Output,`${ page.name }.md`);
@@ -92,4 +95,10 @@ function anchorLink ( header ){
 
 function wikiLink ( version ){
     return `https://minecraft.fandom.com/wiki/Java_Edition_${ version }`
+}
+
+function toSection ( string ){
+    return string
+        .split('\n')
+        .join('\n    ')
 }

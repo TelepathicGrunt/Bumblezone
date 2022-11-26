@@ -23,12 +23,21 @@
         Entities:
             
             -   |
-                Added three tags to make it easier to define what items will lure Beehemoth and what item can lure/breed Honey Slime.
-                Honey Slime will now follow players holding VanillaTweaks or Supplementaries's Sugar Block and can be bred with that along with vanilla's Sugar item.
-                Candylands's Sugar brick, Crystalized Sugar, and Glazed Sugar can be used with Honey Slime too now.
-                `the_bumblezone:mob_luring/beehemoth`
-                `the_bumblezone:mob_luring/beehemoth_fast_luring`
-                `the_bumblezone:mob_luring/honey_slime`
+                Added three tags to make it easier to define what items will  
+                lure Beehemoth and what item can lure / breed Honey Slime.
+                
+                Honey Slime will now follow players holding VanillaTweaks or  
+                Supplementaries's Sugar Block and can be bred with that along  
+                with vanilla's Sugar item.
+                
+                Candylands's Sugar brick, Crystalized Sugar, and  
+                Glazed Sugar can be used with Honey Slime too now.
+                
+                ###### Tags
+                
+                -   `the_bumblezone:mob_luring/beehemoth`
+                -   `the_bumblezone:mob_luring/beehemoth_fast_luring`
+                -   `the_bumblezone:mob_luring/honey_slime`
                 
         Advancements:
             

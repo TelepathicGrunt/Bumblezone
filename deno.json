@@ -1,5 +1,6 @@
 {
     "tasks": {
-        "changelog" : "clear && deno run --watch --allow-read --allow-write --importmap Documentation/Changelog/Source/Imports.json Documentation/Changelog/Source/App.js"
+        "changelog-dev" : "clear && deno run --watch --allow-read --allow-write --importmap Documentation/Changelog/Source/Imports.json Documentation/Changelog/Source/App.js" ,
+        "changelog" : "clear && deno run --allow-read --allow-write --importmap Documentation/Changelog/Source/Imports.json Documentation/Changelog/Source/App.js"
     }
 }
