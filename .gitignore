@@ -30,3 +30,6 @@ forge*changelog.txt
 
 # songs
 *.ogg
+
+# Misc
+CHANGELOG_OLD.md
