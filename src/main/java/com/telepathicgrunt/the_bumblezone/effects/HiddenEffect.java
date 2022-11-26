@@ -45,7 +45,7 @@ public class HiddenEffect extends MobEffect {
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         super.applyEffectTick(livingEntity, amplifier);
 
-        MobEffectInstance effect = livingEntity.getEffect(BzEffects.HIDDEN.get());
+        MobEffectInstance effect = livingEntity.getEffect(BzEffects.HIDDEN);
         if (effect != null && effect.getDuration() <= 1) {
             PileOfPollen.reapplyHiddenEffectIfInsidePollenPile(livingEntity);
         }
@@ -79,5 +79,6 @@ public class HiddenEffect extends MobEffect {
                 return 0;
             }
         }
+        return currentVisibilty;
     }
 }

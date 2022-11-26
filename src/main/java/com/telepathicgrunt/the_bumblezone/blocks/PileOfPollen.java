@@ -345,7 +345,7 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // make entity invisible if hidden inside
-            if(entity instanceof LivingEntity livingEntity && !livingEntity.hasEffect(BzEffects.HIDDEN.get())) {
+            if(entity instanceof LivingEntity livingEntity && !livingEntity.hasEffect(BzEffects.HIDDEN)) {
                 applyHiddenEffectIfBuried(livingEntity, blockState, blockPos);
             }
         }
@@ -363,7 +363,7 @@ public class PileOfPollen extends FallingBlock {
                     for (int z = maxCorner.getZ(); z <= minCorner.getZ(); ++z) {
                         mutableBlockPos.set(x, y, z);
                         BlockState blockState = livingEntity.level.getBlockState(mutableBlockPos);
-                        if (blockState.is(BzBlocks.PILE_OF_POLLEN.get()) && applyHiddenEffectIfBuried(livingEntity, blockState, mutableBlockPos)) {
+                        if (blockState.is(BzBlocks.PILE_OF_POLLEN) && applyHiddenEffectIfBuried(livingEntity, blockState, mutableBlockPos)) {
                             return;
                         }
                     }
@@ -377,7 +377,7 @@ public class PileOfPollen extends FallingBlock {
 
         if (blockBounds.contains(livingEntity.getEyePosition())) {
             livingEntity.addEffect(new MobEffectInstance(
-                    BzEffects.HIDDEN.get(),
+                    BzEffects.HIDDEN,
                     10,
                     1,
                     true,
@@ -387,7 +387,7 @@ public class PileOfPollen extends FallingBlock {
         }
         else if (blockBounds.contains(livingEntity.getEyePosition().add(0, -0.2d, 0))) {
             livingEntity.addEffect(new MobEffectInstance(
-                    BzEffects.HIDDEN.get(),
+                    BzEffects.HIDDEN,
                     10,
                     0,
                     true,
