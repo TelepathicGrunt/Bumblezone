@@ -35,10 +35,6 @@
       "required": false
     },
     {
-      "id": "resourcefulbees:gold_flower",
-      "required": false
-    },
-    {
       "id": "blue_skies:muckweed",
       "required": false
     },
