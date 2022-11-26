@@ -62,7 +62,7 @@ public class HiddenEffect extends MobEffect {
      */
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
-        if (amplifier >= 2) {
+        if (amplifier >= 1) {
             SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D);
             List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius.get()*0.5D));
 
