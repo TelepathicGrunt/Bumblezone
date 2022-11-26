@@ -5,7 +5,7 @@ Pile of Pollen no longer slows Beehemoth or Bees down when inside it.
 
 Pile of Pollen now more optimized with its Hidden effect. Less checking occurs while in block.
  Hidden effect is granted when Pile of Pollen covers up to just below the eye's height (Hidden 1) 
- and when eyes are fully covered by Pile of Pollen, bees will give up chasing you (Hidden 2)
+ and when eyes are fully covered by Pile of Pollen, bees will give up chasing you unless you exit the Pile of Pollen (Hidden 2)
  Hidden effect of any level will act like 100% Invisibility effect where mobs won't see you until you touch/hit them. (Or they previously seen you)
 
 ##### Entities:
