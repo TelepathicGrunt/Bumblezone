@@ -1,5 +1,8 @@
 ### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Pile of Pollen no longer slows Beehemoth or Bees down when inside it.
+
 ##### Entities:
 Fixed Bee Queen reward item being spawned too far off to the side.
 
