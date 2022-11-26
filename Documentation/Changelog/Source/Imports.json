@@ -1,0 +1,10 @@
+{
+    "imports" : {
+        
+        "FileSystem" : "https://deno.land/std/fs/mod.ts" ,
+        "YAML" : "https://deno.land/std/encoding/yaml.ts" ,
+        "Path" : "https://deno.land/std/path/mod.ts" ,
+        
+        "Paths" : "./Misc/Paths.js"
+    }
+}

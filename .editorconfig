@@ -5,7 +5,7 @@ root = true
 insert_final_newline = true
 end_of_line = lf
 
-[*.{md}]
+[*.{md,yaml,js}]
 indent_style = space
 indent_size = 4
 charset = utf-8
