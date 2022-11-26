@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
@@ -285,10 +286,12 @@ public class PileOfPollen extends FallingBlock {
                 newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
             }
 
-            entity.setDeltaMovement(new Vec3(
-                    deltaMovement.x * speedReduction,
-                    newYDelta,
-                    deltaMovement.z * speedReduction));
+            if (!(entity instanceof Bee || entity instanceof BeehemothEntity)) {
+                entity.setDeltaMovement(new Vec3(
+                        deltaMovement.x * speedReduction,
+                        newYDelta,
+                        deltaMovement.z * speedReduction));
+            }
 
             double entitySpeed = entity.getDeltaMovement().length();
 
