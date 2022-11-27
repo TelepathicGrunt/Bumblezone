@@ -1,3 +1,36 @@
+### **(V.6.4.7 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Pile of Pollen no longer slows Beehemoth or Bees down when inside it.
+
+Pile of Pollen now more optimized with its Hidden effect. Less checking occurs while in block.
+ Hidden effect is granted when Pile of Pollen covers up to just below the eye's height (Hidden 1) 
+ and when eyes are fully covered by Pile of Pollen, bees will give up chasing you unless you exit the Pile of Pollen (Hidden 2)
+ Hidden effect of any level will act like 100% Invisibility effect where mobs won't see you until you touch/hit them. (Or they previously seen you)
+
+Sticky Honey Residue/Sticky Honey Redstone is a bit more optimized now too.
+
+Honey Web and Redstone Honey Web cannot apply slowness/stickiness to creative players now.
+
+##### Items:
+Carpenter Bee Boots now only mine the below wood, leaves, honeycomb, or wax block when looking downward.
+ More intuitive and prevents accidental block mining.
+
+##### Entities:
+Fixed Bee Queen reward item being spawned too far off to the side.
+
+Honey Slime is now immune to the slowness/stickiness applied by Sticky Honey Residue, Sticky Honey Redstone, Honey Web and Redstone Honey Web.
+
+Hopefully fixed Honey Slimes spawning on slopes and suffocating in blocks when chunk is first created.
+
+##### Enchantments:
+Condensed Bumblezone's enchantment descriptions that gets shown by Enchantment Description mod.
+
+##### Mod Compat:
+Added Bee Queen randomization trades for dyed items from Applied Energistics 2, Another Furniture, Bontany Pots, Companion,
+ Cat Walks Inc, Farmer's Delight, Kibe, Modern Industrialization, Snowy Spirit, and Supplementaries.
+
+
 ### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

@@ -74,6 +74,7 @@
     "client.DimensionSpecialEffectsAccessor",
     "client.FluidRendererMixin",
     "client.FogRendererMixin",
+    "client.GuiMixin",
     "client.KeyboardHandlerMixin",
     "client.KeyMappingAccessor",
     "client.LivingEntityRendererMixin",

@@ -26,7 +26,11 @@ bin/
 run/
 backup/
 /deps/
+/flatdir
 
 # songs
 *.ogg
 *.launch
+
+# Misc
+CHANGELOG_OLD.md

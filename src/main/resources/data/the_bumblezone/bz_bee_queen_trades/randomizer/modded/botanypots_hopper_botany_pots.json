@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#botanypots:hopper_botany_pots",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#botanypots:hopper_botany_pots",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

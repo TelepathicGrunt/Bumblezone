@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#modern_industrialization:fluid_pipes",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#modern_industrialization:fluid_pipes",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}
