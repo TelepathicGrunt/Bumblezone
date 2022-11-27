@@ -98,7 +98,7 @@ repositories {
         url "https://www.cursemaven.com"
     }
     maven {
-        url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
+        url "https://nexus.resourcefulbees.com/repository/maven-public/"
     }
     maven {
         url "https://maven.architectury.dev/"
@@ -108,6 +108,9 @@ repositories {
     }
     maven {
         url "https://jitpack.io"
+    }
+    flatDir {
+        dirs 'flatdir'
     }
 }
 
@@ -129,16 +132,17 @@ dependencies {
     compileOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
 
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
-    //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
     compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
     //runtimeOnly fg.deobf("curse.maven:blueprint-382216:${project.blueprint_file_id}")
 
     compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
     compileOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
+
+    compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
+    //runtimeOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
+    //runtimeOnly fg.deobf("flatdir:Phosphophyllite-0.6.0:beta.52")
+    //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.35")
 
     //runtimeOnly fg.deobf("curse.maven:realistic_bees-410743:4021715")
     //runtimeOnly fg.deobf("curse.maven:collective-342584:4035506")
