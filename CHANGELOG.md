@@ -10,6 +10,8 @@ Pile of Pollen now more optimized with its Hidden effect. Less checking occurs w
 
 Sticky Honey Residue/Sticky Honey Redstone is a bit more optimized now too.
 
+Honey Web and Redstone Honey Web cannot apply slowness/stickiness to creative players now.
+
 ##### Entities:
 Fixed Bee Queen reward item being spawned too far off to the side.
 
