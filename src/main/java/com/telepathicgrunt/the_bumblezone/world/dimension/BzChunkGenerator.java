@@ -449,10 +449,10 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                 if (spawnerData.type.canSummon()) {
                     Entity entity;
                     float f = spawnerData.type.getWidth();
-                    double d = Mth.clamp(x, (double)i + (double)f, (double)i + 16.0 - (double)f);
-                    double e = Mth.clamp(z, (double)j + (double)f, (double)j + 16.0 - (double)f);
+                    double finalX = Math.floor(Mth.clamp(x, (double)i + (double)f, (double)i + 16.0 - (double)f)) + 0.5d;
+                    double finalZ = Math.floor(Mth.clamp(z, (double)j + (double)f, (double)j + 16.0 - (double)f)) + 0.5d;
 
-                    if (!serverLevelAccessor.getWorldBorder().isWithinBounds(d, e) ||
+                    if (!serverLevelAccessor.getWorldBorder().isWithinBounds(finalX, finalZ) ||
                         (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
                     {
                         continue;
@@ -466,7 +466,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                         continue;
                     }
 
-                    entity.moveTo(d, mutableBlockPos.getY(), e, randomSource.nextFloat() * 360.0f, 0.0f);
+                    entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0f, 0.0f);
                     if (entity instanceof Mob mob && mob.checkSpawnObstruction(serverLevelAccessor)) {
                         spawnGroupData = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawnGroupData, null);
                         mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
