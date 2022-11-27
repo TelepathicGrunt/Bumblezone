@@ -1,0 +1,41 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "resourcefulbees:zombee_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:beeper_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:slimy_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:coal_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:iron_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:emerald_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:ender_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:wither_honeycomb_block",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:netherite_honeycomb_block",
+      "required": false
+    }
+  ]
+}

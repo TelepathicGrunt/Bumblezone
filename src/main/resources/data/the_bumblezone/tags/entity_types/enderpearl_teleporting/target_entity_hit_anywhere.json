@@ -1,5 +1,9 @@
 {
   "replace": false,
   "values": [
+    {
+      "id": "duneons:beenestmob",
+      "required": false
+    }
   ]
 }

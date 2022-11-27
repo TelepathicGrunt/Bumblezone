@@ -92,9 +92,6 @@ public class ProductiveBeesCompat {
 		}
 	}
 
-	/**
-	 * 1/15th of bees spawning will also spawn Productive Bees' bees
-	 */
 	public static boolean PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
 		if (ALL_BEES.get().size() == 0) {
 			return false;

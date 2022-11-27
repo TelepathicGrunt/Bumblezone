@@ -56,10 +56,11 @@ public class CarpenterBeeBoots extends BeeArmor {
             double xInBlock = Math.abs(player.position().x()) % 1;
             double zInBlock = Math.abs(player.position().z()) % 1;
             if (player.isCrouching() &&
-                xInBlock > 0.25d &&
-                xInBlock < 0.75d &&
-                zInBlock > 0.25d &&
-                zInBlock < 0.75d)
+                player.getLookAngle().y() < -0.9d &&
+                xInBlock > 0.2d &&
+                xInBlock < 0.8d &&
+                zInBlock > 0.2d &&
+                zInBlock < 0.8d)
             {
                 BlockPos belowBlockPos = new BlockPos(player.position().add(0, -0.1d, 0));
                 BlockState belowBlockState = world.getBlockState(belowBlockPos);

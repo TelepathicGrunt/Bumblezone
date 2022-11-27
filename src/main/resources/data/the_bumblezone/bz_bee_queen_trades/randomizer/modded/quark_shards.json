@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#quark:shards",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#quark:shards",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

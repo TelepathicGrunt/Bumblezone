@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#supplementaries:candle_holders",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#supplementaries:candle_holders",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -107,7 +108,11 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
 
         // main body and ceiling
         else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
-            if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.oreHoneycombSpawnRateSpiderBeeDungeon.get()) {
+            if(ModChecker.resourcefulBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.RBOreHoneycombSpawnRateSpiderBeeDungeon.get()) {
+                StructureTemplate.StructureBlockInfo info = ResourcefulBeesCompat.RBGetSpiderHoneycomb(worldPos, random, worldView);
+                if(info != null) return info;
+            }
+            else if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon.get()) {
                 StructureTemplate.StructureBlockInfo info = ProductiveBeesCompat.PBGetRottenedHoneycomb(worldPos, random);
                 if(info != null) return info;
             }

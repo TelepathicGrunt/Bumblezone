@@ -23,6 +23,7 @@ run
 .gitattributes
 /deps
 /src/generated/
+/flatdir
 
 # Files from Forge MDK
 forge*changelog.txt
@@ -30,3 +31,6 @@ forge*changelog.txt
 
 # songs
 *.ogg
+
+# Misc
+CHANGELOG_OLD.md

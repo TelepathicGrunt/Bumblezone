@@ -10,6 +10,7 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 public class ModChecker {
 
 	public static boolean productiveBeesPresent = false;
+	public static boolean resourcefulBeesPresent = false;
 	public static boolean buzzierBeesPresent = false;
 	public static boolean pokecubePresent = false;
 	public static boolean friendsAndFoesPresent = false;
@@ -43,6 +44,9 @@ public class ModChecker {
 
 			modid = "buzzier_bees";
 			loadupModCompat(modid, () -> BuzzierBeesCompat.setupBuzzierBees());
+
+			modid = "resourcefulbees";
+			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

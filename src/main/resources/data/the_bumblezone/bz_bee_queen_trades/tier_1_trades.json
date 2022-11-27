@@ -239,6 +239,22 @@
     {
       "id": "vanillatweaks:sugar_block",
       "required": false
+    },
+    {
+      "id": "duneons:wax",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:wax",
+      "required": false
+    },
+    {
+      "id": "hexerei:wax_blend",
+      "required": false
+    },
+    {
+      "id": "cyclic:wax_bucket",
+      "required": false
     }
   ],
   "possible_rewards": [

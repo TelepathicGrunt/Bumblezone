@@ -36,6 +36,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -60,12 +61,15 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
@@ -540,27 +544,36 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 advancementsProgressMap.get(advancement).isDone();
     }
 
+    private boolean isContainerBlockEntity(ItemStack itemStack) {
+        return itemStack.getItem() instanceof BlockItem blockItem &&
+                blockItem.getBlock() instanceof EntityBlock block &&
+                block.newBlockEntity(this.blockPosition(), blockItem.getBlock().defaultBlockState()) instanceof Container;
+    }
+
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward, ItemStack originalItem) {
         ItemStack rewardItem = reward.item().getDefaultInstance();
         setQueenPose(BeeQueenPose.ITEM_THROW);
 
-        if (originalItem.is(BzTags.SHULKER_BOXES) && rewardItem.is(BzTags.SHULKER_BOXES) && originalItem.hasTag()) {
+        if (originalItem.is(ItemTags.BANNERS) && rewardItem.is(ItemTags.BANNERS) && originalItem.hasTag()) {
             rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
         }
-        else if (originalItem.is(ItemTags.BANNERS) && rewardItem.is(ItemTags.BANNERS) && originalItem.hasTag()) {
+        else if (originalItem.sameItem(rewardItem) && originalItem.hasTag()) {
+            rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
+        }
+        else if (isContainerBlockEntity(originalItem) && isContainerBlockEntity(rewardItem) && originalItem.hasTag()) {
             rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
         }
 
         rewardItem.setCount(reward.count());
         ItemEntity rewardItemEntity = new ItemEntity(
                 this.level,
-                this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
-                this.getY() + 0.3,
-                this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
+                this.getX() + (sideVect.x() * 0.9d) + (forwardVect.x() * 1),
+                this.getY() + 0.3d,
+                this.getZ() + (sideVect.z() * 0.9d) + (forwardVect.x() * 1),
                 rewardItem,
-                (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 4,
+                (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 4d,
                 0.3f,
-                (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 4);
+                (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 4d);
         this.level.addFreshEntity(rewardItemEntity);
         rewardItemEntity.setDefaultPickUpDelay();
         spawnHappyParticles();
