@@ -1,37 +1,54 @@
 {
   "replace": false,
   "values": [
+    "the_bumblezone:beehive_beeswax",
+    "the_bumblezone:carvable_wax",
+    "#minecraft:planks",
+    "#minecraft:logs",
+    "#minecraft:leaves",
+    "#minecraft:wooden_slabs",
+    "#minecraft:wooden_stairs",
+    "#minecraft:beehives",
+    "#the_bumblezone:honeycombs_that_features_can_carve",
     {
-      "id": "#minecraft:planks",
-      "required": true
+      "id": "#forge:storage_blocks/honeycombs",
+      "required": false
     },
     {
-      "id": "#minecraft:logs",
-      "required": true
+      "id": "#forge:storage_blocks/wax",
+      "required": false
     },
     {
-      "id": "#minecraft:leaves",
-      "required": true
+      "id": "#c:storage_blocks/honeycombs",
+      "required": false
     },
     {
-      "id": "#minecraft:wooden_slabs",
-      "required": true
+      "id": "#c:storage_blocks/wax",
+      "required": false
     },
     {
-      "id": "#minecraft:wooden_stairs",
-      "required": true
+      "id": "resourcefulbees:waxed_planks",
+      "required": false
     },
     {
-      "id": "#minecraft:beehives",
-      "required": true
+      "id": "resourcefulbees:trimmed_waxed_planks",
+      "required": false
     },
     {
-      "id": "#the_bumblezone:honeycombs_that_features_can_carve",
-      "required": true
+      "id": "resourcefulbees:waxed_slab",
+      "required": false
     },
     {
-      "id": "the_bumblezone:beehive_beeswax",
-      "required": true
+      "id": "resourcefulbees:waxed_stairs",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_machine_block",
+      "required": false
+    },
+    {
+      "id": "duneons:waxblock",
+      "required": false
     }
   ]
 }
