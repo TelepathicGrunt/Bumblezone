@@ -12,7 +12,7 @@ Sticky Honey Residue/Sticky Honey Redstone is a bit more optimized now too.
 
 ##### Items:
 Carpenter Bee Boots now only mine the below wood, leaves, honeycomb, or wax block when looking downward.
- More inuitive and prevents accidental block mining.
+ More intuitive and prevents accidental block mining.
 
 ##### Entities:
 Fixed Bee Queen reward item being spawned too far off to the side.
