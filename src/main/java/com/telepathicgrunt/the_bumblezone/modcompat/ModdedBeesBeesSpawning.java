@@ -12,15 +12,14 @@ import net.minecraftforge.eventbus.api.Event;
 public class ModdedBeesBeesSpawning {
 	/*
 	 * Manual spawning of modded Bees so it can be disabled real time by config.
-	 * works by making 1/15th of bees spawning also spawn modded bees
+	 * works by making a chance of bees spawning also spawn modded bees
 	 */
 	public static void MobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
 
-		if ((ModChecker.productiveBeesPresent || ModChecker.pokecubePresent) &&
-			(event.getSpawnReason() == MobSpawnType.NATURAL ||
+		if (event.getSpawnReason() == MobSpawnType.NATURAL ||
 			event.getSpawnReason() == MobSpawnType.SPAWNER ||
 			event.getSpawnReason() == MobSpawnType.CHUNK_GENERATION ||
-			event.getSpawnReason() == MobSpawnType.STRUCTURE))
+			event.getSpawnReason() == MobSpawnType.STRUCTURE)
 		{
 			Mob entity = event.getEntity();
 			ResourceLocation worldRL = entity.level.dimension().location();
@@ -32,6 +31,19 @@ public class ModdedBeesBeesSpawning {
 				{
 					if(ProductiveBeesCompat.PBMobSpawnEvent(event, entity.isBaby())) {
 						event.setResult(Event.Result.DENY);
+						return;
+					}
+				}
+
+				if (ModChecker.resourcefulBeesPresent &&
+					BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob.get() &&
+					entity.getRandom().nextFloat() < (event.getSpawnReason() == MobSpawnType.SPAWNER ?
+							BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsBrood.get() :
+							BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsOther.get()))
+				{
+					if(ResourcefulBeesCompat.RBMobSpawnEvent(event, entity.isBaby(), event.getSpawnReason())) {
+						event.setResult(Event.Result.DENY);
+						return;
 					}
 				}
 
@@ -42,6 +54,7 @@ public class ModdedBeesBeesSpawning {
 				{
 					if(PokecubeCompat.PCMobSpawnEvent(event, entity.isBaby())) {
 						event.setResult(Event.Result.DENY);
+						return;
 					}
 				}
 			}

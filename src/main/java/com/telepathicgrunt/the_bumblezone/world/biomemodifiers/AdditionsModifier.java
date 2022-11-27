@@ -31,6 +31,11 @@ public record AdditionsModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature
                     feature.stream().forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
                 }
             }
+            else if (modid.equals("resourcefulbees")) {
+                if (BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins.get()) {
+                    feature.stream().forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
+                }
+            }
             else {
                 feature.stream().forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
             }

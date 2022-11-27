@@ -13,12 +13,19 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.BooleanValue beePokemonGetsProtectionEffect;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfPokecubeBeePokemon;
 
+	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesBeesMob;
+	public static ForgeConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsBrood;
+	public static ForgeConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsOther;
+	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateBeeDungeon;
+	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateSpiderBeeDungeon;
+	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesHoneycombVeins;
+
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
 	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
-	public static ForgeConfigSpec.DoubleValue oreHoneycombSpawnRateBeeDungeon;
-	public static ForgeConfigSpec.DoubleValue oreHoneycombSpawnRateSpiderBeeDungeon;
+	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateBeeDungeon;
+	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateSpiderBeeDungeon;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsForDungeons;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsAsOres;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedBees;
@@ -76,12 +83,63 @@ public class BzModCompatibilityConfigs {
 
 			builder.pop();
 
+			builder.push("Resourceful Bees Options");
+
+			spawnResourcefulBeesBeesMob = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Spawn Resourceful Bees in The Bumblezone and from Honey Brood Blocks alongside",
+							" regular bees at a spawnrateOfResourcefulBeesMobs chance when spawning regular bees.",
+							" You can datapack the_bumblezone:resourcefulbees/spawnable_from_brood_block entity tag",
+							" and/or datapack the_bumblezone:resourcefulbees/spawnable_from_chunk_creation entity tag",
+							" for more control of what kinds of bees spawns.\n")
+					.translation("the_bumblezone.config.spawnresourcefulbeesbeesmob")
+					.define("spawnResourcefulBeesBeesMob", true);
+
+			spawnrateOfResourcefulBeesMobsBrood = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Chance of a Bee spawning from Honeycomb Brood Blocks in Bumblezone dimension being replaced by Resourceful Bee's mob.",
+							" 0 is no RB's mobs and 1 is max EB's mobs.\n")
+					.translation("the_bumblezone.config.spawnrateofresourcefulbeesmobsbrood")
+					.defineInRange("spawnrateOfResourcefulBeesMobsBrood", 0.03D, 0D, 1D);
+
+			spawnrateOfResourcefulBeesMobsOther = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Chance of a regular Bee spawning in Bumblezone being replaced by Resourceful Bee's mob.",
+							" 0 is no RB's mobs and 1 is max RB's mobs.\n")
+					.translation("the_bumblezone.config.spawnrateofresourcefulbeesmobsother")
+					.defineInRange("spawnrateOfResourcefulBeesMobsOther", 0.008D, 0D, 1D);
+
+			RBOreHoneycombSpawnRateBeeDungeon = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" How much of Bee Dungeons is made of honeycombs from the_bumblezone:resourcefulbees/spawns_in_bee_dungeons block tag.",
+							" 0 is no RB's honeycombs and 1 is max RB's honeycombs.\n")
+					.translation("the_bumblezone.config.rborehoneycombspawnratebeedungeon")
+					.defineInRange("RBOreHoneycombSpawnRateBeeDungeon", 0.06D, 0D, 1D);
+
+			RBOreHoneycombSpawnRateSpiderBeeDungeon = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" How much of Spider Infested Bee Dungeons is made of honeycombs from the_bumblezone:resourcefulbees/spawns_in_spider_infested_bee_dungeons block tag.",
+							" 0 is no RB's honeycombs and 1 is max RB's honeycombs.\n")
+					.translation("the_bumblezone.config.rborehoneycombspawnratespiderbeedungeon")
+					.defineInRange("RBOreHoneycombSpawnRateSpiderBeeDungeon", 0.12D, 0D, 1D);
+
+			spawnResourcefulBeesHoneycombVeins = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Spawn Resourceful Bees's various honeycomb variants in The Bumblezone at all",
+							" kinds of heights and height bands. Start exploring to find where they spawn!",
+							" ",
+							" NOTE: Will require a restart of the world to take effect. \n")
+					.translation("the_bumblezone.config.spawnresourcefulbeeshoneycombveins")
+					.define("spawnResourcefulBeesHoneycombVeins", true);
+
+			builder.pop();
+
 			builder.push("Productive Bees Options");
 
 			spawnProductiveBeesBeesMob = builder
 					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Productive Bees in The Bumblezone and from Honey Brood Blocks",
-							" alongside regular bees at a 1/15th chance when spawning regular bees.\n")
+							" Spawn Productive Bees in The Bumblezone and from Honey Brood Blocks alongside",
+							" regular bees at a spawnrateOfProductiveBeesMobs chance when spawning regular bees.\n")
 					.translation("the_bumblezone.config.spawnproductivebeesbeesmob")
 					.define("spawnProductiveBeesBeesMob", true);
 
@@ -94,9 +152,8 @@ public class BzModCompatibilityConfigs {
 
 			spawnProductiveBeesHoneycombVariants = builder
 					.comment(" \n-----------------------------------------------------\n",
-							" Spawn Productive Bees's various honeycomb variants in The Bumblezone",
-							" at all kinds of heights and height bands. Start exploring to find ",
-							" where they spawn!",
+							" Spawn Productive Bees's various honeycomb variants in The Bumblezone at all",
+							" kinds of heights and height bands. Start exploring to find where they spawn!",
 							" ",
 							" NOTE: Will require a restart of the world to take effect. \n")
 					.translation("the_bumblezone.config.spawnproductivebeeshoneycombvariants")
@@ -187,19 +244,19 @@ public class BzModCompatibilityConfigs {
 					.translation("the_bumblezone.config.allowhoneytreatcompat")
 					.define("allowHoneyTreatCompat", true);
 
-			oreHoneycombSpawnRateBeeDungeon = builder
+			PBOreHoneycombSpawnRateBeeDungeon = builder
 					.comment(" \n-----------------------------------------------------\n",
 							" How much of Bee Dungeons is made of ore-based honeycombs.",
 							" 0 is no PB's honeycombs and 1 is max PB's honeycombs.\n")
-					.translation("the_bumblezone.config.orehoneycombspawnratebeedungeon")
-					.defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.06D, 0D, 1D);
+					.translation("the_bumblezone.config.pborehoneycombspawnratebeedungeon")
+					.defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.045D, 0D, 1D);
 
-			oreHoneycombSpawnRateSpiderBeeDungeon = builder
+			PBOreHoneycombSpawnRateSpiderBeeDungeon = builder
 					.comment(" \n-----------------------------------------------------\n",
 							" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.",
 							" 0 is no PB's honeycombs and 1 is max PB's honeycombs.\n")
-					.translation("the_bumblezone.config.orehoneycombspawnratespiderbeedungeon")
-					.defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.12D, 0D, 1D);
+					.translation("the_bumblezone.config.pborehoneycombspawnratespiderbeedungeon")
+					.defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.10D, 0D, 1D);
 
 			builder.pop();
 

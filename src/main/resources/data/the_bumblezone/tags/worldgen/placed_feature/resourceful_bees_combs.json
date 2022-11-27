@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:resourcefulbees/zombee_comb_vein",
+      "required": false
+    }
+  ]
+}
