@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -27,6 +29,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
@@ -47,6 +50,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -73,6 +77,7 @@ public class StickyHoneyResidue extends Block {
     };
 
     protected final Short2ObjectMap<VoxelShape> shapeByIndex = new Short2ObjectArrayMap<>();
+    protected final Short2ObjectMap<AABB> aabbShapeByIndex = new Short2ObjectArrayMap<>();
     private final Object2ShortMap<BlockState> stateToIndex = new Object2ShortOpenHashMap<>();
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP =
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
@@ -107,7 +112,7 @@ public class StickyHoneyResidue extends Block {
         builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
-    protected short getAABBIndex(BlockState blockState) {
+    protected short getShapeIndex(BlockState blockState) {
         return this.stateToIndex.computeIfAbsent(blockState, (a) -> {
             short bitFlag = 0;
             for (Direction direction : Direction.values()) {
@@ -126,7 +131,7 @@ public class StickyHoneyResidue extends Block {
     @Override
     public VoxelShape getShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
         return shapeByIndex.computeIfAbsent(
-            getAABBIndex(blockstate),
+            getShapeIndex(blockstate),
             (bitFlag) -> {
                 VoxelShape shape = Shapes.empty();
                 for (Direction direction : Direction.values()) {
@@ -136,6 +141,19 @@ public class StickyHoneyResidue extends Block {
                 }
                 return shape;
             }
+        );
+    }
+
+    public AABB getAABBShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return aabbShapeByIndex.computeIfAbsent(
+                getShapeIndex(blockstate),
+                (bitFlag) -> {
+                    VoxelShape shape = getShape(blockstate, world, pos, context);
+                    if (shape.isEmpty()) {
+                        return AABB.ofSize(new Vec3(0,0,0),0,0,0);
+                    }
+                    return shape.bounds();
+                }
         );
     }
 
@@ -176,9 +194,7 @@ public class StickyHoneyResidue extends Block {
     @Deprecated
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        VoxelShape voxelShape = getShape(blockState, level, blockPos, null);
-        if(voxelShape == Shapes.empty()) {
-            level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof HoneySlimeEntity) {
             return;
         }
 
@@ -188,12 +204,11 @@ public class StickyHoneyResidue extends Block {
             return;
         }
 
-        voxelShape = voxelShape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-        if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(entity.getBoundingBox()), BooleanOp.AND)) {
+        AABB aabb = getAABBShape(blockState, level, blockPos, null).move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+        if (aabb.intersects(entity.getBoundingBox())) {
+
             entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
-            if (entity instanceof LivingEntity livingEntity &&
-                !(entity instanceof Player player && player.isCreative()))
-            {
+            if (entity instanceof LivingEntity livingEntity && !(entity instanceof Player player && player.isCreative())) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
                         200,
@@ -421,7 +436,7 @@ public class StickyHoneyResidue extends Block {
      * intermediary method to apply the blockshape and ranges that the particle can spawn in for the next addParticle method
      */
     protected void addParticle(ParticleOptions particleType, RandomSource random, Level world, BlockPos blockPos, BlockState blockState, Direction direction) {
-        short bitFlag = getAABBIndex(blockState);
+        short bitFlag = getShapeIndex(blockState);
         if(((bitFlag >> direction.ordinal()) & 1) != 0) {
             VoxelShape chosenSide = BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()];
             this.addParticle(

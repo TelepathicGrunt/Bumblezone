@@ -64,6 +64,17 @@ public class PileOfPollen extends FallingBlock {
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
     };
+    protected static final AABB[] SHAPE_AABB_BY_LAYER = new AABB[]{
+            AABB.ofSize(new Vec3(0,0,0),0,0,0),
+            SHAPE_BY_LAYER[1].bounds().inflate(0.1f),
+            SHAPE_BY_LAYER[2].bounds().inflate(0.1f),
+            SHAPE_BY_LAYER[3].bounds().inflate(0.1f),
+            SHAPE_BY_LAYER[4].bounds().inflate(0.1f),
+            SHAPE_BY_LAYER[5].bounds().inflate(0.1f),
+            SHAPE_BY_LAYER[6].bounds().inflate(0.1f),
+            SHAPE_BY_LAYER[7].bounds().inflate(0.1f),
+            SHAPE_BY_LAYER[8].bounds().inflate(0.1f)
+    };
     private Item item;
 
     public PileOfPollen() {
@@ -104,6 +115,10 @@ public class PileOfPollen extends FallingBlock {
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter world, BlockPos blockPos, CollisionContext selectionContext) {
         return SHAPE_BY_LAYER[blockState.getValue(LAYERS)];
+    }
+
+    public static AABB getAABBShape(BlockState blockState) {
+        return SHAPE_AABB_BY_LAYER[blockState.getValue(LAYERS)];
     }
 
     @Override
@@ -220,6 +235,9 @@ public class PileOfPollen extends FallingBlock {
      */
     @Override
     public void entityInside(BlockState blockState, Level world, BlockPos blockPos, Entity entity) {
+        if (!blockState.is(BzBlocks.PILE_OF_POLLEN)) {
+            return;
+        }
 
         // make falling block of this block stack the pollen or else destroy it
         if(entity instanceof FallingBlockEntity) {
@@ -353,18 +371,19 @@ public class PileOfPollen extends FallingBlock {
 
     public static void reapplyHiddenEffectIfInsidePollenPile(LivingEntity livingEntity) {
         AABB aabb = livingEntity.getBoundingBox();
-        BlockPos maxCorner = new BlockPos(aabb.minX + 0.001D, aabb.minY + 0.001D, aabb.minZ + 0.001D);
-        BlockPos minCorner = new BlockPos(aabb.maxX - 0.001D, aabb.maxY - 0.001D, aabb.maxZ - 0.001D);
-        if (livingEntity.level.hasChunksAt(maxCorner, minCorner)) {
+        BlockPos minCorner = new BlockPos(aabb.minX + 0.001D, aabb.minY + 0.001D, aabb.minZ + 0.001D);
+        BlockPos maxCorner = new BlockPos(aabb.maxX - 0.001D, aabb.maxY - 0.001D, aabb.maxZ - 0.001D);
+        Level level = livingEntity.level;
+        if (level.hasChunksAt(minCorner, maxCorner)) {
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 
-            for (int x = maxCorner.getX(); x <= minCorner.getX(); ++x) {
-                for (int y = maxCorner.getY(); y <= minCorner.getY(); ++y) {
-                    for (int z = maxCorner.getZ(); z <= minCorner.getZ(); ++z) {
+            for (int x = minCorner.getX(); x <= maxCorner.getX(); ++x) {
+                for (int y = minCorner.getY(); y <= maxCorner.getY(); ++y) {
+                    for (int z = minCorner.getZ(); z <= maxCorner.getZ(); ++z) {
                         mutableBlockPos.set(x, y, z);
-                        BlockState blockState = livingEntity.level.getBlockState(mutableBlockPos);
-                        if (blockState.is(BzBlocks.PILE_OF_POLLEN) && applyHiddenEffectIfBuried(livingEntity, blockState, mutableBlockPos)) {
-                            return;
+                        BlockState blockState = level.getBlockState(mutableBlockPos);
+                        if (blockState.is(BzBlocks.PILE_OF_POLLEN)) {
+                            applyHiddenEffectIfBuried(livingEntity, blockState, mutableBlockPos);
                         }
                     }
                 }
@@ -372,8 +391,8 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    private static boolean applyHiddenEffectIfBuried(LivingEntity livingEntity, BlockState blockState, BlockPos blockPos) {
-        AABB blockBounds = blockState.getShape(livingEntity.level, blockPos).bounds().move(blockPos.getX(), blockPos.getY(), blockPos.getZ()).inflate(0.1f);
+    private static void applyHiddenEffectIfBuried(LivingEntity livingEntity, BlockState blockState, BlockPos blockPos) {
+        AABB blockBounds = getAABBShape(blockState).move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
         if (blockBounds.contains(livingEntity.getEyePosition())) {
             livingEntity.addEffect(new MobEffectInstance(
@@ -383,7 +402,6 @@ public class PileOfPollen extends FallingBlock {
                     true,
                     false,
                     true));
-            return true;
         }
         else if (blockBounds.contains(livingEntity.getEyePosition().add(0, -0.2d, 0))) {
             livingEntity.addEffect(new MobEffectInstance(
@@ -393,9 +411,7 @@ public class PileOfPollen extends FallingBlock {
                     true,
                     false,
                     true));
-            return true;
         }
-        return false;
     }
 
     public static void stackPollen(BlockState blockState, Level world, BlockPos blockPos, BlockState pollonToStack) {

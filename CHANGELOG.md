@@ -8,8 +8,12 @@ Pile of Pollen now more optimized with its Hidden effect. Less checking occurs w
  and when eyes are fully covered by Pile of Pollen, bees will give up chasing you unless you exit the Pile of Pollen (Hidden 2)
  Hidden effect of any level will act like 100% Invisibility effect where mobs won't see you until you touch/hit them. (Or they previously seen you)
 
+Sticky Honey Residue/Sticky Honey Redstone is a bit more optimized now too.
+
 ##### Entities:
 Fixed Bee Queen reward item being spawned too far off to the side.
+
+Honey Slime is now immune to the slowness/stickiness applied by Sticky Honey Residue, Sticky Honey Redstone, Honey Web and Redstone Honey Web.
 
 ##### Enchantments:
 Condensed Bumblezone's enchantment descriptions that gets shown by Enchantment Description mod.
