@@ -14,7 +14,7 @@ Honey Web and Redstone Honey Web cannot apply slowness/stickiness to creative pl
 
 ##### Items:
 Carpenter Bee Boots now only mine the below wood, leaves, honeycomb, or wax block when looking downward.
- More inuitive and prevents accidental block mining.
+ More intuitive and prevents accidental block mining.
 
 ##### Entities:
 Fixed Bee Queen reward item being spawned too far off to the side.
