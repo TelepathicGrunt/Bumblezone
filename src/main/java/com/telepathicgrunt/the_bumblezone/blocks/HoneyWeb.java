@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -129,7 +130,11 @@ public class HoneyWeb extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (!(entity instanceof Bee || entity instanceof BeehemothEntity)) {
+        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof HoneySlimeEntity) {
+            return;
+        }
+
+        if (!(entity instanceof Player player && player.isCreative())) {
             ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
             VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
             shape = shape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
