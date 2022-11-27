@@ -21,6 +21,8 @@ Fixed Bee Queen reward item being spawned too far off to the side.
 
 Honey Slime is now immune to the slowness/stickiness applied by Sticky Honey Residue, Sticky Honey Redstone, Honey Web and Redstone Honey Web.
 
+Hopefully fixed Honey Slimes spawning on slopes and suffocating in blocks when chunk is first created.
+
 ##### Enchantments:
 Condensed Bumblezone's enchantment descriptions that gets shown by Enchantment Description mod.
 
