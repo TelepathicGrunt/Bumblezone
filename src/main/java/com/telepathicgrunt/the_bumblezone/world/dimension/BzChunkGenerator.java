@@ -459,10 +459,10 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                         if (mobspawnsettings$spawnerdata.type.canSummon()) {
                             float f = mobspawnsettings$spawnerdata.type.getWidth();
-                            double d0 = Mth.clamp(x, (double)i + (double)f, (double)i + 16.0D - (double)f);
-                            double d1 = Mth.clamp(z, (double)j + (double)f, (double)j + 16.0D - (double)f);
+                            double finalX = Math.floor(Mth.clamp(x, (double)i + (double)f, (double)i + 16.0D - (double)f)) + 0.5d;
+                            double finalZ = Math.floor(Mth.clamp(z, (double)j + (double)f, (double)j + 16.0D - (double)f)) + 0.5d;
 
-                            if (!serverLevelAccessor.getWorldBorder().isWithinBounds(d0, d1) ||
+                            if (!serverLevelAccessor.getWorldBorder().isWithinBounds(finalX, finalZ) ||
                                 (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
                             {
                                 continue;
@@ -477,9 +477,9 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                                 continue;
                             }
 
-                            entity.moveTo(d0, mutableBlockPos.getY(), d1, randomSource.nextFloat() * 360.0F, 0.0F);
+                            entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
                             if (entity instanceof Mob mob) {
-                                if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(mob, serverLevelAccessor, d0, mutableBlockPos.getY(), d1, null, MobSpawnType.CHUNK_GENERATION) == -1) continue;
+                                if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(mob, serverLevelAccessor, finalX, mutableBlockPos.getY(), finalZ, null, MobSpawnType.CHUNK_GENERATION) == -1) continue;
                                 if (mob.checkSpawnObstruction(serverLevelAccessor)) {
                                     spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata, null);
                                     mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
