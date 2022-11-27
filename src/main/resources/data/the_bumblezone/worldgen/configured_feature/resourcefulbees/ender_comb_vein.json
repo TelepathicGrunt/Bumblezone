@@ -1,7 +1,7 @@
 {
   "type": "minecraft:ore",
   "config": {
-    "size": 17,
+    "size": 7,
     "discard_chance_on_air_exposure": 0,
     "targets": [
       {
@@ -10,7 +10,7 @@
           "tag": "the_bumblezone:honeycombs_that_features_can_carve"
         },
         "state": {
-          "Name": "resourcefulbees:zombee_honeycomb_block"
+          "Name": "resourcefulbees:ender_honeycomb_block"
         }
       }
     ]

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 4,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "the_bumblezone:honeycombs_that_features_can_carve"
+        },
+        "state": {
+          "Name": "resourcefulbees:diamond_honeycomb_block"
+        }
+      }
+    ]
+  }
+}

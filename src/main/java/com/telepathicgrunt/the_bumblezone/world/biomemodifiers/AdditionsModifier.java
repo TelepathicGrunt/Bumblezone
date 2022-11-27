@@ -8,6 +8,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
@@ -33,7 +35,13 @@ public record AdditionsModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature
             }
             else if (modid.equals("resourcefulbees")) {
                 if (BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins.get()) {
-                    feature.stream().forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
+                    feature.stream().filter(placedFeatureHolder -> {
+                        FeatureConfiguration featureConfiguration = placedFeatureHolder.get().feature().get().config();
+                        if (featureConfiguration instanceof OreConfiguration oreConfiguration) {
+                            return oreConfiguration.targetStates.stream().noneMatch(e -> e.state.isAir());
+                        }
+                        return true;
+                    }).forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
                 }
             }
             else {

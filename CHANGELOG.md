@@ -40,6 +40,14 @@ Enderpearls hitting Dungeons Content's Beenest mob will teleport player to Bumbl
 
 Carpenter Bee Boots can mine Dungeons Content's Wax Block.
 
+Added compatibility with Resourceful Bees's alpha jar. Datapackable files for configuring are:
+ `the_bumblezone:resourcefulbees/spawns_in_bee_dungeons` block tag
+ `the_bumblezone:resourcefulbees/spawns_in_spider_infested_bee_dungeons` block tag
+ `the_bumblezone:resourcefulbees/spawnable_from_brood_block` entity tag
+ `the_bumblezone:resourcefulbees/spawnable_from_chunk_creation` entity tag
+ `the_bumblezone:resourceful_bees_combs` worldgen placedfeature tag
+There are some additional config options in Bumblezone's mod compatibility config file too.
+
 
 ### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
 

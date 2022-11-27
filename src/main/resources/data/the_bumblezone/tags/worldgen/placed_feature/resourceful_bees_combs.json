@@ -2,7 +2,43 @@
   "replace": false,
   "values": [
     {
-      "id": "the_bumblezone:resourcefulbees/zombee_comb_vein",
+      "id": "the_bumblezone:resourcefulbees/diamond_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/diamond_comb_vein_high",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/dragon_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/ender_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/ender_comb_vein_high",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/gold_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/iron_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/lapis_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/redstone_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:resourcefulbees/skeleton_comb_vein",
       "required": false
     }
   ]

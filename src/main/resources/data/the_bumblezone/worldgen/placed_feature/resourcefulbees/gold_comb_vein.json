@@ -1,9 +1,9 @@
 {
-  "feature": "the_bumblezone:resourcefulbees/zombee_comb_vein",
+  "feature": "the_bumblezone:resourcefulbees/gold_comb_vein",
   "placement": [
     {
       "type": "minecraft:count",
-      "count": 30
+      "count": 2
     },
     {
       "type": "minecraft:in_square"
