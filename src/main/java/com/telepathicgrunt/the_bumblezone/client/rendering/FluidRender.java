@@ -25,12 +25,6 @@ import java.util.function.Function;
 @Environment(EnvType.CLIENT)
 public class FluidRender {
     public static void setupFluidRendering(final Fluid still, final Fluid flowing, final ResourceLocation stillTextureFluidId, final ResourceLocation flowTextureFluidId, boolean waterColored) {
-        // If they're not already present, add the sprites to the block atlas
-        ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) -> {
-            registry.register(stillTextureFluidId);
-            registry.register(flowTextureFluidId);
-        });
-
         final ResourceLocation fluidId = BuiltInRegistries.FLUID.getKey(still);
         final ResourceLocation listenerId = new ResourceLocation(fluidId.getNamespace(), fluidId.getPath() + "_reload_listener");
 
