@@ -30,13 +30,15 @@ import net.minecraft.world.level.biome.Climate;
 
 import java.util.Set;
 import java.util.function.LongFunction;
+import java.util.stream.Stream;
 
 public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
-                RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("nonstandard_biomes").forGetter((biomeSource) -> biomeSource.nonstandardBiomes))
+                    RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("nonstandard_biomes").forGetter((biomeSource) -> biomeSource.nonstandardBiomes),
+                    RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("main_biomes").forGetter((biomeSource) -> biomeSource.nonstandardBiomes))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
@@ -49,12 +51,14 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     private final long seed;
     private final Layer biomeSampler;
     public final HolderSet<Biome> nonstandardBiomes;
+    public final HolderSet<Biome> mainBiomes;
 
-    public BzBiomeProvider(long seed, HolderSet<Biome> nonstandardBiomes) {
-        super(nonstandardBiomes.stream());
+    public BzBiomeProvider(long seed, HolderSet<Biome> nonstandardBiomes, HolderSet<Biome> mainBiomes) {
+        super(Stream.concat(nonstandardBiomes.stream(), mainBiomes.stream()));
 
         this.seed = seed;
         this.nonstandardBiomes = nonstandardBiomes;
+        this.mainBiomes = mainBiomes;
         this.biomeSampler = buildWorldProcedure(seed, this.nonstandardBiomes);
     }
 
