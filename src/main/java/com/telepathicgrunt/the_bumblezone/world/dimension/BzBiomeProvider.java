@@ -37,8 +37,8 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
-                    RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("nonstandard_biomes").forGetter((biomeSource) -> biomeSource.nonstandardBiomes),
-                    RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("main_biomes").forGetter((biomeSource) -> biomeSource.nonstandardBiomes))
+                    Biome.LIST_CODEC.fieldOf("nonstandard_biomes").forGetter((biomeSource) -> biomeSource.nonstandardBiomes),
+                    Biome.LIST_CODEC.fieldOf("main_biomes").forGetter((biomeSource) -> biomeSource.mainBiomes))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");

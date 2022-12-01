@@ -5,8 +5,15 @@
     "settings": "the_bumblezone:bz_noise_settings",
     "biome_source": {
       "type": "the_bumblezone:biome_source",
-      "main_biomes": "#the_bumblezone:the_bumblezone",
-      "nonstandard_biomes": "#the_bumblezone:extra_biomes_to_spawn"
+      "main_biomes": [
+        "the_bumblezone:hive_pillar",
+        "the_bumblezone:hive_wall",
+        "the_bumblezone:pollinated_fields",
+        "the_bumblezone:pollinated_pillar",
+        "the_bumblezone:sugar_water_floor",
+        "the_bumblezone:crystal_canyon"
+      ],
+      "nonstandard_biomes": []
     }
   }
 }
