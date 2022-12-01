@@ -22,6 +22,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class BzItems {
     /**
      * creative tab to hold our block items
@@ -110,89 +114,98 @@ public class BzItems {
      * registers the item version of the Blocks so they now exist in the registry
      */
     public static void registerItems() {
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "porous_honeycomb_block"), POROUS_HONEYCOMB);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "filled_porous_honeycomb_block"), FILLED_POROUS_HONEYCOMB);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "empty_honeycomb_brood_block"), EMPTY_HONEYCOMB_BROOD);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honeycomb_brood_block"), HONEYCOMB_BROOD);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_infused_stone"), SUGAR_INFUSED_STONE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_infused_cobblestone"), SUGAR_INFUSED_COBBLESTONE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "beehive_beeswax"), BEEHIVE_BEESWAX);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_web"), HONEY_WEB);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "redstone_honey_web"), REDSTONE_HONEY_WEB);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "pile_of_pollen"), PILE_OF_POLLEN);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_cocoon"), HONEY_COCOON);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shards"), HONEY_CRYSTAL_SHARDS);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "sugar_water_bottle"), SUGAR_WATER_BOTTLE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bucket"), HONEY_BUCKET);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_bottle"), ROYAL_JELLY_BOTTLE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_bucket"), ROYAL_JELLY_BUCKET);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "royal_jelly_block"), ROYAL_JELLY_BLOCK);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "glistering_honey_crystal"), GLISTERING_HONEY_CRYSTAL);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax"), CARVABLE_WAX);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax_wavy"), CARVABLE_WAX_WAVY);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax_flower"), CARVABLE_WAX_FLOWER);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax_chiseled"), CARVABLE_WAX_CHISELED);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax_diamond"), CARVABLE_WAX_DIAMOND);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax_bricks"), CARVABLE_WAX_BRICKS);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carvable_wax_chains"), CARVABLE_WAX_CHAINS);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle"), SUPER_CANDLE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_black"), SUPER_CANDLE_BLACK);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_blue"), SUPER_CANDLE_BLUE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_brown"), SUPER_CANDLE_BROWN);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_cyan"), SUPER_CANDLE_CYAN);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_gray"), SUPER_CANDLE_GRAY);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_green"), SUPER_CANDLE_GREEN);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_light_blue"), SUPER_CANDLE_LIGHT_BLUE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_light_gray"), SUPER_CANDLE_LIGHT_GRAY);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_lime"), SUPER_CANDLE_LIME);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_magenta"), SUPER_CANDLE_MAGENTA);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_orange"), SUPER_CANDLE_ORANGE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_pink"), SUPER_CANDLE_PINK);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_purple"), SUPER_CANDLE_PURPLE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_red"), SUPER_CANDLE_RED);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_white"), SUPER_CANDLE_WHITE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candle_yellow"), SUPER_CANDLE_YELLOW);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "incense_candle"), INCENSE_CANDLE);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"), CRYSTALLINE_FLOWER);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_slime_spawn_egg"), HONEY_SLIME_SPAWN_EGG);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "beehemoth_spawn_egg"), BEEHEMOTH_SPAWN_EGG);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BEE_QUEEN_SPAWN_EGG);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_flight_of_the_bumblebee_rimsky_korsakov"), MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_honey_bee_rat_faced_boy"), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_la_bee_da_loca"), MUSIC_DISC_LA_BEE_DA_LOCA);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "music_disc_bee_laxing_with_the_hom_bees"), MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_bread"), BEE_BREAD);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "stinger_spear"), STINGER_SPEAR);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_compass"), HONEY_COMPASS);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_cannon"), BEE_CANNON);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "crystal_cannon"), CRYSTAL_CANNON);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_1"), HONEY_BEE_LEGGINGS_1);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_2"), HONEY_BEE_LEGGINGS_2);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_1"), BUMBLE_BEE_CHESTPLATE_1);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_2"), BUMBLE_BEE_CHESTPLATE_2);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_trans_1"), TRANS_BUMBLE_BEE_CHESTPLATE_1);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_trans_2"), TRANS_BUMBLE_BEE_CHESTPLATE_2);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_1"), STINGLESS_BEE_HELMET_1);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_2"), STINGLESS_BEE_HELMET_2);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_1"), CARPENTER_BEE_BOOTS_1);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_2"), CARPENTER_BEE_BOOTS_2);
-        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence_of_the_bees"), ESSENCE_OF_THE_BEES);
+
+        registerItem(new ResourceLocation(Bumblezone.MODID, "pile_of_pollen"), PILE_OF_POLLEN);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "porous_honeycomb_block"), POROUS_HONEYCOMB);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "filled_porous_honeycomb_block"), FILLED_POROUS_HONEYCOMB);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "empty_honeycomb_brood_block"), EMPTY_HONEYCOMB_BROOD);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honeycomb_brood_block"), HONEYCOMB_BROOD);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue"), STICKY_HONEY_RESIDUE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sticky_honey_redstone"), STICKY_HONEY_REDSTONE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_web"), HONEY_WEB);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "redstone_honey_web"), REDSTONE_HONEY_WEB);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "beehive_beeswax"), BEEHIVE_BEESWAX);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "glistering_honey_crystal"), GLISTERING_HONEY_CRYSTAL);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_crystal"), HONEY_CRYSTAL);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carvable_wax"), CARVABLE_WAX);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carvable_wax_wavy"), CARVABLE_WAX_WAVY);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carvable_wax_flower"), CARVABLE_WAX_FLOWER);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carvable_wax_chiseled"), CARVABLE_WAX_CHISELED);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carvable_wax_diamond"), CARVABLE_WAX_DIAMOND);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carvable_wax_bricks"), CARVABLE_WAX_BRICKS);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carvable_wax_chains"), CARVABLE_WAX_CHAINS);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_cocoon"), HONEY_COCOON);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "crystalline_flower"), CRYSTALLINE_FLOWER);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sugar_infused_stone"), SUGAR_INFUSED_STONE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sugar_infused_cobblestone"), SUGAR_INFUSED_COBBLESTONE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "incense_candle"), INCENSE_CANDLE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle"), SUPER_CANDLE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_black"), SUPER_CANDLE_BLACK);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_blue"), SUPER_CANDLE_BLUE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_brown"), SUPER_CANDLE_BROWN);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_cyan"), SUPER_CANDLE_CYAN);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_gray"), SUPER_CANDLE_GRAY);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_green"), SUPER_CANDLE_GREEN);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_light_blue"), SUPER_CANDLE_LIGHT_BLUE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_light_gray"), SUPER_CANDLE_LIGHT_GRAY);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_lime"), SUPER_CANDLE_LIME);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_magenta"), SUPER_CANDLE_MAGENTA);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_orange"), SUPER_CANDLE_ORANGE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_pink"), SUPER_CANDLE_PINK);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_purple"), SUPER_CANDLE_PURPLE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_red"), SUPER_CANDLE_RED);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_white"), SUPER_CANDLE_WHITE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_yellow"), SUPER_CANDLE_YELLOW);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sugar_water_bottle"), SUGAR_WATER_BOTTLE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "royal_jelly_bottle"), ROYAL_JELLY_BOTTLE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "royal_jelly_bucket"), ROYAL_JELLY_BUCKET);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "royal_jelly_block"), ROYAL_JELLY_BLOCK);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_bucket"), HONEY_BUCKET);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shards"), HONEY_CRYSTAL_SHARDS);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_bread"), BEE_BREAD);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_compass"), HONEY_COMPASS);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "stinger_spear"), STINGER_SPEAR);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_cannon"), BEE_CANNON);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "crystal_cannon"), CRYSTAL_CANNON);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shield"), HONEY_CRYSTAL_SHIELD);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_1"), STINGLESS_BEE_HELMET_1);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_2"), STINGLESS_BEE_HELMET_2);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_1"), BUMBLE_BEE_CHESTPLATE_1);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_2"), BUMBLE_BEE_CHESTPLATE_2);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_trans_1"), TRANS_BUMBLE_BEE_CHESTPLATE_1);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_trans_2"), TRANS_BUMBLE_BEE_CHESTPLATE_2);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_1"), HONEY_BEE_LEGGINGS_1);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_2"), HONEY_BEE_LEGGINGS_2);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_1"), CARPENTER_BEE_BOOTS_1);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots_2"), CARPENTER_BEE_BOOTS_2);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "music_disc_flight_of_the_bumblebee_rimsky_korsakov"), MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "music_disc_honey_bee_rat_faced_boy"), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "music_disc_la_bee_da_loca"), MUSIC_DISC_LA_BEE_DA_LOCA);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "music_disc_bee_laxing_with_the_hom_bees"), MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_slime_spawn_egg"), HONEY_SLIME_SPAWN_EGG);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "beehemoth_spawn_egg"), BEEHEMOTH_SPAWN_EGG);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BEE_QUEEN_SPAWN_EGG);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "essence_of_the_bees"), ESSENCE_OF_THE_BEES);
 
         BUMBLEZONE_CREATIVE_TAB = FabricItemGroup
                 .builder(new ResourceLocation(Bumblezone.MODID, "main_tab"))
-                .displayItems((enabledFeatures, entries, operatorEnabled) -> {
-                        BuiltInRegistries.ITEM.entrySet().stream()
-                        .filter(entry -> entry.getKey().location().getNamespace().equals(Bumblezone.MODID))
-                        .forEach(entry -> entries.accept(entry.getValue().getDefaultInstance()));
-                })
+                .displayItems((enabledFeatures, entries, operatorEnabled) ->
+                        CREATIVE_MENU_ITEM_ORDERING.forEach(item -> entries.accept(item.getDefaultInstance())))
                 .icon(() -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB))
                 .build();
+    }
+
+    private static final List<Item> CREATIVE_MENU_ITEM_ORDERING = new ArrayList<>();
+    
+    private static void registerItemAndShowInTab(ResourceLocation rl, Item item) {
+        CREATIVE_MENU_ITEM_ORDERING.add(item);
+        registerItem(rl, item);
+    }
+
+    private static void registerItem(ResourceLocation rl, Item item) {
+        Registry.register(BuiltInRegistries.ITEM, rl, item);
     }
 }
