@@ -8,7 +8,8 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -69,8 +70,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 Set<Item> items = null;
                 if (value.id.startsWith("#")) {
                     ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
-                    TagKey<Item> itemTag = TagKey.create(Registry.ITEM_REGISTRY, tagRl);
-                    Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
+                    TagKey<Item> itemTag = TagKey.create(Registries.ITEM, tagRl);
+                    Optional<HolderSet.Named<Item>> taggedItems = BuiltInRegistries.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
                         items = taggedItems.get().stream().map(Holder::value).collect(Collectors.toSet());
                     }
@@ -79,7 +80,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                     }
                 }
                 else {
-                    Optional<Item> item = Registry.ITEM.getOptional(new ResourceLocation(value.id));
+                    Optional<Item> item = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(value.id));
                     if (item.isPresent()) {
                         items = Set.of(item.get());
                     }
@@ -98,8 +99,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
             entry.getValue().forEach((value) -> {
                 if (value.id.startsWith("#")) {
                     ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
-                    TagKey<Item> itemTag = TagKey.create(Registry.ITEM_REGISTRY, tagRl);
-                    Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
+                    TagKey<Item> itemTag = TagKey.create(Registries.ITEM, tagRl);
+                    Optional<HolderSet.Named<Item>> taggedItems = BuiltInRegistries.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
                         for (Holder<Item> itemHolder : taggedItems.get()) {
                             rewards.add(new TradeEntryReducedObj(itemHolder.value(), value.getCount(), value.getXpReward(), value.getWeight()));
@@ -110,7 +111,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                     }
                 }
                 else {
-                    Optional<Item> item = Registry.ITEM.getOptional(new ResourceLocation(value.id));
+                    Optional<Item> item = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(value.id));
                     if (item.isPresent()) {
                         rewards.add(new TradeEntryReducedObj(item.get(), value.getCount(), value.getXpReward(), value.getWeight()));
                     }

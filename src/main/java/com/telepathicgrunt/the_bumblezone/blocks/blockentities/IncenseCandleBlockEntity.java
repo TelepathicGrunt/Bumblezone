@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -125,7 +125,7 @@ public class IncenseCandleBlockEntity extends BlockEntity {
         super.load(compoundTag);
         this.color = compoundTag.contains(COLOR_TAG) ? compoundTag.getInt(COLOR_TAG) : DEFAULT_COLOR;
         if (compoundTag.contains(STATUS_EFFECT_TAG) && !compoundTag.getString(STATUS_EFFECT_TAG).trim().equals("")) {
-            this.mobEffect = Registry.MOB_EFFECT.getOptional(new ResourceLocation(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
+            this.mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(new ResourceLocation(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
         }
         else {
             this.mobEffect = null;
@@ -152,7 +152,7 @@ public class IncenseCandleBlockEntity extends BlockEntity {
     private void saveFieldsToTag(CompoundTag compoundTag) {
         compoundTag.putInt(COLOR_TAG, this.color);
         if (this.mobEffect != null) {
-            compoundTag.putString(STATUS_EFFECT_TAG, Registry.MOB_EFFECT.getKey(this.mobEffect).toString());
+            compoundTag.putString(STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(this.mobEffect).toString());
         }
         compoundTag.putInt(AMPLIFIER_TAG, this.amplifier);
         compoundTag.putInt(MAX_DURATION_TAG, this.maxDuration);

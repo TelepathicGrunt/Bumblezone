@@ -8,7 +8,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
@@ -99,7 +100,7 @@ public class HoneyCompass extends Item implements Vanishable {
         if(isBlockCompass(itemStack)) {
             String blockString = getStoredBlock(itemStack);
             if (blockString != null) {
-                Block block = Registry.BLOCK.get(new ResourceLocation(blockString));
+                Block block = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockString));
                 if (block != Blocks.AIR) {
                     return Component.translatable(this.getDescriptionId(itemStack), block.getName());
                 }
@@ -180,7 +181,7 @@ public class HoneyCompass extends Item implements Vanishable {
                         }
 
                         ChunkAccess chunk = level.getChunk(blockPos.getX() >> 4, blockPos.getZ() >> 4, ChunkStatus.FULL, false);
-                        if(chunk != null && !(Registry.BLOCK.getKey(chunk.getBlockState(blockPos).getBlock()).toString().equals(compoundTag.getString(TAG_TARGET_BLOCK)))) {
+                        if(chunk != null && !(BuiltInRegistries.BLOCK.getKey(chunk.getBlockState(blockPos).getBlock()).toString().equals(compoundTag.getString(TAG_TARGET_BLOCK)))) {
                             compoundTag.remove(TAG_TARGET_POS);
                             compoundTag.remove(TAG_TARGET_DIMENSION);
                             compoundTag.remove(TAG_TARGET_BLOCK);
@@ -205,7 +206,7 @@ public class HoneyCompass extends Item implements Vanishable {
 
         if (getBooleanTag(itemStack.getTag(), TAG_FAILED) && hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG)) {
             if (!level.isClientSide()) {
-                TagKey<Structure> structureTagKey = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
+                TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
                 itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
                 itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
                 ThreadExecutor.locate((ServerLevel) level, structureTagKey, playerPos, 100, false)
@@ -357,7 +358,7 @@ public class HoneyCompass extends Item implements Vanishable {
         compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "block");
-        compoundTag.putString(TAG_TARGET_BLOCK, Registry.BLOCK.getKey(block).toString());
+        compoundTag.putString(TAG_TARGET_BLOCK, BuiltInRegistries.BLOCK.getKey(block).toString());
     }
 
     public static void addThroneTags(CompoundTag compoundTag) {

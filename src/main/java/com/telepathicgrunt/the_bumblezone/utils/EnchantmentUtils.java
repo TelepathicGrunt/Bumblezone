@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceKey;
@@ -92,7 +92,7 @@ public class EnchantmentUtils {
 		List<EnchantmentInstance> list = Lists.newArrayList();
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
-		for(Enchantment enchantment : Registry.ENCHANTMENT) {
+		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
 			if (isEnchantmentBanned(enchantment)) {
 				continue;
 			}
@@ -115,7 +115,7 @@ public class EnchantmentUtils {
 	}
 
 	private static boolean isEnchantmentBanned(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
 			if (enchantmentHolder.value().equals(enchantment)) {
 				return true;
@@ -133,7 +133,7 @@ public class EnchantmentUtils {
 			ResourceLocation resourcelocation1 = EnchantmentHelper.getEnchantmentId(compoundtag);
 			if (resourcelocation1 != null) {
 				existingEnchants.put(
-					Objects.requireNonNull(Registry.ENCHANTMENT.get(resourcelocation1)),
+					Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.get(resourcelocation1)),
 					EnchantmentHelper.getEnchantmentLevel(compoundtag)
 				);
 			}
@@ -163,8 +163,8 @@ public class EnchantmentUtils {
 	}
 
 	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
-		ResourceKey<Enchantment> resourceKey1 = Registry.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
-		ResourceKey<Enchantment> resourceKey2 = Registry.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
+		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
 
 		int ret = resourceKey2.location().getNamespace().compareTo(resourceKey1.location().getNamespace());
 		if (ret == 0) ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());

@@ -14,8 +14,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -276,7 +276,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        ResourceLocation itemRL = Registry.ITEM.getKey(item);
+        ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(item);
 
         if (this.isTame() && itemRL.equals(MOB_CATCHER_RL)) {
             if(this.isOwnedBy(player)) {

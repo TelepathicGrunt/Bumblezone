@@ -95,8 +95,8 @@ public class PrefillMap extends LootItemConditionalFunction {
             boolean bumblezoneDim = level.dimension().equals(BzDimension.BZ_WORLD_KEY);
             boolean ceilingDim = level.dimensionType().hasCeiling();
             int scale = 1 << data.scale;
-            int xStart = data.x;
-            int zStart = data.z;
+            int xStart = data.centerX;
+            int zStart = data.centerZ;
             int intervalSpacing = 2;
             int radiusToSkip = ceilingDim ? 64 : 128;
 

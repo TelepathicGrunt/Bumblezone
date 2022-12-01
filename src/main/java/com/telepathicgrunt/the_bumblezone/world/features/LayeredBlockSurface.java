@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayer
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.QuartPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -39,7 +39,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
         BlockPos.MutableBlockPos mutableBlockPosForChunk = new BlockPos.MutableBlockPos();
         ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
-        Biome targetBiome = context.level().registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).get(context.config().biomeRL);
+        Biome targetBiome = context.level().registryAccess().registryOrThrow(Registries.BIOME).get(context.config().biomeRL);
 
         for (int xOffset = -1; xOffset <= 1; xOffset++) {
             for (int zOffset = -1; zOffset <= 1; zOffset++) {

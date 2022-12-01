@@ -1,11 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension.layer;
 
 import com.google.common.collect.ImmutableList;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.AreaTransformer0;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Context;
-import net.minecraft.core.Registry;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
@@ -13,13 +12,11 @@ import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 
 public class BzBiomeLayer implements AreaTransformer0 {
 
-    private final Registry<Biome> biomeRegistry;
     private final PerlinSimplexNoise perlinGen;
 //	private double max = -100;
 //	private double min = 100;
 
-    public BzBiomeLayer(long seed, Registry<Biome> biomeRegistry) {
-        this.biomeRegistry = biomeRegistry;
+    public BzBiomeLayer(long seed) {
         WorldgenRandom sharedseedrandom = new WorldgenRandom(new LegacyRandomSource(seed));
         perlinGen = new PerlinSimplexNoise(sharedseedrandom, ImmutableList.of(-1, 0));
     }
@@ -34,14 +31,14 @@ public class BzBiomeLayer implements AreaTransformer0 {
 //		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
         if (Math.abs(perlinNoise) % 0.1D < 0.07D) {
-            return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.HIVE_WALL));
+            return BiomeRegistryHolder.convertToID(BzBiomeProvider.HIVE_WALL);
         }
         else {
             if (Math.abs(perlinNoise2) > 0.55D) {
-                return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.CRYSTAL_CANYON));
+                return BiomeRegistryHolder.convertToID(BzBiomeProvider.CRYSTAL_CANYON);
             }
             else {
-                return biomeRegistry.getId(biomeRegistry.get(BzBiomeProvider.SUGAR_WATER_FLOOR));
+                return BiomeRegistryHolder.convertToID(BzBiomeProvider.SUGAR_WATER_FLOOR);
             }
         }
     }

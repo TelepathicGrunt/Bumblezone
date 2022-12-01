@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -91,7 +91,7 @@ public class HoneyCaveRoomStructure extends Structure {
                 context,
                 this.startPool,
                 this.size,
-                context.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getKey(this),
+                context.registryAccess().registryOrThrow(Registries.STRUCTURE).getKey(this),
                 centerPos,
                 false,
                 this.projectStartToHeightmap,

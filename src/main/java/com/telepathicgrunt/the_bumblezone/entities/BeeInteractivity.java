@@ -11,8 +11,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,7 +37,7 @@ public class BeeInteractivity {
     // heal bees with sugar water bottle or honey bottle
     public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
-        ResourceLocation itemRL = Registry.ITEM.getKey(itemstack.getItem());
+        ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(itemstack.getItem());
 
         if (itemstack.is(BzItems.BEE_STINGER)) {
             beeEntity.hasStung();

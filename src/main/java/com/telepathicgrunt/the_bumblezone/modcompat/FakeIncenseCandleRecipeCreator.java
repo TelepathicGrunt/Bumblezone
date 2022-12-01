@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
@@ -13,6 +13,7 @@ import net.minecraft.world.item.LingeringPotionItem;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -28,8 +29,8 @@ public class FakeIncenseCandleRecipeCreator {
     public static List<CraftingRecipe> constructFakeRecipes(IncenseCandleRecipe incenseCandleRecipe) {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         int currentRecipe = 0;
-        for (Potion potion : Registry.POTION) {
-            if (potion.getEffects().stream().allMatch(e -> Registry.MOB_EFFECT.getHolderOrThrow(Registry.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+        for (Potion potion : BuiltInRegistries.POTION) {
+            if (potion.getEffects().stream().allMatch(e -> BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
 
@@ -92,6 +93,7 @@ public class FakeIncenseCandleRecipeCreator {
         return new ShapedRecipe(
                 new ResourceLocation(Bumblezone.MODID, recipe.getId().getPath() + "_" + currentRecipe),
                 Bumblezone.MODID,
+                CraftingBookCategory.MISC,
                 3,
                 3,
                 fakedShapedIngredients,

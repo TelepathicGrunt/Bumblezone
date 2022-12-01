@@ -8,11 +8,13 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import net.minecraft.Util;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.arguments.EntitySummonArgument;
+import net.minecraft.commands.arguments.ResourceArgument;
 import net.minecraft.commands.synchronization.SuggestionProviders;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -43,12 +45,12 @@ public class NoneOpCommands {
         QUEENS_DESIRED_KILLED_ENTITY_COUNTER
     }
 
-    public static void createCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void createCommand(CommandDispatcher<CommandSourceStack> commandDispatcher, CommandBuildContext buildContext) {
         String commandString = "bumblezone";
         String dataArg = "data_to_check";
         String entityArg = "entity_to_check";
 
-        LiteralCommandNode<CommandSourceStack> source = dispatcher.register(Commands.literal(commandString)
+        LiteralCommandNode<CommandSourceStack> source = commandDispatcher.register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.argument(dataArg, StringArgumentType.string())
                         .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodSuggestions(ctx), sb))
@@ -58,21 +60,21 @@ public class NoneOpCommands {
                         })
                 ));
 
-        dispatcher.register(Commands.literal(commandString).redirect(source));
+        commandDispatcher.register(Commands.literal(commandString).redirect(source));
 
 
-        LiteralCommandNode<CommandSourceStack> source2 = dispatcher.register(Commands.literal(commandString)
+        LiteralCommandNode<CommandSourceStack> source2 = commandDispatcher.register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.literal(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
-                        .then(Commands.argument(entityArg, EntitySummonArgument.id())
+                        .then(Commands.argument(entityArg, ResourceArgument.resource(buildContext, Registries.ENTITY_TYPE))
                                 .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                                 .executes(cs -> {
-                                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), EntitySummonArgument.getSummonableEntity(cs, entityArg), cs);
+                                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), ResourceArgument.getSummonableEntityType(cs, entityArg).key().location(), cs);
                                     return 1;
                                 })
                         )));
 
-        dispatcher.register(Commands.literal(commandString).redirect(source2));
+        commandDispatcher.register(Commands.literal(commandString).redirect(source2));
     }
 
     private static Set<String> methodSuggestions(CommandContext<CommandSourceStack> cs) {
