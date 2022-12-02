@@ -35,6 +35,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -238,12 +239,14 @@ public class HoneycombBrood extends ProperFacingBlock {
      */
     @Override
     public void playerWillDestroy(Level world, BlockPos position, BlockState state, Player playerEntity) {
-        ListTag listOfEnchants = playerEntity.getMainHandItem().getEnchantmentTags();
-        if (listOfEnchants.stream().noneMatch(enchant -> enchant.getAsString().contains("minecraft:silk_touch"))) {
-            BlockState blockState = world.getBlockState(position);
-            int stage = blockState.getValue(STAGE);
-            if (stage == 3) {
-                spawnBroodMob(world, playerEntity.getRandom(), blockState, position, stage);
+        if (world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+            ListTag listOfEnchants = playerEntity.getMainHandItem().getEnchantmentTags();
+            if (listOfEnchants.stream().noneMatch(enchant -> enchant.getAsString().contains("minecraft:silk_touch"))) {
+                BlockState blockState = world.getBlockState(position);
+                int stage = blockState.getValue(STAGE);
+                if (stage == 3) {
+                    spawnBroodMob(world, playerEntity.getRandom(), blockState, position, stage);
+                }
             }
         }
 

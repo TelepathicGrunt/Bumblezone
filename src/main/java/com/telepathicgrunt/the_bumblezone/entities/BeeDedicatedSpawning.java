@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
@@ -20,6 +21,10 @@ public final class BeeDedicatedSpawning {
     private BeeDedicatedSpawning() {}
 
     public static void specialSpawnBees(ServerLevel world) {
+        if (!world.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
+            return;
+        }
+
         int despawnDistance = 80;
         int entityCountChange = 0;
         Set<Bee> allWildBees = GeneralUtils.getAllWildBees();
