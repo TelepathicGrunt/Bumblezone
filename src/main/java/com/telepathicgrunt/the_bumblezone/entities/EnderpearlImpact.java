@@ -12,13 +12,13 @@ public class EnderpearlImpact {
     public static void onPearlHit(ProjectileImpactEvent event) {
         if (event.getProjectile() instanceof ThrownEnderpearl thrownEnderpearl && thrownEnderpearl.getOwner() != null) {
             if(EntityTeleportationHookup.runEnderpearlImpact(new Vec3(thrownEnderpearl.getX(), thrownEnderpearl.getY(), thrownEnderpearl.getZ()), thrownEnderpearl.getOwner(), thrownEnderpearl)) {
-                event.setResult(Event.Result.DENY);
+                event.setCanceled(true);
                 return;
             }
 
             if (event.getRayTraceResult() != null && event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
                 if (EntityTeleportationHookup.runEntityHitCheck(entityHitResult, thrownEnderpearl)) {
-                    event.setResult(Event.Result.DENY);
+                    event.setCanceled(true);
                 }
             }
         }

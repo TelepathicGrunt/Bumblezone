@@ -4,6 +4,10 @@
 Very slight color change to dimension fog color.
  Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
 
+##### Teleporting:
+Fixed Enderpearl teleporting so it now properly prevents the default pearl behavior when teleporting to Bumblezone.
+ Will also now teleport your vehicle/mount you are on when using pearls to enter Bumblezone.
+
 ##### Mod Compat:
 SlimyBoyos mod now lets Honey Slime pick up items.
 
