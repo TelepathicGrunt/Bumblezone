@@ -1,3 +1,13 @@
+### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
+
+##### Dimension:
+Very slight color change to dimension fog color.
+ Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
+
+##### Mod Compat:
+SlimyBoyos mod now lets Honey Slime pick up items.
+
+
 ### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
