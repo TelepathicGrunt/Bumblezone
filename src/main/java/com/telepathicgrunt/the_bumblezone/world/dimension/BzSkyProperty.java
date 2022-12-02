@@ -24,11 +24,7 @@ public class BzSkyProperty extends DimensionSpecialEffects {
     public static float REDDISH_FOG_TINT = 0;
 
     /**
-     * Returns fog color
-     * <p>
-     * What I done is made it be based on the day/night cycle so the fog will darken at night but brighten during day.
-     * calculateVanillaSkyPositioning returns a value which is between 0 and 1 for day/night and fogChangeSpeed is the range
-     * that the fog color will cycle between.
+     * Returns fog color based on if player has wrath effect or not
      */
     public Vec3 getFogColor() {
         float colorFactor = 1;
