@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeMergeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;
@@ -20,8 +21,6 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.LazyArea
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.ZoomLayer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
@@ -30,6 +29,7 @@ import net.minecraft.world.level.biome.Climate;
 
 import java.util.Set;
 import java.util.function.LongFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBiomeSource {
@@ -37,8 +37,8 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
-                    Biome.LIST_CODEC.fieldOf("nonstandard_biomes").forGetter((biomeSource) -> biomeSource.nonstandardBiomes),
-                    Biome.LIST_CODEC.fieldOf("main_biomes").forGetter((biomeSource) -> biomeSource.mainBiomes))
+                    Biome.LIST_CODEC.fieldOf("main_biomes").forGetter((biomeSource) -> biomeSource.mainBiomes),
+                    Biome.LIST_CODEC.fieldOf("extra_biomes_to_spawn").forGetter((biomeSource) -> biomeSource.extraBiomesToSpawn))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
@@ -50,21 +50,27 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
 
     private final long seed;
     private final Layer biomeSampler;
-    public final HolderSet<Biome> nonstandardBiomes;
+    public final HolderSet<Biome> extraBiomesToSpawn;
     public final HolderSet<Biome> mainBiomes;
+    public final GeneralUtils.Lazy<Set<Holder<Biome>>> lazyPossibleBiomes = new GeneralUtils.Lazy<>();
 
-    public BzBiomeProvider(long seed, HolderSet<Biome> nonstandardBiomes, HolderSet<Biome> mainBiomes) {
-        super(Stream.concat(nonstandardBiomes.stream(), mainBiomes.stream()));
+    public BzBiomeProvider(long seed, HolderSet<Biome> extraBiomesToSpawn, HolderSet<Biome> mainBiomes) {
+        super(Stream.empty());
 
         this.seed = seed;
-        this.nonstandardBiomes = nonstandardBiomes;
+        this.extraBiomesToSpawn = extraBiomesToSpawn;
         this.mainBiomes = mainBiomes;
-        this.biomeSampler = buildWorldProcedure(seed, this.nonstandardBiomes);
+        this.biomeSampler = buildWorldProcedure(seed, this.extraBiomesToSpawn);
     }
 
     @Override
     protected Codec<? extends BiomeSource> codec() {
         return CODEC;
+    }
+
+    @Override
+    public Set<Holder<Biome>> possibleBiomes() {
+        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(extraBiomesToSpawn.stream(), mainBiomes.stream()).collect(Collectors.toSet()));
     }
 
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> stack(long seed, AreaTransformer1 parent, AreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
