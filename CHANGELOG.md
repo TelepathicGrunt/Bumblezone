@@ -1,3 +1,10 @@
+### **(V.6.4.8 Changes) (1.19.2 Minecraft)**
+
+##### Dimension:
+Very slight color change to dimension fog color.
+ Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
+
+
 ### **(V.6.4.7 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
