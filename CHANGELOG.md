@@ -17,6 +17,12 @@ Very slight color change to dimension fog color.
 Fixed Enderpearl teleporting so it now properly prevents the default pearl behavior when teleporting to Bumblezone.
  Will also now teleport your vehicle/mount you are on when using pearls to enter Bumblezone.
 
+##### Block:
+Fixed it so that Incense Candles and Super Candles's flaming wick now can set projectiles on fire again like arrows.
+
+Flaming projectiles going through the Incense Candle or Super Candle wick's space will now light the candle.
+ Hitting the body of candle with flaming projectile will also still light the candle. 
+
 ##### Bee Queen:
 Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
 
