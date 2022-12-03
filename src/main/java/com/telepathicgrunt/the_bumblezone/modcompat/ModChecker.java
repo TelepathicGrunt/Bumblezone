@@ -15,6 +15,7 @@ public class ModChecker {
 	public static boolean pokecubePresent = false;
 	public static boolean friendsAndFoesPresent = false;
 	public static boolean quarkPresent = false;
+	public static boolean potionOfBeesPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -31,10 +32,10 @@ public class ModChecker {
 		try {
 
 			modid = "pokecube_mobs";
-			loadupModCompat(modid, () -> PokecubeCompat.setupPokecube());
+			loadupModCompat(modid, () -> PokecubeCompat.setupCompat());
 
 			modid = "productivebees";
-			loadupModCompat(modid, () -> ProductiveBeesCompat.setupProductiveBees());
+			loadupModCompat(modid, () -> ProductiveBeesCompat.setupCompat());
 
 			modid = "friendsandfoes";
 			loadupModCompat(modid, () -> FriendsAndFoesCompat.setupCompat());
@@ -43,10 +44,13 @@ public class ModChecker {
 			loadupModCompat(modid, () -> QuarkCompat.setupCompat());
 
 			modid = "buzzier_bees";
-			loadupModCompat(modid, () -> BuzzierBeesCompat.setupBuzzierBees());
+			loadupModCompat(modid, () -> BuzzierBeesCompat.setupCompat());
 
 			modid = "resourcefulbees";
-			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupResourcefulBees());
+			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupCompat());
+
+			modid = "potionofbees";
+			loadupModCompat(modid, () -> PotionOfBeesCompat.setupCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

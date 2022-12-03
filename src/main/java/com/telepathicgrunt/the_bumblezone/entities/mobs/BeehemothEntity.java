@@ -665,8 +665,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 this.yBodyRot = this.getYRot();
                 this.yHeadRot = this.yBodyRot;
                 double currentSpeed = this.getSpeed();
-                double speedModifier = this.isQueen() ? 0.75D : 0.15D;
-                speedModifier += (this.getFriendship() / 850D);
+                double speedModifier = this.isQueen() ? 0.55D : 0.15D;
+                speedModifier += (this.getFriendship() / 1100D) + 0.05D;
 
                 double verticalSpeed = (livingEntity.getLookAngle().y() * Math.abs(livingEntity.zza) * 5);
                 double forwardSpeed = (livingEntity.zza * 10) ;

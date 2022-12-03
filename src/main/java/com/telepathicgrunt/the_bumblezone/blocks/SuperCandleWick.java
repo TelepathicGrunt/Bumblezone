@@ -1,11 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -13,17 +16,17 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -42,7 +45,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
@@ -136,18 +138,40 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (state.getValue(LIT) && entity instanceof LivingEntity livingEntity) {
-            VoxelShape voxelShape = AABB;
-            voxelShape = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
-            if (Shapes.joinIsNotEmpty(voxelShape, Shapes.create(livingEntity.getBoundingBox()), BooleanOp.AND)) {
-                if (!livingEntity.fireImmune()) {
-                    livingEntity.setRemainingFireTicks(livingEntity.getRemainingFireTicks() + 1);
-                    if (livingEntity.getRemainingFireTicks() == 0) {
-                        livingEntity.setSecondsOnFire(1);
+        if (!state.getValue(LIT) && entity instanceof Projectile projectile) {
+            if (!level.isClientSide && projectile.isOnFire() && SuperCandle.canBeLit(level, state, pos.below())) {
+                boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(pos), pos, true);
+                if (litWick && projectile.getOwner() instanceof ServerPlayer serverPlayer) {
+                    BlockEntity blockEntity = level.getBlockEntity(pos.below());
+                    if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity &&
+                            incenseCandleBlockEntity.getMobEffect() != null &&
+                            incenseCandleBlockEntity.getMobEffect().isInstantenous() &&
+                            !incenseCandleBlockEntity.getMobEffect().isBeneficial())
+                    {
+                        BzCriterias.PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
+                    }
+                }
+            }
+        }
+
+        if (state.getValue(LIT)) {
+            boolean isProjectile = entity instanceof Projectile;
+            boolean entityInSpace =
+                    isProjectile ||
+                    Shapes.joinIsNotEmpty(
+                            AABB.move(pos.getX(), pos.getY(), pos.getZ()),
+                            Shapes.create(entity.getBoundingBox()),
+                            BooleanOp.AND);
+
+            if (entityInSpace) {
+                if (!entity.fireImmune()) {
+                    entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
+                    if (entity.getRemainingFireTicks() == 0) {
+                        entity.setSecondsOnFire(1);
                     }
                 }
 
-                livingEntity.hurt(DamageSource.IN_FIRE, 0.5f);
+                entity.hurt(DamageSource.IN_FIRE, 0.5f);
             }
         }
         super.entityInside(state, level, pos, entity);
@@ -284,5 +308,20 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
             return BlockPathTypes.DAMAGE_FIRE;
         }
         return null;
+    }
+
+    public static void attemptCandleLighting(LevelAccessor levelAccessor, BlockPos blockPos) {
+        BlockState currentState = levelAccessor.getBlockState(blockPos);
+        if (currentState.is(BzTags.CANDLE_BASES)) {
+            currentState = levelAccessor.getBlockState(blockPos.above());
+        }
+
+        if (currentState.getBlock() instanceof SuperCandleWick && !currentState.getValue(LIT) && !currentState.getValue(WATERLOGGED)) {
+            boolean isBelowSoul = isSoulBelowInRange(levelAccessor, blockPos.below());
+            Block wickBlock = isBelowSoul ? BzBlocks.SUPER_CANDLE_WICK_SOUL.get() : BzBlocks.SUPER_CANDLE_WICK.get();
+            levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, true), 11);
+            levelAccessor.playSound(null, blockPos, BzSounds.SUPER_CANDLE_WICK_LIT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            setBelowLit(levelAccessor, blockPos, true);
+        }
     }
 }

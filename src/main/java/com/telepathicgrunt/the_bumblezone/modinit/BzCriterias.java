@@ -36,6 +36,7 @@ public class BzCriterias {
     public static final GenericTrigger CLEANUP_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_honey_web"));
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
+    public static final GenericTrigger CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "craft_multi_potion_incense_candle"));
     public static final GenericTrigger CRYSTAL_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "crystal_cannon_full"));
     public static final GenericTrigger ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "enchant_crystalline_flower"));
     public static final EntitySpecificTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive"));
@@ -79,7 +80,7 @@ public class BzCriterias {
     public static final GenericTrigger STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_super_sight"));
     public static final GenericTrigger SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "sugar_water_next_to_sugar_cane"));
     public static final TargetAdvancementDoneTrigger TARGET_ADVANCEMENT_DONE_TRIGGER = new TargetAdvancementDoneTrigger(new ResourceLocation(Bumblezone.MODID, "target_advancement_done"));
-    public static final GenericTrigger TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_out_of_bumblezone_fall"));
+    public static final GenericTrigger TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_out_of_bumblezone"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_pearl"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_piston"));
     public static final GenericTrigger TRIGGER_REDSTONE_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "trigger_redstone_honey_web"));
@@ -103,6 +104,7 @@ public class BzCriterias {
         CriteriaTriggers.register(CLEANUP_HONEY_WEB_TRIGGER);
         CriteriaTriggers.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriteriaTriggers.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
+        CriteriaTriggers.register(CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER);
         CriteriaTriggers.register(CRYSTAL_CANNON_FULL_TRIGGER);
         CriteriaTriggers.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
         CriteriaTriggers.register(ENCHANT_CRYSTALLINE_FLOWER_TRIGGER);
@@ -147,7 +149,7 @@ public class BzCriterias {
         CriteriaTriggers.register(STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER);
         CriteriaTriggers.register(SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER);
         CriteriaTriggers.register(TARGET_ADVANCEMENT_DONE_TRIGGER);
-        CriteriaTriggers.register(TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER);
+        CriteriaTriggers.register(TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER);
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER);
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER);
         CriteriaTriggers.register(TRIGGER_REDSTONE_HONEY_WEB_TRIGGER);

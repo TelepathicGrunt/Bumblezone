@@ -229,6 +229,20 @@
       "xp_reward": 15,
       "weight": 1,
       "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_la_bee_da_loca",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:music_disc_bee_laxing_with_the_hom_bees",
+      "count": 1,
+      "xp_reward": 15,
+      "weight": 1,
+      "required": true
     }
   ]
 }

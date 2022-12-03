@@ -29,7 +29,7 @@ public class ResourcefulBeesCompat {
 	public static final TagKey<EntityType<?>> SPAWNABLE_FROM_BROOD_BLOCK_TAG = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_brood_block"));
 	public static final TagKey<EntityType<?>> SPAWNABLE_FROM_CHUNK_CREATION_TAG = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_chunk_creation"));
 
-	public static void setupResourcefulBees() {
+	public static void setupCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.resourcefulBeesPresent = true;
 	}

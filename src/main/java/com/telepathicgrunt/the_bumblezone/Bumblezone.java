@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
+import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
@@ -76,35 +77,36 @@ public class Bumblezone{
 
         //Events
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        forgeBus.addListener(BzCommands::registerCommand);
+        forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
+        forgeBus.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BeeAggression::pickupItemAnger);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::onLivingEntityHurt);
+        forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(BeeInteractivity::onEntityInteractEvent);
         forgeBus.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
-        forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
-        forgeBus.addListener(WanderingTrades::addWanderingTrades);
-        forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
-        forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
-        forgeBus.addListener(EntityTeleportationHookup::entityTick);
-        forgeBus.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BzWorldSavedData::worldTick);
+        forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(EntityTeleportationBackend::entityChangingDimension);
-        forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
+        forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
-        forgeBus.addListener(this::serverAboutToStart);
+        forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
         forgeBus.addListener(BeeStinger::bowUsable);
-        forgeBus.addListener(EntityMisc::resetValueOnRespawn);
-        forgeBus.addListener(EntityMisc::onItemCrafted);
         forgeBus.addListener(EntityMisc::onBeeBreed);
-        forgeBus.addListener(EventPriority.LOWEST, EntityMisc::onEntityKilled);
-        forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
+        forgeBus.addListener(EntityMisc::onItemCrafted);
         forgeBus.addListener(EntityMisc::onHoneySlimeBred);
+        forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
+        forgeBus.addListener(EntityMisc::resetValueOnRespawn);
+        forgeBus.addListener(EventPriority.LOWEST, EntityMisc::onEntityKilled);
+        forgeBus.addListener(IncenseCandleBase::multiPotionCandleCrafted);
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
+        forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         forgeBus.addListener(ThreadExecutor::handleServerAboutToStartEvent);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
         forgeBus.addListener(this::registerDatapackListener);
-        forgeBus.addListener(BzCommands::registerCommand);
+        forgeBus.addListener(this::serverAboutToStart);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

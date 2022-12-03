@@ -37,6 +37,8 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.BooleanValue spawnCrystallizedHoneyInDimension;
 	public static ForgeConfigSpec.BooleanValue spawnHoneyTilesInDimension;
 
+	public static ForgeConfigSpec.BooleanValue allowPotionOfBeesRevivingEmptyBroodBlock;
+
 	static {
 		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
 		setupConfig(configBuilder);
@@ -302,6 +304,18 @@ public class BzModCompatibilityConfigs {
 							" Requires a game restart to take effect (close game and re-open) \n")
 					.translation("the_bumblezone.config.spawnhoneytilesindimension")
 					.define("spawnHoneyTilesInDimension", true);
+
+			builder.pop();
+
+
+			builder.push("Potion of Bees Options");
+
+			allowPotionOfBeesRevivingEmptyBroodBlock = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Allow Potion of Bees to turn Empty Honeycomb Brood blocks into ",
+							" a regular Honeycomb Brood Block with a larva inside! \n")
+					.translation("the_bumblezone.config.allowpotionofbeesrevivingemptybroodblock")
+					.define("allowPotionOfBeesRevivingEmptyBroodBlock", true);
 
 			builder.pop();
 

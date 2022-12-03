@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/candles/obtain_all_colored_super_candles",
+  "parent": "the_bumblezone:the_bumblezone/candles/multi_potion_incense_candle",
   "display": {
     "icon": {
       "item": "the_bumblezone:incense_candle"
