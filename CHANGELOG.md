@@ -9,9 +9,6 @@ Renamed and adjusted descriptions for a few advancements.
 
 Teleporting out of Bumblezone advancement now does not have a speed requirement and can be granted if exiting below or above dimension bounds.
 
-##### Block:
-Fixed Incense Candle placing crashing servers. My bad.
-
 Added a new advancement for crafting an Incense Candle with two or more potions! (The candle's stats is a mix between the potion's stats)
 
 ##### Dimension:
@@ -19,6 +16,8 @@ Very slight color change to dimension fog color.
  Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
 
 ##### Block:
+Fixed Incense Candle placing crashing servers. My bad.
+
 Fixed it so that Incense Candles and Super Candles's flaming wick now can set projectiles on fire again like arrows.
 
 Flaming projectiles going through the Incense Candle or Super Candle wick's space will now light the candle.
