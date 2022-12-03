@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import dev.architectury.event.events.common.PlayerEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +22,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -328,5 +331,21 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return !(state.hasProperty(LIT) && state.getValue(LIT));
+    }
+
+    public static void multiPotionCandleCrafted(Player player, ItemStack craftedItem, Container craftingInventory) {
+        if (player instanceof ServerPlayer serverPlayer && craftedItem.is(BzItems.INCENSE_CANDLE)) {
+            int containerSize = craftingInventory.getContainerSize();
+            int potionsUsed = 0;
+            for (int i = 0; i < containerSize; i++) {
+                if (craftingInventory.getItem(i).is(Items.POTION)) {
+                    potionsUsed++;
+                }
+            }
+
+            if (potionsUsed >= 2) {
+                BzCriterias.CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
+            }
+        }
     }
 }

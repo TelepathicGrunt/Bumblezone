@@ -36,6 +36,7 @@ public class BzCriterias {
     public static final GenericTrigger CLEANUP_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_honey_web"));
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
+    public static final GenericTrigger CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "craft_multi_potion_incense_candle"));
     public static final GenericTrigger CRYSTAL_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "crystal_cannon_full"));
     public static final GenericTrigger ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "enchant_crystalline_flower"));
     public static final EntitySpecificTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive"));
@@ -103,6 +104,7 @@ public class BzCriterias {
         CriteriaTriggers.register(CLEANUP_HONEY_WEB_TRIGGER);
         CriteriaTriggers.register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         CriteriaTriggers.register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
+        CriteriaTriggers.register(CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER);
         CriteriaTriggers.register(CRYSTAL_CANNON_FULL_TRIGGER);
         CriteriaTriggers.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
         CriteriaTriggers.register(ENCHANT_CRYSTALLINE_FLOWER_TRIGGER);
