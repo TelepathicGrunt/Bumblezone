@@ -9,6 +9,9 @@ Renamed and adjusted descriptions for a few advancements.
 
 Teleporting out of Bumblezone advancement now does not have a speed requirement and can be granted if exiting below or above dimension bounds.
 
+##### Block:
+Fixed Incense Candle placing crashing servers. My bad.
+
 ##### Dimension:
 Very slight color change to dimension fog color.
  Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
