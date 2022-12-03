@@ -16,7 +16,6 @@ buildscript {
         classpath 'org.moddingx:ModGradle:3.0.2'
         classpath 'org.spongepowered:mixingradle:0.7.+'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-        id "com.modrinth.minotaur" version "2.+"
     }
 }
 
@@ -24,6 +23,7 @@ plugins {
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id "net.darkhax.curseforgegradle" version "1.0.7"
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -202,10 +202,12 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 apply from: 'gradle/maven.gradle'
+
+
+String changelogText = file("CHANGELOG.md").getText('UTF-8')
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = "$System.env.CURSEFORGEKEY"
     int projectId = 362479
-    String changelogText = new File("CHANGELOG.md").getText('UTF-8')
 
     def mainFile = upload(projectId, jar)
     mainFile.changelog = changelogText
@@ -220,7 +222,7 @@ modrinth {
     versionName = "The Bumblezone"
     versionNumber = project.version
     projectId = "38tpSycf"
-    uploadFile = remapJar
+    uploadFile = jar
     changelog = changelogText
     versionType = "RELEASE"
     gameVersions = ["1.19.2"]
@@ -238,5 +240,5 @@ task buildAndRelease{}
 tasks.checkForRefmap.mustRunAfter tasks.build
 tasks.publish.mustRunAfter tasks.checkForRefmap
 tasks.publishCurseForge.mustRunAfter tasks.publish
-tasks.publishModrinth.mustRunAfter tasks.publish
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.publishModrinth)
+tasks.modrinth.mustRunAfter tasks.publish
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)
