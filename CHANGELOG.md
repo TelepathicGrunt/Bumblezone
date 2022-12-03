@@ -27,6 +27,9 @@ Flaming projectiles going through the Incense Candle or Super Candle wick's spac
 
 Incense Candles now can be made from Super Candles too. Still needs Royal Jelly Bottle and 1 or more potion.
 
+Lightning hitting the wick space of Super Candles or Incense Candles will light the candles.
+ If the lightning hits the body of the candle, it'll destroy the candle!
+
 ##### Bee Queen:
 Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
 
