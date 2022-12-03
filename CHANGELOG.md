@@ -16,6 +16,8 @@ Very slight color change to dimension fog color.
  Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
 
 ##### Block:
+Fixed Incense Candle placing crashing servers. My bad.
+
 Fixed it so that Incense Candles and Super Candles's flaming wick now can set projectiles on fire again like arrows.
 
 Flaming projectiles going through the Incense Candle or Super Candle wick's space will now light the candle.
