@@ -4,6 +4,9 @@
 Very slight color change to dimension fog color.
  Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
 
+##### Bee Queen:
+Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
+
 ##### Mod Compat:
 SlimyBoyos mod now lets Honey Slime pick up items.
 
