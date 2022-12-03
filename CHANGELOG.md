@@ -9,6 +9,8 @@ Renamed and adjusted descriptions for a few advancements.
 
 Teleporting out of Bumblezone advancement now does not have a speed requirement and can be granted if exiting below or above dimension bounds.
 
+Added a new advancement for crafting an Incense Candle with two or more potions! (The candle's stats is a mix between the potion's stats)
+
 ##### Dimension:
 Very slight color change to dimension fog color.
  Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
@@ -18,6 +20,8 @@ Fixed it so that Incense Candles and Super Candles's flaming wick now can set pr
 
 Flaming projectiles going through the Incense Candle or Super Candle wick's space will now light the candle.
  Hitting the body of candle with flaming projectile will also still light the candle. 
+
+Incense Candles now can be made from Super Candles too. Still needs Royal Jelly Bottle and 1 or more potion.
 
 ##### Bee Queen:
 Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
