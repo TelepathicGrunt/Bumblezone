@@ -36,6 +36,8 @@ Nerfed Beehemoth flying speeds a bit to better balance it. Base speed can still 
 ##### Mod Compat:
 SlimyBoyos mod now lets Honey Slime pick up items.
 
+Aquamirae's Golden Moth can spawn in Hanging Gardens now
+
 
 ### **(V.6.4.7 Changes) (1.19.2 Minecraft)**
 
