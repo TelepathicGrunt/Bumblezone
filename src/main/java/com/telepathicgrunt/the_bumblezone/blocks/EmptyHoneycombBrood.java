@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.PotionOfBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -53,40 +54,25 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
     public InteractionResult use(BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        /*
-         * Player is harvesting the honey from this block if it is filled with honey
-         */
-        /*
-        if (ModChecker.potionOfBeesPresent && PotionOfBeesRedirection.POBIsPotionOfBeesItem(itemstack.getItem())) {
+        if (ModChecker.potionOfBeesPresent && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock.get()) {
+            if (PotionOfBeesCompat.potionOfBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
+                playerEntity.swing(playerHand);
+                level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                                .setValue(HoneycombBrood.STAGE, 3)
+                                .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
+                        3);
 
-            playerEntity.swingHand(playerHand);
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-            world.setBlockState(position, BzBlocks.HONEYCOMB_BROOD.defaultBlockState()
-                    .with(HoneycombBrood.STAGE, 0)
-                    .with(FacingBlock.FACING, thisBlockState.get(FacingBlock.FACING)));
-
-            if (!playerEntity.isCreative()) {
-                itemstack.decrement(1); // remove current bee bottle
-
-                if (itemstack.isEmpty()) {
-                    playerEntity.setStackInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); // places glass bottle in hand
-                }
-                else if (!playerEntity.getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE))) // places glass bottle in inventory
-                {
-                    playerEntity.dropItem(new ItemStack(Items.GLASS_BOTTLE), false); // drops glass bottle if inventory is full
-                }
+                return InteractionResult.SUCCESS;
             }
-
-            return ActionResult.SUCCESS;
         }
-        */
 
         if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock.get()) {
             if (BuzzierBeesCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                 level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
-                                .setValue(HoneycombBrood.STAGE, 0)
+                                .setValue(HoneycombBrood.STAGE, 3)
                                 .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
                         3);
 

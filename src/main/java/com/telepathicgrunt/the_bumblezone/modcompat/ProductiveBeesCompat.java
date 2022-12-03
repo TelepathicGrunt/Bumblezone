@@ -63,7 +63,7 @@ public class ProductiveBeesCompat {
 
 	public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("productivebees", "solitary_overworld_nests"));
 
-	public static void setupProductiveBees() {
+	public static void setupCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.productiveBeesPresent = true;
 	}

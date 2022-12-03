@@ -39,6 +39,13 @@ Nerfed Beehemoth flying speeds a bit to better balance it. Base speed can still 
 ##### Mod Compat:
 SlimyBoyos mod now lets Honey Slime pick up items.
 
+Buzzier Bees's Bottled Bees can revive Empty Honeycomb Brood Blocks by using a Dispenser.
+ Revived Brood block will try to be stage 4.
+
+Potion of Bees compat is added back! The potions can be used to revive Empty Honeycomb Brood Blocks.
+ Revived Brood block will try to be stage 4. Thrown potions are biased towards making stage 4 Brood blocks.
+ Splash has a 3x3x3 range to revive Brood blocks. Lingering has a 7x7x7 range to revive Brood blocks.
+
 Aquamirae's Golden Moth can spawn in Hanging Gardens now
 
 

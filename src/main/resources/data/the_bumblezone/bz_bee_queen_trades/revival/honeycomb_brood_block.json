@@ -7,6 +7,18 @@
     {
       "id": "buzzier_bees:bee_bottle",
       "required": false
+    },
+    {
+      "id": "potionofbees:potion_of_bees",
+      "required": false
+    },
+    {
+      "id": "potionofbees:splash_potion_of_bees",
+      "required": false
+    },
+    {
+      "id": "potionofbees:lingering_potion_of_bees",
+      "required": false
     }
   ],
   "possible_rewards": [

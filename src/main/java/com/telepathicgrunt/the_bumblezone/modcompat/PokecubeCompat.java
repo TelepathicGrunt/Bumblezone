@@ -32,7 +32,7 @@ public class PokecubeCompat {
     private static final List<PokedexEntry> BABY_POKECUBE_POKEMON_LIST = new ArrayList<>();
     private static final List<PokedexEntry> POKECUBE_POKEMON_LIST = new ArrayList<>();
 
-    public static void setupPokecube() {
+    public static void setupCompat() {
 
         // get all baby bees
         BABY_POKECUBE_POKEMON_LIST.add(Database.getEntry("Combee"));
