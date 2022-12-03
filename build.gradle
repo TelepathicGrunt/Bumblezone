@@ -147,14 +147,14 @@ jar {
 
 apply from: 'gradle/maven.gradle'
 
-String fileContents = file("CHANGELOG.md").getText('UTF-8')
+String changelogText = file("CHANGELOG.md").getText('UTF-8')
 
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
 	int projectId = 363949
 
 	def mainFile = upload(projectId, remapJar)
-	mainFile.changelog = fileContents
+	mainFile.changelog = changelogText
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "release"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
