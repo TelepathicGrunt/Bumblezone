@@ -8,6 +8,9 @@ Very slight color change to dimension fog color.
 Fixed Enderpearl teleporting so it now properly prevents the default pearl behavior when teleporting to Bumblezone.
  Will also now teleport your vehicle/mount you are on when using pearls to enter Bumblezone.
 
+##### Bee Queen:
+Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
+
 ##### Mod Compat:
 SlimyBoyos mod now lets Honey Slime pick up items.
 
