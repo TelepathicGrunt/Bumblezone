@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/teleportation/teleport_to_bumblezone_pearl",
+  "parent": "the_bumblezone:the_bumblezone/teleportation/teleport_to_bumblezone_piston",
   "display": {
     "icon": {
       "item": "minecraft:ender_pearl"
