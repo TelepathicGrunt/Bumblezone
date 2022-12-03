@@ -162,7 +162,7 @@ modrinth {
 	versionNumber = project.version + "+fabric"
 	projectId = "eA8SXqWL"
 	uploadFile = remapJar
-	changelog = fileContents
+	changelog = changelogText
 	versionType = "BETA"
 	gameVersions = ["1.19.2"]
 	loaders = ["fabric"]
