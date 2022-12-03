@@ -48,11 +48,11 @@ public class EntityTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
-                if(livingEntity instanceof ServerPlayer && livingEntity.fallDistance > 100 && livingEntity.getDeltaMovement().y() < -1) {
-                    BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER.trigger((ServerPlayer) livingEntity);
-                }
-
                 if(BzConfig.enableExitTeleportation) {
+                    if(livingEntity instanceof ServerPlayer) {
+                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
+                    }
+
                     if (livingEntity.getY() < -4) {
                         livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
                         livingEntity.absMoveTo(livingEntity.getX(), -4, livingEntity.getZ());
@@ -76,6 +76,10 @@ public class EntityTeleportationHookup {
             }
             else if (livingEntity.getY() > 255) {
                 if(BzConfig.enableExitTeleportation) {
+                    if(livingEntity instanceof ServerPlayer) {
+                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
+                    }
+
                     if (livingEntity.getY() > 257) {
                         livingEntity.moveTo(livingEntity.getX(), 257, livingEntity.getZ());
                         livingEntity.absMoveTo(livingEntity.getX(), 257, livingEntity.getZ());
