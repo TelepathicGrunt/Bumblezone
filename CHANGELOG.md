@@ -16,6 +16,9 @@ Very slight color change to dimension fog color.
 ##### Bee Queen:
 Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
 
+##### Entities:
+Nerfed Beehemoth flying speeds a bit to better balance it. Base speed can still be changed in config.
+
 ##### Mod Compat:
 SlimyBoyos mod now lets Honey Slime pick up items.
 
