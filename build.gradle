@@ -16,7 +16,7 @@ buildscript {
         classpath 'org.moddingx:ModGradle:3.0.2'
         classpath 'org.spongepowered:mixingradle:0.7.+'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-        classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
+        id "com.modrinth.minotaur" version "2.+"
     }
 }
 
@@ -202,7 +202,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 apply from: 'gradle/maven.gradle'
-apply from: 'gradle/modrinth.gradle'
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = "$System.env.CURSEFORGEKEY"
     int projectId = 362479
@@ -214,6 +213,18 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
+}
+
+modrinth {
+    token = System.getenv("MODRINTH")
+    versionName = "The Bumblezone"
+    versionNumber = project.version
+    projectId = "38tpSycf"
+    uploadFile = remapJar
+    changelog = changelogText
+    versionType = "RELEASE"
+    gameVersions = ["1.19.2"]
+    loaders = ["forge"]
 }
 
 task checkForRefmap() {
