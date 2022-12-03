@@ -37,6 +37,7 @@
     "entities.ExperienceOrbMixin",
     "entities.FishingBobberEntityMixin",
     "entities.InventoryMixin",
+    "entities.LightningBoltMixin",
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
     "entities.MobSpawnLocationMixin",
