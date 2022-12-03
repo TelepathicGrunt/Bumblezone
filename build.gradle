@@ -147,23 +147,23 @@ jar {
 
 apply from: 'gradle/maven.gradle'
 
-String fileContents = file("CHANGELOG.md").getText('UTF-8')
+String changelogText = file("CHANGELOG.md").getText('UTF-8')
 
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
 	int projectId = 363949
 
 	def mainFile = upload(projectId, remapJar)
-	mainFile.changelog = fileContents
+	mainFile.changelog = changelogText
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "release"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
-	mainFile.addGameVersion("1.19.1")
 	mainFile.addGameVersion("1.19.2")
 	mainFile.addModLoader("Quilt")
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("qsl")
 	mainFile.addOptional("continuity")
+	mainFile.addOptional("unofficial-sodium-biome-blending-fix")
 }
 
 modrinth {
@@ -172,15 +172,15 @@ modrinth {
 	versionNumber = project.version + "+quilt"
 	projectId = "eA8SXqWL"
 	uploadFile = remapJar
-	changelog = fileContents
+	changelog = changelogText
 	versionType = "RELEASE"
-	gameVersions = ["1.19.1"]
 	gameVersions = ["1.19.2"]
 	loaders = ["quilt"]
 	dependencies {
 		required.project "qsl"
 		required.project "midnightlib"
 		optional.project "continuity"
+		optional.project "unofficial-sodium-biome-blending-fix"
 	}
 }
 

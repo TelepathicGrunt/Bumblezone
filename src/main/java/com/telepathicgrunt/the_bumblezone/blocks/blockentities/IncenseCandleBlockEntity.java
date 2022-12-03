@@ -138,7 +138,7 @@ public class IncenseCandleBlockEntity extends BlockEntity {
         this.range = compoundTag.contains(RANGE_TAG) ? compoundTag.getInt(RANGE_TAG) : DEFAULT_RANGE;
         this.lingerTime = compoundTag.contains(LINGER_TIME_TAG) ? compoundTag.getInt(LINGER_TIME_TAG) : DEFAULT_LINGER_TIME;
 
-        if (this.level instanceof ClientLevel) {
+        if (this.level != null && this.level.isClientSide()) {
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
         }
     }

@@ -2,13 +2,13 @@
   "parent": "the_bumblezone:the_bumblezone/teleportation/teleport_to_bumblezone_pearl",
   "display": {
     "icon": {
-      "item": "minecraft:bee_nest"
+      "item": "the_bumblezone:beehive_beeswax"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.teleport_out_of_bumblezone_fall.title"
+      "translate": "advancements.the_bumblezone.teleport_out_of_bumblezone.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.teleport_out_of_bumblezone_fall.description"
+      "translate": "advancements.the_bumblezone.teleport_out_of_bumblezone.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,14 +19,14 @@
     "experience": 10
   },
   "criteria": {
-    "teleport_out_of_bumblezone_fall": {
-      "trigger": "the_bumblezone:teleport_out_of_bumblezone_fall",
+    "teleport_out_of_bumblezone": {
+      "trigger": "the_bumblezone:teleport_out_of_bumblezone",
       "conditions": {}
     }
   },
   "requirements": [
     [
-      "teleport_out_of_bumblezone_fall"
+      "teleport_out_of_bumblezone"
     ]
   ]
 }

@@ -1,3 +1,47 @@
+### **(V.6.4.8 Changes) (1.19.2 Minecraft)**
+
+##### Advancements:
+Changed it so that Bumblezone's advancement screen is always visible even if you have no completed a prior advancement before.
+
+Reorder advancements so that the teleportation advancements are shown first.
+
+Renamed and adjusted descriptions for a few advancements.
+
+Teleporting out of Bumblezone advancement now does not have a speed requirement and can be granted if exiting below or above dimension bounds.
+
+Added a new advancement for crafting an Incense Candle with two or more potions! (The candle's stats is a mix between the potion's stats)
+
+##### Dimension:
+Very slight color change to dimension fog color.
+ Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
+
+##### Block:
+Fixed Incense Candle placing crashing servers. My bad.
+
+Fixed it so that Incense Candles and Super Candles's flaming wick now can set projectiles on fire again like arrows.
+
+Flaming projectiles going through the Incense Candle or Super Candle wick's space will now light the candle.
+ Hitting the body of candle with flaming projectile will also still light the candle. 
+
+Incense Candles now can be made from Super Candles too. Still needs Royal Jelly Bottle and 1 or more potion.
+
+Lightning hitting the wick space of Super Candles or Incense Candles will light the candles.
+ If the lightning hits the body of the candle, it'll destroy the candle!
+
+##### Bee Queen:
+Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
+
+##### Entities:
+Nerfed Beehemoth flying speeds a bit to better balance it. Base speed can still be changed in config.
+
+##### Mod Compat:
+SlimyBoyos mod now lets Honey Slime pick up items.
+
+NOTE: If you are using Sodium, please download Unofficial Sodium Biome Blending Fix mod so that Sodium does not break
+ the rendering of Bumblezone's Incense Candle. The bug fix mod can be downloaded here: 
+ https://www.curseforge.com/minecraft/mc-mods/unofficial-sodium-biome-blending-fix
+
+
 ### **(V.6.4.7 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
