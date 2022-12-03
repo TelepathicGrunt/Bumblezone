@@ -116,6 +116,10 @@
     {
       "id": "infernalexp:glowsilk_moth",
       "required": false
+    },
+    {
+      "id": "ob_aquamirae:golden_moth",
+      "required": false
     }
   ]
 }
