@@ -75,7 +75,7 @@ public class BumblezoneAPI {
      * Trigger Bumblezone's advancement for teleporting out of the Bumblezone dimension.
      */
     public static void triggerExitingBumblezoneAdvancement(ServerPlayer serverPlayer) {
-        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER.trigger(serverPlayer);
+        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger(serverPlayer);
     }
 
     /**
