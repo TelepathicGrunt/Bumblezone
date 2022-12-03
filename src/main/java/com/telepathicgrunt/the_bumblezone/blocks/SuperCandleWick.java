@@ -139,7 +139,6 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        boolean isProjectile = entity instanceof Projectile;
         if (!state.getValue(LIT) && entity instanceof Projectile projectile) {
             if (!level.isClientSide && projectile.isOnFire() && SuperCandle.canBeLit(level, state, pos.below())) {
                 boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(pos), pos, true);
@@ -157,14 +156,15 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
         }
 
         if (state.getValue(LIT)) {
-            boolean fireCollision =
+            boolean isProjectile = entity instanceof Projectile;
+            boolean entityInSpace =
                     isProjectile ||
                     Shapes.joinIsNotEmpty(
                             AABB.move(pos.getX(), pos.getY(), pos.getZ()),
                             Shapes.create(entity.getBoundingBox()),
                             BooleanOp.AND);
 
-            if (fireCollision) {
+            if (entityInSpace) {
                 if (!entity.fireImmune()) {
                     entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
                     if (entity.getRemainingFireTicks() == 0) {
