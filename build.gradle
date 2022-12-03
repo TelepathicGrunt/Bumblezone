@@ -6,13 +6,13 @@ buildscript {
 	}
 	dependencies {
 		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-		id "com.modrinth.minotaur" version "2.+"
 	}
 }
 
 plugins {
 	id "net.darkhax.curseforgegradle" version "1.0.7"
 	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -139,11 +139,12 @@ jar {
 }
 
 apply from: 'gradle/maven.gradle'
-apply from: 'gradle/modrinth.gradle'
+
+String changelogText = file("CHANGELOG.md").getText('UTF-8')
+
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
 	apiToken = "$System.env.CURSEFORGEKEY"
 	int projectId = 363949
-	String changelogText = new File("CHANGELOG.md").getText('UTF-8')
 
 	def mainFile = upload(projectId, remapJar)
 	mainFile.changelog = changelogText
@@ -177,6 +178,6 @@ modrinth {
 task buildAndRelease{}
 tasks.publish.mustRunAfter tasks.build
 tasks.publishCurseForge.mustRunAfter tasks.publish
-tasks.publishModrinth.mustRunAfter tasks.publish
+tasks.modrinth.mustRunAfter tasks.publish
 tasks.publishCurseForge.dependsOn("remapJar")
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.publishModrinth)
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)
