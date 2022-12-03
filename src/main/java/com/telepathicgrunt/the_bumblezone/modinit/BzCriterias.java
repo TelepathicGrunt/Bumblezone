@@ -79,7 +79,7 @@ public class BzCriterias {
     public static final GenericTrigger STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_super_sight"));
     public static final GenericTrigger SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "sugar_water_next_to_sugar_cane"));
     public static final TargetAdvancementDoneTrigger TARGET_ADVANCEMENT_DONE_TRIGGER = new TargetAdvancementDoneTrigger(new ResourceLocation(Bumblezone.MODID, "target_advancement_done"));
-    public static final GenericTrigger TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_out_of_bumblezone_fall"));
+    public static final GenericTrigger TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_out_of_bumblezone"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_pearl"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_piston"));
     public static final GenericTrigger TRIGGER_REDSTONE_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "trigger_redstone_honey_web"));
@@ -147,7 +147,7 @@ public class BzCriterias {
         CriteriaTriggers.register(STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER);
         CriteriaTriggers.register(SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER);
         CriteriaTriggers.register(TARGET_ADVANCEMENT_DONE_TRIGGER);
-        CriteriaTriggers.register(TELEPORT_OUT_OF_BUMBLEZONE_FALL_TRIGGER);
+        CriteriaTriggers.register(TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER);
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER);
         CriteriaTriggers.register(TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER);
         CriteriaTriggers.register(TRIGGER_REDSTONE_HONEY_WEB_TRIGGER);
