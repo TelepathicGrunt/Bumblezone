@@ -290,11 +290,8 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
                     int green = Math.max((currentColor >> 8 & 255), 10);
                     int blue = Math.max((currentColor & 255), 5);
                     currentColor = (Math.min(red + 60, 255) << 16) + (Math.min(green + 30, 255) << 8) + Math.min(blue + 25, 255);
-                    return currentColor;
                 }
-                else {
-                    return currentColor;
-                }
+                return currentColor;
             }
         }
         return tintIndex;
