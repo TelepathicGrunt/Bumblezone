@@ -1,5 +1,14 @@
 ### **(V.6.4.8 Changes) (1.19.2 Minecraft)**
 
+##### Advancements:
+Changed it so that Bumblezone's advancement screen is always visible even if you have no completed a prior advancement before.
+
+Reorder advancements so that the teleportation advancements are shown first.
+
+Renamed and adjusted descriptions for a few advancements.
+
+Teleporting out of Bumblezone advancement now does not have a speed requirement and can be granted if exiting below or above dimension bounds.
+
 ##### Dimension:
 Very slight color change to dimension fog color.
  Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.

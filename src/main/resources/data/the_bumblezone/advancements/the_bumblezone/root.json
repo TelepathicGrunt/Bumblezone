@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "the_bumblezone:filled_porous_honeycomb_block"
+      "item": "minecraft:bee_nest"
     },
     "title": {
       "translate": "advancements.the_bumblezone.root.title"
@@ -10,25 +10,21 @@
       "translate": "advancements.the_bumblezone.root.description"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": true,
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
     "background": "the_bumblezone:textures/advancements/background.png"
   },
-  "rewards": {
-    "experience": 10
-  },
+  "rewards": {},
   "criteria": {
-    "entered_bumblezone": {
-      "trigger": "minecraft:changed_dimension",
-      "conditions": {
-        "to": "the_bumblezone:the_bumblezone"
-      }
+    "instant_granted": {
+      "trigger": "minecraft:tick",
+      "conditions": {}
     }
   },
   "requirements": [
     [
-      "entered_bumblezone"
+      "instant_granted"
     ]
   ]
 }
