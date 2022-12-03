@@ -25,6 +25,10 @@ Nerfed Beehemoth flying speeds a bit to better balance it. Base speed can still 
 ##### Mod Compat:
 SlimyBoyos mod now lets Honey Slime pick up items.
 
+NOTE: If you are using Sodium, please download Unofficial Sodium Biome Blending Fix mod so that Sodium does not break
+ the rendering of Bumblezone's Incense Candle. The bug fix mod can be downloaded here:
+ https://www.curseforge.com/minecraft/mc-mods/unofficial-sodium-biome-blending-fix
+
 
 ### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
 

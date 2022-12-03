@@ -6,7 +6,7 @@ buildscript {
 	}
 	dependencies {
 		classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-		classpath group: 'gradle.plugin.com.modrinth.minotaur', name: 'Minotaur', version: '1.2.1'
+		id "com.modrinth.minotaur" version "2.+"
 	}
 }
 
@@ -153,6 +153,25 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("fabric-api")
 	mainFile.addOptional("continuity")
+	mainFile.addOptional("unofficial-sodium-biome-blending-fix")
+}
+
+modrinth {
+	token = System.getenv("MODRINTH")
+	versionName = "The Bumblezone"
+	versionNumber = project.version + "+fabric"
+	projectId = "eA8SXqWL"
+	uploadFile = remapJar
+	changelog = fileContents
+	versionType = "BETA"
+	gameVersions = ["1.19.2"]
+	loaders = ["fabric"]
+	dependencies {
+		required.project "qsl"
+		required.project "midnightlib"
+		optional.project "continuity"
+		optional.project "unofficial-sodium-biome-blending-fix"
+	}
 }
 
 task buildAndRelease{}
