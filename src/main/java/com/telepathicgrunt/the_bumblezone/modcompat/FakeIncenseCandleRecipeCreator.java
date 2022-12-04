@@ -20,9 +20,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FakeIncenseCandleRecipeCreator {
@@ -30,7 +32,18 @@ public class FakeIncenseCandleRecipeCreator {
     public static List<CraftingRecipe> constructFakeRecipes(IncenseCandleRecipe incenseCandleRecipe) {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         int currentRecipe = 0;
+        Set<MobEffect> effects = new HashSet<>();
+        List<Potion> potions = new ArrayList<>();
         for (Potion potion : BuiltInRegistries.POTION) {
+            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(ReBuiltInRegistriesgistry.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+                continue;
+            }
+
+            potion.getEffects().forEach(e -> effects.add(e.getEffect()));
+            potions.add(potion);
+        }
+        potions.sort(Comparator.comparingInt(a -> a.getEffects().size()));
+        for (Potion potion : potions) {
             if (potion.getEffects().stream().allMatch(e -> BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
