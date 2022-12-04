@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixin.ChunkGeneratorAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.ChunkGeneratorAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -211,7 +211,7 @@ public class HoneyCompass extends Item implements Vanishable {
                 TagKey<Structure> structureTagKey = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
                 Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(structureTagKey);
                 Set<Structure> structureSets = ((ChunkGeneratorAccessor)serverLevel.getChunkSource().getGenerator()).getPlacementsForStructure().keySet();
-                boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.get()));
+                boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.value()));
                 if (structureExists) {
                     itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
                     itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
@@ -242,7 +242,7 @@ public class HoneyCompass extends Item implements Vanishable {
         if (level instanceof ServerLevel serverLevel && !isStructureCompass(itemStack)) {
             Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING);
             Set<Structure> structureSets = ((ChunkGeneratorAccessor)serverLevel.getChunkSource().getGenerator()).getPlacementsForStructure().keySet();
-            boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.get()));
+            boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.value()));
             if (structureExists) {
                 itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
                 ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
