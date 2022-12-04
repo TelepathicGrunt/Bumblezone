@@ -1,3 +1,9 @@
+### **(V.6.4.9 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Fixed recipe to make Bee Bread from Honey Buckets.
+
+
 ### **(V.6.4.8 Changes) (1.19.2 Minecraft)**
 
 ##### Advancements:
