@@ -28,12 +28,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class FakeIncenseCandleRecipeCreator {
 
-    public static List<CraftingRecipe> constructFakeRecipes(IncenseCandleRecipe incenseCandleRecipe) {
+    public static List<CraftingRecipe> constructFakeRecipes(IncenseCandleRecipe incenseCandleRecipe, boolean oneRecipeOnly) {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         int currentRecipe = 0;
         Set<MobEffect> effects = new HashSet<>();
         List<Potion> potions = new ArrayList<>();
         for (Potion potion : BuiltInRegistries.POTION) {
+            if (oneRecipeOnly && potions.size() > 0) {
+                break;
+            }
+
             if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
