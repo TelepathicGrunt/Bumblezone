@@ -6,7 +6,7 @@
       "item": "minecraft:compass"
     },
     {
-      "item": "the_bumblezone:honey_bucket"
+      "tag": "c:buckets/honey"
     },
     {
       "item": "the_bumblezone:honey_crystal_shards"
