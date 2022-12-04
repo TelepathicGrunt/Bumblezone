@@ -1,3 +1,11 @@
+### **(V.6.4.9 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Honey Compass now craftable with any mod's honey bucket tagged as `forge:buckets/honey`
+
+Cleaned up amount of recipes shown for Incense Candles in JEI and REI.
+
+
 ### **(V.6.4.8 Changes) (1.19.2 Minecraft)**
 
 ##### Advancements:
