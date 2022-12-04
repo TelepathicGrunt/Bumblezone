@@ -116,8 +116,10 @@ public class JEIIntegration implements IModPlugin {
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null)
             return;
-        level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registration));
+		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
+		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
+				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
     }
 
     private static void addInfo(IRecipeRegistration registration, Item item) {
@@ -134,12 +136,12 @@ public class JEIIntegration implements IModPlugin {
                 Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".jei_description"));
     }
 
-    private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration) {
-        if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
-            List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe);
-            registration.addRecipes(RecipeTypes.CRAFTING, extraRecipes);
-        }
-    }
+	private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration, boolean oneRecipeOnly) {
+		if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
+			List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe, oneRecipeOnly);
+			registration.addRecipes(RecipeTypes.CRAFTING, extraRecipes);
+		}
+	}
 
     private static class FluidStack implements IJeiFluidIngredient {
 
