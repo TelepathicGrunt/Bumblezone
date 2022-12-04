@@ -100,7 +100,10 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.CRYSTALLINE_FLOWER);
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registry));
+                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
+
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
+                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
     }
 
     private static void addInfo(Item item) {
@@ -123,9 +126,9 @@ public class REICompat implements REIClientPlugin {
                 });
     }
 
-    private static void registerExtraRecipes(Recipe<?> baseRecipe, DisplayRegistry registry) {
+    private static void registerExtraRecipes(Recipe<?> baseRecipe, DisplayRegistry registry, boolean oneRecipeOnly) {
         if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
-            List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe);
+            List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe, oneRecipeOnly);
             extraRecipes.forEach(registry::add);
         }
     }
