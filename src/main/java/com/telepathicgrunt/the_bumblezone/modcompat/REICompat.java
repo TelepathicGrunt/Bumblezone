@@ -102,11 +102,11 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.INCENSE_CANDLE.get());
         addInfo(BzItems.CRYSTALLINE_FLOWER.get());
 
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
-
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
+
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
     }
 
     private static void addInfo(Item item) {
