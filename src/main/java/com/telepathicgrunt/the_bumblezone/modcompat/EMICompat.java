@@ -103,10 +103,10 @@ public class EMICompat implements EmiPlugin {
         addInfo(registry, BzItems.INCENSE_CANDLE);
         addInfo(registry, BzItems.CRYSTALLINE_FLOWER);
 
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
     }
 
     private static void registerExtraRecipes(Recipe<?> baseRecipe, EmiRegistry registry, boolean oneRecipeOnly) {
