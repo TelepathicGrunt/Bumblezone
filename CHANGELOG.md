@@ -9,6 +9,9 @@ Honey Compass set to a Beehive/Bee Nest will display correct message on screen w
 
 Cleaned up amount of recipes shown for Incense Candles in JEI and REI.
 
+##### Mod Compat:
+Critters and Companions's Leaf insect can spawn in Hanging Gardens now.
+
 
 ### **(V.6.4.8 Changes) (1.19.2 Minecraft)**
 
