@@ -3,6 +3,8 @@
 ##### Items:
 Fixed recipe to make Bee Bread from Honey Buckets.
 
+Cleaned up amount of recipes shown for Incense Candles in JEI, REI, and EMI.
+
 
 ### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
 
