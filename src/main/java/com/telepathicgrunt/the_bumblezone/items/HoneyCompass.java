@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.mixin.ChunkGeneratorAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -8,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -42,6 +44,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_TARGET_POS = "TargetPos";
@@ -204,12 +207,21 @@ public class HoneyCompass extends Item implements Vanishable {
         BlockPos playerPos = player.blockPosition();
 
         if (getBooleanTag(itemStack.getTag(), TAG_FAILED) && hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG)) {
-            if (!level.isClientSide()) {
+            if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenSettings().generateStructures()) {
                 TagKey<Structure> structureTagKey = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
-                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
-                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
-                ThreadExecutor.locate((ServerLevel) level, structureTagKey, playerPos, 100, false)
-                        .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
+                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(structureTagKey);
+                Set<Structure> structureSets = ((ChunkGeneratorAccessor)serverLevel.getChunkSource().getGenerator()).getPlacementsForStructure().keySet();
+                boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.get()));
+                if (structureExists) {
+                    itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
+                    itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
+                    ThreadExecutor.locate((ServerLevel) level, structureTagKey, playerPos, 100, false)
+                            .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
+                }
+                else {
+                    player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
+                    return InteractionResultHolder.pass(itemStack);
+                }
             }
             return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
         }
@@ -227,10 +239,19 @@ public class HoneyCompass extends Item implements Vanishable {
             return super.use(level, player, interactionHand);
         }
 
-        if (!level.isClientSide() && !isStructureCompass(itemStack)) {
-            itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
-            ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
-                    .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
+        if (level instanceof ServerLevel serverLevel && !isStructureCompass(itemStack)) {
+            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING);
+            Set<Structure> structureSets = ((ChunkGeneratorAccessor)serverLevel.getChunkSource().getGenerator()).getPlacementsForStructure().keySet();
+            boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.get()));
+            if (structureExists) {
+                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
+                ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
+                        .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
+            }
+            else {
+                player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
+                return InteractionResultHolder.pass(itemStack);
+            }
             return InteractionResultHolder.success(itemStack);
         }
 
@@ -294,21 +315,23 @@ public class HoneyCompass extends Item implements Vanishable {
                 BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
             }
 
-            boolean singleCompass = !player.getAbilities().instabuild && handCompass.getCount() == 1;
-            if (singleCompass) {
-                addBlockTags(level.dimension(), blockPos, handCompass.getOrCreateTag(), targetBlock.getBlock());
-            }
-            else {
-                ItemStack newCompass = new ItemStack(BzItems.HONEY_COMPASS.get(), 1);
-                CompoundTag newCompoundTag = handCompass.hasTag() ? handCompass.getTag().copy() : new CompoundTag();
-                newCompass.setTag(newCompoundTag);
-                if (!player.getAbilities().instabuild) {
-                    handCompass.shrink(1);
+            if (!level.isClientSide()) {
+                boolean singleCompass = !player.getAbilities().instabuild && handCompass.getCount() == 1;
+                if (singleCompass) {
+                    addBlockTags(level.dimension(), blockPos, handCompass.getOrCreateTag(), targetBlock.getBlock());
                 }
+                else {
+                    ItemStack newCompass = new ItemStack(BzItems.HONEY_COMPASS.get(), 1);
+                    CompoundTag newCompoundTag = handCompass.hasTag() ? handCompass.getTag().copy() : new CompoundTag();
+                    newCompass.setTag(newCompoundTag);
+                    if (!player.getAbilities().instabuild) {
+                        handCompass.shrink(1);
+                    }
 
-                addBlockTags(level.dimension(), blockPos, newCompoundTag, targetBlock.getBlock());
-                if (!player.getInventory().add(newCompass)) {
-                    player.drop(newCompass, false);
+                    addBlockTags(level.dimension(), blockPos, newCompoundTag, targetBlock.getBlock());
+                    if (!player.getInventory().add(newCompass)) {
+                        player.drop(newCompass, false);
+                    }
                 }
             }
 
@@ -358,6 +381,9 @@ public class HoneyCompass extends Item implements Vanishable {
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "block");
         compoundTag.putString(TAG_TARGET_BLOCK, Registry.BLOCK.getKey(block).toString());
+        compoundTag.remove(HoneyCompass.TAG_LOADING);
+        compoundTag.remove(HoneyCompass.TAG_FAILED);
+        compoundTag.remove(HoneyCompass.TAG_STRUCTURE_TAG);
     }
 
     public static void addThroneTags(CompoundTag compoundTag) {

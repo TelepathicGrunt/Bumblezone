@@ -3,6 +3,10 @@
 ##### Items:
 Honey Compass now craftable with any mod's honey bucket tagged as `forge:buckets/honey`
 
+Honey Compass now will say if the player is in wrong dimension when attempting a structure search.
+
+Honey Compass set to a Beehive/Bee Nest will display correct message on screen when first set.
+
 Cleaned up amount of recipes shown for Incense Candles in JEI and REI.
 
 
