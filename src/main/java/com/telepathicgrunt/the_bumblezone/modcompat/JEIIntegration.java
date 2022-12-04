@@ -116,10 +116,10 @@ public class JEIIntegration implements IModPlugin {
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null)
             return;
+        level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
+                .ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
 		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
-		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
-				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
     }
 
     private static void addInfo(IRecipeRegistration registration, Item item) {
