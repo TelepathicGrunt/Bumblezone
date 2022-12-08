@@ -1,23 +1,23 @@
 [versions]
 # The latest versions are available at https://lambdaurora.dev/tools/import_quilt.html
-minecraft = "1.19.3-pre3"
+minecraft = "1.19.3"
 quilt_mappings = "1.19.2+build.5"
 quilt_loader = "0.17.7"
 
-quilted_fabric_api = "4.0.0-beta.23+0.68.0-1.19.2"
+quilted_fabric_api = "5.0.0-alpha.2+0.68.1-1.19.3"
 mixinextra = "0.1.1-rc.4"
-midnightlib = "0.5.2"
-commandstructures = "3.1.0+1.19"
+midnightlib = "1.0.0-quilt"
+commandstructures = "4.0.0+1.19.3"
 structurevoidtoggle = "4.0.0+1.19"
 mod_menu = "5.0.0-alpha.4"
 fake_player = "0.5.0"
 cardinal = "5.0.1"
-rei = "9.1.530"
-architectury = "6.2.43"
-cloth_config = "8.0.75"
-emi = "0.4.0+1.19"
-jei = "11.2.0.256"
-jeimc = "1.19.2"
+rei = "9.1.577"
+architectury = "7.0.59"
+cloth_config = "9.0.93"
+emi = "0.5.0+1.19.3"
+jei = "11.4.0.287"
+jeimc = "1.19.3"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -31,4 +31,4 @@ quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-a
 # example = ["example-a", "example-b", "example-c"]
 
 [plugins]
-quilt_loom = { id = "org.quiltmc.loom", version = "0.12.+" }
+quilt_loom = { id = "org.quiltmc.loom", version = "1.+" }

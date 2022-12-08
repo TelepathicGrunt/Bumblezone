@@ -163,6 +163,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("qsl")
 	mainFile.addOptional("continuity")
+	mainFile.addOptional("unofficial-sodium-biome-blending-fix")
 }
 
 modrinth {
@@ -171,7 +172,7 @@ modrinth {
 	versionNumber = project.version + "+quilt"
 	projectId = "eA8SXqWL"
 	uploadFile = remapJar
-	changelog = fileContents
+	changelog = changelogText
 	versionType = "RELEASE"
 	gameVersions = ["1.19.3"]
 	loaders = ["quilt"]
@@ -179,6 +180,7 @@ modrinth {
 		required.project "qsl"
 		required.project "midnightlib"
 		optional.project "continuity"
+		optional.project "unofficial-sodium-biome-blending-fix"
 	}
 }
 

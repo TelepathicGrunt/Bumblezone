@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
-import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,10 +189,10 @@ public class BzItems {
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BEE_QUEEN_SPAWN_EGG);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "essence_of_the_bees"), ESSENCE_OF_THE_BEES);
 
-        BUMBLEZONE_CREATIVE_TAB = QuiltItemGroup
+        BUMBLEZONE_CREATIVE_TAB = FabricItemGroup
                 .builder(new ResourceLocation(Bumblezone.MODID, "main_tab"))
-                .appendItems((itemStacks) ->
-                        CREATIVE_MENU_ITEM_ORDERING.forEach(item -> itemStacks.add(item.getDefaultInstance())))
+                .displayItems((enabledFeatures, entries, operatorEnabled) ->
+                        CREATIVE_MENU_ITEM_ORDERING.forEach(item -> entries.accept(item.getDefaultInstance())))
                 .icon(() -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB))
                 .build();
     }

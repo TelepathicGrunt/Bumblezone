@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -35,7 +34,7 @@ public class FakeIncenseCandleRecipeCreator {
         Set<MobEffect> effects = new HashSet<>();
         List<Potion> potions = new ArrayList<>();
         for (Potion potion : BuiltInRegistries.POTION) {
-            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(ReBuiltInRegistriesgistry.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
 
