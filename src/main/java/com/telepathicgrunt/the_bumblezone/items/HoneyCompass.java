@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixin.world.ChunkGeneratorAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -208,7 +207,7 @@ public class HoneyCompass extends Item implements Vanishable {
         BlockPos playerPos = player.blockPosition();
 
         if (getBooleanTag(itemStack.getTag(), TAG_FAILED) && hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG)) {
-            if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenSettings().generateStructures()) {
+            if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
                 TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
                 Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE).getTag(structureTagKey);
                 boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).size() > 0);

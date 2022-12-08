@@ -11,7 +11,7 @@ buildscript {
 
 plugins {
 	id "net.darkhax.curseforgegradle" version "1.0.7"
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id "com.modrinth.minotaur" version "2.+"
 }
 
@@ -165,7 +165,7 @@ modrinth {
 	uploadFile = remapJar
 	changelog = changelogText
 	versionType = "BETA"
-	gameVersions = ["1.19.2"]
+	gameVersions = ["1.19.3"]
 	loaders = ["fabric"]
 	dependencies {
 		required.project "qsl"
