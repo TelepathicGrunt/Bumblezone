@@ -98,7 +98,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ModChecker.setupModCompat();
         ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
 
-        EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
         BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
         StinglessBeeHelmetSightPacket.registerPacket();
