@@ -54,9 +54,9 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
 
         StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(rotation).setRotationPivot(halfLengths).setIgnoreEntities(false);
         Registry<StructureProcessorList> processorListRegistry = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
-        Optional<StructureProcessorList> processor = processorListRegistry.getOptional(context.config().processor);
         StructureProcessorList emptyProcessor = processorListRegistry.get(EMPTY);
 
+        Optional<StructureProcessorList> processor = processorListRegistry.getOptional(context.config().processor);
         processor.orElse(emptyProcessor).list().forEach(placementsettings::addProcessor); // add all processors
         mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()); // pivot
         template.get().placeInWorld(context.level(), mutable, mutable, placementsettings, context.random(), Block.UPDATE_INVISIBLE);

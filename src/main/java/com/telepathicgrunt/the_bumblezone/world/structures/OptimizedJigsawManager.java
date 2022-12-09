@@ -234,12 +234,6 @@ public class OptimizedJigsawManager {
                 // Get the jigsaw block's fallback pool (which is a part of the pool's JSON)
                 Holder<StructureTemplatePool> fallbackOptional = poolOptional.get().getFallback();
 
-                // Only continue if the fallback pool is present and valid
-                if (!(fallbackOptional != null && (fallbackOptional.value().size() != 0 || Objects.equals(fallbackOptional.unwrapKey().get().location(), Pools.EMPTY.location())))) {
-                    Bumblezone.LOGGER.warn("Bumblezone: Empty or nonexistent pool: {} which is being called from {}", fallbackOptional.unwrapKey().get().location(), pieceBlueprint instanceof SinglePoolElement ? ((SinglePoolElementAccessor) pieceBlueprint).getTemplate().left().get() : "not a SinglePoolElement class");
-                    continue;
-                }
-
                 // Adjustments for if the target block position is inside the current piece
                 boolean isTargetInsideCurrentPiece = pieceBoundingBox.isInside(jigsawBlockTargetPos);
                 int targetPieceBoundsTop;

@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class NoneOpCommands {
+public class NonOpCommands {
     private static MinecraftServer currentMinecraftServer = null;
     private static Set<String> cachedSuggestion = new HashSet<>();
     enum DATA_ARG {
@@ -53,12 +53,12 @@ public class NoneOpCommands {
         LiteralCommandNode<CommandSourceStack> source = commandDispatcher.register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.argument(dataArg, StringArgumentType.string())
-                        .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodSuggestions(ctx), sb))
-                        .executes(cs -> {
-                            runMethod(cs.getArgument(dataArg, String.class), null, cs);
-                            return 1;
-                        })
-                ));
+                    .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodSuggestions(ctx), sb))
+                    .executes(cs -> {
+                        runMethod(cs.getArgument(dataArg, String.class), null, cs);
+                        return 1;
+                    })
+            ));
 
         commandDispatcher.register(Commands.literal(commandString).redirect(source));
 
@@ -66,13 +66,13 @@ public class NoneOpCommands {
         LiteralCommandNode<CommandSourceStack> source2 = commandDispatcher.register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.literal(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
-                        .then(Commands.argument(entityArg, ResourceArgument.resource(buildContext, Registries.ENTITY_TYPE))
-                                .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
-                                .executes(cs -> {
-                                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), ResourceArgument.getSummonableEntityType(cs, entityArg).key().location(), cs);
-                                    return 1;
-                                })
-                        )));
+                .then(Commands.argument(entityArg, ResourceArgument.resource(buildContext, Registries.ENTITY_TYPE))
+                .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
+                .executes(cs -> {
+                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), ResourceArgument.getSummonableEntityType(cs, entityArg).key().location(), cs);
+                    return 1;
+                })
+        )));
 
         commandDispatcher.register(Commands.literal(commandString).redirect(source2));
     }
