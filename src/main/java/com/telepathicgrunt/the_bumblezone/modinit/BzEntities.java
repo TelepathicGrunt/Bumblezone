@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
+import org.quiltmc.qsl.entity.networking.api.tracked_data.QuiltTrackedDataHandlerRegistry;
 
 public class BzEntities {
 
@@ -87,5 +88,7 @@ public class BzEntities {
         Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "thrown_stinger_spear"), THROWN_STINGER_SPEAR_ENTITY);
         Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER_ENTITY);
         Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shard"), HONEY_CRYSTAL_SHARD);
+
+        QuiltTrackedDataHandlerRegistry.register(new ResourceLocation(Bumblezone.MODID, "queen_pose_serializer"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
     }
 }
