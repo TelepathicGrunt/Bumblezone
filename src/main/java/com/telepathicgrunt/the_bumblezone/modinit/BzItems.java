@@ -15,8 +15,8 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -24,11 +24,15 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 
 public class BzItems {
+    /**
+     * creative tab to hold our items
+     */
+    public static CreativeModeTab BUMBLEZONE_TAB;
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Bumblezone.MODID);
 
     //blocks
@@ -84,7 +88,7 @@ public class BzItems {
     public static final RegistryObject<Item> ROYAL_JELLY_BUCKET = ITEMS.register("royal_jelly_bucket", () -> new BzBucketItem(BzFluids.ROYAL_JELLY_FLUID, new Item.Properties().rarity(Rarity.EPIC).craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> ROYAL_JELLY_BOTTLE = ITEMS.register("royal_jelly_bottle", () -> new RoyalJellyBottle((new Item.Properties().rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).food((new FoodProperties.Builder()).nutrition(12).saturationMod(1.0F).effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, 1200, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.JUMP, 1200, 3), 1.0F).effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 1), 1.0F).effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 1200, 1), 1.0F).build()).stacksTo(16)));
     public static final RegistryObject<Item> HONEY_SLIME_SPAWN_EGG = ITEMS.register("honey_slime_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties())));
-    public static final RegistryObject<Item> BEEHEMOTH_SPAWN_EGG = ITEMS.register("beehemoth_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEEHEMOTH, 0xEDC343, 0x43241B, (new Item.Properties())));
+    public static final RegistryObject<Item> BEEHEMOTH_SPAWN_EGG = ITEMS.register("beehemoth_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEEHEMOTH, 0xFFCA47, 0x68372A, (new Item.Properties())));
     public static final RegistryObject<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC))));
     public static final RegistryObject<Item> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = ITEMS.register("music_disc_flight_of_the_bumblebee_rimsky_korsakov", () -> new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee));
     public static final RegistryObject<Item> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = ITEMS.register("music_disc_honey_bee_rat_faced_boy", () -> new BzMusicDiscs(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Properties()).stacksTo(1).rarity(Rarity.RARE), BzGeneralConfigs.musicDiscTimeLengthHoneyBee));
@@ -109,93 +113,181 @@ public class BzItems {
     public static final RegistryObject<Item> CARPENTER_BEE_BOOTS_2 = ITEMS.register("carpenter_bee_boots_2", () -> new CarpenterBeeBoots(BeeArmorMaterial.BEE_MATERIAL, EquipmentSlot.FEET, new Item.Properties().rarity(Rarity.UNCOMMON), 2));
     public static final RegistryObject<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
-    public static CreativeModeTab BUMBLEZONE_TAB;
-
     public static void registerCreativeModeTab(CreativeModeTabEvent.Register event) {
-        List<ItemStack> creativeTabItems = Stream.of(
-            BzItems.POROUS_HONEYCOMB.get(),
-            BzItems.FILLED_POROUS_HONEYCOMB.get(),
-            BzItems.EMPTY_HONEYCOMB_BROOD.get(),
-            BzItems.HONEYCOMB_BROOD.get(),
-            BzItems.STICKY_HONEY_RESIDUE.get(),
-            BzItems.STICKY_HONEY_REDSTONE.get(),
-            BzItems.HONEY_WEB.get(),
-            BzItems.REDSTONE_HONEY_WEB.get(),
-            BzItems.BEEHIVE_BEESWAX.get(),
-            BzItems.GLISTERING_HONEY_CRYSTAL.get(),
-            BzItems.HONEY_CRYSTAL.get(),
-            BzItems.CARVABLE_WAX.get(),
-            BzItems.CARVABLE_WAX_WAVY.get(),
-            BzItems.CARVABLE_WAX_FLOWER.get(),
-            BzItems.CARVABLE_WAX_CHISELED.get(),
-            BzItems.CARVABLE_WAX_DIAMOND.get(),
-            BzItems.CARVABLE_WAX_BRICKS.get(),
-            BzItems.CARVABLE_WAX_CHAINS.get(),
-            BzItems.HONEY_COCOON.get(),
-            BzItems.CRYSTALLINE_FLOWER.get(),
-            BzItems.SUGAR_INFUSED_STONE.get(),
-            BzItems.SUGAR_INFUSED_COBBLESTONE.get(),
-            BzItems.INCENSE_CANDLE.get(),
-            BzItems.SUPER_CANDLE.get(),
-            BzItems.SUPER_CANDLE_BLACK.get(),
-            BzItems.SUPER_CANDLE_BLUE.get(),
-            BzItems.SUPER_CANDLE_BROWN.get(),
-            BzItems.SUPER_CANDLE_CYAN.get(),
-            BzItems.SUPER_CANDLE_GRAY.get(),
-            BzItems.SUPER_CANDLE_GREEN.get(),
-            BzItems.SUPER_CANDLE_LIGHT_BLUE.get(),
-            BzItems.SUPER_CANDLE_LIGHT_GRAY.get(),
-            BzItems.SUPER_CANDLE_LIME.get(),
-            BzItems.SUPER_CANDLE_MAGENTA.get(),
-            BzItems.SUPER_CANDLE_ORANGE.get(),
-            BzItems.SUPER_CANDLE_PINK.get(),
-            BzItems.SUPER_CANDLE_PURPLE.get(),
-            BzItems.SUPER_CANDLE_RED.get(),
-            BzItems.SUPER_CANDLE_WHITE.get(),
-            BzItems.SUPER_CANDLE_YELLOW.get(),
-            BzItems.SUGAR_WATER_BOTTLE.get(),
-            BzItems.SUGAR_WATER_BUCKET.get(),
-            BzItems.ROYAL_JELLY_BOTTLE.get(),
-            BzItems.ROYAL_JELLY_BUCKET.get(),
-            BzItems.ROYAL_JELLY_BLOCK.get(),
-            BzItems.HONEY_BUCKET.get(),
-            BzItems.HONEY_CRYSTAL_SHARDS.get(),
-            BzItems.BEE_BREAD.get(),
-            BzItems.POLLEN_PUFF.get(),
-            BzItems.HONEY_COMPASS.get(),
-            BzItems.BEE_STINGER.get(),
-            BzItems.STINGER_SPEAR.get(),
-            BzItems.BEE_CANNON.get(),
-            BzItems.CRYSTAL_CANNON.get(),
-            BzItems.HONEY_CRYSTAL_SHIELD.get(),
-            BzItems.STINGLESS_BEE_HELMET_1.get(),
-            BzItems.STINGLESS_BEE_HELMET_2.get(),
-            BzItems.BUMBLE_BEE_CHESTPLATE_1.get(),
-            BzItems.BUMBLE_BEE_CHESTPLATE_2.get(),
-            BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.get(),
-            BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get(),
-            BzItems.HONEY_BEE_LEGGINGS_1.get(),
-            BzItems.HONEY_BEE_LEGGINGS_2.get(),
-            BzItems.CARPENTER_BEE_BOOTS_1.get(),
-            BzItems.CARPENTER_BEE_BOOTS_2.get(),
-            BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get(),
-            BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get(),
-            BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get(),
-            BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get(),
-            BzItems.HONEY_SLIME_SPAWN_EGG.get(),
-            BzItems.BEEHEMOTH_SPAWN_EGG.get(),
-            BzItems.BEE_QUEEN_SPAWN_EGG.get(),
-            BzItems.ESSENCE_OF_THE_BEES.get()
-        )
-        .map(Item::getDefaultInstance)
-        .toList();
 
         BUMBLEZONE_TAB = event.registerCreativeModeTab(new ResourceLocation(Bumblezone.MODID, "main_tab"),
-                builder -> builder.icon(() -> new ItemStack(BzItems.HONEYCOMB_BROOD.get()))
-                .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab"))
-                .withLabelColor(0xDDBB00)
-                .displayItems((features, output, hasPermissions) -> {
-                    output.acceptAll(creativeTabItems);
-                }));
+            builder -> builder.icon(() -> HONEYCOMB_BROOD.get().getDefaultInstance())
+            .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab"))
+            .withLabelColor(0xDDBB00)
+            .displayItems((features, output, hasPermissions) ->
+                output.acceptAll(Stream.of(
+                        POROUS_HONEYCOMB.get(),
+                        FILLED_POROUS_HONEYCOMB.get(),
+                        EMPTY_HONEYCOMB_BROOD.get(),
+                        HONEYCOMB_BROOD.get(),
+                        STICKY_HONEY_RESIDUE.get(),
+                        STICKY_HONEY_REDSTONE.get(),
+                        HONEY_WEB.get(),
+                        REDSTONE_HONEY_WEB.get(),
+                        BEEHIVE_BEESWAX.get(),
+                        GLISTERING_HONEY_CRYSTAL.get(),
+                        HONEY_CRYSTAL.get(),
+                        CARVABLE_WAX.get(),
+                        CARVABLE_WAX_WAVY.get(),
+                        CARVABLE_WAX_FLOWER.get(),
+                        CARVABLE_WAX_CHISELED.get(),
+                        CARVABLE_WAX_DIAMOND.get(),
+                        CARVABLE_WAX_BRICKS.get(),
+                        CARVABLE_WAX_CHAINS.get(),
+                        HONEY_COCOON.get(),
+                        CRYSTALLINE_FLOWER.get(),
+                        SUGAR_INFUSED_STONE.get(),
+                        SUGAR_INFUSED_COBBLESTONE.get(),
+                        INCENSE_CANDLE.get(),
+                        SUPER_CANDLE.get(),
+                        SUPER_CANDLE_BLACK.get(),
+                        SUPER_CANDLE_BLUE.get(),
+                        SUPER_CANDLE_BROWN.get(),
+                        SUPER_CANDLE_CYAN.get(),
+                        SUPER_CANDLE_GRAY.get(),
+                        SUPER_CANDLE_GREEN.get(),
+                        SUPER_CANDLE_LIGHT_BLUE.get(),
+                        SUPER_CANDLE_LIGHT_GRAY.get(),
+                        SUPER_CANDLE_LIME.get(),
+                        SUPER_CANDLE_MAGENTA.get(),
+                        SUPER_CANDLE_ORANGE.get(),
+                        SUPER_CANDLE_PINK.get(),
+                        SUPER_CANDLE_PURPLE.get(),
+                        SUPER_CANDLE_RED.get(),
+                        SUPER_CANDLE_WHITE.get(),
+                        SUPER_CANDLE_YELLOW.get(),
+                        SUGAR_WATER_BOTTLE.get(),
+                        SUGAR_WATER_BUCKET.get(),
+                        ROYAL_JELLY_BOTTLE.get(),
+                        ROYAL_JELLY_BUCKET.get(),
+                        ROYAL_JELLY_BLOCK.get(),
+                        HONEY_BUCKET.get(),
+                        HONEY_CRYSTAL_SHARDS.get(),
+                        BEE_BREAD.get(),
+                        POLLEN_PUFF.get(),
+                        HONEY_COMPASS.get(),
+                        BEE_STINGER.get(),
+                        STINGER_SPEAR.get(),
+                        BEE_CANNON.get(),
+                        CRYSTAL_CANNON.get(),
+                        HONEY_CRYSTAL_SHIELD.get(),
+                        STINGLESS_BEE_HELMET_1.get(),
+                        STINGLESS_BEE_HELMET_2.get(),
+                        BUMBLE_BEE_CHESTPLATE_1.get(),
+                        BUMBLE_BEE_CHESTPLATE_2.get(),
+                        TRANS_BUMBLE_BEE_CHESTPLATE_1.get(),
+                        TRANS_BUMBLE_BEE_CHESTPLATE_2.get(),
+                        HONEY_BEE_LEGGINGS_1.get(),
+                        HONEY_BEE_LEGGINGS_2.get(),
+                        CARPENTER_BEE_BOOTS_1.get(),
+                        CARPENTER_BEE_BOOTS_2.get(),
+                        MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get(),
+                        MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get(),
+                        MUSIC_DISC_LA_BEE_DA_LOCA.get(),
+                        MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get(),
+                        HONEY_SLIME_SPAWN_EGG.get(),
+                        BEEHEMOTH_SPAWN_EGG.get(),
+                        BEE_QUEEN_SPAWN_EGG.get(),
+                        ESSENCE_OF_THE_BEES.get()
+                )
+                .map(Item::getDefaultInstance)
+                .toList())
+            )
+        );
+    }
+
+    public static void addToCreativeModeTabs(CreativeModeTabEvent.BuildContents event) {
+        
+        event.register(CreativeModeTabs.REDSTONE_BLOCKS, (features, output, hasPermissions) -> 
+            output.acceptAll(Stream.of(
+                STICKY_HONEY_REDSTONE.get(),
+                REDSTONE_HONEY_WEB.get(),
+                ROYAL_JELLY_BLOCK.get()
+            ).map(Item::getDefaultInstance).toList())
+        );
+        
+        event.register(CreativeModeTabs.FUNCTIONAL_BLOCKS, (features, output, hasPermissions) ->
+            output.acceptAll(Stream.of(
+                HONEYCOMB_BROOD.get(),
+                GLISTERING_HONEY_CRYSTAL.get(),
+                HONEY_COCOON.get(),
+                CRYSTALLINE_FLOWER.get(),
+                STICKY_HONEY_RESIDUE.get(),
+                HONEY_WEB.get(),
+                INCENSE_CANDLE.get(),
+                SUPER_CANDLE.get(),
+                SUPER_CANDLE_WHITE.get(),
+                SUPER_CANDLE_LIGHT_GRAY.get(),
+                SUPER_CANDLE_GRAY.get(),
+                SUPER_CANDLE_BLACK.get(),
+                SUPER_CANDLE_BROWN.get(),
+                SUPER_CANDLE_RED.get(),
+                SUPER_CANDLE_ORANGE.get(),
+                SUPER_CANDLE_YELLOW.get(),
+                SUPER_CANDLE_LIME.get(),
+                SUPER_CANDLE_GREEN.get(),
+                SUPER_CANDLE_CYAN.get(),
+                SUPER_CANDLE_LIGHT_BLUE.get(),
+                SUPER_CANDLE_BLUE.get(),
+                SUPER_CANDLE_PURPLE.get(),
+                SUPER_CANDLE_MAGENTA.get(),
+                SUPER_CANDLE_PINK.get()
+            ).map(Item::getDefaultInstance).toList())
+        );
+
+        event.register(CreativeModeTabs.COLORED_BLOCKS, (features, output, hasPermissions) ->
+            output.acceptAll(Stream.of(
+                SUPER_CANDLE.get(),
+                SUPER_CANDLE_WHITE.get(),
+                SUPER_CANDLE_LIGHT_GRAY.get(),
+                SUPER_CANDLE_GRAY.get(),
+                SUPER_CANDLE_BLACK.get(),
+                SUPER_CANDLE_BROWN.get(),
+                SUPER_CANDLE_RED.get(),
+                SUPER_CANDLE_ORANGE.get(),
+                SUPER_CANDLE_YELLOW.get(),
+                SUPER_CANDLE_LIME.get(),
+                SUPER_CANDLE_GREEN.get(),
+                SUPER_CANDLE_CYAN.get(),
+                SUPER_CANDLE_LIGHT_BLUE.get(),
+                SUPER_CANDLE_BLUE.get(),
+                SUPER_CANDLE_PURPLE.get(),
+                SUPER_CANDLE_MAGENTA.get(),
+                SUPER_CANDLE_PINK.get()
+            ).map(Item::getDefaultInstance).toList())
+        );
+
+        event.register(CreativeModeTabs.COMBAT, (features, output, hasPermissions) ->
+            output.acceptAll(Stream.of(
+                BEE_STINGER.get(),
+                STINGER_SPEAR.get(),
+                BEE_CANNON.get(),
+                CRYSTAL_CANNON.get(),
+                HONEY_CRYSTAL_SHIELD.get(),
+                STINGLESS_BEE_HELMET_1.get(),
+                STINGLESS_BEE_HELMET_2.get(),
+                BUMBLE_BEE_CHESTPLATE_1.get(),
+                BUMBLE_BEE_CHESTPLATE_2.get(),
+                TRANS_BUMBLE_BEE_CHESTPLATE_1.get(),
+                TRANS_BUMBLE_BEE_CHESTPLATE_2.get(),
+                HONEY_BEE_LEGGINGS_1.get(),
+                HONEY_BEE_LEGGINGS_2.get(),
+                CARPENTER_BEE_BOOTS_1.get(),
+                CARPENTER_BEE_BOOTS_2.get()
+            ).map(Item::getDefaultInstance).toList())
+        );
+
+        event.register(CreativeModeTabs.SPAWN_EGGS, (features, output, hasPermissions) ->
+            output.acceptAll(Stream.of(
+                HONEY_SLIME_SPAWN_EGG.get(),
+                BEEHEMOTH_SPAWN_EGG.get(),
+                BEE_QUEEN_SPAWN_EGG.get()
+            ).map(Item::getDefaultInstance).toList())
+        );
     }
 }
