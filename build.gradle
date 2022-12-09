@@ -48,7 +48,8 @@ configurations {
 }
 
 minecraft {
-    mappings channel: 'sugarcane', version: "${sugarcane_version}-${mc_version}"
+    mappings channel: "official", version: "${mc_version}"
+    //mappings channel: 'sugarcane', version: "${sugarcane_version}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -95,7 +96,7 @@ repositories {
     maven { url "https://maven.architectury.dev/" }
     maven { url "https://maven.shedaniel.me" }
     maven { url "https://jitpack.io" }
-    flatDir { dirs 'flatdir' }
+    //flatDir { dirs 'flatdir' }
 }
 
 dependencies {
@@ -126,7 +127,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
     compileOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
-    compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
+    //compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
     //runtimeOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
     //runtimeOnly fg.deobf("flatdir:Phosphophyllite-0.6.0:beta.52")
     //runtimeOnly fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-1.19.2:1.1.17")
@@ -161,7 +162,7 @@ Map<?, ?> makeAttributes() {
 
 tasks.create('relocateShadowJar', ConfigureShadowRelocation) {
     target(tasks.shadowJar)
-    prefix("com.telepathicgrunt.bumblezone.shade")
+    prefix("com.telepathicgrunt.the_bumblezone.shade")
 }
 
 tasks.named('shadowJar', ShadowJar).configure {
@@ -178,18 +179,17 @@ mixin {
     add sourceSets.main, "${modid}.refmap.json"
 }
 
-jar.finalizedBy('reobfJar')
-reobf {
-    shadowJar {}
-}
-shadowJar.finalizedBy('reobfShadowJar')
+processResources {}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
-apply from: 'gradle/maven.gradle'
+jar.finalizedBy('reobfJar')
+reobf { shadowJar {} }
+shadowJar.finalizedBy('reobfShadowJar')
 
+apply from: 'gradle/maven.gradle'
 
 String changelogText = file("CHANGELOG.md").getText('UTF-8')
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
