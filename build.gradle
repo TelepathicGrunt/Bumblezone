@@ -89,29 +89,13 @@ repositories {
         name = "Jared"
         url = "https://maven.blamejared.com"
     }
-    maven {
-        // Abnormal Core
-        url = "https://maven.jaackson.me"
-    }
-    maven {
-        // AMB, Potion of Bees, Productive Bees, Buzzier Bees, Pokecube AIO, and Charm Reforged
-        url "https://www.cursemaven.com"
-    }
-    maven {
-        url "https://nexus.resourcefulbees.com/repository/maven-public/"
-    }
-    maven {
-        url "https://maven.architectury.dev/"
-    }
-    maven {
-        url "https://maven.shedaniel.me"
-    }
-    maven {
-        url "https://jitpack.io"
-    }
-    flatDir {
-        dirs 'flatdir'
-    }
+    maven { url = "https://maven.jaackson.me" }
+    maven { url "https://www.cursemaven.com" }
+    maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
+    maven { url "https://maven.architectury.dev/" }
+    maven { url "https://maven.shedaniel.me" }
+    maven { url "https://jitpack.io" }
+    flatDir { dirs 'flatdir' }
 }
 
 dependencies {
