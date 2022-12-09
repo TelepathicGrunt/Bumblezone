@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -117,7 +117,7 @@ public class EnchantmentUtils {
 		List<EnchantmentInstance> list = Lists.newArrayList();
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
-		for(Enchantment enchantment : Registry.ENCHANTMENT) {
+		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
 			if (Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment)) {
 				continue;
 			}
@@ -148,7 +148,7 @@ public class EnchantmentUtils {
 			ResourceLocation resourcelocation1 = EnchantmentHelper.getEnchantmentId(compoundtag);
 			if (resourcelocation1 != null) {
 				existingEnchants.put(
-					Objects.requireNonNull(Registry.ENCHANTMENT.get(resourcelocation1)),
+					Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.get(resourcelocation1)),
 					EnchantmentHelper.getEnchantmentLevel(compoundtag)
 				);
 			}

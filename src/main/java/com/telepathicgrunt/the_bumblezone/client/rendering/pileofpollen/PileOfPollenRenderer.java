@@ -7,8 +7,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.client.renderer.GameRenderer;
@@ -19,6 +17,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 
 // CLIENT-SIDED
@@ -80,7 +80,7 @@ public class PileOfPollenRenderer {
             float pitchPlus4 = 4.0F + pitch;
 
             float movementScaling = 0.85f;
-            Vector3f playerPosition = new Vector3f(playerEntity.position().multiply(movementScaling, movementScaling, movementScaling));
+            Vector3f playerPosition = playerEntity.position().multiply(movementScaling, movementScaling, movementScaling).toVector3f();
             float smallXZOffset = playerPosition.x() * playerPosition.z() * 0;
             float smallYOffset = playerPosition.y() * 0.33f;
 

@@ -55,6 +55,6 @@ public class BzSounds {
 
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String path) {
-        return SOUND_EVENTS.register(path, () -> new SoundEvent(new ResourceLocation(Bumblezone.MODID, path)));
+        return SOUND_EVENTS.register(path, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, path)));
     }
 }

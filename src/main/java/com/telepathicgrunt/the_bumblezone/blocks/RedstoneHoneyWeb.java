@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -31,13 +31,13 @@ import java.util.List;
 public class RedstoneHoneyWeb extends HoneyWeb {
 
     public static final IntegerProperty POWER = BlockStateProperties.POWER;
-    private static final Vec3[] COLORS = Util.make(new Vec3[16], (vec3s) -> {
+    private static final Vector3f[] COLORS = Util.make(new Vector3f[16], (vec3s) -> {
         for(int powerLevel = 0; powerLevel <= 15; ++powerLevel) {
             float brightness = (float)powerLevel / 15.0F;
             float red = brightness * 0.6F + (brightness > 0.0F ? 0.4F : 0.3F);
             float green = Mth.clamp(brightness * brightness * 0.7F - 0.5F, 0.0F, 1.0F);
             float blue = Mth.clamp(brightness * brightness * 0.6F - 0.7F, 0.0F, 1.0F);
-            vec3s[powerLevel] = new Vec3(red, green, blue);
+            vec3s[powerLevel] = new Vec3(red, green, blue).toVector3f();
         }
     });
 
@@ -245,6 +245,6 @@ public class RedstoneHoneyWeb extends HoneyWeb {
      * Adds the actual redstone particle into the world within the given range
      */
     private void addRedstoneParticle(Level world, RandomSource random, double xMin, double xMax, double yMin, double yMax, double zMax, double zMin, int power) {
-        world.addParticle(new DustParticleOptions(new Vector3f(COLORS[power]), 1.0F), Mth.lerp(random.nextDouble(), xMin, xMax), Mth.lerp(random.nextDouble(), yMin, yMax), Mth.lerp(random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
+        world.addParticle(new DustParticleOptions(COLORS[power], 1.0F), Mth.lerp(random.nextDouble(), xMin, xMax), Mth.lerp(random.nextDouble(), yMin, yMax), Mth.lerp(random.nextDouble(), zMax, zMin), 0.0D, 0.0D, 0.0D);
     }
 }

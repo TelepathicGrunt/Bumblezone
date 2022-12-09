@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.bakedmodel;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;

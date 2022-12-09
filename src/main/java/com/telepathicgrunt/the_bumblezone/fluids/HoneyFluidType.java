@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
 import net.minecraft.client.Camera;

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
@@ -9,7 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class BzStats {
-    public static final DeferredRegister<ResourceLocation> CUSTOM_STAT = DeferredRegister.create(Registry.CUSTOM_STAT_REGISTRY, Bumblezone.MODID);
+    public static final DeferredRegister<ResourceLocation> CUSTOM_STAT = DeferredRegister.create(Registries.CUSTOM_STAT, Bumblezone.MODID);
 
     public static final RegistryObject<ResourceLocation> CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL = CUSTOM_STAT.register("carpenter_bee_boots_mined_blocks", () -> makeRL("carpenter_bee_boots_mined_blocks"));
     public static final RegistryObject<ResourceLocation> CARPENTER_BEE_BOOTS_WALL_HANG_TIME_RL = CUSTOM_STAT.register("carpenter_bee_boots_wall_hang_time", () -> makeRL("carpenter_bee_boots_wall_hang_time"));

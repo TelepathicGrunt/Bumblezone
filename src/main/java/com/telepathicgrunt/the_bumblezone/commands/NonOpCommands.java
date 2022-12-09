@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.commands;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -11,21 +10,23 @@ import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.arguments.EntitySummonArgument;
+import net.minecraft.commands.arguments.ResourceArgument;
 import net.minecraft.commands.synchronization.SuggestionProviders;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.RegisterCommandsEvent;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class NoneOpCommands {
+public class NonOpCommands {
     private static MinecraftServer currentMinecraftServer = null;
     private static Set<String> cachedSuggestion = new HashSet<>();
     enum DATA_ARG {
@@ -43,12 +44,12 @@ public class NoneOpCommands {
         QUEENS_DESIRED_KILLED_ENTITY_COUNTER
     }
 
-    public static void createCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void createCommand(RegisterCommandsEvent commandEvent) {
         String commandString = "bumblezone";
         String dataArg = "data_to_check";
         String entityArg = "entity_to_check";
 
-        LiteralCommandNode<CommandSourceStack> source = dispatcher.register(Commands.literal(commandString)
+        LiteralCommandNode<CommandSourceStack> source = commandEvent.getDispatcher().register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.argument(dataArg, StringArgumentType.string())
                 .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(methodSuggestions(ctx), sb))
@@ -58,21 +59,21 @@ public class NoneOpCommands {
                 })
         ));
 
-        dispatcher.register(Commands.literal(commandString).redirect(source));
+        commandEvent.getDispatcher().register(Commands.literal(commandString).redirect(source));
 
 
-        LiteralCommandNode<CommandSourceStack> source2 = dispatcher.register(Commands.literal(commandString)
+        LiteralCommandNode<CommandSourceStack> source2 = commandEvent.getDispatcher().register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.literal(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
-                .then(Commands.argument(entityArg, EntitySummonArgument.id())
+                .then(Commands.argument(entityArg, ResourceArgument.resource(commandEvent.getBuildContext(), Registries.ENTITY_TYPE))
                 .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                 .executes(cs -> {
-                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), EntitySummonArgument.getSummonableEntity(cs, entityArg), cs);
+                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), ResourceArgument.getSummonableEntityType(cs, entityArg).key().location(), cs);
                     return 1;
                 })
         )));
 
-        dispatcher.register(Commands.literal(commandString).redirect(source2));
+        commandEvent.getDispatcher().register(Commands.literal(commandString).redirect(source2));
     }
 
     private static Set<String> methodSuggestions(CommandContext<CommandSourceStack> cs) {

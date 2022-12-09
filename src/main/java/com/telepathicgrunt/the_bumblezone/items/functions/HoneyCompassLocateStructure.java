@@ -10,7 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -102,7 +102,7 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
         private static TagKey<Structure> readStructure(JsonObject jsonObject) {
             if (jsonObject.has("destination")) {
                 String s = GsonHelper.getAsString(jsonObject, "destination");
-                return TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(s));
+                return TagKey.create(Registries.STRUCTURE, new ResourceLocation(s));
             }
             else {
                 return BzTags.HONEY_COMPASS_DEFAULT_LOCATING;

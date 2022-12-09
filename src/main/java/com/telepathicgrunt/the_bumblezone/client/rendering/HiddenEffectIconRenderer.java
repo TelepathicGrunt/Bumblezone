@@ -17,7 +17,7 @@ public class HiddenEffectIconRenderer {
             @Override
             public boolean renderGuiIcon(MobEffectInstance instance, Gui gui, PoseStack poseStack, int x, int y, float z, float alpha) {
                 TextureAtlasSprite textureatlassprite = Minecraft.getInstance().getMobEffectTextures().get(instance.getEffect());
-                RenderSystem.setShaderTexture(0, textureatlassprite.atlas().location());
+                RenderSystem.setShaderTexture(0, textureatlassprite.atlasLocation());
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, instance.getAmplifier() == 0 ? 0.5f : 1f);
                 blit(poseStack, x + 3, y + 3, (int) z, 18, 18, textureatlassprite);
                 return true;

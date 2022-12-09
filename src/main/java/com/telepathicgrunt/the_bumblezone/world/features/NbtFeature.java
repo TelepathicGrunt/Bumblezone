@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class NbtFeature extends Feature<NbtFeatureConfig> {
+
+    private static final ResourceLocation EMPTY = new ResourceLocation("minecraft", "empty");
 
     public NbtFeature(Codec<NbtFeatureConfig> configFactory) {
         super(configFactory);
@@ -51,8 +54,11 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
         BlockPos position = context.origin().above(context.config().structureYOffset);
 
         StructurePlaceSettings placementsettings = (new StructurePlaceSettings()).setRotation(rotation).setRotationPivot(halfLengths).setIgnoreEntities(false);
-        Optional<StructureProcessorList> processor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().processor);
-        processor.orElse(ProcessorLists.EMPTY.value()).list().forEach(placementsettings::addProcessor); // add all processors
+        Registry<StructureProcessorList> processorListRegistry = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
+        StructureProcessorList emptyProcessor = processorListRegistry.get(EMPTY);
+
+        Optional<StructureProcessorList> processor = processorListRegistry.getOptional(context.config().processor);
+        processor.orElse(emptyProcessor).list().forEach(placementsettings::addProcessor); // add all processors
         mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ()); // pivot
         template.get().placeInWorld(context.level(), mutable, mutable, placementsettings, context.random(), Block.UPDATE_INVISIBLE);
 
@@ -60,8 +66,8 @@ public class NbtFeature extends Feature<NbtFeatureConfig> {
         // For all processors that are sensitive to neighboring blocks such as vines.
         // Post processors will place the blocks themselves so we will not do anything with the return of Structure.process
         placementsettings.clearProcessors();
-        Optional<StructureProcessorList> postProcessor = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registry.PROCESSOR_LIST_REGISTRY).getOptional(context.config().postProcessor);
-        postProcessor.orElse(ProcessorLists.EMPTY.value()).list().forEach(placementsettings::addProcessor); // add all post processors
+        Optional<StructureProcessorList> postProcessor = processorListRegistry.getOptional(context.config().postProcessor);
+        postProcessor.orElse(emptyProcessor).list().forEach(placementsettings::addProcessor); // add all post processors
         List<StructureTemplate.StructureBlockInfo> list = placementsettings.getRandomPalette(((StructureTemplateAccessor)template.get()).getBlocks(), mutable).blocks();
         StructureTemplate.processBlockInfos(context.level(), mutable, mutable, placementsettings, list);
 

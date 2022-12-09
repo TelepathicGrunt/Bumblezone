@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
@@ -34,14 +35,14 @@ public final class BiomeInfluencedNoiseSampler {
             return cachedResult;
         }
 
-        BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(biomeRegistry.getKey(
-                biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, sampler).value())).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
+        BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.get().getHolder(biomeRegistry.getKey(
+                biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, sampler).value())).map(Holder::value).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
 
         float totalHeight = 0.0F;
         for(int xOffset = -RADIUS; xOffset <= RADIUS; ++xOffset) {
             for(int zOffset = -RADIUS; zOffset <= RADIUS; ++zOffset) {
-                BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.getOptional(biomeRegistry.getKey(
-                        biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, sampler).value())).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
+                BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.get().getHolder(biomeRegistry.getKey(
+                        biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, sampler).value())).map(Holder::value).orElse(new BzBiomeHeightRegistry.BiomeTerrain(4, 1));
                 float biomeDepth = biomeTerrain.depth;
                 float weight = BIOME_WEIGHT_TABLE[xOffset + RADIUS + (zOffset + RADIUS) * ((RADIUS * 2) + 1)];
                 if(biomeDepth != centerBiomeInfo.depth) {

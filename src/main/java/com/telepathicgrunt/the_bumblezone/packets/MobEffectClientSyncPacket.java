@@ -129,7 +129,6 @@ public class MobEffectClientSyncPacket {
                     MobEffect mobeffect = MobEffect.byId(pkt.getEffectId() & 0xFF);
                     if (mobeffect != null) {
                         MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, pkt.getEffectDurationTicks(), pkt.getEffectAmplifier(), pkt.isEffectAmbient(), pkt.isEffectVisible(), pkt.effectShowsIcon());
-                        mobeffectinstance.setNoCounter(pkt.isSuperLongDuration());
                         ((LivingEntity)entity).forceAddEffect(mobeffectinstance, null);
                     }
                 }

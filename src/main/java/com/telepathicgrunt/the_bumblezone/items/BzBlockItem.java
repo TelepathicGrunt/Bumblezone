@@ -51,11 +51,4 @@ public class BzBlockItem extends BlockItem {
         }
         return placingState != null && this.canPlace(context, placingState) ? placingState : null;
     }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab category, NonNullList<ItemStack> items) {
-        if (this.allowedIn(category)) {
-            items.add(new ItemStack(this));
-        }
-    }
 }
