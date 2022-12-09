@@ -5,8 +5,6 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.AreaTransformer0;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Context;
-import net.minecraft.core.Registry;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;

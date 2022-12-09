@@ -4,8 +4,6 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.CastleTransformer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Context;
-import net.minecraft.core.Registry;
-import net.minecraft.world.level.biome.Biome;
 
 
 public record BzBiomePollinatedPillarLayer() implements CastleTransformer {

@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.joml.Vector3f;
 
 public class HoneyCrystalShardRenderer extends EntityRenderer<HoneyCrystalShardEntity> {
     public static final ResourceLocation HONEY_CRYSTAL_SHARD_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/honey_crystal_shard.png");

@@ -83,12 +83,10 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
         return LayerFactory;
     }
 
-
     public static Layer buildWorldProcedure(long seed, HolderSet<Biome> nonstandardBiomes) {
         AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, nonstandardBiomes);
         return new Layer(layerFactory);
     }
-
 
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, HolderSet<Biome> nonstandardBiomes) {
         AreaFactory<T> layer = new BzBiomeLayer(seed).run(contextFactory.apply(200L));

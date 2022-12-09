@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayer
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.QuartPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;

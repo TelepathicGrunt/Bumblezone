@@ -193,7 +193,7 @@ public class BzItems {
                 .builder(new ResourceLocation(Bumblezone.MODID, "main_tab"))
                 .displayItems((enabledFeatures, entries, operatorEnabled) ->
                         CREATIVE_MENU_ITEM_ORDERING.forEach(item -> entries.accept(item.getDefaultInstance())))
-                .icon(() -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB))
+                .icon(() -> new ItemStack(BzBlocks.HONEYCOMB_BROOD))
                 .build();
     }
 
