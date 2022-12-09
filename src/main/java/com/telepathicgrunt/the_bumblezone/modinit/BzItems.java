@@ -19,7 +19,6 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
@@ -30,7 +29,7 @@ import java.util.List;
 
 public class BzItems {
     /**
-     * creative tab to hold our block items
+     * creative tab to hold our items
      */
     public static CreativeModeTab BUMBLEZONE_CREATIVE_TAB;
 
