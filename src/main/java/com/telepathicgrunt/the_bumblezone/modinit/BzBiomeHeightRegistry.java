@@ -1,18 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
-import com.mojang.serialization.Lifecycle;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
-import net.minecraft.core.WritableRegistry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.NewRegistryEvent;
 import net.minecraftforge.registries.RegistryBuilder;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class BzBiomeHeightRegistry {

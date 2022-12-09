@@ -24,6 +24,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 
 public class BzItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Bumblezone.MODID);
@@ -109,84 +112,90 @@ public class BzItems {
     public static CreativeModeTab BUMBLEZONE_TAB;
 
     public static void registerCreativeModeTab(CreativeModeTabEvent.Register event) {
+        List<ItemStack> creativeTabItems = Stream.of(
+            BzItems.POROUS_HONEYCOMB.get(),
+            BzItems.FILLED_POROUS_HONEYCOMB.get(),
+            BzItems.EMPTY_HONEYCOMB_BROOD.get(),
+            BzItems.HONEYCOMB_BROOD.get(),
+            BzItems.STICKY_HONEY_RESIDUE.get(),
+            BzItems.STICKY_HONEY_REDSTONE.get(),
+            BzItems.HONEY_WEB.get(),
+            BzItems.REDSTONE_HONEY_WEB.get(),
+            BzItems.BEEHIVE_BEESWAX.get(),
+            BzItems.GLISTERING_HONEY_CRYSTAL.get(),
+            BzItems.HONEY_CRYSTAL.get(),
+            BzItems.CARVABLE_WAX.get(),
+            BzItems.CARVABLE_WAX_WAVY.get(),
+            BzItems.CARVABLE_WAX_FLOWER.get(),
+            BzItems.CARVABLE_WAX_CHISELED.get(),
+            BzItems.CARVABLE_WAX_DIAMOND.get(),
+            BzItems.CARVABLE_WAX_BRICKS.get(),
+            BzItems.CARVABLE_WAX_CHAINS.get(),
+            BzItems.HONEY_COCOON.get(),
+            BzItems.CRYSTALLINE_FLOWER.get(),
+            BzItems.SUGAR_INFUSED_STONE.get(),
+            BzItems.SUGAR_INFUSED_COBBLESTONE.get(),
+            BzItems.INCENSE_CANDLE.get(),
+            BzItems.SUPER_CANDLE.get(),
+            BzItems.SUPER_CANDLE_BLACK.get(),
+            BzItems.SUPER_CANDLE_BLUE.get(),
+            BzItems.SUPER_CANDLE_BROWN.get(),
+            BzItems.SUPER_CANDLE_CYAN.get(),
+            BzItems.SUPER_CANDLE_GRAY.get(),
+            BzItems.SUPER_CANDLE_GREEN.get(),
+            BzItems.SUPER_CANDLE_LIGHT_BLUE.get(),
+            BzItems.SUPER_CANDLE_LIGHT_GRAY.get(),
+            BzItems.SUPER_CANDLE_LIME.get(),
+            BzItems.SUPER_CANDLE_MAGENTA.get(),
+            BzItems.SUPER_CANDLE_ORANGE.get(),
+            BzItems.SUPER_CANDLE_PINK.get(),
+            BzItems.SUPER_CANDLE_PURPLE.get(),
+            BzItems.SUPER_CANDLE_RED.get(),
+            BzItems.SUPER_CANDLE_WHITE.get(),
+            BzItems.SUPER_CANDLE_YELLOW.get(),
+            BzItems.SUGAR_WATER_BOTTLE.get(),
+            BzItems.SUGAR_WATER_BUCKET.get(),
+            BzItems.ROYAL_JELLY_BOTTLE.get(),
+            BzItems.ROYAL_JELLY_BUCKET.get(),
+            BzItems.ROYAL_JELLY_BLOCK.get(),
+            BzItems.HONEY_BUCKET.get(),
+            BzItems.HONEY_CRYSTAL_SHARDS.get(),
+            BzItems.BEE_BREAD.get(),
+            BzItems.POLLEN_PUFF.get(),
+            BzItems.HONEY_COMPASS.get(),
+            BzItems.BEE_STINGER.get(),
+            BzItems.STINGER_SPEAR.get(),
+            BzItems.BEE_CANNON.get(),
+            BzItems.CRYSTAL_CANNON.get(),
+            BzItems.HONEY_CRYSTAL_SHIELD.get(),
+            BzItems.STINGLESS_BEE_HELMET_1.get(),
+            BzItems.STINGLESS_BEE_HELMET_2.get(),
+            BzItems.BUMBLE_BEE_CHESTPLATE_1.get(),
+            BzItems.BUMBLE_BEE_CHESTPLATE_2.get(),
+            BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.get(),
+            BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get(),
+            BzItems.HONEY_BEE_LEGGINGS_1.get(),
+            BzItems.HONEY_BEE_LEGGINGS_2.get(),
+            BzItems.CARPENTER_BEE_BOOTS_1.get(),
+            BzItems.CARPENTER_BEE_BOOTS_2.get(),
+            BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get(),
+            BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get(),
+            BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get(),
+            BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get(),
+            BzItems.HONEY_SLIME_SPAWN_EGG.get(),
+            BzItems.BEEHEMOTH_SPAWN_EGG.get(),
+            BzItems.BEE_QUEEN_SPAWN_EGG.get(),
+            BzItems.ESSENCE_OF_THE_BEES.get()
+        )
+        .map(Item::getDefaultInstance)
+        .toList();
+
         BUMBLEZONE_TAB = event.registerCreativeModeTab(new ResourceLocation(Bumblezone.MODID, "main_tab"),
                 builder -> builder.icon(() -> new ItemStack(BzItems.HONEYCOMB_BROOD.get()))
                 .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab"))
                 .withLabelColor(0xDDBB00)
                 .displayItems((features, output, hasPermissions) -> {
-                    output.accept(new ItemStack(BzItems.POROUS_HONEYCOMB.get()));
-                    output.accept(new ItemStack(BzItems.FILLED_POROUS_HONEYCOMB.get()));
-                    output.accept(new ItemStack(BzItems.EMPTY_HONEYCOMB_BROOD.get()));
-                    output.accept(new ItemStack(BzItems.HONEYCOMB_BROOD.get()));
-                    output.accept(new ItemStack(BzItems.STICKY_HONEY_RESIDUE.get()));
-                    output.accept(new ItemStack(BzItems.STICKY_HONEY_REDSTONE.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_WEB.get()));
-                    output.accept(new ItemStack(BzItems.REDSTONE_HONEY_WEB.get()));
-                    output.accept(new ItemStack(BzItems.BEEHIVE_BEESWAX.get()));
-                    output.accept(new ItemStack(BzItems.GLISTERING_HONEY_CRYSTAL.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_CRYSTAL.get()));
-                    output.accept(new ItemStack(BzItems.CARVABLE_WAX.get()));
-                    output.accept(new ItemStack(BzItems.CARVABLE_WAX_WAVY.get()));
-                    output.accept(new ItemStack(BzItems.CARVABLE_WAX_FLOWER.get()));
-                    output.accept(new ItemStack(BzItems.CARVABLE_WAX_CHISELED.get()));
-                    output.accept(new ItemStack(BzItems.CARVABLE_WAX_DIAMOND.get()));
-                    output.accept(new ItemStack(BzItems.CARVABLE_WAX_BRICKS.get()));
-                    output.accept(new ItemStack(BzItems.CARVABLE_WAX_CHAINS.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_COCOON.get()));
-                    output.accept(new ItemStack(BzItems.CRYSTALLINE_FLOWER.get()));
-                    output.accept(new ItemStack(BzItems.SUGAR_INFUSED_STONE.get()));
-                    output.accept(new ItemStack(BzItems.SUGAR_INFUSED_COBBLESTONE.get()));
-                    output.accept(new ItemStack(BzItems.INCENSE_CANDLE.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_BLACK.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_BLUE.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_BROWN.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_CYAN.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_GRAY.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_GREEN.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_LIGHT_BLUE.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_LIGHT_GRAY.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_LIME.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_MAGENTA.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_ORANGE.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_PINK.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_PURPLE.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_RED.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_WHITE.get()));
-                    output.accept(new ItemStack(BzItems.SUPER_CANDLE_YELLOW.get()));
-                    output.accept(new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()));
-                    output.accept(new ItemStack(BzItems.SUGAR_WATER_BUCKET.get()));
-                    output.accept(new ItemStack(BzItems.ROYAL_JELLY_BOTTLE.get()));
-                    output.accept(new ItemStack(BzItems.ROYAL_JELLY_BUCKET.get()));
-                    output.accept(new ItemStack(BzItems.ROYAL_JELLY_BLOCK.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_BUCKET.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_CRYSTAL_SHARDS.get()));
-                    output.accept(new ItemStack(BzItems.BEE_BREAD.get()));
-                    output.accept(new ItemStack(BzItems.POLLEN_PUFF.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_COMPASS.get()));
-                    output.accept(new ItemStack(BzItems.BEE_STINGER.get()));
-                    output.accept(new ItemStack(BzItems.STINGER_SPEAR.get()));
-                    output.accept(new ItemStack(BzItems.BEE_CANNON.get()));
-                    output.accept(new ItemStack(BzItems.CRYSTAL_CANNON.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_CRYSTAL_SHIELD.get()));
-                    output.accept(new ItemStack(BzItems.STINGLESS_BEE_HELMET_1.get()));
-                    output.accept(new ItemStack(BzItems.STINGLESS_BEE_HELMET_2.get()));
-                    output.accept(new ItemStack(BzItems.BUMBLE_BEE_CHESTPLATE_1.get()));
-                    output.accept(new ItemStack(BzItems.BUMBLE_BEE_CHESTPLATE_2.get()));
-                    output.accept(new ItemStack(BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.get()));
-                    output.accept(new ItemStack(BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_BEE_LEGGINGS_1.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_BEE_LEGGINGS_2.get()));
-                    output.accept(new ItemStack(BzItems.CARPENTER_BEE_BOOTS_1.get()));
-                    output.accept(new ItemStack(BzItems.CARPENTER_BEE_BOOTS_2.get()));
-                    output.accept(new ItemStack(BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get()));
-                    output.accept(new ItemStack(BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get()));
-                    output.accept(new ItemStack(BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get()));
-                    output.accept(new ItemStack(BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get()));
-                    output.accept(new ItemStack(BzItems.HONEY_SLIME_SPAWN_EGG.get()));
-                    output.accept(new ItemStack(BzItems.BEEHEMOTH_SPAWN_EGG.get()));
-                    output.accept(new ItemStack(BzItems.BEE_QUEEN_SPAWN_EGG.get()));
-                    output.accept(new ItemStack(BzItems.ESSENCE_OF_THE_BEES.get()));
+                    output.acceptAll(creativeTabItems);
                 }));
     }
 }
