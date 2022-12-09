@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +32,7 @@ public class HangingGardenMob extends Feature<NoneFeatureConfiguration> {
         EntityType<?> entityToSpawn = context.random().nextFloat() < 0.3f ? EntityType.BEE : null;
         if (entityToSpawn == null) {
             List<EntityType<?>> spawnableExtraEntities = new ArrayList<>();
-            Iterable<Holder<EntityType<?>>> holderIterable = Registry.ENTITY_TYPE.getTagOrEmpty(BzTags.HANGING_GARDENS_INITIAL_SPAWN_ENTITIES);
+            Iterable<Holder<EntityType<?>>> holderIterable = BuiltInRegistries.ENTITY_TYPE.getTagOrEmpty(BzTags.HANGING_GARDENS_INITIAL_SPAWN_ENTITIES);
             holderIterable.forEach(h -> spawnableExtraEntities.add(h.value()));
             if (!spawnableExtraEntities.isEmpty()) {
                 entityToSpawn = spawnableExtraEntities.get(context.random().nextInt(spawnableExtraEntities.size()));

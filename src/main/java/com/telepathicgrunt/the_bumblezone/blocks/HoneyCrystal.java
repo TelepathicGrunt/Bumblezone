@@ -190,10 +190,10 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     /**
      * Makes this block show up in creative menu to fix the asItem override side-effect
      */
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+//        items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
+//    }
 
     /**
      * Makes this block always spawn Honey Crystal Shards when broken by piston or removal of attached block

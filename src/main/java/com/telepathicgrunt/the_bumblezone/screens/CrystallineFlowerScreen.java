@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -451,7 +452,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
             int level = this.menu.xpTier.get() * BzConfig.crystallineFlowerEnchantingPowerAllowedPerTier;
             List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempBook, this.menu.xpTier.get() == 7);
-            availableEnchantments.forEach(e -> enchantmentsAvailable.add(Map.entry(Registry.ENCHANTMENT.getResourceKey(e.enchantment).get(), e)));
+            availableEnchantments.forEach(e -> enchantmentsAvailable.add(Map.entry(BuiltInRegistries.ENCHANTMENT.getResourceKey(e.enchantment).get(), e)));
             enchantmentsAvailable.removeIf(e -> this.menu.xpTier.get() <= EnchantmentUtils.getEnchantmentTierCost(e.getValue()));
             enchantmentsAvailable.sort((e1, e2) -> EnchantmentUtils.compareEnchantments(e1.getValue(), e2.getValue()));
         }

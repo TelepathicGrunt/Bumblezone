@@ -72,7 +72,7 @@ repositories {
 dependencies {
 	minecraft libs.minecraft
 	mappings( loom.layered {
-		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:v2")
+		addLayer quiltMappings.mappings("org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:intermediary-v2")
 		officialMojangMappings()
 	})
 	modImplementation libs.quilt.loader
@@ -104,8 +104,6 @@ dependencies {
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}"
 
-	//modRuntimeOnly "com.github.PepperCode1:Continuity:1.19~dev"
-
 	//modCompileOnly "curse.maven:llamarama-449083:3938753"
 	//modRuntimeOnly "curse.maven:llamarama-449083:3938753"
 
@@ -114,8 +112,8 @@ dependencies {
 	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
 	//modRuntimeOnly "curse.maven:bee_better-351600:3726160"
 
-	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:${libs.versions.commandstructures.get()}"
-	modRuntimeOnly "com.telepathicgrunt:StructureVoidToggle-Fabric:${libs.versions.structurevoidtoggle.get()}"
+	//modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:${libs.versions.commandstructures.get()}"
+	//modRuntimeOnly "com.telepathicgrunt:StructureVoidToggle-Fabric:${libs.versions.structurevoidtoggle.get()}"
 
 	//modCompileOnly "curse.maven:friends_and_foes-551364:3827720"
 	//modCompileOnly "curse.maven:bee_better-351600:3726160"
@@ -158,7 +156,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "release"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
-	mainFile.addGameVersion("1.19.2")
+	mainFile.addGameVersion("1.19.3")
 	mainFile.addModLoader("Quilt")
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("qsl")
@@ -174,7 +172,7 @@ modrinth {
 	uploadFile = remapJar
 	changelog = changelogText
 	versionType = "RELEASE"
-	gameVersions = ["1.19.2"]
+	gameVersions = ["1.19.3"]
 	loaders = ["quilt"]
 	dependencies {
 		required.project "qsl"

@@ -156,10 +156,6 @@
     {
       "id": "infernalexp:warpbeetle",
       "required": false
-    },
-    {
-      "id": "crittersandcompanions:dragonfly",
-      "required": false
     }
   ]
 }

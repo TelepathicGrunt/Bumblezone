@@ -120,10 +120,6 @@
     {
       "id": "ob_aquamirae:golden_moth",
       "required": false
-    },
-    {
-      "id": "crittersandcompanions:leaf_insect",
-      "required": false
     }
   ]
 }

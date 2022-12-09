@@ -37,6 +37,7 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
@@ -89,10 +90,10 @@ public class BumblezoneClient implements ClientModInitializer {
     }
 
     private void registerParticleFactories() {
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.POLLEN_PARTICLE, PollenPuffParticle.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.ROYAL_JELLY_PARTICLE, RoyalJellyParticle.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.SPARKLE_PARTICLE, SparkleParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.POLLEN_PARTICLE, PollenPuffParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.ROYAL_JELLY_PARTICLE, RoyalJellyParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.SPARKLE_PARTICLE, SparkleParticle.Factory::new);
     }
 
     private void registerFluidRenders() {
