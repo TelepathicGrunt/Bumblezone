@@ -1,4 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
+
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -12,7 +13,6 @@ import mezz.jei.api.fabric.ingredients.fluids.IJeiFluidIngredient;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

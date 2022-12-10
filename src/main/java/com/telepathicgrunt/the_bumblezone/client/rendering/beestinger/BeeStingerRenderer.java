@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.joml.Vector3f;
 
 public class BeeStingerRenderer extends EntityRenderer<BeeStingerEntity> {
     public static final ResourceLocation BEE_STINGER_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/bee_stinger.png");

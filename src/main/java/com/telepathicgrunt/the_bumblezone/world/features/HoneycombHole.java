@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfi
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
@@ -55,11 +54,13 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
         StructurePlaceSettings structurePlacementData = (new StructurePlaceSettings()).setRotation(Rotation.NONE).setRotationPivot(halfLengths).setIgnoreEntities(false);
         Registry<StructureProcessorList> processorListRegistry = context.level().getLevel().getServer().registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
-        Optional<StructureProcessorList> processor = processorListRegistry.getOptional(context.config().processor);
         StructureProcessorList emptyProcessor = processorListRegistry.get(EMPTY);
+
+        Optional<StructureProcessorList> processor = processorListRegistry.getOptional(context.config().processor);
         processor.orElse(emptyProcessor).list().forEach(structurePlacementData::addProcessor); // add all processors
         mutable.set(position).move(-halfLengths.getX(), 0, -halfLengths.getZ());
         template.placeInWorld(context.level(), mutable, mutable, structurePlacementData, context.random(), Block.UPDATE_INVISIBLE);
+
         // Post-processors
         // For all processors that are sensitive to neighboring blocks such as vines.
         // Post processors will place the blocks themselves so we will not do anything with the return of Structure.process
