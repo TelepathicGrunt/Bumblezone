@@ -1,3 +1,9 @@
+### **(V.6.5.2 Changes) (1.19.3 Minecraft)**
+
+##### Mod Compat:
+Brought back Incense Candle recipe cleanup for REI, JEI, and EMI.
+
+
 ### **(V.6.5.1 Changes) (1.19.3 Minecraft)**
 
 ##### Items:
