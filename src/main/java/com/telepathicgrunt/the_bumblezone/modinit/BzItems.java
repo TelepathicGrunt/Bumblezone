@@ -25,6 +25,7 @@ import net.minecraft.world.item.SpawnEggItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 public class BzItems {
@@ -198,91 +199,96 @@ public class BzItems {
                 .build();
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS)
-                .register(new ResourceLocation(Bumblezone.MODID, "additions_redstone_blocks"),
-                        (itemGroupEntries) -> {
-                            itemGroupEntries.accept(STICKY_HONEY_REDSTONE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(REDSTONE_HONEY_WEB, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(ROYAL_JELLY_BLOCK, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                        });
+            .register(new ResourceLocation(Bumblezone.MODID, "additions_redstone_blocks"),
+                (itemGroupEntries) -> itemGroupEntries.acceptAll(Stream.of(
+                    STICKY_HONEY_REDSTONE,
+                    REDSTONE_HONEY_WEB,
+                    ROYAL_JELLY_BLOCK
+                ).map(Item::getDefaultInstance).toList())
+            );
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS)
-                .register(new ResourceLocation(Bumblezone.MODID, "additions_functional_blocks"),
-                        (itemGroupEntries) -> {
-                            itemGroupEntries.accept(HONEYCOMB_BROOD, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(GLISTERING_HONEY_CRYSTAL, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(HONEY_COCOON, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(CRYSTALLINE_FLOWER, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(STICKY_HONEY_RESIDUE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(HONEY_WEB, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(INCENSE_CANDLE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_WHITE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_LIGHT_GRAY, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_GRAY, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_BLACK, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_BROWN, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_RED, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_ORANGE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_YELLOW, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_LIME, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_GREEN, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_CYAN, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_LIGHT_BLUE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_BLUE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_PURPLE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_MAGENTA, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_PINK, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                        });
+            .register(new ResourceLocation(Bumblezone.MODID, "additions_functional_blocks"),
+                (itemGroupEntries) -> itemGroupEntries.acceptAll(Stream.of(
+                    HONEYCOMB_BROOD,
+                    GLISTERING_HONEY_CRYSTAL,
+                    HONEY_COCOON,
+                    CRYSTALLINE_FLOWER,
+                    STICKY_HONEY_RESIDUE,
+                    HONEY_WEB,
+                    INCENSE_CANDLE,
+                    SUPER_CANDLE,
+                    SUPER_CANDLE_WHITE,
+                    SUPER_CANDLE_LIGHT_GRAY,
+                    SUPER_CANDLE_GRAY,
+                    SUPER_CANDLE_BLACK,
+                    SUPER_CANDLE_BROWN,
+                    SUPER_CANDLE_RED,
+                    SUPER_CANDLE_ORANGE,
+                    SUPER_CANDLE_YELLOW,
+                    SUPER_CANDLE_LIME,
+                    SUPER_CANDLE_GREEN,
+                    SUPER_CANDLE_CYAN,
+                    SUPER_CANDLE_LIGHT_BLUE,
+                    SUPER_CANDLE_BLUE,
+                    SUPER_CANDLE_PURPLE,
+                    SUPER_CANDLE_MAGENTA,
+                    SUPER_CANDLE_PINK
+                ).map(Item::getDefaultInstance).toList())
+            );
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS)
-                .register(new ResourceLocation(Bumblezone.MODID, "additions_colored_blocks"),
-                        (itemGroupEntries) -> {
-                            itemGroupEntries.accept(SUPER_CANDLE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_WHITE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_LIGHT_GRAY, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_GRAY, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_BLACK, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_BROWN, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_RED, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_ORANGE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_YELLOW, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_LIME, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_GREEN, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_CYAN, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_LIGHT_BLUE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_BLUE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_PURPLE, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_MAGENTA, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(SUPER_CANDLE_PINK, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                        });
+            .register(new ResourceLocation(Bumblezone.MODID, "additions_colored_blocks"),
+                (itemGroupEntries) -> itemGroupEntries.acceptAll(Stream.of(
+                    SUPER_CANDLE,
+                    SUPER_CANDLE_WHITE,
+                    SUPER_CANDLE_LIGHT_GRAY,
+                    SUPER_CANDLE_GRAY,
+                    SUPER_CANDLE_BLACK,
+                    SUPER_CANDLE_BROWN,
+                    SUPER_CANDLE_RED,
+                    SUPER_CANDLE_ORANGE,
+                    SUPER_CANDLE_YELLOW,
+                    SUPER_CANDLE_LIME,
+                    SUPER_CANDLE_GREEN,
+                    SUPER_CANDLE_CYAN,
+                    SUPER_CANDLE_LIGHT_BLUE,
+                    SUPER_CANDLE_BLUE,
+                    SUPER_CANDLE_PURPLE,
+                    SUPER_CANDLE_MAGENTA,
+                    SUPER_CANDLE_PINK
+                ).map(Item::getDefaultInstance).toList())
+            );
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT)
-                .register(new ResourceLocation(Bumblezone.MODID, "additions_combat_items"),
-                        (itemGroupEntries) -> {
-                            itemGroupEntries.accept(BEE_STINGER, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(STINGER_SPEAR, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(BEE_CANNON, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(CRYSTAL_CANNON, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(HONEY_CRYSTAL_SHIELD, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(STINGLESS_BEE_HELMET_1, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(STINGLESS_BEE_HELMET_2, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(BUMBLE_BEE_CHESTPLATE_1, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(BUMBLE_BEE_CHESTPLATE_2, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(TRANS_BUMBLE_BEE_CHESTPLATE_1, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(TRANS_BUMBLE_BEE_CHESTPLATE_2, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(HONEY_BEE_LEGGINGS_1, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(HONEY_BEE_LEGGINGS_2, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(CARPENTER_BEE_BOOTS_1, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(CARPENTER_BEE_BOOTS_2, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                        });
+            .register(new ResourceLocation(Bumblezone.MODID, "additions_combat_items"),
+                (itemGroupEntries) -> itemGroupEntries.acceptAll(Stream.of(
+                    BEE_STINGER,
+                    STINGER_SPEAR,
+                    BEE_CANNON,
+                    CRYSTAL_CANNON,
+                    HONEY_CRYSTAL_SHIELD,
+                    STINGLESS_BEE_HELMET_1,
+                    STINGLESS_BEE_HELMET_2,
+                    BUMBLE_BEE_CHESTPLATE_1,
+                    BUMBLE_BEE_CHESTPLATE_2,
+                    TRANS_BUMBLE_BEE_CHESTPLATE_1,
+                    TRANS_BUMBLE_BEE_CHESTPLATE_2,
+                    HONEY_BEE_LEGGINGS_1,
+                    HONEY_BEE_LEGGINGS_2,
+                    CARPENTER_BEE_BOOTS_1,
+                    CARPENTER_BEE_BOOTS_2
+                ).map(Item::getDefaultInstance).toList())
+            );
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS)
-                .register(new ResourceLocation(Bumblezone.MODID, "additions_spawn_eggs"),
-                        (itemGroupEntries) -> {
-                            itemGroupEntries.accept(HONEY_SLIME_SPAWN_EGG, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(BEEHEMOTH_SPAWN_EGG, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                            itemGroupEntries.accept(BEE_QUEEN_SPAWN_EGG, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                        });
+            .register(new ResourceLocation(Bumblezone.MODID, "additions_spawn_eggs"),
+                (itemGroupEntries) -> itemGroupEntries.acceptAll(Stream.of(
+                    HONEY_SLIME_SPAWN_EGG,
+                    BEEHEMOTH_SPAWN_EGG,
+                    BEE_QUEEN_SPAWN_EGG
+                ).map(Item::getDefaultInstance).toList())
+            );
 
     }
 
