@@ -203,16 +203,16 @@ public class BzItems {
 
     public static void addToCreativeModeTabs(CreativeModeTabEvent.BuildContents event) {
         
-        event.register(CreativeModeTabs.REDSTONE_BLOCKS, (features, output, hasPermissions) -> 
-            output.acceptAll(Stream.of(
+        if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
+            event.acceptAll(Stream.of(
                 STICKY_HONEY_REDSTONE,
                 REDSTONE_HONEY_WEB,
                 ROYAL_JELLY_BLOCK
-            ).map(item -> item.get().getDefaultInstance()).toList())
-        );
-        
-        event.register(CreativeModeTabs.FUNCTIONAL_BLOCKS, (features, output, hasPermissions) ->
-            output.acceptAll(Stream.of(
+            ).map(item -> item.get().getDefaultInstance()).toList());
+        }
+
+        if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.acceptAll(Stream.of(
                 HONEYCOMB_BROOD,
                 GLISTERING_HONEY_CRYSTAL,
                 HONEY_COCOON,
@@ -237,11 +237,11 @@ public class BzItems {
                 SUPER_CANDLE_PURPLE,
                 SUPER_CANDLE_MAGENTA,
                 SUPER_CANDLE_PINK
-            ).map(item -> item.get().getDefaultInstance()).toList())
-        );
+            ).map(item -> item.get().getDefaultInstance()).toList());
+        }
 
-        event.register(CreativeModeTabs.COLORED_BLOCKS, (features, output, hasPermissions) ->
-            output.acceptAll(Stream.of(
+        if (event.getTab() == CreativeModeTabs.COLORED_BLOCKS) {
+            event.acceptAll(Stream.of(
                 SUPER_CANDLE,
                 SUPER_CANDLE_WHITE,
                 SUPER_CANDLE_LIGHT_GRAY,
@@ -259,11 +259,11 @@ public class BzItems {
                 SUPER_CANDLE_PURPLE,
                 SUPER_CANDLE_MAGENTA,
                 SUPER_CANDLE_PINK
-            ).map(item -> item.get().getDefaultInstance()).toList())
-        );
+            ).map(item -> item.get().getDefaultInstance()).toList());
+        }
 
-        event.register(CreativeModeTabs.COMBAT, (features, output, hasPermissions) ->
-            output.acceptAll(Stream.of(
+        if (event.getTab() == CreativeModeTabs.COMBAT) {
+            event.acceptAll(Stream.of(
                 BEE_STINGER,
                 STINGER_SPEAR,
                 BEE_CANNON,
@@ -279,15 +279,15 @@ public class BzItems {
                 HONEY_BEE_LEGGINGS_2,
                 CARPENTER_BEE_BOOTS_1,
                 CARPENTER_BEE_BOOTS_2
-            ).map(item -> item.get().getDefaultInstance()).toList())
-        );
+            ).map(item -> item.get().getDefaultInstance()).toList());
+        }
 
-        event.register(CreativeModeTabs.SPAWN_EGGS, (features, output, hasPermissions) ->
-            output.acceptAll(Stream.of(
+        if (event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
+            event.acceptAll(Stream.of(
                 HONEY_SLIME_SPAWN_EGG,
                 BEEHEMOTH_SPAWN_EGG,
                 BEE_QUEEN_SPAWN_EGG
-            ).map(item -> item.get().getDefaultInstance()).toList())
-        );
+            ).map(item -> item.get().getDefaultInstance()).toList());
+        }
     }
 }
