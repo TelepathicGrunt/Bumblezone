@@ -32,9 +32,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class BeeInteractivity {
 

@@ -10,7 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -22,9 +22,11 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.common.util.RecipeMatcher;
@@ -172,7 +174,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         blockEntityTag.putInt(IncenseCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
         blockEntityTag.putInt(IncenseCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
         blockEntityTag.putInt(IncenseCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
-        blockEntityTag.putString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG, Registry.MOB_EFFECT.getKey(chosenEffect).toString());
+        blockEntityTag.putString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
         blockEntityTag.putBoolean(IncenseCandleBlockEntity.INFINITE_TAG, false);
         blockEntityTag.putInt(IncenseCandleBlockEntity.RANGE_TAG, 3 + (splashCount * 2));
         if (chosenEffect.isInstantenous()) {
@@ -322,6 +324,16 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
     @Override
     public ResourceLocation getId() {
         return this.id;
+    }
+
+    @Override
+    public RecipeType<?> getType() {
+        return RecipeType.CRAFTING;
+    }
+
+    @Override
+    public CraftingBookCategory category() {
+        return CraftingBookCategory.MISC;
     }
 
     public static class Serializer implements RecipeSerializer<IncenseCandleRecipe> {

@@ -10,7 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -510,7 +510,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
             availableEnchantments.removeIf(e -> xpTier.get() <= EnchantmentUtils.getEnchantmentTierCost(e));
             availableEnchantments.sort(
-                    Comparator.comparing((EnchantmentInstance a) -> Registry.ENCHANTMENT.getResourceKey(a.enchantment).get())
+                    Comparator.comparing((EnchantmentInstance a) -> BuiltInRegistries.ENCHANTMENT.getResourceKey(a.enchantment).get())
                     .thenComparingInt(a -> a.level));
             if (availableEnchantments.size() > selectedEnchantment) {
                 EnchantmentInstance enchantmentForItem = availableEnchantments.get(selectedEnchantment);

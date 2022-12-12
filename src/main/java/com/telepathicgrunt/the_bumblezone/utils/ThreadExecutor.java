@@ -8,7 +8,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 
@@ -28,7 +27,7 @@ public class ThreadExecutor {
     private static final AtomicInteger runningSearches = new AtomicInteger(0);
     private static final AtomicInteger queuedSearches = new AtomicInteger(0);
 
-    private static void setupExecutorService() {
+    public static void setupExecutorService() {
         shutdownExecutorService();
         LOCATING_EXECUTOR_SERVICE = Executors.newFixedThreadPool(
                 3,
@@ -49,10 +48,6 @@ public class ThreadExecutor {
         if (LOCATING_EXECUTOR_SERVICE != null) {
             LOCATING_EXECUTOR_SERVICE.shutdown();
         }
-    }
-
-    public static void handleServerAboutToStartEvent(ServerAboutToStartEvent ignoredEvent) {
-        setupExecutorService();
     }
 
     public static void handleServerStoppingEvent(ServerStoppingEvent ignoredEvent) {

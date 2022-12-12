@@ -8,8 +8,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.ConditionBasedPlacement;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.MatchingBlocksPredicate;
@@ -32,8 +32,8 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.List;
 
 public class BuzzierBeesCompatRegs {
-    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, Bumblezone.MODID);
-    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Bumblezone.MODID);
+    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registries.CONFIGURED_FEATURE, Bumblezone.MODID);
+    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registries.PLACED_FEATURE, Bumblezone.MODID);
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> CRYSTALIZED_HONEY_CF = CONFIGURED_FEATURES.register("buzzier_bees_crystallized_honey_cf", () ->
         new ConfiguredFeature<>(Feature.ORE,

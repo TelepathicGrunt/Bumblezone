@@ -33,13 +33,13 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
@@ -62,8 +62,6 @@ import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-
 @Mod(Bumblezone.MODID)
 public class Bumblezone{
 
@@ -73,7 +71,6 @@ public class Bumblezone{
 
     public Bumblezone() {
         BzTags.initTags();
-        BzBiomeHeightRegistry.initBiomeHeightRegistry();
 
         //Events
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -103,7 +100,6 @@ public class Bumblezone{
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
-        forgeBus.addListener(ThreadExecutor::handleServerAboutToStartEvent);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
         forgeBus.addListener(this::registerDatapackListener);
         forgeBus.addListener(this::serverAboutToStart);
@@ -113,8 +109,11 @@ public class Bumblezone{
         modEventBus.addListener(EventPriority.NORMAL, this::setup);
         modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
         modEventBus.addListener(EventPriority.NORMAL, this::setupBuiltInResourcePack);
+        modEventBus.addListener(EventPriority.NORMAL, BzItems::registerCreativeModeTab);
+        modEventBus.addListener(EventPriority.NORMAL, BzItems::addToCreativeModeTabs);
         modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
         modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntitySpawnRestrictions);
+        modEventBus.addListener(EventPriority.NORMAL,BzBiomeHeightRegistry::createNewRegistry);
         BzItems.ITEMS.register(modEventBus);
         BzBlocks.BLOCKS.register(modEventBus);
         BzFluids.FLUIDS.register(modEventBus);
@@ -168,6 +167,7 @@ public class Bumblezone{
 
     private void setup(final FMLCommonSetupEvent event) {
     	event.enqueueWork(() -> {
+            BzBiomeHeightRegistry.initBiomeHeightRegistry();
             BzCriterias.registerCriteriaTriggers();
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
@@ -195,25 +195,17 @@ public class Bumblezone{
     }
 
     private void serverAboutToStart(final ServerAboutToStartEvent event) {
-        PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenSettings().seed());
+        PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenOptions().seed());
+        BiomeRegistryHolder.setupBiomeRegistry(event.getServer());
+        ThreadExecutor.setupExecutorService();
     }
 
     private void setupBuiltInResourcePack(final AddPackFindersEvent event) {
-        try {
-            if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-                var resourcePath = ModList.get().getModFileById(MODID).getFile().findResource("resourcepacks/anti_tropophobia");
-                var pack = new PathPackResources(ModList.get().getModFileById(MODID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-                var metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
-                if (metadataSection != null) {
-                    event.addRepositorySource((packConsumer, packConstructor) ->
-                            packConsumer.accept(packConstructor.create(
-                                    "builtin/the_bumblezone", Component.literal("Bumblezone - Anti Trypophobia"), false,
-                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
-                }
-            }
-        }
-        catch(IOException ex) {
-            throw new RuntimeException(ex);
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            var resourcePath = ModList.get().getModFileById(MODID).getFile().findResource("resourcepacks/anti_tropophobia");
+            var pack = Pack.readMetaAndCreate("builtin/add_pack_finders_test", Component.literal("Bumblezone - Anti Trypophobia"), false,
+                    (path) -> new PathPackResources(path, true, resourcePath), PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
+            event.addRepositorySource((packConsumer) -> packConsumer.accept(pack));
         }
     }
 }

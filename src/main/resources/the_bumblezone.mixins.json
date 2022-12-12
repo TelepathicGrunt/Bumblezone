@@ -5,7 +5,6 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [
-    "world.ChunkGeneratorAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
