@@ -118,7 +118,7 @@ public class BzItems {
         BUMBLEZONE_TAB = event.registerCreativeModeTab(new ResourceLocation(Bumblezone.MODID, "main_tab"),
             builder -> builder.icon(() -> HONEYCOMB_BROOD.get().getDefaultInstance())
             .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab"))
-            .withLabelColor(0xDDBB00)
+            .withLabelColor(0x664400)
             .displayItems((features, output, hasPermissions) ->
                 output.acceptAll(Stream.of(
                         POROUS_HONEYCOMB,

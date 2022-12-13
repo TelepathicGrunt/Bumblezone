@@ -112,9 +112,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     public record BiomeNoise() implements DensityFunction.SimpleFunction {
         public static final KeyDispatchDataCodec<BiomeNoise> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(new BiomeNoise()));
         public static Climate.Sampler sampler;
-        public static Registry<Biome> biomeRegistry;
         public static BiomeSource biomeSource;
-
 
         @Override
         public double compute(FunctionContext functionContext) {
@@ -123,7 +121,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                     functionContext.blockZ(),
                     sampler,
                     biomeSource,
-                    biomeRegistry);
+                    BiomeRegistryHolder.BIOME_REGISTRY);
         }
 
         @Override
@@ -259,7 +257,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     public void buildSurface(ChunkAccess chunkAccess, WorldGenerationContext worldGenerationContext, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, Registry<Biome> biomeRegistry, Blender blender) {
         NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((noiseChunk) -> this.createNoiseChunk(noiseChunk, structureManager, blender, randomState));
-        NoiseGeneratorSettings noisegeneratorsettings = this.settings.get();
+        NoiseGeneratorSettings noisegeneratorsettings = this.settings.value();
         randomState.surfaceSystem().buildSurface(randomState, biomeManager, biomeRegistry, noisegeneratorsettings.useLegacyRandomSource(), worldGenerationContext, chunkAccess, noisechunk, noisegeneratorsettings.surfaceRule());
     }
 
