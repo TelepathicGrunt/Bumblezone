@@ -3,6 +3,8 @@
 ##### Mod Compat:
 Brought back Incense Candle recipe cleanup for REI, JEI, and EMI.
 
+Fixed Carvable Wax Advancement not checking for Chain pattern Carvable Wax.
+
 
 ### **(V.6.5.1 Changes) (1.19.3 Minecraft)**
 
