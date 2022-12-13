@@ -1,3 +1,9 @@
+### **(V.6.5.2 Changes) (1.19.3 Minecraft)**
+
+##### Advancement:
+Fixed Carvable Wax Advancement not checking for Chain pattern Carvable Wax.
+
+
 ### **(V.6.5.1 Changes) (1.19.3 Minecraft)**
 
 ##### Items:
