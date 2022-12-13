@@ -137,6 +137,7 @@ public class Bumblezone{
         BzBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         BzPlacements.PLACEMENT_MODIFIER.register(modEventBus);
         BzProcessors.STRUCTURE_PROCESSOR.register(modEventBus);
+        BzBiomeHeightRegistry.BIOME_HEIGHT.register(modEventBus);
         BzBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.register(modEventBus);
 
@@ -167,7 +168,6 @@ public class Bumblezone{
 
     private void setup(final FMLCommonSetupEvent event) {
     	event.enqueueWork(() -> {
-            BzBiomeHeightRegistry.initBiomeHeightRegistry();
             BzCriterias.registerCriteriaTriggers();
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
