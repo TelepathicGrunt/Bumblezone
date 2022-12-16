@@ -1,7 +1,9 @@
-### **(V.6.5.3 Changes) (1.19.3 Minecraft)**
+### **(V.6.6.0 Changes) (1.19.3 Minecraft)**
 
 ##### Structures:
 Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
+
+Added Bee House structure!
 
 ##### Tags:
 Organized Bumblezone tags much better into sub folders. Changes are:
@@ -72,7 +74,7 @@ Organized Bumblezone tags much better into sub folders. Changes are:
 
 `the_bumblezone:honey_compass_default_locating` -> `the_bumblezone:honey_compass/default_locating` (structure tag)
 
-`the_bumblezone:honey_compass_from_hive_temple` -> `the_bumblezone:honey_compass/from_hive_temple` (structure tag)
+`the_bumblezone:honey_compass_from_hive_temple` -> `the_bumblezone:honey_compass/misc_locating` (structure tag)
 
 `the_bumblezone:honey_compass_throne_locating` -> `the_bumblezone:honey_compass/throne_locating` (structure tag)
 
