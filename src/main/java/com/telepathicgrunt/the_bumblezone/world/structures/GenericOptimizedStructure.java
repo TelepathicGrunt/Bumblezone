@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.structures;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -67,7 +68,7 @@ public class GenericOptimizedStructure extends Structure {
                 false,
                 this.projectStartToHeightmap,
                 this.maxDistanceFromCenter,
-                (structurePiecesBuilder, pieces) -> {});
+                (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces));
     }
 
     @Override
