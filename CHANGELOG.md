@@ -5,9 +5,6 @@ Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
 
 Added Bee House structure!
 
-##### Misc:
-Fixed versioning. 1.19.3 Bumblezone was supposed to be 6.5.0...
-
 ##### Tags:
 Organized Bumblezone tags much better into sub folders. Changes are:
 
