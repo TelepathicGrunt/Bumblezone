@@ -63,21 +63,21 @@ Organized Bumblezone tags much better into sub folders. Changes are:
 
 `the_bumblezone:stinger_spear_items` -> `the_bumblezone:repair_items/stinger_spear` (item tag)
 
-_`the_bumblezone:consumable_candle_lighting_items` -> `the_bumblezone:candle_lightables/consumable` (item tag)
+`the_bumblezone:consumable_candle_lighting_items` -> `the_bumblezone:candle_lightables/consumable` (item tag)
 
-_`the_bumblezone:damagable_candle_lighting_items` -> `the_bumblezone:candle_lightables/damageable` (item tag)
+`the_bumblezone:damagable_candle_lighting_items` -> `the_bumblezone:candle_lightables/damageable` (item tag)
 
-_`the_bumblezone:infinite_candle_lighting_items` -> `the_bumblezone:candle_lightables/infinite` (item tag)
+`the_bumblezone:infinite_candle_lighting_items` -> `the_bumblezone:candle_lightables/infinite` (item tag)
 
-_`the_bumblezone:wrath_activating_items_when_picked_up` -> `the_bumblezone:bee_aggression_in_dimension/wrath_activating_items_when_picked_up` (item tag)
+`the_bumblezone:wrath_activating_items_when_picked_up` -> `the_bumblezone:bee_aggression_in_dimension/wrath_activating_items_when_picked_up` (item tag)
 
-_`the_bumblezone:bee_feeding_items` -> `the_bumblezone:bee_feedable_items` (item tag)
+`the_bumblezone:bee_feeding_items` -> `the_bumblezone:bee_feedable_items` (item tag)
 
-_`the_bumblezone:honey_compass_default_locating` -> `the_bumblezone:honey_compass/default_locating` (structure tag)
+`the_bumblezone:honey_compass_default_locating` -> `the_bumblezone:honey_compass/default_locating` (structure tag)
 
-_`the_bumblezone:honey_compass_from_hive_temple` -> `the_bumblezone:honey_compass/from_hive_temple` (structure tag)
+`the_bumblezone:honey_compass_from_hive_temple` -> `the_bumblezone:honey_compass/from_hive_temple` (structure tag)
 
-_`the_bumblezone:honey_compass_throne_locating` -> `the_bumblezone:honey_compass/throne_locating` (structure tag)
+`the_bumblezone:honey_compass_throne_locating` -> `the_bumblezone:honey_compass/throne_locating` (structure tag)
 
 
 ### **(V.6.4.10 Changes) (1.19.3 Minecraft)**

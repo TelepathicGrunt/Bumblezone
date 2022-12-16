@@ -38,8 +38,8 @@ public class BzTags {
     public static final TagKey<Item> CRYSTAL_CANNON_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/crystal_cannon"));
     public static final TagKey<Item> BEE_FEEDING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_feedable_items"));
     public static final TagKey<Item> WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/wrath_activating_items_when_picked_up"));
-    public static final TagKey<Item> HONEY_BUCKETS = TagKey.create(Registries.ITEM, new ResourceLocation("forge", "buckets/honey"));
-    public static final TagKey<Item> ROYAL_JELLY_BUCKETS = TagKey.create(Registries.ITEM, new ResourceLocation("forge", "buckets/royal_jelly"));
+    public static final TagKey<Item> HONEY_BUCKETS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "buckets/honey"));
+    public static final TagKey<Item> ROYAL_JELLY_BUCKETS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "buckets/royal_jelly"));
     public static final TagKey<Item> SHULKER_BOXES = TagKey.create(Registries.ITEM, new ResourceLocation("forge", "shulker_boxes"));
     public static final TagKey<Item> SUPER_CANDLES_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candles"));
     public static final TagKey<Item> DAMAGEABLE_CANDLE_LIGHTING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "candle_lightables/damageable"));
