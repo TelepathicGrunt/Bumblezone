@@ -6,12 +6,10 @@
     "#minecraft:planks",
     "#minecraft:logs",
     "#minecraft:leaves",
-    "#minecraft:wooden_doors",
-    "#minecraft:wooden_trapdoors",
     "#minecraft:wooden_slabs",
     "#minecraft:wooden_stairs",
     "#minecraft:beehives",
-    "#the_bumblezone:honeycombs_that_features_can_carve",
+    "#the_bumblezone:worldgen_checks/honeycombs_that_features_can_carve",
     {
       "id": "#forge:storage_blocks/honeycombs",
       "required": false
@@ -26,14 +24,6 @@
     },
     {
       "id": "#c:storage_blocks/wax",
-      "required": false
-    },
-    {
-      "id": "resourcefulbees:waxed_door",
-      "required": false
-    },
-    {
-      "id": "resourcefulbees:waxed_trapdoor",
       "required": false
     },
     {

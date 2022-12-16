@@ -173,7 +173,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
                     lightCandle(level, blockPos, player);
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                else if (handItem.is(BzTags.DAMAGABLE_CANDLE_LIGHTING_ITEMS)) {
+                else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
                     boolean successfulLit = lightCandle(level, blockPos, player);
                     if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
                         handItem.hurt(1, level.getRandom(), serverPlayer);
