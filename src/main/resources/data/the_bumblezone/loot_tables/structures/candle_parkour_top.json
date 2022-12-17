@@ -26,7 +26,7 @@
         {
           "name": "the_bumblezone:carvable_wax",
           "type": "minecraft:item",
-          "weight": 3
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",

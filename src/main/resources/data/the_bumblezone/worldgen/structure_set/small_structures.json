@@ -11,6 +11,10 @@
     {
       "structure": "the_bumblezone:candle_parkour",
       "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:battle_cubes",
+      "weight": 1
     }
   ],
   "placement": {

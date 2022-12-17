@@ -190,17 +190,6 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:levitation\"}"
-            }
-          ]
-        },
-        {
-          "name": "minecraft:potion",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
               "tag": "{Potion:\"minecraft:strong_leaping\"}"
             }
           ]
