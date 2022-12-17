@@ -7,6 +7,8 @@ Added Bee House structure!
 
 Added Candle Parkour structure!
 
+Added Battle Cubes structure!
+
 ##### Misc:
 Fixed bug where I was checking for crouching pose instead of if player was holding down shift key. (isCrouching vs isShiftKeyDown)
  Should make it so stuff like Carpenter Bees Boots do not mine automatically if you are in a 1.5 block high space.
