@@ -5,6 +5,8 @@ Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
 
 Added Bee House structure!
 
+Added Candle Parkour structure!
+
 ##### Tags:
 Organized Bumblezone tags much better into sub folders. Changes are:
 
