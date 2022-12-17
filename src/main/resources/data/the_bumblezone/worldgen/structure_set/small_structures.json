@@ -7,6 +7,10 @@
     {
       "structure": "the_bumblezone:bee_house",
       "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:candle_parkour",
+      "weight": 1
     }
   ],
   "placement": {
