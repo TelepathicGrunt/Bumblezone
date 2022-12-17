@@ -46,13 +46,13 @@ public class HoneyBeeLeggings extends BeeArmor {
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
 
         if(!world.isClientSide()) {
-            if(player.isCrouching() && isPollinated) {
+            if(player.isShiftKeyDown() && isPollinated) {
                 removeAndSpawnPollen(world, player.position(), itemstack);
                 if(!world.isClientSide() && random.nextFloat() < 0.1f) {
                     itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
                 }
             }
-            else if(!player.isCrouching() && !isPollinated && isSprinting) {
+            else if(!player.isShiftKeyDown() && !isPollinated && isSprinting) {
                 BlockState withinBlock = world.getBlockState(player.blockPosition());
                 if(withinBlock.is(BzBlocks.PILE_OF_POLLEN)) {
                     setPollinated(itemstack);
