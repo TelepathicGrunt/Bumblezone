@@ -7,6 +7,11 @@ Added Bee House structure!
 
 Added Candle Parkour structure!
 
+##### Misc:
+Fixed bug where I was checking for crouching pose instead of if player was holding down shift key. (isCrouching vs isShiftKeyDown)
+ Should make it so stuff like Carpenter Bees Boots do not mine automatically if you are in a 1.5 block high space.
+ It will only mine if you specifically are holding down crouching key. Same with helmet and leggings behaviors.
+
 ##### Tags:
 Organized Bumblezone tags much better into sub folders. Changes are:
 

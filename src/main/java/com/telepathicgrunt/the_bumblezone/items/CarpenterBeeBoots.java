@@ -55,7 +55,7 @@ public class CarpenterBeeBoots extends BeeArmor {
 
             double xInBlock = Math.abs(player.position().x()) % 1;
             double zInBlock = Math.abs(player.position().z()) % 1;
-            if (player.isCrouching() &&
+            if (player.isShiftKeyDown() &&
                 player.getLookAngle().y() < -0.9d &&
                 xInBlock > 0.2d &&
                 xInBlock < 0.8d &&
@@ -158,7 +158,7 @@ public class CarpenterBeeBoots extends BeeArmor {
             !player.onClimbable() &&
             !player.isOnGround() &&
             !player.isInWater() &&
-            !player.isCrouching() &&
+            !player.isShiftKeyDown() &&
             playerDeltaY <= 0 &&
             playerDeltaY >= -1.2f &&
             hangCooldownTimer <= 0)

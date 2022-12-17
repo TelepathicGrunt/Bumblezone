@@ -176,7 +176,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
-        if(!entity.isCrouching() && !beeLeggings.isEmpty()) {
+        if(!entity.isShiftKeyDown() && !beeLeggings.isEmpty()) {
             HoneyBeeLeggings.setPollinated(beeLeggings);
         }
     }

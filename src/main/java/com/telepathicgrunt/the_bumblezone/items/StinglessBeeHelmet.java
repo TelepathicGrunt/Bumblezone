@@ -83,7 +83,7 @@ public class StinglessBeeHelmet extends BeeArmor {
             ALL_BEE_ARMOR_ON_CLIENTSIDE = isAllBeeArmorOn;
             decrementHighlightingCounter();
 
-            if (player.isCrouching()) {
+            if (player.isShiftKeyDown()) {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = isAllBeeArmorOn ? 200 : 6;
 
                 if(!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {
@@ -100,7 +100,7 @@ public class StinglessBeeHelmet extends BeeArmor {
             if (hasWrath ||
                 player.isUnderWater() ||
                 player.isHurt() ||
-                player.isCrouching() ||
+                player.isShiftKeyDown() ||
                 (!isAllBeeArmorOn && beeRidingTimer > 600))
             {
                 for (Entity passenger : player.getPassengers()) {
