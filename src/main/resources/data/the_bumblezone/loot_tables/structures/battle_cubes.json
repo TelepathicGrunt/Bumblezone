@@ -44,9 +44,14 @@
           "weight": 8
         },
         {
+          "name": "the_bumblezone:crystal_cannon",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
           "name": "the_bumblezone:stinger_spear",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 1
         },
         {
           "name": "minecraft:music_disc_strad",

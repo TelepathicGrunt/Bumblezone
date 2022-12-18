@@ -15,6 +15,18 @@
     {
       "structure": "the_bumblezone:battle_cubes",
       "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:honey_fountain",
+      "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:ice_monolith",
+      "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:stinger_spear_shrine",
+      "weight": 1
     }
   ],
   "placement": {
