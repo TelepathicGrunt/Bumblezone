@@ -1,0 +1,15 @@
+{
+  "name": "the_bumblezone:honey_fountain",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:honey_fountain",
+        "processors": "the_bumblezone:honey_fountain",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
