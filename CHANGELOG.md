@@ -3,11 +3,10 @@
 ##### Structures:
 Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
 
-Added Bee House structure!
+Added Bee House, Candle Parkour, Battle Cubes, Stinger Spear Shrine, Ice Monolith, and Honey Fountain structures!
 
-Added Candle Parkour structure!
-
-Added Battle Cubes structure!
+##### Items:
+Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reopened, and the the spear picked up again.
 
 ##### Misc:
 Fixed bug where I was checking for crouching pose instead of if player was holding down shift key. (isCrouching vs isShiftKeyDown)

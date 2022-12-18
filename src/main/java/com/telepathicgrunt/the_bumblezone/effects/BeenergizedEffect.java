@@ -30,6 +30,18 @@ public class BeenergizedEffect extends MobEffect {
     }
 
     /**
+     * Needed to apply when restarting game for existing entities
+     */
+//    public void applyEffectTick(LivingEntity livingEntity, int i) {
+//        if (livingEntity.getAttributes().hasAttribute(Attributes.FLYING_SPEED)) {
+//            float savedFlyingSpeed = Bumblezone.FLYING_SPEED_COMPONENT.get(livingEntity).getOriginalFlyingSpeed();
+//            if (livingEntity.flyingSpeed == savedFlyingSpeed) {
+//                livingEntity.flyingSpeed = ((float)(livingEntity.getAttributeValue(Attributes.FLYING_SPEED)) - 0.6f);
+//            }
+//        }
+//    }
+
+    /**
      * Make entity have faster flying speeds at first apply
      */
     @Override

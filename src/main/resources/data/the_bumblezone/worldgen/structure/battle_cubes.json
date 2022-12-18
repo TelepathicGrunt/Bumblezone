@@ -10,5 +10,14 @@
     "absolute": 41
   },
   "use_expansion_hack": false,
-  "spawn_overrides": {}
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": []
+    },
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": []
+    }
+  }
 }
