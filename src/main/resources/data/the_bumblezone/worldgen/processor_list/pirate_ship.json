@@ -1,0 +1,7 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:waterlogging_fix_processor"
+    }
+  ]
+}

@@ -212,7 +212,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     public void tickDespawn() {
         int loyalty = this.entityData.get(ID_LOYALTY);
-        if (this.pickup != Pickup.ALLOWED || loyalty <= 0) {
+        if (!this.isInvulnerable() && (this.pickup != Pickup.ALLOWED || loyalty <= 0)) {
             super.tickDespawn();
         }
     }
