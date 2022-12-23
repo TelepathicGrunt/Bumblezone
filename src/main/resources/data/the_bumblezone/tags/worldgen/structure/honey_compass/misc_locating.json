@@ -1,7 +1,8 @@
 {
   "replace": false,
   "values": [
-	  "the_bumblezone:hanging_garden",
-	  "the_bumblezone:battle_cubes"
+    "the_bumblezone:hanging_garden",
+    "the_bumblezone:battle_cubes",
+    "the_bumblezone:overgrown_flower"
   ]
 }

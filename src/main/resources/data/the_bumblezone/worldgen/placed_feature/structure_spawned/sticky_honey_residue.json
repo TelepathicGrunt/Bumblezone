@@ -1,0 +1,26 @@
+{
+  "feature": "the_bumblezone:sticky_honey_residue_feature",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 80
+    },
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": -7,
+          "max_inclusive": 7
+        }
+      },
+      "y_spread": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": -3,
+          "max_inclusive": 3
+        }
+      }
+    }
+  ]
+}

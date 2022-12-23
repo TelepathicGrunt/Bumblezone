@@ -1,0 +1,20 @@
+{
+  "name": "the_bumblezone:overgrown_flower/giant_crystal",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "feature": "the_bumblezone:structure_spawned/giant_honey_crystal",
+        "projection": "rigid",
+        "element_type": "minecraft:feature_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}

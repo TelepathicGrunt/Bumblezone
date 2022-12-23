@@ -7,12 +7,12 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Context;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 
-public record BzBiomeNonstandardLayer(HolderSet<Biome> nonstandardBiomes) implements AreaTransformer0 {
+public record BzBiomeBlobLayer(HolderSet<Biome> blobBiomes) implements AreaTransformer0 {
 
     public int applyPixel(Context noise, int x, int z) {
-        if (nonstandardBiomes.size() != 0 && noise.nextRandom(10) == 0) {
+        if (blobBiomes.size() != 0 && noise.nextRandom(12) == 0) {
             return BiomeRegistryHolder.BIOME_REGISTRY.getId(
-                nonstandardBiomes.get(noise.nextRandom(nonstandardBiomes.size())).value()
+                blobBiomes.get(noise.nextRandom(blobBiomes.size())).value()
             );
         }
         else {
