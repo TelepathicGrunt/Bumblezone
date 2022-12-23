@@ -27,6 +27,10 @@
     {
       "structure": "the_bumblezone:stinger_spear_shrine",
       "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:overgrown_flower",
+      "weight": 3
     }
   ],
   "placement": {

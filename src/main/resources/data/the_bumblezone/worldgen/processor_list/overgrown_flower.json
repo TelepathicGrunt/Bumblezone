@@ -1,0 +1,21 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "the_bumblezone:carvable_wax"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "uncarved"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

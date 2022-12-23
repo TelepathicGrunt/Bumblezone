@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeMergeLayer;
-import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;
+import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeBlobLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePillarLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePollinatedFieldsLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePollinatedPillarLayer;
@@ -37,8 +37,8 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
-                    Biome.LIST_CODEC.fieldOf("main_biomes").forGetter((biomeSource) -> biomeSource.mainBiomes),
-                    Biome.LIST_CODEC.fieldOf("extra_biomes_to_spawn").forGetter((biomeSource) -> biomeSource.extraBiomesToSpawn))
+                Biome.LIST_CODEC.fieldOf("blob_biomes").forGetter((biomeSource) -> biomeSource.blobBiomes),
+                Biome.LIST_CODEC.fieldOf("main_biomes").forGetter((biomeSource) -> biomeSource.mainBiomes))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
@@ -50,17 +50,17 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
 
     private final long seed;
     private final Layer biomeSampler;
-    public final HolderSet<Biome> extraBiomesToSpawn;
+    public final HolderSet<Biome> blobBiomes;
     public final HolderSet<Biome> mainBiomes;
     public final GeneralUtils.Lazy<Set<Holder<Biome>>> lazyPossibleBiomes = new GeneralUtils.Lazy<>();
 
-    public BzBiomeProvider(long seed, HolderSet<Biome> extraBiomesToSpawn, HolderSet<Biome> mainBiomes) {
+    public BzBiomeProvider(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> mainBiomes) {
         super(Stream.empty());
 
         this.seed = seed;
-        this.extraBiomesToSpawn = extraBiomesToSpawn;
+        this.blobBiomes = blobBiomes;
         this.mainBiomes = mainBiomes;
-        this.biomeSampler = buildWorldProcedure(seed, this.extraBiomesToSpawn);
+        this.biomeSampler = buildWorldProcedure(seed, this.blobBiomes);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
 
     @Override
     public Set<Holder<Biome>> possibleBiomes() {
-        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(extraBiomesToSpawn.stream(), mainBiomes.stream()).collect(Collectors.toSet()));
+        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(blobBiomes.stream(), mainBiomes.stream()).collect(Collectors.toSet()));
     }
 
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> stack(long seed, AreaTransformer1 parent, AreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
@@ -83,19 +83,19 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
         return LayerFactory;
     }
 
-    public static Layer buildWorldProcedure(long seed, HolderSet<Biome> nonstandardBiomes) {
-        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, nonstandardBiomes);
+    public static Layer buildWorldProcedure(long seed, HolderSet<Biome> blobBiomes) {
+        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, blobBiomes);
         return new Layer(layerFactory);
     }
 
-    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, HolderSet<Biome> nonstandardBiomes) {
+    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, HolderSet<Biome> blobBiomes) {
         AreaFactory<T> layer = new BzBiomeLayer(seed).run(contextFactory.apply(200L));
         layer = new BzBiomePillarLayer().run(contextFactory.apply(1008L), layer);
         layer = new BzBiomeScaleLayer(Set.of(HIVE_PILLAR)).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
         layer = new BzBiomeScaleLayer(Set.of(CRYSTAL_CANYON, SUGAR_WATER_FLOOR)).run(contextFactory.apply(54088L), layer);
-        AreaFactory<T> layerOverlay = new BzBiomeNonstandardLayer(nonstandardBiomes).run(contextFactory.apply(204L));
+        AreaFactory<T> layerOverlay = new BzBiomeBlobLayer(blobBiomes).run(contextFactory.apply(204L));
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
         layerOverlay = new BzBiomePollinatedPillarLayer().run(contextFactory.apply(3008L), layerOverlay);
         layerOverlay = new BzBiomeScaleLayer(Set.of(POLLINATED_PILLAR)).run(contextFactory.apply(4455L), layerOverlay);

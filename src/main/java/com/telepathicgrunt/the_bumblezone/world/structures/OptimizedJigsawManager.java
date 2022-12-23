@@ -68,13 +68,9 @@ public class OptimizedJigsawManager {
             int maxDistanceFromCenter,
             BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster
     ) {
-        // Get jigsaw pool registry
-        Registry<StructureTemplatePool> jigsawPoolRegistry = context.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL);
-
         // Get a random orientation for the starting piece
         WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
         random.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
-        Rotation rotation = Rotation.getRandom(random);
 
         // Get starting pool
         StructureTemplatePool startPool = startPoolHolder.value();
@@ -90,7 +86,12 @@ public class OptimizedJigsawManager {
             return Optional.empty();
         }
 
+        if (!context.validBiome().test(context.chunkGenerator().getBiomeSource().getNoiseBiome(QuartPos.fromBlock(startPos.getX()), QuartPos.fromBlock(startPos.getY()), QuartPos.fromBlock(startPos.getZ()), context.randomState().sampler()))) {
+            return Optional.empty();
+        }
+
         // Instantiate a piece using the "blueprint" we just got.
+        Rotation rotation = Rotation.getRandom(random);
         PoolElementStructurePiece startPiece = new PoolElementStructurePiece(
                 context.structureTemplateManager(),
                 startPieceBlueprint,
@@ -123,11 +124,12 @@ public class OptimizedJigsawManager {
 
         int yAdjustment = pieceBoundingBox.minY() + startPiece.getGroundLevelDelta();
         startPiece.move(0, pieceCenterY - yAdjustment, 0);
-        if (!context.validBiome().test(context.chunkGenerator().getBiomeSource().getNoiseBiome(QuartPos.fromBlock(pieceCenterX), QuartPos.fromBlock(pieceCenterY), QuartPos.fromBlock(pieceCenterZ), context.randomState().sampler()))) {
-            return Optional.empty();
-        }
 
         int finalPieceCenterY = pieceCenterY;
+
+        // Get jigsaw pool registry
+        Registry<StructureTemplatePool> jigsawPoolRegistry = context.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL);
+
         return Optional.of(new Structure.GenerationStub(new BlockPos(pieceCenterX, pieceCenterY, pieceCenterZ), (structurePiecesBuilder) -> {
             List<PoolElementStructurePiece> components = new ArrayList<>();
             components.add(startPiece);
