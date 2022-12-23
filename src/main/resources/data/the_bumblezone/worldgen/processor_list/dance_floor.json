@@ -1,0 +1,116 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:yellow_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:beehive_beeswax"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:black_concrete"
+          },
+          "replacement" : {
+            "Name": "minecraft:black_concrete"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:yellow_concrete"
+          },
+          "replacement" : {
+            "Name": "minecraft:yellow_concrete"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:lime_concrete"
+          },
+          "replacement" : {
+            "Name": "minecraft:lime_concrete"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:magenta_concrete"
+          },
+          "replacement" : {
+            "Name": "minecraft:magenta_concrete"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_concrete"
+          },
+          "replacement" : {
+            "Name": "minecraft:red_concrete"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:light_blue_concrete"
+          },
+          "replacement" : {
+            "Name": "minecraft:light_blue_concrete"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:orange_concrete"
+          },
+          "replacement" : {
+            "Name": "minecraft:orange_concrete"
+          }
+        }
+      ]
+    }
+  ]
+}

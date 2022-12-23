@@ -29,13 +29,25 @@
       "weight": 1
     },
     {
+      "structure": "the_bumblezone:dance_floor",
+      "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:cannon_range",
+      "weight": 1
+    },
+    {
+      "structure": "the_bumblezone:pirate_ship",
+      "weight": 1
+    },
+    {
       "structure": "the_bumblezone:overgrown_flower",
-      "weight": 3
+      "weight": 5
     }
   ],
   "placement": {
     "salt": 578754875,
-    "spacing": 23,
+    "spacing": 21,
     "separation": 10,
     "exclusion_zone": {
       "other_set": "the_bumblezone:cell_maze",

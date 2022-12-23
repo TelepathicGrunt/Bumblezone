@@ -3,12 +3,13 @@
 ##### Structures:
 Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
 
-Added Bee House, Candle Parkour, Battle Cubes, Stinger Spear Shrine, Ice Monolith, Overground Flower, and Honey Fountain structures!
+Added Bee House, Candle Parkour, Battle Cubes, Stinger Spear Shrine, Ice Monolith, Overground Flower,
+Pirate Ship, Dance Floor, Cannon Range, and Honey Fountain structures!
 
 ##### Items:
 Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reopened, and the spear picked up again.
 
-Fixed Honey Crystal Cannon firing center crystal shard backwards.
+Fixed Crystal Cannon firing center crystal shard backwards.
 
 ##### Biomes:
 Fixed biome spawning that was spawning blobs of biomes that shouldn't be blobs.
