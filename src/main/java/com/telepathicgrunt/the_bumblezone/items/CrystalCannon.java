@@ -86,9 +86,11 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
 
                     Vec3 upVector = player.getUpVector(1.0F);
                     Vec3 viewVector = player.getViewVector(1.0F);
-                    Quaternionfc quaternion1 = new Quaternionf(upVector.x(), upVector.y(), upVector.z(), offset);
                     Vector3f shootVector = viewVector.toVector3f();
-                    shootVector.rotate(quaternion1);
+                    if (i != 0) {
+                        Quaternionfc quaternion1 = new Quaternionf(upVector.x(), upVector.y(), upVector.z(), offset);
+                        shootVector.rotate(quaternion1);
+                    }
                     newCrystal.shoot(
                             shootVector.x(),
                             shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),
