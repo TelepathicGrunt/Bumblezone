@@ -1,48 +1,48 @@
 {
   "structures": [
     {
-      "structure": "the_bumblezone:hive_temple",
-      "weight": 1
-    },
-    {
-      "structure": "the_bumblezone:bee_house",
-      "weight": 1
-    },
-    {
-      "structure": "the_bumblezone:candle_parkour",
-      "weight": 1
-    },
-    {
       "structure": "the_bumblezone:battle_cubes",
       "weight": 1
     },
     {
+      "structure": "the_bumblezone:hive_temple",
+      "weight": 2
+    },
+    {
+      "structure": "the_bumblezone:bee_house",
+      "weight": 2
+    },
+    {
+      "structure": "the_bumblezone:candle_parkour",
+      "weight": 2
+    },
+    {
       "structure": "the_bumblezone:honey_fountain",
-      "weight": 1
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:ice_monolith",
-      "weight": 1
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:stinger_spear_shrine",
-      "weight": 1
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:dance_floor",
-      "weight": 1
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:cannon_range",
-      "weight": 1
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:pirate_ship",
-      "weight": 1
+      "weight": 2
     },
     {
       "structure": "the_bumblezone:overgrown_flower",
-      "weight": 5
+      "weight": 10
     }
   ],
   "placement": {
