@@ -11,6 +11,9 @@ Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reope
 
 Fixed Crystal Cannon firing center crystal shard backwards.
 
+##### Effects:
+Hopefully remove Wrath of the Hive from more bees properly when the target dies.
+
 ##### Biomes:
 Fixed biome spawning that was spawning blobs of biomes that shouldn't be blobs.
 
