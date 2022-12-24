@@ -11,6 +11,13 @@ Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reope
 
 Fixed Crystal Cannon firing center crystal shard backwards.
 
+##### Fluids:
+Fixed issue where mobs would not see Sugar Water, Honey Fluid, or Royal Jelly Fluid as water when pathfinding.
+ Bees should now properly avoid flying into these liquids and suffocating. (Hopefully...)
+
+##### Effects:
+Hopefully remove Wrath of the Hive from more bees properly when the target dies.
+
 ##### Biomes:
 Fixed biome spawning that was spawning blobs of biomes that shouldn't be blobs.
 
