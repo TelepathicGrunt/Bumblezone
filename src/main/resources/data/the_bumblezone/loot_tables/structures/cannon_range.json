@@ -94,7 +94,7 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:honey_crystal_shard",
+          "name": "the_bumblezone:honey_crystal_shards",
           "type": "minecraft:item",
           "weight": 1,
           "functions": [
