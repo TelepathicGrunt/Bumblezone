@@ -4,7 +4,7 @@
 Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
 
 Added Bee House, Candle Parkour, Battle Cubes, Stinger Spear Shrine, Ice Monolith, Overground Flower,
-Pirate Ship, Dance Floor, Cannon Range, and Honey Fountain structures!
+Pirate Ship, Dance Floor, Cannon Range, Honitel, and Honey Fountain structures!
 
 ##### Items:
 Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reopened, and the spear picked up again.
