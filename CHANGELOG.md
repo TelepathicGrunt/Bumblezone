@@ -50,6 +50,11 @@ Fixed bug where I was checking for crouching pose instead of if player was holdi
  Should make it so stuff like Carpenter Bees Boots do not mine automatically if you are in a 1.5 block high space.
  It will only mine if you specifically are holding down crouching key. Same with helmet and leggings behaviors.
 
+Silence "Hanging entity at invalid position" logspam from vanilla by lowering the logging level of that event from error to debug level.
+ Mojang bug report: https://bugs.mojang.com/browse/MC-252934
+ The Item Frame spawned from nbt files still places as intended and functions as intended.
+ This was just annoying logspam I decided to yeet.
+
 ##### Tags:
 Organized Bumblezone tags much better into sub folders. Changes are:
 
