@@ -7,7 +7,7 @@
   "step": "surface_structures",
   "terrain_adaptation": "beard_box",
   "start_height": {
-    "absolute": 36
+    "absolute": 34
   },
   "use_expansion_hack": false,
   "spawn_overrides": {}
