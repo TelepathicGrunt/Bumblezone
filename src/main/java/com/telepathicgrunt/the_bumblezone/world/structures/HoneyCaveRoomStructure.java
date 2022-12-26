@@ -60,13 +60,13 @@ public class HoneyCaveRoomStructure extends Structure {
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView, RandomState randomState) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        int radius = 24;
+        int radius = 20;
         for(int x = -radius; x <= radius; x += radius*2) {
             for(int z = -radius; z <= radius; z += radius*2) {
                 mutable.set(centerPos).move(x, 0, z);
                 NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
-                BlockState state = columnOfBlocks.getBlock(mutable.getY());
-                BlockState aboveState = columnOfBlocks.getBlock(mutable.getY() + 15);
+                BlockState state = columnOfBlocks.getBlock(mutable.getY() + 2);
+                BlockState aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
                 if(state.isAir() || !state.getFluidState().isEmpty() ||
                     aboveState.isAir() || !aboveState.getFluidState().isEmpty())
                 {
