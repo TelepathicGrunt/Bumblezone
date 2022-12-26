@@ -11,6 +11,18 @@ Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reope
 
 Fixed Crystal Cannon firing center crystal shard backwards.
 
+##### Blocks:
+Empty Porous Honeycomb Block will transform into a Filled Porous Honeycomb Block when touched by a pollinated bee!
+
+Empty Honeycomb Brood Block will transform into a Honeycomb Brood Block with a larva inside when touched by a pollinated bee!
+
+##### Fluids:
+Fixed issue where mobs would not see Sugar Water, Honey Fluid, or Royal Jelly Fluid as water when pathfinding.
+ Bees should now properly avoid flying into these liquids and suffocating. (Hopefully...)
+
+Non-source Honey Fluid cannot be transformed into source blocks anymore by pollinated bees.
+ Stops bees from messing up structures or builds as much as they currently are.
+
 ##### Effects:
 Hopefully remove Wrath of the Hive from more bees properly when the target dies.
 

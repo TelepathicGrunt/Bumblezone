@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.PotionOfBeesCompat;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,6 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -45,6 +48,29 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
     }
 
 
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+        beeHoneyFill(state, level, blockPos, entity);
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
+        beeHoneyFill(state, level, blockPos, entity);
+    }
+
+    public static void beeHoneyFill(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+        if(entity instanceof Bee beeEntity &&
+            beeEntity.hasNectar() &&
+            state.is(BzBlocks.EMPTY_HONEYCOMB_BROOD.get()))
+        {
+            ((BeeEntityInvoker) entity).callSetHasNectar(false);
+            level.setBlock(blockPos,
+                    BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                    .setValue(HoneycombBrood.STAGE, 0)
+                    .setValue(HoneycombBrood.FACING, state.getValue(HoneycombBrood.FACING)),
+                    3);
+        }
+    }
 
     /**
      * Allow player to harvest honey and put honey into this block using bottles
