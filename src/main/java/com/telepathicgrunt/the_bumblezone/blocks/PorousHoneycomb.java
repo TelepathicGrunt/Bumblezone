@@ -50,10 +50,10 @@ public class PorousHoneycomb extends Block {
     public static void beeHoneyFill(BlockState state, Level level, BlockPos blockPos, Entity entity) {
         if(entity instanceof Bee beeEntity &&
             beeEntity.hasNectar() &&
-            state.is(BzBlocks.POROUS_HONEYCOMB))
+            state.is(BzBlocks.POROUS_HONEYCOMB.get()))
         {
             ((BeeEntityInvoker) entity).callSetHasNectar(false);
-            level.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
+            level.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
         }
     }
 

@@ -430,12 +430,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         EntityMisc.onQueenBeeTrade(serverPlayer, tradedItems);
 
                         if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                            MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
-                            if (!capability.receivedEssencePrize) {
-                                spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES, 1, 1000, 1), ItemStack.EMPTY);
-                                capability.receivedEssencePrize = true;
-                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
-                            }
+                            serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+                                if (!capability.receivedEssencePrize) {
+                                    spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
+                                    capability.receivedEssencePrize = true;
+                                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                                }
+                            });
                         }
                     }
                 }
@@ -511,7 +512,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 player.setItemInHand(hand, stack);
 
                 if (player instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.BEE_QUEEN_HAND_TRADE_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
                     EntityMisc.onQueenBeeTrade(serverPlayer);
 
                     if (finalbeeQueenAdvancementDone(serverPlayer)) {
