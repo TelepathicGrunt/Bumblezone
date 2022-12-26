@@ -390,19 +390,19 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
             List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
             items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
-                boolean traded = false;
+                int tradedItems = 0;
                 Item item = itemEntity.getItem().getItem();
                 if (QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.containsKey(item)) {
                     for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                         Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
                         if (reward.isPresent()) {
                             spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem());
-                            traded = true;
+                            tradedItems++;
                         }
                     }
                 }
 
-                if (traded) {
+                if (tradedItems > 0) {
                     itemEntity.remove(RemovalReason.DISCARDED);
                 }
                 else {
@@ -423,6 +423,22 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 }
 
                 setThrowCooldown(50);
+
+                if (tradedItems > 0 && itemEntity.getThrower() != null) {
+                    if (level.getPlayerByUUID(itemEntity.getThrower()) instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
+                        EntityMisc.onQueenBeeTrade(serverPlayer, tradedItems);
+
+                        if (finalbeeQueenAdvancementDone(serverPlayer)) {
+                            MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+                            if (!capability.receivedEssencePrize) {
+                                spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES, 1, 1000, 1), ItemStack.EMPTY);
+                                capability.receivedEssencePrize = true;
+                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            }
+                        }
+                    }
+                }
             });
         }
     }
@@ -448,18 +464,18 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
                         spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
                         capability.receivedEssencePrize = true;
-                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                     }
                     else {
                         long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
                         if (timeDiff < 200 && timeDiff > 10) {
                             resetAdvancementTree(serverPlayer, BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
                             capability.resetAllTrackerStats();
-                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                         }
                         else {
                             capability.tradeResetPrimedTime = this.level.getGameTime();
-                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                         }
                     }
                 });
@@ -505,7 +521,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
                                 spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY);
                                 capability.receivedEssencePrize = true;
-                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.beehemoth_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                             }
                         });
                     }

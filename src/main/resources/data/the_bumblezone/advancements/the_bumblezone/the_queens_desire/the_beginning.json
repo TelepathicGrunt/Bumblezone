@@ -19,14 +19,14 @@
     "experience": 200
   },
   "criteria": {
-    "bee_queen_hand_trade": {
-      "trigger": "the_bumblezone:bee_queen_hand_trade",
+    "bee_queen_first_trade": {
+      "trigger": "the_bumblezone:bee_queen_first_trade",
       "conditions": {}
     }
   },
   "requirements": [
     [
-      "bee_queen_hand_trade"
+      "bee_queen_first_trade"
     ]
   ]
 }

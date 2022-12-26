@@ -23,6 +23,12 @@ Fixed issue where mobs would not see Sugar Water, Honey Fluid, or Royal Jelly Fl
 Non-source Honey Fluid cannot be transformed into source blocks anymore by pollinated bees.
  Stops bees from messing up structures or builds as much as they currently are.
 
+##### Entities:
+Throwing/dropping items from player to Bee Queen will now trigger/progress the Bee Queen trade advancements for that player.
+ This means dropping 64 stacks of an item is a superfast way to progress the 256 Bee Queen trade advancement.
+
+Fixed some typos in translation keys for Bee Queen saying `beehemoth_queen` instead of `bee_queen`.
+
 ##### Effects:
 Hopefully remove Wrath of the Hive from more bees properly when the target dies.
 
