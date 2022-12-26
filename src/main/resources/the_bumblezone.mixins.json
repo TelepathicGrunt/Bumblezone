@@ -30,6 +30,7 @@
     "entities.EntityTypeMixin",
     "entities.ExperienceOrbMixin",
     "entities.FishingBobberEntityMixin",
+    "entities.HangingEntityMixin",
     "entities.LightningBoltMixin",
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
