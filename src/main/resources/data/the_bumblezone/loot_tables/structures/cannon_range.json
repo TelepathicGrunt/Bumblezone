@@ -131,7 +131,7 @@
       ]
     },
     {
-      "rolls": 2,
+      "rolls": 1,
       "entries": [
         {
           "name": "minecraft:bow",
@@ -166,6 +166,10 @@
               "function": "minecraft:enchant_randomly"
             }
           ]
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 1
         }
       ]
     }

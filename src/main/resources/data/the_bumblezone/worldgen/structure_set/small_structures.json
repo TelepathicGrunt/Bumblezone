@@ -51,8 +51,8 @@
   ],
   "placement": {
     "salt": 578754875,
-    "spacing": 23,
-    "separation": 10,
+    "spacing": 21,
+    "separation": 4,
     "exclusion_zone": {
       "other_set": "the_bumblezone:cell_maze",
       "chunk_count": 5

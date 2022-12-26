@@ -11,7 +11,7 @@
         {
           "name": "the_bumblezone:bee_bread",
           "type": "minecraft:item",
-          "weight": 20,
+          "weight": 300,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -26,7 +26,7 @@
         {
           "name": "minecraft:honeycomb",
           "type": "minecraft:item",
-          "weight": 20,
+          "weight": 300,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -41,7 +41,7 @@
         {
           "name": "minecraft:cookie",
           "type": "minecraft:item",
-          "weight": 17,
+          "weight": 260,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -56,7 +56,7 @@
         {
           "name": "the_bumblezone:bee_stinger",
           "type": "minecraft:item",
-          "weight": 12,
+          "weight": 220,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -71,7 +71,7 @@
         {
           "name": "the_bumblezone:sticky_honey_residue",
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 70,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -86,7 +86,7 @@
         {
           "name": "the_bumblezone:sugar_water_bottle",
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 70,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -101,7 +101,7 @@
         {
           "name": "minecraft:beetroot_soup",
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 70,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -116,7 +116,7 @@
         {
           "name": "minecraft:pumpkin_pie",
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 70,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -131,17 +131,17 @@
         {
           "name": "minecraft:cake",
           "type": "minecraft:item",
-          "weight": 3
+          "weight": 50
         },
         {
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
-          "weight": 2
+          "weight": 35
         },
         {
           "name": "minecraft:bowl",
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 35,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -154,8 +154,143 @@
           ]
         },
         {
+          "name": "minecraft:spyglass",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:compass",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:clock",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:recovery_compass",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:writable_book",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:name_tag",
+          "type": "minecraft:item",
+          "weight": 17,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:map",
+          "type": "minecraft:item",
+          "weight": 17,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:shears",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:saddle",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:music_disc_13",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:music_disc_blocks",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:flower_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:daylight_detector",
+          "type": "minecraft:item",
+          "weight": 17,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:note_block",
+          "type": "minecraft:item",
+          "weight": 17,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:bell",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
+          "name": "minecraft:bookshelf",
+          "type": "minecraft:item",
+          "weight": 17,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:brewing_stand",
+          "type": "minecraft:item",
+          "weight": 17
+        },
+        {
           "type": "minecraft:tag",
-          "expand": false,
+          "expand": true,
           "name": "minecraft:candles",
           "weight": 1,
           "functions": [
@@ -171,7 +306,7 @@
         },
         {
           "type": "minecraft:tag",
-          "expand": false,
+          "expand": true,
           "name": "the_bumblezone:super_candles",
           "weight": 1,
           "functions": [
@@ -184,141 +319,6 @@
               }
             }
           ]
-        },
-        {
-          "name": "minecraft:spyglass",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:compass",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:clock",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:recovery_compass",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:writable_book",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:name_tag",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:map",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:shears",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:saddle",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:music_disc_13",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:music_disc_blocks",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:flower_banner_pattern",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:daylight_detector",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:note_block",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:bell",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:bookshelf",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:brewing_stand",
-          "type": "minecraft:item",
-          "weight": 1
         }
       ]
     },
@@ -380,7 +380,7 @@
         },
         {
           "type": "minecraft:empty",
-          "weight": 14
+          "weight": 17
         }
       ]
     }

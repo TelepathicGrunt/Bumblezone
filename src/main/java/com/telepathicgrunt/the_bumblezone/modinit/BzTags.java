@@ -78,6 +78,8 @@ public class BzTags {
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
     public static final TagKey<Structure> NO_CAVES = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_caves"));
+    public static final TagKey<Structure> NO_HONEYCOMB_HOLES = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_honeycomb_holes"));
+    public static final TagKey<Structure> NO_HONEYCOMB_HOLES_PIECEWISE = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_honeycomb_holes_piecewise"));
     public static final TagKey<Structure> WRATH_CAUSING = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "wrath_causing"));
     public static final TagKey<Structure> HONEY_COMPASS_DEFAULT_LOCATING = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "honey_compass/default_locating"));
     public static final TagKey<Structure> HONEY_COMPASS_THRONE_LOCATING = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "honey_compass/throne_locating"));

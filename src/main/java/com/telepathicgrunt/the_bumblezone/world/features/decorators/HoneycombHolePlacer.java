@@ -1,14 +1,24 @@
 package com.telepathicgrunt.the_bumblezone.world.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +45,20 @@ public class HoneycombHolePlacer extends PlacementModifier {
         List<BlockPos> blockPosList = new ArrayList<>();
         boolean alternate = false;
 
+        StructureManager structureManager = null;
+        List<StructureStart> structureStarts = new ArrayList<>();
+        List<StructureStart> structureStartsPiecewiseCheck = new ArrayList<>();
+        if (placementContext.getLevel() instanceof WorldGenRegion worldGenRegion) {
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
+
+            ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
+            structureStarts = structureManager.startsForStructure(chunkPos,
+                    struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES));
+            structureStartsPiecewiseCheck = structureManager.startsForStructure(chunkPos,
+                    struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES_PIECEWISE));
+        }
+
         //Repeats twice with an offset on second pass
         for (int repeat = 0; repeat < 2; repeat++) {
             //Makes 23 holes from y = 236 to y = 52
@@ -49,7 +73,23 @@ public class HoneycombHolePlacer extends PlacementModifier {
                 alternate = !alternate;
 
                 //Makes sure the place for holes is valid
-                if (isPlaceValid(placementContext, mutableBlockPos)) {
+                boolean validSpot = true;
+                for (StructureStart structureStart : structureStarts) {
+                    if (structureStart.isValid() && structureStart.getBoundingBox().inflatedBy(8).isInside(mutableBlockPos)) {
+                        validSpot = false;
+                        break;
+                    }
+                }
+                for (StructureStart structureStart : structureStartsPiecewiseCheck) {
+                    for(StructurePiece structurePiece : structureStart.getPieces()) {
+                        if (structurePiece.getBoundingBox().inflatedBy(8).isInside(mutableBlockPos)) {
+                            validSpot = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (validSpot && isPlaceValid(placementContext, mutableBlockPos)) {
                     blockPosList.add(mutableBlockPos.immutable());
                 }
             }
