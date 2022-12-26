@@ -222,6 +222,15 @@ public class MiscComponent implements Component {
         }
     }
 
+    public static void onQueenBeeTrade(Player player, int tradedItems) {
+        if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
+            MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+            int currentTrades = capability.queenBeeTrade + tradedItems;
+            BzCriterias.BEE_QUEEN_TRADING_TRIGGER.trigger(serverPlayer, currentTrades);
+            capability.queenBeeTrade = currentTrades;
+        }
+    }
+
     public static boolean rootAdvancementDone(ServerPlayer serverPlayer) {
         Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
         Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
