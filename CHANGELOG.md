@@ -10,6 +10,9 @@ Honitel and Battle Cube structures has a chance of having a Honey Compass that c
 
 Fixed the giant honeycomb hole feature from eating away at many structures.
 
+Made Honey Cave Room structure much more common so it is more easily found.
+ Also improve the bottom of the structure to not be as flat.
+
 ##### Items:
 Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reopened, and the spear picked up again.
 

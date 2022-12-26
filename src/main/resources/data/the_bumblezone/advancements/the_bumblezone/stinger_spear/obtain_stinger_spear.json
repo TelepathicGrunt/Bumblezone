@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/cell_maze/enter_cell_maze",
+  "parent": "the_bumblezone:the_bumblezone/structures/enter_cell_maze",
   "display": {
     "icon": {
       "item": "the_bumblezone:stinger_spear"
