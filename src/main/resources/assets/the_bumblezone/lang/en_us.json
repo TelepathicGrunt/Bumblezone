@@ -161,9 +161,9 @@
   "entity.the_bumblezone.thrown_stinger_spear": "Stinger Spear",
   "entity.the_bumblezone.bee_stinger": "Bee Stinger",
   "entity.the_bumblezone.honey_crystal_shard": "Honey Crystal Shard",
-  "entity.the_bumblezone.beehemoth_queen.advancements_warning": "To reset Queen's Desire advancements, right click again with empty hand",
-  "entity.the_bumblezone.beehemoth_queen.reset_advancements": "Queen's Desire advancements have been reset!",
-  "entity.the_bumblezone.beehemoth_queen.mention_reset": "Congrats on your accomplishments! To redo the Queen's Desire quest-line, right click Bee Queen with empty hand to reset those advancements",
+  "entity.the_bumblezone.bee_queen.advancements_warning": "To reset Queen's Desire advancements, right click again with empty hand",
+  "entity.the_bumblezone.bee_queen.reset_advancements": "Queen's Desire advancements have been reset!",
+  "entity.the_bumblezone.bee_queen.mention_reset": "Congrats on your accomplishments! To redo the Queen's Desire quest-line, right click Bee Queen with empty hand to reset those advancements",
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
   "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster.\nDoubles output of any BeeNest or BeeHive blocks.",
@@ -469,7 +469,7 @@
   "advancements.the_bumblezone.the_queens_desire.too_many_legs.title": "Too Many Legs",
   "advancements.the_bumblezone.the_queens_desire.too_many_legs.description": "Smash and kill 64 Spiders for their icky-ness",
   "advancements.the_bumblezone.the_queens_desire.vip_trader.title": "VIP Trader",
-  "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Complete 256 hand trades with the Bee Queen",
+  "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Complete 256 trades with the Bee Queen",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets.",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees. \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",
