@@ -76,6 +76,22 @@ public class BzItems {
     public static final Item SUPER_CANDLE_YELLOW = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW, new Item.Properties(), true, false);
     public static final Item INCENSE_CANDLE = new IncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE, new Item.Properties());
     public static final Item CRYSTALLINE_FLOWER = new BzBlockItem(BzBlocks.CRYSTALLINE_FLOWER, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), true, true);
+    public static final Item STRING_CURTAIN_BLACK = new BlockItem(BzBlocks.STRING_CURTAIN_BLACK, new Item.Properties());
+    public static final Item STRING_CURTAIN_BLUE = new BlockItem(BzBlocks.STRING_CURTAIN_BLUE, new Item.Properties());
+    public static final Item STRING_CURTAIN_BROWN = new BlockItem(BzBlocks.STRING_CURTAIN_BROWN, new Item.Properties());
+    public static final Item STRING_CURTAIN_CYAN = new BlockItem(BzBlocks.STRING_CURTAIN_CYAN, new Item.Properties());
+    public static final Item STRING_CURTAIN_GRAY = new BlockItem(BzBlocks.STRING_CURTAIN_GRAY, new Item.Properties());
+    public static final Item STRING_CURTAIN_GREEN = new BlockItem(BzBlocks.STRING_CURTAIN_GREEN, new Item.Properties());
+    public static final Item STRING_CURTAIN_LIGHT_BLUE = new BlockItem(BzBlocks.STRING_CURTAIN_LIGHT_BLUE, new Item.Properties());
+    public static final Item STRING_CURTAIN_LIGHT_GRAY = new BlockItem(BzBlocks.STRING_CURTAIN_LIGHT_GRAY, new Item.Properties());
+    public static final Item STRING_CURTAIN_LIME = new BlockItem(BzBlocks.STRING_CURTAIN_LIME, new Item.Properties());
+    public static final Item STRING_CURTAIN_MAGENTA = new BlockItem(BzBlocks.STRING_CURTAIN_MAGENTA, new Item.Properties());
+    public static final Item STRING_CURTAIN_ORANGE = new BlockItem(BzBlocks.STRING_CURTAIN_ORANGE, new Item.Properties());
+    public static final Item STRING_CURTAIN_PINK = new BlockItem(BzBlocks.STRING_CURTAIN_PINK, new Item.Properties());
+    public static final Item STRING_CURTAIN_PURPLE = new BlockItem(BzBlocks.STRING_CURTAIN_PURPLE, new Item.Properties());
+    public static final Item STRING_CURTAIN_RED = new BlockItem(BzBlocks.STRING_CURTAIN_RED, new Item.Properties());
+    public static final Item STRING_CURTAIN_WHITE = new BlockItem(BzBlocks.STRING_CURTAIN_WHITE, new Item.Properties());
+    public static final Item STRING_CURTAIN_YELLOW = new BlockItem(BzBlocks.STRING_CURTAIN_YELLOW, new Item.Properties());
 
     //items
     public static final HoneyCrystalShards HONEY_CRYSTAL_SHARDS = new HoneyCrystalShards(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build()));
@@ -157,16 +173,32 @@ public class BzItems {
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_red"), SUPER_CANDLE_RED);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_white"), SUPER_CANDLE_WHITE);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "super_candle_yellow"), SUPER_CANDLE_YELLOW);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_black"), STRING_CURTAIN_BLACK);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_blue"), STRING_CURTAIN_BLUE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_brown"), STRING_CURTAIN_BROWN);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_cyan"), STRING_CURTAIN_CYAN);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_gray"), STRING_CURTAIN_GRAY);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_green"), STRING_CURTAIN_GREEN);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_light_blue"), STRING_CURTAIN_LIGHT_BLUE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_light_gray"), STRING_CURTAIN_LIGHT_GRAY);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_lime"), STRING_CURTAIN_LIME);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_magenta"), STRING_CURTAIN_MAGENTA);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_orange"), STRING_CURTAIN_ORANGE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_pink"), STRING_CURTAIN_PINK);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_purple"), STRING_CURTAIN_PURPLE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_red"), STRING_CURTAIN_RED);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_white"), STRING_CURTAIN_WHITE);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "string_curtain_yellow"), STRING_CURTAIN_YELLOW);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sugar_water_bottle"), SUGAR_WATER_BOTTLE);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "sugar_water_bucket"), SUGAR_WATER_BUCKET);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "royal_jelly_bottle"), ROYAL_JELLY_BOTTLE);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "royal_jelly_bucket"), ROYAL_JELLY_BUCKET);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "royal_jelly_block"), ROYAL_JELLY_BLOCK);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_bucket"), HONEY_BUCKET);
-        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shards"), HONEY_CRYSTAL_SHARDS);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_compass"), HONEY_COMPASS);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_bread"), BEE_BREAD);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF);
-        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_compass"), HONEY_COMPASS);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shards"), HONEY_CRYSTAL_SHARDS);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "stinger_spear"), STINGER_SPEAR);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_cannon"), BEE_CANNON);
@@ -233,7 +265,23 @@ public class BzItems {
                     SUPER_CANDLE_BLUE,
                     SUPER_CANDLE_PURPLE,
                     SUPER_CANDLE_MAGENTA,
-                    SUPER_CANDLE_PINK
+                    SUPER_CANDLE_PINK,
+                    STRING_CURTAIN_WHITE,
+                    STRING_CURTAIN_LIGHT_GRAY,
+                    STRING_CURTAIN_GRAY,
+                    STRING_CURTAIN_BLACK,
+                    STRING_CURTAIN_BROWN,
+                    STRING_CURTAIN_RED,
+                    STRING_CURTAIN_ORANGE,
+                    STRING_CURTAIN_YELLOW,
+                    STRING_CURTAIN_LIME,
+                    STRING_CURTAIN_GREEN,
+                    STRING_CURTAIN_CYAN,
+                    STRING_CURTAIN_LIGHT_BLUE,
+                    STRING_CURTAIN_BLUE,
+                    STRING_CURTAIN_PURPLE,
+                    STRING_CURTAIN_MAGENTA,
+                    STRING_CURTAIN_PINK
                 ).map(Item::getDefaultInstance).toList())
             );
 
@@ -256,7 +304,23 @@ public class BzItems {
                     SUPER_CANDLE_BLUE,
                     SUPER_CANDLE_PURPLE,
                     SUPER_CANDLE_MAGENTA,
-                    SUPER_CANDLE_PINK
+                    SUPER_CANDLE_PINK,
+                    STRING_CURTAIN_WHITE,
+                    STRING_CURTAIN_LIGHT_GRAY,
+                    STRING_CURTAIN_GRAY,
+                    STRING_CURTAIN_BLACK,
+                    STRING_CURTAIN_BROWN,
+                    STRING_CURTAIN_RED,
+                    STRING_CURTAIN_ORANGE,
+                    STRING_CURTAIN_YELLOW,
+                    STRING_CURTAIN_LIME,
+                    STRING_CURTAIN_GREEN,
+                    STRING_CURTAIN_CYAN,
+                    STRING_CURTAIN_LIGHT_BLUE,
+                    STRING_CURTAIN_BLUE,
+                    STRING_CURTAIN_PURPLE,
+                    STRING_CURTAIN_MAGENTA,
+                    STRING_CURTAIN_PINK
                 ).map(Item::getDefaultInstance).toList())
             );
 

@@ -78,6 +78,22 @@ public class BzBlocks {
     public static final Block SUPER_CANDLE_BASE_YELLOW = new SuperCandleBase();
     public static final Block INCENSE_BASE_CANDLE = new IncenseCandleBase();
     public static final Block CRYSTALLINE_FLOWER = new CrystallineFlower();
+    public static final Block STRING_CURTAIN_BLACK = new StringCurtain();
+    public static final Block STRING_CURTAIN_BLUE = new StringCurtain();
+    public static final Block STRING_CURTAIN_BROWN = new StringCurtain();
+    public static final Block STRING_CURTAIN_CYAN = new StringCurtain();
+    public static final Block STRING_CURTAIN_GRAY = new StringCurtain();
+    public static final Block STRING_CURTAIN_GREEN = new StringCurtain();
+    public static final Block STRING_CURTAIN_LIGHT_BLUE = new StringCurtain();
+    public static final Block STRING_CURTAIN_LIGHT_GRAY = new StringCurtain();
+    public static final Block STRING_CURTAIN_LIME = new StringCurtain();
+    public static final Block STRING_CURTAIN_MAGENTA = new StringCurtain();
+    public static final Block STRING_CURTAIN_ORANGE = new StringCurtain();
+    public static final Block STRING_CURTAIN_PINK = new StringCurtain();
+    public static final Block STRING_CURTAIN_PURPLE = new StringCurtain();
+    public static final Block STRING_CURTAIN_RED = new StringCurtain();
+    public static final Block STRING_CURTAIN_WHITE = new StringCurtain();
+    public static final Block STRING_CURTAIN_YELLOW = new StringCurtain();
 
 
     /**
@@ -122,5 +138,23 @@ public class BzBlocks {
         Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "super_candle_base_yellow"), SUPER_CANDLE_BASE_YELLOW);
         Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "incense_candle_base"), INCENSE_BASE_CANDLE);
         Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"), CRYSTALLINE_FLOWER);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_black"), STRING_CURTAIN_BLACK);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_blue"), STRING_CURTAIN_BLUE);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_brown"), STRING_CURTAIN_BROWN);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_cyan"), STRING_CURTAIN_CYAN);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_gray"), STRING_CURTAIN_GRAY);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_green"), STRING_CURTAIN_GREEN);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_light_blue"), STRING_CURTAIN_LIGHT_BLUE);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_light_gray"), STRING_CURTAIN_LIGHT_GRAY);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_lime"), STRING_CURTAIN_LIME);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_magenta"), STRING_CURTAIN_MAGENTA);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_orange"), STRING_CURTAIN_ORANGE);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_pink"), STRING_CURTAIN_PINK);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_purple"), STRING_CURTAIN_PURPLE);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_red"), STRING_CURTAIN_RED);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_white"), STRING_CURTAIN_WHITE);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_yellow"), STRING_CURTAIN_YELLOW);
+
+        StringCurtain.setupStringCurtainbehaviors();
     }
 }
