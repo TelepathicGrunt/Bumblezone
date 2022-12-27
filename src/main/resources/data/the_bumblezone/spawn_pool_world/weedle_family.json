@@ -1,0 +1,52 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "weedle-1",
+      "pokemon": "weedle",
+      "type": "pokemon",
+      "context": "grounded",
+      "bucket": "common",
+      "level": "5-21",
+      "weight": 7.0,
+      "condition": {
+        "canSeeSky": false,
+        "biomes": [
+          "#the_bumblezone:the_bumblezone"
+        ]
+      }
+    },
+    {
+      "id": "kakuna-1",
+      "pokemon": "kakuna",
+      "type": "pokemon",
+      "context": "grounded",
+      "bucket": "common",
+      "level": "12-27",
+      "weight": 3.0,
+      "condition": {
+        "canSeeSky": false,
+        "biomes": [
+          "#the_bumblezone:the_bumblezone"
+        ]
+      }
+    },
+    {
+      "id": "beedrill-1",
+      "pokemon": "beedrill",
+      "type": "pokemon",
+      "context": "grounded",
+      "bucket": "common",
+      "level": "25-45",
+      "weight": 2.0,
+      "condition": {
+        "canSeeSky": false,
+        "biomes": [
+          "#the_bumblezone:the_bumblezone"
+        ]
+      }
+    }
+  ]
+}
