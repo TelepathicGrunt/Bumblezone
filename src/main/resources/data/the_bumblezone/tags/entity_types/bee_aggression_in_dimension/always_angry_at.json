@@ -78,6 +78,10 @@
       "required": false
     },
     {
+      "id": "pokecube:vibrava",
+      "required": false
+    },
+    {
       "id": "pokecube:beartic",
       "required": false
     },
@@ -155,6 +159,10 @@
     },
     {
       "id": "infernalexp:warpbeetle",
+      "required": false
+    },
+    {
+      "id": "endlessencore:fleet",
       "required": false
     }
   ]

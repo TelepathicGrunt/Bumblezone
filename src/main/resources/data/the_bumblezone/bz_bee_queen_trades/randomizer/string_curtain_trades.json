@@ -1,0 +1,17 @@
+{
+  "wants": [
+    {
+      "id": "#the_bumblezone:string_curtains",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#the_bumblezone:string_curtains",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}
