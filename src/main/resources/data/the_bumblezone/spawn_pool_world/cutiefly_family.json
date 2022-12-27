@@ -1,0 +1,37 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "cutiefly-1",
+      "pokemon": "cutiefly",
+      "type": "pokemon",
+      "context": "grounded",
+      "bucket": "common",
+      "level": "7-21",
+      "weight": 5.0,
+      "condition": {
+        "canSeeSky": false,
+        "biomes": [
+          "#the_bumblezone:the_bumblezone"
+        ]
+      }
+    },
+    {
+      "id": "Ribombee-1",
+      "pokemon": "ribombee",
+      "type": "pokemon",
+      "context": "grounded",
+      "bucket": "common",
+      "level": "16-38",
+      "weight": 2.0,
+      "condition": {
+        "canSeeSky": false,
+        "biomes": [
+          "#the_bumblezone:the_bumblezone"
+        ]
+      }
+    }
+  ]
+}
