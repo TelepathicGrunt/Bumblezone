@@ -162,6 +162,10 @@
       "required": false
     },
     {
+      "id": "crittersandcompanions:dragonfly",
+      "required": false
+    },
+    {
       "id": "endlessencore:fleet",
       "required": false
     }
