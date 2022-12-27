@@ -78,6 +78,10 @@
       "required": false
     },
     {
+      "id": "pokecube:vibrava",
+      "required": false
+    },
+    {
       "id": "pokecube:beartic",
       "required": false
     },
@@ -159,6 +163,10 @@
     },
     {
       "id": "crittersandcompanions:dragonfly",
+      "required": false
+    },
+    {
+      "id": "endlessencore:fleet",
       "required": false
     }
   ]

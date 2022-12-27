@@ -19,6 +19,24 @@ Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reope
 Fixed Crystal Cannon firing center crystal shard backwards.
 
 ##### Blocks:
+Added String Curtains that bees cannot pathfind through and slightly pushes bees away. Great for making a walk-in bee room with bees escaping!
+ Attaches to any solid surface and right clicking with string will extend the block downward.
+ Recipe to create the curtain is this with (T) Stick, (S) String, (G) Glass, and (D) a Dye which is optional:
+ T T T
+ S G S
+ S D S
+
+Some tags that the String Curtains uses are:
+ `the_bumblezone:string_curtains` (item tag)
+
+ `the_bumblezone:string_curtains` (block tag)
+
+ `the_bumblezone:string_curtains/curtain_extending` (item tag)
+
+ `the_bumblezone:string_curtains/blocks_pathfinding_for_non_bee_mob` (entity tag)
+
+ `the_bumblezone:string_curtains/force_allow_pathfinding` (entity tag)
+
 Empty Porous Honeycomb Block will transform into a Filled Porous Honeycomb Block when touched by a pollinated bee!
 
 Empty Honeycomb Brood Block will transform into a Honeycomb Brood Block with a larva inside when touched by a pollinated bee!

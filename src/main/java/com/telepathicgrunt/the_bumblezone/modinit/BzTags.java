@@ -29,6 +29,7 @@ public class BzTags {
     public static final TagKey<Block> CANDLE_WICKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "candle_wicks"));
     public static final TagKey<Block> CANDLE_BASES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "candle_bases"));
     public static final TagKey<Block> CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "worldgen_checks/cave_edge_blocks_for_modded_compats"));
+    public static final TagKey<Block> STRING_CURTAINS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtains"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));
@@ -56,6 +57,7 @@ public class BzTags {
     public static final TagKey<Item> BEEHEMOTH_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/beehemoth"));
     public static final TagKey<Item> BEEHEMOTH_FAST_LURING_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/beehemoth_fast_luring"));
     public static final TagKey<Item> HONEY_SLIME_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/honey_slime"));
+    public static final TagKey<Item> STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "string_curtains/curtain_extending"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("forge", "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
@@ -75,6 +77,8 @@ public class BzTags {
     public static final TagKey<EntityType<?>> FORCED_BEE_ANGRY_AT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/always_angry_at"));
     public static final TagKey<EntityType<?>> FORCED_BEE_CALM_AT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/forced_calm_at"));
     public static final TagKey<EntityType<?>> HANGING_GARDENS_INITIAL_SPAWN_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "hanging_garden/initial_spawn_entities"));
+    public static final TagKey<EntityType<?>> STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "string_curtains/blocks_pathfinding_for_non_bee_mob"));
+    public static final TagKey<EntityType<?>> STRING_CURTAIN_FORCE_ALLOW_PATHFINDING = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "string_curtains/force_allow_pathfinding"));
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
     public static final TagKey<Structure> NO_CAVES = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_caves"));

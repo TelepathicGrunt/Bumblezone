@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "the_bumblezone:block/string_curtain/blue_attached"
+  }
+}
