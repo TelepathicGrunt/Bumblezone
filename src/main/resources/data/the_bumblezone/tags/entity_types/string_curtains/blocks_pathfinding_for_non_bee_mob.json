@@ -1,0 +1,210 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:beehemoth",
+    {
+      "id": "blue_skies:firefly",
+      "required": false
+    },
+    {
+      "id": "naturalist:butterfly",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:moth",
+      "required": false
+    },
+    {
+      "id": "wonderouswilds:firefly",
+      "required": false
+    },
+    {
+      "id": "wildlife:spicebush_butterfly",
+      "required": false
+    },
+    {
+      "id": "wildlife:monarch_butterfly",
+      "required": false
+    },
+    {
+      "id": "wildlife:glasswing_butterfly",
+      "required": false
+    },
+    {
+      "id": "wildlife:tiger_butterfly",
+      "required": false
+    },
+    {
+      "id": "wildlife:morpho_butterfly",
+      "required": false
+    },
+    {
+      "id": "whisperwoods:moth",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:white_butterfly",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:yellow_butterfly",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:morpho_butterfly",
+      "required": false
+    },
+    {
+      "id": "natural_decoration:morpho_butterfly",
+      "required": false
+    },
+    {
+      "id": "infernalexp:glowsilk_moth",
+      "required": false
+    },
+    {
+      "id": "ob_aquamirae:golden_moth",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:dragonfly",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:tarantula_hawk",
+      "required": false
+    },
+    {
+      "id": "wildlife:dragonfly",
+      "required": false
+    },
+    {
+      "id": "betterend:dragonfly",
+      "required": false
+    },
+    {
+      "id": "swampier_swamps:dragonfly",
+      "required": false
+    },
+    {
+      "id": "endlessencore:fleet",
+      "required": false
+    },
+    {
+      "id": "pokecube:butterfree",
+      "required": false
+    },
+    {
+      "id": "pokecube:butterfree-gmax",
+      "required": false
+    },
+    {
+      "id": "pokecube:beedrill",
+      "required": false
+    },
+    {
+      "id": "pokecube:beedrill-mega",
+      "required": false
+    },
+    {
+      "id": "pokecube:venomoth",
+      "required": false
+    },
+    {
+      "id": "pokecube:scyther",
+      "required": false
+    },
+    {
+      "id": "pokecube:yanma",
+      "required": false
+    },
+    {
+      "id": "pokecube:heracross",
+      "required": false
+    },
+    {
+      "id": "pokecube:dustox",
+      "required": false
+    },
+    {
+      "id": "pokecube:beautifly",
+      "required": false
+    },
+    {
+      "id": "pokecube:ninjask",
+      "required": false
+    },
+    {
+      "id": "pokecube:masquerain",
+      "required": false
+    },
+    {
+      "id": "pokecube:vibrava",
+      "required": false
+    },
+    {
+      "id": "pokecube:combee",
+      "required": false
+    },
+    {
+      "id": "pokecube:vespiquen",
+      "required": false
+    },
+    {
+      "id": "pokecube:mothim",
+      "required": false
+    },
+    {
+      "id": "pokecube:yanmega",
+      "required": false
+    },
+    {
+      "id": "pokecube:volcarona",
+      "required": false
+    },
+    {
+      "id": "pokecube:vivillon",
+      "required": false
+    },
+    {
+      "id": "pokecube:cutiefly",
+      "required": false
+    },
+    {
+      "id": "pokecube:ribombee",
+      "required": false
+    },
+    {
+      "id": "pokecube:vikavolt",
+      "required": false
+    },
+    {
+      "id": "pokecube:buzzwole",
+      "required": false
+    },
+    {
+      "id": "pokecube:orbeetle",
+      "required": false
+    },
+    {
+      "id": "pokecube:orbeetle-gmax",
+      "required": false
+    },
+    {
+      "id": "pokecube:flapple",
+      "required": false
+    },
+    {
+      "id": "pokecube:frosmoth",
+      "required": false
+    },
+    {
+      "id": "pokecube:ledian",
+      "required": false
+    },
+    {
+      "id": "pokecube:ledyba",
+      "required": false
+    }
+  ]
+}

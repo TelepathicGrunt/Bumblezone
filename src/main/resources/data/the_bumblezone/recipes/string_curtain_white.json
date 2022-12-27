@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "the_bumblezone",
+  "pattern": [
+    "ttt",
+    "sgs",
+    "s s"
+  ],
+  "key": {
+    "t": {
+      "item": "minecraft:stick"
+    },
+    "s": {
+      "item": "minecraft:string"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:string_curtain_white"
+  }
+}

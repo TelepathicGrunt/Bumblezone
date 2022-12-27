@@ -1,0 +1,41 @@
+{
+  "textures": {
+    "0": "the_bumblezone:block/string_curtain/pink_attached",
+    "particle": "the_bumblezone:block/string_curtain/pink_attached"
+  },
+  "render_type": "minecraft:cutout",
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        15.95
+      ],
+      "to": [
+        16,
+        16,
+        15.95
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}
