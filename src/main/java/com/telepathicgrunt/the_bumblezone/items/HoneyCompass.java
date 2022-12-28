@@ -339,7 +339,9 @@ public class HoneyCompass extends Item implements Vanishable {
     }
 
     public static boolean isValidBeeHive(BlockState block) {
-        if(block.is(BzTags.BLACKLISTED_HONEY_COMPASS_BLOCKS)) return false;
+        if (block.is(BzTags.FORCED_ALLOWED_POSITION_TRACKING_BLOCKS)) return true;
+
+        if(block.is(BzTags.DISALLOWED_POSITION_TRACKING_BLOCKS)) return false;
 
         if(block.is(BlockTags.BEEHIVES) || block.getBlock() instanceof BeehiveBlock) {
             return true;
