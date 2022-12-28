@@ -92,7 +92,8 @@ public class BzTags {
     public static final TagKey<Structure> HONEY_COMPASS_THRONE_LOCATING = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "honey_compass/throne_locating"));
     public static final TagKey<Structure> BEE_QUEEN_MINING_FATIGUE = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "bee_queen_mining_fatigue"));
 
-    public static final TagKey<MobEffect> BLACKLISTED_INCENSE_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "blacklisted_incense_candle_effects"));
+    public static final TagKey<MobEffect> DISALLOWED_INCENSE_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "incense_candle/disallowed_effects"));
 
-    public static final TagKey<Enchantment> BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "blacklisted_crystalline_flower_enchantments"));
+    public static final TagKey<Enchantment> DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/disallowed_enchantments"));
+    public static final TagKey<Enchantment> FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/force_allowed_enchantments"));
 }

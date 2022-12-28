@@ -38,7 +38,7 @@ public class FakeIncenseCandleRecipeCreator {
                 break;
             }
 
-            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
 
@@ -47,7 +47,7 @@ public class FakeIncenseCandleRecipeCreator {
         }
         potions.sort(Comparator.comparingInt(a -> a.getEffects().size()));
         for (Potion potion : potions) {
-            if (potion.getEffects().stream().allMatch(e -> BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+            if (potion.getEffects().stream().allMatch(e -> BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
 

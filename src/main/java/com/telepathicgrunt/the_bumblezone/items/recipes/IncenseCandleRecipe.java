@@ -139,7 +139,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
-        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS)).toList();
+        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS)).toList();
         chosenEffect = filteredMobEffects.get(new Random().nextInt(filteredMobEffects.size()));
         if (chosenEffect == null) {
             return getResultStack(this.outputCount);
@@ -292,7 +292,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, QuiltRecipeSerialize
             }
         }
 
-        if (mobEffects.stream().allMatch(e -> BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+        if (mobEffects.stream().allMatch(e -> BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
             return false;
         }
 

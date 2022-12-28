@@ -168,6 +168,22 @@
     {
       "id": "endlessencore:fleet",
       "required": false
+    },
+    {
+      "id": "alchemists_garden:spider_queen",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spider_egg",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spiderling",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spiderling_minion",
+      "required": false
     }
   ]
 }
