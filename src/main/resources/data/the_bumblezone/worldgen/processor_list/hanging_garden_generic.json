@@ -4,13 +4,13 @@
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:poppy",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_flowers",
-      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/blacklisted_flowers"
+      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/forced_disallowed_flowers"
     },
     {
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:sunflower",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_tall_flowers",
-      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/blacklisted_tall_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/forced_disallowed_tall_flowers",
       "double_tall_flower": true,
       "same_throughout_piece": true,
       "seed_random_addition": 866
@@ -19,7 +19,7 @@
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:lilac",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_tall_flowers",
-      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/blacklisted_tall_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/forced_disallowed_tall_flowers",
       "double_tall_flower": true,
       "same_throughout_piece": true,
       "seed_random_addition": 986
@@ -28,7 +28,7 @@
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:rose_bush",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_tall_flowers",
-      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/blacklisted_tall_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/forced_disallowed_tall_flowers",
       "double_tall_flower": true,
       "same_throughout_piece": true,
       "seed_random_addition": 515
@@ -37,7 +37,7 @@
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:peony",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_tall_flowers",
-      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/blacklisted_tall_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/forced_disallowed_tall_flowers",
       "double_tall_flower": true,
       "same_throughout_piece": true,
       "seed_random_addition": 356
@@ -46,7 +46,7 @@
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:birch_log",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_logs",
-      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/blacklisted_logs",
+      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/forced_disallowed_logs",
       "double_tall_flower": false,
       "same_throughout_piece": true,
       "seed_random_addition": 1000
@@ -55,7 +55,7 @@
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:birch_leaves",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_leaves",
-      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/blacklisted_leaves",
+      "blacklisted_output_block_tag": "the_bumblezone:hanging_garden/forced_disallowed_leaves",
       "double_tall_flower": false,
       "same_throughout_piece": true,
       "seed_random_addition": 1317
