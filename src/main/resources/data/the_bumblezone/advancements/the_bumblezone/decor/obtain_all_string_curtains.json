@@ -1,0 +1,233 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/decor/discover_string_curtain_recipe",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:string_curtain_orange"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_all_string_curtains.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_all_string_curtains.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "black_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_black"]
+          }
+        ]
+      }
+    },
+    "blue_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_blue"]
+          }
+        ]
+      }
+    },
+    "brown_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_brown"]
+          }
+        ]
+      }
+    },
+    "cyan_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_cyan"]
+          }
+        ]
+      }
+    },
+    "gray_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_gray"]
+          }
+        ]
+      }
+    },
+    "green_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_green"]
+          }
+        ]
+      }
+    },
+    "light_blue_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_light_blue"]
+          }
+        ]
+      }
+    },
+    "light_gray_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_light_gray"]
+          }
+        ]
+      }
+    },
+    "lime_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_lime"]
+          }
+        ]
+      }
+    },
+    "magenta_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_magenta"]
+          }
+        ]
+      }
+    },
+    "orange_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_orange"]
+          }
+        ]
+      }
+    },
+    "pink_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_pink"]
+          }
+        ]
+      }
+    },
+    "purple_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_purple"]
+          }
+        ]
+      }
+    },
+    "red_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_red"]
+          }
+        ]
+      }
+    },
+    "white_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_white"]
+          }
+        ]
+      }
+    },
+    "yellow_string_curtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:string_curtain_yellow"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "black_string_curtain"
+    ],
+    [
+      "blue_string_curtain"
+    ],
+    [
+      "brown_string_curtain"
+    ],
+    [
+      "cyan_string_curtain"
+    ],
+    [
+      "gray_string_curtain"
+    ],
+    [
+      "green_string_curtain"
+    ],
+    [
+      "light_blue_string_curtain"
+    ],
+    [
+      "light_gray_string_curtain"
+    ],
+    [
+      "lime_string_curtain"
+    ],
+    [
+      "magenta_string_curtain"
+    ],
+    [
+      "orange_string_curtain"
+    ],
+    [
+      "pink_string_curtain"
+    ],
+    [
+      "purple_string_curtain"
+    ],
+    [
+      "red_string_curtain"
+    ],
+    [
+      "white_string_curtain"
+    ],
+    [
+      "yellow_string_curtain"
+    ]
+  ]
+}

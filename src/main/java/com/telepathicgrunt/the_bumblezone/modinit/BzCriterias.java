@@ -40,6 +40,7 @@ public class BzCriterias {
     public static final GenericTrigger CRYSTAL_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "crystal_cannon_full"));
     public static final GenericTrigger ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "enchant_crystalline_flower"));
     public static final EntitySpecificTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive"));
+    public static final GenericTrigger EXTEND_STRING_CURTAIN_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "extend_string_curtain"));
     public static final GenericTrigger FALLING_ON_POLLEN_BLOCK_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "fall_onto_pollen_pile"));
     public static final ItemSpecificTrigger FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "food_removed_wrath_of_the_hive"));
     public static final GenericTrigger GETTING_PROTECTION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "getting_protection"));
@@ -107,6 +108,7 @@ public class BzCriterias {
         CriteriaTriggers.register(CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER);
         CriteriaTriggers.register(CRYSTAL_CANNON_FULL_TRIGGER);
         CriteriaTriggers.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
+        CriteriaTriggers.register(EXTEND_STRING_CURTAIN_TRIGGER);
         CriteriaTriggers.register(ENCHANT_CRYSTALLINE_FLOWER_TRIGGER);
         CriteriaTriggers.register(FALLING_ON_POLLEN_BLOCK_TRIGGER);
         CriteriaTriggers.register(FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER);

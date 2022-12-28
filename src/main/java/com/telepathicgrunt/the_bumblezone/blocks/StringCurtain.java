@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.RequiemCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -11,6 +13,7 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -262,10 +265,13 @@ public class StringCurtain extends Block {
                 if (!playerEntity.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
+
+                if(playerEntity instanceof ServerPlayer) {
+                    BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.trigger((ServerPlayer) playerEntity);
+                }
             }
             return InteractionResult.SUCCESS;
         }
-
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
