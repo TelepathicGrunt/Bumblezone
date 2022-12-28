@@ -338,7 +338,9 @@ public class EntityTeleportationBackend {
     }
 
     public static boolean isValidBeeHive(BlockState block) {
-        if(block.is(BzTags.BLACKLISTED_TELEPORTATION_HIVES)) return false;
+        if(block.is(BzTags.FORCED_ALLOWED_TELEPORTABLE_BLOCK)) return true;
+
+        if(block.is(BzTags.DISALLOWED_TELEPORTABLE_BEEHIVE)) return false;
 
         if(block.is(BlockTags.BEEHIVES) || block.getBlock() instanceof BeehiveBlock) {
             return true;

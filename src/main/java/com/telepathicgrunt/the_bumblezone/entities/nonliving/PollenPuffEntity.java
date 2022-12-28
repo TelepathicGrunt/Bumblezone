@@ -107,7 +107,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         if (raytraceresult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = raytraceresult.getBlockPos();
             BlockState blockstate = this.level.getBlockState(blockpos);
-            if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
+            if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
                 this.handleInsidePortal(blockpos);
                 this.onHit(raytraceresult);
             }
@@ -197,7 +197,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         BlockState blockstate = this.level.getBlockState(blockHitResult.getBlockPos());
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
-        if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
+        if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
             spawnPlants(blockHitResult.getBlockPos(), (r, b) -> blockstate);
         }
         else if(blockstate.is(Blocks.HONEY_BLOCK) ||
