@@ -1,14 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -34,8 +30,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
-import org.quiltmc.qsl.block.content.registry.api.FlammableBlockEntry;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.Map;
 
@@ -54,28 +49,6 @@ public class StringCurtain extends Block {
                 .lightLevel((blockState) -> 1)
                 .sound(SoundType.WOOL)
                 .strength(0.3F));
-    }
-
-    public static void setupStringCurtainbehaviors() {
-        BlockContentRegistries.FLAMMABLE.put(BzTags.STRING_CURTAINS, new FlammableBlockEntry(60, 20));
-
-        UseBlockCallback.EVENT.register(new ResourceLocation(Bumblezone.MODID, "string_below_string_curtain"),
-            (player, level, interactionHand, hitResult) -> {
-                if (player != null && player.getItemInHand(interactionHand).is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
-                    BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
-                    BlockState aboveState = level.getBlockState(pos);
-                    if (aboveState.is(BzTags.STRING_CURTAINS)) {
-                        return aboveState.use(level, player, interactionHand, new BlockHitResult(
-                                hitResult.getLocation().add(0, 1, 0),
-                                hitResult.getDirection(),
-                                pos,
-                                hitResult.isInside()
-                        ));
-                    }
-                }
-
-                return InteractionResult.PASS;
-            });
     }
 
     public StringCurtain(Properties properties) {
@@ -259,6 +232,45 @@ public class StringCurtain extends Block {
         }
 
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+    }
+
+    public static void onBlockInteractEvent(PlayerInteractEvent.RightClickBlock event) {
+        Player player = event.getEntity();
+        InteractionHand interactionHand = event.getHand();
+        if (player != null && player.getItemInHand(interactionHand).is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
+            BlockHitResult hitResult = event.getHitVec();
+            BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
+            BlockState aboveState = event.getLevel().getBlockState(pos);
+            if (aboveState.is(BzTags.STRING_CURTAINS)) {
+                InteractionResult interactionResult = aboveState.use(event.getLevel(), player, interactionHand, new BlockHitResult(
+                        hitResult.getLocation().add(0, 1, 0),
+                        hitResult.getDirection(),
+                        pos,
+                        hitResult.isInside()
+                ));
+
+                if (interactionResult != InteractionResult.PASS) {
+                    event.setCanceled(true);
+                    event.setCancellationResult(interactionResult);
+                }
+            }
+        }
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return 20;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction)
+    {
+        return 60;
+    }
+
+    @Override
+    public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return true;
     }
 
     @Override

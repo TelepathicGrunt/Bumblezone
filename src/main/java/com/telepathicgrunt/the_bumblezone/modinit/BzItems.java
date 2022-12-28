@@ -76,6 +76,22 @@ public class BzItems {
     public static final RegistryObject<Item> SUPER_CANDLE_RED = ITEMS.register("super_candle_red", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_RED.get(), new Item.Properties(), true, false));
     public static final RegistryObject<Item> SUPER_CANDLE_WHITE = ITEMS.register("super_candle_white", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE.get(), new Item.Properties(), true, false));
     public static final RegistryObject<Item> SUPER_CANDLE_YELLOW = ITEMS.register("super_candle_yellow", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW.get(), new Item.Properties(), true, false));
+    public static final RegistryObject<Item> STRING_CURTAIN_BLACK = ITEMS.register("string_curtain_black", () -> new BlockItem(BzBlocks.STRING_CURTAIN_BLACK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_BLUE = ITEMS.register("string_curtain_blue", () -> new BlockItem(BzBlocks.STRING_CURTAIN_BLUE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_BROWN = ITEMS.register("string_curtain_brown", () -> new BlockItem(BzBlocks.STRING_CURTAIN_BROWN.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_CYAN = ITEMS.register("string_curtain_cyan", () -> new BlockItem(BzBlocks.STRING_CURTAIN_CYAN.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_GRAY = ITEMS.register("string_curtain_gray", () -> new BlockItem(BzBlocks.STRING_CURTAIN_GRAY.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_GREEN = ITEMS.register("string_curtain_green", () -> new BlockItem(BzBlocks.STRING_CURTAIN_GREEN.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_LIGHT_BLUE = ITEMS.register("string_curtain_light_blue", () -> new BlockItem(BzBlocks.STRING_CURTAIN_LIGHT_BLUE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_LIGHT_GRAY = ITEMS.register("string_curtain_light_gray", () -> new BlockItem(BzBlocks.STRING_CURTAIN_LIGHT_GRAY.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_LIME = ITEMS.register("string_curtain_lime", () -> new BlockItem(BzBlocks.STRING_CURTAIN_LIME.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_MAGENTA = ITEMS.register("string_curtain_magenta", () -> new BlockItem(BzBlocks.STRING_CURTAIN_MAGENTA.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_ORANGE = ITEMS.register("string_curtain_orange", () -> new BlockItem(BzBlocks.STRING_CURTAIN_ORANGE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_PINK = ITEMS.register("string_curtain_pink", () -> new BlockItem(BzBlocks.STRING_CURTAIN_PINK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_PURPLE = ITEMS.register("string_curtain_purple", () -> new BlockItem(BzBlocks.STRING_CURTAIN_PURPLE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_RED = ITEMS.register("string_curtain_red", () -> new BlockItem(BzBlocks.STRING_CURTAIN_RED.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_WHITE = ITEMS.register("string_curtain_white", () -> new BlockItem(BzBlocks.STRING_CURTAIN_WHITE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> STRING_CURTAIN_YELLOW = ITEMS.register("string_curtain_yellow", () -> new BlockItem(BzBlocks.STRING_CURTAIN_YELLOW.get(), new Item.Properties()));
     public static final RegistryObject<Item> INCENSE_CANDLE = ITEMS.register("incense_candle", () -> new IncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE.get(), new Item.Properties()));
     public static final RegistryObject<Item> CRYSTALLINE_FLOWER = ITEMS.register("crystalline_flower", () -> new BzBlockItem(BzBlocks.CRYSTALLINE_FLOWER.get(), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), true, true));
 
@@ -161,16 +177,32 @@ public class BzItems {
                         SUPER_CANDLE_RED,
                         SUPER_CANDLE_WHITE,
                         SUPER_CANDLE_YELLOW,
+                        STRING_CURTAIN_BLACK,
+                        STRING_CURTAIN_BLUE,
+                        STRING_CURTAIN_BROWN,
+                        STRING_CURTAIN_CYAN,
+                        STRING_CURTAIN_GRAY,
+                        STRING_CURTAIN_GREEN,
+                        STRING_CURTAIN_LIGHT_BLUE,
+                        STRING_CURTAIN_LIGHT_GRAY,
+                        STRING_CURTAIN_LIME,
+                        STRING_CURTAIN_MAGENTA,
+                        STRING_CURTAIN_ORANGE,
+                        STRING_CURTAIN_PINK,
+                        STRING_CURTAIN_PURPLE,
+                        STRING_CURTAIN_RED,
+                        STRING_CURTAIN_WHITE,
+                        STRING_CURTAIN_YELLOW,
                         SUGAR_WATER_BOTTLE,
                         SUGAR_WATER_BUCKET,
                         ROYAL_JELLY_BOTTLE,
                         ROYAL_JELLY_BUCKET,
                         ROYAL_JELLY_BLOCK,
                         HONEY_BUCKET,
-                        HONEY_CRYSTAL_SHARDS,
+                        HONEY_COMPASS,
                         BEE_BREAD,
                         POLLEN_PUFF,
-                        HONEY_COMPASS,
+                        HONEY_CRYSTAL_SHARDS,
                         BEE_STINGER,
                         STINGER_SPEAR,
                         BEE_CANNON,
@@ -258,7 +290,23 @@ public class BzItems {
                 SUPER_CANDLE_BLUE,
                 SUPER_CANDLE_PURPLE,
                 SUPER_CANDLE_MAGENTA,
-                SUPER_CANDLE_PINK
+                SUPER_CANDLE_PINK,
+                STRING_CURTAIN_WHITE,
+                STRING_CURTAIN_LIGHT_GRAY,
+                STRING_CURTAIN_GRAY,
+                STRING_CURTAIN_BLACK,
+                STRING_CURTAIN_BROWN,
+                STRING_CURTAIN_RED,
+                STRING_CURTAIN_ORANGE,
+                STRING_CURTAIN_YELLOW,
+                STRING_CURTAIN_LIME,
+                STRING_CURTAIN_GREEN,
+                STRING_CURTAIN_CYAN,
+                STRING_CURTAIN_LIGHT_BLUE,
+                STRING_CURTAIN_BLUE,
+                STRING_CURTAIN_PURPLE,
+                STRING_CURTAIN_MAGENTA,
+                STRING_CURTAIN_PINK
             ).map(item -> item.get().getDefaultInstance()).toList());
         }
 

@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone;
 
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
+import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
@@ -80,6 +81,7 @@ public class Bumblezone{
         forgeBus.addListener(BeeAggression::pickupItemAnger);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::onLivingEntityHurt);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
+        forgeBus.addListener(StringCurtain::onBlockInteractEvent);
         forgeBus.addListener(BeeInteractivity::onEntityInteractEvent);
         forgeBus.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         forgeBus.addListener(BzWorldSavedData::worldTick);
