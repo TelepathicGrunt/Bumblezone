@@ -112,6 +112,22 @@ public class JEIIntegration implements IModPlugin {
         addInfo(registration, BzItems.SUPER_CANDLE_YELLOW);
         addInfo(registration, BzItems.INCENSE_CANDLE);
         addInfo(registration, BzItems.CRYSTALLINE_FLOWER);
+        addInfo(registration, BzItems.STRING_CURTAIN_BLACK);
+        addInfo(registration, BzItems.STRING_CURTAIN_BLUE);
+        addInfo(registration, BzItems.STRING_CURTAIN_BROWN);
+        addInfo(registration, BzItems.STRING_CURTAIN_CYAN);
+        addInfo(registration, BzItems.STRING_CURTAIN_GRAY);
+        addInfo(registration, BzItems.STRING_CURTAIN_GREEN);
+        addInfo(registration, BzItems.STRING_CURTAIN_LIGHT_BLUE);
+        addInfo(registration, BzItems.STRING_CURTAIN_LIGHT_GRAY);
+        addInfo(registration, BzItems.STRING_CURTAIN_LIME);
+        addInfo(registration, BzItems.STRING_CURTAIN_MAGENTA);
+        addInfo(registration, BzItems.STRING_CURTAIN_ORANGE);
+        addInfo(registration, BzItems.STRING_CURTAIN_PINK);
+        addInfo(registration, BzItems.STRING_CURTAIN_PURPLE);
+        addInfo(registration, BzItems.STRING_CURTAIN_RED);
+        addInfo(registration, BzItems.STRING_CURTAIN_WHITE);
+        addInfo(registration, BzItems.STRING_CURTAIN_YELLOW);
 
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null)
