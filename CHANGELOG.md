@@ -73,6 +73,9 @@ Silence "Hanging entity at invalid position" logspam from vanilla by lowering th
  The Item Frame spawned from nbt files still places as intended and functions as intended.
  This was just annoying logspam I decided to yeet.
 
+##### Recipes:
+Organized Bumblezone recipe json files much better into sub folders. Cleaner and easier to browse.
+
 ##### Tags:
 Added the following new tags:
 
