@@ -221,8 +221,8 @@ public class WrathOfTheHiveEffect extends MobEffect {
      * Calm the bees that are attacking the incoming entity
      */
     public static void calmTheBees(Level world, LivingEntity livingEntity) {
-        SEE_THROUGH_WALLS.range(BzConfig.aggressionTriggerRadius * 1.2f);
-        List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius * 1.2f));
+        SEE_THROUGH_WALLS.range(BzConfig.aggressionTriggerRadius * 1.2d);
+        List<Bee> beeList = world.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzConfig.aggressionTriggerRadius * 1.2d));
         for (Bee bee : beeList) {
             if (bee.isNoAi()) {
                 continue;
