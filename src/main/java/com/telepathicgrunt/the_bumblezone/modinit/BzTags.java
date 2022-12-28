@@ -17,14 +17,16 @@ public class BzTags {
     public static void initTags() {}
 
     public static final TagKey<Block> REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/required_blocks_under_beehive_to_teleport"));
-    public static final TagKey<Block> BLACKLISTED_TELEPORTATION_HIVES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/blacklisted_teleportable_beehive_blocks"));
+    public static final TagKey<Block> FORCED_ALLOWED_TELEPORTABLE_BLOCK = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/forced_allowed_teleportable_blocks"));
+    public static final TagKey<Block> DISALLOWED_TELEPORTABLE_BEEHIVE = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/disallowed_teleportable_beehive_blocks"));
     public static final TagKey<Block> HONEYCOMBS_THAT_FEATURES_CAN_CARVE = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "worldgen_checks/honeycombs_that_features_can_carve"));
     public static final TagKey<Block> WRATH_ACTIVATING_BLOCKS_WHEN_MINED = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/wrath_activating_blocks_when_mined"));
     public static final TagKey<Block> FLOWERS_ALLOWED_BY_POLLEN_PUFF = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen_puff/multiplying_allowed_flowers"));
-    public static final TagKey<Block> FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen_puff/multiplying_disallowed_flowers"));
+    public static final TagKey<Block> FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen_puff/multiplying_forced_disallowed_flowers"));
     public static final TagKey<Block> CARPENTER_BEE_BOOTS_MINEABLES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots/mineables"));
     public static final TagKey<Block> CARPENTER_BEE_BOOTS_CLIMBABLES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots/climbables"));
-    public static final TagKey<Block> BLACKLISTED_HONEY_COMPASS_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_compass/beehives_blacklisted_from_position_tracking"));
+    public static final TagKey<Block> DISALLOWED_POSITION_TRACKING_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_compass/beehives_disallowed_from_position_tracking"));
+    public static final TagKey<Block> FORCED_ALLOWED_POSITION_TRACKING_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_compass/forced_allowed_position_tracking"));
     public static final TagKey<Block> CANDLES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "candles"));
     public static final TagKey<Block> CANDLE_WICKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "candle_wicks"));
     public static final TagKey<Block> CANDLE_BASES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "candle_bases"));
@@ -69,8 +71,9 @@ public class BzTags {
     public static final TagKey<Fluid> SPECIAL_HONEY_LIKE = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "special_honey_like"));
 
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff/can_pollinate"));
-    public static final TagKey<EntityType<?>> BLACKLISTED_BEE_CANNON_BEES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_cannon/blacklisted_bees"));
-    public static final TagKey<EntityType<?>> BLACKLISTED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/blacklisted_passengers"));
+    public static final TagKey<EntityType<?>> DISALLOWED_BEE_CANNON_BEES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_cannon/disallowed_bee_pickup"));
+    public static final TagKey<EntityType<?>> FORCED_ALLOWED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/forced_allowed_passengers"));
+    public static final TagKey<EntityType<?>> DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/disallowed_passengers"));
     public static final TagKey<EntityType<?>> ENDERPEARL_TARGET_ENTITY_HIT_ANYWHERE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_entity_hit_anywhere"));
     public static final TagKey<EntityType<?>> ENDERPEARL_TARGET_ENTITY_HIT_HIGH = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_entity_hit_high"));
     public static final TagKey<EntityType<?>> ENDERPEARL_TARGET_ENTITY_HIT_LOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "enderpearl_teleporting/target_entity_hit_low"));

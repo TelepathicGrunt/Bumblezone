@@ -26,16 +26,24 @@ public class PlayerEntityInteractionMixin {
             cancellable = true)
     private void thebumblezone_onBeeInteract(Entity entity, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if(entity instanceof Bee beeEntity) {
-            if(BeeInteractivity.beeFeeding(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
+            if(BeeInteractivity.beeFeeding(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS) {
                 cir.setReturnValue(InteractionResult.SUCCESS);
-            else if(StinglessBeeHelmet.addBeePassenger(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
+                return;
+            }
+            else if(BeeInteractivity.beeUnpollinating(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS) {
                 cir.setReturnValue(InteractionResult.SUCCESS);
-            else if(BeeInteractivity.beeUnpollinating(entity.level, ((Player)(Object)this), hand, beeEntity) == InteractionResult.SUCCESS)
-                cir.setReturnValue(InteractionResult.SUCCESS);
+                return;
+            }
         }
         else if (entity instanceof Slime slimeEntity) {
-            if(CreatingHoneySlime.createHoneySlime(entity.level, ((Player)(Object)this), hand, slimeEntity) == InteractionResult.SUCCESS)
+            if(CreatingHoneySlime.createHoneySlime(entity.level, ((Player)(Object)this), hand, slimeEntity) == InteractionResult.SUCCESS) {
                 cir.setReturnValue(InteractionResult.SUCCESS);
+                return;
+            }
+        }
+
+        if(StinglessBeeHelmet.addBeePassenger(entity.level, ((Player)(Object)this), hand, entity) == InteractionResult.SUCCESS) {
+            cir.setReturnValue(InteractionResult.SUCCESS);
         }
     }
 

@@ -74,6 +74,15 @@ Silence "Hanging entity at invalid position" logspam from vanilla by lowering th
  This was just annoying logspam I decided to yeet.
 
 ##### Tags:
+Added the following new tags:
+
+`the_bumblezone:dimension_teleportation/forced_allowed_teleportable_blocks` (block tag)
+
+`the_bumblezone:honey_compass/forced_allowed_position_tracking` (block tag)
+
+`the_bumblezone:stingless_bee_helmet/forced_allowed_passengers` (entity tag)
+
+
 Organized Bumblezone tags much better into sub folders. Changes are:
 
 `the_bumblezone:allowed_hanging_garden_flowers` -> `the_bumblezone:hanging_garden/allowed_flowers` (block tag)
@@ -84,23 +93,23 @@ Organized Bumblezone tags much better into sub folders. Changes are:
 
 `the_bumblezone:allowed_hanging_garden_logs` -> `the_bumblezone:hanging_garden/allowed_logs` (block tag)
 
-`the_bumblezone:blacklisted_hanging_garden_flowers` -> `the_bumblezone:hanging_garden/blacklisted_flowers` (block tag)
+`the_bumblezone:blacklisted_hanging_garden_flowers` -> `the_bumblezone:hanging_garden/forced_disallowed_flowers` (block tag)
 
-`the_bumblezone:blacklisted_hanging_garden_tall_flowers` -> `the_bumblezone:hanging_garden/blacklisted_tall_flowers` (block tag)
+`the_bumblezone:blacklisted_hanging_garden_tall_flowers` -> `the_bumblezone:hanging_garden/forced_disallowed_tall_flowers` (block tag)
 
-`the_bumblezone:blacklisted_hanging_garden_leaves` -> `the_bumblezone:hanging_garden/blacklisted_leaves` (block tag)
+`the_bumblezone:blacklisted_hanging_garden_leaves` -> `the_bumblezone:hanging_garden/forced_disallowed_leaves` (block tag)
 
-`the_bumblezone:blacklisted_hanging_garden_logs` -> `the_bumblezone:hanging_garden/blacklisted_logs` (block tag)
+`the_bumblezone:blacklisted_hanging_garden_logs` -> `the_bumblezone:hanging_garden/forced_disallowed_logs` (block tag)
 
 `the_bumblezone:flowers_allowed_by_pollen_puff` -> `the_bumblezone:pollen_puff/multiplying_allowed_flowers` (block tag)
 
-`the_bumblezone:flowers_blacklisted_from_pollen_puff` -> `the_bumblezone:pollen_puff/multiplying_disallowed_flowers` (block tag)
+`the_bumblezone:flowers_blacklisted_from_pollen_puff` -> `the_bumblezone:pollen_puff/multiplying_forced_disallowed_flowers` (block tag)
 
 `the_bumblezone:carpenter_bee_boots_climbables` -> `the_bumblezone:carpenter_bee_boots/climbables` (block tag)
 
 `the_bumblezone:carpenter_bee_boots_mineables` -> `the_bumblezone:carpenter_bee_boots/mineables` (block tag)
 
-`the_bumblezone:blacklisted_teleportable_hive_blocks` -> `the_bumblezone:dimension_teleportation/blacklisted_teleportable_beehive_blocks` (block tag)
+`the_bumblezone:blacklisted_teleportable_hive_blocks` -> `the_bumblezone:dimension_teleportation/disallowed_teleportable_beehive_blocks` (block tag)
 
 `the_bumblezone:required_blocks_under_hive_to_teleport` -> `the_bumblezone:dimension_teleportation/required_blocks_under_beehive_to_teleport` (block tag)
 
@@ -110,15 +119,15 @@ Organized Bumblezone tags much better into sub folders. Changes are:
 
 `the_bumblezone:wrath_activating_blocks_when_mined` -> `the_bumblezone:bee_aggression_in_dimension/wrath_activating_blocks_when_mined` (block tag)
 
-`the_bumblezone:blacklisted_honey_compass_blocks` -> `the_bumblezone:honey_compass/beehives_blacklisted_from_position_tracking` (block tag)
+`the_bumblezone:blacklisted_honey_compass_blocks` -> `the_bumblezone:honey_compass/beehives_disallowed_from_position_tracking` (block tag)
 
-`the_bumblezone:blacklisted_bee_cannon_bees` -> `the_bumblezone:bee_cannon/blacklisted_bees` (entity type tag)
+`the_bumblezone:blacklisted_bee_cannon_bees` -> `the_bumblezone:bee_cannon/disallowed_bee_pickup` (entity type tag)
 
 `the_bumblezone:hanging_gardens_initial_spawn_entities` -> `the_bumblezone:hanging_garden/initial_spawn_entities` (entity type tag)
 
 `the_bumblezone:pollen_puff_can_pollinate` -> `the_bumblezone:pollen_puff/can_pollinate` (entity type tag)
 
-`the_bumblezone:blacklisted_stingless_bee_helmet_passengers` -> `the_bumblezone:stingless_bee_helmet/blacklisted_passengers` (entity type tag)
+`the_bumblezone:blacklisted_stingless_bee_helmet_passengers` -> `the_bumblezone:stingless_bee_helmet/disallowed_passengers` (entity type tag)
 
 `the_bumblezone:bee_armor_repair_items` -> `the_bumblezone:repair_items/bee_armor` (item tag)
 
