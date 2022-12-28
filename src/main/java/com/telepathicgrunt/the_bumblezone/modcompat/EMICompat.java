@@ -102,6 +102,22 @@ public class EMICompat implements EmiPlugin {
         addInfo(registry, BzItems.SUPER_CANDLE_YELLOW);
         addInfo(registry, BzItems.INCENSE_CANDLE);
         addInfo(registry, BzItems.CRYSTALLINE_FLOWER);
+        addInfo(registry, BzItems.STRING_CURTAIN_BLACK);
+        addInfo(registry, BzItems.STRING_CURTAIN_BLUE);
+        addInfo(registry, BzItems.STRING_CURTAIN_BROWN);
+        addInfo(registry, BzItems.STRING_CURTAIN_CYAN);
+        addInfo(registry, BzItems.STRING_CURTAIN_GRAY);
+        addInfo(registry, BzItems.STRING_CURTAIN_GREEN);
+        addInfo(registry, BzItems.STRING_CURTAIN_LIGHT_BLUE);
+        addInfo(registry, BzItems.STRING_CURTAIN_LIGHT_GRAY);
+        addInfo(registry, BzItems.STRING_CURTAIN_LIME);
+        addInfo(registry, BzItems.STRING_CURTAIN_MAGENTA);
+        addInfo(registry, BzItems.STRING_CURTAIN_ORANGE);
+        addInfo(registry, BzItems.STRING_CURTAIN_PINK);
+        addInfo(registry, BzItems.STRING_CURTAIN_PURPLE);
+        addInfo(registry, BzItems.STRING_CURTAIN_RED);
+        addInfo(registry, BzItems.STRING_CURTAIN_WHITE);
+        addInfo(registry, BzItems.STRING_CURTAIN_YELLOW);
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
