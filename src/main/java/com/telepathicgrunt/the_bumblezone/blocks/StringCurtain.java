@@ -34,8 +34,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
-import org.quiltmc.qsl.block.content.registry.api.FlammableBlockEntry;
 
 import java.util.Map;
 
@@ -57,7 +55,7 @@ public class StringCurtain extends Block {
     }
 
     public static void setupStringCurtainbehaviors() {
-        BlockContentRegistries.FLAMMABLE.put(BzTags.STRING_CURTAINS, new FlammableBlockEntry(60, 20));
+        FlammableBlockRegistry.getDefaultInstance().add(BzTags.STRING_CURTAINS, 60, 20);
 
         UseBlockCallback.EVENT.register(new ResourceLocation(Bumblezone.MODID, "string_below_string_curtain"),
             (player, level, interactionHand, hitResult) -> {
