@@ -118,7 +118,10 @@ public class EnchantmentUtils {
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
-			if (Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment)) {
+
+			bool forcedAllowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
+			bool disallowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
+			if (!forcedAllowed && disallowed) {
 				continue;
 			}
 
@@ -127,9 +130,9 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && enchantment.isDiscoverable() && (enchantment.canApplyAtEnchantingTable(stack) || (bookFlag && enchantment.isAllowedOnBooks()))) {
+			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (enchantment.canApplyAtEnchantingTable(stack) || (bookFlag && enchantment.isAllowedOnBooks()))) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
-					if (level >= enchantment.getMinCost(i)) {
+					if (forceAllowed || level >= enchantment.getMinCost(i)) {
 						list.add(new EnchantmentInstance(enchantment, i));
 						break;
 					}
