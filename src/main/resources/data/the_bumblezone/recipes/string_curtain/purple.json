@@ -4,7 +4,7 @@
   "pattern": [
     "ttt",
     "sgs",
-    "s s"
+    "sds"
   ],
   "key": {
     "t": {
@@ -15,9 +15,12 @@
     },
     "g": {
       "item": "minecraft:glass"
+    },
+    "d": {
+      "item": "minecraft:purple_dye"
     }
   },
   "result": {
-    "item": "the_bumblezone:string_curtain_white"
+    "item": "the_bumblezone:string_curtain_purple"
   }
 }

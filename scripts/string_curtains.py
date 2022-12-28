@@ -80,6 +80,43 @@ for color in colors:
     modelFile.write(json.dumps(modelJson, indent=2))
 
 
+    if not os.path.exists("output/recipes"):
+        os.mkdir("output/recipes")
+
+    if not os.path.exists("output/recipes/string_curtain"):
+        os.mkdir("output/recipes/string_curtain")
+
+    modelFile = open(f"output/recipes/string_curtain/{color}.json", "w+")
+    modelFile.seek(0)
+    modelJson = {
+        "type": "minecraft:crafting_shaped",
+        "group": "the_bumblezone",
+        "pattern": [
+            "ttt",
+            "sgs",
+            "sds"
+        ],
+        "key": {
+            "t": {
+                "item": "minecraft:stick"
+            },
+            "s": {
+                "item": "minecraft:string"
+            },
+            "g": {
+                "item": "minecraft:glass"
+            },
+            "d": {
+                "item": f"minecraft:{color}_dye"
+            }
+        },
+        "result": {
+            "item": f"the_bumblezone:string_curtain_{color}"
+        }
+    }
+    modelFile.write(json.dumps(modelJson, indent=2))
+
+
     if not os.path.exists("output/loot_table"):
         os.mkdir("output/loot_table")
 
