@@ -361,7 +361,9 @@ public class EntityTeleportationBackend {
     }
 
     public static boolean isValidBeeHive(BlockState blockState) {
-        if(blockState.is(BzTags.BLACKLISTED_TELEPORTATION_HIVES)) return false;
+        if(blockState.is(BzTags.FORCED_ALLOWED_TELEPORTABLE_BLOCK)) return false;
+
+        if(blockState.is(BzTags.DISALLOWED_TELEPORTABLE_BEEHIVE)) return false;
 
         if(blockState.is(BlockTags.BEEHIVES) || blockState.getBlock() instanceof BeehiveBlock) {
             if(ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).getNamespace().equals("minecraft") || BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
