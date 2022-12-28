@@ -227,10 +227,13 @@ public class StringCurtain extends Block {
                 if (!playerEntity.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
+
+                if(playerEntity instanceof ServerPlayer) {
+                    BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.trigger((ServerPlayer) playerEntity);
+                }
             }
             return InteractionResult.SUCCESS;
         }
-
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
