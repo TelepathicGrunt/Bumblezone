@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.RequiemCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -118,15 +116,9 @@ public class StringCurtain extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        boolean entityShouldBePushed =
-                (entity instanceof Bee || entity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                        !entity.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
-
-        if (!entityShouldBePushed && ModChecker.requiemPresent) {
-            entityShouldBePushed = RequiemCompat.isEntityUsingHostBee(entity);
-        }
-
-        if (entityShouldBePushed) {
+        if ((entity instanceof Bee || entity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+            !entity.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING))
+        {
             if (!entity.hasControllingPassenger() &&
                 !entity.isPassenger() &&
                 entity.isPushable() &&

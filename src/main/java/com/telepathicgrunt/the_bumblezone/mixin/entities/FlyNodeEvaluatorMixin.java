@@ -3,8 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.RequiemCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
@@ -25,16 +23,12 @@ public class FlyNodeEvaluatorMixin extends WalkNodeEvaluator {
     private BlockPathTypes thebumblezone_bzStringCurtainBlockingBees(BlockGetter blockGetter, BlockPos blockPos, Operation<BlockPathTypes> original) {
         BlockPathTypes blockPathType = original.call(blockGetter, blockPos);
         if (blockPathType == BlockPathTypes.OPEN) {
-            boolean shouldBlockPathfinding =
-                    (this.mob instanceof Bee || this.mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                            !this.mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
-
-            if (!shouldBlockPathfinding && ModChecker.requiemPresent) {
-                shouldBlockPathfinding = RequiemCompat.isEntityUsingHostBee(this.mob);
-            }
-
-            if (shouldBlockPathfinding && blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
-                return BlockPathTypes.BLOCKED;
+            if ((this.mob instanceof Bee || this.mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                !this.mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING))
+            {
+                if (blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
+                    return BlockPathTypes.BLOCKED;
+                }
             }
         }
         return blockPathType;
