@@ -18,6 +18,7 @@ cloth_config = "9.0.94"
 emi = "0.5.0+1.19.3"
 jei = "11.4.0.287"
 jeimc = "1.19.3"
+requiem = "2.0.0-beta.15"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
