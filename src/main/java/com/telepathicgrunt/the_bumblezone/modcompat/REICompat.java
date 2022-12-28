@@ -101,6 +101,22 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzItems.SUPER_CANDLE_YELLOW.get());
         addInfo(BzItems.INCENSE_CANDLE.get());
         addInfo(BzItems.CRYSTALLINE_FLOWER.get());
+        addInfo(BzItems.STRING_CURTAIN_BLACK.get());
+        addInfo(BzItems.STRING_CURTAIN_BLUE.get());
+        addInfo(BzItems.STRING_CURTAIN_BROWN.get());
+        addInfo(BzItems.STRING_CURTAIN_CYAN.get());
+        addInfo(BzItems.STRING_CURTAIN_GRAY.get());
+        addInfo(BzItems.STRING_CURTAIN_GREEN.get());
+        addInfo(BzItems.STRING_CURTAIN_LIGHT_BLUE.get());
+        addInfo(BzItems.STRING_CURTAIN_LIGHT_GRAY.get());
+        addInfo(BzItems.STRING_CURTAIN_LIME.get());
+        addInfo(BzItems.STRING_CURTAIN_MAGENTA.get());
+        addInfo(BzItems.STRING_CURTAIN_ORANGE.get());
+        addInfo(BzItems.STRING_CURTAIN_PINK.get());
+        addInfo(BzItems.STRING_CURTAIN_PURPLE.get());
+        addInfo(BzItems.STRING_CURTAIN_RED.get());
+        addInfo(BzItems.STRING_CURTAIN_WHITE.get());
+        addInfo(BzItems.STRING_CURTAIN_YELLOW.get());
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
