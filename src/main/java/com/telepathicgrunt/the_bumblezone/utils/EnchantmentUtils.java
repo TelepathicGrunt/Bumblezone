@@ -93,7 +93,8 @@ public class EnchantmentUtils {
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
-			if (isEnchantmentBanned(enchantment)) {
+			boolean forceAllowed = isEnchantmentForcedAllowed(enchantment);
+			if (!forceAllowed && isEnchantmentBanned(enchantment)) {
 				continue;
 			}
 
@@ -102,9 +103,9 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && enchantment.isDiscoverable() && (enchantment.canEnchant(stack) || bookFlag)) {
+			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (enchantment.canEnchant(stack) || bookFlag)) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
-					if (level >= enchantment.getMinCost(i)) {
+					if (forceAllowed || level >= enchantment.getMinCost(i)) {
 						list.add(new EnchantmentInstance(enchantment, i));
 						break;
 					}
@@ -114,8 +115,18 @@ public class EnchantmentUtils {
 		return list;
 	}
 
+	private static boolean isEnchantmentForcedAllowed(Enchantment enchantment) {
+		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
+			if (enchantmentHolder.value().equals(enchantment)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private static boolean isEnchantmentBanned(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
 			if (enchantmentHolder.value().equals(enchantment)) {
 				return true;
@@ -163,8 +174,8 @@ public class EnchantmentUtils {
 	}
 
 	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
-		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
-		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
 
 		int ret = resourceKey2.location().getNamespace().compareTo(resourceKey1.location().getNamespace());
 		if (ret == 0) ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());

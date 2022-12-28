@@ -85,8 +85,16 @@ Added the following new tags:
 
 `the_bumblezone:stingless_bee_helmet/forced_allowed_passengers` (entity tag)
 
+Also added is `the_bumblezone:crystalline_flower/force_allowed_enchantments` enchantment tag for Crystalline Flower. 
+ This will force an enchantment to always show regardless of the isDiscoverable value in the enchantment itself. 
+ It will also show the enchantment at max tier even if the  enchantment requires more enchanting power than 
+ the flower can provide. Also overrides the disallow tag.
 
 Organized Bumblezone tags much better into sub folders. Changes are:
+
+`the_bumblezone:blacklisted_crystalline_flower_enchantments` -> `the_bumblezone:crystalline_flower/disallowed_enchantments` (enchantment tag
+
+`the_bumblezone:blacklisted_incense_candle_effects` -> `the_bumblezone:incense_candle/disallowed_effects` (mob effect tag)
 
 `the_bumblezone:allowed_hanging_garden_flowers` -> `the_bumblezone:hanging_garden/allowed_flowers` (block tag)
 
