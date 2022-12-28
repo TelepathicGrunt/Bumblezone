@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/decor/obtain_all_string_curtains",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:string_curtain_yellow"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.extend_string_curtains.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.extend_string_curtains.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "extend_string_curtain": {
+      "trigger": "the_bumblezone:extend_string_curtain",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "extend_string_curtain"
+    ]
+  ]
+}
