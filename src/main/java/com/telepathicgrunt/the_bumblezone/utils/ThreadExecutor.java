@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
@@ -75,9 +76,14 @@ public class ThreadExecutor {
         CompletableFuture<BlockPos> completableFuture = new CompletableFuture<>();
         Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
                 () ->  {
-                    runningSearches.getAndIncrement();
-                    queuedSearches.getAndDecrement();
-                    doLocateLevel(completableFuture, level, structureTag, pos, searchRadius, skipKnownStructures);
+                    try {
+                        runningSearches.getAndIncrement();
+                        queuedSearches.getAndDecrement();
+                        doLocateLevel(completableFuture, level, structureTag, pos, searchRadius, skipKnownStructures);
+                    }
+                    catch (Exception e) {
+                        Bumblezone.LOGGER.error("Off thread structure locating crashed. Exception is: ", e);
+                    }
                 }
         );
         return new LocateTask<>(level.getServer(), completableFuture, future);
@@ -87,7 +93,12 @@ public class ThreadExecutor {
         CompletableFuture<Optional<Vec3>> completableFuture = new CompletableFuture<>();
         Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
                 () ->  {
-                    completableFuture.complete(searchFunction.get());
+                    try {
+                        completableFuture.complete(searchFunction.get());
+                    }
+                    catch (Exception e) {
+                        Bumblezone.LOGGER.error("Off thread teleport destination search crashed. Exception is: ", e);
+                    }
                 }
         );
         return new LocateTask<>(minecraftServer, completableFuture, future);
@@ -113,7 +124,14 @@ public class ThreadExecutor {
     {
         CompletableFuture<Object> completableFuture = new CompletableFuture<>();
         Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
-                () -> PrefillMap.update(level, pos, data)
+                () -> {
+                    try {
+                        PrefillMap.update(level, pos, data);
+                    }
+                    catch (Exception e) {
+                        Bumblezone.LOGGER.error("Off thread map filling crashed. Exception is: ", e);
+                    }
+                }
         );
         new LocateTask<>(level.getServer(), completableFuture, future);
     }
