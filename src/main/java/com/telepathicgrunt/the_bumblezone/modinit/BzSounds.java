@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -59,7 +61,7 @@ public class BzSounds {
     public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_CHIME = registerSoundEvent("block.the_bumblezone.honey_crystal_block.chime");
     public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_BREAK = registerSoundEvent("block.the_bumblezone.honey_crystal_block.break");
 
-    public static final SoundType HONEY_CRYSTALS_TYPE = new SoundType(
+    public static final ForgeSoundType HONEY_CRYSTALS_TYPE = new ForgeSoundType(
             1.0F,
             1.0F,
             BzSounds.HONEY_CRYSTAL_BLOCK_BREAK,

@@ -63,7 +63,11 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     private Item item;
 
     public HoneyCrystal() {
-        super(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).sound(BzSounds.HONEY_CRYSTALS_TYPE).noOcclusion());
+        super(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW)
+                .lightLevel((blockState) -> 1)
+                .strength(0.3F, 0.3f)
+                .sound(BzSounds.HONEY_CRYSTALS_TYPE)
+                .noOcclusion());
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
@@ -253,8 +257,8 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     public void onProjectileHit(Level level, BlockState blockState, BlockHitResult blockHitResult, Projectile projectile) {
         if (!level.isClientSide) {
             BlockPos blockPos = blockHitResult.getBlockPos();
-            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_HIT, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
-            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_HIT.get(), SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_CHIME.get(), SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
         }
     }
 }
