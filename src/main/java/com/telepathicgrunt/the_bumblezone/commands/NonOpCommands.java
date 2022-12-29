@@ -46,7 +46,7 @@ public class NonOpCommands {
     }
 
     public static void createCommand(CommandDispatcher<CommandSourceStack> commandDispatcher, CommandBuildContext buildContext) {
-        String commandString = "bumblezone";
+        String commandString = "bumblezone_read_self_data";
         String dataArg = "data_to_check";
         String entityArg = "entity_to_check";
 
@@ -108,57 +108,58 @@ public class NonOpCommands {
                 MutableComponent mutableComponent = Component.translatable(
                         hasBeeEssence ?
                                 "command.the_bumblezone.have_bee_essence" :
-                                "command.the_bumblezone.does_not_have_bee_essence"
+                                "command.the_bumblezone.does_not_have_bee_essence",
+                        serverPlayer.getDisplayName()
                 );
                 player.displayClientMessage(mutableComponent, false);
                 return;
             }
 
             if (!MiscComponent.rootAdvancementDone(serverPlayer)) {
-                player.displayClientMessage(Component.translatable("command.the_bumblezone.queens_desired_not_active"), false);
+                player.displayClientMessage(Component.translatable("command.the_bumblezone.queens_desired_not_active", serverPlayer.getDisplayName()), false);
                 return;
             }
 
             switch (dataArg) {
                 case QUEENS_DESIRED_CRAFTED_BEEHIVE -> 
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", Bumblezone.MISC_COMPONENT.get(serverPlayer).craftedBeehives),
+                            Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", serverPlayer.getDisplayName(),  Bumblezone.MISC_COMPONENT.get(serverPlayer).craftedBeehives),
                             false);
                 case QUEENS_DESIRED_BEES_BRED ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_bees_bred", Bumblezone.MISC_COMPONENT.get(serverPlayer).beesBred),
+                            Component.translatable("command.the_bumblezone.queens_desired_bees_bred", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).beesBred),
                             false);
                 case QUEENS_DESIRED_FLOWERS_SPAWNED ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_flowers_spawned", Bumblezone.MISC_COMPONENT.get(serverPlayer).flowersSpawned),
+                            Component.translatable("command.the_bumblezone.queens_desired_flowers_spawned", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).flowersSpawned),
                             false);
                 case QUEENS_DESIRED_HONEY_BOTTLE_DRANK ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_honey_bottle_drank", Bumblezone.MISC_COMPONENT.get(serverPlayer).honeyBottleDrank),
+                            Component.translatable("command.the_bumblezone.queens_desired_honey_bottle_drank", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).honeyBottleDrank),
                             false);
                 case QUEENS_DESIRED_BEE_STINGERS_FIRED ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_bee_stingers_fired", Bumblezone.MISC_COMPONENT.get(serverPlayer).beeStingersFired),
+                            Component.translatable("command.the_bumblezone.queens_desired_bee_stingers_fired", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).beeStingersFired),
                             false);
                 case QUEENS_DESIRED_BEE_SAVED ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_bee_saved", Bumblezone.MISC_COMPONENT.get(serverPlayer).beeSaved),
+                            Component.translatable("command.the_bumblezone.queens_desired_bee_saved", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).beeSaved),
                             false);
                 case QUEENS_DESIRED_POLLEN_PUFF_HITS ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_pollen_puff_hits", Bumblezone.MISC_COMPONENT.get(serverPlayer).pollenPuffHits),
+                            Component.translatable("command.the_bumblezone.queens_desired_pollen_puff_hits", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).pollenPuffHits),
                             false);
                 case QUEENS_DESIRED_HONEY_SLIME_BRED ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_honey_slime_bred", Bumblezone.MISC_COMPONENT.get(serverPlayer).honeySlimeBred),
+                            Component.translatable("command.the_bumblezone.queens_desired_honey_slime_bred", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).honeySlimeBred),
                             false);
                 case QUEENS_DESIRED_BEES_FED ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_bees_fed", Bumblezone.MISC_COMPONENT.get(serverPlayer).beesFed),
+                            Component.translatable("command.the_bumblezone.queens_desired_bees_fed", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).beesFed),
                             false);
                 case QUEENS_DESIRED_QUEEN_BEE_TRADE ->
                         player.displayClientMessage(
-                            Component.translatable("command.the_bumblezone.queens_desired_queen_bee_trade", Bumblezone.MISC_COMPONENT.get(serverPlayer).queenBeeTrade),
+                            Component.translatable("command.the_bumblezone.queens_desired_queen_bee_trade", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).queenBeeTrade),
                             false);
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
                     if (killedEntityRL != null) {
@@ -176,6 +177,7 @@ public class NonOpCommands {
 
                         player.displayClientMessage(
                                 Component.translatable(translationKey,
+                                        serverPlayer.getDisplayName(),
                                         killed,
                                         Component.translatable(Util.makeDescriptionId("entity", killedEntityRL))),
                                 false);
