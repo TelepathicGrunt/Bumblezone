@@ -28,7 +28,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class GlisteringHoneyCrystal extends ProperFacingBlock {
     public GlisteringHoneyCrystal() {
-        super(Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW).lightLevel((blockState) -> 11).strength(0.4F, 0.4f).sound(BzSounds.HONEY_CRYSTALS_TYPE).noOcclusion());
+        super(Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW)
+                .lightLevel((blockState) -> 11)
+                .strength(0.4F, 0.4f)
+                .sound(BzSounds.HONEY_CRYSTALS_TYPE)
+                .noOcclusion());
+
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
     }
 

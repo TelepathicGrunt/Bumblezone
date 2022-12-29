@@ -70,7 +70,13 @@ public class CrystallineFlower extends BaseEntityBlock {
     private static final Component CONTAINER_TITLE = Component.translatable(Bumblezone.MODID + ".container.crystalline_flower");
 
     public CrystallineFlower() {
-        super(Properties.of(BzBlocks.YELLOW_CRYSTAL_PLANT, MaterialColor.TERRACOTTA_YELLOW).noCollission().noOcclusion().strength(0.4F, 0.01F).lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0).sound(BzSounds.HONEY_CRYSTALS_TYPE));
+        super(Properties.of(BzBlocks.YELLOW_CRYSTAL_PLANT, MaterialColor.TERRACOTTA_YELLOW)
+                .noCollission()
+                .noOcclusion()
+                .strength(0.4F, 0.01F)
+                .lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0)
+                .sound(BzSounds.HONEY_CRYSTALS_TYPE));
+
         this.registerDefaultState(this.stateDefinition.any().setValue(FLOWER, false));
     }
 
