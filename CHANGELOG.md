@@ -191,8 +191,7 @@ Organized Bumblezone tags much better into sub folders. Changes are:
 
 `the_bumblezone:honey_compass_throne_locating` -> `the_bumblezone:honey_compass/throne_locating` (structure tag)
 
+##### Mod Compat:
 
-### **(V.6.4.10 Changes) (1.19.3 Minecraft)**
+Setup compat with Friends and Foes's new Moobloom mob types from their Flowery Mooblooms mod.
 
-##### Major:
-Ported to 1.19.3
