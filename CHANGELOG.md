@@ -13,6 +13,8 @@ Fixed the giant honeycomb hole feature from eating away at many structures.
 Made Honey Cave Room structure much more common so it is more easily found.
  Also improve the bottom of the structure to not be as flat.
 
+Disabled prefilling maps in Hive Temple's loot due to unable to resolve the lag with it.
+
 ##### Items:
 Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reopened, and the spear picked up again.
 

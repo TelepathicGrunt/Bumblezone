@@ -154,6 +154,11 @@
           ]
         },
         {
+          "type": "minecraft:item",
+          "name": "minecraft:map",
+          "weight": 24
+        },
+        {
           "name": "minecraft:spyglass",
           "type": "minecraft:item",
           "weight": 17
