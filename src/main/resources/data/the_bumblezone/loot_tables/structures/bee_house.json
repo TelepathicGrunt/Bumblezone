@@ -70,7 +70,12 @@
         {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:map",
+          "weight": 1
         },
         {
           "weight": 1,

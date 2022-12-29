@@ -316,7 +316,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
-          "weight": 2,
+          "weight": 1,
           "quality": 3,
           "functions": [
             {
@@ -342,17 +342,11 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:map",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "the_bumblezone:prefill_map",
-              "scale": 2
-            }
-          ]
+          "weight": 1
         },
         {
           "type": "minecraft:empty",
-          "weight": 4
+          "weight": 3
         }
       ]
     }
