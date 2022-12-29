@@ -18,9 +18,15 @@ Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reope
 
 Fixed Crystal Cannon firing center crystal shard backwards.
 
+Bee armor now prevents freezing effect that Powder Snow gives. tagged as `minecraft:freeze_immune_wearables`. Bundle up for the cold!
+
+Honey Compass is now tagged in `minecraft:compasses` tag. Let me know if this ends up being an issue.
+
 ##### Blocks:
 Added String Curtains that bees cannot pathfind through and slightly pushes bees away. Great for making a walk-in bee room with bees escaping!
  Attaches to any solid surface and right clicking with string will extend the block downward.
+ Dispensers with string can extend the curtain and Comparators counts how far down the curtain goes under the checked spot (up to 15 power) 
+ Has vibration dampening that blocks sculk sensor from hearing a sound on the other side of the curtain.
  Recipe to create the curtain is this with (T) Stick, (S) String, (G) Glass, and (D) a Dye which is optional:
  T T T
  S G S
@@ -41,6 +47,8 @@ Empty Porous Honeycomb Block will transform into a Filled Porous Honeycomb Block
 
 Empty Honeycomb Brood Block will transform into a Honeycomb Brood Block with a larva inside when touched by a pollinated bee!
 
+Crystalline Flower, Honey Crystal, and Glistering Honey Crystal now has crystal sounds when placed, broken, stepped on, or shot at.
+
 ##### Fluids:
 Fixed issue where mobs would not see Sugar Water, Honey Fluid, or Royal Jelly Fluid as water when pathfinding.
  Bees should now properly avoid flying into these liquids and suffocating. (Hopefully...)
@@ -53,6 +61,8 @@ Throwing/dropping items from player to Bee Queen will now trigger/progress the B
  This means dropping 64 stacks of an item is a superfast way to progress the 256 Bee Queen trade advancement.
 
 Fixed some typos in translation keys for Bee Queen saying `beehemoth_queen` instead of `bee_queen`.
+
+Tagged Honey Slime as `minecraft:frog_food` so Frogs can eat them now.
 
 ##### Effects:
 Hopefully remove Wrath of the Hive from more bees properly when the target dies.

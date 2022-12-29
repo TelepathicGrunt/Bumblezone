@@ -2,10 +2,14 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -17,6 +21,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,7 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class GlisteringHoneyCrystal extends ProperFacingBlock {
     public GlisteringHoneyCrystal() {
-        super(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW).lightLevel((blockState) -> 11).strength(0.4F, 0.4f).noOcclusion());
+        super(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW).lightLevel((blockState) -> 11).strength(0.4F, 0.4f).sound(BzSounds.HONEY_CRYSTALS_TYPE).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
     }
 
@@ -111,5 +116,14 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock {
                 0.0D,
                 0.0D,
                 0.0D);
+    }
+
+    @Override
+    public void onProjectileHit(Level level, BlockState blockState, BlockHitResult blockHitResult, Projectile projectile) {
+        if (!level.isClientSide) {
+            BlockPos blockPos = blockHitResult.getBlockPos();
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_HIT, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
+        }
     }
 }

@@ -52,7 +52,22 @@ public class BzSounds {
     public static final RegistryObject<SoundEvent> BEE_QUEEN_DEATH = registerSoundEvent("entity.the_bumblezone.bee_queen.death");
     public static final RegistryObject<SoundEvent> BEE_QUEEN_LOOP = registerSoundEvent("entity.the_bumblezone.bee_queen.loop");
     public static final RegistryObject<SoundEvent> BEE_QUEEN_HAPPY = registerSoundEvent("entity.the_bumblezone.bee_queen.happy");
+    public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_STEP = registerSoundEvent("block.the_bumblezone.honey_crystal_block.step");
+    public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_PLACE = registerSoundEvent("block.the_bumblezone.honey_crystal_block.place");
+    public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_HIT = registerSoundEvent("block.the_bumblezone.honey_crystal_block.hit");
+    public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_FALL = registerSoundEvent("block.the_bumblezone.honey_crystal_block.fall");
+    public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_CHIME = registerSoundEvent("block.the_bumblezone.honey_crystal_block.chime");
+    public static final RegistryObject<SoundEvent> HONEY_CRYSTAL_BLOCK_BREAK = registerSoundEvent("block.the_bumblezone.honey_crystal_block.break");
 
+    public static final SoundType HONEY_CRYSTALS_TYPE = new SoundType(
+            1.0F,
+            1.0F,
+            BzSounds.HONEY_CRYSTAL_BLOCK_BREAK,
+            BzSounds.HONEY_CRYSTAL_BLOCK_STEP,
+            BzSounds.HONEY_CRYSTAL_BLOCK_PLACE,
+            BzSounds.HONEY_CRYSTAL_BLOCK_HIT,
+            BzSounds.HONEY_CRYSTAL_BLOCK_FALL
+    );
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String path) {
         return SOUND_EVENTS.register(path, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, path)));
