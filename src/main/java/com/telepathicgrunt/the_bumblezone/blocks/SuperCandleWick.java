@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -153,7 +154,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
             }
         }
 
-        if (state.getValue(LIT)) {
+        if (state.getValue(LIT) && !level.isClientSide()) {
             boolean isProjectile = entity instanceof Projectile;
             boolean entityInSpace =
                     isProjectile ||
@@ -162,15 +163,15 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
                             Shapes.create(entity.getBoundingBox()),
                             BooleanOp.AND);
 
-            if (entityInSpace) {
+            if (entityInSpace && (BzConfig.superCandlesBurnsMobs || isProjectile)) {
                 if (!entity.fireImmune()) {
                     entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
                     if (entity.getRemainingFireTicks() == 0) {
                         entity.setSecondsOnFire(1);
                     }
-                }
 
-                entity.hurt(DamageSource.IN_FIRE, 0.5f);
+                    entity.hurt(DamageSource.IN_FIRE, 0.5f);
+                }
             }
         }
         super.entityInside(state, level, pos, entity);

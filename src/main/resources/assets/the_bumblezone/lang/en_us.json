@@ -615,6 +615,7 @@
   "the_bumblezone.midnightconfig.blockMechanicsComment": "Block Mechanics Section",
   "the_bumblezone.midnightconfig.dispensersDropGlassBottles": "Dispensers Drop Glass Bottles",
   "the_bumblezone.midnightconfig.broodBlocksBeeSpawnCapacity": "Brood Blocks Bee Spawn Capacity",
+  "the_bumblezone.midnightconfig.superCandlesBurnsMobs": "Super/Incense Candles Burns Mobs",
   "the_bumblezone.midnightconfig.dimensionComment": "Dimension Section",
   "the_bumblezone.midnightconfig.fogBrightnessPercentage": "Fog Brightness Percentage",
   "the_bumblezone.midnightconfig.enableDimensionFog": "Enable Dimension Fog",
