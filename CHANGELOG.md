@@ -77,6 +77,13 @@ Fixed biome spawning that was spawning blobs of biomes that shouldn't be blobs.
 Renamed nonstandard_biomes field in dimension json to blob_biomes where it takes a biome tag of biomes to spawn as a 
  blob of area. Crystal Canyon and Hive Pillar are added to this by default and can spawn over a medium sized area as a blob.
 
+##### Commands:
+`bumblezone` command was renamed to `bumblezone_read_self_data` command for anyone to use to check their own data.
+
+`bumblezone_modify_data` and `bumblezone_read_data` commands were added to allow for op players to check data of 
+ any players or change the essence status of any player. Permission level 2 required by the command user.
+ Example usage that removes essence from someone: `/bumblezone_modify_data is_bee_essenced SomePersonOnServer false`
+
 ##### Misc:
 Fixed bug where I was checking for crouching pose instead of if player was holding down shift key. (isCrouching vs isShiftKeyDown)
  Should make it so stuff like Carpenter Bees Boots do not mine automatically if you are in a 1.5 block high space.
@@ -86,6 +93,8 @@ Silence "Hanging entity at invalid position" logspam from vanilla by lowering th
  Mojang bug report: https://bugs.mojang.com/browse/MC-252934
  The Item Frame spawned from nbt files still places as intended and functions as intended.
  This was just annoying logspam I decided to yeet.
+
+Made Bumblezone's off thread tasks properly log any crash into the log file if they die.
 
 ##### Recipes:
 Organized Bumblezone recipe json files much better into sub folders. Cleaner and easier to browse.

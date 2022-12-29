@@ -6,5 +6,6 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 public class BzCommands {
     public static void registerCommand(RegisterCommandsEvent event) {
         NonOpCommands.createCommand(event);
+        OpCommands.createCommand(event);
     }
 }
