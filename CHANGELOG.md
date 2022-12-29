@@ -49,6 +49,10 @@ Empty Honeycomb Brood Block will transform into a Honeycomb Brood Block with a l
 
 Crystalline Flower, Honey Crystal, and Glistering Honey Crystal now has crystal sounds when placed, broken, stepped on, or shot at.
 
+Fixed Super Candles/Incense Candles able to deal damage to fire immune mobs in its flame.
+
+Added superCandlesBurnsMobs config option to allow disabling Super Candles/Incense Candles's flame from setting mobs on fire.
+
 ##### Fluids:
 Fixed issue where mobs would not see Sugar Water, Honey Fluid, or Royal Jelly Fluid as water when pathfinding.
  Bees should now properly avoid flying into these liquids and suffocating. (Hopefully...)

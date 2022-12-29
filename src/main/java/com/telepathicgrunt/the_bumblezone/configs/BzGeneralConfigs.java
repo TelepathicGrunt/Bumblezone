@@ -10,6 +10,7 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
+    public static ForgeConfigSpec.BooleanValue superCandlesBurnsMobs;
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
@@ -80,6 +81,12 @@ public class BzGeneralConfigs {
                         " off automatic Brood Block bee spawning.\n")
                 .translation("the_bumblezone.config.broodblocksbeespawncapacity")
                 .defineInRange("broodBlocksBeeSpawnCapacity", 60, 0, 1000);
+
+        superCandlesBurnsMobs = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Allows lit Super Candles/Incense Candle to burn mobs in its flame.\n")
+                .translation("the_bumblezone.config.supercandlesburnsmobs")
+                .define("superCandlesBurnsMobs", true);
 
         keepEssenceOfTheBeesOnRespawning = builder
                 .comment(" \n-----------------------------------------------------\n",
