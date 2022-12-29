@@ -4,12 +4,10 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.RequiemCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -234,6 +232,12 @@ public class StringCurtain extends Block {
     }
 
     @Override
+    public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+        blockUpdateCurtainChainUpward(level, blockPos);
+        super.onRemove(blockState, level, blockPos, blockState2, bl);
+    }
+
+    @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
         if (!level.isClientSide) {
             if (!blockState.canSurvive(level, blockPos)) {
@@ -247,21 +251,8 @@ public class StringCurtain extends Block {
     public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         if (itemstack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS) && blockstate.is(BzTags.STRING_CURTAINS)) {
-            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
-            BlockState belowState = world.getBlockState(mutableBlockPos.move(Direction.DOWN));
-            while (belowState.is(BzTags.STRING_CURTAINS) && world.isInWorldBounds(mutableBlockPos)) {
-                belowState = world.getBlockState(mutableBlockPos.move(Direction.DOWN));
-            }
-
-            if (world.isInWorldBounds(mutableBlockPos) && belowState.isAir()) {
-                world.setBlock(
-                        mutableBlockPos,
-                        defaultBlockState()
-                            .setValue(ATTACHED, false)
-                            .setValue(MIDDLE, blockstate.getValue(MIDDLE))
-                            .setValue(HORIZONTAL_FACING, blockstate.getValue(HORIZONTAL_FACING)),
-                        3);
-
+            boolean success = extendCurtainIfPossible(blockstate, world, position);
+            if (success) {
                 if (!playerEntity.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
@@ -275,6 +266,38 @@ public class StringCurtain extends Block {
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
+    public static boolean extendCurtainIfPossible(BlockState blockstate, Level world, BlockPos position) {
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
+        BlockState belowState = world.getBlockState(mutableBlockPos.move(Direction.DOWN));
+        while (belowState.is(BzTags.STRING_CURTAINS) && world.isInWorldBounds(mutableBlockPos)) {
+            belowState = world.getBlockState(mutableBlockPos.move(Direction.DOWN));
+        }
+
+        if (world.isInWorldBounds(mutableBlockPos) && belowState.isAir()) {
+            world.setBlock(
+                    mutableBlockPos,
+                    blockstate.getBlock()
+                        .defaultBlockState()
+                        .setValue(ATTACHED, false)
+                        .setValue(MIDDLE, blockstate.getValue(MIDDLE))
+                        .setValue(HORIZONTAL_FACING, blockstate.getValue(HORIZONTAL_FACING)),
+                    3);
+
+            blockUpdateCurtainChainUpward(world, mutableBlockPos);
+            return true;
+        }
+        return false;
+    }
+
+    private static void blockUpdateCurtainChainUpward(Level world, BlockPos position) {
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
+        BlockState aboveState = world.getBlockState(mutableBlockPos.move(Direction.UP));
+        while (aboveState.is(BzTags.STRING_CURTAINS) && world.isInWorldBounds(mutableBlockPos)) {
+            world.blockUpdated(mutableBlockPos, aboveState.getBlock());
+            mutableBlockPos.move(Direction.UP);
+        }
+    }
+
     @Override
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(HORIZONTAL_FACING, rot.rotate(state.getValue(HORIZONTAL_FACING)));
@@ -283,5 +306,24 @@ public class StringCurtain extends Block {
     @Override
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(HORIZONTAL_FACING)));
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+        int comparatorPower = 0;
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(pos);
+        BlockState currentState = level.getBlockState(mutableBlockPos.move(Direction.DOWN));
+
+        while (currentState.is(BzTags.STRING_CURTAINS) && comparatorPower < 15) {
+            comparatorPower++;
+            currentState = level.getBlockState(mutableBlockPos.move(Direction.DOWN));
+        }
+
+        return comparatorPower;
     }
 }

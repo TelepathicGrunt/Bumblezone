@@ -5,6 +5,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.block.SoundType;
 
 public class BzSounds {
     public final static SoundEvent ANGERED_BEES = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "angered_bees"));
@@ -49,6 +50,22 @@ public class BzSounds {
     public static final SoundEvent BEE_QUEEN_DEATH = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_queen.death"));
     public static final SoundEvent BEE_QUEEN_LOOP = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_queen.loop"));
     public static final SoundEvent BEE_QUEEN_HAPPY = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "entity.the_bumblezone.bee_queen.happy"));
+    public static final SoundEvent HONEY_CRYSTAL_BLOCK_STEP = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.honey_crystal_block.step"));
+    public static final SoundEvent HONEY_CRYSTAL_BLOCK_PLACE = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.honey_crystal_block.place"));
+    public static final SoundEvent HONEY_CRYSTAL_BLOCK_HIT = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.honey_crystal_block.hit"));
+    public static final SoundEvent HONEY_CRYSTAL_BLOCK_FALL = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.honey_crystal_block.fall"));
+    public static final SoundEvent HONEY_CRYSTAL_BLOCK_CHIME = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.honey_crystal_block.chime"));
+    public static final SoundEvent HONEY_CRYSTAL_BLOCK_BREAK = SoundEvent.createVariableRangeEvent(new ResourceLocation(Bumblezone.MODID, "block.the_bumblezone.honey_crystal_block.break"));
+
+    public static final SoundType HONEY_CRYSTALS_TYPE = new SoundType(
+            1.0F,
+            1.0F,
+            BzSounds.HONEY_CRYSTAL_BLOCK_BREAK,
+            BzSounds.HONEY_CRYSTAL_BLOCK_STEP,
+            BzSounds.HONEY_CRYSTAL_BLOCK_PLACE,
+            BzSounds.HONEY_CRYSTAL_BLOCK_HIT,
+            BzSounds.HONEY_CRYSTAL_BLOCK_FALL
+    );
 
     public static void registerSounds() {
         Registry.register(BuiltInRegistries.SOUND_EVENT, ANGERED_BEES.getLocation(), ANGERED_BEES);
@@ -93,5 +110,11 @@ public class BzSounds {
         Registry.register(BuiltInRegistries.SOUND_EVENT, BEE_QUEEN_DEATH.getLocation(), BEE_QUEEN_DEATH);
         Registry.register(BuiltInRegistries.SOUND_EVENT, BEE_QUEEN_LOOP.getLocation(), BEE_QUEEN_LOOP);
         Registry.register(BuiltInRegistries.SOUND_EVENT, BEE_QUEEN_HAPPY.getLocation(), BEE_QUEEN_HAPPY);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, HONEY_CRYSTAL_BLOCK_STEP.getLocation(), HONEY_CRYSTAL_BLOCK_STEP);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, HONEY_CRYSTAL_BLOCK_PLACE.getLocation(), HONEY_CRYSTAL_BLOCK_PLACE);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, HONEY_CRYSTAL_BLOCK_HIT.getLocation(), HONEY_CRYSTAL_BLOCK_HIT);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, HONEY_CRYSTAL_BLOCK_FALL.getLocation(), HONEY_CRYSTAL_BLOCK_FALL);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, HONEY_CRYSTAL_BLOCK_CHIME.getLocation(), HONEY_CRYSTAL_BLOCK_CHIME);
+        Registry.register(BuiltInRegistries.SOUND_EVENT, HONEY_CRYSTAL_BLOCK_BREAK.getLocation(), HONEY_CRYSTAL_BLOCK_BREAK);
     }
 }
