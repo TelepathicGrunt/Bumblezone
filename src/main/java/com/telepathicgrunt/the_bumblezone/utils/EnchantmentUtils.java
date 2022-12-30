@@ -154,17 +154,23 @@ public class EnchantmentUtils {
 	}
 
 	public static int getEnchantmentTierCost(EnchantmentInstance enchantmentInstance) {
-		Enchantment enchantment = enchantmentInstance.enchantment;
-		int level = enchantmentInstance.level;
+		return getEnchantmentTierCost(
+				enchantmentInstance.level,
+				enchantmentInstance.enchantment.getMinCost(2),
+				enchantmentInstance.enchantment.isTreasureOnly(),
+				enchantmentInstance.enchantment.isCurse());
+	}
+
+	public static int getEnchantmentTierCost(int level, int minCost, boolean isTreasureOnly, boolean isCurse) {
 		int cost = 0;
 
-		cost += enchantment.getMinCost(2) / 10;
+		cost += minCost / 10;
 		cost += level / 1.5f;
 
-		if (enchantment.isTreasureOnly()) {
+		if (isTreasureOnly) {
 			cost += 2;
 		}
-		if (enchantment.isCurse()) {
+		if (isCurse) {
 			cost -= 3;
 		}
 
