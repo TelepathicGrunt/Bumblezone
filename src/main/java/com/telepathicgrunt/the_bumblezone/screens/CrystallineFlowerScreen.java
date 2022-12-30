@@ -25,6 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import org.jetbrains.annotations.NotNull;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -574,7 +576,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             .withStyle(ChatFormatting.DARK_GRAY);
                 }
                 else {
-                    Optional<? extends ModContainer> modFileInfo = ModList.get().getModContainerById(enchantment.namespace);
+                    Optional<? extends ModContainer> modFileInfo = QuiltLoader.getModContainer(enchantment.namespace);
                     if (modFileInfo.isEmpty()) {
                         String formattedModid = Arrays.stream(enchantment.namespace
                                 .split("_"))
@@ -585,7 +587,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                                 .withStyle(ChatFormatting.BLUE);
                     }
                     else {
-                        mutableComponent4 = Component.literal(modFileInfo.get().getModInfo().getDisplayName())
+                        mutableComponent4 = Component.literal(modFileInfo.get().metadata().name())
                                 .withStyle(ChatFormatting.BLUE);
                     }
                 }
