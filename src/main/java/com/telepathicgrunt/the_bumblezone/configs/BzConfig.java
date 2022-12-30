@@ -137,7 +137,7 @@ public class BzConfig extends MidnightConfig {
     @Entry(min=0, max=100)
     public static double beehemothSpeed = 0.95;
 
-    @Entry(min=0, max=100)
+    @Entry(min=0, max=256)
     public static int beeQueenSuperTradeRewardMultiplier = 3;
 
     @Entry(min=0, max=2000000)
