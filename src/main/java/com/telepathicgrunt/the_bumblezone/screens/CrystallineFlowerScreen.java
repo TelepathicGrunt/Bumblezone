@@ -22,6 +22,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -564,8 +566,28 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 MutableComponent mutableComponent3 = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost", tierCost)
                         .withStyle(ChatFormatting.RED);
 
-                MutableComponent mutableComponent4 = Component.literal(enchantment.namespace)
-                        .withStyle(ChatFormatting.DARK_GRAY);
+                MutableComponent mutableComponent4;
+
+                if (this.minecraft != null && this.minecraft.options.advancedItemTooltips) {
+                    mutableComponent4 = Component.literal(enchantment.namespace + ":" + enchantment.path)
+                            .withStyle(ChatFormatting.DARK_GRAY);
+                }
+                else {
+                    Optional<? extends ModContainer> modFileInfo = ModList.get().getModContainerById(enchantment.namespace);
+                    if (modFileInfo.isEmpty()) {
+                        String formattedModid = Arrays.stream(enchantment.namespace
+                                .split("_"))
+                                .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
+                                .collect(Collectors.joining(" "));
+
+                        mutableComponent4 = Component.literal(formattedModid)
+                                .withStyle(ChatFormatting.BLUE);
+                    }
+                    else {
+                        mutableComponent4 = Component.literal(modFileInfo.get().getModInfo().getDisplayName())
+                                .withStyle(ChatFormatting.BLUE);
+                    }
+                }
 
                 this.renderTooltip(
                         poseStack,
