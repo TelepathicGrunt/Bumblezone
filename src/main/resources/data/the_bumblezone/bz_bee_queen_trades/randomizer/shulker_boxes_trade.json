@@ -3,11 +3,22 @@
     {
       "id": "#forge:shulker_boxes",
       "required": false
+    },
+    {
+      "id": "#c:shulker_boxes",
+      "required": false
     }
   ],
   "possible_rewards": [
     {
       "id": "#forge:shulker_boxes",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "#c:shulker_boxes",
       "count": 1,
       "xp_reward": 0,
       "weight": 1,
