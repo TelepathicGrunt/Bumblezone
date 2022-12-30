@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPacket;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -33,7 +34,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.EntityBlock;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.List;
 

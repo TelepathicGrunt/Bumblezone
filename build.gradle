@@ -95,7 +95,7 @@ dependencies {
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-	//modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${project.jeimc_version}-fabric:${project.jei_version}"

@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
-import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 import java.util.ArrayList;
 import java.util.List;
