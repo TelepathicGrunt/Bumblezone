@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:bricks",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:brick",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

@@ -120,7 +120,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
             }
         }
         //Anything lower than 2 is medium aggression
-        else if (entity.getLevel().getGameTime() % 20 == 0) {
+        else if ((entity.getLevel().getGameTime() + entity.getUUID().getLeastSignificantBits()) % 20 == 0) {
             mediumAggression(world, entity);
         }
 

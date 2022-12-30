@@ -60,6 +60,8 @@ public class BzTags {
     public static final TagKey<Item> BEEHEMOTH_FAST_LURING_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/beehemoth_fast_luring"));
     public static final TagKey<Item> HONEY_SLIME_DESIRED_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "mob_luring/honey_slime"));
     public static final TagKey<Item> STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "string_curtains/curtain_extending"));
+    public static final TagKey<Item> FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen/forced_allowed_random_super_trade_items"));
+    public static final TagKey<Item> DISALLOWED_RANDOM_SUPER_TRADE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen/disallowed_random_super_trade_items"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("c", "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
