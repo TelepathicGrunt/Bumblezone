@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
