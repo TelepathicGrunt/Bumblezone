@@ -180,6 +180,9 @@
   "entity.the_bumblezone.bee_queen.advancements_warning": "To reset Queen's Desire advancements, right click again with empty hand",
   "entity.the_bumblezone.bee_queen.reset_advancements": "Queen's Desire advancements have been reset!",
   "entity.the_bumblezone.bee_queen.mention_reset": "Congrats on your accomplishments! To redo the Queen's Desire quest-line, right click Bee Queen with empty hand to reset those advancements",
+  "entity.the_bumblezone.bee_queen.mention_super_trade": "Bzz! BZZZ! (The Bee Queen is interested in getting %s within the next %s minutes)",
+  "entity.the_bumblezone.bee_queen.mention_super_trade_inventory": "BZZZ! BZZZ! (The Bee Queen is interested in your %s within your inventory!)",
+  "entity.the_bumblezone.bee_queen.mention_super_trade_satisfied": "Bzzz..! (The Bee Queen is satisfied now)",
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
   "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster.\nDoubles output of any BeeNest or BeeHive blocks.",
