@@ -13,25 +13,19 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -675,17 +669,6 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-        if (canScroll(enchantmentsAvailable.size())) {
-            int offscreenRows = this.getOffscreenRows();
-            float percentage = (float)delta / (float)offscreenRows;
-            this.scrollOff = Mth.clamp(this.scrollOff - percentage, 0.0F, 1.0F);
-            this.startIndex = (int)((double)(this.scrollOff * (float)offscreenRows) + 0.5D);
-        }
-
-        return true;
-    }
-
-    public boolean clampScrollOff(double mouseX, double mouseY, double delta) {
         if (canScroll(enchantmentsAvailable.size())) {
             int offscreenRows = this.getOffscreenRows();
             float percentage = (float)delta / (float)offscreenRows;
