@@ -45,7 +45,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private static final int MENU_HEIGHT = 126;
 
     private static final int INVENTORY_LABEL_Y_OFFSET = -60;
-    private static final int TITLE_LABEL_Y_OFFSET = -3;
+    private static final int TITLE_LABEL_Y_OFFSET = -1;
 
     private static final int ENCHANTMENT_AREA_X_OFFSET = 76;
     private static final int ENCHANTMENT_AREA_Y_OFFSET = 52;
