@@ -55,6 +55,13 @@ Fixed Super Candles/Incense Candles able to deal damage to fire immune mobs in i
 
 Added superCandlesBurnsMobs config option to allow disabling Super Candles/Incense Candles's flame from setting mobs on fire.
 
+Crystalline Flower screen refactored a bit to now send the enchantments to show from the server to the client.
+ This should help against any enchantment registry desync issue between server and client such as
+ another mod not registering an enchantment on the server.
+
+Crystalline Flower now gains 2xp instead of 1xp when consuming diamond, emerald, quartz, echo shard, and amethyst shard.
+ Amethyst Block, Quartz Block, Diamond Block, and Emerald Block gives 5xp.
+
 ##### Fluids:
 Fixed issue where mobs would not see Sugar Water, Honey Fluid, or Royal Jelly Fluid as water when pathfinding.
  Bees should now properly avoid flying into these liquids and suffocating. (Hopefully...)

@@ -29,6 +29,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPacket;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
@@ -75,6 +76,7 @@ public class BumblezoneClient implements ClientModInitializer {
         registerKeybinds();
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
+        CrystallineFlowerEnchantmentPacket.registerPacket();
     }
 
     private void registerEntityRenders() {
