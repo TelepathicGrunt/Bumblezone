@@ -62,7 +62,8 @@ Crystalline Flower screen refactored a bit to now send the enchantments to show 
 Crystalline Flower now gains 2xp instead of 1xp when consuming diamond, emerald, quartz, echo shard, and amethyst shard.
  Amethyst Block, Quartz Block, Diamond Block, and Emerald Block gives 5xp.
 
-Crystalline Flower now shows the modid of the mod that the enchantment is from in the tooltip.
+Crystalline Flower now shows the name of the mod that the enchantment is from in the tooltip.
+ Switch on advanced tooltip settings (F3 + H) to see full resourcelocation of enchantment instead.
  Also, will attempt to auto-translate enchantments that have no translation by using the path
  of the enchantment's resourcelocation and formatting it to be cleaner.
 
