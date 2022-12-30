@@ -686,17 +686,6 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         return true;
     }
 
-    public boolean clampScrollOff(double mouseX, double mouseY, double delta) {
-        if (canScroll(enchantmentsAvailable.size())) {
-            int offscreenRows = this.getOffscreenRows();
-            float percentage = (float)delta / (float)offscreenRows;
-            this.scrollOff = Mth.clamp(this.scrollOff - percentage, 0.0F, 1.0F);
-            this.startIndex = (int)((double)(this.scrollOff * (float)offscreenRows) + 0.5D);
-        }
-
-        return true;
-    }
-
     protected int getOffscreenRows() {
         return Math.max(enchantmentsAvailable.size() - 3, 0);
     }

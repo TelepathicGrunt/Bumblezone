@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -184,5 +185,15 @@ public class EnchantmentUtils {
 		cost += BzGeneralConfigs.crystallineFlowerExtraTierCost.get();
 
 		return Math.max(1, Math.min(6, cost));
+	}
+
+	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
+		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
+
+		int ret = resourceKey2.location().getNamespace().compareTo(resourceKey1.location().getNamespace());
+		if (ret == 0) ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
+		if (ret == 0) ret = enchantment2.level - enchantment1.level;
+		return ret;
 	}
 }
