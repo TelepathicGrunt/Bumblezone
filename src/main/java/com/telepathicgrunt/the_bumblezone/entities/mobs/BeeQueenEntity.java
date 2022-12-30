@@ -715,16 +715,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 this.getZ() + (forwardVect.x() * 1)),
                         reward.xpReward());
             }
-
-            this.level.playSound(
-                    null,
-                    this.blockPosition(),
-                    BzSounds.BEE_QUEEN_HAPPY,
-                    SoundSource.NEUTRAL,
-                    1.0F,
-                    (this.getRandom().nextFloat() * 0.2F) + 0.6F);
-
         }
+
+        this.level.playSound(
+                null,
+                this.blockPosition(),
+                BzSounds.BEE_QUEEN_HAPPY,
+                SoundSource.NEUTRAL,
+                1.0F,
+                (this.getRandom().nextFloat() * 0.2F) + 0.6F);
     }
 
     public void spawnAngryParticles(int particles) {
