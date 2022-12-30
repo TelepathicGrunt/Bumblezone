@@ -639,7 +639,7 @@
   "the_bumblezone.midnightconfig.generalComment": "General Section",
   "the_bumblezone.midnightconfig.beehemothSpeed": "Beehemoth Speed",
   "the_bumblezone.midnightconfig.beeQueenSuperTradeRewardMultiplier": "Queen Super Trade Reward Multiplier",
-  "the_bumblezone.midnightconfig.beeQueenSuperTradeDurationInTicks": "Queen Super Trade Duration",
+  "the_bumblezone.midnightconfig.beeQueenSuperTradeDurationInTicks": "Queen Super Trade Duration (ticks)",
   "the_bumblezone.midnightconfig.beeQueenSuperTradeAmountTillSatified": "Trades Per Queen Super Trades",
   "the_bumblezone.midnightconfig.specialBeeSpawning": "Special Bee Spawning",
   "the_bumblezone.midnightconfig.nearbyBeesPerPlayerInBz": "Nearby Bees Per Player In Bz",
