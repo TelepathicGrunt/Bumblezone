@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.commands.NonOpCommands;
+import com.telepathicgrunt.the_bumblezone.commands.OpCommands;
 import net.minecraftforge.event.RegisterCommandsEvent;
 
 public class BzCommands {
