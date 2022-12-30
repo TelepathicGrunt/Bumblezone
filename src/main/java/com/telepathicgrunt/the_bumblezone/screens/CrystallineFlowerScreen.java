@@ -6,6 +6,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -576,7 +578,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             .withStyle(ChatFormatting.DARK_GRAY);
                 }
                 else {
-                    Optional<? extends ModContainer> modFileInfo = QuiltLoader.getModContainer(enchantment.namespace);
+                    Optional<? extends ModContainer> modFileInfo = FabricLoader.getInstance().getModContainer(enchantment.namespace);
                     if (modFileInfo.isEmpty()) {
                         String formattedModid = Arrays.stream(enchantment.namespace
                                 .split("_"))
@@ -587,7 +589,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                                 .withStyle(ChatFormatting.BLUE);
                     }
                     else {
-                        mutableComponent4 = Component.literal(modFileInfo.get().metadata().name())
+                        mutableComponent4 = Component.literal(modFileInfo.get().getMetadata().getName())
                                 .withStyle(ChatFormatting.BLUE);
                     }
                 }
