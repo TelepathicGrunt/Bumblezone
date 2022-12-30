@@ -585,7 +585,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     }
                     else {
                         mutableComponent4 = Component.literal(modFileInfo.get().getMetadata().getName())
-                                .withStyle(ChatFormatting.BLUE);
+                                .withStyle(ChatFormatting.BLUE)
+                                .withStyle(ChatFormatting.ITALIC);
                     }
                 }
 
