@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeAttackGoal;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
@@ -349,9 +350,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private void performSuperTradeTick() {
         if (!this.level.isClientSide()) {
-            if (BzConfig.beeQueenSuperTradeRewardMultiplier <= 1 ||
-                BzConfig.beeQueenSuperTradeDurationInTicks == 0 ||
-                BzConfig.beeQueenSuperTradeAmountTillSatified == 0)
+            if (BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() <= 1 ||
+                BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get() == 0 ||
+                BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified.get() == 0)
             {
                 if (getRemainingSuperTradeTime() > 0) {
                     setRemainingSuperTradeTime(0);
@@ -379,7 +380,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                 List<Player> nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(16));
                 if (getRemainingSuperTradeTime() == 0 && nearbyPlayers.size() > 0) {
-                    setRemainingSuperTradeTime(BzConfig.beeQueenSuperTradeDurationInTicks);
+                    setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get());
 
                     List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.keySet().stream()
                             .filter(i -> !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) ||
@@ -388,7 +389,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                     if (allowedSuperTradeItems.size() > 0) {
                         setSuperTradeItem(allowedSuperTradeItems.get(getRandom().nextInt(allowedSuperTradeItems.size())).getDefaultInstance());
-                        getSuperTradeItem().grow(BzConfig.beeQueenSuperTradeAmountTillSatified);
+                        getSuperTradeItem().grow(BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified.get());
                     }
                 }
 
@@ -670,8 +671,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward, ItemStack originalItem, UUID playerUUID) {
         int rewardMultiplier = 1;
-        if (getSuperTradeItem().sameItem(originalItem) && BzConfig.beeQueenSuperTradeRewardMultiplier > 1) {
-            rewardMultiplier = BzConfig.beeQueenSuperTradeRewardMultiplier;
+        if (getSuperTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() > 1) {
+            rewardMultiplier = BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get();
             getSuperTradeItem().shrink(1);
 
             Player player = level.getPlayerByUUID(playerUUID);
@@ -720,13 +721,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 this.getZ() + (forwardVect.x() * 1)),
                         reward.xpReward());
             }
-
         }
 
         this.level.playSound(
                 null,
                 this.blockPosition(),
-                BzSounds.BEE_QUEEN_HAPPY,
+                BzSounds.BEE_QUEEN_HAPPY.get(),
                 SoundSource.NEUTRAL,
                 1.0F,
                 (this.getRandom().nextFloat() * 0.2F) + 0.6F);
