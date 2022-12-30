@@ -1,0 +1,42 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:mushroom_stew",
+      "required": true
+    },
+    {
+      "id": "minecraft:beetroot_soup",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:bread",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:baked_potato",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:apple",
+      "count": 3,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:paper",
+      "count": 4,
+      "xp_reward": 1,
+      "weight": 3,
+      "required": true
+    }
+  ]
+}
