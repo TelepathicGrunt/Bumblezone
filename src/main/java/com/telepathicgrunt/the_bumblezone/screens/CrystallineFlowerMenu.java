@@ -509,9 +509,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             tempCopy.setCount(1);
 
             int level = xpTier.get() * BzConfig.crystallineFlowerEnchantingPowerAllowedPerTier;
-            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get() == 7);
-            availableEnchantments.removeIf(e -> xpTier.get() <= EnchantmentUtils.getEnchantmentTierCost(e));
-            availableEnchantments.sort(EnchantmentUtils::compareEnchantments);
+            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
 
             if (availableEnchantments.size() == 0) {
                 if (enchantedSlot.hasItem()) {
