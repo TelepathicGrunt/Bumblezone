@@ -114,9 +114,10 @@ public class EnchantmentUtils {
 			items.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)));
 	}
 
-	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, boolean allowTreasure) {
+	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
 		List<EnchantmentInstance> list = Lists.newArrayList();
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
+		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
 
@@ -134,12 +135,16 @@ public class EnchantmentUtils {
 			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (enchantment.canApplyAtEnchantingTable(stack) || (bookFlag && enchantment.isAllowedOnBooks()))) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
 					if (forceAllowed || level >= enchantment.getMinCost(i)) {
-						list.add(new EnchantmentInstance(enchantment, i));
-						break;
+						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, i);
+						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
+							list.add(enchantmentInstance);
+							break;
+						}
 					}
 				}
 			}
 		}
+		list.sort(EnchantmentUtils::compareEnchantments);
 		return list;
 	}
 
@@ -191,8 +196,7 @@ public class EnchantmentUtils {
 		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
 		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
 
-		int ret = resourceKey2.location().getNamespace().compareTo(resourceKey1.location().getNamespace());
-		if (ret == 0) ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
+		int ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
 		if (ret == 0) ret = enchantment2.level - enchantment1.level;
 		return ret;
 	}

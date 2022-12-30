@@ -26,11 +26,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -38,6 +41,7 @@ import java.util.function.Function;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
@@ -393,10 +397,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     private void drawEnchantmentText(PoseStack poseStack, int rowStartX, int currentRowStartY, EnchantmentSkeleton enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor) {
-        String translatedEnchantmentName = getTruncatedString("""
-                enchantment.%s.%s""".formatted(
-                    enchantmentEntry.namespace,
-                    enchantmentEntry.path),
+        String translatedEnchantmentName = getTruncatedString(
+                enchantmentEntry.namespace,
+                enchantmentEntry.path,
                 88);
 
         MutableComponent mutableComponent = Component.literal(translatedEnchantmentName);
@@ -410,8 +413,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     @NotNull
-    private String getTruncatedString(String stringToTruncate, int maxSize) {
-        StringBuilder translatedEnchantmentName = new StringBuilder(Language.getInstance().getOrDefault(stringToTruncate));
+    private String getTruncatedString(String namespace, String path, int maxSize) {
+        StringBuilder translatedEnchantmentName = new StringBuilder(Language.getInstance().getOrDefault("""
+                enchantment.%s.%s""".formatted(namespace, path)));
+
+        String originalNameOutput = translatedEnchantmentName.toString();
+        if (originalNameOutput.contains("enchantment.")) {
+            translatedEnchantmentName = new StringBuilder(Arrays.stream(path
+                    .split("_"))
+                    .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
+                    .collect(Collectors.joining(" ")));
+        }
+
         boolean hasTruncated = false;
         while (font.width(translatedEnchantmentName.toString()) > maxSize) {
             int nameLength = translatedEnchantmentName.length();
@@ -535,10 +548,17 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 EnchantmentSkeleton enchantment = enchantmentsAvailable.get(currentSection);
                 int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
 
-                MutableComponent mutableComponent = Component.translatable("""
-                    enchantment.%s.%s""".formatted(
-                            enchantment.namespace,
-                            enchantment.path))
+                String translatedEnchantmentName = Language.getInstance().getOrDefault("""
+                    enchantment.%s.%s""".formatted(enchantment.namespace, enchantment.path));
+
+                if (translatedEnchantmentName.contains("enchantment.")) {
+                    translatedEnchantmentName = Arrays.stream(enchantment.path
+                            .split("_"))
+                            .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
+                            .collect(Collectors.joining(" "));
+                }
+
+                MutableComponent mutableComponent = Component.literal(translatedEnchantmentName)
                         .withStyle(ChatFormatting.GOLD);
 
                 MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantment.level)
@@ -548,13 +568,15 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     mutableComponent2.append(Component.translatable("the_bumblezone.container.crystalline_flower.level_star"));
                 }
 
-
                 MutableComponent mutableComponent3 = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost", tierCost)
                         .withStyle(ChatFormatting.RED);
 
+                MutableComponent mutableComponent4 = Component.literal(enchantment.namespace)
+                        .withStyle(ChatFormatting.DARK_GRAY);
+
                 this.renderTooltip(
                         poseStack,
-                        List.of(mutableComponent, mutableComponent2, mutableComponent3),
+                        List.of(mutableComponent, mutableComponent2, mutableComponent3, mutableComponent4),
                         Optional.empty(),
                         x,
                         y,
