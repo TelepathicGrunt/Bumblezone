@@ -24,6 +24,8 @@ Bee armor now prevents freezing effect that Powder Snow gives. tagged as `minecr
 
 Honey Compass is now tagged in `minecraft:compasses` tag. Let me know if this ends up being an issue.
 
+Fixed Stingless Bee Helmet not highlighting Bee Queen mob.
+
 ##### Blocks:
 Added String Curtains that bees cannot pathfind through and slightly pushes bees away. Great for making a walk-in bee room with bees escaping!
  Attaches to any solid surface and right clicking with string will extend the block downward.
