@@ -84,6 +84,12 @@ Fixed some typos in translation keys for Bee Queen saying `beehemoth_queen` inst
 
 Tagged Honey Slime as `minecraft:frog_food` so Frogs can eat them now.
 
+Bee Queen now has a super trade system! Every 20 minutes, the Bee Queen will ask players very close by to trade with it up to 24 time
+ with a specific item for triple the reward! Has 3 config settings that setting any of the configs to 0 will disable this system.
+
+Added some more Bee Queen trade possibilities. Try trading Sweet Berries, Glow Berries, Cocoa Beans, Bricks, Clay Ball,
+ Snowball, Magma Cream, Iron Ingot, Gold Ingot, Copper Ingot, Nether Brick, Mushroom Stew, Beetroot Soup, or Potion of Bees's potions!
+
 ##### Effects:
 Hopefully remove Wrath of the Hive from more bees properly when the target dies.
 
