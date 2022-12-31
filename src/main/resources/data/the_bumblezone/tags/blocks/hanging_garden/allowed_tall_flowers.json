@@ -5,6 +5,10 @@
     {
       "id": "biomemakeover:foxglove",
       "required": false
+    },
+    {
+      "id": "srias_flowers:tall_hydrangea",
+      "required": false
     }
   ]
 }
