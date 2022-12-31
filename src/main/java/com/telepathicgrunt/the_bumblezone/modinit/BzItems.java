@@ -226,7 +226,7 @@ public class BzItems {
         BUMBLEZONE_CREATIVE_TAB = FabricItemGroup
                 .builder(new ResourceLocation(Bumblezone.MODID, "main_tab"))
                 .displayItems((enabledFeatures, entries, operatorEnabled) ->
-                        CREATIVE_MENU_ITEM_ORDERING.forEach(item -> entries.accept(item.getDefaultInstance())))
+                        CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> entries.accept(item.getDefaultInstance())))
                 .icon(BzItems.HONEYCOMB_BROOD::getDefaultInstance)
                 .build();
 
@@ -235,6 +235,7 @@ public class BzItems {
                 (itemGroupEntries) -> itemGroupEntries.acceptAll(Stream.of(
                     STICKY_HONEY_REDSTONE,
                     REDSTONE_HONEY_WEB,
+                    STRING_CURTAIN_WHITE,
                     ROYAL_JELLY_BLOCK
                 ).map(Item::getDefaultInstance).toList())
             );
@@ -356,10 +357,10 @@ public class BzItems {
 
     }
 
-    private static final List<Item> CREATIVE_MENU_ITEM_ORDERING = new ArrayList<>();
-    
+    public static final List<Item> CUSTOM_CREATIVE_TAB_ITEMS = new ArrayList<>();
+
     private static void registerItemAndShowInTab(ResourceLocation rl, Item item) {
-        CREATIVE_MENU_ITEM_ORDERING.add(item);
+        CUSTOM_CREATIVE_TAB_ITEMS.add(item);
         registerItem(rl, item);
     }
 
