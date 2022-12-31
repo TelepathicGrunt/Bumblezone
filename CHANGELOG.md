@@ -116,6 +116,9 @@ Silence "Hanging entity at invalid position" logspam from vanilla by lowering th
 
 Made Bumblezone's off thread tasks properly log any crash into the log file if they die.
 
+##### Mod Compat:
+Fixed REI showing duplicated info tabs for Bumblezone's items and fluids.
+
 ##### Recipes:
 Organized Bumblezone recipe json files much better into sub folders. Cleaner and easier to browse.
 
