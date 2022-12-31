@@ -7,7 +7,15 @@
       "required": false
     },
     {
+      "id": "srias_flowers:himalayan_poppy",
+      "required": false
+    },
+    {
       "id": "srias_flowers:hydrangea",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:hydrangea_bush",
       "required": false
     },
     {
@@ -20,6 +28,18 @@
     },
     {
       "id": "srias_flowers:orange_daisy",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:fleabane",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:columbine",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:sunrise_daisy",
       "required": false
     },
     {
