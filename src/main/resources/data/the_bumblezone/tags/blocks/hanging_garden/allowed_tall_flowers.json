@@ -9,6 +9,42 @@
     {
       "id": "srias_flowers:tall_hydrangea",
       "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_morning_glory",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_dark_blue_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_blue_bell_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_purple_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_bright_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_mixed_pink_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium_pink",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium",
+      "required": false
     }
   ]
 }

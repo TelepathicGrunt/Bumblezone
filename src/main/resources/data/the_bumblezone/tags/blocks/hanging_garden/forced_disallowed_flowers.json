@@ -116,6 +116,14 @@
       "required": false
     },
     {
+      "id": "floralis:light_gray_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:gray_flower",
+      "required": false
+    },
+    {
       "id": "floralis:black_flower",
       "required": false
     },
@@ -224,11 +232,23 @@
       "required": false
     },
     {
-      "id": "naturaldecormod:epiphyte_orchid",
+      "id": "naturaldecormod:epiphyte_picher_plant",
       "required": false
     },
     {
-      "id": "naturaldecormod:epiphyte_orchid",
+      "id": "naturaldecormod:epiphyte_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphtye_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:irish_moss_large",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:irish_moss_small",
       "required": false
     },
     {
@@ -273,6 +293,14 @@
     },
     {
       "id": "naturaldecormod:wither_rose_bundle",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:little_creosote_bush",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:seafic_ice_plant_small",
       "required": false
     },
     {
@@ -333,6 +361,94 @@
     },
     {
       "id": "duneons:endpinkflower",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:wilting_trillium",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dorcel",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:green_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:yellow_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_bioshroom",
+      "required": false
+    },
+    {
+      "id": "kniro_flower:white_clover",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:parodia_muricata",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cactus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:albuca_namaquensis",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:desert_sturt_pea",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:devils_claw_vine",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:tumble_weed",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:dry_shrub",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yucca",
+      "required": false
+    },
+    {
+      "id": "botania:gray_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:light_gray_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:lime_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:green_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:brown_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:black_mystical_flower",
       "required": false
     }
   ]
