@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -18,6 +19,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
@@ -88,7 +90,7 @@ public class StinglessBeeHelmet extends BeeArmor {
             ALL_BEE_ARMOR_ON_CLIENTSIDE = isAllBeeArmorOn;
             decrementHighlightingCounter();
 
-            if (player.isCrouching()) {
+            if (player.isShiftKeyDown()) {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = isAllBeeArmorOn ? 200 : 6;
 
                 if (!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {
@@ -105,13 +107,17 @@ public class StinglessBeeHelmet extends BeeArmor {
             if (hasWrath ||
                 player.isUnderWater() ||
                 player.isHurt() ||
-                player.isCrouching() ||
+                player.isShiftKeyDown() ||
                 (!isAllBeeArmorOn && beeRidingTimer > 600))
             {
                 for (Entity passenger : player.getPassengers()) {
-                    if (passenger instanceof Bee bee) {
-                        bee.stopRiding();
-                        bee.setNoAi(false);
+                    if ((passenger instanceof Bee && !passenger.getType().is(BzTags.DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS)) ||
+                        passenger.getType().is(BzTags.FORCED_ALLOWED_STINGLESS_BEE_HELMET_PASSENGERS))
+                    {
+                        passenger.stopRiding();
+                        if (passenger instanceof Mob mob) {
+                            mob.setNoAi(false);
+                        }
                     }
                 }
                 if(!world.isClientSide()) {
@@ -130,26 +136,30 @@ public class StinglessBeeHelmet extends BeeArmor {
     }
 
     public static boolean shouldEntityGlow(Player player, Entity entity) {
-        if (entity instanceof Bee || entity instanceof BeehemothEntity) {
+        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof BeeQueenEntity) {
             return entity.blockPosition().closerThan(player.blockPosition(), ALL_BEE_ARMOR_ON_CLIENTSIDE ? 80 : 30);
         }
         return false;
     }
 
-    public static InteractionResult addBeePassenger(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
+    public static InteractionResult addBeePassenger(Level world, Player playerEntity, InteractionHand hand, Entity entity) {
         ItemStack beeHelmet = StinglessBeeHelmet.getEntityBeeHelmet(playerEntity);
         if (!beeHelmet.isEmpty() &&
             playerEntity.getItemInHand(playerEntity.getUsedItemHand()).isEmpty() &&
-            playerEntity.getPassengers().isEmpty() &&
-            !beeEntity.getType().is(BzTags.BLACKLISTED_STINGLESS_BEE_HELMET_PASSENGERS))
+            playerEntity.getPassengers().isEmpty())
         {
-            beeEntity.startRiding(playerEntity);
+            if ((entity instanceof Bee && !entity.getType().is(BzTags.DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS)) ||
+                entity.getType().is(BzTags.FORCED_ALLOWED_STINGLESS_BEE_HELMET_PASSENGERS))
+            {
+                entity.startRiding(playerEntity);
 
-            if(!world.isClientSide()) {
-                CompoundTag tag = beeHelmet.getOrCreateTag();
-                tag.putBoolean("hasBeeRider", true);
+                if(!world.isClientSide()) {
+                    CompoundTag tag = beeHelmet.getOrCreateTag();
+                    tag.putBoolean("hasBeeRider", true);
+                }
+                return InteractionResult.SUCCESS;
             }
-            return InteractionResult.SUCCESS;
+
         }
         return InteractionResult.PASS;
     }

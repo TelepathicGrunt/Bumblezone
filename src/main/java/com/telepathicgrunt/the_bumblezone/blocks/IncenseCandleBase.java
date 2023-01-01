@@ -18,7 +18,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -27,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -48,7 +48,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -174,7 +173,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
                     lightCandle(level, blockPos, player);
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                else if (handItem.is(BzTags.DAMAGABLE_CANDLE_LIGHTING_ITEMS)) {
+                else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
                     boolean successfulLit = lightCandle(level, blockPos, player);
                     if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
                         handItem.hurt(1, level.getRandom(), serverPlayer);
@@ -226,7 +225,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
 
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (player != null && player.getAbilities().instabuild) {
+        if ((player != null && player.getAbilities().instabuild) || !level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
             super.playerWillDestroy(level, pos, state, player);
             return;
         }

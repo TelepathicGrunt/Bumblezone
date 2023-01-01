@@ -1,0 +1,62 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:battle_cubes",
+      "weight": 2
+    },
+    {
+      "structure": "the_bumblezone:honitel",
+      "weight": 2
+    },
+    {
+      "structure": "the_bumblezone:hive_temple",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:bee_house",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:candle_parkour",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:honey_fountain",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:ice_monolith",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:stinger_spear_shrine",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:dance_floor",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:cannon_range",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:pirate_ship",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:overgrown_flower",
+      "weight": 20
+    }
+  ],
+  "placement": {
+    "salt": 578754875,
+    "spacing": 21,
+    "separation": 4,
+    "exclusion_zone": {
+      "other_set": "the_bumblezone:cell_maze",
+      "chunk_count": 5
+    },
+    "type": "minecraft:random_spread"
+  }
+}

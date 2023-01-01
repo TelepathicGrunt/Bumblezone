@@ -8,9 +8,15 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPacket;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -51,8 +57,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     private final Slot enchantedSlot;
 
     final DataSlot selectedEnchantmentIndex = DataSlot.standalone();
-    final DataSlot searchTreasure = DataSlot.standalone();
-    final DataSlot searchLevel = DataSlot.standalone();
     final DataSlot xpBarPercent = DataSlot.standalone();
     final DataSlot xpTier = DataSlot.standalone();
     final DataSlot tierCost = DataSlot.standalone();
@@ -115,21 +119,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
             public void setChanged() {
                 this.container.setChanged();
-                int existingEnchantments = 0;
-                ItemStack itemStack = bookSlot.getItem();
-
-                if (!itemStack.isEmpty()) {
-                    existingEnchantments = EnchantmentHelper.getEnchantments(itemStack).size();
+                if (!player.level.isClientSide()) {
+                    setupResultSlot();
+                    broadcastChanges();
                 }
-
-                if (existingEnchantments >= 3) {
-                    tooManyEnchantmentsOnInput.set(1);
-                }
-                else {
-                    tooManyEnchantmentsOnInput.set(0);
-                }
-
-                broadcastChanges();
             }
         });
         this.enchantedSlot = addSlot(new Slot(inputContainer, ENCHANTED_SLOT, ENCHANTED_SLOT_X, ENCHANTED_SLOT_Y) {
@@ -154,6 +147,17 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 });
 
                 drainFlowerXPLevel(tierCost.get());
+
+                ItemStack bookSlotItem = bookSlot.getItem();
+                if (bookSlotItem.isEmpty()) {
+                    selectedEnchantmentIndex.set(-1);
+                }
+
+                if (!player.level.isClientSide()) {
+                    setupResultSlot();
+                    broadcastChanges();
+                }
+
                 super.onTake(player, itemStack);
             }
         });
@@ -170,8 +174,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             addSlot(new Slot(playerInventory, i, 8 + i * 18, playerInvYOffset + 58));
         }
 
-        this.searchTreasure.set(searchTreasure);
-        this.searchLevel.set(searchLevel);
         this.selectedEnchantmentIndex.set(-1);
         this.xpBarPercent.set(0);
         this.xpTier.set(0);
@@ -191,8 +193,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         syncXpTier();
 
         addDataSlot(this.selectedEnchantmentIndex);
-        addDataSlot(this.searchTreasure);
-        addDataSlot(this.searchLevel);
         addDataSlot(this.xpBarPercent);
         addDataSlot(this.xpTier);
         addDataSlot(this.tierCost);
@@ -237,52 +237,51 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         }
     }
 
-    public void slotsChanged(Container inventory) {
-        ItemStack bookSlotItem = bookSlot.getItem();
-
-        if (bookSlotItem.isEmpty()) {
-            if (enchantedSlot.hasItem()) {
-                enchantedSlot.set(ItemStack.EMPTY);
-            }
-            searchLevel.set(0);
-            searchTreasure.set(0);
-            selectedEnchantmentIndex.set(-1);
-        }
-
-        if (selectedEnchantmentIndex.get() != -1) {
-            setupResultSlot(selectedEnchantmentIndex.get());
-        }
-        else if (enchantedSlot.hasItem()) {
-            enchantedSlot.set(ItemStack.EMPTY);
-        }
-
-        broadcastChanges();
-    }
+    public void slotsChanged(Container inventory) {}
 
     public boolean clickMenuButton(Player player, int id) {
         if (id >= 0) {
             selectedEnchantmentIndex.set(id);
-            setupResultSlot(selectedEnchantmentIndex.get());
+            if (!player.level.isClientSide()) {
+                setupResultSlot();
+                broadcastChanges();
+            }
             return true;
         }
         // drain xp 1
         else if (id == -2) {
             drainPlayerXPLevel(1);
+            if (!player.level.isClientSide()) {
+                setupResultSlot();
+                broadcastChanges();
+            }
             return true;
         }
         // drain xp 2
         else if (id == -3) {
             drainPlayerXPLevel(2);
+            if (!player.level.isClientSide()) {
+                setupResultSlot();
+                broadcastChanges();
+            }
             return true;
         }
         // drain xp 3
         else if (id == -4) {
             drainPlayerXPLevel(3);
+            if (!player.level.isClientSide()) {
+                setupResultSlot();
+                broadcastChanges();
+            }
             return true;
         }
         // confirm consume
         else if (id == -5) {
             consumeItem();
+            if (!player.level.isClientSide()) {
+                setupResultSlot();
+                broadcastChanges();
+            }
             return true;
         }
         else {
@@ -477,20 +476,31 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         return itemStack;
     }
 
-    private void setupResultSlot(int selectedEnchantment) {
-        if (selectedEnchantmentIndex.get() == -1 || tooManyEnchantmentsOnInput.get() == 1) {
+    private void setupResultSlot() {
+        ItemStack bookSlotItem = bookSlot.getItem();
+        int existingEnchantments;
+        if (!bookSlotItem.isEmpty() && xpTier.get() > 1) {
+            existingEnchantments = EnchantmentHelper.getEnchantments(bookSlotItem).size();
+        }
+        else {
+            tooManyEnchantmentsOnInput.set(0);
+            selectedEnchantmentIndex.set(-1);
             if (enchantedSlot.hasItem()) {
                 enchantedSlot.set(ItemStack.EMPTY);
             }
             return;
         }
-        else if (xpTier.get() <= 1) {
+
+        if (existingEnchantments >= 3) {
+            tooManyEnchantmentsOnInput.set(1);
             selectedEnchantmentIndex.set(-1);
-            broadcastChanges();
             if (enchantedSlot.hasItem()) {
                 enchantedSlot.set(ItemStack.EMPTY);
             }
             return;
+        }
+        else {
+            tooManyEnchantmentsOnInput.set(0);
         }
 
         ItemStack toEnchant = bookSlot.getItem();
@@ -499,40 +509,65 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             tempCopy.setCount(1);
 
             int level = xpTier.get() * BzConfig.crystallineFlowerEnchantingPowerAllowedPerTier;
-            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get() == 7);
-            if (availableEnchantments.size() == 0 && enchantedSlot.hasItem()) {
-                enchantedSlot.container.removeItemNoUpdate(enchantedSlot.index);
+            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
+
+            if (availableEnchantments.size() == 0) {
+                if (enchantedSlot.hasItem()) {
+                    enchantedSlot.set(ItemStack.EMPTY);
+                }
                 selectedEnchantmentIndex.set(-1);
+            }
+
+            if (selectedEnchantmentIndex.get() != -1) {
+                if (selectedEnchantmentIndex.get() != -1 && availableEnchantments.size() > selectedEnchantmentIndex.get()) {
+                    EnchantmentInstance enchantmentForItem = availableEnchantments.get(selectedEnchantmentIndex.get());
+
+                    if (tempCopy.is(Items.BOOK)) {
+                        ItemStack enchantedBook = Items.ENCHANTED_BOOK.getDefaultInstance();
+                        enchantedBook.setCount(1);
+
+                        CompoundTag compoundtag = tempCopy.getTag();
+                        if (compoundtag != null) {
+                            enchantedBook.setTag(compoundtag.copy());
+                        }
+                        tempCopy = enchantedBook;
+                    }
+
+                    if (tempCopy.is(Items.BOOK) || tempCopy.is(Items.ENCHANTED_BOOK)) {
+                        EnchantedBookItem.addEnchantment(tempCopy, enchantmentForItem);
+                    }
+                    else {
+                        tempCopy.enchant(enchantmentForItem.enchantment, enchantmentForItem.level);
+                    }
+
+                    if (!ItemStack.matches(tempCopy, enchantedSlot.getItem())) {
+                        enchantedSlot.set(tempCopy);
+                        tierCost.set(EnchantmentUtils.getEnchantmentTierCost(enchantmentForItem));
+                    }
+                }
                 return;
             }
 
-            availableEnchantments.removeIf(e -> xpTier.get() <= EnchantmentUtils.getEnchantmentTierCost(e));
-            availableEnchantments.sort(EnchantmentUtils::compareEnchantments);
-            if (availableEnchantments.size() > selectedEnchantment) {
-                EnchantmentInstance enchantmentForItem = availableEnchantments.get(selectedEnchantment);
-
-                if (tempCopy.is(Items.BOOK)) {
-                    ItemStack enchantedBook = Items.ENCHANTED_BOOK.getDefaultInstance();
-                    enchantedBook.setCount(1);
-
-                    CompoundTag compoundtag = tempCopy.getTag();
-                    if (compoundtag != null) {
-                        enchantedBook.setTag(compoundtag.copy());
-                    }
-                    tempCopy = enchantedBook;
+            if (player instanceof ServerPlayer serverPlayer) {
+                List<EnchantmentSkeleton> availableEnchantmentsSkeletons =
+                        availableEnchantments.stream().map(e -> {
+                            ResourceLocation resourceLocation = BuiltInRegistries.ENCHANTMENT.getKey(e.enchantment);
+                            return new EnchantmentSkeleton(
+                                    resourceLocation.getPath(),
+                                    resourceLocation.getNamespace(),
+                                    e.level,
+                                    e.enchantment.getMinCost(2),
+                                    e.level == e.enchantment.getMaxLevel(),
+                                    e.enchantment.isCurse(),
+                                    e.enchantment.isTreasureOnly()
+                            );
+                        }).toList();
+                FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
+                passedData.writeInt(availableEnchantmentsSkeletons.size());
+                for (EnchantmentSkeleton skeleton : availableEnchantmentsSkeletons) {
+                    passedData.writeUtf(CrystallineFlowerEnchantmentPacket.gson.toJson(skeleton));
                 }
-
-                if (tempCopy.is(Items.BOOK) || tempCopy.is(Items.ENCHANTED_BOOK)) {
-                    EnchantedBookItem.addEnchantment(tempCopy, enchantmentForItem);
-                }
-                else {
-                    tempCopy.enchant(enchantmentForItem.enchantment, enchantmentForItem.level);
-                }
-
-                if (!ItemStack.matches(tempCopy, enchantedSlot.getItem())) {
-                    enchantedSlot.set(tempCopy);
-                    tierCost.set(EnchantmentUtils.getEnchantmentTierCost(enchantmentForItem));
-                }
+                ServerPlayNetworking.send(serverPlayer, CrystallineFlowerEnchantmentPacket.PACKET_ID, passedData);
             }
         }
     }

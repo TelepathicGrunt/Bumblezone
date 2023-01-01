@@ -21,7 +21,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -107,7 +107,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         if (raytraceresult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = raytraceresult.getBlockPos();
             BlockState blockstate = this.level.getBlockState(blockpos);
-            if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
+            if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
                 this.handleInsidePortal(blockpos);
                 this.onHit(raytraceresult);
             }
@@ -184,7 +184,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
-        if(!entity.isCrouching() && !beeLeggings.isEmpty()) {
+        if(!entity.isShiftKeyDown() && !beeLeggings.isEmpty()) {
             HoneyBeeLeggings.setPollinated(beeLeggings);
         }
     }
@@ -197,7 +197,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         BlockState blockstate = this.level.getBlockState(blockHitResult.getBlockPos());
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
 
-        if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_BLACKLISTED_FROM_POLLEN_PUFF)) {
+        if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
             spawnPlants(blockHitResult.getBlockPos(), (r, b) -> blockstate);
         }
         else if(blockstate.is(Blocks.HONEY_BLOCK) ||
@@ -272,7 +272,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             if((isWaterBased ? this.level.getBlockState(newPos).is(Blocks.WATER) : this.level.isEmptyBlock(newPos)) && blockstate.canSurvive(this.level, newPos)) {
                 if (blockstate.is(Blocks.MOSS_CARPET)) {
                     BlockState belowState = this.level.getBlockState(newPos.below());
-                    if (Registry.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level, newPos.below(), Direction.DOWN, SupportType.FULL)) {
+                    if (BuiltInRegistries.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level, newPos.below(), Direction.DOWN, SupportType.FULL)) {
                         continue;
                     }
                 }

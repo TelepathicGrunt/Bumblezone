@@ -78,6 +78,10 @@
       "required": false
     },
     {
+      "id": "pokecube:vibrava",
+      "required": false
+    },
+    {
       "id": "pokecube:beartic",
       "required": false
     },
@@ -159,6 +163,54 @@
     },
     {
       "id": "crittersandcompanions:dragonfly",
+      "required": false
+    },
+    {
+      "id": "endlessencore:fleet",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spider_queen",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spider_egg",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spiderling",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spiderling_minion",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:ladybug",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:weevil",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:praying_mantis",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:tiger_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:goliath_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:hercules_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:rhino_beetle",
       "required": false
     }
   ]

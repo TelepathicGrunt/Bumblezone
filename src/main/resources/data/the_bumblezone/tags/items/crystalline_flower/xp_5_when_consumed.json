@@ -5,6 +5,10 @@
     "the_bumblezone:honey_crystal",
     "minecraft:enchanting_table",
     "minecraft:honey_block",
+    "minecraft:diamond_block",
+    "minecraft:emerald_block",
+    "minecraft:quartz_block",
+    "minecraft:amethyst_block",
     {
       "id": "#forge:buckets/honey",
       "required": false

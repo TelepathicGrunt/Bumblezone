@@ -47,6 +47,9 @@ public class BzConfig extends MidnightConfig {
     @Entry(min=1, max=1000)
     public static int broodBlocksBeeSpawnCapacity = 80;
 
+    @Entry
+    public static boolean superCandlesBurnsMobs = true;
+
     @Comment
     public static Comment crystallineFlowerComment;
 
@@ -133,6 +136,15 @@ public class BzConfig extends MidnightConfig {
 
     @Entry(min=0, max=100)
     public static double beehemothSpeed = 0.95;
+
+    @Entry(min=0, max=256)
+    public static int beeQueenSuperTradeRewardMultiplier = 3;
+
+    @Entry(min=0, max=2000000)
+    public static int beeQueenSuperTradeDurationInTicks = 24000;
+
+    @Entry(min=0, max=1000000)
+    public static int beeQueenSuperTradeAmountTillSatified = 24;
 
     @Entry
     public static boolean specialBeeSpawning = true;

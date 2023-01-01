@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -24,6 +22,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Quaternionf;
+import org.joml.Quaternionfc;
+import org.joml.Vector3f;
 
 import java.util.function.Predicate;
 
@@ -85,9 +86,11 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
 
                     Vec3 upVector = player.getUpVector(1.0F);
                     Vec3 viewVector = player.getViewVector(1.0F);
-                    Quaternion quaternion1 = new Quaternion(new Vector3f(upVector), offset, true);
-                    Vector3f shootVector = new Vector3f(viewVector);
-                    shootVector.transform(quaternion1);
+                    Vector3f shootVector = viewVector.toVector3f();
+                    if (i != 0) {
+                        Quaternionfc quaternion1 = new Quaternionf(upVector.x(), upVector.y(), upVector.z(), offset);
+                        shootVector.rotate(quaternion1);
+                    }
                     newCrystal.shoot(
                             shootVector.x(),
                             shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),

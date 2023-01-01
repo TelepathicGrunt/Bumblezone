@@ -1,183 +1,217 @@
-### **(V.6.4.7 Changes) (1.19.2 Minecraft)**
-
-##### Items:
-Fixed recipe to make Bee Bread with any mod's honey bucket tagged as `c:buckets/honey`
-
-Honey Compass now craftable with any mod's honey bucket tagged as `c:buckets/honey`
-
-Honey Compass now will say if the player is in wrong dimension when attempting a structure search.
-
-Honey Compass set to a Beehive/Bee Nest will display correct message on screen when first set.
-
-Cleaned up amount of recipes shown for Incense Candles in JEI, REI, and EMI.
-
-
-### **(V.6.4.6 Changes) (1.19.2 Minecraft)**
-
-##### Advancements:
-Changed it so that Bumblezone's advancement screen is always visible even if you have no completed a prior advancement before.
-
-Reorder advancements so that the teleportation advancements are shown first.
-
-Renamed and adjusted descriptions for a few advancements.
-
-Teleporting out of Bumblezone advancement now does not have a speed requirement and can be granted if exiting below or above dimension bounds.
-
-Added a new advancement for crafting an Incense Candle with two or more potions! (The candle's stats is a mix between the potion's stats)
-
-##### Dimension:
-Very slight color change to dimension fog color.
- Remember folks, there's config options to change the dimension's fog color, thickness, or turn it off.
-
-##### Block:
-Fixed Incense Candle placing crashing servers. My bad.
-
-Fixed it so that Incense Candles and Super Candles's flaming wick now can set projectiles on fire again like arrows.
-
-Flaming projectiles going through the Incense Candle or Super Candle wick's space will now light the candle.
- Hitting the body of candle with flaming projectile will also still light the candle. 
-
-Incense Candles now can be made from Super Candles too. Still needs Royal Jelly Bottle and 1 or more potion.
-
-Lightning hitting the wick space of Super Candles or Incense Candles will light the candles.
- If the lightning hits the body of the candle, it'll destroy the candle!
-
-##### Bee Queen:
-Forgot to add two of Bumblezone's Music Discs into the tier 4 Bee Queen trades.
-
-##### Entities:
-Nerfed Beehemoth flying speeds a bit to better balance it. Base speed can still be changed in config.
-
-##### Mod Compat:
-SlimyBoyos mod now lets Honey Slime pick up items.
-
-NOTE: If you are using Sodium, please download Unofficial Sodium Biome Blending Fix mod so that Sodium does not break
- the rendering of Bumblezone's Incense Candle. The bug fix mod can be downloaded here:
- https://www.curseforge.com/minecraft/mc-mods/unofficial-sodium-biome-blending-fix
-
-
-### **(V.6.4.5 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-Pile of Pollen no longer slows Beehemoth or Bees down when inside it.
-
-Pile of Pollen now more optimized with its Hidden effect. Less checking occurs while in block.
- Hidden effect is granted when Pile of Pollen covers up to just below the eye's height (Hidden 1) 
- and when eyes are fully covered by Pile of Pollen, bees will give up chasing you unless you exit the Pile of Pollen (Hidden 2)
- Hidden effect of any level will act like 100% Invisibility effect where mobs won't see you until you touch/hit them. (Or they previously seen you)
-
-Sticky Honey Residue/Sticky Honey Redstone is a bit more optimized now too.
-
-Honey Web and Redstone Honey Web cannot apply slowness/stickiness to creative players now.
-
-##### Items:
-Carpenter Bee Boots now only mine the below wood, leaves, honeycomb, or wax block when looking downward.
- More intuitive and prevents accidental block mining.
-
-##### Entities:
-Fixed Bee Queen reward item being spawned too far off to the side.
-
-Honey Slime is now immune to the slowness/stickiness applied by Sticky Honey Residue, Sticky Honey Redstone, Honey Web and Redstone Honey Web.
-
-Hopefully fixed Honey Slimes spawning on slopes and suffocating in blocks when chunk is first created.
-
-##### Enchantments:
-Condensed Bumblezone's enchantment descriptions that gets shown by Enchantment Description mod.
-
-##### Mod Compat:
-Added Bee Queen randomization trades for dyed items from Applied Energistics 2, Another Furniture, Bontany Pots, Companion,
- Cat Walks Inc, Farmer's Delight, Kibe, Modern Industrialization, Snowy Spirit, and Supplementaries.
-
-
-### **(V.6.4.4 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-Set the base of lit Super Candles/Incense Candles to return fire damage type for pathfinding.
- Should help stop other mod's mobs from pathfinding through the lit candles and burning.
-
-##### Items:
-Increased the durability for all Bumblezone bee armor by 2.4x.
-
-##### Features:
-Fixed checks for valid spot for Bee Dungeons/Spider Infested Bee Dungeons.
-
-##### Entities:
-Added three tags to make it easier to define what items will lure Beehemoth and what item can lure/breed Honey Slime.
- Honey Slime will now follow players holding Charm, VanillaTweaks, or Supplementaries's Sugar Block and can be bred with that along with vanilla's Sugar item.
- `the_bumblezone:mob_luring/beehemoth`
- `the_bumblezone:mob_luring/beehemoth_fast_luring`
- `the_bumblezone:mob_luring/honey_slime`
-
-##### Advancements:
-Mention that Honey Slime requires Sugar to breed in the Queen's Desire advancement for it.
-
-
-### **(V.6.4.3 Changes) (1.19.2 Minecraft)**
+### **(V.6.6.0 Changes) (1.19.3 Minecraft)**
 
 ##### Structures:
-Hanging Garden structure will now be able to randomly spawn flowering leaves or logs from other mods!
- This includes some leaves/logs from Oh The Biomes You'll Go, Biomes O Plenty, Quark, Ecologics, Terrestria, 
- Fruit Trees, Cherry Blossom Grotto, Colorful Azaleas, Blossom, and Aurora's Decorations!
- The new block tags that control this are:
- `the_bumblezone:allowed_hanging_garden_leaves`
- `the_bumblezone:allowed_hanging_garden_logs`
- `the_bumblezone:blacklisted_hanging_garden_leaves`
- `the_bumblezone:blacklisted_hanging_garden_logs`
+Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
+
+Added Bee House, Candle Parkour, Battle Cubes, Stinger Spear Shrine, Ice Monolith, Overground Flower,
+Pirate Ship, Dance Floor, Cannon Range, Honitel, and Honey Fountain structures!
+
+Honitel and Battle Cube structures has a chance of having a Honey Compass that can locate the Throne Pillar structure!
+
+Fixed the giant honeycomb hole feature from eating away at many structures.
+
+Made Honey Cave Room structure much more common so it is more easily found.
+ Also improve the bottom of the structure to not be as flat.
+
+Disabled prefilling maps in Hive Temple's loot due to unable to resolve the lag with it.
 
 ##### Items:
-Pollen Puff pollination json files will now safely skip invalid entries and parse the rest of the json file if a typo is done on a mob name.
+Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reopened, and the spear picked up again.
 
-##### Mod Compat:
-Changed my mind and now Biome Makeover's Black Thistle and Blue Skies's Lucentroot flowers no longer spawn in Hanging Garden structure now.
- Also blacklisted several flowers from Natural Decor Mod and Natural Expansion mod due to not looking good in structure. 
+Fixed Crystal Cannon firing center crystal shard backwards.
 
+Bee armor now prevents freezing effect that Powder Snow gives. tagged as `minecraft:freeze_immune_wearables`. Bundle up for the cold!
 
-### **(V.6.4.2 Changes) (1.19.2 Minecraft)**
+Honey Compass is now tagged in `minecraft:compasses` tag. Let me know if this ends up being an issue.
 
-##### Misc:
-Fixed bug with vanilla Bees that make them not threadsafe when created as part of worldgen threaded chunk creation.
- Very niche rare crash to even get to happen but good for me to still patch just in case it does cause issues for people rarely.
- Could be cause of some crashes on AoF6 which is why this update is released to rule out a vanilla bee issue and harden Bumblezone against the crash.
+Fixed Stingless Bee Helmet not highlighting Bee Queen mob.
 
-Cleaned up some more mixins to make them more stackable with other people's mixins
+##### Blocks:
+Added String Curtains that bees cannot pathfind through and slightly pushes bees away. Great for making a walk-in bee room with bees escaping!
+ Attaches to any solid surface and right clicking with string will extend the block downward.
+ Dispensers with string can extend the curtain and Comparators counts how far down the curtain goes under the checked spot (up to 15 power) 
+ Has vibration dampening that blocks sculk sensor from hearing a sound on the other side of the curtain.
+ Recipe to create the curtain is this with (T) Stick, (S) String, (G) Glass, and (D) a Dye which is optional:
+ T T T
+ S G S
+ S D S
+
+Some tags that the String Curtains uses are:
+ `the_bumblezone:string_curtains` (item tag)
+
+ `the_bumblezone:string_curtains` (block tag)
+
+ `the_bumblezone:string_curtains/curtain_extending` (item tag)
+
+ `the_bumblezone:string_curtains/blocks_pathfinding_for_non_bee_mob` (entity tag)
+
+ `the_bumblezone:string_curtains/force_allow_pathfinding` (entity tag)
+
+Empty Porous Honeycomb Block will transform into a Filled Porous Honeycomb Block when touched by a pollinated bee!
+
+Empty Honeycomb Brood Block will transform into a Honeycomb Brood Block with a larva inside when touched by a pollinated bee!
+
+Crystalline Flower, Honey Crystal, and Glistering Honey Crystal now has crystal sounds when placed, broken, stepped on, or shot at.
+
+Fixed Super Candles/Incense Candles able to deal damage to fire immune mobs in its flame.
+
+Added superCandlesBurnsMobs config option to allow disabling Super Candles/Incense Candles's flame from setting mobs on fire.
+
+Crystalline Flower screen refactored a bit to now send the enchantments to show from the server to the client.
+ This should help against any enchantment registry desync issue between server and client such as
+ another mod not registering an enchantment on the server.
+
+Crystalline Flower now gains 2xp instead of 1xp when consuming diamond, emerald, quartz, echo shard, and amethyst shard.
+ Amethyst Block, Quartz Block, Diamond Block, and Emerald Block gives 5xp.
+
+Crystalline Flower now shows the name of the mod that the enchantment is from in the tooltip.
+ Switch on advanced tooltip settings (F3 + H) to see full resourcelocation of enchantment instead.
+ Also, will attempt to auto-translate enchantments that have no translation by using the path
+ of the enchantment's resourcelocation and formatting it to be cleaner.
 
 ##### Fluids:
-Significantly fixed rendering issues with Honey Fluid and Royal Jelly Fluid.
- Also fixed particles from fluid spawning way out of the fluid at times.
+Fixed issue where mobs would not see Sugar Water, Honey Fluid, or Royal Jelly Fluid as water when pathfinding.
+ Bees should now properly avoid flying into these liquids and suffocating. (Hopefully...)
 
-Fixed Honey Fluid not falling when in midair.
+Non-source Honey Fluid cannot be transformed into source blocks anymore by pollinated bees.
+ Stops bees from messing up structures or builds as much as they currently are.
 
-##### Items:
-Fixed Pollen Puff sometimes placing blocks at invalid locations like Biome Makeover's Moth Blossom flower in midair.
+##### Entities:
+Throwing/dropping items from player to Bee Queen will now trigger/progress the Bee Queen trade advancements for that player.
+ This means dropping 64 stacks of an item is a superfast way to progress the 256 Bee Queen trade advancement.
 
-##### Mod Compat:
-Bosses of Mass Destruction's Void Lily, Twilight Forests's Thorn Rose, Sria's Flowers's small flowers,
-and Biome Makeover's Black Thistle and Foxglove can spawn in Hanging Garden structure now.
+Fixed some typos in translation keys for Bee Queen saying `beehemoth_queen` instead of `bee_queen`.
 
-Farmer's Delight's Wild Tomatoes plant cannot spawn in Hanging Gardens structure now.
+Tagged Honey Slime as `minecraft:frog_food` so Frogs can eat them now.
 
-Biome Makeover's Black Thistle and Foxglove can be multiplied by Pollen Puff now.
+Bee Queen now has a super trade system! Every 20 minutes, the Bee Queen will ask players very close by to trade with it up to 24 time
+ with a specific item for triple the reward! Has 3 config settings that setting any of the configs to 0 will disable this system.
 
+Added some more Bee Queen trade possibilities. Try trading Sweet Berries, Glow Berries, Cocoa Beans, Bricks, Clay Ball,
+ Snowball, Magma Cream, Iron Ingot, Gold Ingot, Copper Ingot, Nether Brick, Mushroom Stew, Beetroot Soup, or Potion of Bees's potions!
 
-### **(V.6.4.1) (1.19.2 Minecraft)**
+##### Effects:
+Hopefully remove Wrath of the Hive from more bees properly when the target dies.
 
-##### Fluids:
-Fixed Royal Jelly Fluid missing visual overlays and player physics when inside fluid.
- Had to update because this is a big issue. Can't have straight up broken fluids...
+##### Biomes:
+Fixed biome spawning that was spawning blobs of biomes that shouldn't be blobs.
 
-Fixed being able to "jump" while on ground inside Royal Jelly Fluid and Sugar Water Fluid.
+Renamed nonstandard_biomes field in dimension json to blob_biomes where it takes a biome tag of biomes to spawn as a 
+ blob of area. Crystal Canyon and Hive Pillar are added to this by default and can spawn over a medium sized area as a blob.
 
-##### Structures:
-Increased number of threads spawned by Bumblezone so multiple Hive Temple maps and Honey Compasses can search at once from 1 to 3.
+##### Commands:
+`bumblezone` command was renamed to `bumblezone_read_self_data` command for anyone to use to check their own data.
+
+`bumblezone_modify_data` and `bumblezone_read_data` commands were added to allow for op players to check data of 
+ any players or change the essence status of any player. Permission level 2 required by the command user.
+ Example usage that removes essence from someone: `/bumblezone_modify_data is_bee_essenced SomePersonOnServer false`
 
 ##### Misc:
-Fixed LGBT+ and Ukraine Bee Skin configs fighting each other on applying. And changed the default config values for them.
+Fixed bug where I was checking for crouching pose instead of if player was holding down shift key. (isCrouching vs isShiftKeyDown)
+ Should make it so stuff like Carpenter Bees Boots do not mine automatically if you are in a 1.5 block high space.
+ It will only mine if you specifically are holding down crouching key. Same with helmet and leggings behaviors.
 
-Went through and cleaned up and modified several mixins to make some of them less hacky.
+Silence "Hanging entity at invalid position" logspam from vanilla by lowering the logging level of that event from error to debug level.
+ Mojang bug report: https://bugs.mojang.com/browse/MC-252934
+ The Item Frame spawned from nbt files still places as intended and functions as intended.
+ This was just annoying logspam I decided to yeet.
 
+Made Bumblezone's off thread tasks properly log any crash into the log file if they die.
 
-### **(V.6.4.0) (1.19.2 Minecraft)**
+##### Recipes:
+Organized Bumblezone recipe json files much better into sub folders. Cleaner and easier to browse.
 
-##### Major:
-Ported Fabric Bumblezone stuff to Fabric version to make Fabric version be in parity with v6.4.2 Fabric Bumblezone.
- Updates will remain far and few in between for Fabric Bumblezone or delayed.
+##### Tags:
+Added the following new tags:
+
+`the_bumblezone:dimension_teleportation/forced_allowed_teleportable_blocks` (block tag)
+
+`the_bumblezone:honey_compass/forced_allowed_position_tracking` (block tag)
+
+`the_bumblezone:stingless_bee_helmet/forced_allowed_passengers` (entity tag)
+
+Also added is `the_bumblezone:crystalline_flower/force_allowed_enchantments` enchantment tag for Crystalline Flower. 
+ This will force an enchantment to always show regardless of the isDiscoverable value in the enchantment itself. 
+ It will also show the enchantment at max tier even if the  enchantment requires more enchanting power than 
+ the flower can provide. Also overrides the disallow tag.
+
+Organized Bumblezone tags much better into sub folders. Changes are:
+
+`the_bumblezone:blacklisted_crystalline_flower_enchantments` -> `the_bumblezone:crystalline_flower/disallowed_enchantments` (enchantment tag
+
+`the_bumblezone:blacklisted_incense_candle_effects` -> `the_bumblezone:incense_candle/disallowed_effects` (mob effect tag)
+
+`the_bumblezone:allowed_hanging_garden_flowers` -> `the_bumblezone:hanging_garden/allowed_flowers` (block tag)
+
+`the_bumblezone:allowed_hanging_garden_tall_flowers` -> `the_bumblezone:hanging_garden/allowed_tall_flowers` (block tag)
+
+`the_bumblezone:allowed_hanging_garden_leaves` -> `the_bumblezone:hanging_garden/allowed_leaves` (block tag)
+
+`the_bumblezone:allowed_hanging_garden_logs` -> `the_bumblezone:hanging_garden/allowed_logs` (block tag)
+
+`the_bumblezone:blacklisted_hanging_garden_flowers` -> `the_bumblezone:hanging_garden/forced_disallowed_flowers` (block tag)
+
+`the_bumblezone:blacklisted_hanging_garden_tall_flowers` -> `the_bumblezone:hanging_garden/forced_disallowed_tall_flowers` (block tag)
+
+`the_bumblezone:blacklisted_hanging_garden_leaves` -> `the_bumblezone:hanging_garden/forced_disallowed_leaves` (block tag)
+
+`the_bumblezone:blacklisted_hanging_garden_logs` -> `the_bumblezone:hanging_garden/forced_disallowed_logs` (block tag)
+
+`the_bumblezone:flowers_allowed_by_pollen_puff` -> `the_bumblezone:pollen_puff/multiplying_allowed_flowers` (block tag)
+
+`the_bumblezone:flowers_blacklisted_from_pollen_puff` -> `the_bumblezone:pollen_puff/multiplying_forced_disallowed_flowers` (block tag)
+
+`the_bumblezone:carpenter_bee_boots_climbables` -> `the_bumblezone:carpenter_bee_boots/climbables` (block tag)
+
+`the_bumblezone:carpenter_bee_boots_mineables` -> `the_bumblezone:carpenter_bee_boots/mineables` (block tag)
+
+`the_bumblezone:blacklisted_teleportable_hive_blocks` -> `the_bumblezone:dimension_teleportation/disallowed_teleportable_beehive_blocks` (block tag)
+
+`the_bumblezone:required_blocks_under_hive_to_teleport` -> `the_bumblezone:dimension_teleportation/required_blocks_under_beehive_to_teleport` (block tag)
+
+`the_bumblezone:cave_edge_blocks_for_modded_compats` -> `the_bumblezone:worldgen_checks/cave_edge_blocks_for_modded_compats` (block tag)
+
+`the_bumblezone:honeycombs_that_features_can_carve` -> `the_bumblezone:worldgen_checks/honeycombs_that_features_can_carve` (block tag)
+
+`the_bumblezone:wrath_activating_blocks_when_mined` -> `the_bumblezone:bee_aggression_in_dimension/wrath_activating_blocks_when_mined` (block tag)
+
+`the_bumblezone:blacklisted_honey_compass_blocks` -> `the_bumblezone:honey_compass/beehives_disallowed_from_position_tracking` (block tag)
+
+`the_bumblezone:blacklisted_bee_cannon_bees` -> `the_bumblezone:bee_cannon/disallowed_bee_pickup` (entity type tag)
+
+`the_bumblezone:hanging_gardens_initial_spawn_entities` -> `the_bumblezone:hanging_garden/initial_spawn_entities` (entity type tag)
+
+`the_bumblezone:pollen_puff_can_pollinate` -> `the_bumblezone:pollen_puff/can_pollinate` (entity type tag)
+
+`the_bumblezone:blacklisted_stingless_bee_helmet_passengers` -> `the_bumblezone:stingless_bee_helmet/disallowed_passengers` (entity type tag)
+
+`the_bumblezone:bee_armor_repair_items` -> `the_bumblezone:repair_items/bee_armor` (item tag)
+
+`the_bumblezone:bee_cannon_repair_items` -> `the_bumblezone:repair_items/bee_cannon` (item tag)
+
+`the_bumblezone:crystal_cannon_repair_items` -> `the_bumblezone:repair_items/crystal_cannon` (item tag)
+
+`the_bumblezone:honey_crystal_shield_repair_items` -> `the_bumblezone:repair_items/honey_crystal_shield` (item tag)
+
+`the_bumblezone:stinger_spear_items` -> `the_bumblezone:repair_items/stinger_spear` (item tag)
+
+`the_bumblezone:consumable_candle_lighting_items` -> `the_bumblezone:candle_lightables/consumable` (item tag)
+
+`the_bumblezone:damagable_candle_lighting_items` -> `the_bumblezone:candle_lightables/damageable` (item tag)
+
+`the_bumblezone:infinite_candle_lighting_items` -> `the_bumblezone:candle_lightables/infinite` (item tag)
+
+`the_bumblezone:wrath_activating_items_when_picked_up` -> `the_bumblezone:bee_aggression_in_dimension/wrath_activating_items_when_picked_up` (item tag)
+
+`the_bumblezone:bee_feeding_items` -> `the_bumblezone:bee_feedable_items` (item tag)
+
+`the_bumblezone:honey_compass_default_locating` -> `the_bumblezone:honey_compass/default_locating` (structure tag)
+
+`the_bumblezone:honey_compass_from_hive_temple` -> `the_bumblezone:honey_compass/misc_locating` (structure tag)
+
+`the_bumblezone:honey_compass_throne_locating` -> `the_bumblezone:honey_compass/throne_locating` (structure tag)
+
+##### Mod Compat:
+
+Setup compat with Friends and Foes's new Moobloom mob types from their Flowery Mooblooms mod.
+

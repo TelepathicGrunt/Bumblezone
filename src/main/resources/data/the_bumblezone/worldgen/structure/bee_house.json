@@ -1,0 +1,31 @@
+{
+  "type": "the_bumblezone:generic_optimized_structure",
+  "start_pool": "the_bumblezone:bee_house",
+  "size": 6,
+  "max_distance_from_center": 80,
+  "biomes": "#the_bumblezone:has_structure/bee_house",
+  "step": "surface_structures",
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
+  "terrain_adaptation": "beard_box",
+  "start_height": {
+    "absolute": 1
+  },
+  "use_expansion_hack": false,
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:bee",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    },
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": []
+    }
+  }
+}

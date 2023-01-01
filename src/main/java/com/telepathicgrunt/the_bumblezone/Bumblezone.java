@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.components.NeurotoxinsMissedCounterCom
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
@@ -18,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
@@ -34,7 +34,6 @@ import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
@@ -97,7 +96,6 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ModChecker.setupModCompat();
         ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
 
-        EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
         BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
         StinglessBeeHelmetSightPacket.registerPacket();
@@ -110,6 +108,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register((a) -> QueensTradeManager.QUEENS_TRADE_MANAGER.resolveQueenTrades());
         ServerLifecycleEvents.SERVER_STARTING.register((a) -> ThreadExecutor.handleServerAboutToStartEvent());
         ServerLifecycleEvents.SERVER_STOPPING.register((a) -> ThreadExecutor.handleServerStoppingEvent());
+        ServerLifecycleEvents.SERVER_STARTING.register(BiomeRegistryHolder::setupBiomeRegistry);
 
         ResourceManagerHelper.registerBuiltinResourcePack(
                 new ResourceLocation(MODID, "anti_tropophobia"),

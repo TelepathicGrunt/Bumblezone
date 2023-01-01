@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceKey;
@@ -88,12 +88,14 @@ public class EnchantmentUtils {
 			items.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)));
 	}
 
-	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, boolean allowTreasure) {
+	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
 		List<EnchantmentInstance> list = Lists.newArrayList();
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
+		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
-		for(Enchantment enchantment : Registry.ENCHANTMENT) {
-			if (isEnchantmentBanned(enchantment)) {
+		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
+			boolean forceAllowed = isEnchantmentForcedAllowed(enchantment);
+			if (!forceAllowed && isEnchantmentBanned(enchantment)) {
 				continue;
 			}
 
@@ -102,20 +104,34 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && enchantment.isDiscoverable() && (enchantment.canEnchant(stack) || bookFlag)) {
+			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (enchantment.canEnchant(stack) || bookFlag)) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
-					if (level >= enchantment.getMinCost(i)) {
-						list.add(new EnchantmentInstance(enchantment, i));
-						break;
+					if (forceAllowed || level >= enchantment.getMinCost(i)) {
+						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, i);
+						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
+							list.add(enchantmentInstance);
+							break;
+						}
 					}
 				}
 			}
 		}
+		list.sort(EnchantmentUtils::compareEnchantments);
 		return list;
 	}
 
+	private static boolean isEnchantmentForcedAllowed(Enchantment enchantment) {
+		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
+			if (enchantmentHolder.value().equals(enchantment)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private static boolean isEnchantmentBanned(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
 			if (enchantmentHolder.value().equals(enchantment)) {
 				return true;
@@ -133,7 +149,7 @@ public class EnchantmentUtils {
 			ResourceLocation resourcelocation1 = EnchantmentHelper.getEnchantmentId(compoundtag);
 			if (resourcelocation1 != null) {
 				existingEnchants.put(
-					Objects.requireNonNull(Registry.ENCHANTMENT.get(resourcelocation1)),
+					Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.get(resourcelocation1)),
 					EnchantmentHelper.getEnchantmentLevel(compoundtag)
 				);
 			}
@@ -143,17 +159,23 @@ public class EnchantmentUtils {
 	}
 
 	public static int getEnchantmentTierCost(EnchantmentInstance enchantmentInstance) {
-		Enchantment enchantment = enchantmentInstance.enchantment;
-		int level = enchantmentInstance.level;
+		return getEnchantmentTierCost(
+				enchantmentInstance.level,
+				enchantmentInstance.enchantment.getMinCost(2),
+				enchantmentInstance.enchantment.isTreasureOnly(),
+				enchantmentInstance.enchantment.isCurse());
+	}
+
+	public static int getEnchantmentTierCost(int level, int minCost, boolean isTreasureOnly, boolean isCurse) {
 		int cost = 0;
 
-		cost += enchantment.getMinCost(2) / 10;
+		cost += minCost / 10;
 		cost += level / 1.5f;
 
-		if (enchantment.isTreasureOnly()) {
+		if (isTreasureOnly) {
 			cost += 2;
 		}
-		if (enchantment.isCurse()) {
+		if (isCurse) {
 			cost -= 3;
 		}
 
@@ -163,11 +185,10 @@ public class EnchantmentUtils {
 	}
 
 	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
-		ResourceKey<Enchantment> resourceKey1 = Registry.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
-		ResourceKey<Enchantment> resourceKey2 = Registry.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
 
-		int ret = resourceKey2.location().getNamespace().compareTo(resourceKey1.location().getNamespace());
-		if (ret == 0) ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
+		int ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
 		if (ret == 0) ret = enchantment2.level - enchantment1.level;
 		return ret;
 	}

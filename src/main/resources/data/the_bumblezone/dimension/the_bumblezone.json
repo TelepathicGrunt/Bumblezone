@@ -4,7 +4,9 @@
     "type": "the_bumblezone:chunk_generator",
     "settings": "the_bumblezone:bz_noise_settings",
     "biome_source": {
-      "type": "the_bumblezone:biome_source"
+      "type": "the_bumblezone:biome_source",
+      "main_biomes": "#the_bumblezone:the_bumblezone",
+      "blob_biomes": "#the_bumblezone:blob_biomes"
     }
   }
 }

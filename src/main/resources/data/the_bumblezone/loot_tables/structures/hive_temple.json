@@ -316,7 +316,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
-          "weight": 2,
+          "weight": 1,
           "quality": 3,
           "functions": [
             {
@@ -333,7 +333,7 @@
             },
             {
               "function": "the_bumblezone:honey_compass_locate_structure",
-              "destination": "the_bumblezone:honey_compass_from_hive_temple",
+              "destination": "the_bumblezone:honey_compass/misc_locating",
               "skip_existing_chunks": false,
               "search_radius": 40
             }
@@ -342,17 +342,11 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:map",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "the_bumblezone:prefill_map",
-              "scale": 2
-            }
-          ]
+          "weight": 1
         },
         {
           "type": "minecraft:empty",
-          "weight": 4
+          "weight": 3
         }
       ]
     }

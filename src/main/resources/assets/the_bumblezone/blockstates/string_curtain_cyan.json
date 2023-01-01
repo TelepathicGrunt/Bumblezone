@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "attached=true,middle=false,facing=north": {
+      "model": "the_bumblezone:block/string_curtain/cyan_north_attached"
+    },
+    "attached=true,middle=false,facing=south": {
+      "model": "the_bumblezone:block/string_curtain/cyan_south_attached"
+    },
+    "attached=true,middle=false,facing=west": {
+      "model": "the_bumblezone:block/string_curtain/cyan_west_attached"
+    },
+    "attached=true,middle=false,facing=east": {
+      "model": "the_bumblezone:block/string_curtain/cyan_east_attached"
+    },
+    "attached=true,middle=true,facing=north": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ns_attached"
+    },
+    "attached=true,middle=true,facing=south": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ns_attached"
+    },
+    "attached=true,middle=true,facing=west": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ew_attached"
+    },
+    "attached=true,middle=true,facing=east": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ew_attached"
+    },
+    "attached=false,middle=false,facing=north": {
+      "model": "the_bumblezone:block/string_curtain/cyan_north_unattached"
+    },
+    "attached=false,middle=false,facing=south": {
+      "model": "the_bumblezone:block/string_curtain/cyan_south_unattached"
+    },
+    "attached=false,middle=false,facing=west": {
+      "model": "the_bumblezone:block/string_curtain/cyan_west_unattached"
+    },
+    "attached=false,middle=false,facing=east": {
+      "model": "the_bumblezone:block/string_curtain/cyan_east_unattached"
+    },
+    "attached=false,middle=true,facing=north": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ns_unattached"
+    },
+    "attached=false,middle=true,facing=south": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ns_unattached"
+    },
+    "attached=false,middle=true,facing=west": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ew_unattached"
+    },
+    "attached=false,middle=true,facing=east": {
+      "model": "the_bumblezone:block/string_curtain/cyan_ew_unattached"
+    }
+  }
+}

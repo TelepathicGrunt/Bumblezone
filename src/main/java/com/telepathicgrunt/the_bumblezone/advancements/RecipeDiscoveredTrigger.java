@@ -46,7 +46,7 @@ public class RecipeDiscoveredTrigger extends SimpleCriterionTrigger<RecipeDiscov
     }
 
     public void trigger(ServerPlayer serverPlayer, ResourceLocation recipeRL) {
-        super.trigger(serverPlayer, (currentItemStack) -> currentItemStack.matches(recipeRL));
+        super.trigger(serverPlayer, (instance) -> instance.matches(recipeRL));
     }
 
     public static class Instance extends AbstractCriterionTriggerInstance {

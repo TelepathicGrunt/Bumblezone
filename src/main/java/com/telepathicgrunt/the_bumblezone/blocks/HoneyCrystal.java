@@ -3,19 +3,19 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.Maps;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -63,7 +63,11 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     private Item item;
 
     public HoneyCrystal() {
-        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW).lightLevel((blockState) -> 1).strength(0.3F, 0.3f).noOcclusion());
+        super(FabricBlockSettings.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW)
+                .lightLevel((blockState) -> 1)
+                .strength(0.3F, 0.3f)
+                .sound(BzSounds.HONEY_CRYSTALS_TYPE)
+                .noOcclusion());
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
@@ -190,10 +194,10 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     /**
      * Makes this block show up in creative menu to fix the asItem override side-effect
      */
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+//        items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
+//    }
 
     /**
      * Makes this block always spawn Honey Crystal Shards when broken by piston or removal of attached block
@@ -256,5 +260,14 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
         return false;
+    }
+
+    @Override
+    public void onProjectileHit(Level level, BlockState blockState, BlockHitResult blockHitResult, Projectile projectile) {
+        if (!level.isClientSide) {
+            BlockPos blockPos = blockHitResult.getBlockPos();
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_HIT, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
+            level.playSound(null, blockPos, BzSounds.HONEY_CRYSTAL_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 1.2F);
+        }
     }
 }

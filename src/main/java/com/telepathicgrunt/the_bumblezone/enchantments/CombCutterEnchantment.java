@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -33,7 +33,7 @@ public class CombCutterEnchantment extends Enchantment {
     public Set<Block> getTargetBlocks() {
         return TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
-            Registry.BLOCK.entrySet().forEach(entry ->{
+            BuiltInRegistries.BLOCK.entrySet().forEach(entry ->{
                 if(entry.getKey().location().getPath().contains("comb")) {
                     validBlocks.add(entry.getValue());
                 }
@@ -45,7 +45,7 @@ public class CombCutterEnchantment extends Enchantment {
     public Set<Block> getLesserTargetBlocks() {
         return LESSER_TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
-            Registry.BLOCK.entrySet().forEach(entry ->{
+            BuiltInRegistries.BLOCK.entrySet().forEach(entry ->{
                 String path = entry.getKey().location().getPath();
                 if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
                     validBlocks.add(entry.getValue());

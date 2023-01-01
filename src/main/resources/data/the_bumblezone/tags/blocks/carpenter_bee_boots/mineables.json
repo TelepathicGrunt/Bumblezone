@@ -1,0 +1,80 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:honeycomb_block",
+    "the_bumblezone:beehive_beeswax",
+    "the_bumblezone:carvable_wax",
+    "the_bumblezone:porous_honeycomb_block",
+    "the_bumblezone:filled_porous_honeycomb_block",
+    "the_bumblezone:empty_honeycomb_brood_block",
+    "the_bumblezone:honeycomb_brood_block",
+    "#minecraft:planks",
+    "#minecraft:logs",
+    "#minecraft:leaves",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_trapdoors",
+    "#minecraft:wooden_slabs",
+    "#minecraft:wooden_stairs",
+    "#minecraft:beehives",
+    {
+      "id": "#forge:storage_blocks/honeycombs",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/wax",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/honeycombs",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/wax",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_door",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_trapdoor",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_planks",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:trimmed_waxed_planks",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_slab",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_stairs",
+      "required": false
+    },
+    {
+      "id": "resourcefulbees:waxed_machine_block",
+      "required": false
+    },
+    {
+      "id": "duneons:waxblock",
+      "required": false
+    },
+    {
+      "id": "productivebees:configurable_comb",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:crystallized_honey_block",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_tiles",
+      "required": false
+    }
+  ]
+}

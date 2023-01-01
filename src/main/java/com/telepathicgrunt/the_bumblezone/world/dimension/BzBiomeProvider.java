@@ -3,9 +3,10 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeBlobLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeMergeLayer;
-import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomeNonstandardLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePillarLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePollinatedFieldsLayer;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.BzBiomePollinatedPillarLayer;
@@ -19,26 +20,25 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.LazyArea
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.LazyAreaContext;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.ZoomLayer;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.RegistryOps;
+import net.minecraft.core.HolderSet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.function.LongFunction;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBiomeSource {
 
     public static final Codec<BzBiomeProvider> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
-                RegistryOps.retrieveRegistry(Registry.BIOME_REGISTRY).forGetter((biomeSource) -> biomeSource.biomeRegistry))
+                Biome.LIST_CODEC.fieldOf("blob_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.blobBiomes),
+                Biome.LIST_CODEC.fieldOf("main_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.mainBiomes))
             .apply(instance, instance.stable(BzBiomeProvider::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
@@ -50,35 +50,27 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
 
     private final long seed;
     private final Layer biomeSampler;
-    private final Registry<Biome> biomeRegistry;
-    public static List<Biome> nonstandardBiome = new ArrayList<>();
+    public final HolderSet<Biome> blobBiomes;
+    public final HolderSet<Biome> mainBiomes;
+    public final GeneralUtils.Lazy<Set<Holder<Biome>>> lazyPossibleBiomes = new GeneralUtils.Lazy<>();
 
-    public BzBiomeProvider(long seed, Registry<Biome> biomeRegistry) {
-        super(biomeRegistry.holders()
-                .filter(entry -> entry.key().location().getNamespace().equals(Bumblezone.MODID))
-                .collect(Collectors.toList()));
-
-        nonstandardBiome = this.possibleBiomes().stream()
-                .map(Holder::value)
-                .filter(biome ->  {
-                    ResourceLocation rlKey = biomeRegistry.getKey(biome);
-                    return rlKey != null &&
-                            !rlKey.equals(HIVE_WALL) &&
-                            !rlKey.equals(HIVE_PILLAR) &&
-                            !rlKey.equals(SUGAR_WATER_FLOOR) &&
-                            !rlKey.equals(POLLINATED_FIELDS) &&
-                            !rlKey.equals(POLLINATED_PILLAR) &&
-                            !rlKey.equals(CRYSTAL_CANYON);
-                }).collect(Collectors.toList());
+    public BzBiomeProvider(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> mainBiomes) {
+        super(Stream.empty());
 
         this.seed = seed;
-        this.biomeRegistry = biomeRegistry;
-        this.biomeSampler = buildWorldProcedure(seed, biomeRegistry);
+        this.blobBiomes = blobBiomes;
+        this.mainBiomes = mainBiomes;
+        this.biomeSampler = buildWorldProcedure(seed, this.blobBiomes);
     }
 
     @Override
     protected Codec<? extends BiomeSource> codec() {
         return CODEC;
+    }
+
+    @Override
+    public Set<Holder<Biome>> possibleBiomes() {
+        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(blobBiomes.stream(), mainBiomes.stream()).collect(Collectors.toSet()));
     }
 
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> stack(long seed, AreaTransformer1 parent, AreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
@@ -91,32 +83,26 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
         return LayerFactory;
     }
 
-
-    public static Layer buildWorldProcedure(long seed, Registry<Biome> biomeRegistry) {
-        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, biomeRegistry);
+    public static Layer buildWorldProcedure(long seed, HolderSet<Biome> blobBiomes) {
+        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, blobBiomes);
         return new Layer(layerFactory);
     }
 
-
-    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, Registry<Biome> biomeRegistry) {
-        AreaFactory<T> layer = new BzBiomeLayer(seed, biomeRegistry).run(contextFactory.apply(200L));
-        layer = new BzBiomePillarLayer(biomeRegistry).run(contextFactory.apply(1008L), layer);
-        layer = new BzBiomeScaleLayer(Set.of(biomeRegistry.getId(biomeRegistry.get(HIVE_PILLAR))), biomeRegistry).run(contextFactory.apply(1055L), layer);
+    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, HolderSet<Biome> blobBiomes) {
+        AreaFactory<T> layer = new BzBiomeLayer(seed).run(contextFactory.apply(200L));
+        layer = new BzBiomePillarLayer().run(contextFactory.apply(1008L), layer);
+        layer = new BzBiomeScaleLayer(Set.of(HIVE_PILLAR)).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
-        layer = new BzBiomeScaleLayer(Set.of(
-                biomeRegistry.getId(biomeRegistry.get(CRYSTAL_CANYON)),
-                biomeRegistry.getId(biomeRegistry.get(SUGAR_WATER_FLOOR))
-        ), biomeRegistry).run(contextFactory.apply(54088L), layer);
-
-        AreaFactory<T> layerOverlay = new BzBiomeNonstandardLayer(biomeRegistry).run(contextFactory.apply(204L));
+        layer = new BzBiomeScaleLayer(Set.of(CRYSTAL_CANYON, SUGAR_WATER_FLOOR)).run(contextFactory.apply(54088L), layer);
+        AreaFactory<T> layerOverlay = new BzBiomeBlobLayer(blobBiomes).run(contextFactory.apply(204L));
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
-        layerOverlay = new BzBiomePollinatedPillarLayer(biomeRegistry).run(contextFactory.apply(3008L), layerOverlay);
-        layerOverlay = new BzBiomeScaleLayer(Set.of(biomeRegistry.getId(biomeRegistry.get(POLLINATED_PILLAR))), biomeRegistry).run(contextFactory.apply(4455L), layerOverlay);
+        layerOverlay = new BzBiomePollinatedPillarLayer().run(contextFactory.apply(3008L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(Set.of(POLLINATED_PILLAR)).run(contextFactory.apply(4455L), layerOverlay);
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2503L), layerOverlay);
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2603L), layerOverlay);
-        layerOverlay = new BzBiomePollinatedFieldsLayer(biomeRegistry).run(contextFactory.apply(3578L), layerOverlay);
-        layerOverlay = new BzBiomeScaleLayer(Set.of(biomeRegistry.getId(biomeRegistry.get(POLLINATED_FIELDS))), biomeRegistry).run(contextFactory.apply(4055L), layerOverlay);
+        layerOverlay = new BzBiomePollinatedFieldsLayer().run(contextFactory.apply(3578L), layerOverlay);
+        layerOverlay = new BzBiomeScaleLayer(Set.of(POLLINATED_FIELDS)).run(contextFactory.apply(4055L), layerOverlay);
         layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(2853L), layerOverlay);
         layerOverlay = ZoomLayer.FUZZY.run(contextFactory.apply(3583L), layerOverlay);
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(4583L), layerOverlay);
@@ -127,11 +113,11 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
 
     @Override
     public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
-        return biomeSampler.sample(biomeRegistry, x, z);
+        return biomeSampler.sample(x, z);
     }
 
     @Override
     public Holder<Biome> getNoiseBiome(int x, int y, int z) {
-        return biomeSampler.sample(biomeRegistry, x, z);
+        return biomeSampler.sample(x, z);
     }
 }

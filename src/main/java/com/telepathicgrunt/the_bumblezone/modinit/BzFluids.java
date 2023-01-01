@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.FlowingFluid;
@@ -26,14 +27,14 @@ public class BzFluids {
     public static final Block ROYAL_JELLY_FLUID_BLOCK = new RoyalJellyFluidBlock(ROYAL_JELLY_FLUID);
 
     public static void registerFluids() {
-        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_still"), SUGAR_WATER_FLUID);
-        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_flowing"), SUGAR_WATER_FLUID_FLOWING);
-        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water_block"), SUGAR_WATER_BLOCK);
-        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_fluid_still"), HONEY_FLUID);
-        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_fluid_flowing"), HONEY_FLUID_FLOWING);
-        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_fluid_block"), HONEY_FLUID_BLOCK);
-        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_still"), ROYAL_JELLY_FLUID);
-        Registry.register(Registry.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_flowing"), ROYAL_JELLY_FLUID_FLOWING);
-        Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_block"), ROYAL_JELLY_FLUID_BLOCK);
+        Registry.register(BuiltInRegistries.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_still"), SUGAR_WATER_FLUID);
+        Registry.register(BuiltInRegistries.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water_flowing"), SUGAR_WATER_FLUID_FLOWING);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water_block"), SUGAR_WATER_BLOCK);
+        Registry.register(BuiltInRegistries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_fluid_still"), HONEY_FLUID);
+        Registry.register(BuiltInRegistries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_fluid_flowing"), HONEY_FLUID_FLOWING);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "honey_fluid_block"), HONEY_FLUID_BLOCK);
+        Registry.register(BuiltInRegistries.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_still"), ROYAL_JELLY_FLUID);
+        Registry.register(BuiltInRegistries.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_flowing"), ROYAL_JELLY_FLUID_FLOWING);
+        Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Bumblezone.MODID, "royal_jelly_fluid_block"), ROYAL_JELLY_FLUID_BLOCK);
     }
 }

@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -22,8 +22,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 public class NoiseReplaceWithPropertiesProcessor extends StructureProcessor {
 
     public static final Codec<NoiseReplaceWithPropertiesProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Registry.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.inputBlock),
-            Registry.BLOCK.byNameCodec().fieldOf("output_block").forGetter(config -> config.outputBlock),
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.inputBlock),
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("output_block").forGetter(config -> config.outputBlock),
             Codec.floatRange(0, 1).fieldOf("threshold").forGetter(config -> config.threshold),
             Codec.FLOAT.fieldOf("xz_scale").forGetter(config -> config.xzScale),
             Codec.FLOAT.fieldOf("y_scale").forGetter(config -> config.yScale)

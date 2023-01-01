@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
-import com.telepathicgrunt.the_bumblezone.client.rendering.BeeVariantRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.FluidRender;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
@@ -21,7 +20,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.Hon
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
-import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
@@ -31,6 +29,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPacket;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
@@ -41,17 +40,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.impl.client.particle.ParticleFactoryRegistryImpl;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Bee;
 
 @Environment(EnvType.CLIENT)
 public class BumblezoneClient implements ClientModInitializer {
@@ -79,6 +75,7 @@ public class BumblezoneClient implements ClientModInitializer {
         registerKeybinds();
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
+        CrystallineFlowerEnchantmentPacket.registerPacket();
     }
 
     private void registerEntityRenders() {
@@ -92,10 +89,10 @@ public class BumblezoneClient implements ClientModInitializer {
     }
 
     private void registerParticleFactories() {
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.POLLEN_PARTICLE, PollenPuffParticle.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.ROYAL_JELLY_PARTICLE, RoyalJellyParticle.Factory::new);
-        ParticleFactoryRegistryImpl.INSTANCE.register(BzParticles.SPARKLE_PARTICLE, SparkleParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.POLLEN_PARTICLE, PollenPuffParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.HONEY_PARTICLE, HoneyParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.ROYAL_JELLY_PARTICLE, RoyalJellyParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(BzParticles.SPARKLE_PARTICLE, SparkleParticle.Factory::new);
     }
 
     private void registerFluidRenders() {
@@ -214,6 +211,22 @@ public class BumblezoneClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.SUPER_CANDLE_WICK_SOUL, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.INCENSE_BASE_CANDLE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.CRYSTALLINE_FLOWER, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_BLACK, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_BLUE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_BROWN, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_CYAN, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_GRAY, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_GREEN, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_LIGHT_BLUE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_LIGHT_GRAY, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_LIME, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_MAGENTA, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_ORANGE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_PINK, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_PURPLE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_RED, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_WHITE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.STRING_CURTAIN_YELLOW, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.HONEY_CRYSTAL, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.GLISTERING_HONEY_CRYSTAL, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(BzBlocks.ROYAL_JELLY_BLOCK, RenderType.translucent());

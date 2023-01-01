@@ -9,7 +9,8 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -99,18 +100,18 @@ public class EntityTeleportationHookup {
             ResourceKey<Level> worldKey;
 
             if (livingEntity.getControllingPassenger() == null) {
-                worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
+                worldKey = ResourceKey.create(Registries.DIMENSION, Bumblezone.ENTITY_COMPONENT.get(livingEntity).getNonBZDimension());
             }
             else {
                 if(livingEntity.getControllingPassenger() instanceof LivingEntity livingEntity2) {
                     checkAndCorrectStoredDimension(livingEntity2);
                 }
-                worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, Bumblezone.ENTITY_COMPONENT.get(livingEntity.getControllingPassenger()).getNonBZDimension());
+                worldKey = ResourceKey.create(Registries.DIMENSION, Bumblezone.ENTITY_COMPONENT.get(livingEntity.getControllingPassenger()).getNonBZDimension());
             }
 
             ServerLevel serverWorld = minecraftServer.getLevel(worldKey);
             if(serverWorld == null) {
-                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY,  new ResourceLocation(BzConfig.defaultDimension)));
+                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION,  new ResourceLocation(BzConfig.defaultDimension)));
             }
             BzWorldSavedData.queueEntityToTeleport(livingEntity, serverWorld.dimension());
         }
@@ -128,7 +129,7 @@ public class EntityTeleportationHookup {
         if (BzConfig.enableEntranceTeleportation &&
             !world.isClientSide() && pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
+            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzConfig.defaultDimension)))))
         {
             // get nearby hives
             BlockPos hivePos;
@@ -148,7 +149,7 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
+            Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
             if(blockTag.isPresent() && blockTag.get().size() != 0) {
                 if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
@@ -186,7 +187,7 @@ public class EntityTeleportationHookup {
                 BzConfig.enableEntranceTeleportation &&
                 pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
                 !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
+                (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzConfig.defaultDimension)))))
         {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
@@ -269,7 +270,7 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
-            Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
+            Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
             if (blockTag.isPresent() && blockTag.get().size() != 0) {
                 if (world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
@@ -327,7 +328,7 @@ public class EntityTeleportationHookup {
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (BzConfig.enableEntranceTeleportation &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
+            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzConfig.defaultDimension)))))
         {
             if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
 
@@ -352,7 +353,7 @@ public class EntityTeleportationHookup {
             if (isPushedIntoBeehive) {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
-                Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
+                Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
                 if(blockTag.isPresent() && blockTag.get().size() != 0) {
 
                     for(BlockState belowBlock : belowHiveBlocks) {
