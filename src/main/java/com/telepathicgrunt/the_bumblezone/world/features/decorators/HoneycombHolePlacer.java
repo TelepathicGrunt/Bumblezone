@@ -45,14 +45,14 @@ public class HoneycombHolePlacer extends PlacementModifier {
         List<BlockPos> blockPosList = new ArrayList<>();
         boolean alternate = false;
 
-        StructureManager structureManager = null;
+        StructureManager structureManager;
         List<StructureStart> structureStarts = new ArrayList<>();
         List<StructureStart> structureStartsPiecewiseCheck = new ArrayList<>();
         if (placementContext.getLevel() instanceof WorldGenRegion worldGenRegion) {
             Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registries.STRUCTURE);
             structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
 
-            ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
+            ChunkPos chunkPos = new ChunkPos(blockPos);
             structureStarts = structureManager.startsForStructure(chunkPos,
                     struct -> structureRegistry.getHolderOrThrow(structureRegistry.getResourceKey(struct).get()).is(BzTags.NO_HONEYCOMB_HOLES));
             structureStartsPiecewiseCheck = structureManager.startsForStructure(chunkPos,
