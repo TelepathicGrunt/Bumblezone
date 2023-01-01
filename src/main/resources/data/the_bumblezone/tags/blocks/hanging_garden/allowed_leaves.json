@@ -36,27 +36,27 @@
       "required": false
     },
     {
-      "id": "colorful-azaleas:red_flowering_azalea_leaves",
+      "id": "colorfulazaleas:red_flowering_azalea_leaves",
       "required": false
     },
     {
-      "id": "colorful-azaleas:orange_flowering_azalea_leaves",
+      "id": "colorfulazaleas:orange_flowering_azalea_leaves",
       "required": false
     },
     {
-      "id": "colorful-azaleas:yellow_flowering_azalea_leaves",
+      "id": "colorfulazaleas:yellow_flowering_azalea_leaves",
       "required": false
     },
     {
-      "id": "colorful-azaleas:pink_flowering_azalea_leaves",
+      "id": "colorfulazaleas:pink_flowering_azalea_leaves",
       "required": false
     },
     {
-      "id": "colorful-azaleas:purple_flowering_azalea_leaves",
+      "id": "colorfulazaleas:purple_flowering_azalea_leaves",
       "required": false
     },
     {
-      "id": "colorful-azaleas:white_flowering_azalea_leaves",
+      "id": "colorfulazaleas:white_flowering_azalea_leaves",
       "required": false
     },
     {
