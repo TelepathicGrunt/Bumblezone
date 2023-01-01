@@ -47,6 +47,10 @@
       "required": false
     },
     {
+      "id": "fruittrees:apple_sapling",
+      "required": false
+    },
+    {
       "id": "broglisplants:deadly_nightshade_block",
       "required": false
     },
