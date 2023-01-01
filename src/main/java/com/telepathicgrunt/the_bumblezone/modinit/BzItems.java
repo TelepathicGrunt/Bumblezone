@@ -46,7 +46,7 @@ public class BzItems {
     public static final Item STICKY_HONEY_REDSTONE = new BlockItem(BzBlocks.STICKY_HONEY_REDSTONE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_WEB = new BlockItem(BzBlocks.HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item REDSTONE_HONEY_WEB = new BlockItem(BzBlocks.REDSTONE_HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties());
     public static final Item HONEY_CRYSTAL = new BzHoneyCrystalBlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_COCOON = new BzBlockItem(BzBlocks.HONEY_COCOON, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), false, true);
     public static final Item ROYAL_JELLY_BLOCK = new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.EPIC));
