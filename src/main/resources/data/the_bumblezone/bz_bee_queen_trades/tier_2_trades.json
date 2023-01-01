@@ -131,6 +131,10 @@
     {
       "id": "duneons:waxblock",
       "required": false
+    },
+    {
+      "id": "bk:bee_pollen",
+      "required": false
     }
   ],
   "possible_rewards": [
