@@ -124,6 +124,10 @@
     {
       "id": "crittersandcompanions:leaf_insect",
       "required": false
+    },
+    {
+      "id": "silverbirch:firefly",
+      "required": false
     }
   ]
 }
