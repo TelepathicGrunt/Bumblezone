@@ -420,10 +420,6 @@
       "required": false
     },
     {
-      "id": "ferdinandsflowers:dry_shrub",
-      "required": false
-    },
-    {
       "id": "ferdinandsflowers:yucca",
       "required": false
     },

@@ -67,6 +67,10 @@
       "required": false
     },
     {
+      "id": "fruittrees:apple_sapling",
+      "required": false
+    },
+    {
       "id": "broglisplants:deadly_nightshade_block",
       "required": false
     },
@@ -176,6 +180,14 @@
     },
     {
       "id": "botania:hydroangeas",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:buttercup",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:pink_daisy",
       "required": false
     }
   ]
