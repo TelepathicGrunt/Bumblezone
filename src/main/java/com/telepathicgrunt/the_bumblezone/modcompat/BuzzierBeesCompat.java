@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,7 +30,7 @@ public class BuzzierBeesCompat {
 	}
 
 	public static InteractionResult bottledBeeInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
-		if (BuiltInRegistries.ITEM.getKey(itemstack.getItem()).equals(BEE_BOTTLE_RL)) {
+		if (Registry.ITEM.getKey(itemstack.getItem()).equals(BEE_BOTTLE_RL)) {
 			if (!playerEntity.isCrouching()) {
 				if (!playerEntity.isCreative()) {
 					playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced bottled bee with glass bottle

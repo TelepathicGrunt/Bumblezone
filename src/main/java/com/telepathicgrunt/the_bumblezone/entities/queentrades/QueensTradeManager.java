@@ -7,8 +7,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -70,8 +69,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 Set<Item> items = null;
                 if (value.id.startsWith("#")) {
                     ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
-                    TagKey<Item> itemTag = TagKey.create(Registries.ITEM, tagRl);
-                    Optional<HolderSet.Named<Item>> taggedItems = BuiltInRegistries.ITEM.getTag(itemTag);
+                    TagKey<Item> itemTag = TagKey.create(Registry.ITEM_REGISTRY, tagRl);
+                    Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
                         items = taggedItems.get().stream().map(Holder::value).collect(Collectors.toSet());
                     }
@@ -99,8 +98,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             entry.getValue().forEach((value) -> {
                 if (value.id.startsWith("#")) {
                     ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
-                    TagKey<Item> itemTag = TagKey.create(Registries.ITEM, tagRl);
-                    Optional<HolderSet.Named<Item>> taggedItems = BuiltInRegistries.ITEM.getTag(itemTag);
+                    TagKey<Item> itemTag = TagKey.create(Registry.ITEM_REGISTRY, tagRl);
+                    Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
                         for (Holder<Item> itemHolder : taggedItems.get()) {
                             rewards.add(new TradeEntryReducedObj(itemHolder.get(), value.getCount(), value.getXpReward(), value.getWeight()));

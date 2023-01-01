@@ -17,13 +17,13 @@ import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingPro
 import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.TagReplaceProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.WaterloggingFixProcessor;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class BzProcessors {
-    public static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSOR = DeferredRegister.create(Registries.STRUCTURE_PROCESSOR, Bumblezone.MODID);
+    public static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSOR = DeferredRegister.create(Registry.STRUCTURE_PROCESSOR_REGISTRY, Bumblezone.MODID);
 
     public static final RegistryObject<StructureProcessorType<BeeDungeonProcessor>> BEE_DUNGEON_PROCESSOR = STRUCTURE_PROCESSOR.register("bee_dungeon_processor", () -> () -> BeeDungeonProcessor.CODEC);
     public static final RegistryObject<StructureProcessorType<SpiderInfestedBeeDungeonProcessor>> SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR = STRUCTURE_PROCESSOR.register("spider_infested_bee_dungeon_processor", () -> () -> SpiderInfestedBeeDungeonProcessor.CODEC);

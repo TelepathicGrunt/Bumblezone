@@ -1,4 +1,4 @@
-### **(V.6.6.0 Changes) (1.19.3 Minecraft)**
+### **(V.6.6.0 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
 Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
@@ -116,9 +116,6 @@ Silence "Hanging entity at invalid position" logspam from vanilla by lowering th
 
 Made Bumblezone's off thread tasks properly log any crash into the log file if they die.
 
-##### Mod Compat:
-Fixed REI showing duplicated info tabs for Bumblezone's items and fluids.
-
 ##### Recipes:
 Organized Bumblezone recipe json files much better into sub folders. Cleaner and easier to browse.
 
@@ -215,4 +212,6 @@ Organized Bumblezone tags much better into sub folders. Changes are:
 ##### Mod Compat:
 
 Setup compat with Friends and Foes's new Moobloom mob types from their Flowery Mooblooms mod.
+
+Fixed REI showing duplicated info tabs for Bumblezone's items and fluids.
 

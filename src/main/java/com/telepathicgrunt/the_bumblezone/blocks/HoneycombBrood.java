@@ -15,8 +15,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -119,7 +119,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
             return InteractionResult.SUCCESS;
         }
-        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && BuiltInRegistries.ITEM.getKey(itemstack.getItem()).equals(HONEY_TREAT)) {
+        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && Registry.ITEM.getKey(itemstack.getItem()).equals(HONEY_TREAT)) {
             if (!world.isClientSide()) {
                 // spawn bee if at final stage and front isn't blocked off
                 int stage = thisBlockState.getValue(STAGE);

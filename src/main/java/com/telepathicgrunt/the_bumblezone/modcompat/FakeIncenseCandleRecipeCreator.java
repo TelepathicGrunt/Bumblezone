@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +13,6 @@ import net.minecraft.world.item.LingeringPotionItem;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -35,12 +34,12 @@ public class FakeIncenseCandleRecipeCreator {
         int currentRecipe = 0;
         Set<MobEffect> effects = new HashSet<>();
         List<Potion> potions = new ArrayList<>();
-        for (Potion potion : BuiltInRegistries.POTION) {
+        for (Potion potion : Registry.POTION) {
             if (oneRecipeOnly && potions.size() > 0) {
                 break;
             }
 
-            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
+            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || Registry.MOB_EFFECT.getHolderOrThrow(Registry.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
 
@@ -112,7 +111,6 @@ public class FakeIncenseCandleRecipeCreator {
         return new ShapedRecipe(
                 new ResourceLocation(Bumblezone.MODID, recipe.getId().getPath() + "_" + currentRecipe),
                 Bumblezone.MODID,
-                CraftingBookCategory.MISC,
                 3,
                 3,
                 fakedShapedIngredients,

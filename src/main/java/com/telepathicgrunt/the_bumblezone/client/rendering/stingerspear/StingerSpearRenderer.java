@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,8 +25,8 @@ public class StingerSpearRenderer extends EntityRenderer<ThrownStingerSpearEntit
     @Override
     public void render(ThrownStingerSpearEntity thrownStingerSpearEntity, float float1, float float2, PoseStack poseStack, MultiBufferSource multiBufferSource, int int1) {
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(float2, thrownStingerSpearEntity.yRotO, thrownStingerSpearEntity.getYRot()) - 90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(float2, thrownStingerSpearEntity.xRotO, thrownStingerSpearEntity.getXRot()) + 90.0F));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(float2, thrownStingerSpearEntity.yRotO, thrownStingerSpearEntity.getYRot()) - 90.0F));
+        poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(float2, thrownStingerSpearEntity.xRotO, thrownStingerSpearEntity.getXRot()) + 90.0F));
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(multiBufferSource, this.model.renderType(this.getTextureLocation(thrownStingerSpearEntity)), false, thrownStingerSpearEntity.isFoil());
         this.model.renderToBuffer(poseStack, vertexconsumer, int1, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         poseStack.popPose();

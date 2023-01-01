@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import cy.jdkdigital.productivebees.init.ModBlocks;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
@@ -21,8 +21,8 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.List;
 
 public class ProductiveBeesCompatRegs {
-    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registries.CONFIGURED_FEATURE, Bumblezone.MODID);
-    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registries.PLACED_FEATURE, Bumblezone.MODID);
+    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, Bumblezone.MODID);
+    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Bumblezone.MODID);
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> PB_CONFIGURABLE_COMB_CF = CONFIGURED_FEATURES.register("productivebees_be_comb_configured_feature", () ->
         new ConfiguredFeature<>(BzFeatures.BLOCKENTITY_COMBS_FEATURE.get(),

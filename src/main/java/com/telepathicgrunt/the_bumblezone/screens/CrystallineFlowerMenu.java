@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPacket;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -548,7 +548,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             if (player instanceof ServerPlayer serverPlayer) {
                 List<EnchantmentSkeleton> availableEnchantmentsSkeletons =
                         availableEnchantments.stream().map(e -> {
-                            ResourceLocation resourceLocation = BuiltInRegistries.ENCHANTMENT.getKey(e.enchantment);
+                            ResourceLocation resourceLocation = Registry.ENCHANTMENT.getKey(e.enchantment);
                             return new EnchantmentSkeleton(
                                     resourceLocation.getPath(),
                                     resourceLocation.getNamespace(),

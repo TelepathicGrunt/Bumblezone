@@ -11,7 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.KeyDispatchDataCodec;
@@ -60,6 +60,8 @@ import net.minecraft.world.level.levelgen.RandomSupport;
 import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.blending.Blender;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.text.DecimalFormat;
@@ -74,23 +76,29 @@ import java.util.function.Predicate;
 public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    RegistryOps.retrieveRegistry(Registry.STRUCTURE_SET_REGISTRY).forGetter(bzChunkGenerator -> bzChunkGenerator.structureSets),
+                    RegistryOps.retrieveRegistry(Registry.NOISE_REGISTRY).forGetter(bzChunkGenerator -> bzChunkGenerator.noises),
                     BiomeSource.CODEC.fieldOf("biome_source").forGetter(bzChunkGenerator -> bzChunkGenerator.biomeSource),
                     NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(bzChunkGenerator -> bzChunkGenerator.settings))
             .apply(instance, instance.stable(BzChunkGenerator::new)));
 
     protected final BlockState defaultBlock;
     protected final BlockState defaultFluid;
+    private final Registry<NormalNoise.NoiseParameters> noises;
     private final Holder<NoiseGeneratorSettings> settings;
     private final Aquifer.FluidPicker globalFluidPicker;
 
-    public BzChunkGenerator(BiomeSource biomeSource,
+    public BzChunkGenerator(Registry<StructureSet> structureSetRegistry,
+                            Registry<NormalNoise.NoiseParameters> noises,
+                            BiomeSource biomeSource,
                             Holder<NoiseGeneratorSettings> supplier
     ) {
-        super(biomeSource, supplier);
+        super(structureSetRegistry, noises, biomeSource, supplier);
         NoiseGeneratorSettings noiseGeneratorSettings = supplier.value();
         this.defaultBlock = noiseGeneratorSettings.defaultBlock();
         this.defaultFluid = noiseGeneratorSettings.defaultFluid();
         NoiseRouter noiseRouter = noiseGeneratorSettings.noiseRouter();
+        this.noises = noises;
 
         BiomeNoise.biomeSource = this.getBiomeSource();
         BiomeNoise.sampler = new Climate.Sampler(
@@ -146,7 +154,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    public CompletableFuture<ChunkAccess> createBiomes(Executor executor, RandomState randomState, Blender blender, StructureManager structureManager, ChunkAccess chunkAccess) {
+    public CompletableFuture<ChunkAccess> createBiomes(Registry<Biome> biomeRegistry, Executor executor, RandomState randomState, Blender blender, StructureManager structureManager, ChunkAccess chunkAccess) {
         return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("init_biomes", () -> {
             this.doCreateBiomes(blender, randomState, structureManager, chunkAccess);
             return chunkAccess;
@@ -252,7 +260,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         else {
             biomeManager = worldGenRegion.getBiomeManager();
         }
-        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registryOrThrow(Registries.BIOME), Blender.of(worldGenRegion));
+        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), Blender.of(worldGenRegion));
     }
 
     public void buildSurface(ChunkAccess chunkAccess, WorldGenerationContext worldGenerationContext, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, Registry<Biome> biomeRegistry, Blender blender) {

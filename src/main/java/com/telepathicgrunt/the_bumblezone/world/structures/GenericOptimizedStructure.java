@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
@@ -96,7 +96,7 @@ public class GenericOptimizedStructure extends Structure {
                 context,
                 this.startPool,
                 this.size,
-                context.registryAccess().registryOrThrow(Registries.STRUCTURE).getKey(this),
+                context.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getKey(this),
                 centerPos,
                 false,
                 this.projectStartToHeightmap,

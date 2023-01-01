@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.math.Vector3f;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -20,11 +21,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
             float red = brightness * 0.6F + (brightness > 0.0F ? 0.4F : 0.3F);
             float green = Mth.clamp(brightness * brightness * 0.7F - 0.5F, 0.0F, 1.0F);
             float blue = Mth.clamp(brightness * brightness * 0.6F - 0.7F, 0.0F, 1.0F);
-            vec3s[powerLevel] = new Vec3(red, green, blue).toVector3f();
+            vec3s[powerLevel] = new Vector3f(red, green, blue);
         }
     });
 
