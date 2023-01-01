@@ -79,7 +79,7 @@ public class TagReplaceProcessor extends StructureProcessor {
 
                 List<Block> blockList = optionalBlocks.get().stream()
                         .map(Holder::value)
-                        .filter(f -> !f.defaultBlockState().is(blacklistedOutputBlockTag))
+                        .filter(f -> !f.defaultBlockState().is(blacklistedOutputBlockTag) && !f.defaultBlockState().isAir() && !f.getClass().getName().endsWith("BlockDummyAir"))
                         .toList();
 
                 if (doubleTallFlower) {
