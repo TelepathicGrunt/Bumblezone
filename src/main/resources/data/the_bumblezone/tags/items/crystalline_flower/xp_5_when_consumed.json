@@ -32,6 +32,10 @@
     {
       "id": "skinnedlanterns:honey_soul_lantern_block",
       "required": false
+    },
+    {
+      "id": "bk:royal_jelly",
+      "required": false
     }
   ]
 }

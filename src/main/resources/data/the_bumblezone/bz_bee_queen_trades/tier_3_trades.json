@@ -67,6 +67,10 @@
     {
       "id": "createaddition:honey_cake",
       "required": false
+    },
+    {
+      "id": "bk:honey_extractor",
+      "required": false
     }
   ],
   "possible_rewards": [
