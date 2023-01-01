@@ -676,7 +676,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             Player player = level.getPlayerByUUID(playerUUID);
             if (player != null) {
                 if (!getSuperTradeItem().isEmpty()) {
-                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_performed", BzConfig.beeQueenSuperTradeRewardMultiplier).withStyle(ChatFormatting.WHITE), true);
+                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_performed", BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get()).withStyle(ChatFormatting.WHITE), true);
                 }
                 else  {
                     this.acknowledgedPlayers.clear();
