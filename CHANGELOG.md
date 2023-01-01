@@ -216,3 +216,9 @@ Organized Bumblezone tags much better into sub folders. Changes are:
 
 Setup compat with Friends and Foes's new Moobloom mob types from their Flowery Mooblooms mod.
 
+Fixed REI showing duplicated info tabs for Bumblezone's items and fluids.
+
+Add compat with Beekeeper mod. Now adds Bumblezone trades to that mod's Beekeeper villager profession! https://www.curseforge.com/minecraft/mc-mods/beekeeper
+ Check Bumblezone config to turn off if compat if desired.
+
+Added compat with Botania where some of their flowers and Dreamwood can spawn in Hanging Gardens structure!
