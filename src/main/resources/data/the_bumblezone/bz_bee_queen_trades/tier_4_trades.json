@@ -59,6 +59,10 @@
     {
       "id": "apotheosis:beeshelf",
       "required": false
+    },
+    {
+      "id": "bk:royal_jelly",
+      "required": false
     }
   ],
   "possible_rewards": [
