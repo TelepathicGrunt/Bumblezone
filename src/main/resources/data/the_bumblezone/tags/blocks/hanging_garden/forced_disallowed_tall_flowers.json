@@ -54,6 +54,10 @@
       "required": false
     },
     {
+      "id": "ferdinandsflowers:dry_shrub",
+      "required": false
+    },
+    {
       "id": "botania:gray_double_flower",
       "required": false
     },
