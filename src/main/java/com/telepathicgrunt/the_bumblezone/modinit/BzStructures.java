@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.world.structures.GenericOptimizedStruc
 import com.telepathicgrunt.the_bumblezone.world.structures.HoneyCaveRoomStructure;
 import com.telepathicgrunt.the_bumblezone.world.structures.PollinatedStreamStructure;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 

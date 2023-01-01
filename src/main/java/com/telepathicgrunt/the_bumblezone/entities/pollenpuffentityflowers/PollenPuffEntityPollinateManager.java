@@ -11,6 +11,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.BzNbtPredicate;
 import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;

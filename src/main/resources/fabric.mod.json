@@ -48,9 +48,9 @@
   "accessWidener" : "the_bumblezone.accesswidener",
 
   "depends": {
-    "fabricloader": ">=0.14.11",
-    "minecraft": ">=1.19.3",
-    "fabric": ">=0.68.0",
+    "fabricloader": ">=0.14.12",
+    "minecraft": "1.19.2",
+    "fabric": ">=0.70.0",
     "midnightlib": ">=0.5.2"
   },
   "custom": {

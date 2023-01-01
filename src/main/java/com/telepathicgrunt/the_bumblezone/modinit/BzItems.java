@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -19,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
-import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,9 @@ public class BzItems {
     /**
      * creative tab to hold our items
      */
-    public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = QuiltItemGroup
-            .builder(new ResourceLocation(Bumblezone.MODID, "main_tab"))
-            .icon(() -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB))
-            .build();
+    public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = FabricItemGroupBuilder
+            .build(new ResourceLocation(Bumblezone.MODID, "main_tab"),
+                    () -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB));
 
     //blocks
     public static final Item POROUS_HONEYCOMB = new BlockItem(BzBlocks.POROUS_HONEYCOMB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
@@ -45,7 +44,7 @@ public class BzItems {
     public static final Item STICKY_HONEY_REDSTONE = new BlockItem(BzBlocks.STICKY_HONEY_REDSTONE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_WEB = new BlockItem(BzBlocks.HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item REDSTONE_HONEY_WEB = new BlockItem(BzBlocks.REDSTONE_HONEY_WEB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
+    public static final Item PILE_OF_POLLEN = new BlockItem(BzBlocks.PILE_OF_POLLEN, new Item.Properties());
     public static final Item HONEY_CRYSTAL = new BzHoneyCrystalBlockItem(BzBlocks.HONEY_CRYSTAL, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item HONEY_COCOON = new BzBlockItem(BzBlocks.HONEY_COCOON, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), false, true);
     public static final Item ROYAL_JELLY_BLOCK = new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.EPIC));

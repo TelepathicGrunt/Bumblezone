@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.items.functions.HoneyCompassLocateStru
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
 import com.telepathicgrunt.the_bumblezone.items.functions.UniquifyIfHasItems;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 
