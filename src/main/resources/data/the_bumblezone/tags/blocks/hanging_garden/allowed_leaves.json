@@ -102,6 +102,22 @@
     {
       "id": "duneons:towerleavesflowers",
       "required": false
+    },
+    {
+      "id": "regions_unexplored:flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:red_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_cherry_leaves",
+      "required": false
     }
   ]
 }

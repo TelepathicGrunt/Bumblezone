@@ -184,6 +184,34 @@
     {
       "id": "alchemists_garden:spiderling_minion",
       "required": false
+    },
+    {
+      "id": "bunchobugs:ladybug",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:weevil",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:praying_mantis",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:tiger_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:goliath_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:hercules_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:rhino_beetle",
+      "required": false
     }
   ]
 }

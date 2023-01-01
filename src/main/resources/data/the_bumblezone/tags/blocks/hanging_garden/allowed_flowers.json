@@ -157,6 +157,26 @@
     {
       "id": "duneons:warpedflower",
       "required": false
+    },
+    {
+      "id": "regions_unexplored:flowering_sapling",
+      "required": false
+    },
+    {
+      "id": "minecraft_earth_mod:pink_daisy",
+      "required": false
+    },
+    {
+      "id": "minecraft_earth_mod:pink_daisy",
+      "required": false
+    },
+    {
+      "id": "botania:pure_daisy",
+      "required": false
+    },
+    {
+      "id": "botania:hydroangeas",
+      "required": false
     }
   ]
 }
