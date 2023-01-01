@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -56,7 +56,7 @@ public class BeeAggression {
         if(SET_OF_BEE_HATED_NAMED_ENTITIES.size() != 0) return;
         if(SET_OF_BEE_NAMED_ENTITIES.size() != 0) return;
 
-        for(Map.Entry<ResourceKey<EntityType<?>>, EntityType<?>> entry : BuiltInRegistries.ENTITY_TYPE.entrySet()) {
+        for(Map.Entry<ResourceKey<EntityType<?>>, EntityType<?>> entry : Registry.ENTITY_TYPE.entrySet()) {
 
             String mobName = entry.getKey().location().getPath();
 

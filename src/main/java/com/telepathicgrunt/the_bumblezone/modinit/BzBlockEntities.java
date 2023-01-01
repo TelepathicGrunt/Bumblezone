@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockE
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -18,8 +18,8 @@ public class BzBlockEntities {
     public static final BlockEntityType<?> CRYSTALLINE_FLOWER = FabricBlockEntityTypeBuilder.create(CrystallineFlowerBlockEntity::new, BzBlocks.CRYSTALLINE_FLOWER).build(null);
 
     public static void registerBlockEntities() {
-        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_cocoon"), HONEY_COCOON);
-        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "incense_candle"), INCENSE_CANDLE);
-        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"), CRYSTALLINE_FLOWER);
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_cocoon"), HONEY_COCOON);
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "incense_candle"), INCENSE_CANDLE);
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"), CRYSTALLINE_FLOWER);
     }
 }

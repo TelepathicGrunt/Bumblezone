@@ -81,13 +81,13 @@ public class BzEntities {
             .build();
 
     public static void registerEntities() {
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_slime"), HONEY_SLIME);
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "beehemoth"), BEEHEMOTH);
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_queen"), BEE_QUEEN);
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF_ENTITY);
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "thrown_stinger_spear"), THROWN_STINGER_SPEAR_ENTITY);
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER_ENTITY);
-        Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shard"), HONEY_CRYSTAL_SHARD);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_slime"), HONEY_SLIME);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "beehemoth"), BEEHEMOTH);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_queen"), BEE_QUEEN);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff"), POLLEN_PUFF_ENTITY);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "thrown_stinger_spear"), THROWN_STINGER_SPEAR_ENTITY);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_stinger"), BEE_STINGER_ENTITY);
+        Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_crystal_shard"), HONEY_CRYSTAL_SHARD);
 
         EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
     }

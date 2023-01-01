@@ -164,7 +164,7 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
     }
 
     @Override
-    protected void spread(Level world, BlockPos blockPos, FluidState fluidState) {
+    protected void spread(LevelAccessor world, BlockPos blockPos, FluidState fluidState) {
         if (!fluidState.isEmpty()) {
             int bottomFluidLevel = fluidState.getValue(BOTTOM_LEVEL);
             if(bottomFluidLevel == 0) {
@@ -193,7 +193,7 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
     }
 
     @Override
-    protected FluidState getNewLiquid(Level worldReader, BlockPos blockPos, BlockState blockState) {
+    protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
         boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LiquidBlock.LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
         int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LiquidBlock.LEVEL) : 0;
@@ -289,7 +289,7 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
+        protected boolean canConvertToSource() {
             return true;
         }
     }
@@ -316,7 +316,7 @@ public abstract class RoyalJellyFluid extends FlowingFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
+        protected boolean canConvertToSource() {
             return false;
         }
     }

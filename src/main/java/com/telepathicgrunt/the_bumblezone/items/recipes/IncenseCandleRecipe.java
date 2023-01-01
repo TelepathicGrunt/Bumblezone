@@ -12,7 +12,7 @@ import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +24,6 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -138,7 +137,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, RecipeSerializer<Inc
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
-        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS)).toList();
+        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !Registry.MOB_EFFECT.getHolderOrThrow(Registry.MOB_EFFECT.getResourceKey(e).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS)).toList();
         chosenEffect = filteredMobEffects.get(new Random().nextInt(filteredMobEffects.size()));
         if (chosenEffect == null) {
             return getResultStack(this.outputCount);
@@ -172,7 +171,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, RecipeSerializer<Inc
         blockEntityTag.putInt(IncenseCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
         blockEntityTag.putInt(IncenseCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
         blockEntityTag.putInt(IncenseCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
-        blockEntityTag.putString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
+        blockEntityTag.putString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG, Registry.MOB_EFFECT.getKey(chosenEffect).toString());
         blockEntityTag.putBoolean(IncenseCandleBlockEntity.INFINITE_TAG, false);
         blockEntityTag.putInt(IncenseCandleBlockEntity.RANGE_TAG, 3 + (splashCount * 2));
         if (chosenEffect.isInstantenous()) {
@@ -291,7 +290,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, RecipeSerializer<Inc
             }
         }
 
-        if (mobEffects.stream().allMatch(e -> BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
+        if (mobEffects.stream().allMatch(e -> Registry.MOB_EFFECT.getHolderOrThrow(Registry.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
             return false;
         }
 
@@ -365,11 +364,6 @@ public class IncenseCandleRecipe implements CraftingRecipe, RecipeSerializer<Inc
         return RecipeType.CRAFTING;
     }
 
-    @Override
-    public CraftingBookCategory category() {
-        return CraftingBookCategory.MISC;
-    }
-
     public static class Serializer implements RecipeSerializer<IncenseCandleRecipe> {
         private static NonNullList<Ingredient> getIngredients(JsonArray jsonElements) {
             NonNullList<Ingredient> defaultedList = NonNullList.create();
@@ -414,7 +408,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, RecipeSerializer<Inc
         public JsonObject toJson(IncenseCandleRecipe recipe) {
             JsonObject json = new JsonObject();
 
-            json.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZER.getKey(BzRecipes.INCENSE_CANDLE_RECIPE).toString());
+            json.addProperty("type", Registry.RECIPE_SERIALIZER.getKey(BzRecipes.INCENSE_CANDLE_RECIPE).toString());
             json.addProperty("group", recipe.group);
 
             NonNullList<Ingredient> recipeIngredients = recipe.shapedRecipeItems;

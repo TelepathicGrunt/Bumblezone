@@ -172,8 +172,8 @@ public abstract class SugarWaterFluid extends FlowingFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
-            return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
+        protected boolean canConvertToSource() {
+            return true;
         }
     }
 
@@ -190,8 +190,8 @@ public abstract class SugarWaterFluid extends FlowingFluid {
         }
 
         @Override
-        protected boolean canConvertToSource(Level level) {
-            return level.getGameRules().getBoolean(GameRules.RULE_WATER_SOURCE_CONVERSION);
+        protected boolean canConvertToSource() {
+            return true;
         }
     }
 }

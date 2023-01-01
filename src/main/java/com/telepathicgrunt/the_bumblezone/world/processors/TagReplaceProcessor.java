@@ -6,8 +6,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
 public class TagReplaceProcessor extends StructureProcessor {
 
     public static final Codec<TagReplaceProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.inputBlock),
-            TagKey.codec(Registries.BLOCK).fieldOf("output_block_tag").forGetter(config -> config.outputBlockTag),
-            TagKey.codec(Registries.BLOCK).fieldOf("blacklisted_output_block_tag").forGetter(config -> config.blacklistedOutputBlockTag),
+            Registry.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.inputBlock),
+            TagKey.codec(Registry.BLOCK_REGISTRY).fieldOf("output_block_tag").forGetter(config -> config.outputBlockTag),
+            TagKey.codec(Registry.BLOCK_REGISTRY).fieldOf("blacklisted_output_block_tag").forGetter(config -> config.blacklistedOutputBlockTag),
             Codec.BOOL.fieldOf("double_tall_flower").orElse(false).forGetter(config -> config.doubleTallFlower),
             Codec.BOOL.fieldOf("same_throughout_piece").orElse(false).forGetter(config -> config.sameThroughoutPiece),
             Codec.INT.fieldOf("seed_random_addition").orElse(0).forGetter(config -> config.seedRandomAddition)
@@ -66,7 +66,7 @@ public class TagReplaceProcessor extends StructureProcessor {
             settings.getBoundingBox() != null &&
             settings.getBoundingBox().isInside(infoIn2.pos))
         {
-            Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(outputBlockTag);
+            Optional<HolderSet.Named<Block>> optionalBlocks = Registry.BLOCK.getTag(outputBlockTag);
 
             if(optionalBlocks.isPresent()) {
                 RandomSource randomSource;

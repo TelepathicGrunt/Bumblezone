@@ -18,7 +18,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayer
 import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -39,18 +39,18 @@ public class BzFeatures {
     public static Feature<NoneFeatureConfiguration> HANGING_GARDEN_MOB = new HangingGardenMob(NoneFeatureConfiguration.CODEC);
 
     public static void registerFeatures() {
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_caves"), HONEYCOMB_CAVES);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "pollinated_caves"), POLLINATED_CAVES);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "cave_sugar_waterfall"), CAVE_SUGAR_WATERFALL);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "honey_crystals_feature"), HONEY_CRYSTAL_FEATURE);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "giant_honey_crystal_feature"), GIANT_HONEY_CRYSTAL_FEATURE);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue_feature"), STICKY_HONEY_RESIDUE_FEATURE);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "nbt_feature"), NBT_FEATURE);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "layered_block_surface"), LAYERED_BLOCK_SURFACE);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "web_wall"), WEB_WALL);
-        Registry.register(BuiltInRegistries.FEATURE, new ResourceLocation(Bumblezone.MODID, "hanging_garden_mob"), HANGING_GARDEN_MOB);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_caves"), HONEYCOMB_CAVES);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "pollinated_caves"), POLLINATED_CAVES);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "cave_sugar_waterfall"), CAVE_SUGAR_WATERFALL);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honey_crystals_feature"), HONEY_CRYSTAL_FEATURE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "giant_honey_crystal_feature"), GIANT_HONEY_CRYSTAL_FEATURE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue_feature"), STICKY_HONEY_RESIDUE_FEATURE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "nbt_feature"), NBT_FEATURE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "bee_dungeon"), BEE_DUNGEON);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "spider_infested_bee_dungeon"), SPIDER_INFESTED_BEE_DUNGEON);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "layered_block_surface"), LAYERED_BLOCK_SURFACE);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "web_wall"), WEB_WALL);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "hanging_garden_mob"), HANGING_GARDEN_MOB);
     }
 }

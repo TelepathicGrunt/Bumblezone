@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -25,7 +25,7 @@ public class FriendsAndFoesCompat {
     }
 
     public static void setupFriendsAndFoesTrades() {
-        Optional<VillagerProfession> beekeeper = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(new ResourceLocation("friendsandfoes", "beekeeper"));
+        Optional<VillagerProfession> beekeeper = Registry.VILLAGER_PROFESSION.getOptional(new ResourceLocation("friendsandfoes", "beekeeper"));
 
         if(beekeeper.isPresent() && VillagerTrades.TRADES.containsKey(beekeeper.get())) {
             TradeOfferHelper.registerVillagerOffers(beekeeper.get(), 2, (itemListings) -> itemListings.add(

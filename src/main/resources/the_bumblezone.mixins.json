@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "world.ChunkGeneratorAccessor",
+    "ChunkGeneratorAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",

@@ -10,7 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,7 +42,7 @@ public class BeeDungeon extends NbtFeature {
     }
 
     protected static boolean isValidDungeonSpot(FeaturePlaceContext<?> context) {
-        Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
         StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
 
         for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.NO_DUNGEONS)) {
