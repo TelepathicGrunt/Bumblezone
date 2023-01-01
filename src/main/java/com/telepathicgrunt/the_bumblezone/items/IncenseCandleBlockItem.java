@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -35,7 +35,7 @@ public class IncenseCandleBlockItem extends BlockItem {
             incenseCandleBlockEntity.setColor(color);
 
             ResourceLocation rl = new ResourceLocation(blockEntityTag.getString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG));
-            Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
+            Optional<MobEffect> mobEffect = Registry.MOB_EFFECT.getOptional(rl);
             incenseCandleBlockEntity.setMobEffect(mobEffect.orElse(null));
         }
         return super.updateCustomBlockEntityTag(pos, level, player, stack, state);
@@ -52,7 +52,7 @@ public class IncenseCandleBlockItem extends BlockItem {
             CompoundTag blockEntityTag = itemStack.getOrCreateTag().getCompound("BlockEntityTag");
             if (blockEntityTag.contains(IncenseCandleBlockEntity.STATUS_EFFECT_TAG)) {
                 ResourceLocation rl = new ResourceLocation(blockEntityTag.getString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG));
-                Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
+                Optional<MobEffect> mobEffect = Registry.MOB_EFFECT.getOptional(rl);
                 if (mobEffect.isPresent()) {
                     components.add(formatComponent(Component.translatable("item.the_bumblezone.incense_candle.status_effect", mobEffect.get().getDisplayName())));
                     components.add(formatComponent(Component.translatable("item.the_bumblezone.incense_candle.amplifier", blockEntityTag.getInt(IncenseCandleBlockEntity.AMPLIFIER_TAG))));

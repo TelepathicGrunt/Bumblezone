@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
@@ -16,7 +16,7 @@ public final class BzBiomeHeightRegistry {
     public static final Registry<BiomeTerrain> BIOME_HEIGHT_REGISTRY = FabricRegistryBuilder.createSimple(BiomeTerrain.class, BIOME_HEIGHT_KEY.location()).buildAndRegister();
 
     public static void initBiomeHeightRegistry() {
-        Optional<? extends Registry<?>> registryOptional = BuiltInRegistries.REGISTRY.getOptional(BIOME_HEIGHT_KEY.location());
+        Optional<? extends Registry<?>> registryOptional = Registry.REGISTRY.getOptional(BIOME_HEIGHT_KEY.location());
         registryOptional.ifPresent(registry -> {
             Registry.register((Registry<BiomeTerrain>)registry,
                     new ResourceLocation(Bumblezone.MODID, "hive_pillar"), new BiomeTerrain(22f, 0.35f));

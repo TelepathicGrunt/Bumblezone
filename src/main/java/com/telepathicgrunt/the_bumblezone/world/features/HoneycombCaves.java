@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -162,7 +162,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         int disallowedBottomRange = Integer.MAX_VALUE;
         int disallowedTopRange = Integer.MIN_VALUE;
         if (context.level() instanceof WorldGenRegion worldGenRegion) {
-            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
             StructureManager structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
             ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
             List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos,

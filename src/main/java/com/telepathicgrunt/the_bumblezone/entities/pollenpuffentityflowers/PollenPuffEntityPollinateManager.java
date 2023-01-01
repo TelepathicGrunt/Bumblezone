@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.BzNbtPredicate;
 import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -41,7 +41,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
 
     public static final Codec<Map<EntityType<?>, List<EntryObject>>> CODEC =
             new LenientUnboundedMapCodec<>(ResourceLocation.CODEC.comapFlatMap(r -> {
-                Optional<EntityType<?>> entityTypeOptional = BuiltInRegistries.ENTITY_TYPE.getOptional(r);
+                Optional<EntityType<?>> entityTypeOptional = Registry.ENTITY_TYPE.getOptional(r);
                 if (entityTypeOptional.isPresent()) {
                     return DataResult.success(entityTypeOptional.get());
                 }
@@ -52,7 +52,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                 else {
                     return DataResult.error("Bz Error - Target mod not present");
                 }
-            }, BuiltInRegistries.ENTITY_TYPE::getKey), Codec.list(EntryObject.ENTRY_CODEC));
+            }, Registry.ENTITY_TYPE::getKey), Codec.list(EntryObject.ENTRY_CODEC));
 
     public Map<EntityType<?>, List<EntryObject>> mobToPlants = new Object2ObjectArrayMap<>();
 

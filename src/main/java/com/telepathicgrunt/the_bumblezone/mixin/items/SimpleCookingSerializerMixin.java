@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
@@ -36,7 +35,7 @@ public class SimpleCookingSerializerMixin<T extends AbstractCookingRecipe> {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/GsonHelper;getAsString(Lcom/google/gson/JsonObject;Ljava/lang/String;)Ljava/lang/String;"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
-    private void thebumblezone_checkForCountSize(ResourceLocation identifier, JsonObject jsonObject, CallbackInfoReturnable<T> cir, String string, CookingBookCategory cookingBookCategory, JsonElement jsonElement, Ingredient ingredient) {
+    private void thebumblezone_checkForCountSize(ResourceLocation identifier, JsonObject jsonObject, CallbackInfoReturnable<T> cir, String string, JsonElement jsonElement, Ingredient ingredient) {
         if (!jsonObject.has("result")) {
             throw new JsonSyntaxException("Missing result, expected to find a string or object");
         }
@@ -46,7 +45,7 @@ public class SimpleCookingSerializerMixin<T extends AbstractCookingRecipe> {
             itemstack = ShapedRecipe.itemStackFromJson(jsonObj2);
             float f = GsonHelper.getAsFloat(jsonObject, "experience", 0.0F);
             int i = GsonHelper.getAsInt(jsonObject, "cookingtime", this.defaultCookingTime);
-            cir.setReturnValue(this.factory.create(identifier, string, cookingBookCategory, ingredient, itemstack, f, i));
+            cir.setReturnValue(this.factory.create(identifier, string, ingredient, itemstack, f, i));
         }
     }
 }

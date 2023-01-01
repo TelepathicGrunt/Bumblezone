@@ -7,14 +7,14 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
+import dev.architectury.registry.registries.Registries;
 import net.minecraft.Util;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.commands.arguments.ResourceArgument;
+import net.minecraft.commands.arguments.EntitySummonArgument;
 import net.minecraft.commands.synchronization.SuggestionProviders;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -66,10 +66,10 @@ public class NonOpCommands {
         LiteralCommandNode<CommandSourceStack> source2 = commandDispatcher.register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.literal(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
-                .then(Commands.argument(entityArg, ResourceArgument.resource(buildContext, Registries.ENTITY_TYPE))
+                .then(Commands.argument(entityArg, EntitySummonArgument.id())
                 .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                 .executes(cs -> {
-                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), ResourceArgument.getSummonableEntityType(cs, entityArg).key().location(), cs);
+                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), EntitySummonArgument.getSummonableEntity(cs, entityArg), cs);
                     return 1;
                 })
         )));

@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 public class Layer {
-    private static final Logger LOGGER = LogManager.getLogger();
     private final LazyArea area;
 
     public Layer(AreaFactory<LazyArea> areaFactory) {
@@ -23,7 +22,7 @@ public class Layer {
 
     public Holder<Biome> sample(int x, int z) {
         int resultBiomeID = this.area.get(x, z);
-        Optional<Holder.Reference<Biome>> biome = BiomeRegistryHolder.BIOME_REGISTRY.getHolder(resultBiomeID);
+        Optional<Holder<Biome>> biome = BiomeRegistryHolder.BIOME_REGISTRY.getHolder(resultBiomeID);
         if (biome.isEmpty()) {
             if (SharedConstants.IS_RUNNING_IN_IDE) {
                 throw Util.pauseInIde(new IllegalStateException("Unknown biome id: " + resultBiomeID));

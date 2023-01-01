@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.PotentPoisonEnchantment;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
 public class BzEnchantments {
@@ -14,8 +14,8 @@ public class BzEnchantments {
     public static final NeurotoxinsEnchantment NEUROTOXINS = new NeurotoxinsEnchantment();
 
     public static void registerEnchantment() {
-        Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "comb_cutter"), COMB_CUTTER);
-        Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "potent_poison"), POTENT_POISON);
-        Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "neurotoxins"), NEUROTOXINS);
+        Registry.register(Registry.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "comb_cutter"), COMB_CUTTER);
+        Registry.register(Registry.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "potent_poison"), POTENT_POISON);
+        Registry.register(Registry.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "neurotoxins"), NEUROTOXINS);
     }
 }

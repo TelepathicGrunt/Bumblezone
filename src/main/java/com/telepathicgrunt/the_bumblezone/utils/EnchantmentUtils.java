@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceKey;
@@ -93,7 +93,7 @@ public class EnchantmentUtils {
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
-		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
+		for(Enchantment enchantment : Registry.ENCHANTMENT) {
 			boolean forceAllowed = isEnchantmentForcedAllowed(enchantment);
 			if (!forceAllowed && isEnchantmentBanned(enchantment)) {
 				continue;
@@ -121,7 +121,7 @@ public class EnchantmentUtils {
 	}
 
 	private static boolean isEnchantmentForcedAllowed(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
 			if (enchantmentHolder.value().equals(enchantment)) {
 				return true;
@@ -131,7 +131,7 @@ public class EnchantmentUtils {
 	}
 
 	private static boolean isEnchantmentBanned(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = BuiltInRegistries.ENCHANTMENT.getTagOrEmpty(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
 			if (enchantmentHolder.value().equals(enchantment)) {
 				return true;
@@ -149,7 +149,7 @@ public class EnchantmentUtils {
 			ResourceLocation resourcelocation1 = EnchantmentHelper.getEnchantmentId(compoundtag);
 			if (resourcelocation1 != null) {
 				existingEnchants.put(
-					Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.get(resourcelocation1)),
+					Objects.requireNonNull(Registry.ENCHANTMENT.get(resourcelocation1)),
 					EnchantmentHelper.getEnchantmentLevel(compoundtag)
 				);
 			}
@@ -185,8 +185,8 @@ public class EnchantmentUtils {
 	}
 
 	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
-		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
-		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
+		ResourceKey<Enchantment> resourceKey1 = Registry.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey2 = Registry.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
 
 		int ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
 		if (ret == 0) ret = enchantment2.level - enchantment1.level;

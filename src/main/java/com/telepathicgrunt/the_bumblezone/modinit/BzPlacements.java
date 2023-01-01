@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.decorators.HoneycombHol
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DClusterPlacement;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DUndergroundChunkPlacement;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
@@ -24,6 +24,6 @@ public class BzPlacements {
     }
 
     private static <P extends PlacementModifier> PlacementModifierType<P> register(ResourceLocation resourceLocation, Codec<P> codec) {
-        return Registry.register(BuiltInRegistries.PLACEMENT_MODIFIER_TYPE, resourceLocation, () -> codec);
+        return Registry.register(Registry.PLACEMENT_MODIFIERS, resourceLocation, () -> codec);
     }
 }

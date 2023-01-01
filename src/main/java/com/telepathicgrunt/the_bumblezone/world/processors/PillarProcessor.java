@@ -5,9 +5,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import dev.architectury.registry.registries.Registries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
@@ -30,6 +32,7 @@ public class PillarProcessor extends StructureProcessor {
     private static final ResourceLocation EMPTY_RL = new ResourceLocation("minecraft", "empty");
 
     public static final Codec<PillarProcessor> CODEC  = RecordCodecBuilder.create((instance) -> instance.group(
+            RegistryOps.retrieveRegistry(Registry.PROCESSOR_LIST_REGISTRY).forGetter((processor) -> processor.processorListRegistry),
             Codec.mapPair(BlockState.CODEC.fieldOf("trigger"), BlockState.CODEC.fieldOf("replacement"))
                     .codec().listOf()
                     .xmap((list) -> list.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)),
@@ -42,18 +45,21 @@ public class PillarProcessor extends StructureProcessor {
             Codec.BOOL.optionalFieldOf("forced_placement", false).forGetter(config -> config.forcePlacement))
     .apply(instance, instance.stable(PillarProcessor::new)));
 
+    public final Registry<StructureProcessorList> processorListRegistry;
     public final Map<BlockState, BlockState> pillarTriggerAndReplacementBlocks;
     public final ResourceLocation processorList;
     public final Direction direction;
     public final Optional<IntProvider> pillarLength;
     public final boolean forcePlacement;
 
-    private PillarProcessor(Map<BlockState, BlockState> pillarTriggerAndReplacementBlocks,
+    private PillarProcessor(Registry<StructureProcessorList> processorListRegistry,
+                            Map<BlockState, BlockState> pillarTriggerAndReplacementBlocks,
                             ResourceLocation processorList,
                             Direction direction,
                             Optional<IntProvider> pillarLength,
                             boolean forcePlacement)
     {
+        this.processorListRegistry = processorListRegistry;
         this.pillarTriggerAndReplacementBlocks = pillarTriggerAndReplacementBlocks;
         this.processorList = processorList;
         this.direction = direction;
@@ -74,7 +80,7 @@ public class PillarProcessor extends StructureProcessor {
             BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos().set(worldPos);
             StructureProcessorList structureProcessorList = null;
             if(processorList != null && !processorList.equals(EMPTY_RL)) {
-                structureProcessorList = levelReader.registryAccess().registryOrThrow(Registries.PROCESSOR_LIST).get(processorList);
+                structureProcessorList = processorListRegistry.get(processorList);
             }
 
             if(levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(currentPos))) {
