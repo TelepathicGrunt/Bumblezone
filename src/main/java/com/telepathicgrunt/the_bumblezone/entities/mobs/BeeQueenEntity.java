@@ -372,6 +372,16 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
             if ((this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
                 if (getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() > 0) {
+                    if (getRemainingSuperTradeTime() > minNotifyTime) {
+                        List<Player> nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
+                        for (Player player : nearbyPlayers) {
+                            if (!this.acknowledgedPlayers.contains(player.getUUID())) {
+                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
+                                this.acknowledgedPlayers.add(player.getUUID());
+                            }
+                        }
+                    }
+
                     return;
                 }
 
@@ -394,23 +404,19 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     boolean notifiedAPlayer = false;
                     for (Player player : nearbyPlayers) {
                         if (!this.acknowledgedPlayers.contains(player.getUUID())) {
-
-                            if (getRandom().nextFloat() < 1f) {
-                                Component itemName = getSuperTradeItem().getHoverName();
-                                if (itemName instanceof MutableComponent mutableComponent) {
-                                    mutableComponent.withStyle(ChatFormatting.YELLOW);
-                                }
-
-                                if (player.inventoryMenu.slots.stream().anyMatch(s -> s.getItem().sameItem(getSuperTradeItem()))) {
-                                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_inventory", itemName).withStyle(ChatFormatting.WHITE), true);
-                                }
-                                else {
-                                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade", itemName, (getRemainingSuperTradeTime() / minNotifyTime)).withStyle(ChatFormatting.WHITE), true);
-                                }
-                                
-                                notifiedAPlayer = true;
+                            Component itemName = getSuperTradeItem().getHoverName();
+                            if (itemName instanceof MutableComponent mutableComponent) {
+                                mutableComponent.withStyle(ChatFormatting.YELLOW);
                             }
 
+                            if (player.inventoryMenu.slots.stream().anyMatch(s -> s.getItem().sameItem(getSuperTradeItem()))) {
+                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_inventory", itemName).withStyle(ChatFormatting.WHITE), true);
+                            }
+                            else {
+                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade", itemName, (getRemainingSuperTradeTime() / minNotifyTime)).withStyle(ChatFormatting.WHITE), true);
+                            }
+
+                            notifiedAPlayer = true;
                             this.acknowledgedPlayers.add(player.getUUID());
                         }
                     }
@@ -662,8 +668,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             getSuperTradeItem().shrink(1);
 
             Player player = level.getPlayerByUUID(playerUUID);
-            if (player != null && getSuperTradeItem().isEmpty()) {
-                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
+            if (player != null) {
+                if (!getSuperTradeItem().isEmpty()) {
+                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_performed", BzConfig.beeQueenSuperTradeRewardMultiplier).withStyle(ChatFormatting.WHITE), true);
+                }
+                else  {
+                    this.acknowledgedPlayers.clear();
+                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
+                    this.acknowledgedPlayers.add(playerUUID);
+                }
             }
         }
 
