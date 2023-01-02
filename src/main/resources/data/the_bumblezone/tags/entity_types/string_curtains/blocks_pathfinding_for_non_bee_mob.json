@@ -63,6 +63,10 @@
       "required": false
     },
     {
+      "id": "infernalexp:glowsquito",
+      "required": false
+    },
+    {
       "id": "ob_aquamirae:golden_moth",
       "required": false
     },
@@ -72,6 +76,14 @@
     },
     {
       "id": "alexsmobs:tarantula_hawk",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:crimson_mosquito",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:fly",
       "required": false
     },
     {
@@ -87,7 +99,15 @@
       "required": false
     },
     {
+      "id": "unusualend:ender_firefly",
+      "required": false
+    },
+    {
       "id": "endlessencore:fleet",
+      "required": false
+    },
+    {
+      "id": "twilightforest:mosquito_swarm",
       "required": false
     },
     {
