@@ -8,6 +8,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NoiseColumn;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,8 +39,10 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -345,4 +350,14 @@ public class GeneralUtils {
         }
     }
 
+    //////////////////////////////////////////////
+
+    public static List<Block> getListOfNonDummyBlocks(Optional<HolderSet.Named<Block>> blockTagResult) {
+        return blockTagResult.map(holders -> holders
+                .stream()
+                .map(Holder::value)
+                .filter(block -> !block.defaultBlockState().isAir() && !block.getClass().getName().endsWith("BlockDummyAir"))
+                .toList()
+            ).orElseGet(ArrayList::new);
+    }
 }
