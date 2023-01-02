@@ -45,6 +45,18 @@
     {
       "id": "ferdinandsflowers:staked_nasturtium",
       "required": false
+    },
+    {
+      "id": "naturalized:ancient_orchid",
+      "required": false
+    },
+    {
+      "id": "naturalized:pink_rose_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:begonias",
+      "required": false
     }
   ]
 }

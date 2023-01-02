@@ -132,6 +132,86 @@
     {
       "id": "morecropsbydaleeny:snail",
       "required": false
+    },
+    {
+      "id": "broglisbugs:entity_ladybird",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_grasshopper",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_stick_insect",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_snail",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_banana_slug",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_slug",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_worm",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:ladybug",
+      "required": false
+    },
+    {
+      "id": "lilwings:white_fox_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:swallow_tail_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:shroom_skipper_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:painted_panther_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:crystal_puff_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:swamp_hopper_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:cloudy_puff_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:butter_gold_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:aponi_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:red_applefly_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:gold_applefly_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:grayling_butterfly",
+      "required": false
     }
   ]
 }
