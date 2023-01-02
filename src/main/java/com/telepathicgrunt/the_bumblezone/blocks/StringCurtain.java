@@ -31,6 +31,8 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
@@ -47,7 +49,6 @@ public class StringCurtain extends Block {
     public StringCurtain() {
         this(Properties.of(Material.CLOTH_DECORATION, MaterialColor.WOOL)
                 .noOcclusion()
-                .noCollission()
                 .lightLevel((blockState) -> 1)
                 .sound(SoundType.WOOL)
                 .strength(0.3F));
@@ -89,6 +90,25 @@ public class StringCurtain extends Block {
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
         return collisionShapeByMap.get(Pair.of(blockState.getValue(HORIZONTAL_FACING), blockState.getValue(MIDDLE)));
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        if (context instanceof EntityCollisionContext ctx) {
+            Entity entity = ctx.getEntity();
+            if (entity == null) {
+                return getShape(state, worldIn, pos, context);
+            }
+
+            if ((entity instanceof Bee || entity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                !entity.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING))
+            {
+                if (state.is(BzTags.STRING_CURTAINS)) {
+                    return getShape(state, worldIn, pos, context);
+                }
+            }
+        }
+        return Shapes.empty();
     }
 
     @Override
