@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,6 +40,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class EntityTeleportationHookup {
 
@@ -159,7 +161,7 @@ public class EntityTeleportationHookup {
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
             Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-            if(blockTag.isPresent() && blockTag.get().size() != 0) {
+            if(blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
                 if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
                 }
@@ -280,7 +282,7 @@ public class EntityTeleportationHookup {
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = false;
             Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-            if (blockTag.isPresent() && blockTag.get().size() != 0) {
+            if (blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
                 if (world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
                 }
@@ -360,7 +362,7 @@ public class EntityTeleportationHookup {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
                 Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-                if(blockTag.isPresent() && blockTag.get().size() != 0) {
+                if(blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
 
                     for(BlockState belowBlock : belowHiveBlocks) {
                         if(belowBlock.is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {

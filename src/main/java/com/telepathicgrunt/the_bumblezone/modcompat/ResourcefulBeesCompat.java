@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ResourcefulBeesCompat {
@@ -89,10 +91,10 @@ public class ResourcefulBeesCompat {
 			Optional<HolderSet.Named<Block>> optionalNamed = blockRegistry.getTag(spawnsInBeeDungeonsTag);
 			if(optionalNamed.isEmpty()) return null;
 
-			HolderSet.Named<Block> holders = optionalNamed.get();
+			List<Block> holders = GeneralUtils.getListOfNonDummyBlocks(optionalNamed);
 			if (holders.size() == 0) return null;
 
-			Block rbComb = holders.get(random.nextInt(random.nextInt(holders.size()) + 1)).get();
+			Block rbComb = holders.get(random.nextInt(random.nextInt(holders.size()) + 1));
 			return new StructureTemplate.StructureBlockInfo(worldPos, rbComb.defaultBlockState(), null);
 		}
 		return null;
