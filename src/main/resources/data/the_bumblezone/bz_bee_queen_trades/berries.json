@@ -11,6 +11,22 @@
     {
       "id": "minecraft:cocoa_beans",
       "required": true
+    },
+    {
+      "id": "windswept:holly_berries",
+      "required": false
+    },
+    {
+      "id": "windswept:wild_berries",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry",
+      "required": false
+    },
+    {
+      "id": "naturalized:cloudberry",
+      "required": false
     }
   ],
   "possible_rewards": [
@@ -37,6 +53,13 @@
     },
     {
       "id": "minecraft:pumpkin_pie",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:rabbit_stew",
       "count": 1,
       "xp_reward": 1,
       "weight": 1,

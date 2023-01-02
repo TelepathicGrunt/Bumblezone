@@ -116,6 +116,22 @@
     {
       "id": "infernalexp:glowsilk_moth",
       "required": false
+    },
+    {
+      "id": "broglisbugs:entity_ladybird",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_grasshopper",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_stick_insect",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:ladybug",
+      "required": false
     }
   ]
 }
