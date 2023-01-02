@@ -39,6 +39,7 @@
     "entities.PlayerAdvancementsAccessor",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
+    "entities.AmphibiousNodeEvaluatorMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldMobMixin",
     "items.HoneyShieldPlayerMixin",
