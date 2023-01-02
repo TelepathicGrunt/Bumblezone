@@ -5,10 +5,6 @@
       "required": true
     },
     {
-      "id": "minecraft:amethyst_block",
-      "required": true
-    },
-    {
       "id": "#minecraft:tall_flowers",
       "required": true
     },
