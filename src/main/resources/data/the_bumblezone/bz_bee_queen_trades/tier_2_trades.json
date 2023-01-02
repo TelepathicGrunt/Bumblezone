@@ -135,6 +135,18 @@
     {
       "id": "bk:bee_pollen",
       "required": false
+    },
+    {
+      "id": "windswept:wild_berry_juice",
+      "required": false
+    },
+    {
+      "id": "windswept:wild_berry_bowl",
+      "required": false
+    },
+    {
+      "id": "windswept:sweet_berry_bowl",
+      "required": false
     }
   ],
   "possible_rewards": [

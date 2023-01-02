@@ -165,6 +165,50 @@
     {
       "id": "duneons:jungle_flower_leafy",
       "required": false
+    },
+    {
+      "id": "habitat:rafflesia",
+      "required": false
+    },
+    {
+      "id": "naturalized:sea_grass_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:sea_leaves_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:flowered_small_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:yarrow",
+      "required": false
+    },
+    {
+      "id": "naturalized:buttercup",
+      "required": false
+    },
+    {
+      "id": "naturalized:marigold",
+      "required": false
+    },
+    {
+      "id": "naturalized:rose",
+      "required": false
+    },
+    {
+      "id": "naturalized:ancient_orchid",
+      "required": false
+    },
+    {
+      "id": "naturalized:pink_rose_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:begonias",
+      "required": false
     }
   ]
 }
