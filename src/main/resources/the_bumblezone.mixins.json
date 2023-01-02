@@ -52,6 +52,7 @@
     "entities.PlayerEntityMixin",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
+    "entities.AmphibiousNodeEvaluatorMixin",
     "entities.WalkNodeEvaluatorMixin",
     "items.BowItemMixin",
     "items.BucketItemAccessor",

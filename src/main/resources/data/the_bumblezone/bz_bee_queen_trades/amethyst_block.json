@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:amethyst_block",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:amethyst_shard",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}
