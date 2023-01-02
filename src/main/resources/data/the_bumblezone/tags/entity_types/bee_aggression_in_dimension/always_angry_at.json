@@ -186,10 +186,6 @@
       "required": false
     },
     {
-      "id": "bunchobugs:ladybug",
-      "required": false
-    },
-    {
       "id": "bunchobugs:weevil",
       "required": false
     },
@@ -211,6 +207,10 @@
     },
     {
       "id": "bunchobugs:rhino_beetle",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_hercules_beetle",
       "required": false
     }
   ]

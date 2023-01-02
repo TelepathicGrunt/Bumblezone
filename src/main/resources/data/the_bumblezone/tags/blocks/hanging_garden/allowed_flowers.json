@@ -189,6 +189,38 @@
     {
       "id": "earthmobsmod:pink_daisy",
       "required": false
+    },
+    {
+      "id": "habitat:rafflesia",
+      "required": false
+    },
+    {
+      "id": "naturalized:sea_grass_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:sea_leaves_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:flowered_small_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:yarrow",
+      "required": false
+    },
+    {
+      "id": "naturalized:buttercup",
+      "required": false
+    },
+    {
+      "id": "naturalized:marigold",
+      "required": false
+    },
+    {
+      "id": "naturalized:rose",
+      "required": false
     }
   ]
 }
