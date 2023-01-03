@@ -1,0 +1,41 @@
+{
+  "textures": {
+    "main": "the_bumblezone:block/string_curtain/magenta_bottom",
+    "particle": "the_bumblezone:block/string_curtain/magenta_bottom"
+  },
+  "render_type": "minecraft:cutout",
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        8
+      ],
+      "to": [
+        16,
+        16,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#main"
+        },
+        "south": {
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ],
+          "texture": "#main"
+        }
+      }
+    }
+  ]
+}
