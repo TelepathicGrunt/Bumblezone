@@ -1,0 +1,41 @@
+{
+  "textures": {
+    "main": "the_bumblezone:block/string_curtain/cyan_middle",
+    "particle": "the_bumblezone:block/string_curtain/cyan_middle"
+  },
+  "render_type": "minecraft:cutout",
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        0
+      ],
+      "to": [
+        1,
+        16,
+        16
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#main"
+        },
+        "west": {
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ],
+          "texture": "#main"
+        }
+      }
+    }
+  ]
+}
