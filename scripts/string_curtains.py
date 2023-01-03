@@ -23,18 +23,14 @@ colors = [
 ]
 
 modelTypes = [
-    "north_attached", 
-    "south_attached", 
-    "west_attached", 
-    "east_attached",
-    "ns_attached",
-    "ew_attached",
-    "north_unattached",
-    "south_unattached",
-    "west_unattached",
-    "east_unattached",
-    "ns_unattached",
-    "ew_unattached"
+    "center_bottom", 
+    "center_middle", 
+    "center_top", 
+    "center_top_end", 
+    "wall_bottom",
+    "wall_middle",
+    "wall_top",
+    "wall_top_end"
 ]
 
 if not os.path.exists("output"):
@@ -45,23 +41,41 @@ for color in colors:
     blockstateFile.seek(0)
     jsonData = {
         "variants": {
-            "attached=true,middle=false,facing=north": { "model": f"the_bumblezone:block/string_curtain/{color}_north_attached" },
-            "attached=true,middle=false,facing=south": { "model": f"the_bumblezone:block/string_curtain/{color}_south_attached" },
-            "attached=true,middle=false,facing=west": { "model": f"the_bumblezone:block/string_curtain/{color}_west_attached" },
-            "attached=true,middle=false,facing=east": { "model": f"the_bumblezone:block/string_curtain/{color}_east_attached" },
-            "attached=true,middle=true,facing=north": { "model": f"the_bumblezone:block/string_curtain/{color}_ns_attached" },
-            "attached=true,middle=true,facing=south": { "model": f"the_bumblezone:block/string_curtain/{color}_ns_attached" },
-            "attached=true,middle=true,facing=west": { "model": f"the_bumblezone:block/string_curtain/{color}_ew_attached" },
-            "attached=true,middle=true,facing=east": { "model": f"the_bumblezone:block/string_curtain/{color}_ew_attached" },
+            "attached=true,center=false,facing=north,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top", "y": 270 },
+            "attached=true,center=false,facing=south,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top", "y": 90 },
+            "attached=true,center=false,facing=west,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top", "y": 180 },
+            "attached=true,center=false,facing=east,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top" },
+            "attached=true,center=true,facing=north,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top" },
+            "attached=true,center=true,facing=south,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top" },
+            "attached=true,center=true,facing=west,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top", "y": 90 },
+            "attached=true,center=true,facing=east,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top", "y": 90 },
 
-            "attached=false,middle=false,facing=north": { "model": f"the_bumblezone:block/string_curtain/{color}_north_unattached" },
-            "attached=false,middle=false,facing=south": { "model": f"the_bumblezone:block/string_curtain/{color}_south_unattached" },
-            "attached=false,middle=false,facing=west": { "model": f"the_bumblezone:block/string_curtain/{color}_west_unattached" },
-            "attached=false,middle=false,facing=east": { "model": f"the_bumblezone:block/string_curtain/{color}_east_unattached" },
-            "attached=false,middle=true,facing=north": { "model": f"the_bumblezone:block/string_curtain/{color}_ns_unattached" },
-            "attached=false,middle=true,facing=south": { "model": f"the_bumblezone:block/string_curtain/{color}_ns_unattached" },
-            "attached=false,middle=true,facing=west": { "model": f"the_bumblezone:block/string_curtain/{color}_ew_unattached" },
-            "attached=false,middle=true,facing=east": { "model": f"the_bumblezone:block/string_curtain/{color}_ew_unattached" }
+            "attached=true,center=false,facing=north,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top_end", "y": 270 },
+            "attached=true,center=false,facing=south,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top_end", "y": 90 },
+            "attached=true,center=false,facing=west,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top_end", "y": 180 },
+            "attached=true,center=false,facing=east,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top_end" },
+            "attached=true,center=true,facing=north,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top_end" },
+            "attached=true,center=true,facing=south,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top_end" },
+            "attached=true,center=true,facing=west,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top_end", "y": 90 },
+            "attached=true,center=true,facing=east,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_top_end", "y": 90 },
+
+            "attached=false,center=false,facing=north,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_middle", "y": 270 },
+            "attached=false,center=false,facing=south,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_middle", "y": 90 },
+            "attached=false,center=false,facing=west,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_middle", "y": 180 },
+            "attached=false,center=false,facing=east,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_middle" },
+            "attached=false,center=true,facing=north,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_middle" },
+            "attached=false,center=true,facing=south,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_middle" },
+            "attached=false,center=true,facing=west,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_middle", "y": 90 },
+            "attached=false,center=true,facing=east,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_center_middle", "y": 90 },
+
+            "attached=false,center=false,facing=north,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_bottom", "y": 270 },
+            "attached=false,center=false,facing=south,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_bottom", "y": 90 },
+            "attached=false,center=false,facing=west,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_bottom", "y": 180 },
+            "attached=false,center=false,facing=east,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_bottom" },
+            "attached=false,center=true,facing=north,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_bottom" },
+            "attached=false,center=true,facing=south,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_bottom" },
+            "attached=false,center=true,facing=west,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_bottom", "y": 90 },
+            "attached=false,center=true,facing=east,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_bottom", "y": 90 },
         }
     }
     blockstateFile.write(json.dumps(jsonData, indent=2))
@@ -74,7 +88,7 @@ for color in colors:
     modelJson = {
         "parent": "minecraft:item/generated",
         "textures": {
-            "layer0": f"the_bumblezone:block/string_curtain/{color}_attached"
+            "layer0": f"the_bumblezone:item/string_curtain/{color}"
         }
     }
     modelFile.write(json.dumps(modelJson, indent=2))
@@ -174,7 +188,7 @@ for color in colors:
         modelFile.seek(0)
         modelJson = json.load(modelTemplateFile)
         textures = modelJson["textures"]
-        textures["0"] = textures["0"].replace("string_curtain/", f"string_curtain/{color}_")
+        textures["main"] = textures["main"].replace("string_curtain/", f"string_curtain/{color}_")
         textures["particle"] = textures["particle"].replace("string_curtain/", f"string_curtain/{color}_")
         modelFile.write(json.dumps(modelJson, indent=2))
 
