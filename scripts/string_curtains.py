@@ -2,6 +2,10 @@ from os.path import exists
 import os
 import shutil
 import json
+import jsbeautifier
+
+options = jsbeautifier.default_options()
+options.indent_size = 2
 
 colors = [
     "black", 
@@ -37,9 +41,12 @@ if not os.path.exists("output"):
     os.mkdir("output")
 
 for color in colors:
-    blockstateFile = open(f"output/string_curtain_{color}.json", "w+")
+    if not os.path.exists("output/blockstates"):
+        os.mkdir("output/blockstates")
+
+    blockstateFile = open(f"output/blockstates/string_curtain_{color}.json", "w+")
     blockstateFile.seek(0)
-    jsonData = {
+    blockstateJsonData = {
         "variants": {
             "attached=true,center=false,facing=north,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top", "y": 270 },
             "attached=true,center=false,facing=south,is_end=false": { "model": f"the_bumblezone:block/string_curtain/{color}_wall_top", "y": 90 },
@@ -78,20 +85,20 @@ for color in colors:
             "attached=false,center=true,facing=east,is_end=true": { "model": f"the_bumblezone:block/string_curtain/{color}_center_bottom", "y": 90 },
         }
     }
-    blockstateFile.write(json.dumps(jsonData, indent=2))
+    blockstateFile.write(jsbeautifier.beautify(json.dumps(blockstateJsonData), options))
 
     if not os.path.exists("output/item_models"):
         os.mkdir("output/item_models")
 
-    modelFile = open(f"output/item_models/string_curtain_{color}.json", "w+")
-    modelFile.seek(0)
-    modelJson = {
+    itemModelFile = open(f"output/item_models/string_curtain_{color}.json", "w+")
+    itemModelFile.seek(0)
+    itemModelJson = {
         "parent": "minecraft:item/generated",
         "textures": {
             "layer0": f"the_bumblezone:item/string_curtain/{color}"
         }
     }
-    modelFile.write(json.dumps(modelJson, indent=2))
+    itemModelFile.write(jsbeautifier.beautify(json.dumps(itemModelJson), options))
 
 
     if not os.path.exists("output/recipes"):
@@ -100,9 +107,9 @@ for color in colors:
     if not os.path.exists("output/recipes/string_curtain"):
         os.mkdir("output/recipes/string_curtain")
 
-    modelFile = open(f"output/recipes/string_curtain/{color}.json", "w+")
-    modelFile.seek(0)
-    modelJson = {
+    recipeFile = open(f"output/recipes/string_curtain/{color}.json", "w+")
+    recipeFile.seek(0)
+    recipeJson = {
         "type": "minecraft:crafting_shaped",
         "group": "the_bumblezone",
         "pattern": [
@@ -128,15 +135,15 @@ for color in colors:
             "item": f"the_bumblezone:string_curtain_{color}"
         }
     }
-    modelFile.write(json.dumps(modelJson, indent=2))
+    recipeFile.write(jsbeautifier.beautify(json.dumps(recipeJson), options))
 
 
     if not os.path.exists("output/loot_table"):
         os.mkdir("output/loot_table")
 
-    modelFile = open(f"output/loot_table/string_curtain_{color}.json", "w+")
-    modelFile.seek(0)
-    modelJson = {
+    lootTableFile = open(f"output/loot_table/string_curtain_{color}.json", "w+")
+    lootTableFile.seek(0)
+    lootTableJson = {
         "type": "minecraft:block",
         "pools": [
         {
@@ -173,7 +180,7 @@ for color in colors:
         }
         ]
     }
-    modelFile.write(json.dumps(modelJson, indent=2))
+    lootTableFile.write(jsbeautifier.beautify(json.dumps(lootTableJson), options))
 
 
     if not os.path.exists("output/block_models"):
@@ -184,13 +191,13 @@ for color in colors:
 
     for modelType in modelTypes:
         modelTemplateFile = open(f"input/string_curtain/{modelType}.json")
-        modelFile = open(f"output/block_models/string_curtain/{color}_{modelType}.json", "w+")
-        modelFile.seek(0)
-        modelJson = json.load(modelTemplateFile)
-        textures = modelJson["textures"]
+        blockModelFile = open(f"output/block_models/string_curtain/{color}_{modelType}.json", "w+")
+        blockModelFile.seek(0)
+        blockModelJson = json.load(modelTemplateFile)
+        textures = blockModelJson["textures"]
         textures["main"] = textures["main"].replace("string_curtain/", f"string_curtain/{color}_")
         textures["particle"] = textures["particle"].replace("string_curtain/", f"string_curtain/{color}_")
-        modelFile.write(json.dumps(modelJson, indent=2))
+        blockModelFile.write(jsbeautifier.beautify(json.dumps(blockModelJson), options))
 
 
 
