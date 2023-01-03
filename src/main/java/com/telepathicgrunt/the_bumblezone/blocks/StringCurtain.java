@@ -45,7 +45,8 @@ import java.util.Map;
 public class StringCurtain extends Block {
 
     public static final BooleanProperty ATTACHED = BooleanProperty.create("attached");
-    public static final BooleanProperty MIDDLE = BooleanProperty.create("middle");
+    public static final BooleanProperty CENTER = BooleanProperty.create("center");
+    public static final BooleanProperty IS_END = BooleanProperty.create("is_end");
     public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     protected final Map<Pair<Direction, Boolean>, VoxelShape> collisionShapeByMap;
 
@@ -84,28 +85,29 @@ public class StringCurtain extends Block {
         this.collisionShapeByMap = this.makeShapes();
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(ATTACHED, true)
-                .setValue(MIDDLE, true)
+                .setValue(CENTER, true)
+                .setValue(IS_END, true)
                 .setValue(HORIZONTAL_FACING, Direction.NORTH));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
-        blockStateBuilder.add(ATTACHED, MIDDLE, HORIZONTAL_FACING);
+        blockStateBuilder.add(ATTACHED, CENTER, IS_END, HORIZONTAL_FACING);
     }
 
     protected Map<Pair<Direction, Boolean>, VoxelShape> makeShapes() {
         Map<Pair<Direction, Boolean>, VoxelShape> shapeMap = new Object2ObjectArrayMap<>();
 
-        shapeMap.put(Pair.of(Direction.NORTH, false), Block.box(0, 0, 15, 16, 16, 16));
-        shapeMap.put(Pair.of(Direction.SOUTH, false), Block.box(0, 0, 0, 16, 16, 1));
-        shapeMap.put(Pair.of(Direction.WEST, false), Block.box(15, 0, 0, 16, 16, 16));
-        shapeMap.put(Pair.of(Direction.EAST, false), Block.box(0, 0, 0, 1, 16, 16));
+        shapeMap.put(Pair.of(Direction.NORTH, false), Block.box(0, 0, 14, 16, 16, 16));
+        shapeMap.put(Pair.of(Direction.SOUTH, false), Block.box(0, 0, 0, 16, 16, 2));
+        shapeMap.put(Pair.of(Direction.WEST, false), Block.box(14, 0, 0, 16, 16, 16));
+        shapeMap.put(Pair.of(Direction.EAST, false), Block.box(0, 0, 0, 2, 16, 16));
 
-        VoxelShape temp = Block.box(0, 0, 7.5, 16, 16, 8.5);
+        VoxelShape temp = Block.box(0, 0, 7, 16, 16, 9);
         shapeMap.put(Pair.of(Direction.NORTH, true), temp);
         shapeMap.put(Pair.of(Direction.SOUTH, true), temp);
 
-        temp = Block.box(7.5, 0, 0, 8.5, 16, 16);
+        temp = Block.box(7, 0, 0, 9, 16, 16);
         shapeMap.put(Pair.of(Direction.WEST, true), temp);
         shapeMap.put(Pair.of(Direction.EAST, true), temp);
 
@@ -114,7 +116,7 @@ public class StringCurtain extends Block {
 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        return collisionShapeByMap.get(Pair.of(blockState.getValue(HORIZONTAL_FACING), blockState.getValue(MIDDLE)));
+        return collisionShapeByMap.get(Pair.of(blockState.getValue(HORIZONTAL_FACING), blockState.getValue(CENTER)));
     }
 
     @Override
@@ -209,16 +211,20 @@ public class StringCurtain extends Block {
             return null;
         }
 
+        BlockState belowState = level.getBlockState(blockpos.below());
+
         if(placeContext.getClickedFace().getAxis() != Direction.Axis.Y) {
             return defaultBlockState()
                     .setValue(ATTACHED, true)
-                    .setValue(MIDDLE, false)
+                    .setValue(CENTER, false)
+                    .setValue(IS_END, !belowState.is(BzTags.STRING_CURTAINS))
                     .setValue(HORIZONTAL_FACING, placeContext.getClickedFace());
         }
         if(placeContext.getClickedFace() == Direction.DOWN) {
             return defaultBlockState()
                     .setValue(ATTACHED, true)
-                    .setValue(MIDDLE, true)
+                    .setValue(CENTER, true)
+                    .setValue(IS_END, !belowState.is(BzTags.STRING_CURTAINS))
                     .setValue(HORIZONTAL_FACING, placeContext.getHorizontalDirection());
         }
 
@@ -231,7 +237,7 @@ public class StringCurtain extends Block {
             return false;
         }
 
-        if (blockstate.getValue(MIDDLE) || !blockstate.getValue(ATTACHED)) {
+        if (blockstate.getValue(CENTER) || !blockstate.getValue(ATTACHED)) {
             BlockState aboveState = world.getBlockState(pos.above());
             return aboveState.is(BzTags.STRING_CURTAINS) || aboveState.isFaceSturdy(world, pos.above(), Direction.DOWN);
         }
@@ -253,6 +259,17 @@ public class StringCurtain extends Block {
         if (!level.isClientSide) {
             if (!blockState.canSurvive(level, blockPos)) {
                 level.destroyBlock(blockPos, true);
+            }
+
+            boolean belowCurtain = level.getBlockState(blockPos.below()).is(BzTags.STRING_CURTAINS);
+            if (belowCurtain == blockState.getValue(IS_END)) {
+                level.setBlock(blockPos,
+                        defaultBlockState()
+                        .setValue(ATTACHED, blockState.getValue(ATTACHED))
+                        .setValue(CENTER, blockState.getValue(CENTER))
+                        .setValue(IS_END, !belowCurtain)
+                        .setValue(HORIZONTAL_FACING, blockState.getValue(HORIZONTAL_FACING)),
+                        3);
             }
         }
     }
@@ -290,7 +307,7 @@ public class StringCurtain extends Block {
                     blockstate.getBlock()
                         .defaultBlockState()
                         .setValue(ATTACHED, false)
-                        .setValue(MIDDLE, blockstate.getValue(MIDDLE))
+                        .setValue(CENTER, blockstate.getValue(CENTER))
                         .setValue(HORIZONTAL_FACING, blockstate.getValue(HORIZONTAL_FACING)),
                     3);
 
