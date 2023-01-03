@@ -215,12 +215,14 @@ public class StringCurtain extends Block {
 
         if (blockstate.getValue(CENTER) || !blockstate.getValue(ATTACHED)) {
             BlockState aboveState = world.getBlockState(pos.above());
-            return aboveState.is(BzTags.STRING_CURTAINS) || aboveState.isFaceSturdy(world, pos.above(), Direction.DOWN);
+            return (aboveState.is(BzTags.STRING_CURTAINS) && !blockstate.getValue(ATTACHED)) ||
+                    (aboveState.isFaceSturdy(world, pos.above(), Direction.DOWN) && blockstate.getValue(ATTACHED));
         }
         else {
             Direction facing = blockstate.getValue(HORIZONTAL_FACING);
             BlockState sideState = world.getBlockState(pos.relative(facing.getOpposite()));
-            return sideState.isFaceSturdy(world, pos.relative(facing.getOpposite()), facing);
+            BlockState aboveState = world.getBlockState(pos.above());
+            return sideState.isFaceSturdy(world, pos.relative(facing.getOpposite()), facing) || aboveState.isFaceSturdy(world, pos.above(), Direction.DOWN);
         }
     }
 
@@ -237,13 +239,18 @@ public class StringCurtain extends Block {
                 level.destroyBlock(blockPos, true);
             }
 
-            boolean belowCurtain = level.getBlockState(blockPos.below()).is(BzTags.STRING_CURTAINS);
+            BlockState belowState = level.getBlockState(blockPos.below());
+            boolean belowCurtain = belowState.is(BzTags.STRING_CURTAINS);
             if (belowCurtain == blockState.getValue(IS_END)) {
+                boolean showEnds = !belowCurtain ||
+                        (belowState.getValue(CENTER) != blockState.getValue(CENTER) ||
+                        belowState.getValue(HORIZONTAL_FACING) != blockState.getValue(HORIZONTAL_FACING));
+
                 level.setBlock(blockPos,
                         defaultBlockState()
                         .setValue(ATTACHED, blockState.getValue(ATTACHED))
                         .setValue(CENTER, blockState.getValue(CENTER))
-                        .setValue(IS_END, !belowCurtain)
+                        .setValue(IS_END, showEnds)
                         .setValue(HORIZONTAL_FACING, blockState.getValue(HORIZONTAL_FACING)),
                         3);
             }
