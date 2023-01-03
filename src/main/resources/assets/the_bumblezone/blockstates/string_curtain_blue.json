@@ -1,52 +1,120 @@
 {
   "variants": {
-    "attached=true,middle=false,facing=north": {
-      "model": "the_bumblezone:block/string_curtain/blue_north_attached"
+    "attached=true,center=false,facing=north,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top",
+      "y": 270
     },
-    "attached=true,middle=false,facing=south": {
-      "model": "the_bumblezone:block/string_curtain/blue_south_attached"
+    "attached=true,center=false,facing=south,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top",
+      "y": 90
     },
-    "attached=true,middle=false,facing=west": {
-      "model": "the_bumblezone:block/string_curtain/blue_west_attached"
+    "attached=true,center=false,facing=west,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top",
+      "y": 180
     },
-    "attached=true,middle=false,facing=east": {
-      "model": "the_bumblezone:block/string_curtain/blue_east_attached"
+    "attached=true,center=false,facing=east,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top"
     },
-    "attached=true,middle=true,facing=north": {
-      "model": "the_bumblezone:block/string_curtain/blue_ns_attached"
+    "attached=true,center=true,facing=north,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top"
     },
-    "attached=true,middle=true,facing=south": {
-      "model": "the_bumblezone:block/string_curtain/blue_ns_attached"
+    "attached=true,center=true,facing=south,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top"
     },
-    "attached=true,middle=true,facing=west": {
-      "model": "the_bumblezone:block/string_curtain/blue_ew_attached"
+    "attached=true,center=true,facing=west,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top",
+      "y": 90
     },
-    "attached=true,middle=true,facing=east": {
-      "model": "the_bumblezone:block/string_curtain/blue_ew_attached"
+    "attached=true,center=true,facing=east,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top",
+      "y": 90
     },
-    "attached=false,middle=false,facing=north": {
-      "model": "the_bumblezone:block/string_curtain/blue_north_unattached"
+    "attached=true,center=false,facing=north,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top_end",
+      "y": 270
     },
-    "attached=false,middle=false,facing=south": {
-      "model": "the_bumblezone:block/string_curtain/blue_south_unattached"
+    "attached=true,center=false,facing=south,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top_end",
+      "y": 90
     },
-    "attached=false,middle=false,facing=west": {
-      "model": "the_bumblezone:block/string_curtain/blue_west_unattached"
+    "attached=true,center=false,facing=west,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top_end",
+      "y": 180
     },
-    "attached=false,middle=false,facing=east": {
-      "model": "the_bumblezone:block/string_curtain/blue_east_unattached"
+    "attached=true,center=false,facing=east,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_top_end"
     },
-    "attached=false,middle=true,facing=north": {
-      "model": "the_bumblezone:block/string_curtain/blue_ns_unattached"
+    "attached=true,center=true,facing=north,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top_end"
     },
-    "attached=false,middle=true,facing=south": {
-      "model": "the_bumblezone:block/string_curtain/blue_ns_unattached"
+    "attached=true,center=true,facing=south,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top_end"
     },
-    "attached=false,middle=true,facing=west": {
-      "model": "the_bumblezone:block/string_curtain/blue_ew_unattached"
+    "attached=true,center=true,facing=west,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top_end",
+      "y": 90
     },
-    "attached=false,middle=true,facing=east": {
-      "model": "the_bumblezone:block/string_curtain/blue_ew_unattached"
+    "attached=true,center=true,facing=east,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_top_end",
+      "y": 90
+    },
+    "attached=false,center=false,facing=north,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_middle",
+      "y": 270
+    },
+    "attached=false,center=false,facing=south,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_middle",
+      "y": 90
+    },
+    "attached=false,center=false,facing=west,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_middle",
+      "y": 180
+    },
+    "attached=false,center=false,facing=east,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_middle"
+    },
+    "attached=false,center=true,facing=north,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_middle"
+    },
+    "attached=false,center=true,facing=south,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_middle"
+    },
+    "attached=false,center=true,facing=west,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_middle",
+      "y": 90
+    },
+    "attached=false,center=true,facing=east,is_end=false": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_middle",
+      "y": 90
+    },
+    "attached=false,center=false,facing=north,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_bottom",
+      "y": 270
+    },
+    "attached=false,center=false,facing=south,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_bottom",
+      "y": 90
+    },
+    "attached=false,center=false,facing=west,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_bottom",
+      "y": 180
+    },
+    "attached=false,center=false,facing=east,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_wall_bottom"
+    },
+    "attached=false,center=true,facing=north,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_bottom"
+    },
+    "attached=false,center=true,facing=south,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_bottom"
+    },
+    "attached=false,center=true,facing=west,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_bottom",
+      "y": 90
+    },
+    "attached=false,center=true,facing=east,is_end=true": {
+      "model": "the_bumblezone:block/string_curtain/blue_center_bottom",
+      "y": 90
     }
   }
 }
