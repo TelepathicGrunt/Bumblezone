@@ -80,6 +80,10 @@
     {
       "id": "botania:black_double_flower",
       "required": false
+    },
+    {
+      "id": "wilderwild:cattail",
+      "required": false
     }
   ]
 }
