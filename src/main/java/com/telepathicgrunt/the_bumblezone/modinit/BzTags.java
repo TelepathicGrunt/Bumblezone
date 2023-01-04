@@ -97,5 +97,5 @@ public class BzTags {
     public static final TagKey<MobEffect> DISALLOWED_INCENSE_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "incense_candle/disallowed_effects"));
 
     public static final TagKey<Enchantment> DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/disallowed_enchantments"));
-    public static final TagKey<Enchantment> FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/force_allowed_enchantments"));
+    public static final TagKey<Enchantment> FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/forced_allowed_enchantments"));
 }
