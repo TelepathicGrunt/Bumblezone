@@ -62,10 +62,6 @@
       "required": false
     },
     {
-      "id": "wildlife:stinkbug",
-      "required": false
-    },
-    {
       "id": "wildlife:dragonfly",
       "required": false
     },

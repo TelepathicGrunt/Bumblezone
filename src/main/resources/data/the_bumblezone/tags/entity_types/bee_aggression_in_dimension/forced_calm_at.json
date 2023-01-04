@@ -30,7 +30,15 @@
       "required": false
     },
     {
+      "id": "wondrouswilds:firefly",
+      "required": false
+    },
+    {
       "id": "wonderouswilds:firefly",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:butterfly",
       "required": false
     },
     {
@@ -94,6 +102,10 @@
       "required": false
     },
     {
+      "id": "wildlife:stinkbug",
+      "required": false
+    },
+    {
       "id": "betterend:silk_moth",
       "required": false
     },
@@ -107,10 +119,6 @@
     },
     {
       "id": "whisperwoods:moth",
-      "required": false
-    },
-    {
-      "id": "wonderouswilds:firefly",
       "required": false
     },
     {
