@@ -168,11 +168,11 @@ public class StinglessBeeHelmet extends BeeArmor {
         return yOffset;
     }
 
-    public static void decrementHighlightingCounter(TickEvent.ClientTickEvent event) {
-        if(event.phase == TickEvent.Phase.END && HELMET_EFFECT_COUNTER_CLIENTSIDE > 0) {
+    public static void decrementHighlightingCounter(Player player) {
+        if(HELMET_EFFECT_COUNTER_CLIENTSIDE > 0) {
             HELMET_EFFECT_COUNTER_CLIENTSIDE--;
 
-            if (getEntityBeeHelmet(Minecraft.getInstance().player).isEmpty()) {
+            if (getEntityBeeHelmet(player).isEmpty()) {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
             }
         }
