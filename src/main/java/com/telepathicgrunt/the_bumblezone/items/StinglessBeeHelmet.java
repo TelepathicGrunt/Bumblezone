@@ -9,8 +9,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -171,11 +169,11 @@ public class StinglessBeeHelmet extends BeeArmor {
         return yOffset;
     }
 
-    public static void decrementHighlightingCounter(Minecraft minecraft) {
+    public static void decrementHighlightingCounter(Player player) {
         if(HELMET_EFFECT_COUNTER_CLIENTSIDE > 0) {
             HELMET_EFFECT_COUNTER_CLIENTSIDE--;
 
-            if (getEntityBeeHelmet(minecraft.player).isEmpty()) {
+            if (getEntityBeeHelmet(player).isEmpty()) {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
             }
         }

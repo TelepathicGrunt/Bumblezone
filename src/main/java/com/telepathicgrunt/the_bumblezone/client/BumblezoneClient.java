@@ -22,6 +22,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerS
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.mixin.client.DimensionSpecialEffectsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -76,6 +77,7 @@ public class BumblezoneClient implements ClientModInitializer {
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
         CrystallineFlowerEnchantmentPacket.registerPacket();
+        ClientTickEvents.END.register((minecraft) -> StinglessBeeHelmet.decrementHighlightingCounter(minecraft.player));
     }
 
     private void registerEntityRenders() {
