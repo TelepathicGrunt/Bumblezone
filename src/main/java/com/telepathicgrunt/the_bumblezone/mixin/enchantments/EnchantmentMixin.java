@@ -20,10 +20,10 @@ public class EnchantmentMixin {
         Enchantment enchantment = ((Enchantment)(Object)this);
 
         if (HoneyCrystalShield.isInvalidForHoneyCrystalShield(stack, enchantment)) {
-            return true;
+            return false;
         }
         else if (StingerSpearItem.isInvalidForStingerSpear(stack, enchantment)) {
-            return true;
+            return false;
         }
         else if (StingerSpearItem.canBeEnchanted(stack, enchantment)) {
             return true;
