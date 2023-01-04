@@ -26,6 +26,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
+import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -88,6 +89,7 @@ public class Bumblezone{
         forgeBus.addListener(BeeInteractivity::onEntityInteractEvent);
         forgeBus.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         forgeBus.addListener(BzWorldSavedData::worldTick);
+        forgeBus.addListener(StinglessBeeHelmet::decrementHighlightingCounter);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(EntityTeleportationBackend::entityChangingDimension);
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
