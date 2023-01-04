@@ -28,6 +28,7 @@ import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -96,7 +97,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BeeAggression.setupEvents();
         ModChecker.setupModCompat();
         ServerTickEvents.END_WORLD_TICK.register(BzWorldSavedData::tick);
-        ClientTickEvents.END.register(StinglessBeeHelmet::decrementHighlightingCounter);
+        ClientTickEvents.END_CLIENT_TICK.register(StinglessBeeHelmet::decrementHighlightingCounter);
 
         BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
