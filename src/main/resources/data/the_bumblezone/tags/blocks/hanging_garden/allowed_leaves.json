@@ -118,6 +118,38 @@
     {
       "id": "regions_unexplored:white_cherry_leaves",
       "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "promenade:white_cherry_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "terrestria:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "promenade:white_cherry_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:lavender_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:rose_wisteria_leaves",
+      "required": false
     }
   ]
 }

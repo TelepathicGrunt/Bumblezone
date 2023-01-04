@@ -446,6 +446,10 @@
     {
       "id": "botania:black_mystical_flower",
       "required": false
+    },
+    {
+      "id": "spectrum:resonant_lily",
+      "required": false
     }
   ]
 }

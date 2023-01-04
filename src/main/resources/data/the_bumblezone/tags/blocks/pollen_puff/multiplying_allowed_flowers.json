@@ -209,6 +209,14 @@
     {
       "id": "naturalized:begonias",
       "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "promenade:white_cherry_oak_sapling",
+      "required": false
     }
   ]
 }
