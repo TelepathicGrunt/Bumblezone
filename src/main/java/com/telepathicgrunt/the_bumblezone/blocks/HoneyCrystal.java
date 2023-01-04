@@ -9,12 +9,14 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -200,6 +202,14 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         }
 
         return this.item;
+    }
+
+    /**
+     * Makes this block show up in creative menu to fix the asItem override side-effect
+     */
+    @Override
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
     }
 
     /**
