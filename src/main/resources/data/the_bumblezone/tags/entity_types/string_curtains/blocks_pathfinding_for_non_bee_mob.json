@@ -15,7 +15,19 @@
       "required": false
     },
     {
+      "id": "wondrouswilds:firefly",
+      "required": false
+    },
+    {
       "id": "wonderouswilds:firefly",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:butterfly",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:dragonfly",
       "required": false
     },
     {
@@ -36,6 +48,10 @@
     },
     {
       "id": "wildlife:morpho_butterfly",
+      "required": false
+    },
+    {
+      "id": "wildlife:firefly",
       "required": false
     },
     {

@@ -221,6 +221,70 @@
     {
       "id": "naturalized:rose",
       "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "promenade:white_cherry_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "promenade:lily_of_the_valley_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:cornflower_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:oxeye_daisy_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:dandelion_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:pink_tulip_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:white_tulip_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:orange_tulip_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:red_tulip_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:poppy_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:azure_bluet_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:blue_orchid_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:allium_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:white_cherry_oak_leaf_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_leaf_pile",
+      "required": false
     }
   ]
 }

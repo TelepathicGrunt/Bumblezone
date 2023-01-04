@@ -316,6 +316,10 @@
     {
       "id": "naturaldecormod:irish_moss_small",
       "required": false
+    },
+    {
+      "id": "spectrum:resonant_lily",
+      "required": false
     }
   ]
 }
