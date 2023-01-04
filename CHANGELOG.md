@@ -15,6 +15,8 @@ Made Honey Cave Room structure much more common so it is more easily found.
 
 Disabled prefilling maps in Hive Temple's loot due to unable to resolve the lag with it.
 
+Fixed Throne Pillar structure's giant webs not turning into Filled Porous Honeycomb Block when replacing Sugar Water.
+
 ##### Items:
 Fixed Stinger Spear losing enchantments and damage if thrown, game closed, reopened, and the spear picked up again.
 
