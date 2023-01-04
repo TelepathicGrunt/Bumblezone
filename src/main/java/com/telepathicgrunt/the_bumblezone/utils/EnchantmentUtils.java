@@ -121,7 +121,7 @@ public class EnchantmentUtils {
 	}
 
 	private static boolean isEnchantmentForcedAllowed(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
 			if (enchantmentHolder.value().equals(enchantment)) {
 				return true;
