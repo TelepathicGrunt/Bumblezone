@@ -29,6 +29,10 @@ Fixed Stingless Bee Helmet not highlighting Bee Queen mob.
 Fixed Stingless Bee Helmet still highlighting bees even after taking it off.
  Also highlights if shift clicking while on ground now instead of any shift clicking.
 
+Fixed Honey Crystal Shield able to get Mending enchantment.
+
+Fixed Stinger Spear able to get Channeling and Riptide enchantments.
+
 ##### Blocks:
 Added String Curtains that bees cannot pathfind through and slightly pushes bees away. Great for making a walk-in bee room with bees escaping!
  Attaches to any solid surface and right clicking with string will extend the block downward.
