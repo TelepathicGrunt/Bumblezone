@@ -450,6 +450,10 @@
     {
       "id": "spectrum:resonant_lily",
       "required": false
+    },
+    {
+      "id": "terrestria:monsteras",
+      "required": false
     }
   ]
 }
