@@ -1,4 +1,4 @@
-### **(V.6.6.0 Changes) (1.19.3 Minecraft)**
+### **(V.6.6.0 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
 Made Throne Pillar locating Honey Compasses more common in Cell Maze structure.
