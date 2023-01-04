@@ -105,7 +105,7 @@ dependencies {
     annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1-rc.4")
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 
-    runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
+    //runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
     runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 

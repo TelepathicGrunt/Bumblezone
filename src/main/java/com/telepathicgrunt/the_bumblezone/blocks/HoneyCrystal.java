@@ -209,7 +209,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      */
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(BzItems.HONEY_CRYSTAL));
+        items.add(new ItemStack(BzItems.HONEY_CRYSTAL.get()));
     }
 
     /**
