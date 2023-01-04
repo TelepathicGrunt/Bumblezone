@@ -22,7 +22,15 @@
       "required": false
     },
     {
+      "id": "wondrouswilds:firefly",
+      "required": false
+    },
+    {
       "id": "wonderouswilds:firefly",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:butterfly",
       "required": false
     },
     {
@@ -67,6 +75,26 @@
     },
     {
       "id": "wildlife:ladybug",
+      "required": false
+    },
+    {
+      "id": "wildlife:stinkbug",
+      "required": false
+    },
+    {
+      "id": "wildlife:cricket",
+      "required": false
+    },
+    {
+      "id": "wildlife:chameleon",
+      "required": false
+    },
+    {
+      "id": "wildlife:gecko",
+      "required": false
+    },
+    {
+      "id": "wildlife:iguana",
       "required": false
     },
     {
