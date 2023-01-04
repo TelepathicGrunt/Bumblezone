@@ -121,7 +121,7 @@ public class EnchantmentUtils {
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : Registry.ENCHANTMENT) {
 
-			boolean forceAllowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.FORCE_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
+			boolean forceAllowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
 			boolean disallowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
 			if (!forceAllowed && disallowed) {
 				continue;
