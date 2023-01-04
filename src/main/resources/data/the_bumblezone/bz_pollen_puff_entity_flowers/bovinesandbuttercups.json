@@ -1,0 +1,384 @@
+{
+  "bovinesandbuttercups:moobloom": [
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:buttercup"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:buttercup" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:pink_daisy"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:pink_daisy" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:limelight"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:limelight" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:bird_of_paradise"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:bird_of_paradise" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:chargelily"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:chargelily" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:hyacinth"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:hyacinth" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:snowdrop"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:snowdrop" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "bovinesandbuttercups:tropical_blue"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:tropical_blue" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
+        "Type": "minecraft:dandelion"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:dandelion" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:poppy"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:poppy" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:blue_orchid"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:blue_orchid" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:allium"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:allium" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:azure_bluet"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:azure_bluet" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:red_tulip"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_tulip" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:orange_tulip"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:orange_tulip" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:white_tulip"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:white_tulip" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:pink_tulip"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:pink_tulip" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:oxeye_daisy"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:oxeye_daisy" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:cornflower"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:cornflower" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0, 
+        "Type": "minecraft:lily_of_the_valley"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:lily_of_the_valley" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

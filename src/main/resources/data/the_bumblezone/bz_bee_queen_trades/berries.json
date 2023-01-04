@@ -27,6 +27,10 @@
     {
       "id": "naturalized:cloudberry",
       "required": false
+    },
+    {
+      "id": "promenade:blueberries",
+      "required": false
     }
   ],
   "possible_rewards": [
