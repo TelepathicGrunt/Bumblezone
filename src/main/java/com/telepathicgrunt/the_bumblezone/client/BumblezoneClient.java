@@ -40,6 +40,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -77,7 +78,7 @@ public class BumblezoneClient implements ClientModInitializer {
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
         CrystallineFlowerEnchantmentPacket.registerPacket();
-        ClientTickEvents.END.register((minecraft) -> StinglessBeeHelmet.decrementHighlightingCounter(minecraft.player));
+        ClientTickEvents.END_CLIENT_TICK.register((minecraft) -> StinglessBeeHelmet.decrementHighlightingCounter(minecraft.player));
     }
 
     private void registerEntityRenders() {
