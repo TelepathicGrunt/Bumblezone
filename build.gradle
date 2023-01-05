@@ -126,13 +126,13 @@ dependencies {
     compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
     compileOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
-    compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
+    //compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
     //runtimeOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
     //runtimeOnly fg.deobf("flatdir:Phosphophyllite-0.6.0:beta.52")
     //runtimeOnly fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-1.19.2:1.1.17")
     //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.35")
 
-    compileOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
+    //compileOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
     //runtimeOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
 
     //runtimeOnly fg.deobf("curse.maven:realistic_bees-410743:4021715")
