@@ -1,0 +1,143 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:birch_leaves",
+    "minecraft:flowering_azalea_leaves",
+    {
+      "id": "byg:flowering_orchard_leaves",
+      "required": false
+    },
+    {
+      "id": "byg:skyris_leaves",
+      "required": false
+    },
+    {
+      "id": "terrestria:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:lavender_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:pink_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:yellow_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:orange_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:red_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:red_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:orange_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:yellow_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:pink_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:purple_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:white_flowering_azalea_leaves",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:flowering_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:budding_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:redlove_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:apple_leaves",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "blossom:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "duneons:towerleavesflowers",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:red_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "promenade:white_cherry_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "terrestria:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:lavender_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:rose_wisteria_leaves",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:birch_log",
+    {
+      "id": "ecologics:flowering_azalea_log",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:flowering_azalea_log",
+      "required": false
+    },
+    {
+      "id": "botania:glimmering_dreamwood_log",
+      "required": false
+    }
+  ]
+}

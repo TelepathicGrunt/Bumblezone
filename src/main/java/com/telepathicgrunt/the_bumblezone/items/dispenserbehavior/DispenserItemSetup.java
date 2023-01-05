@@ -34,9 +34,13 @@ public class DispenserItemSetup {
         FlintAndSteelDispenseBehavior.DEFAULT_DISPENSE_BEHAVIOR =
                 ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(Items.FLINT_AND_STEEL));
 
+        StringDispenseBehavior.DEFAULT_STRING_DISPENSE_BEHAVIOR =
+                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(Items.STRING));
+
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.BUCKET, new EmptyBucketDispenseBehavior());
         DispenserBlock.registerBehavior(Items.FLINT_AND_STEEL, new FlintAndSteelDispenseBehavior());
+        DispenserBlock.registerBehavior(Items.STRING, new StringDispenseBehavior());
     }
 }

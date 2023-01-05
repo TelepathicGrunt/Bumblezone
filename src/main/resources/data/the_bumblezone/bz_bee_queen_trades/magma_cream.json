@@ -1,0 +1,45 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:magma_cream",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:ghast_tear",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:ghast_tear",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:glowstone_dust",
+      "count": 3,
+      "xp_reward": 1,
+      "weight": 4,
+      "required": true
+    },
+    {
+      "id": "minecraft:glowstone_dust",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 4,
+      "required": true
+    },
+    {
+      "id": "minecraft:glowstone_dust",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 4,
+      "required": true
+    }
+  ]
+}

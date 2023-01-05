@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -11,6 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -32,6 +35,26 @@ public class PorousHoneycomb extends Block {
 
     public PorousHoneycomb() {
         super(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK));
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+        beeHoneyFill(state, level, blockPos, entity);
+    }
+
+    @Override
+    public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
+        beeHoneyFill(state, level, blockPos, entity);
+    }
+
+    public static void beeHoneyFill(BlockState state, Level level, BlockPos blockPos, Entity entity) {
+        if(entity instanceof Bee beeEntity &&
+            beeEntity.hasNectar() &&
+            state.is(BzBlocks.POROUS_HONEYCOMB.get()))
+        {
+            ((BeeEntityInvoker) entity).callSetHasNectar(false);
+            level.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
+        }
     }
 
     /**

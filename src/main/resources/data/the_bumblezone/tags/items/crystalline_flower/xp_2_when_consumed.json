@@ -4,6 +4,11 @@
     "the_bumblezone:honey_crystal_shards",
     "the_bumblezone:bee_bread",
     "minecraft:honey_bottle",
+    "minecraft:emerald",
+    "minecraft:diamond",
+    "minecraft:amethyst_shard",
+    "minecraft:quartz",
+    "minecraft:echo_shard",
     {
       "id": "productivebees:honey_treat",
       "required": false
@@ -50,6 +55,10 @@
     },
     {
       "id": "create:honeyed_apple",
+      "required": false
+    },
+    {
+      "id": "bk:bee_pollen",
       "required": false
     }
   ]

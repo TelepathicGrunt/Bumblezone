@@ -1,0 +1,29 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:iron_ingot",
+      "required": true
+    },
+    {
+      "id": "minecraft:gold_ingot",
+      "required": true
+    },
+    {
+      "id": "minecraft:copper_ingot",
+      "required": true
+    },
+    {
+      "id": "minecraft:nether_brick",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:brick",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

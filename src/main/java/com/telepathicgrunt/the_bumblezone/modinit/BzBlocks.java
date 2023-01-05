@@ -79,6 +79,22 @@ public class BzBlocks {
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_RED = BLOCKS.register("super_candle_base_red", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_WHITE = BLOCKS.register("super_candle_base_white", SuperCandleBase::new);
     public static final RegistryObject<Block> SUPER_CANDLE_BASE_YELLOW = BLOCKS.register("super_candle_base_yellow", SuperCandleBase::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_BLACK = BLOCKS.register("string_curtain_black", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_BLUE = BLOCKS.register("string_curtain_blue", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_BROWN = BLOCKS.register("string_curtain_brown", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_CYAN = BLOCKS.register("string_curtain_cyan", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_GRAY = BLOCKS.register("string_curtain_gray", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_GREEN = BLOCKS.register("string_curtain_green", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_LIGHT_BLUE = BLOCKS.register("string_curtain_light_blue", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_LIGHT_GRAY = BLOCKS.register("string_curtain_light_gray", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_LIME = BLOCKS.register("string_curtain_lime", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_MAGENTA = BLOCKS.register("string_curtain_magenta", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_ORANGE = BLOCKS.register("string_curtain_orange", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_PINK = BLOCKS.register("string_curtain_pink", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_PURPLE = BLOCKS.register("string_curtain_purple", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_RED = BLOCKS.register("string_curtain_red", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_WHITE = BLOCKS.register("string_curtain_white", StringCurtain::new);
+    public static final RegistryObject<Block> STRING_CURTAIN_YELLOW = BLOCKS.register("string_curtain_yellow", StringCurtain::new);
     public static final RegistryObject<Block> INCENSE_BASE_CANDLE = BLOCKS.register("incense_candle_base", IncenseCandleBase::new);
     public static final RegistryObject<Block> CRYSTALLINE_FLOWER = BLOCKS.register("crystalline_flower", CrystallineFlower::new);
 }

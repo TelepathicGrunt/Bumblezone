@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -125,23 +124,12 @@ public class HoneyFluidBlock extends LiquidBlock {
     @Override
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
-        if (entity instanceof Bee beeEntity) {
-            if(state.is(BzFluids.HONEY_FLUID_BLOCK.get()) &&
-                beeEntity.hasNectar() &&
-                !state.getFluidState().isSource() &&
-                !state.getFluidState().getValue(FALLING))
-            {
-                ((BeeEntityInvoker)entity).callSetHasNectar(false);
-                world.setBlock(position, BzFluids.HONEY_FLUID.get().defaultFluidState().createLegacyBlock(), 3);
-            }
-
-            if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
-                float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
-                beeEntity.heal(diff);
-                BlockState currentState = world.getBlockState(position);
-                if(currentState.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
-                    world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(currentState.getValue(HoneyFluidBlock.LEVEL) - (int)Math.ceil(diff), 1)), 3);
-                }
+        if (entity instanceof Bee beeEntity && beeEntity.getHealth() < beeEntity.getMaxHealth()) {
+            float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
+            beeEntity.heal(diff);
+            BlockState currentState = world.getBlockState(position);
+            if(currentState.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
+                world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(currentState.getValue(HoneyFluidBlock.LEVEL) - (int)Math.ceil(diff), 1)), 3);
             }
         }
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {

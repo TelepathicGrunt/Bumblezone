@@ -1,0 +1,247 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:quartz_block",
+    "minecraft:amethyst_block",
+    "minecraft:bricks",
+    "minecraft:dead_tube_coral_fan",
+    "minecraft:dead_tube_coral_block",
+    "minecraft:dead_tube_coral",
+    "minecraft:dead_horn_coral_fan",
+    "minecraft:dead_horn_coral_block",
+    "minecraft:dead_horn_coral",
+    "minecraft:dead_fire_coral_fan",
+    "minecraft:dead_fire_coral_block",
+    "minecraft:dead_fire_coral",
+    "minecraft:dead_bubble_coral_fan",
+    "minecraft:dead_bubble_coral_block",
+    "minecraft:dead_bubble_coral",
+    "minecraft:dead_brain_coral_fan",
+    "minecraft:dead_brain_coral_block",
+    "minecraft:dead_brain_coral",
+    "#minecraft:terracotta",
+    "#minecraft:wool_carpets",
+    "#minecraft:wool",
+    "#minecraft:banners",
+    "#minecraft:beds",
+    "#minecraft:candles",
+    "the_bumblezone:empty_honeycomb_brood_block",
+    "the_bumblezone:royal_jelly_bottle",
+    "the_bumblezone:royal_jelly_bucket",
+    "the_bumblezone:royal_jelly_block",
+    "#the_bumblezone:string_curtains",
+    "#the_bumblezone:super_candles",
+    {
+      "id": "#forge:concrete_powder",
+      "required": false
+    },
+    {
+      "id": "#forge:concrete",
+      "required": false
+    },
+    {
+      "id": "#forge:dyes",
+      "required": false
+    },
+    {
+      "id": "#forge:glazed_terracotta",
+      "required": false
+    },
+    {
+      "id": "#forge:shulker_boxes",
+      "required": false
+    },
+    {
+      "id": "#forge:stained_glass_panes",
+      "required": false
+    },
+    {
+      "id": "#forge:stained_glass",
+      "required": false
+    },
+    {
+      "id": "#c:concrete_powder",
+      "required": false
+    },
+    {
+      "id": "#c:concrete",
+      "required": false
+    },
+    {
+      "id": "#c:dyes",
+      "required": false
+    },
+    {
+      "id": "#c:glazed_terracotta",
+      "required": false
+    },
+    {
+      "id": "#c:shulker_boxes",
+      "required": false
+    },
+    {
+      "id": "#c:stained_glass_panes",
+      "required": false
+    },
+    {
+      "id": "#c:stained_glass",
+      "required": false
+    },
+    {
+      "id": "#ae2:covered_cable",
+      "required": false
+    },
+    {
+      "id": "#ae2:covered_dense_cable",
+      "required": false
+    },
+    {
+      "id": "#ae2:glass_cable",
+      "required": false
+    },
+    {
+      "id": "#ae2:paint_balls",
+      "required": false
+    },
+    {
+      "id": "#ae2:smart_cable",
+      "required": false
+    },
+    {
+      "id": "#ae2:smart_dense_cable",
+      "required": false
+    },
+    {
+      "id": "#another_furniture:curtains",
+      "required": false
+    },
+    {
+      "id": "#another_furniture:lamps",
+      "required": false
+    },
+    {
+      "id": "#another_furniture:sofas",
+      "required": false
+    },
+    {
+      "id": "#another_furniture:stools",
+      "required": false
+    },
+    {
+      "id": "#another_furniture:tall_stools",
+      "required": false
+    },
+    {
+      "id": "#botanypots:basic_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#botanypots:hopper_botany_pots",
+      "required": false
+    },
+    {
+      "id": "#campanion:lawn_chairs",
+      "required": false
+    },
+    {
+      "id": "#catwalksinc:filled_paint_rollers",
+      "required": false
+    },
+    {
+      "id": "#chalk:chalk",
+      "required": false
+    },
+    {
+      "id": "#comforts:hammocks",
+      "required": false
+    },
+    {
+      "id": "#comforts:sleeping_bags",
+      "required": false
+    },
+    {
+      "id": "#elevatorid:elevators",
+      "required": false
+    },
+    {
+      "id": "#farmersdelight:canvas_signs",
+      "required": false
+    },
+    {
+      "id": "#kibe:elevators",
+      "required": false
+    },
+    {
+      "id": "#kibe:sleeping_bags",
+      "required": false
+    },
+    {
+      "id": "#modern_industrialization:fluid_pipes",
+      "required": false
+    },
+    {
+      "id": "#modern_industrialization:item_pipes",
+      "required": false
+    },
+    {
+      "id": "#pitg:duel_glass_panes",
+      "required": false
+    },
+    {
+      "id": "#pitg:horizontal_glass_panes",
+      "required": false
+    },
+    {
+      "id": "#quark:corundum",
+      "required": false
+    },
+    {
+      "id": "#quark:corundum_cluster",
+      "required": false
+    },
+    {
+      "id": "#quark:corundum_pane",
+      "required": false
+    },
+    {
+      "id": "#quark:framed_glass",
+      "required": false
+    },
+    {
+      "id": "#quark:framed_glass_pane",
+      "required": false
+    },
+    {
+      "id": "#quark:shards",
+      "required": false
+    },
+    {
+      "id": "#quark:stools",
+      "required": false
+    },
+    {
+      "id": "#silentgear:fluffy_blocks",
+      "required": false
+    },
+    {
+      "id": "#snowyspirit:glow_lights",
+      "required": false
+    },
+    {
+      "id": "#snowyspirit:gumdrops",
+      "required": false
+    },
+    {
+      "id": "#supplementaries:candle_holders",
+      "required": false
+    },
+    {
+      "id": "#supplementaries:flags",
+      "required": false
+    },
+    {
+      "id": "#supplementaries:presents",
+      "required": false
+    }
+  ]
+}

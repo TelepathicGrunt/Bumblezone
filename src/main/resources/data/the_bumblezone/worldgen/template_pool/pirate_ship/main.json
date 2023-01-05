@@ -1,0 +1,15 @@
+{
+  "name": "the_bumblezone:pirate_ship/main",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:pirate_ship",
+        "processors": "the_bumblezone:pirate_ship",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

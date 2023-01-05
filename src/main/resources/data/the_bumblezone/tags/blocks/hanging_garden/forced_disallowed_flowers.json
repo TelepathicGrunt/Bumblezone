@@ -1,0 +1,459 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wither_rose",
+    "minecraft:azure_bluet",
+    {
+      "id": "gaiadimension:missingno_plant",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_azure_bluet",
+      "required": false
+    },
+    {
+      "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "flowerpatch:azure_bluet_patch",
+      "required": false
+    },
+    {
+      "id": "byg:black_rose",
+      "required": false
+    },
+    {
+      "id": "byg:tall_allium",
+      "required": false
+    },
+    {
+      "id": "byg:tall_pink_allium",
+      "required": false
+    },
+    {
+      "id": "byg:delphinium",
+      "required": false
+    },
+    {
+      "id": "byg:japanese_orchid",
+      "required": false
+    },
+    {
+      "id": "byg:prairie_grass",
+      "required": false
+    },
+    {
+      "id": "byg:pollen_block",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:wilted_lily",
+      "required": false
+    },
+    {
+      "id": "aoa3:blue_daylooms",
+      "required": false
+    },
+    {
+      "id": "aoa3:yellow_daylooms",
+      "required": false
+    },
+    {
+      "id": "aoa3:pink_daylooms",
+      "required": false
+    },
+    {
+      "id": "aoa3:red_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:blue_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:white_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:purple_celevians",
+      "required": false
+    },
+    {
+      "id": "aoa3:magias",
+      "required": false
+    },
+    {
+      "id": "aoa3:arcflower",
+      "required": false
+    },
+    {
+      "id": "aoa3:dawn_bush",
+      "required": false
+    },
+    {
+      "id": "aoa3:dawn_flower",
+      "required": false
+    },
+    {
+      "id": "blue_skies:muckweed",
+      "required": false
+    },
+    {
+      "id": "blue_skies:brittlebush",
+      "required": false
+    },
+    {
+      "id": "blue_skies:lucentroot",
+      "required": false
+    },
+    {
+      "id": "floralis:brown_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:light_gray_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:gray_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:black_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:green_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:lime_flower",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_tomatoes",
+      "required": false
+    },
+    {
+      "id": "extendedmushrooms:infested_flower",
+      "required": false
+    },
+    {
+      "id": "pokecube_legends:purple_wisteria_vines_plant",
+      "required": false
+    },
+    {
+      "id": "pokecube_legends:purple_wisteria_vines",
+      "required": false
+    },
+    {
+      "id": "pokecube_legends:polluting_blossom",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:sloeberries_plant_2",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:sloeberries_plant_0",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:sloeberries_plant_1",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:sloeberries_plant_2",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:sloeberries_plant_3",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:yucca_plant_0",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:yucca_plant_05",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:yucca_plant_1",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:seafig_ice_plant",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:iona_air_plant",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:bird_of_paradise",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:sundew_fixed",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_lady_slipper_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_ghost_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_spotted_bromeliad",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_tango_bromeliad",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_pitcher_plant",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphtye_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:irish_moss_large",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:irish_moss_small",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:soul_sage",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:creeping_flox_blue_small",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:creeping_flox_blue_large",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:creeping_flox_purple_small",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:creeping_flox_purple_large",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:creeping_flox_purple_small",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:dwarf_red_bottle_brush",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:dwarf_pink_bottle_brush",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:spotted_bromeliad_ndm",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:viola_delight",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:wither_rose_bundle",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:little_creosote_bush",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:seafic_ice_plant_small",
+      "required": false
+    },
+    {
+      "id": "cyclic:flower_lime_carnation",
+      "required": false
+    },
+    {
+      "id": "undergarden:shimmerweed",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:cloudelion",
+      "required": false
+    },
+    {
+      "id": "duneons:lobby_plantssmall",
+      "required": false
+    },
+    {
+      "id": "duneons:popflower",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsallium",
+      "required": false
+    },
+    {
+      "id": "duneons:purplefaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:pinkfaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerswamp",
+      "required": false
+    },
+    {
+      "id": "duneons:junglebush",
+      "required": false
+    },
+    {
+      "id": "duneons:jungle_flower_leafy",
+      "required": false
+    },
+    {
+      "id": "duneons:nethertulip",
+      "required": false
+    },
+    {
+      "id": "duneons:torchflower",
+      "required": false
+    },
+    {
+      "id": "duneons:fortune_flower",
+      "required": false
+    },
+    {
+      "id": "duneons:endpinkflower",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:wilting_trillium",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dorcel",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:green_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:yellow_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_bioshroom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_bioshroom",
+      "required": false
+    },
+    {
+      "id": "kniro_flower:white_clover",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:parodia_muricata",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cactus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:albuca_namaquensis",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:desert_sturt_pea",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:devils_claw_vine",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:tumble_weed",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yucca",
+      "required": false
+    },
+    {
+      "id": "botania:gray_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:light_gray_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:lime_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:green_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:brown_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:black_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "spectrum:resonant_lily",
+      "required": false
+    },
+    {
+      "id": "terrestria:monsteras",
+      "required": false
+    }
+  ]
+}

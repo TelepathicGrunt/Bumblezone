@@ -26,7 +26,7 @@ public class BzCriterias {
     public static final CounterTrigger BEE_SAVED_BY_STINGER_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_saved_by_stinger"));
     public static final GenericTrigger BEE_STINGER_PARALYZE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_stinger_paralyze"));
     public static final CounterTrigger BEE_STINGER_SHOOTER_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_stinger_shooter"));
-    public static final GenericTrigger BEE_QUEEN_HAND_TRADE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_queen_hand_trade"));
+    public static final GenericTrigger BEE_QUEEN_FIRST_TRADE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_queen_first_trade"));
     public static final CounterTrigger BEE_QUEEN_TRADING_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_queen_trading"));
     public static final CounterTrigger BEEHIVE_CRAFTED_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "beehive_crafted"));
     public static final GenericTrigger BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bumble_bee_chestplate_max_flight"));
@@ -40,6 +40,7 @@ public class BzCriterias {
     public static final GenericTrigger CRYSTAL_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "crystal_cannon_full"));
     public static final GenericTrigger ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "enchant_crystalline_flower"));
     public static final EntitySpecificTrigger EXTENDED_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "extended_wrath_of_the_hive"));
+    public static final GenericTrigger EXTEND_STRING_CURTAIN_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "extend_string_curtain"));
     public static final GenericTrigger FALLING_ON_POLLEN_BLOCK_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "fall_onto_pollen_pile"));
     public static final ItemSpecificTrigger FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "food_removed_wrath_of_the_hive"));
     public static final GenericTrigger GETTING_PROTECTION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "getting_protection"));
@@ -95,7 +96,7 @@ public class BzCriterias {
         CriteriaTriggers.register(BEE_SAVED_BY_STINGER_TRIGGER);
         CriteriaTriggers.register(BEE_STINGER_PARALYZE_TRIGGER);
         CriteriaTriggers.register(BEE_STINGER_SHOOTER_TRIGGER);
-        CriteriaTriggers.register(BEE_QUEEN_HAND_TRADE_TRIGGER);
+        CriteriaTriggers.register(BEE_QUEEN_FIRST_TRADE_TRIGGER);
         CriteriaTriggers.register(BEEHIVE_CRAFTED_TRIGGER);
         CriteriaTriggers.register(BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER);
         CriteriaTriggers.register(CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER);
@@ -107,6 +108,7 @@ public class BzCriterias {
         CriteriaTriggers.register(CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER);
         CriteriaTriggers.register(CRYSTAL_CANNON_FULL_TRIGGER);
         CriteriaTriggers.register(EXTENDED_WRATH_OF_THE_HIVE_TRIGGER);
+        CriteriaTriggers.register(EXTEND_STRING_CURTAIN_TRIGGER);
         CriteriaTriggers.register(ENCHANT_CRYSTALLINE_FLOWER_TRIGGER);
         CriteriaTriggers.register(FALLING_ON_POLLEN_BLOCK_TRIGGER);
         CriteriaTriggers.register(FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER);

@@ -1,9 +1,6 @@
 {
   "processors": [
     {
-      "processor_type": "the_bumblezone:replace_air_processor"
-    },
-    {
       "processor_type": "minecraft:rule",
       "rules": [
         {
@@ -20,6 +17,10 @@
           }
         }
       ]
+    },
+    {
+      "processor_type": "the_bumblezone:replace_air_processor",
+      "blocks_to_always_replace": ["the_bumblezone:honey_web"]
     },
     {
       "processor_type": "the_bumblezone:noise_replace_with_properties_processor",

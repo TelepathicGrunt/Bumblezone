@@ -132,6 +132,9 @@ dependencies {
     //runtimeOnly fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-1.19.2:1.1.17")
     //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.35")
 
+    compileOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
+    //runtimeOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
+
     //runtimeOnly fg.deobf("curse.maven:realistic_bees-410743:4021715")
     //runtimeOnly fg.deobf("curse.maven:collective-342584:4035506")
 

@@ -5,10 +5,6 @@
       "required": true
     },
     {
-      "id": "minecraft:amethyst_block",
-      "required": true
-    },
-    {
       "id": "#minecraft:tall_flowers",
       "required": true
     },
@@ -66,6 +62,10 @@
     },
     {
       "id": "createaddition:honey_cake",
+      "required": false
+    },
+    {
+      "id": "bk:honey_extractor",
       "required": false
     }
   ],

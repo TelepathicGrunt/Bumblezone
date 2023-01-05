@@ -1,0 +1,222 @@
+{
+  "replace": false,
+  "values": [
+    "#flowers",
+    {
+      "id": "srias_flowers:blue_poppy",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:hydrangea",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:crocus",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:snowdrops",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:orange_daisy",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:black_thistle",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:foxglove",
+      "required": false
+    },
+    {
+      "id": "ecologics:azalea_flower",
+      "required": false
+    },
+    {
+      "id": "twigs:azalea_flowers",
+      "required": false
+    },
+    {
+      "id": "fruittrees:redlove_sapling",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "fruittrees:apple_sapling",
+      "required": false
+    },
+    {
+      "id": "broglisplants:deadly_nightshade_block",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_poppy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_oxeye_daisy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:white_dandelion",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:foxglove",
+      "required": false
+    },
+    {
+      "id": "duneons:houstonia",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerpatch",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactusred",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactuspink",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerscactuswhite",
+      "required": false
+    },
+    {
+      "id": "duneons:flowersheatherblue",
+      "required": false
+    },
+    {
+      "id": "duneons:flowersheatherorange",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsplaynt_1",
+      "required": false
+    },
+    {
+      "id": "duneons:creeperwoodsplant_1",
+      "required": false
+    },
+    {
+      "id": "duneons:pink_jungle_plant",
+      "required": false
+    },
+    {
+      "id": "duneons:large_jungle_plant",
+      "required": false
+    },
+    {
+      "id": "duneons:bloomingflare",
+      "required": false
+    },
+    {
+      "id": "duneons:netherflower",
+      "required": false
+    },
+    {
+      "id": "duneons:warpedputridpetals",
+      "required": false
+    },
+    {
+      "id": "duneons:warpedflower",
+      "required": false
+    },
+    {
+      "id": "duneons:endpinkflower",
+      "required": false
+    },
+    {
+      "id": "duneons:purplefaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:pinkfaireflowersmall",
+      "required": false
+    },
+    {
+      "id": "duneons:flowerswamp",
+      "required": false
+    },
+    {
+      "id": "duneons:jungle_flower_leafy",
+      "required": false
+    },
+    {
+      "id": "habitat:rafflesia",
+      "required": false
+    },
+    {
+      "id": "naturalized:sea_grass_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:sea_leaves_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:flowered_small_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:yarrow",
+      "required": false
+    },
+    {
+      "id": "naturalized:buttercup",
+      "required": false
+    },
+    {
+      "id": "naturalized:marigold",
+      "required": false
+    },
+    {
+      "id": "naturalized:rose",
+      "required": false
+    },
+    {
+      "id": "naturalized:ancient_orchid",
+      "required": false
+    },
+    {
+      "id": "naturalized:pink_rose_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:begonias",
+      "required": false
+    },
+    {
+      "id": "promenade:pink_cherry_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "promenade:white_cherry_oak_sapling",
+      "required": false
+    }
+  ]
+}

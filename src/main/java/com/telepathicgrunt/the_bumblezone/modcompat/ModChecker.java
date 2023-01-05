@@ -14,6 +14,7 @@ public class ModChecker {
 	public static boolean buzzierBeesPresent = false;
 	public static boolean pokecubePresent = false;
 	public static boolean friendsAndFoesPresent = false;
+	public static boolean beekeeperPresent = false;
 	public static boolean quarkPresent = false;
 	public static boolean potionOfBeesPresent = false;
 
@@ -39,6 +40,9 @@ public class ModChecker {
 
 			modid = "friendsandfoes";
 			loadupModCompat(modid, () -> FriendsAndFoesCompat.setupCompat());
+
+			modid = "bk";
+			loadupModCompat(modid, () -> BeekeeperCompat.setupCompat());
 
 			modid = "quark";
 			loadupModCompat(modid, () -> QuarkCompat.setupCompat());

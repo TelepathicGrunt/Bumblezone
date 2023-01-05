@@ -1,0 +1,62 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:tall_flowers",
+    {
+      "id": "biomemakeover:foxglove",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:tall_hydrangea",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_morning_glory",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_dark_blue_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_blue_bell_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_purple_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_bright_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_mixed_pink_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium_pink",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium",
+      "required": false
+    },
+    {
+      "id": "naturalized:ancient_orchid",
+      "required": false
+    },
+    {
+      "id": "naturalized:pink_rose_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:begonias",
+      "required": false
+    }
+  ]
+}

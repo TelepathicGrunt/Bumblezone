@@ -212,7 +212,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     public void tickDespawn() {
         int loyalty = this.entityData.get(ID_LOYALTY);
-        if (this.pickup != AbstractArrow.Pickup.ALLOWED || loyalty <= 0) {
+        if (!this.isInvulnerable() && (this.pickup != Pickup.ALLOWED || loyalty <= 0)) {
             super.tickDespawn();
         }
     }
@@ -220,12 +220,13 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        if (compoundTag.contains("Trident", 10)) {
+        if (compoundTag.contains("StingerSpear", 10)) {
             spearItem = ItemStack.of(compoundTag.getCompound("StingerSpear"));
         }
 
         dealtDamage = compoundTag.getBoolean("DealtDamage");
         this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(spearItem));
+        this.entityData.set(ID_FOIL, compoundTag.getBoolean("IsFoil"));
     }
 
     @Override
@@ -233,6 +234,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.put("StingerSpear", spearItem.save(new CompoundTag()));
         compoundTag.putBoolean("DealtDamage", dealtDamage);
+        compoundTag.putBoolean("IsFoil", isFoil());
     }
 
     @Override

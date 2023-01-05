@@ -480,7 +480,7 @@
             },
             {
               "function": "the_bumblezone:honey_compass_locate_structure",
-              "destination": "the_bumblezone:honey_compass_throne_locating",
+              "destination": "the_bumblezone:honey_compass/throne_locating",
               "skip_existing_chunks": false,
               "search_radius": 40
             }
@@ -488,7 +488,7 @@
         },
         {
           "type": "minecraft:empty",
-          "weight": 69
+          "weight": 49
         }
       ]
     }

@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -77,9 +78,9 @@ public class TagReplaceProcessor extends StructureProcessor {
                     randomSource = settings.getRandom(infoIn2.pos);
                 }
 
-                List<Block> blockList = optionalBlocks.get().stream()
-                        .map(Holder::value)
-                        .filter(f -> !f.defaultBlockState().is(blacklistedOutputBlockTag))
+                List<Block> blockList = GeneralUtils.getListOfNonDummyBlocks(optionalBlocks)
+                        .stream()
+                        .filter(block -> !block.defaultBlockState().is(blacklistedOutputBlockTag))
                         .toList();
 
                 if (doubleTallFlower) {

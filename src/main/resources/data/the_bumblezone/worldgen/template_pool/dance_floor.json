@@ -1,0 +1,15 @@
+{
+  "name": "the_bumblezone:dance_floor",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:dance_floor",
+        "processors": "the_bumblezone:dance_floor",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

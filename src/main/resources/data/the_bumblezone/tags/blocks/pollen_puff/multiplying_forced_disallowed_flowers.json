@@ -1,0 +1,322 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wither_rose",
+    {
+      "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "flowerseeds:crop_witherrose",
+      "required": false
+    },
+    {
+      "id": "#botania:mystical_flowers",
+      "required": false
+    },
+    {
+      "id": "#botania:special_flowers",
+      "required": false
+    },
+    {
+      "id": "byg:prairie_grass",
+      "required": false
+    },
+    {
+      "id": "byg:pollen_block",
+      "required": false
+    },
+    {
+      "id": "gaiadimension:missingno_plant",
+      "required": false
+    },
+    {
+      "id": "blue_skies:muckweed",
+      "required": false
+    },
+    {
+      "id": "blue_skies:brittlebush",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "extendedmushrooms:infested_flower",
+      "required": false
+    },
+    {
+      "id": "undergarden:shimmerweed",
+      "required": false
+    },
+    {
+      "id": "undergarden:tall_shimmerweed",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:clover_leaves",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cactus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:albuca_namaquensis",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_light",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:frogbit",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_large",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_medium",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_small",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:duckweed_bunch",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:duckweed",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:sprout",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:manzanita_bush",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:devils_claw_vine",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:tumble_weed",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:dry_shrub",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yucca",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_morning_glory",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_dark_blue_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_blue_bell_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_purple_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_bright_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_mixed_pink_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium_pink",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:beach_grass",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:live_forever_leaves",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:bamboo_sapling_groove",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:bamboo_groove",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:bamboo_sapling_golden",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:bamboo_golden",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:bamboo_sapling_black",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:bamboo_black",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:devils_fingers",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:devils_fingers_single",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:basket_stinkhorn",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:jack_o_lantern_dark",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:jack_o_lantern_fungus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:jack_o_lantern_light",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_reishi",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_stagshorn",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_patches",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:inky_cap",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:violet_coral_fungus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:violet_webcap",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:pixies_parasol_blue",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:pixies_parasol_cyan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:oyster_blue",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:oyster_yellow",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cracking_russula",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:turkey_tail",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:turkey_tail_tan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:turkey_tail_brown",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:turkey_tail_fan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:turkey_tail_tan_fan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:turkey_tail_brown_fan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_reishi_fan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:jack_o_lantern_light_fan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:jack_o_lantern_fan",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:raccoon_grape",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:little_creosote_bush",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:seafic_ice_plant_small",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:irish_moss_large",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:irish_moss_small",
+      "required": false
+    },
+    {
+      "id": "spectrum:resonant_lily",
+      "required": false
+    }
+  ]
+}

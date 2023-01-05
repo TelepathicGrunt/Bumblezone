@@ -823,5 +823,274 @@
     "sounds": [
       "fire/ignite"
     ]
+  },
+  "block.the_bumblezone.honey_crystal_block.break": {
+    "sounds": [
+      {
+        "name": "block/amethyst/break1",
+        "volume": 0.75,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/break2",
+        "volume": 0.75,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/break3",
+        "volume": 0.75,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/break4",
+        "volume": 0.75,
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.the_bumblezone.honey_crystal_block.chime": {
+    "sounds": [
+      {
+        "name": "block/amethyst/shimmer",
+        "volume": 0.25,
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.block.the_bumblezone.honey_crystal_block.chime"
+  },
+  "block.the_bumblezone.honey_crystal_block.fall": {
+    "sounds": [
+      {
+        "name": "block/amethyst/step1",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step2",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step3",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step4",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step5",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step6",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step7",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step8",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step9",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step10",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step11",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step12",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step14",
+        "volume": 0.9,
+        "pitch": 0.5
+      }
+    ]
+  },
+  "block.the_bumblezone.honey_crystal_block.hit": {
+    "sounds": [
+      {
+        "name": "block/amethyst/step1",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step2",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step3",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step4",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step5",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step6",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step7",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step8",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step9",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step10",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step11",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step12",
+        "volume": 0.9,
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.the_bumblezone.honey_crystal_block.place": {
+    "sounds": [
+      {
+        "name": "block/amethyst/place1",
+        "volume": 0.75,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/place2",
+        "volume": 0.75,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/place3",
+        "volume": 0.75,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/place4",
+        "volume": 0.75,
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.the_bumblezone.honey_crystal_block.step": {
+    "sounds": [
+      {
+        "name": "block/amethyst/step1",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step2",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step3",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step4",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step5",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step6",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step7",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step8",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step9",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step10",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step11",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step12",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step13",
+        "volume": 0.9,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/amethyst/step14",
+        "volume": 0.9,
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.block.the_bumblezone.honey_crystal_block.chime"
   }
 }

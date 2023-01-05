@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -33,84 +34,17 @@ public class JEIIntegration implements IModPlugin {
     
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-		addInfo(registration, BzItems.EMPTY_HONEYCOMB_BROOD.get());
-		addInfo(registration, BzItems.FILLED_POROUS_HONEYCOMB.get());
-		addInfo(registration, BzItems.HONEY_CRYSTAL.get());
-		addInfo(registration, BzItems.HONEY_CRYSTAL_SHARDS.get());
-		addInfo(registration, BzItems.HONEY_CRYSTAL_SHIELD.get());
-		addInfo(registration, BzItems.HONEYCOMB_BROOD.get());
-		addInfo(registration, BzItems.POROUS_HONEYCOMB.get());
-		addInfo(registration, BzItems.STICKY_HONEY_REDSTONE.get());
-		addInfo(registration, BzItems.STICKY_HONEY_RESIDUE.get());
-		addInfo(registration, BzItems.SUGAR_INFUSED_COBBLESTONE.get());
-		addInfo(registration, BzItems.SUGAR_INFUSED_STONE.get());
-		addInfo(registration, BzItems.SUGAR_WATER_BOTTLE.get());
-		addInfo(registration, BzItems.SUGAR_WATER_BUCKET.get());
-		addInfo(registration, BzItems.BEEHIVE_BEESWAX.get());
-		addInfo(registration, BzItems.HONEY_SLIME_SPAWN_EGG.get());
-		addInfo(registration, BzItems.BEEHEMOTH_SPAWN_EGG.get());
-		addInfo(registration, BzItems.BEE_QUEEN_SPAWN_EGG.get());
-		addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());
-		addInfo(registration, BzFluids.ROYAL_JELLY_FLUID.get());
-		addInfo(registration, BzItems.ROYAL_JELLY_BOTTLE.get());
-		addInfo(registration, BzItems.ROYAL_JELLY_BUCKET.get());
-		addInfo(registration, BzItems.ROYAL_JELLY_BLOCK.get());
-		addInfo(registration, BzItems.POLLEN_PUFF.get());
-		addInfo(registration, BzItems.BEE_BREAD.get());
-		addInfo(registration, BzFluids.HONEY_FLUID.get());
-		addInfo(registration, BzItems.HONEY_BUCKET.get());
-		addInfo(registration, BzItems.HONEY_WEB.get());
-		addInfo(registration, BzItems.REDSTONE_HONEY_WEB.get());
-		addInfo(registration, BzItems.HONEY_COCOON.get());
-		addInfo(registration, BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get());
-		addInfo(registration, BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY.get());
-		addInfo(registration, BzItems.MUSIC_DISC_LA_BEE_DA_LOCA.get());
-		addInfo(registration, BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES.get());
-		addInfo(registration, BzItems.STINGER_SPEAR.get());
-		addInfo(registration, BzItems.HONEY_COMPASS.get());
-		addInfo(registration, BzItems.BEE_STINGER.get());
-		addInfo(registration, BzItems.BEE_CANNON.get());
-		addInfo(registration, BzItems.CRYSTAL_CANNON.get());
-		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_1.get());
-		addInfo(registration, BzItems.HONEY_BEE_LEGGINGS_2.get());
-		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE_1.get());
-		addInfo(registration, BzItems.BUMBLE_BEE_CHESTPLATE_2.get());
-		addInfo(registration, BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.get());
-		addInfo(registration, BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get());
-		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_1.get());
-		addInfo(registration, BzItems.STINGLESS_BEE_HELMET_2.get());
-		addInfo(registration, BzItems.CARPENTER_BEE_BOOTS_1.get());
-		addInfo(registration, BzItems.CARPENTER_BEE_BOOTS_2.get());
-		addInfo(registration, BzItems.ESSENCE_OF_THE_BEES.get());
-		addInfo(registration, BzItems.GLISTERING_HONEY_CRYSTAL.get());
-		addInfo(registration, BzItems.CARVABLE_WAX.get());
-		addInfo(registration, BzItems.CARVABLE_WAX_WAVY.get());
-		addInfo(registration, BzItems.CARVABLE_WAX_FLOWER.get());
-		addInfo(registration, BzItems.CARVABLE_WAX_CHISELED.get());
-		addInfo(registration, BzItems.CARVABLE_WAX_DIAMOND.get());
-		addInfo(registration, BzItems.CARVABLE_WAX_BRICKS.get());
-		addInfo(registration, BzItems.CARVABLE_WAX_CHAINS.get());
-		addInfo(registration, BzItems.SUPER_CANDLE.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_BLACK.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_BLUE.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_BROWN.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_CYAN.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_GRAY.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_GREEN.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_LIGHT_BLUE.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_LIGHT_GRAY.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_LIME.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_MAGENTA.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_ORANGE.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_PINK.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_PURPLE.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_RED.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_WHITE.get());
-		addInfo(registration, BzItems.SUPER_CANDLE_YELLOW.get());
-		addInfo(registration, BzItems.INCENSE_CANDLE.get());
-		addInfo(registration, BzItems.CRYSTALLINE_FLOWER.get());
+      if (ModList.get().isLoaded("roughlyenoughitems")) {
+        return;
+      }
 
-		ClientLevel level = Minecraft.getInstance().level;
+      BzItems.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(registration, item.get()));
+      addInfo(registration, BzItems.PILE_OF_POLLEN.get());
+      addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());
+      addInfo(registration, BzFluids.ROYAL_JELLY_FLUID.get());
+      addInfo(registration, BzFluids.HONEY_FLUID.get());
+
+      ClientLevel level = Minecraft.getInstance().level;
 		if (level == null)
 			return;
 		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))

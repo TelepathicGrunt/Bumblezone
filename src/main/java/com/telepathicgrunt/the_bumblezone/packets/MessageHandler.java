@@ -24,5 +24,6 @@ public class MessageHandler {
         DEFAULT_CHANNEL.registerMessage(++channelID, BumbleBeeChestplateFlyingPacket.class, BumbleBeeChestplateFlyingPacket::compose, BumbleBeeChestplateFlyingPacket::parse, BumbleBeeChestplateFlyingPacket.Handler::handle);
         DEFAULT_CHANNEL.registerMessage(++channelID, StinglessBeeHelmetSightPacket.class, StinglessBeeHelmetSightPacket::compose, StinglessBeeHelmetSightPacket::parse, StinglessBeeHelmetSightPacket.Handler::handle);
         DEFAULT_CHANNEL.registerMessage(++channelID, BeehemothControlsPacket.class, BeehemothControlsPacket::compose, BeehemothControlsPacket::parse, BeehemothControlsPacket.Handler::handle);
+        DEFAULT_CHANNEL.registerMessage(++channelID, CrystallineFlowerEnchantmentPacket.class, CrystallineFlowerEnchantmentPacket::compose, CrystallineFlowerEnchantmentPacket::parse, CrystallineFlowerEnchantmentPacket.Handler::handle);
     }
 }

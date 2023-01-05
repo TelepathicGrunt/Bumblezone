@@ -1,0 +1,73 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:sweet_berries",
+      "required": true
+    },
+    {
+      "id": "minecraft:glow_berries",
+      "required": true
+    },
+    {
+      "id": "minecraft:cocoa_beans",
+      "required": true
+    },
+    {
+      "id": "windswept:holly_berries",
+      "required": false
+    },
+    {
+      "id": "windswept:wild_berries",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry",
+      "required": false
+    },
+    {
+      "id": "naturalized:cloudberry",
+      "required": false
+    },
+    {
+      "id": "promenade:blueberries",
+      "required": false
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:melon_slice",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:cookie",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "minecraft:apple",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "minecraft:pumpkin_pie",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:rabbit_stew",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

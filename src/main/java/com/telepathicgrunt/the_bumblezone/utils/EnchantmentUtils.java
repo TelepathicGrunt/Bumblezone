@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -113,12 +114,16 @@ public class EnchantmentUtils {
 			items.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)));
 	}
 
-	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, boolean allowTreasure) {
+	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
 		List<EnchantmentInstance> list = Lists.newArrayList();
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
+		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
-			if (Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.BLACKLISTED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment)) {
+
+			boolean forceAllowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
+			boolean disallowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
+			if (!forceAllowed && disallowed) {
 				continue;
 			}
 
@@ -127,15 +132,19 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && enchantment.isDiscoverable() && (enchantment.canApplyAtEnchantingTable(stack) || (bookFlag && enchantment.isAllowedOnBooks()))) {
+			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (enchantment.canApplyAtEnchantingTable(stack) || (bookFlag && enchantment.isAllowedOnBooks()))) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
-					if (level >= enchantment.getMinCost(i)) {
-						list.add(new EnchantmentInstance(enchantment, i));
-						break;
+					if (forceAllowed || level >= enchantment.getMinCost(i)) {
+						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, i);
+						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
+							list.add(enchantmentInstance);
+							break;
+						}
 					}
 				}
 			}
 		}
+		list.sort(EnchantmentUtils::compareEnchantments);
 		return list;
 	}
 
@@ -158,22 +167,37 @@ public class EnchantmentUtils {
 	}
 
 	public static int getEnchantmentTierCost(EnchantmentInstance enchantmentInstance) {
-		Enchantment enchantment = enchantmentInstance.enchantment;
-		int level = enchantmentInstance.level;
+		return getEnchantmentTierCost(
+				enchantmentInstance.level,
+				enchantmentInstance.enchantment.getMinCost(2),
+				enchantmentInstance.enchantment.isTreasureOnly(),
+				enchantmentInstance.enchantment.isCurse());
+	}
+
+	public static int getEnchantmentTierCost(int level, int minCost, boolean isTreasureOnly, boolean isCurse) {
 		int cost = 0;
 
-		cost += enchantment.getMinCost(2) / 10;
+		cost += minCost / 10;
 		cost += level / 1.5f;
 
-		if (enchantment.isTreasureOnly()) {
+		if (isTreasureOnly) {
 			cost += 2;
 		}
-		if (enchantment.isCurse()) {
+		if (isCurse) {
 			cost -= 3;
 		}
 
 		cost += BzGeneralConfigs.crystallineFlowerExtraTierCost.get();
 
 		return Math.max(1, Math.min(6, cost));
+	}
+
+	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
+		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
+		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
+
+		int ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
+		if (ret == 0) ret = enchantment2.level - enchantment1.level;
+		return ret;
 	}
 }

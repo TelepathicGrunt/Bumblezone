@@ -4,6 +4,10 @@
     {
       "id": "duneons:beenestmob",
       "required": false
+    },
+    {
+      "id": "pokecube:combee",
+      "required": false
     }
   ]
 }

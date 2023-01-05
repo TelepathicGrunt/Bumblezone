@@ -1,0 +1,37 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "combee-1",
+      "pokemon": "combee",
+      "type": "pokemon",
+      "context": "grounded",
+      "bucket": "common",
+      "level": "6-23",
+      "weight": 7.0,
+      "condition": {
+        "canSeeSky": false,
+        "biomes": [
+          "#the_bumblezone:the_bumblezone"
+        ]
+      }
+    },
+    {
+      "id": "vespiquen-1",
+      "pokemon": "vespiquen",
+      "type": "pokemon",
+      "context": "grounded",
+      "bucket": "common",
+      "level": "25-45",
+      "weight": 2.0,
+      "condition": {
+        "canSeeSky": false,
+        "biomes": [
+          "#the_bumblezone:the_bumblezone"
+        ]
+      }
+    }
+  ]
+}

@@ -40,7 +40,7 @@ public class FakeIncenseCandleRecipeCreator {
                 break;
             }
 
-            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS))) {
+            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
                 continue;
             }
 
@@ -49,7 +49,7 @@ public class FakeIncenseCandleRecipeCreator {
         }
         potions.sort(Comparator.comparingInt(a -> a.getEffects().size()));
         for (Potion potion : potions) {
-            if (potion.getEffects().stream().allMatch(e -> Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.BLACKLISTED_INCENSE_CANDLE_EFFECTS).contains(e.getEffect()))) {
+            if (potion.getEffects().stream().allMatch(e -> Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS).contains(e.getEffect()))) {
                 continue;
             }
 

@@ -7,7 +7,7 @@
       {
         "target": {
           "predicate_type": "minecraft:tag_match",
-          "tag": "the_bumblezone:honeycombs_that_features_can_carve"
+          "tag": "the_bumblezone:worldgen_checks/honeycombs_that_features_can_carve"
         },
         "state": {
           "Name": "resourcefulbees:dragon_honeycomb_block"

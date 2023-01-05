@@ -2,14 +2,12 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
