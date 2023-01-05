@@ -301,6 +301,10 @@
     {
       "id": "pokecube:ledyba",
       "required": false
+    },
+    {
+      "id": "moonbits:stunbug",
+      "required": false
     }
   ]
 }
