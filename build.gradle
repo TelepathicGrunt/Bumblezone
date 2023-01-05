@@ -173,7 +173,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.changelogType = "markdown"
 	mainFile.releaseType = "release"
 	mainFile.displayName = "The Bumblezone v${project.mod_version} (${libs.versions.minecraft.get()} MC Quilt)"
-	mainFile.addGameVersion("1.19.3")
+	mainFile.addGameVersion("1.19.2")
 	mainFile.addModLoader("Quilt")
 	mainFile.addRequirement("midnightlib")
 	mainFile.addRequirement("qsl")
@@ -189,7 +189,7 @@ modrinth {
 	uploadFile = remapJar
 	changelog = changelogText
 	versionType = "RELEASE"
-	gameVersions = ["1.19.3"]
+	gameVersions = ["1.19.2"]
 	loaders = ["quilt"]
 	dependencies {
 		required.project "qsl"
