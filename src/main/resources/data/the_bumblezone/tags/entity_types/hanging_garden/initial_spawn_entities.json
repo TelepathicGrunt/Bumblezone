@@ -240,6 +240,14 @@
     {
       "id": "lilwings:grayling_butterfly",
       "required": false
+    },
+    {
+      "id": "moonbits:stunbug",
+      "required": false
+    },
+    {
+      "id": "moonbits:cave_snail",
+      "required": false
     }
   ]
 }
