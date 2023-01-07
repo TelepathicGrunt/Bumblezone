@@ -1,4 +1,10 @@
-# MAVEN
+![The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name](https://user-images.githubusercontent.com/40846040/211122783-e4bde0e7-f721-48aa-8095-54dd8319ed40.png)
+
+# See the wiki for more details about this bee-tastic mod!
+
+***
+
+## MAVEN
 
 For developers that want to add Bumblezone to their mod's workspace:
 
@@ -48,10 +54,3 @@ https://github.com/SpongePowered/Mixin/wiki/Mixins-on-Minecraft-Forge#step-1---a
 &nbsp; &nbsp; }
 
 }</blockquote>
-
-**____________________________________________________________________________**
-
-&nbsp;
-
-![The banner logo for The Bumblezone with a friendly and hostile bee shown below the mod name.](https://i.imgur.com/ovPqrFL.png)
-
