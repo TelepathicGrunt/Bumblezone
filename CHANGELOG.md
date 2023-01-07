@@ -1,9 +1,6 @@
 ### **(V.6.6.1 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:
-
-
-##### Misc:
 Fixed random potential server crash.
 
 
