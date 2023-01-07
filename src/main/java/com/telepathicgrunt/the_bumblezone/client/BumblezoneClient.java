@@ -48,11 +48,12 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.block.extensions.api.client.BlockRenderLayerMap;
 import org.quiltmc.qsl.lifecycle.api.client.event.ClientTickEvents;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class BumblezoneClient implements ClientModInitializer {
     public static final ResourceLocation SUGAR_WATER_FLUID_STILL = new ResourceLocation(Bumblezone.MODID, "block/sugar_water_still");
     public static final ResourceLocation SUGAR_WATER_FLUID_FLOWING = new ResourceLocation(Bumblezone.MODID, "block/sugar_water_flow");
@@ -79,7 +80,7 @@ public class BumblezoneClient implements ClientModInitializer {
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
         CrystallineFlowerEnchantmentPacket.registerPacket();
-        ClientTickEvents.END_CLIENT_TICK.register((minecraft) -> StinglessBeeHelmet.decrementHighlightingCounter(minecraft.player));
+        ClientTickEvents.END.register((minecraft) -> StinglessBeeHelmet.decrementHighlightingCounter(minecraft.player));
     }
 
     private void registerEntityRenders() {

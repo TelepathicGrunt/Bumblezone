@@ -5,10 +5,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class ModMenuConfig implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {

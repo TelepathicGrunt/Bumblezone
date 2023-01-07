@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
-@Environment(EnvType.CLIENT)
+@ClientOnly
 public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothModel> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/beehemoth.png");
 

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
+import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 public class StinglessBeeHelmetClientNetworking {
 
