@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.biome.Biome;

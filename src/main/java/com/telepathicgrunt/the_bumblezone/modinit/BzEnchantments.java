@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.PotentPoisonEnchantment;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
 public class BzEnchantments {

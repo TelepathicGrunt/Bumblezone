@@ -18,7 +18,6 @@ import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayer
 import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;

@@ -18,7 +18,6 @@ import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDung
 import com.telepathicgrunt.the_bumblezone.world.processors.TagReplaceProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.WaterloggingFixProcessor;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 

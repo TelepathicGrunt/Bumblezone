@@ -5,8 +5,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzBiomeProvider;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzChunkGenerator;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;

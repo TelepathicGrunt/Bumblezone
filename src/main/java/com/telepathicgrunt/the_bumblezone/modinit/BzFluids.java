@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.FlowingFluid;

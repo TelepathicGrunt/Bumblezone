@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.world.features.decorators.HoneycombHol
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DClusterPlacement;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DUndergroundChunkPlacement;
 import net.minecraft.core.Registry;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
