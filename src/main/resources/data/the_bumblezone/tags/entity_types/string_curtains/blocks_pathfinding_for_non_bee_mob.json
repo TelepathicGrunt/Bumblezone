@@ -7,6 +7,10 @@
       "required": false
     },
     {
+      "id": "blue_skies:nyctofly",
+      "required": false
+    },
+    {
       "id": "naturalist:butterfly",
       "required": false
     },
