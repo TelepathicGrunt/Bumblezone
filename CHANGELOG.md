@@ -1,3 +1,14 @@
+### **(V.6.6.1 Changes) (1.19.3 Minecraft)**
+
+##### Fluids:
+Fixed crash where Productive Bees honey fluid flowing onto Bumblezone's honey fluid would crash.
+
+##### Mod Compat:
+Throwing Pollen Puff at Born in Chaos's pumpkin mobs will spawn Pumpkin Stem on nearby Farmland blocks. 
+
+Made String Curtain block Blue Skies's Nyctofly from being able to fly through it.
+
+
 ### **(V.6.6.0 Changes) (1.19.3 Minecraft)**
 
 ##### Structures:
