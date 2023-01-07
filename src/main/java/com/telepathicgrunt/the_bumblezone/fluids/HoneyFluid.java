@@ -253,7 +253,7 @@ public abstract class HoneyFluid extends FlowingFluid {
                 Fluids.EMPTY.defaultFluidState() :
                 this.getFlowing(newFluidLevel, isFalling)
                         .setValue(BOTTOM_LEVEL, newBottomFluidLevel)
-                        .setValue(ABOVE_FLUID, aboveFluidIsThisFluid && (aboveFluidState.isSource() || aboveFluidState.getValue(BOTTOM_LEVEL) == 0));
+                        .setValue(ABOVE_FLUID, aboveFluidIsThisFluid && (aboveFluidState.isSource() || (aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && aboveFluidState.getValue(BOTTOM_LEVEL) == 0)));
     }
 
     @Override
