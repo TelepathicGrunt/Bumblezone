@@ -248,6 +248,10 @@
     {
       "id": "moonbits:cave_snail",
       "required": false
+    },
+    {
+      "id": "etcetera:snail",
+      "required": false
     }
   ]
 }
