@@ -6,10 +6,9 @@ import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccesso
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
+import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetClientNetworking;
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -83,7 +82,8 @@ public class StinglessBeeHelmet extends BeeArmor {
                 if (BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.size() >= 100) {
                     FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
                     passedData.writeByte(1);
-                    ClientPlayNetworking.send(StinglessBeeHelmetSightPacket.PACKET_ID, passedData);
+                    Runnable runnable = () -> StinglessBeeHelmetClientNetworking.sendDataToServer(passedData);
+                    runnable.run();
                 }
             }
             BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.clear();
