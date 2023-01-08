@@ -75,6 +75,22 @@
     {
       "id": "nature_expansion:sloeberries",
       "required": false
+    },
+    {
+      "id": "bewitchment:witchberry",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:blue_berry",
+      "required": false
+    },
+    {
+      "id": "archon:mana_berries",
+      "required": false
+    },
+    {
+      "id": "vinery:cherry",
+      "required": false
     }
   ],
   "possible_rewards": [
