@@ -285,6 +285,10 @@
     {
       "id": "promenade:pink_cherry_oak_leaf_pile",
       "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:marigolds",
+      "required": false
     }
   ]
 }
