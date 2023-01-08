@@ -91,6 +91,46 @@
     {
       "id": "vinery:cherry",
       "required": false
+    },
+    {
+      "id": "croptopia:blackberry",
+      "required": false
+    },
+    {
+      "id": "croptopia:blueberry",
+      "required": false
+    },
+    {
+      "id": "croptopia:cranberry",
+      "required": false
+    },
+    {
+      "id": "croptopia:elderberry",
+      "required": false
+    },
+    {
+      "id": "croptopia:raspberry",
+      "required": false
+    },
+    {
+      "id": "croptopia:strawberry",
+      "required": false
+    },
+    {
+      "id": "croptopia:cherry",
+      "required": false
+    },
+    {
+      "id": "rootsclassic:elderberry",
+      "required": false
+    },
+    {
+      "id": "caupona:wolfberries",
+      "required": false
+    },
+    {
+      "id": "delightful:salmonberries",
+      "required": false
     }
   ],
   "possible_rewards": [
