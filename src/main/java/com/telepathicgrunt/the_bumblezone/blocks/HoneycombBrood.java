@@ -290,7 +290,8 @@ public class HoneycombBrood extends ProperFacingBlock {
         BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(position);
         blockpos.move(state.getValue(FACING).getOpposite());
 
-        if (stage == 3 && !world.getBlockState(blockpos).getMaterial().isSolid()) {
+        BlockState frontState = world.getBlockState(blockpos);
+        if (stage == 3 && frontState.getFluidState().isEmpty() && !frontState.isCollisionShapeFullBlock(world, position)) {
             Mob beeMob = EntityType.BEE.create(world);
             beeMob.setBaby(true);
             spawnMob(world, blockpos, beeMob, beeMob);

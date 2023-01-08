@@ -3,6 +3,9 @@
 ##### Fluids:
 Fixed crash where Productive Bees honey fluid flowing onto Bumblezone's honey fluid would crash.
 
+##### Blocks:
+Fixed Honeycomb Brood Blocks able to spawn bees in fluids.
+
 ##### Mod Compat:
 Throwing Pollen Puff at Born in Chaos's pumpkin mobs will spawn Pumpkin Stem on nearby Farmland blocks. 
 
