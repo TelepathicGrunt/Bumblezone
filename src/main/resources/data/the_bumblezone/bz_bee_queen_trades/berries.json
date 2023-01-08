@@ -9,10 +9,6 @@
       "required": true
     },
     {
-      "id": "minecraft:cocoa_beans",
-      "required": true
-    },
-    {
       "id": "windswept:holly_berries",
       "required": false
     },
@@ -31,26 +27,74 @@
     {
       "id": "promenade:blueberries",
       "required": false
+    },
+    {
+      "id": "forbidden_arcanus:cherry_peach",
+      "required": false
+    },
+    {
+      "id": "blue_skies:cherry",
+      "required": false
+    },
+    {
+      "id": "blue_skies:brewberry",
+      "required": false
+    },
+    {
+      "id": "blue_skies:pink_brewberry",
+      "required": false
+    },
+    {
+      "id": "blue_skies:black_brewberry",
+      "required": false
+    },
+    {
+      "id": "undergarden:blisterberry",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:source_berry",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cranberry",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:blue_berry",
+      "required": false
+    },
+    {
+      "id": "twilight_forest:torchberries",
+      "required": false
+    },
+    {
+      "id": "byg:blueberries",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:sloeberries",
+      "required": false
     }
   ],
   "possible_rewards": [
     {
       "id": "minecraft:melon_slice",
-      "count": 1,
+      "count": 2,
       "xp_reward": 1,
       "weight": 10,
       "required": true
     },
     {
       "id": "minecraft:cookie",
-      "count": 1,
+      "count": 3,
       "xp_reward": 1,
       "weight": 5,
       "required": true
     },
     {
       "id": "minecraft:apple",
-      "count": 1,
+      "count": 2,
       "xp_reward": 1,
       "weight": 3,
       "required": true
