@@ -11,7 +11,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.61', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
         classpath 'org.moddingx:ModGradle:3.0.2'
         classpath 'org.spongepowered:mixingradle:0.7.+'

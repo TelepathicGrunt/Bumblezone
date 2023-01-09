@@ -1,3 +1,21 @@
+### **(V.6.6.1 Changes) (1.19.3 Minecraft)**
+
+##### Fluids:
+Fixed crash where Productive Bees honey fluid flowing onto Bumblezone's honey fluid would crash.
+
+##### Blocks:
+Fixed Honeycomb Brood Blocks able to spawn bees in fluids.
+
+##### Mod Compat:
+Throwing Pollen Puff at Born in Chaos's pumpkin mobs will spawn Pumpkin Stem on nearby Farmland blocks. 
+
+Made String Curtain block Blue Skies's Nyctofly from being able to fly through it.
+
+Forbidden Arcanus's Cherry sapling, leaves, and carpet spawns in hanging gardens now.
+
+Made Bee Queen trade for more mod's berry item.
+
+
 ### **(V.6.6.0 Changes) (1.19.3 Minecraft)**
 
 ##### Structures:

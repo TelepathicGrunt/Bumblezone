@@ -138,6 +138,10 @@
     {
       "id": "paradise_lost:rose_wisteria_leaves",
       "required": false
+    },
+    {
+      "id": "forbidden_arcanus:cherry_leaves",
+      "required": false
     }
   ]
 }

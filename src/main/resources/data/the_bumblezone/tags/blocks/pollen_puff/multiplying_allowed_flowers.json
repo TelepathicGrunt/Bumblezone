@@ -217,6 +217,14 @@
     {
       "id": "promenade:white_cherry_oak_sapling",
       "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:marigolds",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:cherry_sapling",
+      "required": false
     }
   ]
 }
