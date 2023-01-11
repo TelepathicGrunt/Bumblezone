@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -49,7 +50,7 @@ public abstract class EntityMixin {
     @Inject(method = "checkInsideBlocks()V",
             at = @At(value = "HEAD"))
     private void thebumblezone_pollinatedBeeBlockFilling(CallbackInfo ci) {
-        if (((Object)this) instanceof Bee bee && bee.hasNectar()) {
+        if (((Object)this) instanceof Bee bee && (bee.hasNectar() || bee.getHealth() < bee.getMaxHealth())) {
             AABB aABB = this.getBoundingBox();
             BlockPos minBlockPos = new BlockPos(aABB.minX - 1.0E-7, aABB.minY - 1.0E-7, aABB.minZ - 1.0E-7);
             BlockPos maxBlockPos = new BlockPos(aABB.maxX + 1.0E-7, aABB.maxY + 1.0E-7, aABB.maxZ + 1.0E-7);
@@ -86,6 +87,9 @@ public abstract class EntityMixin {
                                 BlockState blockState = this.level.getBlockState(mutableBlockPos);
                                 if (blockState.is(BzBlocks.POROUS_HONEYCOMB.get())) {
                                     PorousHoneycomb.beeHoneyFill(blockState, this.level, mutableBlockPos, ((Entity)(Object)this));
+                                }
+                                else if (blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
+                                    FilledPorousHoneycomb.beeHoneyTake(blockState, this.level, mutableBlockPos, ((Entity)(Object)this));
                                 }
                                 else if (blockState.is(BzBlocks.EMPTY_HONEYCOMB_BROOD.get())) {
                                     EmptyHoneycombBrood.beeHoneyFill(blockState, this.level, mutableBlockPos, ((Entity)(Object)this));
