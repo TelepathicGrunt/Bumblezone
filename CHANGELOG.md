@@ -8,6 +8,9 @@ Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block wi
 
 Hurt bees now can take honey from Filled Porous Honeycomb Block to heal up to 4 points of health. Turns the block into a Porous Honeycomb Block.
 
+##### Lang:
+Ukraine lang file added by Unroman! Special thanks to them!
+
 
 ### **(V.6.6.1 Changes) (1.19.2 Minecraft)**
 
