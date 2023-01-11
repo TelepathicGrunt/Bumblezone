@@ -25,7 +25,7 @@
     "honey_slime_bred": {
       "trigger": "the_bumblezone:honey_slime_bred",
       "conditions": {
-        "target_count": 16
+        "target_count": 6
       }
     }
   },
