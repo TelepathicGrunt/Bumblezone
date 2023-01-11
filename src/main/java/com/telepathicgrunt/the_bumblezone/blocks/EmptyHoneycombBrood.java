@@ -6,10 +6,12 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.PotionOfBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -27,6 +30,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 
 public class EmptyHoneycombBrood extends ProperFacingBlock {
@@ -69,6 +73,16 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
                     .setValue(HoneycombBrood.STAGE, 0)
                     .setValue(HoneycombBrood.FACING, state.getValue(HoneycombBrood.FACING)),
                     3);
+
+            Vec3 centerOfBee = beeEntity.getBoundingBox().getCenter();
+            PileOfPollen.spawnParticlesServer(
+                    level,
+                    centerOfBee,
+                    beeEntity.getRandom(),
+                    0.05D,
+                    0.05D,
+                    -0.001D,
+                    55);
         }
     }
 

@@ -4,6 +4,8 @@
 Bee Queen will now properly split up rewards into multiple itemstacks if the item's stack limit is reached.
  Will fix Royal Jelly Bucket trade getting a single stack of 2 Totem of Undying instead of 2 stacks of 1 Totem of Undying each.
 
+Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block will spawn a few particles of pollen to show that the block was changed.
+
 
 ### **(V.6.6.1 Changes) (1.19.2 Minecraft)**
 
