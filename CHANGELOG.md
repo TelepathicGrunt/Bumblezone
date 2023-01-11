@@ -6,6 +6,8 @@ Bee Queen will now properly split up rewards into multiple itemstacks if the ite
 
 Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block will spawn a few particles of pollen to show that the block was changed.
 
+Hurt bees now can take honey from Filled Porous Honeycomb Block to heal up to 4 points of health. Turns the block into a Porous Honeycomb Block.
+
 
 ### **(V.6.6.1 Changes) (1.19.3 Minecraft)**
 
