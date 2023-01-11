@@ -1,3 +1,10 @@
+### **(V.6.6.2 Changes) (1.19.3 Minecraft)**
+
+##### Entities:
+Bee Queen will now properly split up rewards into multiple itemstacks if the item's stack limit is reached.
+ Will fix Royal Jelly Bucket trade getting a single stack of 2 Totem of Undying instead of 2 stacks of 1 Totem of Undying each.
+
+
 ### **(V.6.6.1 Changes) (1.19.3 Minecraft)**
 
 ##### Fluids:

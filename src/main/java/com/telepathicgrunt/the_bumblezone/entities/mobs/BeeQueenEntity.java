@@ -686,7 +686,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
         }
 
-        for (int i = 0; i < rewardMultiplier; i++) {
+        int remainingItemToSpawn = reward.count() * rewardMultiplier;
+        int itemStackMaxSize = reward.item().getMaxStackSize();
+
+        while (remainingItemToSpawn > 0) {
             ItemStack rewardItem = reward.item().getDefaultInstance();
             setQueenPose(BeeQueenPose.ITEM_THROW);
 
@@ -700,7 +703,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
             }
 
-            rewardItem.setCount(reward.count());
+            int currentItemStackCount = Math.min(remainingItemToSpawn, itemStackMaxSize);
+            rewardItem.setCount(currentItemStackCount);
+            remainingItemToSpawn -= currentItemStackCount;
+
             ItemEntity rewardItemEntity = new ItemEntity(
                     this.level,
                     this.getX() + (sideVect.x() * 0.9d) + (forwardVect.x() * 1),
