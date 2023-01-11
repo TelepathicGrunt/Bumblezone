@@ -25,6 +25,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,6 +55,16 @@ public class PorousHoneycomb extends Block {
         {
             ((BeeEntityInvoker) entity).callSetHasNectar(false);
             level.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), 3);
+
+            Vec3 centerOfBee = beeEntity.getBoundingBox().getCenter();
+            PileOfPollen.spawnParticlesServer(
+                    level,
+                    centerOfBee,
+                    beeEntity.getRandom(),
+                    0.05D,
+                    0.05D,
+                    -0.001D,
+                    55);
         }
     }
 
