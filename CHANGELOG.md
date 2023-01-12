@@ -6,6 +6,11 @@ Bee Queen will now properly split up rewards into multiple itemstacks if the ite
 
 Adjusted Royal Jelly Bucket trades with Bee Queen so that Dragon Egg is nerfed a bit from 1/181 chance to 1/231 chance of being obtained.
 
+Adjusted Super/Bonus Trades so Bee Queen won't ask for warped/crimson blocks that Minecraft tagged in various "wooden" tags.
+
+Fixed it so that items added to `the_bumblezone:bee_queen/disallowed_random_super_trade_items` now will apply to Queens already
+ asking for the now disallowed item. They will pick a new fresh item instead on world load if they old item they wanted is now disallowed.
+
 Bee Queen now shows the item it wants for Super/Bonus Trades! The item will be transparent under the head of the Queen.
 
 Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block will spawn a few particles of pollen to show that the block was changed.
