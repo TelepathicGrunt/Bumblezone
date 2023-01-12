@@ -190,4 +190,7 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean playWrathOfHiveEffectMusic = true;
 
+    @Entry
+    public static boolean renderBeeQueenSuperTradeItem = true;
+
 }
