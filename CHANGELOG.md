@@ -4,6 +4,8 @@
 Bee Queen will now properly split up rewards into multiple itemstacks if the item's stack limit is reached.
  Will fix Royal Jelly Bucket trade getting a single stack of 2 Totem of Undying instead of 2 stacks of 1 Totem of Undying each.
 
+Adjusted Royal Jelly Bucket trades with Bee Queen so that Dragon Egg is nerfed a bit from 1/181 chance to 1/231 chance of being obtained.
+
 Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block will spawn a few particles of pollen to show that the block was changed.
 
 Hurt bees now can take honey from Filled Porous Honeycomb Block to heal up to 4 points of health. Turns the block into a Porous Honeycomb Block.
