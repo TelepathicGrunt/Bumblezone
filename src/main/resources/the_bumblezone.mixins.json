@@ -87,7 +87,9 @@
     "client.KeyMappingAccessor",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
-    "client.ScreenEffectRendererMixin"
+    "client.RenderStateShardAccessor",
+    "client.ScreenEffectRendererMixin",
+    "client.TextureStateShardAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
