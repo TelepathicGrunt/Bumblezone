@@ -23,6 +23,9 @@ Nerfed Slimy Mitosis Bee Queen quest to now be completed after breeding Honey Sl
 ##### Lang:
 Ukraine lang file added by Unroman! Special thanks to them!
 
+##### Misc:
+Fixed Bumblezone icon not showing up for Mod Menu.
+
 
 ### **(V.6.6.1 Changes) (1.19.3 Minecraft)**
 
