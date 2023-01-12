@@ -177,6 +177,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
         setRemainingSuperTradeTime(tag.getInt("supertradetime"));
         setSuperTradeItem(ItemStack.of(tag.getCompound("supertradeitem")));
+
+        if (getSuperTradeItem().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) &&
+            !getSuperTradeItem().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS))
+        {
+            setSuperTradeItem(ItemStack.EMPTY);
+            setRemainingSuperTradeTime(0);
+        }
+
         this.readPersistentAngerSaveData(this.level, tag);
     }
 
