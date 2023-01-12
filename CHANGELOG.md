@@ -6,6 +6,8 @@ Bee Queen will now properly split up rewards into multiple itemstacks if the ite
 
 Adjusted Royal Jelly Bucket trades with Bee Queen so that Dragon Egg is nerfed a bit from 1/181 chance to 1/231 chance of being obtained.
 
+Bee Queen now shows the item it wants for Super/Bonus Trades! The item will be transparent under the head of the Queen.
+
 Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block will spawn a few particles of pollen to show that the block was changed.
 
 Hurt bees now can take honey from Filled Porous Honeycomb Block to heal up to 4 points of health. Turns the block into a Porous Honeycomb Block.

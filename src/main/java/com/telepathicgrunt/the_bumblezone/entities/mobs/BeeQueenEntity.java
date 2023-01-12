@@ -672,6 +672,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         if (getSuperTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() > 1) {
             rewardMultiplier = BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get();
             getSuperTradeItem().shrink(1);
+            if (getSuperTradeItem().isEmpty()) {
+                setSuperTradeItem(ItemStack.EMPTY);
+            }
 
             Player player = level.getPlayerByUUID(playerUUID);
             if (player != null) {
