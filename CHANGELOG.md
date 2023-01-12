@@ -12,9 +12,6 @@ Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block wi
 
 Hurt bees now can take honey from Filled Porous Honeycomb Block to heal up to 4 points of health. Turns the block into a Porous Honeycomb Block.
 
-##### Items:
-Fixed Creative Tab not showing all forms of Carvable Wax properly.
-
 ##### Advancements:
 Nerfed Slimy Mitosis Bee Queen quest to now be completed after breeding Honey Slime 6 times instead of 16 times.
 
