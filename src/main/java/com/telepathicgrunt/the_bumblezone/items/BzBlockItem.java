@@ -2,7 +2,10 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,10 +54,10 @@ public class BzBlockItem extends BlockItem {
         return placingState != null && this.canPlace(context, placingState) ? placingState : null;
     }
 
-//    @Override
-//    public void fillItemCategory(CreativeModeTab category, NonNullList<ItemStack> items) {
-//        if (this.allowedIn(category)) {
-//            items.add(new ItemStack(this));
-//        }
-//    }
+    @Override
+    public void fillItemCategory(CreativeModeTab category, NonNullList<ItemStack> items) {
+        if (this.allowedIn(category)) {
+            items.add(new ItemStack(this));
+        }
+    }
 }
