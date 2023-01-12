@@ -16,6 +16,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.quiltmc.qsl.entity.api.QuiltEntityTypeBuilder;
 import org.quiltmc.qsl.entity.networking.api.tracked_data.QuiltTrackedDataHandlerRegistry;
@@ -79,6 +82,13 @@ public class BzEntities {
             .maxChunkTrackingRange(4)
             .maxBlockTrackingRange(20)
             .build();
+
+    // Stored here instead of BzItems to prevent classloading crash with Lithium in 1.19.3.
+    // Somehow Lithium caused a cascade of classloading that then classloaded BzEntities too early in
+    // Bootstrap which then crashes the Fabric/Quilt entity type builders.
+    public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties()));
+    public static final Item BEEHEMOTH_SPAWN_EGG = new SpawnEggItem(BzEntities.BEEHEMOTH, 0xFFCA47, 0x68372A, (new Item.Properties()));
+    public static final Item BEE_QUEEN_SPAWN_EGG = new SpawnEggItem(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC)));
 
     public static void registerEntities() {
         Registry.register(BuiltInRegistries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_slime"), HONEY_SLIME);
