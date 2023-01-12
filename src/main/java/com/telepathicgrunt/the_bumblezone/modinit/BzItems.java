@@ -21,7 +21,6 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.SpawnEggItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,9 +100,6 @@ public class BzItems {
     public static final Item HONEY_BUCKET = new BucketItem(BzFluids.HONEY_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1));
     public static final Item ROYAL_JELLY_BUCKET = new BucketItem(BzFluids.ROYAL_JELLY_FLUID, new Item.Properties().rarity(Rarity.EPIC).craftRemainder(Items.BUCKET).stacksTo(1));
     public static final Item ROYAL_JELLY_BOTTLE = new RoyalJellyBottle((new Item.Properties().rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).food((new FoodProperties.Builder()).nutrition(10).saturationMod(0.2F).effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0), 1.0F).effect(new MobEffectInstance(BzEffects.BEENERGIZED, 1200, 1), 1.0F).build()).stacksTo(16));
-    public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties()));
-    public static final Item BEEHEMOTH_SPAWN_EGG = new SpawnEggItem(BzEntities.BEEHEMOTH, 0xFFCA47, 0x68372A, (new Item.Properties()));
-    public static final Item BEE_QUEEN_SPAWN_EGG = new SpawnEggItem(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC)));
     public static final Item MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = new BzMusicDiscs(14, BzSounds.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthFlightOfTheBumblebee);
     public static final Item MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = new BzMusicDiscs(15, BzSounds.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthHoneyBee);
     public static final Item MUSIC_DISC_LA_BEE_DA_LOCA = new BzMusicDiscs(13, BzSounds.MUSIC_DISC_LA_BEE_DA_LOCA, (new Item.Properties()).rarity(Rarity.UNCOMMON).stacksTo(1).rarity(Rarity.RARE), BzConfig.musicDiscTimeLengthLaBeeDaLoca);
@@ -218,9 +214,9 @@ public class BzItems {
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "music_disc_honey_bee_rat_faced_boy"), MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "music_disc_la_bee_da_loca"), MUSIC_DISC_LA_BEE_DA_LOCA);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "music_disc_bee_laxing_with_the_hom_bees"), MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES);
-        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_slime_spawn_egg"), HONEY_SLIME_SPAWN_EGG);
-        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "beehemoth_spawn_egg"), BEEHEMOTH_SPAWN_EGG);
-        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BEE_QUEEN_SPAWN_EGG);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "honey_slime_spawn_egg"), BzEntities.HONEY_SLIME_SPAWN_EGG);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "beehemoth_spawn_egg"), BzEntities.BEEHEMOTH_SPAWN_EGG);
+        registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "bee_queen_spawn_egg"), BzEntities.BEE_QUEEN_SPAWN_EGG);
         registerItemAndShowInTab(new ResourceLocation(Bumblezone.MODID, "essence_of_the_bees"), ESSENCE_OF_THE_BEES);
 
         BUMBLEZONE_CREATIVE_TAB = FabricItemGroup
@@ -349,9 +345,9 @@ public class BzItems {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS)
             .register(new ResourceLocation(Bumblezone.MODID, "additions_spawn_eggs"),
                 (itemGroupEntries) -> itemGroupEntries.acceptAll(Stream.of(
-                    HONEY_SLIME_SPAWN_EGG,
-                    BEEHEMOTH_SPAWN_EGG,
-                    BEE_QUEEN_SPAWN_EGG
+                    BzEntities.HONEY_SLIME_SPAWN_EGG,
+                    BzEntities.BEEHEMOTH_SPAWN_EGG,
+                    BzEntities.BEE_QUEEN_SPAWN_EGG
                 ).map(Item::getDefaultInstance).toList())
             );
 
