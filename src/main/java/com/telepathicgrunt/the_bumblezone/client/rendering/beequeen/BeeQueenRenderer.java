@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.beequeen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.transparentitem.TranslucentItemRenderTypeBuffer;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
@@ -35,12 +35,12 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
             stack.pushPose();
             stack.scale(scale, scale, scale);
             float rotYaw = Mth.rotLerp(partialTicks, beeQueenEntity.yBodyRotO, beeQueenEntity.yBodyRot);
-            stack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotYaw + 180.0f));
+            stack.mulPose(Axis.YP.rotationDegrees(180.0F - rotYaw + 180.0f));
             this.getModel().root().translateAndRotate(stack);
             this.getModel().root().getChild("segment3").translateAndRotate(stack);
             stack.translate(-0.15f, -1.25f, -0.22f);
-            stack.mulPose(Vector3f.YP.rotationDegrees(-75F));
-            stack.mulPose(Vector3f.XP.rotationDegrees(-20F));
+            stack.mulPose(Axis.YP.rotationDegrees(-75F));
+            stack.mulPose(Axis.XP.rotationDegrees(-20F));
             stack.scale(0.6f, 0.6f, 0.6f);
 
             int alpha = 150;
