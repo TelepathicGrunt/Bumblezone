@@ -12,6 +12,7 @@ Fixed it so that items added to `the_bumblezone:bee_queen/disallowed_random_supe
  asking for the now disallowed item. They will pick a new fresh item instead on world load if they old item they wanted is now disallowed.
 
 Bee Queen now shows the item it wants for Super/Bonus Trades! The item will be transparent under the head of the Queen.
+ The item rendering can be turned off on clientside with the renderBeeQueenSuperTradeItem config option.
 
 Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block will spawn a few particles of pollen to show that the block was changed.
 
