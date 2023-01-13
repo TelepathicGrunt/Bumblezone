@@ -12,7 +12,8 @@ displayName="The Bumblezone" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-forge"
 authors="TelepathicGrunt"
 credits="Thanks to Commoble for suggesting this awesome name for this mod! Special thanks to all the Forge tutorials and debugging help from other modders to help make this mod possible!"
-description='''An awesome dimension full of bees that becomes REALLY angry if you take their honey! Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.'''
+description='''An awesome dimension full of bees that becomes REALLY angry if you take their honey! Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.
+'''
 
 [[dependencies.the_bumblezone]]
     modId="minecraft"

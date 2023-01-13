@@ -21,6 +21,7 @@
     "containers.WorkbenchContainerMixin",
     "effects.MobEffectInstanceAccessor",
     "entities.AbstractArrowMixin",
+    "entities.AmphibiousNodeEvaluatorMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
     "entities.BeeGoToKnownFlowerGoalMixin",
@@ -39,7 +40,6 @@
     "entities.PlayerAdvancementsAccessor",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
-    "entities.AmphibiousNodeEvaluatorMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldMobMixin",
     "items.HoneyShieldPlayerMixin",
@@ -62,7 +62,9 @@
     "client.FogRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
-    "client.ScreenEffectRendererMixin"
+    "client.RenderStateShardAccessor",
+    "client.ScreenEffectRendererMixin",
+    "client.TextureStateShardAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

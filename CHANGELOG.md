@@ -1,3 +1,33 @@
+### **(V.6.6.2 Changes) (1.19.3 Minecraft)**
+
+##### Entities:
+Bee Queen will now properly split up rewards into multiple itemstacks if the item's stack limit is reached.
+ Will fix Royal Jelly Bucket trade getting a single stack of 2 Totem of Undying instead of 2 stacks of 1 Totem of Undying each.
+
+Adjusted Royal Jelly Bucket trades with Bee Queen so that Dragon Egg is nerfed a bit from 1/181 chance to 1/231 chance of being obtained.
+
+Adjusted Super/Bonus Trades so Bee Queen won't ask for warped/crimson blocks that Minecraft tagged in various "wooden" tags.
+
+Fixed it so that items added to `the_bumblezone:bee_queen/disallowed_random_super_trade_items` now will apply to Queens already
+ asking for the now disallowed item. They will pick a new fresh item instead on world load if they old item they wanted is now disallowed.
+
+Bee Queen now shows the item it wants for Super/Bonus Trades! The item will be transparent under the head of the Queen.
+ The item rendering can be turned off on clientside with the renderBeeQueenSuperTradeItem config option.
+
+Pollinated bees filling Porous Honeycomb Block or Empty Honeycomb Brood Block will spawn a few particles of pollen to show that the block was changed.
+
+Hurt bees now can take honey from Filled Porous Honeycomb Block to heal up to 4 points of health. Turns the block into a Porous Honeycomb Block.
+
+##### Advancements:
+Nerfed Slimy Mitosis Bee Queen quest to now be completed after breeding Honey Slime 6 times instead of 16 times.
+
+##### Lang:
+Ukraine lang file added by Unroman! Special thanks to them!
+
+##### Misc:
+Updated Bumblezone icon for the mod list screen.
+
+
 ### **(V.6.6.1 Changes) (1.19.3 Minecraft)**
 
 ##### Fluids:

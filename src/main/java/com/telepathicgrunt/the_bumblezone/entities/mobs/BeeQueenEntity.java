@@ -179,6 +179,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
         setRemainingSuperTradeTime(tag.getInt("supertradetime"));
         setSuperTradeItem(ItemStack.of(tag.getCompound("supertradeitem")));
+
+        if (getSuperTradeItem().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) &&
+            !getSuperTradeItem().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS))
+        {
+            setSuperTradeItem(ItemStack.EMPTY);
+            setRemainingSuperTradeTime(0);
+        }
+
         this.readPersistentAngerSaveData(this.level, tag);
     }
 
@@ -672,6 +680,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         if (getSuperTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() > 1) {
             rewardMultiplier = BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get();
             getSuperTradeItem().shrink(1);
+            if (getSuperTradeItem().isEmpty()) {
+                setSuperTradeItem(ItemStack.EMPTY);
+            }
 
             Player player = level.getPlayerByUUID(playerUUID);
             if (player != null) {
@@ -686,7 +697,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
         }
 
-        for (int i = 0; i < rewardMultiplier; i++) {
+        int remainingItemToSpawn = reward.count() * rewardMultiplier;
+        int itemStackMaxSize = reward.item().getMaxStackSize();
+
+        while (remainingItemToSpawn > 0) {
             ItemStack rewardItem = reward.item().getDefaultInstance();
             setQueenPose(BeeQueenPose.ITEM_THROW);
 
@@ -700,7 +714,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
             }
 
-            rewardItem.setCount(reward.count());
+            int currentItemStackCount = Math.min(remainingItemToSpawn, itemStackMaxSize);
+            rewardItem.setCount(currentItemStackCount);
+            remainingItemToSpawn -= currentItemStackCount;
+
             ItemEntity rewardItemEntity = new ItemEntity(
                     this.level,
                     this.getX() + (sideVect.x() * 0.9d) + (forwardVect.x() * 1),
