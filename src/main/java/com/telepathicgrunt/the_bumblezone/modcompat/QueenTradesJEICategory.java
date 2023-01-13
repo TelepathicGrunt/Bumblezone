@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -52,7 +53,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<QueenTradesInfo> 
 
         this.slotBackground = guiHelper.getSlotDrawable();
         //this.jeiPlugin = jeiPlugin;
-        this.icon = guiHelper.createDrawableItemStack(BzItems.BEE_QUEEN_SPAWN_EGG.getDefaultInstance());
+        this.icon = guiHelper.createDrawableItemStack(BzEntities.BEE_QUEEN_SPAWN_EGG.getDefaultInstance());
         this.localizedName = Component.translatable("the_bumblezone.category.bee_queen_trade_info");
     }
 
