@@ -1,3 +1,10 @@
+### **(V.6.6.3 Changes) (1.19.2 Minecraft)**
+
+##### Entities:
+Fixed respawning from the End's podium portal causing all Bumblezone data attached to player to be lost.
+ Should be corrected now.
+
+
 ### **(V.6.6.2 Changes) (1.19.2 Minecraft)**
 
 ##### Entities:
