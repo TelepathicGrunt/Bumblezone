@@ -1,14 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
+import net.minecraft.resources.ResourceLocation;
 
-import java.util.function.Supplier;
+public record BeehemothControlsPacket(byte upPressed, byte downPressed) implements Packet<BeehemothControlsPacket> {
 
-public record BeehemothControlsPacket(byte upPressed, byte downPressed) {
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "beehemoth_controls");
+    public static final Handler HANDLER = new Handler();
 
     /**
      * 2 means no action.
@@ -16,46 +19,49 @@ public record BeehemothControlsPacket(byte upPressed, byte downPressed) {
      * 0 means set it to false serverside.
      */
     public static void sendToServer(int upPressed, int downPressed) {
-        MessageHandler.DEFAULT_CHANNEL.send(PacketDistributor.SERVER.with(() -> null), new BeehemothControlsPacket((byte) upPressed, (byte) downPressed));
+        MessageHandler.DEFAULT_CHANNEL.sendToServer(new BeehemothControlsPacket((byte) upPressed, (byte) downPressed));
     }
 
-    /*
-     * How the server will read the packet.
-     */
-    public static BeehemothControlsPacket parse(final FriendlyByteBuf buf) {
-        return new BeehemothControlsPacket(buf.readByte(), buf.readByte());
+    @Override
+    public ResourceLocation getID() {
+        return ID;
     }
 
-    /*
-     * creates the packet buffer and sets its values
-     */
-    public static void compose(final BeehemothControlsPacket pkt, final FriendlyByteBuf buf) {
-        buf.writeByte(pkt.upPressed);
-        buf.writeByte(pkt.downPressed);
+    @Override
+    public PacketHandler<BeehemothControlsPacket> getHandler() {
+        return HANDLER;
     }
 
-    /*
-     * What the server will do with the packet
-     */
-    public static class Handler {
-        //this is what gets run on the server
-        public static void handle(final BeehemothControlsPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer serverPlayer = ctx.get().getSender();
-                if(serverPlayer == null) {
+    private static class Handler implements PacketHandler<BeehemothControlsPacket> {
+
+        @Override
+        public void encode(BeehemothControlsPacket message, FriendlyByteBuf buffer) {
+            buffer.writeByte(message.upPressed);
+            buffer.writeByte(message.downPressed);
+        }
+
+        @Override
+        public BeehemothControlsPacket decode(FriendlyByteBuf buffer) {
+            return new BeehemothControlsPacket(buffer.readByte(), buffer.readByte());
+        }
+
+        @Override
+        public PacketContext handle(BeehemothControlsPacket message) {
+            return (player, level) -> {
+                if(player == null) {
                     return;
                 }
 
-                if (serverPlayer.getVehicle() instanceof BeehemothEntity beehemothEntity) {
-                    if (pkt.upPressed() != 2) {
-                        beehemothEntity.movingStraightUp = pkt.upPressed() == 1;
+                if (player.getVehicle() instanceof BeehemothEntity beehemothEntity) {
+                    if (message.upPressed() != 2) {
+                        beehemothEntity.movingStraightUp = message.upPressed() == 1;
                     }
-                    if (pkt.downPressed() != 2) {
-                        beehemothEntity.movingStraightDown = pkt.downPressed() == 1;
+                    if (message.downPressed() != 2) {
+                        beehemothEntity.movingStraightDown = message.downPressed() == 1;
                     }
                 }
-            });
-            ctx.get().setPacketHandled(true);
+            };
         }
     }
+
 }

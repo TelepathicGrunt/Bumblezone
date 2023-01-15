@@ -2,58 +2,55 @@ package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
-public record CrystallineFlowerEnchantmentPacket(List<EnchantmentSkeleton> enchantmentSkeletons) {
-    public static Gson gson = new GsonBuilder().create();
+public record CrystallineFlowerEnchantmentPacket(List<EnchantmentSkeleton> enchantmentSkeletons) implements Packet<CrystallineFlowerEnchantmentPacket> {
+    public static final Gson GSON = new GsonBuilder().create();
 
-    public static void sendToClient(ServerPlayer entity, List<EnchantmentSkeleton> enchantmentSkeletons) {
-        MessageHandler.DEFAULT_CHANNEL.send(PacketDistributor.PLAYER.with(() -> entity),
-                new CrystallineFlowerEnchantmentPacket(enchantmentSkeletons));
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_enchantment");
+    public static final Handler HANDLER = new Handler();
+
+    public static void sendToClient(ServerPlayer player, List<EnchantmentSkeleton> enchantmentSkeletons) {
+        MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new CrystallineFlowerEnchantmentPacket(enchantmentSkeletons), player);
     }
 
-    /*
-     * How the client will read the packet.
-     */
-    public static CrystallineFlowerEnchantmentPacket parse(final FriendlyByteBuf buf) {
-        List<EnchantmentSkeleton> enchantmentSkeletons = new ArrayList<>();
-        int elements = buf.readInt();
-        for (int i = 0; i < elements; i++) {
-            String jsonData = buf.readUtf();
-            enchantmentSkeletons.add(gson.fromJson(jsonData, EnchantmentSkeleton.class));
+    @Override
+    public ResourceLocation getID() {
+        return ID;
+    }
+
+    @Override
+    public PacketHandler<CrystallineFlowerEnchantmentPacket> getHandler() {
+        return HANDLER;
+    }
+
+    private static final class Handler implements PacketHandler<CrystallineFlowerEnchantmentPacket> {
+
+        @Override
+        public void encode(CrystallineFlowerEnchantmentPacket message, FriendlyByteBuf buffer) {
+            buffer.writeCollection(message.enchantmentSkeletons(), (buf, enchantmentSkeleton) -> buf.writeUtf(GSON.toJson(enchantmentSkeleton)));
         }
-        return new CrystallineFlowerEnchantmentPacket(enchantmentSkeletons);
-    }
 
-    /*
-     * creates the packet buffer and sets its values
-     */
-    public static void compose(final CrystallineFlowerEnchantmentPacket pkt, final FriendlyByteBuf buf) {
-        buf.writeInt(pkt.enchantmentSkeletons().size());
-        for (EnchantmentSkeleton enchantmentSkeleton : pkt.enchantmentSkeletons()) {
-            buf.writeUtf(gson.toJson(enchantmentSkeleton));
+        @Override
+        public CrystallineFlowerEnchantmentPacket decode(FriendlyByteBuf buffer) {
+            return new CrystallineFlowerEnchantmentPacket(buffer.readList(buf -> GSON.fromJson(buf.readUtf(), EnchantmentSkeleton.class)));
         }
-    }
 
-    /*
-     * What the client will do with the packet
-     */
-    public static class Handler {
-        //this is what gets run on the client
-        public static void handle(final CrystallineFlowerEnchantmentPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                CrystallineFlowerScreen.enchantmentsAvailable = pkt.enchantmentSkeletons;
-            });
-            ctx.get().setPacketHandled(true);
+        @Override
+        public PacketContext handle(CrystallineFlowerEnchantmentPacket message) {
+            return (player, level) -> {
+                CrystallineFlowerScreen.enchantmentsAvailable = message.enchantmentSkeletons;
+            };
         }
     }
 }

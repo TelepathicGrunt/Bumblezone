@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
+import org.apache.commons.lang3.NotImplementedException;
 
 public class BzTags {
     // Sole purpose is to initalize the tag wrappers at mod startup
@@ -43,7 +45,7 @@ public class BzTags {
     public static final TagKey<Item> WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/wrath_activating_items_when_picked_up"));
     public static final TagKey<Item> HONEY_BUCKETS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "buckets/honey"));
     public static final TagKey<Item> ROYAL_JELLY_BUCKETS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "buckets/royal_jelly"));
-    public static final TagKey<Item> SHULKER_BOXES = TagKey.create(Registries.ITEM, new ResourceLocation("forge", "shulker_boxes"));
+    public static final TagKey<Item> SHULKER_BOXES = TagKey.create(Registries.ITEM, new ResourceLocation(getPlatformTagNamespace(), "shulker_boxes"));
     public static final TagKey<Item> SUPER_CANDLES_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "super_candles"));
     public static final TagKey<Item> DAMAGEABLE_CANDLE_LIGHTING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "candle_lightables/damageable"));
     public static final TagKey<Item> CONSUMABLE_CANDLE_LIGHTING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "candle_lightables/consumable"));
@@ -63,12 +65,12 @@ public class BzTags {
     public static final TagKey<Item> FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen/forced_allowed_random_super_trade_items"));
     public static final TagKey<Item> DISALLOWED_RANDOM_SUPER_TRADE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_queen/disallowed_random_super_trade_items"));
 
-    public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("forge", "honey"));
+    public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
     public static final TagKey<Fluid> ROYAL_JELLY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly"));
     public static final TagKey<Fluid> SPECIAL_HONEY_LIKE = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "special_honey_like"));
-    public static final TagKey<Fluid> VISUAL_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("forge", "visual/honey"));
-    public static final TagKey<Fluid> VISUAL_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("forge", "visual/water"));
+    public static final TagKey<Fluid> VISUAL_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "visual/honey"));
+    public static final TagKey<Fluid> VISUAL_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "visual/water"));
     public static final TagKey<Fluid> SUGAR_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water"));
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "convertible_to_sugar_water"));
 
@@ -98,4 +100,9 @@ public class BzTags {
 
     public static final TagKey<Enchantment> DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/disallowed_enchantments"));
     public static final TagKey<Enchantment> FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/forced_allowed_enchantments"));
+
+    @ExpectPlatform
+    public static String getPlatformTagNamespace() {
+        throw new NotImplementedException("BzTags.getPlatformTagNamespace");
+    }
 }

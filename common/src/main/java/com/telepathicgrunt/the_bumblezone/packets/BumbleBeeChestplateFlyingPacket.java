@@ -1,54 +1,56 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 
-import java.util.function.Supplier;
+public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<BumbleBeeChestplateFlyingPacket> {
 
-public record BumbleBeeChestplateFlyingPacket(byte isFlying) {
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "bumblebee_chestplate_flying");
+    public static final Handler HANDLER = new Handler();
 
     public static void sendToServer(boolean isFlying) {
-        MessageHandler.DEFAULT_CHANNEL.send(PacketDistributor.SERVER.with(() -> null), new BumbleBeeChestplateFlyingPacket((byte) (isFlying ? 1 : 0)));
+        MessageHandler.DEFAULT_CHANNEL.sendToServer(new BumbleBeeChestplateFlyingPacket((byte) (isFlying ? 1 : 0)));
     }
 
-    /*
-     * How the server will read the packet.
-     */
-    public static BumbleBeeChestplateFlyingPacket parse(final FriendlyByteBuf buf) {
-        return new BumbleBeeChestplateFlyingPacket(buf.readByte());
+    @Override
+    public ResourceLocation getID() {
+        return ID;
     }
 
-    /*
-     * creates the packet buffer and sets its values
-     */
-    public static void compose(final BumbleBeeChestplateFlyingPacket pkt, final FriendlyByteBuf buf) {
-        buf.writeByte(pkt.isFlying);
+    @Override
+    public PacketHandler<BumbleBeeChestplateFlyingPacket> getHandler() {
+        return HANDLER;
     }
 
-    /*
-     * What the server will do with the packet
-     */
-    public static class Handler {
-        //this is what gets run on the server
-        public static void handle(final BumbleBeeChestplateFlyingPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer serverPlayer = ctx.get().getSender();
-                if(serverPlayer == null) {
-                    return;
-                }
 
-                ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(serverPlayer);
+    private static class Handler implements PacketHandler<BumbleBeeChestplateFlyingPacket> {
+
+        @Override
+        public void encode(BumbleBeeChestplateFlyingPacket message, FriendlyByteBuf buffer) {
+            buffer.writeByte(message.isFlying);
+        }
+
+        @Override
+        public BumbleBeeChestplateFlyingPacket decode(FriendlyByteBuf buffer) {
+            return new BumbleBeeChestplateFlyingPacket(buffer.readByte());
+        }
+
+        @Override
+        public PacketContext handle(BumbleBeeChestplateFlyingPacket message) {
+            return (player, level) -> {
+                ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(player);
                 if(!itemStack.isEmpty()) {
                     CompoundTag tag = itemStack.getOrCreateTag();
-                    tag.putBoolean("isFlying", pkt.isFlying() != 0);
+                    tag.putBoolean("isFlying", message.isFlying() != 0);
                 }
-            });
-            ctx.get().setPacketHandled(true);
+            };
         }
     }
 }

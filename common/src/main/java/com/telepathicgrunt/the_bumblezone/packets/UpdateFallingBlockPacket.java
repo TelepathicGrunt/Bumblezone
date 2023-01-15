@@ -1,55 +1,57 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.minecraft.client.Minecraft;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 
-import java.util.function.Supplier;
+public record UpdateFallingBlockPacket(int fallingBlockId, short layer) implements Packet<UpdateFallingBlockPacket> {
 
-public record UpdateFallingBlockPacket(int fallingBlockId, short layer) {
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "update_falling_block");
+    public static final Handler HANDLER = new Handler();
 
     public static void sendToClient(Entity entity, int fallingBlockId, short layer) {
-        MessageHandler.DEFAULT_CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), new UpdateFallingBlockPacket(fallingBlockId, layer));
+        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new UpdateFallingBlockPacket(fallingBlockId, layer), entity.level, entity.blockPosition());
     }
 
-    /*
-     * How the client will read the packet.
-     */
-    public static UpdateFallingBlockPacket parse(final FriendlyByteBuf buf) {
-        return new UpdateFallingBlockPacket(buf.readInt(), buf.readShort());
+    @Override
+    public ResourceLocation getID() {
+        return ID;
     }
 
-    /*
-     * creates the packet buffer and sets its values
-     */
-    public static void compose(final UpdateFallingBlockPacket pkt, final FriendlyByteBuf buf) {
-        buf.writeInt(pkt.fallingBlockId);
-        buf.writeShort(pkt.layer);
+    @Override
+    public PacketHandler<UpdateFallingBlockPacket> getHandler() {
+        return HANDLER;
     }
 
-    /*
-     * What the client will do with the packet
-     */
-    public static class Handler {
-        //this is what gets run on the client
-        public static void handle(final UpdateFallingBlockPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                if(Minecraft.getInstance().level == null) {
-                    return;
-                }
+    private static final class Handler implements PacketHandler<UpdateFallingBlockPacket> {
 
-                Entity entity = Minecraft.getInstance().level.getEntity(pkt.fallingBlockId);
+        @Override
+        public void encode(UpdateFallingBlockPacket message, FriendlyByteBuf buffer) {
+            buffer.writeVarInt(message.fallingBlockId);
+            buffer.writeShort(message.layer);
+        }
+
+        @Override
+        public UpdateFallingBlockPacket decode(FriendlyByteBuf buffer) {
+            return new UpdateFallingBlockPacket(buffer.readVarInt(), buffer.readShort());
+        }
+
+        @Override
+        public PacketContext handle(UpdateFallingBlockPacket message) {
+            return (player, level) -> {
+                Entity entity = level.getEntity(message.fallingBlockId);
                 if (entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
-                    ((FallingBlockEntityAccessor) fallingBlockEntity).setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) pkt.layer));
+                    ((FallingBlockEntityAccessor) fallingBlockEntity).setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) message.layer));
                 }
-            });
-            ctx.get().setPacketHandled(true);
+            };
         }
     }
 }

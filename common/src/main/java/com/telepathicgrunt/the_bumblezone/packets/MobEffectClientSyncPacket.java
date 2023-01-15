@@ -1,32 +1,36 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
-import net.minecraft.client.Minecraft;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
+import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 
-import java.util.function.Supplier;
+public record MobEffectClientSyncPacket(int entityId, byte effectId, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
 
-public class MobEffectClientSyncPacket {
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "mob_effect_client_sync");
+    public static final Handler HANDLER = new Handler();
+
     private static final int FLAG_AMBIENT = 1;
     private static final int FLAG_VISIBLE = 2;
     private static final int FLAG_SHOW_ICON = 4;
-    private final int entityId;
-    private final byte effectId;
-    private final byte effectAmplifier;
-    private final int effectDurationTicks;
-    private final byte flags;
 
     public MobEffectClientSyncPacket(int mobId, MobEffectInstance mobEffectInstance) {
-        this.entityId = mobId;
-        this.effectId = (byte)(MobEffect.getId(mobEffectInstance.getEffect()) & 255);
-        this.effectAmplifier = (byte)(mobEffectInstance.getAmplifier() & 255);
-        this.effectDurationTicks = Math.min(mobEffectInstance.getDuration(), 32767);
+        this(
+                mobId,
+                (byte) (MobEffect.getId(mobEffectInstance.getEffect()) & 255),
+                (byte) (mobEffectInstance.getAmplifier() & 255),
+                Math.min(mobEffectInstance.getDuration(), 32767),
+                getFlags(mobEffectInstance)
+        );
+    }
 
+    private static byte getFlags(MobEffectInstance mobEffectInstance) {
         byte flags = 0;
         if (mobEffectInstance.isAmbient()) {
             flags = (byte)(flags | FLAG_AMBIENT);
@@ -40,31 +44,7 @@ public class MobEffectClientSyncPacket {
             flags = (byte)(flags | FLAG_SHOW_ICON);
         }
 
-        this.flags = flags;
-    }
-
-    private MobEffectClientSyncPacket(int entityId, byte effectId, byte effectAmplifier, int effectDurationTicks, byte flags) {
-        this.entityId = entityId;
-        this.effectId = effectId;
-        this.effectAmplifier = effectAmplifier;
-        this.effectDurationTicks = effectDurationTicks;
-        this.flags = flags;
-    }
-
-    public int getEntityId() {
-        return this.entityId;
-    }
-
-    public byte getEffectId() {
-        return this.effectId;
-    }
-
-    public byte getEffectAmplifier() {
-        return this.effectAmplifier;
-    }
-
-    public int getEffectDurationTicks() {
-        return this.effectDurationTicks;
+        return flags;
     }
 
     public boolean isEffectVisible() {
@@ -79,61 +59,54 @@ public class MobEffectClientSyncPacket {
         return (this.flags & 4) == 4;
     }
 
-    public boolean isSuperLongDuration() {
-        return this.effectDurationTicks == 32767;
-    }
-
     public static void sendToClient(Entity entity, MobEffectInstance mobEffectInstance) {
-        MessageHandler.DEFAULT_CHANNEL.send(
-                PacketDistributor.TRACKING_ENTITY.with(() -> entity),
-                new MobEffectClientSyncPacket(entity.getId(), mobEffectInstance));
+        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new MobEffectClientSyncPacket(entity.getId(), mobEffectInstance), entity.level, entity.blockPosition());
     }
 
-    /*
-     * How the client will read the packet.
-     */
-    public static MobEffectClientSyncPacket parse(final FriendlyByteBuf buf) {
-        return new MobEffectClientSyncPacket(
-                buf.readVarInt(),
-                buf.readByte(),
-                buf.readByte(),
-                buf.readVarInt(),
-                buf.readByte()
-        );
+    @Override
+    public ResourceLocation getID() {
+        return ID;
     }
 
-    /*
-     * creates the packet buffer and sets its values
-     */
-    public static void compose(final MobEffectClientSyncPacket pkt, final FriendlyByteBuf buf) {
-        buf.writeVarInt(pkt.entityId);
-        buf.writeByte(pkt.effectId);
-        buf.writeByte(pkt.effectAmplifier);
-        buf.writeVarInt(pkt.effectDurationTicks);
-        buf.writeByte(pkt.flags);
+    @Override
+    public PacketHandler<MobEffectClientSyncPacket> getHandler() {
+        return HANDLER;
     }
 
-    /*
-     * What the client will do with the packet
-     */
-    public static class Handler {
-        //this is what gets run on the client
-        public static void handle(final MobEffectClientSyncPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                if(Minecraft.getInstance().level == null) {
-                    return;
-                }
+    private static final class Handler implements PacketHandler<MobEffectClientSyncPacket> {
 
-                Entity entity = Minecraft.getInstance().level.getEntity(pkt.getEntityId());
+        @Override
+        public void encode(MobEffectClientSyncPacket message, FriendlyByteBuf buffer) {
+            buffer.writeVarInt(message.entityId);
+            buffer.writeByte(message.effectId);
+            buffer.writeByte(message.effectAmplifier);
+            buffer.writeVarInt(message.effectDurationTicks);
+            buffer.writeByte(message.flags);
+        }
+
+        @Override
+        public MobEffectClientSyncPacket decode(FriendlyByteBuf buffer) {
+            return new MobEffectClientSyncPacket(
+                    buffer.readVarInt(),
+                    buffer.readByte(),
+                    buffer.readByte(),
+                    buffer.readVarInt(),
+                    buffer.readByte()
+            );
+        }
+
+        @Override
+        public PacketContext handle(MobEffectClientSyncPacket message) {
+            return (player, level) -> {
+                Entity entity = level.getEntity(message.entityId());
                 if (entity instanceof LivingEntity) {
-                    MobEffect mobeffect = MobEffect.byId(pkt.getEffectId() & 0xFF);
+                    MobEffect mobeffect = MobEffect.byId(message.effectId() & 0xFF);
                     if (mobeffect != null) {
-                        MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, pkt.getEffectDurationTicks(), pkt.getEffectAmplifier(), pkt.isEffectAmbient(), pkt.isEffectVisible(), pkt.effectShowsIcon());
+                        MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, message.effectDurationTicks(), message.effectAmplifier(), message.isEffectAmbient(), message.isEffectVisible(), message.effectShowsIcon());
                         ((LivingEntity)entity).forceAddEffect(mobeffectinstance, null);
                     }
                 }
-            });
-            ctx.get().setPacketHandled(true);
+            };
         }
     }
 }
