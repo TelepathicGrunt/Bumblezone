@@ -14,6 +14,9 @@ When Bee Queen is angry, the translucent super trade item rendering will disappe
 ##### Effects:
 Wrath of the Hive will not apply to players in Peaceful mode now.
 
+##### Lang:
+Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
+
 
 ### **(V.6.6.2 Changes) (1.19.2 Minecraft)**
 
