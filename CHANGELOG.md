@@ -1,5 +1,8 @@
 ### **(V.6.6.3 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Made XP Orbs no longer spawn pollen particles when moving through Pile of Pollen block.
+
 ##### Entities:
 Bee Queen will not get angry at attacking Players in Peaceful mode now.
 
