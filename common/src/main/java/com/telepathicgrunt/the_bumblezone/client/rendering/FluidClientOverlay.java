@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.ClientPlatformHooks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -15,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 import org.joml.Matrix4f;
 
 public class FluidClientOverlay {
@@ -22,9 +24,8 @@ public class FluidClientOverlay {
     private static final ResourceLocation ROYAL_JELLY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/royal_jelly_fluid_underwater.png");
 
     public static boolean renderHoneyOverlay(LocalPlayer clientPlayerEntity, PoseStack matrixStack) {
-        if(!clientPlayerEntity.isEyeInFluidType(BzFluids.HONEY_FLUID_TYPE.get()) &&
-            !clientPlayerEntity.isEyeInFluidType(BzFluids.ROYAL_JELLY_FLUID_TYPE.get()))
-        {
+        Fluid fluidInEyes = ClientPlatformHooks.getFluidInEyes(clientPlayerEntity);
+        if (!fluidInEyes.equals(BzFluids.HONEY_FLUID.get()) && !fluidInEyes.equals(BzFluids.ROYAL_JELLY_FLUID.get())) {
             return false;
         }
 

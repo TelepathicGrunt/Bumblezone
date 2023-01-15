@@ -16,14 +16,14 @@ public class BeeVariantRenderer {
     private static final String UKRAINE_VARIANT = "ukrainebee";
 
     public static ResourceLocation getTextureLocation(Bee entity) {
-        if(BzClientConfigs.enableAltBeeSkinRenderer.get()) {
+        if(BzClientConfigs.enableAltBeeSkinRenderer) {
             UUID id = entity.getUUID();
             long most = id.getMostSignificantBits();
 
-            final double lgbtChance = BzClientConfigs.lgbtBeeRate.get();
+            final double lgbtChance = BzClientConfigs.lgbtBeeRate;
             boolean lgbt = (new Random(most + 1001)).nextDouble() < lgbtChance; // + 1001 so it doesn't align exactly with quark.
 
-            final double ukraineChance = BzClientConfigs.ukraineBeeRate.get();
+            final double ukraineChance = BzClientConfigs.ukraineBeeRate;
             boolean ukraine = (new Random(most + 2005)).nextDouble() < ukraineChance; // + 1001 so it doesn't align exactly with quark.
 
             if(entity.hasCustomName() || lgbt || ukraine) {

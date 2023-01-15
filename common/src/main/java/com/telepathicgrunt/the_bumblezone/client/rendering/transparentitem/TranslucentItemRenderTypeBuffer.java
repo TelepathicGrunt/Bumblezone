@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -33,9 +34,12 @@ public class TranslucentItemRenderTypeBuffer implements MultiBufferSource {
     }
 
     @Override
-    public VertexConsumer getBuffer(RenderType type) {
-        if (MAKE_TRANSPARENT.contains(((RenderStateShardAccessor)type).getName()) && type instanceof RenderType.CompositeRenderType composite) {
-            if (composite.state.textureState instanceof RenderStateShard.TextureStateShard textureState) {
+    public VertexConsumer getBuffer(@NotNull RenderType type) {
+        if (MAKE_TRANSPARENT.contains(((RenderStateShardAccessor)type).getName())) {
+            //noinspection ConstantConditions For some reason intellij thinks this is not possible.
+            RenderType.CompositeRenderType composite = type instanceof RenderType.CompositeRenderType comp ? comp : null;
+            //noinspection ConstantConditions Same above.
+            if (composite != null && composite.state().textureState instanceof RenderStateShard.TextureStateShard textureState) {
                 ResourceLocation texture = ((TextureStateShardAccessor)textureState).getTexture().orElse(InventoryMenu.BLOCK_ATLAS);
                 type = RenderType.entityTranslucentCull(texture);
             }

@@ -1,13 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
@@ -16,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -26,11 +21,11 @@ public class PileOfPollenRenderer {
 
     private static final ResourceLocation TEXTURE_POLLEN = new ResourceLocation(Bumblezone.MODID + ":textures/block/pile_of_pollen.png");
 
-    public static void pileOfPollenOverlay(RenderBlockScreenEffectEvent event) {
-        BlockState blockState = event.getBlockState();
+    public static boolean pileOfPollenOverlay(BlockRenderedOnScreenEvent event) {
+        BlockState blockState = event.state();
         if (blockState.is(BzBlocks.PILE_OF_POLLEN.get())) {
-            Player playerEntity = event.getPlayer();
-            PoseStack matrixStack = event.getPoseStack();
+            Player playerEntity = event.player();
+            PoseStack matrixStack = event.stack();
             boolean isInPollen = false;
             for(int x = -1; x <= 1; x++) {
                 for(int z = -1; z <= 1; z++) {
@@ -57,8 +52,7 @@ public class PileOfPollenRenderer {
             }
 
             if(!isInPollen) {
-                event.setCanceled(true);
-                return;
+                return true;
             }
 
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -106,7 +100,8 @@ public class PileOfPollenRenderer {
             bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(pitchPlus4 - playerPosition.z(), yaw - smallYOffset).endVertex();
             BufferUploader.drawWithShader(bufferbuilder.end());
             RenderSystem.disableBlend();
-            event.setCanceled(true);
+            return true;
         }
+        return false;
     }
 }
