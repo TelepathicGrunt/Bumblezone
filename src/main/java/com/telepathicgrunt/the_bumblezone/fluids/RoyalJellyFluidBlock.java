@@ -121,25 +121,30 @@ public class RoyalJellyFluidBlock extends LiquidBlock {
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity) {
-            if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
-                float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
-                beeEntity.heal(diff);
-            }
+            if (entity.getEyeInFluidType().isAir()) {
+                if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
+                    float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
+                    beeEntity.heal(diff);
+                }
 
-            beeEntity.addEffect(new MobEffectInstance(
-                    BzEffects.BEENERGIZED,
-                    600,
-                    0,
-                    false,
-                    true,
-                    true));
-            beeEntity.addEffect(new MobEffectInstance(
-                    MobEffects.REGENERATION,
-                    600,
-                    0,
-                    false,
-                    false,
-                    true));
+                beeEntity.addEffect(new MobEffectInstance(
+                        BzEffects.BEENERGIZED,
+                        600,
+                        0,
+                        false,
+                        true,
+                        true));
+                beeEntity.addEffect(new MobEffectInstance(
+                        MobEffects.REGENERATION,
+                        600,
+                        0,
+                        false,
+                        false,
+                        true));
+            }
+            else {
+                beeEntity.removeEffect(MobEffects.REGENERATION);
+            }
         }
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
             Vec3 vec3 = entity.getDeltaMovement();
