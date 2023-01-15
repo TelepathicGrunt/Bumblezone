@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -123,7 +124,7 @@ public class HoneyFluidBlock extends LiquidBlock {
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity) {
-            if (beeEntity.getHealth() < beeEntity.getMaxHealth() && entity.getEyeInFluidType().isAir()) {
+            if (beeEntity.getHealth() < beeEntity.getMaxHealth() && ((EntityAccessor)entity).getFluidOnEyes().isEmpty()) {
                 float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
                 beeEntity.heal(diff);
                 BlockState currentState = world.getBlockState(position);

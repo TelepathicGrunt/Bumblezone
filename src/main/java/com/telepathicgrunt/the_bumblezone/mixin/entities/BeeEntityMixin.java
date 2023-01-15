@@ -17,6 +17,9 @@ import java.util.Random;
 @Mixin(Bee.class)
 public abstract class BeeEntityMixin extends Entity {
 
+    @Shadow
+    private int underWaterTicks;
+
     public BeeEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
     }

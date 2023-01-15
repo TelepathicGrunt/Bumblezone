@@ -99,10 +99,10 @@ public class HoneycombBrood extends ProperFacingBlock {
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
                 !playerEntity.isCreative() &&
                 !playerEntity.isSpectator() &&
-                BzBeeAggressionConfigs.aggressiveBees.get() &&
+                BzConfig.aggressiveBees &&
                 world.getDifficulty() != Difficulty.PEACEFUL)
             {
                 if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {

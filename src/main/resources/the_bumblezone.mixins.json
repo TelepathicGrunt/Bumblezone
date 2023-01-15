@@ -3,6 +3,7 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "entities.EntityAccessor",
     "blocks.AbstractFurnaceBlockEntityMixin",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
@@ -28,6 +29,7 @@
     "enchantments.EnchantmentHelperMixin",
     "enchantments.EnchantmentMixin",
     "entities.AbstractArrowMixin",
+    "entities.AmphibiousNodeEvaluatorMixin",
     "entities.AnimalMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
@@ -52,7 +54,6 @@
     "entities.PlayerEntityMixin",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
-    "entities.AmphibiousNodeEvaluatorMixin",
     "entities.WalkNodeEvaluatorMixin",
     "items.BowItemMixin",
     "items.BucketItemAccessor",
