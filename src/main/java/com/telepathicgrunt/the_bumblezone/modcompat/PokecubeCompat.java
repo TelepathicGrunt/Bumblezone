@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -123,7 +124,7 @@ public class PokecubeCompat {
 
     public static void PCAddProtectionForBeeMobs(Entity entity) {
         if (BzModCompatibilityConfigs.beePokemonGetsProtectionEffect.get() && entity instanceof PokemobBase pokemobBase) {
-            if (POKECUBE_POKEMON_LIST.contains(pokemobBase.pokemobCap.getPokedexEntry())) {
+            if (POKECUBE_POKEMON_LIST.contains(pokemobBase.pokemobCap.getPokedexEntry()) && entity.level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
                 pokemobBase.addEffect(new MobEffectInstance(
                         BzEffects.PROTECTION_OF_THE_HIVE.get(),
                         Integer.MAX_VALUE - 5,
