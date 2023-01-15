@@ -2,11 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,9 +29,8 @@ public class BumbleBeeChestplate extends BeeArmor {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
-    //TODO forge method
     @Override
-    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
+    public void armorTick(ItemStack itemstack, Level world, Player player) {
         CompoundTag tag = itemstack.getOrCreateTag();
         boolean isFlying = tag.getBoolean("isFlying");
         int flyCounter = tag.getInt("flyCounter");
@@ -101,8 +96,6 @@ public class BumbleBeeChestplate extends BeeArmor {
         if(player.isOnGround()) {
             tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5f : 1) * (isAllBeeArmorOn ? 2 : 1)));
         }
-
-        super.onArmorTick(itemstack, world, player);
     }
 
     public static ItemStack getEntityBeeChestplate(Entity entity) {

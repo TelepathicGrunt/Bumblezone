@@ -42,10 +42,8 @@ public class CarpenterBeeBoots extends BeeArmor {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
-
-    //TODO forge method
     @Override
-    public void onArmorTick(ItemStack beeBoots, Level world, Player player) {
+    public void armorTick(ItemStack beeBoots, Level world, Player player) {
         RandomSource random = player.getRandom();
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
         CompoundTag tag = beeBoots.getOrCreateTag();

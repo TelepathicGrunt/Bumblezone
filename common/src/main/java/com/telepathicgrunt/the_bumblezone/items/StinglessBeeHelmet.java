@@ -45,9 +45,8 @@ public class StinglessBeeHelmet extends BeeArmor {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
-    //TODO forge method
     @Override
-    public void onArmorTick(ItemStack beeHelmet, Level world, Player player) {
+    public void armorTick(ItemStack beeHelmet, Level world, Player player) {
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
 
         MobEffectInstance nausea = player.getEffect(MobEffects.CONFUSION);
@@ -129,8 +128,6 @@ public class StinglessBeeHelmet extends BeeArmor {
                 }
             }
         }
-
-        super.onArmorTick(beeHelmet, world, player);
     }
 
     public static boolean shouldEntityGlow(Player player, Entity entity) {

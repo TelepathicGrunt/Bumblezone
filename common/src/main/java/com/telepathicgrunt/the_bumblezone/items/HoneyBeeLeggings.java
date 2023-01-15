@@ -37,9 +37,8 @@ public class HoneyBeeLeggings extends BeeArmor {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
-    //TODO forge method
     @Override
-    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
+    public void armorTick(ItemStack itemstack, Level world, Player player) {
         RandomSource random = player.getRandom();
         boolean isPollinated = isPollinated(itemstack);
         boolean isSprinting = player.isSprinting();
@@ -106,8 +105,6 @@ public class HoneyBeeLeggings extends BeeArmor {
                         random.nextGaussian() * speedXZModifier);
             }
         }
-
-        super.onArmorTick(itemstack, world, player);
     }
 
     public static ItemStack getEntityBeeLegging(Entity entity) {

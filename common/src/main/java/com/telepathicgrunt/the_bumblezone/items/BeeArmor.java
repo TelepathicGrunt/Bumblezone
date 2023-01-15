@@ -8,10 +8,14 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -28,6 +32,19 @@ public abstract class BeeArmor extends ArmorItem {
     public int getVariant() {
         return variant;
     }
+
+    @Override
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slot, boolean isSelected) {
+        super.inventoryTick(stack, level, entity, slot, isSelected);
+        if (entity instanceof Player player) {
+            Inventory inventory = player.getInventory();
+            if (slot < inventory.items.size()) return;
+            if (slot >= inventory.items.size() + inventory.armor.size()) return;
+            armorTick(stack, level, player);
+        }
+    }
+
+    abstract void armorTick(ItemStack stack, Level level, Player player);
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {

@@ -15,3 +15,4 @@ accessible field net/minecraft/client/renderer/RenderType$CompositeState texture
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V
 
+accessible method net/minecraft/world/food/FoodProperties <init> (IFZZZLjava/util/List;)V
