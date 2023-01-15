@@ -11,6 +11,9 @@ When Bee Queen is angry, the translucent super trade item rendering will disappe
 ##### Effects:
 Wrath of the Hive will not apply to players in Peaceful mode now.
 
+##### Fluids:
+Fixed it so Bees that spend too long in Honey Fluid and Royal Jelly Fluid will drown properly.
+
 ##### Lang:
 Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
 
