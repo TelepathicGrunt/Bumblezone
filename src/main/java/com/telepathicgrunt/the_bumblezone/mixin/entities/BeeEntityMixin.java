@@ -17,25 +17,8 @@ import java.util.Random;
 @Mixin(Bee.class)
 public abstract class BeeEntityMixin extends Entity {
 
-    @Shadow
-    private int underWaterTicks;
-
     public BeeEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
-    }
-
-    /**
-     * @author TelepathicGrunt
-     * @reason make bees not drown in honey fluid
-     */
-    @Inject(method = "customServerAiStep()V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Bee;isInWaterOrBubble()Z", shift = At.Shift.AFTER),
-            require = 0)
-    private void thebumblezone_honeyFluidNotDrown(CallbackInfo ci) {
-        if(this.underWaterTicks >= 10 && this.forgeFluidTypeHeight.getOrDefault(BzTags.SPECIAL_HONEY_LIKE, 0) > 0)
-        {
-            this.underWaterTicks = 9;
-        }
     }
 
     //spawns bees with chance to bee full of pollen
