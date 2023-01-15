@@ -4,17 +4,18 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 
 public class BzBlockEntities {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Bumblezone.MODID);
+    public static final ResourcefulRegistry<BlockEntityType<?>> BLOCK_ENTITIES = ResourcefulRegistries.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Bumblezone.MODID);
 
     //Blocks
-    public static final RegistryObject<BlockEntityType<?>> HONEY_COCOON = BLOCK_ENTITIES.register("honey_cocoon", () -> BlockEntityType.Builder.of(HoneyCocoonBlockEntity::new, BzBlocks.HONEY_COCOON.get()).build(null));
-    public static final RegistryObject<BlockEntityType<?>> INCENSE_CANDLE = BLOCK_ENTITIES.register("incense_candle", () -> BlockEntityType.Builder.of(IncenseCandleBlockEntity::new, BzBlocks.INCENSE_BASE_CANDLE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<?>> CRYSTALLINE_FLOWER = BLOCK_ENTITIES.register("crystalline_flower", () -> BlockEntityType.Builder.of(CrystallineFlowerBlockEntity::new, BzBlocks.CRYSTALLINE_FLOWER.get()).build(null));
+    public static final RegistryEntry<BlockEntityType<?>> HONEY_COCOON = BLOCK_ENTITIES.register("honey_cocoon", () -> BlockEntityType.Builder.of(HoneyCocoonBlockEntity::new, BzBlocks.HONEY_COCOON.get()).build(null));
+    public static final RegistryEntry<BlockEntityType<?>> INCENSE_CANDLE = BLOCK_ENTITIES.register("incense_candle", () -> BlockEntityType.Builder.of(IncenseCandleBlockEntity::new, BzBlocks.INCENSE_BASE_CANDLE.get()).build(null));
+    public static final RegistryEntry<BlockEntityType<?>> CRYSTALLINE_FLOWER = BLOCK_ENTITIES.register("crystalline_flower", () -> BlockEntityType.Builder.of(CrystallineFlowerBlockEntity::new, BzBlocks.CRYSTALLINE_FLOWER.get()).build(null));
 }
