@@ -24,6 +24,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -98,10 +99,11 @@ public class HoneycombBrood extends ProperFacingBlock {
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    BzConfig.allowWrathOfTheHiveOutsideBumblezone) &&
-                    !playerEntity.isCreative() &&
-                    !playerEntity.isSpectator() &&
-                    BzConfig.aggressiveBees)
+                BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                !playerEntity.isCreative() &&
+                !playerEntity.isSpectator() &&
+                BzBeeAggressionConfigs.aggressiveBees.get() &&
+                world.getDifficulty() != Difficulty.PEACEFUL)
             {
                 if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {
                     if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE)) {
@@ -211,19 +213,23 @@ public class HoneycombBrood extends ProperFacingBlock {
         if (!world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
-        List<LivingEntity> nearbyEntities = world.getEntitiesOfClass(
+        List<LivingEntity> nearbyEntities = null;
+
+        if (world.getDifficulty() == Difficulty.PEACEFUL) {
+            nearbyEntities = world.getEntitiesOfClass(
                 LivingEntity.class,
                 new AABB(position).inflate(WrathOfTheHiveEffect.NEARBY_WRATH_EFFECT_RADIUS),
                 entity -> entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE));
+        }
 
         int stage = state.getValue(STAGE);
         if (stage < 3) {
-            if (!nearbyEntities.isEmpty() || (world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ? random.nextInt(10) == 0 : random.nextInt(22) == 0)) {
+            if ((nearbyEntities != null && !nearbyEntities.isEmpty()) || (world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ? random.nextInt(10) == 0 : random.nextInt(22) == 0)) {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
         else if(BzConfig.broodBlocksBeeSpawnCapacity != 0) {
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
+            if((nearbyEntities != null && !nearbyEntities.isEmpty()) && GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
                 spawnBroodMob(world, random, state, position, stage);
             }
             else if(GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity) {
