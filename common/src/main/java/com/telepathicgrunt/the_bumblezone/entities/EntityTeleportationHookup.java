@@ -1,12 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
@@ -35,13 +37,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class EntityTeleportationHookup {
 
@@ -49,13 +48,13 @@ public class EntityTeleportationHookup {
     // Methods that setup and call PlayerTeleportationBackend //
 
     //Living Entity ticks
-    public static void entityTick(LivingEvent.LivingTickEvent event) {
-        LivingEntity livingEntity = event.getEntity();
+    public static void entityTick(EntityTickEvent event) {
+        LivingEntity livingEntity = event.entity();
 
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
-                if(BzDimensionConfigs.enableExitTeleportation.get()) {
+                if(BzDimensionConfigs.enableExitTeleportation) {
                     if(livingEntity instanceof ServerPlayer) {
                         BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
                     }
@@ -82,7 +81,7 @@ public class EntityTeleportationHookup {
                 }
             }
             else if (livingEntity.getY() > 255) {
-                if(BzDimensionConfigs.enableExitTeleportation.get()) {
+                if(BzDimensionConfigs.enableExitTeleportation) {
                     if(livingEntity instanceof ServerPlayer) {
                         BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
                     }
@@ -108,9 +107,9 @@ public class EntityTeleportationHookup {
             ResourceKey<Level> worldKey = null;
 
             if (livingEntity.getControllingPassenger() == null) {
-                LazyOptional<EntityPositionAndDimension> capOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+                Optional<EntityPosAndDimModule> capOptional = ModuleHelper.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
                 if (capOptional.isPresent()) {
-                    EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                    EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
                     worldKey = ResourceKey.create(Registries.DIMENSION, capability.getNonBZDim());
                 }
             }
@@ -118,16 +117,16 @@ public class EntityTeleportationHookup {
                 if(livingEntity.getControllingPassenger() instanceof LivingEntity livingEntity2) {
                     checkAndCorrectStoredDimension(livingEntity2);
                 }
-                LazyOptional<EntityPositionAndDimension> capOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+                Optional<EntityPosAndDimModule> capOptional = ModuleHelper.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
                 if (capOptional.isPresent()) {
-                    EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                    EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
                     worldKey = ResourceKey.create(Registries.DIMENSION, capability.getNonBZDim());
                 }
             }
 
             ServerLevel serverWorld = worldKey == null ? null : minecraftServer.getLevel(worldKey);
             if(serverWorld == null) {
-                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())));
+                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)));
             }
             BzWorldSavedData.queueEntityToTeleport(livingEntity, serverWorld.dimension());
         }
@@ -139,10 +138,10 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzDimensionConfigs.enableEntranceTeleportation.get() &&
+        if (BzDimensionConfigs.enableEntranceTeleportation &&
             !world.isClientSide() && thrower instanceof ServerPlayer playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
+            (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
         {
             // get nearby hives
             BlockPos hivePos;
@@ -166,7 +165,7 @@ public class EntityTeleportationHookup {
                 if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
                 }
-                else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get())
+                else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive)
                 {
                     //failed. Block below isn't the required block
                     Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
@@ -196,10 +195,10 @@ public class EntityTeleportationHookup {
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isClientSide() &&
                 hitResult instanceof EntityHitResult entityHitResult &&
-                BzDimensionConfigs.enableEntranceTeleportation.get() &&
+                BzDimensionConfigs.enableEntranceTeleportation &&
                 pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
                 !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
+                (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
         {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
@@ -287,7 +286,7 @@ public class EntityTeleportationHookup {
                 if (world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                     validBelowBlock = true;
                 }
-                else if (BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get()) {
+                else if (BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive) {
                     //failed. Block below isn't the required block
                     Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                     Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
@@ -335,9 +334,9 @@ public class EntityTeleportationHookup {
         ServerLevel world = (ServerLevel) pushedEntity.level;
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzDimensionConfigs.enableEntranceTeleportation.get() &&
+        if (BzDimensionConfigs.enableEntranceTeleportation &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
+            (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
         {
             if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
 
@@ -371,7 +370,7 @@ public class EntityTeleportationHookup {
                         }
                     }
 
-                    if(!validBelowBlock && BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get()) {
+                    if(!validBelowBlock && BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive) {
                         if(pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
@@ -402,11 +401,11 @@ public class EntityTeleportationHookup {
      * BZ dimension or the config forces going to default dimension.
      */
     private static void checkAndCorrectStoredDimension(LivingEntity livingEntity) {
-        livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
-            if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld.get()) {
+        ModuleHelper.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
+            if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld) {
                 //Go to default dimension instead
                 //update stored dimension
-                capability.setNonBZDim(new ResourceLocation(BzDimensionConfigs.defaultDimension.get()));
+                capability.setNonBZDim(new ResourceLocation(BzDimensionConfigs.defaultDimension));
             }
         });
     }

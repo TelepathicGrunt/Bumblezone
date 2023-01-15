@@ -2,12 +2,12 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -86,8 +86,7 @@ public class StingerSpearItem extends TridentItem {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (itemStack.getDamageValue() >= itemStack.getMaxDamage() - 1) {
             return InteractionResultHolder.fail(itemStack);
-        }
-        else {
+        } else {
             player.startUsingItem(interactionHand);
             return InteractionResultHolder.consume(itemStack);
         }
@@ -116,7 +115,7 @@ public class StingerSpearItem extends TridentItem {
         }
 
         int durabilityDecrease = 1;
-        if(user instanceof Player) {
+        if (user instanceof Player) {
             int neuroToxinLevel = itemStack.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
             if (neuroToxinLevel > 0) {
                 durabilityDecrease = 5;
@@ -125,11 +124,10 @@ public class StingerSpearItem extends TridentItem {
 
         itemStack.hurtAndBreak(durabilityDecrease, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
-        if(user instanceof ServerPlayer serverPlayer &&
-            enemy.getType() == EntityType.WITHER &&
-            enemy.isDeadOrDying() &&
-            EntityMisc.rootAdvancementDone(serverPlayer))
-        {
+        if (user instanceof ServerPlayer serverPlayer &&
+                enemy.getType() == EntityType.WITHER &&
+                enemy.isDeadOrDying() &&
+                EntityMiscHandler.rootAdvancementDone(serverPlayer)) {
             BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
         }
 
@@ -141,7 +139,7 @@ public class StingerSpearItem extends TridentItem {
      */
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if(enchantment == Enchantments.CHANNELING || enchantment == Enchantments.RIPTIDE) {
+        if (enchantment == Enchantments.CHANNELING || enchantment == Enchantments.RIPTIDE) {
             return false;
         }
 

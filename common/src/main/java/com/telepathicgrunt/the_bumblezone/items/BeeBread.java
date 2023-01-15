@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -38,7 +38,7 @@ public class BeeBread extends Item {
             itemstack.shrink(1);
         }
 
-        EntityMisc.onBeesFed(playerEntity);
+        EntityMiscHandler.onBeesFed(playerEntity);
         playerEntity.swing(playerHand, true);
         return InteractionResult.SUCCESS;
     }

@@ -1,8 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -11,11 +9,10 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeA
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
@@ -44,16 +41,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -77,12 +65,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class BeeQueenEntity extends Animal implements NeutralMob {
     private final static TargetingConditions PLAYER_ACKNOWLEDGE_SIGHT = TargetingConditions.forNonCombat();
@@ -251,15 +234,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     !(livingEntity instanceof Player player && player.isCreative()))
                 {
                     if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                        BzBeeAggressionConfigs.aggressiveBees.get())
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
+                        BzBeeAggressionConfigs.aggressiveBees)
                     {
                         if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                             livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                         }
                         else {
                             //Now all bees nearby in Bumblezone will get VERY angry!!!
-                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 3, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 3, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                         }
                     }
 
@@ -358,9 +341,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private void performSuperTradeTick() {
         if (!this.level.isClientSide()) {
-            if (BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() <= 1 ||
-                BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get() == 0 ||
-                BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified.get() == 0)
+            if (BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier <= 1 ||
+                BzGeneralConfigs.beeQueenSuperTradeDurationInTicks == 0 ||
+                BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified == 0)
             {
                 if (getRemainingSuperTradeTime() > 0) {
                     setRemainingSuperTradeTime(0);
@@ -398,7 +381,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                 List<Player> nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
                 if (getRemainingSuperTradeTime() == 0 && nearbyPlayers.size() > 0) {
-                    setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get());
+                    setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks);
 
                     List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.keySet().stream()
                             .filter(i -> !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) ||
@@ -407,7 +390,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                     if (allowedSuperTradeItems.size() > 0) {
                         setSuperTradeItem(allowedSuperTradeItems.get(getRandom().nextInt(allowedSuperTradeItems.size())).getDefaultInstance());
-                        getSuperTradeItem().grow(BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified.get());
+                        getSuperTradeItem().grow(BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified);
                     }
                 }
 
@@ -536,10 +519,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 if (tradedItems > 0 && itemEntity.getThrower() != null) {
                     if (level.getPlayerByUUID(itemEntity.getThrower()) instanceof ServerPlayer serverPlayer) {
                         BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
-                        EntityMisc.onQueenBeeTrade(serverPlayer, tradedItems);
+                        EntityMiscHandler.onQueenBeeTrade(serverPlayer, tradedItems);
 
                         if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                            serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+                            ModuleHelper.getModule(serverPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> {
                                 if (!capability.receivedEssencePrize) {
                                     spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(BzItems.ESSENCE_OF_THE_BEES.get(), 1, 1000, 1), ItemStack.EMPTY, null);
                                     capability.receivedEssencePrize = true;
@@ -568,7 +551,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         if (stack.isEmpty() && player instanceof ServerPlayer serverPlayer) {
             if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+                ModuleHelper.getModule(serverPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> {
                     if (!capability.receivedEssencePrize) {
                         Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                         Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
@@ -622,10 +605,10 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                 if (player instanceof ServerPlayer serverPlayer) {
                     BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
-                    EntityMisc.onQueenBeeTrade(serverPlayer);
+                    EntityMiscHandler.onQueenBeeTrade(serverPlayer);
 
                     if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                        serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+                        ModuleHelper.getModule(serverPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> {
                             if (!capability.receivedEssencePrize) {
                                 Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
@@ -677,8 +660,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward, ItemStack originalItem, UUID playerUUID) {
         int rewardMultiplier = 1;
-        if (getSuperTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() > 1) {
-            rewardMultiplier = BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get();
+        if (getSuperTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier > 1) {
+            rewardMultiplier = BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier;
             getSuperTradeItem().shrink(1);
             if (getSuperTradeItem().isEmpty()) {
                 setSuperTradeItem(ItemStack.EMPTY);
@@ -687,7 +670,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             Player player = level.getPlayerByUUID(playerUUID);
             if (player != null) {
                 if (!getSuperTradeItem().isEmpty()) {
-                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_performed", BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get()).withStyle(ChatFormatting.WHITE), true);
+                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_performed", BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier).withStyle(ChatFormatting.WHITE), true);
                 }
                 else  {
                     this.acknowledgedPlayers.clear();

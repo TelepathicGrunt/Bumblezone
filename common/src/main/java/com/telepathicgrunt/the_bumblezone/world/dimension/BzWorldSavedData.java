@@ -1,9 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.LevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -24,13 +26,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 public class BzWorldSavedData extends SavedData {
@@ -65,9 +62,9 @@ public class BzWorldSavedData extends SavedData {
 		return QUEUED_ENTITIES_TO_TELEPORT.stream().anyMatch(entry -> entry.getEntity().equals(entity));
 	}
 
-	public static void worldTick(TickEvent.LevelTickEvent event){
-		if(event.phase == TickEvent.Phase.END && !event.level.isClientSide()){
-			BzWorldSavedData.tick((ServerLevel) event.level);
+	public static void worldTick(LevelTickEvent event){
+		if(event.end() && !event.getLevel().isClientSide()){
+			BzWorldSavedData.tick((ServerLevel) event.getLevel());
 		}
 	}
 
@@ -181,7 +178,7 @@ public class BzWorldSavedData extends SavedData {
 				bumblezoneWorld.setBlockAndUpdate(blockPos.south().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
 			}
 
-			entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
+			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
 				capability.setNonBZDim(entity.level.dimension().location());
 
@@ -224,7 +221,7 @@ public class BzWorldSavedData extends SavedData {
 		entity.setPortalCooldown();
 
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-			entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capability -> {
+			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
 				capability.setNonBZDim(entity.level.dimension().location());
 			});

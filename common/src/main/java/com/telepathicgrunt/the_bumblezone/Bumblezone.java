@@ -3,25 +3,13 @@ package com.telepathicgrunt.the_bumblezone;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
-import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.*;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
-import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
-import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
-import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
-import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
-import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
+import com.telepathicgrunt.the_bumblezone.entities.*;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
@@ -32,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
@@ -92,12 +81,7 @@ public class Bumblezone{
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
         forgeBus.addListener(BeeStinger::bowUsable);
-        forgeBus.addListener(EntityMisc::onBeeBreed);
-        forgeBus.addListener(EntityMisc::onItemCrafted);
-        forgeBus.addListener(EntityMisc::onHoneySlimeBred);
-        forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
-        forgeBus.addListener(EntityMisc::resetValueOnRespawn);
-        forgeBus.addListener(EventPriority.LOWEST, EntityMisc::onEntityKilled);
+        EntityMiscHandler.initEvents();
         forgeBus.addListener(IncenseCandleBase::multiPotionCandleCrafted);
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
@@ -153,7 +137,7 @@ public class Bumblezone{
             BuzzierBeesCompatRegs.PLACED_FEATURES.register(modEventBus);
         }
 
-        BzCapabilities.setupCapabilities();
+
         if (FMLEnvironment.dist == Dist.CLIENT) {
             BumblezoneClient.subscribeClientEvents();
         }

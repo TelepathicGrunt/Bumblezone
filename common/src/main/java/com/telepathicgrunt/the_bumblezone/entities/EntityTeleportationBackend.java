@@ -2,15 +2,18 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.google.common.primitives.Doubles;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -28,12 +31,10 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,9 +49,9 @@ public class EntityTeleportationBackend {
         if(player != null) entity = player;
         double coordinateScale = entity.level.dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
         BlockPos finalSpawnPos;
-        LazyOptional<EntityPositionAndDimension> capOptional = entity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+        Optional<EntityPosAndDimModule> capOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
 
-        if (BzDimensionConfigs.forceBumblezoneOriginMobToOverworldCenter.get() &&
+        if (BzDimensionConfigs.forceBumblezoneOriginMobToOverworldCenter &&
             capOptional.isPresent() &&
             capOptional.orElseThrow(RuntimeException::new).getNonBZPos() == null)
         {
@@ -64,7 +65,7 @@ public class EntityTeleportationBackend {
             }
         }
 
-        if(BzDimensionConfigs.teleportationMode.get() == 1) {
+        if(BzDimensionConfigs.teleportationMode == 1) {
             finalSpawnPos = new BlockPos(
                     Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
                     entity.position().y(),
@@ -74,11 +75,11 @@ public class EntityTeleportationBackend {
             finalSpawnPos = validPlayerSpawnLocationByBeehive(destination, finalSpawnPos, SEARCH_RADIUS, checkingUpward);
         }
 
-        else if(BzDimensionConfigs.teleportationMode.get() == 2) {
+        else if(BzDimensionConfigs.teleportationMode == 2) {
             Vec3 playerPos = null;
 
             if (capOptional.isPresent()) {
-                EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
                 playerPos = capability.getNonBZPos();
             }
 
@@ -103,7 +104,7 @@ public class EntityTeleportationBackend {
             Vec3 pastPos = null;
 
             if (capOptional.isPresent()) {
-                EntityPositionAndDimension capability = capOptional.orElseThrow(RuntimeException::new);
+                EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
                 pastPos = capability.getNonBZPos();
             }
 
@@ -137,7 +138,7 @@ public class EntityTeleportationBackend {
     public static Vec3 getBzCoordinate(Entity entity, ServerLevel originalWorld, ServerLevel bumblezoneWorld) {
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = 1;
-        if (BzDimensionConfigs.teleportationMode.get() != 2) {
+        if (BzDimensionConfigs.teleportationMode != 2) {
             coordinateScale = originalWorld.dimensionType().coordinateScale() / bumblezoneWorld.dimensionType().coordinateScale();
         }
         BlockPos blockpos = new BlockPos(
@@ -245,7 +246,7 @@ public class EntityTeleportationBackend {
             }
 
             // Filter out all positions that are below sealevel if we do not want underground spots.
-            if (BzDimensionConfigs.seaLevelOrHigherExitTeleporting.get() && be.getBlockPos().getY() < ((ServerLevel)world).getChunkSource().getGenerator().getSeaLevel() - 1) {
+            if (BzDimensionConfigs.seaLevelOrHigherExitTeleporting && be.getBlockPos().getY() < ((ServerLevel)world).getChunkSource().getGenerator().getSeaLevel() - 1) {
                 return false;
             }
 
@@ -280,7 +281,7 @@ public class EntityTeleportationBackend {
         }
 
         //this mode will not generate a beenest automatically.
-        if(BzDimensionConfigs.teleportationMode.get() == 3) return null;
+        if(BzDimensionConfigs.teleportationMode == 3) return null;
 
         //no valid spot was found, generate a hive and spawn us on the highest land
         //This if statement is so we dont get placed on roof of other roofed dimension
@@ -306,7 +307,7 @@ public class EntityTeleportationBackend {
     }
 
     private static void createSpaceForPlayer(Level world, BlockPos.MutableBlockPos mutableBlockPos) {
-        if(BzDimensionConfigs.generateBeenest.get())
+        if(BzDimensionConfigs.generateBeenest)
             world.setBlockAndUpdate(mutableBlockPos, Blocks.BEE_NEST.defaultBlockState());
         else if(world.getBlockState(mutableBlockPos).getMaterial() == Material.AIR ||
                 (!world.getBlockState(mutableBlockPos).getFluidState().isEmpty() &&
@@ -366,13 +367,13 @@ public class EntityTeleportationBackend {
         if(blockState.is(BzTags.DISALLOWED_TELEPORTABLE_BEEHIVE)) return false;
 
         if(blockState.is(BlockTags.BEEHIVES) || blockState.getBlock() instanceof BeehiveBlock) {
-            if(ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).getNamespace().equals("minecraft") || BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
+            if(BuiltInRegistries.BLOCK.getKey(blockState.getBlock()).getNamespace().equals("minecraft") || BzDimensionConfigs.allowTeleportationWithModdedBeehives) {
                 return true;
             }
         }
 
 
-        if(BzDimensionConfigs.allowTeleportationWithModdedBeehives.get()) {
+        if(BzDimensionConfigs.allowTeleportationWithModdedBeehives) {
             if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(blockState)) {
                 return true;
             }
@@ -381,14 +382,14 @@ public class EntityTeleportationBackend {
         return false;
     }
 
-    public static void entityChangingDimension(EntityTravelToDimensionEvent event) {
-        Entity entity = event.getEntity();
+    public static void entityChangingDimension(EntityTravelingToDimensionEvent event) {
+        Entity entity = event.entity();
 
         // store entity's last position when entering bumblezone.
-        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide() && event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
-            LazyOptional<EntityPositionAndDimension> lazyOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
+        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide() && event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+            Optional<EntityPosAndDimModule> lazyOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
             if(lazyOptional.isPresent()) {
-                EntityPositionAndDimension capability = lazyOptional.orElseThrow(RuntimeException::new);
+                EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);
                 capability.setNonBZDim(entity.level.dimension().location());
                 capability.setNonBZPos(entity.position());
             }
@@ -400,7 +401,7 @@ public class EntityTeleportationBackend {
                         entity.getUUID(),
                         entity.position(),
                         entity.level.dimension(),
-                        event.getDimension());
+                        event.dimension());
             }
         }
     }

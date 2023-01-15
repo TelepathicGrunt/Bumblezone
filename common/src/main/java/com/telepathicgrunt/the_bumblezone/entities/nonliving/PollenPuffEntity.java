@@ -2,17 +2,13 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
-import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.VineBlockAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -163,7 +159,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         if(entity instanceof LivingEntity && this.getOwner() instanceof ServerPlayer serverPlayer) {
-            EntityMisc.onPollenHit(serverPlayer);
+            EntityMiscHandler.onPollenHit(serverPlayer);
         }
 
         WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
@@ -278,7 +274,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, player, ItemStack.EMPTY);
 
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
-                    EntityMisc.onFlowerSpawned(serverPlayer);
+                    EntityMiscHandler.onFlowerSpawned(serverPlayer);
                     if(isTallPlant) {
                         BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger(serverPlayer);
                     }

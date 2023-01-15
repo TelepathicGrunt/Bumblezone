@@ -1,14 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
-import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
-import com.telepathicgrunt.the_bumblezone.capabilities.NeurotoxinsMissCounter;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ThrownTridentAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modules.NeurotoxinsMissedCounterModule;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -19,8 +21,9 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+
+import java.util.Optional;
 
 public class NeurotoxinsEnchantment extends Enchantment {
 
@@ -53,19 +56,19 @@ public class NeurotoxinsEnchantment extends Enchantment {
         return this.canEnchant(stack);
     }
 
-    public static void entityHurtEvent(LivingAttackEvent event) {
-        if(event.getEntity().level.isClientSide()) {
+    public static void entityHurtEvent(EntityAttackedEvent event) {
+        if(event.entity().level.isClientSide()) {
             return;
         }
 
         ItemStack attackingItem = null;
         LivingEntity attacker = null;
-        if(event.getSource().getEntity() instanceof LivingEntity livingEntity) {
+        if(event.source().getEntity() instanceof LivingEntity livingEntity) {
             attacker = livingEntity;
             attackingItem = attacker.getMainHandItem();
         }
-        if(event.getSource().isProjectile()) {
-           Entity projectile = event.getSource().getDirectEntity();
+        if(event.source().isProjectile()) {
+           Entity projectile = event.source().getDirectEntity();
            if(projectile instanceof ThrownTrident thrownTrident) {
                attackingItem = ((ThrownTridentAccessor)thrownTrident).getTridentItem();
            }
@@ -75,12 +78,12 @@ public class NeurotoxinsEnchantment extends Enchantment {
         }
 
         if(attackingItem != null && !attackingItem.isEmpty()) {
-            applyNeurotoxins(attacker, event.getEntity(), attackingItem);
+            applyNeurotoxins(attacker, event.entity(), attackingItem);
         }
     }
 
     public static void applyNeurotoxins(Entity attacker, Entity victim, ItemStack itemStack) {
-        int level = itemStack.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
+        int level = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
 
         if(level > 0 && victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
             if (livingEntity.hasEffect(BzEffects.PARALYZED.get())) {
@@ -88,12 +91,12 @@ public class NeurotoxinsEnchantment extends Enchantment {
             }
 
             float applyChance = 1.0f;
-            NeurotoxinsMissCounter capability = null;
+            NeurotoxinsMissedCounterModule capability = null;
 
             if(attacker != null) {
-                LazyOptional<NeurotoxinsMissCounter> capOptional = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY);
+                Optional<NeurotoxinsMissedCounterModule> capOptional = ModuleHelper.getModule(attacker, ModuleRegistry.NEUROTOXINS_MISSED);
                 if (capOptional.isPresent()) {
-                    capability = attacker.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).orElseThrow(RuntimeException::new);
+                    capability = capOptional.orElseThrow(RuntimeException::new);
                     float healthModifier = Math.max(100 - livingEntity.getHealth(), 10) / 100f;
                     applyChance = (healthModifier * level) * (capability.getMissedParalysis() + 1);
                 }
