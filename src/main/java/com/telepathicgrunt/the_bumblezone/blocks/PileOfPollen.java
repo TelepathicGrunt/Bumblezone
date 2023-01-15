@@ -20,6 +20,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Panda;
@@ -279,7 +280,7 @@ public class PileOfPollen extends FallingBlock {
         }
 
         // slows the entity and spawns particles
-        else {
+        else if (!(entity instanceof ExperienceOrb)) {
             int layerValueMinusOne = blockState.getValue(LAYERS) - 1;
             double speedReduction = (entity instanceof Projectile) ? 0.85D : 1 - (layerValueMinusOne * 0.1D);
             double chance = 0.22D + layerValueMinusOne * 0.09D;
