@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -43,7 +44,7 @@ public class BeeCannon extends Item implements Vanishable {
             ItemStack mutableBeeCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
 
             int numberOfBees = getNumberOfBees(mutableBeeCannon);
-            int quickCharge = beeCannon.getEnchantmentLevel(Enchantments.QUICK_CHARGE);
+            int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, beeCannon);
             int remainingDuration = this.getUseDuration(mutableBeeCannon) - currentDuration;
             if (remainingDuration >= 20 - (quickCharge * 3) && numberOfBees > 0) {
                 List<Entity> bees = tryReleaseBees(level, mutableBeeCannon);
@@ -220,6 +221,7 @@ public class BeeCannon extends Item implements Vanishable {
         return UseAnim.BOW;
     }
 
+    //TODO forge method
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.QUICK_CHARGE) {

@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanFunction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CancellableEventHandler<T> {
 
@@ -28,6 +29,13 @@ public class CancellableEventHandler<T> {
     public void addListener(CancellableFunctionOnlyReturn<T> listener) {
         addListener((b, t) -> {
             return listener.apply(t);
+        });
+    }
+
+    public void addListener(Consumer<T> listener) {
+        addListener((t) -> {
+            listener.accept(t);
+            return false;
         });
     }
 

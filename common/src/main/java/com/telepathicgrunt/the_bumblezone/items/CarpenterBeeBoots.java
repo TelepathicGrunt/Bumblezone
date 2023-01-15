@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,8 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.level.BlockEvent;
 
 public class CarpenterBeeBoots extends BeeArmor {
 
@@ -43,6 +42,8 @@ public class CarpenterBeeBoots extends BeeArmor {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
+
+    //TODO forge method
     @Override
     public void onArmorTick(ItemStack beeBoots, Level world, Player player) {
         RandomSource random = player.getRandom();
@@ -92,11 +93,9 @@ public class CarpenterBeeBoots extends BeeArmor {
 
                         // Post the block break event
                         BlockState state = world.getBlockState(belowBlockPos);
-                        BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, belowBlockPos, state, player);
-                        MinecraftForge.EVENT_BUS.post(event);
 
                         // Handle if the event is canceled
-                        if (event.isCanceled()) {
+                        if (PlatformHooks.sendBlockBreakEvent(world, belowBlockPos, state, player)) {
                             return;
                         }
 
@@ -219,7 +218,7 @@ public class CarpenterBeeBoots extends BeeArmor {
     }
 
     public static float getPlayerDestroySpeed(Player player, ItemStack beeBoots, float currentSpeed) {
-        int efficencyLevel = beeBoots.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+        int efficencyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, beeBoots);
         if (efficencyLevel > 0) {
             currentSpeed += efficencyLevel / 4f;
         }
@@ -283,6 +282,7 @@ public class CarpenterBeeBoots extends BeeArmor {
         return ItemStack.EMPTY;
     }
 
+    //TODO forge method
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment.category == EnchantmentCategory.DIGGER) {

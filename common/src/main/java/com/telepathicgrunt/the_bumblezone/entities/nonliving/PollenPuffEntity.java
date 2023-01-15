@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -45,8 +46,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.function.BiFunction;
 
@@ -223,7 +222,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 return false;
             }
 
-            FakePlayer player = FakePlayerFactory.getMinecraft((ServerLevel) this.level);
+            ServerPlayer fakePlayer = PlatformHooks.getFakePlayer((ServerLevel) this.level);
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;
@@ -238,7 +237,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             else {
                 try {
                     BlockPlaceContext blockPlaceContext = new BlockPlaceContext(
-                            player,
+                            fakePlayer,
                             InteractionHand.MAIN_HAND,
                             ItemStack.EMPTY,
                             new BlockHitResult(Vec3.atCenterOf(newPos.above()), Direction.UP, newPos, false)
@@ -271,7 +270,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 }
 
                 this.level.setBlock(newPos, blockstate, 3);
-                blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, player, ItemStack.EMPTY);
+                blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, fakePlayer, ItemStack.EMPTY);
 
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
                     EntityMiscHandler.onFlowerSpawned(serverPlayer);

@@ -27,6 +27,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
@@ -99,7 +100,7 @@ public class StingerSpearItem extends TridentItem {
 
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity enemy, LivingEntity user) {
-        int potentPoisonLevel = itemStack.getEnchantmentLevel(BzEnchantments.POTENT_POISON.get());
+        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get() , itemStack);
         if (enemy.getMobType() != MobType.UNDEAD) {
             enemy.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -116,7 +117,7 @@ public class StingerSpearItem extends TridentItem {
 
         int durabilityDecrease = 1;
         if (user instanceof Player) {
-            int neuroToxinLevel = itemStack.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
+            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get() , itemStack);
             if (neuroToxinLevel > 0) {
                 durabilityDecrease = 5;
             }
@@ -137,6 +138,7 @@ public class StingerSpearItem extends TridentItem {
     /**
      * blacklisted riptide and channeling enchantment
      */
+    //TODO forge method
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if (enchantment == Enchantments.CHANNELING || enchantment == Enchantments.RIPTIDE) {

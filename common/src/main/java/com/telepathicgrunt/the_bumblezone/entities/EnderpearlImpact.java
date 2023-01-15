@@ -1,24 +1,22 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
+import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 
 public class EnderpearlImpact {
 
-    public static void onPearlHit(ProjectileImpactEvent event) {
-        if (event.getProjectile() instanceof ThrownEnderpearl thrownEnderpearl && thrownEnderpearl.getOwner() != null) {
+    public static boolean onPearlHit(ProjectileHitEvent event) {
+        if (event.projectile() instanceof ThrownEnderpearl thrownEnderpearl && thrownEnderpearl.getOwner() != null) {
             if(EntityTeleportationHookup.runEnderpearlImpact(new Vec3(thrownEnderpearl.getX(), thrownEnderpearl.getY(), thrownEnderpearl.getZ()), thrownEnderpearl.getOwner(), thrownEnderpearl)) {
-                event.setCanceled(true);
-                return;
+                return true;
             }
 
-            if (event.getRayTraceResult() != null && event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
-                if (EntityTeleportationHookup.runEntityHitCheck(entityHitResult, thrownEnderpearl)) {
-                    event.setCanceled(true);
-                }
+            if (event.hitResult() != null && event.hitResult() instanceof EntityHitResult entityHitResult) {
+                return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, thrownEnderpearl);
             }
         }
+        return false;
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -14,8 +15,9 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 
 import java.util.function.Supplier;
 
+//TODO switch to custom class
 public class DispenserAddedSpawnEgg extends ForgeSpawnEggItem {
-    public DispenserAddedSpawnEgg(Supplier<? extends EntityType<? extends Mob>> typeIn, int primaryColorIn, int secondaryColorIn, Properties builder) {
+    public DispenserAddedSpawnEgg(Supplier<? extends EntityType<? extends Mob>> typeIn, int primaryColorIn, int secondaryColorIn, Item.Properties builder) {
         super(typeIn, primaryColorIn, secondaryColorIn, builder);
 
         // Have to manually add dispenser behavior due to forge item registry event running too late.

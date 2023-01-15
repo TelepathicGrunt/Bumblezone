@@ -7,6 +7,8 @@ import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
+import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.MobEffectRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
@@ -56,6 +58,7 @@ public class BumblezoneClient {
         BlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         KeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
 
+        MobEffectRenderer.RENDERERS.put(BzEffects.HIDDEN.get(), new HiddenEffectIconRenderer());
     }
 
     public static void registerKeyBinding(RegisterKeyMappingEvent event) {

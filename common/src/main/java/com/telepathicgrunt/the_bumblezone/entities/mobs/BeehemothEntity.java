@@ -8,14 +8,11 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothFlyingStillGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothRandomFlyGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothTemptGoal;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -35,16 +32,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.PlayerRideable;
-import net.minecraft.world.entity.Saddleable;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -68,7 +56,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
@@ -224,22 +211,22 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
                     addFriendship((int) (-3 * amount));
                 }
-                if (BzBeeAggressionConfigs.aggressiveBees.get() &&
-                        BzBeeAggressionConfigs.beehemothTriggersWrath.get() &&
+                if (BzBeeAggressionConfigs.aggressiveBees &&
+                        BzBeeAggressionConfigs.beehemothTriggersWrath &&
                         entity instanceof LivingEntity livingEntity) {
                     addFriendship((int) (-amount));
 
                     if (!(livingEntity instanceof Player player && player.isCreative()) &&
                             (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                             !livingEntity.isSpectator() &&
-                            BzBeeAggressionConfigs.aggressiveBees.get()) {
+                            BzBeeAggressionConfigs.aggressiveBees) {
                         if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                             livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                         }
                         else {
                             //Now all bees nearby in Bumblezone will get VERY angry!!!
-                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                         }
                     }
                 }
@@ -278,7 +265,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
-        ResourceLocation itemRL = ForgeRegistries.ITEMS.getKey(item);
+        ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(item);
         if (this.level.isClientSide) {
             if (isTame() && isOwnedBy(player)) {
                 return InteractionResult.SUCCESS;
@@ -673,7 +660,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 double strafeSpeed = 0;
 
                 double flyingSpeedAttribute = getFinalFlyingSpeed();
-                double configVal = BzGeneralConfigs.beehemothSpeed.get();
+                double configVal = BzGeneralConfigs.beehemothSpeed;
                 double configSpeedModifier = configVal - (this.getFriendship() * configVal * 0.00065d) + 0.5d;
                 if (livingEntity.zza != 0 || this.movingStraightUp || this.movingStraightDown) {
                     currentSpeed = configSpeedModifier * Math.min(

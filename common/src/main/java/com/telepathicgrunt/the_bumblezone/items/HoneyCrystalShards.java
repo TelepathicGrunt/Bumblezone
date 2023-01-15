@@ -19,6 +19,7 @@ public class HoneyCrystalShards extends ArrowItem {
         return new HoneyCrystalShardEntity(level, livingEntity);
     }
 
+    //TODO forge method
     @Override
     public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
         int enchantLevel = bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);

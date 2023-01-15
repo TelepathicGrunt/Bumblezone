@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.items.PollenPuff;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
@@ -12,7 +13,9 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,41 +34,38 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 public class BeeInteractivity {
 
     private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
 
-    public static void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
-        Entity entity = event.getTarget();
-        Player player = event.getEntity();
-        InteractionHand hand = event.getHand();
-        if (player == null || entity == null || event.isCanceled()) {
-            return;
+    @Nullable
+    public static InteractionResult onEntityInteractEvent(@Nullable InteractionResult result, PlayerEntityInteractEvent event) {
+        Entity entity = event.entity();
+        Player player = event.player();
+        InteractionHand hand = event.hand();
+        if (player == null || entity == null || result != null) {
+            return null;
         }
 
         if(entity instanceof Bee beeEntity) {
             if(BeeInteractivity.beeFeeding(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
-                event.setCancellationResult(InteractionResult.SUCCESS);
-                event.setCanceled(true);
+                return InteractionResult.SUCCESS;
             }
             else if(StinglessBeeHelmet.addBeePassenger(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
-                event.setCancellationResult(InteractionResult.SUCCESS);
-                event.setCanceled(true);
+                return InteractionResult.SUCCESS;
             }
             else if(BeeInteractivity.beeUnpollinating(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
-                event.setCancellationResult(InteractionResult.SUCCESS);
-                event.setCanceled(true);
+                return InteractionResult.SUCCESS;
             }
         }
         else if (entity instanceof Slime slimeEntity) {
             if(CreatingHoneySlime.createHoneySlime(entity.level, player, hand, slimeEntity) == InteractionResult.SUCCESS) {
-                event.setCancellationResult(InteractionResult.SUCCESS);
-                event.setCanceled(true);
+                return InteractionResult.SUCCESS;
             }
         }
+        return null;
     }
 
 
@@ -74,7 +74,7 @@ public class BeeInteractivity {
         if (target instanceof Bee beeEntity) {
 
             ItemStack itemstack = playerEntity.getItemInHand(hand);
-            ResourceLocation itemRL = ForgeRegistries.ITEMS.getKey(itemstack.getItem());
+            ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(itemstack.getItem());
 
             if (itemstack.is(BzItems.BEE_STINGER.get())) {
                 beeEntity.hasStung();
@@ -100,7 +100,7 @@ public class BeeInteractivity {
             ItemStack itemstackOriginal = itemstack.copy();
 
             // Special cased items so the ActionResultType continues and make the item's behavior not lost.
-            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get() || (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT))) {
+            if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get() || (BzModCompatibilityConfigs.allowHoneyTreatCompat && itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT))) {
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
                 if(removedWrath && playerEntity instanceof ServerPlayer) {
@@ -186,7 +186,7 @@ public class BeeInteractivity {
                 if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
                         item == Items.WET_SPONGE ||
                         item == BzItems.SUGAR_WATER_BOTTLE.get() ||
-                        (item instanceof BucketItem bucketItem && bucketItem.getFluid().is(FluidTags.WATER))) {
+                        (item instanceof BucketItem bucketItem && PlatformHooks.getBucketFluid(bucketItem).is(FluidTags.WATER))) {
 
                     if(world.isClientSide())
                         return InteractionResult.SUCCESS;
@@ -219,7 +219,7 @@ public class BeeInteractivity {
 
             playerEntity.addEffect(new MobEffectInstance(
                     BzEffects.PROTECTION_OF_THE_HIVE.get(),
-                    BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts.get(),
+                    BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts,
                     2,
                     false,
                     false,

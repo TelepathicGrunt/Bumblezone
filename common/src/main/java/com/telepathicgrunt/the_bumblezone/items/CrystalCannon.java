@@ -18,6 +18,7 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -40,7 +41,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
             ItemStack mutableCrystalCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
 
             int numberOfCrystals = getNumberOfCrystals(mutableCrystalCannon);
-            int quickCharge = mutableCrystalCannon.getEnchantmentLevel(Enchantments.QUICK_CHARGE);
+            int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, mutableCrystalCannon);
             int remainingDuration = this.getUseDuration(mutableCrystalCannon) - currentDuration;
             if (remainingDuration >= 20 - (quickCharge * 3) && numberOfCrystals > 0) {
                 int crystalsToSpawn = getAndClearStoredCrystals(level, mutableCrystalCannon);
@@ -57,17 +58,17 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                     }
 
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
-                    int power = crystalCannon.getEnchantmentLevel(Enchantments.POWER_ARROWS);
+                    int power = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, crystalCannon);
                     if (power > 0) {
                         newCrystal.setBaseDamage(newCrystal.getBaseDamage() + (double)power * 0.5D + 0.5D);
                     }
 
-                    int punch = crystalCannon.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);
+                    int punch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, crystalCannon);
                     if (punch > 0) {
                         newCrystal.setKnockback(newCrystal.getKnockback() + punch);
                     }
 
-                    int pierce = crystalCannon.getEnchantmentLevel(Enchantments.PIERCING);
+                    int pierce = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, crystalCannon);
                     if (pierce > 0) {
                         newCrystal.setPierceLevel((byte) pierce);
                     }
@@ -211,6 +212,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
         return UseAnim.BOW;
     }
 
+    //TODO forge method
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.QUICK_CHARGE ||

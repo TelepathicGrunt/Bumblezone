@@ -1,9 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -17,8 +20,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,11 +35,11 @@ public class CombCutterEnchantment extends Enchantment {
     public Set<Block> getTargetBlocks() {
         return TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
-            ForgeRegistries.BLOCKS.getEntries().forEach(entry ->{
-                if(entry.getKey().location().getPath().contains("comb")) {
-                    validBlocks.add(entry.getValue());
+            for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
+                if(key.getPath().contains("comb")) {
+                    validBlocks.add(BuiltInRegistries.BLOCK.get(key));
                 }
-            });
+            }
             return validBlocks;
         });
     }
@@ -46,34 +47,33 @@ public class CombCutterEnchantment extends Enchantment {
     public Set<Block> getLesserTargetBlocks() {
         return LESSER_TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
-            ForgeRegistries.BLOCKS.getEntries().forEach(entry ->{
-                String path = entry.getKey().location().getPath();
-                if(entry.getValue() instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
-                    validBlocks.add(entry.getValue());
+            for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
+                String path = key.getPath();
+                Block block = BuiltInRegistries.BLOCK.get(key);
+                if(block instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
+                    validBlocks.add(block);
                 }
-            });
+            }
             return validBlocks;
         });
     }
 
-    public static void attemptFasterMining(PlayerEvent.BreakSpeed event){
-        if(BzEnchantments.COMB_CUTTER.get().getTargetBlocks().contains(event.getState().getBlock())){
+    public static void attemptFasterMining(PlayerBreakSpeedEvent event){
+        if(BzEnchantments.COMB_CUTTER.get().getTargetBlocks().contains(event.state().getBlock())){
             mineFaster(event, false);
         }
-        else if(BzEnchantments.COMB_CUTTER.get().getLesserTargetBlocks().contains(event.getState().getBlock())){
+        else if(BzEnchantments.COMB_CUTTER.get().getLesserTargetBlocks().contains(event.state().getBlock())){
             mineFaster(event, true);
         }
     }
 
-    private static void mineFaster(PlayerEvent.BreakSpeed event, boolean lesserTarget) {
-        float breakSpeed = event.getNewSpeed();
-        Player playerEntity = event.getEntity();
+    private static void mineFaster(PlayerBreakSpeedEvent event, boolean lesserTarget) {
+        Player playerEntity = event.player();
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-            breakSpeed += (float)(equipmentLevel * equipmentLevel + (lesserTarget ? 3 : 13));
+            event.speed().addAndGet(equipmentLevel * equipmentLevel + (lesserTarget ? 3 : 13));
         }
-        event.setNewSpeed(breakSpeed);
     }
 
     public static void increasedCombDrops(Player playerEntity, Level world, BlockPos pos) {
@@ -107,6 +107,7 @@ public class CombCutterEnchantment extends Enchantment {
         return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.is(Items.BOOK);
     }
 
+    //TODO forge method
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return this.canEnchant(stack);

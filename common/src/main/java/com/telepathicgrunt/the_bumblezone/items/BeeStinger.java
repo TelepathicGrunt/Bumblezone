@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerLocateProjectileEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,25 +29,23 @@ public class BeeStinger extends ArrowItem {
         return new BeeStingerEntity(level, livingEntity);
     }
 
+    //TODO forge method
     @Override
     public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
         int enchantLevel = bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
         return enchantLevel > 0;
     }
 
-    public static void bowUsable(LivingGetProjectileEvent event) {
-        if (event.getEntity() instanceof Player player &&
-            (event.getProjectileWeaponItemStack().is(Items.BOW) ||
-            event.getProjectileWeaponItemStack().is(Items.CROSSBOW)))
-        {
+    public static ItemStack bowUsable(ItemStack ammo, PlayerLocateProjectileEvent event) {
+        if (event.shooter() instanceof Player player && (event.weapon().is(Items.BOW) || event.weapon().is(Items.CROSSBOW))) {
             Inventory inventory = player.getInventory();
             for(int i = 0; i < inventory.getContainerSize(); ++i) {
                 ItemStack itemstack1 = inventory.getItem(i);
                 if (itemstack1.is(BzItems.BEE_STINGER.get())) {
-                    event.setProjectileItemStack(itemstack1);
-                    return;
+                    return itemstack1;
                 }
             }
         }
+        return null;
     }
 }

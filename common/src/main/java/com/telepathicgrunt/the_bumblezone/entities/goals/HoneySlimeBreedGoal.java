@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeHooks;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -123,7 +123,7 @@ public class HoneySlimeBreedGoal extends Goal {
             this.field_75391_e.resetLove();
             childEntity.setAge(-24000);
             childEntity.moveTo(this.slime.getX(), this.slime.getY(), this.slime.getZ(), 0.0F, 0.0F);
-            if (ForgeHooks.canEntitySpawn(childEntity, world, childEntity.position().x(), childEntity.position().y(), childEntity.position().z(), null, MobSpawnType.BREEDING) != -1) {
+            if (PlatformHooks.canEntitySpawn(childEntity, world, childEntity.position().x(), childEntity.position().y(), childEntity.position().z(), null, MobSpawnType.BREEDING) != -1) {
                 this.world.addFreshEntity(childEntity);
                 this.world.broadcastEntityEvent(this.slime, (byte) 18);
                 if (this.world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {

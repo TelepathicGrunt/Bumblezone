@@ -33,6 +33,7 @@ public class BumbleBeeChestplate extends BeeArmor {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
+    //TODO forge method
     @Override
     public void onArmorTick(ItemStack itemstack, Level world, Player player) {
         CompoundTag tag = itemstack.getOrCreateTag();

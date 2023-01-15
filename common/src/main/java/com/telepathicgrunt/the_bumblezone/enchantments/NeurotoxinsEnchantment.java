@@ -51,6 +51,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
         return stack.getItem() instanceof StingerSpearItem;
     }
 
+    //TODO forge method
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return this.canEnchant(stack);

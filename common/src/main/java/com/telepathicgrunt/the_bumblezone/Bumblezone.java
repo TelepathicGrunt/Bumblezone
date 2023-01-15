@@ -13,8 +13,11 @@ import com.telepathicgrunt.the_bumblezone.entities.*;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.*;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompatRegs;
@@ -68,26 +71,26 @@ public class Bumblezone{
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(BzCommands::registerCommand);
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
-        forgeBus.addListener(BeeAggression::playerTick);
+        PlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BeeAggression::pickupItemAnger);
-        forgeBus.addListener(EventPriority.LOWEST, BeeAggression::onLivingEntityHurt);
-        forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
+        EntityHurtEvent.EVENT.addListener(BeeAggression::onLivingEntityHurt);
+        BlockBreakEvent.EVENT.addListener(BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(StringCurtain::onBlockInteractEvent);
-        forgeBus.addListener(BeeInteractivity::onEntityInteractEvent);
+        PlayerEntityInteractEvent.EVENT.addListener(BeeInteractivity::onEntityInteractEvent);
         forgeBus.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         forgeBus.addListener(BzWorldSavedData::worldTick);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(EntityTeleportationBackend::entityChangingDimension);
-        forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
+        ProjectileHitEvent.EVENT_HIGH.addListener(EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
-        forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
-        forgeBus.addListener(BeeStinger::bowUsable);
+        PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantment::attemptFasterMining);
+        PlayerLocateProjectileEvent.EVENT.addListener(BeeStinger::bowUsable);
         EntityMiscHandler.initEvents();
         PlayerCraftedItemEvent.EVENT.addListener(IncenseCandleBase::multiPotionCandleCrafted);
         PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
-        forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
+        TagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
         forgeBus.addListener(this::registerDatapackListener);
         forgeBus.addListener(this::serverAboutToStart);

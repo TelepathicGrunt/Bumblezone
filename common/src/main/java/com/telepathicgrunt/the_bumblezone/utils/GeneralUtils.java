@@ -5,13 +5,9 @@ import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.FrontAndTop;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Vec3i;
+import net.minecraft.core.*;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -44,6 +40,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static java.util.Objects.requireNonNull;
@@ -235,8 +232,8 @@ public class GeneralUtils {
         }
 
         // give container item of player's item if specified
-        if(giveContainerItem && copiedPlayerItem.hasCraftingRemainingItem()) {
-            ItemStack containerItem = copiedPlayerItem.getCraftingRemainingItem();
+        if(giveContainerItem && PlatformHooks.hasCraftingRemainder(copiedPlayerItem)) {
+            ItemStack containerItem = PlatformHooks.getCraftingRemainder(copiedPlayerItem);
             if (playerEntity.getItemInHand(hand).isEmpty()) {
                 // places result item in hand
                 playerEntity.setItemInHand(hand, containerItem);
@@ -359,5 +356,32 @@ public class GeneralUtils {
                 .filter(block -> !block.defaultBlockState().isAir() && !block.getClass().getName().endsWith("BlockDummyAir"))
                 .toList()
             ).orElseGet(ArrayList::new);
+    }
+
+    public static <B, T extends B> boolean isInTag(Registry<B> registry, TagKey<B> key, T value) {
+        return registry.getTag(key)
+                .stream()
+                .flatMap(HolderSet.ListBacked::stream)
+                .filter(Holder::isBound)
+                .anyMatch(holder -> holder.value() == value);
+    }
+
+    /**
+     * Matches each list item to a predicate and returns if all predicates are true.
+     */
+    public static <T> boolean listMatches(List<T> list, List<? extends Predicate<T>> predicates) {
+        if(list.size() != predicates.size()) return false;
+        List<Predicate<T>> copiedPredicates = new ArrayList<>(predicates);
+        predicateCheck:
+        for (int i = copiedPredicates.size() - 1; i >= 0; i--) {
+            for (int k = list.size() - 1; k >= 0; k--) {
+                if (copiedPredicates.get(i).test(list.get(k))) {
+                    copiedPredicates.remove(i);
+                    continue predicateCheck;
+                }
+            }
+            return false;
+        }
+        return copiedPredicates.isEmpty();
     }
 }

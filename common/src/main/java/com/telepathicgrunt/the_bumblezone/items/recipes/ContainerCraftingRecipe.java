@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -64,12 +65,12 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
         NonNullList<ItemStack> remainingInv = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
-        int containerOutput = recipeOutput.hasCraftingRemainingItem() ? recipeOutput.getCount() : 0;
+        int containerOutput = PlatformHooks.hasCraftingRemainder(recipeOutput) ? recipeOutput.getCount() : 0;
 
         for(int i = 0; i < remainingInv.size(); ++i) {
             ItemStack craftingInput = inv.getItem(i);
-            ItemStack craftingContainer = craftingInput.getCraftingRemainingItem();
-            ItemStack recipeContainer = recipeOutput.getCraftingRemainingItem();
+            ItemStack craftingContainer = PlatformHooks.getCraftingRemainder(craftingInput);
+            ItemStack recipeContainer = PlatformHooks.getCraftingRemainder(recipeOutput);
             if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(craftingInput.getItem())) {
                 craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(craftingInput.getItem()).getDefaultInstance();
             }

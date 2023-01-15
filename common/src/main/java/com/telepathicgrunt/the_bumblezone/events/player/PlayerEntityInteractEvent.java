@@ -8,5 +8,5 @@ import net.minecraft.world.entity.player.Player;
 
 public record PlayerEntityInteractEvent(Player player, Entity entity, InteractionHand hand) {
 
-    public static final ReturnableEventHandler<PlayerEntityInteractEvent, InteractionResult> PLAYER_ENTITY_INTERACT = new ReturnableEventHandler<>();
+    public static final ReturnableEventHandler<PlayerEntityInteractEvent, InteractionResult> EVENT = new ReturnableEventHandler<>();
 }

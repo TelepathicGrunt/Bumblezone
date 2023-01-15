@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class HoneyCrystalShield extends ShieldItem {
+public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
     private static final int[] shieldDurabilityBoostPerLevel = new int[]{0,20,45,75,110,150,195,245,316,632};
     private static final int maxShieldLevel = shieldDurabilityBoostPerLevel.length - 1;
 
@@ -30,6 +31,7 @@ public class HoneyCrystalShield extends ShieldItem {
         return repair.is(BzTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS);
     }
 
+    //TODO forge method
     @Override
     public EquipmentSlot getEquipmentSlot(ItemStack stack) {
         return EquipmentSlot.OFFHAND;
@@ -84,14 +86,14 @@ public class HoneyCrystalShield extends ShieldItem {
     @Override
     public void setDamage(ItemStack stack, int damage) {
         int newDamage = damage;
-        int oldDamage = this.getDamage(stack);
+        int oldDamage = stack.getDamageValue();
         int damageCaused = oldDamage - damage;
         int shieldLevel = stack.getOrCreateTag().getInt("ShieldLevel");
 
         // ignore anvil repairing
         if (damageCaused < 0) {
             int reducedDamage = -1 * Math.min(-1, damageCaused + (shieldLevel / 4));
-            newDamage = Math.max(0, this.getDamage(stack) + reducedDamage);
+            newDamage = Math.max(0, stack.getDamageValue() + reducedDamage);
         }
         // strengthen on significant repair
         else if (damageCaused > stack.getMaxDamage() / 5) {
@@ -104,6 +106,7 @@ public class HoneyCrystalShield extends ShieldItem {
     /**
      * blacklisted mending enchantment
      */
+    //TODO forge method
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.MENDING) {
