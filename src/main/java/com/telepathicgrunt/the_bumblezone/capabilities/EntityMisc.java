@@ -121,22 +121,24 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 	public static void resetValueOnRespawn(PlayerEvent.Clone event) {
 		if (event.getEntity() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
 			serverPlayerOld.reviveCaps();
-
-			serverPlayerNew.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capabilityNew ->
-					serverPlayerOld.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capabilityOld ->
-							capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
-
-			serverPlayerNew.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).ifPresent(capabilityNew ->
-					serverPlayerOld.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).ifPresent(capabilityOld ->
-							capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
-
-			serverPlayerNew.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).ifPresent(capabilityNew ->
-					serverPlayerOld.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).ifPresent(capabilityOld ->
-							capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
-
+			
 			serverPlayerNew.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capabilityNew ->
 					serverPlayerOld.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capabilityOld ->
 							capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
+
+			if (!event.isWasDeath()) {
+				serverPlayerNew.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capabilityNew ->
+						serverPlayerOld.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capabilityOld ->
+								capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
+
+				serverPlayerNew.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).ifPresent(capabilityNew ->
+						serverPlayerOld.getCapability(BzCapabilities.NEUROTOXINS_MISS_COUNTER_CAPABILITY).ifPresent(capabilityOld ->
+								capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
+
+				serverPlayerNew.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).ifPresent(capabilityNew ->
+						serverPlayerOld.getCapability(BzCapabilities.ORIGINAL_FLYING_SPEED_CAPABILITY).ifPresent(capabilityOld ->
+								capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
+			}
 
 			if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning.get() || !event.isWasDeath()) {
 				EssenceOfTheBees.setEssence(serverPlayerNew, EssenceOfTheBees.hasEssence(serverPlayerOld));
