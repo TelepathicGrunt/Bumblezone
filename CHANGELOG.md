@@ -5,7 +5,7 @@ Made XP Orbs no longer spawn pollen particles when moving through Pile of Pollen
 
 ##### Entities:
 Fixed respawning from the End's podium portal causing all Bumblezone data attached to player to be lost.
- Should be corrected now.
+ Should be corrected now. (This impacted Essence of the Bees effect and the Queen's Desire advancement progress data)
 
 Bee Queen will not get angry at attacking Players in Peaceful mode now.
 
