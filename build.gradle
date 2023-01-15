@@ -1,233 +1,57 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
-
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://maven.parchmentmc.org' }
-        maven { url = 'https://maven.moddingx.org' }
-        mavenCentral()
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.61', changing: true
-        classpath 'org.parchmentmc:librarian:1.+'
-        classpath 'org.moddingx:ModGradle:3.0.2'
-        classpath 'org.spongepowered:mixingradle:0.7.+'
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-    }
-}
-
 plugins {
-    id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id "net.darkhax.curseforgegradle" version "1.0.7"
-    id "com.modrinth.minotaur" version "2.+"
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "0.11.0-SNAPSHOT" apply false
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-apply plugin: 'org.moddingx.modgradle.mapping'
-
-version = "${mod_version}+${mc_version}"
-group = "com.telepathicgrunt"
-archivesBaseName = "${modid}_forge"
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-sourceSets {
-    api {}
+architectury {
+    minecraft = rootProject.minecraft_version
 }
 
-configurations {
-    shadowMinecraftLibrary
-    minecraftLibrary.extendsFrom(shadowMinecraftLibrary)
+subprojects {
+    apply plugin: "dev.architectury.loom"
+
+    loom {
+        silentMojangMappingsLicense()
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        // The following line declares the mojmap mappings, you may use other mappings as well
+        mappings loom.officialMojangMappings()
+        // The following line declares the yarn mappings you may select this one as well.
+        // mappings "net.fabricmc:yarn:@YARN_MAPPINGS@:v2"
+    }
 }
 
-minecraft {
-    mappings channel: 'parchment', version: "${parchment_version}"
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
-    runs {
-        all {
-            workingDirectory project.file('run')
-            arg "-mixin.config=" + project.getProperty('modid') + ".mixins.json"
-            mods {
-                the_bumblezone {
-                    source sourceSets.api
-                    source sourceSets.main
-                }
-            }
-            lazyToken('minecraft_classpath') {
-                configurations.shadowMinecraftLibrary.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+    archivesBaseName = rootProject.archives_base_name
+    version = rootProject.mod_version
+    group = rootProject.maven_group
+
+    repositories {
+        maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
+        maven {
+            name = 'Ladysnake Mods'
+            url = 'https://ladysnake.jfrog.io/artifactory/mods'
+            content {
+                includeGroup 'io.github.ladysnake'
+                includeGroupByRegex '(dev|io\\.github)\\.onyxstudios.*'
+                includeGroupByRegex 'dev\\.emi.*'
             }
         }
-        client {}
-        server {}
-        data {
-            args '--mod', "the_bumblezone", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-        }
+        maven { url "https://jitpack.io" }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
+
+    java {
+        withSourcesJar()
     }
 }
-
-repositories {
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
-    maven {
-        // Carrier Bees
-        name = "Jared"
-        url = "https://maven.blamejared.com"
-    }
-    maven { url = "https://maven.jaackson.me" }
-    maven { url "https://www.cursemaven.com" }
-    maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
-    maven { url "https://maven.architectury.dev/" }
-    maven { url "https://maven.shedaniel.me" }
-    maven { url "https://jitpack.io" }
-    flatDir { dirs 'flatdir' }
-}
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
-
-    shadowMinecraftLibrary "com.github.LlamaLad7:MixinExtras:0.1.1-rc.4"
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1-rc.4")
-    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
-
-    runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
-    runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
-    compileOnly fg.deobf("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
-
-    compileOnly fg.deobf("mezz.jei:jei-${project.jei_mc_version}-forge:${project.jei_version}")
-    //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
-    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
-    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
-    compileOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
-
-    compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
-
-    compileOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:blueprint-382216:${project.blueprint_file_id}")
-
-    //runtimeOnly fg.deobf("curse.maven:potionofbees-355348:${project.potionofbees_file_id}")
-
-    compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
-    compileOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
-
-    //compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
-    //runtimeOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
-    //runtimeOnly fg.deobf("flatdir:Phosphophyllite-0.6.0:beta.52")
-    //runtimeOnly fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-1.19.2:1.1.17")
-    //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.35")
-
-    //compileOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
-    //runtimeOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
-
-    //runtimeOnly fg.deobf("curse.maven:realistic_bees-410743:4021715")
-    //runtimeOnly fg.deobf("curse.maven:collective-342584:4035506")
-
-    // Switch to `implementation` when testing mod compat
-    //runtimeOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
-    //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3873779")
-    //runtimeOnly fg.deobf("curse.maven:earthmobsmod-333256:3871807")
-    //runtimeOnly fg.deobf("curse.maven:token_enchanter-444421:3559237")
-    //runtimeOnly fg.deobf("curse.maven:silent_lib-242998:3708359")
-
-    //compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
-}
-
-Map<?, ?> makeAttributes() {
-    return [
-            "Specification-Title": "${modid}",
-            "Specification-Vendor": "TelepathicGrunt",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${mod_version}+${mc_version}",
-            "Implementation-Vendor" :"TelepathicGrunt",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "${modid}.mixins.json"
-    ]
-}
-
-tasks.create('relocateShadowJar', ConfigureShadowRelocation) {
-    target(tasks.shadowJar)
-    prefix("com.telepathicgrunt.the_bumblezone.shade")
-}
-
-tasks.named('shadowJar', ShadowJar).configure {
-    archiveClassifier.set('')
-    configurations = [project.configurations.shadowMinecraftLibrary]
-    dependsOn('relocateShadowJar')
-    manifest.attributes(makeAttributes())
-    from sourceSets.api.output
-    from 'LICENSE'
-    exclude 'META-INF/services/javax.*'
-}
-
-mixin { 
-    add sourceSets.main, "${modid}.refmap.json"
-}
-
-processResources {}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-
-jar.finalizedBy('reobfJar')
-reobf { shadowJar {} }
-shadowJar.finalizedBy('reobfShadowJar')
-
-apply from: 'gradle/maven.gradle'
-
-String changelogText = file("CHANGELOG.md").getText('UTF-8')
-task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-    apiToken = "$System.env.CURSEFORGEKEY"
-    int projectId = 362479
-
-    def mainFile = upload(projectId, jar)
-    mainFile.changelog = changelogText
-    mainFile.addGameVersion("1.19.3")
-    mainFile.changelogType = "markdown"
-    mainFile.releaseType = "release"
-    mainFile.displayName = "The Bumblezone v${project.mod_version} (${project.mc_version} MC)"
-}
-
-modrinth {
-    token = System.getenv("MODRINTH")
-    versionName = "The Bumblezone"
-    versionNumber = project.version
-    projectId = "38tpSycf"
-    uploadFile = jar
-    changelog = changelogText
-    versionType = "RELEASE"
-    gameVersions = ["1.19.3"]
-    loaders = ["forge"]
-}
-
-task checkForRefmap() {
-    if (file("./build/libs/the_bumblezone_forge-${project.mod_version}+${project.mc_version}.jar").exists()) {
-        assert zipTree("./build/libs/the_bumblezone_forge-${project.mod_version}+${project.mc_version}.jar")
-                .matching { include "the_bumblezone.refmap.json" }.getSingleFile() != null
-    }
-}
-
-task buildAndRelease{}
-tasks.checkForRefmap.mustRunAfter tasks.build
-tasks.publish.mustRunAfter tasks.checkForRefmap
-tasks.publishCurseForge.mustRunAfter tasks.publish
-tasks.modrinth.mustRunAfter tasks.publish
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)
