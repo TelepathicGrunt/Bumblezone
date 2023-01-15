@@ -6,6 +6,8 @@ Fixed respawning from the End's podium portal causing all Bumblezone data attach
 
 Bee Queen will not get angry at attacking Players in Peaceful mode now.
 
+When Bee Queen is angry, the translucent super trade item rendering will disappear until queen is calm again.
+
 ##### Effects:
 Wrath of the Hive will not apply to players in Peaceful mode now.
 
