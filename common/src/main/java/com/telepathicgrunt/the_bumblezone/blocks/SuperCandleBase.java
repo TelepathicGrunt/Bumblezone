@@ -175,6 +175,7 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
         return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
 
+    //TODO forge method
     @Override
     public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {

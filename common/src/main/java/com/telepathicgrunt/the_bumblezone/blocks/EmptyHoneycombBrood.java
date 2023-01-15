@@ -94,7 +94,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
     public InteractionResult use(BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if (ModChecker.potionOfBeesPresent && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock.get()) {
+        if (ModChecker.potionOfBeesPresent && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock) {
             if (PotionOfBeesCompat.potionOfBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -107,7 +107,7 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
             }
         }
 
-        if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock.get()) {
+        if (ModChecker.buzzierBeesPresent && BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock) {
             if (BuzzierBeesCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);

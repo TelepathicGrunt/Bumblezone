@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -180,8 +182,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
                 honeyCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
                 ItemStack consumedItem = honeyCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
-                if(consumedItem.hasCraftingRemainingItem()) {
-                    ItemStack ejectedItem = consumedItem.getCraftingRemainingItem();
+                if(PlatformHooks.hasCraftingRemainder(consumedItem)) {
+                    ItemStack ejectedItem = PlatformHooks.getCraftingRemainder(consumedItem);
                     if(ejectedItem.isEmpty()) {
                         ejectedItem = ContainerCraftingRecipe.HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(consumedItem.getItem()).getDefaultInstance();
                     }
@@ -363,7 +365,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack itemStack) {
-        if (itemStack.getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0 && player instanceof ServerPlayer serverPlayer) {
+        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) > 0 && player instanceof ServerPlayer serverPlayer) {
             BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
         }
 

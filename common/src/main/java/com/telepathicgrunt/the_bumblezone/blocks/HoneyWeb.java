@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.Util;
@@ -224,7 +225,7 @@ public class HoneyWeb extends Block {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         if ((itemstack.getItem() instanceof BucketItem bucketItem &&
-                bucketItem.getFluid().is(FluidTags.WATER)) ||
+                PlatformHooks.getBucketFluid(bucketItem).is(FluidTags.WATER)) ||
                 (itemstack.hasTag() && itemstack.getOrCreateTag().getString("Potion").contains("water")) ||
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {

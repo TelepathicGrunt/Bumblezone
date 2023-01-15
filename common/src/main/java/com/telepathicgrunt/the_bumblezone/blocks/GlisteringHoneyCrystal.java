@@ -67,6 +67,7 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock {
         return true;
     }
 
+    //TODO forge method
     @Override
     public boolean shouldDisplayFluidOverlay(BlockState blockState, BlockAndTintGetter level, BlockPos blockPos, FluidState fluidState) {
         return blockState.is(this);

@@ -20,8 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import java.util.stream.IntStream;
 
@@ -107,10 +105,11 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
         }
     }
 
-    @Override
-    protected IItemHandler createUnSidedHandler() {
-        return new SidedInvWrapper(this, Direction.UP);
-    }
+    //TODO Check if this is needed
+//    @Override
+//    protected IItemHandler createUnSidedHandler() {
+//        return new SidedInvWrapper(this, Direction.UP);
+//    }
 
     public boolean isUnpackedLoottable() {
         return this.lootTable == null;

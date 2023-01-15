@@ -3,11 +3,9 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -63,10 +61,10 @@ public class FilledPorousHoneycomb extends Block {
             }
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    BzBeeAggressionConfigs.aggressiveBees.get())
+                    BzBeeAggressionConfigs.aggressiveBees)
             {
                 boolean hasProtection = playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 if(!hasProtection &&
@@ -77,7 +75,7 @@ public class FilledPorousHoneycomb extends Block {
                     serverPlayer.displayClientMessage(message, true);
 
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                 }
 
                 if (hasProtection && playerEntity instanceof ServerPlayer serverPlayer) {

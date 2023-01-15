@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -333,6 +334,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
         return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
 
+    //TODO forge method
     @Override
     public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {
@@ -341,12 +343,12 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
         return null;
     }
 
-    public static void multiPotionCandleCrafted(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getEntity() instanceof ServerPlayer serverPlayer && event.getCrafting().is(BzItems.INCENSE_CANDLE.get())) {
-            int containerSize = event.getInventory().getContainerSize();
+    public static void multiPotionCandleCrafted(PlayerCraftedItemEvent event) {
+        if (event.player() instanceof ServerPlayer serverPlayer && event.item().is(BzItems.INCENSE_CANDLE.get())) {
+            int containerSize = event.table().getContainerSize();
             int potionsUsed = 0;
             for (int i = 0; i < containerSize; i++) {
-                if (event.getInventory().getItem(i).is(Items.POTION)) {
+                if (event.table().getItem(i).is(Items.POTION)) {
                     potionsUsed++;
                 }
             }

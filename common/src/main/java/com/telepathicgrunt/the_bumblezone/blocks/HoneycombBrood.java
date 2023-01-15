@@ -6,13 +6,9 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -52,7 +48,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
 
 import java.util.List;
 
@@ -101,10 +96,10 @@ public class HoneycombBrood extends ProperFacingBlock {
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
-                    BzBeeAggressionConfigs.aggressiveBees.get())
+                    BzBeeAggressionConfigs.aggressiveBees)
             {
                 if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {
                     if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
@@ -112,14 +107,14 @@ public class HoneycombBrood extends ProperFacingBlock {
                     }
                     else {
                         //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts.get(), 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles.get(), true));
+                        playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                     }
                 }
             }
 
             return InteractionResult.SUCCESS;
         }
-        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat.get() && BuiltInRegistries.ITEM.getKey(itemstack.getItem()).equals(HONEY_TREAT)) {
+        else if (BzModCompatibilityConfigs.allowHoneyTreatCompat && BuiltInRegistries.ITEM.getKey(itemstack.getItem()).equals(HONEY_TREAT)) {
             if (!world.isClientSide()) {
                 // spawn bee if at final stage and front isn't blocked off
                 int stage = thisBlockState.getValue(STAGE);
@@ -166,7 +161,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
                 if (successfulGrowth && random.nextFloat() < 0.30F) {
                     if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-                        playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), (int) (BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts.get() * 0.75f), 1, false, false,  true));
+                        playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), (int) (BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
 
                         if (playerEntity instanceof ServerPlayer serverPlayer) {
                             BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
@@ -255,11 +250,11 @@ public class HoneycombBrood extends ProperFacingBlock {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
-        else if(BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get() != 0) {
-            if(!nearbyEntities.isEmpty() && GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get() * 1.75f) {
+        else if(BzGeneralConfigs.broodBlocksBeeSpawnCapacity != 0) {
+            if(!nearbyEntities.isEmpty() && GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzGeneralConfigs.broodBlocksBeeSpawnCapacity * 1.75f) {
                 spawnBroodMob(world, random, state, position, stage);
             }
-            else if(GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzGeneralConfigs.broodBlocksBeeSpawnCapacity.get()) {
+            else if(GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzGeneralConfigs.broodBlocksBeeSpawnCapacity) {
                 spawnBroodMob(world, random, state, position, stage);
             }
         }
@@ -311,7 +306,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(new BlockPos(beeMob.position())), MobSpawnType.TRIGGERED, null, null);
 
-        if(ForgeHooks.canEntitySpawn(entity, world, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.SPAWNER) != -1) {
+        if(PlatformHooks.canEntitySpawn(entity, world, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.SPAWNER) != -1) {
             world.addFreshEntity(entity);
         }
     }

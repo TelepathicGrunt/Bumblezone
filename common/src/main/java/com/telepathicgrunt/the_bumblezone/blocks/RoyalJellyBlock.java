@@ -37,11 +37,13 @@ public class RoyalJellyBlock extends HalfTransparentBlock {
         super(Properties.of(Material.CLAY, MaterialColor.COLOR_PURPLE).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK));
     }
 
+    //TODO forge method
     @Override
     public boolean isStickyBlock(BlockState state) {
         return state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get();
     }
 
+    //TODO forge method
     @Override
     public boolean canStickTo(BlockState state, BlockState other) {
         if (state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get() &&

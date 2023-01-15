@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.ExperienceOrbAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -14,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerMenu;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -127,14 +129,14 @@ public class CrystallineFlower extends BaseEntityBlock {
                     {
                         BlockEntity blockEntity = level.getBlockEntity(pos);
                         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
-                            int reward = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(livingEntity, null, livingEntity.getExperienceReward());
+                            int reward = PlatformHooks.getXpDrop(livingEntity, null, livingEntity.getExperienceReward());
                             ExperienceOrb.award((ServerLevel) level, livingEntity.position(), reward);
                         }
                     }
                 }
             }
         }
-        else if (entity instanceof ItemEntity itemEntity && BzGeneralConfigs.crystallineFlowerConsumeItemEntities.get()) {
+        else if (entity instanceof ItemEntity itemEntity && BzGeneralConfigs.crystallineFlowerConsumeItemEntities) {
             ItemStack stack = itemEntity.getItem();
             if (stack.is(BzTags.CAN_BE_ENCHANTED_ITEMS) || stack.is(BzTags.CANNOT_CONSUMED_ITEMS) || stack.is(BzItems.HONEY_CRYSTAL_SHARDS.get())) {
                 return;
@@ -170,7 +172,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 }
             }
         }
-        else if (entity instanceof ExperienceOrb experienceOrb && BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities.get()) {
+        else if (entity instanceof ExperienceOrb experienceOrb && BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities) {
             int bottomY = CrystallineFlower.flowerHeightBelow(level, pos);
             BlockPos bottomPos = pos.below(bottomY);
             BlockEntity blockEntity = level.getBlockEntity(bottomPos);
@@ -180,11 +182,11 @@ public class CrystallineFlower extends BaseEntityBlock {
                 List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
                 int xpToHighestAvailableTier = getXpToHighestAvailableTier(crystallineFlowerBlockEntity, tiersToMax, obstructedAbove);
-                int xpGranted = Math.min(xpToHighestAvailableTier, experienceOrb.value);
+                int xpGranted = Math.min(xpToHighestAvailableTier, experienceOrb.getValue());
 
                 crystallineFlowerBlockEntity.addXpAndTier(xpGranted);
-                experienceOrb.value -= xpGranted;
-                if (experienceOrb.value <= 0) {
+                ((ExperienceOrbAccessor)experienceOrb).setValue(experienceOrb.getValue() - xpGranted);
+                if (experienceOrb.getValue() <= 0) {
                     experienceOrb.discard();
                 }
 

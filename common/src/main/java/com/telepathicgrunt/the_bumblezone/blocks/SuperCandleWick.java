@@ -164,7 +164,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
                             Shapes.create(entity.getBoundingBox()),
                             BooleanOp.AND);
 
-            if (entityInSpace && (BzGeneralConfigs.superCandlesBurnsMobs.get() || isProjectile)) {
+            if (entityInSpace && (BzGeneralConfigs.superCandlesBurnsMobs || isProjectile)) {
                 if (!entity.fireImmune()) {
                     entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
                     if (entity.getRemainingFireTicks() == 0) {
@@ -303,6 +303,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
         return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
 
+    //TODO forge method
     @Override
     public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {

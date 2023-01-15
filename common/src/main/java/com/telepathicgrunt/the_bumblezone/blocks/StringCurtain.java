@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerRightClickedBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.Pair;
@@ -277,15 +278,15 @@ public class StringCurtain extends Block {
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
-    public static void onBlockInteractEvent(PlayerInteractEvent.RightClickBlock event) {
-        Player player = event.getEntity();
-        InteractionHand interactionHand = event.getHand();
+    public static InteractionResult onBlockInteractEvent(PlayerRightClickedBlockEvent event) {
+        Player player = event.player();
+        InteractionHand interactionHand = event.hand();
         if (player != null && player.getItemInHand(interactionHand).is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
-            BlockHitResult hitResult = event.getHitVec();
+            BlockHitResult hitResult = event.hitResult();
             BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
-            BlockState aboveState = event.getLevel().getBlockState(pos);
+            BlockState aboveState = player.getLevel().getBlockState(pos);
             if (aboveState.is(BzTags.STRING_CURTAINS)) {
-                InteractionResult interactionResult = aboveState.use(event.getLevel(), player, interactionHand, new BlockHitResult(
+                InteractionResult interactionResult = aboveState.use(player.getLevel(), player, interactionHand, new BlockHitResult(
                         hitResult.getLocation().add(0, 1, 0),
                         hitResult.getDirection(),
                         pos,
@@ -293,24 +294,27 @@ public class StringCurtain extends Block {
                 ));
 
                 if (interactionResult != InteractionResult.PASS) {
-                    event.setCanceled(true);
-                    event.setCancellationResult(interactionResult);
+                    return interactionResult;
                 }
             }
         }
+        return null;
     }
 
+    //TODO forge method
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return 20;
     }
 
+    //TODO forge method
     @Override
     public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction)
     {
         return 60;
     }
 
+    //TODO forge method
     @Override
     public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return true;
