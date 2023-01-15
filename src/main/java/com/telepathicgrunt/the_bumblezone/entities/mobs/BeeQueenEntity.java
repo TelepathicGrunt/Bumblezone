@@ -39,6 +39,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Container;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -245,11 +246,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
         else {
             if (!this.isNoAi()) {
+
                 Entity entity = source.getEntity();
-                if (entity instanceof LivingEntity livingEntity &&
-                    !livingEntity.isSpectator() &&
-                    !(livingEntity instanceof Player player && player.isCreative()))
-                {
+                if (entity instanceof LivingEntity livingEntity && !livingEntity.isSpectator()) {
+
+                    if (livingEntity instanceof Player player && (level.getDifficulty() == Difficulty.PEACEFUL || player.isCreative())) {
+                        spawnAngryParticles(6);
+                        return super.hurt(source, amount);
+                    }
+
                     if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                         BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
                         BzBeeAggressionConfigs.aggressiveBees.get())
@@ -440,6 +445,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void performAngryActions() {
+        if (level.getDifficulty() == Difficulty.PEACEFUL) {
+            this.stopBeingAngry();
+            return;
+        }
+
         int beeCooldown = this.getBeeSpawnCooldown();
         if (beeCooldown <= 0 && !this.isImmobile()) {
             this.setBeeSpawnCooldown(this.random.nextInt(50) + 75);

@@ -31,6 +31,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -224,16 +225,19 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
                     addFriendship((int) (-3 * amount));
                 }
+
                 if (BzBeeAggressionConfigs.aggressiveBees.get() &&
-                        BzBeeAggressionConfigs.beehemothTriggersWrath.get() &&
-                        entity instanceof LivingEntity livingEntity) {
+                    BzBeeAggressionConfigs.beehemothTriggersWrath.get() &&
+                    entity instanceof LivingEntity livingEntity &&
+                    !(livingEntity instanceof Player && level.getDifficulty() == Difficulty.PEACEFUL))
+                {
                     addFriendship((int) (-amount));
 
                     if (!(livingEntity instanceof Player player && player.isCreative()) &&
-                            (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                            !livingEntity.isSpectator() &&
-                            BzBeeAggressionConfigs.aggressiveBees.get()) {
+                        (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
+                        !livingEntity.isSpectator() &&
+                        BzBeeAggressionConfigs.aggressiveBees.get())
+                    {
                         if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                             livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                         }

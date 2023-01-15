@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -71,7 +72,8 @@ public class FilledPorousHoneycomb extends Block {
                 boolean hasProtection = playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                 if(!hasProtection &&
                     playerEntity instanceof ServerPlayer serverPlayer &&
-                    !EssenceOfTheBees.hasEssence(serverPlayer))
+                    !EssenceOfTheBees.hasEssence(serverPlayer) &&
+                    world.getDifficulty() != Difficulty.PEACEFUL)
                 {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     serverPlayer.displayClientMessage(message, true);

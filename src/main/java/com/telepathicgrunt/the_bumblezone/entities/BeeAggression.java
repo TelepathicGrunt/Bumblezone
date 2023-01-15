@@ -15,6 +15,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -91,7 +92,7 @@ public class BeeAggression {
                 !player.isSpectator())
         {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                if (!EssenceOfTheBees.hasEssence(player)) {
+                if (!EssenceOfTheBees.hasEssence(player) && player.level.getDifficulty() != Difficulty.PEACEFUL) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     player.displayClientMessage(message, true);
 
@@ -128,8 +129,9 @@ public class BeeAggression {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if(attackerEntity instanceof Player player &&
-                !((Player)attackerEntity).isCreative() &&
-                !attackerEntity.isSpectator())
+            !((Player)attackerEntity).isCreative() &&
+            !attackerEntity.isSpectator() &&
+            player.level.getDifficulty() != Difficulty.PEACEFUL)
         {
             if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
@@ -226,14 +228,20 @@ public class BeeAggression {
     public static void playerTick(TickEvent.PlayerTickEvent event) {
         Player playerEntity = event.player;
 
-        //removes the wrath of the hive if it is disallowed outside dimension
-        if(!playerEntity.level.isClientSide() &&
-                playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()) &&
-                !(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get() ||
-                        playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
-        {
-            playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-            WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+
+        //removes the wrath of the hive if it is disallowed outside dimension or in peaceful mode
+        if(!playerEntity.level.isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+
+            if (playerEntity.level.getDifficulty() == Difficulty.PEACEFUL) {
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+            }
+            else if (!(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get() ||
+                    playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
+            {
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+            }
         }
 
         //Makes the fog redder when this effect is active
@@ -261,7 +269,11 @@ public class BeeAggression {
 
     // Makes bees angry if in Cell Maze or other tagged structures.
     public static void applyAngerIfInTaggedStructures(ServerPlayer serverPlayer) {
-        if(serverPlayer.isCreative() || serverPlayer.isSpectator() || !BzBeeAggressionConfigs.aggressiveBees.get()) {
+        if(serverPlayer.isCreative() ||
+            serverPlayer.isSpectator() ||
+            !BzBeeAggressionConfigs.aggressiveBees.get() ||
+            serverPlayer.level.getDifficulty() == Difficulty.PEACEFUL)
+        {
             return;
         }
 

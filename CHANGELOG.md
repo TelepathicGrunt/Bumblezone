@@ -4,6 +4,11 @@
 Fixed respawning from the End's podium portal causing all Bumblezone data attached to player to be lost.
  Should be corrected now.
 
+Bee Queen will not get angry at attacking Players in Peaceful mode now.
+
+##### Effects:
+Wrath of the Hive will not apply to players in Peaceful mode now.
+
 
 ### **(V.6.6.2 Changes) (1.19.2 Minecraft)**
 
