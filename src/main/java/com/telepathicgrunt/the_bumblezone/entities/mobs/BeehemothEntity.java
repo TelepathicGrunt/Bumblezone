@@ -228,15 +228,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
                 if (BzBeeAggressionConfigs.aggressiveBees.get() &&
                     BzBeeAggressionConfigs.beehemothTriggersWrath.get() &&
-                    entity instanceof LivingEntity livingEntity &&
-                    !(livingEntity instanceof Player && level.getDifficulty() == Difficulty.PEACEFUL))
+                    entity instanceof LivingEntity livingEntity)
                 {
                     addFriendship((int) (-amount));
 
-                    if (!(livingEntity instanceof Player player && player.isCreative()) &&
+                    if (!(livingEntity instanceof Player player && (player.isCreative() || level.getDifficulty() == Difficulty.PEACEFUL)) &&
                         (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone.get()) &&
-                        !livingEntity.isSpectator() &&
-                        BzBeeAggressionConfigs.aggressiveBees.get())
+                        !livingEntity.isSpectator())
                     {
                         if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                             livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
