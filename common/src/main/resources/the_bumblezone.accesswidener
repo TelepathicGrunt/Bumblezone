@@ -1,0 +1,13 @@
+accessWidener   v2  named
+
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
+
+accessible class net/minecraft/world/entity/animal/Bee$BeeWanderGoal
+accessible class net/minecraft/world/level/levelgen/DensityFunctions$BeardifierMarker
+accessible class net/minecraft/world/level/levelgen/blockpredicates/MatchingBlocksPredicate
+
+accessible class net/minecraft/client/renderer/RenderType$CompositeRenderType
+accessible method net/minecraft/client/renderer/RenderType$CompositeRenderType state ()Lnet/minecraft/client/renderer/RenderType$CompositeState;
+accessible field net/minecraft/client/renderer/RenderType$CompositeState textureState Lnet/minecraft/client/renderer/RenderStateShard$EmptyTextureStateShard;
+

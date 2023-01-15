@@ -11,6 +11,10 @@ architectury {
     common("fabric", "forge", "quilt")
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/the_bumblezone.accesswidener")
+}
+
 publishing {
     publications {
         mavenCommon(MavenPublication) {

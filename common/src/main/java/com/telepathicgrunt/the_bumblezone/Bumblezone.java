@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.entities.*;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompatRegs;
@@ -83,7 +84,7 @@ public class Bumblezone{
         forgeBus.addListener(BeeStinger::bowUsable);
         EntityMiscHandler.initEvents();
         forgeBus.addListener(IncenseCandleBase::multiPotionCandleCrafted);
-        forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
+        PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
