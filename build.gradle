@@ -33,6 +33,12 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
+        maven {
+            url = 'https://maven.cafeteria.dev/releases'
+            content {
+                includeGroup 'dev.cafeteria'
+            }
+        }
         maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
         maven {
             name = 'Ladysnake Mods'
@@ -44,6 +50,7 @@ allprojects {
             }
         }
         maven { url "https://jitpack.io" }
+        maven { url "https://www.cursemaven.com" }
     }
 
     tasks.withType(JavaCompile) {

@@ -1,7 +1,10 @@
-package com.telepathicgrunt.the_bumblezone.modcompat;
+package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,8 +17,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import org.apache.logging.log4j.Level;
 import pokecube.api.data.PokedexEntry;
 import pokecube.api.data.spawns.SpawnBiomeMatcher;
 import pokecube.api.entity.pokemob.IPokemob;
@@ -26,15 +27,14 @@ import pokecube.core.entity.pokemobs.helper.PokemobBase;
 import thut.api.maths.Vector3;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
-public class PokecubeCompat {
+public class PokecubeCompat implements ModCompat {
     private static final List<PokedexEntry> BABY_POKECUBE_POKEMON_LIST = new ArrayList<>();
     private static final List<PokedexEntry> POKECUBE_POKEMON_LIST = new ArrayList<>();
 
-    public static void setupCompat() {
-
-        // get all baby bees
+    public PokecubeCompat() {
         BABY_POKECUBE_POKEMON_LIST.add(Database.getEntry("Combee"));
         BABY_POKECUBE_POKEMON_LIST.add(Database.getEntry("Weedle"));
         BABY_POKECUBE_POKEMON_LIST.add(Database.getEntry("Cutiefly"));
@@ -49,11 +49,16 @@ public class PokecubeCompat {
         ModChecker.pokecubePresent = true;
     }
 
-    /**
-     * Spawn Pokecube bees
-     */
-    public static boolean PCMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
-        List<PokedexEntry> pokemonListToUse = isChild ? BABY_POKECUBE_POKEMON_LIST : POKECUBE_POKEMON_LIST;
+    @Override
+    public EnumSet<Type> compatTypes() {
+        return EnumSet.of(Type.SPAWNS, Type.DIMENSION_SPAWN);
+    }
+
+    @Override
+    public boolean onBeeSpawn(EntitySpawnEvent event, boolean isBaby) {
+        if (event.entity().getRandom().nextFloat() >= BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon) return false;
+        if (!isBaby) return false;
+        List<PokedexEntry> pokemonListToUse = isBaby ? BABY_POKECUBE_POKEMON_LIST : POKECUBE_POKEMON_LIST;
         if (pokemonListToUse.size() == 0) {
             Bumblezone.LOGGER.warn(
                     "Error! List of POKECUBE_POKEMON_LIST is empty! Cannot spawn their bees. " +
@@ -61,8 +66,8 @@ public class PokecubeCompat {
             return false;
         }
 
-        Mob entity = event.getEntity();
-        LevelAccessor world = event.getLevel();
+        Mob entity = event.entity();
+        LevelAccessor world = event.level();
 
         // Pokecube mobs crash if done in worldgen due to onInitialSpawn not being worldgen safe in their code.
         if(world instanceof WorldGenRegion) return false;
@@ -75,11 +80,11 @@ public class PokecubeCompat {
         if (pokemon == null) return false;
 
         pokemon.setHealth(pokemon.getMaxHealth());
-        pokemon.setBaby(isChild);
+        pokemon.setBaby(isBaby);
 
         BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(entity.blockPosition());
         ChunkAccess chunkAccess = world.getChunk(blockpos);
-        if (!isChild) {
+        if (!isBaby) {
             BlockState currentState = chunkAccess.getBlockState(blockpos);
             while (!currentState.canOcclude() && currentState.getFluidState().isEmpty() && blockpos.getY() > world.getMinBuildHeight()) {
                 blockpos.move(Direction.DOWN);
@@ -96,24 +101,23 @@ public class PokecubeCompat {
                 0.0F);
 
         IPokemob pokemob = PokemobCaps.getPokemobFor(pokemon);
-        if(!isChild) {
+        if(!isBaby) {
             try {
                 SpawnBiomeMatcher spawnMatcher = spawn.getMatcher(((ServerLevel) world), Vector3.entity(pokemon), null);
                 pokemob.spawnInit(spawnMatcher.spawnRule);
             }
             catch (Exception e) {
                 e.addSuppressed(new RuntimeException("Mob: " + pokemob.getDisplayName() + ", Position: " + blockpos + ", Dimension: " + ((ServerLevel) world).dimension().location()));
-                Bumblezone.LOGGER.log(Level.ERROR, e);
+                Bumblezone.LOGGER.error("", e);
             }
-        }
-        else {
+        } else {
             pokemob.setExp(0, false);
         }
 
         pokemon.finalizeSpawn(
                 (ServerLevelAccessor) world,
                 world.getCurrentDifficultyAt(pokemon.blockPosition()),
-                event.getSpawnReason(),
+                event.spawnType(),
                 null,
                 null);
 
@@ -121,8 +125,9 @@ public class PokecubeCompat {
         return true;
     }
 
-    public static void PCAddProtectionForBeeMobs(Entity entity) {
-        if (BzModCompatibilityConfigs.beePokemonGetsProtectionEffect.get() && entity instanceof PokemobBase pokemobBase) {
+    @Override
+    public void onEntitySpawnInDimension(Entity entity) {
+        if (BzModCompatibilityConfigs.beePokemonGetsProtectionEffect && entity instanceof PokemobBase pokemobBase) {
             if (POKECUBE_POKEMON_LIST.contains(pokemobBase.pokemobCap.getPokedexEntry())) {
                 pokemobBase.addEffect(new MobEffectInstance(
                         BzEffects.PROTECTION_OF_THE_HIVE.get(),

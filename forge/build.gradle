@@ -28,6 +28,15 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
 
+    modApi("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
+
+    modApi("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
+
+    modApi("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
+
+    modApi("curse.maven:quark-243121:${project.quark_file_id}")
+    modApi("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }

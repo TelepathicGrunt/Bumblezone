@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerStoppingEvent;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -9,15 +11,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.fml.util.thread.SidedThreadGroups;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -39,10 +36,15 @@ public class ThreadExecutor {
 
                     @Override
                     public Thread newThread(Runnable r) {
-                        return new Thread(SidedThreadGroups.SERVER, r, namePrefix + threadNum.getAndIncrement());
+                        return createServerThread(r, namePrefix + threadNum.getAndIncrement());
                     }
                 }
         );
+    }
+
+    @ExpectPlatform
+    public static Thread createServerThread(Runnable runnable, String name) {
+        throw new NotImplementedException("ThreadExecutor#createServerThread");
     }
 
     private static void shutdownExecutorService() {

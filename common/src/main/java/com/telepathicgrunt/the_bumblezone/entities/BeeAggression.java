@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.PokecubeCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -178,8 +178,10 @@ public class BeeAggression {
                     true));
         }
 
-        if(ModChecker.pokecubePresent) {
-            PokecubeCompat.PCAddProtectionForBeeMobs(entity);
+        if (entity != null && entity.level != null && !entity.level.isClientSide() && entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+            for (ModCompat compat : ModChecker.DIM_SPAWN_COMPATS) {
+                compat.onEntitySpawnInDimension(entity);
+            }
         }
     }
 

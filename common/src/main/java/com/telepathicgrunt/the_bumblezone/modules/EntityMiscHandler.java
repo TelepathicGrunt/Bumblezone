@@ -26,7 +26,7 @@ public class EntityMiscHandler {
         PlayerCraftedItemEvent.EVENT.addListener(EntityMiscHandler::onItemCrafted);
         BabySpawnEvent.EVENT.addListener(EntityMiscHandler::onBeeBreed);
         BabySpawnEvent.EVENT.addListener(EntityMiscHandler::onHoneySlimeBred);
-        EntityDeathEvent.EVENT.addListener(EntityMiscHandler::onEntityKilled);
+        EntityDeathEvent.EVENT_LOWEST.addListener(EntityMiscHandler::onEntityKilled);
         FinishUseItemEvent.EVENT.addListener(EntityMiscHandler::onHoneyBottleDrank);
     }
 

@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
@@ -20,30 +22,41 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
-public class ResourcefulBeesCompat {
+public class ResourcefulBeesCompat implements ModCompat {
 
 	public static final TagKey<Block> SPAWNS_IN_BEE_DUNGEONS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawns_in_bee_dungeons"));
 	public static final TagKey<Block> SPAWNS_IN_SPIDER_INFESTED_BEE_DUNGEONS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawns_in_spider_infested_bee_dungeons"));
 	public static final TagKey<EntityType<?>> SPAWNABLE_FROM_BROOD_BLOCK_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_brood_block"));
 	public static final TagKey<EntityType<?>> SPAWNABLE_FROM_CHUNK_CREATION_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_chunk_creation"));
 
-	public static void setupCompat() {
+	public ResourcefulBeesCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.resourcefulBeesPresent = true;
 	}
 
-	public static boolean RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild, MobSpawnType spawnReason) {
-		Mob entity = event.getEntity();
-        LevelAccessor world = event.getLevel();
+	@Override
+	public EnumSet<Type> compatTypes() {
+		return EnumSet.of(Type.SPAWNS, Type.COMBS);
+	}
+
+	@Override
+	public boolean onBeeSpawn(EntitySpawnEvent event, boolean isBaby) {
+		if (!BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob) return false;
+		double spawnRate = event.spawnType() == MobSpawnType.SPAWNER ?
+				BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsBrood :
+				BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsOther;
+		if (event.entity().getRandom().nextFloat() >= spawnRate) return false;
+		Mob entity = event.entity();
+        LevelAccessor world = event.level();
 
 		Registry<EntityType<?>> entityTypes = world.registryAccess().registryOrThrow(Registries.ENTITY_TYPE);
 		Optional<HolderSet.Named<EntityType<?>>> optionalNamed = entityTypes.getTag(
-				spawnReason == MobSpawnType.CHUNK_GENERATION ?
+				event.spawnType() == MobSpawnType.CHUNK_GENERATION ?
 						SPAWNABLE_FROM_CHUNK_CREATION_TAG :
 						SPAWNABLE_FROM_BROOD_BLOCK_TAG);
 		if(optionalNamed.isEmpty()) return false;
@@ -51,7 +64,7 @@ public class ResourcefulBeesCompat {
 		HolderSet.Named<EntityType<?>> holders = optionalNamed.get();
 		if (holders.size() == 0) return false;
 
-		EntityType<?> rbBeeType = holders.get(entity.getRandom().nextInt(holders.size())).get();
+		EntityType<?> rbBeeType = holders.get(entity.getRandom().nextInt(holders.size())).value();
 		Entity rbBeeUnchecked = rbBeeType.create(entity.getLevel());
 
 		if (rbBeeUnchecked instanceof Bee rbBee) {
@@ -63,12 +76,12 @@ public class ResourcefulBeesCompat {
 					rbBee.getRandom().nextFloat() * 360.0F,
 					0.0F);
 
-			rbBee.setBaby(isChild);
+			rbBee.setBaby(isBaby);
 
 			rbBee.finalizeSpawn(
 					(ServerLevelAccessor)world,
 					world.getCurrentDifficultyAt(rbBee.blockPosition()),
-					event.getSpawnReason(),
+					event.spawnType(),
 					null,
 					null);
 
@@ -78,12 +91,20 @@ public class ResourcefulBeesCompat {
 		return false;
 	}
 
-	public static StructureTemplate.StructureBlockInfo RBGetSpiderHoneycomb(BlockPos worldPos, RandomSource random, LevelReader worldView) {
-		return getRandomCombFromTag(worldPos, random, worldView, SPAWNS_IN_SPIDER_INFESTED_BEE_DUNGEONS_TAG);
+	@Override
+	public boolean checkCombSpawn(BlockPos pos, RandomSource random, LevelReader level, boolean spiderDungeon) {
+		if (spiderDungeon) {
+			return random.nextFloat() < BzModCompatibilityConfigs.RBOreHoneycombSpawnRateSpiderBeeDungeon;
+		}
+		return random.nextFloat() < BzModCompatibilityConfigs.RBOreHoneycombSpawnRateBeeDungeon;
 	}
 
-	public static StructureTemplate.StructureBlockInfo RBGetRandomBeeHoneycomb(BlockPos worldPos, RandomSource random, LevelReader worldView) {
-		return getRandomCombFromTag(worldPos, random, worldView, SPAWNS_IN_BEE_DUNGEONS_TAG);
+	@Override
+	public StructureTemplate.StructureBlockInfo getHoneycomb(BlockPos pos, RandomSource random, LevelReader level, boolean spiderDungeon) {
+		if (spiderDungeon) {
+			return getRandomCombFromTag(pos, random, level, SPAWNS_IN_SPIDER_INFESTED_BEE_DUNGEONS_TAG);
+		}
+		return getRandomCombFromTag(pos, random, level, SPAWNS_IN_BEE_DUNGEONS_TAG);
 	}
 
 	private static StructureTemplate.StructureBlockInfo getRandomCombFromTag(BlockPos worldPos, RandomSource random, LevelReader worldView, TagKey<Block> spawnsInBeeDungeonsTag) {

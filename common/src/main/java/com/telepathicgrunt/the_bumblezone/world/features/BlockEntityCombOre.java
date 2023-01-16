@@ -2,12 +2,13 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.WeakHashMap;
 
 
@@ -36,9 +38,14 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 		if (context.config().size < 10) stretchedFactor = 1;
 		int maxY = (int) (size / 3);
 		int minY = -maxY - 1;
-		String nbt = null;
-		if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(context.config().targetStates.get(0).state.getBlock())) {
-			nbt = ProductiveBeesCompat.PBGetRandomCombType(context.random());
+
+		ModCompat dataCompat = null;
+		Optional<Object> data = Optional.empty();
+		Block targetBlock = context.config().targetStates.get(0).state.getBlock();
+		for (ModCompat compat : ModChecker.COMB_ORE_COMPATS) {
+			data = compat.getCombData(targetBlock, context.random());
+			dataCompat = compat;
+			if (data.isPresent()) break;
 		}
 
 		for(int y = minY; y <= maxY; y++) {
@@ -72,9 +79,10 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 						blockToReplace = cachedChunk.getBlockState(blockposMutable);
 						for(OreConfiguration.TargetBlockState targetBlockState : context.config().targetStates) {
 							if(targetBlockState.target.test(blockToReplace, context.random())) {
-								if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsConfigurableComb(targetBlockState.state.getBlock())) {
-									ProductiveBeesCompat.placeConfigurableCombBlockEntity(blockposMutable, cachedChunk, nbt, targetBlockState, targetBlockState.state.getBlock());
-									continue;
+								if (dataCompat != null && data.isPresent()) {
+									if (dataCompat.placeCombOre(blockposMutable, cachedChunk, data.get(), targetBlockState, targetBlockState.state.getBlock())) {
+										continue;
+									}
 								}
 
 								cachedChunk.setBlockState(blockposMutable, targetBlockState.state, false);

@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
@@ -372,10 +372,11 @@ public class EntityTeleportationBackend {
             }
         }
 
-
         if(BzDimensionConfigs.allowTeleportationWithModdedBeehives) {
-            if(ModChecker.productiveBeesPresent && ProductiveBeesCompat.PBIsExpandedBeehiveBlock(blockState)) {
-                return true;
+            for (ModCompat compat : ModChecker.BLOCK_TELEPORT_COMPATS) {
+                if (compat.isValidBeeHiveForTeleportation(blockState)) {
+                    return true;
+                }
             }
         }
 

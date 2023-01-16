@@ -1,13 +1,23 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.forgespi.language.IModInfo;
+import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import org.apache.logging.log4j.Level;
-import org.apache.maven.artifact.versioning.ArtifactVersion;
-import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class ModChecker {
+
+	public static final List<ModCompat> SPAWNING_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> BROOD_EMPTY_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> DUNGEON_COMB_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> REGISTRY_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> DIM_SPAWN_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> BLOCK_TELEPORT_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> COMB_ORE_COMPATS = new ArrayList<>();
 
 	public static boolean productiveBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
@@ -32,29 +42,11 @@ public class ModChecker {
 		String modid = "";
 		try {
 
-			modid = "pokecube_mobs";
-			loadupModCompat(modid, () -> PokecubeCompat.setupCompat());
-
-			modid = "productivebees";
-			loadupModCompat(modid, () -> ProductiveBeesCompat.setupCompat());
-
 			modid = "friendsandfoes";
 			loadupModCompat(modid, () -> FriendsAndFoesCompat.setupCompat());
 
-			modid = "bk";
-			loadupModCompat(modid, () -> BeekeeperCompat.setupCompat());
-
-			modid = "quark";
-			loadupModCompat(modid, () -> QuarkCompat.setupCompat());
-
-			modid = "buzzier_bees";
-			loadupModCompat(modid, () -> BuzzierBeesCompat.setupCompat());
-
 			modid = "resourcefulbees";
-			loadupModCompat(modid, () -> ResourcefulBeesCompat.setupCompat());
-
-			modid = "potionofbees";
-			loadupModCompat(modid, () -> PotionOfBeesCompat.setupCompat());
+			loadupModCompat(modid, () -> new ResourcefulBeesCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
@@ -62,10 +54,17 @@ public class ModChecker {
 		}
     }
 
-    private static void loadupModCompat(String modid, Runnable runnable){
+    private static void loadupModCompat(String modid, Supplier<ModCompat> loader){
 		try {
-			if (ModList.get().isLoaded(modid)) {
-				runnable.run();
+			if (PlatformHooks.isModLoaded(modid)) {
+				ModCompat compat = loader.get();
+				if (compat.compatTypes().contains(ModCompat.Type.SPAWNS)) SPAWNING_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.EMPTY_BROOD)) BROOD_EMPTY_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.COMBS)) DUNGEON_COMB_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.DIMENSION_SPAWN)) DIM_SPAWN_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.BLOCK_TELEPORT)) BLOCK_TELEPORT_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.COMB_ORE)) COMB_ORE_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.REGISTRIES)) REGISTRY_COMPATS.add(compat);
 			}
 		}
 		catch (Throwable e) {
@@ -85,23 +84,16 @@ public class ModChecker {
 	}
 
     private static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
-    	if(!ModList.get().isLoaded(currentModID)) return true;
+		if(!PlatformHooks.isModLoaded(currentModID)) return true;
 
-		IModInfo modInfo = ModList.get().getModContainerById(currentModID).get().getModInfo();
-		ArtifactVersion modVersion = modInfo.getVersion();
+		ModInfo info = PlatformHooks.getModInfo(currentModID, checkQualifierInstead);
 
-		// some people do 1.16.4-0.5.0.5 and we have to parse the second half instead.
-		// if someone does 0.5.0.5-1.16.4, well, we are screwed lmao. WE HAVE STANDARDS FOR A REASON PEOPLE! lmao
-		if(checkQualifierInstead && modVersion.getQualifier() != null){
-			modVersion = new DefaultArtifactVersion(modVersion.getQualifier());
-		}
-
-		if (modVersion.compareTo(new DefaultArtifactVersion(minVersion)) < 0) {
-			Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
-			Bumblezone.LOGGER.log(Level.INFO, " ");
-			Bumblezone.LOGGER.log(Level.INFO, "BUMBLEZONE: You're using a version of " + modInfo.getDisplayName() + " that is outdated. Please update " + modInfo.getDisplayName() + " to the latest version of that mod to enable compat with Bumblezone again.");
-			Bumblezone.LOGGER.log(Level.INFO, " ");
-			Bumblezone.LOGGER.log(Level.INFO, "------------------------------------------------NOTICE-------------------------------------------------------------------------");
+		if (info != null && info.compare(minVersion) < 0) {
+			Bumblezone.LOGGER.info("------------------------------------------------NOTICE-------------------------------------------------------------------------");
+			Bumblezone.LOGGER.info(" ");
+			Bumblezone.LOGGER.info("BUMBLEZONE: You're using a version of " + info.displayName() + " that is outdated. Please update " + info.displayName() + " to the latest version of that mod to enable compat with Bumblezone again.");
+			Bumblezone.LOGGER.info(" ");
+			Bumblezone.LOGGER.info("------------------------------------------------NOTICE-------------------------------------------------------------------------");
 			return false;
 		}
 

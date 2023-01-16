@@ -9,6 +9,7 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.BzNbtPredicate;
+import com.telepathicgrunt.the_bumblezone.utils.LenientUnboundedMapCodec;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,8 +20,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
-import net.minecraftforge.common.LenientUnboundedMapCodec;
-import net.minecraftforge.fml.ModList;
 
 import java.util.HashMap;
 import java.util.List;

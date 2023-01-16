@@ -8,18 +8,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * We use @Contract(pure = true) because intellij will think that they always return the same value.
@@ -74,24 +74,21 @@ public class PlatformHooks {
         throw new NotImplementedException("PlatformHooks getBucketFluid is not implemented!");
     }
 
-    @ExpectPlatform
-    @Contract(pure = true)
-    public static FallingBlockEntity createFallingBlock(ServerLevel level, Vec3 pos, BlockState state) {
-        throw new NotImplementedException("PlatformHooks createFallingBlock is not implemented!");
-    }
-
-    public static ModInfo getModInfo(String modid) {
-        return getModInfo(modid, false);
-    }
-
+    @Nullable
     @ExpectPlatform
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         throw new NotImplementedException("PlatformHooks getModInfo is not implemented!");
     }
 
     @ExpectPlatform
-    public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, Player player) {
+    public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         throw new NotImplementedException("PlatformHooks sendBlockBreakEvent is not implemented!");
     }
+
+    @ExpectPlatform
+    public static void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
+        throw new NotImplementedException("PlatformHooks sendBlockBreakEvent is not implemented!");
+    }
+
 
 }

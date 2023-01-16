@@ -6,5 +6,5 @@ import net.minecraft.world.entity.LivingEntity;
 
 public record EntityHurtEvent(LivingEntity entity, DamageSource source, float amount) {
 
-    public static final CancellableEventHandler<EntityHurtEvent> EVENT = new CancellableEventHandler<>();
+    public static final CancellableEventHandler<EntityHurtEvent> EVENT_LOWEST = new CancellableEventHandler<>();
 }

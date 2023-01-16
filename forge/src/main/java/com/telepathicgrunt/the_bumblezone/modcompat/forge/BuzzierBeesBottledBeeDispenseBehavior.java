@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat;
+package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
@@ -39,7 +39,7 @@ public class BuzzierBeesBottledBeeDispenseBehavior extends DefaultDispenseItemBe
 
             stack.shrink(1);
 
-            if(!BzGeneralConfigs.dispensersDropGlassBottles.get()) {
+            if(!BzGeneralConfigs.dispensersDropGlassBottles) {
                 if (!stack.isEmpty()) {
                     addGlassBottleToDispenser(source);
                 }

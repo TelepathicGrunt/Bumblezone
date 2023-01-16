@@ -7,4 +7,5 @@ import net.minecraft.world.entity.LivingEntity;
 public record EntityDeathEvent(LivingEntity entity, DamageSource source) {
 
     public static final CancellableEventHandler<EntityDeathEvent> EVENT = new CancellableEventHandler<>();
+    public static final CancellableEventHandler<EntityDeathEvent> EVENT_LOWEST = new CancellableEventHandler<>();
 }

@@ -2,11 +2,9 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -108,19 +106,25 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
 
         // main body and ceiling
         else if(blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
-            if(ModChecker.resourcefulBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.RBOreHoneycombSpawnRateSpiderBeeDungeon.get()) {
-                StructureTemplate.StructureBlockInfo info = ResourcefulBeesCompat.RBGetSpiderHoneycomb(worldPos, random, worldView);
-                if(info != null) return info;
+
+            boolean compatSuccess = false;
+
+            for (ModCompat compat : ModChecker.DUNGEON_COMB_COMPATS) {
+                if (compat.checkCombSpawn(worldPos, random, worldView, true)) {
+                    StructureTemplate.StructureBlockInfo info = compat.getHoneycomb(worldPos, random, worldView, true);
+                    if (info != null) {
+                        return info;
+                    }
+                }
             }
-            else if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon.get()) {
-                StructureTemplate.StructureBlockInfo info = ProductiveBeesCompat.PBGetRottenedHoneycomb(worldPos, random);
-                if(info != null) return info;
-            }
-            else if (random.nextFloat() < 0.15f) {
-                blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
-            }
-            else {
-                blockState = BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState();
+
+            if (!compatSuccess) {
+                if (random.nextFloat() < 0.15f) {
+                    blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
+                }
+                else {
+                    blockState = BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState();
+                }
             }
         }
 
@@ -130,7 +134,7 @@ public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
                 blockState = BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
                         .setValue(HoneycombBrood.FACING, blockState.getValue(HoneycombBrood.FACING));
             }
-            else if (random.nextDouble() < BzWorldgenConfigs.spawnerRateSpiderBeeDungeon.get()) {
+            else if (random.nextDouble() < BzWorldgenConfigs.spawnerRateSpiderBeeDungeon) {
                 blockState = Blocks.SPAWNER.defaultBlockState();
             }
             else {

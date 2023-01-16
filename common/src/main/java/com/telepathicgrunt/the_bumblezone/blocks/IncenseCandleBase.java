@@ -53,7 +53,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 
 
 public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterloggedBlock, SuperCandle {

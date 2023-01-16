@@ -1,16 +1,19 @@
-package com.telepathicgrunt.the_bumblezone.modcompat;
+package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import vazkii.quark.content.client.tooltip.EnchantedBookTooltips;
 
-public class QuarkCompat {
-    public static void setupCompat() {
-        if(BzModCompatibilityConfigs.injectBzItemsIntoQuarkEnchantmentTooltipsCompat.get()) {
+public class QuarkCompat implements ModCompat {
+
+    public QuarkCompat() {
+        if(BzModCompatibilityConfigs.injectBzItemsIntoQuarkEnchantmentTooltipsCompat) {
             setupEnchantmentTooltipItemsSymbols();
         }
 
-       // Keep at end so it is only set to true if no exceptions was thrown during setup
+        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.quarkPresent = true;
     }
 

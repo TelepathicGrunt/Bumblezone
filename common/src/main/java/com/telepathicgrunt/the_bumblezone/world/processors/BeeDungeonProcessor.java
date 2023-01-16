@@ -3,10 +3,8 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -107,19 +105,26 @@ public class BeeDungeonProcessor extends StructureProcessor {
 
         // main body and ceiling
         else if (blockState.is(Blocks.HONEYCOMB_BLOCK) || blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
-            if(ModChecker.resourcefulBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.RBOreHoneycombSpawnRateBeeDungeon.get()) {
-                StructureTemplate.StructureBlockInfo info = ResourcefulBeesCompat.RBGetRandomBeeHoneycomb(worldPos, random, worldView);
-                if(info != null) return info;
+
+            boolean compatSuccess = false;
+
+            for (ModCompat compat : ModChecker.DUNGEON_COMB_COMPATS) {
+                if (compat.checkCombSpawn(worldPos, random, worldView, false)) {
+                    StructureTemplate.StructureBlockInfo info = compat.getHoneycomb(worldPos, random, worldView, false);
+                    if (info != null) {
+                        return info;
+                    }
+                    compatSuccess = true;
+                    break;
+                }
             }
-            else if(ModChecker.productiveBeesPresent && random.nextFloat() < BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon.get()) {
-                StructureTemplate.StructureBlockInfo info = ProductiveBeesCompat.PBGetRandomHoneycomb(worldPos, random);
-                if(info != null) return info;
-            }
-            else if (random.nextFloat() < 0.4f) {
-                blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
-            }
-            else {
-                blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
+
+            if (!compatSuccess) {
+                if (random.nextFloat() < 0.4f) {
+                    blockState = Blocks.HONEYCOMB_BLOCK.defaultBlockState();
+                } else {
+                    blockState = BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState();
+                }
             }
         }
 

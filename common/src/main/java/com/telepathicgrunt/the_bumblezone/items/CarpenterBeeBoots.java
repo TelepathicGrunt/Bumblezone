@@ -91,9 +91,10 @@ public class CarpenterBeeBoots extends BeeArmor {
 
                         // Post the block break event
                         BlockState state = world.getBlockState(belowBlockPos);
+                        BlockEntity entity = world.getBlockEntity(belowBlockPos);
 
                         // Handle if the event is canceled
-                        if (PlatformHooks.sendBlockBreakEvent(world, belowBlockPos, state, player)) {
+                        if (PlatformHooks.sendBlockBreakEvent(world, belowBlockPos, state, entity, player)) {
                             return;
                         }
 
@@ -121,6 +122,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                                     BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
                                 }
                             }
+                            PlatformHooks.afterBlockBreakEvent(world, belowBlockPos, state, entity, player);
                         }
 
                         tag.putInt("lastSentState", -1);

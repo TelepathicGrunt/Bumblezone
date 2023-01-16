@@ -6,5 +6,5 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public record BlockBreakEvent(Player player, BlockState state) {
 
-    public static final CancellableEventHandler<BlockBreakEvent> EVENT = new CancellableEventHandler<>();
+    public static final CancellableEventHandler<BlockBreakEvent> EVENT_LOWEST = new CancellableEventHandler<>();
 }
