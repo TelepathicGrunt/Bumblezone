@@ -53,10 +53,4 @@ public class BuzzierBeesCompat implements ModCompat {
 
 		return InteractionResult.PASS;
 	}
-
-	@Override
-	public void registerCompatRegistries() {
-		BuzzierBeesCompatRegs.CONFIGURED_FEATURES.init();
-		BuzzierBeesCompatRegs.PLACED_FEATURES.init();
-	}
 }

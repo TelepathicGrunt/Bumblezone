@@ -14,6 +14,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.MatchingBlocksPredicate;
@@ -23,15 +24,18 @@ import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguratio
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 
 public class BuzzierBeesCompatRegs {
-    public static final ResourcefulRegistry<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = ResourcefulRegistries.create(Registries.CONFIGURED_FEATURE, Bumblezone.MODID);
-    public static final ResourcefulRegistry<PlacedFeature> PLACED_FEATURES = ResourcefulRegistries.create(Registries.PLACED_FEATURE, Bumblezone.MODID);
+    public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registries.CONFIGURED_FEATURE, Bumblezone.MODID);
+    public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registries.PLACED_FEATURE, Bumblezone.MODID);
 
-    public static final RegistryEntry<ConfiguredFeature<?, ?>> CRYSTALIZED_HONEY_CF = CONFIGURED_FEATURES.register("buzzier_bees_crystallized_honey_cf", () ->
+    public static final RegistryObject<ConfiguredFeature<?, ?>> CRYSTALIZED_HONEY_CF = CONFIGURED_FEATURES.register("buzzier_bees_crystallized_honey_cf", () ->
         new ConfiguredFeature<>(Feature.ORE,
             new OreConfiguration(
                 new BlockMatchTest(BzBlocks.POROUS_HONEYCOMB.get()),
@@ -42,7 +46,7 @@ public class BuzzierBeesCompatRegs {
         )
     );
 
-    public static final RegistryEntry<ConfiguredFeature<?, ?>> HONEYCOMB_TILES_CF = CONFIGURED_FEATURES.register("honeycomb_tiles_cf", () ->
+    public static final RegistryObject<ConfiguredFeature<?, ?>> HONEYCOMB_TILES_CF = CONFIGURED_FEATURES.register("honeycomb_tiles_cf", () ->
         new ConfiguredFeature<>(Feature.ORE,
             new OreConfiguration(
                 new TagMatchTest(BzTags.CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS),
@@ -53,10 +57,10 @@ public class BuzzierBeesCompatRegs {
         )
     );
 
-    public static final RegistryEntry<PlacedFeature> CRYSTALIZED_HONEY_PF = PLACED_FEATURES.register("buzzier_bees_crystallized_honey_pf", () ->
+    public static final RegistryObject<PlacedFeature> CRYSTALIZED_HONEY_PF = PLACED_FEATURES.register("buzzier_bees_crystallized_honey_pf", () ->
         new PlacedFeature(Holder.direct(CRYSTALIZED_HONEY_CF.get()),
             List.of(
-                ConditionBasedPlacement.of(LazySupplier.of(() -> BzModCompatibilityConfigs.spawnCrystallizedHoneyInDimension.get())),
+                ConditionBasedPlacement.of(LazySupplier.of(() -> BzModCompatibilityConfigs.spawnCrystallizedHoneyInDimension)),
                 CountPlacement.of(30),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(
@@ -64,17 +68,17 @@ public class BuzzierBeesCompatRegs {
                     VerticalAnchor.belowTop(16)),
                 BlockPredicateFilter.forPredicate(new MatchingBlocksPredicate(
                     new Vec3i(0,0,0),
-                    HolderSet.direct(BzBlocks.POROUS_HONEYCOMB.getHolder().get())
+                    HolderSet.direct(Block::builtInRegistryHolder, BzBlocks.POROUS_HONEYCOMB.get())
                 )),
                 BiomeFilter.biome()
             )
         )
     );
 
-    public static final RegistryEntry<PlacedFeature> HONEYCOMB_TILES_PF = PLACED_FEATURES.register("buzzier_bees_honeycomb_tiles_pf", () ->
+    public static final RegistryObject<PlacedFeature> HONEYCOMB_TILES_PF = PLACED_FEATURES.register("buzzier_bees_honeycomb_tiles_pf", () ->
         new PlacedFeature(Holder.direct(HONEYCOMB_TILES_CF.get()),
             List.of(
-                ConditionBasedPlacement.of(LazySupplier.of(() -> BzModCompatibilityConfigs.spawnHoneyTilesInDimension.get())),
+                ConditionBasedPlacement.of(LazySupplier.of(() -> BzModCompatibilityConfigs.spawnHoneyTilesInDimension)),
                 CountPlacement.of(45),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.uniform(
@@ -82,7 +86,7 @@ public class BuzzierBeesCompatRegs {
                     VerticalAnchor.belowTop(16)),
                 BlockPredicateFilter.forPredicate(new MatchingBlocksPredicate(
                     new Vec3i(0,0,0),
-                    HolderSet.direct(ForgeRegistries.BLOCKS.getHolder(Blocks.CAVE_AIR).get())
+                    HolderSet.direct(Block::builtInRegistryHolder, Blocks.CAVE_AIR)
                 )),
                 BiomeFilter.biome()
             )

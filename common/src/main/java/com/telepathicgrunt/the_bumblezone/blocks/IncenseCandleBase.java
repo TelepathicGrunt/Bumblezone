@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -55,7 +56,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterloggedBlock, SuperCandle {
+public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterloggedBlock, SuperCandle, BlockExtension {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
@@ -333,9 +334,8 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
         return !(state.hasProperty(LIT) && state.getValue(LIT));
     }
 
-    //TODO forge method
     @Override
-    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
+    public BlockPathTypes bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {
             return BlockPathTypes.DAMAGE_FIRE;
         }

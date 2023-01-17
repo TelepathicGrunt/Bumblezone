@@ -4,39 +4,40 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerLocateProjectileEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.platform.BzArrowItem;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingGetProjectileEvent;
+import org.jetbrains.annotations.NotNull;
 
-public class BeeStinger extends ArrowItem {
+public class BeeStinger extends BzArrowItem {
     public BeeStinger(Properties properties) {
         super(properties);
     }
 
     @Override
-    public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity livingEntity) {
+    public AbstractArrow createArrow(@NotNull Level level, ItemStack stack, @NotNull LivingEntity livingEntity) {
         if (!stack.is(BzItems.CRYSTAL_CANNON.get()) && livingEntity instanceof ServerPlayer serverPlayer) {
             EntityMiscHandler.onBeeStingerFired(serverPlayer);
         }
         return new BeeStingerEntity(level, livingEntity);
     }
 
-    //TODO forge method
     @Override
-    public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
-        int enchantLevel = bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
-        return enchantLevel > 0;
+    public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, Player player) {
+        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
+        return OptionalBoolean.of(enchantLevel > 0);
     }
 
-    public static ItemStack bowUsable(ItemStack ammo, PlayerLocateProjectileEvent event) {
+    public static ItemStack bowUsable(ItemStack ignoredAmmo, PlayerLocateProjectileEvent event) {
         if (event.shooter() instanceof Player player && (event.weapon().is(Items.BOW) || event.weapon().is(Items.CROSSBOW))) {
             Inventory inventory = player.getInventory();
             for(int i = 0; i < inventory.getContainerSize(); ++i) {

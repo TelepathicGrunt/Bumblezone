@@ -78,12 +78,6 @@ public interface ModCompat {
         return false;
     }
 
-    /**
-     * Called when compats can register their own custom registries
-     */
-    default void registerCompatRegistries() {
-    }
-
     enum Type {
         SPAWNS,
         EMPTY_BROOD,

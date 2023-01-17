@@ -11,6 +11,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modules.NeurotoxinsMissedCounterModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -25,7 +27,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.Optional;
 
-public class NeurotoxinsEnchantment extends Enchantment {
+public class NeurotoxinsEnchantment extends BzEnchantment {
 
     public NeurotoxinsEnchantment() {
         super(Rarity.RARE, EnchantmentCategory.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
@@ -51,10 +53,9 @@ public class NeurotoxinsEnchantment extends Enchantment {
         return stack.getItem() instanceof StingerSpearItem;
     }
 
-    //TODO forge method
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return this.canEnchant(stack);
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack) {
+        return OptionalBoolean.of(this.canEnchant(stack));
     }
 
     public static void entityHurtEvent(EntityAttackedEvent event) {

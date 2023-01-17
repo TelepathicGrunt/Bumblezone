@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -28,7 +30,7 @@ import org.joml.Vector3f;
 
 import java.util.function.Predicate;
 
-public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
+public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, ItemExtension {
     public static final String TAG_CRYSTALS = "CrystalStored";
 
     public CrystalCannon(Properties properties) {
@@ -135,7 +137,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
         if (tryAddCrystal(crystalCannon)) {
             boolean infinite = player.getAbilities().instabuild ||
                     (projectItem1.getItem() instanceof HoneyCrystalShards &&
-                            ((HoneyCrystalShards)projectItem1.getItem()).isInfinite(projectItem1, crystalCannon, player));
+                            ((HoneyCrystalShards)projectItem1.getItem()).bz$isInfinite(projectItem1, crystalCannon, player).get());
 
             if (!infinite) {
                 projectItem1.shrink(1);
@@ -212,17 +214,16 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
         return UseAnim.BOW;
     }
 
-    //TODO forge method
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.QUICK_CHARGE ||
             enchantment == Enchantments.PIERCING ||
             enchantment == Enchantments.POWER_ARROWS ||
             enchantment == Enchantments.PUNCH_ARROWS)
         {
-            return true;
+            return OptionalBoolean.ofTrue();
         }
 
-        return enchantment.category.canEnchant(stack.getItem());
+        return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
     }
 }

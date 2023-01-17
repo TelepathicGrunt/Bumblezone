@@ -5,11 +5,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.world.processors.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
 public class BzProcessors {
-    public static final ResourcefulRegistry<StructureProcessorType<?>> STRUCTURE_PROCESSOR = ResourcefulRegistries.create(Registries.STRUCTURE_PROCESSOR, Bumblezone.MODID);
+    public static final ResourcefulRegistry<StructureProcessorType<?>> STRUCTURE_PROCESSOR = ResourcefulRegistries.create(BuiltInRegistries.STRUCTURE_PROCESSOR, Bumblezone.MODID);
 
     public static final RegistryEntry<StructureProcessorType<BeeDungeonProcessor>> BEE_DUNGEON_PROCESSOR = STRUCTURE_PROCESSOR.register("bee_dungeon_processor", () -> () -> BeeDungeonProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<SpiderInfestedBeeDungeonProcessor>> SPIDER_INFESTED_BEE_DUNGEON_PROCESSOR = STRUCTURE_PROCESSOR.register("spider_infested_bee_dungeon_processor", () -> () -> SpiderInfestedBeeDungeonProcessor.CODEC);

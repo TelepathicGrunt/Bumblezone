@@ -18,10 +18,7 @@ import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.*;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.LevelTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerStoppingEvent;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.*;
 import com.telepathicgrunt.the_bumblezone.events.player.*;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
@@ -94,19 +91,20 @@ public class Bumblezone{
         AddWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
         TagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         ServerStoppingEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
-        forgeBus.addListener(this::registerDatapackListener);
-        forgeBus.addListener(this::serverAboutToStart);
+        ServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);
+        RegisterReloadListenerEvent.EVENT.addListener(Bumblezone::registerDatapackListener);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(EventPriority.NORMAL, this::setup);
-        modEventBus.addListener(EventPriority.LOWEST, this::modCompatSetup); //run after all mods
-        AddBuiltinResourcePacks.EVENT.addListener(this::setupBuiltInResourcePack);
+
+        SetupEvent.EVENT.addListener(Bumblezone::setup);
+        FinalSetupEvent.EVENT.addListener(Bumblezone::modCompatSetup); //run after all mods
+
+        AddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
         modEventBus.addListener(EventPriority.NORMAL, BzItems::registerCreativeModeTab);
         modEventBus.addListener(EventPriority.NORMAL, BzItems::addToCreativeModeTabs);
-        modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntityAttributes);
-        modEventBus.addListener(EventPriority.NORMAL, BzEntities::registerEntitySpawnRestrictions);
-        modEventBus.addListener(EventPriority.NORMAL,BzBiomeHeightRegistry::createNewRegistry);
+        RegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
+        RegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);;
         BzItems.ITEMS.init();
         BzBlocks.BLOCKS.init();
         BzFluids.FLUIDS.init();
@@ -130,7 +128,7 @@ public class Bumblezone{
         BzBlockEntities.BLOCK_ENTITIES.init();
         BzPlacements.PLACEMENT_MODIFIER.init();
         BzProcessors.STRUCTURE_PROCESSOR.init();
-        BzBiomeHeightRegistry.BIOME_HEIGHT.register(modEventBus);
+        BzBiomeHeightRegistry.BIOME_HEIGHT.init();
         BzBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.init();
 
@@ -154,7 +152,7 @@ public class Bumblezone{
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzModCompatibilityConfigs.GENERAL_SPEC, "the_bumblezone/mod_compatibility.toml");
     }
 
-    private void setup(final FMLCommonSetupEvent event) {
+    private static void setup(final SetupEvent event) {
     	event.enqueueWork(() -> {
             BzCriterias.registerCriteriaTriggers();
             BeeAggression.setupBeeHatingList();
@@ -164,7 +162,7 @@ public class Bumblezone{
         MessageHandler.init();
     }
 
-    private void modCompatSetup(final FMLCommonSetupEvent event) {
+    private static void modCompatSetup(final FinalSetupEvent event) {
         event.enqueueWork(() -> {
             EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
 
@@ -177,18 +175,18 @@ public class Bumblezone{
         });
     }
 
-    public void registerDatapackListener(final AddReloadListenerEvent event) {
-        event.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER);
-        event.addListener(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+    public static void registerDatapackListener(final RegisterReloadListenerEvent event) {
+        event.register(QueensTradeManager.QUEENS_TRADE_MANAGER);
+        event.register(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
     }
 
-    private void serverAboutToStart(final ServerAboutToStartEvent event) {
+    private static void serverAboutToStart(final ServerGoingToStartEvent event) {
         PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenOptions().seed());
         BiomeRegistryHolder.setupBiomeRegistry(event.getServer());
         ThreadExecutor.setupExecutorService();
     }
 
-    private void setupBuiltInResourcePack(final AddBuiltinResourcePacks event) {
+    private static void setupBuiltInResourcePack(final AddBuiltinResourcePacks event) {
         event.add(
                 new ResourceLocation(MODID, "anti_tropophobia"),
                 Component.literal("Bumblezone - Anti Trypophobia"),

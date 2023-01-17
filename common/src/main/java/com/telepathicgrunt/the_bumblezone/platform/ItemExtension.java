@@ -1,8 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.platform;
 
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.ApiStatus;
+
+import java.util.Optional;
 
 public interface ItemExtension {
 
@@ -11,11 +16,15 @@ public interface ItemExtension {
         return (Item) this;
     }
 
-    default int getMaxDamage(ItemStack stack) {
+    default int bz$getMaxDamage(ItemStack stack) {
         return getBzItem().getMaxDamage();
     }
 
-    default void setDamage(ItemStack stack, int damage) {
+    default void bz$setDamage(ItemStack stack, int damage) {
         stack.getOrCreateTag().putInt("Damage", Math.max(0, damage));
+    }
+
+    default OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return OptionalBoolean.empty();
     }
 }

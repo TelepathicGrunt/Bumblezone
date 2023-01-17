@@ -53,7 +53,7 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
      * Increases the durability of the shield by 10 for every shield level (repair cost)
      */
     @Override
-    public int getMaxDamage(ItemStack stack) {
+    public int bz$getMaxDamage(ItemStack stack) {
         if(stack.hasTag()) {
             upgradeLegacyShield(stack);
 
@@ -84,7 +84,7 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
      * reduces damage done to the shield for higher shield levels (repair cost)
      */
     @Override
-    public void setDamage(ItemStack stack, int damage) {
+    public void bz$setDamage(ItemStack stack, int damage) {
         int newDamage = damage;
         int oldDamage = stack.getDamageValue();
         int damageCaused = oldDamage - damage;

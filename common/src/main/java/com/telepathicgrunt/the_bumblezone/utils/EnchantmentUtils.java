@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,7 +19,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.NotImplementedException;
+import org.jetbrains.annotations.Contract;
 
 import java.util.List;
 import java.util.Map;
@@ -105,8 +107,9 @@ public class EnchantmentUtils {
 		return power;
 	}
 
-	static float getEnchantPower(Level world, BlockPos pos) {
-		return world.getBlockState(pos).getEnchantPowerBonus(world, pos);
+	@ExpectPlatform
+	public static float getEnchantPower(Level world, BlockPos pos) {
+		throw new NotImplementedException();
 	}
 
 	public static void addAllBooks(Enchantment enchantment, List<ItemStack> items) {
@@ -121,8 +124,8 @@ public class EnchantmentUtils {
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
 
-			boolean forceAllowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
-			boolean disallowed = Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS).contains(enchantment);
+			boolean forceAllowed = GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
+			boolean disallowed = GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
 			if (!forceAllowed && disallowed) {
 				continue;
 			}
@@ -132,7 +135,7 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (enchantment.canApplyAtEnchantingTable(stack) || (bookFlag && enchantment.isAllowedOnBooks()))) {
+			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (canApplyAtEnchantingTable(enchantment, stack) || (bookFlag && isAllowedOnBooks(enchantment)))) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
 					if (forceAllowed || level >= enchantment.getMinCost(i)) {
 						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, i);
@@ -146,6 +149,18 @@ public class EnchantmentUtils {
 		}
 		list.sort(EnchantmentUtils::compareEnchantments);
 		return list;
+	}
+
+	@ExpectPlatform
+	@Contract(pure = true)
+	public static boolean canApplyAtEnchantingTable(Enchantment enchantment, ItemStack stack) {
+		throw new NotImplementedException();
+	}
+
+	@ExpectPlatform
+	@Contract(pure = true)
+	public static boolean isAllowedOnBooks(Enchantment enchantment) {
+		throw new NotImplementedException();
 	}
 
 	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {
@@ -187,7 +202,7 @@ public class EnchantmentUtils {
 			cost -= 3;
 		}
 
-		cost += BzGeneralConfigs.crystallineFlowerExtraTierCost.get();
+		cost += BzGeneralConfigs.crystallineFlowerExtraTierCost;
 
 		return Math.max(1, Math.min(6, cost));
 	}

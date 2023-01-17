@@ -37,7 +37,7 @@ public final class BiomeInfluencedNoiseSampler {
 
         Biome biome = biomeSource.getNoiseBiome(x >> 2, 40, z >> 2, sampler).value();
         ResourceLocation biomeRL = biomeRegistry.getKey(biome);
-        BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.get().getValue(biomeRL);
+        BzBiomeHeightRegistry.BiomeTerrain centerBiomeInfo = BzBiomeHeightRegistry.BIOME_HEIGHT.lookup().get(biomeRL);
         if (centerBiomeInfo == null) {
             centerBiomeInfo = new BzBiomeHeightRegistry.BiomeTerrain(4, 1);
         }
@@ -47,7 +47,7 @@ public final class BiomeInfluencedNoiseSampler {
             for(int zOffset = -RADIUS; zOffset <= RADIUS; ++zOffset) {
                 Biome biome2 = biomeSource.getNoiseBiome((x >> 2) + xOffset, 40, (z >> 2) + zOffset, sampler).value();
                 ResourceLocation biomeRL2 = biomeRegistry.getKey(biome2);
-                BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT_REGISTRY.get().getValue(biomeRL2);
+                BzBiomeHeightRegistry.BiomeTerrain biomeTerrain = BzBiomeHeightRegistry.BIOME_HEIGHT.lookup().get(biomeRL2);
                 if (biomeTerrain == null) {
                     biomeTerrain = new BzBiomeHeightRegistry.BiomeTerrain(4, 1);
                 }

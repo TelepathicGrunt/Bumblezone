@@ -3,7 +3,9 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +26,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CombCutterEnchantment extends Enchantment {
+public class CombCutterEnchantment extends BzEnchantment {
     private static final GeneralUtils.Lazy<Set<Block>> TARGET_BLOCKS = new GeneralUtils.Lazy<>();
     private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
@@ -107,9 +109,8 @@ public class CombCutterEnchantment extends Enchantment {
         return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.is(Items.BOOK);
     }
 
-    //TODO forge method
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return this.canEnchant(stack);
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack) {
+        return OptionalBoolean.of(this.canEnchant(stack));
     }
 }

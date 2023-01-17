@@ -14,7 +14,6 @@ public class ModChecker {
 	public static final List<ModCompat> SPAWNING_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BROOD_EMPTY_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> DUNGEON_COMB_COMPATS = new ArrayList<>();
-	public static final List<ModCompat> REGISTRY_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> DIM_SPAWN_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BLOCK_TELEPORT_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> COMB_ORE_COMPATS = new ArrayList<>();
@@ -43,7 +42,7 @@ public class ModChecker {
 		try {
 
 			modid = "friendsandfoes";
-			loadupModCompat(modid, () -> FriendsAndFoesCompat.setupCompat());
+			loadupModCompat(modid, () -> new FriendsAndFoesCompat());
 
 			modid = "resourcefulbees";
 			loadupModCompat(modid, () -> new ResourcefulBeesCompat());
@@ -64,7 +63,6 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.DIMENSION_SPAWN)) DIM_SPAWN_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BLOCK_TELEPORT)) BLOCK_TELEPORT_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.COMB_ORE)) COMB_ORE_COMPATS.add(compat);
-				if (compat.compatTypes().contains(ModCompat.Type.REGISTRIES)) REGISTRY_COMPATS.add(compat);
 			}
 		}
 		catch (Throwable e) {

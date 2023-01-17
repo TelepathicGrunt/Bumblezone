@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,30 +32,29 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class RoyalJellyBlock extends HalfTransparentBlock {
+import java.util.Optional;
+
+public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtension {
     protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
     public RoyalJellyBlock() {
         super(Properties.of(Material.CLAY, MaterialColor.COLOR_PURPLE).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK));
     }
 
-    //TODO forge method
     @Override
-    public boolean isStickyBlock(BlockState state) {
+    public boolean bz$isStickyBlock(BlockState state) {
         return state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get();
     }
 
-    //TODO forge method
     @Override
-    public boolean canStickTo(BlockState state, BlockState other) {
-        if (state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get() &&
-            (other.getBlock() == Blocks.HONEY_BLOCK ||
-            other.getBlock() == Blocks.SLIME_BLOCK))
-        {
-            return false;
+    public OptionalBoolean bz$canStickTo(BlockState state, BlockState other) {
+        if (state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get()) {
+            if (other.getBlock() == Blocks.HONEY_BLOCK || other.getBlock() == Blocks.SLIME_BLOCK) {
+                return OptionalBoolean.ofFalse();
+            }
+            return OptionalBoolean.ofTrue();
         }
-
-        return state.isStickyBlock() || other.isStickyBlock();
+        return OptionalBoolean.empty();
     }
 
     public static boolean isValidMoveDirection(Direction pushDirection, Direction pistonDirection) {

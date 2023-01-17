@@ -3,8 +3,8 @@ dependencies {
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
-    compileOnly("com.github.LlamaLad7:MixinExtras:0.1.1-rc.4")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1-rc.4")
+    modImplementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}")
 }
 
 architectury {
