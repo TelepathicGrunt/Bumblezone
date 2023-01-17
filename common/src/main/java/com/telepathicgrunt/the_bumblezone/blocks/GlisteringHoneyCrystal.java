@@ -4,13 +4,14 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -26,7 +27,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class GlisteringHoneyCrystal extends ProperFacingBlock {
+public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockExtension {
     public GlisteringHoneyCrystal() {
         super(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW)
                 .lightLevel((blockState) -> 11)
@@ -67,10 +68,9 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock {
         return true;
     }
 
-    //TODO forge method
     @Override
-    public boolean shouldDisplayFluidOverlay(BlockState blockState, BlockAndTintGetter level, BlockPos blockPos, FluidState fluidState) {
-        return blockState.is(this);
+    public OptionalBoolean bz$shouldDisplayFluidOverlay() {
+        return OptionalBoolean.ofTrue();
     }
 
     @Override

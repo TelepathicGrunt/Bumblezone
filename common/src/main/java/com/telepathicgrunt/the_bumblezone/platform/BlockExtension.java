@@ -8,8 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
-import java.util.Optional;
-
 /**
  * This class is used to provide the same methods as forge has in their IForgeBlock interface.
  * It may also include extra methods so make sure when you edit this class, you look at what forge has
@@ -27,6 +25,10 @@ public interface BlockExtension {
     }
 
     default OptionalBoolean bz$canStickTo(BlockState state, BlockState other) {
+        return OptionalBoolean.empty();
+    }
+
+    default OptionalBoolean bz$shouldDisplayFluidOverlay() {
         return OptionalBoolean.empty();
     }
 }
