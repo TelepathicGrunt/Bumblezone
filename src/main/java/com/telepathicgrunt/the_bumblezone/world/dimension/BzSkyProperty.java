@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
+import com.mojang.blaze3d.shaders.FogShape;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.phys.Vec3;
 
 public class BzSkyProperty extends DimensionSpecialEffects {
@@ -47,5 +49,19 @@ public class BzSkyProperty extends DimensionSpecialEffects {
         return new Vec3((int)(Math.min(Math.min(0.54f * colorFactor, 0.65f + REDDISH_FOG_TINT)*255, 255)),
                         ((int)(Math.min(Math.max(Math.min(0.3f * colorFactor, 0.87f) - REDDISH_FOG_TINT * 0.6f, 0)*255, 255))),
                         ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
+    }
+
+    public static void fogThicknessAdjustments(float fogEnd, FogRenderer.FogData fogData) {
+        float distanceRationAdjuster = 1;
+        if (fogEnd > 352) {
+            distanceRationAdjuster = Math.min(fogEnd / 352, 1.25F);
+        }
+        else if (fogEnd < 126) {
+            distanceRationAdjuster = Math.max(fogEnd / 126, 0.75F);
+        }
+        float fogStart = (float) (fogEnd / ((BzConfig.fogThickness * distanceRationAdjuster * 0.3f) + 0.00001D));
+        fogData.start = fogEnd;
+        fogData.end = fogStart;
+        fogData.shape = FogShape.CYLINDER;
     }
 }
