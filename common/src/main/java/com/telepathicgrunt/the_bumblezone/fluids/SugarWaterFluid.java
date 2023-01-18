@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -12,11 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,13 +24,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
 
-public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
+public abstract class SugarWaterFluid extends BzFlowingFluid {
 
-    protected SugarWaterFluid(Properties properties) {
+    protected SugarWaterFluid(FluidInfo properties) {
         super(properties);
     }
 
@@ -159,7 +156,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
     }
 
     public static class Flowing extends SugarWaterFluid {
-        public Flowing(Properties properties) {
+        public Flowing(FluidInfo properties) {
             super(properties);
             registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
         }
@@ -187,7 +184,7 @@ public abstract class SugarWaterFluid extends ForgeFlowingFluid  {
 
     public static class Source extends SugarWaterFluid {
 
-        public Source(ForgeFlowingFluid.Properties properties) {
+        public Source(FluidInfo properties) {
             super(properties);
         }
 

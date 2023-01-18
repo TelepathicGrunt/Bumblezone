@@ -21,12 +21,14 @@ import com.telepathicgrunt.the_bumblezone.events.entity.*;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.*;
 import com.telepathicgrunt.the_bumblezone.events.player.*;
 import com.telepathicgrunt.the_bumblezone.items.BeeStinger;
+import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
@@ -93,14 +95,15 @@ public class Bumblezone{
         ServerStoppingEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
         ServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);
         RegisterReloadListenerEvent.EVENT.addListener(Bumblezone::registerDatapackListener);
+        AddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
+        SetupEvent.EVENT.addListener(Bumblezone::setup);
+        FinalSetupEvent.EVENT.addListener(Bumblezone::modCompatSetup); //run after all mods
+        RegisterFlmmablityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
+        SetupEvent.EVENT.addListener(DispenserAddedSpawnEgg::onSetup);
 
         //Registration
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        SetupEvent.EVENT.addListener(Bumblezone::setup);
-        FinalSetupEvent.EVENT.addListener(Bumblezone::modCompatSetup); //run after all mods
-
-        AddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
         modEventBus.addListener(EventPriority.NORMAL, BzItems::registerCreativeModeTab);
         modEventBus.addListener(EventPriority.NORMAL, BzItems::addToCreativeModeTabs);
         RegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
@@ -115,7 +118,7 @@ public class Bumblezone{
         BzStats.CUSTOM_STAT.init();
         BzFeatures.FEATURES.init();
         BzEntities.ENTITIES.init();
-        BzFluids.FLUID_TYPES.register(modEventBus);
+        BzFluids.FLUID_TYPES.init();
         BzSounds.SOUND_EVENTS.init();
         BzStructures.STRUCTURES.init();
         BzDimension.BIOME_SOURCE.init();
@@ -150,6 +153,10 @@ public class Bumblezone{
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzDimensionConfigs.GENERAL_SPEC, "the_bumblezone/dimension.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzBeeAggressionConfigs.GENERAL_SPEC, "the_bumblezone/bee_aggression.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzModCompatibilityConfigs.GENERAL_SPEC, "the_bumblezone/mod_compatibility.toml");
+    }
+
+    public static void onRegisterFlammablity(RegisterFlmmablityEvent event) {
+        BzBlocks.CURTAINS.stream().map(RegistryEntry::get).forEach(block -> event.register(block, 60, 20));
     }
 
     private static void setup(final SetupEvent event) {

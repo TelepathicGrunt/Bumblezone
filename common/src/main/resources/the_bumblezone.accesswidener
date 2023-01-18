@@ -16,3 +16,5 @@ accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lne
 accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V
 
 accessible method net/minecraft/world/food/FoodProperties <init> (IFZZZLjava/util/List;)V
+
+extendable class net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator

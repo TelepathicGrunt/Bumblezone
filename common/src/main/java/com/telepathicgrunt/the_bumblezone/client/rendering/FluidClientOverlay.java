@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import org.joml.Matrix4f;
@@ -23,12 +24,7 @@ public class FluidClientOverlay {
     private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
     private static final ResourceLocation ROYAL_JELLY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/royal_jelly_fluid_underwater.png");
 
-    public static boolean renderHoneyOverlay(LocalPlayer clientPlayerEntity, PoseStack matrixStack) {
-        Fluid fluidInEyes = ClientPlatformHooks.getFluidInEyes(clientPlayerEntity);
-        if (!fluidInEyes.equals(BzFluids.HONEY_FLUID.get()) && !fluidInEyes.equals(BzFluids.ROYAL_JELLY_FLUID.get())) {
-            return false;
-        }
-
+    public static boolean renderHoneyOverlay(Player clientPlayerEntity, PoseStack matrixStack) {
         BlockState state = clientPlayerEntity.level.getBlockState(new BlockPos(clientPlayerEntity.getEyePosition(1)));
         if (state.is(BzFluids.HONEY_FLUID_BLOCK.get()) || state.is(BzFluids.ROYAL_JELLY_FLUID_BLOCK.get())) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);

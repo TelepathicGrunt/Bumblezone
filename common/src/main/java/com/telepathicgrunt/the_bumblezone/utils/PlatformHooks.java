@@ -74,6 +74,10 @@ public class PlatformHooks {
         throw new NotImplementedException("PlatformHooks getBucketFluid is not implemented!");
     }
 
+    public static ModInfo getModInfo(String modid) {
+        return getModInfo(modid, false);
+    }
+
     @Nullable
     @ExpectPlatform
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {

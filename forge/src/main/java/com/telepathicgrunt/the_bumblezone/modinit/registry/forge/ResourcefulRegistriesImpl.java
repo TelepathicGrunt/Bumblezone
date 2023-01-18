@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit.registry.forge;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfoRegistry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.CustomRegistryLookup;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.Registry;
@@ -29,6 +30,10 @@ public class ResourcefulRegistriesImpl {
 
     public static void onRegisterForgeRegistries(NewRegistryEvent event) {
         CUSTOM_REGISTRIES.forEach(registry -> registry.build(event));
+    }
+
+    public static FluidInfoRegistry createFluidRegistry(String id) {
+        return new ForgeFluidInfoRegistry(id);
     }
 
     public static class LateSupplier<T> implements Supplier<T> {

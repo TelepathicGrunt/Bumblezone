@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,9 +20,9 @@ import net.minecraft.world.level.material.Material;
 import java.util.function.Supplier;
 
 
-public class SugarWaterBlock extends LiquidBlock {
+public class SugarWaterBlock extends BzLiquidBlock {
 
-    public SugarWaterBlock(Supplier<? extends FlowingFluid> baseFluid) {
+    public SugarWaterBlock(FluidInfo baseFluid) {
         super(baseFluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.95F));
     }
 

@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -17,15 +18,8 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FakeIncenseCandleRecipeCreator {
@@ -49,7 +43,7 @@ public class FakeIncenseCandleRecipeCreator {
         }
         potions.sort(Comparator.comparingInt(a -> a.getEffects().size()));
         for (Potion potion : potions) {
-            if (potion.getEffects().stream().allMatch(e -> Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS).contains(e.getEffect()))) {
+            if (potion.getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS, e.getEffect()))) {
                 continue;
             }
 
@@ -79,8 +73,8 @@ public class FakeIncenseCandleRecipeCreator {
 
         int currentShapedIndex = 0;
         int shapedRecipeSize = recipe.getShapedRecipeItems().size();
-        for (int x = 0; x < recipe.getRecipeWidth(); x++) {
-            for (int z = 0; z < recipe.getRecipeHeight(); z++) {
+        for (int x = 0; x < recipe.getWidth(); x++) {
+            for (int z = 0; z < recipe.getHeight(); z++) {
                 if (currentShapedIndex >= shapedRecipeSize) {
                     continue;
                 }

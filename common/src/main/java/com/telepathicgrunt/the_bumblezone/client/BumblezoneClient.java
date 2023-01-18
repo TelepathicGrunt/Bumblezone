@@ -16,6 +16,9 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenMode
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidClientProperties;
+import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.RoyalJellyClientProperties;
+import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.SugarWaterClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlimeRendering;
@@ -57,8 +60,18 @@ public class BumblezoneClient {
 
         BlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         KeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
+        RegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
+        RegisterClientFluidPropertiesEvent.EVENT.addListener(BumblezoneClient::onRegisterClientFluidProperties);
+        RegisterItemPropertiesEvent.EVENT.addListener(BumblezoneClient::registerItemProperties);
+        RegisterRenderTypeEvent.EVENT.addListener(BumblezoneClient::registerRenderTypes);
 
         MobEffectRenderer.RENDERERS.put(BzEffects.HIDDEN.get(), new HiddenEffectIconRenderer());
+    }
+
+    public static void onRegisterClientFluidProperties(RegisterClientFluidPropertiesEvent event) {
+        event.register(BzFluids.HONEY_FLUID_TYPE.get(), HoneyFluidClientProperties::create);
+        event.register(BzFluids.ROYAL_JELLY_FLUID_TYPE.get(), RoyalJellyClientProperties::create);
+        event.register(BzFluids.SUGAR_WATER_FLUID_TYPE.get(), SugarWaterClientProperties::create);
     }
 
     public static void registerKeyBinding(RegisterKeyMappingEvent event) {
@@ -148,7 +161,7 @@ public class BumblezoneClient {
         );
     }
 
-    private static void registerRenderLayers(RegisterRenderTypeEvent event) {
+    private static void registerRenderTypes(RegisterRenderTypeEvent event) {
         event.register(RenderType.translucent(),
                 BzFluids.SUGAR_WATER_FLUID.get(),
                 BzFluids.SUGAR_WATER_FLUID_FLOWING.get(),

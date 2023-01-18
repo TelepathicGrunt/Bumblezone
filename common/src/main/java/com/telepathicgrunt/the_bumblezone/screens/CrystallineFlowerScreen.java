@@ -5,7 +5,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -22,15 +24,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.MatchResult;
@@ -281,7 +277,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
-        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             if (pressedXp1Timer > 0 ||
                     this.menu.xpTier.get() == 7 ||
                     isPathObstructed(1) ||
@@ -304,7 +300,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             if (pressedXp2Timer > 0 ||
                     this.menu.xpTier.get() == 7 ||
                     isPathObstructed(2) ||
@@ -327,7 +323,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+        if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             if (pressedXp3Timer > 0 ||
                     this.menu.xpTier.get() == 7 ||
                     isPathObstructed(3) ||
@@ -351,7 +347,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get()) {
+        if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             int xOffset = startX + 26;
             int yOffset = startY + 14;
             RenderSystem.enableDepthTest();
@@ -361,7 +357,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         if (pressedConsumeTimer > 0) {
             pressedConsumeTimer--;
         }
-        if (this.menu.consumeSlotFullyObstructed.get() != 1 && BzGeneralConfigs.crystallineFlowerConsumeItemUI.get()) {
+        if (this.menu.consumeSlotFullyObstructed.get() != 1 && BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
             if (pressedConsumeTimer > 0) {
                 RenderSystem.enableDepthTest();
                 blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
@@ -383,7 +379,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             }
         }
 
-        if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI.get()) {
+        if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
             int xOffset = startX + 26;
             int yOffset = startY + 78;
             RenderSystem.enableDepthTest();
@@ -573,8 +569,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             .withStyle(ChatFormatting.DARK_GRAY);
                 }
                 else {
-                    Optional<? extends ModContainer> modFileInfo = ModList.get().getModContainerById(enchantment.namespace);
-                    if (modFileInfo.isEmpty()) {
+                    ModInfo info = PlatformHooks.getModInfo(enchantment.namespace);
+                    if (info == null) {
                         String formattedModid = Arrays.stream(enchantment.namespace
                                 .split("_"))
                                 .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
@@ -584,7 +580,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                                 .withStyle(ChatFormatting.BLUE);
                     }
                     else {
-                        mutableComponent4 = Component.literal(modFileInfo.get().getModInfo().getDisplayName())
+                        mutableComponent4 = Component.literal(info.displayName())
                                 .withStyle(ChatFormatting.BLUE)
                                 .withStyle(ChatFormatting.ITALIC);
                     }
@@ -595,8 +591,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                         List.of(mutableComponent, mutableComponent2, mutableComponent3, mutableComponent4),
                         Optional.empty(),
                         x,
-                        y,
-                        this.font);
+                        y);
                 return;
             }
         }
@@ -630,7 +625,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         if (this.menu.xpTier.get() != 7)
         {
-            if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get() &&
+            if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI &&
                 canPlayerBuyTier(1) &&
                 !isPathObstructed(1) &&
                 mouseX >= this.leftPos + XP_CONSUME_1_X_OFFSET &&
@@ -641,7 +636,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp1Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-2);
             }
-            else if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get() &&
+            else if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI &&
                     canPlayerBuyTier(2) &&
                     !isPathObstructed(2) &&
                     mouseX >= this.leftPos + XP_CONSUME_2_X_OFFSET &&
@@ -652,7 +647,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp2Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-3);
             }
-            else if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI.get() &&
+            else if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI &&
                     canPlayerBuyTier(3) &&
                     !isPathObstructed(3) &&
                     mouseX >= this.leftPos + XP_CONSUME_3_X_OFFSET &&
@@ -663,7 +658,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 pressedXp3Timer = BUTTON_PRESSED_TIMER_VISUAL;
                 sendButtonPressToMenu(-4);
             }
-            else if (BzGeneralConfigs.crystallineFlowerConsumeItemUI.get() &&
+            else if (BzGeneralConfigs.crystallineFlowerConsumeItemUI &&
                     this.menu.consumeSlotFullyObstructed.get() != 1 &&
                     mouseX >= this.leftPos + CONSUME_CONFIRMATION_X_OFFSET &&
                     mouseX < this.leftPos + CONSUME_CONFIRMATION_X_OFFSET + 18 &&

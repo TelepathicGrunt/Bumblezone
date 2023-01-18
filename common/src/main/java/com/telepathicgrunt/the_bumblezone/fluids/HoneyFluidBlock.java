@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -29,13 +31,13 @@ import java.util.function.Supplier;
 
 import static net.minecraft.world.level.material.FlowingFluid.FALLING;
 
-public class HoneyFluidBlock extends LiquidBlock {
+public class HoneyFluidBlock extends BzLiquidBlock {
 
     public static final int maxBottomLayer = 8;
     public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, maxBottomLayer);
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
-    public HoneyFluidBlock(Supplier<? extends FlowingFluid> fluid) {
+    public HoneyFluidBlock(FluidInfo fluid) {
         super(fluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.15F));
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(LEVEL, 0)

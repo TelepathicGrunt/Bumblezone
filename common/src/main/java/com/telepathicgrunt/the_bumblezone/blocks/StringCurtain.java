@@ -300,25 +300,6 @@ public class StringCurtain extends Block {
         return null;
     }
 
-    //TODO forge method
-    @Override
-    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return 20;
-    }
-
-    //TODO forge method
-    @Override
-    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction)
-    {
-        return 60;
-    }
-
-    //TODO forge method
-    @Override
-    public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-        return true;
-    }
-
     public static boolean extendCurtainIfPossible(BlockState blockstate, Level world, BlockPos position) {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
         BlockState belowState = world.getBlockState(mutableBlockPos.move(Direction.DOWN));

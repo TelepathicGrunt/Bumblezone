@@ -20,7 +20,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -67,10 +66,10 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
                     entityTag = new CompoundTag();
                     spawnDataTag.put("entity", entityTag);
                 }
-                entityTag.putString("id", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
+                entityTag.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
 
                 CompoundTag spawnEntityDataTag = new CompoundTag();
-                spawnEntityDataTag.putString("id", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
+                spawnEntityDataTag.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
                 CompoundTag spawnPotentialDataEntryTag = new CompoundTag();
                 spawnPotentialDataEntryTag.put("entity", spawnEntityDataTag);
                 CompoundTag spawnPotentialEntryTag = new CompoundTag();
@@ -90,13 +89,13 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
                 compound.putShort("SpawnRange", (short) 4);
 
                 CompoundTag spawnDataEntity = new CompoundTag();
-                spawnDataEntity.putString("id", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
+                spawnDataEntity.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
                 CompoundTag spawnData = new CompoundTag();
                 spawnData.put("entity", spawnDataEntity);
                 compound.put("SpawnData", spawnData);
 
                 CompoundTag entityData = new CompoundTag();
-                entityData.putString("id", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
+                entityData.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(entity).toString());
 
                 CompoundTag spawnPotentialData = new CompoundTag();
                 spawnPotentialData.put("entity", entityData);

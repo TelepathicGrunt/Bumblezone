@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -24,14 +26,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
 
-public abstract class HoneyFluid extends ForgeFlowingFluid {
+public abstract class HoneyFluid extends BzFlowingFluid {
 
-    protected HoneyFluid(Properties properties) {
+    protected HoneyFluid(FluidInfo properties) {
         super(properties);
     }
 
@@ -290,7 +291,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
     }
 
     public static class Flowing extends HoneyFluid {
-        public Flowing(Properties properties) {
+        public Flowing(FluidInfo properties) {
             super(properties);
             registerDefaultState(getStateDefinition().any()
                     .setValue(LEVEL, 8)
@@ -324,7 +325,7 @@ public abstract class HoneyFluid extends ForgeFlowingFluid {
 
     public static class Source extends HoneyFluid {
 
-        public Source(Properties properties) {
+        public Source(FluidInfo properties) {
             super(properties);
             registerDefaultState(getStateDefinition().any().setValue(ABOVE_FLUID, false));
         }
