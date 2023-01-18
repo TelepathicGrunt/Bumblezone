@@ -16,6 +16,10 @@ Fixed it so Bees that spend too long in Honey Fluid and Royal Jelly Fluid will d
 
 Fixed Honey Fluid and Royal Jelly Fluid so mobs can float on top of it now.
 
+##### Dimension:
+Fixed dimension rendering breaking when render distance is 30 or greater and a rendering optimizing mod is on.
+ The FogReducer config value now is properly scaled with the render distance and has checks to not go past problematic values anymore.
+
 ##### Lang:
 Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
 

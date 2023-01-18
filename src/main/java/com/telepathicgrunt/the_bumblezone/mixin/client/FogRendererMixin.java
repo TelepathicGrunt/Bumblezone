@@ -78,7 +78,8 @@ public class FogRendererMixin {
             require = 0)
     private static float thebumblezone_reduceFogThickness(float original, Camera cam, FogRenderer.FogMode mode, float farPlaneDistance2, boolean thickFog, float p__) {
         if (mode == FogRenderer.FogMode.FOG_TERRAIN && thickFog && Minecraft.getInstance().player.getLevel().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
-            return (float) (original * BzConfig.fogReducer);
+            float finalReducer = (float) (BzConfig.fogReducer / Math.max(farPlaneDistance2 / 382f, 1.0f));
+            return Math.min(farPlaneDistance2 * 0.95f, original * finalReducer);
         }
         return original;
     }
