@@ -17,6 +17,10 @@ Wrath of the Hive will not apply to players in Peaceful mode now.
 ##### Fluids:
 Fixed it so Bees that spend too long in Honey Fluid and Royal Jelly Fluid will drown properly.
 
+##### Dimension:
+Fixed dimension rendering breaking when render distance is 30 or greater and a rendering optimizing mod is on.
+ The FogReducer config value now is properly scaled with the render distance and has checks to not go past problematic values anymore.
+
 ##### Lang:
 Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
 
