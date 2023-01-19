@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.NoiseChunkAccessor;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -156,11 +157,11 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     private void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
         NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((p_224340_) -> this.createNoiseChunk(p_224340_, structureManager, blender, randomState));
         BiomeResolver biomeresolver = BelowZeroRetrogen.getBiomeResolver(blender.getBiomeResolver(this.biomeSource), chunkAccess);
-        chunkAccess.fillBiomesFromNoise(biomeresolver, ((NoiseChunkAccessor)noisechunk).callCachedClimateSampler(randomState.router(), this.settings.get().spawnTarget()));
+        chunkAccess.fillBiomesFromNoise(biomeresolver, ((NoiseChunkAccessor)noisechunk).callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget()));
     }
 
     private NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
-        return NoiseChunk.forChunk(chunkAccess, randomState, Beardifier.forStructuresInChunk(structureManager, chunkAccess.getPos()), this.settings.get(), this.globalFluidPicker, blender);
+        return NoiseChunk.forChunk(chunkAccess, randomState, Beardifier.forStructuresInChunk(structureManager, chunkAccess.getPos()), this.settings.value(), this.globalFluidPicker, blender);
     }
 
     @Override
@@ -186,7 +187,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     protected OptionalInt iterateNoiseColumn(LevelHeightAccessor levelHeightAccessor, RandomState randomState, int x, int z, MutableObject<NoiseColumn> mutableObject, Predicate<BlockState> blockStatePredicate) {
-        NoiseSettings noisesettings = this.settings.get().noiseSettings().clampToHeightAccessor(levelHeightAccessor);
+        NoiseSettings noisesettings = this.settings.value().noiseSettings().clampToHeightAccessor(levelHeightAccessor);
         int i = noisesettings.getCellHeight();
         int j = noisesettings.minY();
         int k = Mth.intFloorDiv(j, i);
@@ -210,7 +211,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
             int k2 = k1 * i1;
             double d0 = (double) l1 / (double) i1;
             double d1 = (double) i2 / (double) i1;
-            NoiseChunk noiseChunk = new NoiseChunk(1, randomState, j2, k2, noisesettings, DensityFunctions.BeardifierMarker.INSTANCE, this.settings.get(), this.globalFluidPicker, Blender.empty());
+            NoiseChunk noiseChunk = new NoiseChunk(1, randomState, j2, k2, noisesettings, DensityFunctions.BeardifierMarker.INSTANCE, this.settings.value(), this.globalFluidPicker, Blender.empty());
             noiseChunk.initializeForFirstCellX();
             noiseChunk.advanceCellX(0);
 
@@ -266,7 +267,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
-        NoiseSettings noisesettings = this.settings.get().noiseSettings().clampToHeightAccessor(chunkAccess.getHeightAccessorForGeneration());
+        NoiseSettings noisesettings = this.settings.value().noiseSettings().clampToHeightAccessor(chunkAccess.getHeightAccessorForGeneration());
         int i = noisesettings.minY();
         int j = Mth.intFloorDiv(i, noisesettings.getCellHeight());
         int k = Mth.intFloorDiv(noisesettings.height(), noisesettings.getCellHeight());
@@ -307,8 +308,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         Aquifer aquifer = noiseChunk.aquifer();
         noiseChunk.initializeForFirstCellX();
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-        int k = this.settings.get().noiseSettings().getCellWidth();
-        int l = this.settings.get().noiseSettings().getCellHeight();
+        int k = this.settings.value().noiseSettings().getCellWidth();
+        int l = this.settings.value().noiseSettings().getCellHeight();
         int i1 = 16 / k;
         int j1 = 16 / k;
 
@@ -377,17 +378,17 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
     @Override
     public int getGenDepth() {
-        return this.settings.get().noiseSettings().height();
+        return this.settings.value().noiseSettings().height();
     }
 
     @Override
     public int getSeaLevel() {
-        return this.settings.get().seaLevel();
+        return this.settings.value().seaLevel();
     }
 
     @Override
     public int getMinY() {
-        return this.settings.get().noiseSettings().minY();
+        return this.settings.value().noiseSettings().minY();
     }
 
     @Override
@@ -460,7 +461,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                             entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
                             if (entity instanceof Mob mob) {
-                                if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(mob, serverLevelAccessor, finalX, mutableBlockPos.getY(), finalZ, null, MobSpawnType.CHUNK_GENERATION) == -1) continue;
+                                if (PlatformHooks.canEntitySpawn(mob, serverLevelAccessor, finalX, mutableBlockPos.getY(), finalZ, null, MobSpawnType.CHUNK_GENERATION) == -1) continue;
                                 if (mob.checkSpawnObstruction(serverLevelAccessor)) {
                                     spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata, null);
                                     mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());

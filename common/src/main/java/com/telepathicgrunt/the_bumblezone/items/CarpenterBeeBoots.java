@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +30,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-public class CarpenterBeeBoots extends BeeArmor {
+public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
 
     public CarpenterBeeBoots(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {
         super(material, slot, properties, variant, false);
@@ -284,11 +286,11 @@ public class CarpenterBeeBoots extends BeeArmor {
 
     //TODO forge method
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment.category == EnchantmentCategory.DIGGER) {
-            return true;
+            return OptionalBoolean.ofTrue();
         }
 
-        return enchantment.category.canEnchant(stack.getItem());
+        return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
     }
 }

@@ -5,7 +5,9 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.fluids.forge.ForgeFluidInfo;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
@@ -34,7 +36,7 @@ public class BzLiquidBlockMixin extends LiquidBlock implements FluidGetter {
     }
 
     @Inject(method = "<init>(Lcom/telepathicgrunt/the_bumblezone/fluids/base/FluidInfo;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V", at = @At("RETURN"))
-    public void bumblezone$onInit(FluidInfo info, Item.Properties properties, CallbackInfo ci) {
+    public void bumblezone$onInit(FluidInfo info, BlockBehaviour.Properties properties, CallbackInfo ci) {
         this.bz$fluidSupplier = info::source;
         if (info instanceof ForgeFluidInfo forgeInfo) {
             forgeInfo.setBlock(() -> this);

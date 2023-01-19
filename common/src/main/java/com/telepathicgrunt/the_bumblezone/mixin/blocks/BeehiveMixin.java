@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import dev.architectury.injectables.annotations.PlatformOnly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,10 +31,23 @@ public class BeehiveMixin {
         CombCutterEnchantment.increasedCombDrops(player, world, pos);
     }
 
+    @PlatformOnly("forge")
     @Inject(method = "angerNearbyBees(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
             at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z", ordinal = 1, remap = false),
             locals = LocalCapture.CAPTURE_FAILHARD)
-    private void thebumblezone_essenceBeehivePreventAnger2(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
+    private void thebumblezone_essenceBeehivePreventAnger2_forge(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
         BeeAggression.preventAngerOnEssencedPlayers(beeList, playerList);
+    }
+
+    @PlatformOnly({"quilt", "fabric"})
+    @Inject(method = "angerNearbyBees(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+            at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false),
+            locals = LocalCapture.CAPTURE_FAILHARD,
+            cancellable = true)
+    private void thebumblezone_essenceBeehivePreventAnger2_fabric(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
+        BeeAggression.preventAngerOnEssencedPlayers(beeList, playerList);
+        if (playerList.isEmpty()) {
+            ci.cancel(); // Prevent crash if no players are around
+        }
     }
 }

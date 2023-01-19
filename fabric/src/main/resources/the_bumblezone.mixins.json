@@ -1,0 +1,25 @@
+{
+    "required": true,
+    "package": "com.telepathicgrunt.the_bumblezone.mixins.fabric",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "BowItemMixin",
+        "BucketItemAccessor",
+        "BzBucketItemMixin",
+        "BzLiquidBlockMixin",
+        "EnchantmentHelperMixin",
+        "ItemStackMixin",
+        "PistonStructureResolverMixin",
+        "PlayerEntityMixin",
+        "RecordItemMixin",
+        "WalkNodeEvaluatorMixin"
+    ],
+    "client": [
+        "FogRendererMixin",
+        "ScreenEffectRendererMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "minVersion": "0.8"
+}

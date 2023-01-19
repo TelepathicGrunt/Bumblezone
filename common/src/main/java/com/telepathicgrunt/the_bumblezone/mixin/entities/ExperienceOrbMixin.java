@@ -40,7 +40,7 @@ public abstract class ExperienceOrbMixin extends Entity {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ExperienceOrb;move(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V"),
             require = 0)
     private void thebumblezone_xpGoToClosestCrystalFlower(CallbackInfo ci) {
-        if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities.get()) {
+        if (!BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities) {
             return;
         }
 

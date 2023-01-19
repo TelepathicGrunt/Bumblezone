@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -31,9 +32,8 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
         return repair.is(BzTags.HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS);
     }
 
-    //TODO forge method
     @Override
-    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
+    public EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
         return EquipmentSlot.OFFHAND;
     }
 
@@ -108,12 +108,12 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
      */
     //TODO forge method
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.MENDING) {
-            return false;
+            return OptionalBoolean.FALSE;
         }
 
-        return enchantment.category.canEnchant(stack.getItem());
+        return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
     }
 
     @Override

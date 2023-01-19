@@ -3,6 +3,10 @@ dependencies {
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
+    modCompileOnly "mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}"
+
     modImplementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
     annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}")
 }

@@ -8,6 +8,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -31,7 +33,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
-public class StingerSpearItem extends TridentItem {
+public class StingerSpearItem extends TridentItem implements ItemExtension {
     public static final float BASE_DAMAGE = 1F;
     public static final float BASE_THROWN_DAMAGE = 1.5F;
     private final Multimap<Attribute, AttributeModifier> defaultModifiers;
@@ -138,17 +140,16 @@ public class StingerSpearItem extends TridentItem {
     /**
      * blacklisted riptide and channeling enchantment
      */
-    //TODO forge method
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if (enchantment == Enchantments.CHANNELING || enchantment == Enchantments.RIPTIDE) {
-            return false;
+            return OptionalBoolean.FALSE;
         }
 
         if (enchantment == Enchantments.SMITE) {
-            return true;
+            return OptionalBoolean.TRUE;
         }
 
-        return enchantment.category.canEnchant(stack.getItem());
+        return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
     }
 }

@@ -32,8 +32,8 @@ import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_L
 
 public abstract class HoneyFluid extends BzFlowingFluid {
 
-    protected HoneyFluid(FluidInfo properties) {
-        super(properties);
+    protected HoneyFluid(FluidInfo properties, boolean source) {
+        super(properties, source);
     }
 
     @Override
@@ -292,7 +292,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
 
     public static class Flowing extends HoneyFluid {
         public Flowing(FluidInfo properties) {
-            super(properties);
+            super(properties, false);
             registerDefaultState(getStateDefinition().any()
                     .setValue(LEVEL, 8)
                     .setValue(BOTTOM_LEVEL, 0)
@@ -326,7 +326,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
     public static class Source extends HoneyFluid {
 
         public Source(FluidInfo properties) {
-            super(properties);
+            super(properties, true);
             registerDefaultState(getStateDefinition().any().setValue(ABOVE_FLUID, false));
         }
 

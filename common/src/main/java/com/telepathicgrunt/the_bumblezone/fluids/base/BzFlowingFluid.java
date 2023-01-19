@@ -27,8 +27,13 @@ public abstract class BzFlowingFluid extends FlowingFluid {
 
     private final FluidInfo info;
 
-    public BzFlowingFluid(FluidInfo info) {
+    public BzFlowingFluid(FluidInfo info, boolean source) {
         this.info = info;
+        if (source) {
+            info.setSource(() -> this);
+        } else {
+            info.setFlowing(() -> this);
+        }
     }
 
     public FluidInfo info() {
@@ -107,8 +112,7 @@ public abstract class BzFlowingFluid extends FlowingFluid {
 
     public static class Source extends BzFlowingFluid {
         public Source(FluidInfo info) {
-            super(info);
-            info.setSource(() -> this);
+            super(info, true);
         }
 
         @Override
@@ -124,8 +128,7 @@ public abstract class BzFlowingFluid extends FlowingFluid {
 
     public static class Flowing extends BzFlowingFluid {
         public Flowing(FluidInfo info) {
-            super(info);
-            info.setFlowing(() -> this);
+            super(info, false);
             this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 7));
         }
 

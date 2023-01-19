@@ -86,7 +86,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.crystallineFlowerBlockEntity = crystallineFlowerBlockEntity;
         this.consumeSlot = addSlot(new Slot(inputContainer, CONSUME_SLOT, CONSUME_SLOT_X, CONSUME_SLOT_Y) {
             public boolean mayPlace(ItemStack itemStack) {
-                if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI.get()) {
+                if (!BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
                     return false;
                 }
                 if (itemStack.is(BzTags.CANNOT_CONSUMED_ITEMS)) {
@@ -505,7 +505,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             ItemStack tempCopy = toEnchant.copy();
             tempCopy.setCount(1);
 
-            int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier.get();
+            int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier;
             List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
 
             if (availableEnchantments.size() == 0) {

@@ -29,7 +29,7 @@ public class HangingGardenMob extends Feature<NoneFeatureConfiguration> {
         if (entityToSpawn == null) {
             List<EntityType<?>> spawnableExtraEntities = new ArrayList<>();
             Iterable<Holder<EntityType<?>>> holderIterable = BuiltInRegistries.ENTITY_TYPE.getTagOrEmpty(BzTags.HANGING_GARDENS_INITIAL_SPAWN_ENTITIES);
-            holderIterable.forEach(h -> spawnableExtraEntities.add(h.get()));
+            holderIterable.forEach(h -> spawnableExtraEntities.add(h.value()));
             if (!spawnableExtraEntities.isEmpty()) {
                 entityToSpawn = spawnableExtraEntities.get(context.random().nextInt(spawnableExtraEntities.size()));
             }

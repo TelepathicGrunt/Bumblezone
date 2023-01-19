@@ -29,7 +29,7 @@ public class PistonStructureResolverMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isEmptyBlock(Lnet/minecraft/core/BlockPos;)Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    private void thebumblezone_pullableOnlyBlocks2(BlockPos blockPos,
+    private void thebumblezone_pullableOnlyBlocks2_forge(BlockPos blockPos,
                                                       Direction direction,
                                                       CallbackInfoReturnable<Boolean> cir,
                                                       BlockState blockState)
@@ -44,7 +44,7 @@ public class PistonStructureResolverMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    private void thebumblezone_pullableOnlyBlocks2(BlockPos blockPos,
+    private void thebumblezone_pullableOnlyBlocks2_fabric(BlockPos blockPos,
                                                    Direction direction,
                                                    CallbackInfoReturnable<Boolean> cir,
                                                    BlockState blockState)

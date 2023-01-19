@@ -1,15 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.utils.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.mixins.fabric.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
-import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -41,14 +36,9 @@ public class PlatformHooksImpl {
     }
 
     @Contract(pure = true)
-    @SuppressWarnings("UnstableApiUsage")
     public static Fluid getBucketFluid(BucketItem bucket) {
-        final ItemStack bucketStack = new ItemStack(bucket);
-        final Storage<FluidVariant> storage = FluidStorage.ITEM.find(bucketStack, ContainerItemContext.withConstant(bucketStack));
-        if (storage instanceof FullItemFluidStorage fullItem) {
-            return fullItem.getResource().getFluid();
-        }
-        return Fluids.EMPTY;
+        Fluid fluid = ((BucketItemAccessor) bucket).bz$getContents();
+        return fluid == null ? Fluids.EMPTY : fluid;
     }
 
     @Contract(pure = true)

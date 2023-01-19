@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 
-public class SpiderInfestedBeeDungeon extends NbtFeature{
+public class SpiderInfestedBeeDungeon extends NbtFeature {
 
     public SpiderInfestedBeeDungeon(Codec<NbtFeatureConfig> configFactory) {
         super(configFactory);
@@ -18,8 +18,8 @@ public class SpiderInfestedBeeDungeon extends NbtFeature{
     @Override
     public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
         //affect rarity
-        if (BzWorldgenConfigs.spiderInfestedBeeDungeonRarity.get() >= 1000 ||
-            context.random().nextInt(BzWorldgenConfigs.spiderInfestedBeeDungeonRarity.get()) != 0) {
+        if (BzWorldgenConfigs.spiderInfestedBeeDungeonRarity >= 1000 ||
+            context.random().nextInt(BzWorldgenConfigs.spiderInfestedBeeDungeonRarity) != 0) {
             return false;
         }
 

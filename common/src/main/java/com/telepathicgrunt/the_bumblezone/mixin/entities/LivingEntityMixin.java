@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
-import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -37,15 +37,11 @@ public abstract class LivingEntityMixin extends Entity {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFluidHeight(Lnet/minecraft/tags/TagKey;)D", ordinal = 1),
             require = 0)
     private double thebumblezone_customFluidJumpWeaker(LivingEntity livingEntity, TagKey<Fluid> tagKey, Operation<Double> original) {
-        double newFluidHeight = this.getFluidTypeHeight(BzFluids.HONEY_FLUID_TYPE.get());
+        double newFluidHeight = this.getFluidHeight(BzTags.SPECIAL_HONEY_LIKE);
         if(newFluidHeight > 0) {
             return newFluidHeight;
         }
-        newFluidHeight = this.getFluidTypeHeight(BzFluids.ROYAL_JELLY_FLUID_TYPE.get());
-        if(newFluidHeight > 0) {
-            return newFluidHeight;
-        }
-        newFluidHeight = this.getFluidTypeHeight(BzFluids.SUGAR_WATER_FLUID_TYPE.get());
+        newFluidHeight = this.getFluidHeight(BzTags.SUGAR_WATER_FLUID);
         if(newFluidHeight > 0) {
             return newFluidHeight;
         }

@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.mixins.fabric;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.telepathicgrunt.the_bumblezone.fabric.hooks.BzEntityHooks;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
+import com.telepathicgrunt.the_bumblezone.platform.BzEntityHooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
 import org.spongepowered.asm.mixin.Mixin;

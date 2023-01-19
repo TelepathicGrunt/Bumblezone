@@ -27,6 +27,15 @@ public class HackyCapabilityManager {
         }
     }
 
+    /**
+     * Gets a capability from the {@link CapabilityManager} without using {@link net.minecraftforge.common.capabilities.CapabilityToken}
+     * <br>
+     * But with using a {@link Class} reference.
+     * <br><br>
+     * Do note that the class still has to be the one that would have been used for the Capability tokens generic,
+     * this does not circumvent any  of the conventions that forge has in place for how to use capabilities it merely just provides
+     * away to get a capability with a class reference than a transformer hack with {@link net.minecraftforge.common.capabilities.CapabilityToken}.
+     */
     public static <T> Capability<T> get(Class<T> clazz) {
         return get(clazz, false);
     }
@@ -35,9 +44,10 @@ public class HackyCapabilityManager {
         get(clazz, true);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> Capability<T> get(Class<T> clazz, boolean register) {
         try {
-            return  (Capability<T>) capabilityGetter.invokeExact(CapabilityManager.INSTANCE, Type.getInternalName(clazz), register);
+            return (Capability<T>) capabilityGetter.invokeExact(CapabilityManager.INSTANCE, Type.getInternalName(clazz), register);
         }catch (Throwable e) {
             throw new RuntimeException(e);
         }

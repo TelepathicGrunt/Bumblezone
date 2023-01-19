@@ -17,7 +17,7 @@ public class BzSkyProperty extends DimensionSpecialEffects {
 
     @Override
     public boolean isFoggyAt(int camX, int camY) {
-        return BzDimensionConfigs.enableDimensionFog.get();
+        return BzDimensionConfigs.enableDimensionFog;
     }
 
 
@@ -32,10 +32,10 @@ public class BzSkyProperty extends DimensionSpecialEffects {
          * The sky will be turned to midnight when brightness is below 50. This lets us get the
          * full range of brightness by utilizing the default brightness that the current celestial time gives.
          */
-        if (BzDimensionConfigs.fogBrightnessPercentage.get() <= 50) {
-            colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage.get() / 50);
+        if (BzDimensionConfigs.fogBrightnessPercentage <= 50) {
+            colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage / 50);
         } else {
-            colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage.get() / 100);
+            colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage / 100);
         }
 
         if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {

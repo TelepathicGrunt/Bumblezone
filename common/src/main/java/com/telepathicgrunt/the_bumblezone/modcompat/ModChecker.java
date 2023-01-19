@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,8 @@ public class ModChecker {
 		}
     }
 
-    private static void loadupModCompat(String modid, Supplier<ModCompat> loader){
+	@ApiStatus.Internal
+    public static void loadupModCompat(String modid, Supplier<ModCompat> loader){
 		try {
 			if (PlatformHooks.isModLoaded(modid)) {
 				ModCompat compat = loader.get();
@@ -71,7 +73,8 @@ public class ModChecker {
 		}
 	}
 
-	private static void printErrorToLogs(String currentModID) {
+	@ApiStatus.Internal
+	public static void printErrorToLogs(String currentModID) {
 		Bumblezone.LOGGER.log(Level.ERROR, """
 		  ------------------------------------------------NOTICE-------------------------------------------------------------------------
 		  

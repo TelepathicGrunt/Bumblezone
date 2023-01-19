@@ -29,5 +29,6 @@ public class ResourcefulRegistriesImpl {
     }
 
     public static FluidInfoRegistry createFluidRegistry(String id) {
+        return new FabricFluidInfoRegistry(id);
     }
 }

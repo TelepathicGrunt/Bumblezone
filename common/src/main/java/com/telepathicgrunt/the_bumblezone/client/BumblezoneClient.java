@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
@@ -64,8 +65,22 @@ public class BumblezoneClient {
         RegisterClientFluidPropertiesEvent.EVENT.addListener(BumblezoneClient::onRegisterClientFluidProperties);
         RegisterItemPropertiesEvent.EVENT.addListener(BumblezoneClient::registerItemProperties);
         RegisterRenderTypeEvent.EVENT.addListener(BumblezoneClient::registerRenderTypes);
+        RegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
 
         MobEffectRenderer.RENDERERS.put(BzEffects.HIDDEN.get(), new HiddenEffectIconRenderer());
+    }
+
+    public static void registerArmorProviders(RegisterArmorProviderEvent event) {
+        event.register(BzItems.STINGLESS_BEE_HELMET_1.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.STINGLESS_BEE_HELMET_2.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.BUMBLE_BEE_CHESTPLATE_1.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.BUMBLE_BEE_CHESTPLATE_2.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_1.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.TRANS_BUMBLE_BEE_CHESTPLATE_2.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.HONEY_BEE_LEGGINGS_1.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.HONEY_BEE_LEGGINGS_2.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.CARPENTER_BEE_BOOTS_1.get(), BeeArmorModelProvider::new);
+        event.register(BzItems.CARPENTER_BEE_BOOTS_2.get(), BeeArmorModelProvider::new);
     }
 
     public static void onRegisterClientFluidProperties(RegisterClientFluidPropertiesEvent event) {

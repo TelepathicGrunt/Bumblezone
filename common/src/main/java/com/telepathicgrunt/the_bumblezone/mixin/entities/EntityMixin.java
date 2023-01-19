@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.platform.BzEntityHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
@@ -41,7 +42,7 @@ public abstract class EntityMixin {
             require = 0)
     private boolean thebumblezone_applyMissingWaterPhysicsForSugarWaterFluid(boolean appliedFluidPush) {
         if(!appliedFluidPush) {
-            return ((Entity)(Object)this).isInFluidType(BzFluids.SUGAR_WATER_FLUID_TYPE.get());
+            return ((BzEntityHooks) this).bz$getFluidOnEyes().getType().isSame(BzFluids.SUGAR_WATER_FLUID.get());
         }
         return appliedFluidPush;
     }

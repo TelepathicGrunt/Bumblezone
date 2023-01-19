@@ -11,9 +11,9 @@ import java.util.function.BooleanSupplier;
  */
 public class OptionalBoolean {
 
-    private static final OptionalBoolean EMPTY = new OptionalBoolean();
-    private static final OptionalBoolean TRUE = new OptionalBoolean();
-    private static final OptionalBoolean FALSE = new OptionalBoolean();
+    public static final OptionalBoolean EMPTY = new OptionalBoolean();
+    public static final OptionalBoolean TRUE = new OptionalBoolean();
+    public static final OptionalBoolean FALSE = new OptionalBoolean();
 
     private final boolean value;
     private final boolean isPresent;

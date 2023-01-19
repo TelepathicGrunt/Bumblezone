@@ -17,12 +17,14 @@ import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.resource.PathPackResources;
 
 import java.nio.file.Path;
 
+@Mod(Bumblezone.MODID)
 public class BumblezoneForge {
 
     public BumblezoneForge() {

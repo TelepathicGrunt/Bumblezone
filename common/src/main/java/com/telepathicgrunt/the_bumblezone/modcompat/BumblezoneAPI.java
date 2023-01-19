@@ -113,7 +113,7 @@ public class BumblezoneAPI {
      * Returns what level Comb Cutter enchantment the passed in itemstack has.
      */
     public static int getCombCutterLevelForItem(ItemStack toolUsed) {
-        return EnchantmentHelper.getTagEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), toolUsed);
+        return EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), toolUsed);
     }
 
     /**

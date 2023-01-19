@@ -2,12 +2,12 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.forge.REIPluginClient;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -19,12 +19,11 @@ import net.minecraft.world.level.material.Fluid;
 
 import java.util.List;
 
-@REIPluginClient
 public class REICompat implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
-        BzItems.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
+        BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
         addInfo(BzItems.PILE_OF_POLLEN.get());
         addInfo(BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(BzFluids.ROYAL_JELLY_FLUID.get());

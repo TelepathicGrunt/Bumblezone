@@ -1,11 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.mixins.forge;
 
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.fluids.forge.ForgeFluidInfo;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
@@ -22,10 +24,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Supplier;
 
 @Mixin(BzBucketItem.class)
-public class BzBucketItemMixin extends BucketItem {
+public class BzBucketItemMixin extends BucketItem implements FluidGetter {
 
     @Unique
-    private Supplier<? extends Fluid> bz$fluidSupplier;
+    private Supplier<? extends FlowingFluid> bz$fluidSupplier;
 
     public BzBucketItemMixin(Fluid arg, Properties arg2) {
         super(arg, arg2);
@@ -38,7 +40,7 @@ public class BzBucketItemMixin extends BucketItem {
 
     @NotNull
     @Override
-    public Fluid getFluid() {
+    public FlowingFluid getFluid() {
         return bz$fluidSupplier.get();
     }
 

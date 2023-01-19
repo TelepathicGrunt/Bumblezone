@@ -1,9 +1,8 @@
 {
     "required": true,
     "package": "com.telepathicgrunt.the_bumblezone.mixin",
-    "plugin": "com.telepathicgrunt.the_bumblezone.mixin.MixinPlugin",
     "compatibilityLevel": "JAVA_17",
-    "refmap": "the_bumblezone.refmap.json",
+    "refmap": "the_bumblezone-common.refmap.json",
     "mixins": [
         "blocks.BeehiveBlockEntityMixin",
         "blocks.BeehiveMixin",
@@ -31,6 +30,7 @@
         "entities.EntityTypeMixin",
         "entities.ExperienceOrbMixin",
         "entities.FishingBobberEntityMixin",
+        "entities.FluidInEyesEntityMixin",
         "entities.FlyNodeEvaluatorMixin",
         "entities.HangingEntityMixin",
         "entities.LightningBoltMixin",

@@ -13,9 +13,9 @@ import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class BzBucketItem extends BucketItem {
+public class BzBucketItem extends BucketItem implements FluidGetter {
 
-    private final FluidInfo info;
+    protected final FluidInfo info;
 
     public BzBucketItem(FluidInfo info, Properties properties) {
         super("forge".equals(ArchitecturyTarget.getCurrentTarget()) ? Fluids.FLOWING_WATER : info.source(), properties); //This gets replaced in a mixin because of the suppliers.

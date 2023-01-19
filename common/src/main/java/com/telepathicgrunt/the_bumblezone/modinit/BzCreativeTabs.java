@@ -1,18 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
+import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class BzCreativeModTabs {
+public class BzCreativeTabs {
 
     public static final List<RegistryEntry<? extends Item>> CUSTOM_CREATIVE_TAB_ITEMS = List.of(
             BzItems.POROUS_HONEYCOMB,
@@ -106,8 +105,8 @@ public class BzCreativeModTabs {
             BzItems.ESSENCE_OF_THE_BEES
     );
 
-    public static void setupCreativeTabs(TabCreator creator) {
-        creator.createTab(
+    public static void registerCreativeTabs(RegisterCreativeTabsEvent event) {
+        event.register(
                 new ResourceLocation(Bumblezone.MODID, "main_tab"),
                 builder -> builder.icon(() -> BzItems.HONEYCOMB_BROOD.get().getDefaultInstance())
                         .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab")),
@@ -117,17 +116,17 @@ public class BzCreativeModTabs {
         );
     }
 
-    public static void onAddItems(Type type, CreativeModeTab tab, Consumer<ItemStack> adder) {
-        if (type == Type.REDSTONE) {
+    public static void addCreativeTabEntries(AddCreativeTabEntriesEvent event) {
+        if (event.type() == AddCreativeTabEntriesEvent.Type.REDSTONE) {
             Stream.of(
                     BzItems.STICKY_HONEY_REDSTONE,
                     BzItems.REDSTONE_HONEY_WEB,
                     BzItems.STRING_CURTAIN_WHITE,
                     BzItems.ROYAL_JELLY_BLOCK
-            ).map(item -> item.get().getDefaultInstance()).forEach(adder);
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (type == Type.FUNCTIONAL) {
+        if (event.type() == AddCreativeTabEntriesEvent.Type.FUNCTIONAL) {
             Stream.of(
                     BzItems.HONEYCOMB_BROOD,
                     BzItems.GLISTERING_HONEY_CRYSTAL,
@@ -153,10 +152,10 @@ public class BzCreativeModTabs {
                     BzItems.SUPER_CANDLE_PURPLE,
                     BzItems.SUPER_CANDLE_MAGENTA,
                     BzItems.SUPER_CANDLE_PINK
-            ).map(item -> item.get().getDefaultInstance()).forEach(adder);
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (type == Type.COLORED) {
+        if (event.type() == AddCreativeTabEntriesEvent.Type.COLORED) {
             Stream.of(
                     BzItems.SUPER_CANDLE,
                     BzItems.SUPER_CANDLE_WHITE,
@@ -191,10 +190,10 @@ public class BzCreativeModTabs {
                     BzItems.STRING_CURTAIN_PURPLE,
                     BzItems.STRING_CURTAIN_MAGENTA,
                     BzItems.STRING_CURTAIN_PINK
-            ).map(item -> item.get().getDefaultInstance()).forEach(adder);
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (type == Type.COMBAT) {
+        if (event.type() == AddCreativeTabEntriesEvent.Type.COMBAT) {
             Stream.of(
                     BzItems.BEE_STINGER,
                     BzItems.STINGER_SPEAR,
@@ -211,35 +210,15 @@ public class BzCreativeModTabs {
                     BzItems.HONEY_BEE_LEGGINGS_2,
                     BzItems.CARPENTER_BEE_BOOTS_1,
                     BzItems.CARPENTER_BEE_BOOTS_2
-            ).map(item -> item.get().getDefaultInstance()).forEach(adder);
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
-        if (type == Type.SPAWN_EGGS) {
+        if (event.type() == AddCreativeTabEntriesEvent.Type.SPAWN_EGGS) {
             Stream.of(
                     BzItems.HONEY_SLIME_SPAWN_EGG,
                     BzItems.BEEHEMOTH_SPAWN_EGG,
                     BzItems.BEE_QUEEN_SPAWN_EGG
-            ).map(item -> item.get().getDefaultInstance()).forEach(adder);
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
-    }
-
-    public enum Type {
-        BUILDING,
-        COLORED,
-        NATURAL,
-        FUNCTIONAL,
-        REDSTONE,
-        TOOLS,
-        COMBAT,
-        FOOD,
-        INGREDIENTS,
-        SPAWN_EGGS,
-        OPERATOR
-    }
-
-    @FunctionalInterface
-    public interface TabCreator {
-
-        void createTab(ResourceLocation id, Consumer<CreativeModeTab.Builder> builder, Consumer<List<ItemStack>> displayStacks);
     }
 }

@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -31,7 +33,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class BeeCannon extends Item implements Vanishable {
+public class BeeCannon extends Item implements Vanishable, ItemExtension {
     public static final String TAG_BEES = "BeesStored";
 
     public BeeCannon(Properties properties) {
@@ -221,13 +223,12 @@ public class BeeCannon extends Item implements Vanishable {
         return UseAnim.BOW;
     }
 
-    //TODO forge method
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.QUICK_CHARGE) {
-            return true;
+            return OptionalBoolean.ofTrue();
         }
 
-        return enchantment.category.canEnchant(stack.getItem());
+        return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
     }
 }

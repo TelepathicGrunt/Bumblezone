@@ -32,8 +32,8 @@ import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_L
 
 public abstract class RoyalJellyFluid extends BzFlowingFluid {
 
-    protected RoyalJellyFluid(FluidInfo properties) {
-        super(properties);
+    protected RoyalJellyFluid(FluidInfo properties, boolean source) {
+        super(properties, source);
     }
 
     @Override
@@ -267,7 +267,7 @@ public abstract class RoyalJellyFluid extends BzFlowingFluid {
 
     public static class Flowing extends RoyalJellyFluid {
         public Flowing(FluidInfo properties) {
-            super(properties);
+            super(properties, false);
             registerDefaultState(getStateDefinition().any()
                     .setValue(LEVEL, 8)
                     .setValue(BOTTOM_LEVEL, 0)
@@ -301,7 +301,7 @@ public abstract class RoyalJellyFluid extends BzFlowingFluid {
     public static class Source extends RoyalJellyFluid {
 
         public Source(FluidInfo properties) {
-            super(properties);
+            super(properties, true);
             registerDefaultState(getStateDefinition().any().setValue(ABOVE_FLUID, false));
         }
 

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fabric;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -10,7 +11,7 @@ public class BumblezoneFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-
+        Bumblezone.init();
 
         AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) ->
                 ResourceManagerHelper.registerBuiltinResourcePack(

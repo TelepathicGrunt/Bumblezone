@@ -29,8 +29,8 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 public abstract class SugarWaterFluid extends BzFlowingFluid {
 
-    protected SugarWaterFluid(FluidInfo properties) {
-        super(properties);
+    protected SugarWaterFluid(FluidInfo properties, boolean source) {
+        super(properties, source);
     }
 
     @Override
@@ -157,7 +157,7 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
 
     public static class Flowing extends SugarWaterFluid {
         public Flowing(FluidInfo properties) {
-            super(properties);
+            super(properties, false);
             registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
         }
 
@@ -185,7 +185,7 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
     public static class Source extends SugarWaterFluid {
 
         public Source(FluidInfo properties) {
-            super(properties);
+            super(properties, true);
         }
 
         @Override

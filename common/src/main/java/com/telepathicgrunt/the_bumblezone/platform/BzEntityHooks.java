@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.fabric.hooks;
+package com.telepathicgrunt.the_bumblezone.platform;
 
 import net.minecraft.world.level.material.FluidState;
 
