@@ -103,28 +103,22 @@
     "target_advancement_done_14": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
-        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/the_beginning"
+        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/the_crazy_florist"
       }
     },
     "target_advancement_done_15": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
-        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/the_crazy_florist"
+        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/the_great_dragon_slayer"
       }
     },
     "target_advancement_done_16": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
-        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/the_great_dragon_slayer"
-      }
-    },
-    "target_advancement_done_17": {
-      "trigger": "the_bumblezone:target_advancement_done",
-      "conditions": {
         "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/too_many_legs"
       }
     },
-    "target_advancement_done_18": {
+    "target_advancement_done_17": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
         "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/vip_trader"
@@ -182,9 +176,6 @@
     ],
     [
       "target_advancement_done_17"
-    ],
-    [
-      "target_advancement_done_18"
     ]
   ]
 }
