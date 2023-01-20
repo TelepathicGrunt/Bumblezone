@@ -21,6 +21,9 @@ Fixed it so Bees that spend too long in Honey Fluid and Royal Jelly Fluid will d
 Renamed fogReducer config option to fogThickness and fixed it so it nows shows more of the dimension and scales the fog properly.
  Also fixes dimension rendering breaking when render distance is 30 or greater and a rendering optimizing mod is on.
 
+##### Advancements:
+Fixed Journey's End advancment to not include The Beginning advancement requirement. Was throwing off MC's advancement progress tracker.
+
 ##### Lang:
 Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
 
