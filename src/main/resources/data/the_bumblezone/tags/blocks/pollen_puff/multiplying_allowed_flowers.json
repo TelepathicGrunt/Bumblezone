@@ -225,6 +225,30 @@
     {
       "id": "forbidden_arcanus:cherry_sapling",
       "required": false
+    },
+    {
+      "id": "hibernalherbs:chamomile",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chives",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:essitte",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:punuel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:sorrel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:verbena",
+      "required": false
     }
   ]
 }
