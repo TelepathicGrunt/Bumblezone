@@ -131,6 +131,46 @@
     {
       "id": "delightful:salmonberries",
       "required": false
+    },
+    {
+      "id": "wildberries:blueberries",
+      "required": false
+    },
+    {
+      "id": "wildberries:raspberry",
+      "required": false
+    },
+    {
+      "id": "wildberries:blackberry",
+      "required": false
+    },
+    {
+      "id": "wildberries:cranberries",
+      "required": false
+    },
+    {
+      "id": "moreberries:blue_berries",
+      "required": false
+    },
+    {
+      "id": "moreberries:yellow_berries",
+      "required": false
+    },
+    {
+      "id": "moreberries:orange_berries",
+      "required": false
+    },
+    {
+      "id": "moreberries:purple_berries",
+      "required": false
+    },
+    {
+      "id": "moreberries:green_berries",
+      "required": false
+    },
+    {
+      "id": "moreberries:black_berries",
+      "required": false
     }
   ],
   "possible_rewards": [
