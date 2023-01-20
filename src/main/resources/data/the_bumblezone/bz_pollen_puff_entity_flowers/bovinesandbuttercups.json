@@ -155,6 +155,25 @@
     {
       "nbt_match": {
         "Age": 0,
+        "Type": "bovinesandbuttercups:freesia"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "bovinesandbuttercups:freesia" },
+            "weight": 4
+          },
+          {
+            "data": { "Name": "minecraft:moss_carpet" },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Age": 0,
         "Type": "minecraft:dandelion"
       },
       "plants_to_spawn": {
