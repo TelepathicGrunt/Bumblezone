@@ -14,29 +14,35 @@ import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.client.model.geometry.IGeometryLoader;
 import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 
 import java.util.EnumMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ForgeConnedtedModelLoader implements IGeometryLoader<ForgeConnedtedModelLoader.GeometryModel> {
 
+    private final Predicate<BlockState> predicate;
+
+    public ForgeConnedtedModelLoader(Predicate<BlockState> predicate) {
+        this.predicate = predicate;
+    }
 
     @Override
     public GeometryModel read(JsonObject json, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject textures = GsonHelper.getAsJsonObject(json, "textures");
-
-
-        return null;
+        return new GeometryModel(makeMaterials(GsonHelper.getAsJsonObject(json, "textures")), predicate);
     }
 
-    public record GeometryModel(EnumMap<Connection, Material> textures) implements IUnbakedGeometry<GeometryModel> {
+    public record GeometryModel(EnumMap<Connection, Material> textures, Predicate<BlockState> predicate) implements IUnbakedGeometry<GeometryModel> {
 
         @Override
         public BakedModel bake(IGeometryBakingContext iGeometryBakingContext, ModelBaker arg, Function<Material, TextureAtlasSprite> function, ModelState arg2, ItemOverrides arg3, ResourceLocation arg4) {
-            return null;
+            EnumMap<ConnectedBlockModel.Connection, TextureAtlasSprite> bakedTextures = new EnumMap<>(ConnectedBlockModel.Connection.class);
+            textures.forEach((connection, material) -> bakedTextures.put(connection, function.apply(material)));
+            return new ForgeConnectedBlockModel(bakedTextures, predicate);
         }
     }
 

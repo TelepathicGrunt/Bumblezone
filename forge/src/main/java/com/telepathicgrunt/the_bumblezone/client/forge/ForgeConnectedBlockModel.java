@@ -37,7 +37,7 @@ public class ForgeConnectedBlockModel implements IDynamicBakedModel {
     private final BakedModel facingModel = null;
     private final ConnectedBlockModel model;
 
-    public ForgeConnectedBlockModel(Predicate<BlockState> predicate) {
+    public ForgeConnectedBlockModel(EnumMap<Connection, TextureAtlasSprite> sprites, Predicate<BlockState> predicate) {
         this.model = new ConnectedBlockModel(predicate);
     }
 
