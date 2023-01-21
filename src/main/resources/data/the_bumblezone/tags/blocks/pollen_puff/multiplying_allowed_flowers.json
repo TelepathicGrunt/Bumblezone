@@ -249,6 +249,10 @@
     {
       "id": "hibernalherbs:verbena",
       "required": false
+    },
+    {
+      "id": "pyromancer:rafflesia",
+      "required": false
     }
   ]
 }

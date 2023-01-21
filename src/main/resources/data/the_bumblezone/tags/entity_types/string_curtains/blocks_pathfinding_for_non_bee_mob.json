@@ -309,6 +309,14 @@
     {
       "id": "moonbits:stunbug",
       "required": false
+    },
+    {
+      "id": "croodaceous:fang_fly",
+      "required": false
+    },
+    {
+      "id": "queen_bee:queen_bee",
+      "required": false
     }
   ]
 }
