@@ -5,11 +5,13 @@ import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.world.level.block.Block;
 
-public record RegisterBlockColorEvent(BlockColors colors) {
+import java.util.function.BiConsumer;
+
+public record RegisterBlockColorEvent(BiConsumer<BlockColor, Block[]> colors) {
 
     public static final EventHandler<RegisterBlockColorEvent> EVENT = new EventHandler<>();
 
     public void register(BlockColor color, Block... blocks) {
-        colors.register(color, blocks);
+        colors.accept(color, blocks);
     }
 }

@@ -221,7 +221,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
             enchantment == Enchantments.POWER_ARROWS ||
             enchantment == Enchantments.PUNCH_ARROWS)
         {
-            return OptionalBoolean.ofTrue();
+            return OptionalBoolean.TRUE;
         }
 
         return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));

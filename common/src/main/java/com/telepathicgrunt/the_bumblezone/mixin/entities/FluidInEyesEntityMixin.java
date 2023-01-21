@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.platform.BzEntityHooks;
+import dev.architectury.injectables.annotations.PlatformOnly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.material.FluidState;
@@ -16,19 +17,31 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class FluidInEyesEntityMixin implements BzEntityHooks {
 
     @Unique
-    private FluidState bz$eyeFluidState = null;
+    private FluidState bz$eyeFluidState = Fluids.EMPTY.defaultFluidState();
 
     @Inject(method = "updateFluidOnEyes", at = @At("HEAD"))
     public void bumblezone$onSetFluidInEyes(CallbackInfo ci) {
         bz$eyeFluidState = Fluids.EMPTY.defaultFluidState();
     }
 
+    @PlatformOnly({"fabric", "quilt"})
     @Inject(
             method = "updateFluidOnEyes",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;getTags()Ljava/util/stream/Stream;"),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    public void bumblezone$onSetFluidInEyes(CallbackInfo ci, double d, Entity entity, BlockPos blockPos, FluidState fluidState, double e) {
+    public void bumblezone$onSetFluidInEyes_fabric(CallbackInfo ci, double d, Entity entity, BlockPos blockPos, FluidState fluidState, double e) {
+        bz$eyeFluidState = fluidState;
+    }
+
+
+    @PlatformOnly({"forge"})
+    @Inject(
+            method = "updateFluidOnEyes",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;getFluidType()Lnet/minecraftforge/fluids/FluidType;"),
+            locals = LocalCapture.CAPTURE_FAILHARD
+    )
+    public void bumblezone$onSetFluidInEyes_forge(CallbackInfo ci, double d, Entity entity, BlockPos blockPos, FluidState fluidState, double e) {
         bz$eyeFluidState = fluidState;
     }
 

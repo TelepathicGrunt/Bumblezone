@@ -284,11 +284,10 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         return ItemStack.EMPTY;
     }
 
-    //TODO forge method
     @Override
     public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment.category == EnchantmentCategory.DIGGER) {
-            return OptionalBoolean.ofTrue();
+            return OptionalBoolean.TRUE;
         }
 
         return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));

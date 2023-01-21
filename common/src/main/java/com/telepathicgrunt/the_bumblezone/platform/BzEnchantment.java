@@ -13,6 +13,6 @@ public class BzEnchantment extends Enchantment {
     }
 
     public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack) {
-        return OptionalBoolean.empty();
+        return OptionalBoolean.EMPTY;
     }
 }

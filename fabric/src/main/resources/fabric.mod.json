@@ -29,7 +29,7 @@
             "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
         ],
         "cardinal-components-entity": [
-            "com.telepathicgrunt.the_bumblezone.Bumblezone"
+            "com.telepathicgrunt.the_bumblezone.modules.fabric.ComponentInitializer"
         ],
         "rei_client": [
             "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"

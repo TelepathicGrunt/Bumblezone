@@ -1,12 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modules.fabric;
 
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
-import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleFactory;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.base.fabric.FabricModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistrar;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;

@@ -226,7 +226,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
     @Override
     public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.QUICK_CHARGE) {
-            return OptionalBoolean.ofTrue();
+            return OptionalBoolean.TRUE;
         }
 
         return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));

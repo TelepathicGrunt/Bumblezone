@@ -25,10 +25,10 @@ public interface BlockExtension {
     }
 
     default OptionalBoolean bz$canStickTo(BlockState state, BlockState other) {
-        return OptionalBoolean.empty();
+        return OptionalBoolean.EMPTY;
     }
 
     default OptionalBoolean bz$shouldDisplayFluidOverlay() {
-        return OptionalBoolean.empty();
+        return OptionalBoolean.EMPTY;
     }
 }

@@ -12,7 +12,7 @@ public class ModdedBeesBeesSpawning {
 	 * Manual spawning of modded Bees so it can be disabled real time by config.
 	 * works by making a chance of bees spawning also spawn modded bees
 	 */
-	public static boolean MobSpawnEvent(EntitySpawnEvent event) {
+	public static boolean onEntitySpawn(EntitySpawnEvent event) {
 
 		if (event.spawnType() == MobSpawnType.NATURAL ||
 			event.spawnType() == MobSpawnType.SPAWNER ||

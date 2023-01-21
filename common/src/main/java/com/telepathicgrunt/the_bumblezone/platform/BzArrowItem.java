@@ -12,6 +12,6 @@ public class BzArrowItem extends ArrowItem {
     }
 
     public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, Player player) {
-        return OptionalBoolean.empty();
+        return OptionalBoolean.EMPTY;
     }
 }

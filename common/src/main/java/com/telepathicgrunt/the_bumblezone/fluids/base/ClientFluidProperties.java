@@ -26,15 +26,15 @@ import java.util.function.BiConsumer;
 
 public class ClientFluidProperties {
 
-    static Map<ResourceLocation, ClientFluidProperties> PROPERTIES = new HashMap<>();
+    private static final Map<ResourceLocation, ClientFluidProperties> PROPERTIES = new HashMap<>();
 
-    ModifyFogColor modifyFogColor = null;
-    ModifyFog modifyFog = null;
-    FluidOverlay fluidOverlay = null;
-    TriFunction<FluidState, BlockAndTintGetter, BlockPos, Integer> tintColor = (state, level, pos) -> -1;
-    ResourceLocation still;
-    ResourceLocation flowing;
-    ResourceLocation overlay;
+    private ModifyFogColor modifyFogColor = null;
+    private ModifyFog modifyFog = null;
+    private FluidOverlay fluidOverlay = null;
+    private TriFunction<FluidState, BlockAndTintGetter, BlockPos, Integer> tintColor = (state, level, pos) -> -1;
+    private ResourceLocation still;
+    private ResourceLocation flowing;
+    private ResourceLocation overlay;
 
     public ClientFluidProperties(FluidProperties properties) {
         this(properties.id());

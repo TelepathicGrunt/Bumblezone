@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerStoppingEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
@@ -53,7 +53,7 @@ public class ThreadExecutor {
         }
     }
 
-    public static void handleServerStoppingEvent(ServerStoppingEvent ignoredEvent) {
+    public static void handleServerStoppingEvent(ServerGoingToStopEvent ignoredEvent) {
         shutdownExecutorService();
     }
 

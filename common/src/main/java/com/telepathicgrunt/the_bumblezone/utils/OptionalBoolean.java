@@ -12,8 +12,8 @@ import java.util.function.BooleanSupplier;
 public class OptionalBoolean {
 
     public static final OptionalBoolean EMPTY = new OptionalBoolean();
-    public static final OptionalBoolean TRUE = new OptionalBoolean();
-    public static final OptionalBoolean FALSE = new OptionalBoolean();
+    public static final OptionalBoolean TRUE = new OptionalBoolean(true);
+    public static final OptionalBoolean FALSE = new OptionalBoolean(false);
 
     private final boolean value;
     private final boolean isPresent;
@@ -55,17 +55,5 @@ public class OptionalBoolean {
 
     public static OptionalBoolean of(boolean value) {
         return new OptionalBoolean(value);
-    }
-
-    public static OptionalBoolean empty() {
-        return EMPTY;
-    }
-
-    public static OptionalBoolean ofTrue() {
-        return TRUE;
-    }
-
-    public static OptionalBoolean ofFalse() {
-        return FALSE;
     }
 }

@@ -38,13 +38,14 @@ dependencies {
     modCompileOnly("curse.maven:quark-243121:${project.quark_file_id}")
     modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
-    modApi("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
+    modCompileOnly("mezz.jei:jei-${project.minecraft_version}-forge:${project.jei}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
-    compileOnly "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    modImplementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+    minecraftLibraries "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+//    compileOnly "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+//    runtimeOnly "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
 }
 

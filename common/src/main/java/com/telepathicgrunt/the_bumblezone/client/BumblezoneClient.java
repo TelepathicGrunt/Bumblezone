@@ -31,6 +31,7 @@ import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
@@ -41,7 +42,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BumblezoneClient {
 
-    public static void subscribeClientEvents() {
+    public static void init() {
         RegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);
         RegisterEntityRenderersEvent.EVENT.addListener(BumblezoneClient::registerEntityRenderers);
         RegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
@@ -66,8 +67,11 @@ public class BumblezoneClient {
         RegisterItemPropertiesEvent.EVENT.addListener(BumblezoneClient::registerItemProperties);
         RegisterRenderTypeEvent.EVENT.addListener(BumblezoneClient::registerRenderTypes);
         RegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
+        RegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
+    }
 
-        MobEffectRenderer.RENDERERS.put(BzEffects.HIDDEN.get(), new HiddenEffectIconRenderer());
+    public static void registerEffectRenderers(RegisterEffectRenderersEvent event) {
+        event.register(BzEffects.HIDDEN.get(), new HiddenEffectIconRenderer());
     }
 
     public static void registerArmorProviders(RegisterArmorProviderEvent event) {
@@ -184,6 +188,27 @@ public class BumblezoneClient {
                 BzFluids.HONEY_FLUID_FLOWING.get(),
                 BzFluids.ROYAL_JELLY_FLUID.get(),
                 BzFluids.ROYAL_JELLY_FLUID_FLOWING.get()
+        );
+
+        event.register(RenderType.cutout(),
+                BzBlocks.STICKY_HONEY_REDSTONE.get(),
+                BzBlocks.STICKY_HONEY_RESIDUE.get(),
+                BzBlocks.HONEY_WEB.get(),
+                BzBlocks.REDSTONE_HONEY_WEB.get(),
+                BzBlocks.SUPER_CANDLE_WICK.get(),
+                BzBlocks.SUPER_CANDLE_WICK_SOUL.get(),
+                BzBlocks.INCENSE_BASE_CANDLE.get(),
+                BzBlocks.CRYSTALLINE_FLOWER.get(),
+                BzBlocks.POROUS_HONEYCOMB.get(),
+                BzBlocks.EMPTY_HONEYCOMB_BROOD.get()
+        );
+
+        BzBlocks.CURTAINS.stream().map(RegistryEntry::get).forEach(block -> event.register(RenderType.cutout(), block));
+
+        event.register(RenderType.translucent(),
+                BzBlocks.HONEY_CRYSTAL.get(),
+                BzBlocks.GLISTERING_HONEY_CRYSTAL.get(),
+                BzBlocks.ROYAL_JELLY_BLOCK.get()
         );
     }
 

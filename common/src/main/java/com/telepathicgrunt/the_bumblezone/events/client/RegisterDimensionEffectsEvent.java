@@ -5,12 +5,13 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
 
-public record RegisterDimensionEffectsEvent(Map<ResourceLocation, DimensionSpecialEffects> effects) {
+public record RegisterDimensionEffectsEvent(BiConsumer<ResourceLocation, DimensionSpecialEffects> effects) {
 
     public static final EventHandler<RegisterDimensionEffectsEvent> EVENT = new EventHandler<>();
 
     public void register(ResourceLocation dimension, DimensionSpecialEffects effect) {
-        effects.put(dimension, effect);
+        effects.accept(dimension, effect);
     }
 }

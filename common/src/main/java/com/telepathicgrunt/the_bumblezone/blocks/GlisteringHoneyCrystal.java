@@ -70,7 +70,7 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockEx
 
     @Override
     public OptionalBoolean bz$shouldDisplayFluidOverlay() {
-        return OptionalBoolean.ofTrue();
+        return OptionalBoolean.TRUE;
     }
 
     @Override

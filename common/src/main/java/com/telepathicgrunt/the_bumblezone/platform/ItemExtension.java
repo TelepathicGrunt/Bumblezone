@@ -26,7 +26,7 @@ public interface ItemExtension {
     }
 
     default OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return OptionalBoolean.empty();
+        return OptionalBoolean.EMPTY;
     }
 
     default EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {

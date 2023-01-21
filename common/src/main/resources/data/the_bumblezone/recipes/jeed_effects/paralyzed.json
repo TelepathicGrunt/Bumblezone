@@ -13,5 +13,13 @@
       "type": "forge:mod_loaded",
       "modid": "jeed"
     }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "jeed"
+      ]
+    }
   ]
 }

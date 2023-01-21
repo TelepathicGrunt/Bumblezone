@@ -233,7 +233,7 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.stopSleepInBed(true, true);
 			}
 
-			serverPlayer.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z);
+			//serverPlayer.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z);
 			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 			teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
 		}

@@ -31,6 +31,7 @@ public record AddCreativeTabEntriesEvent(Type type, CreativeModeTab tab, Consume
         FOOD,
         INGREDIENTS,
         SPAWN_EGGS,
-        OPERATOR
+        OPERATOR,
+        CUSTOM
     }
 }

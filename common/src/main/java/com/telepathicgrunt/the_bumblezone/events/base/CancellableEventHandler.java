@@ -1,8 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.events.base;
 
-import it.unimi.dsi.fastutil.Function;
-import it.unimi.dsi.fastutil.objects.Object2BooleanFunction;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -43,14 +40,17 @@ public class CancellableEventHandler<T> {
         listeners.remove(listener);
     }
 
-    public boolean invoke(T event) {
-        boolean isCancelled = false;
+    public boolean invoke(T event, boolean isCancelled) {
         for (CancellableFunction<T> listener : listeners) {
             if (listener.apply(isCancelled, event)) {
                 isCancelled = true;
             }
         }
         return isCancelled;
+    }
+
+    public boolean invoke(T event) {
+        return invoke(event, false);
     }
 
     @FunctionalInterface

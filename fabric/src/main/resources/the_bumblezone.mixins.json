@@ -3,20 +3,36 @@
     "package": "com.telepathicgrunt.the_bumblezone.mixins.fabric",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-        "BowItemMixin",
-        "BucketItemAccessor",
-        "BzBucketItemMixin",
+        "BaseSpawnerMixin",
         "BzLiquidBlockMixin",
-        "EnchantmentHelperMixin",
-        "ItemStackMixin",
+        "NaturalSpawnerMixin",
+        "PatrolSpawnerMixin",
         "PistonStructureResolverMixin",
-        "PlayerEntityMixin",
-        "RecordItemMixin",
-        "WalkNodeEvaluatorMixin"
+        "ResultSlotMixin",
+        "SimpleCookingSerializerMixin",
+        "WalkNodeEvaluatorMixin",
+        "entities.AnimalMixin",
+        "entities.EntityMixin",
+        "entities.ItemEntityMixin",
+        "entities.LivingEntityMixin",
+        "entities.PlayerAdvancementsMixin",
+        "entities.PlayerMixin",
+        "entities.ServerPlayerGameModeMixin",
+        "entities.ServerPlayerMixin",
+        "entities.ThrowableProjectileMixin",
+        "items.BowItemMixin",
+        "items.BucketItemAccessor",
+        "items.BzBucketItemMixin",
+        "items.EnchantmentHelperMixin",
+        "items.ItemStackMixin",
+        "items.RecordItemMixin"
     ],
     "client": [
-        "FogRendererMixin",
-        "ScreenEffectRendererMixin"
+        "client.FogRendererMixin",
+        "client.KeyboardHandlerMixin",
+        "client.KeyMappingAccessor",
+        "client.ScreenEffectRendererMixin",
+        "entities.MultiPlayerGameModeMixin"
     ],
     "injectors": {
         "defaultRequire": 1

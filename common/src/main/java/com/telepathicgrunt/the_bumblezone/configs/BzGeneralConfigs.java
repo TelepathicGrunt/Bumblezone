@@ -1,25 +1,25 @@
 package com.telepathicgrunt.the_bumblezone.configs;
 
 public class BzGeneralConfigs {
-    public static double beehemothSpeed;
-    public static boolean specialBeeSpawning;
-    public static int nearbyBeesPerPlayerInBz;
-    public static boolean dispensersDropGlassBottles;
-    public static int broodBlocksBeeSpawnCapacity;
-    public static int beeQueenSuperTradeRewardMultiplier;
-    public static int beeQueenSuperTradeDurationInTicks;
-    public static int beeQueenSuperTradeAmountTillSatified;
-    public static boolean superCandlesBurnsMobs;
-    public static boolean keepEssenceOfTheBeesOnRespawning;
-    public static int musicDiscTimeLengthFlightOfTheBumblebee;
-    public static int musicDiscTimeLengthHoneyBee;
-    public static int musicDiscTimeLengthBeeLaxingWithTheHomBees;
-    public static int musicDiscTimeLengthLaBeeDaLoca;
-    public static boolean crystallineFlowerConsumeItemEntities;
-    public static boolean crystallineFlowerConsumeExperienceOrbEntities;
-    public static boolean crystallineFlowerConsumeItemUI;
-    public static boolean crystallineFlowerConsumeExperienceUI;
-    public static int crystallineFlowerEnchantingPowerAllowedPerTier;
-    public static int crystallineFlowerExtraXpNeededForTiers;
-    public static int crystallineFlowerExtraTierCost;
+    public static double beehemothSpeed = 0.35D;
+    public static boolean specialBeeSpawning = true;
+    public static int nearbyBeesPerPlayerInBz = 3;
+    public static boolean dispensersDropGlassBottles = true;
+    public static int broodBlocksBeeSpawnCapacity = 84;
+    public static int beeQueenSuperTradeRewardMultiplier = 2;
+    public static int beeQueenSuperTradeDurationInTicks = 6000;
+    public static int beeQueenSuperTradeAmountTillSatified = 3;
+    public static boolean superCandlesBurnsMobs = true;
+    public static boolean keepEssenceOfTheBeesOnRespawning = true;
+    public static int musicDiscTimeLengthFlightOfTheBumblebee = 216;
+    public static int musicDiscTimeLengthHoneyBee = 216;
+    public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;
+    public static int musicDiscTimeLengthLaBeeDaLoca = 176;
+    public static boolean crystallineFlowerConsumeItemEntities = true;
+    public static boolean crystallineFlowerConsumeExperienceOrbEntities = true;
+    public static boolean crystallineFlowerConsumeItemUI = true;
+    public static boolean crystallineFlowerConsumeExperienceUI = true;
+    public static int crystallineFlowerEnchantingPowerAllowedPerTier = 8;
+    public static int crystallineFlowerExtraXpNeededForTiers = 0;
+    public static int crystallineFlowerExtraTierCost = 0;
 }

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.utils.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.mixins.fabric.BucketItemAccessor;
+import com.telepathicgrunt.the_bumblezone.mixins.fabric.items.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;

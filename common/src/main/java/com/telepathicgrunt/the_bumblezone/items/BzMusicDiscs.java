@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.utils.SuppliedMap;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.RecordItem;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public class BzMusicDiscs extends RecordItem {
     private final IntSupplier timeSupplier;
 
     public BzMusicDiscs(int comparatorOutput, Supplier<SoundEvent> sound, Properties settings, IntSupplier musicTimeLength) {
-        super(comparatorOutput, null, settings, 0);
+        super(comparatorOutput, SoundEvents.ITEM_PICKUP, settings, 0); // This uses the pickup sound as a placeholder
         this.sound = sound;
         this.timeSupplier = musicTimeLength;
         MUSIC_DISCS.put(sound, () -> this);

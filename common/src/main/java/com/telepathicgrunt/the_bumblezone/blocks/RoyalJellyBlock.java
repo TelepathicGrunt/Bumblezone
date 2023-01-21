@@ -50,11 +50,11 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     public OptionalBoolean bz$canStickTo(BlockState state, BlockState other) {
         if (state.getBlock() == BzBlocks.ROYAL_JELLY_BLOCK.get()) {
             if (other.getBlock() == Blocks.HONEY_BLOCK || other.getBlock() == Blocks.SLIME_BLOCK) {
-                return OptionalBoolean.ofFalse();
+                return OptionalBoolean.FALSE;
             }
-            return OptionalBoolean.ofTrue();
+            return OptionalBoolean.TRUE;
         }
-        return OptionalBoolean.empty();
+        return OptionalBoolean.EMPTY;
     }
 
     public static boolean isValidMoveDirection(Direction pushDirection, Direction pistonDirection) {

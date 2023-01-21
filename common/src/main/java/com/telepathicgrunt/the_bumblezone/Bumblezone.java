@@ -44,7 +44,7 @@ public class Bumblezone{
 
         //Events
         RegisterCommandsEvent.EVENT.addListener(BzCommands::registerCommand);
-        EntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
+        EntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::onEntitySpawn);
         PlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
         PlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
         EntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
@@ -56,7 +56,7 @@ public class Bumblezone{
         EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
         EntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
         ProjectileHitEvent.EVENT_HIGH.addListener(EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
-        EntityVisabilitityEvent.EVENT.addListener(HiddenEffect::hideEntity);
+        EntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
         EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantment::attemptFasterMining);
         PlayerLocateProjectileEvent.EVENT.addListener(BeeStinger::bowUsable);
@@ -65,13 +65,13 @@ public class Bumblezone{
         PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         AddWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
         TagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
-        ServerStoppingEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
+        ServerGoingToStopEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
         ServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);
         RegisterReloadListenerEvent.EVENT.addListener(Bumblezone::registerDatapackListener);
         AddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
         SetupEvent.EVENT.addListener(Bumblezone::setup);
         FinalSetupEvent.EVENT.addListener(Bumblezone::modCompatSetup); //run after all mods
-        RegisterFlmmablityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
+        RegisterFlammabilityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
         SetupEvent.EVENT.addListener(DispenserAddedSpawnEgg::onSetup);
         RegisterCreativeTabsEvent.EVENT.addListener(BzCreativeTabs::registerCreativeTabs);
         AddCreativeTabEntriesEvent.EVENT.addListener(BzCreativeTabs::addCreativeTabEntries);
@@ -116,7 +116,7 @@ public class Bumblezone{
 //        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzModCompatibilityConfigs.GENERAL_SPEC, "the_bumblezone/mod_compatibility.toml");
     }
 
-    public static void onRegisterFlammablity(RegisterFlmmablityEvent event) {
+    public static void onRegisterFlammablity(RegisterFlammabilityEvent event) {
         BzBlocks.CURTAINS.stream().map(RegistryEntry::get).forEach(block -> event.register(block, 60, 20));
     }
 
@@ -144,8 +144,8 @@ public class Bumblezone{
     }
 
     public static void registerDatapackListener(final RegisterReloadListenerEvent event) {
-        event.register(QueensTradeManager.QUEENS_TRADE_MANAGER);
-        event.register(PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+        event.register(new ResourceLocation(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
+        event.register(new ResourceLocation(Bumblezone.MODID, "pollen_puff"),PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
     }
 
     private static void serverAboutToStart(final ServerGoingToStartEvent event) {

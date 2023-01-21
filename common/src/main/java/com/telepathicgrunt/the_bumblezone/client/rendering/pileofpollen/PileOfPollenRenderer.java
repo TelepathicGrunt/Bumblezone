@@ -23,7 +23,7 @@ public class PileOfPollenRenderer {
 
     public static boolean pileOfPollenOverlay(BlockRenderedOnScreenEvent event) {
         BlockState blockState = event.state();
-        if (blockState.is(BzBlocks.PILE_OF_POLLEN.get())) {
+        if (event.type().equals(BlockRenderedOnScreenEvent.Type.BLOCK) && blockState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             Player playerEntity = event.player();
             PoseStack matrixStack = event.stack();
             boolean isInPollen = false;
