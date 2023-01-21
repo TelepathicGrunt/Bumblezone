@@ -5,6 +5,10 @@
     {
       "id": "mcdw:item_bee_stinger",
       "required": false
+    },
+    {
+      "id": "queen_bee:stinger",
+      "required": false
     }
   ]
 }
