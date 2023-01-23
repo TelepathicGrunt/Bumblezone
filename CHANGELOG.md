@@ -20,6 +20,9 @@ Fixed Honey Fluid and Royal Jelly Fluid so mobs can float on top of it now.
 Renamed fogReducer config option to fogThickness and fixed it so it nows shows more of the dimension and scales the fog properly.
  Also fixes dimension rendering breaking when render distance is 30 or greater and a rendering optimizing mod is on.
 
+##### Items:
+Added all Bumblezone music discs to the `minecraft:music_discs` tag. Let me know if this causes issues.
+
 ##### Advancements:
 Fixed Journey's End advancment to not include The Beginning advancement requirement. Was throwing off MC's advancement progress tracker.
 
