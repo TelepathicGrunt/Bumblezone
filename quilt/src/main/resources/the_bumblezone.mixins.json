@@ -3,10 +3,9 @@
     "package": "com.telepathicgrunt.the_bumblezone.mixin.quilt",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
-
+        "items.BucketItemAccessor"
     ],
     "client": [
-
     ],
     "injectors": {
         "defaultRequire": 1

@@ -20,7 +20,6 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
@@ -317,7 +316,8 @@ public class BumblezoneForge {
     }
 
     private static void onLevelTick(TickEvent.LevelTickEvent event) {
-        LevelTickEvent.EVENT.invoke(new LevelTickEvent(event.level, event.phase == TickEvent.Phase.END));
+        if (event.level.isClientSide) return;
+        ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(event.level, event.phase == TickEvent.Phase.END));
     }
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {

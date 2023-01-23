@@ -64,8 +64,8 @@ public class BumblezoneFabric implements ModInitializer {
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) ->
                 AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(toType(tab), tab, entries::accept)));
 
-        ServerTickEvents.START_WORLD_TICK.register(world -> LevelTickEvent.EVENT.invoke(new LevelTickEvent(world, false)));
-        ServerTickEvents.END_WORLD_TICK.register(world -> LevelTickEvent.EVENT.invoke(new LevelTickEvent(world, true)));
+        ServerTickEvents.START_WORLD_TICK.register(world -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, false)));
+        ServerTickEvents.END_WORLD_TICK.register(world -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, true)));
 
         ServerLifecycleEvents.SERVER_STARTING.register((a) -> ServerGoingToStartEvent.EVENT.invoke(new ServerGoingToStartEvent(a)));
         ServerLifecycleEvents.SERVER_STOPPING.register((a) -> ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE));

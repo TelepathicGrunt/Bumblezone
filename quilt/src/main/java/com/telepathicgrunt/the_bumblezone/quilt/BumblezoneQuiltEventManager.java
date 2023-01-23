@@ -2,7 +2,9 @@ package com.telepathicgrunt.the_bumblezone.quilt;
 
 import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.events.*;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.LevelTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStartEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.Util;
@@ -12,7 +14,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
-import org.quiltmc.qsl.lifecycle.api.client.event.ClientWorldTickEvents;
+import org.quiltmc.qsl.lifecycle.api.event.ServerLifecycleEvents;
 import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 import org.quiltmc.qsl.villager.api.TradeOfferHelper;
 
@@ -38,9 +40,10 @@ public class BumblezoneQuiltEventManager {
 
     public static void init() {
         CommandRegistrationCallback.EVENT.register((dispatcher, context, selection) -> RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(dispatcher, selection, context)));
-        ServerWorldTickEvents.START.register((server, world) -> LevelTickEvent.EVENT.invoke(new LevelTickEvent(world, false)));
-        ServerWorldTickEvents.END.register((server, world) -> LevelTickEvent.EVENT.invoke(new LevelTickEvent(world, true)));
-
+        ServerWorldTickEvents.START.register((server, world) -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, false)));
+        ServerWorldTickEvents.END.register((server, world) -> ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(world, true)));
+        ServerLifecycleEvents.STARTING.register(server -> ServerGoingToStartEvent.EVENT.invoke(new ServerGoingToStartEvent(server)));
+        ServerLifecycleEvents.STOPPING.register(server -> ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE));
     }
 
     public static void registerTrades() {

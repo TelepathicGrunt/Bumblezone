@@ -23,8 +23,13 @@ dependencies {
     modImplementation "org.quiltmc:quilt-loader:${rootProject.quilt_loader_version}"
     modApi "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${rootProject.quilt_fabric_api_version}-${rootProject.minecraft_version}"
 
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}"
-    modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}"
+    modImplementation("dev.cafeteria:fake-player-api:${rootProject.fake_player_api}") {
+        transitive = false //This API doesnt use fabric but includes it so we need to exclude it as its from 1.19.1
+    }
+    include "dev.cafeteria:fake-player-api:${rootProject.fake_player_api}"
+
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
+    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}"
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}"
 

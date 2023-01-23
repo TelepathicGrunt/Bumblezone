@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfoRegistry;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import com.telepathicgrunt.the_bumblezone.fluids.forge.BzFluidType;
 import com.telepathicgrunt.the_bumblezone.fluids.forge.ForgeFluidInfo;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.BasicRegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import net.minecraft.resources.ResourceLocation;
@@ -32,17 +33,7 @@ public class ForgeFluidInfoRegistry implements FluidInfoRegistry {
         FluidProperties props = properties.build(this.modid);
         RegistryObject<BzFluidType> type = registry.register(props.id().getPath(), () -> BzFluidType.of(props));
         ForgeFluidInfo info = new ForgeFluidInfo(type, props);
-        return this.entries.add(new RegistryEntry<>() {
-            @Override
-            public FluidInfo get() {
-                return info;
-            }
-
-            @Override
-            public ResourceLocation getId() {
-                return props.id();
-            }
-        });
+        return this.entries.add(new BasicRegistryEntry<>(props.id(), info));
     }
 
     @Override

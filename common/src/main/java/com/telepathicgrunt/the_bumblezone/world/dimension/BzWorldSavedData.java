@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
-import com.telepathicgrunt.the_bumblezone.events.lifecycle.LevelTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
@@ -62,8 +62,8 @@ public class BzWorldSavedData extends SavedData {
 		return QUEUED_ENTITIES_TO_TELEPORT.stream().anyMatch(entry -> entry.getEntity().equals(entity));
 	}
 
-	public static void worldTick(LevelTickEvent event){
-		if(event.end() && !event.getLevel().isClientSide()){
+	public static void worldTick(ServerLevelTickEvent event){
+		if(event.end()){
 			BzWorldSavedData.tick((ServerLevel) event.getLevel());
 		}
 	}
