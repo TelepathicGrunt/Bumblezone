@@ -27,10 +27,6 @@ public record RegisterItemColorEvent(BiConsumer<ItemColor, ItemLike[]> colors, B
     @FunctionalInterface
     public interface BlockColorProvider {
 
-        BlockColor get(Block block);
-
-        default int getColor(BlockState blockState, @Nullable BlockAndTintGetter blockAndTintGetter, @Nullable BlockPos blockPos, int i) {
-            return get(blockState.getBlock()).getColor(blockState, blockAndTintGetter, blockPos, i);
-        }
+        int getColor(BlockState blockState, @Nullable BlockAndTintGetter blockAndTintGetter, @Nullable BlockPos blockPos, int i);
     }
 }

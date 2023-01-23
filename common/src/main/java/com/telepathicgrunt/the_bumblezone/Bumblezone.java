@@ -63,7 +63,7 @@ public class Bumblezone{
         EntityMiscHandler.initEvents();
         PlayerCraftedItemEvent.EVENT.addListener(IncenseCandleBase::multiPotionCandleCrafted);
         PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
-        AddWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
+        RegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
         TagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
         ServerGoingToStopEvent.EVENT.addListener(ThreadExecutor::handleServerStoppingEvent);
         ServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);

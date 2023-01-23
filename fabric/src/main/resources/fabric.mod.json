@@ -53,7 +53,6 @@
             "the_bumblezone:entity_component",
             "the_bumblezone:original_flying_speed",
             "the_bumblezone:neurotoxins_missed_counter",
-            "the_bumblezone:essence_component",
             "the_bumblezone:misc_component"
         ]
     }

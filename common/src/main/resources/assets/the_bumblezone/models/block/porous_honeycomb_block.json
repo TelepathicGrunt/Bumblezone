@@ -1,5 +1,6 @@
 {
-  "loader": "the_bumblezone:porous_honeycomb",
+  "loader": "the_bumblezone:connected_block",
+  "block": "the_bumblezone:filled_porous_honeycomb_block",
   "textures": {
     "base": "the_bumblezone:block/porous_honeycomb_block",
     "particle": "the_bumblezone:block/porous_honeycomb_block",

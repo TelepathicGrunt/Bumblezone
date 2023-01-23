@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 
 public class FabricConnectedBlockModel implements BakedModel, FabricBakedModel {
 
-    private final EnumMap<ConnectedBlockModel.Connection, TextureAtlasSprite> textures;
+    private final EnumMap<ConnectedBlockModel.Texture, TextureAtlasSprite> textures;
     private final ConnectedBlockModel model;
 
     public FabricConnectedBlockModel(Map<String, TextureAtlasSprite> textures, Predicate<BlockState> connectionPredicate) {
@@ -34,10 +34,10 @@ public class FabricConnectedBlockModel implements BakedModel, FabricBakedModel {
         this.textures = createTextures(textures);
     }
 
-    private static EnumMap<ConnectedBlockModel.Connection, TextureAtlasSprite> createTextures(Map<String, TextureAtlasSprite> textures) {
-        EnumMap<ConnectedBlockModel.Connection, TextureAtlasSprite> map = new EnumMap<>(ConnectedBlockModel.Connection.class);
+    private static EnumMap<ConnectedBlockModel.Texture, TextureAtlasSprite> createTextures(Map<String, TextureAtlasSprite> textures) {
+        EnumMap<ConnectedBlockModel.Texture, TextureAtlasSprite> map = new EnumMap<>(ConnectedBlockModel.Texture.class);
         textures.forEach((key, value) ->
-                ConnectedBlockModel.Connection.tryParse(key)
+                ConnectedBlockModel.Texture.tryParse(key)
                 .ifPresent(connection -> map.put(connection, value))
         );
         return map;
@@ -63,18 +63,18 @@ public class FabricConnectedBlockModel implements BakedModel, FabricBakedModel {
 
             if (state != null && state.hasProperty(BlockStateProperties.FACING) && value.getOpposite() == state.getValue(BlockStateProperties.FACING)) {
                 emitter.square(value, 0, 0, 1, 1, 0);
-                emitter.spriteBake(0, textures.get(ConnectedBlockModel.Connection.FRONT), MutableQuadView.BAKE_LOCK_UV);
+                emitter.spriteBake(0, textures.get(ConnectedBlockModel.Texture.FRONT), MutableQuadView.BAKE_LOCK_UV);
                 emitter.spriteColor(0, -1, -1, -1, -1);
                 emitter.emit();
             } else {
                 emitter.square(value, 0, 0, 1, 1, 0);
-                emitter.spriteBake(0, textures.get(ConnectedBlockModel.Connection.BASE), MutableQuadView.BAKE_LOCK_UV);
+                emitter.spriteBake(0, textures.get(ConnectedBlockModel.Texture.BASE), MutableQuadView.BAKE_LOCK_UV);
                 emitter.spriteColor(0, -1, -1, -1, -1);
                 emitter.emit();
             }
 
             if (level != null && state != null && pos != null) {
-                for (ConnectedBlockModel.Connection connection : model.getSprites(level, pos, value)) {
+                for (ConnectedBlockModel.Texture connection : model.getSprites(level, pos, value)) {
 
                     if (connection != null) {
                         TextureAtlasSprite sprite = textures.get(connection);
@@ -116,7 +116,7 @@ public class FabricConnectedBlockModel implements BakedModel, FabricBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return textures.get(ConnectedBlockModel.Connection.BASE);
+        return textures.getOrDefault(ConnectedBlockModel.Texture.PARTICLE, textures.get(ConnectedBlockModel.Texture.BASE));
     }
 
     @Override

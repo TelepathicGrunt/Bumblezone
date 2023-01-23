@@ -19,28 +19,28 @@ public class ConnectedBlockModel {
         this.connectionPredicate = connectionPredicate;
     }
 
-    public Set<Connection> getSprites(BlockAndTintGetter level, BlockPos pos, Direction direction) {
-        Set<Connection> connections = new HashSet<>();
+    public Set<Texture> getSprites(BlockAndTintGetter level, BlockPos pos, Direction direction) {
+        Set<Texture> connections = new HashSet<>();
         switch (direction) {
             case UP, DOWN -> {
                 if (canConnect(level.getBlockState(pos.relative(Direction.NORTH)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.TOP_RIGHT);
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.TOP_RIGHT);
                 }
                 if (canConnect(level.getBlockState(pos.relative(Direction.SOUTH)))) {
-                    connections.add(Connection.BOTTOM_LEFT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                    connections.add(Texture.BOTTOM_LEFT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
-                if ((!connections.contains(Connection.TOP_LEFT) || !connections.contains(Connection.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.WEST)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.BOTTOM_LEFT);
+                if ((!connections.contains(Texture.TOP_LEFT) || !connections.contains(Texture.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.WEST)))) {
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.BOTTOM_LEFT);
                 }
-                if ((!connections.contains(Connection.TOP_RIGHT) || !connections.contains(Connection.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.EAST)))) {
-                    connections.add(Connection.TOP_RIGHT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                if ((!connections.contains(Texture.TOP_RIGHT) || !connections.contains(Texture.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.EAST)))) {
+                    connections.add(Texture.TOP_RIGHT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
 
-                for (Connection connection : Connection.BASELESS) {
+                for (Texture connection : Texture.BASELESS) {
                     if (!connections.contains(connection) && canConnect(level.getBlockState(connection.offset(pos, direction)))) {
                         connections.add(connection);
                     }
@@ -48,23 +48,23 @@ public class ConnectedBlockModel {
             }
             case NORTH -> {
                 if (canConnect(level.getBlockState(pos.relative(Direction.UP)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.TOP_RIGHT);
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.TOP_RIGHT);
                 }
                 if (canConnect(level.getBlockState(pos.relative(Direction.DOWN)))) {
-                    connections.add(Connection.BOTTOM_LEFT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                    connections.add(Texture.BOTTOM_LEFT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
-                if ((!connections.contains(Connection.TOP_LEFT) || !connections.contains(Connection.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.EAST)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.BOTTOM_LEFT);
+                if ((!connections.contains(Texture.TOP_LEFT) || !connections.contains(Texture.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.EAST)))) {
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.BOTTOM_LEFT);
                 }
-                if ((!connections.contains(Connection.TOP_RIGHT) || !connections.contains(Connection.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.WEST)))) {
-                    connections.add(Connection.TOP_RIGHT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                if ((!connections.contains(Texture.TOP_RIGHT) || !connections.contains(Texture.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.WEST)))) {
+                    connections.add(Texture.TOP_RIGHT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
 
-                for (Connection connection : Connection.BASELESS) {
+                for (Texture connection : Texture.BASELESS) {
                     if (!connections.contains(connection) && canConnect(level.getBlockState(connection.offset(pos, direction)))) {
                         connections.add(connection);
                     }
@@ -72,23 +72,23 @@ public class ConnectedBlockModel {
             }
             case EAST -> {
                 if (canConnect(level.getBlockState(pos.relative(Direction.UP)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.TOP_RIGHT);
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.TOP_RIGHT);
                 }
                 if (canConnect(level.getBlockState(pos.relative(Direction.DOWN)))) {
-                    connections.add(Connection.BOTTOM_LEFT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                    connections.add(Texture.BOTTOM_LEFT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
-                if ((!connections.contains(Connection.TOP_LEFT) || !connections.contains(Connection.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.SOUTH)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.BOTTOM_LEFT);
+                if ((!connections.contains(Texture.TOP_LEFT) || !connections.contains(Texture.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.SOUTH)))) {
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.BOTTOM_LEFT);
                 }
-                if ((!connections.contains(Connection.TOP_RIGHT) || !connections.contains(Connection.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.NORTH)))) {
-                    connections.add(Connection.TOP_RIGHT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                if ((!connections.contains(Texture.TOP_RIGHT) || !connections.contains(Texture.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.NORTH)))) {
+                    connections.add(Texture.TOP_RIGHT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
 
-                for (Connection connection : Connection.BASELESS) {
+                for (Texture connection : Texture.BASELESS) {
                     if (!connections.contains(connection) && canConnect(level.getBlockState(connection.offset(pos, direction)))) {
                         connections.add(connection);
                     }
@@ -96,23 +96,23 @@ public class ConnectedBlockModel {
             }
             case WEST -> {
                 if (canConnect(level.getBlockState(pos.relative(Direction.UP)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.TOP_RIGHT);
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.TOP_RIGHT);
                 }
                 if (canConnect(level.getBlockState(pos.relative(Direction.DOWN)))) {
-                    connections.add(Connection.BOTTOM_LEFT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                    connections.add(Texture.BOTTOM_LEFT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
-                if ((!connections.contains(Connection.TOP_LEFT) || !connections.contains(Connection.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.NORTH)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.BOTTOM_LEFT);
+                if ((!connections.contains(Texture.TOP_LEFT) || !connections.contains(Texture.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.NORTH)))) {
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.BOTTOM_LEFT);
                 }
-                if ((!connections.contains(Connection.TOP_RIGHT) || !connections.contains(Connection.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.SOUTH)))) {
-                    connections.add(Connection.TOP_RIGHT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                if ((!connections.contains(Texture.TOP_RIGHT) || !connections.contains(Texture.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.SOUTH)))) {
+                    connections.add(Texture.TOP_RIGHT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
 
-                for (Connection connection : Connection.BASELESS) {
+                for (Texture connection : Texture.BASELESS) {
                     if (!connections.contains(connection) && canConnect(level.getBlockState(connection.offset(pos, direction)))) {
                         connections.add(connection);
                     }
@@ -120,23 +120,23 @@ public class ConnectedBlockModel {
             }
             case SOUTH -> {
                 if (canConnect(level.getBlockState(pos.relative(Direction.UP)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.TOP_RIGHT);
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.TOP_RIGHT);
                 }
                 if (canConnect(level.getBlockState(pos.relative(Direction.DOWN)))) {
-                    connections.add(Connection.BOTTOM_LEFT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                    connections.add(Texture.BOTTOM_LEFT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
-                if ((!connections.contains(Connection.TOP_LEFT) || !connections.contains(Connection.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.WEST)))) {
-                    connections.add(Connection.TOP_LEFT);
-                    connections.add(Connection.BOTTOM_LEFT);
+                if ((!connections.contains(Texture.TOP_LEFT) || !connections.contains(Texture.BOTTOM_LEFT)) && canConnect(level.getBlockState(pos.relative(Direction.WEST)))) {
+                    connections.add(Texture.TOP_LEFT);
+                    connections.add(Texture.BOTTOM_LEFT);
                 }
-                if ((!connections.contains(Connection.TOP_RIGHT) || !connections.contains(Connection.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.EAST)))) {
-                    connections.add(Connection.TOP_RIGHT);
-                    connections.add(Connection.BOTTOM_RIGHT);
+                if ((!connections.contains(Texture.TOP_RIGHT) || !connections.contains(Texture.BOTTOM_RIGHT)) && canConnect(level.getBlockState(pos.relative(Direction.EAST)))) {
+                    connections.add(Texture.TOP_RIGHT);
+                    connections.add(Texture.BOTTOM_RIGHT);
                 }
 
-                for (Connection connection : Connection.BASELESS) {
+                for (Texture connection : Texture.BASELESS) {
                     if (!connections.contains(connection) && canConnect(level.getBlockState(connection.offset(pos, direction)))) {
                         connections.add(connection);
                     }
@@ -150,15 +150,16 @@ public class ConnectedBlockModel {
         return connectionPredicate.test(state);
     }
 
-    public enum Connection {
+    public enum Texture {
         BASE(),
+        PARTICLE(),
         FRONT(),
         TOP_LEFT(),
         TOP_RIGHT(),
         BOTTOM_LEFT(),
         BOTTOM_RIGHT();
 
-        public static final Connection[] BASELESS = new Connection[]{TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
+        public static final Texture[] BASELESS = new Texture[]{TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
 
         public BlockPos offset(BlockPos pos, Direction direction) {
             return switch (direction) {
@@ -200,7 +201,7 @@ public class ConnectedBlockModel {
             };
         }
 
-        public Connection hFlip() {
+        public Texture hFlip() {
             return switch (this) {
                 case TOP_LEFT -> TOP_RIGHT;
                 case TOP_RIGHT -> TOP_LEFT;
@@ -210,7 +211,7 @@ public class ConnectedBlockModel {
             };
         }
 
-        public Connection vFlip() {
+        public Texture vFlip() {
             return switch (this) {
                 case TOP_LEFT -> BOTTOM_LEFT;
                 case TOP_RIGHT -> BOTTOM_RIGHT;
@@ -220,9 +221,9 @@ public class ConnectedBlockModel {
             };
         }
 
-        public static Optional<Connection> tryParse(String connection) {
+        public static Optional<Texture> tryParse(String connection) {
             try {
-                return Optional.of(Connection.valueOf(connection.toUpperCase(Locale.ROOT)));
+                return Optional.of(Texture.valueOf(connection.toUpperCase(Locale.ROOT)));
             } catch (Exception e) {
                 return Optional.empty();
             }

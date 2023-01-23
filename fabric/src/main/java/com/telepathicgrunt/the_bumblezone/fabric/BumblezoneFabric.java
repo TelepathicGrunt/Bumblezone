@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.*;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.*;
-import dev.architectury.event.events.common.CommandRegistrationEvent;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.api.ModInitializer;
@@ -124,7 +123,7 @@ public class BumblezoneFabric implements ModInitializer {
         var trades = VillagerTrades.WANDERING_TRADER_TRADES;
         List<VillagerTrades.ItemListing> basic = Arrays.stream(trades.get(1)).collect(Collectors.toList());
         List<VillagerTrades.ItemListing> rare = Arrays.stream(trades.get(2)).collect(Collectors.toList());
-        AddWanderingTradesEvent.EVENT.invoke(new AddWanderingTradesEvent(basic, rare));
+        RegisterWanderingTradesEvent.EVENT.invoke(new RegisterWanderingTradesEvent(basic::add, rare::add));
         trades.put(1, basic.toArray(new VillagerTrades.ItemListing[0]));
         trades.put(2, rare.toArray(new VillagerTrades.ItemListing[0]));
     }
@@ -143,7 +142,7 @@ public class BumblezoneFabric implements ModInitializer {
                     listings.put(i, new ArrayList<>());
                 }
             }
-            RegisterVillagerTradesEvent.EVENT.invoke(new RegisterVillagerTradesEvent(profession, listings));
+            RegisterVillagerTradesEvent.EVENT.invoke(new RegisterVillagerTradesEvent(profession, (i, listing) -> listings.get(i.intValue()).add(listing)));
             for (int i = 1; i <= 5; i++) {
                 profTrades.put(i, listings.get(i).toArray(new VillagerTrades.ItemListing[0]));
             }
