@@ -3,7 +3,8 @@ plugins {
 }
 
 repositories {
-    maven { url "https://maven.quiltmc.org/repository/release/" }
+    maven { url 'https://maven.quiltmc.org/repository/release' }
+    maven { url 'https://maven.quiltmc.org/repository/snapshot' }
 }
 
 architectury {
@@ -19,9 +20,25 @@ configurations {
     developmentQuilt.extendsFrom common
 }
 
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module('net.fabricmc:fabric-loader') using module("org.quiltmc:quilt-loader:${rootProject.quilt_loader_version}")
+        all { DependencySubstitution dependency ->
+            if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.group == 'net.fabricmc.fabric-api') {
+                if (dependency.requested.module == 'fabric-api')
+                    dependency.useTarget "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${rootProject.quilt_fabric_api_version}-${rootProject.minecraft_version}"
+                else
+                    dependency.useTarget 'org.quiltmc.quilted-fabric-api' + ':' + dependency.requested.module + ":5.0.0-alpha.7+0.70.0-1.19.3"
+            }
+        }
+    }
+}
+
 dependencies {
     modImplementation "org.quiltmc:quilt-loader:${rootProject.quilt_loader_version}"
-    modApi "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${rootProject.quilt_fabric_api_version}-${rootProject.minecraft_version}"
+    modApi("org.quiltmc.quilted-fabric-api:quilted-fabric-api:${rootProject.quilt_fabric_api_version}-${rootProject.minecraft_version}") {
+        force = true
+    }
 
     modImplementation("dev.cafeteria:fake-player-api:${rootProject.fake_player_api}") {
         transitive = false //This API doesnt use fabric but includes it so we need to exclude it as its from 1.19.1
