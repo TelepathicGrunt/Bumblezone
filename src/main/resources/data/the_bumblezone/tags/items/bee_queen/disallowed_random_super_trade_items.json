@@ -43,6 +43,14 @@
     "#minecraft:banners",
     "#minecraft:beds",
     "#minecraft:candles",
+    "#minecraft:wooden_buttons",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_fences",
+    "#minecraft:wooden_pressure_plates",
+    "#minecraft:wooden_slabs",
+    "#minecraft:wooden_stairs",
+    "#minecraft:wooden_trapdoors",
+    "#minecraft:planks",
     "the_bumblezone:empty_honeycomb_brood_block",
     "the_bumblezone:royal_jelly_bottle",
     "the_bumblezone:royal_jelly_bucket",
@@ -75,6 +83,14 @@
     },
     {
       "id": "#forge:stained_glass",
+      "required": false
+    },
+    {
+      "id": "#forge:fence_gates/wooden",
+      "required": false
+    },
+    {
+      "id": "#c:fence_gates/wooden",
       "required": false
     },
     {
