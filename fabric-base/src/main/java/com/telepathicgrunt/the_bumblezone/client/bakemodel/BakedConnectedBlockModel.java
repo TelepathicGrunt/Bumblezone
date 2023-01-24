@@ -20,18 +20,20 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class FabricConnectedBlockModel implements BakedModel, FabricBakedModel {
+public class BakedConnectedBlockModel implements BakedModel, FabricBakedModel {
 
     private final EnumMap<ConnectedBlockModel.Texture, TextureAtlasSprite> textures;
     private final ConnectedBlockModel model;
 
-    public FabricConnectedBlockModel(Map<String, TextureAtlasSprite> textures, Predicate<BlockState> connectionPredicate) {
+    public BakedConnectedBlockModel(Map<ConnectedBlockModel.Texture, TextureAtlasSprite> textures, Predicate<BlockState> connectionPredicate) {
         this.model = new ConnectedBlockModel(connectionPredicate);
-        this.textures = createTextures(textures);
+        this.textures = new EnumMap<>(textures);
     }
 
     private static EnumMap<ConnectedBlockModel.Texture, TextureAtlasSprite> createTextures(Map<String, TextureAtlasSprite> textures) {

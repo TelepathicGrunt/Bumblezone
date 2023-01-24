@@ -1,6 +1,9 @@
 {
   "loader": "the_bumblezone:connected_block",
-  "block": "the_bumblezone:honeycomb_brood_block",
+  "block": [
+    "the_bumblezone:filled_porous_honeycomb_block",
+    "the_bumblezone:honeycomb_brood_block"
+  ],
   "textures": {
     "base": "the_bumblezone:block/honeycomb_brood_block/empty_honeycomb_brood_block_side",
     "front": "the_bumblezone:block/honeycomb_brood_block/empty_honeycomb_brood_block",

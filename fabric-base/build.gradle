@@ -3,12 +3,7 @@ plugins {
 }
 
 architectury {
-    platformSetupLoomIde()
-    fabric()
-}
-
-loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
+    common("fabric", "quilt", "forge")
 }
 
 configurations {
@@ -17,6 +12,10 @@ configurations {
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
 }
 
 dependencies {
@@ -39,9 +38,6 @@ dependencies {
     modImplementation "me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-    common(project(path: ":fabric-base", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":fabric-base", configuration: "transformProductionFabric")) { transitive false }
 
     include "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
     modImplementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"

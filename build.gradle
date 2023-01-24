@@ -53,6 +53,7 @@ allprojects {
         }
         maven { url "https://jitpack.io" }
         maven { url "https://www.cursemaven.com" }
+        maven { url "https://api.modrinth.com/maven/" }
     }
 
     tasks.withType(JavaCompile) {

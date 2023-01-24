@@ -20,8 +20,8 @@
         },
         "intermediate_mappings": "net.fabricmc:intermediary",
         "entrypoints": {
-            "init": "com.telepathicgrunt.the_bumblezone.Bumblezone",
-            "client_init": "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient",
+            "init": "com.telepathicgrunt.the_bumblezone.quilt.BumblezoneQuilt",
+            "client_init": "com.telepathicgrunt.the_bumblezone.quilt.BumblezoneQuiltClient",
             "preLaunch": "com.llamalad7.mixinextras.MixinExtrasBootstrap::init",
             "modmenu": "com.telepathicgrunt.the_bumblezone.configs.ModMenuConfig",
             "cardinal-components-entity": "com.telepathicgrunt.the_bumblezone.modules.quilt.ComponentInitializer",
@@ -44,7 +44,8 @@
             },
             {
                 "id": "midnightlib",
-                "versions": ">=0.5.2"
+                "versions": ">=0.5.2",
+                "optional": true
             },
             {
                 "id": "emi",
@@ -53,8 +54,11 @@
             }
         ]
     },
-    "access_widener" : "the_bumblezone.accesswidener",
-    "mixin": "the_bumblezone.mixins.json",
+    "mixin": [
+        "the_bumblezone.mixins.json",
+        "the_bumblezone-fabric-base.mixins.json",
+        "the_bumblezone-common.mixins.json"
+    ],
     "cardinal-components": [
         "the_bumblezone:entity_component",
         "the_bumblezone:original_flying_speed",

@@ -40,6 +40,7 @@
     },
     "mixins": [
         "the_bumblezone.mixins.json",
+        "the_bumblezone-fabric-base.mixins.json",
         "the_bumblezone-common.mixins.json"
     ],
 

@@ -9,5 +9,6 @@ pluginManagement {
 
 include("common")
 include("fabric")
+include("fabric-base")
 include("quilt")
 include("forge")
