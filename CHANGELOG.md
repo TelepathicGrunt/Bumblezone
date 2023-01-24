@@ -11,6 +11,8 @@ Bee Queen will not get angry at attacking Players in Peaceful mode now.
 
 When Bee Queen is angry, the translucent super trade item rendering will disappear until queen is calm again.
 
+Bee Queen won't have many plank or plank-derivative blocks as part of the super trade system to reduce wood bloat in it.
+
 ##### Effects:
 Wrath of the Hive will not apply to players in Peaceful mode now.
 

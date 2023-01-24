@@ -73,6 +73,26 @@
       "required": true
     },
     {
+      "id": "#c:seeds",
+      "required": false
+    },
+    {
+      "id": "#c:wax",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/honeycomb",
+      "required": false
+    },
+    {
+      "id": "#c:honeycombs",
+      "required": false
+    },
+    {
+      "id": "#c:fence_gates/wooden",
+      "required": false
+    },
+    {
       "id": "#forge:seeds",
       "required": false
     },
