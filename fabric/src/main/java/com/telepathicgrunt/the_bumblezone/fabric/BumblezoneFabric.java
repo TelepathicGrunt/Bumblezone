@@ -1,12 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.fabricbase.BzConfig;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.*;
 import com.telepathicgrunt.the_bumblezone.fabricbase.FabricBaseEventManager;
+import com.telepathicgrunt.the_bumblezone.modcompat.fabric.FabricModChecker;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.api.ModInitializer;
@@ -37,6 +39,7 @@ public class BumblezoneFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        BzConfig.setup();
         Bumblezone.init();
 
         AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) ->
@@ -74,6 +77,8 @@ public class BumblezoneFabric implements ModInitializer {
                 !BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(player, state)));
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
                 RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(dispatcher, environment, context)));
+
+        FabricModChecker.setupModCompat();
     }
 
     private static <T extends Mob> void registerPlacement(EntityType<T> type, RegisterSpawnPlacementsEvent.Placement<T> placement) {

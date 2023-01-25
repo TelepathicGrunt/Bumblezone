@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.BzEntityHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -11,18 +12,24 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Set;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin {
+public abstract class EntityMixin implements BzEntityHooks {
+
+    @Unique
+    private FluidState bz$eyeFluidState = Fluids.EMPTY.defaultFluidState();
 
     @Shadow public abstract boolean isEyeInFluid(TagKey<Fluid> tagKey);
 
@@ -89,6 +96,7 @@ public abstract class EntityMixin {
             double fluidHeight = (float)blockPos.getY() + fluidState.getHeight(this.level, blockPos);
             if (fluidHeight > eyeHeight) {
                 fluidState.getTags().forEach(this.fluidOnEyes::add);
+                this.bz$eyeFluidState = fluidState;
                 ci.cancel();
             }
         }
@@ -103,5 +111,24 @@ public abstract class EntityMixin {
             return true;
         }
         return original.call(fluidState, tagKey);
+    }
+
+    @Inject(method = "updateFluidOnEyes", at = @At("HEAD"))
+    public void bumblezone$onSetFluidInEyes(CallbackInfo ci) {
+        bz$eyeFluidState = Fluids.EMPTY.defaultFluidState();
+    }
+
+    @Inject(
+            method = "updateFluidOnEyes",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;getTags()Ljava/util/stream/Stream;"),
+            locals = LocalCapture.CAPTURE_FAILHARD
+    )
+    public void bumblezone$onSetFluidInEyes_fabric(CallbackInfo ci, double d, Entity entity, BlockPos blockPos, FluidState fluidState, double e) {
+        bz$eyeFluidState = fluidState;
+    }
+
+    @Override
+    public FluidState bz$getFluidOnEyes() {
+        return bz$eyeFluidState;
     }
 }

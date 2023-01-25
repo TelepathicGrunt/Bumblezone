@@ -1,10 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -92,6 +95,11 @@ public class PlatformHooks {
     @ExpectPlatform
     public static void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         throw new NotImplementedException("PlatformHooks sendBlockBreakEvent is not implemented!");
+    }
+
+    @ExpectPlatform
+    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidInfo... fluids) {
+        throw new NotImplementedException("PlatformHooks getFluidHeight is not implemented!");
     }
 
 

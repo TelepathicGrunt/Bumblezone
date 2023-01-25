@@ -78,6 +78,10 @@ public interface ModCompat {
         return false;
     }
 
+    default boolean isHostBee(Entity entity) {
+        return false;
+    }
+
     enum Type {
         SPAWNS,
         EMPTY_BROOD,
@@ -85,6 +89,6 @@ public interface ModCompat {
         DIMENSION_SPAWN,
         BLOCK_TELEPORT,
         COMB_ORE,
-        REGISTRIES
+        HAS_HOST_BEES,
     }
 }

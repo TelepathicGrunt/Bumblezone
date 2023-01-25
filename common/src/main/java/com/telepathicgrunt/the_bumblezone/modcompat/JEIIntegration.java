@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -22,22 +21,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
+
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(Bumblezone.MODID, "jei_plugin");
     }
 
     @Override
-    public void registerRecipes(IRecipeRegistration registration) {
-        if (PlatformHooks.isModLoaded("roughlyenoughitems")) {
-            return;
-        }
-
+    public void registerRecipes(@NotNull IRecipeRegistration registration) {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(registration, item.get()));
         addInfo(registration, BzItems.PILE_OF_POLLEN.get());
         addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());

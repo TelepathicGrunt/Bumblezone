@@ -35,7 +35,7 @@ public class BuzzierBeesCompat implements ModCompat {
 
 	@Override
 	public EnumSet<Type> compatTypes() {
-		return EnumSet.of(Type.EMPTY_BROOD, Type.REGISTRIES);
+		return EnumSet.of(Type.EMPTY_BROOD);
 	}
 
 	@Override

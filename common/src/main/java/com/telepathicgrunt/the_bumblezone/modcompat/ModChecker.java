@@ -18,6 +18,7 @@ public class ModChecker {
 	public static final List<ModCompat> DIM_SPAWN_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BLOCK_TELEPORT_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> COMB_ORE_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> HOST_BEE_COMPATS = new ArrayList<>();
 
 	public static boolean productiveBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
@@ -27,6 +28,7 @@ public class ModChecker {
 	public static boolean beekeeperPresent = false;
 	public static boolean quarkPresent = false;
 	public static boolean potionOfBeesPresent = false;
+	public static boolean requiemPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -65,6 +67,7 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.DIMENSION_SPAWN)) DIM_SPAWN_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BLOCK_TELEPORT)) BLOCK_TELEPORT_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.COMB_ORE)) COMB_ORE_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.HAS_HOST_BEES)) HOST_BEE_COMPATS.add(compat);
 			}
 		}
 		catch (Throwable e) {

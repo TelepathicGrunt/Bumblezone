@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.quilt;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.fabricbase.BzConfig;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
+import com.telepathicgrunt.the_bumblezone.modcompat.quilt.QuiltModChecker;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
@@ -14,6 +16,7 @@ public class BumblezoneQuilt implements ModInitializer {
 
     @Override
     public void onInitialize(ModContainer mod) {
+        BzConfig.setup();
         Bumblezone.init();
 
         QuiltEventManager.init();
@@ -28,6 +31,7 @@ public class BumblezoneQuilt implements ModInitializer {
         ));
 
         RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(QuiltTrackedDataHandlerRegistry::register));
+        QuiltModChecker.setupModCompat();
     }
 
     private static ResourcePackActivationType toType(AddBuiltinResourcePacks.PackMode mode) {

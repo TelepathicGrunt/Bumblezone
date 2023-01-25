@@ -51,9 +51,19 @@ allprojects {
                 includeGroupByRegex 'dev\\.emi.*'
             }
         }
+        maven {
+            url = 'https://maven.jamieswhiteshirt.com/libs-release/'
+            content {
+                includeGroup 'com.jamieswhiteshirt'
+            }
+        }
         maven { url "https://jitpack.io" }
         maven { url "https://www.cursemaven.com" }
         maven { url "https://api.modrinth.com/maven/" }
+        maven {
+            name = "TerraformersMC"
+            url = "https://maven.terraformersmc.com/"
+        }
     }
 
     tasks.withType(JavaCompile) {

@@ -3,12 +3,14 @@ package com.telepathicgrunt.the_bumblezone.forge;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.forge.BzConfigHandler;
 import com.telepathicgrunt.the_bumblezone.events.*;
 import com.telepathicgrunt.the_bumblezone.events.entity.*;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.*;
 import com.telepathicgrunt.the_bumblezone.events.player.*;
 import com.telepathicgrunt.the_bumblezone.mixins.forge.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.BuzzierBeesCompatRegs;
+import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.forge.ResourcefulRegistriesImpl;
 import com.telepathicgrunt.the_bumblezone.modules.forge.ForgeModuleInitalizer;
@@ -62,6 +64,7 @@ import java.util.List;
 public class BumblezoneForge {
 
     public BumblezoneForge() {
+        BzConfigHandler.setup();
         ForgeModuleInitalizer.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.NORMAL, ResourcefulRegistriesImpl::onRegisterForgeRegistries);
 
@@ -165,6 +168,7 @@ public class BumblezoneForge {
 
     private static void onFinalSetup(FMLCommonSetupEvent event) {
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(event::enqueueWork));
+        event.enqueueWork(ForgeModChecker::setupModCompat);
         event.enqueueWork(() ->
                 RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
                         (id, serializer) -> EntityDataSerializers.registerSerializer(serializer))));

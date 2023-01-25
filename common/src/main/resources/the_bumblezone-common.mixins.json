@@ -31,7 +31,6 @@
         "entities.ExperienceOrbAccessor",
         "entities.ExperienceOrbMixin",
         "entities.FishingBobberEntityMixin",
-        "entities.FluidInEyesEntityMixin",
         "entities.FlyNodeEvaluatorMixin",
         "entities.HangingEntityMixin",
         "entities.LightningBoltMixin",

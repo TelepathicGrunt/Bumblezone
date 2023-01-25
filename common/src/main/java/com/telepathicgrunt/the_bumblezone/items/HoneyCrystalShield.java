@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -15,7 +14,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
+public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
     private static final int[] shieldDurabilityBoostPerLevel = new int[]{0,20,45,75,110,150,195,245,316,632};
     private static final int maxShieldLevel = shieldDurabilityBoostPerLevel.length - 1;
 
@@ -106,7 +105,6 @@ public class HoneyCrystalShield extends ShieldItem implements ItemExtension {
     /**
      * blacklisted mending enchantment
      */
-    //TODO forge method
     @Override
     public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if(enchantment == Enchantments.MENDING) {

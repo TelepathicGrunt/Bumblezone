@@ -6,14 +6,18 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerLocateProjectileEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.items.BzShieldItem;
+import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShieldBehavior;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Abilities;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -25,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends Entity {
@@ -32,6 +37,10 @@ public abstract class PlayerMixin extends Entity {
     @Shadow @Final private Abilities abilities;
 
     @Shadow protected boolean wasUnderwater;
+
+    @Shadow @Final private Inventory inventory;
+
+    @Shadow public abstract ItemCooldowns getCooldowns();
 
     public PlayerMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -97,6 +106,36 @@ public abstract class PlayerMixin extends Entity {
             if(this.wasUnderwater) {
                 cir.setReturnValue(true);
             }
+        }
+    }
+
+    @Inject(method = "hurtCurrentlyUsedShield",
+            at = @At(value = "HEAD"),
+            cancellable = true)
+    private void thebumblezone_damageHoneyCrystalShield(float amount, CallbackInfo ci) {
+        if(HoneyCrystalShieldBehavior.damageHoneyCrystalShield(((Player)(Object)this), amount)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "disableShield",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemCooldowns;addCooldown(Lnet/minecraft/world/item/Item;I)V"))
+    private void thebumblezone$applyCooldownForShield(boolean sprinting, CallbackInfo ci) {
+        inventory.items.forEach(item -> {
+            if (item.getItem() instanceof BzShieldItem) {
+                getCooldowns().addCooldown(item.getItem(), 100);
+            }
+        });
+    }
+
+    @Inject(method = "hurt",
+            at = @At(value = "HEAD"),
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            cancellable = true)
+    private void thebumblezone$playerAttacked(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        HoneyCrystalShieldBehavior.slowPhysicalAttackers(source, ((Player) (Object) this));
+        if(HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(source, ((Player) (Object) this))) {
+            cir.setReturnValue(true);
         }
     }
 }

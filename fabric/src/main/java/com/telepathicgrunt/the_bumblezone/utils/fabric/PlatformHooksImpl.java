@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.utils.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
@@ -10,6 +11,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -93,4 +96,9 @@ public class PlatformHooksImpl {
     public static void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(level, player, pos, state, entity);
     }
+
+    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidInfo... fluids) {
+        return entity.getFluidHeight(fallback);
+    }
+
 }

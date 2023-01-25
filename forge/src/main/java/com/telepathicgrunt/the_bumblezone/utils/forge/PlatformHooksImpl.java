@@ -1,9 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.utils.forge;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -82,4 +85,15 @@ public class PlatformHooksImpl {
     public static void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         //Do nothing
     }
+
+    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidInfo... fluids) {
+        for (FluidInfo fluid : fluids) {
+            double forgeTypeHeight = entity.getFluidTypeHeight(fluid.source().getFluidType());
+            if (forgeTypeHeight > 0) {
+                return forgeTypeHeight;
+            }
+        }
+        return entity.getFluidHeight(fallback);
+    }
+
 }

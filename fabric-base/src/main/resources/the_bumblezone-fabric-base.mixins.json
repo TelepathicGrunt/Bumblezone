@@ -14,7 +14,8 @@
         "client.ModelBakeryMixin",
         "client.MultiPlayerGameModeMixin",
         "client.ParticleEngineMixin",
-        "client.ScreenEffectRendererMixin"
+        "client.ScreenEffectRendererMixin",
+        "mods.MidnightConfigScreenMixin"
     ],
     "mixins": [
         "PistonStructureResolverMixin",
@@ -33,6 +34,7 @@
         "entity.PlayerMixin",
         "entity.ServerPlayerGameModeMixin",
         "entity.ServerPlayerMixin",
+        "entity.ShieldMobMixin",
         "entity.ThrowableProjectileMixin",
         "entity.WalkNodeEvaluatorMixin",
         "fluid.BzBucketItemMixin",

@@ -27,10 +27,7 @@ import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,7 +70,7 @@ public class Bumblezone{
         AddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
         SetupEvent.EVENT.addListener(Bumblezone::setup);
         RegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
-        FinalSetupEvent.EVENT.addListener(Bumblezone::modCompatSetup); //run after all mods
+        FinalSetupEvent.EVENT.addListener(Bumblezone::onFinalSetup); //run after all mods
         RegisterFlammabilityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
         SetupEvent.EVENT.addListener(DispenserAddedSpawnEgg::onSetup);
         RegisterCreativeTabsEvent.EVENT.addListener(BzCreativeTabs::registerCreativeTabs);
@@ -137,20 +134,8 @@ public class Bumblezone{
         event.register(new ResourceLocation(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
     }
 
-    private static void modCompatSetup(final FinalSetupEvent event) {
-        event.enqueueWork(() -> {
-            // Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
-            // another mod registers to it at the same exact time.
-            DispenserItemSetup.setupDispenserBehaviors();
-
-            // should run after most other mods just in case
-            //ModChecker.setupModCompat(); TODO run on each side respectively because we require each sides mod compats to be ran too.
-        });
-    }
-
-    @ExpectPlatform
-    private static void registerSerializer(ResourceLocation id, EntityDataSerializer<?> serializer) {
-
+    private static void onFinalSetup(final FinalSetupEvent event) {
+        event.enqueueWork(DispenserItemSetup::setupDispenserBehaviors);
     }
 
     public static void registerDatapackListener(final RegisterReloadListenerEvent event) {
