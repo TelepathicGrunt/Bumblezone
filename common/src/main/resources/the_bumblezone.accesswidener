@@ -18,3 +18,6 @@ accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/m
 accessible method net/minecraft/world/food/FoodProperties <init> (IFZZZLjava/util/List;)V
 
 extendable class net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator
+
+accessible class net/minecraft/client/particle/ParticleEngine$MutableSpriteSet
+accessible method net/minecraft/client/particle/ParticleEngine$MutableSpriteSet <init> ()V

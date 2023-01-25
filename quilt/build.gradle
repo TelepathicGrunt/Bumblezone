@@ -7,6 +7,10 @@ repositories {
     maven { url 'https://maven.quiltmc.org/repository/snapshot' }
 }
 
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+}
+
 architectury {
     platformSetupLoomIde()
     loader("quilt")
@@ -55,7 +59,7 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionQuilt")) { transitive false }
     common(project(path: ":fabric-base", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":fabric-base", configuration: "transformProductionFabric")) { transitive false }
+    shadowCommon(project(path: ":fabric-base", configuration: "transformProductionQuilt")) { transitive false }
 
     include "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
     modImplementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"

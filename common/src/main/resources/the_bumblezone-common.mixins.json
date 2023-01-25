@@ -28,6 +28,7 @@
         "entities.BeePathfindingMixin",
         "entities.EntityMixin",
         "entities.EntityTypeMixin",
+        "entities.ExperienceOrbAccessor",
         "entities.ExperienceOrbMixin",
         "entities.FishingBobberEntityMixin",
         "entities.FluidInEyesEntityMixin",

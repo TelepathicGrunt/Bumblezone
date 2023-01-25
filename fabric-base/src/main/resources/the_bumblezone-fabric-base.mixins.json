@@ -7,11 +7,40 @@
     },
     "minVersion": "0.8",
     "client": [
-        "BlockModelMixin",
-        "ModelBakeryMixin"
+        "client.BlockModelMixin",
+        "client.FogRendererMixin",
+        "client.KeyboardHandlerMixin",
+        "client.KeyMappingAccessor",
+        "client.ModelBakeryMixin",
+        "client.MultiPlayerGameModeMixin",
+        "client.ParticleEngineMixin",
+        "client.ScreenEffectRendererMixin"
     ],
     "mixins": [
-        "BlockModelDeserializerMixin",
-        "ModelManagerMixin"
+        "PistonStructureResolverMixin",
+        "ResultSlotMixin",
+        "SimpleCookingSerializerMixin",
+        "client.BlockModelDeserializerMixin",
+        "client.ModelManagerMixin",
+        "entity.AnimalMixin",
+        "entity.BaseSpawnerMixin",
+        "entity.EntityMixin",
+        "entity.ItemEntityMixin",
+        "entity.LivingEntityMixin",
+        "entity.NaturalSpawnerMixin",
+        "entity.PatrolSpawnerMixin",
+        "entity.PlayerAdvancementsMixin",
+        "entity.PlayerMixin",
+        "entity.ServerPlayerGameModeMixin",
+        "entity.ServerPlayerMixin",
+        "entity.ThrowableProjectileMixin",
+        "entity.WalkNodeEvaluatorMixin",
+        "fluid.BzBucketItemMixin",
+        "fluid.BzLiquidBlockMixin",
+        "item.BowItemMixin",
+        "item.BucketItemAccessor",
+        "item.EnchantmentHelperMixin",
+        "item.ItemStackMixin",
+        "item.RecordItemMixin"
     ]
 }

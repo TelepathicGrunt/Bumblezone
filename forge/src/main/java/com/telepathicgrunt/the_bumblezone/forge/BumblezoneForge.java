@@ -15,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modules.forge.ForgeModuleInitalizer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -164,6 +165,9 @@ public class BumblezoneForge {
 
     private static void onFinalSetup(FMLCommonSetupEvent event) {
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(event::enqueueWork));
+        event.enqueueWork(() ->
+                RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
+                        (id, serializer) -> EntityDataSerializers.registerSerializer(serializer))));
     }
 
     private static void onServerStarting(ServerStartingEvent event) {
