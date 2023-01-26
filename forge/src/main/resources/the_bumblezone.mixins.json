@@ -12,7 +12,8 @@
         "BzLiquidBlockMixin",
         "IncenseCandleRecipeMixin",
         "ItemExtensionMixin",
-        "FireBlockInvoker"
+        "FireBlockInvoker",
+        "BzRandomizableContainerBlockEntityMixin"
     ],
     "client": [
         "BzArmorMixin",

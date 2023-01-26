@@ -14,13 +14,16 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerProfession;
+import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 import org.quiltmc.qsl.block.content.registry.api.FlammableBlockEntry;
 import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
+import org.quiltmc.qsl.entity.networking.api.tracked_data.QuiltTrackedDataHandlerRegistry;
 import org.quiltmc.qsl.lifecycle.api.event.ServerLifecycleEvents;
 import org.quiltmc.qsl.lifecycle.api.event.ServerWorldLoadEvents;
 import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
+import org.quiltmc.qsl.resource.loader.api.ResourcePackActivationType;
 import org.quiltmc.qsl.villager.api.TradeOfferHelper;
 
 public class QuiltEventManager {
@@ -45,6 +48,21 @@ public class QuiltEventManager {
                 TagsUpdatedEvent.EVENT.invoke(new TagsUpdatedEvent(registry, client)));
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockentity) ->
                 !BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(player, state)));
+
+        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) ->
+                ResourceLoader.registerBuiltinResourcePack(
+                        id,
+                        QuiltLoader.getModContainer(id.getNamespace()).orElseThrow(),
+                        switch (mode) {
+                            case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
+                            case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
+                            case FORCE_ENABLED -> ResourcePackActivationType.ALWAYS_ENABLED;
+                        },
+                        displayName
+                )
+        ));
+
+        RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(QuiltTrackedDataHandlerRegistry::register));
     }
 
     private static <T extends Mob> void registerPlacement(EntityType<T> type, RegisterSpawnPlacementsEvent.Placement<T> placement) {

@@ -12,18 +12,17 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.IntStream;
 
-public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
+public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     private NonNullList<ItemStack> itemStacks = NonNullList.withSize(18, ItemStack.EMPTY);
 
     protected HoneyCocoonBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
@@ -45,9 +44,9 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
-        this.loadFromTag(compoundTag);
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
+        this.loadFromTag(tag);
     }
 
     public void loadFromTag(CompoundTag compoundTag) {
@@ -58,10 +57,10 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
-        if (!this.trySaveLootTable(compoundTag)) {
-            ContainerHelper.saveAllItems(compoundTag, this.itemStacks);
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
+        if (!this.trySaveLootTable(tag)) {
+            ContainerHelper.saveAllItems(tag, this.itemStacks);
         }
     }
 
@@ -71,28 +70,23 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> itemStacks) {
+    protected void setItems(@NotNull NonNullList<ItemStack> itemStacks) {
         this.itemStacks = itemStacks;
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int slot, Inventory inventory) {
+    protected AbstractContainerMenu createMenu(int slot, @NotNull Inventory inventory) {
         return new StrictChestMenu(BzMenuTypes.STRICT_9x2.get(), slot, inventory, this, this.getContainerSize() / 9);
     }
 
     @Override
-    public int[] getSlotsForFace(Direction direction) {
+    public int[] getSlotsForFace(@NotNull Direction direction) {
         return IntStream.range(0, this.getContainerSize()).toArray();
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int i, ItemStack item, Direction direction) {
-        return direction == Direction.UP && item.getItem().canFitInsideContainerItems();
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
-        return direction == Direction.DOWN;
+    public Direction getInputDirection() {
+        return Direction.UP;
     }
 
     @Override
@@ -104,12 +98,6 @@ public class HoneyCocoonBlockEntity extends RandomizableContainerBlockEntity imp
             return super.triggerEvent(i, i1);
         }
     }
-
-    //TODO Check if this is needed
-//    @Override
-//    protected IItemHandler createUnSidedHandler() {
-//        return new SidedInvWrapper(this, Direction.UP);
-//    }
 
     public boolean isUnpackedLoottable() {
         return this.lootTable == null;
