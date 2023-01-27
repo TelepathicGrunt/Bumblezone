@@ -1,0 +1,105 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:glistering_honey_crystal",
+    "minecraft:amethyst_block",
+    "minecraft:budding_amethyst",
+    "minecraft:diamond_block",
+    {
+      "id": "#quark:corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_red_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_orange_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_yellow_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_green_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_blue_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_indigo_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_violet_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_white_corundum",
+      "required": false
+    },
+    {
+      "id": "quark:waxed_black_corundum",
+      "required": false
+    },
+    {
+      "id": "create:rose_quartz_block",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:rose_quartz_block",
+      "required": false
+    },
+    {
+      "id": "byg:budding_subzero_crystal",
+      "required": false
+    },
+    {
+      "id": "byg:subzero_crystal_block",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:arcane_crystal_block",
+      "required": false
+    },
+    {
+      "id": "twigs:polished_amethyst",
+      "required": false
+    },
+    {
+      "id": "twigs:polished_amethyst_bricks",
+      "required": false
+    },
+    {
+      "id": "twigs:cracked_polished_amethyst_bricks",
+      "required": false
+    },
+    {
+      "id": "twigs:chiseled_polished_amethyst",
+      "required": false
+    },
+    {
+      "id": "blockus:polished_amethyst",
+      "required": false
+    },
+    {
+      "id": "blockus:amethyst_bricks",
+      "required": false
+    },
+    {
+      "id": "blockus:amethyst_pillar",
+      "required": false
+    },
+    {
+      "id": "blockus:chiseled_amethyst",
+      "required": false
+    },
+    {
+      "id": "spectrum:amethyst_storage_block",
+      "required": false
+    }
+  ]
+}
