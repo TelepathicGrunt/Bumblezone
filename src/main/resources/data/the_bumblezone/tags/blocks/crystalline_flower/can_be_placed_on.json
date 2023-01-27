@@ -73,6 +73,26 @@
       "required": false
     },
     {
+      "id": "ae2:quartz_block",
+      "required": false
+    },
+    {
+      "id": "ae2:damaged_budding_quartz",
+      "required": false
+    },
+    {
+      "id": "ae2:chipped_budding_quartz",
+      "required": false
+    },
+    {
+      "id": "ae2:flawed_budding_quartz",
+      "required": false
+    },
+    {
+      "id": "ae2:flawless_budding_quartz",
+      "required": false
+    },
+    {
       "id": "deeperdarker:crystallized_amber",
       "required": false
     },
@@ -246,6 +266,54 @@
     },
     {
       "id": "galosphere:amethyst_lamp",
+      "required": false
+    },
+    {
+      "id": "galosphere:amethyst_lamp",
+      "required": false
+    },
+    {
+      "id": "galosphere:allurite_block",
+      "required": false
+    },
+    {
+      "id": "galosphere:smooth_allurite",
+      "required": false
+    },
+    {
+      "id": "galosphere:allurite_bricks",
+      "required": false
+    },
+    {
+      "id": "galosphere:chiseled_allurite",
+      "required": false
+    },
+    {
+      "id": "galosphere:allurite_lamp",
+      "required": false
+    },
+    {
+      "id": "galosphere:lumiere_block",
+      "required": false
+    },
+    {
+      "id": "galosphere:charged_lumiere_block",
+      "required": false
+    },
+    {
+      "id": "galosphere:smooth_lumiere",
+      "required": false
+    },
+    {
+      "id": "galosphere:lumiere_bricks",
+      "required": false
+    },
+    {
+      "id": "galosphere:chiseled_lumiere",
+      "required": false
+    },
+    {
+      "id": "galosphere:lumiere_lamp",
       "required": false
     },
     {
