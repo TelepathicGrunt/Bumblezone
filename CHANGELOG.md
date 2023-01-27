@@ -5,6 +5,7 @@ Made XP Orbs no longer spawn pollen particles when moving through Pile of Pollen
 
 Crystalline Flower can now be placed on Amethyst Blocks along with the Glistering Honey Crystal.
  This is controlled now by this block tag: `the_bumblezone:crystalline_flower/can_be_placed_on`
+ Some modded crystal blocks are support. See tag for which. You can datapack the tag to add more blocks or replace the tag to remove entries.
 
 ##### Entities:
 Bee Queen will not get angry at attacking Players in Peaceful mode now.
