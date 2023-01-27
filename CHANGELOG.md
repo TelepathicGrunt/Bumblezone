@@ -31,7 +31,7 @@ Renamed fogReducer config option to fogThickness and fixed it so it nows shows m
 Added all Bumblezone music discs to the `minecraft:music_discs` tag. Let me know if this causes issues.
 
 ##### Advancements:
-Fixed Journey's End advancment to not include The Beginning advancement requirement. Was throwing off MC's advancement progress tracker.
+Fixed Journey's End advancement to not include The Beginning advancement requirement. Was throwing off MC's advancement progress tracker.
 
 ##### Lang:
 Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
