@@ -332,7 +332,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState belowState = level.getBlockState(pos.below());
-        return (belowState.is(BzBlocks.GLISTERING_HONEY_CRYSTAL.get()) || belowState.is(BzBlocks.CRYSTALLINE_FLOWER.get())) && flowerHeightBelow(level, pos) + flowerHeightAbove(level, pos) + 1 <= 7;
+        return (belowState.is(BzTags.CRYSTALLINE_FLOWER_CAN_SURVIVE_ON) || belowState.is(BzBlocks.CRYSTALLINE_FLOWER.get())) && flowerHeightBelow(level, pos) + flowerHeightAbove(level, pos) + 1 <= 7;
     }
 
     @Override
