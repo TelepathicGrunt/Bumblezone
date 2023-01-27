@@ -62,7 +62,135 @@
       "required": false
     },
     {
+      "id": "byg:therium_block",
+      "required": false
+    },
+    {
+      "id": "byg:shiny_chiseled_therium",
+      "required": false
+    },
+    {
+      "id": "byg:chiseled_therium",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:crystallized_amber",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:illunite_block",
+      "required": false
+    },
+    {
+      "id": "nourished_nether:soul_quartz_block",
+      "required": false
+    },
+    {
+      "id": "nourished_nether:smooth_soul_quartz",
+      "required": false
+    },
+    {
+      "id": "nourished_nether:cracked_soul_quartz_bricks",
+      "required": false
+    },
+    {
+      "id": "nourished_nether:soul_quartz_bricks",
+      "required": false
+    },
+    {
+      "id": "nourished_nether:soul_quartz_pillar",
+      "required": false
+    },
+    {
+      "id": "nourished_nether:chiseled_soul_quartz",
+      "required": false
+    },
+    {
+      "id": "skulked:echo_block",
+      "required": false
+    },
+    {
+      "id": "skulked:budding_echo",
+      "required": false
+    },
+    {
+      "id": "geodes:echo_block",
+      "required": false
+    },
+    {
+      "id": "geodes:budding_echo_block",
+      "required": false
+    },
+    {
+      "id": "geode:nether_quartz_crystal_block",
+      "required": false
+    },
+    {
+      "id": "geode:budding_echo",
+      "required": false
+    },
+    {
+      "id": "geode:wrappist_block",
+      "required": false
+    },
+    {
+      "id": "geode:budding_wrappist",
+      "required": false
+    },
+    {
       "id": "forbidden_arcanus:arcane_crystal_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:spectral_shard_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:citrine_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:budding_citrine",
+      "required": false
+    },
+    {
+      "id": "spectrum:moonstone_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:budding_moonstone",
+      "required": false
+    },
+    {
+      "id": "spectrum:topaz_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:budding_topaz",
+      "required": false
+    },
+    {
+      "id": "spectrum:onyx_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:budding_onyx",
+      "required": false
+    },
+    {
+      "id": "spectrum:pure_gobette_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:pure_gobette_end_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:pure_gobette_nether_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:amethyst_storage_block",
       "required": false
     },
     {
@@ -98,7 +226,123 @@
       "required": false
     },
     {
-      "id": "spectrum:amethyst_storage_block",
+      "id": "hexcasting:amethyst_dust_block",
+      "required": false
+    },
+    {
+      "id": "hexcasting:amethyst_tiles",
+      "required": false
+    },
+    {
+      "id": "galosphere:amethyst_bricks",
+      "required": false
+    },
+    {
+      "id": "galosphere:smooth_amethyst",
+      "required": false
+    },
+    {
+      "id": "galosphere:chiseled_amethyst",
+      "required": false
+    },
+    {
+      "id": "galosphere:amethyst_lamp",
+      "required": false
+    },
+    {
+      "id": "geore:diamond_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_diamond",
+      "required": false
+    },
+    {
+      "id": "geore:ruby_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_ruby",
+      "required": false
+    },
+    {
+      "id": "geore:emerald_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_emerald",
+      "required": false
+    },
+    {
+      "id": "geore:gold_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_gold",
+      "required": false
+    },
+    {
+      "id": "geore:lapis_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_lapis",
+      "required": false
+    },
+    {
+      "id": "geore:iron_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_iron",
+      "required": false
+    },
+    {
+      "id": "geore:quartz_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_quartz",
+      "required": false
+    },
+    {
+      "id": "geore:redstone_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_redstone",
+      "required": false
+    },
+    {
+      "id": "geore:sapphire_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_sapphire",
+      "required": false
+    },
+    {
+      "id": "geore:topaz_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_topaz",
+      "required": false
+    },
+    {
+      "id": "geore:copper_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_copper",
+      "required": false
+    },
+    {
+      "id": "geore:coal_block",
+      "required": false
+    },
+    {
+      "id": "geore:budding_coal",
       "required": false
     }
   ]
