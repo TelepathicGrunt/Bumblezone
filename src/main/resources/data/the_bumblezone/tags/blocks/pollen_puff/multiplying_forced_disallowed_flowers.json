@@ -317,6 +317,18 @@
     {
       "id": "spectrum:resonant_lily",
       "required": false
+    },
+    {
+      "id": "expandeddelight:wild_asparagus",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_peanuts",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_sweet_potatoes",
+      "required": false
     }
   ]
 }
