@@ -332,6 +332,10 @@
     {
       "id": "expandeddelight:wild_sweet_potatoes",
       "required": false
+    },
+    {
+      "id": "windswept:wither_rose_bush",
+      "required": false
     }
   ]
 }
