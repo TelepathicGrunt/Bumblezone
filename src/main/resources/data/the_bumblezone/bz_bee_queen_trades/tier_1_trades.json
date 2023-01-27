@@ -61,14 +61,6 @@
       "required": true
     },
     {
-      "id": "#minecraft:saplings",
-      "required": true
-    },
-    {
-      "id": "minecraft:mangrove_propagule",
-      "required": true
-    },
-    {
       "id": "minecraft:redstone",
       "required": true
     },
