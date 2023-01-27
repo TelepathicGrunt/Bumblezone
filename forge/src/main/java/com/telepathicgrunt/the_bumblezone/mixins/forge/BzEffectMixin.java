@@ -3,9 +3,8 @@ package com.telepathicgrunt.the_bumblezone.mixins.forge;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.client.rendering.MobEffectRenderer;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffect;
-import com.telepathicgrunt.the_bumblezone.utils.LazyOptionalSupplier;
+import com.telepathicgrunt.the_bumblezone.utils.LazySupplier;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -23,7 +22,7 @@ public class BzEffectMixin extends MobEffect {
 
     @Override
     public void initializeClient(Consumer<IClientMobEffectExtensions> consumer) {
-        final LazyOptionalSupplier<MobEffectRenderer> renderer = LazyOptionalSupplier.of(() -> MobEffectRenderer.RENDERERS.get(this));
+        final LazySupplier<MobEffectRenderer> renderer = LazySupplier.of(() -> MobEffectRenderer.RENDERERS.get(this));
         consumer.accept(new IClientMobEffectExtensions() {
 
             @Override

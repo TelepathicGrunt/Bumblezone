@@ -87,8 +87,7 @@ public class BzWorldSavedData extends SavedData {
 								return Optional.of(EntityTeleportationBackend.getBzCoordinate(entry.getEntity(), world, bumblezoneWorld));
 							}
 							catch (Throwable e){
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Bumblezone: Failed to teleport entity. Error:");
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, e);
+								Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);
 								return Optional.empty();
 							}
 						})
@@ -106,8 +105,7 @@ public class BzWorldSavedData extends SavedData {
 								return Optional.of(EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entry.getEntity(), destination, upwardChecking));
 							}
 							catch (Throwable e){
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Bumblezone: Failed to teleport entity. Error:");
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, e);
+								Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);
 								return Optional.empty();
 							}
 						})
@@ -142,7 +140,7 @@ public class BzWorldSavedData extends SavedData {
 					teleportedEntities.add(entity);
 					if (entity instanceof ServerPlayer serverPlayer) {
 						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.failed_teleporting"), false);
-						Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
+						Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
 					}
 				}
 			}
@@ -185,7 +183,7 @@ public class BzWorldSavedData extends SavedData {
 				// Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
 				if (bumblezoneWorld == null) {
 					if (entity instanceof ServerPlayer playerEntity) {
-						Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
+						Bumblezone.LOGGER.info("Bumblezone: Please restart the server. The Bumblezone dimension hasn't been made yet due to this bug: https://bugs.mojang.com/browse/MC-195468. A restart will fix this.");
 						MutableComponent message = Component.translatable("system.the_bumblezone.missing_dimension", Component.translatable("system.the_bumblezone.missing_dimension_link").withStyle(ChatFormatting.RED));
 						playerEntity.displayClientMessage(message, false);
 					}

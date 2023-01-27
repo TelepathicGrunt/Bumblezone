@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
-import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class ModChecker {
 
 	@ApiStatus.Internal
 	public static void printErrorToLogs(String currentModID) {
-		Bumblezone.LOGGER.log(Level.ERROR, """
+		Bumblezone.LOGGER.error("""
 		  ------------------------------------------------NOTICE-------------------------------------------------------------------------
 		  
 		  ERROR: Something broke when trying to add mod compatibility with %s. Please let The Bumblezone developer (TelepathicGrunt) know about this!

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone;
 
+import com.mojang.logging.LogUtils;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
@@ -29,14 +30,13 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 public class Bumblezone{
 
     public static final String MODID = "the_bumblezone";
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
-    public static final Logger LOGGER = LogManager.getLogger(MODID);
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
         BzTags.initTags();
@@ -103,17 +103,7 @@ public class Bumblezone{
         BzPlacements.PLACEMENT_MODIFIER.init();
         BzProcessors.STRUCTURE_PROCESSOR.init();
         BzBiomeHeightRegistry.BIOME_HEIGHT.init();
-        //BzBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.init();
-
-        // generates/handles config
-//        FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve("the_bumblezone"), "the_bumblezone");
-//        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, BzClientConfigs.GENERAL_SPEC, "the_bumblezone/client.toml");
-//        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzGeneralConfigs.GENERAL_SPEC, "the_bumblezone/general.toml");
-//        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzWorldgenConfigs.GENERAL_SPEC, "the_bumblezone/worldgen.toml");
-//        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzDimensionConfigs.GENERAL_SPEC, "the_bumblezone/dimension.toml");
-//        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzBeeAggressionConfigs.GENERAL_SPEC, "the_bumblezone/bee_aggression.toml");
-//        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzModCompatibilityConfigs.GENERAL_SPEC, "the_bumblezone/mod_compatibility.toml");
     }
 
     public static void onRegisterFlammablity(RegisterFlammabilityEvent event) {

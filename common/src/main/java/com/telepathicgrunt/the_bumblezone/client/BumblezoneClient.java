@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.MobEffectRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
@@ -50,10 +49,6 @@ public class BumblezoneClient {
         RegisterDimensionEffectsEvent.EVENT.addListener(BumblezoneClient::registerDimensionEffects);
         RegisterBlockColorEvent.EVENT.addListener(IncenseCandleColoring::registerBlockColors);
         RegisterItemColorEvent.EVENT.addListener(IncenseCandleColoring::registerItemColors);
-//        modEventBus.addListener(PorousHoneycombBlockModel::registerModelLoaders);
-//        modEventBus.addListener(PorousHoneycombBlockModel::onBakingCompleted);
-//        modEventBus.addListener(EmptyHoneycombBroodBlockModel::registerModelLoaders);
-//        modEventBus.addListener(EmptyHoneycombBroodBlockModel::onBakingCompleted);
         ClientTickEvent.EVENT.addListener(event -> {
             if (event.end()) {
                 StinglessBeeHelmet.decrementHighlightingCounter(Minecraft.getInstance().player);
