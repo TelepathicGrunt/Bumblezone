@@ -3,6 +3,9 @@
 ##### Misc:
 Made it so that Pollen Puff hitting baby Mooblooms from Bovines and Buttercups will spawn flowers too.
 
+Fixed an issue where Savage and Ravage tries to use a node evaluator with null mob would cause Bumblezone's code to crash.
+ Worked around it with a null check but Savage and Ravine will still later crash. This is to just get Bumblezone to not be blamed in the logs.
+
 
 ### **(V.6.6.3 Changes) (1.19.2 Minecraft)**
 
