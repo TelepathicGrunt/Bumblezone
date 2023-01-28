@@ -2,7 +2,6 @@
   "bovinesandbuttercups:moobloom": [
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:buttercup"
       },
       "plants_to_spawn": {
@@ -21,7 +20,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:pink_daisy"
       },
       "plants_to_spawn": {
@@ -40,7 +38,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:limelight"
       },
       "plants_to_spawn": {
@@ -59,7 +56,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:bird_of_paradise"
       },
       "plants_to_spawn": {
@@ -78,7 +74,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:chargelily"
       },
       "plants_to_spawn": {
@@ -97,7 +92,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:hyacinth"
       },
       "plants_to_spawn": {
@@ -116,7 +110,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:snowdrop"
       },
       "plants_to_spawn": {
@@ -135,7 +128,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:tropical_blue"
       },
       "plants_to_spawn": {
@@ -154,7 +146,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "bovinesandbuttercups:freesia"
       },
       "plants_to_spawn": {
@@ -173,7 +164,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0,
         "Type": "minecraft:dandelion"
       },
       "plants_to_spawn": {
@@ -192,7 +182,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:poppy"
       },
       "plants_to_spawn": {
@@ -211,7 +200,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:blue_orchid"
       },
       "plants_to_spawn": {
@@ -230,7 +218,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:allium"
       },
       "plants_to_spawn": {
@@ -249,7 +236,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:azure_bluet"
       },
       "plants_to_spawn": {
@@ -268,7 +254,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:red_tulip"
       },
       "plants_to_spawn": {
@@ -287,7 +272,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:orange_tulip"
       },
       "plants_to_spawn": {
@@ -306,7 +290,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:white_tulip"
       },
       "plants_to_spawn": {
@@ -325,7 +308,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:pink_tulip"
       },
       "plants_to_spawn": {
@@ -344,7 +326,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:oxeye_daisy"
       },
       "plants_to_spawn": {
@@ -363,7 +344,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:cornflower"
       },
       "plants_to_spawn": {
@@ -382,7 +362,6 @@
     },
     {
       "nbt_match": {
-        "Age": 0, 
         "Type": "minecraft:lily_of_the_valley"
       },
       "plants_to_spawn": {
