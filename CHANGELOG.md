@@ -1,3 +1,9 @@
+### **(V.6.6.4 Changes) (1.19.2 Minecraft)**
+
+##### Misc:
+Made it so that Pollen Puff hitting baby Mooblooms from Bovines and Buttercups will spawn flowers too.
+
+
 ### **(V.6.6.3 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

@@ -20,7 +20,7 @@ public class FlyNodeEvaluatorMixin extends WalkNodeEvaluator {
             require = 0)
     private BlockPathTypes thebumblezone_bzStringCurtainBlockingBees(BlockGetter blockGetter, BlockPos blockPos, Operation<BlockPathTypes> original) {
         BlockPathTypes blockPathType = original.call(blockGetter, blockPos);
-        if (blockPathType == BlockPathTypes.OPEN) {
+        if (blockPathType == BlockPathTypes.OPEN && this.mob != null) {
             if ((this.mob instanceof Bee || this.mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
                 !this.mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING))
             {
