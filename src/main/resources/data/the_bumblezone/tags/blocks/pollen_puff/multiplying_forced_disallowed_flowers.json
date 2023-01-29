@@ -333,6 +333,50 @@
     {
       "id": "windswept:wither_rose_bush",
       "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_lady_slipper_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_ghost_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_spotted_bromeliad",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_tango_bromeliad",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_pitcher_plant",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphtye_green_wing_orchid",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_holiday_cactus_ndm",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_holiday_cactus",
+      "required": false
     }
   ]
 }

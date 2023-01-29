@@ -244,6 +244,14 @@
       "required": false
     },
     {
+      "id": "naturaldecormod:epiphyte_holiday_cactus_ndm",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:epiphyte_holiday_cactus",
+      "required": false
+    },
+    {
       "id": "naturaldecormod:irish_moss_large",
       "required": false
     },
@@ -285,6 +293,10 @@
     },
     {
       "id": "naturaldecormod:spotted_bromeliad_ndm",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:spotted_bromeliad",
       "required": false
     },
     {
