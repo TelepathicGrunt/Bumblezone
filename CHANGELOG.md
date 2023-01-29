@@ -1,5 +1,8 @@
 ### **(V.6.6.4 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Fixed crash that occurred when taking non-enchanted book out of Crystalline Flower UI after clicking an enchant.
+
 ##### Misc:
 Made it so that Pollen Puff hitting baby Mooblooms from Bovines and Buttercups will spawn flowers too.
 
