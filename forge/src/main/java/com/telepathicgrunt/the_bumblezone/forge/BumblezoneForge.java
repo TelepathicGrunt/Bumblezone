@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.forge;
 
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.AtomicDouble;
+import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.forge.BzConfigHandler;
 import com.telepathicgrunt.the_bumblezone.events.*;
@@ -14,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.forge.ResourcefulRegistriesImpl;
 import com.telepathicgrunt.the_bumblezone.modules.forge.ForgeModuleInitalizer;
+import com.telepathicgrunt.the_bumblezone.world.forge.BzBiomeModifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
@@ -31,6 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -55,6 +58,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.resource.PathPackResources;
 
 import java.nio.file.Path;
@@ -62,6 +68,9 @@ import java.util.List;
 
 @Mod(Bumblezone.MODID)
 public class BumblezoneForge {
+
+    public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Bumblezone.MODID);
+    public static final RegistryObject<Codec<BzBiomeModifier>> BIOME_MODIFIER = BIOME_MODIFIERS.register("biome_modifier", () -> BzBiomeModifier.CODEC);
 
     public BumblezoneForge() {
         BzConfigHandler.setup();
@@ -72,6 +81,8 @@ public class BumblezoneForge {
 
         IEventBus eventBus = MinecraftForge.EVENT_BUS;
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        BIOME_MODIFIERS.register(modEventBus);
 
         if (ModList.get().isLoaded("productivebees")) {
             ProductiveBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);

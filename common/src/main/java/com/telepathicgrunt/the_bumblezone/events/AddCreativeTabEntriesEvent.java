@@ -19,7 +19,6 @@ public record AddCreativeTabEntriesEvent(Type type, CreativeModeTab tab, Consume
         adder.accept(new ItemStack(item));
     }
 
-
     public enum Type {
         BUILDING,
         COLORED,
