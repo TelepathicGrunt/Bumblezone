@@ -14,8 +14,8 @@ public interface ModuleSerializer<T extends Module<T>> {
 
     void write(CompoundTag tag, T module);
 
-    default void onPlayerCopy(T oldModule, T thisModule, ServerPlayer player, boolean loseless) {
-        if (loseless) {
+    default void onPlayerCopy(T oldModule, T thisModule, ServerPlayer player, boolean isPersistent) {
+        if (isPersistent) {
             CompoundTag tag = new CompoundTag();
             oldModule.serializer().write(tag, oldModule);
             read(thisModule, tag);

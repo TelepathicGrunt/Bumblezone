@@ -124,8 +124,8 @@ public class EntityMiscModule implements Module<EntityMiscModule> {
         }
 
         @Override
-        public void onPlayerCopy(EntityMiscModule oldModule, EntityMiscModule thisModule, ServerPlayer player, boolean loseless) {
-            if (loseless) {
+        public void onPlayerCopy(EntityMiscModule oldModule, EntityMiscModule thisModule, ServerPlayer player, boolean isPersistent) {
+            if (isPersistent) {
                 ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
             } else if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning) {
                 thisModule.isBeeEssenced = oldModule.isBeeEssenced;

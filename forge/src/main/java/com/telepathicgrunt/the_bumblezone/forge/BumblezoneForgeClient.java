@@ -4,7 +4,9 @@ import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader;
 import com.telepathicgrunt.the_bumblezone.events.client.*;
-import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
+import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
@@ -23,7 +25,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class BumblezoneForgeClient {
@@ -70,6 +71,11 @@ public class BumblezoneForgeClient {
 
     private static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
         RegisterItemColorEvent.EVENT.invoke(new RegisterItemColorEvent(event::register, event.getBlockColors()::getColor));
+        BzItems.ITEMS.stream()
+                .map(RegistryEntry::get)
+                .filter(item -> item instanceof DispenserAddedSpawnEgg)
+                .map(item -> (DispenserAddedSpawnEgg) item)
+                .forEach(item -> event.register((stack, index) -> item.getColor(index), item));
     }
 
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {

@@ -58,11 +58,11 @@ public class ComponentInitializer implements EntityComponentInitializer {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends Module<T>> void copy(ServerPlayer oldPlayer, ServerPlayer newPlayer, FabricModuleHolder<T> serializer, boolean loseless) {
+    private static <T extends Module<T>> void copy(ServerPlayer oldPlayer, ServerPlayer newPlayer, FabricModuleHolder<T> serializer, boolean isPersistent) {
         ModuleComponent<T> oldModule = serializer.key().getNullable(oldPlayer);
         ModuleComponent<T> newModule = serializer.key().getNullable(newPlayer);
         if (oldModule != null && newModule != null) {
-            oldModule.module().serializer().onPlayerCopy(oldModule.module(), newModule.module(),  newPlayer, loseless);
+            oldModule.module().serializer().onPlayerCopy(oldModule.module(), newModule.module(), newPlayer, isPersistent);
         }
     }
 
