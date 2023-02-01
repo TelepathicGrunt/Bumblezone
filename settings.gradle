@@ -12,3 +12,5 @@ include("fabric")
 include("fabric-base")
 include("quilt")
 include("forge")
+
+rootProject.name = "Bumblezone"

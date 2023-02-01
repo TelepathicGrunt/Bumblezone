@@ -45,7 +45,6 @@
         ]
     },
     "mixins": [
-        "the_bumblezone.mixins.json",
         "the_bumblezone-fabric-base.mixins.json",
         "the_bumblezone-common.mixins.json"
     ],
@@ -53,7 +52,8 @@
     "depends": {
         "fabricloader": ">=0.14.11",
         "minecraft": ">=1.19.3",
-        "fabric": ">=0.68.0"
+        "fabric": ">=0.68.0",
+        "midnightlib": ">=0.5.2"
     },
     "custom": {
         "cardinal-components": [
