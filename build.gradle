@@ -1,6 +1,8 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
+    id "com.modrinth.minotaur" version "2.+"
+    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 architectury {
@@ -9,6 +11,8 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
+    apply plugin: "com.modrinth.minotaur"
+    apply plugin: "com.matthewprenger.cursegradle"
 
     loom {
         silentMojangMappingsLicense()
@@ -17,6 +21,98 @@ subprojects {
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
         mappings loom.officialMojangMappings()
+    }
+
+    Map<String, Map<String, String>> platformSettings = [
+            "fabric": [
+                "curse-id": "363949",
+                "modrinth-id": "eA8SXqWL"
+            ],
+            "quilt": [
+                "curse-id": "363949",
+                "modrinth-id": "eA8SXqWL"
+            ],
+            "forge": [
+                "curse-id": "362479",
+                "modrinth-id": "38tpSycf"
+            ]
+    ]
+
+    Map<String, Map<String, Boolean>> platformDependencies = [
+        "fabric": [
+            "fabric-api": true,
+            "midnightlib": true,
+            "unofficial-sodium-biome-blending-fix": false
+        ],
+        "quilt": [
+            "qsl": true,
+            "midnightlib": true,
+            "unofficial-sodium-biome-blending-fix": false
+        ],
+        "forge": []
+    ]
+
+    var env = System.getenv()
+    def uploadSettings = platformSettings.get(name)
+    def uploadDependencies = platformDependencies.get(name)
+
+    if (uploadSettings != null && uploadDependencies != null) {
+
+        File changeLog = rootProject.file("CHANGELOG.md")
+        String changeLogText = changeLog.exists() ? changeLog.text : ""
+
+        if (env.MODRINTH) {
+            modrinth {
+                token = env.MODRINTH
+                versionName = "The Bumblezone"
+                versionNumber = "${project.version}+${name}"
+                changelog = changeLogText
+                projectId = uploadSettings["modrinth-id"]
+
+                gameVersions = ["${rootProject.minecraft_version}"]
+                loaders = [name]
+
+                uploadFile = tasks.remapJar
+
+                dependencies {
+                    def optionalContainer = getOptional()
+                    def requiredContainer = getRequired()
+                    uploadDependencies.each { dep, required ->
+                        if (required) {
+                            requiredContainer.project(dep)
+                        } else {
+                            optionalContainer.project(dep)
+                        }
+                    }
+                }
+            }
+        }
+
+        if (env.CURSEFORGEKEY) {
+            curseforge {
+                apiKey = env.CURSEFORGEKEY
+                project { proj ->
+                    id = uploadSettings["curse-id"]
+                    changelog = changeLogText
+                    releaseType = "release"
+
+                    addGameVersion("${rootProject.minecraft_version}")
+                    addGameVersion(name.capitalize())
+
+                    mainArtifact(tasks.remapJar)
+
+                    relations {
+                        uploadDependencies.each { dep, required ->
+                            if (required) {
+                                requiredDependency(dep)
+                            } else {
+                                optionalDependency(dep)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
