@@ -1,0 +1,103 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+
+    forge {
+        convertAccessWideners = true
+        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+
+        mixinConfig "the_bumblezone-common.mixins.json"
+        mixinConfig "the_bumblezone.mixins.json"
+    }
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+    shadowMinecraftLibrary
+    minecraftLibraries.extendsFrom(shadowMinecraftLibrary)
+}
+
+dependencies {
+    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+
+    modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
+
+    modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
+
+    modCompileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
+
+    modCompileOnly("curse.maven:quark-243121:${project.quark_file_id}")
+    modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
+
+    modCompileOnly("mezz.jei:jei-${project.minecraft_version}-forge:${project.jei}")
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+
+    shadowMinecraftLibrary "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+//    compileOnly "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+//    runtimeOnly "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+    annotationProcessor "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}
+
+shadowJar {
+    exclude "fabric.mod.json"
+
+    configurations = [project.configurations.shadowCommon, project.configurations.shadowMinecraftLibrary]
+    classifier "dev-shadow"
+}
+
+remapJar {
+    input.set shadowJar.archiveFile
+    dependsOn shadowJar
+    classifier null
+}
+
+jar {
+    classifier "dev"
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+publishing {
+    publications {
+        mavenForge(MavenPublication) {
+            artifactId = rootProject.archives_base_name + "-" + project.name
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+    }
+}

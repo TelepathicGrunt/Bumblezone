@@ -1,0 +1,42 @@
+{
+  "type": "tokenenchanter:token_enchanting",
+  "level_cost": 16,
+  "ingredients": {
+    "token": {
+      "tag": "tokenenchanter:tokens/gold"
+    },
+    "others": [
+      {
+        "item": "minecraft:poisonous_potato",
+        "count": 8
+      },
+      {
+        "item": "minecraft:spider_eye",
+        "count": 16
+      }
+    ]
+  },
+  "result": {
+    "item": "tokenenchanter:enchanted_token",
+    "enchantments": [
+      {
+        "name": "the_bumblezone:potent_poison",
+        "level": 1
+      }
+    ]
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "tokenenchanter"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "tokenenchanter"
+      ]
+    }
+  ]
+}

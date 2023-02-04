@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#the_bumblezone:honey",
+    "#the_bumblezone:royal_jelly",
+    {
+      "id": "inspirations:honey",
+      "required": false
+    },
+    {
+      "id": "inspirations:flowing_honey",
+      "required": false
+    }
+  ]
+}

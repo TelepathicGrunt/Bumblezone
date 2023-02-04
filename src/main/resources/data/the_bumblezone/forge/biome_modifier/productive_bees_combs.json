@@ -1,7 +1,0 @@
-{
-  "type": "the_bumblezone:additions_modifier",
-  "biomes": "#the_bumblezone:the_bumblezone",
-  "feature": "#the_bumblezone:productive_bees_combs",
-  "step": "underground_ores",
-  "required_mod": "productivebees"
-}

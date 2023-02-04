@@ -1,0 +1,31 @@
+{
+  "type": "jeed:effect_provider",
+  "effect":{
+    "id": "the_bumblezone:wrath_of_the_hive"
+  },
+  "providers": [
+    {
+      "item": "minecraft:honey_block"
+    },
+    {
+      "item": "the_bumblezone:filled_porous_honeycomb_block"
+    },
+    {
+      "item": "the_bumblezone:honeycomb_brood_block"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "jeed"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "jeed"
+      ]
+    }
+  ]
+}

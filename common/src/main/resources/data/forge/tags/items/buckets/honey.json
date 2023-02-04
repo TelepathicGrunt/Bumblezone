@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:honey_bucket",
+    {
+      "id": "create:honey_bucket",
+      "required": false
+    },
+    {
+      "id": "cyclic:honey_bucket",
+      "required": false
+    },
+    {
+      "id": "inspirations:honey_bucket",
+      "required": false
+    }
+  ]
+}

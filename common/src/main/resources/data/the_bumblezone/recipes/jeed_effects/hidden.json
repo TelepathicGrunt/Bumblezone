@@ -1,0 +1,25 @@
+{
+  "type": "jeed:effect_provider",
+  "effect":{
+    "id": "the_bumblezone:hidden"
+  },
+  "providers": [
+    {
+      "item": "the_bumblezone:pile_of_pollen"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "jeed"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "jeed"
+      ]
+    }
+  ]
+}

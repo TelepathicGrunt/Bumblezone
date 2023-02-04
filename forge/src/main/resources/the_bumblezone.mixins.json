@@ -1,0 +1,26 @@
+{
+    "required": true,
+    "package": "com.telepathicgrunt.the_bumblezone.mixins.forge",
+    "plugin": "com.telepathicgrunt.the_bumblezone.mixins.forge.MixinPlugin",
+    "compatibilityLevel": "JAVA_17",
+    "refmap": "the_bumblezone-forge-refmap.json",
+    "mixins": [
+        "BlockExtensionMixin",
+        "BzBucketItemMixin",
+        "BzEnchantmentMixin",
+        "BzFlowingFluidMixin",
+        "BzLiquidBlockMixin",
+        "IncenseCandleRecipeMixin",
+        "ItemExtensionMixin",
+        "FireBlockInvoker",
+        "BzRandomizableContainerBlockEntityMixin"
+    ],
+    "client": [
+        "BzArmorMixin",
+        "BzEffectMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "minVersion": "0.8"
+}

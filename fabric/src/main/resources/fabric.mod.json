@@ -1,0 +1,66 @@
+{
+    "schemaVersion": 1,
+    "id": "the_bumblezone",
+    "version": "$version",
+
+    "name": "The Bumblezone - Fabric",
+    "description": "An awesome dimension full of bees that becomes REALLY angry if you take their honey! Enter the dimension by throwing an enderpearl at Bee Nest and exit it by going above Y = 256 to below Y = 0.",
+    "authors": [
+        "TelepathicGrunt"
+    ],
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric",
+        "sources": "https://github.com/TelepathicGrunt/Bumblezone-Fabric",
+        "issues": "https://github.com/TelepathicGrunt/Bumblezone-Fabric/issues"
+    },
+
+    "license": "LGPLv3",
+    "icon": "assets/the_bumblezone/the_bumblezone_logo.png",
+
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabric"
+        ],
+        "client": [
+            "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricClient"
+        ],
+        "preLaunch": [
+            "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
+        ],
+        "modmenu": [
+            "com.telepathicgrunt.the_bumblezone.configs.fabricbase.ModMenuCompat"
+        ],
+        "cardinal-components-entity": [
+            "com.telepathicgrunt.the_bumblezone.modules.fabric.ComponentInitializer"
+        ],
+        "emi": [
+            "com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.EMICompat"
+        ],
+        "rei_client": [
+            "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
+        ],
+        "jei_mod_plugin": [
+            "com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration"
+        ]
+    },
+    "mixins": [
+        "the_bumblezone-fabric-base.mixins.json",
+        "the_bumblezone-common.mixins.json"
+    ],
+    "accessWidener": "the_bumblezone.accesswidener",
+    "depends": {
+        "fabricloader": ">=0.14.11",
+        "minecraft": ">=1.19.3",
+        "fabric": ">=0.68.0",
+        "midnightlib": ">=0.5.2"
+    },
+    "custom": {
+        "cardinal-components": [
+            "the_bumblezone:entity_component",
+            "the_bumblezone:original_flying_speed",
+            "the_bumblezone:neurotoxins_missed_counter",
+            "the_bumblezone:misc_component"
+        ]
+    }
+}

@@ -1,0 +1,42 @@
+{
+  "type": "tokenenchanter:token_enchanting",
+  "level_cost": 1,
+  "ingredients": {
+    "token": {
+      "tag": "tokenenchanter:tokens/gold"
+    },
+    "others": [
+      {
+        "tag": "forge:honeycombs",
+        "count": 5
+      },
+      {
+        "item": "minecraft:blaze_powder",
+        "count": 1
+      }
+    ]
+  },
+  "result": {
+    "item": "tokenenchanter:enchanted_token",
+    "enchantments": [
+      {
+        "name": "the_bumblezone:comb_cutter",
+        "level": 1
+      }
+    ]
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "tokenenchanter"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "tokenenchanter"
+      ]
+    }
+  ]
+}

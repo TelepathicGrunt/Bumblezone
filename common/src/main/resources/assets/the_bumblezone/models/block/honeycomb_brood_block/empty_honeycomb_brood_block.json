@@ -1,0 +1,16 @@
+{
+  "loader": "the_bumblezone:connected_block",
+  "block": [
+    "the_bumblezone:filled_porous_honeycomb_block",
+    "the_bumblezone:honeycomb_brood_block"
+  ],
+  "textures": {
+    "base": "the_bumblezone:block/honeycomb_brood_block/empty_honeycomb_brood_block_side",
+    "front": "the_bumblezone:block/honeycomb_brood_block/empty_honeycomb_brood_block",
+    "particle": "the_bumblezone:block/porous_honeycomb_block",
+    "bottom_left": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/bottom_left",
+    "bottom_right": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/bottom_right",
+    "top_left": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/top_left",
+    "top_right": "the_bumblezone:block/porous_honeycomb_block_corner_overlays/top_right"
+  }
+}
