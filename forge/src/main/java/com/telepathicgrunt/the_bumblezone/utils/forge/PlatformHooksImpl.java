@@ -26,6 +26,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.ModList;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
@@ -96,4 +97,7 @@ public class PlatformHooksImpl {
         return entity.getFluidHeight(fallback);
     }
 
+    public static boolean isEyesInNoFluid(Entity entity) {
+        return entity.getEyeInFluidType().isAir();
+    }
 }

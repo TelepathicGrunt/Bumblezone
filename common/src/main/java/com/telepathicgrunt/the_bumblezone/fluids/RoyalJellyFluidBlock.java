@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -121,25 +122,30 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
         if (entity instanceof Bee beeEntity) {
-            if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
-                float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
-                beeEntity.heal(diff);
-            }
+            if (PlatformHooks.isEyesInNoFluid(entity)) {
+                if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
+                    float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
+                    beeEntity.heal(diff);
+                }
 
-            beeEntity.addEffect(new MobEffectInstance(
-                    BzEffects.BEENERGIZED.get(),
-                    600,
-                    0,
-                    false,
-                    true,
-                    true));
-            beeEntity.addEffect(new MobEffectInstance(
-                    MobEffects.REGENERATION,
-                    600,
-                    0,
-                    false,
-                    false,
-                    true));
+                beeEntity.addEffect(new MobEffectInstance(
+                        BzEffects.BEENERGIZED.get(),
+                        600,
+                        0,
+                        false,
+                        true,
+                        true));
+                beeEntity.addEffect(new MobEffectInstance(
+                        MobEffects.REGENERATION,
+                        600,
+                        0,
+                        false,
+                        false,
+                        true));
+            }
+            else {
+                beeEntity.removeEffect(MobEffects.REGENERATION);
+            }
         }
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {
             Vec3 vec3 = entity.getDeltaMovement();

@@ -476,7 +476,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{\"IsThrone\": 1b}"
+              "tag": "{\"Locked\": 1b}"
             },
             {
               "function": "the_bumblezone:honey_compass_locate_structure",

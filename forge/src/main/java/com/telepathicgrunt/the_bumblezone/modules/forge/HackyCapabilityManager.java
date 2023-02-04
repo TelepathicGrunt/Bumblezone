@@ -10,6 +10,8 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+// Capability 1.20 RFC that will remove need of this class: https://github.com/MinecraftForge/MinecraftForge/pull/8744
+// The problematic ASM that Capabilities currently use: https://github.com/MinecraftForge/MinecraftForge/blob/1.19.x/fmlloader/src/main/java/net/minecraftforge/fml/common/asm/CapabilityTokenSubclass.java
 public class HackyCapabilityManager {
 
     //Unsafe is needed to get the lookup because of module security restrictions.

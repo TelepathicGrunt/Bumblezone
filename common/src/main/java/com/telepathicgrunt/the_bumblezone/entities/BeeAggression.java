@@ -21,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Bee;
@@ -86,7 +87,7 @@ public class BeeAggression {
                 !player.isSpectator())
         {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                if (!EssenceOfTheBees.hasEssence(player)) {
+                if (!EssenceOfTheBees.hasEssence(player) && player.level.getDifficulty() != Difficulty.PEACEFUL) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     player.displayClientMessage(message, true);
 
@@ -109,10 +110,11 @@ public class BeeAggression {
         LivingEntity livingEntity = event.entity();
         if (event.amount() > 0 &&
             livingEntity != null &&
-            !livingEntity.level.isClientSide()  &&
+            !livingEntity.level.isClientSide() &&
             livingEntity instanceof Bee &&
             event.source() != null &&
-            event.source().getEntity() != null)
+            event.source().getEntity() != null &&
+            livingEntity.level.getDifficulty() != Difficulty.PEACEFUL)
         {
             beeHitAndAngered(livingEntity, event.source().getEntity());
         }
@@ -123,8 +125,8 @@ public class BeeAggression {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that if it is a player, that they aren't in creative or spectator
         if(attackerEntity instanceof Player player &&
-                !((Player)attackerEntity).isCreative() &&
-                !attackerEntity.isSpectator())
+            !((Player)attackerEntity).isCreative() &&
+            !attackerEntity.isSpectator())
         {
             if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
@@ -224,13 +226,17 @@ public class BeeAggression {
         Player playerEntity = event.player();
 
         //removes the wrath of the hive if it is disallowed outside dimension
-        if(!playerEntity.level.isClientSide() &&
-                playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()) &&
-                !(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone ||
-                        playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
-        {
-            playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-            WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+        if(!playerEntity.level.isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+            if (playerEntity.level.getDifficulty() == Difficulty.PEACEFUL) {
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+            }
+            else if (!(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone ||
+                    playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
+            {
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+            }
         }
 
         //Makes the fog redder when this effect is active
@@ -258,7 +264,11 @@ public class BeeAggression {
 
     // Makes bees angry if in Cell Maze or other tagged structures.
     public static void applyAngerIfInTaggedStructures(ServerPlayer serverPlayer) {
-        if(serverPlayer.isCreative() || serverPlayer.isSpectator() || !BzBeeAggressionConfigs.aggressiveBees) {
+        if(serverPlayer.isCreative() ||
+            serverPlayer.isSpectator() ||
+            !BzBeeAggressionConfigs.aggressiveBees ||
+            serverPlayer.level.getDifficulty() == Difficulty.PEACEFUL)
+        {
             return;
         }
 

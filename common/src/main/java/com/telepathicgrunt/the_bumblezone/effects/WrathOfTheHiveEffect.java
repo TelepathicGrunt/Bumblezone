@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -69,6 +70,11 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
         if (entity.isDeadOrDying()) {
             calmTheBees(world, entity);
+            return;
+        }
+
+        if (entity instanceof Player && world.getDifficulty() == Difficulty.PEACEFUL) {
+            entity.removeEffect(this);
             return;
         }
 

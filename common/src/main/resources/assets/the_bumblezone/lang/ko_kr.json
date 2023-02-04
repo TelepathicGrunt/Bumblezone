@@ -591,7 +591,7 @@
   "the_bumblezone.midnightconfig.ukraineBeeRate": "Ukraine Bee Rate",
   "the_bumblezone.midnightconfig.enableAltBeeSkinRenderer": "Enable Alt Bee Skin Renderer",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
-  "the_bumblezone.midnightconfig.fogReducer": "Fog Reducer",
+  "the_bumblezone.midnightconfig.fogThickness": "Fog Thickness",
   "the_bumblezone.midnightconfig.crystallineFlowerComment": "Crystalline Flower Section",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Item Entity Consuming",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Exp Orb Consuming",

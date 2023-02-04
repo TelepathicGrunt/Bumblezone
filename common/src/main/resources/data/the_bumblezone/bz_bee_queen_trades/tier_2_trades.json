@@ -25,23 +25,23 @@
       "required": true
     },
     {
-      "id": "#forge:honey_bottle",
+      "id": "#c:honey_bottle",
       "required": false
     },
     {
-      "id": "#forge:crops",
+      "id": "#c:crops",
       "required": false
     },
     {
-      "id": "#forge:chests/wooden",
+      "id": "#c:chests/wooden",
       "required": false
     },
     {
-      "id": "#forge:barrels/wooden",
+      "id": "#c:barrels/wooden",
       "required": false
     },
     {
-      "id": "#forge:storage_blocks/wax",
+      "id": "#c:storage_blocks/wax",
       "required": false
     },
     {

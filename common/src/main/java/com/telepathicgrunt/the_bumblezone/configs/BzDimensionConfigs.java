@@ -4,7 +4,7 @@ public class BzDimensionConfigs{
 
     // dimension
     public static double fogBrightnessPercentage = 100D;
-    public static double fogReducer = 4D;
+    public static double fogThickness = 4D;
     public static boolean enableDimensionFog = true;
     public static int teleportationMode = 3;
     public static boolean generateBeenest = true;

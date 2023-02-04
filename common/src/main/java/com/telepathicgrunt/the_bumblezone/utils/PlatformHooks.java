@@ -102,5 +102,8 @@ public class PlatformHooks {
         throw new NotImplementedException("PlatformHooks getFluidHeight is not implemented!");
     }
 
-
+    @ExpectPlatform
+    public static boolean isEyesInNoFluid(Entity entity) {
+        throw new NotImplementedException("PlatformHooks isEyesInNoFluid is not implemented!");
+    }
 }

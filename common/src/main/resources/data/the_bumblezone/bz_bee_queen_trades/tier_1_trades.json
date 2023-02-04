@@ -61,16 +61,28 @@
       "required": true
     },
     {
-      "id": "#minecraft:saplings",
-      "required": true
-    },
-    {
-      "id": "minecraft:mangrove_propagule",
-      "required": true
-    },
-    {
       "id": "minecraft:redstone",
       "required": true
+    },
+    {
+      "id": "#c:seeds",
+      "required": false
+    },
+    {
+      "id": "#c:wax",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/honeycomb",
+      "required": false
+    },
+    {
+      "id": "#c:honeycombs",
+      "required": false
+    },
+    {
+      "id": "#c:fence_gates/wooden",
+      "required": false
     },
     {
       "id": "#forge:seeds",

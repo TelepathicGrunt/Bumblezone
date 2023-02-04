@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.utils.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
+import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
@@ -101,4 +103,7 @@ public class PlatformHooksImpl {
         return entity.getFluidHeight(fallback);
     }
 
+    public static boolean isEyesInNoFluid(Entity entity) {
+        return ((EntityAccessor)entity).getFluidOnEyes().isEmpty();
+    }
 }

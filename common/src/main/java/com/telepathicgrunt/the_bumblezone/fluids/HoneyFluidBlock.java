@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -122,12 +123,14 @@ public class HoneyFluidBlock extends BzLiquidBlock {
     @Override
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
-        if (entity instanceof Bee beeEntity && beeEntity.getHealth() < beeEntity.getMaxHealth()) {
-            float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
-            beeEntity.heal(diff);
-            BlockState currentState = world.getBlockState(position);
-            if(currentState.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
-                world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(currentState.getValue(HoneyFluidBlock.LEVEL) - (int)Math.ceil(diff), 1)), 3);
+        if (entity instanceof Bee beeEntity) {
+            if (beeEntity.getHealth() < beeEntity.getMaxHealth() && PlatformHooks.isEyesInNoFluid(entity)) {
+                float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
+                beeEntity.heal(diff);
+                BlockState currentState = world.getBlockState(position);
+                if (currentState.is(BzFluids.HONEY_FLUID_BLOCK.get())) {
+                    world.setBlock(position, currentState.setValue(HoneyFluidBlock.LEVEL, Math.max(currentState.getValue(HoneyFluidBlock.LEVEL) - (int) Math.ceil(diff), 1)), 3);
+                }
             }
         }
         else if(Math.abs(entity.getDeltaMovement().y()) > verticalSpeedDeltaLimit && entity.fallDistance <= 0.2D) {

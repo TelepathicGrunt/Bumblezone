@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +51,6 @@ public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_FAILED = "IsFailed";
     public static final String TAG_STRUCTURE_TAG = "TargetStructureTag";
     public static final String TAG_TARGET_BLOCK = "TargetBlock";
-    public static final String TAG_IS_THRONE_TYPE = "IsThrone";
     public static final String TAG_CUSTOM_NAME_TYPE = "CustomName";
     public static final String TAG_CUSTOM_DESCRIPTION_TYPE = "CustomDescription";
     public static final String TAG_LOCKED = "Locked";
@@ -64,7 +61,7 @@ public class HoneyCompass extends Item implements Vanishable {
 
     @Override
     public boolean isFoil(ItemStack itemStack) {
-        return getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE) || getBooleanTag(itemStack.getTag(), TAG_LOCKED) || super.isFoil(itemStack);
+        return getBooleanTag(itemStack.getTag(), TAG_LOCKED) || super.isFoil(itemStack);
     }
 
     @Override
@@ -82,12 +79,7 @@ public class HoneyCompass extends Item implements Vanishable {
         }
 
         if(isStructureCompass(itemStack)) {
-            if(getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE)) {
-                return "item.the_bumblezone.honey_compass_throne_structure";
-            }
-            else {
-                return "item.the_bumblezone.honey_compass_structure";
-            }
+            return "item.the_bumblezone.honey_compass_structure";
         }
 
         if(isBlockCompass(itemStack)) {
@@ -99,6 +91,7 @@ public class HoneyCompass extends Item implements Vanishable {
 
     public Component getName(ItemStack itemStack) {
         if(isBlockCompass(itemStack)) {
+            correctOldNbt(itemStack);
             String blockString = getStoredBlock(itemStack);
             if (blockString != null) {
                 Block block = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockString));
@@ -109,6 +102,22 @@ public class HoneyCompass extends Item implements Vanishable {
             return Component.translatable(this.getDescriptionId(itemStack), Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
         }
         return Component.translatable(this.getDescriptionId(itemStack));
+    }
+
+    public void correctOldNbt(ItemStack itemStack) {
+        if (itemStack.hasTag()) {
+            CompoundTag tag = itemStack.getTag();
+            if (tag.contains("IsThrone")) {
+                boolean isThrone = tag.getBoolean("IsThrone");
+                if (isThrone) {
+                    tag.putBoolean(TAG_LOCKED, true);
+                    tag.putString(TAG_TYPE, "structure");
+                    tag.putString(TAG_CUSTOM_NAME_TYPE, "item.the_bumblezone.honey_compass_throne_structure");
+                    tag.putString(TAG_CUSTOM_DESCRIPTION_TYPE, "item.the_bumblezone.honey_compass_throne_description");
+                }
+                tag.remove("IsThrone");
+            }
+        }
     }
 
     @Override
@@ -123,15 +132,7 @@ public class HoneyCompass extends Item implements Vanishable {
             return;
         }
 
-        if (getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE)) {
-            components.add(Component.translatable("item.the_bumblezone.honey_compass_throne_description"));
-            components.forEach(component -> {
-                if (component instanceof MutableComponent mutableComponent) {
-                    mutableComponent.withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD);
-                }
-            });
-        }
-        else if (isBlockCompass(itemStack)) {
+        if (isBlockCompass(itemStack)) {
             components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description1"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description2"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description3"));
@@ -166,7 +167,7 @@ public class HoneyCompass extends Item implements Vanishable {
                 itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
             }
 
-            if (!getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE) && isBlockCompass(itemStack)) {
+            if (isBlockCompass(itemStack)) {
                 CompoundTag compoundTag = itemStack.getOrCreateTag();
                 if (compoundTag.contains(TAG_TARGET_POS) && compoundTag.contains(TAG_TARGET_BLOCK) && compoundTag.contains(TAG_TARGET_DIMENSION)) {
 
@@ -233,7 +234,7 @@ public class HoneyCompass extends Item implements Vanishable {
             }
         }
 
-        if (getBooleanTag(itemStack.getTag(), TAG_LOCKED) || getBooleanTag(itemStack.getTag(), TAG_IS_THRONE_TYPE)) {
+        if (getBooleanTag(itemStack.getTag(), TAG_LOCKED)) {
             return super.use(level, player, interactionHand);
         }
 
@@ -302,7 +303,7 @@ public class HoneyCompass extends Item implements Vanishable {
             }
         }
 
-        if (getBooleanTag(handCompass.getTag(), TAG_LOCKED) || getBooleanTag(handCompass.getTag(), TAG_IS_THRONE_TYPE)) {
+        if (getBooleanTag(handCompass.getTag(), TAG_LOCKED)) {
             return super.useOn(useOnContext);
         }
 
@@ -383,10 +384,6 @@ public class HoneyCompass extends Item implements Vanishable {
         compoundTag.remove(HoneyCompass.TAG_LOADING);
         compoundTag.remove(HoneyCompass.TAG_FAILED);
         compoundTag.remove(HoneyCompass.TAG_STRUCTURE_TAG);
-    }
-
-    public static void addThroneTags(CompoundTag compoundTag) {
-        compoundTag.putBoolean(TAG_IS_THRONE_TYPE, true);
     }
 
     public static boolean isBlockCompass(ItemStack compassItem) {

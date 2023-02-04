@@ -11,6 +11,7 @@ accessible class net/minecraft/client/renderer/RenderType$CompositeRenderType
 accessible class net/minecraft/client/renderer/RenderStateShard$TextureStateShard
 accessible method net/minecraft/client/renderer/RenderType$CompositeRenderType state ()Lnet/minecraft/client/renderer/RenderType$CompositeState;
 accessible field net/minecraft/client/renderer/RenderType$CompositeState textureState Lnet/minecraft/client/renderer/RenderStateShard$EmptyTextureStateShard;
+accessible class net/minecraft/client/renderer/FogRenderer$FogData
 
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V

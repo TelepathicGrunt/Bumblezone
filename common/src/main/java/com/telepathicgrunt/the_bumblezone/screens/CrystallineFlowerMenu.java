@@ -116,6 +116,12 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
             public void setChanged() {
                 this.container.setChanged();
+
+                ItemStack bookSlotItem = bookSlot.getItem();
+                if (bookSlotItem.isEmpty()) {
+                    selectedEnchantmentIndex.set(-1);
+                }
+
                 if (!player.level.isClientSide()) {
                     setupResultSlot();
                     broadcastChanges();
