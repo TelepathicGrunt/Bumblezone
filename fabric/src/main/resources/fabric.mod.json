@@ -48,7 +48,7 @@
         "the_bumblezone-fabric-base.mixins.json",
         "the_bumblezone-common.mixins.json"
     ],
-
+    "accessWidener": "the_bumblezone.accesswidener",
     "depends": {
         "fabricloader": ">=0.14.11",
         "minecraft": ">=1.19.3",

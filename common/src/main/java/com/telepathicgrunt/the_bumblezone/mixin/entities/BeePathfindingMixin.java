@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class BeePathfindingMixin {
 
     @Final
-    @Shadow(aliases = {"field_226508_a_", "field_20380"})
+    @Shadow(aliases = {"field_226508_a_", "field_20380", "f_28091_"})
     private Bee this$0;
 
     @Unique

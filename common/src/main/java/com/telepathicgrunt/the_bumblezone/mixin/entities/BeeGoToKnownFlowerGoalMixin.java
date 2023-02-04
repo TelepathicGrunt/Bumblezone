@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BeeGoToKnownFlowerGoalMixin {
 
     @Final
-    @Shadow(aliases = {"field_226508_a_", "field_20372"})
+    @Shadow(aliases = {"field_226508_a_", "field_20372", "f_28009_"})
     private Bee this$0;
 
     /**
