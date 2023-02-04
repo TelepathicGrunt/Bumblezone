@@ -16,6 +16,7 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -31,7 +32,7 @@ public class ClientFluidProperties {
     private ModifyFogColor modifyFogColor = null;
     private ModifyFog modifyFog = null;
     private FluidOverlay fluidOverlay = null;
-    private TriFunction<FluidState, BlockAndTintGetter, BlockPos, Integer> tintColor = (state, level, pos) -> -1;
+    private TriFunction<@Nullable FluidState, @Nullable BlockAndTintGetter, @Nullable BlockPos, Integer> tintColor = (state, level, pos) -> -1;
     private ResourceLocation still;
     private ResourceLocation flowing;
     private ResourceLocation overlay;
@@ -59,7 +60,7 @@ public class ClientFluidProperties {
         this.tintColor = (state, level, pos) -> tintColor;
         return this;
     }
-    public ClientFluidProperties tintColor(TriFunction<FluidState, BlockAndTintGetter, BlockPos, Integer> tintColor) {
+    public ClientFluidProperties tintColor(TriFunction<@Nullable FluidState, @Nullable BlockAndTintGetter, @Nullable BlockPos, Integer> tintColor) {
         this.tintColor = tintColor;
         return this;
     }

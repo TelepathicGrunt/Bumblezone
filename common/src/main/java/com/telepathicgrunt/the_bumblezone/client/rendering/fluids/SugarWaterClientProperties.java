@@ -19,6 +19,11 @@ public class SugarWaterClientProperties {
                 .flowing(FLUID_FLOWING_TEXTURE)
                 .overlay(FLUID_OVERLAY_TEXTURE)
                 .screenOverlay(TEXTURE_UNDERWATER)
-                .tintColor((state, level, pos) -> BiomeColors.getAverageWaterColor(level, pos) | 0xFF000000);
+                .tintColor((state, level, pos) -> {
+                    if (level != null && pos != null) {
+                        return BiomeColors.getAverageWaterColor(level, pos) | 0xFF000000;
+                    }
+                    return 0xFF3F76E4;
+                });
     }
 }

@@ -68,6 +68,12 @@ public class BzClientFluidExtension implements IClientFluidTypeExtensions {
     }
 
     @Override
+    public int getTintColor() {
+        checkForProperties();
+        return properties.tintColor(null, null, null);
+    }
+
+    @Override
     public @NotNull Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, Vector3f fluidFogColor) {
         checkForProperties();
         Optional<Vector3f> result = properties.modifyFogColor(camera, partialTick, level, renderDistance, darkenWorldAmount, fluidFogColor);
