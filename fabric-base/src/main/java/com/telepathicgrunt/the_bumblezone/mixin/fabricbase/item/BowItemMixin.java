@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.platform.BzArrowItem;
-import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;

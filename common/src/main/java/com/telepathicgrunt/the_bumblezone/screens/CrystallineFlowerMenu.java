@@ -369,7 +369,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             int xpRequested = crystallineFlowerBlockEntity.getXpForNextTiers(freeTierSpot);
             int xpObtained;
             if (!player.getAbilities().instabuild) {
-                xpObtained = Math.min(EnchantmentUtils.getPlayerXP(player), xpRequested);;
+                xpObtained = Math.min(EnchantmentUtils.getPlayerXP(player), xpRequested);
                 player.giveExperiencePoints(-xpRequested);
             }
             else {

@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;

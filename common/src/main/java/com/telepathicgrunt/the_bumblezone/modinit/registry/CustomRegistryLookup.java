@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
 
 public interface CustomRegistryLookup<T> extends Iterable<T> {
 

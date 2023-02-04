@@ -33,7 +33,7 @@ public class EntityMiscModule implements Module<EntityMiscModule> {
     public int honeySlimeBred = 0;
     public int beesFed = 0;
     public int queenBeeTrade = 0;
-    public Map<ResourceLocation, Integer> mobsKilledTracker = new Object2IntOpenHashMap<>();
+    public final Map<ResourceLocation, Integer> mobsKilledTracker = new Object2IntOpenHashMap<>();
 
     public void resetAllTrackerStats() {
         receivedEssencePrize = false;
@@ -73,6 +73,7 @@ public class EntityMiscModule implements Module<EntityMiscModule> {
 
         @Override
         public void read(EntityMiscModule module, CompoundTag tag) {
+            module.mobsKilledTracker.clear();
             module.isBeeEssenced = tag.getBoolean("is_bee_essenced");
             module.receivedEssencePrize = tag.getBoolean("received_essence_prize");
             module.tradeResetPrimedTime = tag.getLong("trade_reset_primed_time");

@@ -9,7 +9,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 
 public class EnchantmentUtilsImpl {

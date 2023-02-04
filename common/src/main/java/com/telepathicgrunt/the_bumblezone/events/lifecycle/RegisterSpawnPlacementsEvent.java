@@ -1,14 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.events.lifecycle;
 
 import com.telepathicgrunt.the_bumblezone.events.base.EventHandler;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
-
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public record RegisterSpawnPlacementsEvent(Registrar registrar) {
 

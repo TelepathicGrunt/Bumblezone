@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.fluids.forge.ForgeFluidInfo;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.BasicRegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;

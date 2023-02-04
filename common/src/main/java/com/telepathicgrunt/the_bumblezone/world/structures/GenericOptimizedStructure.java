@@ -78,7 +78,7 @@ public class GenericOptimizedStructure extends Structure {
                         context.heightAccessor(),
                         true,
                         projectStartToHeightmap.get() == Heightmap.Types.OCEAN_FLOOR_WG
-                ).getY();;
+                ).getY();
             }
             sectionY = QuartPos.fromBlock(sectionY);
 

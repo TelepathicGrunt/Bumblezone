@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.events.lifecycle;
 
 import com.telepathicgrunt.the_bumblezone.events.base.EventHandler;
 import net.minecraft.world.level.block.Block;
-import org.apache.logging.log4j.util.TriConsumer;
 
 public record RegisterFlammabilityEvent(Registrar registrar) {
 

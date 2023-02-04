@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.client.forge;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.BeehemothControls;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.settings.IKeyConflictContext;

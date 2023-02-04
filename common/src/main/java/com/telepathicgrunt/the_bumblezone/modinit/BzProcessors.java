@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.world.processors.*;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
 public class BzProcessors {

@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
 import com.telepathicgrunt.the_bumblezone.modules.fabric.ModuleComponent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Optional;
 

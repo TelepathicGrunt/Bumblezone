@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.events.client;
 
 import com.telepathicgrunt.the_bumblezone.events.base.EventHandler;
 import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.BiConsumer;

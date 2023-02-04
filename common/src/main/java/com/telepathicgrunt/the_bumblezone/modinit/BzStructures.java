@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.world.structures.GenericOptimizedStruc
 import com.telepathicgrunt.the_bumblezone.world.structures.HoneyCaveRoomStructure;
 import com.telepathicgrunt.the_bumblezone.world.structures.PollinatedStreamStructure;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 
 public class BzStructures {

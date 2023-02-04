@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.events.base.EventHandler;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.Map;
 import java.util.function.BiConsumer;
 
 public record RegisterDimensionEffectsEvent(BiConsumer<ResourceLocation, DimensionSpecialEffects> effects) {

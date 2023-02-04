@@ -2,13 +2,10 @@ package com.telepathicgrunt.the_bumblezone.platform;
 
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.ApiStatus;
-
-import java.util.Optional;
 
 public interface ItemExtension {
 
