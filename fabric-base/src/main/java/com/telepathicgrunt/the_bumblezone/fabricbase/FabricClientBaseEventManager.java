@@ -2,7 +2,17 @@ package com.telepathicgrunt.the_bumblezone.fabricbase;
 
 import com.telepathicgrunt.the_bumblezone.client.bakemodel.ConnectedModelVariantProvider;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
-import com.telepathicgrunt.the_bumblezone.events.client.*;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityRenderersEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.PropertyFluiderRenderHandler;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;

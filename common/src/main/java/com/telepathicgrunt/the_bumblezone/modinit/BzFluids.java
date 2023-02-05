@@ -1,7 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.fluids.*;
+import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidType;
+import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidType;
+import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluidType;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfoRegistry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
