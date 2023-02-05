@@ -15,6 +15,13 @@ loom {
 
         mixinConfig "the_bumblezone-common.mixins.json"
         mixinConfig "the_bumblezone.mixins.json"
+
+        runs {
+            all {
+                property 'mixin.env.remapRefMap', 'true'
+                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            }
+        }
     }
 }
 

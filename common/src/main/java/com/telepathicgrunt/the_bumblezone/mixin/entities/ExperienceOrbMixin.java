@@ -61,7 +61,7 @@ public abstract class ExperienceOrbMixin extends Entity {
             Optional<BlockEntity> closestCrystalFlower =
                     chunksInRange.stream()
                     .flatMap(c -> c.getBlockEntities().values().stream())
-                    .filter(be -> be instanceof CrystallineFlowerBlockEntity)
+                    .filter(be -> be instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier())
                     .min((a, b) -> a.getBlockPos().distManhattan(this.blockPosition()) - b.getBlockPos().distManhattan(this.blockPosition()));
 
             closestCrystalFlower.ifPresent(blockEntity -> this.thebumblezone_trackedCrystalFlower = blockEntity.getBlockPos());
@@ -70,7 +70,7 @@ public abstract class ExperienceOrbMixin extends Entity {
 
         if (this.thebumblezone_trackedCrystalFlower != null) {
             Vec3 centerBlockPosition = Vec3.atCenterOf(this.thebumblezone_trackedCrystalFlower);
-            Vec3 vec3 = new Vec3(centerBlockPosition.x() - this.getX(), centerBlockPosition.y() - this.getY(), centerBlockPosition.z() - this.getZ());
+            Vec3 vec3 = new Vec3(centerBlockPosition.x() - this.getX(), centerBlockPosition.y() - 0.5d - this.getY(), centerBlockPosition.z() - this.getZ());
             double sqrDistance = vec3.lengthSqr();
             if (sqrDistance >= distanceThreshold * distanceThreshold) {
                 this.thebumblezone_trackedCrystalFlower = null;
@@ -80,7 +80,7 @@ public abstract class ExperienceOrbMixin extends Entity {
             BlockState state = this.level.getBlockState(this.thebumblezone_trackedCrystalFlower);
             if(state.getBlock() instanceof CrystallineFlower) {
                 double speedFactor = 1.0D - Math.sqrt(sqrDistance) / distanceThreshold;
-                this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.1D)));
+                this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.11D)));
             }
         }
     }

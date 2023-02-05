@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge;
+package com.telepathicgrunt.the_bumblezone.mixins.forge.item;
 
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;

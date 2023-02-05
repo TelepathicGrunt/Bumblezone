@@ -9,7 +9,7 @@ import com.telepathicgrunt.the_bumblezone.events.*;
 import com.telepathicgrunt.the_bumblezone.events.entity.*;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.*;
 import com.telepathicgrunt.the_bumblezone.events.player.*;
-import com.telepathicgrunt.the_bumblezone.mixins.forge.FireBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.mixins.forge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.BuzzierBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ProductiveBeesCompatRegs;

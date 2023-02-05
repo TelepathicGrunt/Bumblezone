@@ -500,6 +500,14 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_throne_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_throne_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{\"Locked\": 1b}"
             },
             {

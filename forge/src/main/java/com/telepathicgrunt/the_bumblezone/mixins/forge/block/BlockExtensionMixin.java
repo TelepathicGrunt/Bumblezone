@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge;
+package com.telepathicgrunt.the_bumblezone.mixins.forge.block;
 
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;

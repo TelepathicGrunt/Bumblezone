@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge;
+package com.telepathicgrunt.the_bumblezone.mixins.forge.block;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.BzRandomizableContainerBlockEntity;
 import net.minecraft.core.BlockPos;

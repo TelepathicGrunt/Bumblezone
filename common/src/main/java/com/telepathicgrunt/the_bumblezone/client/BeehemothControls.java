@@ -15,7 +15,7 @@ public class BeehemothControls {
     public static final KeyMapping KEY_BIND_BEEHEMOTH_DOWN = createKey(
     "key." + Bumblezone.MODID + ".beehemoth_down",
             BeehemothKeyContext.BEEHEMOTH_KEY_CONTEXT,
-            InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_SPACE),
+            InputConstants.Type.KEYSYM.getOrCreate(GLFW.GLFW_KEY_CAPS_LOCK),
             "key.categories." + Bumblezone.MODID
     );
 

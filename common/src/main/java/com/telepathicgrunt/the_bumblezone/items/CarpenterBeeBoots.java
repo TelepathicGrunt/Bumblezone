@@ -45,10 +45,10 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
     }
 
     @Override
-    public void armorTick(ItemStack beeBoots, Level world, Player player) {
+    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         RandomSource random = player.getRandom();
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
-        CompoundTag tag = beeBoots.getOrCreateTag();
+        CompoundTag tag = itemstack.getOrCreateTag();
 
         if(!world.isClientSide()) {
             int itemId = generateUniqueItemId(world, random, tag, tag.getInt("itemstackId"));
@@ -80,7 +80,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                     float miningProgress = (float) (timeDiff + 1);
 
                     float blockDestroyTime = belowBlockState.getDestroySpeed(world, belowBlockPos);
-                    float playerMiningSpeed = getPlayerDestroySpeed(player, beeBoots, isAllBeeArmorOn ? 0.5f : 0.3F);
+                    float playerMiningSpeed = getPlayerDestroySpeed(player, itemstack, isAllBeeArmorOn ? 0.5f : 0.3F);
                     int finalMiningProgress = (int) ((miningProgress * playerMiningSpeed) / blockDestroyTime);
 
                     if (!(finalMiningProgress == 0 && playerMiningSpeed < 0.001f) && (finalMiningProgress != lastSentState)) {
@@ -111,10 +111,10 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                                     belowBlockPos,
                                     belowBlockState,
                                     blockEntity,
-                                    beeBoots);
+                                    itemstack);
 
                             if(random.nextFloat() < 0.045) {
-                                beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
+                                itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                             }
 
                             if(player instanceof ServerPlayer serverPlayer) {
@@ -205,7 +205,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                             }
 
                             if(random.nextFloat() < 0.001) {
-                                beeBoots.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
+                                itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.FEET));
                             }
                         }
                     }

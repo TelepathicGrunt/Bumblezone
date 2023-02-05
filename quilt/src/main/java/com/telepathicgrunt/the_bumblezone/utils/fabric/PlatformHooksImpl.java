@@ -7,14 +7,18 @@ import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccess
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
@@ -30,8 +34,20 @@ import net.minecraft.world.level.material.Fluids;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 import org.quiltmc.loader.api.QuiltLoader;
+import org.quiltmc.qsl.entity.api.QuiltEntityTypeBuilder;
 
 public class PlatformHooksImpl {
+
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+        return QuiltEntityTypeBuilder
+                .<T>createMob()
+                .spawnGroup(category)
+                .entityFactory(entityFactory)
+                .setDimensions(EntityDimensions.fixed(size, size))
+                .maxChunkTrackingRange(clientTrackingRange)
+                .trackingTickInterval(updateInterval)
+                .build();
+    }
 
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return QuiltLoader.getModContainer(modid)
@@ -58,7 +74,6 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
-        //TODO Find event for experience drop
         return xp;
     }
 
@@ -82,7 +97,6 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static int canEntitySpawn(Mob entity, LevelAccessor world, double x, double y, double z, BaseSpawner spawner, MobSpawnType spawnReason) {
-        //TODO Find event for entity spawn
         return 0;
     }
 

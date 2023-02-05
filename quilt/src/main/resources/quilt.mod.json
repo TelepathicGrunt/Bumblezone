@@ -13,9 +13,9 @@
             "license": "LGPL-3.0-or-later",
             "icon": "assets/the_bumblezone/the_bumblezone_logo.png",
             "contact": {
-                "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric",
-                "sources": "https://github.com/TelepathicGrunt/Bumblezone-Fabric",
-                "issues": "https://github.com/TelepathicGrunt/Bumblezone-Fabric/issues"
+                "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone",
+                "sources": "https://github.com/TelepathicGrunt/Bumblezone",
+                "issues": "https://github.com/TelepathicGrunt/Bumblezone/issues"
             }
         },
         "intermediate_mappings": "net.fabricmc:intermediary",

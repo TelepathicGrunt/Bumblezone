@@ -30,7 +30,7 @@ public class BumbleBeeChestplate extends BeeArmor {
     }
 
     @Override
-    public void armorTick(ItemStack itemstack, Level world, Player player) {
+    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         CompoundTag tag = itemstack.getOrCreateTag();
         boolean isFlying = tag.getBoolean("isFlying");
         int flyCounter = tag.getInt("flyCounter");

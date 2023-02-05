@@ -44,7 +44,7 @@ public class StinglessBeeHelmet extends BeeArmor {
     }
 
     @Override
-    public void armorTick(ItemStack beeHelmet, Level world, Player player) {
+    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
 
         MobEffectInstance nausea = player.getEffect(MobEffects.CONFUSION);
@@ -54,9 +54,9 @@ public class StinglessBeeHelmet extends BeeArmor {
                 ((MobEffectInstanceAccessor) nausea).callTickDownDuration();
                 if(!world.isClientSide() &&
                     player.getRandom().nextFloat() < 0.001f &&
-                    beeHelmet.getMaxDamage() - beeHelmet.getDamageValue() > 1)
+                    itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
                 {
-                    beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
+                    itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
                 }
             }
         }
@@ -66,9 +66,9 @@ public class StinglessBeeHelmet extends BeeArmor {
             ((MobEffectInstanceAccessor) poison).callTickDownDuration();
             if(!world.isClientSide() &&
                 player.getRandom().nextFloat() < 0.004f &&
-                beeHelmet.getMaxDamage() - beeHelmet.getDamageValue() > 1)
+                itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {
-                beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
+                itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
             }
         }
 
@@ -87,12 +87,12 @@ public class StinglessBeeHelmet extends BeeArmor {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = isAllBeeArmorOn ? 200 : 6;
 
                 if(!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {
-                    beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
+                        itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
                 }
             }
         }
 
-        CompoundTag tag = beeHelmet.getOrCreateTag();
+        CompoundTag tag =     itemstack.getOrCreateTag();
         boolean hasBeeRider = tag.getBoolean("hasBeeRider");
         int beeRidingTimer = tag.getInt("beeRidingTimer");
         boolean hasWrath = player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());

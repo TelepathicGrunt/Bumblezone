@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge;
+package com.telepathicgrunt.the_bumblezone.mixins.forge.client;
 
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.items.BzArmor;

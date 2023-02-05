@@ -7,8 +7,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
@@ -26,10 +28,18 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.ModList;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
+
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+        return EntityType.Builder
+                .of(entityFactory, category)
+                .sized(size, size)
+                .clientTrackingRange(clientTrackingRange)
+                .updateInterval(updateInterval)
+                .build(buildName);
+    }
 
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return ModList.get().getModContainerById(modid)

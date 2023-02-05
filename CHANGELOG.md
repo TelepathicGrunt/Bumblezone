@@ -4,6 +4,8 @@
 Switched to using Arch in backend. Special thanks to ThatGravyBoat for doing the work!
  Please let me know if any bugs or issues arises as this porting took a large overhaul of the codebase and could have introduces some bugs.
 
+(Fabric/Quilt): Continuity is no longer needed for connected textures in Bumblezone!
+
 ##### Dimension:
 Renamed fogReducer config option to fogThickness and fixed it so it nows shows more of the dimension and scales the fog properly.
  Also fixes dimension rendering breaking when render distance is 30 or greater and a rendering optimizing mod is on.
@@ -14,6 +16,8 @@ Made XP Orbs no longer spawn pollen particles when moving through Pile of Pollen
 Crystalline Flower can now be placed on Amethyst Blocks along with the Glistering Honey Crystal.
  This is controlled now by this block tag: `the_bumblezone:crystalline_flower/can_be_placed_on`
  Some modded crystal blocks are support. See tag for which. You can datapack the tag to add more blocks or replace the tag to remove entries.
+
+Crystalline Flower won't attract xp orbs if at max tier. Xp orb attraction is slightly strengthened for when not at max tier.
 
 Fixed crash that occurred when taking non-enchanted book out of Crystalline Flower UI after clicking an enchant.
 
@@ -29,6 +33,9 @@ When Bee Queen is angry, the translucent super trade item rendering will disappe
 
 Bee Queen won't have many plank or plank-derivative blocks as part of the super trade system to reduce wood bloat in it.
 
+Fixed default keybind for flying down on Beehemoth being Space instead of Caps Lock. Space is fly up. Caps Locks should be fly down.
+ Go into keybind menu to fix this manually if this update doesn't automatically fix it for your game.
+
 ##### Effects:
 Wrath of the Hive will not apply to players in Peaceful mode now.
 
@@ -37,6 +44,9 @@ Fixed Journey's End advancement to not include The Beginning advancement require
 
 ##### Lang:
 Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
+
+##### Config:
+(Forge): Moved the fog config options out of the dimension.toml file into the client.toml config file because fog is clientsided.
 
 ##### Misc:
 Made it so that Pollen Puff hitting baby Mooblooms from Bovines and Buttercups will spawn flowers too.

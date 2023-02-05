@@ -8,9 +8,6 @@ public class BzDimensionConfig {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     // dimension
-    public static ForgeConfigSpec.DoubleValue fogBrightnessPercentage;
-    public static ForgeConfigSpec.DoubleValue fogThickness;
-    public static ForgeConfigSpec.BooleanValue enableDimensionFog;
     public static ForgeConfigSpec.IntValue teleportationMode;
     public static ForgeConfigSpec.BooleanValue generateBeenest;
     public static ForgeConfigSpec.BooleanValue forceExitToOverworld;
@@ -30,34 +27,6 @@ public class BzDimensionConfig {
     }
 
     private static void setupConfig(ForgeConfigSpec.Builder builder) {
-        builder.push("The Bumblezone Dimension Options");
-
-            fogBrightnessPercentage = builder
-                .comment(" \n-----------------------------------------------------\n",
-                       " How bright the fog is in the Bumblezone dimension. ",
-                       " ",
-                       " The brightness is represented as a percentage",
-                       " so 0 will be pitch black, 50 will be half",
-                       " as bright, 100 will be normal orange brightness,",
-                       " and 100000 will be white.\n")
-                .translation("the_bumblezone.config.fogbrightnesspercentage")
-                .defineInRange("fogBrightnessPercentage", 100D, 0D, 100000D);
-
-            fogThickness = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " How thick the fog in Bumblezone is.",
-                        " 2 is a little bit of fog and 50 is super thick fog. Decimal values are allowed.\n")
-                .translation("the_bumblezone.config.fogthickness")
-                .defineInRange("fogThickness", 4D, 0D, 100D);
-
-            enableDimensionFog = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether Bumblezone dimension has thick fog or not.\n")
-                .translation("the_bumblezone.config.enabledimensionfog")
-                .define("enableDimensionFog", true);
-
-        builder.pop();
-
         builder.push("The Bumblezone Teleportation Options");
 
             teleportationMode = builder
@@ -168,8 +137,6 @@ public class BzDimensionConfig {
     }
 
     public static void copyToCommon() {
-        BzDimensionConfigs.fogBrightnessPercentage = fogBrightnessPercentage.get();
-        BzDimensionConfigs.enableDimensionFog = enableDimensionFog.get();
         BzDimensionConfigs.teleportationMode = teleportationMode.get();
         BzDimensionConfigs.enableEntranceTeleportation = enableEntranceTeleportation.get();
         BzDimensionConfigs.enableExitTeleportation = enableExitTeleportation.get();

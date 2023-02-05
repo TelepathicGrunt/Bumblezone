@@ -8,8 +8,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
@@ -28,6 +30,11 @@ import org.jetbrains.annotations.Nullable;
  * We use @Contract(pure = true) because intellij will think that they always return the same value.
  */
 public class PlatformHooks {
+
+    @ExpectPlatform
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+        throw new NotImplementedException("PlatformHooks isEyesInNoFluid is not implemented!");
+    }
 
     @ExpectPlatform
     @Contract(pure = true)

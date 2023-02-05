@@ -30,6 +30,7 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import org.slf4j.Logger;
 
 public class Bumblezone{

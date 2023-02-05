@@ -1,31 +1,31 @@
 {
   "required": true,
   "package": "com.telepathicgrunt.the_bumblezone.mixin.fabricbase",
-  "refmap": "the_bumblezone-fabric-base-refmap.json",
   "compatibilityLevel": "JAVA_17",
   "injectors": {
     "defaultRequire": 1
   },
   "minVersion": "0.8",
   "client": [
+    "client.BlockModelDeserializerMixin",
     "client.BlockModelMixin",
     "client.FogRendererMixin",
     "client.KeyboardHandlerMixin",
     "client.KeyMappingAccessor",
     "client.ModelBakeryMixin",
+    "client.ModelManagerMixin",
     "client.MultiPlayerGameModeMixin",
     "client.ParticleEngineMixin",
     "client.ScreenEffectRendererMixin",
     "mods.MidnightConfigScreenMixin"
   ],
   "mixins": [
-    "PistonStructureResolverMixin",
-    "ResultSlotMixin",
-    "SimpleCookingSerializerMixin",
-    "client.BlockModelDeserializerMixin",
-    "client.ModelManagerMixin",
+    "block.PistonStructureResolverMixin",
+    "enchantment.EnchantmentHelperMixin",
+    "enchantment.EnchantmentMixin",
     "entity.AnimalMixin",
     "entity.BaseSpawnerMixin",
+    "entity.EntityAccessor",
     "entity.EntityMixin",
     "entity.FloatGoalMixin",
     "entity.ItemEntityMixin",
@@ -43,8 +43,10 @@
     "fluid.BzLiquidBlockMixin",
     "item.BowItemMixin",
     "item.BucketItemAccessor",
-    "item.EnchantmentHelperMixin",
+    "item.InventoryMixin",
     "item.ItemStackMixin",
-    "item.RecordItemMixin"
+    "item.RecordItemMixin",
+    "item.SimpleCookingSerializerMixin",
+    "menu.ResultSlotMixin"
   ]
 }

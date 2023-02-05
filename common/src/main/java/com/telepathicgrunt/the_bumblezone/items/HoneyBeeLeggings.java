@@ -38,7 +38,7 @@ public class HoneyBeeLeggings extends BeeArmor {
     }
 
     @Override
-    public void armorTick(ItemStack itemstack, Level world, Player player) {
+    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         RandomSource random = player.getRandom();
         boolean isPollinated = isPollinated(itemstack);
         boolean isSprinting = player.isSprinting();

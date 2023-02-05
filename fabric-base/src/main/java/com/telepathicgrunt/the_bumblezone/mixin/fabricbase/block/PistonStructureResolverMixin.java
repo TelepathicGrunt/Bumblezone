@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabricbase;
+package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.block;
 
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;

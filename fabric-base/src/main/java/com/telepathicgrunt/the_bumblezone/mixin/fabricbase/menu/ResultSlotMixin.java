@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabricbase;
+package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.menu;
 
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import net.minecraft.world.entity.player.Player;

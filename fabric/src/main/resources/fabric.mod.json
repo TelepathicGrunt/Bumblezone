@@ -9,9 +9,9 @@
         "TelepathicGrunt"
     ],
     "contact": {
-        "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone-fabric",
-        "sources": "https://github.com/TelepathicGrunt/Bumblezone-Fabric",
-        "issues": "https://github.com/TelepathicGrunt/Bumblezone-Fabric/issues"
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-bumblezone",
+        "sources": "https://github.com/TelepathicGrunt/Bumblezone",
+        "issues": "https://github.com/TelepathicGrunt/Bumblezone/issues"
     },
 
     "license": "LGPLv3",
@@ -48,7 +48,6 @@
         "the_bumblezone-fabric-base.mixins.json",
         "the_bumblezone-common.mixins.json"
     ],
-    "accessWidener": "the_bumblezone.accesswidener",
     "depends": {
         "fabricloader": ">=0.14.11",
         "minecraft": ">=1.19.3",

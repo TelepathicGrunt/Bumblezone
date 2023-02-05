@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabricbase;
+package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item;
 
 import com.google.gson.JsonObject;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

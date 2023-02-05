@@ -5,19 +5,19 @@
     "compatibilityLevel": "JAVA_17",
     "refmap": "the_bumblezone-forge-refmap.json",
     "mixins": [
-        "BlockExtensionMixin",
-        "BzBucketItemMixin",
-        "BzEnchantmentMixin",
-        "BzFlowingFluidMixin",
-        "BzLiquidBlockMixin",
-        "IncenseCandleRecipeMixin",
-        "ItemExtensionMixin",
-        "FireBlockInvoker",
-        "BzRandomizableContainerBlockEntityMixin"
+        "block.BlockExtensionMixin",
+        "block.BzFlowingFluidMixin",
+        "block.BzLiquidBlockMixin",
+        "block.BzRandomizableContainerBlockEntityMixin",
+        "block.FireBlockInvoker",
+        "enchantment.BzEnchantmentMixin",
+        "item.BzBucketItemMixin",
+        "item.IncenseCandleRecipeMixin",
+        "item.ItemExtensionMixin"
     ],
     "client": [
-        "BzArmorMixin",
-        "BzEffectMixin"
+        "client.BzArmorMixin",
+        "client.BzEffectMixin"
     ],
     "injectors": {
         "defaultRequire": 1

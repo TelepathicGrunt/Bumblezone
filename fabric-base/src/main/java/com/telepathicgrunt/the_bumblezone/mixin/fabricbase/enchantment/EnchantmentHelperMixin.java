@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item;
+package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.enchantment;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -21,15 +21,15 @@ public class EnchantmentHelperMixin {
             method = "getAvailableEnchantmentResults",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentCategory;canEnchant(Lnet/minecraft/world/item/Item;)Z")
     )
-    private static boolean bumblezone$canEnchant(EnchantmentCategory instance, Item item, Operation<Boolean> operation, int i, ItemStack stack, boolean bl, @Local(ordinal = 0, name = "enchantment") Enchantment enchantment) {
+    private static boolean bumblezone$canEnchant(EnchantmentCategory instance, Item item, Operation<Boolean> operation, int i, ItemStack itemStack, boolean bl, @Local(ordinal = 0, name = "enchantment") Enchantment enchantment) {
         if (enchantment instanceof BzEnchantment bzEnchantment) {
-            OptionalBoolean result = bzEnchantment.bz$canApplyAtEnchantingTable(stack);
+            OptionalBoolean result = bzEnchantment.bz$canApplyAtEnchantingTable(itemStack);
             if (result.isPresent()) {
                 return result.get();
             }
         }
         if (item instanceof ItemExtension extension) {
-            OptionalBoolean result = extension.bz$canApplyAtEnchantingTable(stack, enchantment);
+            OptionalBoolean result = extension.bz$canApplyAtEnchantingTable(itemStack, enchantment);
             if (result.isPresent()) {
                 return result.get();
             }
