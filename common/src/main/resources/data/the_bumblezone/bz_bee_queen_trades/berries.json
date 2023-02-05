@@ -85,6 +85,10 @@
       "required": false
     },
     {
+      "id": "paradise_lost:blackcurrant",
+      "required": false
+    },
+    {
       "id": "archon:mana_berries",
       "required": false
     },

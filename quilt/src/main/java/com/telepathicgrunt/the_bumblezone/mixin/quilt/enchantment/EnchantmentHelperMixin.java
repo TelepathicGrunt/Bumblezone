@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.enchantment;
+package com.telepathicgrunt.the_bumblezone.mixin.quilt.enchantment;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

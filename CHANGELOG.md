@@ -26,6 +26,9 @@ Fixed it so Bees that spend too long in Honey Fluid and Royal Jelly Fluid will d
 
 (Quilt/Fabric): Fixed Honey Fluid and Royal Jelly Fluid so mobs can float on top of it now.
 
+##### Items:
+Fixed thrown Pollen Puff able to multiply Flowering Azalea Leaves and other modded flowering leaves.
+
 ##### Entities:
 Bee Queen will not get angry at attacking Players in Peaceful mode now.
 

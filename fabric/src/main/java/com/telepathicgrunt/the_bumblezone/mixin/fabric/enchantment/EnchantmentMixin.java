@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.enchantment;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.enchantment;
 
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;

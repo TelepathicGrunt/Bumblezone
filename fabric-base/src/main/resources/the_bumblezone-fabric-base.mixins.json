@@ -21,8 +21,6 @@
   ],
   "mixins": [
     "block.PistonStructureResolverMixin",
-    "enchantment.EnchantmentHelperMixin",
-    "enchantment.EnchantmentMixin",
     "entity.AnimalMixin",
     "entity.BaseSpawnerMixin",
     "entity.EntityAccessor",

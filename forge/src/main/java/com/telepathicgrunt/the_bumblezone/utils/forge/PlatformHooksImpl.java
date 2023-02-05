@@ -1,11 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.utils.forge;
 
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
+import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -109,5 +112,9 @@ public class PlatformHooksImpl {
 
     public static boolean isEyesInNoFluid(Entity entity) {
         return entity.getEyeInFluidType().isAir();
+    }
+
+    public static InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
+        return InteractionResultHolder.pass(user.getItemInHand(hand));
     }
 }

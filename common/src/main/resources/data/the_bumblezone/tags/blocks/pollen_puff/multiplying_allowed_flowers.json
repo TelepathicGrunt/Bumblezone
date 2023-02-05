@@ -253,6 +253,18 @@
     {
       "id": "pyromancer:rafflesia",
       "required": false
+    },
+    {
+      "id": "#paradise_lost:small_flowers",
+      "required": false
+    },
+    {
+      "id": "#paradise_lost:tall_flowers",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:grass_flowering",
+      "required": false
     }
   ]
 }

@@ -55,10 +55,10 @@
         ]
     },
     "mixin": [
+        "the_bumblezone-quilt.mixins.json",
         "the_bumblezone-fabric-base.mixins.json",
         "the_bumblezone-common.mixins.json"
     ],
-    "access_widener": "the_bumblezone.accesswidener",
     "cardinal-components": [
         "the_bumblezone:entity_component",
         "the_bumblezone:original_flying_speed",
