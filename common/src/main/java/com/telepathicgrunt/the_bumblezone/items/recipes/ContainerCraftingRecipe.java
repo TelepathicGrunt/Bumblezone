@@ -6,6 +6,7 @@ import com.google.gson.JsonParseException;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -95,8 +96,14 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
         return remainingInv;
     }
 
+    public static JsonObject itemStackFromJson(ItemStack itemStack) {
+        JsonObject json = new JsonObject();
+        json.addProperty("count", itemStack.getCount());
+        json.addProperty("item", BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString());
+        return json;
+    }
 
-    public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
+    public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe>, BzRecipeSerializer<ContainerCraftingRecipe> {
         @Override
         public ContainerCraftingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String s = GsonHelper.getAsString(json, "group", "");
@@ -111,6 +118,18 @@ public class ContainerCraftingRecipe extends ShapelessRecipe {
                 ItemStack itemstack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
                 return new ContainerCraftingRecipe(recipeId, s, craftingBookCategory, itemstack, DefaultedList);
             }
+        }
+
+        public JsonObject toJson(ContainerCraftingRecipe recipe) {
+            JsonObject json = new JsonObject();
+            json.addProperty("group", recipe.getGroup());
+
+            JsonArray array = new JsonArray();
+            recipe.recipeItems.stream().map(Ingredient::toJson).forEach(array::add);
+            json.add("ingredients", array);
+
+            json.add("result", ContainerCraftingRecipe.itemStackFromJson(recipe.recipeOutput));
+            return json;
         }
 
         private static NonNullList<Ingredient> getIngredients(JsonArray jsonElements) {

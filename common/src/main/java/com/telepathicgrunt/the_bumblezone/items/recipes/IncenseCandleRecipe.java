@@ -9,6 +9,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -329,7 +331,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
         return CraftingBookCategory.MISC;
     }
 
-    public static class Serializer implements RecipeSerializer<IncenseCandleRecipe> {
+    public static class Serializer implements RecipeSerializer<IncenseCandleRecipe>, BzRecipeSerializer<IncenseCandleRecipe> {
         private static NonNullList<Ingredient> getIngredients(JsonArray jsonElements) {
             NonNullList<Ingredient> defaultedList = NonNullList.create();
 
@@ -368,6 +370,64 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             int resultCount = json.get("resultCount").getAsInt();
 
             return new IncenseCandleRecipe(recipeId, group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+        }
+
+        public JsonObject toJson(IncenseCandleRecipe recipe) {
+            JsonObject json = new JsonObject();
+
+            json.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZER.getKey(BzRecipes.INCENSE_CANDLE_RECIPE.get()).toString());
+            json.addProperty("group", recipe.group);
+
+            NonNullList<Ingredient> recipeIngredients = recipe.shapedRecipeItems;
+            var ingredients = new Object2CharOpenHashMap<Ingredient>();
+            var inputs = new Char2ObjectOpenHashMap<Ingredient>();
+            ingredients.defaultReturnValue(' ');
+            char currentChar = 'A';
+            for (Ingredient ingredient : recipeIngredients) {
+                if (!ingredient.isEmpty()
+                        && ingredients.putIfAbsent(ingredient, currentChar) == ingredients.defaultReturnValue()) {
+                    inputs.putIfAbsent(currentChar, ingredient);
+                    currentChar++;
+                }
+            }
+
+            var pattern = new ArrayList<String>();
+            var patternLine = new StringBuilder();
+            for (int i = 0; i < recipeIngredients.size(); i++) {
+                if (i != 0 && i % recipe.getWidth() == 0) {
+                    pattern.add(patternLine.toString());
+                    patternLine.setLength(0);
+                }
+
+                Ingredient ingredient = recipeIngredients.get(i);
+                patternLine.append(ingredients.getChar(ingredient));
+            }
+            pattern.add(patternLine.toString());
+
+            JsonArray jsonArray = new JsonArray();
+            for(String string : pattern) {
+                jsonArray.add(string);
+            }
+            json.add("pattern", jsonArray);
+
+            JsonObject jsonObject = new JsonObject();
+            for(Map.Entry<Character, Ingredient> entry : inputs.entrySet()) {
+                jsonObject.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
+            }
+            json.add("key", jsonObject);
+
+            JsonArray shapelessRecipeJsonArray = new JsonArray();
+            recipe.shapelessRecipeItems.stream().map(Ingredient::toJson).forEach(shapelessRecipeJsonArray::add);
+            json.add("shapelessExtraIngredients", shapelessRecipeJsonArray);
+
+            json.addProperty("maxAllowedPotions", recipe.maxAllowedPotions);
+            json.addProperty("allowNormalPotions", recipe.allowNormalPotions);
+            json.addProperty("allowSplashPotions", recipe.allowSplashPotions);
+            json.addProperty("allowLingeringPotions", recipe.allowLingeringPotions);
+            json.addProperty("maxLevelCap", recipe.maxLevelCap);
+            json.addProperty("resultCount", recipe.result.getCount());
+
+            return json;
         }
 
         @Override

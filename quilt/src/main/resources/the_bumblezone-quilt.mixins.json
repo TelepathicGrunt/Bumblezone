@@ -10,6 +10,7 @@
   ],
   "mixins": [
     "enchantment.EnchantmentHelperMixin",
-    "enchantment.EnchantmentMixin"
+    "enchantment.EnchantmentMixin",
+    "recipes.BzRecipeSerializerMixin"
   ]
 }
