@@ -55,3 +55,6 @@ Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
 Made it so that Pollen Puff hitting baby Mooblooms from Bovines and Buttercups will spawn flowers too.
 
 (Forge): Added Pollen Puff compat with Moobloom's (FlowerCow) mod on Forge.
+
+(Forge): Added Pollen Puff compat with Honey Bucket mod's Moobloom and other mobs with mushrooms on them. 
+ Their Golden Bloom flower will spawn in Hanging Gardens now

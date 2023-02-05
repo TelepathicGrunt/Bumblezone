@@ -329,6 +329,10 @@
     {
       "id": "paradise_lost:grass_flowering",
       "required": false
+    },
+    {
+      "id": "honey_bucket:golden_bloom",
+      "required": false
     }
   ]
 }

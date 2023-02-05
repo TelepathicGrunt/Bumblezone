@@ -273,6 +273,10 @@
     {
       "id": "goodending:yellow_flowering_lily_pad",
       "required": false
+    },
+    {
+      "id": "honey_bucket:golden_bloom",
+      "required": false
     }
   ]
 }
