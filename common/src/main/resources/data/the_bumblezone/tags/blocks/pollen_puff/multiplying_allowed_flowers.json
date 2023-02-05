@@ -265,6 +265,14 @@
     {
       "id": "paradise_lost:grass_flowering",
       "required": false
+    },
+    {
+      "id": "goodending:pink_flowering_lily_pad",
+      "required": false
+    },
+    {
+      "id": "goodending:yellow_flowering_lily_pad",
+      "required": false
     }
   ]
 }

@@ -51,5 +51,7 @@ Added a few extra details on some blocks in the JEI/REI/EMI item descriptions.
 ##### Config:
 (Forge): Moved the fog config options out of the dimension.toml file into the client.toml config file because fog is clientsided.
 
-##### Misc:
+##### Mod Compat:
 Made it so that Pollen Puff hitting baby Mooblooms from Bovines and Buttercups will spawn flowers too.
+
+(Forge): Added Pollen Puff compat with Moobloom's (FlowerCow) mod on Forge.
