@@ -42,9 +42,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerRightClickedBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixins.forge.block.FireBlockInvoker;
-import com.telepathicgrunt.the_bumblezone.modcompat.forge.BuzzierBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.forge.ProductiveBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.forge.ResourcefulRegistriesImpl;
 import com.telepathicgrunt.the_bumblezone.modules.forge.ForgeModuleInitalizer;
 import com.telepathicgrunt.the_bumblezone.world.forge.BzBiomeModifier;
@@ -109,7 +107,7 @@ import java.util.List;
 public class BumblezoneForge {
 
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Bumblezone.MODID);
-    public static final RegistryObject<Codec<BzBiomeModifier>> BIOME_MODIFIER = BIOME_MODIFIERS.register("biome_modifier", () -> BzBiomeModifier.CODEC);
+    public static final RegistryObject<Codec<BzBiomeModifier>> BIOME_MODIFIER = BIOME_MODIFIERS.register("additions_modifier", () -> BzBiomeModifier.CODEC);
 
     public BumblezoneForge() {
         BzConfigHandler.setup();
@@ -122,16 +120,6 @@ public class BumblezoneForge {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         BIOME_MODIFIERS.register(modEventBus);
-
-        if (ModList.get().isLoaded("productivebees")) {
-            ProductiveBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);
-            ProductiveBeesCompatRegs.PLACED_FEATURES.register(modEventBus);
-        }
-
-        if (ModList.get().isLoaded("buzzier_bees")) {
-            BuzzierBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);
-            BuzzierBeesCompatRegs.PLACED_FEATURES.register(modEventBus);
-        }
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             BumblezoneForgeClient.init();

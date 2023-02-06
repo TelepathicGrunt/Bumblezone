@@ -23,7 +23,8 @@ public class BzModCompatibilityConfigs {
 	public static boolean spawnProductiveBeesHoneycombVariants = true;
 	public static double PBOreHoneycombSpawnRateBeeDungeon = 0.045D;
 	public static double PBOreHoneycombSpawnRateSpiderBeeDungeon = 0.10D;
-	public static List<String> allowedCombsForDungeons = List.of("productivebees:diamond",
+	public static List<String> allowedCombsForDungeons = List.of(
+			"productivebees:diamond",
 			"productivebees:iron",
 			"productivebees:coal",
 			"productivebees:redstone",
@@ -48,18 +49,8 @@ public class BzModCompatibilityConfigs {
 			"productivebees:ghostly",
 			"productivebees:zombie"
 	);
-	public static List<String> allowedCombsAsOres = List.of("productivebees:iron",
-			"productivebees:redstone",
-			"productivebees:copper",
-			"productivebees:gold",
-			"productivebees:magmatic",
-			"productivebees:crystalline",
-			"productivebees:glowing",
-			"productivebees:blazing",
-			"productivebees:skeletal",
-			"productivebees:ghostly"
-	);
-	public static List<String> allowedBees = List.of("productivebees:diamond",
+	public static List<String> allowedBees = List.of(
+			"productivebees:diamond",
 			"productivebees:iron",
 			"productivebees:coal",
 			"productivebees:redstone",

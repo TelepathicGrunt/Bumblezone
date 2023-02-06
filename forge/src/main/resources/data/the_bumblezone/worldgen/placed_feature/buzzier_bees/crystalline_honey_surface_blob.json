@@ -1,0 +1,32 @@
+{
+  "feature": "the_bumblezone:buzzier_bees/crystalline_honey_surface_blob",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 30
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "above_bottom": 55
+        },
+        "max_inclusive": {
+          "below_top": 16
+        }
+      }
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "offset": [0, 0, 0],
+        "blocks": "the_bumblezone:porous_honeycomb_block"
+      }
+    }
+  ]
+}

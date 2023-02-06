@@ -1,68 +1,56 @@
 package com.telepathicgrunt.the_bumblezone.world.forge;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.JsonOps;
-import com.telepathicgrunt.the_bumblezone.events.AddFeaturesEvent;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.forge.BumblezoneForge;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.RegistryOps;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
+public record BzBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> feature, GenerationStep.Decoration step, String modid) implements BiomeModifier {
 
-public record BzBiomeModifier(@Nullable RegistryOps<?> ops, List<ModificationEntry> features) implements BiomeModifier {
+    public static Codec<BzBiomeModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+            Biome.LIST_CODEC.fieldOf("biomes").forGetter(BzBiomeModifier::biomes),
+            PlacedFeature.LIST_CODEC.fieldOf("feature").forGetter(BzBiomeModifier::feature),
+            GenerationStep.Decoration.CODEC.fieldOf("step").forGetter(BzBiomeModifier::step),
+            Codec.STRING.fieldOf("required_mod").forGetter(BzBiomeModifier::modid)
+    ).apply(builder, BzBiomeModifier::new));
 
-    public static BzBiomeModifier of(@Nullable RegistryOps<?> ops) {
-        List<ModificationEntry> features = new ArrayList<>();
-        AddFeaturesEvent.EVENT.invoke(new AddFeaturesEvent((predicate, step, feature)
-                -> features.add(new ModificationEntry(predicate, step, feature))));
-        return new BzBiomeModifier(ops, features);
-    }
+    public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+        // add a feature to all specified biomes
+        if (feature.size() != 0 && phase == Phase.ADD && PlatformHooks.isModLoaded(modid) && biomes.contains(biome)) {
 
-    public static final Codec<BzBiomeModifier> CODEC = Codec.PASSTHROUGH.xmap(
-            dynamic -> {
-                var op = dynamic.getOps() instanceof RegistryOps<?> regOp ? regOp : null;
-                return BzBiomeModifier.of(op);
-            },
-            biomeModifier -> new Dynamic<>(JsonOps.INSTANCE, JsonOps.INSTANCE.empty())
-    );
-
-    @Override
-    public void modify(Holder<Biome> arg, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-        if (phase.equals(Phase.ADD) && ops != null) {
-            for (var entry : features) {
-                if (entry.test(arg)) {
-                    ops.getter(Registries.PLACED_FEATURE)
-                            .flatMap(registry -> registry.get(entry.feature()))
-                            .ifPresent(holder -> builder.getGenerationSettings().addFeature(entry.step(), holder));
+            if (modid.equals("productivebees")) {
+                if (BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants) {
+                    feature.stream().forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
                 }
+            }
+            else if (modid.equals("resourcefulbees")) {
+                if (BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins) {
+                    feature.stream().filter(placedFeatureHolder -> {
+                        FeatureConfiguration featureConfiguration = placedFeatureHolder.get().feature().get().config();
+                        if (featureConfiguration instanceof OreConfiguration oreConfiguration) {
+                            return oreConfiguration.targetStates.stream().noneMatch(e -> e.state.isAir());
+                        }
+                        return true;
+                    }).forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
+                }
+            }
+            else {
+                feature.stream().forEach(pf -> builder.getGenerationSettings().addFeature(step, pf));
             }
         }
     }
 
-    @Override
     public Codec<? extends BiomeModifier> codec() {
-        return CODEC;
-    }
-
-    public record ModificationEntry(
-            Predicate<Holder<Biome>> predicate,
-            GenerationStep.Decoration step,
-            ResourceKey<PlacedFeature> feature
-    ) implements Predicate<Holder<Biome>> {
-
-        @Override
-        public boolean test(Holder<Biome> biome) {
-            return predicate.test(biome);
-        }
+        return BumblezoneForge.BIOME_MODIFIER.get();
     }
 }

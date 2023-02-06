@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 33,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:block_match",
+          "block": "the_bumblezone:porous_honeycomb_block"
+        },
+        "state": {
+          "Name": "buzzier_bees:crystallized_honey_block"
+        }
+      }
+    ]
+  }
+}

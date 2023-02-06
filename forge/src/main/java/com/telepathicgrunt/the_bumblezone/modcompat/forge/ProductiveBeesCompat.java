@@ -1,17 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.AddFeaturesEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
-import cy.jdkdigital.productivebees.common.block.ConfigurableCombBlock;
 import cy.jdkdigital.productivebees.common.block.ExpansionBox;
-import cy.jdkdigital.productivebees.common.block.entity.CombBlockBlockEntity;
 import cy.jdkdigital.productivebees.common.entity.bee.ConfigurableBee;
 import cy.jdkdigital.productivebees.init.ModBlocks;
 import cy.jdkdigital.productivebees.init.ModEntities;
@@ -29,9 +25,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.common.util.Lazy;
 
@@ -39,7 +32,6 @@ import java.awt.*;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class ProductiveBeesCompat implements ModCompat {
 
@@ -62,12 +54,6 @@ public class ProductiveBeesCompat implements ModCompat {
                         !SPIDER_DUNGEON_HONEYCOMBS.get().contains(e.getKey());
             }).map(Map.Entry::getKey).toList());
 
-    private static final Lazy<List<String>> ORE_HONEYCOMBS = Lazy.of(() ->
-            BeeReloadListener.INSTANCE.getData().entrySet().stream().filter(
-                    e -> BzModCompatibilityConfigs.allowedCombsAsOres.contains(e.getKey()) &&
-                            e.getValue().getBoolean("createComb")
-            ).map(Map.Entry::getKey).toList());
-
     private static final Lazy<List<String>> ALL_BEES = Lazy.of(() -> BeeReloadListener.INSTANCE.getData().keySet().stream().filter(e -> BzModCompatibilityConfigs.allowedBees.contains(e)).toList());
 
     public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation("productivebees", "solitary_overworld_nests"));
@@ -75,15 +61,6 @@ public class ProductiveBeesCompat implements ModCompat {
     public ProductiveBeesCompat() {
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.productiveBeesPresent = true;
-        AddFeaturesEvent.EVENT.addListener(ProductiveBeesCompat::addHoneycombVeins);
-    }
-
-    private static void addHoneycombVeins(AddFeaturesEvent event) {
-        event.addFeature(
-                biome -> biome.is(BzTags.THE_BUMBLEZONE) && BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants,
-                GenerationStep.Decoration.UNDERGROUND_ORES,
-                new ResourceLocation(Bumblezone.MODID, "productivebees_be_comb_placed_feature")
-        );
     }
 
     @Override
@@ -150,27 +127,15 @@ public class ProductiveBeesCompat implements ModCompat {
     }
 
     @Override
-    public Optional<Object> getCombData(Block block, RandomSource random) {
-        if (block instanceof ConfigurableCombBlock) {
-            if (!BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants || ORE_HONEYCOMBS.get().size() == 0) {
-                return Optional.empty();
+    public OptionalBoolean validateCombType(CompoundTag tag) {
+        if (tag.contains("type")) {
+            CompoundTag productiveBeesData = BeeReloadListener.INSTANCE.getData().get(tag.getString("type"));
+            if (productiveBeesData != null && productiveBeesData.getBoolean("createComb")) {
+                return OptionalBoolean.TRUE;
             }
-            return Optional.of(ORE_HONEYCOMBS.get().get(random.nextInt(ORE_HONEYCOMBS.get().size())));
         }
-        return Optional.empty();
-    }
 
-    @Override
-    public boolean placeCombOre(BlockPos.MutableBlockPos pos, ChunkAccess chunk, Object nbt, OreConfiguration.TargetBlockState target, Block block) {
-        if (block instanceof ConfigurableCombBlock && nbt instanceof String string) {
-            chunk.setBlockState(pos, target.state, false);
-            CombBlockBlockEntity be = (CombBlockBlockEntity) ((ConfigurableCombBlock) block).newBlockEntity(pos, target.state);
-            if (be == null) return false;
-            be.setType(string);
-            chunk.setBlockEntity(be);
-            return true;
-        }
-        return false;
+        return OptionalBoolean.EMPTY;
     }
 
     @Override

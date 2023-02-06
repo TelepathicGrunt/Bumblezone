@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 33,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "the_bumblezone:worldgen_checks/cave_edge_blocks_for_modded_compats"
+        },
+        "state": {
+          "Name": "buzzier_bees:honeycomb_tiles"
+        }
+      }
+    ]
+  }
+}

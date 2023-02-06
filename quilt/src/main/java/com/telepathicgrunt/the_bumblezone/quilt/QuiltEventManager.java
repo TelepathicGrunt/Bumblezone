@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.quilt;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
@@ -14,14 +16,27 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEven
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.fabricbase.FabricBaseEventManager;
+import com.telepathicgrunt.the_bumblezone.mixin.quilt.qsl.BiomeModificationContextImplMixin;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 import org.quiltmc.qsl.block.content.registry.api.FlammableBlockEntry;
@@ -33,6 +48,9 @@ import org.quiltmc.qsl.lifecycle.api.event.ServerWorldTickEvents;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 import org.quiltmc.qsl.resource.loader.api.ResourcePackActivationType;
 import org.quiltmc.qsl.villager.api.TradeOfferHelper;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModificationContext;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModifications;
+import org.quiltmc.qsl.worldgen.biome.api.ModificationPhase;
 
 public class QuiltEventManager {
 
@@ -90,4 +108,26 @@ public class QuiltEventManager {
         ));
     }
 
+    public static void lateInit() {
+        if (PlatformHooks.isModLoaded("resourcefulbees") && BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins) {
+            BiomeModifications.create(new ResourceLocation(Bumblezone.MODID, "resourceful_bees_compat"))
+                    .add(ModificationPhase.ADDITIONS,
+                            (context) -> context.isIn(TagKey.create(Registries.BIOME, new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID))),
+                            (context) -> {
+                                for (Holder<PlacedFeature> placedFeatureHolder : getPlacedFeaturesByTag(context, BzTags.RESOURCEFUL_BEES_COMBS)) {
+                                    FeatureConfiguration featureConfiguration = placedFeatureHolder.value().feature().value().config();
+
+                                    if (featureConfiguration instanceof OreConfiguration oreConfiguration && oreConfiguration.targetStates.stream().noneMatch(e -> e.state.isAir())) {
+                                        context.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeatureHolder.unwrapKey().get());
+                                    }
+                                }
+                            });
+        }
+    }
+
+    private static Iterable<Holder<PlacedFeature>> getPlacedFeaturesByTag(BiomeModificationContext context, TagKey<PlacedFeature> placedFeatureTagKey) {
+        RegistryAccess registryAccess = ((BiomeModificationContextImplMixin)context).getRegistries();
+        Registry<PlacedFeature> placedFeatureRegistry = registryAccess.registryOrThrow(Registries.PLACED_FEATURE);
+        return placedFeatureRegistry.getTagOrEmpty(placedFeatureTagKey);
+    }
 }

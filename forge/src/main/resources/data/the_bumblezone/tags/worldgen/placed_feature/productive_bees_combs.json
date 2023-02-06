@@ -1,0 +1,57 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:productivebees/blazing_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/copper_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/crystalline_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/diamond_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/diamond_comb_vein_high",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/ghostly_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/glowing_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/gold_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/iron_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/lapis_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/magmatic_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/redstone_comb_vein",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:productivebees/skeletal_comb_vein",
+      "required": false
+    }
+  ]
+}

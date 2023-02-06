@@ -3,30 +3,32 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtOreConfiguration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.WeakHashMap;
 
 
-public class BlockEntityCombOre extends Feature<OreConfiguration> {
-	public BlockEntityCombOre(Codec<OreConfiguration> configFactory) {
+public class BlockEntityCombOre extends Feature<NbtOreConfiguration> {
+	public BlockEntityCombOre(Codec<NbtOreConfiguration> configFactory) {
 		super(configFactory);
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<OreConfiguration> context) {
+	public boolean place(FeaturePlaceContext<NbtOreConfiguration> context) {
 		BlockPos.MutableBlockPos blockposMutable = new BlockPos.MutableBlockPos();
 		BlockState blockToReplace;
 		float angleOfRotation = (float) (Math.PI * context.random().nextFloat());
@@ -39,13 +41,14 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 		int maxY = (int) (size / 3);
 		int minY = -maxY - 1;
 
-		ModCompat dataCompat = null;
-		Optional<Object> data = Optional.empty();
-		Block targetBlock = context.config().targetStates.get(0).state.getBlock();
+		CompoundTag stateNbt = context.config().targetStates.get(0).stateNbt;
+		OptionalBoolean data = OptionalBoolean.EMPTY;
 		for (ModCompat compat : ModChecker.COMB_ORE_COMPATS) {
-			data = compat.getCombData(targetBlock, context.random());
-			dataCompat = compat;
+			data = compat.validateCombType(stateNbt);
 			if (data.isPresent()) break;
+		}
+		if (data.isEmpty()) {
+			return false;
 		}
 
 		for(int y = minY; y <= maxY; y++) {
@@ -77,15 +80,13 @@ public class BlockEntityCombOre extends Feature<OreConfiguration> {
 						cachedChunk = getCachedChunk(context.level(), blockposMutable);
 
 						blockToReplace = cachedChunk.getBlockState(blockposMutable);
-						for(OreConfiguration.TargetBlockState targetBlockState : context.config().targetStates) {
+						for(NbtOreConfiguration.TargetBlockState targetBlockState : context.config().targetStates) {
 							if(targetBlockState.target.test(blockToReplace, context.random())) {
-								if (dataCompat != null && data.isPresent()) {
-									if (dataCompat.placeCombOre(blockposMutable, cachedChunk, data.get(), targetBlockState, targetBlockState.state.getBlock())) {
-										continue;
-									}
-								}
-
 								cachedChunk.setBlockState(blockposMutable, targetBlockState.state, false);
+								BlockEntity blockentity = ((EntityBlock)targetBlockState.state.getBlock()).newBlockEntity(blockposMutable, targetBlockState.state);
+								if (blockentity == null) return false;
+								blockentity.load(targetBlockState.stateNbt);
+								cachedChunk.setBlockEntity(blockentity);
 							}
 						}
 					}

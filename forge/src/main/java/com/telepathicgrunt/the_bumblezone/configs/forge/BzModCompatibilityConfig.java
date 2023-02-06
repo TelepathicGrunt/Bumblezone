@@ -28,7 +28,6 @@ public class BzModCompatibilityConfig {
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateSpiderBeeDungeon;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsForDungeons;
-	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsAsOres;
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedBees;
 
 	public static ForgeConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
@@ -159,8 +158,12 @@ public class BzModCompatibilityConfig {
 					.comment(" \n-----------------------------------------------------\n",
 							" Spawn Productive Bees's various honeycomb variants in The Bumblezone at all",
 							" kinds of heights and height bands. Start exploring to find where they spawn!",
+							" Disabling this config will make all Productive Bees comb blocks not spawn in Bumblezone dimension.",
 							" ",
-							" NOTE: Will require a restart of the world to take effect. \n")
+							" To add or remove specific combs from spawning, datapack replace this placed feature tag file:",
+							"`data/the_bumblezone/tags/worldgen/placed_feature/productive_bees_combs.json`",
+							" ",
+							" NOTE: This config will require a restart of the world to take effect. \n")
 					.translation("the_bumblezone.config.spawnproductivebeeshoneycombvariants")
 					.define("spawnProductiveBeesHoneycombVariants", true);
 
@@ -193,23 +196,6 @@ public class BzModCompatibilityConfig {
 									"productivebees:skeletal",
 									"productivebees:ghostly",
 									"productivebees:zombie"
-							), (t) -> true);
-
-			allowedCombsAsOres = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow what Productive Bees combs should be able to spawn in Bumblezone as ores.")
-					.translation("the_bumblezone.config.allowedcombsasores")
-					.defineList("allowedCombsAsOres",
-							List.of("productivebees:iron",
-									"productivebees:redstone",
-									"productivebees:copper",
-									"productivebees:gold",
-									"productivebees:magmatic",
-									"productivebees:crystalline",
-									"productivebees:glowing",
-									"productivebees:blazing",
-									"productivebees:skeletal",
-									"productivebees:ghostly"
 							), (t) -> true);
 
 			allowedBees = builder

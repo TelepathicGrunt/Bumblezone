@@ -58,3 +58,8 @@ Made it so that Pollen Puff hitting baby Mooblooms from Bovines and Buttercups w
 
 (Forge): Added Pollen Puff compat with Honey Bucket mod's Moobloom and other mobs with mushrooms on them. 
  Their Golden Bloom flower will spawn in Hanging Gardens now
+
+(Forge): Fixed crash with Productive Bees and also completely redid how natural worldgen comb spawning works.
+ To add or remove specific combs from spawning, datapack replace this placed feature tag file:
+ `data/the_bumblezone/tags/worldgen/placed_feature/productive_bees_combs.json`
+ Otherwise, use the spawnProductiveBeesHoneycombVariants config option to turn them all off if desired.

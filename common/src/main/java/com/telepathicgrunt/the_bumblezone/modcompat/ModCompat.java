@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -70,12 +72,8 @@ public interface ModCompat {
         return false;
     }
 
-    default Optional<Object> getCombData(Block block, RandomSource random) {
-        return Optional.empty();
-    }
-
-    default boolean placeCombOre(BlockPos.MutableBlockPos pos, ChunkAccess chunk, Object nbt, OreConfiguration.TargetBlockState target, Block block) {
-        return false;
+    default OptionalBoolean validateCombType(CompoundTag tag) {
+        return OptionalBoolean.EMPTY;
     }
 
     default boolean isHostBee(Entity entity) {

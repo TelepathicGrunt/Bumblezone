@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "the_bumblezone:buzzier_bees/crystalline_honey_surface_blob",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:buzzier_bees/honeycomb_tiles_blob",
+      "required": false
+    }
+  ]
+}

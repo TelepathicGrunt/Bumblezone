@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 import org.apache.commons.lang3.NotImplementedException;
@@ -103,6 +104,9 @@ public class BzTags {
     public static final TagKey<Enchantment> FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/forced_allowed_enchantments"));
 
     public static final TagKey<Biome> THE_BUMBLEZONE = TagKey.create(Registries.BIOME, new ResourceLocation(Bumblezone.MODID, "the_bumblezone"));
+
+    public static final TagKey<PlacedFeature> RESOURCEFUL_BEES_COMBS = TagKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Bumblezone.MODID, "resourceful_bees_combs"));
+    public static final TagKey<PlacedFeature> PRODUCTIVE_BEES_COMBS = TagKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Bumblezone.MODID, "productive_bees_combs"));
 
     @ExpectPlatform
     public static String getPlatformTagNamespace() {

@@ -87,7 +87,7 @@ public class BumblezoneFabric implements ModInitializer {
                 RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(dispatcher, environment, context)));
 
         FabricModChecker.setupModCompat();
-        FabricBaseEventManager.lateInit();
+        FabricEventManager.lateInit();
     }
 
     private static <T extends Mob> void registerPlacement(EntityType<T> type, RegisterSpawnPlacementsEvent.Placement<T> placement) {

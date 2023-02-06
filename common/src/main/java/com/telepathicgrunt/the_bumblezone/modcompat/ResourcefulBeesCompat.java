@@ -2,9 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.AddFeaturesEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
@@ -23,7 +21,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.EnumSet;
@@ -37,33 +34,9 @@ public class ResourcefulBeesCompat implements ModCompat {
     public static final TagKey<EntityType<?>> SPAWNABLE_FROM_BROOD_BLOCK_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_brood_block"));
     public static final TagKey<EntityType<?>> SPAWNABLE_FROM_CHUNK_CREATION_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_chunk_creation"));
 
-    public static final List<ResourceLocation> FEATURES = List.of(
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/diamond_comb_vein"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/diamond_comb_vein_high"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/dragon_comb_vein"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/ender_comb_vein"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/ender_comb_vein_high"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/gold_comb_vein"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/iron_comb_vein"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/lapis_comb_vein"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/redstone_comb_vein"),
-            new ResourceLocation(Bumblezone.MODID, "resourcefulbees/skeleton_comb_vein")
-    );
-
     public ResourcefulBeesCompat() {
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.resourcefulBeesPresent = true;
-        AddFeaturesEvent.EVENT.addListener(ResourcefulBeesCompat::addHoneycombVeins);
-    }
-
-    private static void addHoneycombVeins(AddFeaturesEvent event) {
-        for (ResourceLocation feature : FEATURES) {
-            event.addFeature(
-                    biome -> biome.is(BzTags.THE_BUMBLEZONE) && BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins,
-                    GenerationStep.Decoration.UNDERGROUND_ORES,
-                    feature
-            );
-        }
     }
 
     @Override

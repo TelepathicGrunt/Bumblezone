@@ -2,12 +2,10 @@ package com.telepathicgrunt.the_bumblezone.fabricbase;
 
 import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
-import com.telepathicgrunt.the_bumblezone.events.AddFeaturesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -54,9 +52,5 @@ public class FabricBaseEventManager {
         RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
         SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
-    }
-
-    public static void lateInit() {
-        AddFeaturesEvent.EVENT.invoke(new AddFeaturesEvent((biome, step, feature) -> BiomeModifications.addFeature(in -> biome.test(in.getBiomeRegistryEntry()), step, feature)));
     }
 }

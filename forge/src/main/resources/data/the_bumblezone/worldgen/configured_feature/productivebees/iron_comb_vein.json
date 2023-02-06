@@ -1,0 +1,21 @@
+{
+  "type": "the_bumblezone:blockentity_combs",
+  "config": {
+    "size": 17,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "the_bumblezone:worldgen_checks/honeycombs_that_features_can_carve"
+        },
+        "state": {
+          "Name": "productivebees:configurable_comb"
+        },
+        "state_nbt": {
+          "type": "productivebees:iron"
+        }
+      }
+    ]
+  }
+}

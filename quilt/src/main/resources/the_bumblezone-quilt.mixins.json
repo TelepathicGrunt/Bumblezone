@@ -11,6 +11,7 @@
   "mixins": [
     "enchantment.EnchantmentHelperMixin",
     "enchantment.EnchantmentMixin",
+    "qsl.BiomeModificationContextImplMixin",
     "recipes.BzRecipeSerializerMixin"
   ]
 }
