@@ -222,5 +222,6 @@ allprojects {
 
     java {
         withSourcesJar()
+        archivesBaseName = "${rootProject.name}-${name.capitalize()}"
     }
 }
