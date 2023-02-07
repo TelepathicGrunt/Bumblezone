@@ -1,10 +1,8 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "minecraft:wither_rose",
-      "required": true
-    },
+    "minecraft:wither_rose",
+    "#minecraft:leaves",
     {
       "id": "flowerpatch:wither_rose_patch",
       "required": false
