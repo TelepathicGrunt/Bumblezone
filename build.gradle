@@ -14,6 +14,8 @@ subprojects {
     apply plugin: "com.modrinth.minotaur"
     apply plugin: "com.matthewprenger.cursegradle"
 
+    version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
+
     loom {
         silentMojangMappingsLicense()
     }
@@ -25,31 +27,31 @@ subprojects {
 
     Map<String, Map<String, String>> platformSettings = [
             "fabric": [
-                "curse-id": "363949",
-                "modrinth-id": "eA8SXqWL"
+                    "curse-id": "363949",
+                    "modrinth-id": "eA8SXqWL"
             ],
             "quilt": [
-                "curse-id": "363949",
-                "modrinth-id": "eA8SXqWL"
+                    "curse-id": "363949",
+                    "modrinth-id": "eA8SXqWL"
             ],
             "forge": [
-                "curse-id": "362479",
-                "modrinth-id": "38tpSycf"
+                    "curse-id": "362479",
+                    "modrinth-id": "38tpSycf"
             ]
     ]
 
     Map<String, Map<String, Boolean>> platformDependencies = [
-        "fabric": [
-            "fabric-api": true,
-            "midnightlib": true,
-            "unofficial-sodium-biome-blending-fix": false
-        ],
-        "quilt": [
-            "qsl": true,
-            "midnightlib": true,
-            "unofficial-sodium-biome-blending-fix": false
-        ],
-        "forge": []
+            "fabric": [
+                    "fabric-api": true,
+                    "midnightlib": true,
+                    "unofficial-sodium-biome-blending-fix": false
+            ],
+            "quilt": [
+                    "qsl": true,
+                    "midnightlib": true,
+                    "unofficial-sodium-biome-blending-fix": false
+            ],
+            "forge": []
     ]
 
     var env = System.getenv()
@@ -65,7 +67,7 @@ subprojects {
             modrinth {
                 token = env.MODRINTH
                 versionName = "The Bumblezone"
-                versionNumber = "${project.version}+${name}"
+                versionNumber = "${project.version}"
                 changelog = changeLogText
                 projectId = uploadSettings["modrinth-id"]
 
@@ -99,14 +101,19 @@ subprojects {
                     addGameVersion("${rootProject.minecraft_version}")
                     addGameVersion(name.capitalize())
 
-                    mainArtifact(tasks.remapJar)
+                    mainArtifact(tasks.remapJar) {
+                        displayName = "The Bumblezone v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
+                    }
 
-                    relations {
-                        uploadDependencies.each { dep, required ->
-                            if (required) {
-                                requiredDependency(dep)
-                            } else {
-                                optionalDependency(dep)
+                    if (uploadDependencies.size() > 0) {
+                        relations {
+                            uploadDependencies.each { dep, required ->
+                                if (required) {
+                                    requiredDependency(dep)
+                                }
+                                else {
+                                    optionalDependency(dep)
+                                }
                             }
                         }
                     }
