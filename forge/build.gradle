@@ -14,7 +14,7 @@ loom {
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
         mixinConfig "the_bumblezone-common.mixins.json"
-        mixinConfig "the_bumblezone.mixins.json"
+        mixinConfig "the_bumblezone-forge.mixins.json"
 
         runs {
             all {
