@@ -20,7 +20,7 @@ For developers that want to add Bumblezone to their mod's workspace:
 
 &nbsp;
 
-Don't forget to change \<modversion> with the actual latest version of this mod like `4.1.2` for example.
+(This format is now standardized for Bumblezone from 6.6.3 forward. See older branches's README.md for what the old format was) Don't forget to change \<modversion> with the actual latest version of this mod like `6.6.3` for example. Replace forge with your modloader and the mc version with the target mc version.
 
 <blockquote>dependencies {
 
@@ -28,14 +28,20 @@ Don't forget to change \<modversion> with the actual latest version of this mod 
 &nbsp; ...
 
 
-&nbsp; implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.18.1")
+&nbsp;FORGE: implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-forge")
+
+
+&nbsp;FABRIC: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-fabric"
+
+
+&nbsp;QUILT: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-quilt"
 
 
 }</blockquote>
 
 &nbsp;
 
-**Add the mixingradle to your buildscript's dependencies block. These will allow Blame's mixins to work. After you add the properties lines, refresh Gradle and run `genEclipseRuns` or `genIntellijRuns` or `genVSCodeRuns` based on what IDE you are using.**
+**FORGE ONLY: Add the mixingradle to your buildscript's dependencies block. These will allow Bumblezone's mixins to work. After you add the properties lines, refresh Gradle and run `genEclipseRuns` or `genIntellijRuns` or `genVSCodeRuns` based on what IDE you are using.**
 
 https://github.com/SpongePowered/Mixin/wiki/Mixins-on-Minecraft-Forge#step-1---adding-the-mixingradle-plugin
 

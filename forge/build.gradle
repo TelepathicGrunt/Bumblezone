@@ -39,7 +39,7 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
 
     modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
-    modRuntimeOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
+    //modRuntimeOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
@@ -54,8 +54,6 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
     shadowMinecraftLibrary "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-//    compileOnly "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-//    runtimeOnly "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
 }
 
@@ -96,16 +94,59 @@ components.java {
     }
 }
 
+def ENV = System.getenv()
+
 publishing {
     publications {
-        mavenForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
-            from components.java
+        mavenJava(MavenPublication) {
+            artifact remapJar
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+
+            artifactId = "$rootProject.name-Forge"
+
+            pom {
+                name = 'TheBumblezone'
+                description = 'An unBEElievable dimension full of bees that becomes REALLY angry if you take their honey!'
+                url = 'https://github.com/TelepathicGrunt/Bumblezone'
+
+                scm {
+                    connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
+                }
+
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License v3.0'
+                        url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'telepathic_grunt'
+                        name = 'TelepathicGrunt'
+                        email = 'asarnesespam@gmail.com'
+                    }
+                }
+            }
         }
     }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
     repositories {
-        // Add repositories to publish to here.
+        maven {
+            url = "https://maven.resourcefulbees.com/repository/telepathicgrunt/"
+            credentials {
+                username ENV.MAVEN_USER
+                password ENV.MAVEN_PASS
+            }
+        }
     }
 }
+
+task buildAndRelease{}
+tasks.publish.mustRunAfter tasks.build
+tasks.curseforge.mustRunAfter tasks.publish
+tasks.modrinth.mustRunAfter tasks.publish
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.curseforge, tasks.modrinth)
