@@ -28,13 +28,13 @@ For developers that want to add Bumblezone to their mod's workspace:
 &nbsp; ...
 
 
-&nbsp;FORGE: implementation fg.deobf("com.telepathicgrunt:Bumblezone-Forge:\<modversion>+1.19.3-forge")
+&nbsp;FORGE: implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-forge")
 
 
-&nbsp;FABRIC: modImplementation "com.telepathicgrunt:Bumblezone-Fabric:\<modversion>+1.19.3-fabric"
+&nbsp;FABRIC: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-fabric"
 
 
-&nbsp;QUILT: modImplementation "com.telepathicgrunt:Bumblezone-Quilt:\<modversion>+1.19.3-quilt"
+&nbsp;QUILT: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-quilt"
 
 
 }</blockquote>
