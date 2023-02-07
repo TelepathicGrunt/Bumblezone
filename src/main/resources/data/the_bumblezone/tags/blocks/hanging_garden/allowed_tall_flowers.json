@@ -57,6 +57,10 @@
     {
       "id": "naturalized:begonias",
       "required": false
+    },
+    {
+      "id": "#paradise_lost:tall_flowers",
+      "required": false
     }
   ]
 }

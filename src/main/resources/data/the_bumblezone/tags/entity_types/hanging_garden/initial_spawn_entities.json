@@ -252,6 +252,18 @@
     {
       "id": "etcetera:snail",
       "required": false
+    },
+    {
+      "id": "honey_bucket:glow_snail",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:pixie_snail",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:sturdy_snail",
+      "required": false
     }
   ]
 }

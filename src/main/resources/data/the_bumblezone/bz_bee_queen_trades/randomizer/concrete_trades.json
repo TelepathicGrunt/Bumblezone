@@ -11,14 +11,14 @@
   ],
   "possible_rewards": [
     {
-      "id": "#forge:concrete",
+      "id": "#c:concrete",
       "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "#c:concrete",
+      "id": "#forge:concrete",
       "count": 1,
       "xp_reward": 0,
       "weight": 1,
