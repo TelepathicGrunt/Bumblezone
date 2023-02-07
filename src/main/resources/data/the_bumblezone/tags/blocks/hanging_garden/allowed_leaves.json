@@ -12,10 +12,6 @@
       "required": false
     },
     {
-      "id": "terrestria:sakura_leaves",
-      "required": false
-    },
-    {
       "id": "quark:lavender_blossom_leaves",
       "required": false
     },

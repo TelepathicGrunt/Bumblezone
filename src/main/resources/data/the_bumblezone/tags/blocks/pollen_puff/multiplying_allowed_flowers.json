@@ -253,6 +253,30 @@
     {
       "id": "pyromancer:rafflesia",
       "required": false
+    },
+    {
+      "id": "#paradise_lost:small_flowers",
+      "required": false
+    },
+    {
+      "id": "#paradise_lost:tall_flowers",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:grass_flowering",
+      "required": false
+    },
+    {
+      "id": "goodending:pink_flowering_lily_pad",
+      "required": false
+    },
+    {
+      "id": "goodending:yellow_flowering_lily_pad",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:golden_bloom",
+      "required": false
     }
   ]
 }

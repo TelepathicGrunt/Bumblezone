@@ -321,6 +321,18 @@
     {
       "id": "hibernalherbs:verbena",
       "required": false
+    },
+    {
+      "id": "#paradise_lost:small_flowers",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:grass_flowering",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:golden_bloom",
+      "required": false
     }
   ]
 }
