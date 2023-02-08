@@ -1,15 +1,15 @@
 {
   "honey_bucket:moobloom": [
     {
-      "nbt_match": {
-        "Age": 0, 
-        "Type": "dandelion"
-      },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
         "entries": [
           {
-            "data": { "Name": "minecraft:dandelion" },
+            "data": { "Name": "honey_bucket:golden_bloom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
             "weight": 1
           }
         ]
