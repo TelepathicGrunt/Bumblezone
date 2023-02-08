@@ -1,4 +1,4 @@
-### **(V.6.6.5 Changes) (1.19.3 Minecraft)**
+### **(V.6.6.5 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
 Crystalline Flower won't attract xp orbs if at max tier. Xp orb attraction is slightly strengthened for when not at max tier.
