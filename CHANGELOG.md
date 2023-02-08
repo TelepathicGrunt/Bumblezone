@@ -1,3 +1,9 @@
+### **(V.6.6.4 Changes) (1.19.3 Minecraft)**
+
+##### Mod Compat:
+(Forge): Fixed Pollen Puff compat with Honey Bucket mod's Moobloom. Should be spawning their Golden Bloom flower instead of Dandelion
+
+
 ### **(V.6.6.3 Changes) (1.19.3 Minecraft)**
 
 ##### Major:
