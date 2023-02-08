@@ -121,55 +121,6 @@ subprojects {
             }
         }
     }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifact remapJar
-                artifact(sourcesJar) {
-                    builtBy remapSourcesJar
-                }
-
-                artifactId = "$rootProject.name"
-
-                pom {
-                    name = 'TheBumblezone'
-                    description = 'An unBEElievable dimension full of bees that becomes REALLY angry if you take their honey!'
-                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
-
-                    scm {
-                        connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                        developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
-                        url = 'https://github.com/TelepathicGrunt/Bumblezone'
-                    }
-
-                    licenses {
-                        license {
-                            name = 'GNU Lesser General Public License v3.0'
-                            url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id = 'telepathic_grunt'
-                            name = 'TelepathicGrunt'
-                            email = 'asarnesespam@gmail.com'
-                        }
-                    }
-                }
-            }
-        }
-        repositories {
-            maven {
-                url = "https://maven.resourcefulbees.com/repository/telepathicgrunt/"
-                credentials {
-                    username ENV.MAVEN_USER
-                    password ENV.MAVEN_PASS
-                }
-            }
-        }
-    }
 }
 
 allprojects {
