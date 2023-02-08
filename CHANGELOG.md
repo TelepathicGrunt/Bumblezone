@@ -3,6 +3,8 @@
 ##### Blocks:
 Crystalline Flower won't attract xp orbs if at max tier. Xp orb attraction is slightly strengthened for when not at max tier.
 
+Fixed potential issue where Super Candle's lit wick may not set entities visually on fire.
+
 ##### Items:
 Fixed thrown Pollen Puff able to multiply Flowering Azalea Leaves and other modded flowering leaves.
 
