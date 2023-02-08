@@ -8,16 +8,6 @@ Fixed potential issue where Super Candle's lit wick may not set entities visuall
 ##### Items:
 Fixed thrown Pollen Puff able to multiply Flowering Azalea Leaves and other modded flowering leaves.
 
-##### Entities:
-Fixed default keybind for flying down on Beehemoth being Space instead of Caps Lock. Space is fly up. Caps Locks should be fly down.
- Go into keybind menu to fix this manually if this update doesn't automatically fix it for your game.
-
-##### Mod Compat:
-Added Pollen Puff compat with Moobloom's (FlowerCow) mod on Forge.
-
-Added Pollen Puff compat with Honey Bucket mod's Moobloom and other mobs with mushrooms on them.
- Their Golden Bloom flower will spawn in Hanging Gardens now
-
 
 ### **(V.6.6.4 Changes) (1.19.2 Minecraft)**
 
