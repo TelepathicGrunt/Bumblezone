@@ -167,7 +167,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
             if (entityInSpace && (BzGeneralConfigs.superCandlesBurnsMobs.get() || isProjectile)) {
                 if (!entity.fireImmune()) {
                     entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
-                    if (entity.getRemainingFireTicks() == 0) {
+                    if (entity.getRemainingFireTicks() <= 0) {
                         entity.setSecondsOnFire(1);
                     }
 
