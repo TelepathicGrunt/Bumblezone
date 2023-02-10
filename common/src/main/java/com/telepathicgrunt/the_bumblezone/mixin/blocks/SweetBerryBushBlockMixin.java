@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
