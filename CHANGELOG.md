@@ -1,5 +1,8 @@
 ### **(V.6.6.6 Changes) (1.19.2 Minecraft)**
 
+##### Effects:
+Made Bee Queen, Beehemoth, and other mod's mobs that have "bee" or "bumble_beast" in the name immune to Wrath of the Hive effect
+
 ##### Mod Compat:
 Fixed Pollen Puff compat with Honey Bucket mod's Moobloom. Should be spawning their Golden Bloom flower instead of Dandelion
  Also fixed pollen Puff not spawning Echoshrooms when hitting their Sculk Snail
