@@ -236,6 +236,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        if (damageSource == DamageSource.SWEET_BERRY_BUSH) {
+            return true;
+        }
+        return super.isInvulnerableTo(damageSource);
+    }
+
+    @Override
     public boolean hurt(DamageSource source, float amount) {
         if (isInvulnerableTo(source)) {
             return false;
