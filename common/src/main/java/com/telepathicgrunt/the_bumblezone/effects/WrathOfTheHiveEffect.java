@@ -188,7 +188,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     }
 
     private static void setAggression(Level world, LivingEntity livingEntity, Class<? extends Mob> entityToFind, TargetingConditions sightMode, int speed, int absorption, int strength) {
-        if(livingEntity instanceof Bee) {
+        if(BeeAggression.isBeelikeEntity(livingEntity)) {
             return;
         }
 
