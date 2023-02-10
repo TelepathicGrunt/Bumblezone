@@ -110,7 +110,7 @@ public class OptimizedJigsawManager {
             pieceCenterY += GeneralUtils.getLowestLand(
                 context.chunkGenerator(),
                 context.randomState(),
-                pieceBoundingBox,
+                startPos,
                 context.heightAccessor(),
                 true,
                 heightmapType.get() == Heightmap.Types.OCEAN_FLOOR_WG

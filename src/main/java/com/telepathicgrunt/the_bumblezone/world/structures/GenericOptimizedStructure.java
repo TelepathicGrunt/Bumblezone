@@ -74,7 +74,7 @@ public class GenericOptimizedStructure extends Structure {
                 sectionY += GeneralUtils.getLowestLand(
                         context.chunkGenerator(),
                         context.randomState(),
-                        new BoundingBox(0, 0, 0, 1, 1, 1),
+                        centerPos,
                         context.heightAccessor(),
                         true,
                         projectStartToHeightmap.get() == Heightmap.Types.OCEAN_FLOOR_WG
