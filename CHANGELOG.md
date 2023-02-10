@@ -1,5 +1,8 @@
 ### **(V.6.6.6 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Fixed structure heightmap checks not being in center of structure properly
+
 ##### Effects:
 Made Bee Queen, Beehemoth, and other mod's mobs that have "bee" or "bumble_beast" in the name immune to Wrath of the Hive effect
 
