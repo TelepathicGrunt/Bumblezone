@@ -18,6 +18,7 @@
     "blocks.RailBlockMixin",
     "blocks.RedstoneDustCanConnectMixin",
     "blocks.ShulkerBoxBlockEntityMixin",
+    "blocks.SweetBerryBushBlockMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
     "containers.PotionBrewingAccessor",
