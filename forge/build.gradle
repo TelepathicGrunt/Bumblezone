@@ -38,6 +38,10 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
 
+    modRuntimeOnly("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge_version}")
+
+    modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
+
     modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
     //modRuntimeOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
