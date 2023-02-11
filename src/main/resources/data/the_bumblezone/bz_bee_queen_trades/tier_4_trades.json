@@ -61,6 +61,10 @@
       "required": false
     },
     {
+      "id": "zenith:beeshelf",
+      "required": false
+    },
+    {
       "id": "bk:royal_jelly",
       "required": false
     }
