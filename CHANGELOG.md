@@ -1,3 +1,10 @@
+### **(V.6.6.5 Changes) (1.19.3 Minecraft)**
+
+##### Mod Compat:
+(Fabric/Quilt): Blocked several Zenith enchants from Crystalline Flower for balance out of the box.
+ Can be changed by `the_bumblezone:crystalline_flower/disallowed_enchantments` enchantment tag.
+
+
 ### **(V.6.6.4 Changes) (1.19.3 Minecraft)**
 
 ##### Structures:
