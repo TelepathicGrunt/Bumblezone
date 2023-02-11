@@ -391,7 +391,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 this.acknowledgedPlayers.clear();
             }
 
-            if ((this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
+            if (!this.isAngry() && (this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
                 if (getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() > 0) {
                     if (getRemainingSuperTradeTime() > minNotifyTime) {
                         List<Player> nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));

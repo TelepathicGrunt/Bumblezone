@@ -1,5 +1,8 @@
 ### **(V.6.6.7 Changes) (1.19.2 Minecraft)**
 
+##### Entities:
+Fixed Bee Queen still asking to do trades when angry.
+
 ##### Mod Compat:
 Blocked several Zenith enchants from Crystalline Flower for balance out of the box.
  Can be changed by `the_bumblezone:crystalline_flower/disallowed_enchantments` enchantment tag.
