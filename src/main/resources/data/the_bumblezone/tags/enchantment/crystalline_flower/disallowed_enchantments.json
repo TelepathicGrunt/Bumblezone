@@ -56,6 +56,42 @@
       "required": false
     },
     {
+      "id": "zenith:infusion",
+      "required": false
+    },
+    {
+      "id": "zenith:chainsaw",
+      "required": false
+    },
+    {
+      "id": "zenith:crescendo",
+      "required": false
+    },
+    {
+      "id": "zenith:scavenger",
+      "required": false
+    },
+    {
+      "id": "zenith:life_mending",
+      "required": false
+    },
+    {
+      "id": "zenith:berserkers_fury",
+      "required": false
+    },
+    {
+      "id": "zenith:knowledge",
+      "required": false
+    },
+    {
+      "id": "zenith:earths_boon",
+      "required": false
+    },
+    {
+      "id": "zenith:endless_quiver",
+      "required": false
+    },
+    {
       "id": "mcdw:void_strike",
       "required": false
     },
