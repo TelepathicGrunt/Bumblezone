@@ -32,4 +32,4 @@ quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-a
 # example = ["example-a", "example-b", "example-c"]
 
 [plugins]
-quilt_loom = { id = "org.quiltmc.loom", version = "1.+" }
+quilt_loom = { id = "org.quiltmc.loom", version = "1.0.+" }
