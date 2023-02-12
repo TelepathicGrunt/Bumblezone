@@ -7,6 +7,8 @@ Fixed Bee Queen still asking to do trades when angry.
 Blocked several Zenith enchants from Crystalline Flower for balance out of the box.
  Can be changed by `the_bumblezone:crystalline_flower/disallowed_enchantments` enchantment tag.
 
+Added Bumblezone Honey and Royal Jelly fluids to `create:diving_fluids` fluid tag so that Copper Backtank works properly in those fluids for next Create update.
+
 
 ### **(V.6.6.6 Changes) (1.19.2 Minecraft)**
 
