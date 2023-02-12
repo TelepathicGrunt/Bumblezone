@@ -48,7 +48,7 @@ public abstract class PlayerEntityMixin extends Entity {
             cancellable = true)
     private void thebumblezone_validProjectileToUse(ItemStack itemStack, CallbackInfoReturnable<ItemStack> cir) {
         ItemStack ammo = BeeStinger.bowUsable((Player) (Object) this, itemStack);
-        if (ammo != ItemStack.EMPTY) {
+        if (!ammo.isEmpty()) {
             cir.setReturnValue(ammo);
         }
     }
