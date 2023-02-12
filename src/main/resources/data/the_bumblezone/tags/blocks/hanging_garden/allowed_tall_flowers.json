@@ -61,6 +61,10 @@
     {
       "id": "#paradise_lost:tall_flowers",
       "required": false
+    },
+    {
+      "id": "meadow:eriophorum_tall",
+      "required": false
     }
   ]
 }
