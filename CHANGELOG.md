@@ -9,6 +9,8 @@ Fixed Bee Queen still asking to do trades when angry.
 
 (Forge): Fixed crash when put on with another mod that jar-in-jars MixinExtras
 
+(Fabric/Quilt): Added Bumblezone Honey and Royal Jelly fluids to `create:diving_fluids` fluid tag so that Copper Backtank works properly in those fluids for next Create update.
+
 
 ### **(V.6.6.4 Changes) (1.19.3 Minecraft)**
 
