@@ -3,6 +3,9 @@
 ##### Entities:
 Fixed Bee Queen still asking to do trades when angry.
 
+##### Mod Compat:
+Pollen Puff now spawns Warped Fungus if it hits From Spores's Craver mob.
+
 
 ### **(V.6.6.6 Changes) (1.19.2 Minecraft)**
 
