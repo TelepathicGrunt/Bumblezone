@@ -175,6 +175,10 @@
     {
       "id": "moreberries:black_berries",
       "required": false
+    },
+    {
+      "id": "meadow:bag_of_juniper",
+      "required": false
     }
   ],
   "possible_rewards": [

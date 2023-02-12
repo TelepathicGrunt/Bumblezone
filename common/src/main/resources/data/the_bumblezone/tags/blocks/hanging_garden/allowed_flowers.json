@@ -329,6 +329,38 @@
     {
       "id": "paradise_lost:grass_flowering",
       "required": false
+    },
+    {
+      "id": "meadow:delphinium",
+      "required": false
+    },
+    {
+      "id": "meadow:alpine_poppy",
+      "required": false
+    },
+    {
+      "id": "meadow:saxifrage",
+      "required": false
+    },
+    {
+      "id": "meadow:enzian",
+      "required": false
+    },
+    {
+      "id": "meadow:fire_lily",
+      "required": false
+    },
+    {
+      "id": "meadow:fire_lily",
+      "required": false
+    },
+    {
+      "id": "meadow:eriophorum",
+      "required": false
+    },
+    {
+      "id": "meadow:eriophorum",
+      "required": false
     }
   ]
 }

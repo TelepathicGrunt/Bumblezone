@@ -148,6 +148,10 @@
     {
       "id": "moonbits:cave_snail",
       "required": false
+    },
+    {
+      "id": "fromspores:craver",
+      "required": false
     }
   ]
 }
