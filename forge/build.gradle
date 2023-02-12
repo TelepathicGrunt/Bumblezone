@@ -59,6 +59,7 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
     include "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+    implementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
     forgeRuntimeLibrary "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
 }
@@ -76,7 +77,6 @@ shadowJar {
 
     configurations = [project.configurations.shadowCommon, project.configurations.shadowMinecraftLibrary]
     classifier "dev-shadow"
-    dependsOn('relocateShadowJar')
 }
 
 remapJar {
