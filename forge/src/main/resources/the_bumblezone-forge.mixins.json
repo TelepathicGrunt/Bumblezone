@@ -3,7 +3,6 @@
     "package": "com.telepathicgrunt.the_bumblezone.mixins.forge",
     "plugin": "com.telepathicgrunt.the_bumblezone.mixins.forge.MixinPlugin",
     "compatibilityLevel": "JAVA_17",
-    "refmap": "the_bumblezone-forge-refmap.json",
     "mixins": [
         "block.BlockExtensionMixin",
         "block.BzFlowingFluidMixin",

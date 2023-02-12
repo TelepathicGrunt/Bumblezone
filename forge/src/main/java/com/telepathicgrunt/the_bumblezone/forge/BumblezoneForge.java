@@ -147,7 +147,7 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onPickupItem);
         eventBus.addListener(BumblezoneForge::onLocateProjectile);
         eventBus.addListener(BumblezoneForge::onGrantAdvancement);
-        eventBus.addListener(BumblezoneForge::onIntreactEntity);
+        eventBus.addListener(BumblezoneForge::onInteractEntity);
         eventBus.addListener(BumblezoneForge::onItemCrafted);
         eventBus.addListener(BumblezoneForge::onBreakSpeed);
         eventBus.addListener(BumblezoneForge::onTagsUpdate);
@@ -326,7 +326,7 @@ public class BumblezoneForge {
         PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(event.getAdvancement(), event.getEntity()));
     }
 
-    private static void onIntreactEntity(PlayerInteractEvent.EntityInteract event) {
+    private static void onInteractEntity(PlayerInteractEvent.EntityInteract event) {
         InteractionResult result = PlayerEntityInteractEvent.EVENT.invoke(new PlayerEntityInteractEvent(event.getEntity(), event.getTarget(), event.getHand()));
         if (result != null) {
             event.setCancellationResult(result);

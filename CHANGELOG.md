@@ -7,6 +7,8 @@ Fixed Bee Queen still asking to do trades when angry.
 (Fabric/Quilt): Blocked several Zenith enchants from Crystalline Flower for balance out of the box.
  Can be changed by `the_bumblezone:crystalline_flower/disallowed_enchantments` enchantment tag.
 
+(Forge): Fixed crash when put on with another mod that jar-in-jars MixinExtras
+
 
 ### **(V.6.6.4 Changes) (1.19.3 Minecraft)**
 
