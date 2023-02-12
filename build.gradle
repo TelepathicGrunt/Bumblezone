@@ -155,6 +155,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addRequirement("fabric-api")
 	mainFile.addOptional("continuity")
 	mainFile.addOptional("unofficial-sodium-biome-blending-fix")
+	mainFile.addIncompatibility("lanterns-bow")
 }
 
 modrinth {
@@ -172,6 +173,7 @@ modrinth {
 		required.project "midnightlib"
 		optional.project "continuity"
 		optional.project "unofficial-sodium-biome-blending-fix"
+		incompatible.project "lanterns-bow"
 	}
 }
 
