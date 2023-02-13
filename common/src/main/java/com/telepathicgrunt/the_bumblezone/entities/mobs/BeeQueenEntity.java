@@ -74,6 +74,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
@@ -241,6 +242,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             return true;
         }
         return super.isInvulnerableTo(damageSource);
+    }
+
+    @Override
+    public void makeStuckInBlock(BlockState blockState, Vec3 speedMult) {
+        if (blockState.getBlock() instanceof SweetBerryBushBlock) {
+            return;
+        }
+        super.makeStuckInBlock(blockState, speedMult);
     }
 
     @Override

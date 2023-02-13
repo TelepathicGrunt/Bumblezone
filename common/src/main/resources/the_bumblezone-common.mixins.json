@@ -12,7 +12,6 @@
     "blocks.PistonBaseBlockMixin",
     "blocks.PistonMovingBlockEntityMixin",
     "blocks.PistonStructureResolverMixin",
-    "blocks.SweetBerryBushBlockMixin",
     "blocks.VineBlockAccessor",
     "blocks.WaterEquivalenceMixin",
     "containers.PotionBrewingAccessor",
