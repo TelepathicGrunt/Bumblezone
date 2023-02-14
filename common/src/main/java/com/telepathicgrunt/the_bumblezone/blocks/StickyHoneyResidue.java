@@ -206,12 +206,8 @@ public class StickyHoneyResidue extends Block {
 
         AABB aabb = getAABBShape(blockState, level, blockPos, null).move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         if (aabb.intersects(entity.getBoundingBox())) {
-            float fallDistance = entity.fallDistance;
-            entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
-            if (entity.position().y() - blockPos.getY() < 0.3F) {
-                entity.fallDistance = fallDistance;
-            }
 
+            entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
             if (entity instanceof LivingEntity livingEntity && !(entity instanceof Player player && player.isCreative())) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,

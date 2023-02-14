@@ -510,7 +510,7 @@
   "advancements.the_bumblezone.the_queens_desire.too_many_legs.title": "Too Many Legs",
   "advancements.the_bumblezone.the_queens_desire.too_many_legs.description": "Smash and kill 64 Spiders for their icky-ness",
   "advancements.the_bumblezone.the_queens_desire.vip_trader.title": "VIP Trader",
-  "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Complete 256 trades with the Bee Queen",
+  "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Complete 256 trades with the Bee Queen. Does not need to be bonus trades. Any trade works!",
 
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets. Pollinated bees touching this block will fill it with honey automatically!",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees unless you have Protection of the Hive effect or consumed an Essence of the Bees. Hurt bees will also take honey from this block to heal themselves.  \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",
