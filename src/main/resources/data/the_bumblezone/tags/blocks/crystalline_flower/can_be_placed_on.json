@@ -73,6 +73,10 @@
       "required": false
     },
     {
+      "id": "byg:ametrine_block",
+      "required": false
+    },
+    {
       "id": "ae2:quartz_block",
       "required": false
     },
