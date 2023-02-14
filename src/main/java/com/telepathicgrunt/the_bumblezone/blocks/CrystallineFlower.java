@@ -113,7 +113,9 @@ public class CrystallineFlower extends BaseEntityBlock {
         }
 
         if (entity instanceof LivingEntity livingEntity && !BeeAggression.isBeelikeEntity(livingEntity)) {
+            float fallDistance = entity.fallDistance;
             livingEntity.makeStuckInBlock(state, new Vec3(0.95F, 2, 0.95F));
+            entity.fallDistance = fallDistance;
             if (!level.isClientSide && (livingEntity.xOld != livingEntity.getX() || livingEntity.zOld != livingEntity.getZ())) {
                 double xDiff = Math.abs(livingEntity.getX() - livingEntity.xOld);
                 double zDiff = Math.abs(livingEntity.getZ() - livingEntity.zOld);

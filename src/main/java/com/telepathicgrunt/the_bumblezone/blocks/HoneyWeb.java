@@ -145,10 +145,7 @@ public class HoneyWeb extends Block {
                     double magnitude = deltaMovement.length();
                     if(magnitude != 0) {
                         speedReduction = speedReduction / magnitude;
-                        entity.setDeltaMovement(new Vec3(
-                                deltaMovement.x * speedReduction,
-                                deltaMovement.y * speedReduction,
-                                deltaMovement.z * speedReduction));
+                        entity.makeStuckInBlock(blockState, new Vec3(speedReduction, speedReduction, speedReduction));
                     }
                 }
                 else {

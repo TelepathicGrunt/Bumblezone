@@ -1,3 +1,12 @@
+### **(V.6.6.8 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Made Crystalline Flower not reset fall distance calculations for entities falling into it.
+
+##### Misc:
+Slightly adjusted REI/JEI/EMI info on Crystalline Flower and Essence of the Bees
+
+
 ### **(V.6.6.7 Changes) (1.19.2 Minecraft)**
 
 ##### Entities:
