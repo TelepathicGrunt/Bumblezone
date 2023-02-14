@@ -1,9 +1,15 @@
 ### **(V.6.6.6 Changes) (1.19.3 Minecraft)**
 
+##### Items:
+(Forge): Fixed Bee armor's special abilities not working.
+
 ##### Blocks:
 Made Crystalline Flower not reset fall distance calculations for entities falling into it.
 
 Made Sticky Honey Residue and Sticky Honey Redstone bottom hit box won't reset fall distance calculations for entities falling into it.
+
+##### Misc:
+Slightly adjusted REI/JEI/EMI info on Crystalline Flower and Essence of the Bees
 
 
 ### **(V.6.6.5 Changes) (1.19.3 Minecraft)**
