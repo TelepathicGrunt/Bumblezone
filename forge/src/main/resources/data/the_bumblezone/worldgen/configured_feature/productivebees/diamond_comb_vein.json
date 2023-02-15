@@ -1,7 +1,7 @@
 {
   "type": "the_bumblezone:blockentity_combs",
   "config": {
-    "size": 6,
+    "size": 7,
     "discard_chance_on_air_exposure": 0,
     "targets": [
       {

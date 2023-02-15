@@ -1,3 +1,9 @@
+### **(V.6.6.7 Changes) (1.19.3 Minecraft)**
+
+##### Mod Compat:
+(Forge): Adjusted the rates of Productive Bees's combs throughout Bumblezone a bit.
+
+
 ### **(V.6.6.6 Changes) (1.19.3 Minecraft)**
 
 ##### Items:

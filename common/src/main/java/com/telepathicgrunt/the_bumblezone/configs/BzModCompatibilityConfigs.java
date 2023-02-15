@@ -21,8 +21,8 @@ public class BzModCompatibilityConfigs {
 	public static double spawnrateOfProductiveBeesMobs = 0.1D;
 	public static boolean allowHoneyTreatCompat = true;
 	public static boolean spawnProductiveBeesHoneycombVariants = true;
-	public static double PBOreHoneycombSpawnRateBeeDungeon = 0.045D;
-	public static double PBOreHoneycombSpawnRateSpiderBeeDungeon = 0.10D;
+	public static double PBOreHoneycombSpawnRateBeeDungeon = 0.125D;
+	public static double PBOreHoneycombSpawnRateSpiderBeeDungeon = 0.25D;
 	public static List<String> allowedCombsForDungeons = List.of(
 			"productivebees:diamond",
 			"productivebees:iron",

@@ -240,14 +240,14 @@ public class BzModCompatibilityConfig {
 							" How much of Bee Dungeons is made of ore-based honeycombs.",
 							" 0 is no PB's honeycombs and 1 is max PB's honeycombs.\n")
 					.translation("the_bumblezone.config.pborehoneycombspawnratebeedungeon")
-					.defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.045D, 0D, 1D);
+					.defineInRange("PBOreHoneycombSpawnRateBeeDungeon", 0.125D, 0D, 1D);
 
 			PBOreHoneycombSpawnRateSpiderBeeDungeon = builder
 					.comment(" \n-----------------------------------------------------\n",
 							" How much of Spider Infested Bee Dungeons is made of ore-based honeycombs.",
 							" 0 is no PB's honeycombs and 1 is max PB's honeycombs.\n")
 					.translation("the_bumblezone.config.pborehoneycombspawnratespiderbeedungeon")
-					.defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.10D, 0D, 1D);
+					.defineInRange("PBOreHoneycombSpawnRateSpiderBeeDungeon", 0.25D, 0D, 1D);
 
 			builder.pop();
 
