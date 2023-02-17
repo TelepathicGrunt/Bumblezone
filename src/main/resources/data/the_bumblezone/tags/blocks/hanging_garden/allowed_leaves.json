@@ -136,6 +136,18 @@
       "required": false
     },
     {
+      "id": "sakurarosea:sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:dark_sakura_leaves",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:sakura_shrub_leaves",
+      "required": false
+    },
+    {
       "id": "terrestria:sakura_leaves",
       "required": false
     }
