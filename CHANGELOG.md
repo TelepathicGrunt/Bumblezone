@@ -3,6 +3,11 @@
 ##### Mod Compat:
 (Forge): Adjusted the rates of Productive Bees's combs throughout Bumblezone a bit.
 
+Cleaned up and improved the tags for Hanging Gardens to pull in more modded logs and flowers and disallow more non-flowers from other mods.
+
+Removed Biome Makeover's Moth from spawning in Hanging Gardens until this PR gets merged and released: https://github.com/Lemonszz/Biome-Makeover/pull/202
+ The entity spawning in Hanging Gardens is controlled by this entity type tag: `the_bumblezone:hanging_gardens/initial_spawn_entities`
+
 
 ### **(V.6.6.6 Changes) (1.19.3 Minecraft)**
 
