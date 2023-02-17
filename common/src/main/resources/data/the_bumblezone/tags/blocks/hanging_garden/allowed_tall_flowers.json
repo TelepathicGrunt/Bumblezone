@@ -7,10 +7,6 @@
       "required": false
     },
     {
-      "id": "srias_flowers:tall_hydrangea",
-      "required": false
-    },
-    {
       "id": "ferdinandsflowers:staked_morning_glory",
       "required": false
     },
@@ -47,6 +43,10 @@
       "required": false
     },
     {
+      "id": "meadow:eriophorum_tall",
+      "required": false
+    },
+    {
       "id": "naturalized:ancient_orchid",
       "required": false
     },
@@ -63,7 +63,7 @@
       "required": false
     },
     {
-      "id": "meadow:eriophorum_tall",
+      "id": "srias_flowers:tall_hydrangea",
       "required": false
     }
   ]

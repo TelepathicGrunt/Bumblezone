@@ -3,47 +3,19 @@
   "values": [
     "#minecraft:small_flowers",
     {
-      "id": "srias_flowers:blue_poppy",
+      "id": "biomesoplenty:pink_cherry_sapling",
       "required": false
     },
     {
-      "id": "srias_flowers:himalayan_poppy",
+      "id": "biomesoplenty:white_cherry_sapling",
       "required": false
     },
     {
-      "id": "srias_flowers:hydrangea",
+      "id": "biomesoplenty:flowering_oak_sapling",
       "required": false
     },
     {
-      "id": "srias_flowers:hydrangea_bush",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:crocus",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:snowdrops",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:orange_daisy",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:fleabane",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:columbine",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:sunrise_daisy",
-      "required": false
-    },
-    {
-      "id": "ecologics:azalea_flower",
+      "id": "born_in_chaos_v1:marigolds",
       "required": false
     },
     {
@@ -51,11 +23,39 @@
       "required": false
     },
     {
-      "id": "twilightforest:thorn_rose",
+      "id": "botania:pure_daisy",
       "required": false
     },
     {
-      "id": "twigs:azalea_flowers",
+      "id": "botania:hydroangeas",
+      "required": false
+    },
+    {
+      "id": "broglisplants:deadly_nightshade_block",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_sapling",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:buttercup",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:pink_daisy",
+      "required": false
+    },
+    {
+      "id": "ecologics:azalea_flower",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:cherry_leaf_carpet",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:cherry_sapling",
       "required": false
     },
     {
@@ -71,127 +71,63 @@
       "required": false
     },
     {
-      "id": "broglisplants:deadly_nightshade_block",
-      "required": false
-    },
-    {
-      "id": "oaks_nature:bundle_of_poppy",
-      "required": false
-    },
-    {
-      "id": "oaks_nature:bundle_of_oxeye_daisy",
-      "required": false
-    },
-    {
-      "id": "oaks_nature:white_dandelion",
-      "required": false
-    },
-    {
-      "id": "cherryblossomgrotto:cherry_blossom_sapling",
-      "required": false
-    },
-    {
-      "id": "biomesoplenty:pink_cherry_sapling",
-      "required": false
-    },
-    {
-      "id": "biomesoplenty:white_cherry_sapling",
-      "required": false
-    },
-    {
-      "id": "biomesoplenty:flowering_oak_sapling",
-      "required": false
-    },
-    {
-      "id": "duneons:houstonia",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerpatch",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerscactusred",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerscactuspink",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerscactuswhite",
-      "required": false
-    },
-    {
-      "id": "duneons:flowersheatherblue",
-      "required": false
-    },
-    {
-      "id": "duneons:flowersheatherorange",
-      "required": false
-    },
-    {
-      "id": "duneons:creeperwoodsplaynt_1",
-      "required": false
-    },
-    {
-      "id": "duneons:creeperwoodsplant_1",
-      "required": false
-    },
-    {
-      "id": "duneons:pink_jungle_plant",
-      "required": false
-    },
-    {
-      "id": "duneons:large_jungle_plant",
-      "required": false
-    },
-    {
-      "id": "duneons:bloomingflare",
-      "required": false
-    },
-    {
-      "id": "duneons:netherflower",
-      "required": false
-    },
-    {
-      "id": "duneons:warpedputridpetals",
-      "required": false
-    },
-    {
-      "id": "duneons:warpedflower",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:flowering_sapling",
-      "required": false
-    },
-    {
-      "id": "minecraft_earth_mod:pink_daisy",
-      "required": false
-    },
-    {
-      "id": "minecraft_earth_mod:pink_daisy",
-      "required": false
-    },
-    {
-      "id": "botania:pure_daisy",
-      "required": false
-    },
-    {
-      "id": "botania:hydroangeas",
-      "required": false
-    },
-    {
-      "id": "earthmobsmod:buttercup",
-      "required": false
-    },
-    {
-      "id": "earthmobsmod:pink_daisy",
-      "required": false
-    },
-    {
       "id": "habitat:rafflesia",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chamomile",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chives",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:essitte",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:punuel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:sorrel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:verbena",
+      "required": false
+    },
+    {
+      "id": "meadow:delphinium",
+      "required": false
+    },
+    {
+      "id": "meadow:alpine_poppy",
+      "required": false
+    },
+    {
+      "id": "meadow:saxifrage",
+      "required": false
+    },
+    {
+      "id": "meadow:enzian",
+      "required": false
+    },
+    {
+      "id": "meadow:fire_lily",
+      "required": false
+    },
+    {
+      "id": "meadow:eriophorum",
+      "required": false
+    },
+    {
+      "id": "minecraft_earth_mod:pink_daisy",
+      "required": false
+    },
+    {
+      "id": "minecraft_earth_mod:pink_daisy",
       "required": false
     },
     {
@@ -220,6 +156,26 @@
     },
     {
       "id": "naturalized:rose",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_poppy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_oxeye_daisy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:white_dandelion",
+      "required": false
+    },
+    {
+      "id": "#paradise_lost:small_flowers",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:grass_flowering",
       "required": false
     },
     {
@@ -287,79 +243,43 @@
       "required": false
     },
     {
-      "id": "born_in_chaos_v1:marigolds",
+      "id": "srias_flowers:columbine",
       "required": false
     },
     {
-      "id": "forbidden_arcanus:cherry_leaf_carpet",
+      "id": "srias_flowers:fleabane",
       "required": false
     },
     {
-      "id": "forbidden_arcanus:cherry_sapling",
+      "id": "srias_flowers:himalayan_poppy",
       "required": false
     },
     {
-      "id": "hibernalherbs:chamomile",
+      "id": "srias_flowers:hydrangea_bush",
       "required": false
     },
     {
-      "id": "hibernalherbs:chives",
+      "id": "srias_flowers:snowdrops",
       "required": false
     },
     {
-      "id": "hibernalherbs:essitte",
+      "id": "srias_flowers:sunrise_daisy",
       "required": false
     },
     {
-      "id": "hibernalherbs:punuel",
+      "id": "srias_flowers:tall_hydrangea",
       "required": false
     },
     {
-      "id": "hibernalherbs:sorrel",
+      "id": "twigs:azalea_flowers",
       "required": false
     },
     {
-      "id": "hibernalherbs:verbena",
+      "id": "twilightforest:thorn_rose",
       "required": false
     },
     {
-      "id": "#paradise_lost:small_flowers",
-      "required": false
-    },
-    {
-      "id": "paradise_lost:grass_flowering",
-      "required": false
-    },
-    {
-      "id": "meadow:delphinium",
-      "required": false
-    },
-    {
-      "id": "meadow:alpine_poppy",
-      "required": false
-    },
-    {
-      "id": "meadow:saxifrage",
-      "required": false
-    },
-    {
-      "id": "meadow:enzian",
-      "required": false
-    },
-    {
-      "id": "meadow:fire_lily",
-      "required": false
-    },
-    {
-      "id": "meadow:fire_lily",
-      "required": false
-    },
-    {
-      "id": "meadow:eriophorum",
-      "required": false
-    },
-    {
-      "id": "meadow:eriophorum",
+      "id": "regions_unexplored:flowering_sapling",
       "required": false
     }
   ]
