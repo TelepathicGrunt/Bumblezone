@@ -4,55 +4,7 @@
     "minecraft:wither_rose",
     "minecraft:azure_bluet",
     {
-      "id": "gaiadimension:missingno_plant",
-      "required": false
-    },
-    {
-      "id": "bushierflowers:grown_wither_rose",
-      "required": false
-    },
-    {
-      "id": "bushierflowers:grown_azure_bluet",
-      "required": false
-    },
-    {
-      "id": "flowerpatch:wither_rose_patch",
-      "required": false
-    },
-    {
-      "id": "flowerpatch:azure_bluet_patch",
-      "required": false
-    },
-    {
-      "id": "byg:black_rose",
-      "required": false
-    },
-    {
-      "id": "byg:tall_allium",
-      "required": false
-    },
-    {
-      "id": "byg:tall_pink_allium",
-      "required": false
-    },
-    {
-      "id": "byg:delphinium",
-      "required": false
-    },
-    {
-      "id": "byg:japanese_orchid",
-      "required": false
-    },
-    {
-      "id": "byg:prairie_grass",
-      "required": false
-    },
-    {
-      "id": "byg:pollen_block",
-      "required": false
-    },
-    {
-      "id": "biomesoplenty:wilted_lily",
+      "id": "alchemists_garden:cloudelion",
       "required": false
     },
     {
@@ -100,6 +52,10 @@
       "required": false
     },
     {
+      "id": "biomesoplenty:wilted_lily",
+      "required": false
+    },
+    {
       "id": "blue_skies:muckweed",
       "required": false
     },
@@ -109,6 +65,110 @@
     },
     {
       "id": "blue_skies:lucentroot",
+      "required": false
+    },
+    {
+      "id": "botania:gray_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:light_gray_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:lime_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:green_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:brown_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:black_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_azure_bluet",
+      "required": false
+    },
+    {
+      "id": "byg:black_rose",
+      "required": false
+    },
+    {
+      "id": "byg:tall_allium",
+      "required": false
+    },
+    {
+      "id": "byg:tall_pink_allium",
+      "required": false
+    },
+    {
+      "id": "byg:delphinium",
+      "required": false
+    },
+    {
+      "id": "byg:japanese_orchid",
+      "required": false
+    },
+    {
+      "id": "byg:prairie_grass",
+      "required": false
+    },
+    {
+      "id": "byg:pollen_block",
+      "required": false
+    },
+    {
+      "id": "cyclic:flower_lime_carnation",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_asparagus",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_peanuts",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_sweet_potatoes",
+      "required": false
+    },
+    {
+      "id": "extendedmushrooms:infested_flower",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_tomatoes",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:parodia_muricata",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:desert_sturt_pea",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:devils_claw_vine",
+      "required": false
+    },
+    {
+      "id": "floralis:lime_flower",
       "required": false
     },
     {
@@ -132,63 +192,19 @@
       "required": false
     },
     {
-      "id": "floralis:lime_flower",
+      "id": "flowerpatch:wither_rose_patch",
       "required": false
     },
     {
-      "id": "farmersdelight:wild_beetroots",
+      "id": "flowerpatch:azure_bluet_patch",
       "required": false
     },
     {
-      "id": "farmersdelight:wild_tomatoes",
+      "id": "gaiadimension:missingno_plant",
       "required": false
     },
     {
-      "id": "extendedmushrooms:infested_flower",
-      "required": false
-    },
-    {
-      "id": "pokecube_legends:purple_wisteria_vines_plant",
-      "required": false
-    },
-    {
-      "id": "pokecube_legends:purple_wisteria_vines",
-      "required": false
-    },
-    {
-      "id": "pokecube_legends:polluting_blossom",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:sloeberries_plant_2",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:sloeberries_plant_0",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:sloeberries_plant_1",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:sloeberries_plant_2",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:sloeberries_plant_3",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:yucca_plant_0",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:yucca_plant_05",
-      "required": false
-    },
-    {
-      "id": "nature_expansion:yucca_plant_1",
+      "id": "kniro_flower:white_clover",
       "required": false
     },
     {
@@ -316,63 +332,47 @@
       "required": false
     },
     {
-      "id": "cyclic:flower_lime_carnation",
+      "id": "nature_expansion:sloeberries_plant_2",
       "required": false
     },
     {
-      "id": "undergarden:shimmerweed",
+      "id": "nature_expansion:sloeberries_plant_0",
       "required": false
     },
     {
-      "id": "alchemists_garden:cloudelion",
+      "id": "nature_expansion:sloeberries_plant_1",
       "required": false
     },
     {
-      "id": "duneons:lobby_plantssmall",
+      "id": "nature_expansion:sloeberries_plant_2",
       "required": false
     },
     {
-      "id": "duneons:popflower",
+      "id": "nature_expansion:sloeberries_plant_3",
       "required": false
     },
     {
-      "id": "duneons:creeperwoodsallium",
+      "id": "nature_expansion:yucca_plant_0",
       "required": false
     },
     {
-      "id": "duneons:purplefaireflowersmall",
+      "id": "nature_expansion:yucca_plant_05",
       "required": false
     },
     {
-      "id": "duneons:pinkfaireflowersmall",
+      "id": "nature_expansion:yucca_plant_1",
       "required": false
     },
     {
-      "id": "duneons:flowerswamp",
+      "id": "pokecube_legends:purple_wisteria_vines_plant",
       "required": false
     },
     {
-      "id": "duneons:junglebush",
+      "id": "pokecube_legends:purple_wisteria_vines",
       "required": false
     },
     {
-      "id": "duneons:jungle_flower_leafy",
-      "required": false
-    },
-    {
-      "id": "duneons:nethertulip",
-      "required": false
-    },
-    {
-      "id": "duneons:torchflower",
-      "required": false
-    },
-    {
-      "id": "duneons:fortune_flower",
-      "required": false
-    },
-    {
-      "id": "duneons:endpinkflower",
+      "id": "pokecube_legends:polluting_blossom",
       "required": false
     },
     {
@@ -384,82 +384,6 @@
       "required": false
     },
     {
-      "id": "regions_unexplored:blue_bioshroom",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:green_bioshroom",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:yellow_bioshroom",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:pink_bioshroom",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:pink_bioshroom",
-      "required": false
-    },
-    {
-      "id": "kniro_flower:white_clover",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:parodia_muricata",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:cactus",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:albuca_namaquensis",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:desert_sturt_pea",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:devils_claw_vine",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:tumble_weed",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:yucca",
-      "required": false
-    },
-    {
-      "id": "botania:gray_mystical_flower",
-      "required": false
-    },
-    {
-      "id": "botania:light_gray_mystical_flower",
-      "required": false
-    },
-    {
-      "id": "botania:lime_mystical_flower",
-      "required": false
-    },
-    {
-      "id": "botania:green_mystical_flower",
-      "required": false
-    },
-    {
-      "id": "botania:brown_mystical_flower",
-      "required": false
-    },
-    {
-      "id": "botania:black_mystical_flower",
-      "required": false
-    },
-    {
       "id": "spectrum:resonant_lily",
       "required": false
     },
@@ -468,15 +392,7 @@
       "required": false
     },
     {
-      "id": "expandeddelight:wild_asparagus",
-      "required": false
-    },
-    {
-      "id": "expandeddelight:wild_peanuts",
-      "required": false
-    },
-    {
-      "id": "expandeddelight:wild_sweet_potatoes",
+      "id": "undergarden:shimmerweed",
       "required": false
     }
   ]

@@ -6,7 +6,27 @@
       "required": false
     },
     {
-      "id": "undergarden:tall_shimmerweed",
+      "id": "botania:gray_double_flower",
+      "required": false
+    },
+    {
+      "id": "botania:light_gray_double_flower",
+      "required": false
+    },
+    {
+      "id": "botania:lime_double_flower",
+      "required": false
+    },
+    {
+      "id": "botania:green_double_flower",
+      "required": false
+    },
+    {
+      "id": "botania:brown_double_flower",
+      "required": false
+    },
+    {
+      "id": "botania:black_double_flower",
       "required": false
     },
     {
@@ -58,27 +78,7 @@
       "required": false
     },
     {
-      "id": "botania:gray_double_flower",
-      "required": false
-    },
-    {
-      "id": "botania:light_gray_double_flower",
-      "required": false
-    },
-    {
-      "id": "botania:lime_double_flower",
-      "required": false
-    },
-    {
-      "id": "botania:green_double_flower",
-      "required": false
-    },
-    {
-      "id": "botania:brown_double_flower",
-      "required": false
-    },
-    {
-      "id": "botania:black_double_flower",
+      "id": "undergarden:tall_shimmerweed",
       "required": false
     },
     {

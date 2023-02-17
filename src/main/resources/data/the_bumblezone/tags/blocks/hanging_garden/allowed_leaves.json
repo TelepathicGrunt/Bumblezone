@@ -4,6 +4,30 @@
     "minecraft:birch_leaves",
     "minecraft:flowering_azalea_leaves",
     {
+      "id": "aurorasdeco:flowering_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:budding_jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pink_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:white_cherry_leaves",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "blossom:flowering_oak_leaves",
+      "required": false
+    },
+    {
       "id": "byg:flowering_orchard_leaves",
       "required": false
     },
@@ -12,23 +36,7 @@
       "required": false
     },
     {
-      "id": "quark:lavender_blossom_leaves",
-      "required": false
-    },
-    {
-      "id": "quark:pink_blossom_leaves",
-      "required": false
-    },
-    {
-      "id": "quark:yellow_blossom_leaves",
-      "required": false
-    },
-    {
-      "id": "quark:orange_blossom_leaves",
-      "required": false
-    },
-    {
-      "id": "quark:red_blossom_leaves",
+      "id": "cherryblossomgrotto:cherry_blossom_leaves",
       "required": false
     },
     {
@@ -56,11 +64,11 @@
       "required": false
     },
     {
-      "id": "aurorasdeco:flowering_jacaranda_leaves",
+      "id": "duneons:towerleavesflowers",
       "required": false
     },
     {
-      "id": "aurorasdeco:budding_jacaranda_leaves",
+      "id": "forbidden_arcanus:cherry_leaves",
       "required": false
     },
     {
@@ -76,27 +84,39 @@
       "required": false
     },
     {
-      "id": "cherryblossomgrotto:cherry_blossom_leaves",
+      "id": "paradise_lost:lavender_wisteria_leaves",
       "required": false
     },
     {
-      "id": "biomesoplenty:pink_cherry_leaves",
+      "id": "paradise_lost:rose_wisteria_leaves",
       "required": false
     },
     {
-      "id": "biomesoplenty:white_cherry_leaves",
+      "id": "promenade:pink_cherry_oak_leaves",
       "required": false
     },
     {
-      "id": "biomesoplenty:flowering_oak_leaves",
+      "id": "promenade:white_cherry_oak_leaves",
       "required": false
     },
     {
-      "id": "blossom:flowering_oak_leaves",
+      "id": "quark:lavender_blossom_leaves",
       "required": false
     },
     {
-      "id": "duneons:towerleavesflowers",
+      "id": "quark:pink_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:yellow_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:orange_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "quark:red_blossom_leaves",
       "required": false
     },
     {
@@ -116,27 +136,7 @@
       "required": false
     },
     {
-      "id": "promenade:pink_cherry_oak_leaves",
-      "required": false
-    },
-    {
-      "id": "promenade:white_cherry_oak_leaves",
-      "required": false
-    },
-    {
       "id": "terrestria:sakura_leaves",
-      "required": false
-    },
-    {
-      "id": "paradise_lost:lavender_wisteria_leaves",
-      "required": false
-    },
-    {
-      "id": "paradise_lost:rose_wisteria_leaves",
-      "required": false
-    },
-    {
-      "id": "forbidden_arcanus:cherry_leaves",
       "required": false
     }
   ]
