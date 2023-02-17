@@ -3,23 +3,15 @@
   "values": [
     "#flowers",
     {
-      "id": "srias_flowers:blue_poppy",
+      "id": "biomesoplenty:pink_cherry_sapling",
       "required": false
     },
     {
-      "id": "srias_flowers:hydrangea",
+      "id": "biomesoplenty:white_cherry_sapling",
       "required": false
     },
     {
-      "id": "srias_flowers:crocus",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:snowdrops",
-      "required": false
-    },
-    {
-      "id": "srias_flowers:orange_daisy",
+      "id": "biomesoplenty:flowering_oak_sapling",
       "required": false
     },
     {
@@ -31,11 +23,27 @@
       "required": false
     },
     {
+      "id": "born_in_chaos_v1:marigolds",
+      "required": false
+    },
+    {
+      "id": "broglisplants:deadly_nightshade_block",
+      "required": false
+    },
+    {
+      "id": "cherryblossomgrotto:cherry_blossom_sapling",
+      "required": false
+    },
+    {
       "id": "ecologics:azalea_flower",
       "required": false
     },
     {
-      "id": "twigs:azalea_flowers",
+      "id": "forbidden_arcanus:cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "ecologics:azalea_flower",
       "required": false
     },
     {
@@ -51,123 +59,39 @@
       "required": false
     },
     {
-      "id": "broglisplants:deadly_nightshade_block",
+      "id": "goodending:pink_flowering_lily_pad",
       "required": false
     },
     {
-      "id": "oaks_nature:bundle_of_poppy",
-      "required": false
-    },
-    {
-      "id": "oaks_nature:bundle_of_oxeye_daisy",
-      "required": false
-    },
-    {
-      "id": "oaks_nature:white_dandelion",
-      "required": false
-    },
-    {
-      "id": "cherryblossomgrotto:cherry_blossom_sapling",
-      "required": false
-    },
-    {
-      "id": "biomesoplenty:pink_cherry_sapling",
-      "required": false
-    },
-    {
-      "id": "biomesoplenty:white_cherry_sapling",
-      "required": false
-    },
-    {
-      "id": "biomesoplenty:flowering_oak_sapling",
-      "required": false
-    },
-    {
-      "id": "biomemakeover:foxglove",
-      "required": false
-    },
-    {
-      "id": "duneons:houstonia",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerpatch",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerscactusred",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerscactuspink",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerscactuswhite",
-      "required": false
-    },
-    {
-      "id": "duneons:flowersheatherblue",
-      "required": false
-    },
-    {
-      "id": "duneons:flowersheatherorange",
-      "required": false
-    },
-    {
-      "id": "duneons:creeperwoodsplaynt_1",
-      "required": false
-    },
-    {
-      "id": "duneons:creeperwoodsplant_1",
-      "required": false
-    },
-    {
-      "id": "duneons:pink_jungle_plant",
-      "required": false
-    },
-    {
-      "id": "duneons:large_jungle_plant",
-      "required": false
-    },
-    {
-      "id": "duneons:bloomingflare",
-      "required": false
-    },
-    {
-      "id": "duneons:netherflower",
-      "required": false
-    },
-    {
-      "id": "duneons:warpedputridpetals",
-      "required": false
-    },
-    {
-      "id": "duneons:warpedflower",
-      "required": false
-    },
-    {
-      "id": "duneons:endpinkflower",
-      "required": false
-    },
-    {
-      "id": "duneons:purplefaireflowersmall",
-      "required": false
-    },
-    {
-      "id": "duneons:pinkfaireflowersmall",
-      "required": false
-    },
-    {
-      "id": "duneons:flowerswamp",
-      "required": false
-    },
-    {
-      "id": "duneons:jungle_flower_leafy",
+      "id": "goodending:yellow_flowering_lily_pad",
       "required": false
     },
     {
       "id": "habitat:rafflesia",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chamomile",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chives",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:essitte",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:punuel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:sorrel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:verbena",
       "required": false
     },
     {
@@ -211,50 +135,6 @@
       "required": false
     },
     {
-      "id": "promenade:pink_cherry_oak_sapling",
-      "required": false
-    },
-    {
-      "id": "promenade:white_cherry_oak_sapling",
-      "required": false
-    },
-    {
-      "id": "born_in_chaos_v1:marigolds",
-      "required": false
-    },
-    {
-      "id": "forbidden_arcanus:cherry_sapling",
-      "required": false
-    },
-    {
-      "id": "hibernalherbs:chamomile",
-      "required": false
-    },
-    {
-      "id": "hibernalherbs:chives",
-      "required": false
-    },
-    {
-      "id": "hibernalherbs:essitte",
-      "required": false
-    },
-    {
-      "id": "hibernalherbs:punuel",
-      "required": false
-    },
-    {
-      "id": "hibernalherbs:sorrel",
-      "required": false
-    },
-    {
-      "id": "hibernalherbs:verbena",
-      "required": false
-    },
-    {
-      "id": "pyromancer:rafflesia",
-      "required": false
-    },
-    {
       "id": "#paradise_lost:small_flowers",
       "required": false
     },
@@ -267,11 +147,15 @@
       "required": false
     },
     {
-      "id": "goodending:pink_flowering_lily_pad",
+      "id": "promenade:pink_cherry_oak_sapling",
       "required": false
     },
     {
-      "id": "goodending:yellow_flowering_lily_pad",
+      "id": "promenade:white_cherry_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "pyromancer:rafflesia",
       "required": false
     },
     {
@@ -295,19 +179,55 @@
       "required": false
     },
     {
-      "id": "meadow:fire_lily",
-      "required": false
-    },
-    {
-      "id": "meadow:eriophorum",
-      "required": false
-    },
-    {
       "id": "meadow:eriophorum",
       "required": false
     },
     {
       "id": "meadow:eriophorum_tall",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_poppy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:bundle_of_oxeye_daisy",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:white_dandelion",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:columbine",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:fleabane",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:himalayan_poppy",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:hydrangea_bush",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:snowdrops",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:sunrise_daisy",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:tall_hydrangea",
+      "required": false
+    },
+    {
+      "id": "twigs:azalea_flowers",
       "required": false
     }
   ]

@@ -4,15 +4,11 @@
     "minecraft:wither_rose",
     "#minecraft:leaves",
     {
-      "id": "flowerpatch:wither_rose_patch",
+      "id": "blue_skies:muckweed",
       "required": false
     },
     {
-      "id": "bushierflowers:grown_wither_rose",
-      "required": false
-    },
-    {
-      "id": "flowerseeds:crop_witherrose",
+      "id": "blue_skies:brittlebush",
       "required": false
     },
     {
@@ -24,6 +20,10 @@
       "required": false
     },
     {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
       "id": "byg:prairie_grass",
       "required": false
     },
@@ -32,19 +32,15 @@
       "required": false
     },
     {
-      "id": "gaiadimension:missingno_plant",
+      "id": "expandeddelight:wild_asparagus",
       "required": false
     },
     {
-      "id": "blue_skies:muckweed",
+      "id": "expandeddelight:wild_peanuts",
       "required": false
     },
     {
-      "id": "blue_skies:brittlebush",
-      "required": false
-    },
-    {
-      "id": "farmersdelight:wild_beetroots",
+      "id": "expandeddelight:wild_sweet_potatoes",
       "required": false
     },
     {
@@ -52,55 +48,7 @@
       "required": false
     },
     {
-      "id": "undergarden:shimmerweed",
-      "required": false
-    },
-    {
-      "id": "undergarden:tall_shimmerweed",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:clover_leaves",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:cactus",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:albuca_namaquensis",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:water_lily_light",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:frogbit",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:water_lily_large",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:water_lily_medium",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:water_lily_small",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:duckweed_bunch",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:duckweed",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:sprout",
+      "id": "farmersdelight:wild_beetroots",
       "required": false
     },
     {
@@ -112,15 +60,7 @@
       "required": false
     },
     {
-      "id": "ferdinandsflowers:tumble_weed",
-      "required": false
-    },
-    {
       "id": "ferdinandsflowers:dry_shrub",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:yucca",
       "required": false
     },
     {
@@ -160,143 +100,19 @@
       "required": false
     },
     {
-      "id": "ferdinandsflowers:beach_grass",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:live_forever_leaves",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:bamboo_sapling_groove",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:bamboo_groove",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:bamboo_sapling_golden",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:bamboo_golden",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:bamboo_sapling_black",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:bamboo_black",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:devils_fingers",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:devils_fingers_single",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:basket_stinkhorn",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:jack_o_lantern_dark",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:jack_o_lantern_fungus",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:jack_o_lantern_light",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:red_reishi",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:yellow_stagshorn",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:yellow_patches",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:inky_cap",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:violet_coral_fungus",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:violet_webcap",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:pixies_parasol_blue",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:pixies_parasol_cyan",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:oyster_blue",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:oyster_yellow",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:cracking_russula",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:turkey_tail",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:turkey_tail_tan",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:turkey_tail_brown",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:turkey_tail_fan",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:turkey_tail_tan_fan",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:turkey_tail_brown_fan",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:red_reishi_fan",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:jack_o_lantern_light_fan",
-      "required": false
-    },
-    {
-      "id": "ferdinandsflowers:jack_o_lantern_fan",
-      "required": false
-    },
-    {
       "id": "ferdinandsflowers:raccoon_grape",
+      "required": false
+    },
+    {
+      "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "flowerseeds:crop_witherrose",
+      "required": false
+    },
+    {
+      "id": "gaiadimension:missingno_plant",
       "required": false
     },
     {
@@ -313,26 +129,6 @@
     },
     {
       "id": "naturaldecormod:irish_moss_small",
-      "required": false
-    },
-    {
-      "id": "spectrum:resonant_lily",
-      "required": false
-    },
-    {
-      "id": "expandeddelight:wild_asparagus",
-      "required": false
-    },
-    {
-      "id": "expandeddelight:wild_peanuts",
-      "required": false
-    },
-    {
-      "id": "expandeddelight:wild_sweet_potatoes",
-      "required": false
-    },
-    {
-      "id": "windswept:wither_rose_bush",
       "required": false
     },
     {
@@ -377,6 +173,22 @@
     },
     {
       "id": "naturaldecormod:epiphyte_holiday_cactus",
+      "required": false
+    },
+    {
+      "id": "spectrum:resonant_lily",
+      "required": false
+    },
+    {
+      "id": "undergarden:shimmerweed",
+      "required": false
+    },
+    {
+      "id": "undergarden:tall_shimmerweed",
+      "required": false
+    },
+    {
+      "id": "windswept:wither_rose_bush",
       "required": false
     }
   ]
