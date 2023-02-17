@@ -243,6 +243,22 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:flowering_sapling",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:sakura_sapling",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:dark_sakura_sapling",
+      "required": false
+    },
+    {
+      "id": "sakurarosea:sakura_shrub_sapling",
+      "required": false
+    },
+    {
       "id": "srias_flowers:columbine",
       "required": false
     },
@@ -276,10 +292,6 @@
     },
     {
       "id": "twilightforest:thorn_rose",
-      "required": false
-    },
-    {
-      "id": "regions_unexplored:flowering_sapling",
       "required": false
     }
   ]
