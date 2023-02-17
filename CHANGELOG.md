@@ -1,3 +1,12 @@
+### **(V.6.6.9 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Cleaned up and improved the tags for Hanging Gardens to pull in more modded logs and flowers and disallow more non-flowers from other mods.
+
+Removed Biome Makeover's Moth from spawning in Hanging Gardens until this PR gets merged and released: https://github.com/Lemonszz/Biome-Makeover/pull/202
+ The entity spawning in Hanging Gardens is controlled by this entity type tag: `the_bumblezone:hanging_gardens/initial_spawn_entities`
+
+
 ### **(V.6.6.8 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

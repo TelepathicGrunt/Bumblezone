@@ -4,6 +4,10 @@
     "minecraft:birch_leaves",
     "minecraft:flowering_azalea_leaves",
     {
+      "id": "atmospheric:flowering_morado_leaves",
+      "required": false
+    },
+    {
       "id": "aurorasdeco:flowering_jacaranda_leaves",
       "required": false
     },
@@ -92,6 +96,10 @@
       "required": false
     },
     {
+      "id": "premium_wood:silverbell_leaves",
+      "required": false
+    },
+    {
       "id": "promenade:pink_cherry_oak_leaves",
       "required": false
     },
@@ -136,6 +144,10 @@
       "required": false
     },
     {
+      "id": "sakurabiome:sakura_white_oak_leave",
+      "required": false
+    },
+    {
       "id": "sakurarosea:sakura_leaves",
       "required": false
     },
@@ -145,6 +157,14 @@
     },
     {
       "id": "sakurarosea:sakura_shrub_leaves",
+      "required": false
+    },
+    {
+      "id": "spoornpink:dark_pink_blossom_leaves",
+      "required": false
+    },
+    {
+      "id": "spoornpink:pink_blossom_leaves",
       "required": false
     },
     {

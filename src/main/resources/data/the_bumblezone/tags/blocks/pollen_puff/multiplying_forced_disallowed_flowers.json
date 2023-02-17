@@ -116,6 +116,46 @@
       "required": false
     },
     {
+      "id": "hibernalherbs:tarragon",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:thyme",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chervil",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:thyocielle",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:fennkystral",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:fennsel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:bloforia",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:marjoram",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:rosemary",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:ceillis",
+      "required": false
+    },
+    {
       "id": "naturaldecormod:little_creosote_bush",
       "required": false
     },

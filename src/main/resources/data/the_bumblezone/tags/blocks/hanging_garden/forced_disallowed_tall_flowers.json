@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "atmospheric:tall_yucca_flower",
+      "required": false
+    },
+    {
       "id": "biomemakeover:black_thistle",
       "required": false
     },
@@ -75,6 +79,10 @@
     },
     {
       "id": "ferdinandsflowers:dry_shrub",
+      "required": false
+    },
+    {
+      "id": "floral_flair:thorn_blossom",
       "required": false
     },
     {

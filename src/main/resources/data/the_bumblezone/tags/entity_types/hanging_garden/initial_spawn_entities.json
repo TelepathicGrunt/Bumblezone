@@ -2,7 +2,151 @@
   "replace": false,
   "values": [
     {
+      "id": "alexsmobs:flutter",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:banana_slug",
+      "required": false
+    },
+    {
+      "id": "autumnity:snail",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:butterfly",
+      "required": false
+    },
+    {
       "id": "blue_skies:firefly",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_ladybird",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_grasshopper",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_stick_insect",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_snail",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_banana_slug",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_slug",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_worm",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:ladybug",
+      "required": false
+    },
+    {
+      "id": "cnb:minipad",
+      "required": false
+    },
+    {
+      "id": "cnb:lizard",
+      "required": false
+    },
+    {
+      "id": "crittersandcompanions:leaf_insect",
+      "required": false
+    },
+    {
+      "id": "etcetera:snail",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:glow_snail",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:pixie_snail",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:sturdy_snail",
+      "required": false
+    },
+    {
+      "id": "infernalexp:glowsilk_moth",
+      "required": false
+    },
+    {
+      "id": "lilwings:white_fox_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:swallow_tail_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:shroom_skipper_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:painted_panther_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:crystal_puff_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:swamp_hopper_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:cloudy_puff_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:butter_gold_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:aponi_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:red_applefly_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:gold_applefly_butterfly",
+      "required": false
+    },
+    {
+      "id": "lilwings:grayling_butterfly",
+      "required": false
+    },
+    {
+      "id": "lovely_snails:snail",
+      "required": false
+    },
+    {
+      "id": "moonbits:stunbug",
+      "required": false
+    },
+    {
+      "id": "moonbits:cave_snail",
+      "required": false
+    },
+    {
+      "id": "morecropsbydaleeny:snail",
       "required": false
     },
     {
@@ -18,31 +162,43 @@
       "required": false
     },
     {
-      "id": "biomemakeover:moth",
+      "id": "natural_decoration:white_butterfly",
       "required": false
     },
     {
-      "id": "wondrouswilds:firefly",
+      "id": "natural_decoration:yellow_butterfly",
       "required": false
     },
     {
-      "id": "wonderouswilds:firefly",
+      "id": "natural_decoration:morpho_butterfly",
       "required": false
     },
     {
-      "id": "betteranimalsplus:butterfly",
+      "id": "natural_decoration:morpho_butterfly",
       "required": false
     },
     {
-      "id": "autumnity:snail",
+      "id": "natural_decoration:snailone",
       "required": false
     },
     {
-      "id": "alexsmobs:flutter",
+      "id": "natural_decoration:snailtwo",
       "required": false
     },
     {
-      "id": "alexsmobs:banana_slug",
+      "id": "natural_decoration:snailthree",
+      "required": false
+    },
+    {
+      "id": "ob_aquamirae:golden_moth",
+      "required": false
+    },
+    {
+      "id": "silverbirch:firefly",
+      "required": false
+    },
+    {
+      "id": "whisperwoods:moth",
       "required": false
     },
     {
@@ -98,171 +254,11 @@
       "required": false
     },
     {
-      "id": "lovely_snails:snail",
+      "id": "wondrouswilds:firefly",
       "required": false
     },
     {
-      "id": "whisperwoods:moth",
-      "required": false
-    },
-    {
-      "id": "natural_decoration:white_butterfly",
-      "required": false
-    },
-    {
-      "id": "natural_decoration:yellow_butterfly",
-      "required": false
-    },
-    {
-      "id": "natural_decoration:morpho_butterfly",
-      "required": false
-    },
-    {
-      "id": "natural_decoration:morpho_butterfly",
-      "required": false
-    },
-    {
-      "id": "natural_decoration:snailone",
-      "required": false
-    },
-    {
-      "id": "natural_decoration:snailtwo",
-      "required": false
-    },
-    {
-      "id": "natural_decoration:snailthree",
-      "required": false
-    },
-    {
-      "id": "cnb:minipad",
-      "required": false
-    },
-    {
-      "id": "cnb:lizard",
-      "required": false
-    },
-    {
-      "id": "infernalexp:glowsilk_moth",
-      "required": false
-    },
-    {
-      "id": "ob_aquamirae:golden_moth",
-      "required": false
-    },
-    {
-      "id": "crittersandcompanions:leaf_insect",
-      "required": false
-    },
-    {
-      "id": "silverbirch:firefly",
-      "required": false
-    },
-    {
-      "id": "morecropsbydaleeny:snail",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_ladybird",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_grasshopper",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_stick_insect",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_snail",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_banana_slug",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_slug",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_worm",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:ladybug",
-      "required": false
-    },
-    {
-      "id": "lilwings:white_fox_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:swallow_tail_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:shroom_skipper_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:painted_panther_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:crystal_puff_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:swamp_hopper_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:cloudy_puff_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:butter_gold_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:aponi_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:red_applefly_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:gold_applefly_butterfly",
-      "required": false
-    },
-    {
-      "id": "lilwings:grayling_butterfly",
-      "required": false
-    },
-    {
-      "id": "moonbits:stunbug",
-      "required": false
-    },
-    {
-      "id": "moonbits:cave_snail",
-      "required": false
-    },
-    {
-      "id": "etcetera:snail",
-      "required": false
-    },
-    {
-      "id": "honey_bucket:glow_snail",
-      "required": false
-    },
-    {
-      "id": "honey_bucket:pixie_snail",
-      "required": false
-    },
-    {
-      "id": "honey_bucket:sturdy_snail",
+      "id": "wonderouswilds:firefly",
       "required": false
     }
   ]
