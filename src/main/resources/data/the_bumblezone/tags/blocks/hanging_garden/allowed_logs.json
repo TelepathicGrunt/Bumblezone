@@ -3,7 +3,31 @@
   "values": [
     "minecraft:birch_log",
     {
+      "id": "ars_nouveau:blue_archwood_log",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:green_archwood_log",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:purple_archwood_log",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:red_archwood_log",
+      "required": false
+    },
+    {
+      "id": "ars_elemental:yellow_archwood_log",
+      "required": false
+    },
+    {
       "id": "aurorasdeco:flowering_azalea_log",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:cherry_log",
       "required": false
     },
     {
@@ -11,7 +35,31 @@
       "required": false
     },
     {
+      "id": "byg:rainbow_eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "byg:aspen_log",
+      "required": false
+    },
+    {
+      "id": "byg:white_mangrove_log",
+      "required": false
+    },
+    {
       "id": "ecologics:flowering_azalea_log",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:mottled_aurel_log",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "terrestria:rainbow_eucalyptus_log",
       "required": false
     }
   ]

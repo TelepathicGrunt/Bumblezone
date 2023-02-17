@@ -8,6 +8,50 @@
       "required": false
     },
     {
+      "id": "andycats:black_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats:black_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats:tall_black_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats:black_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats:tall_black_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats:black_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats:tall_black_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats:black_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats:tall_black_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats:black_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats:black_cosmos",
+      "required": false
+    },
+    {
       "id": "aoa3:blue_daylooms",
       "required": false
     },
@@ -49,6 +93,10 @@
     },
     {
       "id": "aoa3:dawn_flower",
+      "required": false
+    },
+    {
+      "id": "atmospheric:yucca_flower",
       "required": false
     },
     {
@@ -192,6 +240,14 @@
       "required": false
     },
     {
+      "id": "floral_flair:black_hyacinth",
+      "required": false
+    },
+    {
+      "id": "floral_flair:chocolate_cosmos",
+      "required": false
+    },
+    {
       "id": "flowerpatch:wither_rose_patch",
       "required": false
     },
@@ -201,6 +257,46 @@
     },
     {
       "id": "gaiadimension:missingno_plant",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:tarragon",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:thyme",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chervil",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:thyocielle",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:fennkystral",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:fennsel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:bloforia",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:marjoram",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:rosemary",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:ceillis",
       "required": false
     },
     {
@@ -381,6 +477,10 @@
     },
     {
       "id": "regions_unexplored:dorcel",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:yellow_lupine",
       "required": false
     },
     {
