@@ -10,10 +10,48 @@
         {
           "data": { "Name": "minecraft:grass" },
           "weight": 2
+        }
+      ]
+    }
+  }],
+  "creaturesfromthelushcave:azaleahog": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
         },
         {
-          "data": { "Name": "minecraft:air" },
+          "data": { "Name": "minecraft:grass" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:azalea" },
           "weight": 1
+        }
+      ]
+    }
+  }],
+  "creaturesfromthelushcave:lush_warden": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:flowering_azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 2
         }
       ]
     }
