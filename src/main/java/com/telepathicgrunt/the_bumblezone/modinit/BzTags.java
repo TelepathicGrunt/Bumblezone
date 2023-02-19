@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
@@ -97,6 +98,8 @@ public class BzTags {
     public static final TagKey<Structure> BEE_QUEEN_MINING_FATIGUE = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_queen_mining_fatigue"));
 
     public static final TagKey<MobEffect> DISALLOWED_INCENSE_CANDLE_EFFECTS = TagKey.create(Registry.MOB_EFFECT_REGISTRY, new ResourceLocation(Bumblezone.MODID, "incense_candle/disallowed_effects"));
+
+    public static final TagKey<PoiType> IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI = TagKey.create(Registry.POINT_OF_INTEREST_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "is_near_beehive_advancement_trigger"));
 
     public static final TagKey<Enchantment> DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registry.ENCHANTMENT_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/disallowed_enchantments"));
     public static final TagKey<Enchantment> FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registry.ENCHANTMENT_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/forced_allowed_enchantments"));

@@ -20,6 +20,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.village.poi.PoiManager;
+import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArmorItem;
@@ -40,6 +42,30 @@ public class EntityTeleportationHookup {
 
     ////////////////////////////////////////////////////////////
     // Methods that setup and call PlayerTeleportationBackend //
+
+    //Notify people of Bumblezone's advancements so they know how to enter dimension
+    public static void playerTick(TickEvent.PlayerTickEvent event) {
+        if (event.player instanceof ServerPlayer serverPlayer) {
+            Level level = serverPlayer.level;
+
+            if (level instanceof ServerLevel serverLevel &&
+                    (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
+                    !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
+            {
+
+                List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
+                        (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
+                        serverPlayer.blockPosition(),
+                        8,
+                        PoiManager.Occupancy.ANY
+                ).toList();
+
+                if (poiInRange.size() > 0) {
+                    BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
+                }
+            }
+        }
+    }
 
     //Living Entity ticks
     public static void entityTick(LivingEntity livingEntity) {
