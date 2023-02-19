@@ -12,7 +12,7 @@
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": true,
+    "announce_to_chat": false,
     "hidden": false
   },
   "rewards": {
@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:buckets/honey"
+            "tag": "the_bumblezone:buckets/honey"
           }
         ]
       }

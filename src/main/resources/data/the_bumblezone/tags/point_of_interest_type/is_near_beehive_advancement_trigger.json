@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:bee_home",
+    {
+      "id": "productivebees:solitary_hive",
+      "required": false
+    },
+    {
+      "id": "productivebees:solitary_nest",
+      "required": false
+    },
+    {
+      "id": "productivebees:draconic_nest",
+      "required": false
+    },
+    {
+      "id": "productivebees:sugarbag_nest",
+      "required": false
+    },
+    {
+      "id": "productivebees:nether_nest",
+      "required": false
+    },
+    {
+      "id": "productivebees:bumble_bee_nest",
+      "required": false
+    }
+  ]
+}
