@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
+import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import net.minecraft.server.level.ServerLevel;
@@ -24,6 +25,13 @@ public abstract class ServerPlayerMixin {
             BeeAggression.applyAngerIfInTaggedStructures(serverPlayer);
             BeeQueenEntity.applyMiningFatigueInStructures(serverPlayer);
         }
+    }
+
+    @Inject(method = "doTick()V",
+            at = @At(value = "HEAD"))
+    private void thebumblezone_playerTickHead(CallbackInfo ci) {
+        ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
+        EntityTeleportationHookup.playerTick(serverPlayer);
     }
 
     // Handles storing of past non-bumblezone dimension the entity is leaving

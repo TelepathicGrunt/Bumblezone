@@ -44,25 +44,23 @@ public class EntityTeleportationHookup {
     // Methods that setup and call PlayerTeleportationBackend //
 
     //Notify people of Bumblezone's advancements so they know how to enter dimension
-    public static void playerTick(TickEvent.PlayerTickEvent event) {
-        if (event.player instanceof ServerPlayer serverPlayer) {
-            Level level = serverPlayer.level;
+    public static void playerTick(ServerPlayer serverPlayer) {
+        Level level = serverPlayer.level;
 
-            if (level instanceof ServerLevel serverLevel &&
-                    (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
-                    !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
-            {
+        if (level instanceof ServerLevel serverLevel &&
+                (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
+                !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
+        {
 
-                List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
-                        (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
-                        serverPlayer.blockPosition(),
-                        8,
-                        PoiManager.Occupancy.ANY
-                ).toList();
+            List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
+                    (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
+                    serverPlayer.blockPosition(),
+                    8,
+                    PoiManager.Occupancy.ANY
+            ).toList();
 
-                if (poiInRange.size() > 0) {
-                    BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
-                }
+            if (poiInRange.size() > 0) {
+                BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
             }
         }
     }
