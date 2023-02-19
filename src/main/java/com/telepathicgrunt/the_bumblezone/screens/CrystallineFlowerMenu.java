@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPa
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -60,9 +61,12 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     final DataSlot xpBarPercent = DataSlot.standalone();
     final DataSlot xpTier = DataSlot.standalone();
     final DataSlot tierCost = DataSlot.standalone();
-    final DataSlot bottomBlockPosX = DataSlot.standalone();
-    final DataSlot bottomBlockPosY = DataSlot.standalone();
-    final DataSlot bottomBlockPosZ = DataSlot.standalone();
+    final DataSlot bottomBlockPosXUpper = DataSlot.standalone();
+    final DataSlot bottomBlockPosXLower = DataSlot.standalone();
+    final DataSlot bottomBlockPosYUpper = DataSlot.standalone();
+    final DataSlot bottomBlockPosYLower = DataSlot.standalone();
+    final DataSlot bottomBlockPosZUpper = DataSlot.standalone();
+    final DataSlot bottomBlockPosZLower = DataSlot.standalone();
     final DataSlot playerHasXPForTier = DataSlot.standalone();
     final DataSlot consumeSlotFullyObstructed = DataSlot.standalone();
     final DataSlot tooManyEnchantmentsOnInput = DataSlot.standalone();
@@ -187,13 +191,19 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.playerHasXPForTier.set(0);
         this.consumeSlotFullyObstructed.set(0);
         this.tooManyEnchantmentsOnInput.set(0);
-        this.bottomBlockPosX.set(0);
-        this.bottomBlockPosY.set(0);
-        this.bottomBlockPosZ.set(0);
+        this.bottomBlockPosXUpper.set(0);
+        this.bottomBlockPosXLower.set(0);
+        this.bottomBlockPosYUpper.set(0);
+        this.bottomBlockPosYLower.set(0);
+        this.bottomBlockPosZUpper.set(0);
+        this.bottomBlockPosZLower.set(0);
         if (this.crystallineFlowerBlockEntity != null) {
-            this.bottomBlockPosX.set(this.crystallineFlowerBlockEntity.getBlockPos().getX());
-            this.bottomBlockPosY.set(this.crystallineFlowerBlockEntity.getBlockPos().getY());
-            this.bottomBlockPosZ.set(this.crystallineFlowerBlockEntity.getBlockPos().getZ());
+            this.bottomBlockPosXUpper.set(GeneralUtils.split(this.crystallineFlowerBlockEntity.getBlockPos().getX(), true));
+            this.bottomBlockPosXLower.set(GeneralUtils.split(this.crystallineFlowerBlockEntity.getBlockPos().getX(), false));
+            this.bottomBlockPosYUpper.set(GeneralUtils.split(this.crystallineFlowerBlockEntity.getBlockPos().getY(), true));
+            this.bottomBlockPosYLower.set(GeneralUtils.split(this.crystallineFlowerBlockEntity.getBlockPos().getY(), false));
+            this.bottomBlockPosZUpper.set(GeneralUtils.split(this.crystallineFlowerBlockEntity.getBlockPos().getZ(), true));
+            this.bottomBlockPosZLower.set(GeneralUtils.split(this.crystallineFlowerBlockEntity.getBlockPos().getZ(), false));
         }
 
         syncXpTier();
@@ -205,9 +215,12 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         addDataSlot(this.playerHasXPForTier);
         addDataSlot(this.consumeSlotFullyObstructed);
         addDataSlot(this.tooManyEnchantmentsOnInput);
-        addDataSlot(this.bottomBlockPosX);
-        addDataSlot(this.bottomBlockPosY);
-        addDataSlot(this.bottomBlockPosZ);
+        addDataSlot(this.bottomBlockPosXUpper);
+        addDataSlot(this.bottomBlockPosXLower);
+        addDataSlot(this.bottomBlockPosYUpper);
+        addDataSlot(this.bottomBlockPosYLower);
+        addDataSlot(this.bottomBlockPosZUpper);
+        addDataSlot(this.bottomBlockPosZLower);
     }
 
     private void syncXpTier() {

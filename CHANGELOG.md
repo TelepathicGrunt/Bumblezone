@@ -1,5 +1,8 @@
 ### **(V.6.6.10 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Fix Crystalline Flower space checking failing on Dedicated Servers if menu for it is opened while flower is greater than 32,767 blocks from world origin.
+
 ##### Advancements:
 Added a new advancements that is given to player when they are near a beehive to get them to look at
  Bumblezone's advancements to know how to enter dimension. The Point of Interest used to determine if

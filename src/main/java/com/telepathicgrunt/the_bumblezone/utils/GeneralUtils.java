@@ -344,5 +344,27 @@ public class GeneralUtils {
             structurePiece.move(xOffset, 0, zOffset);
         }
     }
+    
+    //////////////////////////////////////////////
+    // Source: https://github.com/Shadows-of-Fire/Placebo/blob/35bc107709970cd7f2f24cf73b2c4337ab00fb3b/src/main/java/shadows/placebo/container/ContainerUtil.java
 
+    /**
+     * IIntArray can only send shorts, so we need to split int values in two.
+     * @param value The int to split
+     * @param upper If sending the upper bits or not.
+     * @return The appropriate half of the integer.
+     */
+    public static int split(int value, boolean upper) {
+        return upper ? value >> 16 : value & 0xFFFF;
+    }
+
+    /**
+     * IIntArray can only send shorts, so we need to split int values in two.
+     * @param upper The current upper split bits, recieved from network
+     * @param lower The current lower split bits, recieved from network
+     * @return The updated value.
+     */
+    public static int merge(int upper, int lower) {
+        return (upper << 16) + (lower & 0x0000FFFF);
+    }
 }
