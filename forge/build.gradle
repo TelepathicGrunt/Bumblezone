@@ -41,7 +41,7 @@ dependencies {
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
     modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
-    modRuntimeOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
+    //modRuntimeOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 

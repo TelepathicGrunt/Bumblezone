@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -240,19 +241,17 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         renderTooltip(poseStack, mouseX, mouseY);
     }
 
-
     private void drawTierState(PoseStack poseStack, int startX, int startY) {
         int xOffset = startX + TIER_X_OFFSET;
         int yOffset = startY + TIER_Y_OFFSET;
 
         if (cachedObstructionsTimer <= 0) {
-            cachedObstructions = CrystallineFlower.getObstructions(
-                7,
-                this.minecraft.player.getLevel(),
-                new BlockPos(
-                    this.menu.bottomBlockPosX.get(),
-                    this.menu.bottomBlockPosY.get(),
-                    this.menu.bottomBlockPosZ.get()));
+            BlockPos flowerPos = new BlockPos(
+                GeneralUtils.merge(this.menu.bottomBlockPosXUpper.get(), this.menu.bottomBlockPosXLower.get()),
+                GeneralUtils.merge(this.menu.bottomBlockPosYUpper.get(), this.menu.bottomBlockPosYLower.get()),
+                GeneralUtils.merge(this.menu.bottomBlockPosZUpper.get(), this.menu.bottomBlockPosZLower.get()));
+
+            cachedObstructions = CrystallineFlower.getObstructions(7, this.minecraft.player.getLevel(), flowerPos);
             cachedObstructionsTimer = 100;
         }
         cachedObstructionsTimer--;
