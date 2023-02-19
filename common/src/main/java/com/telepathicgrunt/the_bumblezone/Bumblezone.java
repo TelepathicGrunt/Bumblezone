@@ -86,6 +86,7 @@ public class Bumblezone{
         PlayerEntityInteractEvent.EVENT.addListener(BeeInteractivity::onEntityInteractEvent);
         EntityDeathEvent.EVENT.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         ServerLevelTickEvent.EVENT.addListener(BzWorldSavedData::worldTick);
+        PlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
         EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
         EntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
         ProjectileHitEvent.EVENT_HIGH.addListener(EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.

@@ -3,8 +3,10 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
@@ -22,10 +24,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.PoiTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.village.poi.PoiManager;
+import net.minecraft.world.entity.ai.village.poi.PoiRecord;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArmorItem;
@@ -41,11 +47,36 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class EntityTeleportationHookup {
 
     ////////////////////////////////////////////////////////////
     // Methods that setup and call PlayerTeleportationBackend //
+
+    //Notify people of Bumblezone's advancements so they know how to enter dimension
+    public static void playerTick(PlayerTickEvent event) {
+        if (event.player() instanceof ServerPlayer serverPlayer) {
+            Level level = serverPlayer.level;
+
+            if (level instanceof ServerLevel serverLevel &&
+                (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
+                !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
+            {
+
+                List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
+                        (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
+                        serverPlayer.blockPosition(),
+                        8,
+                        PoiManager.Occupancy.ANY
+                    ).toList();
+
+                if (poiInRange.size() > 0) {
+                    BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
+                }
+            }
+        }
+    }
 
     //Living Entity ticks
     public static void entityTick(EntityTickEvent event) {

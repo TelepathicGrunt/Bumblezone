@@ -1,3 +1,14 @@
+### **(V.6.6.8 Changes) (1.19.3 Minecraft)**
+
+##### Advancements:
+Added a new advancements that is given to player when they are near a beehive to get them to look at 
+ Bumblezone's advancements to know how to enter dimension. The Point of Interest used to determine if 
+ the player is near a Beehive or Bee Nest (even modded ones) is controlled by this new `point_of_interest_type` tag:
+ `the_bumblezone:is_near_beehive_advancement_trigger`
+
+Made most Bumblezone advancements no longer announce to the chat to reduce chat spam.
+
+
 ### **(V.6.6.7 Changes) (1.19.3 Minecraft)**
 
 ##### Mod Compat:
