@@ -108,7 +108,7 @@ publishing {
 
             pom {
                 name = 'TheBumblezone'
-                description = 'An unBEElievable dimension full of bees that becomes REALLY angry if you take their honey!'
+                description = 'A wonderful bee dimension mod with lots of new exploration and adventuring to do!'
                 url = 'https://github.com/TelepathicGrunt/Bumblezone'
 
                 scm {
