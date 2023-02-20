@@ -37,6 +37,7 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 import org.quiltmc.qsl.block.content.registry.api.FlammableBlockEntry;
@@ -51,6 +52,8 @@ import org.quiltmc.qsl.villager.api.TradeOfferHelper;
 import org.quiltmc.qsl.worldgen.biome.api.BiomeModificationContext;
 import org.quiltmc.qsl.worldgen.biome.api.BiomeModifications;
 import org.quiltmc.qsl.worldgen.biome.api.ModificationPhase;
+
+import java.nio.file.Files;
 
 public class QuiltEventManager {
 
@@ -75,20 +78,36 @@ public class QuiltEventManager {
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockentity) ->
                 !BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(player, state)));
 
-        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) ->
-                ResourceLoader.registerBuiltinResourcePack(
-                        id,
-                        QuiltLoader.getModContainer(id.getNamespace()).orElseThrow(),
-                        switch (mode) {
-                            case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
-                            case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
-                            case FORCE_ENABLED -> ResourcePackActivationType.ALWAYS_ENABLED;
-                        },
-                        displayName
-                )
-        ));
+        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
+            ModContainer container = getModPack(id);
+            ResourceLoader.registerBuiltinResourcePack(
+                    new ResourceLocation(container.metadata().id(), id.getPath()),
+                    container,
+                    switch (mode) {
+                        case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
+                        case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
+                        case FORCE_ENABLED -> ResourcePackActivationType.ALWAYS_ENABLED;
+                    },
+                    displayName
+            );
+        }));
 
         RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(QuiltTrackedDataHandlerRegistry::register));
+    }
+
+    private static ModContainer getModPack(ResourceLocation pack) {
+        if (QuiltLoader.isDevelopmentEnvironment()) {
+            for (ModContainer mod : QuiltLoader.getAllMods()) {
+                if (mod.metadata().id().startsWith("generated_") && fileExists(mod, "resourcepacks/" + pack.getPath())) {
+                    return mod;
+                }
+            }
+        }
+        return QuiltLoader.getModContainer(pack.getNamespace()).orElseThrow();
+    }
+
+    private static boolean fileExists(ModContainer container, String path) {
+        return Files.exists(container.getPath(path));
     }
 
     private static <T extends Mob> void registerPlacement(EntityType<T> type, RegisterSpawnPlacementsEvent.Placement<T> placement) {

@@ -30,8 +30,10 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -50,14 +52,15 @@ public class BumblezoneFabric implements ModInitializer {
         BzConfig.setup();
         Bumblezone.init();
 
-        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) ->
+        AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
+                ModContainer container = getModPack(id);
                 ResourceManagerHelper.registerBuiltinResourcePack(
-                        id,
-                        FabricLoader.getInstance().getModContainer(id.getNamespace()).orElseThrow(),
+                        new ResourceLocation(container.getMetadata().getId(), id.getPath()),
+                        container,
                         displayName,
                         toType(mode)
-                ))
-        );
+                );
+        }));
 
         FabricBaseEventManager.init();
 
@@ -88,6 +91,17 @@ public class BumblezoneFabric implements ModInitializer {
 
         FabricModChecker.setupModCompat();
         FabricEventManager.lateInit();
+    }
+
+    private static ModContainer getModPack(ResourceLocation pack) {
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+                if (mod.getMetadata().getId().startsWith("generated_") && mod.findPath("resourcepacks/" + pack.getPath()).isPresent()) {
+                    return mod;
+                }
+            }
+        }
+        return FabricLoader.getInstance().getModContainer(pack.getNamespace()).orElseThrow();
     }
 
     private static <T extends Mob> void registerPlacement(EntityType<T> type, RegisterSpawnPlacementsEvent.Placement<T> placement) {

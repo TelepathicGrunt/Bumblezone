@@ -50,6 +50,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -95,11 +96,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.forgespi.language.IModFileInfo;
+import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.resource.PathPackResources;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -223,18 +228,34 @@ public class BumblezoneForge {
     private static void onRegisterPackFinder(AddPackFindersEvent event) {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
-                Path resourcePath = ModList.get().getModFileById(id.getNamespace()).getFile().findResource("resourcepacks/" + id.getPath());
+                IModFileInfo info = getPackInfo(id);
+                Path resourcePath = info.getFile().findResource("resourcepacks/" + id.getPath());
 
-                final Pack.Info info = createInfoForLatest(displayName, mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED);
+                final Pack.Info packInfo = createInfoForLatest(displayName, mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED);
                 final Pack pack = Pack.create(
                     "builtin/add_pack_finders_test", displayName,
                     mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
                     (path) -> new PathPackResources(path, true, resourcePath),
-                    info, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, false, createSource(mode)
+                    packInfo, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, false, createSource(mode)
                 );
                 event.addRepositorySource((packConsumer) -> packConsumer.accept(pack));
             }));
         }
+    }
+
+    private static IModFileInfo getPackInfo(ResourceLocation pack) {
+        if (!FMLLoader.isProduction()) {
+            for (IModInfo mod : ModList.get().getMods()) {
+                if (mod.getModId().startsWith("generated_") && fileExists(mod, "resourcepacks/" + pack.getPath())) {
+                    return mod.getOwningFile();
+                }
+            }
+        }
+        return ModList.get().getModFileById(pack.getNamespace());
+    }
+
+    private static boolean fileExists(IModInfo info, String path) {
+        return Files.exists(info.getOwningFile().getFile().findResource(path.split("/")));
     }
 
     private static Pack.Info createInfoForLatest(Component description, boolean hidden) {
