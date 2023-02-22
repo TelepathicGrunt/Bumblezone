@@ -1,3 +1,11 @@
+### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
+
+##### Lang:
+Fixed small Honey Slime having wrong captions for some actions/sounds.
+
+New Russian translation is provided by MageInBlack! Special thanks to them!
+
+
 ### **(V.6.6.11 Changes) (1.19.2 Minecraft)**
 
 ##### Teleportation:
