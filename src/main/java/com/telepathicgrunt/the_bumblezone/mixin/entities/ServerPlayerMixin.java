@@ -33,18 +33,4 @@ public abstract class ServerPlayerMixin {
         ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
         EntityTeleportationHookup.playerTick(serverPlayer);
     }
-
-    // Handles storing of past non-bumblezone dimension the entity is leaving
-    @Inject(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;",
-            at = @At(value = "HEAD"))
-    private void thebumblezone_onDimensionChange1(ServerLevel destination, CallbackInfoReturnable<Entity> cir) {
-        EntityTeleportationBackend.entityChangingDimension(destination.dimension().location(), ((Entity)(Object)this));
-    }
-
-    // Handles storing of past non-bumblezone dimension the entity is leaving
-    @Inject(method = "teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDFF)V",
-            at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/level/ServerPlayer;getLevel()Lnet/minecraft/server/level/ServerLevel;"))
-    private void thebumblezone_onDimensionChange2(ServerLevel serverLevel, double d, double e, double f, float g, float h, CallbackInfo ci) {
-        EntityTeleportationBackend.entityChangingDimension(serverLevel.dimension().location(), ((Entity)(Object)this));
-    }
 }

@@ -1,3 +1,15 @@
+### **(V.6.6.11 Changes) (1.19.2 Minecraft)**
+
+##### Teleportation:
+Fixed exiting Bumblezone not always putting you back to the exact position you were at when you tried to enter the dimension.
+
+##### Lang:
+Removed DrHesberus's Russian translation file due to incredibly poor translation and controversy surrounding him.
+ If you know languages other than English and can do translations without using Google Translate or DeepL, etc,
+ you can find my translation file here and submit new translations to me for your language of choice!
+ https://github.com/TelepathicGrunt/Bumblezone/blob/1.19.3-Arch/common/src/main/resources/assets/the_bumblezone/lang/en_us.json
+
+
 ### **(V.6.6.10 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
