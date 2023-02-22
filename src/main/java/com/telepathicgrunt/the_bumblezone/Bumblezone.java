@@ -90,7 +90,6 @@ public class Bumblezone{
         forgeBus.addListener(BzWorldSavedData::worldTick);
         forgeBus.addListener(EntityTeleportationHookup::playerTick);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
-        forgeBus.addListener(EntityTeleportationBackend::entityChangingDimension);
         forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);

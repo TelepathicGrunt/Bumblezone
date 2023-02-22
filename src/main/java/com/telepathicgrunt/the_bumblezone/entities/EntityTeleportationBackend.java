@@ -380,28 +380,4 @@ public class EntityTeleportationBackend {
 
         return false;
     }
-
-    public static void entityChangingDimension(EntityTravelToDimensionEvent event) {
-        Entity entity = event.getEntity();
-
-        // store entity's last position when entering bumblezone.
-        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide() && event.getDimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
-            LazyOptional<EntityPositionAndDimension> lazyOptional = livingEntity.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY);
-            if(lazyOptional.isPresent()) {
-                EntityPositionAndDimension capability = lazyOptional.orElseThrow(RuntimeException::new);
-                capability.setNonBZDim(entity.level.dimension().location());
-                capability.setNonBZPos(entity.position());
-            }
-            else {
-                Bumblezone.LOGGER.error("Bumblezone entity pos/dim cap was not found for given entity: {}, {}, {}, {}, at {} which has the internal dimension of: {} and is coming from: {}",
-                        entity.getType(),
-                        entity.getClass().getName(),
-                        entity.getDisplayName() instanceof MutableComponent mutableComponent ? mutableComponent.toString(): "N/A",
-                        entity.getUUID(),
-                        entity.position(),
-                        entity.level.dimension(),
-                        event.getDimension());
-            }
-        }
-    }
 }
