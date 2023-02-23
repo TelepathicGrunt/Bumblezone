@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:cell_maze",
+    "the_bumblezone:hive_temple",
+    "the_bumblezone:battle_cubes",
+    "the_bumblezone:overgrown_flower",
+    "the_bumblezone:stinger_spear_shrine"
+  ]
+}

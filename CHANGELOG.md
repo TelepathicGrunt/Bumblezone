@@ -1,5 +1,8 @@
 ### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Pirate Ship structure now can have an Explorer Map to a few structures.
+
 ##### Lang:
 Fixed small Honey Slime having wrong captions for some actions/sounds.
 
