@@ -220,6 +220,20 @@
           "type": "minecraft:item",
           "name": "minecraft:map",
           "weight": 1
+        },
+        {
+          "name": "minecraft:map",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:exploration_map",
+              "destination": "the_bumblezone:explorer_map/pirate_locating",
+              "decoration": "target_x",
+              "zoom": 2,
+              "skip_existing_chunks": false
+            }
+          ]
         }
       ]
     }

@@ -269,10 +269,6 @@
   "key.the_bumblezone.beehemoth_down": "Шмеллиафан лететь вниз",
   "key.the_bumblezone.beehemoth_up": "Шмеллиафан лететь вверх",
 
-  "filled_map.the_bumblezone:pollinated_stream": "Карта Опылённого Ручья",
-  "filled_map.the_bumblezone:honey_cave_room": "Карта Комнаты Медовой Пещеры",
-  "filled_map.the_bumblezone:cell_maze": "Карта Ячеистого Лабиринта",
-
   "stat.the_bumblezone.carpenter_bee_boots_mined_blocks": "Bz: Добыто Блоков Ботинками Пчелы-Плотника",
   "stat.the_bumblezone.carpenter_bee_boots_wall_hang_time": "Bz: Время Висения на Ботинках Пчелы-Плотника",
   "stat.the_bumblezone.stingless_bee_helmet_bee_rider": "Bz: Время Действия Шлема Безжальной Пчелы",
