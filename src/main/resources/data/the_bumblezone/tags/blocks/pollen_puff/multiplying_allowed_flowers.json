@@ -47,6 +47,38 @@
       "required": false
     },
     {
+      "id": "ferdinandsflowers:frogbit_flower",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:lotus_pink",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:lotus_yellow",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_purple",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_lavender",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_joy",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:water_lily_sunfire",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:nuphar",
+      "required": false
+    },
+    {
       "id": "fruittrees:redlove_sapling",
       "required": false
     },
