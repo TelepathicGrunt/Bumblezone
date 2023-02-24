@@ -263,7 +263,7 @@ public class EntityTeleportationHookup {
                     continue;
                 }
                 if (stack.is(BzTags.TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE)) {
-                    Vec3 hitPos = projectile.position();
+                    Vec3 hitPos = hitResult.getLocation();
                     AABB boundBox = entityHitResult.getEntity().getBoundingBox();
                     double relativeHitY = hitPos.y() - boundBox.minY;
                     double entityBoundHeight = boundBox.maxY - boundBox.minY;
@@ -300,11 +300,9 @@ public class EntityTeleportationHookup {
 
             //if the projectile hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
+                if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
                     BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
-                    if (projectile != null) {
-                        projectile.remove(Entity.RemovalReason.DISCARDED);
-                    }
+                    projectile.remove(Entity.RemovalReason.DISCARDED);
                 }
                 BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;
