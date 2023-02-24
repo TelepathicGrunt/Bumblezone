@@ -46,7 +46,7 @@ Along with this, compat with several other mod's teleporting methods now also wo
 
 - Evilcraft's Blood Pearl of Teleportation projectile
 
-- Origin's Enderian ability to throw Ender Pearls
+- Origins's Enderian ability to throw Ender Pearls
 
 ##### Structures:
 Pirate Ship structure now can have an Explorer Map to a few structures.
