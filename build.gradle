@@ -71,9 +71,6 @@ repositories {
 		url = "https://dvs1.progwml6.com/files/maven/"
 	}
 	maven {
-		url = "https://mvn.devos.one/snapshots/"
-	}
-	maven {
 		// location of a maven mirror for JEI files, as a fallback
 		name = "ModMaven"
 		url = "https://modmaven.dev"
@@ -121,9 +118,6 @@ dependencies {
 
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}"
-
-	modCompileOnly "io.github.fabricators_of_create.Porting-Lib:porting-lib:2.1.623+1.19.2"
-	modLocalRuntime "io.github.fabricators_of_create.Porting-Lib:porting-lib:2.1.623+1.19.2"
 
 	//modCompileOnly "curse.maven:llamarama-449083:3938753"
 	//modRuntimeOnly "curse.maven:llamarama-449083:3938753"
