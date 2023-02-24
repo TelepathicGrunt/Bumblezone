@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
@@ -18,7 +19,7 @@ public class TwilightForestCompat {
 
 	public static boolean isTeleportHandled(EntityHitResult entityHitResult, Projectile projectile) {
 		if (projectile != null &&
-			projectile.getExtraCustomData().getBoolean(ENDER_BOW_ATTACHED_TAG) &&
+			projectile.saveWithoutId(new CompoundTag()).getBoolean(ENDER_BOW_ATTACHED_TAG) &&
 			Registry.ITEM.get(ENDER_BOW_RL).getDefaultInstance().is(BzTags.ITEM_SPECIAL_DEDICATED_COMPAT))
 		{
 			return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile);
