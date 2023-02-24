@@ -18,8 +18,8 @@ import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
-import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
-import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
+import com.telepathicgrunt.the_bumblezone.entities.ItemUseOnBlock;
+import com.telepathicgrunt.the_bumblezone.entities.ProjectileImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
@@ -90,7 +90,8 @@ public class Bumblezone{
         forgeBus.addListener(BzWorldSavedData::worldTick);
         forgeBus.addListener(EntityTeleportationHookup::playerTick);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
-        forgeBus.addListener(EventPriority.HIGH, EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
+        forgeBus.addListener(EventPriority.HIGH, ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
+        forgeBus.addListener(EventPriority.HIGH, ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);

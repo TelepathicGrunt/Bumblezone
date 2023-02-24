@@ -10,13 +10,10 @@ public class BzDimensionConfigs{
     public static ForgeConfigSpec.DoubleValue fogBrightnessPercentage;
     public static ForgeConfigSpec.DoubleValue fogThickness;
     public static ForgeConfigSpec.BooleanValue enableDimensionFog;
-    public static ForgeConfigSpec.IntValue teleportationMode;
-    public static ForgeConfigSpec.BooleanValue generateBeenest;
     public static ForgeConfigSpec.BooleanValue forceExitToOverworld;
     public static ForgeConfigSpec.BooleanValue onlyOverworldHivesTeleports;
     public static ForgeConfigSpec.BooleanValue warnPlayersOfWrongBlockUnderHive;
     public static ForgeConfigSpec.BooleanValue allowTeleportationWithModdedBeehives;
-    public static ForgeConfigSpec.BooleanValue seaLevelOrHigherExitTeleporting;
     public static ForgeConfigSpec.BooleanValue enableExitTeleportation;
     public static ForgeConfigSpec.BooleanValue enableEntranceTeleportation;
     public static ForgeConfigSpec.BooleanValue forceBumblezoneOriginMobToOverworldCenter;
@@ -59,26 +56,6 @@ public class BzDimensionConfigs{
 
         builder.push("The Bumblezone Teleportation Options");
 
-            teleportationMode = builder
-                .comment(" \n-----------------------------------------------------\n",
-                       " Which mode of teleportation should be used when ",
-                       " leaving The Bumblezone dimension. ",
-                       " ",
-                       " Mode 1: Coordinates will be converted to the other ",
-                       " dimension's coordinate scale and the game will look for",
-                       " a Bee Nest/Beehive at the new spot to spawn players at. ",
-                       " If none is found, players will still be placed at the spot.",
-                       " ",
-                       " Mode 2: Will always spawn players at the original spot in the",
-                       " non-BZ dimension where they threw the Enderpearl at a Bee Nest/Beehive.",
-                       " Coordinate scale of dimension is ignored both ways.",
-                       " ",
-                       "Mode 3: Will use mode 1's teleportation method if Bee Nest/Beehive",
-                       "is near the spot when exiting the dimension. If none is found,",
-                       "then mode 2's teleportation method is used instead.\n")
-                .translation("the_bumblezone.config.teleportationmode")
-                .defineInRange("teleportationMode", 3, 1, 3);
-
             enableEntranceTeleportation = builder
                     .comment(" \n-----------------------------------------------------\n",
                             " Allow Bumblezone mod to handle teleporting into the Bumblezone dimension.\n")
@@ -98,15 +75,6 @@ public class BzDimensionConfigs{
                 .translation("the_bumblezone.config.forcebumblezoneoriginmobtooverworldcenter")
                 .define("forceBumblezoneOriginMobToOverworldCenter", true);
 
-            generateBeenest = builder
-                .comment(" \n-----------------------------------------------------\n",
-                       " Will a Beenest generate if no Beenest is  ",
-                       " found when leaving The Bumblezone dimension.",
-                       " ",
-                       " ONLY FOR TELEPORTATION MODE 1.\n")
-                .translation("the_bumblezone.config.generatebeenest")
-                .define("generateBeenest", true);
-
             forceExitToOverworld = builder
                 .comment(" \n-----------------------------------------------------\n",
                        " Makes leaving The Bumblezone dimension always places you back",
@@ -124,17 +92,6 @@ public class BzDimensionConfigs{
                        " only possible to enter The Bumblezone dimension from the Overworld")
                 .translation("the_bumblezone.config.onlyoverworldhivesteleports")
                 .define("onlyOverworldHivesTeleports", false);
-
-
-            seaLevelOrHigherExitTeleporting = builder
-                .comment(" \n-----------------------------------------------------\n",
-                       " Should exiting The Bumblezone always try and place you ",
-                       " above sealevel in the target dimension? (Will only look ",
-                       " for beehives above sealevel as well when placing you)",
-                       " ",
-                       " ONLY FOR TELEPORTATION MODE 1 AND 3.\n")
-                .translation("the_bumblezone.config.sealevelorhigherexitteleporting")
-                .define("seaLevelOrHigherExitTeleporting", true);
 
             warnPlayersOfWrongBlockUnderHive = builder
                 .comment(" \n-----------------------------------------------------\n",
