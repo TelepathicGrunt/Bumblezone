@@ -42,6 +42,8 @@ Along with this, compat with several other mod's teleporting methods now also wo
 
 - Xtra Arrows's Ender Arrow variants when shot at block
 
+- Nock Enough Arrows's Teleportation Arrow when shot at block
+
 - Travel Anchors's Travel Staff when crouched right clicked on Beehive/Bee Nest. Same with their Teleportation enchantment on any tool. Also requires crouch right click.
 
 - Evilcraft's Blood Pearl of Teleportation projectile
