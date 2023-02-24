@@ -23,8 +23,8 @@ public class ProjectileImpact {
         }
 
         if (projectile.getType().is(BzTags.TELEPORT_PROJECTILES) && projectile.getOwner() != null) {
-            if(event.getRayTraceResult() instanceof BlockHitResult) {
-                if (EntityTeleportationHookup.runTeleportProjectileImpact(new Vec3(projectile.getX(), projectile.getY(), projectile.getZ()), projectile.getOwner(), projectile)) {
+            if(event.getRayTraceResult() instanceof BlockHitResult blockHitResult) {
+                if (EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult.getLocation(), projectile.getOwner(), projectile)) {
                     event.setCanceled(true);
                 }
             }
