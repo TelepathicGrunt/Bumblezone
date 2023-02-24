@@ -15,7 +15,7 @@ public class ProjectileImpact {
                 return EntityTeleportationHookup.runTeleportProjectileImpact(new Vec3(projectile.position().toVector3f()), projectile.getOwner(), projectile);
             }
             else if (event.hitResult() != null && event.hitResult() instanceof EntityHitResult entityHitResult) {
-                return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile);
+                return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile.getOwner(), projectile);
             }
         }
         return false;
