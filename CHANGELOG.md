@@ -7,7 +7,7 @@ I recognized that having different modes for entering and exiting Bumblezone cou
  dimension. If you entered the dimension by Enderpearl at a Beehive at 1000, 1000 coordinate in Overworld,
  you spawn around 250, 250 coordinate in Bumblezone. But no matter where you leave Bumblezone, you should
  now always be put back to 1000, 1000 coordinate in Overworld. No more searching for nearby Beehives.
- (Which should help speed up exiting Bumblezone too)
+ (Which should help speed up exiting Bumblezone too) Some config options were removed as they are no longer relevant.
 
 Along with this change, some new tags are added to allow you to config how to enter Bumblezone with various items, projectiles, or enchantments!
 
@@ -19,7 +19,7 @@ Along with this change, some new tags are added to allow you to config how to en
 
 - `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant` enchantment tag
 
-- `the_bumblezone:dimension_teleportation/any_projectile_hits_beehive_with_enchant` enchantment tag
+- `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant_crouching` enchantment tag
 
 Several existing teleporting based tags were moved into a `dimension_teleportation` folder to organize together all the teleportation stuff.
 
