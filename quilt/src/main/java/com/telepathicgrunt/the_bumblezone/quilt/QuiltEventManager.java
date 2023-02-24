@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.quilt;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.ItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
@@ -23,6 +24,7 @@ import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -33,11 +35,13 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -102,6 +106,7 @@ public class QuiltEventManager {
         RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(QuiltTrackedDataHandlerRegistry::register));
 
         UseBlockCallback.EVENT.register(QuiltEventManager::onItemUseOnBlock);
+        UseItemCallback.EVENT.register(QuiltEventManager::onItemUse);
     }
 
     private static ModContainer getModPack(ResourceLocation pack) {
@@ -165,5 +170,13 @@ public class QuiltEventManager {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    public static InteractionResultHolder<ItemStack> onItemUse(Player player, Level level, InteractionHand hand) {
+        ItemUseEvent event = new ItemUseEvent(player, level, player.getItemInHand(hand));
+        if (ItemUseEvent.EVENT_HIGH.invoke(event)) {
+            return InteractionResultHolder.success(event.usingStack());
+        }
+        return InteractionResultHolder.pass(event.usingStack());
     }
 }

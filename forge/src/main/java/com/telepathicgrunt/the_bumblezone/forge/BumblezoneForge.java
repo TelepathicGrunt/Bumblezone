@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.forge.BzConfigHandler;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.ItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
@@ -147,6 +148,7 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onRegisterCommand);
         eventBus.addListener(BumblezoneForge::onProjectileHit);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUseOnBlock);
+        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUse);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onProjectileHitHigh);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onBlockBreak);
         eventBus.addListener(BumblezoneForge::onPlayerTick);
@@ -448,6 +450,13 @@ public class BumblezoneForge {
     public static void onItemUseOnBlock(PlayerInteractEvent.RightClickBlock event) {
         ItemUseOnBlockEvent eventBz = new ItemUseOnBlockEvent(event.getEntity(), event.getPos(), event.getEntity().level.getBlockState(event.getPos()), event.getItemStack());
         if (ItemUseOnBlockEvent.EVENT_HIGH.invoke(eventBz)) {
+            event.setCanceled(true);
+        }
+    }
+
+    public static void onItemUse(PlayerInteractEvent.RightClickItem event) {
+        ItemUseEvent eventBz = new ItemUseEvent(event.getEntity(), event.getLevel(), event.getItemStack());
+        if (ItemUseEvent.EVENT_HIGH.invoke(eventBz)) {
             event.setCanceled(true);
         }
     }

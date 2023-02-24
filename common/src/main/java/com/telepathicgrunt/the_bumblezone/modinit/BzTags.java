@@ -69,6 +69,7 @@ public class BzTags {
     public static final TagKey<Item> TARGET_WITH_HELD_ITEM_HIT_BY_TELEPORT_PROJECTILE = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_with_held_item_hit_by_teleport_projectile"));
     public static final TagKey<Item> TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_right_clicked_beehive"));
     public static final TagKey<Item> TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE_CROUCHING = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_right_clicked_beehive_crouching"));
+    public static final TagKey<Item> DO_ITEM_RIGHT_CLICK_CHECK_EARLIER = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/do_item_right_click_check_earlier"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));

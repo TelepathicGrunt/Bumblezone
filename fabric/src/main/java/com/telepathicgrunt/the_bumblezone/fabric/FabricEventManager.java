@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.ItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
@@ -32,6 +33,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
@@ -48,11 +50,13 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -106,7 +110,7 @@ public class FabricEventManager {
                 RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(dispatcher, environment, context)));
 
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
-
+        UseItemCallback.EVENT.register(FabricEventManager::onItemUse);
     }
 
     public static void lateInit() {
@@ -191,5 +195,13 @@ public class FabricEventManager {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
+    }
+
+    public static InteractionResultHolder<ItemStack> onItemUse(Player player, Level level, InteractionHand hand) {
+        ItemUseEvent event = new ItemUseEvent(player, level, player.getItemInHand(hand));
+        if (ItemUseEvent.EVENT_HIGH.invoke(event)) {
+            return InteractionResultHolder.success(event.usingStack());
+        }
+        return InteractionResultHolder.pass(event.usingStack());
     }
 }
