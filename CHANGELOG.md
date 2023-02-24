@@ -17,6 +17,8 @@ Along with this change, some new tags are added to allow you to config how to en
 
 - `the_bumblezone:dimension_teleportation/item_right_clicked_beehive_crouching` item tag
 
+- `the_bumblezone:dimension_teleportation/do_item_right_click_check_earlier` item tag
+
 - `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant` enchantment tag
 
 - `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant_crouching` enchantment tag

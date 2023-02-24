@@ -91,6 +91,7 @@ public class Bumblezone{
         forgeBus.addListener(EntityTeleportationHookup::playerTick);
         forgeBus.addListener(EntityTeleportationHookup::entityTick);
         forgeBus.addListener(EventPriority.HIGH, ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
+        forgeBus.addListener(EventPriority.HIGH, ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
         forgeBus.addListener(EventPriority.HIGH, ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
