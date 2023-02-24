@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
@@ -83,10 +84,8 @@ public class EntityTeleportationBackend {
                 Doubles.constrainToRange(entity.position().y(), 45, 200),
                 Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));
 
-
         //gets valid space in other world
-        BlockPos validBlockPos = validPlayerSpawnLocation(bumblezoneWorld, blockpos, 10);
-
+        BlockPos validBlockPos = validPlayerSpawnLocation(bumblezoneWorld, blockpos, 32);
 
         //No valid space found around destination. Begin secondary valid spot algorithms
         if (validBlockPos == null) {
@@ -151,32 +150,51 @@ public class EntityTeleportationBackend {
         int outerRadius;
         int distanceSq;
         BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos(position.getX(), position.getY(), position.getZ());
+        ChunkAccess chunk = null;
 
         //checks for 2 non-solid blocks with solid block below feet
         //checks outward from center position in both x, y, and z.
         //The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
-        for (int range = 0; range < maximumRange; range++) {
+        for (int range = 0; range <= maximumRange; range++) {
             radius = range * range;
             outerRadius = (range + 1) * (range + 1);
 
-            for (int y = 0; y <= range * 2; y++) {
-                int y2 = y > range ? -(y - range) : y;
+            for (int y = -range; y <= range; y += 4) {
+                for (int x = -range; x <= range; x += 4) {
+                    for (int z = -range; z <= range; z += 4) {
 
-
-                for (int x = 0; x <= range * 2; x++) {
-                    int x2 = x > range ? -(x - range) : x;
-
-
-                    for (int z = 0; z <= range * 2; z++) {
-                        int z2 = z > range ? -(z - range) : z;
-
-                        distanceSq = x2 * x2 + z2 * z2 + y2 * y2;
+                        distanceSq = x * x + z * z + y * y;
                         if (distanceSq >= radius && distanceSq < outerRadius) {
-                            currentPos.set(position.offset(x2, y2, z2));
-                            if (world.getBlockState(currentPos.below()).canOcclude() &&
-                                world.getBlockState(currentPos).isAir() &&
-                                world.getBlockState(currentPos.above()).isAir())
-                            {
+
+                            currentPos.set(position.offset(x, y, z));
+                            if (currentPos.getY() > 250 || currentPos.getY() < 45) {
+                                continue;
+                            }
+
+                            chunk = getChunkForSpot(world, chunk, currentPos);
+                            boolean isCurrentPosAir = chunk.getBlockState(currentPos).isAir();
+                            if (!isCurrentPosAir) {
+                                continue;
+                            }
+
+                            currentPos.move(Direction.DOWN);
+                            boolean isBelowSolid = chunk.getBlockState(currentPos.below()).canOcclude();
+                            if (isBelowSolid) {
+                                if (chunk.getBlockState(currentPos.above(2)).isAir()) {
+                                    //valid space for player is found
+                                    return currentPos;
+                                }
+                                else {
+                                    continue;
+                                }
+                            }
+
+                            while (!isBelowSolid && currentPos.getY() >= 45) {
+                                currentPos.move(Direction.DOWN);
+                                isBelowSolid = chunk.getBlockState(currentPos.below()).canOcclude();
+                            }
+
+                            if (isBelowSolid) {
                                 //valid space for player is found
                                 return currentPos;
                             }
@@ -189,6 +207,12 @@ public class EntityTeleportationBackend {
         return null;
     }
 
+    private static ChunkAccess getChunkForSpot(Level world, ChunkAccess chunkAccess, BlockPos blockPos) {
+        if (chunkAccess == null || chunkAccess.getPos().x != blockPos.getX() >> 4 || chunkAccess.getPos().z != blockPos.getZ() >> 4) {
+            return world.getChunk(blockPos);
+        }
+        return chunkAccess;
+    }
     public static boolean isValidBeeHive(BlockState blockState) {
         if(blockState.is(BzTags.FORCED_ALLOWED_TELEPORTABLE_BLOCK)) return false;
 
