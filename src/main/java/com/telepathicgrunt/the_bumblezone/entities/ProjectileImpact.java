@@ -18,7 +18,7 @@ public class ProjectileImpact {
                 return;
             }
 
-            if (event.getRayTraceResult() != null && event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
+            if (event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
                 if (EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile)) {
                     event.setCanceled(true);
                 }
