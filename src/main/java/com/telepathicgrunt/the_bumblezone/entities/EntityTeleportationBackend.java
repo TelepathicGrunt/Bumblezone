@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.google.common.primitives.Doubles;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
@@ -11,32 +10,20 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.BzPlacingUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EntityTeleportationBackend {
 
@@ -93,7 +80,7 @@ public class EntityTeleportationBackend {
 
 
         //gets valid space in other world
-        BlockPos validBlockPos = validPlayerSpawnLocation(bumblezoneWorld, blockpos, 10);
+        BlockPos validBlockPos = validPlayerSpawnLocation(bumblezoneWorld, blockpos, 32);
 
 
         //No valid space found around destination. Begin secondary valid spot algorithms
@@ -159,32 +146,51 @@ public class EntityTeleportationBackend {
         int outerRadius;
         int distanceSq;
         BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos(position.getX(), position.getY(), position.getZ());
+        ChunkAccess chunk = null;
 
         //checks for 2 non-solid blocks with solid block below feet
         //checks outward from center position in both x, y, and z.
         //The x2, y2, and z2 is so it checks at center of the range box instead of the corner.
-        for (int range = 0; range < maximumRange; range++) {
+        for (int range = 0; range <= maximumRange; range++) {
             radius = range * range;
             outerRadius = (range + 1) * (range + 1);
 
-            for (int y = 0; y <= range * 2; y++) {
-                int y2 = y > range ? -(y - range) : y;
+            for (int y = -range; y <= range; y += 4) {
+                for (int x = -range; x <= range; x += 4) {
+                    for (int z = -range; z <= range; z += 4) {
 
-
-                for (int x = 0; x <= range * 2; x++) {
-                    int x2 = x > range ? -(x - range) : x;
-
-
-                    for (int z = 0; z <= range * 2; z++) {
-                        int z2 = z > range ? -(z - range) : z;
-
-                        distanceSq = x2 * x2 + z2 * z2 + y2 * y2;
+                        distanceSq = x * x + z * z + y * y;
                         if (distanceSq >= radius && distanceSq < outerRadius) {
-                            currentPos.set(position.offset(x2, y2, z2));
-                            if (world.getBlockState(currentPos.below()).canOcclude() &&
-                                world.getBlockState(currentPos).isAir() &&
-                                world.getBlockState(currentPos.above()).isAir())
-                            {
+
+                            currentPos.set(position.offset(x, y, z));
+                            if (currentPos.getY() > 250 || currentPos.getY() < 45) {
+                                continue;
+                            }
+
+                            chunk = getChunkForSpot(world, chunk, currentPos);
+                            boolean isCurrentPosAir = chunk.getBlockState(currentPos).isAir();
+                            if (!isCurrentPosAir) {
+                                continue;
+                            }
+
+                            currentPos.move(Direction.DOWN);
+                            boolean isBelowSolid = chunk.getBlockState(currentPos.below()).canOcclude();
+                            if (isBelowSolid) {
+                                if (chunk.getBlockState(currentPos.above(2)).isAir()) {
+                                    //valid space for player is found
+                                    return currentPos;
+                                }
+                                else {
+                                    continue;
+                                }
+                            }
+
+                            while (!isBelowSolid && currentPos.getY() >= 45) {
+                                currentPos.move(Direction.DOWN);
+                                isBelowSolid = chunk.getBlockState(currentPos.below()).canOcclude();
+                            }
+
+                            if (isBelowSolid) {
                                 //valid space for player is found
                                 return currentPos;
                             }
@@ -195,6 +201,13 @@ public class EntityTeleportationBackend {
         }
 
         return null;
+    }
+
+    private static ChunkAccess getChunkForSpot(Level world, ChunkAccess chunkAccess, BlockPos blockPos) {
+        if (chunkAccess == null || chunkAccess.getPos().x != blockPos.getX() >> 4 || chunkAccess.getPos().z != blockPos.getZ() >> 4) {
+            return world.getChunk(blockPos);
+        }
+        return chunkAccess;
     }
 
     public static boolean isValidBeeHive(BlockState blockState) {

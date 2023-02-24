@@ -90,8 +90,8 @@ public class BzWorldSavedData extends SavedData {
 								return Optional.of(EntityTeleportationBackend.getBzCoordinate(entry.getEntity(), world, bumblezoneWorld));
 							}
 							catch (Throwable e){
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Bumblezone: Failed to teleport entity. Error:");
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, e);
+								Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:");
+								Bumblezone.LOGGER.error(e);
 								return Optional.empty();
 							}
 						})
@@ -108,8 +108,8 @@ public class BzWorldSavedData extends SavedData {
 								return Optional.of(EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entry.getEntity(), destination));
 							}
 							catch (Throwable e){
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Bumblezone: Failed to teleport entity. Error:");
-								Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, e);
+								Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:");
+								Bumblezone.LOGGER.error(e);
 								return Optional.empty();
 							}
 						})
@@ -144,7 +144,7 @@ public class BzWorldSavedData extends SavedData {
 					teleportedEntities.add(entity);
 					if (entity instanceof ServerPlayer serverPlayer) {
 						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.failed_teleporting"), false);
-						Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.ERROR, "Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
+						Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
 					}
 				}
 			}

@@ -48,6 +48,8 @@ Along with this, compat with several other mod's teleporting methods now also wo
 
 - Origins's Enderian ability to throw Ender Pearls
 
+Adjusted teleportation to Bumblezone dimension so that it is far more likely to put you in a cave or on land instead of inside a wall.
+
 ##### Structures:
 Pirate Ship structure now can have an Explorer Map to a few structures.
 
