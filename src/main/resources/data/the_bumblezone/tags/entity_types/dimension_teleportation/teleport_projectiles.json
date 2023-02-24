@@ -1,0 +1,38 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ender_pearl",
+    {
+      "id": "evilcraft:blood_pearl",
+      "required": false
+    },
+    {
+      "id": "origins:enderian_pearl",
+      "required": false
+    },
+    {
+      "id": "unusualend:projectile_creative_wandering_pearl",
+      "required": false
+    },
+    {
+      "id": "xtraarrows:diamond_ender_arrow",
+      "required": false
+    },
+    {
+      "id": "xtraarrows:netherite_ender_arrow",
+      "required": false
+    },
+    {
+      "id": "xtraarrows:golden_ender_arrow",
+      "required": false
+    },
+    {
+      "id": "xtraarrows:iron_ender_arrow",
+      "required": false
+    },
+    {
+      "id": "xtraarrows:flint_ender_arrow",
+      "required": false
+    }
+  ]
+}

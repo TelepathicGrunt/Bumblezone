@@ -1,5 +1,38 @@
 ### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
 
+##### Teleporting:
+I recognized that having different modes for entering and exiting Bumblezone could get confusing along with beehive 
+ searching when exiting causing some delay on exiting. So instead, all teleportation modes have been removed 
+ in favor of exiting Bumblezone ALWAYS puts you back in the exact same spot you were at when you entered the 
+ dimension. If you entered the dimension by Enderpearl at a Beehive at 1000, 1000 coordinate in Overworld,
+ you spawn around 250, 250 coordinate in Bumblezone. But no matter where you leave Bumblezone, you should
+ now always be put back to 1000, 1000 coordinate in Overworld. No more searching for nearby Beehives.
+ (Which should help speed up exiting Bumblezone too)
+
+Along with this change, some new tags are added to allow you to config how to enter Bumblezone with various items, projectiles, or enchantments!
+
+- `the_bumblezone:dimension_teleportation/teleport_projectiles` entity type tag (Now you can add other projectiles besides Ender Pearls for teleporting to the dimension. Even Tridents or Snowballs!)
+
+- `the_bumblezone:dimension_teleportation/item_right_clicked_beehive` item tag
+
+- `the_bumblezone:dimension_teleportation/item_right_clicked_beehive_crouching` item tag
+
+- `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant` enchantment tag
+
+- `the_bumblezone:dimension_teleportation/any_projectile_hits_beehive_with_enchant` enchantment tag
+
+Several existing teleporting based tags were moved into a `dimension_teleportation` folder to organize together all the teleportation stuff.
+
+- `the_bumblezone:enderpearl_teleporting/target_entity_hit_anywhere` -> `the_bumblezone:dimension_teleportation/target_entity_hit_by_teleport_projectile_anywhere` entity type tag
+
+- `the_bumblezone:enderpearl_teleporting/target_entity_hit_high` -> `the_bumblezone:dimension_teleportation/target_entity_hit_by_teleport_projectile_high` entity type tag
+
+- `the_bumblezone:enderpearl_teleporting/target_entity_hit_low` -> `the_bumblezone:dimension_teleportation/target_entity_hit_by_teleport_projectile_low` entity type tag
+
+- `the_bumblezone:enderpearl_teleporting/target_armor` -> `the_bumblezone:dimension_teleportation/target_armor_hit_by_teleport_projectile` item tag
+
+- `the_bumblezone:enderpearl_teleporting/target_held_item` -> `the_bumblezone:dimension_teleportation/target_with_held_item_hit_by_teleport_projectile` item tag
+
 ##### Structures:
 Pirate Ship structure now can have an Explorer Map to a few structures.
 
