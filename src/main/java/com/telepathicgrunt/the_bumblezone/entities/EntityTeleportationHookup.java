@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,7 +40,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 public class EntityTeleportationHookup {
@@ -146,17 +144,14 @@ public class EntityTeleportationHookup {
         }
     }
 
-    // Enderpearl
-    public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity) {
-        Level world = pearlEntity.level; // world we threw in
-        if (runEntityHitCheck(hitResult, pearlEntity, world)) {
-            return true;
-        }
+    // projectile
+    public static boolean runTeleportProjectileImpact(HitResult hitResult, Projectile projectile) {
+        Level world = projectile.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (BzConfig.enableEntranceTeleportation &&
-            !world.isClientSide() && pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
+            !world.isClientSide() && projectile.getOwner() instanceof ServerPlayer playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
         {
@@ -167,7 +162,7 @@ public class EntityTeleportationHookup {
 
             // if fail, move the hit pos one step based on pearl velocity and try again
             if(hivePos == null) {
-                hitPos = hitPos.add(pearlEntity.getDeltaMovement());
+                hitPos = hitPos.add(projectile.getDeltaMovement());
                 hivePos = getNearbyHivePos(hitPos, world);
             }
 
@@ -186,20 +181,22 @@ public class EntityTeleportationHookup {
                     projectile.remove(Entity.RemovalReason.DISCARDED);
                 }
                 BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
-                pearlEntity.discard();
+                projectile.discard();
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean runEntityHitCheck(HitResult hitResult, Projectile pearlEntity, Level world) {
+    public static boolean runEntityHitCheck(HitResult hitResult, Projectile projectile) {
+        Level world = projectile.level; // world we threw in
+
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isClientSide() &&
                 hitResult instanceof EntityHitResult entityHitResult &&
                 BzConfig.enableEntranceTeleportation &&
-                pearlEntity.getOwner() instanceof ServerPlayer playerEntity &&
+                projectile.getOwner() instanceof ServerPlayer playerEntity &&
                 !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
                 (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
         {
@@ -304,9 +301,9 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzDimensionConfigs.enableEntranceTeleportation.get() &&
+        if (BzConfig.enableEntranceTeleportation &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
+            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
         {
             if(!EntityTeleportationBackend.isValidBeeHive(blockstate)) {
                 return false;
@@ -318,11 +315,11 @@ public class EntityTeleportationHookup {
             if (!isAllowTeleportItem) {
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(usingStack);
                 for (Enchantment enchantment : enchantments.keySet()) {
-                    if (Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.ITEM_WITH_TELEPORT_ENCHANT).contains(enchantment)) {
+                    if (EnchantmentUtils.isEnchantmentTagged(enchantment, BzTags.ITEM_WITH_TELEPORT_ENCHANT)) {
                         isAllowTeleportItem = true;
                         break;
                     }
-                    else if (user.isShiftKeyDown() && Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.tags()).getTag(BzTags.ITEM_WITH_TELEPORT_ENCHANT_CROUCHING).contains(enchantment)) {
+                    else if (user.isShiftKeyDown() && EnchantmentUtils.isEnchantmentTagged(enchantment, BzTags.ITEM_WITH_TELEPORT_ENCHANT_CROUCHING)) {
                         isAllowTeleportItem = true;
                         break;
                     }

@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
@@ -121,18 +122,16 @@ public class EnchantmentUtils {
 	}
 
 	private static boolean isEnchantmentForcedAllowed(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
-		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
-			if (enchantmentHolder.value().equals(enchantment)) {
-				return true;
-			}
-		}
-		return false;
+		return isEnchantmentTagged(enchantment, BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
 	}
 
 	private static boolean isEnchantmentBanned(Enchantment enchantment) {
-		Iterable<Holder<Enchantment>> bannedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
-		for (Holder<Enchantment> enchantmentHolder : bannedEnchantments) {
+		return isEnchantmentTagged(enchantment, BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
+	}
+
+	public static boolean isEnchantmentTagged(Enchantment enchantment, TagKey<Enchantment> enchantmentTag) {
+		Iterable<Holder<Enchantment>> taggedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(enchantmentTag);
+		for (Holder<Enchantment> enchantmentHolder : taggedEnchantments) {
 			if (enchantmentHolder.value().equals(enchantment)) {
 				return true;
 			}
