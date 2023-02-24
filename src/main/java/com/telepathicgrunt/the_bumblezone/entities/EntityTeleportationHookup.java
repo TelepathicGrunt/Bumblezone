@@ -166,7 +166,7 @@ public class EntityTeleportationHookup {
     }
 
     // Projectiles
-    public static boolean runTeleportProjectileImpact(BlockHitResult blockHitResult, Entity thrower, Entity projectile) {
+    public static boolean runTeleportProjectileImpact(HitResult hitResult, Entity thrower, Entity projectile) {
         Level world = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
@@ -178,18 +178,20 @@ public class EntityTeleportationHookup {
         {
             // get nearby hives
             BlockPos hivePos = null;
-            BlockState block = world.getBlockState(blockHitResult.getBlockPos());
-            if(EntityTeleportationBackend.isValidBeeHive(block)) {
-                hivePos = blockHitResult.getBlockPos();
+            if (hitResult instanceof BlockHitResult blockHitResult) {
+                BlockState block = world.getBlockState(blockHitResult.getBlockPos());
+                if(EntityTeleportationBackend.isValidBeeHive(block)) {
+                    hivePos = blockHitResult.getBlockPos();
+                }
             }
 
             if(hivePos == null) {
-                hivePos = getNearbyHivePos(blockHitResult.getLocation(), world);
+                hivePos = getNearbyHivePos(hitResult.getLocation(), world);
             }
 
             // if fail, move the hit pos one step based on pearl velocity and try again
             if(hivePos == null && projectile != null) {
-                hivePos = getNearbyHivePos(blockHitResult.getLocation().add(projectile.getDeltaMovement()), world);
+                hivePos = getNearbyHivePos(hitResult.getLocation().add(projectile.getDeltaMovement()), world);
             }
 
             // no hive hit, exit early

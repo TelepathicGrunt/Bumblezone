@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ArsNouveauCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.TwilightForestCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -18,6 +19,12 @@ public class ProjectileImpact {
 
         if (ModChecker.arsNouveauPresent) {
             if (ArsNouveauCompat.isArsSpellProjectile(projectile)) {
+                return;
+            }
+        }
+
+        if (ModChecker.twilightForestPresent && event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
+            if (TwilightForestCompat.isTeleportHandled(entityHitResult, projectile.getOwner(), projectile.level, projectile)) {
                 return;
             }
         }

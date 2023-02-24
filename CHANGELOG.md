@@ -19,6 +19,8 @@ Along with this change, some new tags are added to allow you to config how to en
 
 - `the_bumblezone:dimension_teleportation/do_item_right_click_check_earlier` item tag
 
+- `the_bumblezone:dimension_teleportation/item_special_dedicated_compat` item tag (Only for Twilight Forest Ender Bow behavior right now)
+
 - `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant` enchantment tag
 
 - `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant_crouching` enchantment tag
@@ -52,7 +54,11 @@ Along with this, compat with several other mod's teleporting methods now also wo
 
 - Origins's Enderian ability to throw Ender Pearls
 
+- Twilight Forest's Ender Bow but only when it shoots another entity tagged for allowing teleportation into Bumblezone such as Llamarama's Bumble Llama or Dreamland Biomes's Bumble Beast
+
 Adjusted teleportation to Bumblezone dimension so that it is far more likely to put you in a cave or on land instead of inside a wall.
+
+Note to modders depending on Bumblezone, the BumblezoneAPI$runEnderpearlImpact method now takes a HitResult instead of a vec3.
 
 ##### Structures:
 Pirate Ship structure now can have an Explorer Map to a few structures.

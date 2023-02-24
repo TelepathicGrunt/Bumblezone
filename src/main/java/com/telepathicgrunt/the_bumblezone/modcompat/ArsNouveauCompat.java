@@ -75,7 +75,7 @@ public class ArsNouveauCompat {
 			}
 
 			if(event.rayTraceResult instanceof BlockHitResult) {
-				EntityTeleportationHookup.runTeleportProjectileImpact(event.rayTraceResult.getLocation(), event.shooter, null);
+				EntityTeleportationHookup.runTeleportProjectileImpact(event.rayTraceResult, event.shooter, null);
 			}
 			else if (event.rayTraceResult instanceof EntityHitResult entityHitResult) {
 				EntityTeleportationHookup.runEntityHitCheck(entityHitResult, event.shooter, event.world, null);
