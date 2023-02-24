@@ -3,7 +3,15 @@
   "values": [
     "minecraft:ender_pearl",
     {
+      "id": "ars_nouveau:spell_proj",
+      "required": false
+    },
+    {
       "id": "evilcraft:blood_pearl",
+      "required": false
+    },
+    {
+      "id": "nock_enough_arrows:teleportation_arrow",
       "required": false
     },
     {
