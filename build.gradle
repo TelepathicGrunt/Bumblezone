@@ -52,6 +52,9 @@ repositories {
 		url = "https://dvs1.progwml6.com/files/maven/"
 	}
 	maven {
+		url = "https://mvn.devos.one/snapshots/"
+	}
+	maven {
 		// location of a maven mirror for JEI files, as a fallback
 		name = "ModMaven"
 		url = "https://modmaven.dev"
@@ -108,6 +111,9 @@ dependencies {
 	modRuntimeOnly "com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_version}"
 	modRuntimeOnly "com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_version}"
 
+	modCompileOnly "io.github.fabricators_of_create.Porting-Lib:porting-lib:2.1.623+1.19.2"
+	modLocalRuntime "io.github.fabricators_of_create.Porting-Lib:porting-lib:2.1.623+1.19.2"
+	
 	modCompileOnly "curse.maven:friends_and_foes-551364:3827720"
 	//modCompileOnly "curse.maven:bee_better-351600:3726160"
 
