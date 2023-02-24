@@ -36,6 +36,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -165,7 +166,7 @@ public class EntityTeleportationHookup {
     }
 
     // Projectiles
-    public static boolean runTeleportProjectileImpact(Vec3 hitPos, Entity thrower, Entity projectile) {
+    public static boolean runTeleportProjectileImpact(BlockHitResult blockHitResult, Entity thrower, Entity projectile) {
         Level world = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
@@ -176,13 +177,19 @@ public class EntityTeleportationHookup {
             (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
         {
             // get nearby hives
-            BlockPos hivePos;
-            hivePos = getNearbyHivePos(hitPos, world);
+            BlockPos hivePos = null;
+            BlockState block = world.getBlockState(blockHitResult.getBlockPos());
+            if(EntityTeleportationBackend.isValidBeeHive(block)) {
+                hivePos = blockHitResult.getBlockPos();
+            }
+
+            if(hivePos == null) {
+                hivePos = getNearbyHivePos(blockHitResult.getLocation(), world);
+            }
 
             // if fail, move the hit pos one step based on pearl velocity and try again
             if(hivePos == null && projectile != null) {
-                hitPos = hitPos.add(projectile.getDeltaMovement());
-                hivePos = getNearbyHivePos(hitPos, world);
+                hivePos = getNearbyHivePos(blockHitResult.getLocation().add(projectile.getDeltaMovement()), world);
             }
 
             // no hive hit, exit early

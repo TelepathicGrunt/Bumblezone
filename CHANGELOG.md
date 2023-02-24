@@ -38,7 +38,9 @@ Several existing teleporting based tags were moved into a `dimension_teleportati
 Along with this, compat with several other mod's teleporting methods now also works to teleport the user into Bumblezone when used on Beehive/Bee Nest blocks!
  The mods with this new compat are:
 
-- Ars Nouveau when using a projectile spell that has Blink effect attached to it
+- Ars Nouveau when using a spell with Blink. Projectile + Blink will work. Orbit + Sensitive + Blink will work. Touch + Blink will work if crouch clicking Beehive/Bee Nest. Underfoot + Blink will also work if standing on Beehive/Bee Nest. The projectiles are controlled by `the_bumblezone:dimension_teleportation/teleport_projectile` entity type tag. Touch and Underfoot are controlled by `the_bumblezone:dimension_teleportation/item_right_clicked_beehive` item tag only if player is holding the tagged spell books.
+
+- Ars Elemental when using spells with Blink. Arc Projectile + Blink will work. Homing Projectile + Blink will work. The projectiles are controlled by `the_bumblezone:dimension_teleportation/teleport_projectile` entity type tag.
 
 - Xtra Arrows's Ender Arrow variants when shot at block
 
