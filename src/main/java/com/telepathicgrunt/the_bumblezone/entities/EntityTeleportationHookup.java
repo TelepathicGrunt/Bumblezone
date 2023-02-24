@@ -33,6 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -156,19 +157,21 @@ public class EntityTeleportationHookup {
             (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
         {
             // get nearby hives
-            BlockPos hivePos;
-            Vec3 hitPos = hitResult.getLocation();
-            hivePos = getNearbyHivePos(hitPos, world);
-
-            // if fail, move the hit pos one step based on pearl velocity and try again
-            if(hivePos == null) {
-                hitPos = hitPos.add(projectile.getDeltaMovement());
-                hivePos = getNearbyHivePos(hitPos, world);
+            BlockPos hivePos = null;
+            if (hitResult instanceof BlockHitResult blockHitResult) {
+                BlockState block = world.getBlockState(blockHitResult.getBlockPos());
+                if(EntityTeleportationBackend.isValidBeeHive(block)) {
+                    hivePos = blockHitResult.getBlockPos();
+                }
             }
 
-            // no hive hit, exit early
             if(hivePos == null) {
-                return false;
+                hivePos = getNearbyHivePos(hitResult.getLocation(), world);
+            }
+
+            // if fail, move the hit pos one step based on pearl velocity and try again
+            if(hivePos == null && projectile != null) {
+                hivePos = getNearbyHivePos(hitResult.getLocation().add(projectile.getDeltaMovement()), world);
             }
 
             //checks if block under hive is correct if config needs one
