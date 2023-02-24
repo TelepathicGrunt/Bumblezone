@@ -10,8 +10,8 @@ public class ProjectileImpact {
 
     public static boolean projectileImpactNotHandledByBz(HitResult hitResult, Projectile projectile) {
         if (projectile.getType().is(BzTags.TELEPORT_PROJECTILES) && projectile.getOwner() != null) {
-            if (hitResult instanceof BlockHitResult) {
-                return !EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, projectile);
+            if (hitResult instanceof BlockHitResult blockHitResult) {
+                return !EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult, projectile);
             }
             else if (hitResult instanceof EntityHitResult entityHitResult) {
                 return !EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile);

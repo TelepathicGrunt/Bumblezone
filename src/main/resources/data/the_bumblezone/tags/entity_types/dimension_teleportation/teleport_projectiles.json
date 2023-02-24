@@ -7,6 +7,18 @@
       "required": false
     },
     {
+      "id": "ars_nouveau:follow_proj",
+      "required": false
+    },
+    {
+      "id": "ars_elemental:homing_projectile",
+      "required": false
+    },
+    {
+      "id": "ars_elemental:curved_projectile",
+      "required": false
+    },
+    {
       "id": "evilcraft:blood_pearl",
       "required": false
     },
