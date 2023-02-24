@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "twilightforest:ender_bow",
+      "required": false
+    }
+  ]
+}

@@ -28,6 +28,7 @@ public class ModChecker {
 	public static boolean quarkPresent = false;
 	public static boolean potionOfBeesPresent = false;
 	public static boolean requiemPresent = false;
+	public static boolean twilightForestPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -48,6 +49,9 @@ public class ModChecker {
 
 			modid = "resourcefulbees";
 			loadupModCompat(modid, () -> new ResourcefulBeesCompat());
+
+			modid = "twilightforest";
+			loadupModCompat(modid, () -> new TwilightForestCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

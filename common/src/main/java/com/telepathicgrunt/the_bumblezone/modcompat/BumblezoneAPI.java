@@ -17,7 +17,9 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * For mods that want to use Bumblezone methods but would like to make sure it doesn't get changed over time and break the dependent mods.
@@ -46,8 +48,17 @@ public class BumblezoneAPI {
      * Please only call this for throwables that teleport the entity like Enderpearls.
      * @return - Whether the projectile hit a beehive or bee nest.
      */
-    public static boolean runEnderpearlImpact(Vec3 hitResult, Entity thrower, Projectile pearlEntity) {
-        return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, thrower, pearlEntity);
+    public static boolean runEnderpearlImpact(HitResult hitResult, Entity thrower, Projectile projectile) {
+        return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, thrower, projectile);
+    }
+
+    /**
+     * Will check if the projectile entity hit a beehive or bee nest and teleport the thrower to Bumblezone.
+     * Please only call this for throwables that teleport the entity like Enderpearls.
+     * @return - Whether the projectile hit a beehive or bee nest.
+     */
+    public static boolean runEnderpearlImpact(HitResult hitResult, @NotNull Projectile projectile) {
+        return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, projectile.getOwner(), projectile);
     }
 
     /**
