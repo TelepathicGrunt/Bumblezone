@@ -17,6 +17,7 @@ public class ModChecker {
 	public static boolean beekeeperPresent = false;
 	public static boolean quarkPresent = false;
 	public static boolean potionOfBeesPresent = false;
+	public static boolean arsNouveauPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -55,6 +56,9 @@ public class ModChecker {
 
 			modid = "potionofbees";
 			loadupModCompat(modid, () -> PotionOfBeesCompat.setupCompat());
+
+			modid = "ars_nouveau";
+			loadupModCompat(modid, () -> ArsNouveauCompat.setupCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

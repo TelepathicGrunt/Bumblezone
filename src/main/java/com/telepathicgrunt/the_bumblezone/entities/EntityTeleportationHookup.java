@@ -180,7 +180,7 @@ public class EntityTeleportationHookup {
             hivePos = getNearbyHivePos(hitPos, world);
 
             // if fail, move the hit pos one step based on pearl velocity and try again
-            if(hivePos == null) {
+            if(hivePos == null && projectile != null) {
                 hitPos = hitPos.add(projectile.getDeltaMovement());
                 hivePos = getNearbyHivePos(hitPos, world);
             }
@@ -195,7 +195,7 @@ public class EntityTeleportationHookup {
 
             //if the projectile hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
+                if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
                     BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
                     projectile.remove(Entity.RemovalReason.DISCARDED);
                 }
@@ -206,15 +206,13 @@ public class EntityTeleportationHookup {
         return false;
     }
 
-    protected static boolean runEntityHitCheck(HitResult hitResult, Projectile projectile) {
-        Level world = projectile.level; // world we threw in
-
+    public static boolean runEntityHitCheck(HitResult hitResult, Entity thrower, Level world, Projectile projectile) {
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (!world.isClientSide() &&
                 hitResult instanceof EntityHitResult entityHitResult &&
                 BzDimensionConfigs.enableEntranceTeleportation.get() &&
-                projectile.getOwner() instanceof ServerPlayer playerEntity &&
+                thrower instanceof ServerPlayer playerEntity &&
                 !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
                 (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
         {
@@ -226,7 +224,7 @@ public class EntityTeleportationHookup {
                 hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH) ||
                 hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_LOW))
             {
-                Vec3 hitPos = projectile.position();
+                Vec3 hitPos = hitResult.getLocation();
                 AABB boundBox = entityHitResult.getEntity().getBoundingBox();
                 double relativeHitY = hitPos.y() - boundBox.minY;
                 double entityBoundHeight = boundBox.maxY - boundBox.minY;
@@ -304,7 +302,9 @@ public class EntityTeleportationHookup {
             if (validBelowBlock) {
                 if (Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
                     BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
-                    projectile.remove(Entity.RemovalReason.DISCARDED);
+                    if (projectile != null) {
+                        projectile.remove(Entity.RemovalReason.DISCARDED);
+                    }
                 }
                 BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;

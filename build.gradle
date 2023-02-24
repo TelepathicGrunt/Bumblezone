@@ -89,6 +89,9 @@ repositories {
         name = "Jared"
         url = "https://maven.blamejared.com"
     }
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
     maven { url = "https://maven.jaackson.me" }
     maven { url "https://www.cursemaven.com" }
     maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
@@ -126,6 +129,12 @@ dependencies {
 
     compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
     //compileOnly fg.deobf("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
+
+    compileOnly fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
+    //runtimeOnly fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
+    //runtimeOnly fg.deobf("curse.maven:patchouli-250363:${project.autoreglib_file_id}")
+    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
+    //runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.2.2")
 
     //compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
     //runtimeOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
