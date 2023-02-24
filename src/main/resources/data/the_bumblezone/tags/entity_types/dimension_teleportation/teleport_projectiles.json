@@ -11,6 +11,10 @@
       "required": false
     },
     {
+      "id": "nock_enough_arrows:teleportation_arrow",
+      "required": false
+    },
+    {
       "id": "origins:enderian_pearl",
       "required": false
     },
