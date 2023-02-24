@@ -121,6 +121,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
                 ResourcePackActivationType.NORMAL);
 
         UseBlockCallback.EVENT.register(ItemUseOnBlock::onItemUseOnBlock);
+        UseItemCallback.EVENT.register(ItemUseOnBlock::onEarlyItemUseOnBlock);
     }
 
     @Override
