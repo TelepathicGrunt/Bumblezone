@@ -35,6 +35,15 @@ Several existing teleporting based tags were moved into a `dimension_teleportati
 
 - `the_bumblezone:enderpearl_teleporting/target_held_item` -> `the_bumblezone:dimension_teleportation/target_with_held_item_hit_by_teleport_projectile` item tag
 
+Along with this, compat with several other mod's teleporting methods now also works to teleport the user into Bumblezone when used on Beehive/Bee Nest blocks!
+The mods with this new compat are:
+
+- Xtra Arrows's Ender Arrow variants when shot at block
+
+- Evilcraft's Blood Pearl of Teleportation projectile
+
+- Origins's Enderian ability to throw Ender Pearls
+
 ##### Structures:
 Pirate Ship structure now can have an Explorer Map to a few structures.
 
