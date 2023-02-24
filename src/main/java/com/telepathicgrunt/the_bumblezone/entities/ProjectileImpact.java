@@ -24,7 +24,7 @@ public class ProjectileImpact {
 
         if (projectile.getType().is(BzTags.TELEPORT_PROJECTILES) && projectile.getOwner() != null) {
             if(event.getRayTraceResult() instanceof BlockHitResult blockHitResult) {
-                if (EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult.getLocation(), projectile.getOwner(), projectile)) {
+                if (EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult, projectile.getOwner(), projectile)) {
                     event.setCanceled(true);
                 }
             }
