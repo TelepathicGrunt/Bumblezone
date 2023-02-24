@@ -11,8 +11,8 @@ public class ProjectileImpact {
     public static boolean onProjectileImpact(ProjectileHitEvent event) {
         Projectile projectile = event.projectile();
         if (projectile.getType().is(BzTags.TELEPORT_PROJECTILES) && projectile.getOwner() != null) {
-            if (event.hitResult() != null && event.hitResult() instanceof BlockHitResult) {
-                return EntityTeleportationHookup.runTeleportProjectileImpact(new Vec3(projectile.position().toVector3f()), projectile.getOwner(), projectile);
+            if (event.hitResult() != null && event.hitResult() instanceof BlockHitResult blockHitResult) {
+                return EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult.getLocation(), projectile.getOwner(), projectile);
             }
             else if (event.hitResult() != null && event.hitResult() instanceof EntityHitResult entityHitResult) {
                 return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile.getOwner(), projectile);
