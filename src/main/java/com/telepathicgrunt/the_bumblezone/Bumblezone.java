@@ -28,6 +28,7 @@ import dev.onyxstudios.cca.api.v3.entity.PlayerCopyCallback;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -119,6 +120,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
                 Component.literal("Bumblezone - Anti Trypophobia"));
                 
         UseBlockCallback.EVENT.register(ItemUseOnBlock::onItemUseOnBlock);
+        UseItemCallback.EVENT.register(ItemUseOnBlock::onEarlyItemUseOnBlock);
     }
 
     @Override

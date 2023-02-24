@@ -310,7 +310,7 @@ public class EntityTeleportationHookup {
             }
 
             boolean isAllowTeleportItem = usingStack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE) ||
-                    (usingStack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE) && user.isShiftKeyDown());
+                    (usingStack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE_CROUCHING) && user.isShiftKeyDown());
 
             if (!isAllowTeleportItem) {
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(usingStack);
