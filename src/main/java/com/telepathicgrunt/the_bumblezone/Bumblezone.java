@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.components.MiscComponent;
 import com.telepathicgrunt.the_bumblezone.components.NeurotoxinsMissedCounterComponent;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.entities.ItemUseOnBlock;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
@@ -115,6 +116,8 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
                 mod,
                 ResourcePackActivationType.NORMAL,
                 Component.literal("Bumblezone - Anti Trypophobia"));
+                
+        UseBlockCallback.EVENT.register(ItemUseOnBlock::onItemUseOnBlock);
     }
 
     @Override

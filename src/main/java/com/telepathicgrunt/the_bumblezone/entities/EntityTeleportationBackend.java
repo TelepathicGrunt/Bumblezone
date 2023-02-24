@@ -34,12 +34,10 @@ public class EntityTeleportationBackend {
     
     private static final int SEARCH_RADIUS = 48;
 
-    public static Vec3 destPostFromOutOfBoundsTeleport(Entity entity, ServerLevel destination, boolean checkingUpward) {
+    public static Vec3 destPostFromOutOfBoundsTeleport(Entity entity, ServerLevel destination) {
         //converts the position to get the corresponding position in non-bumblezone dimension
         Entity player = entity.getPassengers().stream().filter(e -> e instanceof Player).findFirst().orElse(null);
         if(player != null) entity = player;
-        double coordinateScale = entity.level.dimensionType().coordinateScale() / destination.dimensionType().coordinateScale();
-        BlockPos finalSpawnPos;
 
         if (BzConfig.forceBumblezoneOriginMobToOverworldCenter &&
             Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos() == null)
@@ -54,11 +52,7 @@ public class EntityTeleportationBackend {
             }
         }
 
-        Vec3 entitySavedPastPos = null;
-
-        if (capOptional.isPresent()) {
-            entitySavedPastPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
-        }
+        Vec3 entitySavedPastPos = Bumblezone.ENTITY_COMPONENT.get(entity).getNonBZPos();
 
         BlockPos finalSpawnPos = entity.blockPosition();
         if(entitySavedPastPos != null) {
