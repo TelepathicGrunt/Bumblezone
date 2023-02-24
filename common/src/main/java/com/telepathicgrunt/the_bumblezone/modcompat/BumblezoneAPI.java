@@ -47,7 +47,7 @@ public class BumblezoneAPI {
      * @return - Whether the projectile hit a beehive or bee nest.
      */
     public static boolean runEnderpearlImpact(Vec3 hitResult, Entity thrower, Projectile pearlEntity) {
-        return EntityTeleportationHookup.runEnderpearlImpact(hitResult, thrower, pearlEntity);
+        return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, thrower, pearlEntity);
     }
 
     /**

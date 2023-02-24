@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.quilt;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
@@ -21,6 +22,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -29,14 +31,19 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.phys.BlockHitResult;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
@@ -93,6 +100,8 @@ public class QuiltEventManager {
         }));
 
         RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(QuiltTrackedDataHandlerRegistry::register));
+
+        UseBlockCallback.EVENT.register(QuiltEventManager::onItemUseOnBlock);
     }
 
     private static ModContainer getModPack(ResourceLocation pack) {
@@ -148,5 +157,13 @@ public class QuiltEventManager {
         RegistryAccess registryAccess = ((BiomeModificationContextImplMixin)context).getRegistries();
         Registry<PlacedFeature> placedFeatureRegistry = registryAccess.registryOrThrow(Registries.PLACED_FEATURE);
         return placedFeatureRegistry.getTagOrEmpty(placedFeatureTagKey);
+    }
+
+    public static InteractionResult onItemUseOnBlock(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
+        ItemUseOnBlockEvent event = new ItemUseOnBlockEvent(player, hitResult.getBlockPos(), world.getBlockState(hitResult.getBlockPos()), player.getItemInHand(hand));
+        if (ItemUseOnBlockEvent.EVENT_HIGH.invoke(event)) {
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.PASS;
     }
 }

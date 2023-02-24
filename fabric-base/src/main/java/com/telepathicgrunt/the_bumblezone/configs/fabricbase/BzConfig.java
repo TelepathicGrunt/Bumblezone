@@ -102,16 +102,7 @@ public class BzConfig extends MidnightConfig {
     public static boolean forceExitToOverworld = false;
 
     @Entry
-    public static boolean seaLevelOrHigherExitTeleporting = true;
-
-    @Entry
     public static boolean warnPlayersOfWrongBlockUnderHive = true;
-
-    @Entry
-    public static boolean generateBeenest = true;
-
-    @Entry(min=1, max=3)
-    public static int teleportationMode = 3;
 
     @Entry
     public static boolean enableExitTeleportation = true;
@@ -242,10 +233,7 @@ public class BzConfig extends MidnightConfig {
         BzDimensionConfigs.enableDimensionFog = enableDimensionFog;
         BzDimensionConfigs.onlyOverworldHivesTeleports = onlyOverworldHivesTeleports;
         BzDimensionConfigs.forceExitToOverworld = forceExitToOverworld;
-        BzDimensionConfigs.seaLevelOrHigherExitTeleporting = seaLevelOrHigherExitTeleporting;
         BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive = warnPlayersOfWrongBlockUnderHive;
-        BzDimensionConfigs.generateBeenest = generateBeenest;
-        BzDimensionConfigs.teleportationMode = teleportationMode;
         BzDimensionConfigs.enableExitTeleportation = enableExitTeleportation;
         BzDimensionConfigs.enableEntranceTeleportation = enableEntranceTeleportation;
         BzDimensionConfigs.forceBumblezoneOriginMobToOverworldCenter = forceBumblezoneOriginMobToOverworldCenter;

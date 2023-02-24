@@ -104,9 +104,8 @@ public class BzWorldSavedData extends SavedData {
 
 					ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
 							try {
-								boolean upwardChecking = entry.getEntity().getY() > 0;
 								ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
-								return Optional.of(EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entry.getEntity(), destination, upwardChecking));
+								return Optional.of(EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entry.getEntity(), destination));
 							}
 							catch (Throwable e){
 								Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);

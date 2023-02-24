@@ -10,15 +10,17 @@ import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
-import com.telepathicgrunt.the_bumblezone.entities.EnderpearlImpact;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
+import com.telepathicgrunt.the_bumblezone.entities.ItemUseOnBlock;
+import com.telepathicgrunt.the_bumblezone.entities.ProjectileImpact;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
+import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
@@ -89,7 +91,8 @@ public class Bumblezone{
         PlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
         EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
         EntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
-        ProjectileHitEvent.EVENT_HIGH.addListener(EnderpearlImpact::onPearlHit); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
+        ItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
+        ProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         EntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
         EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantment::attemptFasterMining);

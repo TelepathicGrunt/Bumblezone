@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "travelanchors:teleportation",
+      "required": false
+    }
+  ]
+}
