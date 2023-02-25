@@ -155,7 +155,8 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzConfig.enableEntranceTeleportation && isTeleportAllowedInDimension(world)) {
+        if (isTeleportAllowedInDimension(world)) {
+
             // get nearby hives
             BlockPos hivePos = null;
             if (hitResult instanceof BlockHitResult blockHitResult) {
@@ -298,7 +299,8 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzConfig.enableEntranceTeleportation && isTeleportAllowedInDimension(world)) {
+        if (isTeleportAllowedInDimension(world)) {
+
             if(!EntityTeleportationBackend.isValidBeeHive(blockstate)) {
                 return false;
             }
