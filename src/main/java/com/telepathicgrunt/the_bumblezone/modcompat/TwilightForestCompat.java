@@ -19,7 +19,7 @@ public class TwilightForestCompat {
 
 	public static boolean isTeleportHandled(EntityHitResult entityHitResult, Projectile projectile) {
 		if (projectile != null &&
-			projectile.saveWithoutId(new CompoundTag()).getBoolean(ENDER_BOW_ATTACHED_TAG) &&
+			projectile.saveWithoutId(new CompoundTag()).getCompound("ForgeData").getBoolean(ENDER_BOW_ATTACHED_TAG) &&
 			Registry.ITEM.get(ENDER_BOW_RL).getDefaultInstance().is(BzTags.ITEM_SPECIAL_DEDICATED_COMPAT))
 		{
 			return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile);

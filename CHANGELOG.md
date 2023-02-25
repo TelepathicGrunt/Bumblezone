@@ -51,6 +51,9 @@ Adjusted teleportation to Bumblezone dimension so that it is far more likely to 
 ##### Structures:
 Pirate Ship structure now can have an Explorer Map to a few structures.
 
+##### Mod Compat:
+Llamarama's Mossy Llama now spawns Moss Carpet, Azalea, Flowering Azalea, or Blossom when hit with Pollen Puff
+
 ##### Lang:
 Fixed small Honey Slime having wrong captions for some actions/sounds.
 
