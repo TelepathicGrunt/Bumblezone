@@ -25,6 +25,7 @@ public class ProjectileImpact {
 
         if (ModChecker.twilightForestPresent && event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
             if (TwilightForestCompat.isTeleportHandled(entityHitResult, projectile.getOwner(), projectile.level, projectile)) {
+                event.setCanceled(true);
                 return;
             }
         }

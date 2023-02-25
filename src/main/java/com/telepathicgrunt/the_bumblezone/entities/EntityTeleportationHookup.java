@@ -172,7 +172,7 @@ public class EntityTeleportationHookup {
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (BzDimensionConfigs.enableEntranceTeleportation.get() &&
-            !world.isClientSide() && thrower instanceof ServerPlayer playerEntity &&
+            thrower instanceof Player playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
         {
@@ -204,11 +204,13 @@ public class EntityTeleportationHookup {
 
             //if the projectile hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
-                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
-                    projectile.remove(Entity.RemovalReason.DISCARDED);
+                if (thrower instanceof ServerPlayer serverPlayer) {
+                    if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
+                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
+                        projectile.remove(Entity.RemovalReason.DISCARDED);
+                    }
+                    BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
                 }
-                BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;
             }
         }
@@ -218,12 +220,11 @@ public class EntityTeleportationHookup {
     public static boolean runEntityHitCheck(HitResult hitResult, Entity thrower, Level world, Projectile projectile) {
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (!world.isClientSide() &&
-                hitResult instanceof EntityHitResult entityHitResult &&
-                BzDimensionConfigs.enableEntranceTeleportation.get() &&
-                thrower instanceof ServerPlayer playerEntity &&
-                !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-                (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
+        if (hitResult instanceof EntityHitResult entityHitResult &&
+            BzDimensionConfigs.enableEntranceTeleportation.get() &&
+            thrower instanceof Player playerEntity &&
+            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
         {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
@@ -309,11 +310,13 @@ public class EntityTeleportationHookup {
 
             //if the projectile hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
-                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(playerEntity);
-                    projectile.remove(Entity.RemovalReason.DISCARDED);
+                if (thrower instanceof ServerPlayer serverPlayer) {
+                    if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
+                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
+                        projectile.remove(Entity.RemovalReason.DISCARDED);
+                    }
+                    BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
                 }
-                BzWorldSavedData.queueEntityToTeleport(playerEntity, BzDimension.BZ_WORLD_KEY);
                 return true;
             }
         }

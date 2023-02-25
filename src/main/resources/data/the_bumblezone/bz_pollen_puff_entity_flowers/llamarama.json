@@ -25,5 +25,28 @@
         }
       ]
     }
+  }],
+  "llamarama:mossy_llama": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:flowering_azalea" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:blossom" },
+          "weight": 1
+        }
+      ]
+    }
   }]
 }
