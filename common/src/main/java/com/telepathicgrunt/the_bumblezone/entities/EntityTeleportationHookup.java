@@ -15,7 +15,6 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -204,7 +203,7 @@ public class EntityTeleportationHookup {
 
             //if the pearl hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                performTeleportation(thrower, projectile);
+                performProjectileBasedTeleportation(thrower, projectile);
                 return true;
             }
         }
@@ -305,7 +304,7 @@ public class EntityTeleportationHookup {
 
             //if the pearl hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                performTeleportation(thrower, projectile);
+                performProjectileBasedTeleportation(thrower, projectile);
                 return true;
             }
         }
@@ -351,7 +350,6 @@ public class EntityTeleportationHookup {
             //if the item is valid for teleport on a beehive, begin the teleportation.
             if (validBelowBlock) {
                 if (user instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
                     BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
                 }
                 return true;
@@ -374,7 +372,7 @@ public class EntityTeleportationHookup {
         return true;
     }
 
-    private static void performTeleportation(Entity thrower, Entity projectile) {
+    private static void performProjectileBasedTeleportation(Entity thrower, Entity projectile) {
         if (thrower instanceof ServerPlayer serverPlayer) {
             if (projectile != null) {
                 if (BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
