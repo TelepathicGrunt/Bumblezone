@@ -19,11 +19,13 @@ Along with this change, some new tags are added to allow you to config how to en
 
 - `the_bumblezone:dimension_teleportation/do_item_right_click_check_earlier` item tag
 
-- `the_bumblezone:dimension_teleportation/item_special_dedicated_compat` item tag (Only for Twilight Forest Ender Bow behavior right now)
+- `the_bumblezone:dimension_teleportation/item_special_dedicated_compat` item tag (Only for Twilight Forest's Ender Bow behavior right now)
 
 - `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant` enchantment tag
 
 - `the_bumblezone:dimension_teleportation/any_item_right_clicked_beehive_with_enchant_crouching` enchantment tag
+- 
+- `the_bumblezone:dimension_teleportation/enchant_special_dedicated_compat` enchantment tag (Only for updated Dragon Enchants's End Step enchantment bhevaior right now)
 
 Several existing teleporting based tags were moved into a `dimension_teleportation` folder to organize together all the teleportation stuff.
 
