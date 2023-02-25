@@ -170,8 +170,13 @@ public class EntityTeleportationHookup {
             }
 
             // if fail, move the hit pos one step based on pearl velocity and try again
-            if(hivePos == null && projectile != null) {
+            if(hivePos == null) {
                 hivePos = getNearbyHivePos(hitResult.getLocation().add(projectile.getDeltaMovement()), world);
+            }
+
+            // no hive hit, exit early
+            if(hivePos == null) {
+                return false;
             }
 
             //checks if block under hive is correct if config needs one
