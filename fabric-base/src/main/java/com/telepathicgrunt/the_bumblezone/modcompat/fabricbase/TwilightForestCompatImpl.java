@@ -5,6 +5,7 @@ import net.minecraft.world.entity.Entity;
 
 public class TwilightForestCompatImpl {
     public static CompoundTag getPersistentData(Entity entity) {
-        return entity.saveWithoutId(new CompoundTag());
+        // From Porting Lib's implementation
+        return entity.saveWithoutId(new CompoundTag()).getCompound("ForgeData");
     }
 }

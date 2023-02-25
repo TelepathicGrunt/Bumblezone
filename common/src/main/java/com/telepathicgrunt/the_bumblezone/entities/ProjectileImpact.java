@@ -15,7 +15,7 @@ public class ProjectileImpact {
 
         if (ModChecker.twilightForestPresent && event.hitResult() instanceof EntityHitResult entityHitResult) {
             if (TwilightForestCompat.isTeleportHandled(entityHitResult, projectile.getOwner(), projectile)) {
-                return false;
+                return true;
             }
         }
 
