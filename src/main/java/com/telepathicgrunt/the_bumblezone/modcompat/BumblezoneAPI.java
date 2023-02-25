@@ -47,8 +47,18 @@ public class BumblezoneAPI {
      * @return - Whether the projectile hit a beehive or bee nest.
      */
     public static boolean runEnderpearlImpact(HitResult hitResult, Projectile pearlEntity) {
-        return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, pearlEntity);
+        return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, pearlEntity.getOwner(), pearlEntity);
     }
+
+    /**
+     * Will check if the projectile entity hit a beehive or bee nest and teleport the thrower to Bumblezone.
+     * Please only call this for throwables that teleport the entity like Enderpearls.
+     * @return - Whether the projectile hit a beehive or bee nest.
+     */
+    public static boolean runEnderpearlImpact(HitResult hitResult, Entity entity, Projectile pearlEntity) {
+        return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, entity, pearlEntity);
+    }
+
 
     /**
      * Will check if entity is pushed by piston into a beehive or bee nest and teleport to Bumblezone if so.

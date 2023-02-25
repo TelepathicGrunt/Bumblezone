@@ -20,10 +20,10 @@ public class ProjectileImpact {
 
         if (projectile.getType().is(BzTags.TELEPORT_PROJECTILES) && projectile.getOwner() != null) {
             if (hitResult instanceof BlockHitResult blockHitResult) {
-                return !EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult, projectile);
+                return !EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult, projectile.getOwner(), projectile);
             }
             else if (hitResult instanceof EntityHitResult entityHitResult) {
-                return !EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile);
+                return !EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile.getOwner(), projectile);
             }
         }
         return true;
