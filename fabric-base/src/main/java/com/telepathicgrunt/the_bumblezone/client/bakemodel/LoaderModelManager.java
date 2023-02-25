@@ -11,15 +11,16 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 public class LoaderModelManager {
 
-    private static final Map<ResourceLocation, Map<ResourceLocation, JsonObject>> MODEL_RAW_DATA = new HashMap<>();
+    private static final Map<ResourceLocation, Map<ResourceLocation, JsonObject>> MODEL_RAW_DATA = new ConcurrentHashMap<>();
     private static Function<ResourceLocation, List<ModelBakery.LoadedJson>> getter;
 
     static {
-        MODEL_RAW_DATA.put(new ResourceLocation(Bumblezone.MODID, "connected_block"), new HashMap<>());
+        MODEL_RAW_DATA.put(new ResourceLocation(Bumblezone.MODID, "connected_block"), new ConcurrentHashMap<>());
     }
 
     public static boolean hasType(ResourceLocation type) {
