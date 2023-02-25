@@ -165,12 +165,15 @@ public class EntityTeleportationHookup {
 
     // Projectiles
     public static boolean runTeleportProjectileImpact(HitResult hitResult, Entity thrower, Entity projectile) {
+        if (thrower == null || thrower.level == null) {
+            return false;
+        }
+
         Level world = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (BzDimensionConfigs.enableEntranceTeleportation &&
-            thrower instanceof Player playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
         {
@@ -198,17 +201,11 @@ public class EntityTeleportationHookup {
             }
 
             //checks if block under hive is correct if config needs one
-            boolean validBelowBlock = isValidBelowBlock(world, playerEntity, hivePos);
+            boolean validBelowBlock = isValidBelowBlock(world, thrower, hivePos);
 
             //if the pearl hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (thrower instanceof ServerPlayer serverPlayer) {
-                    if (projectile != null && BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
-                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
-                        projectile.remove(Entity.RemovalReason.DISCARDED);
-                    }
-                    BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
-                }
+                performTeleportation(thrower, projectile);
                 return true;
             }
         }
@@ -216,12 +213,15 @@ public class EntityTeleportationHookup {
     }
 
     public static boolean runEntityHitCheck(HitResult hitResult, Entity thrower, Projectile projectile) {
+        if (thrower == null || thrower.level == null) {
+            return false;
+        }
+
         Level world = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (hitResult instanceof EntityHitResult entityHitResult &&
-            thrower instanceof Player player &&
             BzDimensionConfigs.enableEntranceTeleportation &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
@@ -306,24 +306,17 @@ public class EntityTeleportationHookup {
             BlockPos hivePos = entityHitResult.getEntity().blockPosition();
 
             //checks if block under hive is correct if config needs one
-            boolean validBelowBlock = isValidBelowBlock(world, player, hivePos);
+            boolean validBelowBlock = isValidBelowBlock(world, thrower, hivePos);
 
             //if the pearl hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (player instanceof ServerPlayer serverPlayer) {
-                    if (projectile != null && BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
-                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
-                        projectile.remove(Entity.RemovalReason.DISCARDED);
-                    }
-                    BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
-                }
+                performTeleportation(thrower, projectile);
                 return true;
             }
         }
 
         return false;
     }
-
 
     public static boolean runItemUseOn(Player user, BlockPos clickedPos, BlockState blockstate, ItemStack usingStack) {
         Level world = user.level; // world we use in
@@ -374,13 +367,25 @@ public class EntityTeleportationHookup {
         return false;
     }
 
-    private static boolean isValidBelowBlock(Level world, Player playerEntity, BlockPos hivePos) {
+    private static void performTeleportation(Entity thrower, Entity projectile) {
+        if (thrower instanceof ServerPlayer serverPlayer) {
+            if (projectile != null) {
+                if (BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
+                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
+                }
+                projectile.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
+        BzWorldSavedData.queueEntityToTeleport(thrower, BzDimension.BZ_WORLD_KEY);
+    }
+
+    private static boolean isValidBelowBlock(Level world, Entity entity, BlockPos hivePos) {
         Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
         if(blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
             if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                 return true;
             }
-            else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive && playerEntity instanceof ServerPlayer serverPlayer) {
+            else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive && entity instanceof ServerPlayer serverPlayer) {
                 //failed. Block below isn't the required block
                 Bumblezone.LOGGER.error("Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                 Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
