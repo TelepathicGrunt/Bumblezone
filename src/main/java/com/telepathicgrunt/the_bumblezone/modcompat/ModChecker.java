@@ -20,6 +20,7 @@ public class ModChecker {
 	public static boolean arsNouveauPresent = false;
 	public static boolean arsElementalPresent = false;
 	public static boolean twilightForestPresent = false;
+	public static boolean dragonEnchantPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -67,6 +68,9 @@ public class ModChecker {
 
 			modid = "twilightforest";
 			loadupModCompat(modid, () -> TwilightForestCompat.setupCompat());
+
+			modid = "dragon_enchants";
+			loadupModCompat(modid, () -> DragonEnchantCompat.setupCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
