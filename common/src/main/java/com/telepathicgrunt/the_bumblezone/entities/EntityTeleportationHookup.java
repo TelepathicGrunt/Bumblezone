@@ -192,6 +192,11 @@ public class EntityTeleportationHookup {
                 hivePos = getNearbyHivePos(hitResult.getLocation().add(projectile.getDeltaMovement()), world);
             }
 
+            // no hive hit, exit early
+            if(hivePos == null) {
+                return false;
+            }
+
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = isValidBelowBlock(world, playerEntity, hivePos);
 
