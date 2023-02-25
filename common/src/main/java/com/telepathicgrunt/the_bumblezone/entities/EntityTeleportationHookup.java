@@ -15,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -169,30 +170,27 @@ public class EntityTeleportationHookup {
             return false;
         }
 
-        Level world = thrower.level; // world we threw in
+        Level level = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzDimensionConfigs.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
-        {
+        if (BzDimensionConfigs.enableEntranceTeleportation && isTeleportAllowedInDimension(level)) {
             // get nearby hives
             BlockPos hivePos = null;
             if (hitResult instanceof BlockHitResult blockHitResult) {
-                BlockState block = world.getBlockState(blockHitResult.getBlockPos());
+                BlockState block = level.getBlockState(blockHitResult.getBlockPos());
                 if(EntityTeleportationBackend.isValidBeeHive(block)) {
                     hivePos = blockHitResult.getBlockPos();
                 }
             }
 
             if(hivePos == null) {
-                hivePos = getNearbyHivePos(hitResult.getLocation(), world);
+                hivePos = getNearbyHivePos(hitResult.getLocation(), level);
             }
 
             // if fail, move the hit pos one step based on pearl velocity and try again
             if(hivePos == null && projectile != null) {
-                hivePos = getNearbyHivePos(hitResult.getLocation().add(projectile.getDeltaMovement()), world);
+                hivePos = getNearbyHivePos(hitResult.getLocation().add(projectile.getDeltaMovement()), level);
             }
 
             // no hive hit, exit early
@@ -201,7 +199,7 @@ public class EntityTeleportationHookup {
             }
 
             //checks if block under hive is correct if config needs one
-            boolean validBelowBlock = isValidBelowBlock(world, thrower, hivePos);
+            boolean validBelowBlock = isValidBelowBlock(level, thrower, hivePos);
 
             //if the pearl hit a beehive, begin the teleportation.
             if (validBelowBlock) {
@@ -217,15 +215,11 @@ public class EntityTeleportationHookup {
             return false;
         }
 
-        Level world = thrower.level; // world we threw in
+        Level level = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (hitResult instanceof EntityHitResult entityHitResult &&
-            BzDimensionConfigs.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
-        {
+        if (hitResult instanceof EntityHitResult entityHitResult && isTeleportAllowedInDimension(level)) {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
 
@@ -306,7 +300,7 @@ public class EntityTeleportationHookup {
             BlockPos hivePos = entityHitResult.getEntity().blockPosition();
 
             //checks if block under hive is correct if config needs one
-            boolean validBelowBlock = isValidBelowBlock(world, thrower, hivePos);
+            boolean validBelowBlock = isValidBelowBlock(level, thrower, hivePos);
 
             //if the pearl hit a beehive, begin the teleportation.
             if (validBelowBlock) {
@@ -319,14 +313,11 @@ public class EntityTeleportationHookup {
     }
 
     public static boolean runItemUseOn(Player user, BlockPos clickedPos, BlockState blockstate, ItemStack usingStack) {
-        Level world = user.level; // world we use in
+        Level level = user.level; // world we use in
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzDimensionConfigs.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
-        {
+        if (BzDimensionConfigs.enableEntranceTeleportation && isTeleportAllowedInDimension(level)) {
             if(!EntityTeleportationBackend.isValidBeeHive(blockstate)) {
                 return false;
             }
@@ -353,7 +344,7 @@ public class EntityTeleportationHookup {
             }
 
             //checks if block under hive is correct if config needs one
-            boolean validBelowBlock = isValidBelowBlock(world, user, clickedPos);
+            boolean validBelowBlock = isValidBelowBlock(level, user, clickedPos);
 
             //if the item is valid for teleport on a beehive, begin the teleportation.
             if (validBelowBlock) {
@@ -365,6 +356,20 @@ public class EntityTeleportationHookup {
             }
         }
         return false;
+    }
+
+    private static boolean isTeleportAllowedInDimension(Level level) {
+        if (!BzDimensionConfigs.enableEntranceTeleportation || level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+            return false;
+        }
+
+        if (BzDimensionConfigs.onlyOverworldHivesTeleports) {
+            ResourceLocation defaultDimRL = new ResourceLocation(BzDimensionConfigs.defaultDimension);
+            ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, defaultDimRL);
+            return level.dimension().equals(worldKey);
+        }
+
+        return true;
     }
 
     private static void performTeleportation(Entity thrower, Entity projectile) {
