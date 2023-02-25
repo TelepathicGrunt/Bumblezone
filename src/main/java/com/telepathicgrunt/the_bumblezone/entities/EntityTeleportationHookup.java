@@ -155,10 +155,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzConfig.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
-        {
+        if (BzConfig.enableEntranceTeleportation && isTeleportAllowedInDimension(world)) {
             // get nearby hives
             BlockPos hivePos = null;
             if (hitResult instanceof BlockHitResult blockHitResult) {
@@ -203,11 +200,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (hitResult instanceof EntityHitResult entityHitResult &&
-            BzConfig.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
-        {
+        if (hitResult instanceof EntityHitResult entityHitResult && isTeleportAllowedInDimension(world)) {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
 
@@ -305,10 +298,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzConfig.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzConfig.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzConfig.defaultDimension)))))
-        {
+        if (BzConfig.enableEntranceTeleportation && isTeleportAllowedInDimension(world)) {
             if(!EntityTeleportationBackend.isValidBeeHive(blockstate)) {
                 return false;
             }
@@ -347,6 +337,20 @@ public class EntityTeleportationHookup {
             }
         }
         return false;
+    }
+
+    private static boolean isTeleportAllowedInDimension(Level level) {
+        if (!BzConfig.enableEntranceTeleportation || level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+            return false;
+        }
+
+        if (BzConfig.onlyOverworldHivesTeleports) {
+            ResourceLocation defaultDimRL = new ResourceLocation(BzConfig.defaultDimension);
+            ResourceKey<Level> worldKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, defaultDimRL);
+            return level.dimension().equals(worldKey);
+        }
+
+        return true;
     }
 
     private static void performTeleportation(Entity thrower, Entity projectile) {
