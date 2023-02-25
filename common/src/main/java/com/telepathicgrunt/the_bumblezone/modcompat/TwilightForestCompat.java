@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +12,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.apache.commons.lang3.NotImplementedException;
+import org.jetbrains.annotations.Contract;
+
+import java.util.EnumSet;
 
 public class TwilightForestCompat implements ModCompat {
 	private static final String ENDER_BOW_ATTACHED_TAG = "twilightforest:ender";
@@ -22,16 +27,23 @@ public class TwilightForestCompat implements ModCompat {
 		ModChecker.twilightForestPresent = true;
 	}
 
-	public static boolean isTeleportHandled(EntityHitResult entityHitResult, Entity owner, Projectile projectile) {
-		if (projectile != null &&
+	public boolean isTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
+		if (hitResult instanceof EntityHitResult entityHitResult &&
+			projectile != null &&
 			getPersistentData(projectile).getBoolean(ENDER_BOW_ATTACHED_TAG) &&
-			BuiltInRegistries.ITEM.get(ENDER_BOW_RL).getDefaultInstance().is(BzTags.ITEM_SPECIAL_DEDICATED_COMPAT))
+			GeneralUtils.isInTag(BuiltInRegistries.ITEM, BzTags.ITEM_SPECIAL_DEDICATED_COMPAT, BuiltInRegistries.ITEM.get(ENDER_BOW_RL)))
 		{
 			return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, owner, projectile);
 		}
 		return false;
 	}
 
+	@Override
+	public EnumSet<Type> compatTypes() {
+		return EnumSet.of(Type.PROJECTILE_IMPACT_HANDLED);
+	}
+
+	@Contract
 	@ExpectPlatform
 	public static CompoundTag getPersistentData(Entity entity) {
 		throw new NotImplementedException("TwilightForestCompat getPesistentData is not implemented!");

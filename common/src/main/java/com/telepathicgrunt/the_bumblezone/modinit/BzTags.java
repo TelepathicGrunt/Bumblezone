@@ -113,6 +113,7 @@ public class BzTags {
     public static final TagKey<Enchantment> FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/forced_allowed_enchantments"));
     public static final TagKey<Enchantment> ITEM_WITH_TELEPORT_ENCHANT = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/any_item_right_clicked_beehive_with_enchant"));
     public static final TagKey<Enchantment> ITEM_WITH_TELEPORT_ENCHANT_CROUCHING = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/any_item_right_clicked_beehive_with_enchant_crouching"));
+    public static final TagKey<Enchantment> ENCHANT_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/enchant_special_dedicated_compat"));
 
     public static final TagKey<Biome> THE_BUMBLEZONE = TagKey.create(Registries.BIOME, new ResourceLocation(Bumblezone.MODID, "the_bumblezone"));
 

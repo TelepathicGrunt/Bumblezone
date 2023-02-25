@@ -48,6 +48,8 @@ The mods with this new compat are:
 
 - Twilight Forest's Ender Bow but only when it shoots another entity tagged for allowing teleportation into Bumblezone such as Llamarama's Bumble Llama or Dreamland Biomes's Bumble Beast
 
+- Dragon Enchants's End Step bow/crossbow enchantment will work if shooting at Beehive/Bee Nest. (Note: Update Dragon Enchant to newest version for this compat)
+
 Adjusted teleportation to Bumblezone dimension so that it is far more likely to put you in a cave or on land instead of inside a wall.
 
 Note to modders depending on Bumblezone, the BumblezoneAPI$runEnderpearlImpact method now takes a HitResult instead of a vec3.

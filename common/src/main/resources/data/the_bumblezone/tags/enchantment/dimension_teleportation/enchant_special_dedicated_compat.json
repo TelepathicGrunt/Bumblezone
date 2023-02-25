@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "dragon_enchants:end_step",
+      "required": false
+    }
+  ]
+}

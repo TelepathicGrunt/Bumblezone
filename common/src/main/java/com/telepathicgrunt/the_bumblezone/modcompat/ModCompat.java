@@ -9,10 +9,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.EnumSet;
 
@@ -76,6 +79,10 @@ public interface ModCompat {
         return false;
     }
 
+    default boolean isTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
+        return false;
+    }
+
     enum Type {
         SPAWNS,
         EMPTY_BROOD,
@@ -84,5 +91,6 @@ public interface ModCompat {
         BLOCK_TELEPORT,
         COMB_ORE,
         HAS_HOST_BEES,
+        PROJECTILE_IMPACT_HANDLED,
     }
 }

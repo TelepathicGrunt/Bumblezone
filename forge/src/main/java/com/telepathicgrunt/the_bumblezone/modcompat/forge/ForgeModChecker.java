@@ -41,6 +41,9 @@ public class ForgeModChecker {
 
             modid = "potionofbees";
             loadupModCompat(modid, () -> new PotionOfBeesCompat());
+
+            modid = "dragon_enchants";
+            loadupModCompat(modid, () -> new DragonEnchantCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

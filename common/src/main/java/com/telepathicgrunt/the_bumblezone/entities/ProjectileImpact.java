@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.TwilightForestCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -13,9 +14,11 @@ public class ProjectileImpact {
     public static boolean onProjectileImpact(ProjectileHitEvent event) {
         Projectile projectile = event.projectile();
 
-        if (ModChecker.twilightForestPresent && event.hitResult() instanceof EntityHitResult entityHitResult) {
-            if (TwilightForestCompat.isTeleportHandled(entityHitResult, projectile.getOwner(), projectile)) {
-                return true;
+        if (!ModChecker.PROJECTILE_IMPACT_HANDLED_COMPATS.isEmpty()) {
+            for (ModCompat compat : ModChecker.PROJECTILE_IMPACT_HANDLED_COMPATS) {
+                if (compat.isTeleportHandled(event.hitResult(), projectile.getOwner(), projectile)) {
+                    return true;
+                }
             }
         }
 
