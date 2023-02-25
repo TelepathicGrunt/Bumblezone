@@ -51,6 +51,11 @@ public class LoaderModelManager {
     }
 
     @ApiStatus.Internal
+    public static void clearStaleRawModelData() {
+        MODEL_RAW_DATA.get(new ResourceLocation(Bumblezone.MODID, "connected_block")).clear();
+    }
+
+    @ApiStatus.Internal
     public static void setGetter(Function<ResourceLocation, List<ModelBakery.LoadedJson>> getter) {
         LoaderModelManager.getter = getter;
     }

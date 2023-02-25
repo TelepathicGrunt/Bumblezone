@@ -15,9 +15,19 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.io.Reader;
 import java.util.Map;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 
 @Mixin(ModelManager.class)
 public class ModelManagerMixin {
+
+    @Inject(
+            method = "method_45899",
+            at = @At(value = "HEAD")
+    )
+    private static void bumblezone$onLoadModelInit(Executor executor, Map<ResourceLocation, Resource> map, CallbackInfoReturnable<CompletionStage> cir) {
+        LoaderModelManager.clearStaleRawModelData();
+    }
 
     @Inject(
             method = "method_45898",
