@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.BlockPos;
@@ -167,6 +166,10 @@ public class EntityTeleportationHookup {
 
     // Projectiles
     public static boolean runTeleportProjectileImpact(HitResult hitResult, Entity thrower, Entity projectile) {
+        if (thrower == null || thrower.level == null) {
+            return false;
+        }
+
         Level world = thrower.level; // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
@@ -204,25 +207,24 @@ public class EntityTeleportationHookup {
 
             //if the projectile hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (thrower instanceof ServerPlayer serverPlayer) {
-                    if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
-                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
-                        projectile.remove(Entity.RemovalReason.DISCARDED);
-                    }
-                    BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
-                }
+                performTeleportation(thrower, projectile);
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean runEntityHitCheck(HitResult hitResult, Entity thrower, Level world, Projectile projectile) {
+    public static boolean runEntityHitCheck(HitResult hitResult, Entity thrower, Projectile projectile) {
+        if (thrower == null || thrower.level == null) {
+            return false;
+        }
+
+        Level world = thrower.level; // world we threw in
+
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (hitResult instanceof EntityHitResult entityHitResult &&
             BzDimensionConfigs.enableEntranceTeleportation.get() &&
-            thrower instanceof Player playerEntity &&
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzDimensionConfigs.onlyOverworldHivesTeleports.get() || world.dimension().equals(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(BzDimensionConfigs.defaultDimension.get())))))
         {
@@ -306,17 +308,11 @@ public class EntityTeleportationHookup {
             BlockPos hivePos = entityHitResult.getEntity().blockPosition();
 
             //checks if block under hive is correct if config needs one
-            boolean validBelowBlock = isValidBelowBlock(world, playerEntity, hivePos);
+            boolean validBelowBlock = isValidBelowBlock(world, thrower, hivePos);
 
             //if the projectile hit a beehive, begin the teleportation.
             if (validBelowBlock) {
-                if (thrower instanceof ServerPlayer serverPlayer) {
-                    if (projectile != null && Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
-                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
-                        projectile.remove(Entity.RemovalReason.DISCARDED);
-                    }
-                    BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
-                }
+                performTeleportation(thrower, projectile);
                 return true;
             }
         }
@@ -373,7 +369,19 @@ public class EntityTeleportationHookup {
         return false;
     }
 
-    private static boolean isValidBelowBlock(Level world, Player playerEntity, BlockPos hivePos) {
+    private static void performTeleportation(Entity thrower, Entity projectile) {
+        if (thrower instanceof ServerPlayer serverPlayer) {
+            if (projectile != null) {
+                if (Registry.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
+                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
+                }
+                projectile.remove(Entity.RemovalReason.DISCARDED);
+            }
+            BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
+        }
+    }
+
+    private static boolean isValidBelowBlock(Level world, Entity playerEntity, BlockPos hivePos) {
         Optional<HolderSet.Named<Block>> blockTag = Registry.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
         if(blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
             if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
@@ -381,7 +389,7 @@ public class EntityTeleportationHookup {
             }
             else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive.get() && playerEntity instanceof ServerPlayer serverPlayer) {
                 //failed. Block below isn't the required block
-                Bumblezone.LOGGER.log(org.apache.logging.log4j.Level.INFO, "Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
+                Bumblezone.LOGGER.info("Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                 Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
                 serverPlayer.displayClientMessage(message, true);
             }

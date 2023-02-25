@@ -22,7 +22,7 @@ public class ProjectileImpact {
         }
 
         if (ModChecker.twilightForestPresent && event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
-            if (TwilightForestCompat.isTeleportHandled(entityHitResult, projectile.getOwner(), projectile.level, projectile)) {
+            if (TwilightForestCompat.isTeleportHandled(entityHitResult, projectile.getOwner(), projectile)) {
                 event.setCanceled(true);
                 return;
             }
@@ -42,7 +42,7 @@ public class ProjectileImpact {
                 }
             }
             else if (event.getRayTraceResult() instanceof EntityHitResult entityHitResult) {
-                if (EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile.getOwner(),projectile.level, projectile)) {
+                if (EntityTeleportationHookup.runEntityHitCheck(entityHitResult, projectile.getOwner(), projectile)) {
                     event.setCanceled(true);
                 }
             }

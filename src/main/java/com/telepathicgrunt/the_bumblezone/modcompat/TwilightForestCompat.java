@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -18,12 +17,12 @@ public class TwilightForestCompat {
 		ModChecker.twilightForestPresent = true;
 	}
 
-	public static boolean isTeleportHandled(EntityHitResult entityHitResult, Entity owner, Level level, Projectile projectile) {
+	public static boolean isTeleportHandled(EntityHitResult entityHitResult, Entity owner, Projectile projectile) {
 		if (projectile != null &&
 			projectile.getPersistentData().getBoolean(ENDER_BOW_ATTACHED_TAG) &&
 			ForgeRegistries.ITEMS.getValue(ENDER_BOW_RL).getDefaultInstance().is(BzTags.ITEM_SPECIAL_DEDICATED_COMPAT))
 		{
-			return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, owner, level, projectile);
+			return EntityTeleportationHookup.runEntityHitCheck(entityHitResult, owner, projectile);
 		}
 		return false;
 	}
