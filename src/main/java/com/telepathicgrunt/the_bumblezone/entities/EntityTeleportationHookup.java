@@ -332,7 +332,6 @@ public class EntityTeleportationHookup {
             //if the item is valid for teleport on a beehive, begin the teleportation.
             if (validBelowBlock) {
                 if (user instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
                     BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
                 }
                 return true;
