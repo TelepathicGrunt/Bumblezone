@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "dungeons_gear:buzzy_nest",
+      "required": false
+    },
+    {
       "id": "duneons:beenestmob",
       "required": false
     },
