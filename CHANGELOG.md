@@ -4,10 +4,13 @@
 Removed the partial bounding box check for teleporting projectiles hitting entities wearing tagged armor that allows for teleporting to Bumblezone.
  So hitting top half of Armor Stand while it has a mod's Bee Hive Boots should teleport thrower to Bumblezone without fighting hitboxes.
 
+Fixed `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` block tag so it actually works.
+Clearly no one ever actually used this tag... lol
+
 (Fabric/Quilt): Added support for Travel Staff's Travel Staff and Teleportation enchantment to match the compat Forge has with Travel Anchor mod.
 
-Fixed `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` block tag so it actually works.
- Clearly no one ever actually used this tag... lol
+(Fabric/Quilt): Fixed Bee Queen crash with Sodium by disabling the transparent item render on the mob if Sodium is installed.
+ Now the Bee Queen's wanted item for bonus trades will be opaque instead of translucent if Sodium is on.
 
 (Forge): Fixed v1.0.5 Dragon Enchants teleporting compat
 

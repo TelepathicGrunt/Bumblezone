@@ -42,8 +42,11 @@ dependencies {
     }
     include("dev.cafeteria:fake-player-api:${rootProject.fake_player_api}")
 
-    modImplementation "me.luligabi:NoIndium:${project.noindium}"
-    include "me.luligabi:NoIndium:${project.noindium}"
+    modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
+    modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
+
+    include("me.luligabi:NoIndium:${project.noindium}")
+    modLocalRuntime("curse.maven:indium-459496:${rootProject.indium_file_id}")
 
     modImplementation("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rootProject.rei}")
     modImplementation("me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei}")

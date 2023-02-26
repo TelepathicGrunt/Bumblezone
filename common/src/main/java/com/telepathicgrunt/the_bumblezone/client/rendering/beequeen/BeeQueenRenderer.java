@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.transparentitem.TranslucentItemRenderTypeBuffer;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -45,14 +46,17 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
             stack.scale(0.6f, 0.6f, 0.6f);
 
             int alpha = 180;
-            TranslucentItemRenderTypeBuffer translucentItemRenderTypeBuffer = new TranslucentItemRenderTypeBuffer(buffer, alpha);
+            MultiBufferSource bufferToUse = buffer;
+            if (!ModChecker.sodiumPresent) {
+                bufferToUse = new TranslucentItemRenderTypeBuffer(buffer, alpha);
+            }
             this.itemRenderer.renderItem(
                     beeQueenEntity,
                     beeQueenEntity.getSuperTradeItem(),
                     ItemTransforms.TransformType.GROUND,
                     false,
                     stack,
-                    translucentItemRenderTypeBuffer,
+                    bufferToUse,
                     packedLight);
             stack.popPose();
         }

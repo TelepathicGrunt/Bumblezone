@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.quilt;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.SodiumCompatImpl;
 
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.printErrorToLogs;
@@ -25,6 +26,9 @@ public class QuiltModChecker {
 
             modid = "requiem";
             loadupModCompat(modid, () -> new RequiemCompat());
+
+            modid = "sodium";
+            loadupModCompat(modid, () -> new SodiumCompatImpl());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
