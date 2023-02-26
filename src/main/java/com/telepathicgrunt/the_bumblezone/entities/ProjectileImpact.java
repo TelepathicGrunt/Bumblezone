@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ArsNouveauCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.DragonEnchantCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.DragonEnchantsCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.TwilightForestCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -28,8 +28,8 @@ public class ProjectileImpact {
             }
         }
 
-        if (ModChecker.dragonEnchantPresent && event.getRayTraceResult() instanceof BlockHitResult blockHitResult) {
-            if (DragonEnchantCompat.isTeleportHandled(blockHitResult, projectile.getOwner(), projectile)) {
+        if (ModChecker.dragonEnchantsPresent && event.getRayTraceResult() instanceof BlockHitResult blockHitResult) {
+            if (DragonEnchantsCompat.isTeleportHandled(blockHitResult, projectile.getOwner(), projectile)) {
                 event.setCanceled(true);
                 return;
             }
