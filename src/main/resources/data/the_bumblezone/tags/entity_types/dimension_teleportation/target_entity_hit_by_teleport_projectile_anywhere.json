@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "ars_nouveau:animated_block",
+      "required": false
+    },
+    {
       "id": "duneons:beenestmob",
       "required": false
     },

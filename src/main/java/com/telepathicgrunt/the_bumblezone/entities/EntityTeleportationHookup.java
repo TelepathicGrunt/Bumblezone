@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.modcompat.ArsNouveauCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -223,6 +225,14 @@ public class EntityTeleportationHookup {
         if (hitResult instanceof EntityHitResult entityHitResult && isTeleportAllowedInDimension(world)) {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
+
+            if (ModChecker.arsNouveauPresent) {
+                if (ArsNouveauCompat.isArsWalkingBlock(hitEntity)) {
+                    if (!ArsNouveauCompat.isArsWalkingBlockAvalidBeeHive(hitEntity)) {
+                        return false;
+                    }
+                }
+            }
 
             // Entity type check
             if (hitEntity.getType().is(BzTags.TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_ANYWHERE) ||

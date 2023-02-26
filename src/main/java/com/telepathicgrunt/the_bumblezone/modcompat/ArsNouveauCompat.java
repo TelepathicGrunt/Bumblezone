@@ -3,15 +3,18 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.google.common.collect.Sets;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
+import com.hollingsworth.arsnouveau.common.entity.AnimBlockSummon;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectBlink;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodUnderfoot;
+import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
@@ -96,5 +99,17 @@ public class ArsNouveauCompat {
 
 	public static boolean isArsSpellBook(ItemStack stack) {
 		return stack.getItem() instanceof SpellBook;
+	}
+
+	public static boolean isArsWalkingBlock(Entity entity) {
+		return entity instanceof AnimBlockSummon ;
+	}
+
+	public static boolean isArsWalkingBlockAvalidBeeHive(Entity entity) {
+		if (entity instanceof AnimBlockSummon animBlockSummon) {
+			return EntityTeleportationBackend.isValidBeeHive(animBlockSummon.blockState);
+		}
+
+		return false;
 	}
 }

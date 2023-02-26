@@ -4,6 +4,13 @@
 Removed the partial bounding box check for teleporting projectiles hitting entities wearing tagged armor that allows for teleporting to Bumblezone.
  So hitting top half of Armor Stand while it has a mod's Bee Hive Boots should teleport thrower to Bumblezone without fighting hitboxes.
 
+Fixed `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` block tag so it actually works.
+ Clearly no one ever actually used this tag... lol
+
+Ars Nouveau can animate blocks by turning them into walking entities with the Animate spell. If this is done on a
+ `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` tagged block, then throwing an Ender Pearl
+ or other teleporting projectile at this walking block will teleport thrower to Bumblezone dimension! (By default, no blocks is in that tag)
+
 
 ### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
 
