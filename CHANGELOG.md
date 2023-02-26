@@ -13,6 +13,10 @@ Ars Nouveau can animate blocks by turning them into walking entities with the An
 
 Fixed Dragon Enchants compat for when Dragon Enchants updates to v1.0.5
 
+##### Bee Aggression:
+Changed default config value of strengthBoostLevel from 2 to 1 to make bees be a little less punishing.
+ Existing configs already generated will have to be edited by user or modpack maker as those will remain at 2 unless edited/deleted.
+
 
 ### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
 
