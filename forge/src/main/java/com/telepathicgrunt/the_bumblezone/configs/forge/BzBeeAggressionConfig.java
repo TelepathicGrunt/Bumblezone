@@ -129,7 +129,7 @@ public class BzBeeAggressionConfig {
                    " How strong the bees attacks become. ",
                    " (5 or higher will instant kill you without armor).\n")
                     .translation("the_bumblezone.config.strengthboostlevel")
-                    .defineInRange("strengthBoostLevel", 2, 1, Integer.MAX_VALUE);
+                    .defineInRange("strengthBoostLevel", 1, 1, Integer.MAX_VALUE);
 
             builder.pop();
         builder.pop();

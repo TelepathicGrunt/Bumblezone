@@ -14,6 +14,10 @@ Clearly no one ever actually used this tag... lol
 
 (Forge): Fixed v1.0.5 Dragon Enchants teleporting compat
 
+##### Bee Aggression:
+Changed default config value of strengthBoostLevel from 2 to 1 to make bees be a little less punishing. 
+ Existing configs already generated will have to be edited by user or modpack maker as those will remain at 2 unless edited/deleted.
+
 ##### Misc:
 (Fabric/Quilt): Now includes `No Indium?` mod within this jar so that users running Bumblezone with Sodium will get a message saying to download Indium.
  This is required because Sodium makes the Porous Honeycomb Block and Empty Brood Honeycomb Block invisible unless Indium is on.

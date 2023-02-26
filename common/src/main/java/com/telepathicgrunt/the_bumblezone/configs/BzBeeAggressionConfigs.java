@@ -12,5 +12,5 @@ public class BzBeeAggressionConfigs {
     public static int howLongProtectionOfTheHiveLasts = 1680;
     public static int speedBoostLevel = 2;
     public static int absorptionBoostLevel = 1;
-    public static int strengthBoostLevel = 2;
+    public static int strengthBoostLevel = 1;
 }
