@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "dragon_enchants:end_step",
+      "id": "dragonenchants:end_step",
       "required": false
     }
   ]

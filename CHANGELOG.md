@@ -11,6 +11,8 @@ Ars Nouveau can animate blocks by turning them into walking entities with the An
  `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` tagged block, then throwing an Ender Pearl
  or other teleporting projectile at this walking block will teleport thrower to Bumblezone dimension! (By default, no blocks is in that tag)
 
+Fixed Dragon Enchants compat for when Dragon Enchants updates to v1.0.5
+
 
 ### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
 

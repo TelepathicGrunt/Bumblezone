@@ -10,8 +10,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class DragonEnchantsCompat {
-	private static final String END_STEP_ENCHANT_ATTACHED_TAG = "dragon_enchants:end_step";
-	private static final ResourceLocation END_STEP_RL = new ResourceLocation("dragon_enchants", "end_step");
+	private static final String END_STEP_ENCHANT_ATTACHED_TAG = "dragonenchants:end_step";
+	private static final ResourceLocation END_STEP_RL = new ResourceLocation("dragonenchants", "end_step");
 
 	public static void setupCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup

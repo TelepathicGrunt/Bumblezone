@@ -69,7 +69,7 @@ public class ModChecker {
 			modid = "twilightforest";
 			loadupModCompat(modid, () -> TwilightForestCompat.setupCompat());
 
-			modid = "dragon_enchants";
+			modid = "dragonenchants";
 			loadupModCompat(modid, () -> DragonEnchantsCompat.setupCompat());
 		}
 		catch (Throwable e) {
