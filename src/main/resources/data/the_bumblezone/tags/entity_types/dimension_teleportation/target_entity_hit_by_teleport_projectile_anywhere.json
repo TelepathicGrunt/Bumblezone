@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     {
+      "id": "ars_nouveau:animated_block",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:buzzy_nest",
+      "required": false
+    },
+    {
       "id": "duneons:beenestmob",
       "required": false
     },
