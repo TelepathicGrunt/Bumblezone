@@ -6,6 +6,9 @@ Removed the partial bounding box check for teleporting projectiles hitting entit
 
 (Fabric/Quilt): Added support for Travel Staff's Travel Staff and Teleportation enchantment to match the compat Forge has with Travel Anchor mod.
 
+Fixed `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` block tag so it actually works.
+ Clearly no one ever actually used this tag... lol
+
 
 ### **(V.6.6.10 Changes) (1.19.3 Minecraft)**
 

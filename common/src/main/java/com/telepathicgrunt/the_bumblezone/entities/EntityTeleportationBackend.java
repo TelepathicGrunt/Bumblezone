@@ -213,8 +213,9 @@ public class EntityTeleportationBackend {
         }
         return chunkAccess;
     }
+
     public static boolean isValidBeeHive(BlockState blockState) {
-        if(blockState.is(BzTags.FORCED_ALLOWED_TELEPORTABLE_BLOCK)) return false;
+        if(blockState.is(BzTags.FORCED_ALLOWED_TELEPORTABLE_BLOCK)) return true;
 
         if(blockState.is(BzTags.DISALLOWED_TELEPORTABLE_BEEHIVE)) return false;
 
