@@ -44,12 +44,12 @@ subprojects {
             "fabric": [
                     "fabric-api": true,
                     "midnightlib": true,
-                    "unofficial-sodium-biome-blending-fix": false
+                    "indium": false
             ],
             "quilt": [
                     "qsl": true,
                     "midnightlib": true,
-                    "unofficial-sodium-biome-blending-fix": false
+                    "indium": false
             ],
             "forge": []
     ]
