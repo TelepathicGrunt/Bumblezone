@@ -4,6 +4,10 @@
     {
       "id": "travelanchors:travel_staff",
       "required": false
+    },
+    {
+      "id": "travelstaff:travel_staff",
+      "required": false
     }
   ]
 }

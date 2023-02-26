@@ -1,3 +1,12 @@
+### **(V.6.6.11 Changes) (1.19.3 Minecraft)**
+
+##### Teleporting:
+Removed the partial bounding box check for teleporting projectiles hitting entities wearing tagged armor that allows for teleporting to Bumblezone.
+ So hitting top half of Armor Stand while it has a mod's Bee Hive Boots should teleport thrower to Bumblezone without fighting hitboxes.
+
+(Fabric/Quilt): Added support for Travel Staff's Travel Staff and Teleportation enchantment to match the compat Forge has with Travel Anchor mod.
+
+
 ### **(V.6.6.10 Changes) (1.19.3 Minecraft)**
 
 ##### Teleporting:
