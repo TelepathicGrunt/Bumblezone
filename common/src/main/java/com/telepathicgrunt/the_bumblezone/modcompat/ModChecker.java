@@ -30,7 +30,7 @@ public class ModChecker {
 	public static boolean potionOfBeesPresent = false;
 	public static boolean requiemPresent = false;
 	public static boolean twilightForestPresent = false;
-	public static boolean dragonEnchantPresent = false;
+	public static boolean dragonEnchantsPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --

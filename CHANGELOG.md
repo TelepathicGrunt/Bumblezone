@@ -9,6 +9,8 @@ Removed the partial bounding box check for teleporting projectiles hitting entit
 Fixed `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` block tag so it actually works.
  Clearly no one ever actually used this tag... lol
 
+(Forge): Fixed v1.0.5 Dragon Enchants teleporting compat
+
 ##### Misc:
 (Fabric/Quilt): Now includes `No Indium?` mod within this jar so that users running Bumblezone with Sodium will get a message saying to download Indium.
  This is required because Sodium makes the Porous Honeycomb Block and Empty Brood Honeycomb Block invisible unless Indium is on.

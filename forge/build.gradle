@@ -55,6 +55,9 @@ dependencies {
     modLocalRuntime("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
     modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
 
+    modCompileOnly("curse.maven:dragonenchants-324769:4412415")
+    modLocalRuntime("curse.maven:dragonenchants-324769:4412415")
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 

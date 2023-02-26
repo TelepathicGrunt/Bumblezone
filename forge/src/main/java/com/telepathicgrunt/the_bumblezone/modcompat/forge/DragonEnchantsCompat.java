@@ -11,18 +11,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.EnumSet;
 
-public class DragonEnchantCompat implements ModCompat {
-	private static final String END_STEP_ENCHANT_ATTACHED_TAG = "dragon_enchants:end_step";
-	private static final ResourceLocation END_STEP_RL = new ResourceLocation("dragon_enchants", "end_step");
+public class DragonEnchantsCompat implements ModCompat {
+	private static final String END_STEP_ENCHANT_ATTACHED_TAG = "dragonenchants:end_step";
+	private static final ResourceLocation END_STEP_RL = new ResourceLocation("dragonenchants", "end_step");
 
-	public DragonEnchantCompat() {
+	public DragonEnchantsCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
-		ModChecker.dragonEnchantPresent = true;
+		ModChecker.dragonEnchantsPresent = true;
 	}
 
 	@Override
