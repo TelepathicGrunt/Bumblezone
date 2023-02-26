@@ -4,6 +4,10 @@
     {
       "id": "travelanchors:teleportation",
       "required": false
+    },
+    {
+      "id": "travelstaff:teleportation",
+      "required": false
     }
   ]
 }
