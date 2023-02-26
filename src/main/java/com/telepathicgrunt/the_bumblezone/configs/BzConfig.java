@@ -35,7 +35,7 @@ public class BzConfig extends MidnightConfig {
     public static int absorptionBoostLevel = 1;
 
     @Entry(min=1, max=100)
-    public static int strengthBoostLevel = 2;
+    public static int strengthBoostLevel = 1;
 
 
     @Comment

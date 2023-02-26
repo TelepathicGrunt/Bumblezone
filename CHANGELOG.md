@@ -6,6 +6,10 @@ Removed the partial bounding box check for teleporting projectiles hitting entit
 
 Added support for Travel Staff's Travel Staff and Teleportation enchantment to match the compat Forge has with Travel Anchor mod.
 
+##### Bee Aggression:
+Changed default config value of strengthBoostLevel from 2 to 1 to make bees be a little less punishing.
+ Existing configs already generated will have to be edited by user or modpack maker as those will remain at 2 unless edited/deleted.
+
 
 ### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
 
