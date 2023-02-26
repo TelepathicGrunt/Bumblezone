@@ -9,6 +9,11 @@ Removed the partial bounding box check for teleporting projectiles hitting entit
 Fixed `the_bumblezone:dimension_teleportation\forced_allowed_teleportable_blocks` block tag so it actually works.
  Clearly no one ever actually used this tag... lol
 
+##### Misc:
+(Fabric/Quilt): Now includes `No Indium?` mod within this jar so that users running Bumblezone with Sodium will get a message saying to download Indium.
+ This is required because Sodium makes the Porous Honeycomb Block and Empty Brood Honeycomb Block invisible unless Indium is on.
+ Reason is Sodium will break Fabric's rendering APIs but Indium adds back the Fabric API's rendering support back into Sodium.
+
 
 ### **(V.6.6.10 Changes) (1.19.3 Minecraft)**
 

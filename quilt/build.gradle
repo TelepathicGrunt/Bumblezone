@@ -71,6 +71,9 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
+    modImplementation "me.luligabi:NoIndium:${project.noindium}"
+    include "me.luligabi:NoIndium:${project.noindium}"
+
     modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
     modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 
