@@ -1,3 +1,10 @@
+### **(V.6.6.13 Changes) (1.19.2 Minecraft)**
+
+##### Teleporting:
+Removed the partial bounding box check for teleporting projectiles hitting entities wearing tagged armor that allows for teleporting to Bumblezone.
+ So hitting top half of Armor Stand while it has a mod's Bee Hive Boots should teleport thrower to Bumblezone without fighting hitboxes.
+
+
 ### **(V.6.6.12 Changes) (1.19.2 Minecraft)**
 
 ##### Teleporting:
