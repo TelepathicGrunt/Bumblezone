@@ -245,33 +245,8 @@ public class EntityTeleportationHookup {
 
             // Armor item check
             for (ItemStack stack : hitEntity.getArmorSlots()) {
-                if (stack == null) {
-                    continue;
-                }
-                if (stack.is(BzTags.TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE)) {
-                    Vec3 hitPos = projectile.position();
-                    AABB boundBox = entityHitResult.getEntity().getBoundingBox();
-                    double relativeHitY = hitPos.y() - boundBox.minY;
-                    double entityBoundHeight = boundBox.maxY - boundBox.minY;
-
-                    double minYThreshold = Integer.MIN_VALUE;
-                    double maxYThreshold = Integer.MAX_VALUE;
-
-                    if (stack.getItem() instanceof ArmorItem armorItem) {
-                        switch (armorItem.getSlot()) {
-                            case HEAD -> minYThreshold = entityBoundHeight * 0.6d;
-                            case CHEST -> minYThreshold = entityBoundHeight * 0.4d;
-                            case LEGS -> maxYThreshold = entityBoundHeight * 0.6d;
-                            case FEET -> maxYThreshold = entityBoundHeight * 0.4d;
-                        }
-                    }
-
-                    if (relativeHitY > maxYThreshold || relativeHitY < minYThreshold) {
-                        continue;
-                    }
-
+                if (stack != null && stack.is(BzTags.TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE)) {
                     passedCheck = true;
-                    break;
                 }
             }
 
