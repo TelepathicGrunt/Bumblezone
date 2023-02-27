@@ -28,6 +28,9 @@ public class BeeStingerEntity extends AbstractArrow {
     public BeeStingerEntity(Level level, LivingEntity livingEntity) {
         super(BzEntities.BEE_STINGER_ENTITY, livingEntity, level);
         this.setBaseDamage(0.5d);
+        if (livingEntity instanceof Player player && player.getAbilities().instabuild) {
+            this.pickup = Pickup.CREATIVE_ONLY;
+        }
     }
 
     @Override
