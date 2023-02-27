@@ -96,7 +96,6 @@ public class Bumblezone{
         forgeBus.addListener(HiddenEffect::hideEntity);
         forgeBus.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         forgeBus.addListener(CombCutterEnchantment::attemptFasterMining);
-        forgeBus.addListener(BeeStinger::bowUsable);
         forgeBus.addListener(EntityMisc::onBeeBreed);
         forgeBus.addListener(EntityMisc::onItemCrafted);
         forgeBus.addListener(EntityMisc::onHoneySlimeBred);

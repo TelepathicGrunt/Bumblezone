@@ -33,20 +33,4 @@ public class BeeStinger extends ArrowItem {
         int enchantLevel = bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
         return enchantLevel > 0;
     }
-
-    public static void bowUsable(LivingGetProjectileEvent event) {
-        if (event.getEntity() instanceof Player player &&
-            (event.getProjectileWeaponItemStack().is(Items.BOW) ||
-            event.getProjectileWeaponItemStack().is(Items.CROSSBOW)))
-        {
-            Inventory inventory = player.getInventory();
-            for(int i = 0; i < inventory.getContainerSize(); ++i) {
-                ItemStack itemstack1 = inventory.getItem(i);
-                if (itemstack1.is(BzItems.BEE_STINGER.get())) {
-                    event.setProjectileItemStack(itemstack1);
-                    return;
-                }
-            }
-        }
-    }
 }
