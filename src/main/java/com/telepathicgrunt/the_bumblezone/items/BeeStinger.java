@@ -25,17 +25,4 @@ public class BeeStinger extends ArrowItem {
         }
         return new BeeStingerEntity(level, livingEntity);
     }
-
-    public static ItemStack bowUsable(Player player, ItemStack weapon) {
-        if (weapon.is(Items.BOW) || weapon.is(Items.CROSSBOW)) {
-            Inventory inventory = player.getInventory();
-            for(int i = 0; i < inventory.getContainerSize(); ++i) {
-                ItemStack itemstack1 = inventory.getItem(i);
-                if (itemstack1.is(BzItems.BEE_STINGER)) {
-                    return itemstack1;
-                }
-            }
-        }
-        return ItemStack.EMPTY;
-    }
 }
