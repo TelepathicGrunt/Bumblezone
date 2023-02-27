@@ -1,3 +1,10 @@
+### **(V.6.6.14 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Bee Stinger is now tagged as `minecraft:arrows` and my hacky mixins/events removed for it.
+ Now any weapon that can take arrow tagged ammo should work with Bee Stinger too as ammo.
+
+
 ### **(V.6.6.13 Changes) (1.19.2 Minecraft)**
 
 ##### Teleporting:

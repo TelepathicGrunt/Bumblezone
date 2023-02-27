@@ -42,14 +42,4 @@ public abstract class PlayerEntityMixin extends Entity {
             if(this.wasUnderwater) cir.setReturnValue(true);
         }
     }
-
-    @Inject(method = "getProjectile(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
-            at = @At(value = "HEAD"),
-            cancellable = true)
-    private void thebumblezone_validProjectileToUse(ItemStack itemStack, CallbackInfoReturnable<ItemStack> cir) {
-        ItemStack ammo = BeeStinger.bowUsable((Player) (Object) this, itemStack);
-        if (!ammo.isEmpty()) {
-            cir.setReturnValue(ammo);
-        }
-    }
 }
