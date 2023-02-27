@@ -81,6 +81,14 @@
       "required": false
     },
     {
+      "id": "diamethysts:diamethyst_block",
+      "required": false
+    },
+    {
+      "id": "diamethysts:budding_diamethyst_block",
+      "required": false
+    },
+    {
       "id": "forbidden_arcanus:arcane_crystal_block",
       "required": false
     },
