@@ -39,7 +39,6 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerLocateProjectileEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerRightClickedBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
@@ -80,7 +79,6 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingGetProjectileEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
@@ -154,7 +152,6 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onPlayerTick);
         eventBus.addListener(BumblezoneForge::onPlayerRightClicked);
         eventBus.addListener(BumblezoneForge::onPickupItem);
-        eventBus.addListener(BumblezoneForge::onLocateProjectile);
         eventBus.addListener(BumblezoneForge::onGrantAdvancement);
         eventBus.addListener(BumblezoneForge::onInteractEntity);
         eventBus.addListener(BumblezoneForge::onItemCrafted);
@@ -338,13 +335,6 @@ public class BumblezoneForge {
 
     private static void onPickupItem(PlayerEvent.ItemPickupEvent event) {
         PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(event.getEntity(), event.getStack()));
-    }
-
-    private static void onLocateProjectile(LivingGetProjectileEvent event) {
-         ItemStack stack = PlayerLocateProjectileEvent.EVENT.invoke(new PlayerLocateProjectileEvent(event.getProjectileWeaponItemStack(), event.getEntity()), event.getProjectileItemStack());
-         if (stack != null) {
-             event.setProjectileItemStack(stack);
-         }
     }
 
     private static void onGrantAdvancement(AdvancementEvent event) {

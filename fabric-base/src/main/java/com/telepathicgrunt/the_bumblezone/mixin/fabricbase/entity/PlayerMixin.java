@@ -4,7 +4,6 @@ import com.google.common.util.concurrent.AtomicDouble;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerLocateProjectileEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BzShieldItem;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShieldBehavior;
@@ -14,12 +13,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemCooldowns;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
@@ -34,8 +30,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(Player.class)
 public abstract class PlayerMixin extends Entity {
 
-    @Shadow @Final private Abilities abilities;
-
     @Shadow protected boolean wasUnderwater;
 
     @Shadow @Final private Inventory inventory;
@@ -44,16 +38,6 @@ public abstract class PlayerMixin extends Entity {
 
     public PlayerMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
-    }
-
-    @Inject(method = "getProjectile(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;", at = @At(value = "HEAD"), cancellable = true)
-    private void bumblezone$getProjectile(ItemStack itemStack, CallbackInfoReturnable<ItemStack> cir) {
-        ItemStack defaultItem = this.abilities.instabuild ? new ItemStack(Items.ARROW) : null;
-        PlayerLocateProjectileEvent event = new PlayerLocateProjectileEvent(itemStack, (Player)((Object) this));
-        ItemStack ammo = PlayerLocateProjectileEvent.EVENT.invoke(event, defaultItem);
-        if (ammo != null && !ammo.isEmpty()) {
-            cir.setReturnValue(ammo);
-        }
     }
 
     @ModifyReturnValue(

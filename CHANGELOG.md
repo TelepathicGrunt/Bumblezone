@@ -1,3 +1,11 @@
+### **(V.6.6.12 Changes) (1.19.3 Minecraft)**
+
+##### Items:
+Bee Stinger is now tagged as `minecraft:arrows` and my hacky mixins/events removed for it.
+ Now any weapon that can take arrow tagged ammo should work with Bee Stinger too as ammo.
+ Also fixes incompat where Bumblezone caused other mod's Bow/Crossbow ammo to be replaced with vanilla arrow when shooting in creative mode.
+
+
 ### **(V.6.6.11 Changes) (1.19.3 Minecraft)**
 
 ##### Teleporting:
