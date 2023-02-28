@@ -55,6 +55,30 @@
       "required": false
     },
     {
+      "id": "environmental:cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "environmental:pink_wisteria_sapling",
+      "required": false
+    },
+    {
+      "id": "environmental:blue_wisteria_sapling",
+      "required": false
+    },
+    {
+      "id": "environmental:white_wisteria_sapling",
+      "required": false
+    },
+    {
+      "id": "environmental:purple_wisteria_sapling",
+      "required": false
+    },
+    {
+      "id": "environmental:cherry_leaf_pile",
+      "required": false
+    },
+    {
       "id": "forbidden_arcanus:cherry_leaf_carpet",
       "required": false
     },
@@ -288,6 +312,10 @@
     },
     {
       "id": "twilightforest:thorn_rose",
+      "required": false
+    },
+    {
+      "id": "woodworks:flowering_azalea_leaf_pile",
       "required": false
     }
   ]

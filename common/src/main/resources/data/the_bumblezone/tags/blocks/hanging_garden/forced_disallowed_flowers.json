@@ -180,6 +180,10 @@
       "required": false
     },
     {
+      "id": "environmental:dianthus",
+      "required": false
+    },
+    {
       "id": "expandeddelight:wild_asparagus",
       "required": false
     },
