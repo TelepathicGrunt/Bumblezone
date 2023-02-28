@@ -179,6 +179,26 @@
     {
       "id": "meadow:bag_of_juniper",
       "required": false
+    },
+    {
+      "id": "environmental:cherries",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:mulberry",
+      "required": false
+    },
+    {
+      "id": "neapolitan:strawberries",
+      "required": false
+    },
+    {
+      "id": "neapolitan:white_strawberries",
+      "required": false
+    },
+    {
+      "id": "autumnity:foul_berries",
+      "required": false
     }
   ],
   "possible_rewards": [
