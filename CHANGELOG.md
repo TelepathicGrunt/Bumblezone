@@ -4,6 +4,9 @@
 Bee Stinger is now tagged as `minecraft:arrows` and my hacky mixins/events removed for it.
  Now any weapon that can take arrow tagged ammo should work with Bee Stinger too as ammo.
 
+##### Mod Compat:
+Improved Bee Queen trades and Hanging Gardens compat with Abnormal team's mods.
+
 
 ### **(V.6.6.13 Changes) (1.19.2 Minecraft)**
 

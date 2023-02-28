@@ -90,6 +90,10 @@
       "required": false
     },
     {
+      "id": "upgrade_aquatic:flowering_rush",
+      "required": false
+    },
+    {
       "id": "wilderwild:cattail",
       "required": false
     },
