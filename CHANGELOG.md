@@ -1,3 +1,11 @@
+### **(V.6.6.13 Changes) (1.19.3 Minecraft)**
+
+##### Teleportation:
+Improved performance a bit with projectile impact code by ignoring projectiles with no owners.
+ Also will help prevent potential issues with any non-owner projectiles from other mods.
+ Fabric Botania's Mana Burst should no longer crash if Bumblezone and Twilight Forest is on together now.
+
+
 ### **(V.6.6.12 Changes) (1.19.3 Minecraft)**
 
 ##### Items:

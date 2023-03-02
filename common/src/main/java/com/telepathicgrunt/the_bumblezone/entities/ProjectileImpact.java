@@ -13,6 +13,9 @@ import net.minecraft.world.phys.Vec3;
 public class ProjectileImpact {
     public static boolean onProjectileImpact(ProjectileHitEvent event) {
         Projectile projectile = event.projectile();
+        if (projectile.getOwner() == null) {
+            return false;
+        }
 
         if (!ModChecker.PROJECTILE_IMPACT_HANDLED_COMPATS.isEmpty()) {
             for (ModCompat compat : ModChecker.PROJECTILE_IMPACT_HANDLED_COMPATS) {
