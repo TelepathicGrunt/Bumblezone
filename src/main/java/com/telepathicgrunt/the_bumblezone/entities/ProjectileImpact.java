@@ -14,6 +14,9 @@ public class ProjectileImpact {
 
     public static void onProjectileImpact(ProjectileImpactEvent event) {
         Projectile projectile = event.getProjectile();
+        if (projectile.getOwner() == null) {
+            return;
+        }
 
         if (ModChecker.arsNouveauPresent) {
             if (ArsNouveauCompat.isArsSpellProjectile(projectile)) {

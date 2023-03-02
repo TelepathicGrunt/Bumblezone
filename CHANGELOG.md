@@ -1,3 +1,10 @@
+### **(V.6.6.15 Changes) (1.19.2 Minecraft)**
+
+##### Teleportation:
+Improved performance a bit with projectile impact code by ignoring projectiles with no owners.
+ Also will help prevent potential issues with any non-owner projectiles from other mods.
+
+
 ### **(V.6.6.14 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
