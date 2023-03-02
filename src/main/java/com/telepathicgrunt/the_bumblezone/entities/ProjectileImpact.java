@@ -12,7 +12,7 @@ public class ProjectileImpact {
 
     public static boolean projectileImpactNotHandledByBz(HitResult hitResult, Projectile projectile) {
         if (projectile.getOwner() == null) {
-            return false;
+            return true;
         }
 
         if (ModChecker.twilightForestPresent && hitResult instanceof EntityHitResult entityHitResult) {
