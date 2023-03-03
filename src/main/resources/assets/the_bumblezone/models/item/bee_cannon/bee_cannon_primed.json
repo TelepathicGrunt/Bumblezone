@@ -2,5 +2,17 @@
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "the_bumblezone:item/bee_cannon/bee_cannon_primed"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, -90, 0],
+      "translation": [0, 0.55, 0],
+      "scale": [0.65, 0.65, 0.65]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, -90, 0],
+      "translation": [0, 0.55, 0],
+      "scale": [0.65, 0.65, 0.65]
+    }
   }
 }
