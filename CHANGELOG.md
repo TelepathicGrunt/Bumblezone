@@ -1,5 +1,10 @@
 ### **(V.6.6.14 Changes) (1.19.3 Minecraft)**
 
+##### Items:
+Fixed Honey Crystal Shard texture having 2 pixels not at 100% transparency
+
+Fixed Bee Cannon and Crystal Cannon not being rotated correctly when viewed in 3rd person or on Armor Stands
+
 ##### Blocks:
 Fixed waterlogged Super Candle wicks deleting the water when candle is broken.
 
