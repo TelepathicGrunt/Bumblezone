@@ -291,7 +291,7 @@ public class GeneralUtils {
     //////////////////////////////////////////////
 
     public static BlockPos getLowestLand(ChunkGenerator chunkGenerator, RandomState randomState, BlockPos centerPos, LevelHeightAccessor heightLimitView, boolean canBeOnLiquid, boolean canBeInLiquid) {
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(centerPos);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(centerPos.getX(), 1, centerPos.getZ());
         NoiseColumn blockView = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
         BlockState currentBlockstate = blockView.getBlock(mutable.getY());
         BlockState pastBlockstate = currentBlockstate;

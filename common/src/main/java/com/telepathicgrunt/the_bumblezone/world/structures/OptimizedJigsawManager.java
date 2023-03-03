@@ -120,6 +120,10 @@ public class OptimizedJigsawManager {
             if (pieceCenterY >= GeneralUtils.getMaxTerrainLimit(context.chunkGenerator()) - pieceBoundingBox.maxY()) {
                 return Optional.empty();
             }
+
+            if (pieceCenterY <= context.chunkGenerator().getMinY()) {
+                return Optional.empty();
+            }
         }
 
         int yAdjustment = pieceBoundingBox.minY() + startPiece.getGroundLevelDelta();
