@@ -1,5 +1,8 @@
 ### **(V.6.6.16 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Fixed waterlogged Super Candle wicks deleting the water when candle is broken.
+
 ##### Structures:
 Fixed some structures spawning at world bottom instead of on land.
 

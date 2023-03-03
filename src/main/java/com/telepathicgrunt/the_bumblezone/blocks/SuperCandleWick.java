@@ -218,7 +218,11 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock {
         if (blockState.getBlock() instanceof SuperCandleWick && !(lit && blockState.getValue(WATERLOGGED))) {
             boolean isBelowSoul = isSoulBelowInRange(levelAccessor, blockPos.below());
             Block wickBlock = (isBelowSoul && lit) ? BzBlocks.SUPER_CANDLE_WICK_SOUL.get() : BzBlocks.SUPER_CANDLE_WICK.get();
-            boolean litWick = levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState().setValue(LIT, lit), 11) && lit;
+            boolean litWick = levelAccessor.setBlock(blockPos, wickBlock.defaultBlockState()
+                        .setValue(LIT, lit)
+                        .setValue(WATERLOGGED, blockState.getValue(WATERLOGGED)
+                    ), 11) && lit;
+
             if (lit) {
                 levelAccessor.playSound(null, blockPos, BzSounds.SUPER_CANDLE_WICK_LIT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             }
