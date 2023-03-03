@@ -1,3 +1,9 @@
+### **(V.6.6.16 Changes) (1.19.2 Minecraft)**
+
+##### Structures:
+Fixed some structures spawning at world bottom instead of on land.
+
+
 ### **(V.6.6.15 Changes) (1.19.2 Minecraft)**
 
 ##### Teleportation:
