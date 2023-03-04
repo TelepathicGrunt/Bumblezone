@@ -23,7 +23,7 @@
     "containers.PotionBrewingAccessor",
     "containers.ResultSlotMixin",
     "containers.ShapedRecipeAccessor",
-    "containers.WorkbenchContainerMixin",
+    "containers.CraftingMenuMixin",
     "effects.MobEffectInstanceAccessor",
     "enchantments.EnchantmentHelperMixin",
     "enchantments.EnchantmentMixin",
