@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
+import com.telepathicgrunt.the_bumblezone.utils.fabricbase.PlatformSharedData;
 import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -188,5 +189,9 @@ public class PlatformHooksImpl {
                 return InteractionResultHolder.fail(itemStack);
             }
         }
+    }
+
+    public static Player getCraftingPlayer() {
+        return PlatformSharedData.craftingPlayer;
     }
 }

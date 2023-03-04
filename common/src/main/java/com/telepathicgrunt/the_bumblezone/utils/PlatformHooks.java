@@ -121,4 +121,9 @@ public class PlatformHooks {
     public static InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
         throw new NotImplementedException("PlatformHooks performItemUse is not implemented!");
     }
+
+    @ExpectPlatform
+    public static Player getCraftingPlayer() {
+        throw new NotImplementedException("PlatformHooks getCraftingPlayer is not implemented!");
+    }
 }

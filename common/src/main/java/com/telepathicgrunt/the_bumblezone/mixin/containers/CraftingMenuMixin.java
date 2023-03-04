@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CraftingMenu.class)
-public class WorkbenchContainerMixin {
+public class CraftingMenuMixin {
 
     @Shadow
     @Final
@@ -28,7 +28,7 @@ public class WorkbenchContainerMixin {
     @Inject(method = "slotsChanged(Lnet/minecraft/world/Container;)V",
             at = @At(value = "TAIL"),
             require = 0)
-    private void thebumblezone_recipeDiscoveredTrigger1(Container container, CallbackInfo ci) {
+    private void thebumblezone_recipeDiscoveredTrigger(Container container, CallbackInfo ci) {
         if (player instanceof ServerPlayer serverPlayer && this.resultSlots.getRecipeUsed() != null) {
             BzCriterias.RECIPE_DISCOVERED_TRIGGER.trigger(serverPlayer, resultSlots.getRecipeUsed().getId());
         }
