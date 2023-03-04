@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "the_bumblezone:recipe_discovered_hooked_recipe",
   "group": "the_bumblezone",
   "pattern": [
     "bbb",
