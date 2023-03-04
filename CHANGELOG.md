@@ -11,6 +11,9 @@ Fixed waterlogged Super Candle wicks deleting the water when candle is broken.
 ##### Structures:
 Fixed some structures spawning at world bottom instead of on land.
 
+##### Advancements:
+Fixed recipe discovering mixin to work better with some crafting menus. Fixed incompat with FastWorkbench
+
 
 ### **(V.6.6.13 Changes) (1.19.3 Minecraft)**
 
