@@ -457,6 +457,26 @@
       "required": false
     },
     {
+      "id": "spelunkery:rough_diamond_block",
+      "required": false
+    },
+    {
+      "id": "spelunkery:rough_cinnabar_block",
+      "required": false
+    },
+    {
+      "id": "spelunkery:cinnabar_block",
+      "required": false
+    },
+    {
+      "id": "spelunkery:rock_salt_block",
+      "required": false
+    },
+    {
+      "id": "spelunkery:polished_rock_salt_block",
+      "required": false
+    },
+    {
       "id": "twigs:polished_amethyst",
       "required": false
     },
