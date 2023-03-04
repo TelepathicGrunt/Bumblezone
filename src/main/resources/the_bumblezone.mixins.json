@@ -18,7 +18,7 @@
     "blocks.WaterEquivalenceMixin",
     "containers.PotionBrewingAccessor",
     "containers.ShapedRecipeAccessor",
-    "containers.WorkbenchContainerMixin",
+    "containers.CraftingMenuMixin",
     "effects.MobEffectInstanceAccessor",
     "entities.AbstractArrowMixin",
     "entities.AmphibiousNodeEvaluatorMixin",
