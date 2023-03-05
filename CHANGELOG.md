@@ -1,3 +1,9 @@
+### **(V.6.6.17 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Fixed String Curtain crash if Requiem is on.
+
+
 ### **(V.6.6.16 Changes) (1.19.2 Minecraft)**
 
 ##### Items:

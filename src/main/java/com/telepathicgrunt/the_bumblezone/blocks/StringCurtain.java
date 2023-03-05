@@ -34,12 +34,14 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 import org.quiltmc.qsl.block.content.registry.api.FlammableBlockEntry;
 
@@ -375,5 +377,24 @@ public class StringCurtain extends Block {
     @Override
     public PushReaction getPistonPushReaction(BlockState pState) {
         return PushReaction.DESTROY;
+    }
+
+
+    @Nullable
+    public static BlockPathTypes getCurtainBlockPathType(Entity mob, BlockGetter blockGetter, BlockPos blockPos, BlockPathTypes blockPathType) {
+        if (blockPathType == BlockPathTypes.OPEN && mob != null) {
+            boolean shouldBlockPathfinding =
+                    (mob instanceof Bee || mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                            !mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
+
+            if (!shouldBlockPathfinding && ModChecker.requiemPresent) {
+                shouldBlockPathfinding = RequiemCompat.isEntityUsingHostBee(mob);
+            }
+
+            if (shouldBlockPathfinding && blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
+                return BlockPathTypes.BLOCKED;
+            }
+        }
+        return null;
     }
 }
