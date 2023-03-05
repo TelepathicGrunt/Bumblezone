@@ -1,4 +1,4 @@
-### **(V.6.6.17 Changes) (1.19.3 Minecraft)**
+### **(V.6.6.17 Changes) (1.19.2 Minecraft)**
 
 ##### Entities:
 Fixed Bee Queen asking for air or saying satisfied when there is no super trade items available.
