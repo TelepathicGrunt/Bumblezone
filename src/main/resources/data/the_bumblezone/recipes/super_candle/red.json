@@ -6,10 +6,10 @@
       "item": "the_bumblezone:super_candle"
     },
     {
-      "item": "minecraft:red_dye"
+      "tag": "the_bumblezone:dyes/red"
     },
     {
-      "item": "minecraft:red_dye"
+      "tag": "the_bumblezone:dyes/red"
     }
   ],
   "result": {

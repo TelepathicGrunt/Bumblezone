@@ -6,10 +6,10 @@
       "item": "the_bumblezone:super_candle"
     },
     {
-      "item": "minecraft:light_blue_dye"
+      "tag": "the_bumblezone:dyes/light_blue"
     },
     {
-      "item": "minecraft:light_blue_dye"
+      "tag": "the_bumblezone:dyes/light_blue"
     }
   ],
   "result": {

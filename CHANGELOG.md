@@ -7,6 +7,10 @@ Fixed String Curtain crash if Requiem is on.
 Fixed Bee Queen asking for air or saying satisfied when there is no super trade items available.
  (Can happen if all items were put in disallowed tag or Queen trade files were all made empty)
 
+##### Items:
+All Bumblezone recipes that uses dyes now properly uses dye tags.
+ Other modded items that are tagged as a dye now should work for Bumblezone's items!
+
 
 ### **(V.6.6.16 Changes) (1.19.2 Minecraft)**
 

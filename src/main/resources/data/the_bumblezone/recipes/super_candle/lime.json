@@ -6,10 +6,10 @@
       "item": "the_bumblezone:super_candle"
     },
     {
-      "item": "minecraft:lime_dye"
+      "tag": "the_bumblezone:dyes/lime"
     },
     {
-      "item": "minecraft:lime_dye"
+      "tag": "the_bumblezone:dyes/lime"
     }
   ],
   "result": {
