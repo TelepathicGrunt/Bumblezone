@@ -13,6 +13,8 @@ Simplified and consolidated the model json for String Curtains and Super Candles
 
 Fixed improper blockstate when placing String Curtains in a very specific way by hand
 
+Fixed weirdness when trying to extend String Curtains that has a String Curtain already in front of it
+
 
 ### **(V.6.6.16 Changes) (1.19.2 Minecraft)**
 

@@ -282,6 +282,11 @@ public class StringCurtain extends Block {
         InteractionHand interactionHand = event.getHand();
         if (player != null && player.getItemInHand(interactionHand).is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
             BlockHitResult hitResult = event.getHitVec();
+            BlockState clickedState = event.getLevel().getBlockState(hitResult.getBlockPos());
+            if (clickedState.is(BzTags.STRING_CURTAINS)) {
+                return;
+            }
+
             BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
             BlockState aboveState = event.getLevel().getBlockState(pos);
             if (aboveState.is(BzTags.STRING_CURTAINS)) {
