@@ -260,6 +260,18 @@
     {
       "id": "wonderouswilds:firefly",
       "required": false
+    },
+    {
+      "id": "valleycraft:snail",
+      "required": false
+    },
+    {
+      "id": "valleycraft:sculk_snail",
+      "required": false
+    },
+    {
+      "id": "valleycraft:cave_snail",
+      "required": false
     }
   ]
 }
