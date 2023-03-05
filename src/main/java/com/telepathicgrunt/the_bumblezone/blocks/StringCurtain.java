@@ -65,6 +65,11 @@ public class StringCurtain extends Block {
         UseBlockCallback.EVENT.register(new ResourceLocation(Bumblezone.MODID, "string_below_string_curtain"),
             (player, level, interactionHand, hitResult) -> {
                 if (player != null && player.getItemInHand(interactionHand).is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
+                    BlockState clickedState = level.getBlockState(hitResult.getBlockPos());
+                    if (clickedState.is(BzTags.STRING_CURTAINS)) {
+                        return InteractionResult.PASS;
+                    }
+
                     BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
                     BlockState aboveState = level.getBlockState(pos);
                     if (aboveState.is(BzTags.STRING_CURTAINS)) {
