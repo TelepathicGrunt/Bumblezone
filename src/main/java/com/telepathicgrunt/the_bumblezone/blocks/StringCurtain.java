@@ -212,7 +212,7 @@ public class StringCurtain extends Block {
             return null;
         }
 
-        BlockState belowState = level.getBlockState(blockpos.below());
+        BlockState belowState = level.getBlockState(placeContext.getClickedPos().below());
 
         if(placeContext.getClickedFace().getAxis() != Direction.Axis.Y) {
             return defaultBlockState()
