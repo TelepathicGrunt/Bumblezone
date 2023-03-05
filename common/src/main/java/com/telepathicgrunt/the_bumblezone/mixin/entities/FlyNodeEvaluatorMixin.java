@@ -2,11 +2,8 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.FlyNodeEvaluator;
@@ -22,22 +19,8 @@ public class FlyNodeEvaluatorMixin extends WalkNodeEvaluator {
             require = 0)
     private BlockPathTypes thebumblezone_bzStringCurtainBlockingBees(BlockGetter blockGetter, BlockPos blockPos, Operation<BlockPathTypes> original) {
         BlockPathTypes blockPathType = original.call(blockGetter, blockPos);
-        if (blockPathType == BlockPathTypes.OPEN && this.mob != null) {
-            boolean shouldBlockPathfinding = (this.mob instanceof Bee || this.mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                    !this.mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
-
-            if (!shouldBlockPathfinding && !ModChecker.HOST_BEE_COMPATS.isEmpty()) {
-                for (ModCompat compat : ModChecker.HOST_BEE_COMPATS) {
-                    if (compat.isHostBee(this.mob)) {
-                        shouldBlockPathfinding = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldBlockPathfinding && blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
-                return BlockPathTypes.BLOCKED;
-            }
-        }
+        BlockPathTypes blocked = StringCurtain.getCurtainBlockPathType(this.mob, blockGetter, blockPos, blockPathType);
+        if (blocked != null) return blocked;
         return blockPathType;
     }
 }

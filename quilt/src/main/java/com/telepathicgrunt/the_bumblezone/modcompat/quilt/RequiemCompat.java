@@ -23,7 +23,8 @@ public class RequiemCompat implements ModCompat {
     @Override
     public boolean isHostBee(Entity entity) {
         Entity possessedEntity = PossessionComponent.getHost(entity);
-        return (possessedEntity instanceof Bee || possessedEntity != null && possessedEntity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+        return possessedEntity != null &&
+                (possessedEntity instanceof Bee && possessedEntity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
                 !possessedEntity.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
     }
 }

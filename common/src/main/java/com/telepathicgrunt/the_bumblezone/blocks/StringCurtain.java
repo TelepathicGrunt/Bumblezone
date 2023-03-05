@@ -32,12 +32,14 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -118,18 +120,7 @@ public class StringCurtain extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        boolean entityShouldBePushed = (entity instanceof Bee || entity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                !entity.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
-
-        if (!entityShouldBePushed && !ModChecker.HOST_BEE_COMPATS.isEmpty()) {
-            for (ModCompat compat : ModChecker.HOST_BEE_COMPATS) {
-                if (compat.isHostBee(entity)) {
-                    entityShouldBePushed = true;
-                    break;
-                }
-            }
-        }
-
+        boolean entityShouldBePushed = shouldBlockOffEntity(entity);
         if (entityShouldBePushed) {
             if (!entity.hasControllingPassenger() &&
                 !entity.isPassenger() &&
@@ -376,5 +367,32 @@ public class StringCurtain extends Block {
     @Override
     public PushReaction getPistonPushReaction(BlockState pState) {
         return PushReaction.DESTROY;
+    }
+
+    @Nullable
+    public static BlockPathTypes getCurtainBlockPathType(Entity mob, BlockGetter blockGetter, BlockPos blockPos, BlockPathTypes blockPathType) {
+        if (blockPathType == BlockPathTypes.OPEN && mob != null) {
+            boolean shouldBlockPathfinding = shouldBlockOffEntity(mob);
+            if (shouldBlockPathfinding && blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
+                return BlockPathTypes.BLOCKED;
+            }
+        }
+        return null;
+    }
+
+    public static boolean shouldBlockOffEntity(Entity mob) {
+        boolean shouldBlockPathfinding = (mob instanceof Bee || mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                !mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
+
+        if (!shouldBlockPathfinding && !ModChecker.HOST_BEE_COMPATS.isEmpty()) {
+            for (ModCompat compat : ModChecker.HOST_BEE_COMPATS) {
+                if (compat.isHostBee(mob)) {
+                    shouldBlockPathfinding = true;
+                    break;
+                }
+            }
+        }
+
+        return shouldBlockPathfinding;
     }
 }

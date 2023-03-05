@@ -2,9 +2,8 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -20,15 +19,8 @@ public class AmphibiousNodeEvaluatorMixin extends WalkNodeEvaluator {
             require = 0)
     private BlockPathTypes thebumblezone_bzStringCurtainBlockingBees(BlockGetter blockGetter, BlockPos blockPos, Operation<BlockPathTypes> original) {
         BlockPathTypes blockPathType = original.call(blockGetter, blockPos);
-        if (blockPathType == BlockPathTypes.OPEN && this.mob != null) {
-            if ((this.mob instanceof Bee || this.mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                !this.mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING))
-            {
-                if (blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
-                    return BlockPathTypes.BLOCKED;
-                }
-            }
-        }
+        BlockPathTypes blocked = StringCurtain.getCurtainBlockPathType(this.mob, blockGetter, blockPos, blockPathType);
+        if (blocked != null) return blocked;
         return blockPathType;
     }
 }
