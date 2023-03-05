@@ -1,21 +1,7 @@
 {
-  "credit": "Made with Blockbench",
+  "parent": "the_bumblezone:block/super_candle/template_candle_shape",
   "textures": {
     "0": "the_bumblezone:block/super_candle/candle_lit_blue",
     "particle": "the_bumblezone:block/super_candle/candle_lit_blue"
-  },
-  "elements": [
-    {
-      "from": [5, 0, 5],
-      "to": [11, 16, 11],
-      "faces": {
-        "north": {"uv": [0, 0, 6, 16], "texture": "#0"},
-        "east": {"uv": [0, 0, 6, 16], "texture": "#0"},
-        "south": {"uv": [0, 0, 6, 16], "texture": "#0"},
-        "west": {"uv": [0, 0, 6, 16], "texture": "#0"},
-        "up": {"uv": [6, 10, 12, 16], "texture": "#0"},
-        "down": {"uv": [6, 10, 12, 16], "texture": "#0"}
-      }
-    }
-  ]
+  }
 }

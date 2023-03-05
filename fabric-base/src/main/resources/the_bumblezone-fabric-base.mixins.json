@@ -14,7 +14,6 @@
     "client.KeyMappingAccessor",
     "client.ModelBakeryMixin",
     "client.ModelManagerMixin",
-    "client.MultiPlayerGameModeMixin",
     "client.ParticleEngineMixin",
     "client.ScreenEffectRendererMixin",
     "mods.MidnightConfigScreenMixin"
@@ -38,7 +37,6 @@
     "entity.PatrolSpawnerMixin",
     "entity.PlayerAdvancementsMixin",
     "entity.PlayerMixin",
-    "entity.ServerPlayerGameModeMixin",
     "entity.ServerPlayerMixin",
     "entity.ShieldMobMixin",
     "entity.ShulkerBulletMixin",

@@ -8,6 +8,14 @@ Fixed Bee Queen asking for air or saying satisfied when there is no super trade 
 All Bumblezone recipes that uses dyes now properly uses dye tags.
  Other modded items that are tagged as a dye now should work for Bumblezone's items!
 
+##### Blocks:
+Simplified and consolidated the model json for String Curtains and Super Candles
+
+Fixed improper blockstate when placing String Curtains in a very specific way by hand
+
+Fixed weirdness when trying to extend String Curtains that has a String Curtain already in front of it 
+ (Removed potentially problematic mixins on Fabric/Quilt that could've broken some block interactions)
+
 
 ### **(V.6.6.14 Changes) (1.19.3 Minecraft)**
 

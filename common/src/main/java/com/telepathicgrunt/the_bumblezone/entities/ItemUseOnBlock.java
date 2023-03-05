@@ -1,24 +1,27 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 
-import com.telepathicgrunt.the_bumblezone.events.ItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class ItemUseOnBlock {
 
-    public static boolean onItemUseOnBlock(ItemUseOnBlockEvent event) {
+    public static InteractionResult onItemUseOnBlock(PlayerItemUseOnBlockEvent event) {
         if (event.usingStack().is(BzTags.DO_ITEM_RIGHT_CLICK_CHECK_EARLIER)) {
-            return false;
+            return InteractionResult.PASS;
         }
 
-        return EntityTeleportationHookup.runItemUseOn(event.user(), event.clickedPos(), event.blockstate(), event.usingStack());
+        boolean success = EntityTeleportationHookup.runItemUseOn(event.user(), event.hitResult().getBlockPos(), event.level().getBlockState(event.hitResult().getBlockPos()), event.usingStack());
+
+        return success ? InteractionResult.SUCCESS : null;
     }
 
-    public static boolean onEarlyItemUseOnBlock(ItemUseEvent event) {
+    public static boolean onEarlyItemUseOnBlock(PlayerItemUseEvent event) {
         if (!event.usingStack().is(BzTags.DO_ITEM_RIGHT_CLICK_CHECK_EARLIER)) {
             return false;
         }

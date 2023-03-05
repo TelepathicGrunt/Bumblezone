@@ -7,8 +7,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.forge.BzConfigHandler;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
-import com.telepathicgrunt.the_bumblezone.events.ItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
@@ -39,8 +37,9 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerRightClickedBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixins.forge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
@@ -150,7 +149,6 @@ public class BumblezoneForge {
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onProjectileHitHigh);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onBlockBreak);
         eventBus.addListener(BumblezoneForge::onPlayerTick);
-        eventBus.addListener(BumblezoneForge::onPlayerRightClicked);
         eventBus.addListener(BumblezoneForge::onPickupItem);
         eventBus.addListener(BumblezoneForge::onGrantAdvancement);
         eventBus.addListener(BumblezoneForge::onInteractEntity);
@@ -325,14 +323,6 @@ public class BumblezoneForge {
         PlayerTickEvent.EVENT.invoke(new PlayerTickEvent(event.player, event.phase == TickEvent.Phase.END));
     }
 
-    private static void onPlayerRightClicked(PlayerInteractEvent.RightClickBlock event) {
-        InteractionResult result = PlayerRightClickedBlockEvent.EVENT.invoke(new PlayerRightClickedBlockEvent(event.getEntity(), event.getHand(), event.getPos(), event.getHitVec()));
-        if (result != null) {
-            event.setCancellationResult(result);
-            event.setCanceled(true);
-        }
-    }
-
     private static void onPickupItem(PlayerEvent.ItemPickupEvent event) {
         PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(event.getEntity(), event.getStack()));
     }
@@ -438,15 +428,17 @@ public class BumblezoneForge {
     }
 
     public static void onItemUseOnBlock(PlayerInteractEvent.RightClickBlock event) {
-        ItemUseOnBlockEvent eventBz = new ItemUseOnBlockEvent(event.getEntity(), event.getPos(), event.getEntity().level.getBlockState(event.getPos()), event.getItemStack());
-        if (ItemUseOnBlockEvent.EVENT_HIGH.invoke(eventBz)) {
+        PlayerItemUseOnBlockEvent eventBz = new PlayerItemUseOnBlockEvent(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec(), event.getItemStack());
+        InteractionResult result = PlayerItemUseOnBlockEvent.EVENT_HIGH.invoke(eventBz);
+        if (result != null) {
             event.setCanceled(true);
+            event.setCancellationResult(result);
         }
     }
 
     public static void onItemUse(PlayerInteractEvent.RightClickItem event) {
-        ItemUseEvent eventBz = new ItemUseEvent(event.getEntity(), event.getLevel(), event.getItemStack());
-        if (ItemUseEvent.EVENT_HIGH.invoke(eventBz)) {
+        PlayerItemUseEvent eventBz = new PlayerItemUseEvent(event.getEntity(), event.getLevel(), event.getItemStack());
+        if (PlayerItemUseEvent.EVENT_HIGH.invoke(eventBz)) {
             event.setCanceled(true);
         }
     }

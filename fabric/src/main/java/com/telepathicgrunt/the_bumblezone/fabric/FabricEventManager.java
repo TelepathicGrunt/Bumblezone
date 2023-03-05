@@ -3,8 +3,6 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
-import com.telepathicgrunt.the_bumblezone.events.ItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
@@ -17,6 +15,8 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStartEve
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.fabricbase.FabricBaseEventManager;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificationContextImplMixin;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -190,16 +190,14 @@ public class FabricEventManager {
     }
 
     public static InteractionResult onItemUseOnBlock(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
-        ItemUseOnBlockEvent event = new ItemUseOnBlockEvent(player, hitResult.getBlockPos(), world.getBlockState(hitResult.getBlockPos()), player.getItemInHand(hand));
-        if (ItemUseOnBlockEvent.EVENT_HIGH.invoke(event)) {
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.PASS;
+        PlayerItemUseOnBlockEvent event = new PlayerItemUseOnBlockEvent(player, world, hand, hitResult, player.getItemInHand(hand));
+        InteractionResult result = PlayerItemUseOnBlockEvent.EVENT_HIGH.invoke(event);
+        return result != null ? result : InteractionResult.PASS;
     }
 
     public static InteractionResultHolder<ItemStack> onItemUse(Player player, Level level, InteractionHand hand) {
-        ItemUseEvent event = new ItemUseEvent(player, level, player.getItemInHand(hand));
-        if (ItemUseEvent.EVENT_HIGH.invoke(event)) {
+        PlayerItemUseEvent event = new PlayerItemUseEvent(player, level, player.getItemInHand(hand));
+        if (PlayerItemUseEvent.EVENT_HIGH.invoke(event)) {
             return InteractionResultHolder.success(event.usingStack());
         }
         return InteractionResultHolder.pass(event.usingStack());

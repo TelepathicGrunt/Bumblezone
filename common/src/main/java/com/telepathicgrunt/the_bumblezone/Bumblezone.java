@@ -20,8 +20,6 @@ import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.Polle
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
-import com.telepathicgrunt.the_bumblezone.events.ItemUseEvent;
-import com.telepathicgrunt.the_bumblezone.events.ItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
@@ -49,8 +47,9 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerRightClickedBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
@@ -83,15 +82,15 @@ public class Bumblezone{
         PlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
         EntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
         BlockBreakEvent.EVENT_LOWEST.addListener(BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
-        PlayerRightClickedBlockEvent.EVENT.addListener(StringCurtain::onBlockInteractEvent);
         PlayerEntityInteractEvent.EVENT.addListener(BeeInteractivity::onEntityInteractEvent);
         EntityDeathEvent.EVENT.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
         ServerLevelTickEvent.EVENT.addListener(BzWorldSavedData::worldTick);
         PlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
         EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
         EntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
-        ItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
-        ItemUseEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
+        PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(StringCurtain::onBlockInteractEvent);
+        PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
+        PlayerItemUseEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onEarlyItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.
         ProjectileHitEvent.EVENT_HIGH.addListener(ProjectileImpact::onProjectileImpact); // High because we want to cancel other mod's impact checks and stuff if it hits a hive.
         EntityVisibilityEvent.EVENT.addListener(HiddenEffect::hideEntity);
         EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantment::entityHurtEvent);

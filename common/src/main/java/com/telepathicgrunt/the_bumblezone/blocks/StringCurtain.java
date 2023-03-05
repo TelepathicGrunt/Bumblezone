@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerRightClickedBlockEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -190,7 +190,7 @@ public class StringCurtain extends Block {
             return null;
         }
 
-        BlockState belowState = level.getBlockState(blockpos.below());
+        BlockState belowState = level.getBlockState(placeContext.getClickedPos().below());
 
         if(placeContext.getClickedFace().getAxis() != Direction.Axis.Y) {
             return defaultBlockState()
@@ -280,11 +280,16 @@ public class StringCurtain extends Block {
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
-    public static InteractionResult onBlockInteractEvent(PlayerRightClickedBlockEvent event) {
-        Player player = event.player();
+    public static InteractionResult onBlockInteractEvent(PlayerItemUseOnBlockEvent event) {
+        Player player = event.user();
         InteractionHand interactionHand = event.hand();
         if (player != null && player.getItemInHand(interactionHand).is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
             BlockHitResult hitResult = event.hitResult();
+            BlockState clickedState = event.level().getBlockState(hitResult.getBlockPos());
+            if (clickedState.is(BzTags.STRING_CURTAINS)) {
+                return null;
+            }
+
             BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
             BlockState aboveState = player.getLevel().getBlockState(pos);
             if (aboveState.is(BzTags.STRING_CURTAINS)) {
@@ -296,7 +301,7 @@ public class StringCurtain extends Block {
                 ));
 
                 if (interactionResult != InteractionResult.PASS) {
-                    return interactionResult;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
