@@ -414,8 +414,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get());
 
                         List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.keySet().stream()
-                                .filter(i -> i.getItemCategory() != null &&
-                                        (!i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) ||
+                                .filter(i -> ((i.getItemCategory() != null &&
+                                        !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS)) ||
                                         i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS)))
                                 .toList();
 

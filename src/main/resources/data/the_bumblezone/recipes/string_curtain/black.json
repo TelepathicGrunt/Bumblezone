@@ -17,7 +17,7 @@
       "item": "minecraft:glass"
     },
     "d": {
-      "item": "minecraft:black_dye"
+      "tag": "the_bumblezone:dyes/black"
     }
   },
   "result": {
