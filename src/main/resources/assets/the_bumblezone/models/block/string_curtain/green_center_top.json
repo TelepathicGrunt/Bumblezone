@@ -1,50 +1,7 @@
 {
+  "parent": "the_bumblezone:block/string_curtain/template_center_top",
   "textures": {
     "main": "the_bumblezone:block/string_curtain/green_top",
     "particle": "the_bumblezone:block/string_curtain/green_top"
-  },
-  "render_type": "minecraft:cutout",
-  "elements": [{
-    "from": [0, 14, 7],
-    "to": [16, 16, 9],
-    "faces": {
-      "north": {
-        "uv": [0, 0, 16, 2],
-        "texture": "#main"
-      },
-      "east": {
-        "uv": [0, 0, 2, 2],
-        "texture": "#main"
-      },
-      "south": {
-        "uv": [0, 0, 16, 2],
-        "texture": "#main"
-      },
-      "west": {
-        "uv": [0, 0, 2, 2],
-        "texture": "#main"
-      },
-      "up": {
-        "uv": [0, 0, 16, 2],
-        "texture": "#main"
-      },
-      "down": {
-        "uv": [0, 2, 16, 0],
-        "texture": "#main"
-      }
-    }
-  }, {
-    "from": [0, 0, 8],
-    "to": [16, 14, 8],
-    "faces": {
-      "north": {
-        "uv": [0, 2, 16, 16],
-        "texture": "#main"
-      },
-      "south": {
-        "uv": [16, 2, 0, 16],
-        "texture": "#main"
-      }
-    }
-  }]
+  }
 }
