@@ -106,6 +106,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private UUID persistentAngerTarget;
     private int underWaterTicks;
     private int poseTicks;
+    private boolean hasTrades = true;
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
         super(type, world);
@@ -402,10 +403,39 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 this.acknowledgedPlayers.clear();
             }
 
-            if (!this.isAngry() && (this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
+            if (hasTrades && !this.isAngry() && (this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
+                List<Player> nearbyPlayers = null;
+
+                if (getRemainingSuperTradeTime() == 0) {
+                    nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
+
+                    if (nearbyPlayers.size() > 0) {
+                        setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks);
+
+                        List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.keySet().stream()
+                                .filter(i -> i.isEnabled(level.enabledFeatures()) &&
+                                        (!i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) ||
+                                        i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS)))
+                                .toList();
+
+                        if (allowedSuperTradeItems.size() > 0) {
+                            setSuperTradeItem(allowedSuperTradeItems.get(getRandom().nextInt(allowedSuperTradeItems.size())).getDefaultInstance());
+                            getSuperTradeItem().grow(BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified);
+                        }
+                        else {
+                            hasTrades = false;
+                            setRemainingSuperTradeTime(0);
+                            return;
+                        }
+                    }
+                }
+
                 if (getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() > 0) {
                     if (getRemainingSuperTradeTime() > minNotifyTime) {
-                        List<Player> nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
+                        if (nearbyPlayers == null) {
+                            nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
+                        }
+
                         for (Player player : nearbyPlayers) {
                             if (!this.acknowledgedPlayers.contains(player.getUUID())) {
                                 player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
@@ -417,22 +447,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     return;
                 }
 
-                List<Player> nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
-                if (getRemainingSuperTradeTime() == 0 && nearbyPlayers.size() > 0) {
-                    setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks);
-
-                    List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.keySet().stream()
-                            .filter(i -> !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) ||
-                                    i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS))
-                            .toList();
-
-                    if (allowedSuperTradeItems.size() > 0) {
-                        setSuperTradeItem(allowedSuperTradeItems.get(getRandom().nextInt(allowedSuperTradeItems.size())).getDefaultInstance());
-                        getSuperTradeItem().grow(BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified);
-                    }
-                }
-
-                if (getRemainingSuperTradeTime() >= minNotifyTime) {
+                if (!getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() >= minNotifyTime && nearbyPlayers != null) {
                     boolean notifiedAPlayer = false;
                     for (Player player : nearbyPlayers) {
                         if (!this.acknowledgedPlayers.contains(player.getUUID())) {

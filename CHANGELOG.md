@@ -1,3 +1,10 @@
+### **(V.6.6.15 Changes) (1.19.3 Minecraft)**
+
+##### Entities:
+Fixed Bee Queen asking for air or saying satisfied when there is no super trade items available.
+ (Can happen if all items were put in disallowed tag or Queen trade files were all made empty)
+
+
 ### **(V.6.6.14 Changes) (1.19.3 Minecraft)**
 
 ##### Items:
