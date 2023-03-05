@@ -146,14 +146,7 @@ public class StringCurtain extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        boolean entityShouldBePushed =
-                (entity instanceof Bee || entity.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                        !entity.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
-
-        if (!entityShouldBePushed && ModChecker.requiemPresent) {
-            entityShouldBePushed = RequiemCompat.isEntityUsingHostBee(entity);
-        }
-
+        boolean entityShouldBePushed = shouldBlockOffEntity(entity);
         if (entityShouldBePushed) {
             if (!entity.hasControllingPassenger() &&
                 !entity.isPassenger() &&
@@ -383,18 +376,23 @@ public class StringCurtain extends Block {
     @Nullable
     public static BlockPathTypes getCurtainBlockPathType(Entity mob, BlockGetter blockGetter, BlockPos blockPos, BlockPathTypes blockPathType) {
         if (blockPathType == BlockPathTypes.OPEN && mob != null) {
-            boolean shouldBlockPathfinding =
-                    (mob instanceof Bee || mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                            !mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
-
-            if (!shouldBlockPathfinding && ModChecker.requiemPresent) {
-                shouldBlockPathfinding = RequiemCompat.isEntityUsingHostBee(mob);
-            }
-
+            boolean shouldBlockPathfinding = shouldBlockOffEntity(mob);
             if (shouldBlockPathfinding && blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
                 return BlockPathTypes.BLOCKED;
             }
         }
         return null;
+    }
+
+    public static boolean shouldBlockOffEntity(Entity mob) {
+        boolean shouldBlockPathfinding =
+                (mob instanceof Bee || mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                    !mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
+
+        if (!shouldBlockPathfinding && ModChecker.requiemPresent) {
+            shouldBlockPathfinding = RequiemCompat.isEntityUsingHostBee(mob);
+        }
+
+        return shouldBlockPathfinding;
     }
 }
