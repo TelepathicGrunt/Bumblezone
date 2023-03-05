@@ -317,6 +317,10 @@
     {
       "id": "woodworks:flowering_azalea_leaf_pile",
       "required": false
+    },
+    {
+      "id": "valleycraft:wild_amethystle",
+      "required": false
     }
   ]
 }

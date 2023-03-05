@@ -1,0 +1,28 @@
+{
+  "valleycraft:mossy_sheep": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 2
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "valleycraft:pupkin": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:pumpkin_stem" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}
