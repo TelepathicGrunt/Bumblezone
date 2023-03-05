@@ -3,6 +3,10 @@
 ##### Mod Compat:
 Fixed String Curtain crash if Requiem is on.
 
+##### Entities:
+Fixed Bee Queen asking for air or saying satisfied when there is no super trade items available.
+ (Can happen if all items were put in disallowed tag or Queen trade files were all made empty)
+
 
 ### **(V.6.6.16 Changes) (1.19.2 Minecraft)**
 
