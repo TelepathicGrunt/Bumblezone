@@ -6,19 +6,19 @@
       "item": "the_bumblezone:bumble_bee_chestplate_1"
     },
     {
-      "item": "minecraft:cyan_dye"
+      "tag": "the_bumblezone:dyes/cyan"
     },
     {
-      "item": "minecraft:cyan_dye"
+      "tag": "the_bumblezone:dyes/cyan"
     },
     {
-      "item": "minecraft:pink_dye"
+      "tag": "the_bumblezone:dyes/pink"
     },
     {
-      "item": "minecraft:pink_dye"
+      "tag": "the_bumblezone:dyes/pink"
     },
     {
-      "item": "minecraft:white_dye"
+      "tag": "the_bumblezone:dyes/white"
     }
   ],
   "result": {

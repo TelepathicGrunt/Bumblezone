@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:orange_dye",
+    {
+      "id": "#c:orange_dyes",
+      "required": false
+    },
+    {
+      "id": "#forge:dyes/orange",
+      "required": false
+    }
+  ]
+}
