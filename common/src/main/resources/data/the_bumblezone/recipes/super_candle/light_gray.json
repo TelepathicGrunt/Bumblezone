@@ -6,10 +6,10 @@
       "item": "the_bumblezone:super_candle"
     },
     {
-      "item": "minecraft:light_gray_dye"
+      "tag": "the_bumblezone:dyes/light_gray"
     },
     {
-      "item": "minecraft:light_gray_dye"
+      "tag": "the_bumblezone:dyes/light_gray"
     }
   ],
   "result": {

@@ -17,7 +17,7 @@
       "item": "minecraft:glass"
     },
     "d": {
-      "item": "minecraft:lime_dye"
+      "tag": "the_bumblezone:dyes/lime"
     }
   },
   "result": {
