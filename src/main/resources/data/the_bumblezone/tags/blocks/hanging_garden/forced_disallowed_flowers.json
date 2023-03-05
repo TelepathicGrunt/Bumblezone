@@ -498,6 +498,62 @@
     {
       "id": "undergarden:shimmerweed",
       "required": false
+    },
+    {
+      "id": "valleycraft:black_dahlia",
+      "required": false
+    },
+    {
+      "id": "valleycraft:black_tulip",
+      "required": false
+    },
+    {
+      "id": "valleycraft:jungle_bush",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_wheat",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_potato",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_carrot",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_beet",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_fire_pepper",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_miners_lettuce",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_cave_root",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_onion",
+      "required": false
+    },
+    {
+      "id": "valleycraft:faded_soul_rose",
+      "required": false
+    },
+    {
+      "id": "valleycraft:soul_rose",
+      "required": false
+    },
+    {
+      "id": "valleycraft:blue_soul_rose",
+      "required": false
     }
   ]
 }
