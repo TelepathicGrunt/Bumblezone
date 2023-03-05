@@ -147,6 +147,26 @@
     {
       "id": "windswept:sweet_berry_bowl",
       "required": false
+    },
+    {
+      "id": "spectrum:honey_pastry",
+      "required": false
+    },
+    {
+      "id": "valleycraft:syrupy_honeycomb",
+      "required": false
+    },
+    {
+      "id": "valleycraft:honeyed_apple",
+      "required": false
+    },
+    {
+      "id": "valleycraft:crystallized_honeydrop",
+      "required": false
+    },
+    {
+      "id": "valleycraft:honey_bottle_block",
+      "required": false
     }
   ],
   "possible_rewards": [

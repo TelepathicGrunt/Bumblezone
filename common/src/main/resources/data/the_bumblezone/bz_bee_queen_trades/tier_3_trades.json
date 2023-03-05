@@ -67,6 +67,14 @@
     {
       "id": "bk:honey_extractor",
       "required": false
+    },
+    {
+      "id": "valleycraft:honey_glazed_crepe",
+      "required": false
+    },
+    {
+      "id": "valleycraft:crystallized_honey_necklace",
+      "required": false
     }
   ],
   "possible_rewards": [
