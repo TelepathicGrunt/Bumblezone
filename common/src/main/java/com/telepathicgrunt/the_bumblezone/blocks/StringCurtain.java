@@ -381,8 +381,9 @@ public class StringCurtain extends Block {
     }
 
     public static boolean shouldBlockOffEntity(Entity mob) {
-        boolean shouldBlockPathfinding = (mob instanceof Bee || mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
-                !mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
+        boolean shouldBlockPathfinding =
+                (mob instanceof Bee || mob.getType().is(BzTags.STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB)) &&
+                    !mob.getType().is(BzTags.STRING_CURTAIN_FORCE_ALLOW_PATHFINDING);
 
         if (!shouldBlockPathfinding && !ModChecker.HOST_BEE_COMPATS.isEmpty()) {
             for (ModCompat compat : ModChecker.HOST_BEE_COMPATS) {
