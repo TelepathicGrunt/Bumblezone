@@ -10,8 +10,8 @@
   "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "↓%s",
   "the_bumblezone.container.crystalline_flower.too_many_enchants": "Enchant Limit 3",
 
-  "death.attack.crystallineFlower": "%1$s was poked to death by a crystalline flower",
-  "death.attack.crystallineFlower.player": "%1$s was poked to death by a crystalline flower whilst trying to escape %2$s",
+  "death.attack.crystalline_flower": "%1$s was poked to death by a crystalline flower",
+  "death.attack.crystalline_flower.player": "%1$s was poked to death by a crystalline flower whilst trying to escape %2$s",
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",

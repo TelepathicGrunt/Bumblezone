@@ -19,6 +19,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -31,8 +32,8 @@ public class StinglessBeeHelmet extends BeeArmor {
     public static Set<Entity> BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE = new ObjectArraySet<>();
     public static int PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;
 
-    public StinglessBeeHelmet(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {
-        super(material, slot, properties, variant, false);
+    public StinglessBeeHelmet(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, int variant) {
+        super(material, armorType, properties, variant, false);
     }
 
     /**

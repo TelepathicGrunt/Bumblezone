@@ -10,8 +10,8 @@
   "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "↓%s",
   "the_bumblezone.container.crystalline_flower.too_many_enchants": "Ліміт чарів - 3",
 
-  "death.attack.crystallineFlower": "%1$s був затицяний до смерті кришталевою квіткою",
-  "death.attack.crystallineFlower.player": "%1$s був затицяний до смерті кришталевою квіткою намагаючись втікти від %2$s",
+  "death.attack.crystalline_flower": "%1$s був затицяний до смерті кришталевою квіткою",
+  "death.attack.crystalline_flower.player": "%1$s був затицяний до смерті кришталевою квіткою намагаючись втікти від %2$s",
 
   "block.the_bumblezone.porous_honeycomb_block": "Пористий стільниковий блок",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Заповнений пористий стільниковий блок",

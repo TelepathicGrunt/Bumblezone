@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -111,8 +112,8 @@ public class RecipeDiscoveredHookedShapedRecipe extends ShapedRecipe {
 
 
             JsonObject result = new JsonObject();
-            result.addProperty("item", BuiltInRegistries.ITEM.getKey(recipe.getResultItem().getItem()).toString());
-            result.addProperty("count", recipe.getResultItem().getCount());
+            result.addProperty("item", BuiltInRegistries.ITEM.getKey(recipe.getResultItem(RegistryAccess.EMPTY).getItem()).toString());
+            result.addProperty("count", recipe.getResultItem(RegistryAccess.EMPTY).getCount());
             json.add("result", result);
 
             return json;
@@ -145,7 +146,7 @@ public class RecipeDiscoveredHookedShapedRecipe extends ShapedRecipe {
                 ingredient.toNetwork(buffer);
             }
 
-            buffer.writeItem(recipe.getResultItem());
+            buffer.writeItem(recipe.getResultItem(RegistryAccess.EMPTY));
         }
     }
 }

@@ -31,7 +31,7 @@ public interface ItemExtension {
 
     default EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
         if (stack.getItem() instanceof ArmorItem) {
-            return ((ArmorItem)stack.getItem()).getSlot();
+            return ((ArmorItem)stack.getItem()).getEquipmentSlot();
         }
 
         return EquipmentSlot.MAINHAND;

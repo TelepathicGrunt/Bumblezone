@@ -31,12 +31,12 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
     public ItemStack execute(BlockSource source, ItemStack stack) {
         BucketItem bucketitem = (BucketItem) stack.getItem();
         ServerLevel world = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = world.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
-        if (bucketitem.emptyContents(null, world, position, null)) {
-            bucketitem.checkExtraContent(null, world, stack, position);
+        if (bucketitem.emptyContents(null, world, dispenseBlockPos, null)) {
+            bucketitem.checkExtraContent(null, world, stack, dispenseBlockPos);
             return new ItemStack(Items.BUCKET);
         }
         else if (blockstate.is(BzBlocks.HONEYCOMB_BROOD.get()) && stack.is(BzTags.BEE_FEEDING_ITEMS)) {
@@ -45,18 +45,18 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {
                 // the front of the block
-                BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(position);
+                BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(dispenseBlockPos);
                 blockpos.move(blockstate.getValue(HoneycombBrood.FACING).getOpposite());
 
                 // do nothing if front is blocked off
                 if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
+                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                     beeEntity.setBaby(true);
                     if (PlatformHooks.canEntitySpawn(beeEntity, world, beeEntity.position().x(), beeEntity.position().y(), beeEntity.position().z(), null, MobSpawnType.DISPENSER) != -1) {
                         world.addFreshEntity(beeEntity);
-                        world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 0));
+                        world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, 0));
                     }
                     else {
                         deniedBeeSpawn = true;
@@ -69,9 +69,9 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
                         for(double zOffset = 0; zOffset <= 1; zOffset++) {
                             world.sendParticles(
                                     ParticleTypes.HEART,
-                                    position.getX() + xOffset,
-                                    position.getY() + yOffset - 0.4f,
-                                    position.getZ() + zOffset,
+                                    dispenseBlockPos.getX() + xOffset,
+                                    dispenseBlockPos.getY() + yOffset - 0.4f,
+                                    dispenseBlockPos.getZ() + zOffset,
                                     1,
                                     world.getRandom().nextFloat() * 0.3f - 0.15f,
                                     world.getRandom().nextFloat() * 0.2f - 0.1f,
@@ -81,7 +81,7 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
                     }
                 }
 
-                world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 3));
+                world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, 3));
             }
 
             if (!deniedBeeSpawn) {

@@ -30,9 +30,9 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
         ServerLevel world = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = world.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
         if (blockstate.is(BzBlocks.HONEYCOMB_BROOD.get()) && stack.is(BzTags.BEE_FEEDING_ITEMS)) {
             boolean deniedBeeSpawn = false;
@@ -42,18 +42,18 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
                 int stage = blockstate.getValue(HoneycombBrood.STAGE);
                 if (stage == 3) {
                     // the front of the block
-                    BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(position);
+                    BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(dispenseBlockPos);
                     blockpos.move(blockstate.getValue(HoneycombBrood.FACING).getOpposite());
 
                     // do nothing if front is blocked off
                     if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                         Mob beeEntity = EntityType.BEE.create(world);
                         beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
-                        beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
+                        beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                         beeEntity.setBaby(true);
                         if (PlatformHooks.canEntitySpawn(beeEntity, world, beeEntity.position().x(), beeEntity.position().y(), beeEntity.position().z(), null, MobSpawnType.DISPENSER) != -1) {
                             world.addFreshEntity(beeEntity);
-                            world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, 0));
+                            world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, 0));
                         }
                         else {
                             deniedBeeSpawn = true;
@@ -61,7 +61,7 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
                     }
                 }
                 else {
-                    world.setBlockAndUpdate(position, blockstate.setValue(HoneycombBrood.STAGE, stage + 1));
+                    world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, stage + 1));
                 }
             }
 

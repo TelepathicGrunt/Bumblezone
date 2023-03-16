@@ -190,7 +190,7 @@ public class BumblezoneForge {
         RegisterCreativeTabsEvent.EVENT.invoke(new RegisterCreativeTabsEvent((id, operator, initialDisplayItems) ->
                 event.registerCreativeModeTab(id, builder -> {
                     operator.accept(builder);
-                    builder.displayItems((flag, output, bl) -> {
+                    builder.displayItems((flag, output) -> {
                         List<ItemStack> stacks = Lists.newArrayList();
                         initialDisplayItems.accept(stacks);
                         output.acceptAll(stacks);
@@ -260,8 +260,8 @@ public class BumblezoneForge {
     private static Pack.Info createInfoForLatest(Component description, boolean hidden) {
         return new Pack.Info(
                 description,
-                SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA.bridgeType),
-                SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES.bridgeType),
+                SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA),
+                SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES),
                 FeatureFlagSet.of(),
                 hidden
         );

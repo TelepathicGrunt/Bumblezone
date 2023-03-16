@@ -75,7 +75,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
             showJumpParticles((ServerLevel)level, entity);
         }
 
-        if (entity.causeFallDamage(fallDistance, 0.2F, DamageSource.FALL)) {
+        if (entity.causeFallDamage(fallDistance, 0.2F, level.damageSources().fall())) {
             entity.playSound(this.soundType.getFallSound(), this.soundType.getVolume() * 0.5F, this.soundType.getPitch() * 0.75F);
         }
     }

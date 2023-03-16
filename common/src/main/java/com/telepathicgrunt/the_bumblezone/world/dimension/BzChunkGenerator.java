@@ -190,8 +190,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         NoiseSettings noisesettings = this.settings.value().noiseSettings().clampToHeightAccessor(levelHeightAccessor);
         int i = noisesettings.getCellHeight();
         int j = noisesettings.minY();
-        int k = Mth.intFloorDiv(j, i);
-        int l = Mth.intFloorDiv(noisesettings.height(), i);
+        int k = Mth.floorDiv(j, i);
+        int l = Mth.floorDiv(noisesettings.height(), i);
         if (l > 0) {
             BlockState[] ablockstate;
             if (mutableObject == null) {
@@ -269,8 +269,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
         NoiseSettings noisesettings = this.settings.value().noiseSettings().clampToHeightAccessor(chunkAccess.getHeightAccessorForGeneration());
         int i = noisesettings.minY();
-        int j = Mth.intFloorDiv(i, noisesettings.getCellHeight());
-        int k = Mth.intFloorDiv(noisesettings.height(), noisesettings.getCellHeight());
+        int j = Mth.floorDiv(i, noisesettings.getCellHeight());
+        int k = Mth.floorDiv(noisesettings.height(), noisesettings.getCellHeight());
         if (k <= 0) {
             return CompletableFuture.completedFuture(chunkAccess);
         }

@@ -30,19 +30,19 @@ public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBe
      */
     public ItemStack execute(BlockSource source, ItemStack stack) {
         ServerLevel world = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = world.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
         if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
             if (PotionOfBeesCompat.isLingeringPotionOfBeesItem(stack)) {
-                PotionOfBeesCompat.reviveBroodsInRange(world, position, 3);
+                PotionOfBeesCompat.reviveBroodsInRange(world, dispenseBlockPos, 3);
             }
             else if (PotionOfBeesCompat.isSplashPotionOfBeesItem(stack)) {
-                PotionOfBeesCompat.reviveBroodsInRange(world, position, 1);
+                PotionOfBeesCompat.reviveBroodsInRange(world, dispenseBlockPos, 1);
             }
             else {
-                world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                world.setBlockAndUpdate(dispenseBlockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                     .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
                     .setValue(HoneycombBrood.STAGE, 3));
             }

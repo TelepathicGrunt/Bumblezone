@@ -10,8 +10,8 @@
   "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "결정꽃 높이 ↓%s",
   "the_bumblezone.container.crystalline_flower.too_many_enchants": "마법 부여 제한: 3",
 
-  "death.attack.crystallineFlower": "%1$s이(가) 결정꽃에 찔려 죽었습니다",
-  "death.attack.crystallineFlower.player": "%1$s이(가) %2$s에게서 도망치려다 결정꽃에 찔려 죽었습니다",
+  "death.attack.crystalline_flower": "%1$s이(가) 결정꽃에 찔려 죽었습니다",
+  "death.attack.crystalline_flower.player": "%1$s이(가) %2$s에게서 도망치려다 결정꽃에 찔려 죽었습니다",
 
   "block.the_bumblezone.porous_honeycomb_block": "다공성 벌집 조각 블록",
   "block.the_bumblezone.filled_porous_honeycomb_block": "꿀이 찬 다공성 벌집 조각 블록",

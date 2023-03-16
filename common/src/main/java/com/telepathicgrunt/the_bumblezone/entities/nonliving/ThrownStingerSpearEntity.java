@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -104,7 +105,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         }
 
         Entity owner = this.getOwner();
-        DamageSource damagesource = DamageSource.trident(this, owner == null ? this : owner);
+        DamageSource damagesource = damageSources().trident(this, owner == null ? this : owner);
         dealtDamage = true;
         SoundEvent soundevent = BzSounds.STINGER_SPEAR_HIT.get();
         if (entity.hurt(damagesource, damageAmount)) {

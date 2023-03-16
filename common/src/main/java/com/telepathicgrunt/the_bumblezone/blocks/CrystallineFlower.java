@@ -19,7 +19,9 @@ import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -28,6 +30,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,6 +66,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class CrystallineFlower extends BaseEntityBlock {
@@ -122,7 +128,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 double xDiff = Math.abs(livingEntity.getX() - livingEntity.xOld);
                 double zDiff = Math.abs(livingEntity.getZ() - livingEntity.zOld);
                 if (xDiff >= (double)0.001F || zDiff >= (double)0.001F) {
-                    livingEntity.hurt(BzDamageSources.CRYSTALLINE_FLOWER, 1.5f);
+                    livingEntity.hurt(level.damageSources().source(BzDamageSources.CRYSTALLINE_FLOWER_TYPE), 1.5f);
 
                     if (livingEntity.isDeadOrDying() &&
                         !livingEntity.wasExperienceConsumed() &&

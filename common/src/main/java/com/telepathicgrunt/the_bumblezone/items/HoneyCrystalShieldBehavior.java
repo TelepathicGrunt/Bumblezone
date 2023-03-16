@@ -3,11 +3,17 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,27 +21,31 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+
+import java.util.Optional;
 
 public class HoneyCrystalShieldBehavior {
     /**
      * Deals massive damage to shield when blocking explosion or getting fire damage with Honey Crystal Shield
      */
     public static boolean damageShieldFromExplosionAndFire(DamageSource source, Player player) {
+        DamageSources damageSources = player.level.damageSources();
 
         // checks for explosion and player
-        if ((source.isExplosion() || source.isFire())) {
+        if (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)) {
             if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
                 if(player instanceof ServerPlayer) {
                     BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.trigger((ServerPlayer) player);
                 }
 
-                if (source.isExplosion() && player.isBlocking()) {
+                if (source.is(DamageTypeTags.IS_EXPLOSION) && player.isBlocking()) {
                     // damage our shield greatly and 1 damage hit player to show shield weakness
-                    player.hurt(DamageSource.GENERIC, 1);
+                    player.hurt(damageSources.generic(), 1);
                     ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
                 }
-                else if (source.isFire()) {
-                    if(source.isProjectile()){
+                else if (source.is(DamageTypeTags.IS_FIRE)) {
+                    if(source.is(DamageTypeTags.IS_PROJECTILE)){
                         ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
                     }
                     else{
@@ -47,6 +57,7 @@ public class HoneyCrystalShieldBehavior {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -58,7 +69,7 @@ public class HoneyCrystalShieldBehavior {
 
         // checks for living attacker and player victim
         // and also ignores explosions or magic damage
-        if (source.getDirectEntity() instanceof LivingEntity attacker && !source.isExplosion() && !source.isMagic()) {
+        if (source.getDirectEntity() instanceof LivingEntity attacker && (!source.is(DamageTypeTags.IS_EXPLOSION) || !source.is(DamageTypeTags.BYPASSES_SHIELD))) {
 
             // checks to see if player is blocking with our shield
             if (player.getUseItem().getItem() instanceof HoneyCrystalShield && player.isBlocking()) {

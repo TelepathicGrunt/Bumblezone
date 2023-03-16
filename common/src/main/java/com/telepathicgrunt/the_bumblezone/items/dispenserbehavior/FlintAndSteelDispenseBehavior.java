@@ -25,15 +25,15 @@ public class FlintAndSteelDispenseBehavior extends OptionalDispenseItemBehavior 
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
         ServerLevel level = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = level.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = level.getBlockState(dispenseBlockPos);
         if (blockstate.is(BzBlocks.SUPER_CANDLE_WICK.get())) {
-            position = position.below();
+            dispenseBlockPos = dispenseBlockPos.below();
         }
 
-        if (SuperCandle.canBeLit(level, blockstate, position)) {
-            boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(position.above()), position.above(), true);
+        if (SuperCandle.canBeLit(level, blockstate, dispenseBlockPos)) {
+            boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(dispenseBlockPos.above()), dispenseBlockPos.above(), true);
             this.setSuccess(successfulLit);
         }
         else {

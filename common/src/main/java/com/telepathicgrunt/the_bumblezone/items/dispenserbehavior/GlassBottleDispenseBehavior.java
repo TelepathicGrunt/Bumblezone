@@ -36,9 +36,9 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
         ServerLevel world = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = world.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
         if (blockstate.getBlock() == BzBlocks.HONEYCOMB_BROOD.get()) {
             // spawn bee if at final stage and front isn't blocked off
@@ -46,14 +46,14 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
             int stage = blockstate.getValue(HoneycombBrood.STAGE);
             if (stage == 3) {
                 // the front of the block
-                BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(position);
+                BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(dispenseBlockPos);
                 blockpos.move(blockstate.getValue(HoneycombBrood.FACING).getOpposite());
 
                 // do nothing if front is blocked off
                 if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(new BlockPos(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
+                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                     beeEntity.setBaby(true);
                     if (PlatformHooks.canEntitySpawn(beeEntity, world, beeEntity.position().x(), beeEntity.position().y(), beeEntity.position().z(), null, MobSpawnType.DISPENSER) != -1) {
                         world.addFreshEntity(beeEntity);
@@ -66,7 +66,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
 
             if (!deniedBeeSpawn) {
                 // kill the brood block
-                world.setBlockAndUpdate(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
+                world.setBlockAndUpdate(dispenseBlockPos, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState()
                         .setValue(BlockStateProperties.FACING, blockstate.getValue(BlockStateProperties.FACING)));
                 stack.shrink(1);
 
@@ -78,7 +78,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         }
         // remove honey
         else if (blockstate.getBlock() == BzBlocks.FILLED_POROUS_HONEYCOMB.get()) {
-            world.setBlockAndUpdate(position, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState());
+            world.setBlockAndUpdate(dispenseBlockPos, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState());
             stack.shrink(1);
 
             if (!stack.isEmpty())
@@ -97,7 +97,7 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
         }
         //pick up honey fluid
         else if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK.get() && blockstate.getFluidState().isSource()) {
-            world.setBlockAndUpdate(position, BzFluids.HONEY_FLUID_FLOWING.get().defaultFluidState().createLegacyBlock().setValue(HoneyFluidBlock.LEVEL, 5));
+            world.setBlockAndUpdate(dispenseBlockPos, BzFluids.HONEY_FLUID_FLOWING.get().defaultFluidState().createLegacyBlock().setValue(HoneyFluidBlock.LEVEL, 5));
             stack.shrink(1);
             if(!stack.isEmpty())
                 addHoneyBottleToDispenser(source, Items.HONEY_BOTTLE);

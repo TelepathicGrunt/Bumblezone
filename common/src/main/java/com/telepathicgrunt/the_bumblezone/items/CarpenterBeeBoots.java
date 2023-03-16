@@ -19,6 +19,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -32,8 +33,8 @@ import net.minecraft.world.phys.Vec3;
 
 public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
 
-    public CarpenterBeeBoots(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {
-        super(material, slot, properties, variant, false);
+    public CarpenterBeeBoots(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, int variant) {
+        super(material, armorType, properties, variant, false);
     }
 
     /**
@@ -63,7 +64,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                 zInBlock > 0.2d &&
                 zInBlock < 0.8d)
             {
-                BlockPos belowBlockPos = new BlockPos(player.position().add(0, -0.1d, 0));
+                BlockPos belowBlockPos = BlockPos.containing(player.position().add(0, -0.1d, 0));
                 BlockState belowBlockState = world.getBlockState(belowBlockPos);
 
                 if (belowBlockState.is(BzTags.CARPENTER_BEE_BOOTS_MINEABLES)) {
@@ -138,7 +139,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                 }
             }
             else if (lastSentState != -1) {
-                BlockPos belowBlockPos = new BlockPos(player.position().add(0, -0.1d, 0));
+                BlockPos belowBlockPos = BlockPos.containing(player.position().add(0, -0.1d, 0));
                 world.destroyBlockProgress(itemId, belowBlockPos, -1);
                 tag.putInt("lastSentState", -1);
                 tag.putInt("miningStartTime", 0);
@@ -167,7 +168,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
             for (float xOffset = -0.45f; xOffset <= 0.45f; xOffset += 0.45f) {
                 for (float zOffset = -0.45f; zOffset <= 0.45f; zOffset += 0.45f) {
                     if(xOffset != 0 && zOffset != 0) {
-                        BlockPos posToCheck = new BlockPos(player.position().add(xOffset, 0.057f, zOffset));
+                        BlockPos posToCheck = BlockPos.containing(player.position().add(xOffset, 0.057f, zOffset));
                         BlockState sideBlockState = world.getBlockState(posToCheck);
                         if (sideBlockState.is(BzTags.CARPENTER_BEE_BOOTS_CLIMBABLES)) {
                             double newDeltaY = Math.min(playerDeltaY * 0.9d + 0.07d, -0.0055);

@@ -31,7 +31,7 @@ public class DropContainerItems extends LootItemConditionalFunction {
         Vec3 spawnPos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
         BlockEntity be = lootContext.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if(spawnPos != null && be instanceof Container container) {
-            Containers.dropContents(lootContext.getLevel(), new BlockPos(spawnPos), container);
+            Containers.dropContents(lootContext.getLevel(), BlockPos.containing(spawnPos), container);
         }
         return itemStack;
     }

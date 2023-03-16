@@ -54,10 +54,10 @@ public abstract class EntityMixin {
     private void thebumblezone_pollinatedBeeBlockFilling(CallbackInfo ci) {
         if (((Object)this) instanceof Bee bee && (bee.hasNectar() || bee.getHealth() < bee.getMaxHealth())) {
             AABB aABB = this.getBoundingBox();
-            BlockPos minBlockPos = new BlockPos(aABB.minX - 1.0E-7, aABB.minY - 1.0E-7, aABB.minZ - 1.0E-7);
-            BlockPos maxBlockPos = new BlockPos(aABB.maxX + 1.0E-7, aABB.maxY + 1.0E-7, aABB.maxZ + 1.0E-7);
-            BlockPos minThreshold = new BlockPos(aABB.minX + 1.0E-7, aABB.minY + 1.0E-7, aABB.minZ + 1.0E-7);
-            BlockPos maxThreshold = new BlockPos(aABB.maxX - 1.0E-7, aABB.maxY - 1.0E-7, aABB.maxZ - 1.0E-7);
+            BlockPos minBlockPos = BlockPos.containing(aABB.minX - 1.0E-7, aABB.minY - 1.0E-7, aABB.minZ - 1.0E-7);
+            BlockPos maxBlockPos = BlockPos.containing(aABB.maxX + 1.0E-7, aABB.maxY + 1.0E-7, aABB.maxZ + 1.0E-7);
+            BlockPos minThreshold = BlockPos.containing(aABB.minX + 1.0E-7, aABB.minY + 1.0E-7, aABB.minZ + 1.0E-7);
+            BlockPos maxThreshold = BlockPos.containing(aABB.maxX - 1.0E-7, aABB.maxY - 1.0E-7, aABB.maxZ - 1.0E-7);
             if (this.level.hasChunksAt(minThreshold, maxThreshold)) {
                 BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 

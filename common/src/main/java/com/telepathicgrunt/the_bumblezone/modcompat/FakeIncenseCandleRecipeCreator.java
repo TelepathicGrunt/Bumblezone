@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -63,7 +64,7 @@ public class FakeIncenseCandleRecipeCreator {
     }
 
     private static void addRecipeIfValid(List<CraftingRecipe> extraRecipes, ShapedRecipe recipe) {
-        if (!recipe.getResultItem().isEmpty()) {
+        if (!recipe.getResultItem(RegistryAccess.EMPTY).isEmpty()) {
             extraRecipes.add(recipe);
         }
     }
@@ -151,6 +152,6 @@ public class FakeIncenseCandleRecipeCreator {
                 amplifier,
                 potionStack.getItem() instanceof SplashPotionItem ? 1 : 0,
                 potionStack.getItem() instanceof LingeringPotionItem ? 1 : 0,
-                recipe.getResultItem().getCount());
+                recipe.getResultItem(RegistryAccess.EMPTY).getCount());
     }
 }

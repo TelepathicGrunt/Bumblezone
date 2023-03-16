@@ -43,7 +43,7 @@ public class CreatingHoneySlime {
                     target.getXRot());
 
             honeySlimeMob.setBaby(slimeSize == 1);
-            honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(new BlockPos(honeySlimeMob.position())), MobSpawnType.TRIGGERED, null, null);
+            honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(honeySlimeMob.position())), MobSpawnType.TRIGGERED, null, null);
             // spawn honey slime
             world.addFreshEntity(honeySlimeMob);
 

@@ -124,11 +124,11 @@ public abstract class LivingEntityMixin {
                             livingEntity.level.addParticle(simpleParticleType, livingEntity.getX() + d2, livingEntity.getY() + d3, livingEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
                         }
 
-                        livingEntity.hurt(DamageSource.DROWN, 2.0F);
+                        livingEntity.hurt(livingEntity.level.damageSources().drown(), 2.0F);
                     }
                 }
 
-                if (!livingEntity.level.isClientSide() && livingEntity.isPassenger() && livingEntity.getVehicle() != null && !livingEntity.getVehicle().rideableUnderWater()) {
+                if (!livingEntity.level.isClientSide() && livingEntity.isPassenger() && livingEntity.getVehicle() != null && livingEntity.getVehicle().dismountsUnderwater()) {
                     livingEntity.stopRiding();
                 }
             }

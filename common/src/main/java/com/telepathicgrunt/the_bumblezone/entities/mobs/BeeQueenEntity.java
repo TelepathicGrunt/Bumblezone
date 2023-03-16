@@ -239,7 +239,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource == DamageSource.SWEET_BERRY_BUSH) {
+        if (damageSource == level.damageSources().sweetBerryBush()) {
             return true;
         }
         return super.isInvulnerableTo(damageSource);
@@ -258,7 +258,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         if (isInvulnerableTo(source)) {
             return false;
         }
-        else if(isOnPortalCooldown() && source == DamageSource.IN_WALL) {
+        else if(isOnPortalCooldown() && source == level.damageSources().inWall()) {
             spawnAngryParticles(6);
             playHurtSound(source);
             return false;
@@ -305,7 +305,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         if (this.underWaterTicks > 100) {
-            this.hurt(DamageSource.DROWN, 3.0F);
+            this.hurt(level.damageSources().drown(), 3.0F);
         }
 
         if (!this.level.isClientSide) {
@@ -546,7 +546,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                         Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
                         if (reward.isPresent()) {
-                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), itemEntity.getThrower());
+                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), itemEntity.getOwner().getUUID());
                             tradedItems++;
                         }
                     }
@@ -574,8 +574,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                 setThrowCooldown(50);
 
-                if (tradedItems > 0 && itemEntity.getThrower() != null) {
-                    if (level.getPlayerByUUID(itemEntity.getThrower()) instanceof ServerPlayer serverPlayer) {
+                if (tradedItems > 0 && itemEntity.getOwner() != null) {
+                    if (level.getPlayerByUUID(itemEntity.getOwner().getUUID()) instanceof ServerPlayer serverPlayer) {
                         BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
                         EntityMiscHandler.onQueenBeeTrade(serverPlayer, tradedItems);
 
@@ -704,7 +704,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
         Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
-        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
+        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
         return advancement != null &&
                 advancementsProgressMap.containsKey(advancement) &&
                 advancementsProgressMap.get(advancement).isDone();

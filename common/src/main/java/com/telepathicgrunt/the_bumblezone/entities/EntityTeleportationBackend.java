@@ -63,7 +63,7 @@ public class EntityTeleportationBackend {
 
         BlockPos finalSpawnPos = entity.blockPosition();
         if(entitySavedPastPos != null) {
-            finalSpawnPos = new BlockPos(entitySavedPastPos);
+            finalSpawnPos = BlockPos.containing(entitySavedPastPos);
         }
 
         //use found location
@@ -79,7 +79,7 @@ public class EntityTeleportationBackend {
         //converts the position to get the corresponding position in bumblezone dimension
         double coordinateScale = originalWorld.dimensionType().coordinateScale() / bumblezoneWorld.dimensionType().coordinateScale();
 
-        BlockPos blockpos = new BlockPos(
+        BlockPos blockpos = BlockPos.containing(
                 Doubles.constrainToRange(entity.position().x() * coordinateScale, -29999936D, 29999936D),
                 Doubles.constrainToRange(entity.position().y(), 45, 200),
                 Doubles.constrainToRange(entity.position().z() * coordinateScale, -29999936D, 29999936D));

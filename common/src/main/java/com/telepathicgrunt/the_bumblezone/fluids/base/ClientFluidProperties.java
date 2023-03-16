@@ -156,10 +156,9 @@ public class ClientFluidProperties {
 
     private static void bz$renderFluid(@NotNull Player player, PoseStack pPoseStack, ResourceLocation texture) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.enableTexture();
         RenderSystem.setShaderTexture(0, texture);
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
-        BlockPos blockpos = new BlockPos(player.getX(), player.getEyeY(), player.getZ());
+        BlockPos blockpos = BlockPos.containing(player.getX(), player.getEyeY(), player.getZ());
         float f = LightTexture.getBrightness(player.level.dimensionType(), player.level.getMaxLocalRawBrightness(blockpos));
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();

@@ -55,7 +55,7 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     public final GeneralUtils.Lazy<Set<Holder<Biome>>> lazyPossibleBiomes = new GeneralUtils.Lazy<>();
 
     public BzBiomeProvider(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> mainBiomes) {
-        super(Stream.empty());
+        super();
 
         this.seed = seed;
         this.blobBiomes = blobBiomes;
@@ -66,6 +66,11 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     @Override
     protected Codec<? extends BiomeSource> codec() {
         return CODEC;
+    }
+
+    @Override
+    protected Stream<Holder<Biome>> collectPossibleBiomes() {
+        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(blobBiomes.stream(), mainBiomes.stream()).collect(Collectors.toSet())).stream();
     }
 
     @Override

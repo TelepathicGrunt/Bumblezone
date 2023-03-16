@@ -90,7 +90,7 @@ public abstract class EntityMixin implements BzEntityHooks {
             cancellable = true)
     private void thebumblezone_markEyesInFluid2(CallbackInfo ci) {
         double eyeHeight = this.getEyeY() - 0.11111111F;
-        BlockPos blockPos = new BlockPos(this.getX(), eyeHeight, this.getZ());
+        BlockPos blockPos = BlockPos.containing(this.getX(), eyeHeight, this.getZ());
         FluidState fluidState = this.level.getFluidState(blockPos);
         if (fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             double fluidHeight = (float)blockPos.getY() + fluidState.getHeight(this.level, blockPos);

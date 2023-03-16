@@ -99,7 +99,7 @@ public class PotionOfBeesCompat implements ModCompat {
     private static void reviveLarvaBlockEvent(Projectile projectile, HitResult rayTraceResult, int range) {
         Level world = projectile.level; // world we threw in
         Vec3 hitBlockPos = rayTraceResult.getLocation(); //position of the collision
-        BlockPos originalPosition = new BlockPos(hitBlockPos);
+        BlockPos originalPosition = BlockPos.containing(hitBlockPos);
         reviveBroodsInRange(world, originalPosition, range);
     }
 

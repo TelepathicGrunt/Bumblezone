@@ -163,7 +163,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 int row = sectionId - this.startIndex;
                 if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
                             poseStack,
                             rowStartX,
@@ -175,7 +175,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
                             poseStack,
                             rowStartX,
@@ -201,7 +201,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 int row = sectionId - this.startIndex;
                 if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
                             poseStack,
                             rowStartX,
@@ -212,7 +212,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_UNSELECTED_U_TEXTURE, ENCHANTMENT_UNSELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_UNSELECTED_U_TEXTURE, ENCHANTMENT_UNSELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
                             poseStack,
                             rowStartX,
@@ -260,7 +260,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             if (i >= this.menu.xpTier.get()) {
                 if (i < cachedObstructions.size() && cachedObstructions.get(i)) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset + (72 - (i * 12)), getBlitOffset(), TIER_BLOCK_U_TEXTURE, TIER_BLOCK_V_TEXTURE, 10, 10, 256, 256);
+                    blit(poseStack, xOffset, yOffset + (72 - (i * 12)), TIER_BLOCK_U_TEXTURE, TIER_BLOCK_V_TEXTURE, 10, 10, 256, 256);
                 }
                 continue;
             }
@@ -272,7 +272,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 textureV = TIER_FLOWER_V_TEXTURE;
             }
             RenderSystem.enableDepthTest();
-            blit(poseStack, xOffset, yOffset + (72 - (i * 12)), getBlitOffset(), textureU, textureV, 10, 10, 256, 256);
+            blit(poseStack, xOffset, yOffset + (72 - (i * 12)), textureU, textureV, 10, 10, 256, 256);
         }
     }
 
@@ -287,18 +287,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     !canPlayerBuyTier(1)) {
                 pressedXp1Timer--;
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
+                blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
                 int xOffset = startX + XP_CONSUME_1_X_OFFSET;
                 int yOffset = startY + XP_CONSUME_1_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 18, 18, 256, 256);
+                    blit(poseStack, xOffset, yOffset, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
+                    blit(poseStack, xOffset, yOffset, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
                 }
             }
         }
@@ -310,18 +310,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     !canPlayerBuyTier(2)) {
                 pressedXp2Timer--;
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
+                blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
                 int xOffset = startX + XP_CONSUME_2_X_OFFSET;
                 int yOffset = startY + XP_CONSUME_2_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 18, 18, 256, 256);
+                    blit(poseStack, xOffset, yOffset, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
+                    blit(poseStack, xOffset, yOffset, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
                 }
             }
         }
@@ -334,18 +334,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             {
                 pressedXp3Timer--;
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
+                blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
                 int xOffset = startX + XP_CONSUME_3_X_OFFSET;
                 int yOffset = startY + XP_CONSUME_3_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 18, 18, 256, 256);
+                    blit(poseStack, xOffset, yOffset, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, getBlitOffset(), XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
+                    blit(poseStack, xOffset, yOffset, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
                 }
             }
         }
@@ -354,7 +354,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             int xOffset = startX + 26;
             int yOffset = startY + 14;
             RenderSystem.enableDepthTest();
-            blit(poseStack, xOffset, yOffset, getBlitOffset(), 176, 0, 48, 58, 256, 256);
+            blit(poseStack, xOffset, yOffset, 176, 0, 48, 58, 256, 256);
         }
 
         if (pressedConsumeTimer > 0) {
@@ -363,22 +363,22 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         if (this.menu.consumeSlotFullyObstructed.get() != 1 && BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
             if (pressedConsumeTimer > 0) {
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
-                blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
+                blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
+                blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
             }
             else if (this.menu.consumeSlot.hasItem() && this.menu.xpTier.get() < 7) {
                 int xOffset = startX + CONSUME_CONFIRMATION_X_OFFSET;
                 int yOffset = startY + CONSUME_CONFIRMATION_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 18, 18, 256, 256);
+                    blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, getBlitOffset(), CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
+                    blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
                 }
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, getBlitOffset(), CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
+                blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
             }
         }
 
@@ -386,7 +386,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             int xOffset = startX + 26;
             int yOffset = startY + 78;
             RenderSystem.enableDepthTest();
-            blit(poseStack, xOffset, yOffset, getBlitOffset(), 176, 59, 48, 19, 256, 256);
+            blit(poseStack, xOffset, yOffset, 176, 59, 48, 19, 256, 256);
         }
     }
 
@@ -475,14 +475,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private void renderXPBar(PoseStack poseStack, int startX, int startY) {
         if (this.menu.xpTier.get() == 7) {
             RenderSystem.enableDepthTest();
-            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, getBlitOffset(), XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE - 5, 54, 5, 256, 256);
+            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE - 5, 54, 5, 256, 256);
         }
         else {
             RenderSystem.enableDepthTest();
-            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, getBlitOffset(), XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE, 54, 5, 256, 256);
+            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE, 54, 5, 256, 256);
             if (this.menu.xpBarPercent.get() > 0) {
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, getBlitOffset(), XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE + 5, (int) (54 * (this.menu.xpBarPercent.get() / 100f)), 5, 256, 256);
+                blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE + 5, (int) (54 * (this.menu.xpBarPercent.get() / 100f)), 5, 256, 256);
             }
         }
     }
@@ -496,11 +496,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             startIndex = (int)((double)(this.scrollOff * (float)this.getOffscreenRows()) + 0.5D);
             int scrollPosition = (int) (scrollOff * 42);
             RenderSystem.enableDepthTest();
-            blit(poseStack, posX, posY + scrollPosition, getBlitOffset(), ENCHANTMENT_SCROLLBAR_U_TEXTURE, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
+            blit(poseStack, posX, posY + scrollPosition, ENCHANTMENT_SCROLLBAR_U_TEXTURE, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
         }
         else {
             RenderSystem.enableDepthTest();
-            blit(poseStack, posX, posY, getBlitOffset(), ENCHANTMENT_SCROLLBAR_U_TEXTURE + 6.0F, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
+            blit(poseStack, posX, posY, ENCHANTMENT_SCROLLBAR_U_TEXTURE + 6.0F, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
         }
     }
 

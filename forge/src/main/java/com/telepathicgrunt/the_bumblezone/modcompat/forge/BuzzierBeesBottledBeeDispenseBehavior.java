@@ -28,12 +28,12 @@ public class BuzzierBeesBottledBeeDispenseBehavior extends DefaultDispenseItemBe
      */
     public ItemStack execute(BlockSource source, ItemStack stack) {
         ServerLevel world = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = world.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
         if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
-            world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+            world.setBlockAndUpdate(dispenseBlockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                     .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
                     .setValue(HoneycombBrood.STAGE, 3));
 

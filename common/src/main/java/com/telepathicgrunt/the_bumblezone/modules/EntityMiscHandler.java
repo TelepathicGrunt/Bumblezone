@@ -153,7 +153,7 @@ public class EntityMiscHandler {
 
     public static boolean rootAdvancementDone(ServerPlayer serverPlayer) {
         Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
-        var progress = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
+        var progress = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
         return advancement != null &&
                 progress.containsKey(advancement) &&
                 progress.get(advancement).isDone();

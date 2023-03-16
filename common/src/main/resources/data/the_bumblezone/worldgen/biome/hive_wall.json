@@ -1,6 +1,6 @@
 {
   "player_spawn_friendly": false,
-  "precipitation": "none",
+  "has_precipitation": false,
   "temperature": 1.85,
   "downfall": 0.5,
   "effects": {

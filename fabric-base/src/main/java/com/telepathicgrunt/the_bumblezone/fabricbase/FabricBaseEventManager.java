@@ -38,7 +38,7 @@ public class FabricBaseEventManager {
         RegisterCreativeTabsEvent.EVENT.invoke(new RegisterCreativeTabsEvent((id, initializer, initialDisplayItems) -> {
             CreativeModeTab.Builder builder = FabricItemGroup.builder(id);
             initializer.accept(builder);
-            builder.displayItems((flags, output, bl) -> {
+            builder.displayItems((flags, output) -> {
                 List<ItemStack> stacks = Lists.newArrayList();
                 initialDisplayItems.accept(stacks);
                 output.acceptAll(stacks);

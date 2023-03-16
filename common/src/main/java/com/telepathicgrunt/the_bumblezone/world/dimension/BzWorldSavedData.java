@@ -157,7 +157,7 @@ public class BzWorldSavedData extends SavedData {
 		if (!entity.level.isClientSide()) {
 			MinecraftServer minecraftServer = entity.getServer(); // the server itself
 			ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
-			BlockPos blockPos = new BlockPos(destinationPosFound);
+			BlockPos blockPos = BlockPos.containing(destinationPosFound);
 
 			if (bumblezoneWorld != null && bumblezoneWorld.getBlockState(blockPos.above()).isSuffocating(bumblezoneWorld, blockPos.above())) {
 				//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
@@ -203,7 +203,7 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	public static void exitingBumblezone(Entity entity, Vec3 destinationPosition, ServerLevel destination, Set<Entity> teleportedEntities) {
-		BlockPos destBlockPos = new BlockPos(destinationPosition);
+		BlockPos destBlockPos = BlockPos.containing(destinationPosition);
 		if (destination.getBlockState(destBlockPos.above()).isSuffocating(destination, destBlockPos.above())) {
 			destination.setBlock(destBlockPos, Blocks.AIR.defaultBlockState(), 3);
 			destination.setBlock(destBlockPos.above(), Blocks.AIR.defaultBlockState(), 3);
@@ -256,7 +256,7 @@ public class BzWorldSavedData extends SavedData {
 			// update set to keep track of entities teleported
 			teleportedEntities.add(entity);
 
-			ChunkPos chunkpos = new ChunkPos(new BlockPos(destinationPosition.x, destinationPosition.y, destinationPosition.z));
+			ChunkPos chunkpos = new ChunkPos(BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z));
 			destination.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 1, entity.getId());
 
 			if(vehicle != null) {

@@ -145,9 +145,7 @@ public class EntityTeleportationHookup {
                 }
             }
             else {
-                if(livingEntity.getControllingPassenger() instanceof LivingEntity livingEntity2) {
-                    checkAndCorrectStoredDimension(livingEntity2);
-                }
+                checkAndCorrectStoredDimension(livingEntity.getControllingPassenger());
                 Optional<EntityPosAndDimModule> capOptional = ModuleHelper.getModule(livingEntity, ModuleRegistry.ENTITY_POS_AND_DIM);
                 if (capOptional.isPresent()) {
                     EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
@@ -385,7 +383,7 @@ public class EntityTeleportationHookup {
         for(double offset = -checkRadius; offset <= checkRadius; offset += checkRadius) {
             for(double offset2 = -checkRadius; offset2 <= checkRadius; offset2 += checkRadius) {
                 for (double offset3 = -checkRadius; offset3 <= checkRadius; offset3 += checkRadius) {
-                    BlockPos offsettedHitPos = new BlockPos(hitBlockPos.add(offset, offset2, offset3));
+                    BlockPos offsettedHitPos = BlockPos.containing(hitBlockPos.add(offset, offset2, offset3));
                     BlockState block = world.getBlockState(offsettedHitPos);
                     if(EntityTeleportationBackend.isValidBeeHive(block)) {
                         return offsettedHitPos;

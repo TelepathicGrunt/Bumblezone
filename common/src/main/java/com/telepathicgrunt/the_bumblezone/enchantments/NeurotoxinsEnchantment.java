@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -68,7 +69,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
             attacker = livingEntity;
             attackingItem = attacker.getMainHandItem();
         }
-        if(event.source().isProjectile()) {
+        if(event.source().is(DamageTypeTags.IS_PROJECTILE)) {
            Entity projectile = event.source().getDirectEntity();
            if(projectile instanceof ThrownTrident thrownTrident) {
                attackingItem = ((ThrownTridentAccessor)thrownTrident).getTridentItem();

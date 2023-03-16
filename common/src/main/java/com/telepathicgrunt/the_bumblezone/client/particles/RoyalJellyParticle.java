@@ -30,7 +30,7 @@ public class RoyalJellyParticle extends SuspendedParticle {
             this.remove();
         }
         else {
-            BlockState blockState = this.level.getBlockState(new BlockPos(this.x, this.y, this.z));
+            BlockState blockState = this.level.getBlockState(BlockPos.containing(this.x, this.y, this.z));
             FluidState fluidState = blockState.getFluidState();
             if (fluidState.is(BzTags.ROYAL_JELLY_FLUID)) {
                 if(fluidState.isSource()) {

@@ -172,7 +172,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                         entity.setSecondsOnFire(1);
                     }
 
-                    entity.hurt(DamageSource.IN_FIRE, 0.5f);
+                    entity.hurt(level.damageSources().inFire(), 0.5f);
                 }
             }
         }

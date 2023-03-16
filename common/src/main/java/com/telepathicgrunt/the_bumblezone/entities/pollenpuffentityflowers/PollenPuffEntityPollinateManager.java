@@ -44,9 +44,9 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                     return DataResult.success(entityTypeOptional.get());
                 } else if (PlatformHooks.isModLoaded(r.getNamespace())) {
                     Bumblezone.LOGGER.error("Bz Pollination File Reading Error - Unknown EntityType:  " + r);
-                    return DataResult.error("Bz Error - Unknown EntityType:  " + r + "  - ");
+                    return DataResult.error(() -> "Bz Error - Unknown EntityType:  " + r + "  - ");
                 } else {
-                    return DataResult.error("Bz Error - Target mod not present");
+                    return DataResult.error(() -> "Bz Error - Target mod not present");
                 }
             }, BuiltInRegistries.ENTITY_TYPE::getKey), Codec.list(EntryObject.ENTRY_CODEC));
 

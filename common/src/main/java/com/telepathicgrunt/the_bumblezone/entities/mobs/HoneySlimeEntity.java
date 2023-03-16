@@ -327,7 +327,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    protected void dealDamage(LivingEntity entityIn) {
       if (this.isAlive()) {
          int i = 2;
-         if (this.distanceToSqr(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.hasLineOfSight(entityIn) && entityIn.hurt(DamageSource.mobAttack(this), this.getAttackStrength())) {
+         if (this.distanceToSqr(entityIn) < 0.6D * (double) i * 0.6D * (double) i && this.hasLineOfSight(entityIn) && entityIn.hurt(damageSources().mobAttack(this), this.getAttackStrength())) {
             this.playSound(BzSounds.HONEY_SLIME_ATTACK.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
             this.dealDamage(entityIn);
          }

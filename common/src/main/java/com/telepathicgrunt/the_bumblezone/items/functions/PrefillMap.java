@@ -60,7 +60,7 @@ public class PrefillMap extends LootItemConditionalFunction {
         if (itemStack.is(Items.MAP)) {
             Vec3 vec3 = lootContext.getParamOrNull(LootContextParams.ORIGIN);
             if (vec3 != null) {
-                BlockPos blockPos = new BlockPos(vec3);
+                BlockPos blockPos = BlockPos.containing(vec3);
                 ItemStack newFilledMap = MapItem.create(lootContext.getLevel(), blockPos.getX(), blockPos.getZ(), (byte) scaleLevel, true, true);
                 Integer mapId = MapItem.getMapId(newFilledMap);
                 MapItemSavedData data = MapItem.getSavedData(mapId, lootContext.getLevel());

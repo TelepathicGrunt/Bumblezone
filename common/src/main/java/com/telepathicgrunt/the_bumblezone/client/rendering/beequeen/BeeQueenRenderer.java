@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
 
 public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/bee_queen.png");
@@ -53,7 +54,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
             this.itemRenderer.renderItem(
                     beeQueenEntity,
                     beeQueenEntity.getSuperTradeItem(),
-                    ItemTransforms.TransformType.GROUND,
+                    ItemDisplayContext.GROUND,
                     false,
                     stack,
                     bufferToUse,

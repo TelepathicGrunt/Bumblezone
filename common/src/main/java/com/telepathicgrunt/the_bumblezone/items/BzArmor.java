@@ -6,8 +6,7 @@ import net.minecraft.world.item.ArmorMaterial;
 
 public class BzArmor extends ArmorItem {
 
-    public BzArmor(ArmorMaterial armorMaterial, EquipmentSlot equipmentSlot, Properties properties) {
-        super(armorMaterial, equipmentSlot, properties);
+    public BzArmor(ArmorMaterial armorMaterial, ArmorItem.Type armorType, Properties properties) {
+        super(armorMaterial, armorType, properties);
     }
-
 }

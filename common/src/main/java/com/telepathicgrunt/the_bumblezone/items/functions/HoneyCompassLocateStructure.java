@@ -57,7 +57,7 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
         if (itemStack.is(BzItems.HONEY_COMPASS.get())) {
             Vec3 vec3 = lootContext.getParamOrNull(LootContextParams.ORIGIN);
             if (vec3 != null) {
-                BlockPos blockPos = new BlockPos(vec3);
+                BlockPos blockPos = BlockPos.containing(vec3);
                 itemStack.getOrCreateTag().putBoolean(HoneyCompass.TAG_LOADING, true);
                 HoneyCompass.setStructureTags(itemStack.getOrCreateTag(), destination);
                 ThreadExecutor.locate(lootContext.getLevel(), destination, blockPos, 100, false)

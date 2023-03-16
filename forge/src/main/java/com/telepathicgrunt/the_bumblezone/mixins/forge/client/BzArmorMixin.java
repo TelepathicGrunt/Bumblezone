@@ -25,7 +25,7 @@ public class BzArmorMixin extends ArmorItem {
     @Unique
     private ArmorModelProvider bz$armorModelProvider;
 
-    public BzArmorMixin(ArmorMaterial arg, EquipmentSlot arg2, Properties arg3) {
+    public BzArmorMixin(ArmorMaterial arg, ArmorItem.Type arg2, Properties arg3) {
         super(arg, arg2, arg3);
     }
 

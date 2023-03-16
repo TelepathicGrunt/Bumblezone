@@ -43,7 +43,7 @@ public class PileOfPollenRenderer {
                         double eyePosY = playerEntity.getEyeY() + y * 0.12F;
                         double eyePosZ = playerEntity.getZ() + z * playerEntity.getBbWidth() * 0.155F;
                         Vec3 eyePosition = new Vec3(eyePosX, eyePosY, eyePosZ);
-                        BlockPos eyeBlockPos = new BlockPos(eyePosition);
+                        BlockPos eyeBlockPos = BlockPos.containing(eyePosition);
                         BlockState eyeBlock = playerEntity.level.getBlockState(eyeBlockPos);
                         VoxelShape blockBounds = eyeBlock.getShape(playerEntity.level, eyeBlockPos);
                         if (!blockBounds.isEmpty() && blockBounds.bounds().contains(eyePosition.subtract(Vec3.atLowerCornerOf(eyeBlockPos)))) {
@@ -61,7 +61,6 @@ public class PileOfPollenRenderer {
             }
 
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.enableTexture();
             RenderSystem.setShaderTexture(0, TEXTURE_POLLEN);
             BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
             RenderSystem.enableBlend();

@@ -24,7 +24,7 @@ public class HoneyFluidClientProperties {
                 .screenOverlay(FluidClientOverlay::renderHoneyOverlay)
                 .modifyFogColor((camera, level, pos, fluidState, fluid, fogColor) -> {
                     // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
-                    BlockPos blockpos = new BlockPos(camera.getEntity().getX(), camera.getEntity().getEyeY(), camera.getEntity().getZ());
+                    BlockPos blockpos = BlockPos.containing(camera.getEntity().getX(), camera.getEntity().getEyeY(), camera.getEntity().getZ());
                     float brightnessAtEyes = LightTexture.getBrightness(camera.getEntity().level.dimensionType(), camera.getEntity().level.getMaxLocalRawBrightness(blockpos));
                     float brightness = (float) Math.max(
                             Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(camera.getEntity()), 2D),

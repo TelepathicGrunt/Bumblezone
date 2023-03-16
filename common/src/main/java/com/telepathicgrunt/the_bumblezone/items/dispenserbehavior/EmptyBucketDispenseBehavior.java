@@ -28,12 +28,12 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
         Level world = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = world.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
         if (blockstate.getBlock() == BzFluids.HONEY_FLUID_BLOCK.get() && blockstate.getFluidState().isSource()) {
-            world.setBlockAndUpdate(position, Blocks.AIR.defaultBlockState());
+            world.setBlockAndUpdate(dispenseBlockPos, Blocks.AIR.defaultBlockState());
             stack.shrink(1);
             if (!stack.isEmpty())
                 addItemToDispenser(source, BzItems.HONEY_BUCKET.get());

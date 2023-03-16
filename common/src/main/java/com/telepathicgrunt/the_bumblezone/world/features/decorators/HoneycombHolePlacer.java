@@ -136,7 +136,7 @@ public class HoneycombHolePlacer extends PlacementModifier {
             for (double y = -3.5; y <= 3.5; y++) {
                 distanceSq = z * z + y * y;
                 if (distanceSq > 5 && distanceSq < 18) {
-                    blockState = world.getBlockState(pos.offset(0, y + 1, z));
+                    blockState = world.getBlockState(pos.offset(0, (int) y + 1, (int) z));
                     if (!blockState.canOcclude()) {
                         //only count Air and not Cave Air so holes aren't placed in caves
                         if (blockState.getBlock() == Blocks.AIR)

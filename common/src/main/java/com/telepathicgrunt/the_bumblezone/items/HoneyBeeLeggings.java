@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -25,8 +26,8 @@ import net.minecraft.world.phys.Vec3;
 
 public class HoneyBeeLeggings extends BeeArmor {
 
-    public HoneyBeeLeggings(ArmorMaterial material, EquipmentSlot slot, Properties properties, int variant) {
-        super(material, slot, properties, variant, false);
+    public HoneyBeeLeggings(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, int variant) {
+        super(material, armorType, properties, variant, false);
     }
 
     /**

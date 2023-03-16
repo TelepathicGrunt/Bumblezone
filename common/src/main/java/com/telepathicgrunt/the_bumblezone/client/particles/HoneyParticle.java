@@ -30,7 +30,7 @@ public class HoneyParticle extends SuspendedParticle {
             this.remove();
         }
         else {
-            BlockState blockState = this.level.getBlockState(new BlockPos(this.x, this.y, this.z));
+            BlockState blockState = this.level.getBlockState(BlockPos.containing(this.x, this.y, this.z));
             FluidState fluidState = blockState.getFluidState();
             if (fluidState.is(BzTags.BZ_HONEY_FLUID)) {
                 if(fluidState.isSource()) {

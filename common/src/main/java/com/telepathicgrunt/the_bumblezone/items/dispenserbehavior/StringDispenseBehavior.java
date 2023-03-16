@@ -24,12 +24,12 @@ public class StringDispenseBehavior extends DefaultDispenseItemBehavior {
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
         ServerLevel world = source.getLevel();
-        Position iposition = DispenserBlock.getDispensePosition(source);
-        BlockPos position = new BlockPos(iposition);
-        BlockState blockstate = world.getBlockState(position);
+        Position dispensePosition = DispenserBlock.getDispensePosition(source);
+        BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
+        BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
         if (blockstate.is(BzTags.STRING_CURTAINS)) {
-            boolean success = StringCurtain.extendCurtainIfPossible(blockstate, world, position);
+            boolean success = StringCurtain.extendCurtainIfPossible(blockstate, world, dispenseBlockPos);
             if (success) {
                 stack.shrink(1);
             }

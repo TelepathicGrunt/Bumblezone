@@ -50,7 +50,7 @@ dependencies {
     modCompileOnly("curse.maven:quark-243121:${project.quark_file_id}")
     modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
-    modCompileOnly("mezz.jei:jei-${project.minecraft_version}-forge:${project.jei}")
+    modCompileOnly("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
 
     modLocalRuntime("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
     modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")

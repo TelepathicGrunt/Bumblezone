@@ -375,8 +375,8 @@ public class PileOfPollen extends FallingBlock {
 
     public static void reapplyHiddenEffectIfInsidePollenPile(LivingEntity livingEntity) {
         AABB aabb = livingEntity.getBoundingBox();
-        BlockPos minCorner = new BlockPos(aabb.minX + 0.001D, aabb.minY + 0.001D, aabb.minZ + 0.001D);
-        BlockPos maxCorner = new BlockPos(aabb.maxX - 0.001D, aabb.maxY - 0.001D, aabb.maxZ - 0.001D);
+        BlockPos minCorner = BlockPos.containing(aabb.minX + 0.001D, aabb.minY + 0.001D, aabb.minZ + 0.001D);
+        BlockPos maxCorner = BlockPos.containing(aabb.maxX - 0.001D, aabb.maxY - 0.001D, aabb.maxZ - 0.001D);
         Level level = livingEntity.level;
         if (level.hasChunksAt(minCorner, maxCorner)) {
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();

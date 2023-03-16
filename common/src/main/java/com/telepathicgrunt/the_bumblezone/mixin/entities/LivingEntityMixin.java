@@ -1,12 +1,18 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.telepathicgrunt.the_bumblezone.effects.BzEffect;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LivingEntity.class)
@@ -16,6 +22,16 @@ public abstract class LivingEntityMixin extends Entity {
         super(type, world);
     }
 
+    @Shadow
+    public boolean hasEffect(MobEffect mobEffect) {
+        return false;
+    }
+
+    @Shadow
+    public double getAttributeValue(Attribute attribute) {
+        return 0;
+    }
+
     @ModifyReturnValue(method = "isImmobile()Z",
             at = @At(value = "RETURN"))
     private boolean thebumblezone_isParalyzedCheck(boolean isImmobile) {
@@ -23,5 +39,14 @@ public abstract class LivingEntityMixin extends Entity {
             return true;
         }
         return isImmobile;
+    }
+
+    @ModifyReturnValue(method = "getFlyingSpeed()F",
+            at = @At(value = "RETURN"))
+    private float thebumblezone_flyingSpeedBeenergized(float flyingSpeed) {
+        if(hasEffect(BzEffects.BEENERGIZED.get())) {
+            return ((float) (getAttributeValue(Attributes.FLYING_SPEED) / 0.4000000059604645d) + flyingSpeed);
+        }
+        return flyingSpeed;
     }
 }

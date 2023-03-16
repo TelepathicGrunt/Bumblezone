@@ -12,6 +12,7 @@ import dev.emi.emi.api.recipe.EmiCraftingRecipe;
 import dev.emi.emi.api.recipe.EmiInfoRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -46,7 +47,7 @@ public class EMICompat implements EmiPlugin {
             extraRecipes.forEach(r -> registry.addRecipe(
                     new EmiCraftingRecipe(
                             r.getIngredients().stream().map(EmiIngredient::of).toList(),
-                            EmiStack.of(r.getResultItem()),
+                            EmiStack.of(r.getResultItem(RegistryAccess.EMPTY)),
                             r.getId(),
                             false)));
         }
