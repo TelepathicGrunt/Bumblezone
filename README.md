@@ -8,36 +8,26 @@
 
 For developers that want to add Bumblezone to their mod's workspace:
 
-<blockquote>repositories {
-
-&nbsp; maven {
-
-&nbsp; &nbsp; url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
-
-&nbsp; }
-
-}</blockquote>
+```
+repositories {
+  maven {
+     url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
+  }
+}
+```
 
 &nbsp;
 
 (This format is now standardized for Bumblezone from 6.6.3 forward. See older branches's README.md for what the old format was) Don't forget to change \<modversion> with the actual latest version of this mod like `6.6.3` for example. Replace forge with your modloader and the mc version with the target mc version.
 
-<blockquote>dependencies {
-
-
-&nbsp; ...
-
-
-&nbsp;FORGE: implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-forge")
-
-
-&nbsp;FABRIC: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-fabric"
-
-
-&nbsp;QUILT: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-quilt"
-
-
-}</blockquote>
+```
+dependencies {
+   ...
+   FORGE: implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-forge")
+   FABRIC: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-fabric"
+   QUILT: modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.19.3-quilt"
+}
+```
 
 &nbsp;
 
@@ -45,18 +35,13 @@ For developers that want to add Bumblezone to their mod's workspace:
 
 https://github.com/SpongePowered/Mixin/wiki/Mixins-on-Minecraft-Forge#step-1---adding-the-mixingradle-plugin
 
-<blockquote>buildscript {
-
-&nbsp; &nbsp; ...
-
-&nbsp; &nbsp; dependencies {
-
-&nbsp; &nbsp; &nbsp; &nbsp; classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-
-&nbsp; &nbsp; &nbsp; &nbsp; // MixinGradle:
-
-&nbsp; &nbsp; &nbsp; &nbsp; classpath 'org.spongepowered:mixingradle:0.7.+'
-
-&nbsp; &nbsp; }
-
-}</blockquote>
+```
+buildscript {
+   ...
+   dependencies {
+      classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+      // MixinGradle:
+      classpath 'org.spongepowered:mixingradle:0.7.+'
+   }
+}
+```
