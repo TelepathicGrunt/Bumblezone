@@ -31,12 +31,9 @@ public class SugarInfusedCobblestone extends Block {
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos blockPos, BlockState state, LivingEntity placer, ItemStack stack) {
-        if (!level.isClientSide()) {
-            sugarifyNeighboringWater(level, blockPos);
-        }
-
-        super.setPlacedBy(level, blockPos, state, placer, stack);
+    public void onPlace(BlockState blockState, Level world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
+        sugarifyNeighboringWater(world, blockPos);
+        super.onPlace(blockState, world, blockPos, previousBlockState, notify);
     }
 
     private static void sugarifyNeighboringWater(LevelAccessor level, BlockPos blockPos) {

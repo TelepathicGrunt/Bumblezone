@@ -10,10 +10,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -75,29 +78,25 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockEx
 
     @Override
     public void onPlace(BlockState blockState, Level world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
+        sugarifyNeighboringWater(world, blockPos);
         super.onPlace(blockState, world, blockPos, previousBlockState, notify);
-        setNeighboringSugarWater(world, blockPos);
     }
 
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos blockPos, Block block, BlockPos fromPos, boolean notify) {
+        sugarifyNeighboringWater(world, blockPos);
         super.neighborChanged(state, world, blockPos, block, fromPos, notify);
-        setNeighboringSugarWater(world, blockPos);
     }
 
-    private void setNeighboringSugarWater(Level world, BlockPos blockPos) {
+    private static void sugarifyNeighboringWater(LevelAccessor level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
             BlockPos sidePos = blockPos.relative(direction);
-            FluidState fluidState = world.getFluidState(sidePos);
-            if(fluidState.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) &&
-                    fluidState.isSource() &&
-                    world.getBlockState(sidePos).getCollisionShape(world, sidePos).isEmpty())
-            {
-                world.setBlock(blockPos.relative(direction), BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
+            FluidState sideFluid = level.getFluidState(sidePos);
+            if(sideFluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && sideFluid.isSource() && level.getBlockState(sidePos).getShape(level, sidePos).isEmpty()) {
+                level.setBlock(sidePos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
             }
         }
     }
-
 
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
