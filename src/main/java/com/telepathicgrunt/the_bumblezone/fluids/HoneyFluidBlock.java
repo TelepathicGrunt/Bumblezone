@@ -50,7 +50,7 @@ public class HoneyFluidBlock extends LiquidBlock {
     @Override
     public void neighborChanged(BlockState blockState, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (this.neighboringFluidInteractions(world, pos)) {
-            world.scheduleTick(pos, blockState.getFluidState().getType(), this.getFluid().getTickDelay(world));
+            world.scheduleTick(pos, blockState.getFluidState().getType(), this.fluid.getTickDelay(world));
         }
     }
 
