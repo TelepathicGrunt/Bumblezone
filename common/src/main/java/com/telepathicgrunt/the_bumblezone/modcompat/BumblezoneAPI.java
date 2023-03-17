@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -135,19 +133,4 @@ public class BumblezoneAPI {
         return EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), serverPlayer);
     }
 
-    /**
-     * Returns what the bee's skin variation is. (Example: transbee or bluebee or transbluebee) See BeeVariantRender class for all types.
-     */
-    public static String getVariantId(Entity entity) {
-        return PlatformHooks.getVariantId(entity);
-    }
-
-    /**
-     * Sets what the bee's skin variation is. (Example: transbee or bluebee or transbluebee) See BeeVariantRender class for all types.
-     * Can be used to store your own variation for bees that Bumblezone will automatically try to put on bees.
-     * Be sure to add the texture assets to the right places for BeeVariantRenderer to grab it.
-     */
-    public static void saveVariantId(Entity entity, String variantId) {
-        PlatformHooks.saveVariantId(entity, variantId);
-    }
 }

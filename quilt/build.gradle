@@ -72,11 +72,11 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
 
-    modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
-    modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
+    //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
+    //modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
 
-    include("me.luligabi:NoIndium:${project.noindium}")
-    modLocalRuntime("curse.maven:indium-459496:${rootProject.indium_file_id}")
+    //include("me.luligabi:NoIndium:${project.noindium}")
+    //modLocalRuntime("curse.maven:indium-459496:${rootProject.indium_file_id}")
 
     modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
     modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")

@@ -146,6 +146,7 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
+        maven { url = 'https://maven.quiltmc.org/repository/release' }
         maven { url "https://www.cursemaven.com" }
         maven { url "https://maven.architectury.dev/" }
         maven { url "https://maven.shedaniel.me" }
