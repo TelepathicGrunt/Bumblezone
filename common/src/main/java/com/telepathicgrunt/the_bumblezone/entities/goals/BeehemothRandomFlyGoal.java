@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -19,6 +20,13 @@ public class BeehemothRandomFlyGoal extends Goal {
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
+    public void start() {
+        target = getBlockInViewBeehemoth();
+        if (target != null) {
+            beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFlyingSpeed());
+        }
+    }
+
     public boolean canUse() {
         MoveControl movementcontroller = beehemothEntity.getMoveControl();
         if (beehemothEntity.isStopWandering()) {
@@ -27,7 +35,7 @@ public class BeehemothRandomFlyGoal extends Goal {
         if (!movementcontroller.hasWanted() || target == null) {
             target = getBlockInViewBeehemoth();
             if (target != null) {
-                beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFinalFlyingSpeed());
+                beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFlyingSpeed());
             }
             return true;
         }
@@ -47,21 +55,24 @@ public class BeehemothRandomFlyGoal extends Goal {
             target = getBlockInViewBeehemoth();
         }
         if (target != null) {
-            beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFinalFlyingSpeed());
-            if (beehemothEntity.distanceToSqr(Vec3.atCenterOf(target)) < 2.5F) {
+            double distance = beehemothEntity.distanceToSqr(Vec3.atCenterOf(target));
+            if (distance < 2.5D) {
                 target = null;
+                return;
             }
+
+            beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFlyingSpeed());
         }
     }
 
     public BlockPos getBlockInViewBeehemoth() {
-        float radius = 1 + beehemothEntity.getRandom().nextInt(5);
+        float radius = 3 + beehemothEntity.getRandom().nextInt(6);
         float neg = beehemothEntity.getRandom().nextBoolean() ? 1 : -1;
         float renderYawOffset = beehemothEntity.yBodyRot;
         float angle = (0.01745329251F * renderYawOffset) + 3.15F + (beehemothEntity.getRandom().nextFloat() * neg);
         double extraX = radius * Mth.sin((float) (Math.PI + angle));
         double extraZ = radius * Mth.cos(angle);
-        BlockPos radialPos = new BlockPos(beehemothEntity.getX() + extraX, beehemothEntity.getY() + 2, beehemothEntity.getZ() + extraZ);
+        BlockPos radialPos = BlockPos.containing(beehemothEntity.getX() + extraX, beehemothEntity.getY() + 2, beehemothEntity.getZ() + extraZ);
         BlockPos ground = getGroundPosition(beehemothEntity.level, radialPos);
         BlockPos newPos = ground.above(1 + beehemothEntity.getRandom().nextInt(6));
         if (!beehemothEntity.isTargetBlocked(Vec3.atCenterOf(newPos)) && beehemothEntity.distanceToSqr(Vec3.atCenterOf(newPos)) > 6) {

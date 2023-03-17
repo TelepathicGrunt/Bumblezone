@@ -85,6 +85,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     public boolean movingStraightUp = false;
     public boolean movingStraightDown = false;
     private boolean wasOnGround = false;
+    public float flyingSpeed = 0.02F;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
         super(type, world);
@@ -116,7 +117,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     public static AttributeSupplier.Builder getAttributeBuilder() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 42.0D)
-                .add(Attributes.FLYING_SPEED, 0.6)
+                .add(Attributes.FLYING_SPEED, 0.4000000059604645D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
                 .add(Attributes.FOLLOW_RANGE, 128.0D);
@@ -124,8 +125,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 2D, Ingredient.of(BzTags.BEEHEMOTH_FAST_LURING_DESIRED_ITEMS)));
-        this.goalSelector.addGoal(2, new BeehemothTemptGoal(this, 1.5D, Ingredient.of(BzTags.BEEHEMOTH_DESIRED_ITEMS)));
+        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 0.012D, Ingredient.of(BzTags.BEEHEMOTH_FAST_LURING_DESIRED_ITEMS)));
+        this.goalSelector.addGoal(2, new BeehemothTemptGoal(this, 0.006D, Ingredient.of(BzTags.BEEHEMOTH_DESIRED_ITEMS)));
         this.goalSelector.addGoal(3, new BeehemothFlyingStillGoal(this));
         this.goalSelector.addGoal(4, new BeehemothRandomFlyGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 60));
@@ -220,7 +221,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource == DamageSource.SWEET_BERRY_BUSH) {
+        if (damageSource == level.damageSources().sweetBerryBush()) {
             return true;
         }
         return super.isInvulnerableTo(damageSource);
@@ -231,7 +232,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         if (isInvulnerableTo(source)) {
             return false;
         }
-        else if(isOnPortalCooldown() && source == DamageSource.IN_WALL) {
+        else if(isOnPortalCooldown() && source == level.damageSources().inWall()) {
             spawnMadParticles();
             playHurtSound(source);
             return false;
@@ -522,8 +523,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public double getPassengersRidingOffset() {
-        float f = Math.min(0.25F, this.animationSpeed);
-        float f1 = this.animationPosition;
+        float f = Math.min(0.25F, this.walkAnimation.speed());
+        float f1 = this.walkAnimation.position();
         return (double) getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * f);
     }
 
@@ -538,15 +539,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     @Override
     public boolean isNoGravity() {
         return true;
-    }
-
-    @Override
-    protected void checkFallDamage(double y, boolean onGround, BlockState blockState, BlockPos blockPos) {
-    }
-
-    @Override
-    public boolean causeFallDamage(float fallDistance, float damageModifier, DamageSource damageSource) {
-        return false;
     }
 
     @Override
@@ -649,12 +641,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         return this.tickCount % TICKS_PER_FLAP == 0;
     }
 
-    // If our flyingSpeed is manually modified by something (like Beenergized effect),
-    public float getFinalFlyingSpeed() {
-        float percentDiff = (float) getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;
-        return ((percentDiff - 1) * 5) + 1;
-    }
-
     @Nullable
     public LivingEntity getControllingPassenger() {
         if (this.isSaddled()) {
@@ -665,6 +651,17 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         }
 
         return null;
+    }
+
+    @Override
+    public float getFlyingSpeed() {
+        if (!this.isTame() || (!this.isOrderedToSit() && !this.isVehicle())) {
+            return (float) ((getAttributeValue(Attributes.FLYING_SPEED) / Attributes.FLYING_SPEED.getDefaultValue()) * 0.0038f);
+        }
+
+        float reducedAttrDiff = (float) ((getAttributeValue(Attributes.FLYING_SPEED) - Attributes.FLYING_SPEED.getDefaultValue()) / 3F);
+        float adjustedSpeedMultiplier = (float) ((reducedAttrDiff + Attributes.FLYING_SPEED.getDefaultValue()) / Attributes.FLYING_SPEED.getDefaultValue());
+        return adjustedSpeedMultiplier * this.flyingSpeed;
     }
 
     @Override
@@ -681,24 +678,20 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 this.setRot(this.getYRot(), this.getXRot());
                 this.yBodyRot = this.getYRot();
                 this.yHeadRot = this.yBodyRot;
-                double currentSpeed = this.getSpeed();
-                double speedModifier = this.isQueen() ? 0.55D : 0.15D;
-                speedModifier += (this.getFriendship() / 1100D) + 0.05D;
+                double currentSpeed = this.flyingSpeed;
+                double queenModifier = this.isQueen() ? 0.55D : 0.15D;
+                double friendlyModifier = (this.getFriendship() / 1100D) + 0.05D;
+                double speedModifier = (queenModifier + friendlyModifier) * 0.1D;
 
                 double verticalSpeed = (livingEntity.getLookAngle().y() * Math.abs(livingEntity.zza) * 5);
                 double forwardSpeed = (livingEntity.zza * 10) ;
                 double strafeSpeed = 0;
 
-                double flyingSpeedAttribute = getFinalFlyingSpeed();
-                double configVal = BzGeneralConfigs.beehemothSpeed;
-                double configSpeedModifier = configVal - (this.getFriendship() * configVal * 0.00065d) + 0.5d;
                 if (livingEntity.zza != 0 || this.movingStraightUp || this.movingStraightDown) {
-                    currentSpeed = configSpeedModifier * Math.min(
-                            speedModifier * flyingSpeedAttribute,
-                            currentSpeed + (0.3D * flyingSpeedAttribute));
+                    currentSpeed = Math.min(BzGeneralConfigs.beehemothSpeed * speedModifier, currentSpeed + 0.003D);
                 }
                 else {
-                    currentSpeed = Math.max(0, currentSpeed - 0.2D * flyingSpeedAttribute);
+                    currentSpeed = Math.max(0, currentSpeed - 0.2D);
                 }
 
                 if(this.movingStraightUp || this.movingStraightDown) {
@@ -719,8 +712,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 }
 
                 if (this.isControlledByLocalInstance()) {
-                    this.setSpeed((float)currentSpeed);
-                    this.flyingSpeed = this.getSpeed() * 0.1F;
+                    this.flyingSpeed = (float) currentSpeed;
+                    this.setSpeed(this.getFlyingSpeed());
                     Vec3 moveDir = new Vec3(strafeSpeed, verticalSpeed, forwardSpeed);
                     super.travel(moveDir);
                 }
@@ -728,12 +721,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     this.setDeltaMovement(Vec3.ZERO);
                 }
 
-                this.flyingSpeed = this.getSpeed() * 0.1F;
-                this.calculateEntityAnimation(this, false);
+                this.calculateEntityAnimation(false);
                 this.tryCheckInsideBlocks();
             }
             else {
-                this.flyingSpeed = this.getSpeed() * 0.1F;
                 super.travel(moveVector);
             }
 
@@ -772,7 +763,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                         this.wantedY - beehemothEntity.getY(),
                         this.wantedZ - beehemothEntity.getZ());
 
-                double length = vec3.length();
+                double length = vec3.length() / 1.25D;
 
                 if (length < beehemothEntity.getBoundingBox().getSize()) {
                     this.operation = MoveControl.Operation.WAIT;
@@ -783,7 +774,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     if (beehemothEntity.isVehicle()) {
                         localSpeed *= 1.5D;
                     }
-                    Vec3 newVelocity = beehemothEntity.getDeltaMovement().add(vec3.scale(localSpeed * 0.005D / length));
+                    Vec3 newVelocity = beehemothEntity.getDeltaMovement().add(vec3.scale(localSpeed / length));
 
                     double newYSpeed;
                     if (beehemothEntity.isOnGround()) {
