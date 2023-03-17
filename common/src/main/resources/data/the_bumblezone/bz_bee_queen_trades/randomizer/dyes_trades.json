@@ -7,6 +7,10 @@
     {
       "id": "#c:dyes",
       "required": false
+    },
+    {
+      "id": "#c:dye_any",
+      "required": false
     }
   ],
   "possible_rewards": [

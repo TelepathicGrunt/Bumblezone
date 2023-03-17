@@ -446,6 +446,11 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    }
 
    @Override
+   protected boolean shouldDropLoot() {
+      return true;
+   }
+
+   @Override
    protected ResourceLocation getDefaultLootTable() {
       return this.getType().getDefaultLootTable();
    }
