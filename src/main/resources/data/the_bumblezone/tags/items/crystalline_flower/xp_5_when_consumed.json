@@ -9,6 +9,10 @@
     "minecraft:emerald_block",
     "minecraft:quartz_block",
     "minecraft:amethyst_block",
+    "minecraft:end_crystal",
+    "minecraft:golden_apple",
+    "minecraft:golden_carrot",
+    "minecraft:glistering_melon_slice",
     {
       "id": "#forge:buckets/honey",
       "required": false

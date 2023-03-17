@@ -5,6 +5,7 @@
       "rolls": 1,
       "entries": [
         {
+          "name": "minecraft:sugar",
           "type": "minecraft:item",
           "functions": [
             {
@@ -22,8 +23,7 @@
                 "max": 1.0
               }
             }
-          ],
-          "name": "minecraft:sugar"
+          ]
         }
       ]
     },
@@ -31,7 +31,9 @@
       "rolls": 1,
       "entries": [
         {
+          "name": "minecraft:slime_ball",
           "type": "minecraft:item",
+          "weight": 1,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -48,8 +50,7 @@
                 "max": 1.0
               }
             }
-          ],
-          "name": "minecraft:slime_ball"
+          ]
         }
       ]
     }
