@@ -3,9 +3,9 @@
 ##### Items:
 Fixed Bumblebee Chestplate and Honeybee Leggings rendering improperly if more than one of them is rendering in the world.
 
-Added Stinger Spear to `forge:tools/tridents` and Honey Crystal Shield to `forge:tools/shields` for a bit more mod compatibility.
+Added Stinger Spear to `forge:tools/tridents` and Honey Crystal Shield to `forge:tools/shields` item tags for a bit more mod compatibility.
 
-Added all bee armors to the 4 `forge:armors/` tags for a bit more mod compatibility.
+Added all bee armors to the 4 `forge:armors/` item tags for a bit more mod compatibility.
 
 ##### Fluids:
 
