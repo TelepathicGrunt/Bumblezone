@@ -476,6 +476,12 @@ public class CrystallineFlower extends BaseEntityBlock {
         else if (stack.is(BzTags.XP_100_WHEN_CONSUMED_ITEMS)) {
             return 100;
         }
+        else if (stack.is(BzTags.XP_1000_WHEN_CONSUMED_ITEMS)) {
+            return 1000;
+        }
+        else if (stack.is(BzTags.XP_MAXED_WHEN_CONSUMED_ITEMS)) {
+            return Integer.MAX_VALUE;
+        }
 
         return 1;
     }

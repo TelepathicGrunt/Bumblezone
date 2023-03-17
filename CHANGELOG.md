@@ -15,11 +15,27 @@ Sugar Infused Stone and Sugar Infused Cobblestone will now turn neighboring Wate
 
 String Curtains now says message to use String to extend curtain if one right-clicks the curtain with another curtain item.
 
+More items now setup so they give Crystalline Flower more XP than normal when consumed.
+ Beacon, Glowstone, Spectral Arrow, Glistering Melon Slice, Golden Carrot, Golden Apple, and End Crystal gives a little more XP to flower when consumed.
+ Enchanted Books gives more XP when consumed by flower, so they can be partially recycled into new enchantments.
+ Royal Jelly Bottle gives an insane more XP due to its rarity.
+ Royal Jelly Bucket/Block now maxes out the Crystalline Flower regardless of its XP requirements.
+
+Two new item tags were added for the above Crystalline Flower consuming changes:
+
+- `the_bumblezone:crystalline_flower/xp_1000_when_consumed`
+
+- `the_bumblezone:crystalline_flower/xp_maxed_when_consumed`
+
 ##### Entities:
 Adult Honey Slime now will split into 2 to 4 baby Honey Slimes when killed.
 
 Adult Honey Slime that you harvested honey off of now will split into 2 to 4 tiny vanilla Slimes when killed.
 
-Honey Slime loot table adjusted to drop less due to this new way to multiply them.
+Baby Honey Slimes now drops loot when killed
 
 When a Honey Slime is killed, all nearby Honey Slimes will aggro against you. This includes splitting adults into babies.
+
+##### Advancements:
+Changed the Music Disc advancement to now progress when obtaining the Music Discs from anywhere. Not just Wandering Trader's trades.
+ As long as the Bumblezone Music Disc gets into your player's inventory, it'll count towards the advancement progress.

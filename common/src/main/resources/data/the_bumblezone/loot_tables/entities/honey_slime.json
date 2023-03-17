@@ -5,10 +5,6 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:empty",
-          "weight": 1
-        },
-        {
           "name": "minecraft:sugar",
           "type": "minecraft:item",
           "functions": [
@@ -34,10 +30,6 @@
     {
       "rolls": 1,
       "entries": [
-        {
-          "type": "minecraft:empty",
-          "weight": 1
-        },
         {
           "name": "minecraft:slime_ball",
           "type": "minecraft:item",

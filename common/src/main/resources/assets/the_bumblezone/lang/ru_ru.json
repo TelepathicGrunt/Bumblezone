@@ -284,7 +284,7 @@
   "system.the_bumblezone.require_hive_blocks_failed": "Телепорт в Жужжилище неудачен. Требуется необходимый блок под ульем.",
   "system.the_bumblezone.no_protection": "У вас не было Защиты Улья...",
   "system.the_bumblezone.lost_bee_essence": "Пчелиная Эссенция потеряна при возрождении...",
-  "system.the_bumblezone.string_curtain_extending_clarification": "Use String to extend String Curtains!",
+  "system.the_bumblezone.string_curtain_extending_clarification": "Используйте струну для раздвижения струнных штор!",
 
   "command.the_bumblezone.invalid_data_arg": "Аргумент данных не найден. Пожалуйста, выберите из предложенных вариантов.",
   "command.the_bumblezone.invalid_entity_arg": "Отсутствует данные о существе в текущем запросе. Пожалуйста, выберите из предложенных вариантов.",
@@ -341,7 +341,7 @@
   "advancements.the_bumblezone.obtain_honey_bucket.title": "БОЛЬШЕ МЁДА!!!",
   "advancements.the_bumblezone.obtain_honey_bucket.description": "Заполучи ведро мёда!",
   "advancements.the_bumblezone.obtain_all_music_discs.title": "Пчелиный Танцпол!",
-  "advancements.the_bumblezone.obtain_all_music_discs.description": "Выкупи у Странствующего Торговца все пластинки про пчёл!",
+  "advancements.the_bumblezone.obtain_all_music_discs.description": "Получите все музыкальные диски с пчелиной тематикой!",
   "advancements.the_bumblezone.honey_slime_creation.title": "Живой Мёд!",
   "advancements.the_bumblezone.honey_slime_creation.description": "Наполни Слизня Мёдом!",
   "advancements.the_bumblezone.honey_slime_harvest.title": "Да Кому Нужны Ваши Пчёлы???",

@@ -196,6 +196,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
                      honeySlime.setCustomName(component);
                      honeySlime.setNoAi(flag);
                      honeySlime.setInvulnerable(this.isInvulnerable());
+                     honeySlime.setupHoneySlime(honeySlime.isBaby(), true);
                      honeySlime.moveTo(this.getX() + (double)xOffset, this.getY() + 0.5, this.getZ() + (double)zOffset, this.random.nextFloat() * 360.0F, 0.0F);
                      this.level.addFreshEntity(honeySlime);
                   }
@@ -446,7 +447,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    protected ResourceLocation getDefaultLootTable() {
-      return this.isBaby() ? BuiltInLootTables.EMPTY : this.getType().getDefaultLootTable();
+      return this.getType().getDefaultLootTable();
    }
 
    @Override

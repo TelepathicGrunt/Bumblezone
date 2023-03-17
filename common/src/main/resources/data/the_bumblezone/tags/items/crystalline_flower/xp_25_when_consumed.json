@@ -1,9 +1,8 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:royal_jelly_bottle",
     "minecraft:enchanted_golden_apple",
     "minecraft:nether_star",
-    "minecraft:enchanted_book"
+    "minecraft:beacon"
   ]
 }
