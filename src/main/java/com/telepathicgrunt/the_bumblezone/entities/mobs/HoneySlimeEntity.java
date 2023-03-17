@@ -193,7 +193,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
                float xOffset = ((float)(currentNewSlime % 2) - 0.5F) * 0.5F;
                float zOffset = ((float)(currentNewSlime / 2) - 0.5F) * 0.5F;
                if (isInHoney()) {
-                  HoneySlimeEntity honeySlime = BzEntities.HONEY_SLIME.get().create(this.level);
+                  HoneySlimeEntity honeySlime = BzEntities.HONEY_SLIME.create(this.level);
                   if (honeySlime != null) {
                      if (this.isPersistenceRequired()) {
                         honeySlime.setPersistenceRequired();
@@ -440,6 +440,11 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    protected float getAttackStrength() {
       return (float) Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).getValue();
+   }
+
+   @Override
+   protected boolean shouldDropLoot() {
+      return true;
    }
 
    @Override
