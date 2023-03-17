@@ -65,7 +65,6 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 rightArm.visible = true;
                 leftArm.visible = true;
 
-                body.render(poseStack, buffer, light, overlay);
                 ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(entityLiving);
                 if (!itemStack.isEmpty() && itemStack.getOrCreateTag().getBoolean("isFlying")) {
                     long time = System.currentTimeMillis();
@@ -93,6 +92,8 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                         rightWing.xRot = -0.2f;
                     }
                 }
+
+                body.render(poseStack, buffer, light, overlay);
             }
             case LEGS -> {
                 body.visible = true;
@@ -103,8 +104,6 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 bootRight.visible = false;
                 bootLeft.visible = false;
 
-                leftLeg.render(poseStack, buffer, light, overlay);
-                rightLeg.render(poseStack, buffer, light, overlay);
                 ItemStack itemStack = HoneyBeeLeggings.getEntityBeeLegging(entityLiving);
                 if (!itemStack.isEmpty() && HoneyBeeLeggings.isPollinated(itemStack)) {
                     leftPollen.visible = true;
@@ -114,6 +113,9 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                     leftPollen.visible = false;
                     rightPollen.visible = false;
                 }
+
+                leftLeg.render(poseStack, buffer, light, overlay);
+                rightLeg.render(poseStack, buffer, light, overlay);
             }
             case FEET -> {
                 rightLeg.visible = true;

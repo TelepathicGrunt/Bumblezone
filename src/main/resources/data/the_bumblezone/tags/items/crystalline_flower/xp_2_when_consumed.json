@@ -9,6 +9,8 @@
     "minecraft:amethyst_shard",
     "minecraft:quartz",
     "minecraft:echo_shard",
+    "minecraft:spectral_arrow",
+    "minecraft:glowstone",
     {
       "id": "productivebees:honey_treat",
       "required": false
