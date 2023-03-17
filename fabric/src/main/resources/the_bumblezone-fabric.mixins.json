@@ -9,8 +9,8 @@
   "client": [
   ],
   "mixins": [
-    "enchantment.EnchantmentHelperMixin",
-    "enchantment.EnchantmentMixin",
+    "enchantments.EnchantmentHelperMixin",
+    "enchantments.EnchantmentMixin",
     "fabricapi.BiomeModificationContextImplMixin"
   ]
 }

@@ -23,10 +23,7 @@ public class SugarInfusedCobblestone extends Block {
 
     @Override
     public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos1, boolean b) {
-        if (!level.isClientSide()) {
-            sugarifyNeighboringWater(level, blockPos);
-        }
-
+        sugarifyNeighboringWater(level, blockPos);
         super.neighborChanged(blockState, level, blockPos, block, blockPos1, b);
     }
 

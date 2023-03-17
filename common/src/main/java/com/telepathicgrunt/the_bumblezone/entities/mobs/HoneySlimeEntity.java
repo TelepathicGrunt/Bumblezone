@@ -1,8 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeAngerAttackingGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFaceRandomGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFacingRevengeGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeRevengeGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
@@ -16,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -33,6 +35,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -46,6 +49,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -59,6 +63,7 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -75,7 +80,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
    private static final Ingredient LURING_BREEDING_ITEM = Ingredient.of(BzTags.HONEY_SLIME_DESIRED_ITEMS);
    private UUID target_UUID;
-
 
    private static final HashSet<Block> HONEY_BASED_BLOCKS = new HashSet<>();
 
@@ -96,7 +100,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    @Override
    protected void registerGoals() {
       this.goalSelector.addGoal(1, new HoneySlimeFloatGoal(this));
-      this.targetSelector.addGoal(1, new HoneySlimeFacingRevengeGoal(this));
+      this.targetSelector.addGoal(1, new HoneySlimeRevengeGoal(this));
+      this.targetSelector.addGoal(1, new HoneySlimeAngerAttackingGoal(this));
       this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
       this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this, 1.2D, LURING_BREEDING_ITEM));
       this.goalSelector.addGoal(4, new HoneySlimeHopGoal(this));
@@ -167,6 +172,63 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       }
 
       this.xpReward = isBaby ? 1 : 2;
+   }
+
+   public void remove(Entity.RemovalReason removalReason) {
+      if (!this.level.isClientSide() && this.isDeadOrDying()) {
+         if (!this.isBaby()) {
+
+            Component component = this.getCustomName();
+            boolean flag = this.isNoAi();
+            int splitAmount = 2 + this.random.nextInt(3);
+
+            for(int currentNewSlime = 0; currentNewSlime < splitAmount; ++currentNewSlime) {
+               float xOffset = ((float)(currentNewSlime % 2) - 0.5F) * 0.5F;
+               float zOffset = ((float)(currentNewSlime / 2) - 0.5F) * 0.5F;
+               if (isInHoney()) {
+                  HoneySlimeEntity honeySlime = BzEntities.HONEY_SLIME.get().create(this.level);
+                  if (honeySlime != null) {
+                     if (this.isPersistenceRequired()) {
+                        honeySlime.setPersistenceRequired();
+                     }
+
+                     honeySlime.setBaby(true);
+                     honeySlime.setCustomName(component);
+                     honeySlime.setNoAi(flag);
+                     honeySlime.setInvulnerable(this.isInvulnerable());
+                     honeySlime.moveTo(this.getX() + (double)xOffset, this.getY() + 0.5, this.getZ() + (double)zOffset, this.random.nextFloat() * 360.0F, 0.0F);
+                     this.level.addFreshEntity(honeySlime);
+                  }
+               }
+               else {
+                  Slime slime = EntityType.SLIME.create(this.level);
+                  if (slime != null) {
+                     if (this.isPersistenceRequired()) {
+                        slime.setPersistenceRequired();
+                     }
+
+                     slime.setCustomName(component);
+                     slime.setNoAi(flag);
+                     slime.setInvulnerable(this.isInvulnerable());
+                     slime.setSize(1, true);
+                     slime.moveTo(this.getX() + (double)xOffset, this.getY() + 0.5, this.getZ() + (double)zOffset, this.random.nextFloat() * 360.0F, 0.0F);
+                     this.level.addFreshEntity(slime);
+                  }
+               }
+            }
+         }
+
+         if (this.getLastAttacker() != null && !(this.getLastAttacker() instanceof Player player && player.isCreative())) {
+            List<HoneySlimeEntity> honeySlimes = this.level.getEntitiesOfClass(HoneySlimeEntity.class, this.getBoundingBox().inflate(24));
+            for (HoneySlimeEntity honeySlime : honeySlimes) {
+               honeySlime.startPersistentAngerTimer();
+               honeySlime.setPersistentAngerTarget(this.getLastAttacker().getUUID());
+               honeySlime.setTarget(this.getLastAttacker());
+            }
+         }
+      }
+
+      super.remove(removalReason);
    }
 
    public boolean isInHoney() {

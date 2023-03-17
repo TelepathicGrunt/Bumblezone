@@ -147,7 +147,6 @@ allprojects {
 
     repositories {
         maven { url "https://www.cursemaven.com" }
-        maven { url "https://nexus.resourcefulbees.com/repository/maven-public/" }
         maven { url "https://maven.architectury.dev/" }
         maven { url "https://maven.shedaniel.me" }
         maven { url "https://api.modrinth.com/maven/" }
@@ -171,6 +170,7 @@ allprojects {
             name = "TerraformersMC"
             url = "https://maven.terraformersmc.com/"
         }
+        maven { url "https://nexus.resourcefulbees.com/repository/maven-public/" }
         maven { url "https://jitpack.io" }
     }
 
