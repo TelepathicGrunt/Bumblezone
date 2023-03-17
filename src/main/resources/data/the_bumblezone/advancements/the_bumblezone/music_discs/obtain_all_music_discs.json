@@ -20,47 +20,43 @@
   },
   "criteria": {
     "obtain_music_disc_honey_bee_rat_faced_boy": {
-      "trigger": "minecraft:villager_trade",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "item": {
-          "items": ["the_bumblezone:music_disc_honey_bee_rat_faced_boy"]
-        },
-        "villager": {
-          "type": "minecraft:wandering_trader"
-        }
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_honey_bee_rat_faced_boy"]
+          }
+        ]
       }
     },
     "obtain_music_disc_flight_of_the_bumblebee_rimsky_korsakov": {
-      "trigger": "minecraft:villager_trade",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "item": {
-          "items": ["the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"]
-        },
-        "villager": {
-          "type": "minecraft:wandering_trader"
-        }
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"]
+          }
+        ]
       }
     },
     "obtain_music_disc_la_bee_da_loca": {
-      "trigger": "minecraft:villager_trade",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "item": {
-          "items": ["the_bumblezone:music_disc_la_bee_da_loca"]
-        },
-        "villager": {
-          "type": "minecraft:wandering_trader"
-        }
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_la_bee_da_loca"]
+          }
+        ]
       }
     },
     "obtain_music_disc_bee_laxing_with_the_hom_bees": {
-      "trigger": "minecraft:villager_trade",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "item": {
-          "items": ["the_bumblezone:music_disc_bee_laxing_with_the_hom_bees"]
-        },
-        "villager": {
-          "type": "minecraft:wandering_trader"
-        }
+        "items": [
+          {
+            "items": ["the_bumblezone:music_disc_bee_laxing_with_the_hom_bees"]
+          }
+        ]
       }
     }
   },

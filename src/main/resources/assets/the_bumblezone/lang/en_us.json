@@ -284,6 +284,7 @@
   "system.the_bumblezone.require_hive_blocks_failed": "Bumblezone teleport failed. Hive needs a required block below it.",
   "system.the_bumblezone.no_protection": "You lacked Protection of the Hive effect...",
   "system.the_bumblezone.lost_bee_essence": "Bee Essence lost upon respawning...",
+  "system.the_bumblezone.string_curtain_extending_clarification": "Use String to extend String Curtains!",
 
   "command.the_bumblezone.invalid_data_arg": "The data argument is invalid. Please pick one of the suggestion's entries.",
   "command.the_bumblezone.invalid_entity_arg": "The entity argument is missing for this data request. Please pick an entity from the suggestion's entries.",
@@ -340,7 +341,7 @@
   "advancements.the_bumblezone.obtain_honey_bucket.title": "MOAR HONEEEEY!!!",
   "advancements.the_bumblezone.obtain_honey_bucket.description": "Get a Bucket of Honey!",
   "advancements.the_bumblezone.obtain_all_music_discs.title": "Gotta Hive a Dance!",
-  "advancements.the_bumblezone.obtain_all_music_discs.description": "Bargain with a Wandering Trader for all Bee-themed music discs!",
+  "advancements.the_bumblezone.obtain_all_music_discs.description": "Obtain all Bee-themed music discs!",
   "advancements.the_bumblezone.honey_slime_creation.title": "The Honey Is Alive!",
   "advancements.the_bumblezone.honey_slime_creation.description": "Infused a Slime with honey!",
   "advancements.the_bumblezone.honey_slime_harvest.title": "Who Needs Bees???",

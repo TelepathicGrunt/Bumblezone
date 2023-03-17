@@ -2,18 +2,29 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 
 import java.util.EnumSet;
 
-public class HoneySlimeFacingRevengeGoal extends HurtByTargetGoal {
+public class HoneySlimeAngerAttackingGoal extends TargetGoal {
     private final HoneySlimeEntity slime;
 
-    public HoneySlimeFacingRevengeGoal(HoneySlimeEntity slimeIn) {
-        super(slimeIn);
+    public HoneySlimeAngerAttackingGoal(HoneySlimeEntity slimeIn) {
+        super(slimeIn, true);
         this.slime = slimeIn;
-        this.setFlags(EnumSet.of(Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.TARGET));
     }
+
+    public boolean canUse() {
+        LivingEntity livingEntity = this.slime.getTarget();
+        if (livingEntity == null) {
+            this.slime.setRemainingPersistentAngerTime(0);
+            return false;
+        }
+        return true;
+    }
+
     public boolean canContinueToUse() {
         return slime.getTarget() != null && super.canContinueToUse();
     }

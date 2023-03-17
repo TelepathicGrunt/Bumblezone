@@ -48,9 +48,9 @@ public class HoneyFluidBlock extends LiquidBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborChanged(BlockState blockState, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (this.neighboringFluidInteractions(world, pos)) {
-            world.scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(world));
+            world.scheduleTick(pos, blockState.getFluidState().getType(), this.getFluid().getTickDelay(world));
         }
     }
 
@@ -67,31 +67,38 @@ public class HoneyFluidBlock extends LiquidBlock {
 
         for (Direction direction : Direction.values()) {
             BlockPos sidePos = pos.relative(direction);
-            FluidState fluidState = world.getFluidState(sidePos);
-            if (fluidState.is(FluidTags.LAVA)) {
+            FluidState sideFluid = world.getFluidState(sidePos);
+            if (sideFluid.is(FluidTags.LAVA)) {
                 lavaflag = true;
                 if (direction == Direction.DOWN) {
                     lavadownflag = true;
                 }
                 break;
             }
-            else if(fluidState.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) &&
-                    fluidState.isSource() &&
-                    world.getBlockState(sidePos).getCollisionShape(world, sidePos).isEmpty())
-            {
-                world.setBlock(pos.relative(direction), BzFluids.SUGAR_WATER_BLOCK.defaultBlockState(), 3);
+            else if(!sideFluid.isEmpty() && !sideFluid.is(BzTags.VISUAL_HONEY_FLUID)) {
+                FluidState currentFluid = world.getFluidState(pos);
+                if (direction == Direction.DOWN && currentFluid.hasProperty(BOTTOM_LEVEL) && currentFluid.getValue(BOTTOM_LEVEL) != 0) {
+                    continue;
+                }
+
+                if (direction == Direction.UP) {
+                    world.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState(), 3);
+                    return false;
+                }
+
+                world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState(), 3);
             }
         }
 
         if (lavaflag) {
-            FluidState ifluidstate = world.getFluidState(pos);
-            if (ifluidstate.isSource()) {
+            FluidState currentFluid = world.getFluidState(pos);
+            if (currentFluid.isSource()) {
                 world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_STONE.defaultBlockState());
                 this.triggerMixEffects(world, pos);
                 return false;
             }
 
-            if (ifluidstate.getHeight(world, pos) >= 0.44444445F || (lavadownflag && ifluidstate.getValue(BOTTOM_LEVEL) == 0)) {
+            if (currentFluid.getHeight(world, pos) >= 0.44444445F || (lavadownflag && currentFluid.hasProperty(BOTTOM_LEVEL) && currentFluid.getValue(BOTTOM_LEVEL) == 0)) {
                 world.setBlockAndUpdate(pos, BzBlocks.SUGAR_INFUSED_COBBLESTONE.defaultBlockState());
                 this.triggerMixEffects(world, pos);
                 return false;

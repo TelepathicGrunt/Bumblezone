@@ -10,6 +10,10 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -291,18 +295,24 @@ public class StringCurtain extends Block {
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-        if (itemstack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS) && blockstate.is(BzTags.STRING_CURTAINS)) {
-            boolean success = extendCurtainIfPossible(blockstate, world, position);
-            if (success) {
-                if (!playerEntity.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
+        if (blockstate.is(BzTags.STRING_CURTAINS)) {
+            if (itemstack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
+                boolean success = extendCurtainIfPossible(blockstate, world, position);
+                if (success) {
+                    if (!playerEntity.getAbilities().instabuild) {
+                        itemstack.shrink(1);
+                    }
 
-                if(playerEntity instanceof ServerPlayer) {
-                    BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    if(playerEntity instanceof ServerPlayer) {
+                        BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    }
                 }
+                return InteractionResult.SUCCESS;
             }
-            return InteractionResult.SUCCESS;
+            else if (itemstack.is(BzTags.STRING_CURTAINS_ITEMS)) {
+                playerEntity.displayClientMessage(Component.translatable("system.the_bumblezone.string_curtain_extending_clarification").withStyle(ChatFormatting.WHITE), true);
+                return InteractionResult.FAIL;
+            }
         }
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
