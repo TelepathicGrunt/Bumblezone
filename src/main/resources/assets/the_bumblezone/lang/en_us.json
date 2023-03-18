@@ -512,9 +512,10 @@
   "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Complete 256 trades with the Bee Queen. Does not need to be bonus trades. Any trade works!",
 
   "the_bumblezone.jei.bee_queen_trades": "Bee Queen Trades",
-  "the_bumblezone.jei.bee_queen_color_randomizing_trades": "Bee Queen Color Trades",
   "the_bumblezone.jei.queen_trade_chance": "Chance: %s%%",
   "the_bumblezone.jei.queen_trade_xp": "%sXP",
+  "the_bumblezone.jei.bee_queen_color_randomizing_trades": "Bee Queen Color Trades",
+  "the_bumblezone.jei.queen_trade_colors": "%s colors",
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets. Pollinated bees touching this block will fill it with honey automatically!",
   "the_bumblezone.filled_porous_honeycomb_block.jei_description": " A honeycomb block filled to the brim with honey! You can take honey out of this block with a Glass Bottle. However, this may anger nearby bees unless you have Protection of the Hive effect or consumed an Essence of the Bees. Hurt bees will also take honey from this block to heal themselves.  \n\n When mined, this block drops Porous Honeycomb Block and some Honeycombs. The drop is affect by Fortune or you can use Silk Touch to keep the block intact. \n\n This block also give off a Redstone signal of 1 when a Comparator is facing this block.",
   "the_bumblezone.empty_honeycomb_brood_block.jei_description": " A honeycomb block with a large hole that has nothing inside. Pollinated bees touching this block will revive it and put a larva inside the block! Can be revived with Buzzier Bee's Bottled bee item or with Potion of Bee's bee potions!",

@@ -1,17 +1,8 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#ae2:smart_cable",
-      "required": false
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#ae2:smart_cable",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": false
     }
   ]

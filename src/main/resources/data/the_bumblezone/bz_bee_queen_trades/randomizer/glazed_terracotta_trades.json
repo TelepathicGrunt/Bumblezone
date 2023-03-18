@@ -1,28 +1,12 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#forge:glazed_terracotta",
       "required": false
     },
     {
       "id": "#c:glazed_terracotta",
-      "required": false
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#c:glazed_terracotta",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
-      "required": false
-    },
-    {
-      "id": "#forge:glazed_terracotta",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": false
     }
   ]

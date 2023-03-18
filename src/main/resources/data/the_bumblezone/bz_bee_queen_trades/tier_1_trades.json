@@ -37,10 +37,6 @@
       "required": true
     },
     {
-      "id": "#c:seeds",
-      "required": false
-    },
-    {
       "id": "#c:wax",
       "required": false
     },
@@ -53,7 +49,7 @@
       "required": false
     },
     {
-      "id": "#forge:seeds",
+      "id": "#forge:crops",
       "required": false
     },
     {

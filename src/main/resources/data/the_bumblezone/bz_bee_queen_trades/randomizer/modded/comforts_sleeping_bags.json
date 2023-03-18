@@ -1,17 +1,8 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#comforts:sleeping_bags",
-      "required": false
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#comforts:sleeping_bags",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": false
     }
   ]
