@@ -194,6 +194,10 @@
       "required": false
     },
     {
+      "id": "aquamirae:golden_moth",
+      "required": false
+    },
+    {
       "id": "silverbirch:firefly",
       "required": false
     },
