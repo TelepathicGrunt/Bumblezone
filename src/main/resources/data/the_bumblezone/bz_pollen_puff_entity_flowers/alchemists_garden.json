@@ -72,5 +72,27 @@
         }
       ]
     }
+  }],
+  "alchemists_garden:ent": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "alchemists_garden:ent_minion": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:oak_sapling" },
+          "weight": 1
+        }
+      ]
+    }
   }]
 }

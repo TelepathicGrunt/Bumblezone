@@ -40,3 +40,6 @@ When a Honey Slime is killed, all nearby Honey Slimes will aggro against you. Th
 ##### Advancements:
 Changed the Music Disc advancement to now progress when obtaining the Music Discs from anywhere. Not just Wandering Trader's trades.
  As long as the Bumblezone Music Disc gets into your player's inventory, it'll count towards the advancement progress.
+
+##### Mod Compat:
+Hitting Alchemist Garden's Ent mob with Pollen Puff may spawn Oak Sapling enarby.
