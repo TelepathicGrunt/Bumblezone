@@ -29,12 +29,12 @@
       "required": true
     },
     {
-      "id": "#minecraft:planks",
+      "id": "minecraft:redstone",
       "required": true
     },
     {
-      "id": "minecraft:redstone",
-      "required": true
+      "id": "#c:crops",
+      "required": false
     },
     {
       "id": "#c:wax",
