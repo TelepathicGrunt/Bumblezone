@@ -512,6 +512,7 @@
   "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Complete 256 trades with the Bee Queen. Does not need to be bonus trades. Any trade works!",
 
   "the_bumblezone.jei.bee_queen_trades": "Bee Queen Trades",
+  "the_bumblezone.jei.bee_queen_color_randomizing_trades": "Bee Queen Color Trades",
   "the_bumblezone.jei.queen_trade_chance": "Chance: %s%%",
   "the_bumblezone.jei.queen_trade_xp": "%sXP",
   "the_bumblezone.porous_honeycomb_block.jei_description": " A honeycomb block filled with holes! You can store honey into this block with Honey Bottles or Honey Buckets. Pollinated bees touching this block will fill it with honey automatically!",

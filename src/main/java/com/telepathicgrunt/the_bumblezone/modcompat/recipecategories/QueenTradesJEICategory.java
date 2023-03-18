@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -13,6 +12,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.library.gui.elements.DrawableBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -30,8 +30,11 @@ public class QueenTradesJEICategory implements IRecipeCategory<QueenTradesInfo> 
 
     public QueenTradesJEICategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_jei.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
-        this.icon = guiHelper.createDrawableItemStack(BzItems.BEE_QUEEN_SPAWN_EGG.get().getDefaultInstance());
         this.localizedName = Component.translatable("the_bumblezone.jei.bee_queen_trades");
+
+        DrawableBuilder iconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/bee_queen_trades.png"), 0, 0, 16, 16);
+        iconBuilder.setTextureSize(16, 16);
+        this.icon = iconBuilder.build();
     }
 
     @Override

@@ -29,19 +29,15 @@
       "required": false
     },
     {
-      "id": "#c:crops",
-      "required": false
-    },
-    {
-      "id": "#c:chests/wooden",
-      "required": false
-    },
-    {
-      "id": "#c:barrels/wooden",
-      "required": false
-    },
-    {
       "id": "#c:storage_blocks/wax",
+      "required": false
+    },
+    {
+      "id": "#forge:honey_bottle",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/wax",
       "required": false
     },
     {
@@ -207,13 +203,6 @@
     },
     {
       "id": "minecraft:honey_bottle",
-      "count": 1,
-      "xp_reward": 2,
-      "weight": 10,
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:bee_bread",
       "count": 1,
       "xp_reward": 2,
       "weight": 10,
