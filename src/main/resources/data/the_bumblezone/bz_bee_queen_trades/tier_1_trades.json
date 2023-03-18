@@ -29,34 +29,6 @@
       "required": true
     },
     {
-      "id": "#minecraft:wooden_buttons",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_doors",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_fences",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_pressure_plates",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_slabs",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_stairs",
-      "required": true
-    },
-    {
-      "id": "#minecraft:wooden_trapdoors",
-      "required": true
-    },
-    {
       "id": "#minecraft:planks",
       "required": true
     },
@@ -81,10 +53,6 @@
       "required": false
     },
     {
-      "id": "#c:fence_gates/wooden",
-      "required": false
-    },
-    {
       "id": "#forge:seeds",
       "required": false
     },
@@ -101,10 +69,6 @@
       "required": false
     },
     {
-      "id": "#forge:fence_gates/wooden",
-      "required": false
-    },
-    {
       "id": "#resourcefulbees:resourceful_honeycomb_block",
       "required": false
     },
@@ -118,10 +82,6 @@
     },
     {
       "id": "resourcefulbees:t1_apiary",
-      "required": false
-    },
-    {
-      "id": "resourcefulbees:waxed_planks",
       "required": false
     },
     {

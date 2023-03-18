@@ -33,15 +33,19 @@
       "required": false
     },
     {
-      "id": "#c:chests/wooden",
-      "required": false
-    },
-    {
-      "id": "#c:barrels/wooden",
-      "required": false
-    },
-    {
       "id": "#c:storage_blocks/wax",
+      "required": false
+    },
+    {
+      "id": "#forge:honey_bottle",
+      "required": false
+    },
+    {
+      "id": "#forge:crops",
+      "required": false
+    },
+    {
+      "id": "#forge:storage_blocks/wax",
       "required": false
     },
     {

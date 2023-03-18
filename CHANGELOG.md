@@ -37,6 +37,12 @@ Baby Honey Slimes now drops loot when killed
 
 When a Honey Slime is killed, all nearby Honey Slimes will aggro against you. This includes splitting adults into babies.
 
+Removed many wooden trades from Bee Queen so there's less wood pollution in the trade system. Adjusted some trades as well for balance.
+
 ##### Advancements:
 Changed the Music Disc advancement to now progress when obtaining the Music Discs from anywhere. Not just Wandering Trader's trades.
  As long as the Bumblezone Music Disc gets into your player's inventory, it'll count towards the advancement progress.
+
+##### Mod Compat:
+JEI now shows Bee Queen trades for tradeable items! Special thanks to GizmoTheMoonPig for adding this!
+ (Left click items to see trades that gives the item. Right click items to see trades that uses the item. Right click Bee Queen Spawn Egg to see all possible trades.)
