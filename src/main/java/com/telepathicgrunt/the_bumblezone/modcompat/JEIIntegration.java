@@ -2,13 +2,12 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryObj;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenRandomizeTradesJEICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenRandomizerTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenTradesJEICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenRandomizeTradesJEICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenRandomizerTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenTradesJEICategory;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import mezz.jei.api.IModPlugin;
@@ -37,13 +36,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
 
-	public static final RecipeType<QueenTradesInfo> QUEEN_TRADES = RecipeType.create(Bumblezone.MODID, "queen_trades", QueenTradesInfo.class);
-	public static final RecipeType<QueenRandomizerTradesInfo> QUEEN_RANDOMIZE_TRADES = RecipeType.create(Bumblezone.MODID, "queen_color_randomizer_trades", QueenRandomizerTradesInfo.class);
+	public static final RecipeType<JEIQueenTradesInfo> QUEEN_TRADES = RecipeType.create(Bumblezone.MODID, "queen_trades", JEIQueenTradesInfo.class);
+	public static final RecipeType<JEIQueenRandomizerTradesInfo> QUEEN_RANDOMIZE_TRADES = RecipeType.create(Bumblezone.MODID, "queen_color_randomizer_trades", JEIQueenRandomizerTradesInfo.class);
 
 	@Override
     public ResourceLocation getPluginUid() {
@@ -70,24 +68,24 @@ public class JEIIntegration implements IModPlugin {
 		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
 
-		List<QueenTradesInfo> trades = new LinkedList<>();
+		List<JEIQueenTradesInfo> trades = new LinkedList<>();
 		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
 			for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
 				for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
 					if (!tradeResult.randomizerTrade()) {
-						trades.add(new QueenTradesInfo(trade.getKey().getDefaultInstance(), new ItemStack(tradeResult.item(), tradeResult.count()), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
+						trades.add(new JEIQueenTradesInfo(trade.getKey().getDefaultInstance(), new ItemStack(tradeResult.item(), tradeResult.count()), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
 					}
 				}
 			}
 		}
 		registration.addRecipes(QUEEN_TRADES, trades);
 
-		List<QueenRandomizerTradesInfo> randomizerTrades = new LinkedList<>();
+		List<JEIQueenRandomizerTradesInfo> randomizerTrades = new LinkedList<>();
 		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
 			for (List<TradeEntryReducedObj> tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
 				List<ItemStack> randomizeStack = tradeEntry.stream().map(e -> e.item().getDefaultInstance()).toList();
 				for (ItemStack input : randomizeStack) {
-					randomizerTrades.add(new QueenRandomizerTradesInfo(input, randomizeStack, 1, randomizeStack.size()));
+					randomizerTrades.add(new JEIQueenRandomizerTradesInfo(input, randomizeStack, 1, randomizeStack.size()));
 				}
 			}
 		}
