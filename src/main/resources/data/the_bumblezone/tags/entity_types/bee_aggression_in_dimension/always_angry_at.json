@@ -2,31 +2,19 @@
   "replace": false,
   "values": [
     {
-      "id": "deeperdarker:sculk_centipede",
+      "id": "alchemists_garden:spider_queen",
       "required": false
     },
     {
-      "id": "twilightforest:fire_beetle",
+      "id": "alchemists_garden:spider_egg",
       "required": false
     },
     {
-      "id": "twilightforest:pinch_beetle",
+      "id": "alchemists_garden:spiderling",
       "required": false
     },
     {
-      "id": "blue_skies:infested_swarmer",
-      "required": false
-    },
-    {
-      "id": "blue_skies:venom_spider",
-      "required": false
-    },
-    {
-      "id": "blue_skies:polargeist",
-      "required": false
-    },
-    {
-      "id": "biomemakeover:dragonfly",
+      "id": "alchemists_garden:spiderling_minion",
       "required": false
     },
     {
@@ -50,27 +38,67 @@
       "required": false
     },
     {
-      "id": "wildlife:staghorn_beetle",
-      "required": false
-    },
-    {
-      "id": "wildlife:rhino_beetle",
-      "required": false
-    },
-    {
-      "id": "wildlife:june_beetle",
-      "required": false
-    },
-    {
-      "id": "wildlife:dragonfly",
-      "required": false
-    },
-    {
       "id": "betterend:dragonfly",
       "required": false
     },
     {
-      "id": "unusualend:ender_blob",
+      "id": "biomemakeover:dragonfly",
+      "required": false
+    },
+    {
+      "id": "blue_skies:infested_swarmer",
+      "required": false
+    },
+    {
+      "id": "blue_skies:venom_spider",
+      "required": false
+    },
+    {
+      "id": "blue_skies:polargeist",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_hercules_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:weevil",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:praying_mantis",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:tiger_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:goliath_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:hercules_beetle",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:rhino_beetle",
+      "required": false
+    },
+    {
+      "id": "crittersandcompanions:dragonfly",
+      "required": false
+    },
+    {
+      "id": "deeperdarker:sculk_centipede",
+      "required": false
+    },
+    {
+      "id": "endlessencore:fleet",
+      "required": false
+    },
+    {
+      "id": "infernalexp:warpbeetle",
       "required": false
     },
     {
@@ -150,63 +178,39 @@
       "required": false
     },
     {
+      "id": "twilightforest:fire_beetle",
+      "required": false
+    },
+    {
+      "id": "twilightforest:pinch_beetle",
+      "required": false
+    },
+    {
       "id": "swampier_swamps:dragonfly",
       "required": false
     },
     {
-      "id": "infernalexp:warpbeetle",
+      "id": "unusualend:ender_blob",
       "required": false
     },
     {
-      "id": "crittersandcompanions:dragonfly",
+      "id": "unusualprehistory:encrusted",
       "required": false
     },
     {
-      "id": "endlessencore:fleet",
+      "id": "wildlife:staghorn_beetle",
       "required": false
     },
     {
-      "id": "alchemists_garden:spider_queen",
+      "id": "wildlife:rhino_beetle",
       "required": false
     },
     {
-      "id": "alchemists_garden:spider_egg",
+      "id": "wildlife:june_beetle",
       "required": false
     },
     {
-      "id": "alchemists_garden:spiderling",
-      "required": false
-    },
-    {
-      "id": "alchemists_garden:spiderling_minion",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:weevil",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:praying_mantis",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:tiger_beetle",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:goliath_beetle",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:hercules_beetle",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:rhino_beetle",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_hercules_beetle",
+      "id": "wildlife:dragonfly",
       "required": false
     }
   ]
