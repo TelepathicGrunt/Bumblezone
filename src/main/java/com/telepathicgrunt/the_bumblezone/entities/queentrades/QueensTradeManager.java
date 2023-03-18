@@ -18,12 +18,8 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class QueensTradeManager extends SimpleJsonResourceReloadListener {
@@ -95,6 +91,19 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 wants.addAll(items);
             });
 
+            AtomicInteger totalGroupWeight = new AtomicInteger();
+            entry.getValue().forEach(value -> {
+                if (value.id.startsWith("#")) {
+                    ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
+                    TagKey<Item> itemTag = TagKey.create(Registry.ITEM_REGISTRY, tagRl);
+                    Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
+                    taggedItems.ifPresent(holders -> totalGroupWeight.addAndGet(value.getWeight() * holders.size()));
+                } else {
+                    Optional<Holder<Item>> item = ForgeRegistries.ITEMS.getHolder(new ResourceLocation(value.id));
+                    item.ifPresent(holder -> totalGroupWeight.addAndGet(value.getWeight()));
+                }
+            });
+
             entry.getValue().forEach((value) -> {
                 if (value.id.startsWith("#")) {
                     ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
@@ -102,7 +111,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
                         for (Holder<Item> itemHolder : taggedItems.get()) {
-                            rewards.add(new TradeEntryReducedObj(itemHolder.get(), value.getCount(), value.getXpReward(), value.getWeight()));
+                            rewards.add(new TradeEntryReducedObj(itemHolder.get(), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get()));
                         }
                     }
                     else if (value.isRequired()) {
@@ -112,7 +121,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 else {
                     Optional<Holder<Item>> item = ForgeRegistries.ITEMS.getHolder(new ResourceLocation(value.id));
                     if (item.isPresent()) {
-                        rewards.add(new TradeEntryReducedObj(item.get().value(), value.getCount(), value.getXpReward(), value.getWeight()));
+                        rewards.add(new TradeEntryReducedObj(item.get().value(), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get()));
                     }
                     else if (value.isRequired()) {
                         Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find reward item {} in bee queen trades file", value.id);

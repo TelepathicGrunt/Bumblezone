@@ -1,7 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
+import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenTradesJEICategory;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import mezz.jei.api.IModPlugin;
@@ -9,11 +13,15 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.forge.ForgeTypes;
+import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -23,11 +31,16 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
-    @Override
+
+	public static final RecipeType<QueenTradesInfo> QUEEN_TRADES = RecipeType.create(Bumblezone.MODID, "queen_trades", QueenTradesInfo.class);
+
+	@Override
     public ResourceLocation getPluginUid() {
 		return new ResourceLocation(Bumblezone.MODID, "jei_plugin");
     }
@@ -51,7 +64,17 @@ public class JEIIntegration implements IModPlugin {
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
 		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
-    }
+
+		List<QueenTradesInfo> trades = new LinkedList<>();
+		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
+			for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
+				for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
+					trades.add(new QueenTradesInfo(trade.getKey().getDefaultInstance(), new ItemStack(tradeResult.item(), tradeResult.count()), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
+				}
+			}
+		}
+		registration.addRecipes(QUEEN_TRADES, trades);
+	}
 
     private static void addInfo(IRecipeRegistration registration, Item item) {
 	registration.addIngredientInfo(
@@ -72,5 +95,15 @@ public class JEIIntegration implements IModPlugin {
 			List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe, oneRecipeOnly);
 			registration.addRecipes(RecipeTypes.CRAFTING, extraRecipes);
 		}
+	}
+
+	@Override
+	public void registerCategories(IRecipeCategoryRegistration registration) {
+		registration.addRecipeCategories(new QueenTradesJEICategory(registration.getJeiHelpers().getGuiHelper()));
+	}
+
+	@Override
+	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+		registration.addRecipeCatalyst(BzItems.BEE_QUEEN_SPAWN_EGG.get().getDefaultInstance(), QUEEN_TRADES);
 	}
 }
