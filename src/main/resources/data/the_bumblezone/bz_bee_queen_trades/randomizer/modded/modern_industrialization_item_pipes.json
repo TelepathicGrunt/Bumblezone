@@ -1,17 +1,8 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#modern_industrialization:item_pipes",
-      "required": false
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#modern_industrialization:item_pipes",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": false
     }
   ]

@@ -1,28 +1,12 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#forge:stained_glass_panes",
       "required": false
     },
     {
       "id": "#c:stained_glass_panes",
-      "required": false
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#c:stained_glass_panes",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
-      "required": false
-    },
-    {
-      "id": "#forge:stained_glass_panes",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": false
     }
   ]

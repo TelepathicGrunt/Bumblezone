@@ -1,17 +1,8 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#minecraft:wool_carpets",
-      "required": true
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#minecraft:wool_carpets",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": true
     }
   ]

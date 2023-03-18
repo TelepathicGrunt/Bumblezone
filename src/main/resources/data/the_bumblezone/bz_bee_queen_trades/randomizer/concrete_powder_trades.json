@@ -1,6 +1,6 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#forge:concrete_powder",
       "required": false
@@ -11,22 +11,6 @@
     },
     {
       "id": "#c:concrete_powders",
-      "required": false
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#c:concrete_powder",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
-      "required": false
-    },
-    {
-      "id": "#forge:concrete_powder",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": false
     }
   ]
