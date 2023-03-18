@@ -35,6 +35,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
     public Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> tradeReduced = new Object2ObjectOpenHashMap<>();
     public Map<Pair<List<TradeEntryObj>, Boolean>, List<TradeEntryObj>> tradeRaw = new HashMap<>();
+    public List<List<TradeEntryReducedObj>> tradeRandomizer = new ArrayList<>();
 
     public QueensTradeManager() {
         super(GSON, "bz_bee_queen_trades");
@@ -46,10 +47,17 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         loader.forEach((fileIdentifier, jsonElement) -> {
             try {
                 QueenTradesCollectionObj tradesCollection = GSON.fromJson(jsonElement, QueenTradesCollectionObj.class);
+                if (tradesCollection.is_color_randomizer_trade) {
+                    if (!tradesCollection.randomizes.isEmpty()) {
+                        tradeRaw.put(Pair.of(tradesCollection.randomizes, true), tradesCollection.randomizes);
+                    }
+                    return;
+                }
+
                 if (tradesCollection.wants.isEmpty() || tradesCollection.possible_rewards.isEmpty()) {
                     return;
                 }
-                tradeRaw.put(Pair.of(tradesCollection.wants, tradesCollection.is_color_randomizer_trade), tradesCollection.possible_rewards);
+                tradeRaw.put(Pair.of(tradesCollection.wants, false), tradesCollection.possible_rewards);
             }
             catch (Exception e) {
                 Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse bee queen trades file {}", fileIdentifier, e);
@@ -63,6 +71,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             return;
         }
 
+        List<List<TradeEntryReducedObj>> randomizerTrades = new ArrayList<>();
         Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> reducedTradeMap = new Object2ObjectOpenHashMap<>();
         for (Map.Entry<Pair<List<TradeEntryObj>, Boolean>, List<TradeEntryObj>> entry : tradeRaw.entrySet()) {
 
@@ -105,11 +114,16 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     TagKey<Item> itemTag = TagKey.create(Registries.ITEM, tagRl);
                     Optional<HolderSet.Named<Item>> taggedItems = BuiltInRegistries.ITEM.getTag(itemTag);
                     taggedItems.ifPresent(holders -> totalGroupWeight.addAndGet(value.getWeight() * holders.size()));
-                } else {
+                }
+                else {
                     Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.getHolder(ResourceKey.create(Registries.ITEM, new ResourceLocation(value.id)));
                     item.ifPresent(holder -> totalGroupWeight.addAndGet(value.getWeight()));
                 }
             });
+
+            if (entry.getKey().getSecond()) {
+                randomizerTrades.add(new ArrayList<>(wants.stream().map(e -> new TradeEntryReducedObj(e, 1, 0, 1)).collect(Collectors.toList())));
+            }
 
             entry.getValue().forEach((value) -> {
                 if (value.id.startsWith("#")) {
@@ -158,6 +172,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             }
         }
         tradeReduced = reducedTradeMap;
+        tradeRandomizer = randomizerTrades;
         tradeRaw.clear();
     }
 }

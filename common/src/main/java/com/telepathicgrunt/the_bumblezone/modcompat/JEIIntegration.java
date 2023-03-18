@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManage
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenRandomizeTradesJEICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenRandomizerTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.QueenTradesJEICategory;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
@@ -40,7 +41,7 @@ import java.util.Map;
 public class JEIIntegration implements IModPlugin {
 
     public static final RecipeType<QueenTradesInfo> QUEEN_TRADES = RecipeType.create(Bumblezone.MODID, "queen_trades", QueenTradesInfo.class);
-    public static final RecipeType<QueenTradesInfo> QUEEN_RANDOMIZE_TRADES = RecipeType.create(Bumblezone.MODID, "queen_color_randomizer_trades", QueenTradesInfo.class);
+    public static final RecipeType<QueenRandomizerTradesInfo> QUEEN_RANDOMIZE_TRADES = RecipeType.create(Bumblezone.MODID, "queen_color_randomizer_trades", QueenRandomizerTradesInfo.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -64,20 +65,26 @@ public class JEIIntegration implements IModPlugin {
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
 
         List<QueenTradesInfo> trades = new LinkedList<>();
-        List<QueenTradesInfo> randomizerTrades = new LinkedList<>();
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
             for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
                 for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
-                    if (tradeResult.randomizerTrade()) {
-                        randomizerTrades.add(new QueenTradesInfo(trade.getKey().getDefaultInstance(), new ItemStack(tradeResult.item(), tradeResult.count()), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
-                    }
-                    else {
+                    if (!tradeResult.randomizerTrade()) {
                         trades.add(new QueenTradesInfo(trade.getKey().getDefaultInstance(), new ItemStack(tradeResult.item(), tradeResult.count()), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
                     }
                 }
             }
         }
         registration.addRecipes(QUEEN_TRADES, trades);
+
+        List<QueenRandomizerTradesInfo> randomizerTrades = new LinkedList<>();
+        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
+            for (List<TradeEntryReducedObj> tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
+                List<ItemStack> randomizeStack = tradeEntry.stream().map(e -> e.item().getDefaultInstance()).toList();
+                for (ItemStack input : randomizeStack) {
+                    randomizerTrades.add(new QueenRandomizerTradesInfo(input, randomizeStack, 1, randomizeStack.size()));
+                }
+            }
+        }
         registration.addRecipes(QUEEN_RANDOMIZE_TRADES, randomizerTrades);
     }
 

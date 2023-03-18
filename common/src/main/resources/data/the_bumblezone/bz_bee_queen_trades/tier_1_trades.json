@@ -29,15 +29,11 @@
       "required": true
     },
     {
-      "id": "#minecraft:planks",
-      "required": true
-    },
-    {
       "id": "minecraft:redstone",
       "required": true
     },
     {
-      "id": "#c:seeds",
+      "id": "#c:crops",
       "required": false
     },
     {
@@ -53,7 +49,7 @@
       "required": false
     },
     {
-      "id": "#forge:seeds",
+      "id": "#forge:crops",
       "required": false
     },
     {
