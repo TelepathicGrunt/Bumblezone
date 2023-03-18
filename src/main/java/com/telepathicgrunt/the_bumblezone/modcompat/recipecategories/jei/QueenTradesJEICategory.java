@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
-public class QueenTradesJEICategory implements IRecipeCategory<QueenTradesInfo> {
+public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInfo> {
 
     public static final int RECIPE_WIDTH = 124;
     public static final int RECIPE_HEIGHT = 28;
@@ -38,7 +38,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<QueenTradesInfo> 
     }
 
     @Override
-    public RecipeType<QueenTradesInfo> getRecipeType() {
+    public RecipeType<JEIQueenTradesInfo> getRecipeType() {
         return JEIIntegration.QUEEN_TRADES;
     }
 
@@ -58,12 +58,12 @@ public class QueenTradesJEICategory implements IRecipeCategory<QueenTradesInfo> 
     }
 
     @Override
-    public void draw(QueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_xp", recipe.xp()), 100, 10, 0xFF808080);
     }
 
     @Override
-    public List<Component> getTooltipStrings(QueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public List<Component> getTooltipStrings(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         if (mouseX > 32 && mouseX < 54 && mouseY > 6 && mouseY < 22) {
             String percent = String.valueOf((double)(recipe.weight()) / (recipe.totalGroupWeight()) * 100);
             return List.of(Component.translatable("the_bumblezone.jei.queen_trade_chance", percent.substring(0, Math.min(percent.length(), 5))));
@@ -72,7 +72,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<QueenTradesInfo> 
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, QueenTradesInfo recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, JEIQueenTradesInfo recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.wantItem());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.reward());
     }
