@@ -96,7 +96,6 @@ public class REICompat implements REIClientPlugin {
             extraRecipes.forEach(registry::add);
         }
     }
-}
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
