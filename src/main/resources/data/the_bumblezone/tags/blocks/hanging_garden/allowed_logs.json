@@ -55,6 +55,10 @@
       "required": false
     },
     {
+      "id": "premium_wood:purple_heart_log",
+      "required": false
+    },
+    {
       "id": "regions_unexplored:eucalyptus_log",
       "required": false
     },

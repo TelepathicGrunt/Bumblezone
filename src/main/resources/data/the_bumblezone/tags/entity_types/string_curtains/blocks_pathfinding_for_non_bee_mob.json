@@ -147,6 +147,10 @@
       "required": false
     },
     {
+      "id": "aquamirae:golden_moth",
+      "required": false
+    },
+    {
       "id": "pokecube:butterfree",
       "required": false
     },
