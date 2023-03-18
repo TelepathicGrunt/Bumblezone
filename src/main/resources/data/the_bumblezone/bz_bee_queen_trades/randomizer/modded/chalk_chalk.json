@@ -1,17 +1,8 @@
 {
   "is_color_randomizer_trade": true,
-  "wants": [
+  "randomizes": [
     {
       "id": "#chalk:chalk",
-      "required": false
-    }
-  ],
-  "possible_rewards": [
-    {
-      "id": "#chalk:chalk",
-      "count": 1,
-      "xp_reward": 0,
-      "weight": 1,
       "required": false
     }
   ]
