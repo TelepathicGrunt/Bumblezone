@@ -1,4 +1,5 @@
 {
+  "is_color_randomizer_trade": true,
   "wants": [
     {
       "id": "#forge:dyes",
@@ -6,6 +7,10 @@
     },
     {
       "id": "#c:dyes",
+      "required": false
+    },
+    {
+      "id": "#c:dye_any",
       "required": false
     }
   ],

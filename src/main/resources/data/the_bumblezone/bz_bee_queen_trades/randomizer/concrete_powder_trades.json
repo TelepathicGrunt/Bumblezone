@@ -1,4 +1,5 @@
 {
+  "is_color_randomizer_trade": true,
   "wants": [
     {
       "id": "#forge:concrete_powder",
@@ -6,6 +7,10 @@
     },
     {
       "id": "#c:concrete_powder",
+      "required": false
+    },
+    {
+      "id": "#c:concrete_powders",
       "required": false
     }
   ],
