@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.entities.queentrades;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -10,6 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class QueensTradeManager extends SimpleJsonResourceReloadListener {
@@ -31,7 +34,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     public static final QueensTradeManager QUEENS_TRADE_MANAGER = new QueensTradeManager();
 
     public Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> tradeReduced = new Object2ObjectOpenHashMap<>();
-    public Map<List<TradeEntryObj>, List<TradeEntryObj>> tradeRaw = new HashMap<>();
+    public Map<Pair<List<TradeEntryObj>, Boolean>, List<TradeEntryObj>> tradeRaw = new HashMap<>();
 
     public QueensTradeManager() {
         super(GSON, "bz_bee_queen_trades");
@@ -46,7 +49,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 if (tradesCollection.wants.isEmpty() || tradesCollection.possible_rewards.isEmpty()) {
                     return;
                 }
-                tradeRaw.put(tradesCollection.wants, tradesCollection.possible_rewards);
+                tradeRaw.put(Pair.of(tradesCollection.wants, tradesCollection.is_color_randomizer_trade), tradesCollection.possible_rewards);
             }
             catch (Exception e) {
                 Bumblezone.LOGGER.error("Bumblezone Error: Couldn't parse bee queen trades file {}", fileIdentifier, e);
@@ -61,11 +64,11 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         }
 
         Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> reducedTradeMap = new Object2ObjectOpenHashMap<>();
-        for (Map.Entry<List<TradeEntryObj>, List<TradeEntryObj>> entry : tradeRaw.entrySet()) {
+        for (Map.Entry<Pair<List<TradeEntryObj>, Boolean>, List<TradeEntryObj>> entry : tradeRaw.entrySet()) {
 
             ArrayList<Item> wants = new ArrayList<>();
             List<TradeEntryReducedObj> rewards = new ArrayList<>();
-            entry.getKey().forEach((value) -> {
+            entry.getKey().getFirst().forEach((value) -> {
                 Set<Item> items = null;
                 if (value.id.startsWith("#")) {
                     ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
@@ -95,6 +98,19 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 wants.addAll(items);
             });
 
+            AtomicInteger totalGroupWeight = new AtomicInteger();
+            entry.getValue().forEach(value -> {
+                if (value.id.startsWith("#")) {
+                    ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
+                    TagKey<Item> itemTag = TagKey.create(Registries.ITEM, tagRl);
+                    Optional<HolderSet.Named<Item>> taggedItems = BuiltInRegistries.ITEM.getTag(itemTag);
+                    taggedItems.ifPresent(holders -> totalGroupWeight.addAndGet(value.getWeight() * holders.size()));
+                } else {
+                    Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.getHolder(ResourceKey.create(Registries.ITEM, new ResourceLocation(value.id)));
+                    item.ifPresent(holder -> totalGroupWeight.addAndGet(value.getWeight()));
+                }
+            });
+
             entry.getValue().forEach((value) -> {
                 if (value.id.startsWith("#")) {
                     ResourceLocation tagRl = new ResourceLocation(value.id.substring(1));
@@ -102,7 +118,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     Optional<HolderSet.Named<Item>> taggedItems = BuiltInRegistries.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
                         for (Holder<Item> itemHolder : taggedItems.get()) {
-                            rewards.add(new TradeEntryReducedObj(itemHolder.value(), value.getCount(), value.getXpReward(), value.getWeight()));
+                            rewards.add(new TradeEntryReducedObj(itemHolder.value(), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get(), entry.getKey().getSecond()));
                         }
                     }
                     else if (value.isRequired()) {
@@ -112,7 +128,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 else {
                     Optional<Item> item = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(value.id));
                     if (item.isPresent()) {
-                        rewards.add(new TradeEntryReducedObj(item.get(), value.getCount(), value.getXpReward(), value.getWeight()));
+                        rewards.add(new TradeEntryReducedObj(item.get(), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get(), entry.getKey().getSecond()));
                     }
                     else if (value.isRequired()) {
                         Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find reward item {} in bee queen trades file", value.id);
