@@ -47,5 +47,8 @@ Removed many wooden trades from Bee Queen so there's less wood pollution in the 
 Changed the Music Disc advancement to now progress when obtaining the Music Discs from anywhere. Not just Wandering Trader's trades.
  As long as the Bumblezone Music Disc gets into your player's inventory, it'll count towards the advancement progress.
 
+Added new item tag `the_bumblezone:queens_desire/honey_drunk_trigger_items` item tag so now Honey Drunk advancement
+ can be completed with more tagged modded honey bottle items other than vanilla's Honey Bottle item.
+
 ##### Lang:
 Updated ru_ru.json file. Special thanks to MageInBlack!

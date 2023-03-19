@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
@@ -158,7 +159,7 @@ public class MiscComponent implements Component {
 
     public static void onHoneyBottleDrank(LivingEntity livingEntity, ItemStack itemStack) {
         if (livingEntity instanceof ServerPlayer serverPlayer &&
-            itemStack.is(Items.HONEY_BOTTLE)
+            itemStack.is(BzTags.HONEY_DRUNK_TRIGGER_ITEMS)
             && rootAdvancementDone(serverPlayer))
         {
             MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
