@@ -14,7 +14,6 @@ Added Stinger Spear to `forge:tools/tridents` and Honey Crystal Shield to `forge
 Added all bee armors to the 4 `forge:armors/` item tags for a bit more mod compatibility.
 
 ##### Fluids:
-
 Honey Fluid and Royal Jelly Fluid now turns into Glistering Honey Crystal block when it touches non-honey fluids!
 
 ##### Blocks:

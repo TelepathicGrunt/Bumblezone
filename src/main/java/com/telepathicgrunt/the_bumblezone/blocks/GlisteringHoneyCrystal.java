@@ -89,7 +89,7 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock {
         for (Direction direction : Direction.values()) {
             BlockPos sidePos = blockPos.relative(direction);
             FluidState sideFluid = level.getFluidState(sidePos);
-            if(sideFluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && sideFluid.isSource() && level.getBlockState(sidePos).getShape(level, sidePos).isEmpty()) {
+            if(sideFluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && !sideFluid.is(BzTags.SUGAR_WATER_FLUID) && sideFluid.isSource() && level.getBlockState(sidePos).getShape(level, sidePos).isEmpty()) {
                 level.setBlock(sidePos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
             }
         }
