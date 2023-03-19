@@ -2,7 +2,87 @@
   "replace": false,
   "values": [
     {
+      "id": "alexsmobs:lobster",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:endergrade",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mantis_shrimp",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:banana_slug",
+      "required": false
+    },
+    {
+      "id": "autumnity:snail",
+      "required": false
+    },
+    {
+      "id": "betterend:silk_moth",
+      "required": false
+    },
+    {
+      "id": "betternether:firefly",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:helmet_crab",
+      "required": false
+    },
+    {
+      "id": "biomemakeover:moth",
+      "required": false
+    },
+    {
       "id": "blue_skies:firefly",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_ladybird",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_grasshopper",
+      "required": false
+    },
+    {
+      "id": "broglisbugs:entity_stick_insect",
+      "required": false
+    },
+    {
+      "id": "bunchobugs:ladybug",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:butterfly",
+      "required": false
+    },
+    {
+      "id": "evilcraft:werewolf",
+      "required": false
+    },
+    {
+      "id": "fromspores:craver",
+      "required": false
+    },
+    {
+      "id": "infernalexp:glowsilk_moth",
+      "required": false
+    },
+    {
+      "id": "lovely_snails:snail",
+      "required": false
+    },
+    {
+      "id": "moonbits:stunbug",
+      "required": false
+    },
+    {
+      "id": "moonbits:cave_snail",
       "required": false
     },
     {
@@ -18,55 +98,19 @@
       "required": false
     },
     {
-      "id": "twilightforest:helmet_crab",
-      "required": false
-    },
-    {
-      "id": "biomemakeover:helmet_crab",
-      "required": false
-    },
-    {
-      "id": "biomemakeover:moth",
-      "required": false
-    },
-    {
-      "id": "wondrouswilds:firefly",
-      "required": false
-    },
-    {
-      "id": "wonderouswilds:firefly",
-      "required": false
-    },
-    {
-      "id": "betteranimalsplus:butterfly",
-      "required": false
-    },
-    {
-      "id": "evilcraft:werewolf",
-      "required": false
-    },
-    {
       "id": "quark:crab",
       "required": false
     },
     {
-      "id": "autumnity:snail",
+      "id": "twilightforest:helmet_crab",
       "required": false
     },
     {
-      "id": "alexsmobs:lobster",
+      "id": "unusualprehistory:eryon",
       "required": false
     },
     {
-      "id": "alexsmobs:endergrade",
-      "required": false
-    },
-    {
-      "id": "alexsmobs:mantis_shrimp",
-      "required": false
-    },
-    {
-      "id": "alexsmobs:banana_slug",
+      "id": "whisperwoods:moth",
       "required": false
     },
     {
@@ -106,51 +150,7 @@
       "required": false
     },
     {
-      "id": "betterend:silk_moth",
-      "required": false
-    },
-    {
-      "id": "betternether:firefly",
-      "required": false
-    },
-    {
-      "id": "lovely_snails:snail",
-      "required": false
-    },
-    {
-      "id": "whisperwoods:moth",
-      "required": false
-    },
-    {
-      "id": "infernalexp:glowsilk_moth",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_ladybird",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_grasshopper",
-      "required": false
-    },
-    {
-      "id": "broglisbugs:entity_stick_insect",
-      "required": false
-    },
-    {
-      "id": "bunchobugs:ladybug",
-      "required": false
-    },
-    {
-      "id": "moonbits:stunbug",
-      "required": false
-    },
-    {
-      "id": "moonbits:cave_snail",
-      "required": false
-    },
-    {
-      "id": "fromspores:craver",
+      "id": "wondrouswilds:firefly",
       "required": false
     }
   ]
