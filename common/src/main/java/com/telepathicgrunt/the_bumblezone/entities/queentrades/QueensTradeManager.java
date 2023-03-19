@@ -107,6 +107,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 wants.addAll(items);
             });
 
+            if (wants.isEmpty()) {
+                continue;
+            }
+
             AtomicInteger totalGroupWeight = new AtomicInteger();
             entry.getValue().forEach(value -> {
                 if (value.id.startsWith("#")) {
@@ -148,10 +152,6 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     }
                 }
             });
-
-            if (wants.isEmpty()) {
-                continue;
-            }
 
             if (rewards.isEmpty()) {
                 continue;

@@ -56,3 +56,6 @@ Changed the Music Disc advancement to now progress when obtaining the Music Disc
 
 ##### Teleportation:
 Might had fixed issue where players couldn't teleport back to Bumblezone?
+
+##### Lang:
+Updated ru_ru.json file. Special thanks to MageInBlack!
