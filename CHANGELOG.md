@@ -4,8 +4,6 @@
 JEI and REI now shows Bee Queen trades for tradeable items! Special thanks to GizmoTheMoonPig for adding this!
  (Left click items to see trades that gives the item. Right click items to see trades that uses the item. Right click Bee Queen Spawn Egg to see all possible trades.)
 
-Hitting Alchemist Garden's Ent mob with Pollen Puff may spawn Oak Sapling nearby.
-
 ##### Items:
 Fixed Bumblebee Chestplate and Honeybee Leggings rendering improperly if more than one of them is rendering in the world.
 

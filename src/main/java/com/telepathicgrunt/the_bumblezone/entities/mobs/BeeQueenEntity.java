@@ -578,13 +578,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         MiscComponent.onQueenBeeTrade(serverPlayer, tradedItems);
 
                         if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                            serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
-                                if (!capability.receivedEssencePrize) {
-                                    spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(List.of(BzItems.ESSENCE_OF_THE_BEES), 1, 1000, 1), ItemStack.EMPTY, null);
-                                    capability.receivedEssencePrize = true;
-                                    serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
-                                }
-                            });
+                            MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+                            if (!capability.receivedEssencePrize) {
+                                spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(List.of(BzItems.ESSENCE_OF_THE_BEES), 1, 1000, 1), ItemStack.EMPTY, null);
+                                capability.receivedEssencePrize = true;
+                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                            }
                         }
                     }
                 }

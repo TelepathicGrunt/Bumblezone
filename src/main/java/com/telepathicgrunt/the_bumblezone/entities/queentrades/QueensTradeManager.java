@@ -132,7 +132,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                     TagKey<Item> itemTag = TagKey.create(Registry.ITEM_REGISTRY, tagRl);
                     Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
-                        List<Item> rewardGroup = taggedItems.get().stream().map(Holder::get).collect(Collectors.toList());
+                        List<Item> rewardGroup = taggedItems.get().stream().map(Holder::value).collect(Collectors.toList());
                         rewards.add(new TradeEntryReducedObj(rewardGroup, value.getCount(), value.getXpReward(), value.getWeight() * rewardGroup.size(), totalGroupWeight.get(), entry.getKey().getSecond()));
                     }
                     else if (value.isRequired()) {
@@ -142,7 +142,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 else {
                     Optional<Item> item = Registry.ITEM.getOptional(new ResourceLocation(value.id));
                     if (item.isPresent()) {
-                        rewards.add(new TradeEntryReducedObj(List.of(item.get().value()), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get(), entry.getKey().getSecond()));
+                        rewards.add(new TradeEntryReducedObj(List.of(item.get()), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get(), entry.getKey().getSecond()));
                     }
                     else if (value.isRequired()) {
                         Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find rewards items {} in bee queen trades file", value.id);
