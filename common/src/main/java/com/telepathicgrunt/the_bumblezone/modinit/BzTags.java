@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -74,6 +75,7 @@ public class BzTags {
     public static final TagKey<Item> TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE_CROUCHING = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_right_clicked_beehive_crouching"));
     public static final TagKey<Item> DO_ITEM_RIGHT_CLICK_CHECK_EARLIER = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/do_item_right_click_check_earlier"));
     public static final TagKey<Item> ITEM_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_special_dedicated_compat"));
+    public static final TagKey<Item> HONEY_DRUNK_TRIGGER_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "queens_desire/honey_drunk_trigger_items"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));

@@ -54,6 +54,12 @@ When a Honey Slime is killed, all nearby Honey Slimes will aggro against you. Th
 Changed the Music Disc advancement to now progress when obtaining the Music Discs from anywhere. Not just Wandering Trader's trades.
  As long as the Bumblezone Music Disc gets into your player's inventory, it'll count towards the advancement progress.
 
+Added new item tag `the_bumblezone:queens_desire/honey_drunk_trigger_items` item tag so now Honey Drunk advancement 
+ can be completed with more tagged modded honey bottle items other than vanilla's Honey Bottle item.
+
+##### Commands:
+Fixed bumblezone_read_self_data command not showing data properly for some advancements
+
 ##### Teleportation:
 Might had fixed issue where players couldn't teleport back to Bumblezone?
 

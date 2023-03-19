@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import net.minecraft.advancements.Advancement;
@@ -81,7 +82,7 @@ public class EntityMiscHandler {
     }
 
     public static void onHoneyBottleDrank(ItemStack result, FinishUseItemEvent event) {
-        if (!event.item().is(Items.HONEY_BOTTLE)) return;
+        if (!event.item().is(BzTags.HONEY_DRUNK_TRIGGER_ITEMS)) return;
 
         if (event.user() instanceof ServerPlayer player && rootAdvancementDone(player)) {
             ModuleHelper.getModule(player, ModuleRegistry.ENTITY_MISC).ifPresent(module -> {

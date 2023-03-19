@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:royal_jelly_bottle",
+    "minecraft:honey_bottle",
+    {
+      "id": "#c:honey_bottle",
+      "required": false
+    },
+    {
+      "id": "#forge:honey_bottle",
+      "required": false
+    }
+  ]
+}
