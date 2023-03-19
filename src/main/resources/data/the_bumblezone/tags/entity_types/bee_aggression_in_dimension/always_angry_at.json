@@ -98,6 +98,10 @@
       "required": false
     },
     {
+      "id": "enemyexpansion:wasp",
+      "required": false
+    },
+    {
       "id": "infernalexp:warpbeetle",
       "required": false
     },

@@ -66,6 +66,10 @@
       "required": false
     },
     {
+      "id": "enemyexpansion:ladybug",
+      "required": false
+    },
+    {
       "id": "etcetera:snail",
       "required": false
     },

@@ -59,6 +59,18 @@
       "required": false
     },
     {
+      "id": "enemyexpansion:wasp",
+      "required": false
+    },
+    {
+      "id": "enemyexpansion:pheromone_summon",
+      "required": false
+    },
+    {
+      "id": "enemyexpansion:flutterfly",
+      "required": false
+    },
+    {
       "id": "goodending:firefly_swarm",
       "required": false
     },
