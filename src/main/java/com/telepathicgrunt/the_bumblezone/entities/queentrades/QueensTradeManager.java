@@ -101,6 +101,10 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 wants.addAll(items);
             });
 
+            if (wants.isEmpty()) {
+                continue;
+            }
+
             if (entry.getKey().getSecond()) {
                 randomizerTrades.add(new TradeEntryReducedObj(wants, 1, 0, 1));
             }
@@ -142,10 +146,6 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     }
                 }
             });
-
-            if (wants.isEmpty()) {
-                continue;
-            }
 
             if (rewards.isEmpty()) {
                 continue;
