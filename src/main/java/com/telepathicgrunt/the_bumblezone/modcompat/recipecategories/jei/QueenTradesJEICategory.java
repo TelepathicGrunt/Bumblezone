@@ -74,6 +74,6 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JEIQueenTradesInfo recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.wantItem());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.reward());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.rewards());
     }
 }

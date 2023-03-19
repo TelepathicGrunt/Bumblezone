@@ -55,21 +55,21 @@ public class REICompat implements REIClientPlugin {
             for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
                 for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
                     if (!tradeResult.randomizerTrade()) {
-                        registry.add(new REIQueenTradesInfo(List.of(EntryIngredients.of(trade.getKey())), List.of(EntryIngredients.of(tradeResult.item(), tradeResult.count())), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()), QUEEN_TRADES);
+                        List<ItemStack> rewardCollection = tradeResult.items().stream().map(e -> new ItemStack(e, tradeResult.count())).toList();
+                        registry.add(new REIQueenTradesInfo(List.of(EntryIngredients.of(trade.getKey())), List.of(EntryIngredients.ofItemStacks(rewardCollection)), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()), QUEEN_TRADES);
                     }
                 }
             }
         }
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
-            for (List<TradeEntryReducedObj> tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
-                List<ItemStack> randomizeStack = tradeEntry.stream().map(e -> e.item().getDefaultInstance()).toList();
+            for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
+                List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
                 for (ItemStack input : randomizeStack) {
                     registry.add(new REIQueenRandomizerTradesInfo(List.of(EntryIngredients.of(input)), List.of(EntryIngredients.ofItemStacks(randomizeStack)), 1, randomizeStack.size()), QUEEN_RANDOMIZE_TRADES);
                 }
             }
         }
-
     }
 
     private static void addInfo(Item item) {
@@ -103,8 +103,5 @@ public class REICompat implements REIClientPlugin {
     public void registerCategories(CategoryRegistry registry) {
         registry.add(new QueenTradesREICategory());
         registry.add(new QueenRandomizerTradesREICategory());
-
-        registry.addWorkstations(QUEEN_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG.get()));
-        registry.addWorkstations(QUEEN_RANDOMIZE_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG.get()));
     }
 }

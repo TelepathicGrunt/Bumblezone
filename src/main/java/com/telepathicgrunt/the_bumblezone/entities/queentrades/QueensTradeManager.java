@@ -29,7 +29,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
     public Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> tradeReduced = new Object2ObjectOpenHashMap<>();
     public Map<Pair<List<TradeEntryObj>, Boolean>, List<TradeEntryObj>> tradeRaw = new HashMap<>();
-    public List<List<TradeEntryReducedObj>> tradeRandomizer = new ArrayList<>();
+    public List<TradeEntryReducedObj> tradeRandomizer = new ArrayList<>();
 
     public QueensTradeManager() {
         super(GSON, "bz_bee_queen_trades");
@@ -65,7 +65,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             return;
         }
 
-        List<List<TradeEntryReducedObj>> randomizerTrades = new ArrayList<>();
+        List<TradeEntryReducedObj> randomizerTrades = new ArrayList<>();
         Object2ObjectOpenHashMap<Item, WeightedRandomList<TradeEntryReducedObj>> reducedTradeMap = new Object2ObjectOpenHashMap<>();
         for (Map.Entry<Pair<List<TradeEntryObj>, Boolean>, List<TradeEntryObj>> entry : tradeRaw.entrySet()) {
 
@@ -81,7 +81,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                         items = taggedItems.get().stream().map(Holder::value).collect(Collectors.toSet());
                     }
                     else if (value.isRequired()) {
-                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find want item tag {} in bee queen trades file", value.id);
+                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find want items tag {} in bee queen trades file", value.id);
                     }
                 }
                 else {
@@ -90,7 +90,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                         items = Set.of(item.get().value());
                     }
                     else if (value.isRequired()) {
-                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find want item {} in bee queen trades file", value.id);
+                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find want items {} in bee queen trades file", value.id);
                     }
                 }
 
@@ -102,7 +102,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             });
 
             if (entry.getKey().getSecond()) {
-                randomizerTrades.add(new ArrayList<>(wants.stream().map(e -> new TradeEntryReducedObj(e, 1, 0, 1)).collect(Collectors.toList())));
+                randomizerTrades.add(new TradeEntryReducedObj(wants, 1, 0, 1));
             }
 
             AtomicInteger totalGroupWeight = new AtomicInteger();
@@ -125,21 +125,20 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                     TagKey<Item> itemTag = TagKey.create(Registry.ITEM_REGISTRY, tagRl);
                     Optional<HolderSet.Named<Item>> taggedItems = Registry.ITEM.getTag(itemTag);
                     if (taggedItems.isPresent()) {
-                        for (Holder<Item> itemHolder : taggedItems.get()) {
-                            rewards.add(new TradeEntryReducedObj(itemHolder.get(), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get(), entry.getKey().getSecond()));
-                        }
+                        List<Item> rewardGroup = taggedItems.get().stream().map(Holder::get).collect(Collectors.toList());
+                        rewards.add(new TradeEntryReducedObj(rewardGroup, value.getCount(), value.getXpReward(), value.getWeight() * rewardGroup.size(), totalGroupWeight.get(), entry.getKey().getSecond()));
                     }
                     else if (value.isRequired()) {
-                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find reward item tag {} in bee queen trades file", value.id);
+                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find rewards items tag {} in bee queen trades file", value.id);
                     }
                 }
                 else {
                     Optional<Holder<Item>> item = ForgeRegistries.ITEMS.getHolder(new ResourceLocation(value.id));
                     if (item.isPresent()) {
-                        rewards.add(new TradeEntryReducedObj(item.get().value(), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get(), entry.getKey().getSecond()));
+                        rewards.add(new TradeEntryReducedObj(List.of(item.get().value()), value.getCount(), value.getXpReward(), value.getWeight(), totalGroupWeight.get(), entry.getKey().getSecond()));
                     }
                     else if (value.isRequired()) {
-                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find reward item {} in bee queen trades file", value.id);
+                        Bumblezone.LOGGER.error("Bumblezone Error: Couldn't find rewards items {} in bee queen trades file", value.id);
                     }
                 }
             });
