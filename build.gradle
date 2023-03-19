@@ -112,6 +112,7 @@ dependencies {
 	modRuntimeOnly "maven.modrinth:modmenu:${libs.versions.mod.menu.get()}"
 
 	modCompileOnly "dev.emi:emi:${libs.versions.emi.get()}"
+	//modRuntimeOnly "dev.emi:emi:${libs.versions.emi.get()}"
 
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${libs.versions.rei.get()}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${libs.versions.rei.get()}"
