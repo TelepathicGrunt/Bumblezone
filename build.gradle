@@ -113,10 +113,13 @@ dependencies {
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
     compileOnly fg.deobf("mezz.jei:jei-${project.jei_mc_version}-forge:${project.jei_version}")
+    //runtimeOnly fg.deobf("mezz.jei:jei-${project.jei_mc_version}-forge:${project.jei_version}")
+
     //runtimeOnly fg.deobf("curse.maven:jeed-532286:${jeed_version}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${project.rei_version}")
     compileOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
+    compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}")
 
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
     //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
