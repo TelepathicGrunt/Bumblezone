@@ -12,7 +12,6 @@ Added Stinger Spear to `c:spears` and Honey Crystal Shield to `c:shields` item t
 Added some Bumblezone items to various community `c` item tags for a bit more mod compatibility.
 
 ##### Fluids:
-
 Honey Fluid and Royal Jelly Fluid now turns into Glistering Honey Crystal block when it touches non-honey fluids!
 
 ##### Blocks:
