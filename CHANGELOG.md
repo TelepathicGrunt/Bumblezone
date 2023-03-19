@@ -1,7 +1,7 @@
 ### **(V.6.6.18 Changes) (1.19.2 Minecraft)**
 
 ##### Mod Compat:
-JEI and REI now shows Bee Queen trades for tradeable items! Special thanks to GizmoTheMoonPig for adding this!
+JEI, REI, and EMI now shows Bee Queen trades for tradeable items! Special thanks to GizmoTheMoonPig for adding this!
  (Left click items to see trades that gives the item. Right click items to see trades that uses the item. Right click Bee Queen Spawn Egg to see all possible trades.)
 
 ##### Items:
