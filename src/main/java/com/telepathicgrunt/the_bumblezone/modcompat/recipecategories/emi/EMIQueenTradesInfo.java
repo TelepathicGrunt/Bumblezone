@@ -6,19 +6,14 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.emi.emi.api.widget.SlotWidget;
+import dev.emi.emi.api.widget.GeneratedSlotWidget;
 import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.TextureWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
-import me.shedaniel.math.Point;
-import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.client.gui.widgets.Widget;
-import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EMIQueenTradesInfo implements EmiRecipe {
@@ -83,8 +78,16 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 	@Override
 	public void addWidgets(WidgetHolder widgets) {
 		widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_jei.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
-		widgets.add(new SlotWidget(inputs.get(0), 5, 5));
-		widgets.add(new SlotWidget(outputs.get(0), 63, 5));
+
+		widgets.add(new GeneratedSlotWidget((random) ->  {
+			long nowInSeconds = System.currentTimeMillis() / 1000;
+			return inputs.get((int) (nowInSeconds % inputs.size()));
+		}, 1001, 5, 5));
+
+		widgets.add(new GeneratedSlotWidget((random) ->  {
+			long nowInSeconds = System.currentTimeMillis() / 1000;
+			return outputs.get((int) (nowInSeconds % outputs.size()));
+		}, 3444, 63, 5));
 
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  10, 0xFF404040, false));
 
