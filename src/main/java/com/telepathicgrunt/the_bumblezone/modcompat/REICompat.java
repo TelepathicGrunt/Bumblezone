@@ -104,5 +104,8 @@ public class REICompat implements REIClientPlugin {
     public void registerCategories(CategoryRegistry registry) {
         registry.add(new QueenTradesREICategory());
         registry.add(new QueenRandomizerTradesREICategory());
+
+        registry.addWorkstations(QUEEN_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG));
+        registry.addWorkstations(QUEEN_RANDOMIZE_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG));
     }
 }
