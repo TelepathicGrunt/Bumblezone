@@ -78,7 +78,7 @@ public class EMICompat implements EmiPlugin {
             for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
                 List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
                 for (ItemStack input : randomizeStack) {
-                    registry.addRecipe(new REIQueenRandomizerTradesInfo(List.of(EmiIngredient.of(Ingredient.of(input))), randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList()), 1, randomizeStack.size()));
+                    registry.addRecipe(new EMIQueenRandomizerTradesInfo(List.of(EmiIngredient.of(Ingredient.of(input))), randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList()), 1, randomizeStack.size()));
                 }
             }
         }
