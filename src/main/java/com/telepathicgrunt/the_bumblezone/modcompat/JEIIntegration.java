@@ -71,7 +71,7 @@ public class JEIIntegration implements IModPlugin {
 			for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
 				for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
 					if (!tradeResult.randomizerTrade()) {
-						trades.add(new JEIQueenTradesInfo(trade.getKey().getDefaultInstance(), new ItemStack(tradeResult.item(), tradeResult.count()), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
+						trades.add(new JEIQueenTradesInfo(trade.getKey().getDefaultInstance(), tradeResult.items().stream().map(e -> new ItemStack(e, tradeResult.count())).toList(), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
 					}
 				}
 			}
@@ -80,8 +80,8 @@ public class JEIIntegration implements IModPlugin {
 
 		List<JEIQueenRandomizerTradesInfo> randomizerTrades = new LinkedList<>();
 		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
-			for (List<TradeEntryReducedObj> tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
-				List<ItemStack> randomizeStack = tradeEntry.stream().map(e -> e.item().getDefaultInstance()).toList();
+			for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
+				List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
 				for (ItemStack input : randomizeStack) {
 					randomizerTrades.add(new JEIQueenRandomizerTradesInfo(input, randomizeStack, 1, randomizeStack.size()));
 				}
