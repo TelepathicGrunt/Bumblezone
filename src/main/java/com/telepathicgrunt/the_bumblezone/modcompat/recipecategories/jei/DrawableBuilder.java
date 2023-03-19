@@ -61,13 +61,13 @@ public class DrawableBuilder implements IDrawableBuilder {
     @Override
     public IDrawableAnimated buildAnimated(int ticksPerCycle, IDrawableAnimated.StartDirection startDirection, boolean inverted) {
         IDrawableStatic drawable = build();
-        return new DrawableAnimated(drawable, ticksPerCycle, startDirection, inverted);
+        return new DrawableAnimated(drawable);
     }
 
     @Override
     public IDrawableAnimated buildAnimated(ITickTimer tickTimer, IDrawableAnimated.StartDirection startDirection) {
         IDrawableStatic drawable = build();
-        return new DrawableAnimated(drawable, tickTimer, startDirection);
+        return new DrawableAnimated(drawable);
     }
 }
 
