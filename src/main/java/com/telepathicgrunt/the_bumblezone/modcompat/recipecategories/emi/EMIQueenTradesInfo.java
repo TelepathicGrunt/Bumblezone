@@ -86,7 +86,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		widgets.add(new SlotWidget(inputs.get(0), 5, 5));
 		widgets.add(new SlotWidget(outputs.get(0), 63, 5));
 
-		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  110, 0xFF404040, false));
+		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  10, 0xFF404040, false));
 
 		String percent = String.valueOf((double)(getWeight()) / (getGroupWeight()) * 100);
 		//widgets.add(Widgets.createTooltip(new Rectangle(bounds.getX() + 32, bounds.getY() + 6, 22, 16), Component.translatable("the_bumblezone.jei.queen_trade_chance", percent.substring(0, Math.min(percent.length(), 5)))));

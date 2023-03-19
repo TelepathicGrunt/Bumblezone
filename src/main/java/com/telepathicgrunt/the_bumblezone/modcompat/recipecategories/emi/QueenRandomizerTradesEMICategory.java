@@ -22,9 +22,6 @@ import java.util.List;
 
 public class QueenRandomizerTradesEMICategory extends EmiRecipeCategory {
 
-	public static final int RECIPE_WIDTH = 136;
-	public static final int RECIPE_HEIGHT = 28;
-
 	public QueenRandomizerTradesEMICategory() {
 		super(new ResourceLocation(Bumblezone.MODID, "queen_color_randomizer_trades"), EMICompat.WORKSTATION, new EmiTexture(new ResourceLocation(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16));
 	}
@@ -32,5 +29,4 @@ public class QueenRandomizerTradesEMICategory extends EmiRecipeCategory {
 	public Component getName() {
 		return EmiPort.translatable("the_bumblezone.jei.bee_queen_color_randomizing_trades");
 	}
-
 }
