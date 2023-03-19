@@ -6,10 +6,13 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.widget.DrawableWidget;
 import dev.emi.emi.api.widget.GeneratedSlotWidget;
+import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.TextureWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -18,16 +21,18 @@ import java.util.List;
 
 public class EMIQueenTradesInfo implements EmiRecipe {
 
-	private final List<EmiIngredient> inputs;
+	private final EmiIngredient input;
 	private final List<EmiStack> outputs;
+	private final EmiIngredient visualOutputs;
 	private final int xpReward;
 	private final int weight;
 	private final int groupWeight;
 
-	public EMIQueenTradesInfo(List<EmiIngredient> inputs, List<EmiStack> outputs, int xp, int weight, int groupWeight) {
+	public EMIQueenTradesInfo(EmiIngredient input, List<EmiStack> outputs, int xp, int weight, int groupWeight) {
 		super();
-		this.inputs = inputs;
+		this.input = input;
 		this.outputs = outputs;
+		this.visualOutputs = EmiIngredient.of(outputs);
 		this.xpReward = xp;
 		this.weight = weight;
 		this.groupWeight = groupWeight;
@@ -57,7 +62,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 
 	@Override
 	public List<EmiIngredient> getInputs() {
-		return inputs;
+		return List.of(input);
 	}
 
 	@Override
@@ -79,19 +84,19 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 	public void addWidgets(WidgetHolder widgets) {
 		widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_jei.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
 
-		widgets.add(new GeneratedSlotWidget((random) ->  {
-			long nowInSeconds = System.currentTimeMillis() / 1000;
-			return inputs.get((int) (nowInSeconds % inputs.size()));
-		}, 1001, 5, 5));
-
-		widgets.add(new GeneratedSlotWidget((random) ->  {
-			long nowInSeconds = System.currentTimeMillis() / 1000;
-			return outputs.get((int) (nowInSeconds % outputs.size()));
-		}, 3444, 63, 5));
+		widgets.add(new SlotWidget(input, 5, 5));
+		widgets.add(new SlotWidget(visualOutputs, 63, 5));
 
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  10, 0xFF404040, false));
 
-		String percent = String.valueOf((double)(getWeight()) / (getGroupWeight()) * 100);
-		//widgets.add(Widgets.createTooltip(new Rectangle(bounds.getX() + 32, bounds.getY() + 6, 22, 16), Component.translatable("the_bumblezone.jei.queen_trade_chance", percent.substring(0, Math.min(percent.length(), 5)))));
+		double percentValue = (double)(getWeight()) / (getGroupWeight()) * 100;
+		String percent = String.valueOf(percentValue);
+		String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
+
+		DrawableWidget tooltipWidget = new DrawableWidget(32, 2, 22, 20, (matrices, mouseX, mouseY, delta) -> {});
+		tooltipWidget.tooltip((x, z) -> List.of(ClientTooltipComponent.create(Component.translatable("the_bumblezone.jei.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))).getVisualOrderText())));
+		widgets.add(tooltipWidget);
+
+		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded).getVisualOrderText(), 38 - (percentRounded.length() * 3), 11, 0xFF404040, false));
 	}
 }

@@ -60,15 +60,15 @@ public class EMICompat implements EmiPlugin {
         registry.addCategory(QUEEN_TRADES);
         registry.addCategory(QUEEN_RANDOMIZE_TRADES);
 
-        registry.addWorkstation(QUEEN_TRADES, EmiIngredient.of(Ingredient.of(BzItems.BEE_QUEEN_SPAWN_EGG)));
-        registry.addWorkstation(QUEEN_RANDOMIZE_TRADES, EmiIngredient.of(Ingredient.of(BzItems.BEE_QUEEN_SPAWN_EGG)));
+        registry.addWorkstation(QUEEN_TRADES, WORKSTATION);
+        registry.addWorkstation(QUEEN_RANDOMIZE_TRADES, WORKSTATION);
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
             for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
                 for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
                     if (!tradeResult.randomizerTrade()) {
                         List<EmiStack> rewardCollection = tradeResult.items().stream().map(e -> EmiStack.of(new ItemStack(e, tradeResult.count()))).toList();
-                        registry.addRecipe(new EMIQueenTradesInfo(List.of(EmiIngredient.of(Ingredient.of(trade.getKey()))), rewardCollection, tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
+                        registry.addRecipe(new EMIQueenTradesInfo(EmiIngredient.of(Ingredient.of(trade.getKey())), rewardCollection, tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
                     }
                 }
             }
@@ -78,7 +78,7 @@ public class EMICompat implements EmiPlugin {
             for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
                 List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
                 for (ItemStack input : randomizeStack) {
-                    registry.addRecipe(new EMIQueenRandomizerTradesInfo(List.of(EmiIngredient.of(Ingredient.of(input))), randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList()), 1, randomizeStack.size()));
+                    registry.addRecipe(new EMIQueenRandomizerTradesInfo(EmiIngredient.of(Ingredient.of(input)), randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList()), 1, randomizeStack.size()));
                 }
             }
         }
