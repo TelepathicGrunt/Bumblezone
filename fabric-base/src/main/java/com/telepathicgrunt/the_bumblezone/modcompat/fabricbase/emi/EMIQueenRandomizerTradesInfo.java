@@ -81,16 +81,5 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 		widgets.add(new SlotWidget(visualOutputs, 63, 5));
 
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_colors", getOutputs().size()).getVisualOrderText(), 86,  10, 0xFF404040, false));
-
-		double percentValue = ((double)(getWeight()) / getGroupWeight()) * 100D;
-		String percent = String.valueOf(percentValue);
-		String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
-
-		DrawableWidget tooltipWidget = new DrawableWidget(32, 6, 22, 16, (matrices, mouseX, mouseY, delta) -> {});
-		tooltipWidget.tooltip((x, z) -> List.of(ClientTooltipComponent.create(Component.translatable("the_bumblezone.jei.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))).getVisualOrderText())));
-		widgets.add(tooltipWidget);
-
-		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded).getVisualOrderText(), 38 - (percentRounded.length() * 3), 11, 0xFF404040, false));
-
 	}
 }
