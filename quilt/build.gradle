@@ -54,8 +54,6 @@ dependencies {
     modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
     modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
 
-    modCompileOnly("dev.emi:emi:${rootProject.emi}")
-
     modCompileOnly("io.github.ladysnake:requiem-api:${rootProject.requiem}") {
         transitive = false
     }
@@ -71,6 +69,10 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
+    modCompileOnly("dev.emi:emi:${rootProject.emi}")
+
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rootProject.rei}")
+    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei}")
 
     //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
     //modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")

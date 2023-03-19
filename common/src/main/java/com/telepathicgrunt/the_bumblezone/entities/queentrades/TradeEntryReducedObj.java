@@ -4,10 +4,12 @@ import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.item.Item;
 
-public record TradeEntryReducedObj(Item item, int count, int xpReward, int weight, int totalGroupWeight, boolean randomizerTrade) implements WeightedEntry {
+import java.util.List;
 
-    public TradeEntryReducedObj(Item item, int count, int xpReward, int weight) {
-        this(item, count, xpReward, weight, 1, false);
+public record TradeEntryReducedObj(List<Item> items, int count, int xpReward, int weight, int totalGroupWeight, boolean randomizerTrade) implements WeightedEntry {
+
+    public TradeEntryReducedObj(List<Item> items, int count, int xpReward, int weight) {
+        this(items, count, xpReward, weight, 1, false);
     }
 
     @Override

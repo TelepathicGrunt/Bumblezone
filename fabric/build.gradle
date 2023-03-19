@@ -30,8 +30,6 @@ dependencies {
     modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
     modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
 
-    modCompileOnly("dev.emi:emi:${rootProject.emi}")
-
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
@@ -47,6 +45,8 @@ dependencies {
 
     //include("me.luligabi:NoIndium:${project.noindium}")
     //modLocalRuntime("curse.maven:indium-459496:${rootProject.indium_file_id}")
+
+    modCompileOnly("dev.emi:emi:${rootProject.emi}")
 
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rootProject.rei}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:${rootProject.rei}")
