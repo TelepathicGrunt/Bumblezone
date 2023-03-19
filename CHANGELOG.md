@@ -1,3 +1,9 @@
+### **(V.6.6.19 Changes) (1.19.4 Minecraft)**
+
+##### Mod Compat:
+(Forge): Chance of spawning Enemy Expansion's Ladybug mob in Hanging Gardens structure.
+
+
 ### **(V.6.6.18 Changes) (1.19.4 Minecraft)**
 
 ##### Major:
