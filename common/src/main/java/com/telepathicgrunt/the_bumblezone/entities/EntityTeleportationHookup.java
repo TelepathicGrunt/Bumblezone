@@ -353,8 +353,8 @@ public class EntityTeleportationHookup {
                 }
                 projectile.remove(Entity.RemovalReason.DISCARDED);
             }
+            BzWorldSavedData.queueEntityToTeleport(thrower, BzDimension.BZ_WORLD_KEY);
         }
-        BzWorldSavedData.queueEntityToTeleport(thrower, BzDimension.BZ_WORLD_KEY);
     }
 
     private static boolean isValidBelowBlock(Level world, Entity entity, BlockPos hivePos) {

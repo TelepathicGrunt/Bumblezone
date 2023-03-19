@@ -57,7 +57,7 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	public static void queueEntityToTeleport(Entity entity, ResourceKey<Level> destination) {
-		if(!isEntityQueuedToTeleportAlready(entity)) {
+		if(entity != null && !entity.level.isClientSide() && !isEntityQueuedToTeleportAlready(entity)) {
 			QUEUED_ENTITIES_TO_TELEPORT.add(new QueuedEntityData(entity, destination));
 		}
 	}
