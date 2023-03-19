@@ -58,14 +58,18 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
     @Override
     public void draw(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_colors", recipe.randomizes().size()), 86, 11, 0xFF808080);
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_colors", recipe.randomizes().size()), 86, 10, 0xFF808080);
+
+        double percentValue = ((double)(recipe.weight()) / recipe.totalGroupWeight()) * 100D;
+        String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
     }
 
     @Override
     public List<Component> getTooltipStrings(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        if (mouseX > 32 && mouseX < 54 && mouseY > 6 && mouseY < 22) {
+        if (mouseX > 32 && mouseX < 54 && mouseY > 4 && mouseY < 24) {
             String percent = String.valueOf((double)(recipe.weight()) / (recipe.totalGroupWeight()) * 100);
-            return List.of(Component.translatable("the_bumblezone.jei.queen_trade_chance", percent.substring(0, Math.min(percent.length(), 5))));
+            return List.of(Component.translatable("the_bumblezone.jei.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))));
         }
         return IRecipeCategory.super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
     }
