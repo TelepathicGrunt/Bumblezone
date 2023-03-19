@@ -46,3 +46,6 @@ Removed many wooden trades from Bee Queen so there's less wood pollution in the 
 ##### Advancements:
 Changed the Music Disc advancement to now progress when obtaining the Music Discs from anywhere. Not just Wandering Trader's trades.
  As long as the Bumblezone Music Disc gets into your player's inventory, it'll count towards the advancement progress.
+
+##### Lang:
+Updated ru_ru.json file. Special thanks to MageInBlack!
