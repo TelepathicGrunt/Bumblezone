@@ -70,12 +70,8 @@ public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQuee
 
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 86, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_colors", display.getOutputEntries().get(0).size())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 
-		double percentValue = (double)(display.getWeight()) / (display.getGroupWeight()) * 100;
-		String percent = String.valueOf(percentValue);
-		String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
-
-		widgets.add(Widgets.createTooltip(new Rectangle(bounds.getX() + 32, bounds.getY() + 6, 22, 16), Component.translatable("the_bumblezone.jei.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5)))));
-		widgets.add(Widgets.createLabel(new Point(bounds.getX() + (38 - (percentRounded.length() * 3)), bounds.getY() + 11), Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded)).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
+		String percent = String.valueOf((double)(display.getWeight()) / (display.getGroupWeight()) * 100);
+		widgets.add(Widgets.createTooltip(new Rectangle(bounds.getX() + 32, bounds.getY() + 6, 22, 16), Component.translatable("the_bumblezone.jei.queen_trade_chance", percent.substring(0, Math.min(percent.length(), 5)))));
 		return widgets;
 	}
 }
