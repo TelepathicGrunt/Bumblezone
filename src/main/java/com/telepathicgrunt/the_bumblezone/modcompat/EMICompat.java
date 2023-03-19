@@ -36,6 +36,32 @@ public class EMICompat implements EmiPlugin {
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
+
+        registry.addCategory(QUEEN_TRADES);
+        registry.addCategory(QUEEN_RANDOMIZE_TRADES);
+
+        registry.addWorkstation(QUEEN_TRADES, WORKSTATION);
+        registry.addWorkstation(QUEEN_RANDOMIZE_TRADES, WORKSTATION);
+
+        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
+            for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
+                for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
+                    if (!tradeResult.randomizerTrade()) {
+                        List<EmiStack> rewardCollection = tradeResult.items().stream().map(e -> EmiStack.of(new ItemStack(e, tradeResult.count()))).toList();
+                        registry.addRecipe(new EMIQueenTradesInfo(EmiIngredient.of(Ingredient.of(trade.getKey())), rewardCollection, tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
+                    }
+                }
+            }
+        }
+
+        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
+            for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
+                List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
+                for (ItemStack input : randomizeStack) {
+                    registry.addRecipe(new EMIQueenRandomizerTradesInfo(EmiIngredient.of(Ingredient.of(input)), randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList()), 1, randomizeStack.size()));
+                }
+            }
+        }
     }
 
     private static void registerExtraRecipes(Recipe<?> baseRecipe, EmiRegistry registry, boolean oneRecipeOnly) {

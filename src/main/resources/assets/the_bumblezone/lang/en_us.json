@@ -512,7 +512,8 @@
   "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Complete 256 trades with the Bee Queen. Does not need to be bonus trades. Any trade works!",
 
   "the_bumblezone.jei.bee_queen_trades": "Bee Queen Trades",
-  "the_bumblezone.jei.queen_trade_chance": "Chance: %s%%",
+  "the_bumblezone.jei.queen_trade_chance_tooltip": "Chance: %s%%",
+  "the_bumblezone.jei.queen_trade_chance_text": "%s%%",
   "the_bumblezone.jei.queen_trade_xp": "%sXP",
   "the_bumblezone.jei.bee_queen_color_randomizing_trades": "Bee Queen Color Trades",
   "the_bumblezone.jei.queen_trade_colors": "%s colors",
