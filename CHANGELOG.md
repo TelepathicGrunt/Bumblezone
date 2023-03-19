@@ -1,5 +1,11 @@
 ### **(V.6.6.18 Changes) (1.19.2 Minecraft)**
 
+##### Mod Compat:
+JEI and REI now shows Bee Queen trades for tradeable items! Special thanks to GizmoTheMoonPig for adding this!
+ (Left click items to see trades that gives the item. Right click items to see trades that uses the item. Right click Bee Queen Spawn Egg to see all possible trades.)
+
+Hitting Alchemist Garden's Ent mob with Pollen Puff may spawn Oak Sapling nearby.
+
 ##### Items:
 Fixed Bumblebee Chestplate and Honeybee Leggings rendering improperly if more than one of them is rendering in the world.
 
@@ -42,7 +48,3 @@ Removed many wooden trades from Bee Queen so there's less wood pollution in the 
 ##### Advancements:
 Changed the Music Disc advancement to now progress when obtaining the Music Discs from anywhere. Not just Wandering Trader's trades.
  As long as the Bumblezone Music Disc gets into your player's inventory, it'll count towards the advancement progress.
-
-##### Mod Compat:
-JEI now shows Bee Queen trades for tradeable items! Special thanks to GizmoTheMoonPig for adding this!
- (Left click items to see trades that gives the item. Right click items to see trades that uses the item. Right click Bee Queen Spawn Egg to see all possible trades.)
