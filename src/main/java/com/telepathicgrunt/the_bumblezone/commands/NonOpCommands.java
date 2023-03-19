@@ -137,7 +137,7 @@ public class NonOpCommands {
                 case QUEENS_DESIRED_HONEY_BOTTLE_DRANK ->
                         serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability ->
                                 player.displayClientMessage(
-                                        Component.translatable("command.the_bumblezone.queens_desired_honey_bottle_drank", serverPlayer.getDisplayName(), serverPlayer.getDisplayName(), capability.honeyBottleDrank),
+                                        Component.translatable("command.the_bumblezone.queens_desired_honey_bottle_drank", serverPlayer.getDisplayName(), capability.honeyBottleDrank),
                                         false));
                 case QUEENS_DESIRED_BEE_STINGERS_FIRED ->
                         serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability ->
@@ -152,7 +152,7 @@ public class NonOpCommands {
                 case QUEENS_DESIRED_POLLEN_PUFF_HITS ->
                         serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability ->
                                 player.displayClientMessage(
-                                        Component.translatable("command.the_bumblezone.queens_desired_pollen_puff_hits", serverPlayer.getDisplayName(), serverPlayer.getDisplayName(), capability.pollenPuffHits),
+                                        Component.translatable("command.the_bumblezone.queens_desired_pollen_puff_hits", serverPlayer.getDisplayName(), capability.pollenPuffHits),
                                         false));
                 case QUEENS_DESIRED_HONEY_SLIME_BRED ->
                         serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability ->

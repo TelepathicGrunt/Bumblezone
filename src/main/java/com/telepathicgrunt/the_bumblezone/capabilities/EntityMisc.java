@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
@@ -214,7 +215,7 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 
 	public static void onHoneyBottleDrank(LivingEntityUseItemEvent.Finish event) {
 		if (event.getEntity() instanceof ServerPlayer serverPlayer &&
-			event.getItem().is(Items.HONEY_BOTTLE)
+			event.getItem().is(BzTags.HONEY_DRUNK_TRIGGER_ITEMS)
 			&& rootAdvancementDone(serverPlayer))
 		{
 			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
