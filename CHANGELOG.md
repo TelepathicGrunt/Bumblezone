@@ -30,6 +30,8 @@ Twilight Forest's Swarm Spider mob spawners may rarely spawn in Spider Infested 
 
 Alchemists Garden's Spiderling mob spawners may rarely spawn in Spider Infested Bee Dungeons, Cell Maze, and Pollinated Streams structures.
 
+Tofucraft's Tofu Spider mob spawners may rarely spawn in Cell Maze and Pollinated Streams structures.
+
 Born In Chaos's Wither Spider mob spawners may rarely spawn in Battle Cubes structures.
 
 Earth Mobs Mod's Bone Spider mob spawners may rarely spawn in Battle Cubes structures.
