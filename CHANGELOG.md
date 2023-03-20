@@ -30,6 +30,8 @@ Added new Entity Type tags that will be used for mod compat where a few of Bumbl
 
 (Forge): Alchemists Garden's Spiderling mob spawners may rarely spawn in Spider Infested Bee Dungeons, Cell Maze, and Pollinated Streams structures.
 
+(Forge): Tofucraft's Tofu Spider mob spawners may rarely spawn in Cell Maze and Pollinated Streams structures.
+
 (Forge): Born In Chaos's Wither Spider mob spawners may rarely spawn in Battle Cubes structures.
 
 (Forge): Earth Mobs Mod's Bone Spider mob spawners may rarely spawn in Battle Cubes structures.
