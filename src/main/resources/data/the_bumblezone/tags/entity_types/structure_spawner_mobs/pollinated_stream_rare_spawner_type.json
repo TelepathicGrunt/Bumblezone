@@ -14,6 +14,10 @@
       "required": false
     },
     {
+      "id": "tofucraft:tofuspider",
+      "required": false
+    },
+    {
       "id": "twilightforest:hedge_spider",
       "required": false
     }
