@@ -111,7 +111,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:pollinated_stream/cave_spider_den",
         "processors": "the_bumblezone:pollinated_stream_processors",
