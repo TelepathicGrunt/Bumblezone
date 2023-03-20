@@ -5,8 +5,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import dev.architectury.registry.registries.Registries;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
@@ -14,37 +17,53 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SpawnerBlock;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 
     public static final Codec<SpawnerRandomizingProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.mapPair(Registry.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.spawnerRandomizingProcessor)
+            Codec.mapPair(Registry.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.mainSpawnerData),
+            RegistryCodecs.homogeneousList(Registry.ENTITY_TYPE_REGISTRY, Registry.ENTITY_TYPE.byNameCodec()).optionalFieldOf("override_mobs_to_pick_from").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.overrideMobsToPickFrom),
+            Codec.floatRange(0, 1).fieldOf("chance_to_override_with_tagged_mobs").orElse(0F).forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.chanceToOverrideWithTaggedMobs)
     ).apply(instance, instance.stable(SpawnerRandomizingProcessor::new)));
 
-    public final List<Pair<EntityType<?>, Integer>> spawnerRandomizingProcessor;
+    public final List<Pair<EntityType<?>, Integer>> mainSpawnerData;
+    public final Optional<HolderSet<EntityType<?>>> overrideMobsToPickFrom;
+    public final float chanceToOverrideWithTaggedMobs;
 
-    private SpawnerRandomizingProcessor(List<Pair<EntityType<?>, Integer>> spawnerRandomizingProcessor) {
-        this.spawnerRandomizingProcessor = spawnerRandomizingProcessor;
+    private SpawnerRandomizingProcessor(List<Pair<EntityType<?>, Integer>> mainSpawnerData, Optional<HolderSet<EntityType<?>>> overrideMobsToPickFrom, float chanceToOverrideWithTaggedMobs) {
+        this.mainSpawnerData = mainSpawnerData;
+        this.overrideMobsToPickFrom = overrideMobsToPickFrom;
+        this.chanceToOverrideWithTaggedMobs = chanceToOverrideWithTaggedMobs;
     }
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         if (structureBlockInfoWorld.state.getBlock() instanceof SpawnerBlock) {
             BlockPos worldPos = structureBlockInfoWorld.pos;
-            RandomSource random = new WorldgenRandom(new LegacyRandomSource(0));
-            random.setSeed(worldPos.asLong() * worldPos.getY());
+            RandomSource randomSource = structurePlacementData.getRandom(worldPos);
+
+            CompoundTag newSpawnerData;
+            if (overrideMobsToPickFrom.isPresent() && overrideMobsToPickFrom.get().size() > 0 && randomSource.nextFloat() < chanceToOverrideWithTaggedMobs) {
+                newSpawnerData = SetMobSpawnerEntity(overrideMobsToPickFrom.get().get(randomSource.nextInt(overrideMobsToPickFrom.get().size())).value(), structureBlockInfoWorld.nbt);
+            }
+            else if (mainSpawnerData.size() > 0) {
+                newSpawnerData = SetMobSpawnerEntity(GeneralUtils.getRandomEntry(mainSpawnerData, randomSource), structureBlockInfoWorld.nbt);
+            }
+            else {
+                return structureBlockInfoWorld;
+            }
+
             return new StructureTemplate.StructureBlockInfo(
                     worldPos,
                     structureBlockInfoWorld.state,
-                    SetMobSpawnerEntity(random, structureBlockInfoWorld.nbt));
+                    newSpawnerData);
         }
         return structureBlockInfoWorld;
     }
@@ -52,8 +71,7 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
     /**
      * Makes the given block entity now have the correct spawner mob
      */
-    private CompoundTag SetMobSpawnerEntity(RandomSource random, CompoundTag nbt) {
-        EntityType<?> entity = GeneralUtils.getRandomEntry(spawnerRandomizingProcessor, random);
+    private CompoundTag SetMobSpawnerEntity(EntityType<?> entity, CompoundTag nbt) {
         if(entity != null) {
             if(nbt != null) {
                 CompoundTag spawnDataTag = nbt.getCompound("SpawnData");

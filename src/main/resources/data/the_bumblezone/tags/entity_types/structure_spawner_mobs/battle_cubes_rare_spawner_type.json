@@ -1,0 +1,41 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "enemyexpansion:wasp",
+      "required": false
+    },
+    {
+      "id": "blue_skies:venom_spider",
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:wither_strider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:black_widow",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:orb_weaver",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:bone_spider",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:stray_bone_spider",
+      "required": false
+    },
+    {
+      "id": "earthtojavamobs:bone_spider",
+      "required": false
+    },
+    {
+      "id": "minecraft_earth_mod:bone_spider",
+      "required": false
+    }
+  ]
+}
