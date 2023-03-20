@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "alchemists_garden:spiderling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:venom_spider",
+      "required": false
+    },
+    {
+      "id": "enemyexpansion:wasp",
+      "required": false
+    },
+    {
+      "id": "twilightforest:hedge_spider",
+      "required": false
+    },
+    {
+      "id": "twilightforest:swarm_spider",
+      "required": false
+    }
+  ]
+}

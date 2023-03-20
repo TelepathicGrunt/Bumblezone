@@ -1,7 +1,48 @@
 ### **(V.6.6.19 Changes) (1.19.4 Minecraft)**
 
+##### Structures:
+Added new Entity Type tags that will be used for mod compat where a few of Bumblezone's Spider Spawners will be 
+ converted into spawners for certain other mod's mobs. You can use these tags to quickly add rare chances of new 
+ mob spawners in Bumblezone! The tags are:
+
+- `the_bumblezone:structure_spawner_mobs/battle_cubes_rare_spawner_type`
+
+- `the_bumblezone:structure_spawner_mobs/cell_maze_rare_spawner_type`
+
+- `the_bumblezone:structure_spawner_mobs/pollinated_stream_rare_spawner_type`
+
+- `the_bumblezone:structure_spawner_mobs/spider_infested_bee_dungeon_rare_spawner_type`
+
 ##### Mod Compat:
 (Forge): Chance of spawning Enemy Expansion's Ladybug mob in Hanging Gardens structure.
+
+(Forge): Enemy Expansion's Wasp mob spawners may rarely spawn in Cell Maze, Battle Cubes, and Pollinated Streams structures.
+
+(Forge/Fabric/Quilt): Better Animal Plus's Tarantula mob spawners may rarely spawn in Spider Infested Bee Dungeons and Pollinated Streams structures.
+
+(Forge): Blue Skies's Nested Spider mob spawners may rarely spawn in Spider Infested Bee Dungeons.
+
+(Forge): Blue Skies's Venom Spider mob spawners may rarely spawn in Cell Maze and Battle Cubes structures.
+
+(Forge/Fabric/Quilt): Twilight Forest's Hedge Spider mob spawners may rarely spawn in Spider Infested Bee Dungeons, Cell Maze, and Pollinated Streams structures.
+
+(Forge/Fabric/Quilt): Twilight Forest's Swarm Spider mob spawners may rarely spawn in Spider Infested Bee Dungeons and Cell Maze structures.
+
+(Forge): Alchemists Garden's Spiderling mob spawners may rarely spawn in Spider Infested Bee Dungeons, Cell Maze, and Pollinated Streams structures.
+
+(Forge): Born In Chaos's Wither Spider mob spawners may rarely spawn in Battle Cubes structures.
+
+(Forge): Earth Mobs Mod's Bone Spider mob spawners may rarely spawn in Battle Cubes structures.
+
+(Forge): Earth Mobs Mod's Stray Bone Spider mob spawners may rarely spawn in Battle Cubes structures.
+
+(Forge/Fabric/Quilt): Earth To Java Mobs's Bone Spider mob spawners may rarely spawn in Battle Cubes structures.
+
+(Forge): Minecraft Earth Mod's Bone Spider mob spawners may rarely spawn in Battle Cubes structures.
+
+(Forge): Canes Wonderful Spiders's Jumping, Wolf, and Hard Shell Spider mob spawners may rarely spawn in Spider Infested Bee Dungeons structures.
+
+(Forge): Canes Wonderful Spiders's Black Widow and Orb Weaver mob spawners may rarely spawn in Battle Cubes structures.
 
 
 ### **(V.6.6.18 Changes) (1.19.4 Minecraft)**
