@@ -1,0 +1,15 @@
+{
+  "processors": [
+    {
+      "spawner_mob_entries": [
+        {
+          "resourcelocation": "minecraft:spider",
+          "weight": 100
+        }
+      ],
+      "chance_to_override_with_tagged_mobs":  0.222,
+      "override_mobs_to_pick_from": "#the_bumblezone:structure_spawner_mobs/battle_cubes_rare_spawner_type",
+      "processor_type": "the_bumblezone:spawner_randomizing_processor"
+    }
+  ]
+}

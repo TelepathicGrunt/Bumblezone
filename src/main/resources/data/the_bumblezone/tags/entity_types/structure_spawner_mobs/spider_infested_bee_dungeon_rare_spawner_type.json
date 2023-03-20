@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "alchemists_garden:spiderling",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:tarantula",
+      "required": false
+    },
+    {
+      "id": "blue_skies:nested_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:wolf_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:jumping_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:hard_shell_spider",
+      "required": false
+    },
+    {
+      "id": "twilightforest:hedge_spider",
+      "required": false
+    },
+    {
+      "id": "twilightforest:swarm_spider",
+      "required": false
+    }
+  ]
+}

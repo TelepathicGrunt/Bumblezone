@@ -51,7 +51,7 @@
       "weight": 12,
       "element": {
         "location": "the_bumblezone:cell_maze/cave_spider_room",
-        "processors": "the_bumblezone:cell_maze_generic",
+        "processors": "the_bumblezone:cell_maze_spider",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
