@@ -129,6 +129,17 @@
           ]
         },
         {
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            }
+          ]
+        },
+        {
           "name": "the_bumblezone:bee_stinger",
           "type": "minecraft:item",
           "weight": 2,
@@ -142,11 +153,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
-          "weight": 1
         }
       ]
     },
