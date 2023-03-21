@@ -77,7 +77,7 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 
 	@Override
 	public void addWidgets(WidgetHolder widgets) {
-		widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_jei.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
+		widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
 
 		widgets.add(new SlotWidget(input, 5, 5));
 		widgets.add(new SlotWidget(visualOutputs, 63, 5));
