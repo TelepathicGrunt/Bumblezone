@@ -86,7 +86,13 @@
         {
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
-          "weight": 1
+          "weight": 1,
+          "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            }
+          ]
         }
       ]
     },

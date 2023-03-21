@@ -1,0 +1,172 @@
+{
+  "values": [
+    {
+      "id": "blue_skies:muckweed",
+      "required": false
+    },
+    {
+      "id": "blue_skies:brittlebush",
+      "required": false
+    },
+    {
+      "id": "#botania:mystical_flowers",
+      "required": false
+    },
+    {
+      "id": "#botania:special_flowers",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "byg:prairie_grass",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_asparagus",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_peanuts",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:wild_sweet_potatoes",
+      "required": false
+    },
+    {
+      "id": "extendedmushrooms:infested_flower",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:devils_claw_vine",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:dry_shrub",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_morning_glory",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_dark_blue_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_blue_bell_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_purple_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_bright_magenta_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_mixed_pink_sweet_peas",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium_pink",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:staked_nasturtium",
+      "required": false
+    },
+    {
+      "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "gaiadimension:missingno_plant",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:bird_nest_spruce",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:prickly_pear_fruited",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:dwarf_pink_bottle_brush",
+      "required": false
+    },
+    {
+      "id": "spectrum:resonant_lily",
+      "required": false
+    },
+    {
+      "id": "undergarden:shimmerweed",
+      "required": false
+    },
+    {
+      "id": "undergarden:tall_shimmerweed",
+      "required": false
+    },
+    {
+      "id": "windswept:wither_rose_bush",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_wheat",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_potato",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_carrot",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_beet",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_fire_pepper",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_miners_lettuce",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_cave_root",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_onion",
+      "required": false
+    },
+    {
+      "id": "valleycraft:faded_soul_rose",
+      "required": false
+    },
+    {
+      "id": "valleycraft:soul_rose",
+      "required": false
+    },
+    {
+      "id": "valleycraft:blue_soul_rose",
+      "required": false
+    }
+  ]
+}

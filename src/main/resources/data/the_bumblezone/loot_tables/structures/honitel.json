@@ -11,7 +11,7 @@
         {
           "name": "the_bumblezone:bee_bread",
           "type": "minecraft:item",
-          "weight": 300,
+          "weight": 280,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -26,7 +26,7 @@
         {
           "name": "minecraft:honeycomb",
           "type": "minecraft:item",
-          "weight": 300,
+          "weight": 280,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -41,7 +41,7 @@
         {
           "name": "minecraft:cookie",
           "type": "minecraft:item",
-          "weight": 260,
+          "weight": 250,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -129,14 +129,20 @@
           ]
         },
         {
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 70,
+          "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            }
+          ]
+        },
+        {
           "name": "minecraft:cake",
           "type": "minecraft:item",
           "weight": 50
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
-          "weight": 35
         },
         {
           "name": "minecraft:bowl",
