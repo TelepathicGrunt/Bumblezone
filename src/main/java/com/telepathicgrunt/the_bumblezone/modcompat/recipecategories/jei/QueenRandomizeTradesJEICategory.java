@@ -28,7 +28,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
     private final Component localizedName;
 
     public QueenRandomizeTradesJEICategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createDrawable(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_jei.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
+        this.background = guiHelper.createDrawable(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
         this.localizedName = Component.translatable("the_bumblezone.jei.bee_queen_color_randomizing_trades");
 
         DrawableBuilder iconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16);
