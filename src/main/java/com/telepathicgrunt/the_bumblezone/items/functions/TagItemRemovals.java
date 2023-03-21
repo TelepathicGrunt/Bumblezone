@@ -29,7 +29,7 @@ public class TagItemRemovals extends LootItemConditionalFunction {
 
     @Override
     public LootItemFunctionType getType() {
-        return BzLootFunctionTypes.TAG_ITEM_REMOVALS.get();
+        return BzLootFunctionTypes.TAG_ITEM_REMOVALS;
     }
 
     @Override
