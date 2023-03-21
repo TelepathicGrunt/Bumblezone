@@ -71,7 +71,13 @@
         {
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
-          "weight": 10
+          "weight": 10,
+          "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            }
+          ]
         },
         {
           "name": "the_bumblezone:sticky_honey_residue",
