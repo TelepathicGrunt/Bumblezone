@@ -1,5 +1,8 @@
 ### **(V.6.6.19 Changes) (1.19.4 Minecraft)**
 
+##### Items:
+Fixed possible crash with Bee Helmet's Bee Highlighting.
+
 ##### Structures:
 Fixed one of Cell Maze's piece not having properly randomize loot in its Honey Cocoon.
 
