@@ -171,7 +171,7 @@ public class StinglessBeeHelmet extends BeeArmor {
     }
 
     public static void decrementHighlightingCounter(Player player) {
-        if(HELMET_EFFECT_COUNTER_CLIENTSIDE > 0) {
+        if(player != null && HELMET_EFFECT_COUNTER_CLIENTSIDE > 0) {
             HELMET_EFFECT_COUNTER_CLIENTSIDE--;
 
             if (getEntityBeeHelmet(player).isEmpty()) {
