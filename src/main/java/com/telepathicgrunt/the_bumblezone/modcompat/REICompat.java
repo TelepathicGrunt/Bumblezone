@@ -57,9 +57,9 @@ public class REICompat implements REIClientPlugin {
                 for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
                     List<ItemStack> rewardCollection = weightedTradeResult.items.stream().map(e -> new ItemStack(e, weightedTradeResult.count)).toList();
                     registry.add(new REIQueenTradesInfo(
-                            List.of(trade.getFirst().tagKey() != null ? EntryIngredients.ofItemTag(trade.getFirst().tagKey()) : EntryIngredients.of(trade.getFirst().item())),
+                            trade.getFirst().tagKey() != null ? EntryIngredients.ofItemTag(trade.getFirst().tagKey()) : EntryIngredients.of(trade.getFirst().item()),
                             trade.getFirst().tagKey(),
-                            List.of(weightedTradeResult.tagKey != null ? EntryIngredients.ofItemTag(weightedTradeResult.tagKey) : EntryIngredients.ofItemStacks(rewardCollection)),
+                            weightedTradeResult.tagKey != null ? EntryIngredients.ofItemTag(weightedTradeResult.tagKey) : EntryIngredients.ofItemStacks(rewardCollection),
                             weightedTradeResult.tagKey,
                             weightedTradeResult.xpReward,
                             weightedTradeResult.weight,
@@ -74,8 +74,8 @@ public class REICompat implements REIClientPlugin {
                 List<ItemStack> randomizeStack = tradeEntry.wantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
                 for (ItemStack input : randomizeStack) {
                     registry.add(new REIQueenRandomizerTradesInfo(
-                            List.of(EntryIngredients.of(input)),
-                            List.of(tradeEntry.tagKey() != null ? EntryIngredients.ofItemTag(tradeEntry.tagKey()) : EntryIngredients.ofItemStacks(randomizeStack)),
+                            EntryIngredients.of(input),
+                            tradeEntry.tagKey() != null ? EntryIngredients.ofItemTag(tradeEntry.tagKey()) : EntryIngredients.ofItemStacks(randomizeStack),
                             tradeEntry.tagKey(),
                             1,
                             randomizeStack.size()
