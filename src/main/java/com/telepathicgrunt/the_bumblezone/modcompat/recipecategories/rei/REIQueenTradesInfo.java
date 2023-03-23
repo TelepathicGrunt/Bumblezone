@@ -6,10 +6,8 @@ import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 
 import java.util.Collections;
-import java.util.List;
 
 public class REIQueenTradesInfo extends BasicDisplay {
 

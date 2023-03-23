@@ -4,14 +4,10 @@ import com.telepathicgrunt.the_bumblezone.modcompat.REICompat;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.Collections;
-import java.util.List;
 
 public class REIQueenRandomizerTradesInfo extends BasicDisplay {
 

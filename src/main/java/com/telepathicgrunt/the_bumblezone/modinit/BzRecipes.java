@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.items.recipes.RecipeDiscoveredHookedShapedRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.items.recipes.RecipeDiscoveredHookedShapedRecipe;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.PotionBrewingAccessor;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeSerializer;
