@@ -2,12 +2,8 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
     {
-      "id": "#forge:glazed_terracotta",
-      "required": false
-    },
-    {
-      "id": "#c:glazed_terracotta",
-      "required": false
+      "id": "#the_bumblezone:bee_queen_randomize_trades/glazed_terracotta_trades",
+      "required": true
     }
   ]
 }

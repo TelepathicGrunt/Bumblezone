@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
+
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
+import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.QueenRandomizeTradesJEICategory;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenRandomizerTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenTradesInfo;
@@ -67,23 +70,21 @@ public class JEIIntegration implements IModPlugin {
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
 
 		List<JEIQueenTradesInfo> trades = new LinkedList<>();
-		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
-			for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
-				for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
-					if (!tradeResult.randomizerTrade()) {
-						trades.add(new JEIQueenTradesInfo(trade.getKey().getDefaultInstance(), tradeResult.items().stream().map(e -> new ItemStack(e, tradeResult.count())).toList(), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()));
-					}
+		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
+			for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
+				for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
+					trades.add(new JEIQueenTradesInfo(trade.getFirst(), weightedTradeResult));
 				}
 			}
 		}
 		registration.addRecipes(QUEEN_TRADES, trades);
 
 		List<JEIQueenRandomizerTradesInfo> randomizerTrades = new LinkedList<>();
-		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
-			for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
-				List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
+		if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
+			for (QueensTradeManager.TradeWantEntry tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
+				List<ItemStack> randomizeStack = tradeEntry.wantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
 				for (ItemStack input : randomizeStack) {
-					randomizerTrades.add(new JEIQueenRandomizerTradesInfo(input, randomizeStack, 1, randomizeStack.size()));
+					randomizerTrades.add(new JEIQueenRandomizerTradesInfo(input, tradeEntry.tagKey(), randomizeStack));
 				}
 			}
 		}

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:dyes",
+      "required": false
+    },
+    {
+      "id": "#c:dyes",
+      "required": false
+    },
+    {
+      "id": "#c:dye_any",
+      "required": false
+    }
+  ]
+}

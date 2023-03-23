@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeAttackGoal;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
+import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -104,6 +104,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private int underWaterTicks;
     private int poseTicks;
     private boolean hasTrades = true;
+    private static final WeightedTradeResult ESSENCE_DROP = new WeightedTradeResult(null, List.of(BzItems.ESSENCE_OF_THE_BEES), 1, 1000, 1);
 
     public BeeQueenEntity(EntityType<? extends BeeQueenEntity> type, Level world) {
         super(type, world);
@@ -410,7 +411,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     if (nearbyPlayers.size() > 0) {
                         setRemainingSuperTradeTime(BzConfig.beeQueenSuperTradeDurationInTicks);
 
-                        List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.keySet().stream()
+                        List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet().stream()
                                 .filter(i -> ((i.getItemCategory() != null &&
                                         !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS)) ||
                                         i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS)))
@@ -540,9 +541,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
                 int tradedItems = 0;
                 Item item = itemEntity.getItem().getItem();
-                if (QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.containsKey(item)) {
+                if (QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
                     for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
-                        Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
+                        Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
                         if (reward.isPresent()) {
                             spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), itemEntity.getThrower());
                             tradedItems++;
@@ -580,7 +581,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         if (finalbeeQueenAdvancementDone(serverPlayer)) {
                             MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
                             if (!capability.receivedEssencePrize) {
-                                spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(List.of(BzItems.ESSENCE_OF_THE_BEES), 1, 1000, 1), ItemStack.EMPTY, null);
+                                spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, null);
                                 capability.receivedEssencePrize = true;
                                 serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                             }
@@ -610,7 +611,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 if (!capability.receivedEssencePrize) {
                     Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                     Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                    spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(List.of(BzItems.ESSENCE_OF_THE_BEES), 1, 1000, 1), ItemStack.EMPTY, null);
+                    spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, null);
                     capability.receivedEssencePrize = true;
                     serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                 }
@@ -632,7 +633,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         boolean traded = false;
-        if (QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.containsKey(item)) {
+        if (QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
             if (this.level.isClientSide()) {
                 return InteractionResult.SUCCESS;
             }
@@ -640,7 +641,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
 
-            Optional<TradeEntryReducedObj> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.get(item).getRandom(this.random);
+            Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
             if (reward.isPresent()) {
                 spawnReward(forwardVect, sideVect, reward.get(), stack, player.getUUID());
                 traded = true;
@@ -666,8 +667,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         if (!capability.receivedEssencePrize) {
                             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                            spawnReward(forwardVect, sideVect, new TradeEntryReducedObj(List.of(BzItems.ESSENCE_OF_THE_BEES), 1, 1000, 1), ItemStack.EMPTY, null);
-                                capability.receivedEssencePrize = true;
+                            spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, null);
+                            capability.receivedEssencePrize = true;
                             serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                         }
                     }
@@ -711,7 +712,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 block.newBlockEntity(this.blockPosition(), blockItem.getBlock().defaultBlockState()) instanceof Container;
     }
 
-    private void spawnReward(Vec3 forwardVect, Vec3 sideVect, TradeEntryReducedObj reward, ItemStack originalItem, UUID playerUUID) {
+    private void spawnReward(Vec3 forwardVect, Vec3 sideVect, WeightedTradeResult reward, ItemStack originalItem, UUID playerUUID) {
         int rewardMultiplier = 1;
         if (getSuperTradeItem().sameItem(originalItem) && BzConfig.beeQueenSuperTradeRewardMultiplier > 1) {
             rewardMultiplier = BzConfig.beeQueenSuperTradeRewardMultiplier;
@@ -733,8 +734,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
         }
 
-        int remainingItemToSpawn = reward.count() * rewardMultiplier;
-        Item chosenItem = reward.items().get(random.nextInt(reward.items().size()));
+        int remainingItemToSpawn = reward.count * rewardMultiplier;
+        Item chosenItem = reward.items.get(random.nextInt(reward.items.size()));
         int itemStackMaxSize = chosenItem.getMaxStackSize();
 
         while (remainingItemToSpawn > 0) {
@@ -768,13 +769,13 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             rewardItemEntity.setDefaultPickUpDelay();
             spawnHappyParticles();
 
-            if (reward.xpReward() > 0 && this.level instanceof ServerLevel serverLevel) {
+            if (reward.xpReward > 0 && this.level instanceof ServerLevel serverLevel) {
                 ExperienceOrb.award(
                         serverLevel,
                         new Vec3(this.getX() + (forwardVect.x() * 1),
                                 this.getY() + 0.3,
                                 this.getZ() + (forwardVect.x() * 1)),
-                        reward.xpReward());
+                        reward.xpReward);
             }
         }
 
