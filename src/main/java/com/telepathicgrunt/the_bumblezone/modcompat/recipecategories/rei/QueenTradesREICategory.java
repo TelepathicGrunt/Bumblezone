@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei;
 
+import com.mojang.math.Matrix4f;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.REICompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -67,16 +68,16 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput().disableBackground());
 
 		if (display.getInputTag() != null) {
-			widgets.add(Widgets.createTexturedWidget(
+			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
 					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
 					new Rectangle(bounds.getX() + 8, bounds.getY() + 8, 16, 16),
-					0, 0, 16, 16));
+					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 101)));
 		}
 		if (display.getOutputTag() != null) {
-			widgets.add(Widgets.createTexturedWidget(
+			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
 					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
 					new Rectangle(bounds.getX() + 66, bounds.getY() + 8, 16, 16),
-					0, 0, 16, 16));
+					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 101)));
 		}
 
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
