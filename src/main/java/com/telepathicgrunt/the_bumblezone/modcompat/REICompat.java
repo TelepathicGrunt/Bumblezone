@@ -49,19 +49,13 @@ public class REICompat implements REIClientPlugin {
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
 
-        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
-            for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
-                for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
-                    List<ItemStack> rewardCollection = weightedTradeResult.items.stream().map(e -> new ItemStack(e, weightedTradeResult.count)).toList();
-                    registry.add(new REIQueenTradesInfo(
-                            trade.getFirst().tagKey() != null ? EntryIngredients.ofItemTag(trade.getFirst().tagKey()) : EntryIngredients.of(trade.getFirst().item()),
-                            trade.getFirst().tagKey(),
-                            weightedTradeResult.tagKey != null ? EntryIngredients.ofItemTag(weightedTradeResult.tagKey) : EntryIngredients.ofItemStacks(rewardCollection),
-                            weightedTradeResult.tagKey,
-                            weightedTradeResult.xpReward,
-                            weightedTradeResult.weight,
-                            weightedTradeResult.getTotalWeight()
-                    ), QUEEN_TRADES);
+        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
+            for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
+                for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
+                    if (!tradeResult.randomizerTrade()) {
+                        List<ItemStack> rewardCollection = tradeResult.items().stream().map(e -> new ItemStack(e, tradeResult.count())).toList();
+                        registry.add(new REIQueenTradesInfo(List.of(EntryIngredients.of(trade.getKey())), List.of(EntryIngredients.ofItemStacks(rewardCollection)), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()), QUEEN_TRADES);
+                    }
                 }
             }
         }
@@ -70,13 +64,7 @@ public class REICompat implements REIClientPlugin {
             for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
                 List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
                 for (ItemStack input : randomizeStack) {
-                    registry.add(new REIQueenRandomizerTradesInfo(
-                            EntryIngredients.of(input),
-                            tradeEntry.tagKey() != null ? EntryIngredients.ofItemTag(tradeEntry.tagKey()) : EntryIngredients.ofItemStacks(randomizeStack),
-                            tradeEntry.tagKey(),
-                            1,
-                            randomizeStack.size()
-                    ), QUEEN_RANDOMIZE_TRADES);
+                    registry.add(new REIQueenRandomizerTradesInfo(List.of(EntryIngredients.of(input)), List.of(EntryIngredients.ofItemStacks(randomizeStack)), 1, randomizeStack.size()), QUEEN_RANDOMIZE_TRADES);
                 }
             }
         }
