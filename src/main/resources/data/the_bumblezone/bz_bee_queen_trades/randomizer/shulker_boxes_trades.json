@@ -2,7 +2,7 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
     {
-      "id": "#the_bumblezone:bee_queen_randomize_trades/stained_glass_pane_trades",
+      "id": "#the_bumblezone:bee_queen_randomize_trades/shulker_boxes_trades",
       "required": true
     }
   ]
