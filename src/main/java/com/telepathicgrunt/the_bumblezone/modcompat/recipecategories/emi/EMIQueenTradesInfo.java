@@ -15,6 +15,8 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -22,16 +24,20 @@ import java.util.List;
 public class EMIQueenTradesInfo implements EmiRecipe {
 
 	private final EmiIngredient input;
+	private final TagKey<Item> inputTag;
 	private final List<EmiStack> outputs;
+	private final TagKey<Item> outputTag;
 	private final EmiIngredient visualOutputs;
 	private final int xpReward;
 	private final int weight;
 	private final int groupWeight;
 
-	public EMIQueenTradesInfo(EmiIngredient input, List<EmiStack> outputs, int xp, int weight, int groupWeight) {
+	public EMIQueenTradesInfo(EmiIngredient input, TagKey<Item> inputTag, List<EmiStack> outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight) {
 		super();
 		this.input = input;
+		this.inputTag = inputTag;
 		this.outputs = outputs;
+		this.outputTag = outputTag;
 		this.visualOutputs = EmiIngredient.of(outputs);
 		this.xpReward = xp;
 		this.weight = weight;
@@ -48,6 +54,14 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 
 	public int getGroupWeight() {
 		return this.groupWeight;
+	}
+
+	public TagKey<Item> getInputTag() {
+		return this.inputTag;
+	}
+
+	public TagKey<Item> getOutputTag() {
+		return this.outputTag;
 	}
 
 	@Override
@@ -88,6 +102,13 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		widgets.add(new SlotWidget(visualOutputs, 63, 5));
 
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  10, 0xFF404040, false));
+
+		if (this.getInputTag() != null) {
+			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 10, 10, 16, 16, 0, 0, 16, 16, 16, 16));
+		}
+		if (this.getOutputTag() != null) {
+			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 10, 16, 16, 0, 0, 16, 16, 16, 16));
+		}
 
 		double percentValue = (double)(getWeight()) / (getGroupWeight()) * 100;
 		String percent = String.valueOf(percentValue);
