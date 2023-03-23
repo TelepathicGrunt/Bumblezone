@@ -68,14 +68,14 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 		if (display.getInputTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
 					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
-					new Rectangle(bounds.getX() + 8, bounds.getY() + 8, 16, 16),
-					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 101)));
+					new Rectangle(bounds.getX() + 11, bounds.getY() + 11, 16, 16),
+					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 301)));
 		}
 		if (display.getOutputTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
 					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
-					new Rectangle(bounds.getX() + 66, bounds.getY() + 8, 16, 16),
-					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 101)));
+					new Rectangle(bounds.getX() + 69, bounds.getY() + 11, 16, 16),
+					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 301)));
 		}
 
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
