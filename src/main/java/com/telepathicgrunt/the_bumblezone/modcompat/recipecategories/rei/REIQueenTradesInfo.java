@@ -8,6 +8,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 
+import java.util.Collections;
 import java.util.List;
 
 public class REIQueenTradesInfo extends BasicDisplay {
@@ -18,8 +19,8 @@ public class REIQueenTradesInfo extends BasicDisplay {
 	private final int weight;
 	private final int groupWeight;
 
-	public REIQueenTradesInfo(List<EntryIngredient> inputs, TagKey<Item> inputTag, List<EntryIngredient> outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight) {
-		super(inputs, outputs);
+	public REIQueenTradesInfo(EntryIngredient inputs, TagKey<Item> inputTag, EntryIngredient outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight) {
+		super(Collections.singletonList(inputs), Collections.singletonList(outputs));
 		this.inputTag = inputTag;
 		this.outputTag = outputTag;
 		this.xpReward = xp;
