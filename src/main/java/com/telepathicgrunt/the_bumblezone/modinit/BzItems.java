@@ -30,7 +30,7 @@ public class BzItems {
      */
     public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = FabricItemGroupBuilder
             .build(new ResourceLocation(Bumblezone.MODID, "main_tab"),
-                    () -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB));
+                    () -> new ItemStack(BzBlocks.HONEYCOMB_BROOD));
 
     //blocks
     public static final Item POROUS_HONEYCOMB = new BlockItem(BzBlocks.POROUS_HONEYCOMB, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
