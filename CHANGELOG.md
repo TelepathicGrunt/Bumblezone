@@ -7,6 +7,9 @@ Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking
  Only normal right click should pick up bees because crouching is what removes the bee from your head.
  As a result, this fixes the incompat with Carry On mod as well when wearing the helmet and shift right-clicking bees.
 
+##### Entities:
+If using another mod to put passengers on the Bee Queen, now those passengers are positioned properly on the queen's back.
+
 ##### Structures:
 Fixed one of Cell Maze's piece not having properly randomize loot in its Honey Cocoon.
 
