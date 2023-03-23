@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.REICompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -71,10 +72,10 @@ public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQuee
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 86, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_colors", display.getOutputEntries().get(0).size())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 
 		if (display.getOutputTag() != null) {
-			widgets.add(Widgets.createTexturedWidget(
+			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
 					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
 					new Rectangle(bounds.getX() + 66, bounds.getY() + 8, 16, 16),
-					0, 0, 16, 16));
+					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 101)));
 		}
 
 		return widgets;
