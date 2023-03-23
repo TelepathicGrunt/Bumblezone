@@ -144,6 +144,7 @@ public class StinglessBeeHelmet extends BeeArmor {
     public static InteractionResult addBeePassenger(Level world, Player playerEntity, InteractionHand hand, Entity entity) {
         ItemStack beeHelmet = StinglessBeeHelmet.getEntityBeeHelmet(playerEntity);
         if (!beeHelmet.isEmpty() &&
+            !playerEntity.isShiftKeyDown() &&
             playerEntity.getItemInHand(playerEntity.getUsedItemHand()).isEmpty() &&
             playerEntity.getPassengers().isEmpty())
         {

@@ -3,6 +3,10 @@
 ##### Items:
 Fixed possible crash with Bee Helmet's Bee Highlighting.
 
+Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking bees.
+ Only normal right click should pick up bees because crouching is what removes the bee from your head.
+ As a result, this fixes the incompat with Carry On mod as well when wearing the helmet and shift right-clicking bees.
+
 ##### Structures:
 Fixed one of Cell Maze's piece not having properly randomize loot in its Honey Cocoon.
 
