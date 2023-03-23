@@ -4,8 +4,6 @@ import com.telepathicgrunt.the_bumblezone.modcompat.REICompat;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 
 import java.util.Collections;
 import java.util.List;
