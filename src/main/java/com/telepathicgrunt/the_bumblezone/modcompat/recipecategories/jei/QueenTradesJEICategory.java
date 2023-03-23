@@ -15,8 +15,6 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
@@ -65,14 +63,6 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
         double percentValue = ((double)(recipe.weight()) / recipe.totalGroupWeight()) * 100D;
         String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
         Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
-
-        if (recipe.input().tagKey() != null) {
-            tagIcon.draw(stack, 11, 11);
-        }
-
-        if (recipe.reward().tagKey != null) {
-            tagIcon.draw(stack, 69, 11);
-        }
     }
 
     @Override
@@ -86,14 +76,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JEIQueenTradesInfo recipe, IFocusGroup focuses) {
-
-        if (recipe.input().tagKey() != null) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStacks(Registry.ITEM.getTag(recipe.input().tagKey()).get().stream().map(e -> e.value().getDefaultInstance()).toList());
-        }
-        else {
-            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStack(recipe.input().item().getDefaultInstance());
-        }
-
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward().items.stream().map(e -> new ItemStack(e, recipe.reward().count)).toList());
+        builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.wantItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.rewards());
     }
 }
