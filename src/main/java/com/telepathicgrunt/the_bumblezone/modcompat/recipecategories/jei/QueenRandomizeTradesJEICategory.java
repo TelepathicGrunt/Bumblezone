@@ -66,7 +66,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
         Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_colors", recipe.output().size()), 86, 10, 0xFF808080);
 
         if (recipe.tagOutput() != null) {
-            tagIcon.draw(stack, 67, 9);
+            tagIcon.draw(stack, 69, 11);
         }
     }
 
