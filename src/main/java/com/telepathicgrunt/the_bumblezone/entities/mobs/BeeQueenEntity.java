@@ -53,6 +53,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -232,6 +233,25 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     @Override
     public boolean isPushable() {
         return false;
+    }
+
+    @Override
+    public void positionRider(Entity entity) {
+        this.positionRider(entity, Entity::setPos);
+    }
+
+    @Override
+    public double getPassengersRidingOffset() {
+        return this.getDimensions(Pose.STANDING).height * 0.90f;
+    }
+
+    private void positionRider(Entity entity, MoveFunction moveFunction) {
+        if (this.hasPassenger(entity)) {
+            double riderYOffset = this.getY() + this.getPassengersRidingOffset() + entity.getMyRidingOffset();
+            Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+            Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+            moveFunction.accept(entity, this.getX() + sideVect.x() - (forwardVect.x() * 0.5d), riderYOffset, this.getZ() + sideVect.z() - (forwardVect.z() * 0.5d));
+        }
     }
 
     @Override
