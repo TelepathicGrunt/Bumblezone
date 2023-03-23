@@ -103,10 +103,10 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  10, 0xFF404040, false));
 
 		if (this.getInputTag() != null) {
-			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 10, 10, 16, 16, 0, 0, 16, 16, 16, 16));
+			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
 		}
 		if (this.getOutputTag() != null) {
-			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 10, 16, 16, 0, 0, 16, 16, 16, 16));
+			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
 		}
 
 		double percentValue = (double)(getWeight()) / (getGroupWeight()) * 100;
