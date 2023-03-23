@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.entities.ProjectileImpact;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;

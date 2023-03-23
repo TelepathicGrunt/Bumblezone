@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.functions.DropContainerItems;
 import com.telepathicgrunt.the_bumblezone.items.functions.HoneyCompassLocateStructure;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
-import com.telepathicgrunt.the_bumblezone.items.functions.TagItemRemovals;
 import com.telepathicgrunt.the_bumblezone.items.functions.UniquifyIfHasItems;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
