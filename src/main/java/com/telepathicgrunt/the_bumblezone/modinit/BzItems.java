@@ -31,7 +31,7 @@ public class BzItems {
      */
     public static final CreativeModeTab BUMBLEZONE_CREATIVE_TAB = QuiltItemGroup
             .builder(new ResourceLocation(Bumblezone.MODID, "main_tab"))
-            .icon(() -> new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB))
+            .icon(() -> new ItemStack(BzBlocks.HONEYCOMB_BROOD))
             .build();
 
     //blocks
