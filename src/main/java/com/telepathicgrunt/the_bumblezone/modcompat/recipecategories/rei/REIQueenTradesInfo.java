@@ -5,6 +5,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 
+import java.util.Collections;
 import java.util.List;
 
 public class REIQueenTradesInfo extends BasicDisplay {
@@ -13,8 +14,10 @@ public class REIQueenTradesInfo extends BasicDisplay {
 	private final int weight;
 	private final int groupWeight;
 
-	public REIQueenTradesInfo(List<EntryIngredient> inputs, List<EntryIngredient> outputs, int xp, int weight, int groupWeight) {
-		super(inputs, outputs);
+	public REIQueenTradesInfo(EntryIngredient inputs, TagKey<Item> inputTag, EntryIngredient outputs, TagKey<Item> outputTag, int xp, int weight, int groupWeight) {
+		super(Collections.singletonList(inputs), Collections.singletonList(outputs));
+		this.inputTag = inputTag;
+		this.outputTag = outputTag;
 		this.xpReward = xp;
 		this.weight = weight;
 		this.groupWeight = groupWeight;

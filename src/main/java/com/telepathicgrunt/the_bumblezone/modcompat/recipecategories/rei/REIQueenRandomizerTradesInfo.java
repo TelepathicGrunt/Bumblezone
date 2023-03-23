@@ -8,6 +8,7 @@ import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Collections;
 import java.util.List;
 
 public class REIQueenRandomizerTradesInfo extends BasicDisplay {
@@ -15,8 +16,9 @@ public class REIQueenRandomizerTradesInfo extends BasicDisplay {
 	private final int weight;
 	private final int groupWeight;
 
-	public REIQueenRandomizerTradesInfo(List<EntryIngredient> inputs, List<EntryIngredient> outputs, int weight, int groupWeight) {
-		super(inputs, outputs);
+	public REIQueenRandomizerTradesInfo(EntryIngredient inputs, EntryIngredient outputs, TagKey<Item> outputTag, int weight, int groupWeight) {
+		super(Collections.singletonList(inputs), Collections.singletonList(outputs));
+		this.outputTag = outputTag;
 		this.weight = weight;
 		this.groupWeight = groupWeight;
 	}
