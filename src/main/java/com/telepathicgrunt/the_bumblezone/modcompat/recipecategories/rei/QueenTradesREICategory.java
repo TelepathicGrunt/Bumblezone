@@ -64,7 +64,20 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 
 		widgets.add(Widgets.createTexturedWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT)));
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 5, bounds.getY() + 5, 18, 18)).entries(display.getInputEntries().get(0)).markInput().disableBackground());
-		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markOutput().disableBackground());
+		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput().disableBackground());
+
+		if (display.getInputTag() != null) {
+			widgets.add(Widgets.createTexturedWidget(
+					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+					new Rectangle(bounds.getX() + 8, bounds.getY() + 8, 16, 16),
+					0, 0, 16, 16));
+		}
+		if (display.getOutputTag() != null) {
+			widgets.add(Widgets.createTexturedWidget(
+					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+					new Rectangle(bounds.getX() + 66, bounds.getY() + 8, 16, 16),
+					0, 0, 16, 16));
+		}
 
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 

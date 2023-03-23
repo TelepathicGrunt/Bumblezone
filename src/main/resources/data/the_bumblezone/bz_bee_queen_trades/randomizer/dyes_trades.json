@@ -2,16 +2,8 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
     {
-      "id": "#forge:dyes",
-      "required": false
-    },
-    {
-      "id": "#c:dyes",
-      "required": false
-    },
-    {
-      "id": "#c:dye_any",
-      "required": false
+      "id": "#the_bumblezone:bee_queen_randomize_trades/dyes_trades",
+      "required": true
     }
   ]
 }
