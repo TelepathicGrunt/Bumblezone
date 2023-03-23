@@ -16,6 +16,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
@@ -71,11 +72,11 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
         Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
 
         if (recipe.input().tagKey() != null) {
-            tagIcon.draw(stack, 9, 9);
+            tagIcon.draw(stack, 11, 11);
         }
 
         if (recipe.reward().tagKey != null) {
-            tagIcon.draw(stack, 67, 9);
+            tagIcon.draw(stack, 69, 11);
         }
     }
 
@@ -98,6 +99,6 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
             builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStack(recipe.input().item().getDefaultInstance());
         }
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward().items.stream().map(Item::getDefaultInstance).toList());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward().items.stream().map(e -> new ItemStack(e, recipe.reward().count)).toList());
     }
 }
