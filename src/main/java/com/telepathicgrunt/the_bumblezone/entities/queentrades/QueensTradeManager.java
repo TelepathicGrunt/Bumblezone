@@ -121,7 +121,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                         continue;
                     }
 
-                    List<Item> items = tradeRandomizeEntry.wantItems().stream().map(Holder::get).toList();
+                    List<Item> items = tradeRandomizeEntry.wantItems().stream().map(Holder::value).toList();
 
                     tempRecipeViewerRandomizerTrades.add(tradeRandomizeEntry);
                     populateRandomizedQueenTrades(tempQueenTradesFirstPass, items, tradeRandomizeEntry);
@@ -147,7 +147,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                         tempRecipeViewerMainTagTrades.add(tradeWantEntry);
                     }
 
-                    List<Item> wantItems = tradeWantEntry.wantItems().stream().map(Holder::get).toList();
+                    List<Item> wantItems = tradeWantEntry.wantItems().stream().map(Holder::value).toList();
                     populateMainQueenTrades(tempQueenTradesFirstPass, tradeResultEntry, wantItems, tradeWantEntry);
                 }
             }
@@ -279,7 +279,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
             }
 
             for (TradeResultEntry tradeResultEntry : tradeResultEntries) {
-                List<Item> resultItems = tradeResultEntry.resultItems().stream().map(Holder::get).toList();
+                List<Item> resultItems = tradeResultEntry.resultItems().stream().map(Holder::value).toList();
                 existingTrades.add(new WeightedTradeResult(tradeResultEntry.tagKey, resultItems, tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
             }
 
