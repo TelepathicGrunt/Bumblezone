@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.jei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;

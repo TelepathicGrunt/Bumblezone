@@ -2,12 +2,8 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
     {
-      "id": "#forge:stained_glass",
-      "required": false
-    },
-    {
-      "id": "#c:stained_glass",
-      "required": false
+      "id": "#the_bumblezone:bee_queen_randomize_trades/stained_glass_trades",
+      "required": true
     }
   ]
 }

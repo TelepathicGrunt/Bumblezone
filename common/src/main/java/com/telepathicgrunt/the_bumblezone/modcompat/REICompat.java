@@ -1,13 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.TradeEntryReducedObj;
+import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
-import com.telepathicgrunt.the_bumblezone.modcompat.rei.QueenRandomizerTradesREICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.rei.QueenTradesREICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.rei.REIQueenRandomizerTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.rei.REIQueenTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.QueenRandomizerTradesREICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.QueenTradesREICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQueenRandomizerTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQueenTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -29,7 +31,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.List;
-import java.util.Map;
 
 public class REICompat implements REIClientPlugin {
 
@@ -50,26 +51,37 @@ public class REICompat implements REIClientPlugin {
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
 
-        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
-            for (Map.Entry<Item, WeightedRandomList<TradeEntryReducedObj>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.entrySet()) {
-                for (TradeEntryReducedObj tradeResult : trade.getValue().unwrap()) {
-                    if (!tradeResult.randomizerTrade()) {
-                        List<ItemStack> rewardCollection = tradeResult.items().stream().map(e -> new ItemStack(e, tradeResult.count())).toList();
-                        registry.add(new REIQueenTradesInfo(List.of(EntryIngredients.of(trade.getKey())), List.of(EntryIngredients.ofItemStacks(rewardCollection)), tradeResult.xpReward(), tradeResult.weight(), tradeResult.totalGroupWeight()), QUEEN_TRADES);
-                    }
+        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
+            for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
+                for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
+                    List<ItemStack> rewardCollection = weightedTradeResult.items.stream().map(e -> new ItemStack(e, weightedTradeResult.count)).toList();
+                    registry.add(new REIQueenTradesInfo(
+                            trade.getFirst().tagKey() != null ? EntryIngredients.ofItemTag(trade.getFirst().tagKey()) : EntryIngredients.of(trade.getFirst().item()),
+                            trade.getFirst().tagKey(),
+                            EntryIngredients.ofItemStacks(rewardCollection),
+                            weightedTradeResult.tagKey,
+                            weightedTradeResult.xpReward,
+                            weightedTradeResult.weight,
+                            weightedTradeResult.getTotalWeight()
+                    ), QUEEN_TRADES);
                 }
             }
         }
 
-        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.tradeReduced.isEmpty()) {
-            for (TradeEntryReducedObj tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.tradeRandomizer) {
-                List<ItemStack> randomizeStack = tradeEntry.items().stream().map(Item::getDefaultInstance).toList();
+        if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
+            for (QueensTradeManager.TradeWantEntry tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
+                List<ItemStack> randomizeStack = tradeEntry.wantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
                 for (ItemStack input : randomizeStack) {
-                    registry.add(new REIQueenRandomizerTradesInfo(List.of(EntryIngredients.of(input)), List.of(EntryIngredients.ofItemStacks(randomizeStack)), 1, randomizeStack.size()), QUEEN_RANDOMIZE_TRADES);
+                    registry.add(new REIQueenRandomizerTradesInfo(
+                            EntryIngredients.of(input),
+                            EntryIngredients.ofItemStacks(randomizeStack),
+                            tradeEntry.tagKey(),
+                            1,
+                            randomizeStack.size()
+                    ), QUEEN_RANDOMIZE_TRADES);
                 }
             }
         }
-
     }
 
     private static void addInfo(Item item) {

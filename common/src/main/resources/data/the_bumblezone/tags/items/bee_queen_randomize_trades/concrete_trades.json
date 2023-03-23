@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#forge:concrete",
+      "required": false
+    },
+    {
+      "id": "#c:concrete",
+      "required": false
+    }
+  ]
+}

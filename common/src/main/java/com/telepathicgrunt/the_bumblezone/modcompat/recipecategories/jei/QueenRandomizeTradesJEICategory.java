@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.jei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
@@ -26,6 +26,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
     private final IDrawable background;
     private final IDrawable icon;
     private final Component localizedName;
+    private final IDrawable tagIcon;
 
     public QueenRandomizeTradesJEICategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
@@ -34,6 +35,10 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
         DrawableBuilder iconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16);
         iconBuilder.setTextureSize(16, 16);
         this.icon = iconBuilder.build();
+
+        DrawableBuilder tagIconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/tag_icon.png"), 0, 0, 16, 16);
+        tagIconBuilder.setTextureSize(16, 16);
+        this.tagIcon = tagIconBuilder.build();
     }
 
     @Override
@@ -58,7 +63,11 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
     @Override
     public void draw(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_colors", recipe.randomizes().size()), 86, 10, 0xFF808080);
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_colors", recipe.output().size()), 86, 10, 0xFF808080);
+
+        if (recipe.tagOutput() != null) {
+            tagIcon.draw(stack, 69, 11);
+        }
     }
 
     @Override
@@ -69,6 +78,6 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JEIQueenRandomizerTradesInfo recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addIngredient(VanillaTypes.ITEM_STACK, recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.randomizes());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.output());
     }
 }

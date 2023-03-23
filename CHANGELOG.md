@@ -25,6 +25,8 @@ Added new Entity Type tags that will be used for mod compat where a few of Bumbl
 - `the_bumblezone:structure_spawner_mobs/spider_infested_bee_dungeon_rare_spawner_type`
 
 ##### Mod Compat:
+Improved and condensed the Bee Queen trades in JEI, REI, and EMI. Much less page spam when viewing all recipes on the Bee Queen Spawn Egg item.
+
 (Forge): Chance of spawning Enemy Expansion's Ladybug mob in Hanging Gardens structure.
 
 (Forge): Enemy Expansion's Wasp mob spawners may rarely spawn in Cell Maze, Battle Cubes, and Pollinated Streams structures.

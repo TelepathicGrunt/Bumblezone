@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.jei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
 
 import mezz.jei.api.gui.ITickTimer;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;

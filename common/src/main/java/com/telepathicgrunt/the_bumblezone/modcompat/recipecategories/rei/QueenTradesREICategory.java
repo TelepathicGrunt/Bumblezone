@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.rei;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.REICompat;
@@ -11,6 +11,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,20 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 
 		widgets.add(Widgets.createTexturedWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), new Rectangle(bounds.getX(), bounds.getY(), RECIPE_WIDTH, RECIPE_HEIGHT)));
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 5, bounds.getY() + 5, 18, 18)).entries(display.getInputEntries().get(0)).markInput().disableBackground());
-		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markOutput().disableBackground());
+		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput().disableBackground());
+
+		if (display.getInputTag() != null) {
+			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
+					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+					new Rectangle(bounds.getX() + 11, bounds.getY() + 11, 16, 16),
+					0, 0, 16, 16), new Matrix4f().translate(0, 0, 301)));
+		}
+		if (display.getOutputTag() != null) {
+			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
+					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
+					new Rectangle(bounds.getX() + 69, bounds.getY() + 11, 16, 16),
+					0, 0, 16, 16), new Matrix4f().translate(0, 0, 301)));
+		}
 
 		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 

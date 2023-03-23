@@ -1,6 +1,6 @@
 {
-  "is_color_randomizer_trade": true,
-  "randomizes": [
+  "replace": false,
+  "values": [
     {
       "id": "#forge:shulker_boxes",
       "required": false

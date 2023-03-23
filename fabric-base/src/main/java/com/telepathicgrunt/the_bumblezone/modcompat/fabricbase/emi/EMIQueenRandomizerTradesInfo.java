@@ -6,14 +6,14 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.emi.emi.api.widget.DrawableWidget;
 import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.TextureWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -22,13 +22,15 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 
 	private final EmiIngredient input;
 	private final List<EmiStack> outputs;
+	private final TagKey<Item> outputTag;
 	private final EmiIngredient visualOutputs;
 	private final int weight;
 	private final int groupWeight;
 
-	public EMIQueenRandomizerTradesInfo(EmiIngredient input, List<EmiStack> outputs, int weight, int groupWeight) {
+	public EMIQueenRandomizerTradesInfo(EmiIngredient input, List<EmiStack> outputs, TagKey<Item> outputTag, int weight, int groupWeight) {
 		super();
 		this.input = input;
+		this.outputTag = outputTag;
 		this.outputs = outputs;
 		this.visualOutputs = EmiIngredient.of(outputs);
 		this.weight = weight;
@@ -41,6 +43,10 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 
 	public int getGroupWeight() {
 		return this.groupWeight;
+	}
+
+	public TagKey<Item> getOutputTag() {
+		return this.outputTag;
 	}
 
 	@Override
@@ -79,6 +85,10 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 
 		widgets.add(new SlotWidget(input, 5, 5));
 		widgets.add(new SlotWidget(visualOutputs, 63, 5));
+
+		if (this.getOutputTag() != null) {
+			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
+		}
 
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_colors", getOutputs().size()).getVisualOrderText(), 86,  10, 0xFF404040, false));
 	}

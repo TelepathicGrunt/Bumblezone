@@ -2,12 +2,8 @@
   "is_color_randomizer_trade": true,
   "randomizes": [
     {
-      "id": "#forge:concrete",
-      "required": false
-    },
-    {
-      "id": "#c:concrete",
-      "required": false
+      "id": "#the_bumblezone:bee_queen_randomize_trades/concrete_trades",
+      "required": true
     }
   ]
 }
