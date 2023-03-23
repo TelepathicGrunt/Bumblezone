@@ -74,8 +74,8 @@ public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQuee
 		if (display.getOutputTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(
 					new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"),
-					new Rectangle(bounds.getX() + 66, bounds.getY() + 8, 16, 16),
-					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 101)));
+					new Rectangle(bounds.getX() + 69, bounds.getY() + 11, 16, 16),
+					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 301)));
 		}
 
 		return widgets;
