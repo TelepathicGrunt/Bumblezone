@@ -31,7 +31,7 @@ public class BzItems {
         @Override
         // CLIENT-SIDED
         public ItemStack makeIcon() {
-            return new ItemStack(BzBlocks.FILLED_POROUS_HONEYCOMB.get());
+            return new ItemStack(BzBlocks.HONEYCOMB_BROOD.get());
         }
     };
 
