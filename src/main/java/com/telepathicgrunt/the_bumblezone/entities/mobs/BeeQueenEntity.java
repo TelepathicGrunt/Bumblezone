@@ -80,6 +80,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +104,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private static final EntityDataAccessor<ItemStack> SUPER_TRADE_ITEM = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
     private final Set<UUID> acknowledgedPlayers = new HashSet<>();
+    private final HashMap<UUID, Item> acknowledgedPlayerHeldItem = new HashMap<>();
     private UUID persistentAngerTarget;
     private int underWaterTicks;
     private int poseTicks;
@@ -426,11 +428,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
 
             if (hasTrades && !this.isAngry() && (this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
-                List<Player> nearbyPlayers = null;
+                List<Player> nearbyPlayers  = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
 
                 if (getRemainingSuperTradeTime() == 0) {
-                    nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
-
                     if (nearbyPlayers.size() > 0) {
                         setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get());
 
@@ -447,17 +447,24 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         else {
                             hasTrades = false;
                             setRemainingSuperTradeTime(0);
-                            return;
                         }
                     }
                 }
 
-                if (getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() > 0) {
-                    if (getRemainingSuperTradeTime() > minNotifyTime) {
-                        if (nearbyPlayers == null) {
-                            nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
+                for (Player player : nearbyPlayers) {
+                    Item heldItem = player.getMainHandItem().getItem();
+                    if (!this.acknowledgedPlayerHeldItem.containsKey(player.getUUID()) || !this.acknowledgedPlayerHeldItem.get(player.getUUID()).equals(heldItem)) {
+                        if ((this.getSuperTradeItem().isEmpty() || !this.getSuperTradeItem().is(heldItem)) &&
+                            QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(heldItem))
+                        {
+                            player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_regular_trade_held").withStyle(ChatFormatting.WHITE), true);
                         }
+                        this.acknowledgedPlayerHeldItem.put(player.getUUID(), heldItem);
+                    }
+                }
 
+                if (hasTrades && getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() > 0) {
+                    if (getRemainingSuperTradeTime() > minNotifyTime) {
                         for (Player player : nearbyPlayers) {
                             if (!this.acknowledgedPlayers.contains(player.getUUID())) {
                                 player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
@@ -469,7 +476,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     return;
                 }
 
-                if (!getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() >= minNotifyTime && nearbyPlayers != null) {
+                if (!getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() >= minNotifyTime) {
                     boolean notifiedAPlayer = false;
                     for (Player player : nearbyPlayers) {
                         if (!this.acknowledgedPlayers.contains(player.getUUID())) {

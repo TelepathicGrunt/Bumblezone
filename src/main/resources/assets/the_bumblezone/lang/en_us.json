@@ -185,6 +185,7 @@
   "entity.the_bumblezone.bee_queen.mention_super_trade_inventory": "Bzz! BZZZ! (Queen wants %s from your inventory!)",
   "entity.the_bumblezone.bee_queen.mention_super_trade_satisfied": "Bzzz..! (The Queen is satisfied now)",
   "entity.the_bumblezone.bee_queen.mention_super_trade_performed": "Bonus trade! %sx the rewards!",
+  "entity.the_bumblezone.bee_queen.mention_regular_trade_held": "Bzz? (Queen is interested in your held item)",
 
   "enchantment.the_bumblezone.comb_cutter": "Comb Cutter",
   "enchantment.the_bumblezone.comb_cutter.desc": "Mines combs, hives, nest, and wax blocks faster. Doubles output of any BeeNest or BeeHive blocks.",
