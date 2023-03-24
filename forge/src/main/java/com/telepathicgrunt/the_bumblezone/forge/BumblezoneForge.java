@@ -22,6 +22,7 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensi
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
@@ -68,6 +69,7 @@ import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
@@ -98,6 +100,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.forgespi.language.IModFileInfo;
 import net.minecraftforge.forgespi.language.IModInfo;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -157,6 +160,7 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onTagsUpdate);
         eventBus.addListener(BumblezoneForge::onLevelTick);
         eventBus.addListener(BumblezoneForge::onAddReloadListeners);
+        eventBus.addListener(BumblezoneForge::onDatapackSync);
         eventBus.addListener(BumblezoneForge::onEntityAttacked);
         eventBus.addListener(BumblezoneForge::onEntityDeath);
         eventBus.addListener(BumblezoneForge::onEntitySpawn);
@@ -373,6 +377,17 @@ public class BumblezoneForge {
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {
         RegisterReloadListenerEvent.EVENT.invoke(new RegisterReloadListenerEvent((id, listener) -> event.addListener(listener)));
+    }
+
+    private static void onDatapackSync(OnDatapackSyncEvent event) {
+        if (FMLEnvironment.dist.isDedicatedServer()) {
+            if (event.getPlayer() != null) {
+                DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(event.getPlayer()));
+            }
+            else {
+                event.getPlayerList().getPlayers().forEach(player -> DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player)));
+            }
+        }
     }
 
     private static void onFinishUseItem(LivingEntityUseItemEvent.Finish event) {

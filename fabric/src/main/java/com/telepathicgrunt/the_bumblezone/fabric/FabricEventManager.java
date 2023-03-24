@@ -6,7 +6,9 @@ import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterFlammabilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterReloadListenerEvent;
@@ -108,6 +110,10 @@ public class FabricEventManager {
                 !BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(player, state)));
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
                 RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(dispatcher, environment, context)));
+
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
+            DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player));
+        });
 
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
         UseItemCallback.EVENT.register(FabricEventManager::onItemUse);

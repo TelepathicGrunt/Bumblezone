@@ -1,15 +1,29 @@
 package com.telepathicgrunt.the_bumblezone.entities.queentrades;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.item.Item;
 
 import java.util.List;
+import java.util.Optional;
 
 public class WeightedTradeResult implements WeightedEntry {
+    public static final Codec<WeightedTradeResult> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+            TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
+            BuiltInRegistries.ITEM.byNameCodec().listOf().fieldOf("want_items").forGetter(e -> e.items),
+            Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
+            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("xp_reward").forGetter(e -> e.xpReward),
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight").forGetter(e -> e.weight),
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("total_group_weight").forGetter(e -> e.totalGroupWeight)
+    ).apply(instance, instance.stable(WeightedTradeResult::new)));
 
-    public final TagKey<Item> tagKey;
+    public final Optional<TagKey<Item>> tagKey;
 
     public final List<Item> items;
 
@@ -21,7 +35,16 @@ public class WeightedTradeResult implements WeightedEntry {
 
     private int totalGroupWeight;
 
-    public WeightedTradeResult(TagKey<Item> tagKey, List<Item> items, int count, int xpReward, int weight) {
+    public WeightedTradeResult(Optional<TagKey<Item>> tagKey, List<Item> items, int count, int xpReward, int weight, int totalGroupWeight) {
+        this.tagKey = tagKey;
+        this.items = items;
+        this.count = count;
+        this.xpReward = xpReward;
+        this.weight = weight;
+        this.totalGroupWeight = totalGroupWeight;
+    }
+
+    public WeightedTradeResult(Optional<TagKey<Item>> tagKey, List<Item> items, int count, int xpReward, int weight) {
         this.tagKey = tagKey;
         this.items = items;
         this.count = count;

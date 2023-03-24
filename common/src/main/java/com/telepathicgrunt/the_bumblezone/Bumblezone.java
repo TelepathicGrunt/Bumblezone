@@ -32,6 +32,7 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
@@ -58,6 +59,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
+import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
+import com.telepathicgrunt.the_bumblezone.packets.QueenRandomizerTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
@@ -113,6 +116,8 @@ public class Bumblezone{
         AddCreativeTabEntriesEvent.EVENT.addListener(BzCreativeTabs::addCreativeTabEntries);
         RegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
         RegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);
+        DatapackSyncEvent.EVENT.addListener(QueenRandomizerTradesSyncPacket::sendToClient);
+        DatapackSyncEvent.EVENT.addListener(QueenMainTradesSyncPacket::sendToClient);
 
         //Registration
         BzItems.ITEMS.init();

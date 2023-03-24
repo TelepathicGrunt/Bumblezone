@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterFlammabilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterReloadListenerEvent;
@@ -88,6 +89,10 @@ public class QuiltEventManager {
                 TagsUpdatedEvent.EVENT.invoke(new TagsUpdatedEvent(registry, client)));
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockentity) ->
                 !BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(player, state)));
+
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
+            DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player));
+        });
 
         AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);

@@ -21,5 +21,7 @@ public class MessageHandler {
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, CrystallineFlowerEnchantmentPacket.ID, CrystallineFlowerEnchantmentPacket.HANDLER, CrystallineFlowerEnchantmentPacket.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, MobEffectClientSyncPacket.ID, MobEffectClientSyncPacket.HANDLER, MobEffectClientSyncPacket.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, UpdateFallingBlockPacket.ID, UpdateFallingBlockPacket.HANDLER, UpdateFallingBlockPacket.class);
+        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, QueenMainTradesSyncPacket.ID, QueenMainTradesSyncPacket.HANDLER, QueenMainTradesSyncPacket.class);
+        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, QueenRandomizerTradesSyncPacket.ID, QueenRandomizerTradesSyncPacket.HANDLER, QueenRandomizerTradesSyncPacket.class);
     }
 }

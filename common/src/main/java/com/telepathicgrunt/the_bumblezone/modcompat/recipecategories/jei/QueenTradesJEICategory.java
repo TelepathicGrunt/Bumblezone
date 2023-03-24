@@ -71,11 +71,11 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
         String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
         Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
 
-        if (recipe.input().tagKey() != null) {
+        if (recipe.input().tagKey().isPresent()) {
             tagIcon.draw(stack, 11, 11);
         }
 
-        if (recipe.reward().tagKey != null) {
+        if (recipe.reward().tagKey.isPresent()) {
             tagIcon.draw(stack, 69, 11);
         }
     }
@@ -92,8 +92,8 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JEIQueenTradesInfo recipe, IFocusGroup focuses) {
 
-        if (recipe.input().tagKey() != null) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStacks(BuiltInRegistries.ITEM.getTag(recipe.input().tagKey()).get().stream().map(e -> e.value().getDefaultInstance()).toList());
+        if (recipe.input().tagKey().isPresent()) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStacks(BuiltInRegistries.ITEM.getTag(recipe.input().tagKey().get()).get().stream().map(e -> e.value().getDefaultInstance()).toList());
         }
         else {
             builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStack(recipe.input().item().getDefaultInstance());
