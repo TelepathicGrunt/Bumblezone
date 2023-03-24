@@ -26,5 +26,7 @@ public class MessageHandler {
         DEFAULT_CHANNEL.registerMessage(++channelID, BeehemothControlsPacket.class, BeehemothControlsPacket::compose, BeehemothControlsPacket::parse, BeehemothControlsPacket.Handler::handle);
         DEFAULT_CHANNEL.registerMessage(++channelID, CrystallineFlowerEnchantmentPacket.class, CrystallineFlowerEnchantmentPacket::compose, CrystallineFlowerEnchantmentPacket::parse, CrystallineFlowerEnchantmentPacket.Handler::handle);
         DEFAULT_CHANNEL.registerMessage(++channelID, CrystallineFlowerClickedEnchantmentButtonPacket.class, CrystallineFlowerClickedEnchantmentButtonPacket::compose, CrystallineFlowerClickedEnchantmentButtonPacket::parse, CrystallineFlowerClickedEnchantmentButtonPacket.Handler::handle);
+        DEFAULT_CHANNEL.registerMessage(++channelID, QueenRandomizerTradesSyncPacket.class, QueenRandomizerTradesSyncPacket::compose, QueenRandomizerTradesSyncPacket::parse, QueenRandomizerTradesSyncPacket.Handler::handle);
+        DEFAULT_CHANNEL.registerMessage(++channelID, QueenMainTradesSyncPacket.class, QueenMainTradesSyncPacket::compose, QueenMainTradesSyncPacket::parse, QueenMainTradesSyncPacket.Handler::handle);
     }
 }

@@ -105,6 +105,7 @@ public class Bumblezone{
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         forgeBus.addListener(WanderingTrades::addWanderingTrades);
         forgeBus.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);
+        forgeBus.addListener(QueensTradeManager::syncRecipeViewerDataToClient);
         forgeBus.addListener(ThreadExecutor::handleServerStoppingEvent);
         forgeBus.addListener(this::registerDatapackListener);
         forgeBus.addListener(this::serverAboutToStart);
