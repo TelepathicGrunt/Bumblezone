@@ -62,10 +62,10 @@ public class EMICompat implements EmiPlugin {
                 for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
                     List<EmiStack> rewardCollection = weightedTradeResult.items.stream().map(e -> EmiStack.of(new ItemStack(e, weightedTradeResult.count))).toList();
                     registry.addRecipe(new EMIQueenTradesInfo(
-                            EmiIngredient.of(trade.getFirst().tagKey() != null ? Ingredient.of(trade.getFirst().tagKey()) : Ingredient.of(trade.getFirst().item())),
-                            trade.getFirst().tagKey(),
+                            EmiIngredient.of(trade.getFirst().tagKey().isPresent() ? Ingredient.of(trade.getFirst().tagKey().orElse(null)) : Ingredient.of(trade.getFirst().item())),
+                            trade.getFirst().tagKey().orElse(null),
                             rewardCollection,
-                            weightedTradeResult.tagKey,
+                            weightedTradeResult.tagKey.orElse(null),
                             weightedTradeResult.xpReward,
                             weightedTradeResult.weight,
                             weightedTradeResult.getTotalWeight()));
@@ -80,7 +80,7 @@ public class EMICompat implements EmiPlugin {
                     registry.addRecipe(new EMIQueenRandomizerTradesInfo(
                             EmiIngredient.of(Ingredient.of(input)),
                             randomizeStack.stream().map(EmiStack::of).collect(Collectors.toList()),
-                            tradeEntry.tagKey(),
+                            tradeEntry.tagKey().orElse(null),
                             1,
                             randomizeStack.size()));
                 }

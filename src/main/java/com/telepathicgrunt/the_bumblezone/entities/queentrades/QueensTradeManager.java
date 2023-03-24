@@ -19,8 +19,14 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
@@ -327,18 +333,11 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
         }
     }
 
-    public static void syncRecipeViewerDataToClient(OnDatapackSyncEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer()) {
-            if (event.getPlayer() != null) {
-                QueenRandomizerTradesSyncPacket.sendToClient(event.getPlayer(), QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades);
-                QueenMainTradesSyncPacket.sendToClient(event.getPlayer(), QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades);
-            }
-            else {
-                event.getPlayerList().getPlayers().forEach(player -> QueenRandomizerTradesSyncPacket.sendToClient(player, QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades));
-                event.getPlayerList().getPlayers().forEach(player -> QueenMainTradesSyncPacket.sendToClient(player, QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades));
-            }
-        }
+    public static void syncRecipeViewerDataToClient(ServerPlayer player) {
+        QueenRandomizerTradesSyncPacket.sendToClient(player, QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades);
+        QueenMainTradesSyncPacket.sendToClient(player, QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades);
     }
+
 
     @Override
     public ResourceLocation getQuiltId() {
