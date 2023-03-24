@@ -70,6 +70,7 @@
   "block.the_bumblezone.string_curtain_red": "Красные Нитяные Шторы",
   "block.the_bumblezone.string_curtain_white": "Белые Нитяные Шторы",
   "block.the_bumblezone.string_curtain_yellow": "Жёлтые Нитяные Шторы",
+  "block.the_bumblezone.string_curtain.extending_clarification": "Используйте Нить чтобы удлинить Нитяные Шторы!",
 
   "fluid.the_bumblezone.sugar_water_still": "Сахарная Вода",
   "fluid.the_bumblezone.sugar_water_flowing": "Сахарная Вода",
@@ -284,7 +285,6 @@
   "system.the_bumblezone.require_hive_blocks_failed": "Телепорт в Жужжилище неудачен. Требуется необходимый блок под ульем.",
   "system.the_bumblezone.no_protection": "У вас не было Защиты Улья...",
   "system.the_bumblezone.lost_bee_essence": "Пчелиная Эссенция потеряна при возрождении...",
-  "system.the_bumblezone.string_curtain_extending_clarification": "Используйте Нить чтобы удлинить Нитяные Шторы!",
 
   "command.the_bumblezone.invalid_data_arg": "Аргумент данных не найден. Пожалуйста, выберите из предложенных вариантов.",
   "command.the_bumblezone.invalid_entity_arg": "Отсутствует данные о существе в текущем запросе. Пожалуйста, выберите из предложенных вариантов.",
