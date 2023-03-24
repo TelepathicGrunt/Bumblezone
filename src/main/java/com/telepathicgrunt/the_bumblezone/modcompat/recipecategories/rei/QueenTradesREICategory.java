@@ -80,7 +80,7 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 					0, 0, 16, 16), Matrix4f.createTranslateMatrix(0, 0, 301)));
 		}
 
-		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 10), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 11), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 
 		double percentValue = (double)(display.getWeight()) / (display.getGroupWeight()) * 100;
 		String percent = String.valueOf(percentValue);
