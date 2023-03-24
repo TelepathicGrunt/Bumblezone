@@ -64,7 +64,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
 
     @Override
     public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward().xpReward), 100, 10, 0xFF808080);
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward().xpReward), 100, 11, 0xFF808080);
 
         double percentValue = ((double)(recipe.reward().weight) / recipe.reward().getTotalWeight()) * 100D;
         String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
