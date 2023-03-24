@@ -10,9 +10,9 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
-    public static ForgeConfigSpec.IntValue beeQueenSuperTradeRewardMultiplier;
-    public static ForgeConfigSpec.IntValue beeQueenSuperTradeDurationInTicks;
-    public static ForgeConfigSpec.IntValue beeQueenSuperTradeAmountTillSatified;
+    public static ForgeConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
+    public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
+    public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
     public static ForgeConfigSpec.BooleanValue superCandlesBurnsMobs;
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
@@ -85,25 +85,25 @@ public class BzGeneralConfigs {
                 .translation("the_bumblezone.config.broodblocksbeespawncapacity")
                 .defineInRange("broodBlocksBeeSpawnCapacity", 60, 0, 1000);
 
-        beeQueenSuperTradeRewardMultiplier = builder
+        beeQueenBonusTradeRewardMultiplier = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " Multiplies the trade reward by this much for super trades! 0 or 1 set here disables super trades.\n")
-                .translation("the_bumblezone.config.beequeensupertraderewardmultiplier")
-                .defineInRange("beeQueenSuperTradeRewardMultiplier", 3, 0, 256);
+                        " Multiplies the trade reward by this much for bonus Trades! 0 or 1 set here disables bonus Trades.\n")
+                .translation("the_bumblezone.config.beequeenbonusTraderewardmultiplier")
+                .defineInRange("beeQueenBonusTradeRewardMultiplier", 3, 0, 256);
 
-        beeQueenSuperTradeDurationInTicks = builder
+        beeQueenBonusTradeDurationInTicks = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " How long in ticks that super trades will last for before the Bee Queen asks for a new item.",
-                        " Setting this to 0 disables super trades. Anything less than a minute (1200) will not broadcast request message to players\n")
-                .translation("the_bumblezone.config.beequeensupertradedurationinticks")
-                .defineInRange("beeQueenSuperTradeDurationInTicks", 24000, 0, 2000000);
+                        " How long in ticks that bonus Trades will last for before the Bee Queen asks for a new item.",
+                        " Setting this to 0 disables bonus Trades. Anything less than a minute (1200) will not broadcast request message to players\n")
+                .translation("the_bumblezone.config.beequeenbonusTradedurationinticks")
+                .defineInRange("beeQueenBonusTradeDurationInTicks", 24000, 0, 2000000);
 
-        beeQueenSuperTradeAmountTillSatified = builder
+        beeQueenBonusTradeAmountTillSatified = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " How many boosted trades are allowed until the super trade is depleted until the queen requests a new item",
-                        " Setting this to 0 disables super trades.\n")
-                .translation("the_bumblezone.config.beequeensupertradeamounttillsatified")
-                .defineInRange("beeQueenSuperTradeAmountTillSatified", 24, 0, 1000000);
+                        " How many boosted trades are allowed until the bonus Trade is depleted until the queen requests a new item",
+                        " Setting this to 0 disables bonus Trades.\n")
+                .translation("the_bumblezone.config.beequeenbonusTradeamounttillsatified")
+                .defineInRange("beeQueenBonusTradeAmountTillSatified", 24, 0, 1000000);
 
         superCandlesBurnsMobs = builder
                 .comment(" \n-----------------------------------------------------\n",

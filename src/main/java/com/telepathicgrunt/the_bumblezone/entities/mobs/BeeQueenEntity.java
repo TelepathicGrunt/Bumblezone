@@ -100,8 +100,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private static final EntityDataAccessor<Integer> BEESPAWNCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<BeeQueenPose> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, QUEEN_POSE_SERIALIZER);
-    private static final EntityDataAccessor<Integer> REMAINING_SUPER_TRADE_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<ItemStack> SUPER_TRADE_ITEM = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Integer> REMAINING_BONUS_TRADE_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<ItemStack> BONUS_TRADE_ITEM = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
     private final Set<UUID> acknowledgedPlayers = new HashSet<>();
     private final HashMap<UUID, Item> acknowledgedPlayerHeldItem = new HashMap<>();
@@ -122,8 +122,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         this.entityData.define(REMAINING_ANGER_TIME, 0);
         this.entityData.define(BEESPAWNCOOLDOWN, 0);
         this.entityData.define(QUEEN_POSE, BeeQueenPose.NONE);
-        this.entityData.define(REMAINING_SUPER_TRADE_TIME, 0);
-        this.entityData.define(SUPER_TRADE_ITEM, ItemStack.EMPTY);
+        this.entityData.define(REMAINING_BONUS_TRADE_TIME, 0);
+        this.entityData.define(BONUS_TRADE_ITEM, ItemStack.EMPTY);
     }
 
     @Override
@@ -174,8 +174,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         super.addAdditionalSaveData(tag);
         tag.putInt("throwcooldown", getThrowCooldown());
         tag.putInt("beespawncooldown", getBeeSpawnCooldown());
-        tag.putInt("supertradetime", getRemainingSuperTradeTime());
-        tag.put("supertradeitem", getSuperTradeItem().save(new CompoundTag()));
+        tag.putInt("bonusTradetime", getRemainingBonusTradeTime());
+        tag.put("bonusTradeitem", getBonusTradeItem().save(new CompoundTag()));
         this.addPersistentAngerSaveData(tag);
     }
 
@@ -184,14 +184,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         super.readAdditionalSaveData(tag);
         setThrowCooldown(tag.getInt("throwcooldown"));
         setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
-        setRemainingSuperTradeTime(tag.getInt("supertradetime"));
-        setSuperTradeItem(ItemStack.of(tag.getCompound("supertradeitem")));
+        setRemainingBonusTradeTime(tag.getInt("bonusTradetime"));
+        setBonusTradeItem(ItemStack.of(tag.getCompound("bonusTradeitem")));
 
-        if (getSuperTradeItem().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS) &&
-            !getSuperTradeItem().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS))
+        if (getBonusTradeItem().is(BzTags.DISALLOWED_RANDOM_BONUS_TRADE_ITEMS) &&
+            !getBonusTradeItem().is(BzTags.FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS))
         {
-            setSuperTradeItem(ItemStack.EMPTY);
-            setRemainingSuperTradeTime(0);
+            setBonusTradeItem(ItemStack.EMPTY);
+            setRemainingBonusTradeTime(0);
         }
 
         this.readPersistentAngerSaveData(this.level, tag);
@@ -399,54 +399,54 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
         }
 
-        performSuperTradeTick();
+        performBonusTradeTick();
     }
 
-    private void performSuperTradeTick() {
+    private void performBonusTradeTick() {
         if (!this.level.isClientSide()) {
-            if (BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() <= 1 ||
-                BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get() == 0 ||
-                BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified.get() == 0)
+            if (BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier.get() <= 1 ||
+                BzGeneralConfigs.beeQueenBonusTradeDurationInTicks.get() == 0 ||
+                BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified.get() == 0)
             {
-                if (getRemainingSuperTradeTime() > 0) {
-                    setRemainingSuperTradeTime(0);
+                if (getRemainingBonusTradeTime() > 0) {
+                    setRemainingBonusTradeTime(0);
                 }
-                if (!getSuperTradeItem().isEmpty()) {
-                    setSuperTradeItem(ItemStack.EMPTY);
+                if (!getBonusTradeItem().isEmpty()) {
+                    setBonusTradeItem(ItemStack.EMPTY);
                     this.acknowledgedPlayers.clear();
                 }
             }
 
             int minNotifyTime = 1200;
 
-            if (getRemainingSuperTradeTime() > 0) {
-                setRemainingSuperTradeTime(getRemainingSuperTradeTime() - 1);
+            if (getRemainingBonusTradeTime() > 0) {
+                setRemainingBonusTradeTime(getRemainingBonusTradeTime() - 1);
             }
-            else if (!getSuperTradeItem().isEmpty()) {
-                setSuperTradeItem(ItemStack.EMPTY);
+            else if (!getBonusTradeItem().isEmpty()) {
+                setBonusTradeItem(ItemStack.EMPTY);
                 this.acknowledgedPlayers.clear();
             }
 
             if (hasTrades && !this.isAngry() && (this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
                 List<Player> nearbyPlayers  = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
 
-                if (getRemainingSuperTradeTime() == 0) {
+                if (getRemainingBonusTradeTime() == 0) {
                     if (nearbyPlayers.size() > 0) {
-                        setRemainingSuperTradeTime(BzGeneralConfigs.beeQueenSuperTradeDurationInTicks.get());
+                        setRemainingBonusTradeTime(BzGeneralConfigs.beeQueenBonusTradeDurationInTicks.get());
 
-                        List<Item> allowedSuperTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet().stream()
+                        List<Item> allowedBonusTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet().stream()
                                 .filter(i -> ((i.getItemCategory() != null &&
-                                        !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_SUPER_TRADE_ITEMS)) ||
-                                        i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS)))
+                                        !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_BONUS_TRADE_ITEMS)) ||
+                                        i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS)))
                                 .toList();
 
-                        if (allowedSuperTradeItems.size() > 0) {
-                            setSuperTradeItem(allowedSuperTradeItems.get(getRandom().nextInt(allowedSuperTradeItems.size())).getDefaultInstance());
-                            getSuperTradeItem().grow(BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified.get());
+                        if (allowedBonusTradeItems.size() > 0) {
+                            setBonusTradeItem(allowedBonusTradeItems.get(getRandom().nextInt(allowedBonusTradeItems.size())).getDefaultInstance());
+                            getBonusTradeItem().grow(BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified.get());
                         }
                         else {
                             hasTrades = false;
-                            setRemainingSuperTradeTime(0);
+                            setRemainingBonusTradeTime(0);
                         }
                     }
                 }
@@ -454,7 +454,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 for (Player player : nearbyPlayers) {
                     Item heldItem = player.getMainHandItem().getItem();
                     if (!this.acknowledgedPlayerHeldItem.containsKey(player.getUUID()) || !this.acknowledgedPlayerHeldItem.get(player.getUUID()).equals(heldItem)) {
-                        if ((this.getSuperTradeItem().isEmpty() || !this.getSuperTradeItem().is(heldItem)) &&
+                        if ((this.getBonusTradeItem().isEmpty() || !this.getBonusTradeItem().is(heldItem)) &&
                             QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(heldItem))
                         {
                             player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_regular_trade_held").withStyle(ChatFormatting.WHITE), true);
@@ -463,11 +463,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     }
                 }
 
-                if (hasTrades && getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() > 0) {
-                    if (getRemainingSuperTradeTime() > minNotifyTime) {
+                if (hasTrades && getBonusTradeItem().isEmpty() && getRemainingBonusTradeTime() > 0) {
+                    if (getRemainingBonusTradeTime() > minNotifyTime) {
                         for (Player player : nearbyPlayers) {
                             if (!this.acknowledgedPlayers.contains(player.getUUID())) {
-                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
+                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
                                 this.acknowledgedPlayers.add(player.getUUID());
                             }
                         }
@@ -476,20 +476,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     return;
                 }
 
-                if (!getSuperTradeItem().isEmpty() && getRemainingSuperTradeTime() >= minNotifyTime) {
+                if (!getBonusTradeItem().isEmpty() && getRemainingBonusTradeTime() >= minNotifyTime) {
                     boolean notifiedAPlayer = false;
                     for (Player player : nearbyPlayers) {
                         if (!this.acknowledgedPlayers.contains(player.getUUID())) {
-                            Component itemName = getSuperTradeItem().getHoverName();
+                            Component itemName = getBonusTradeItem().getHoverName();
                             if (itemName instanceof MutableComponent mutableComponent) {
                                 mutableComponent.withStyle(ChatFormatting.YELLOW);
                             }
 
-                            if (player.inventoryMenu.slots.stream().anyMatch(s -> s.getItem().sameItem(getSuperTradeItem()))) {
-                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_inventory", itemName).withStyle(ChatFormatting.WHITE), true);
+                            if (player.inventoryMenu.slots.stream().anyMatch(s -> s.getItem().sameItem(getBonusTradeItem()))) {
+                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_inventory", itemName).withStyle(ChatFormatting.WHITE), true);
                             }
                             else {
-                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade", itemName, (getRemainingSuperTradeTime() / minNotifyTime)).withStyle(ChatFormatting.WHITE), true);
+                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade", itemName, (getRemainingBonusTradeTime() / minNotifyTime)).withStyle(ChatFormatting.WHITE), true);
                             }
 
                             notifiedAPlayer = true;
@@ -747,21 +747,21 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, WeightedTradeResult reward, ItemStack originalItem, UUID playerUUID) {
         int rewardMultiplier = 1;
-        if (getSuperTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get() > 1) {
-            rewardMultiplier = BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get();
-            getSuperTradeItem().shrink(1);
-            if (getSuperTradeItem().isEmpty()) {
-                setSuperTradeItem(ItemStack.EMPTY);
+        if (getBonusTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier.get() > 1) {
+            rewardMultiplier = BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier.get();
+            getBonusTradeItem().shrink(1);
+            if (getBonusTradeItem().isEmpty()) {
+                setBonusTradeItem(ItemStack.EMPTY);
             }
 
             Player player = level.getPlayerByUUID(playerUUID);
             if (player != null) {
-                if (!getSuperTradeItem().isEmpty()) {
-                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_performed", BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier.get()).withStyle(ChatFormatting.WHITE), true);
+                if (!getBonusTradeItem().isEmpty()) {
+                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_performed", BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier.get()).withStyle(ChatFormatting.WHITE), true);
                 }
                 else  {
                     this.acknowledgedPlayers.clear();
-                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_super_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
+                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
                     this.acknowledgedPlayers.add(playerUUID);
                 }
             }
@@ -914,20 +914,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         this.setTarget(null);
     }
 
-    public int getRemainingSuperTradeTime() {
-        return this.entityData.get(REMAINING_SUPER_TRADE_TIME);
+    public int getRemainingBonusTradeTime() {
+        return this.entityData.get(REMAINING_BONUS_TRADE_TIME);
     }
 
-    public void setRemainingSuperTradeTime(Integer remainingSuperTradeItem) {
-        this.entityData.set(REMAINING_SUPER_TRADE_TIME, remainingSuperTradeItem);
+    public void setRemainingBonusTradeTime(Integer remainingBonusTradeItem) {
+        this.entityData.set(REMAINING_BONUS_TRADE_TIME, remainingBonusTradeItem);
     }
 
-    public ItemStack getSuperTradeItem() {
-        return this.entityData.get(SUPER_TRADE_ITEM);
+    public ItemStack getBonusTradeItem() {
+        return this.entityData.get(BONUS_TRADE_ITEM);
     }
 
-    public void setSuperTradeItem(ItemStack superTradeItem) {
-        this.entityData.set(SUPER_TRADE_ITEM, superTradeItem);
+    public void setBonusTradeItem(ItemStack bonusTradeItem) {
+        this.entityData.set(BONUS_TRADE_ITEM, bonusTradeItem);
     }
 
     @Override

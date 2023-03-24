@@ -9,7 +9,7 @@ public class BzClientConfigs {
     public static ForgeConfigSpec.DoubleValue ukraineBeeRate;
     public static ForgeConfigSpec.BooleanValue enableAltBeeSkinRenderer;
     public static ForgeConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
-    public static ForgeConfigSpec.BooleanValue renderBeeQueenSuperTradeItem;
+    public static ForgeConfigSpec.BooleanValue renderBeeQueenBonusTradeItem;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -43,10 +43,10 @@ public class BzClientConfigs {
                 .translation("the_bumblezone.config.playwrathofhiveeffectmusic")
                 .define("playWrathOfHiveEffectMusic", true);
 
-        renderBeeQueenSuperTradeItem = builder
+        renderBeeQueenBonusTradeItem = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " Whether to show the item on the Bee Queen that the Queen wants for Super Trades.\n")
-                .translation("the_bumblezone.config.renderbeequeensupertradeitem")
-                .define("renderBeeQueenSuperTradeItem", true);
+                        " Whether to show the item on the Bee Queen that the Queen wants for Bonus Trades.\n")
+                .translation("the_bumblezone.config.renderbeequeenbonusTradeitem")
+                .define("renderBeeQueenBonusTradeItem", true);
     }
 }

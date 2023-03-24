@@ -31,7 +31,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
 
     public QueenTradesJEICategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
-        this.localizedName = Component.translatable("the_bumblezone.jei.bee_queen_trades");
+        this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_trades");
 
         DrawableBuilder iconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/bee_queen_trades.png"), 0, 0, 16, 16);
         iconBuilder.setTextureSize(16, 16);
@@ -64,11 +64,11 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
 
     @Override
     public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_xp", recipe.reward().xpReward), 100, 10, 0xFF808080);
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward().xpReward), 100, 10, 0xFF808080);
 
         double percentValue = ((double)(recipe.reward().weight) / recipe.reward().getTotalWeight()) * 100D;
         String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
 
         if (recipe.input().tagKey() != null) {
             tagIcon.draw(stack, 11, 11);
@@ -83,7 +83,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     public List<Component> getTooltipStrings(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         if (mouseX > 32 && mouseX < 54 && mouseY > 4 && mouseY < 24) {
             String percent = String.valueOf((double)(recipe.reward().weight) / (recipe.reward().getTotalWeight()) * 100);
-            return List.of(Component.translatable("the_bumblezone.jei.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))));
+            return List.of(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))));
         }
         return IRecipeCategory.super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
     }
