@@ -1,5 +1,8 @@
 ### **(V.6.6.19 Changes) (1.19.4 Minecraft)**
 
+##### Misc:
+(Forge): Fixed crash with v45.0.23 Forge due to Forge breaking change.
+
 ##### Items:
 Fixed possible crash with Bee Helmet's Bee Highlighting.
 
@@ -13,6 +16,8 @@ Fixed Crystalline Flower getting wrong enchantments if you are in flower's UI co
 Fixed Crystalline Flower xp requirements getting messed up on servers if use sets config to use more than 32,767 xp for a tier.
 
 Fixed Crystalline Flower selecting wrong enchantment on servers if there is more than 127 enchantments in the UI.
+
+Nerfed Crystalline flower so it takes 1634xp to reach max tier instead of 1451xp.
 
 ##### Entities:
 If using another mod to put passengers on the Bee Queen, now those passengers are positioned properly on the queen's back.

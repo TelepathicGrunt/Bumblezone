@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
@@ -88,7 +89,10 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static int canEntitySpawn(Mob entity, LevelAccessor world, double x, double y, double z, BaseSpawner spawner, MobSpawnType spawnReason) {
-        return ForgeHooks.canEntitySpawn(entity, world, x, y, z, spawner, spawnReason);
+        if (world instanceof ServerLevelAccessor serverLevelAccessor) {
+            return ForgeEventFactory.onFinalizeSpawn(entity, serverLevelAccessor, world.getCurrentDifficultyAt(entity.blockPosition()), spawnReason, null, null) == null ? -1 : 1;
+        }
+        return 1;
     }
 
     public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {

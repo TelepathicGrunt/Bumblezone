@@ -79,7 +79,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -399,8 +399,8 @@ public class BumblezoneForge {
         EntityTickEvent.EVENT.invoke(new EntityTickEvent(event.getEntity()));
     }
 
-    private static void onEntitySpawn(LivingSpawnEvent.CheckSpawn event) {
-        boolean cancel = EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getSpawnReason()), event.isCanceled());
+    private static void onEntitySpawn(MobSpawnEvent.FinalizeSpawn event) {
+        boolean cancel = EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getSpawnType()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
         }
