@@ -103,7 +103,7 @@ public class EMICompat implements EmiPlugin {
     private static void addInfo(EmiRegistry registry, Item item) {
         registry.addRecipe(new EmiInfoRecipe(
                 List.of(EmiIngredient.of(Ingredient.of(new ItemStack(item)))),
-                List.of(Component.translatable(Bumblezone.MODID + "." + Registry.ITEM.getKey(item).getPath() + ".jei_description")),
+                List.of(Component.translatable(Bumblezone.MODID + "." + Registry.ITEM.getKey(item).getPath() + ".description")),
                 new ResourceLocation(Bumblezone.MODID, Registry.ITEM.getKey(item).getPath() + "_info")
         ));
     }
@@ -111,7 +111,7 @@ public class EMICompat implements EmiPlugin {
     private static void addInfo(EmiRegistry registry, Fluid fluid) {
         registry.addRecipe(new EmiInfoRecipe(
                 List.of(EmiStack.of(fluid)),
-                List.of(Component.translatable(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".jei_description")),
+                List.of(Component.translatable(Bumblezone.MODID + "." + Registry.FLUID.getKey(fluid).getPath() + ".description")),
                 new ResourceLocation(Bumblezone.MODID, Registry.FLUID.getKey(fluid).getPath() + "_info")
         ));
     }
