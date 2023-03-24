@@ -126,10 +126,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                         continue;
                     }
 
-                    List<Item> items = tradeRandomizeEntry.wantItems().stream().map(Holder::value).toList();
-
                     tempRecipeViewerRandomizerTrades.add(tradeRandomizeEntry);
-                    populateRandomizedQueenTrades(tempQueenTradesFirstPass, items, tradeRandomizeEntry);
+                    populateRandomizedQueenTrades(tempQueenTradesFirstPass, tradeRandomizeEntry);
                 }
             }
             else {
@@ -152,8 +150,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                         tempRecipeViewerMainTagTrades.add(tradeWantEntry);
                     }
 
-                    List<Item> wantItems = tradeWantEntry.wantItems().stream().map(Holder::value).toList();
-                    populateMainQueenTrades(tempQueenTradesFirstPass, tradeResultEntry, wantItems, tradeWantEntry);
+                    populateMainQueenTrades(tempQueenTradesFirstPass, tradeResultEntry, tradeWantEntry);
                 }
             }
         }
@@ -162,8 +159,15 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
         tempRecipeViewerRandomizerTrades.removeIf(randomizerTrade -> {
             Set<Item> wantSet = randomizerTrade.wantItems().stream().map(Holder::value).collect(Collectors.toUnmodifiableSet());
             for (Item item : wantSet) {
+                if (!tempQueenTradesFirstPass.containsKey(item)) {
+                    return true;
+                }
+
                 List<WeightedTradeResult> tradeResults = tempQueenTradesFirstPass.get(item).getFirst().unwrap();
                 if (tradeResults.stream().anyMatch(r -> r.items.stream().anyMatch(t -> !wantSet.contains(t)))) {
+                    for (Item item2 : wantSet) {
+                        tempQueenTradesFirstPass.put(item2, Pair.of(tempQueenTradesFirstPass.get(item2).getFirst(), null));
+                    }
                     return true;
                 }
             }
@@ -273,14 +277,17 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
     }
 
 
-    private static void populateMainQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, List<TradeResultEntry> tradeResultEntries, List<Item> wantItems, TradeWantEntry tradeWantEntry) {
+    private static void populateMainQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
+        List<Item> wantItems = tradeWantEntry.wantItems().stream().map(Holder::value).toList();
         for (Item item : wantItems) {
             List<WeightedTradeResult> existingTrades = new ArrayList<>();
             TagKey<Item> key = tradeWantEntry.tagKey;
+            boolean needsSorting = false;
 
             if (tempQueenTrades.containsKey(item)) {
                 existingTrades.addAll(tempQueenTrades.get(item).getFirst().unwrap());
                 key = null;
+                needsSorting = true;
             }
 
             for (TradeResultEntry tradeResultEntry : tradeResultEntries) {
@@ -288,19 +295,24 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 existingTrades.add(new WeightedTradeResult(tradeResultEntry.tagKey, resultItems, tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
             }
 
+            if (needsSorting) {
+                existingTrades.sort((a, b) -> b.weight - a.weight);
+            }
+
             tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(existingTrades), key));
         }
     }
 
-    private static void populateRandomizedQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, List<Item> items, TradeWantEntry tradeRandomizeEntry) {
+    private static void populateRandomizedQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, TradeWantEntry tradeRandomizeEntry) {
+        List<Item> items = tradeRandomizeEntry.wantItems().stream().map(Holder::value).toList();
         for (Item item : items) {
             if (tempQueenTrades.containsKey(item)) {
                 List<WeightedTradeResult> existingTrades = new ArrayList<>(tempQueenTrades.get(item).getFirst().unwrap());
-                existingTrades.add(new WeightedTradeResult(null, items, 1, 0 , 1));
+                existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), items, 1, 0 , 1));
                 tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(existingTrades), null));
             }
             else {
-                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(null, items, 1, 0 , 1)), tradeRandomizeEntry.tagKey));
+                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), items, 1, 0 , 1)), tradeRandomizeEntry.tagKey));
             }
         }
     }

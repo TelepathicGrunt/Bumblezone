@@ -19,6 +19,9 @@ Fixed Crystalline Flower selecting wrong enchantment on servers if there is more
 ##### Entities:
 If using another mod to put passengers on the Bee Queen, now those passengers are positioned properly on the queen's back.
 
+Royal Jelly Block/Bucket trades now have 0.11% of Dragon Egg chance down from previously 0.43%.
+ Already incredibly difficult to get. Now even more of a once-in-a-lifetime chance of getting. Are you a lottery winner???
+
 ##### Structures:
 Fixed one of Cell Maze's piece not having properly randomize loot in its Honey Cocoon.
 
