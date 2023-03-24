@@ -89,7 +89,7 @@ public class REICompat implements REIClientPlugin {
                 EntryStacks.of(item),
                 Component.translatable(BuiltInRegistries.ITEM.getKey(item).toString()),
                 (text) -> {
-                    text.add(Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.ITEM.getKey(item).getPath() + ".jei_description"));
+                    text.add(Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.ITEM.getKey(item).getPath() + ".description"));
                     return text;
                 });
     }
@@ -99,7 +99,7 @@ public class REICompat implements REIClientPlugin {
                 EntryStacks.of(fluid, 1),
                 Component.translatable(BuiltInRegistries.FLUID.getKey(fluid).toString()),
                 (text) -> {
-                    text.add(Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".jei_description"));
+                    text.add(Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".description"));
                     return text;
                 });
     }

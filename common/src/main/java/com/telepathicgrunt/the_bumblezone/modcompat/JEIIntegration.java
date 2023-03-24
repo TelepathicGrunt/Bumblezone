@@ -91,7 +91,7 @@ public class JEIIntegration implements IModPlugin {
 	registration.addIngredientInfo(
 		new ItemStack(item),
 		VanillaTypes.ITEM_STACK,
-		Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.ITEM.getKey(item).getPath() + ".jei_description"));
+		Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.ITEM.getKey(item).getPath() + ".description"));
 	}
 
 	private static void addInfo(IRecipeRegistration registration, Fluid fluid) {
@@ -102,7 +102,7 @@ public class JEIIntegration implements IModPlugin {
 		registration.addIngredientInfo(
 				platformFluidHelper.create(fluid, 1),
 				platformFluidHelper.getFluidIngredientType(),
-				Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".jei_description"));
+				Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".description"));
 	}
 
 	private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration, boolean oneRecipeOnly) {
