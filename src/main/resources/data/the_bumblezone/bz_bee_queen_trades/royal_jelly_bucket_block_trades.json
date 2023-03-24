@@ -14,70 +14,70 @@
       "id": "minecraft:enchanted_golden_apple",
       "count": 1,
       "xp_reward": 50,
-      "weight": 35,
+      "weight": 140,
       "required": true
     },
     {
       "id": "minecraft:heart_of_the_sea",
       "count": 4,
       "xp_reward": 50,
-      "weight": 30,
+      "weight": 120,
       "required": true
     },
     {
       "id": "minecraft:totem_of_undying",
       "count": 2,
       "xp_reward": 50,
-      "weight": 30,
+      "weight": 120,
       "required": true
     },
     {
       "id": "minecraft:end_crystal",
       "count": 24,
       "xp_reward": 50,
-      "weight": 25,
+      "weight": 100,
       "required": true
     },
     {
       "id": "minecraft:golden_apple",
       "count": 9,
       "xp_reward": 50,
-      "weight": 20,
+      "weight": 80,
       "required": true
     },
     {
       "id": "minecraft:nether_star",
       "count": 1,
       "xp_reward": 50,
-      "weight": 20,
+      "weight": 80,
       "required": true
     },
     {
       "id": "minecraft:dragon_head",
       "count": 2,
       "xp_reward": 50,
-      "weight": 20,
+      "weight": 80,
       "required": true
     },
     {
       "id": "minecraft:dragon_breath",
       "count": 10,
       "xp_reward": 50,
-      "weight": 20,
+      "weight": 80,
       "required": true
     },
     {
       "id": "minecraft:beacon",
       "count": 2,
       "xp_reward": 50,
-      "weight": 15,
+      "weight": 60,
       "required": true
     },
     {
       "id": "minecraft:experience_bottle",
       "count": 32,
       "xp_reward": 50,
-      "weight": 15,
+      "weight": 60,
       "required": true
     },
     {
