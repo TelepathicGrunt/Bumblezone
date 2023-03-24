@@ -259,7 +259,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     public int getMaxXpForTier(int tier) {
-        return Math.max(1, (45 + (tier * tier * 13)) + BzGeneralConfigs.crystallineFlowerExtraXpNeededForTiers.get());
+        return Math.max(1, (45 + (tier * tier * 14)) + BzGeneralConfigs.crystallineFlowerExtraXpNeededForTiers.get());
     }
 
     public int getXpForNextTiers(int nextTiersToCalculate) {
