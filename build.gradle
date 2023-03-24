@@ -75,29 +75,55 @@ minecraft {
 
 repositories {
     maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        url = 'https://maven.shedaniel.me'
+        content {
+            includeGroup 'me.shedaniel.cloth'
+            includeGroup 'me.shedaniel'
+        }
     }
     maven {
-        // location of a maven mirror for JEI files, as a fallback
+        url = 'https://maven.architectury.dev/'
+        content {
+            includeGroup 'dev.architectury'
+        }
+    }
+    maven {
         name = "ModMaven"
         url = "https://modmaven.dev"
+        content {
+            includeGroup 'com.hollingsworth.ars_nouveau'
+        }
     }
     maven {
-        // Carrier Bees
-        name = "Jared"
-        url = "https://maven.blamejared.com"
+        url = 'https://www.cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
     }
     maven {
-        url = "https://maven.theillusivec4.top/"
+        url = 'https://api.modrinth.com/maven/'
+        content {
+            includeGroup 'maven.modrinth'
+        }
     }
-    maven { url = "https://maven.jaackson.me" }
-    maven { url "https://www.cursemaven.com" }
-    maven { url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/" }
-    maven { url "https://maven.architectury.dev/" }
-    maven { url "https://maven.shedaniel.me" }
-    maven { url "https://jitpack.io" }
+    maven {
+        url = 'https://maven.blamejared.com'
+        content {
+            includeGroup 'mezz.jei'
+        }
+    }
+    maven {
+        url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
+        content {
+            includeGroup 'com.telepathicgrunt'
+        }
+    }
+    maven {
+        url = 'https://jitpack.io'
+        content {
+            includeGroup 'com.github.LlamaLad7'
+        }
+    }
     flatDir { dirs 'flatdir' }
 }
 
