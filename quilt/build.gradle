@@ -3,8 +3,18 @@ plugins {
 }
 
 repositories {
-    maven { url 'https://maven.quiltmc.org/repository/release' }
-    maven { url 'https://maven.quiltmc.org/repository/snapshot' }
+    maven {
+        url = 'https://maven.quiltmc.org/repository/release'
+        content {
+            includeGroupByRegex 'org\\.quiltmc\\.*'
+        }
+    }
+    maven {
+        url = 'https://maven.quiltmc.org/repository/snapshot'
+        content {
+            includeGroupByRegex 'org\\.quiltmc\\.*'
+        }
+    }
 }
 
 loom {
