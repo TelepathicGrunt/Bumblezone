@@ -253,6 +253,10 @@
       "required": false
     },
     {
+      "id": "#supplementaries:sacks",
+      "required": false
+    },
+    {
       "id": "bushierflowers:grown_wither_rose",
       "required": false
     },
