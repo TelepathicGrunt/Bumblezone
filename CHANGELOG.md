@@ -29,6 +29,8 @@ If using another mod to put passengers on the Bee Queen, now those passengers ar
 Royal Jelly Block/Bucket trades now have 0.11% of Dragon Egg chance down from previously 0.43%.
  Already incredibly difficult to get. Now even more of a once-in-a-lifetime chance of getting. Are you a lottery winner???
 
+Fixed Bee Queen trades not being synced from server to client. Now clients with recipe viewers can see trades when connected to server.
+
 ##### Structures:
 Fixed one of Cell Maze's piece not having properly randomize loot in its Honey Cocoon.
 
