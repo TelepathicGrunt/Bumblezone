@@ -19,38 +19,13 @@
     "minecraft:dead_brain_coral_fan",
     "minecraft:dead_brain_coral_block",
     "minecraft:dead_brain_coral",
-    "minecraft:warped_pressure_plate",
-    "minecraft:warped_fence_gate",
-    "minecraft:warped_trapdoor",
-    "minecraft:warped_stairs",
-    "minecraft:warped_button",
-    "minecraft:warped_planks",
-    "minecraft:warped_fence",
-    "minecraft:warped_slab",
-    "minecraft:warped_door",
-    "minecraft:crimson_pressure_plate",
-    "minecraft:crimson_fence_gate",
-    "minecraft:crimson_trapdoor",
-    "minecraft:crimson_stairs",
-    "minecraft:crimson_button",
-    "minecraft:crimson_planks",
-    "minecraft:crimson_fence",
-    "minecraft:crimson_slab",
-    "minecraft:crimson_door",
+    "minecraft:wither_rose",
     "#minecraft:terracotta",
     "#minecraft:wool_carpets",
     "#minecraft:wool",
     "#minecraft:banners",
     "#minecraft:beds",
     "#minecraft:candles",
-    "#minecraft:wooden_buttons",
-    "#minecraft:wooden_doors",
-    "#minecraft:wooden_fences",
-    "#minecraft:wooden_pressure_plates",
-    "#minecraft:wooden_slabs",
-    "#minecraft:wooden_stairs",
-    "#minecraft:wooden_trapdoors",
-    "#minecraft:planks",
     "the_bumblezone:empty_honeycomb_brood_block",
     "the_bumblezone:royal_jelly_bottle",
     "the_bumblezone:royal_jelly_bucket",
@@ -275,6 +250,26 @@
     },
     {
       "id": "#supplementaries:presents",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_wither_rose",
+      "required": false
+    },
+    {
+      "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "windswept:wither_rose_bush",
+      "required": false
+    },
+    {
+      "id": "#botania:mystical_flowers",
+      "required": false
+    },
+    {
+      "id": "#botania:special_flowers",
       "required": false
     }
   ]
