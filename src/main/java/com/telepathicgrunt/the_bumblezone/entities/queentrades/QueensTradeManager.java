@@ -11,6 +11,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.util.WeightedRandomListAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
+import com.telepathicgrunt.the_bumblezone.packets.QueenRandomizerTradesSyncPacket;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.Holder;
@@ -73,9 +75,22 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
         ).apply(instance, instance.stable(RawTradeOutputEntry::new)));
     }
 
-    public record TradeWantEntry(TagKey<Item> tagKey, HolderSet<Item> wantItems) { }
+    public record TradeWantEntry(Optional<TagKey<Item>> tagKey, HolderSet<Item> wantItems) {
+        public static final Codec<TradeWantEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                TagKey.codec(Registry.ITEM_REGISTRY).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
+                RegistryCodecs.homogeneousList(Registry.ITEM_REGISTRY, Registry.ITEM.byNameCodec()).fieldOf("wantItems").forGetter(e -> e.wantItems)
+        ).apply(instance, instance.stable(TradeWantEntry::new)));
+    }
 
-    public record TradeResultEntry(TagKey<Item> tagKey, HolderSet<Item> resultItems, int count, int xpReward, int weight) { }
+    public record TradeResultEntry(Optional<TagKey<Item>> tagKey, HolderSet<Item> resultItems, int count, int xpReward, int weight) {
+        public static final Codec<TradeResultEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                TagKey.codec(Registry.ITEM_REGISTRY).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
+                RegistryCodecs.homogeneousList(Registry.ITEM_REGISTRY, Registry.ITEM.byNameCodec()).fieldOf("wantItems").forGetter(e -> e.resultItems),
+                Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
+                Codec.intRange(0, Integer.MAX_VALUE).fieldOf("xp_reward").forGetter(e -> e.xpReward),
+                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight").forGetter(e -> e.weight)
+        ).apply(instance, instance.stable(TradeResultEntry::new)));
+    }
 
     public QueensTradeManager() {
         super(GSON, "bz_bee_queen_trades");
@@ -141,7 +156,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                         continue;
                     }
 
-                    if (tradeWantEntry.tagKey != null) {
+                    if (tradeWantEntry.tagKey.isPresent()) {
                         tempRecipeViewerMainTagTrades.add(tradeWantEntry);
                     }
 
@@ -177,12 +192,12 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
 
         // tempQueenTradesFirstPass now only has main trades left. Go nuts!
         tempRecipeViewerMainTagTrades.forEach(tagTrades -> {
-            List<Item> taggedItems = Registry.ITEM.getTag(tagTrades.tagKey()).get().stream().map(Holder::value).toList();
+            List<Item> taggedItems = Registry.ITEM.getTag(tagTrades.tagKey().get()).get().stream().map(Holder::value).toList();
 
             boolean tagNeedsToBeBrokenUp = false;
             for (Item item : taggedItems) {
                 Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>> pair = tempQueenTradesFirstPass.get(item);
-                if (pair.getSecond() != tagTrades.tagKey()) {
+                if (pair.getSecond() != tagTrades.tagKey().get()) {
                     tagNeedsToBeBrokenUp = true;
                     break;
                 }
@@ -191,7 +206,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
             if (tagNeedsToBeBrokenUp) {
                 for (Item item : taggedItems) {
                     Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>> pair = tempQueenTradesFirstPass.get(item);
-                    if (pair.getSecond() != tagTrades.tagKey()) {
+                    if (pair.getSecond() != tagTrades.tagKey().get()) {
                         tempQueenTradesFirstPass.put(item, Pair.of(pair.getFirst(), null));
                     }
                 }
@@ -204,7 +219,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
 
             if (pairEntry.getValue().getSecond() == null || !collectedTag.contains(pairEntry.getValue().getSecond())) {
                 tempRecipeViewerMainTrades.add(Pair.of(
-                        new MainTradeRowInput(pairEntry.getValue().getSecond(), pairEntry.getKey()),
+                        new MainTradeRowInput(Optional.ofNullable(pairEntry.getValue().getSecond()), pairEntry.getKey()),
                         pairEntry.getValue().getFirst()
                 ));
 
@@ -232,7 +247,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 throw new RuntimeException("Trade input entry is set to required but " + rawTradeInputEntry.entry + " tag does not exist.");
             }
             else if (tag.isPresent()) {
-                return new TradeWantEntry(tagKey, tag.get());
+                return new TradeWantEntry(Optional.of(tagKey), tag.get());
             }
         }
         else {
@@ -241,7 +256,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 throw new RuntimeException("Trade input entry is set to required but " + rawTradeInputEntry.entry + " item does not exist.");
             }
             else if (item.isPresent()) {
-                return new TradeWantEntry(null, HolderSet.direct(item.get()));
+                return new TradeWantEntry(Optional.empty(), HolderSet.direct(item.get()));
             }
         }
         return null;
@@ -257,14 +272,14 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 if (tag.isEmpty() && rawTradeOutputEntry.required) {
                     throw new RuntimeException("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " tag does not exist.");
                 }
-                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(tagKey, holders, rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders, rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
             else {
                 Optional<Holder<Item>> item = Registry.ITEM.getHolder(ResourceKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(rawTradeOutputEntry.entry)));
                 if (item.isEmpty() && rawTradeOutputEntry.required) {
                     throw new RuntimeException("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " item does not exist.");
                 }
-                else item.ifPresent(itemHolder -> tradeResultEntries.add(new TradeResultEntry(null, HolderSet.direct(itemHolder), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
+                else item.ifPresent(itemHolder -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), HolderSet.direct(itemHolder), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
         }
 
@@ -276,7 +291,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
         List<Item> wantItems = tradeWantEntry.wantItems().stream().map(Holder::value).toList();
         for (Item item : wantItems) {
             List<WeightedTradeResult> existingTrades = new ArrayList<>();
-            TagKey<Item> key = tradeWantEntry.tagKey;
+            TagKey<Item> key = tradeWantEntry.tagKey.orElse(null);
             boolean needsSorting = false;
 
             if (tempQueenTrades.containsKey(item)) {
@@ -307,7 +322,20 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(existingTrades), null));
             }
             else {
-                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), items, 1, 0 , 1)), tradeRandomizeEntry.tagKey));
+                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), items, 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
+            }
+        }
+    }
+
+    public static void syncRecipeViewerDataToClient(OnDatapackSyncEvent event) {
+        if (FMLEnvironment.dist.isDedicatedServer()) {
+            if (event.getPlayer() != null) {
+                QueenRandomizerTradesSyncPacket.sendToClient(event.getPlayer(), QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades);
+                QueenMainTradesSyncPacket.sendToClient(event.getPlayer(), QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades);
+            }
+            else {
+                event.getPlayerList().getPlayers().forEach(player -> QueenRandomizerTradesSyncPacket.sendToClient(player, QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades));
+                event.getPlayerList().getPlayers().forEach(player -> QueenMainTradesSyncPacket.sendToClient(player, QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades));
             }
         }
     }

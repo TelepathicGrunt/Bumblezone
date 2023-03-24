@@ -55,10 +55,10 @@ public class REICompat implements REIClientPlugin {
                 for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
                     List<ItemStack> rewardCollection = weightedTradeResult.items.stream().map(e -> new ItemStack(e, weightedTradeResult.count)).toList();
                     registry.add(new REIQueenTradesInfo(
-                            trade.getFirst().tagKey() != null ? EntryIngredients.ofItemTag(trade.getFirst().tagKey()) : EntryIngredients.of(trade.getFirst().item()),
-                            trade.getFirst().tagKey(),
+                            trade.getFirst().tagKey().isPresent() ? EntryIngredients.ofItemTag(trade.getFirst().tagKey().get()) : EntryIngredients.of(trade.getFirst().item()),
+                            trade.getFirst().tagKey().orElse(null),
                             EntryIngredients.ofItemStacks(rewardCollection),
-                            weightedTradeResult.tagKey,
+                            weightedTradeResult.tagKey.orElse(null),
                             weightedTradeResult.xpReward,
                             weightedTradeResult.weight,
                             weightedTradeResult.getTotalWeight()
@@ -74,7 +74,7 @@ public class REICompat implements REIClientPlugin {
                     registry.add(new REIQueenRandomizerTradesInfo(
                             EntryIngredients.of(input),
                             EntryIngredients.ofItemStacks(randomizeStack),
-                            tradeEntry.tagKey(),
+                            tradeEntry.tagKey().orElse(null),
                             1,
                             randomizeStack.size()
                     ), QUEEN_RANDOMIZE_TRADES);

@@ -84,7 +84,7 @@ public class JEIIntegration implements IModPlugin {
 			for (QueensTradeManager.TradeWantEntry tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
 				List<ItemStack> randomizeStack = tradeEntry.wantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
 				for (ItemStack input : randomizeStack) {
-					randomizerTrades.add(new JEIQueenRandomizerTradesInfo(input, tradeEntry.tagKey(), randomizeStack));
+					randomizerTrades.add(new JEIQueenRandomizerTradesInfo(input, tradeEntry.tagKey().orElse(null), randomizeStack));
 				}
 			}
 		}
