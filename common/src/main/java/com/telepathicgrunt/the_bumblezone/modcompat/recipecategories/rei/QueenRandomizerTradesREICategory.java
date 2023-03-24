@@ -26,7 +26,7 @@ public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQuee
 
 	public QueenRandomizerTradesREICategory() {
 		this.icon = new QueenEggIconRenderer(new ResourceLocation(Bumblezone.MODID, "textures/gui/bee_queen_randomize_trades.png"));
-		this.localizedName = Component.translatable("the_bumblezone.jei.bee_queen_color_randomizing_trades");
+		this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class QueenRandomizerTradesREICategory implements DisplayCategory<REIQuee
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 5, bounds.getY() + 5, 18, 18)).entries(display.getInputEntries().get(0)).markInput().disableBackground());
 		widgets.add(Widgets.createSlot(new Rectangle(bounds.getX() + 63, bounds.getY() + 5, 18, 18)).entries(display.getOutputEntries().get(0)).markInput().disableBackground());
 
-		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 86, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_colors", display.getOutputEntries().get(0).size())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 86, bounds.getY() + 10), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", display.getOutputEntries().get(0).size())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 
 		if (display.getOutputTag() != null) {
 			widgets.add(Widgets.withTranslate(Widgets.createTexturedWidget(

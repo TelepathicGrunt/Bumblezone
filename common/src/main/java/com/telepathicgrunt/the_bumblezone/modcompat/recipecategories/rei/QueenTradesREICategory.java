@@ -26,7 +26,7 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 
 	public QueenTradesREICategory() {
 		this.icon = new QueenEggIconRenderer(new ResourceLocation(Bumblezone.MODID, "textures/gui/bee_queen_trades.png"));
-		this.localizedName = Component.translatable("the_bumblezone.jei.bee_queen_trades");
+		this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_trades");
 	}
 
 	@Override
@@ -78,14 +78,14 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 					0, 0, 16, 16), new Matrix4f().translate(0, 0, 301)));
 		}
 
-		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 10), Component.translatable("the_bumblezone.jei.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createLabel(new Point(bounds.getX() + 100, bounds.getY() + 10), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", display.getXpReward())).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 
 		double percentValue = (double)(display.getWeight()) / (display.getGroupWeight()) * 100;
 		String percent = String.valueOf(percentValue);
 		String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
 
-		widgets.add(Widgets.createTooltip(new Rectangle(bounds.getX() + 32, bounds.getY() + 2, 22, 20), Component.translatable("the_bumblezone.jei.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5)))));
-		widgets.add(Widgets.createLabel(new Point(bounds.getX() + (38 - (percentRounded.length() * 3)), bounds.getY() + 11), Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded)).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createTooltip(new Rectangle(bounds.getX() + 32, bounds.getY() + 2, 22, 20), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5)))));
+		widgets.add(Widgets.createLabel(new Point(bounds.getX() + (38 - (percentRounded.length() * 3)), bounds.getY() + 11), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded)).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 		return widgets;
 	}
 }

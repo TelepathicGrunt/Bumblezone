@@ -14,6 +14,6 @@ public class QueenRandomizerTradesEMICategory extends EmiRecipeCategory {
 	}
 
 	public Component getName() {
-		return EmiPort.translatable("the_bumblezone.jei.bee_queen_color_randomizing_trades");
+		return EmiPort.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 	}
 }

@@ -137,13 +137,13 @@ public class BzConfig extends MidnightConfig {
     public static double beehemothSpeed = 0.95;
 
     @Entry(min=0, max=256)
-    public static int beeQueenSuperTradeRewardMultiplier = 3;
+    public static int beeQueenBonusTradeRewardMultiplier = 3;
 
     @Entry(min=0, max=2000000)
-    public static int beeQueenSuperTradeDurationInTicks = 24000;
+    public static int beeQueenBonusTradeDurationInTicks = 24000;
 
     @Entry(min=0, max=1000000)
-    public static int beeQueenSuperTradeAmountTillSatified = 24;
+    public static int beeQueenBonusTradeAmountTillSatified = 24;
 
     @Entry
     public static boolean specialBeeSpawning = true;
@@ -246,9 +246,9 @@ public class BzConfig extends MidnightConfig {
 
         //General
         BzGeneralConfigs.beehemothSpeed = beehemothSpeed;
-        BzGeneralConfigs.beeQueenSuperTradeRewardMultiplier = beeQueenSuperTradeRewardMultiplier;
-        BzGeneralConfigs.beeQueenSuperTradeDurationInTicks = beeQueenSuperTradeDurationInTicks;
-        BzGeneralConfigs.beeQueenSuperTradeAmountTillSatified = beeQueenSuperTradeAmountTillSatified;
+        BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier;
+        BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks;
+        BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified;
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;

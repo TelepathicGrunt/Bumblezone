@@ -3,6 +3,10 @@
 ##### Misc:
 (Forge): Fixed crash with v45.0.23 Forge due to Forge breaking change.
 
+Renamed Bee Queen's Super Trades to Bonus Trades everywhere. This includes code, configs, and even tags such as the now-named:
+ `the_bumblezone:bee_queen/disallowed_random_bonus_trade_items`
+ `the_bumblezone:bee_queen/forced_allow_random_bonus_trade_items`
+
 ##### Items:
 Fixed possible crash with Bee Helmet's Bee Highlighting.
 

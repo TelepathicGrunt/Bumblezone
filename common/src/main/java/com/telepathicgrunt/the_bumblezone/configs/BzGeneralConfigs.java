@@ -6,9 +6,9 @@ public class BzGeneralConfigs {
     public static int nearbyBeesPerPlayerInBz = 3;
     public static boolean dispensersDropGlassBottles = true;
     public static int broodBlocksBeeSpawnCapacity = 84;
-    public static int beeQueenSuperTradeRewardMultiplier = 2;
-    public static int beeQueenSuperTradeDurationInTicks = 6000;
-    public static int beeQueenSuperTradeAmountTillSatified = 3;
+    public static int beeQueenBonusTradeRewardMultiplier = 2;
+    public static int beeQueenBonusTradeDurationInTicks = 6000;
+    public static int beeQueenBonusTradeAmountTillSatified = 3;
     public static boolean superCandlesBurnsMobs = true;
     public static boolean keepEssenceOfTheBeesOnRespawning = true;
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 216;

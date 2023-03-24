@@ -6,5 +6,5 @@ public class BzClientConfigs {
     public static double ukraineBeeRate = 0.004D;
     public static boolean enableAltBeeSkinRenderer = true;
     public static boolean playWrathOfHiveEffectMusic = true;
-    public static boolean renderBeeQueenSuperTradeItem = true;
+    public static boolean renderBeeQueenBonusTradeItem = true;
 }

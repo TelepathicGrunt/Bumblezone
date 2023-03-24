@@ -34,7 +34,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
         super.render(beeQueenEntity, entityYaw, partialTicks, stack, buffer, packedLight);
         stack.popPose();
 
-        if (!beeQueenEntity.isAngry() && BzClientConfigs.renderBeeQueenSuperTradeItem && !beeQueenEntity.getSuperTradeItem().isEmpty()) {
+        if (!beeQueenEntity.isAngry() && BzClientConfigs.renderBeeQueenBonusTradeItem && !beeQueenEntity.getBonusTradeItem().isEmpty()) {
             stack.pushPose();
             stack.scale(scale, scale, scale);
             float rotYaw = Mth.rotLerp(partialTicks, beeQueenEntity.yBodyRotO, beeQueenEntity.yBodyRot);
@@ -53,7 +53,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
             }
             this.itemRenderer.renderItem(
                     beeQueenEntity,
-                    beeQueenEntity.getSuperTradeItem(),
+                    beeQueenEntity.getBonusTradeItem(),
                     ItemDisplayContext.GROUND,
                     false,
                     stack,
