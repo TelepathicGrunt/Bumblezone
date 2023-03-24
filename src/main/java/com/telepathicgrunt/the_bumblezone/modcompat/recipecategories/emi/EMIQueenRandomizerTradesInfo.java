@@ -94,6 +94,6 @@ public class EMIQueenRandomizerTradesInfo implements EmiRecipe {
 			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
 		}
 
-		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_colors", getOutputs().size()).getVisualOrderText(), 86,  10, 0xFF404040, false));
+		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", getOutputs().size()).getVisualOrderText(), 86,  10, 0xFF404040, false));
 	}
 }

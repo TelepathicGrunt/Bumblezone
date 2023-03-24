@@ -31,7 +31,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
     public QueenRandomizeTradesJEICategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_randomizer_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
-        this.localizedName = Component.translatable("the_bumblezone.jei.bee_queen_color_randomizing_trades");
+        this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_color_randomizing_trades");
 
         DrawableBuilder iconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/bee_queen_randomize_trades.png"), 0, 0, 16, 16);
         iconBuilder.setTextureSize(16, 16);
@@ -64,7 +64,7 @@ public class QueenRandomizeTradesJEICategory implements IRecipeCategory<JEIQueen
 
     @Override
     public void draw(JEIQueenRandomizerTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.jei.queen_trade_colors", recipe.output().size()), 86, 10, 0xFF808080);
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_colors", recipe.output().size()), 86, 10, 0xFF808080);
 
         if (recipe.tagOutput() != null) {
             tagIcon.draw(stack, 69, 11);

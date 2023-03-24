@@ -101,7 +101,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		widgets.add(new SlotWidget(input, 5, 5));
 		widgets.add(new SlotWidget(visualOutputs, 63, 5));
 
-		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  10, 0xFF404040, false));
+		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  10, 0xFF404040, false));
 
 		if (this.getInputTag() != null) {
 			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
@@ -115,9 +115,9 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
 
 		DrawableWidget tooltipWidget = new DrawableWidget(32, 2, 22, 20, (matrices, mouseX, mouseY, delta) -> {});
-		tooltipWidget.tooltip((x, z) -> List.of(ClientTooltipComponent.create(Component.translatable("the_bumblezone.jei.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))).getVisualOrderText())));
+		tooltipWidget.tooltip((x, z) -> List.of(ClientTooltipComponent.create(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))).getVisualOrderText())));
 		widgets.add(tooltipWidget);
 
-		widgets.add(new TextWidget(Component.translatable("the_bumblezone.jei.queen_trade_chance_text", percentRounded).getVisualOrderText(), 38 - (percentRounded.length() * 3), 11, 0xFF404040, false));
+		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded).getVisualOrderText(), 38 - (percentRounded.length() * 3), 11, 0xFF404040, false));
 	}
 }
