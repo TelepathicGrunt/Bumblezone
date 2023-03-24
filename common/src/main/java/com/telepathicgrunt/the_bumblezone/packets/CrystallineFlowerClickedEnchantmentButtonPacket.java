@@ -14,13 +14,8 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, i
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
     public static final Handler HANDLER = new Handler();
 
-    /**
-     * 2 means no action.
-     * 1 means set it to true on serverside.
-     * 0 means set it to false serverside.
-     */
-    public static void sendToServer(int containIdIn, int ClickecButtonIn) {
-        MessageHandler.DEFAULT_CHANNEL.sendToServer(new CrystallineFlowerClickedEnchantmentButtonPacket(containIdIn, ClickecButtonIn));
+    public static void sendToServer(int containIdIn, int ClickedButtonIn) {
+        MessageHandler.DEFAULT_CHANNEL.sendToServer(new CrystallineFlowerClickedEnchantmentButtonPacket(containIdIn, ClickedButtonIn));
     }
 
     @Override
