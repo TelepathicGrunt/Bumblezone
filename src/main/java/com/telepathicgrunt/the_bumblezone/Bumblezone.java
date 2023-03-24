@@ -114,7 +114,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         ServerLifecycleEvents.STARTING.register((a) -> ThreadExecutor.handleServerAboutToStartEvent());
         ServerLifecycleEvents.STOPPING.register((a) -> ThreadExecutor.handleServerStoppingEvent());
         ServerLifecycleEvents.STARTING.register(BiomeRegistryHolder::setupBiomeRegistry);
-        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((serverPlayer, joined) -> QueensTradeManager.syncRecipeViewerDataToClient(serverPlayer));
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((serverPlayer, joined) -> QueensTradeManager.syncRecipeViewerDataToClient(serverPlayer));
 
         ResourceLoader.registerBuiltinResourcePack(
                 new ResourceLocation(MODID, "anti_tropophobia"),
