@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class CrystallineFlowerEnchantmentPacket {
     public static void registerPacket() {
         ClientPlayNetworking.registerGlobalReceiver(PACKET_ID,
                 (client, handler, buf, responseSender) -> {
+                    int containerId = buf.readInt();
                     List<EnchantmentSkeleton> enchantmentSkeletons = new ArrayList<>();
                     int elements = buf.readInt();
                     for (int i = 0; i < elements; i++) {
@@ -27,7 +29,9 @@ public class CrystallineFlowerEnchantmentPacket {
                     }
 
                     client.execute(() -> {
-                        CrystallineFlowerScreen.enchantmentsAvailable = enchantmentSkeletons;
+                        if(Minecraft.getInstance().player != null && Minecraft.getInstance().player.containerMenu.containerId == containerId){
+                            CrystallineFlowerScreen.enchantmentsAvailable = enchantmentSkeletons;
+                        }
                     });
                 });
     }

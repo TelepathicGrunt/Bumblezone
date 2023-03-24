@@ -5,8 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
+import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerClickedEnchantmentButtonPacket;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.ChatFormatting;
@@ -18,6 +21,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -695,7 +699,15 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private void sendButtonPressToMenu(Integer sectionId) {
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
-        this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, sectionId);
+        if (sectionId >= 0) {
+            FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
+            passedData.writeInt(this.menu.containerId);
+            passedData.writeVarInt(sectionId);
+            ClientPlayNetworking.send(CrystallineFlowerClickedEnchantmentButtonPacket.PACKET_ID, passedData);
+        }
+        else {
+            this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, sectionId);
+        }
     }
 
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
