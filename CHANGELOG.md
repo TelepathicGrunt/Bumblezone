@@ -9,6 +9,13 @@ Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking
 
 Made Honeycomb Brood Block the Creative Menu icon for Bumblezone to match 1.19.4 Bumblezone
 
+##### Blocks:
+Fixed Crystalline Flower getting wrong enchantments if you are in flower's UI connected to server and someone else opens a flower as well.
+
+Fixed Crystalline Flower xp requirements getting messed up on servers if use sets config to use more than 32,767 xp for a tier.
+
+Fixed Crystalline Flower selecting wrong enchantment on servers if there is more than 127 enchantments in the UI.
+
 ##### Entities:
 If using another mod to put passengers on the Bee Queen, now those passengers are positioned properly on the queen's back.
 

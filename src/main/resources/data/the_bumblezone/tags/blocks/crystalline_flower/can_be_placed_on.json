@@ -491,6 +491,10 @@
     {
       "id": "twigs:chiseled_polished_amethyst",
       "required": false
+    },
+    {
+      "id": "wwizardry:crystalline_sculk_block",
+      "required": false
     }
   ]
 }
