@@ -1,0 +1,9 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+    {
+      "id": "#supplementaries:sacks",
+      "required": false
+    }
+  ]
+}

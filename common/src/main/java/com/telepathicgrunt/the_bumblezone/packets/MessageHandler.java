@@ -16,6 +16,7 @@ public class MessageHandler {
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, BeehemothControlsPacket.ID, BeehemothControlsPacket.HANDLER, BeehemothControlsPacket.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, BumbleBeeChestplateFlyingPacket.ID, BumbleBeeChestplateFlyingPacket.HANDLER, BumbleBeeChestplateFlyingPacket.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, StinglessBeeHelmetSightPacket.ID, StinglessBeeHelmetSightPacket.HANDLER, StinglessBeeHelmetSightPacket.class);
+        DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, CrystallineFlowerClickedEnchantmentButtonPacket.ID, CrystallineFlowerClickedEnchantmentButtonPacket.HANDLER, CrystallineFlowerClickedEnchantmentButtonPacket.class);
 
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, CrystallineFlowerEnchantmentPacket.ID, CrystallineFlowerEnchantmentPacket.HANDLER, CrystallineFlowerEnchantmentPacket.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, MobEffectClientSyncPacket.ID, MobEffectClientSyncPacket.HANDLER, MobEffectClientSyncPacket.class);

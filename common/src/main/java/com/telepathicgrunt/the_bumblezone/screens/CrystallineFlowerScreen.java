@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerClickedEnchantmentButtonPacket;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -694,7 +695,12 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private void sendButtonPressToMenu(Integer sectionId) {
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
-        this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, sectionId);
+        if (sectionId >= 0) {
+            CrystallineFlowerClickedEnchantmentButtonPacket.sendToServer(this.menu.containerId, sectionId);
+        }
+        else {
+            this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, sectionId);
+        }
     }
 
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {

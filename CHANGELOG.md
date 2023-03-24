@@ -7,6 +7,13 @@ Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking
  Only normal right click should pick up bees because crouching is what removes the bee from your head.
  As a result, this fixes the incompat with Carry On mod as well when wearing the helmet and shift right-clicking bees.
 
+##### Blocks:
+Fixed Crystalline Flower getting wrong enchantments if you are in flower's UI connected to server and someone else opens a flower as well.
+
+Fixed Crystalline Flower xp requirements getting messed up on servers if use sets config to use more than 32,767 xp for a tier.
+
+Fixed Crystalline Flower selecting wrong enchantment on servers if there is more than 127 enchantments in the UI.
+
 ##### Entities:
 If using another mod to put passengers on the Bee Queen, now those passengers are positioned properly on the queen's back.
 
