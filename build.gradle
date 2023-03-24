@@ -147,7 +147,7 @@ allprojects {
     version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
     group = rootProject.maven_group
 
-    repositories { RepositoryHandler handler ->
+    repositories {
         maven {
             url = 'https://maven.quiltmc.org/repository/release'
             content {
