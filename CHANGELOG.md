@@ -28,6 +28,8 @@ Royal Jelly Block/Bucket trades now have 0.11% of Dragon Egg chance down from pr
 ##### Structures:
 Fixed one of Cell Maze's piece not having properly randomize loot in its Honey Cocoon.
 
+Throne Pillar's queen room should not be crowded with Glistering Honey Crystals anymore.
+
 Increased chances of Pollinated Streams of having a spider spawner piece.
 
 Added new item tag called `the_bumblezone:structures/disallowed_flowers_in_cocoon_loot` that can disallow flowers from showing
