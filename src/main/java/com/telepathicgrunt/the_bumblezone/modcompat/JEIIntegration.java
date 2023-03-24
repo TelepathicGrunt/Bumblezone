@@ -95,14 +95,14 @@ public class JEIIntegration implements IModPlugin {
 	registration.addIngredientInfo(
 		new ItemStack(item),
 		VanillaTypes.ITEM_STACK,
-		Component.translatable(Bumblezone.MODID + "." + ForgeRegistries.ITEMS.getKey(item).getPath() + ".jei_description"));
+		Component.translatable(Bumblezone.MODID + "." + ForgeRegistries.ITEMS.getKey(item).getPath() + ".description"));
     }
     
     private static void addInfo(IRecipeRegistration registration, Fluid fluid) {
 	registration.addIngredientInfo(
 		new FluidStack(fluid, 1),
 		ForgeTypes.FLUID_STACK,
-		Component.translatable(Bumblezone.MODID + "." + ForgeRegistries.FLUIDS.getKey(fluid).getPath() + ".jei_description"));
+		Component.translatable(Bumblezone.MODID + "." + ForgeRegistries.FLUIDS.getKey(fluid).getPath() + ".description"));
     }
 
 	private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration, boolean oneRecipeOnly) {
