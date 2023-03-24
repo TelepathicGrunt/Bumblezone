@@ -63,8 +63,8 @@ public class BzTags {
     public static final TagKey<Item> HONEY_SLIME_DESIRED_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "mob_luring/honey_slime"));
     public static final TagKey<Item> STRING_CURTAINS_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "string_curtains"));
     public static final TagKey<Item> STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "string_curtains/curtain_extending"));
-    public static final TagKey<Item> FORCED_ALLOWED_RANDOM_SUPER_TRADE_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_queen/forced_allowed_random_super_trade_items"));
-    public static final TagKey<Item> DISALLOWED_RANDOM_SUPER_TRADE_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_queen/disallowed_random_super_trade_items"));
+    public static final TagKey<Item> FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_queen/forced_allowed_random_bonus_trade_items"));
+    public static final TagKey<Item> DISALLOWED_RANDOM_BONUS_TRADE_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_queen/disallowed_random_bonus_trade_items"));
     public static final TagKey<Item> TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_armor_hit_by_teleport_projectile"));
     public static final TagKey<Item> TARGET_WITH_HELD_ITEM_HIT_BY_TELEPORT_PROJECTILE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_with_held_item_hit_by_teleport_projectile"));
     public static final TagKey<Item> TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_right_clicked_beehive"));
