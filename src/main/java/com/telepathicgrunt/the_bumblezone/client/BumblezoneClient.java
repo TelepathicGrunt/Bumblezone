@@ -32,6 +32,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPacket;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
+import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
+import com.telepathicgrunt.the_bumblezone.packets.QueenRandomizerTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
@@ -78,6 +80,8 @@ public class BumblezoneClient implements ClientModInitializer {
         UpdateFallingBlockPacket.registerPacket();
         MobEffectClientSyncPacket.registerPacket();
         CrystallineFlowerEnchantmentPacket.registerPacket();
+        QueenMainTradesSyncPacket.registerPacket();
+        QueenRandomizerTradesSyncPacket.registerPacket();
         ClientTickEvents.END_CLIENT_TICK.register((minecraft) -> StinglessBeeHelmet.decrementHighlightingCounter(minecraft.player));
     }
 

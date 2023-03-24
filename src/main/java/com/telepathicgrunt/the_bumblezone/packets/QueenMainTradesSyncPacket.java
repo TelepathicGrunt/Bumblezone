@@ -8,27 +8,43 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.random.WeightedRandomList;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> recipeViewerMainTrades) {
     public static Gson gson = new GsonBuilder().create();
+    public static final ResourceLocation PACKET_ID = new ResourceLocation(Bumblezone.MODID, "queen_main_trades_sync_packet");
 
-    public static void sendToClient(ServerPlayer entity, List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> recipeViewerMainTrades) {
-        MessageHandler.DEFAULT_CHANNEL.send(PacketDistributor.PLAYER.with(() -> entity),
-                new QueenMainTradesSyncPacket(recipeViewerMainTrades));
+    public static void registerPacket() {
+        ClientPlayNetworking.registerGlobalReceiver(PACKET_ID,
+                (client, handler, buf, responseSender) -> {
+                    QueenMainTradesSyncPacket queenMainTradesSyncPacket = parse(buf);
+
+                    client.execute(() -> {
+                        QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades = queenMainTradesSyncPacket.recipeViewerMainTrades();
+                    });
+                });
     }
+
+    public static void sendToClient(final ServerPlayer serverPlayer, List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> dataToCompose) {
+        FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
+        compose(dataToCompose, passedData);
+        ServerPlayNetworking.send(serverPlayer, QueenMainTradesSyncPacket.PACKET_ID, passedData);
+    }
+
 
     /*
      * How the client will read the packet.
@@ -64,10 +80,10 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
     /*
      * creates the packet buffer and sets its values
      */
-    public static void compose(final QueenMainTradesSyncPacket pkt, final FriendlyByteBuf buf) {
+    public static void compose(final List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> dataToCompose, final FriendlyByteBuf buf) {
         CompoundTag data = new CompoundTag();
         ListTag listTag = new ListTag();
-        for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> tradeRow : pkt.recipeViewerMainTrades()) {
+        for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> tradeRow : dataToCompose) {
 
             CompoundTag pairData = new CompoundTag();
             DataResult<Tag> dataResult1 = MainTradeRowInput.CODEC.encodeStart(NbtOps.INSTANCE, tradeRow.getFirst());
@@ -82,18 +98,5 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
         }
         data.put("main_trades", listTag);
         buf.writeNbt(data);
-    }
-
-    /*
-     * What the client will do with the packet
-     */
-    public static class Handler {
-        //this is what gets run on the client
-        public static void handle(final QueenMainTradesSyncPacket pkt, final Supplier<NetworkEvent.Context> ctx) {
-            ctx.get().enqueueWork(() -> {
-                QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades = pkt.recipeViewerMainTrades();
-            });
-            ctx.get().setPacketHandled(true);
-        }
     }
 }
