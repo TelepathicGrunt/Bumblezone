@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
 import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacket;
+import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerClickedEnchantmentButtonPacket;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
@@ -103,6 +104,7 @@ public class Bumblezone implements ModInitializer, EntityComponentInitializer {
         BeehemothControlsPacket.registerPacket();
         BumbleBeeChestplateFlyingPacket.registerPacket();
         StinglessBeeHelmetSightPacket.registerPacket();
+        CrystallineFlowerClickedEnchantmentButtonPacket.registerPacket();
 
         MiscComponent.onEntityKilled();
 

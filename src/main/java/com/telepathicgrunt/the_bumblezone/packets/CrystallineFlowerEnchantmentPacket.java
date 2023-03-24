@@ -19,6 +19,7 @@ public class CrystallineFlowerEnchantmentPacket {
     public static void registerPacket() {
         ClientPlayNetworking.registerGlobalReceiver(PACKET_ID,
                 (client, handler, buf, responseSender) -> {
+                    int containerId = buf.readInt();
                     List<EnchantmentSkeleton> enchantmentSkeletons = new ArrayList<>();
                     int elements = buf.readInt();
                     for (int i = 0; i < elements; i++) {
@@ -27,7 +28,9 @@ public class CrystallineFlowerEnchantmentPacket {
                     }
 
                     client.execute(() -> {
-                        CrystallineFlowerScreen.enchantmentsAvailable = enchantmentSkeletons;
+                        if(Minecraft.getInstance().player != null && Minecraft.getInstance().player.containerMenu.containerId == containerId){
+                            CrystallineFlowerScreen.enchantmentsAvailable = enchantmentSkeletons;
+                        }
                     });
                 });
     }

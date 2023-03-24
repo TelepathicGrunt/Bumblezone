@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.screens;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
@@ -60,7 +61,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     final DataSlot selectedEnchantmentIndex = DataSlot.standalone();
     final DataSlot xpBarPercent = DataSlot.standalone();
     final DataSlot xpTier = DataSlot.standalone();
-    final DataSlot tierCost = DataSlot.standalone();
+    final DataSlot tierCostUpper = DataSlot.standalone();
+    final DataSlot tierCostLower = DataSlot.standalone();
     final DataSlot bottomBlockPosXUpper = DataSlot.standalone();
     final DataSlot bottomBlockPosXLower = DataSlot.standalone();
     final DataSlot bottomBlockPosYUpper = DataSlot.standalone();
@@ -156,7 +158,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
                 });
 
-                drainFlowerXPLevel(tierCost.get());
+                drainFlowerXPLevel(GeneralUtils.merge(tierCostUpper.get(), tierCostLower.get()));
 
                 ItemStack bookSlotItem = bookSlot.getItem();
                 if (bookSlotItem.isEmpty()) {
@@ -187,7 +189,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         this.selectedEnchantmentIndex.set(-1);
         this.xpBarPercent.set(0);
         this.xpTier.set(0);
-        this.tierCost.set(0);
+        this.tierCostUpper.set(0);
+        this.tierCostLower.set(0);
         this.playerHasXPForTier.set(0);
         this.consumeSlotFullyObstructed.set(0);
         this.tooManyEnchantmentsOnInput.set(0);
@@ -211,7 +214,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         addDataSlot(this.selectedEnchantmentIndex);
         addDataSlot(this.xpBarPercent);
         addDataSlot(this.xpTier);
-        addDataSlot(this.tierCost);
+        addDataSlot(this.tierCostUpper);
+        addDataSlot(this.tierCostLower);
         addDataSlot(this.playerHasXPForTier);
         addDataSlot(this.consumeSlotFullyObstructed);
         addDataSlot(this.tooManyEnchantmentsOnInput);
@@ -561,7 +565,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
                     if (!ItemStack.matches(tempCopy, enchantedSlot.getItem())) {
                         enchantedSlot.set(tempCopy);
-                        tierCost.set(EnchantmentUtils.getEnchantmentTierCost(enchantmentForItem));
+
+                        int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantmentForItem);
+                        tierCostUpper.set(GeneralUtils.split(tierCost, true));
+                        tierCostLower.set(GeneralUtils.split(tierCost, false));
                     }
                 }
                 return;
@@ -582,6 +589,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                             );
                         }).toList();
                 FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
+                passedData.writeInt(this.containerId);
                 passedData.writeInt(availableEnchantmentsSkeletons.size());
                 for (EnchantmentSkeleton skeleton : availableEnchantmentsSkeletons) {
                     passedData.writeUtf(CrystallineFlowerEnchantmentPacket.gson.toJson(skeleton));
