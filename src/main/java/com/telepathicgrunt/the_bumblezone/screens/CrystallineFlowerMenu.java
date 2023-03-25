@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.screens;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;

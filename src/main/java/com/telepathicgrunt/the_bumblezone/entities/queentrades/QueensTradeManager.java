@@ -30,7 +30,6 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.Comparator;

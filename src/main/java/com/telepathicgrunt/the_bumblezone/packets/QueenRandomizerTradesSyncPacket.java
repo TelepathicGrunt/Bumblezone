@@ -3,13 +3,8 @@ package com.telepathicgrunt.the_bumblezone.packets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.JsonOps;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
-import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
-import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
@@ -21,7 +16,6 @@ import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public record QueenRandomizerTradesSyncPacket(List<QueensTradeManager.TradeWantEntry> recipeViewerRandomizerTrades) {

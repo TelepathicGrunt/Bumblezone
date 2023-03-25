@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.entities.queentrades;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryCodecs;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
