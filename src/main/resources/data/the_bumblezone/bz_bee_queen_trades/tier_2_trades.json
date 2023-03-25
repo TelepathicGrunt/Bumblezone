@@ -171,6 +171,38 @@
     {
       "id": "valleycraft:honey_bottle_block",
       "required": false
+    },
+    {
+      "id": "pamhc2foodcore:sweetberryjuiceitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:sweetberrysmoothieitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:sweetberryjellyitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:glowberryjuiceitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:glowberrysmoothieitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:glowberryjellyitem",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_honey",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_strawberry",
+      "required": false
     }
   ],
   "possible_rewards": [

@@ -75,6 +75,22 @@
     {
       "id": "valleycraft:crystallized_honey_necklace",
       "required": false
+    },
+    {
+      "id": "pamhc2foodcore:sweetberrytoastitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:sweetberrypieitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:glowberrytoastitem",
+      "required": false
+    },
+    {
+      "id": "pamhc2foodcore:glowberrypieitem",
+      "required": false
     }
   ],
   "possible_rewards": [
