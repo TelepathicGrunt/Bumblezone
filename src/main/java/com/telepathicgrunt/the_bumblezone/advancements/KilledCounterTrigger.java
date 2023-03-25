@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.DeserializationContext;
@@ -50,7 +51,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
         }
 
         public boolean matches(ServerPlayer serverPlayer, ResourceLocation currentEntity, int currentCount) {
-            return (!beeArmorRequired || StinglessBeeHelmet.isAllBeeArmorOn(serverPlayer)) &&
+            return (!beeArmorRequired || BeeArmor.getBeeThemedGearCount(serverPlayer) >= 4) &&
                     currentEntity.equals(this.targetEntity) &&
                     currentCount >= this.targetCount;
         }
