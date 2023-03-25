@@ -81,6 +81,9 @@ public abstract class BeeArmor extends TickingArmorItem {
                 beeGearCount++;
             }
         }
+        if (ModChecker.curiosPresent) {
+            beeGearCount += CuriosCompat.getCuriosBeeGearCount(entity);
+        }
         return beeGearCount;
     }
 }
