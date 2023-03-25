@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class StinglessBeeHelmet extends BeeArmor {
     public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
-    public static boolean ALL_BEE_ARMOR_ON_CLIENTSIDE = false;
+    public static int BEE_GEAR_COUNT = 0;
     public static Set<Entity> BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE = new ObjectArraySet<>();
     public static int PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;
 
@@ -45,11 +45,11 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     @Override
     public void onArmorTick(ItemStack beeHelmet, Level world, Player player) {
-        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
+        int beeGearCount = BeeArmor.getBeeThemedGearCount(player);
 
         MobEffectInstance nausea = player.getEffect(MobEffects.CONFUSION);
         if (nausea != null) {
-            int decreaseSpeed = isAllBeeArmorOn ? 10 : 1;
+            int decreaseSpeed = (int)((beeGearCount * 3d) - 2);
             for (int i = 0; i < decreaseSpeed; i++) {
                 ((MobEffectInstanceAccessor) nausea).callTickDownDuration();
                 if(!world.isClientSide() &&
@@ -62,8 +62,12 @@ public class StinglessBeeHelmet extends BeeArmor {
         }
 
         MobEffectInstance poison = player.getEffect(MobEffects.POISON);
-        if (poison != null && (isAllBeeArmorOn || world.getGameTime() % 3 == 0)) {
-            ((MobEffectInstanceAccessor) poison).callTickDownDuration();
+        if (poison != null && (beeGearCount >= 4 || world.getGameTime() % (beeGearCount == 3 ? 2 : 3) == 0)) {
+            for (int i = 0; i <= Math.max(beeGearCount - 3, 1); i++) {
+                if (poison.getDuration() > 0) {
+                    ((MobEffectInstanceAccessor) poison).callTickDownDuration();
+                }
+            }
             if(!world.isClientSide() &&
                 player.getRandom().nextFloat() < 0.004f &&
                 beeHelmet.getMaxDamage() - beeHelmet.getDamageValue() > 1)
@@ -81,10 +85,10 @@ public class StinglessBeeHelmet extends BeeArmor {
                 }
             }
             BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.clear();
-            ALL_BEE_ARMOR_ON_CLIENTSIDE = isAllBeeArmorOn;
+            StinglessBeeHelmet.BEE_GEAR_COUNT = beeGearCount;
 
             if (player.isShiftKeyDown() && player.isOnGround()) {
-                HELMET_EFFECT_COUNTER_CLIENTSIDE = isAllBeeArmorOn ? 200 : 6;
+                HELMET_EFFECT_COUNTER_CLIENTSIDE = ((beeGearCount - 1) * 65) + 6;
 
                 if(!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {
                     beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
@@ -101,7 +105,7 @@ public class StinglessBeeHelmet extends BeeArmor {
                 player.isUnderWater() ||
                 player.isHurt() ||
                 player.isShiftKeyDown() ||
-                (!isAllBeeArmorOn && beeRidingTimer > 600))
+                (beeGearCount < 4 && beeRidingTimer > beeGearCount * 600))
             {
                 for (Entity passenger : player.getPassengers()) {
                     if ((passenger instanceof Bee && !passenger.getType().is(BzTags.DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS)) ||
@@ -132,7 +136,7 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     public static boolean shouldEntityGlow(Player player, Entity entity) {
         if(entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof BeeQueenEntity) {
-            return entity.blockPosition().closerThan(player.blockPosition(), ALL_BEE_ARMOR_ON_CLIENTSIDE ? 80 : 30);
+            return entity.blockPosition().closerThan(player.blockPosition(), (BEE_GEAR_COUNT * 16.5d) + 14);
         }
         return false;
     }
@@ -175,13 +179,6 @@ public class StinglessBeeHelmet extends BeeArmor {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
             }
         }
-    }
-
-    public static boolean isAllBeeArmorOn(Entity entity) {
-        return !StinglessBeeHelmet.getEntityBeeHelmet(entity).isEmpty() &&
-                !BumbleBeeChestplate.getEntityBeeChestplate(entity).isEmpty() &&
-                !HoneyBeeLeggings.getEntityBeeLegging(entity).isEmpty() &&
-                !CarpenterBeeBoots.getEntityBeeBoots(entity).isEmpty();
     }
 
     public static ItemStack getEntityBeeHelmet(Entity entity) {

@@ -1,0 +1,99 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:stingless_bee_helmet_1",
+    "the_bumblezone:stingless_bee_helmet_2",
+    "the_bumblezone:bumble_bee_chestplate_1",
+    "the_bumblezone:bumble_bee_chestplate_2",
+    "the_bumblezone:bumble_bee_chestplate_trans_1",
+    "the_bumblezone:bumble_bee_chestplate_trans_2",
+    "the_bumblezone:honey_bee_leggings_1",
+    "the_bumblezone:honey_bee_leggings_2",
+    "the_bumblezone:carpenter_bee_boots_1",
+    "the_bumblezone:carpenter_bee_boots_2",
+    {
+      "id": "productivebees:bee_nest_diamond_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "mcda:beehive_armor_boots",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_helmet",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_chestplate",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_leggings",
+      "required": false
+    },
+    {
+      "id": "mcda:beenest_armor_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_helmet",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_chestplate",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_leggings",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beenest_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_helmet",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_chestplate",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_leggings",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:beehive_boots",
+      "required": false
+    },
+    {
+      "id": "duneons:beenest_helmet",
+      "required": false
+    },
+    {
+      "id": "duneons:beenest_chestplate",
+      "required": false
+    },
+    {
+      "id": "duneons:beehive_helmet",
+      "required": false
+    },
+    {
+      "id": "duneons:beehive_chestplate",
+      "required": false
+    }
+  ]
+}
