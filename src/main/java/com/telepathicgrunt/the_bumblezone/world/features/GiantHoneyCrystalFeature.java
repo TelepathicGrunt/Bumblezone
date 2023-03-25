@@ -5,9 +5,11 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.GlisteringHoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -18,6 +20,8 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.Structure;
+
+import java.util.Optional;
 
 public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -40,12 +44,22 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             return false;
         }
 
+        Registry<Structure> structureRegistry = context.level().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+        StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
+
         if (origin.getY() > 130 && origin.getY() < 148) {
-            Registry<Structure> structureRegistry = context.level().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
-            StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
             Structure thronePillar = structureRegistry.get(new ResourceLocation(Bumblezone.MODID, "throne_pillar"));
             if (thronePillar != null && structureManager.getStructureAt(origin, thronePillar).isValid()) {
                 return false;
+            }
+        }
+
+        Optional<HolderSet.Named<Structure>> optionalHolders = structureRegistry.getTag(BzTags.NO_GIANT_HONEY_CRYSTALS);
+        if (optionalHolders.isPresent()) {
+            for (Holder<Structure> structureHolder : optionalHolders.get()) {
+                if (structureManager.getStructureAt(origin, structureHolder.value()).isValid()) {
+                    return false;
+                }
             }
         }
 

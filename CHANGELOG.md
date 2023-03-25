@@ -32,9 +32,12 @@ Royal Jelly Block/Bucket trades now have 0.11% of Dragon Egg chance down from pr
 Fixed Bee Queen trades not being synced from server to client. Now clients with recipe viewers can see trades when connected to server.
 
 ##### Structures:
+Slightly buffed the loot in Honitel and Pirate Ship structures. Pirate Ship loot can have Spyglass now.
+
 Fixed one of Cell Maze's piece not having properly randomize loot in its Honey Cocoon.
 
 Throne Pillar's queen room should not be crowded with Glistering Honey Crystals anymore.
+ Also prevent the giant crystal features in a few other structures as well.
 
 Increased chances of Pollinated Streams of having a spider spawner piece.
 

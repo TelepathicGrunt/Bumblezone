@@ -110,7 +110,7 @@
         {
           "name": "minecraft:honey_block",
           "type": "minecraft:item",
-          "weight": 9,
+          "weight": 18,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -125,12 +125,12 @@
         {
           "name": "minecraft:stone_sword",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 9
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_boots",
-          "weight": 4,
+          "weight": 9,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -141,7 +141,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_leggings",
-          "weight": 4,
+          "weight": 9,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -152,7 +152,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_chestplate",
-          "weight": 4,
+          "weight": 9,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -163,7 +163,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_helmet",
-          "weight": 4,
+          "weight": 9,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -174,10 +174,15 @@
         {
           "name": "minecraft:iron_sword",
           "type": "minecraft:item",
-          "weight": 3
+          "weight": 7
         },
         {
           "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:spyglass",
           "type": "minecraft:item",
           "weight": 1
         }
