@@ -2,9 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryCodecs;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 

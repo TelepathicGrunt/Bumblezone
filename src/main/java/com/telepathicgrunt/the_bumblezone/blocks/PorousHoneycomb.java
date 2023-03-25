@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 import net.minecraft.world.phys.Vec3;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
 import java.util.Arrays;
 import java.util.Collections;
