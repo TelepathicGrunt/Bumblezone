@@ -4,14 +4,14 @@
     {
       "rolls": {
         "min": 3.0,
-        "max": 5.0,
+        "max": 6.0,
         "type": "minecraft:uniform"
       },
       "entries": [
         {
           "name": "the_bumblezone:bee_bread",
           "type": "minecraft:item",
-          "weight": 280,
+          "weight": 260,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -26,7 +26,7 @@
         {
           "name": "minecraft:honeycomb",
           "type": "minecraft:item",
-          "weight": 280,
+          "weight": 260,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -41,7 +41,7 @@
         {
           "name": "minecraft:cookie",
           "type": "minecraft:item",
-          "weight": 250,
+          "weight": 230,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -56,7 +56,7 @@
         {
           "name": "the_bumblezone:bee_stinger",
           "type": "minecraft:item",
-          "weight": 220,
+          "weight": 200,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -71,7 +71,7 @@
         {
           "name": "the_bumblezone:sticky_honey_residue",
           "type": "minecraft:item",
-          "weight": 70,
+          "weight": 60,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -86,7 +86,7 @@
         {
           "name": "the_bumblezone:sugar_water_bottle",
           "type": "minecraft:item",
-          "weight": 70,
+          "weight": 60,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -101,7 +101,7 @@
         {
           "name": "minecraft:beetroot_soup",
           "type": "minecraft:item",
-          "weight": 70,
+          "weight": 60,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -116,7 +116,7 @@
         {
           "name": "minecraft:pumpkin_pie",
           "type": "minecraft:item",
-          "weight": 70,
+          "weight": 60,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -131,7 +131,7 @@
         {
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
-          "weight": 70,
+          "weight": 60,
           "functions": [
             {
               "function": "the_bumblezone:tag_item_removals",
@@ -142,12 +142,12 @@
         {
           "name": "minecraft:cake",
           "type": "minecraft:item",
-          "weight": 50
+          "weight": 45
         },
         {
           "name": "minecraft:bowl",
           "type": "minecraft:item",
-          "weight": 35,
+          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -162,6 +162,11 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:map",
+          "weight": 24
+        },
+        {
+          "name": "minecraft:saddle",
+          "type": "minecraft:item",
           "weight": 24
         },
         {
@@ -221,11 +226,6 @@
         },
         {
           "name": "minecraft:shears",
-          "type": "minecraft:item",
-          "weight": 17
-        },
-        {
-          "name": "minecraft:saddle",
           "type": "minecraft:item",
           "weight": 17
         },

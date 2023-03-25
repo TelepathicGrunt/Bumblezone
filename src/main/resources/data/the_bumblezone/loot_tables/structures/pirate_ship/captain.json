@@ -93,6 +93,11 @@
           ]
         },
         {
+          "name": "minecraft:spyglass",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
           "name": "minecraft:golden_sword",
           "type": "minecraft:item",
           "weight": 1
