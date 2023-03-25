@@ -2,14 +2,18 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.TrinketsCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 
 public abstract class BeeArmor extends TickingArmorItem {
@@ -81,8 +85,8 @@ public abstract class BeeArmor extends TickingArmorItem {
                 beeGearCount++;
             }
         }
-        if (ModChecker.curiosPresent) {
-            beeGearCount += CuriosCompat.getCuriosBeeGearCount(entity);
+        if (ModChecker.TrinketsPresent) {
+            beeGearCount += TrinketsCompat.getTrinketsBeeGearCount(entity);
         }
         return beeGearCount;
     }

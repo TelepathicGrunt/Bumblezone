@@ -23,15 +23,9 @@ Bumblezone's Bee Armor abilities now scales with how many bee-themed armor/curio
 
  Compat with modded items includes:
 
-- Traveler's Backpack's Bee Backpack (Requires backpack to be in Curios slot. Enable Curios compat in Traveler's Backpack's config)
-
-- Dungeon Gear's Bee Nest and Beehive armor set.
+- Traveler's Backpack's Bee Backpack (Requires backpack to be in Trinkets slot. Enable Trinkets compat in Traveler's Backpack's config)
 
 - MC Dungeons Armors's Bee Nest and Beehive armor set.
-
-- Dungeons Content's Bee Nest and Beehive armor set.
-
-- Productive Bees's Bee Nest Diamond Helmet.
 
 - Simple Hats's Bee Hat.
 
