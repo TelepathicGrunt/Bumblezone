@@ -14,6 +14,10 @@ Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking
  Only normal right click should pick up bees because crouching is what removes the bee from your head.
  As a result, this fixes the incompat with Carry On mod as well when wearing the helmet and shift right-clicking bees.
 
+Bumblezone's Bee Armor abilities now scales with how many bee-themed armor you have equipped on. (Including a few other mod's bee armor)
+ The armors that counts towards improving abilities such as flight time are controlled by this item tag:
+ `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear`
+
 ##### Blocks:
 Fixed Crystalline Flower getting wrong enchantments if you are in flower's UI connected to server and someone else opens a flower as well.
 

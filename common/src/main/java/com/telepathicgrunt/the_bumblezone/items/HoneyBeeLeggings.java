@@ -43,7 +43,7 @@ public class HoneyBeeLeggings extends BeeArmor {
         RandomSource random = player.getRandom();
         boolean isPollinated = isPollinated(itemstack);
         boolean isSprinting = player.isSprinting();
-        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
+        int beeGearCount = BeeArmor.getBeeThemedGearCount(player);
 
         if(!world.isClientSide()) {
             if(player.isShiftKeyDown() && isPollinated) {
@@ -64,7 +64,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                         world.setBlock(player.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
-                else if(random.nextFloat() < (isAllBeeArmorOn ? 0.01f : 0.003f) && withinBlock.is(BlockTags.FLOWERS)) {
+                else if(random.nextFloat() < (((beeGearCount - 1) * 0.002f)+ 0.003f) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
                     if(player instanceof ServerPlayer serverPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
@@ -75,8 +75,12 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
 
         MobEffectInstance slowness = player.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
-        if (slowness != null && (isAllBeeArmorOn || world.getGameTime() % 2 == 0)) {
-            ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
+        if (slowness != null && (beeGearCount >= 3 || world.getGameTime() % 2 == 0)) {
+            for (int i = 0; i <= Math.max(beeGearCount - 2, 1); i++) {
+                if (slowness.getDuration() > 0) {
+                    ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
+                }
+            }
             if(!world.isClientSide() &&
                 random.nextFloat() < 0.004f &&
                 itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
@@ -85,8 +89,8 @@ public class HoneyBeeLeggings extends BeeArmor {
             }
         }
 
-        if(world.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < (isAllBeeArmorOn ? 0.03f : 0.025f))) {
-            int particles = isAllBeeArmorOn ? 2 : 1;
+        if(world.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < (beeGearCount >= 3 ? 0.03f : 0.025f))) {
+            int particles = beeGearCount >= 3 ? 2 : 1;
             for(int i = 0; i < particles; i++){
                 double speedYModifier = isSprinting ? 0.05D : 0.02D;
                 double speedXZModifier = isSprinting ? 0.03D : 0.02D;

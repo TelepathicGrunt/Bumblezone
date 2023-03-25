@@ -54,7 +54,7 @@ public class BumbleBeeChestplate extends BeeArmor {
             }
         }
 
-        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
+        int beeGearCount = BeeArmor.getBeeThemedGearCount(player);
         MobEffectInstance beenergized = player.getEffect(BzEffects.BEENERGIZED.get());
         boolean isBeenergized = beenergized != null;
 
@@ -92,14 +92,14 @@ public class BumbleBeeChestplate extends BeeArmor {
             }
             else {
                 tag.putBoolean("isFlying", false);
-                if(isBeenergized && isAllBeeArmorOn && player instanceof ServerPlayer) {
+                if(isBeenergized && beeGearCount >= 4 && player instanceof ServerPlayer) {
                     BzCriterias.BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER.trigger((ServerPlayer) player);
                 }
             }
         }
 
         if(player.isOnGround()) {
-            tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5f : 1) * (isAllBeeArmorOn ? 2 : 1)));
+            tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
         }
     }
 

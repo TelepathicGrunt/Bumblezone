@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -27,4 +29,14 @@ public abstract class BeeArmor extends BzArmor implements ItemExtension {
     }
 
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) { }
+
+    public static int getBeeThemedGearCount(Entity entity) {
+        int beeGearCount = 0;
+        for(ItemStack armor : entity.getArmorSlots()) {
+            if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+                beeGearCount++;
+            }
+        }
+        return beeGearCount;
+    }
 }
