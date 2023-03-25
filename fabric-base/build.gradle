@@ -35,6 +35,7 @@ dependencies {
     include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}"
 
     //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
+    modCompileOnly("dev.emi:trinkets:${trinkets}")
 
     modImplementation("dev.cafeteria:fake-player-api:${rootProject.fake_player_api}") {
         transitive = false //This API doesnt use fabric but includes it so we need to exclude it as its from 1.19.1

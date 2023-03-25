@@ -52,6 +52,12 @@ dependencies {
 
     //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
 
+    //modLocalRuntime("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
+    //modLocalRuntime("dev.architectury:architectury-forge:${project.architectury}")
+    //modLocalRuntime("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
+    //modLocalRuntime("top.theillusivec4.curios:curios-forge:${project.curios}")
+    modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
+
     modLocalRuntime("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
     modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
 

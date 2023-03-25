@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.world.entity.Entity;
@@ -36,6 +38,9 @@ public abstract class BeeArmor extends BzArmor implements ItemExtension {
             if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
                 beeGearCount++;
             }
+        }
+        for (ModCompat compat : ModChecker.CUSTOM_EQUIPMENT_SLOTS_COMPATS) {
+            beeGearCount += compat.getNumberOfMatchingEquippedItemsInCustomSlots(entity, (itemStack) -> itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR));
         }
         return beeGearCount;
     }

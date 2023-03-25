@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.SodiumCompatImpl;
+import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.TrinketsCompat;
 
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.printErrorToLogs;
@@ -26,6 +27,9 @@ public class FabricModChecker {
 
             modid = "sodium";
             loadupModCompat(modid, () -> new SodiumCompatImpl());
+
+            modid = "trinkets";
+            loadupModCompat(modid, () -> new TrinketsCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

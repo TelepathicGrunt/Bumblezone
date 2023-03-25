@@ -14,10 +14,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.EnumSet;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public interface ModCompat {
 
@@ -83,6 +85,10 @@ public interface ModCompat {
         return false;
     }
 
+    default int getNumberOfMatchingEquippedItemsInCustomSlots(Entity entity, Predicate<ItemStack> itemStackPredicate) {
+        return 0;
+    }
+
     enum Type {
         SPAWNS,
         EMPTY_BROOD,
@@ -92,5 +98,6 @@ public interface ModCompat {
         COMB_ORE,
         HAS_HOST_BEES,
         PROJECTILE_IMPACT_HANDLED,
+        CUSTOM_EQUIPMENT_SLOTS,
     }
 }

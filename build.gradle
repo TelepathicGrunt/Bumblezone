@@ -207,6 +207,18 @@ allprojects {
             }
         }
         maven {
+            url = "https://maven.theillusivec4.top/"
+            content {
+                includeGroup 'top.theillusivec4.curios'
+            }
+        }
+        maven {
+            url "https://maven.jamieswhiteshirt.com/libs-release"
+            content {
+                includeGroup "com.jamieswhiteshirt"
+            }
+        }
+        maven {
             url = 'https://jitpack.io'
             content {
                 includeGroup 'com.github.LlamaLad7'
