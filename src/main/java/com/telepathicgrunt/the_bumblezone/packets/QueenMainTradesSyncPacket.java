@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
