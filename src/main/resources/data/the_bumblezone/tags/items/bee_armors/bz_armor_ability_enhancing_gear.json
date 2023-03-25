@@ -16,6 +16,14 @@
       "required": false
     },
     {
+      "id": "simplehats:beehat",
+      "required": false
+    },
+    {
+      "id": "travelersbackpack:bee",
+      "required": false
+    },
+    {
       "id": "mcda:beehive_armor_helmet",
       "required": false
     },
@@ -77,6 +85,10 @@
     },
     {
       "id": "dungeons_gear:beehive_boots",
+      "required": false
+    },
+    {
+      "id": "dungeons_gear:buzzy_nest",
       "required": false
     },
     {
