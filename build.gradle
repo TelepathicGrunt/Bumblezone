@@ -65,12 +65,16 @@ repositories {
 		content {
 			includeGroup 'io.github.ladysnake'
 			includeGroupByRegex 'dev\\.onyxstudios.*'
+			includeGroupByRegex 'dev\\.emi.*'
 		}
 	}
-	//maven {
-	//	name = 'Nexus OSS Repository'
-	//	url = 'https://oss.sonatype.org/content/repositories/snapshots'
-	//}
+	maven {
+		name = 'Nexus OSS Repository'
+		url = 'https://oss.sonatype.org/content/repositories/snapshots'
+		content {
+			includeGroup 'me.lucko'
+		}
+	}
 	maven {
 		url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
 		content {
@@ -150,8 +154,10 @@ dependencies {
 
 	//modRuntimeOnly "com.jamieswhiteshirt:reach-entity-attributes:2.3.0"
 	//modRuntimeOnly "curse.maven:travelersbackpacks-541171:4451504"
-	//modRuntimeOnly "dev.emi:trinkets:${trinkets_version}"
-	modCompileOnly "dev.emi:trinkets:${trinkets_version}"
+	//modRuntimeOnly "me.shedaniel.cloth:cloth-config-fabric:${libs.versions.cloth.config.get()}"
+	//modRuntimeOnly "dev.architectury:architectury-fabric:${libs.versions.architectury.get()}"
+	//modRuntimeOnly "dev.emi:trinkets:${libs.versions.trinkets.get()}"
+	modCompileOnly "dev.emi:trinkets:${libs.versions.trinkets.get()}"
 
 	//modCompileOnly "curse.maven:llamarama-449083:3938753"
 	//modRuntimeOnly "curse.maven:llamarama-449083:3938753"
@@ -170,7 +176,7 @@ dependencies {
 	modCompileOnly "io.github.ladysnake:requiem-api:${libs.versions.requiem.get()}"
 	modCompileOnly "io.github.ladysnake:requiem-core:${libs.versions.requiem.get()}"
 	modCompileOnly "io.github.ladysnake:requiem:${libs.versions.requiem.get()}"
-	//modRuntimeOnly "curse.maven:architectury-419697:3717905"
+
 	//modImplementation ("curse.maven:mobcatcher-498389:3575752") { transitive = false }
 	//modCompileOnly ("curse.maven:charm-318872:3355096") { transitive = false }
 }
