@@ -124,6 +124,12 @@ repositories {
             includeGroup 'com.github.LlamaLad7'
         }
     }
+    maven {
+        url = "https://maven.theillusivec4.top/"
+        content {
+            includeGroup 'top.theillusivec4.curios'
+        }
+    }
     flatDir { dirs 'flatdir' }
 }
 
@@ -135,7 +141,7 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 
     //runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
-    runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
+    //runtimeOnly fg.deobf("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_version}")
     compileOnly fg.deobf("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
 
     compileOnly fg.deobf("mezz.jei:jei-${project.jei_mc_version}-forge-api:${project.jei_version}")
@@ -169,6 +175,10 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:patchouli-250363:${project.autoreglib_file_id}")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
     //runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.2.2")
+
+    //runtimeOnly fg.deobf("curse.maven:travelersbackpacks-321117:4449239")
+    //runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
     //compileOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
     //runtimeOnly fg.deobf("flatdir:resourcefulbees-1.0.0:alpha.4")
