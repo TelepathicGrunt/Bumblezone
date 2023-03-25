@@ -3,9 +3,9 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeAngerAttackingGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFaceRandomGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeRevengeGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeRevengeGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -59,7 +59,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;

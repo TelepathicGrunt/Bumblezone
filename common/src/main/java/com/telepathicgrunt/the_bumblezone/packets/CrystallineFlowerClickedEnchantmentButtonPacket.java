@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;

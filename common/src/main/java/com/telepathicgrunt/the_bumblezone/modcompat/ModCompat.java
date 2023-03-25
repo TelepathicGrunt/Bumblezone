@@ -17,9 +17,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.phys.HitResult;
 
 import java.util.EnumSet;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public interface ModCompat {
 

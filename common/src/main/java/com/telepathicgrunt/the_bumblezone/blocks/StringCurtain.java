@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;

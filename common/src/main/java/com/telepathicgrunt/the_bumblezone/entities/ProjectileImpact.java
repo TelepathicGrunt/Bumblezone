@@ -3,12 +3,10 @@ package com.telepathicgrunt.the_bumblezone.entities;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import com.telepathicgrunt.the_bumblezone.modcompat.TwilightForestCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 
 public class ProjectileImpact {
     public static boolean onProjectileImpact(ProjectileHitEvent event) {

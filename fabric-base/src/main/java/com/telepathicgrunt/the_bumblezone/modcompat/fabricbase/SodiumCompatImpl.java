@@ -3,8 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modcompat.fabricbase;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.Entity;
 
 public class SodiumCompatImpl implements ModCompat {
 

@@ -34,7 +34,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class EMICompat implements EmiPlugin {

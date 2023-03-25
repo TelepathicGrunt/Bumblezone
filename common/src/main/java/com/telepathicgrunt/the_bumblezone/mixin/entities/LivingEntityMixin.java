@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.telepathicgrunt.the_bumblezone.effects.BzEffect;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.world.effect.MobEffect;

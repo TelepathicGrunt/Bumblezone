@@ -8,7 +8,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 import java.util.Collections;
-import java.util.List;
 
 public class REIQueenTradesInfo extends BasicDisplay {
 

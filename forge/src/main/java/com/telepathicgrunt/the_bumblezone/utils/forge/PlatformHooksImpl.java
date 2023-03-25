@@ -32,7 +32,6 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.ModList;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {

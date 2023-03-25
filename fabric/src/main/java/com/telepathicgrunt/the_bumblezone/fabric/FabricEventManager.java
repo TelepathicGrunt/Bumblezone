@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;

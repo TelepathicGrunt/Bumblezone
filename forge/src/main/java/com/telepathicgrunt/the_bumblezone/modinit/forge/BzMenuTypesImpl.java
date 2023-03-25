@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit.forge;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
-import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;

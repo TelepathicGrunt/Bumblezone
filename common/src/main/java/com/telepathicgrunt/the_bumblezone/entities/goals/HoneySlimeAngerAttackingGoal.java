@@ -2,11 +2,8 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
-import net.minecraft.world.level.GameRules;
 
 import java.util.EnumSet;
 
