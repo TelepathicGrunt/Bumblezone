@@ -47,6 +47,10 @@
       "required": false
     },
     {
+      "id": "minestuck:flowery_vine_log",
+      "required": false
+    },
+    {
       "id": "paradise_lost:mottled_aurel_log",
       "required": false
     },
