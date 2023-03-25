@@ -64,7 +64,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                         world.setBlock(player.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
-                else if(random.nextFloat() < (((beeGearCount - 1) * 0.002f)+ 0.003f)  && withinBlock.is(BlockTags.FLOWERS)) {
+                else if(random.nextFloat() < (((beeGearCount - 1) * 0.015f) + 0.01f) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
                     if(player instanceof ServerPlayer serverPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
