@@ -27,7 +27,7 @@ Bumblezone's Bee Armor abilities now scales with how many bee-themed armor/curio
 
 - Traveler's Backpack's Bee Backpack (Requires backpack to be in Curios slot. Enable Curios compat in Traveler's Backpack's config)
 
-- Dungeon Gear's Bee Nest and Beehive armor set.
+- Dungeon Gear's Bee Nest and Beehive armor set along with their Buzzy Nest artifact.
 
 - MC Dungeons Armors's Bee Nest and Beehive armor set.
 
