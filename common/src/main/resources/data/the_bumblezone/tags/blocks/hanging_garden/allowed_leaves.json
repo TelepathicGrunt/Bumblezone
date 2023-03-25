@@ -100,6 +100,10 @@
       "required": false
     },
     {
+      "id": "minestuck:frost_leaves",
+      "required": false
+    },
+    {
       "id": "paradise_lost:lavender_wisteria_leaves",
       "required": false
     },

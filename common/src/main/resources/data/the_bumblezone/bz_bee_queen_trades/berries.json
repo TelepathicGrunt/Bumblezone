@@ -199,6 +199,14 @@
     {
       "id": "autumnity:foul_berries",
       "required": false
+    },
+    {
+      "id": "minestuck:strawberry",
+      "required": false
+    },
+    {
+      "id": "minestuck:strawberry_chunk",
+      "required": false
     }
   ],
   "possible_rewards": [

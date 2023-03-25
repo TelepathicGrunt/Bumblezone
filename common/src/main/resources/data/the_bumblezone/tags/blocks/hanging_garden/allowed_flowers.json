@@ -135,6 +135,10 @@
       "required": false
     },
     {
+      "id": "minestuck:glowflower",
+      "required": false
+    },
+    {
       "id": "naturalized:sea_grass_flower",
       "required": false
     },
