@@ -47,7 +47,7 @@ public class CarpenterBeeBoots extends BeeArmor {
     @Override
     public void onArmorTick(ItemStack beeBoots, Level world, Player player) {
         RandomSource random = player.getRandom();
-        boolean isAllBeeArmorOn = StinglessBeeHelmet.isAllBeeArmorOn(player);
+        int beeGearCount = BeeArmor.getBeeThemedGearCount(player);
         CompoundTag tag = beeBoots.getOrCreateTag();
 
         if(!world.isClientSide()) {
@@ -80,7 +80,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                     float miningProgress = (float) (timeDiff + 1);
 
                     float blockDestroyTime = belowBlockState.getDestroySpeed(world, belowBlockPos);
-                    float playerMiningSpeed = getPlayerDestroySpeed(player, beeBoots, isAllBeeArmorOn ? 0.5f : 0.3F);
+                    float playerMiningSpeed = getPlayerDestroySpeed(player, beeBoots, ((beeGearCount - 1) * 0.067F) + 0.3F);
                     int finalMiningProgress = (int) ((miningProgress * playerMiningSpeed) / blockDestroyTime);
 
                     if (!(finalMiningProgress == 0 && playerMiningSpeed < 0.001f) && (finalMiningProgress != lastSentState)) {
@@ -150,7 +150,7 @@ public class CarpenterBeeBoots extends BeeArmor {
 
         double playerDeltaY = player.getDeltaMovement().y();
         int hangCooldownTimer = tag.getInt("hangCooldownTimer");
-        int maxHangTime = isAllBeeArmorOn ? 100 : 35;
+        int maxHangTime = ((beeGearCount - 1) * 22) + 35;
         if (!player.getAbilities().flying &&
             !player.isPassenger() &&
             !player.onClimbable() &&

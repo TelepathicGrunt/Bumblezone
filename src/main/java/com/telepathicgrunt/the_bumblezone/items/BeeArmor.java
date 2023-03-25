@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.resources.ResourceLocation;
@@ -71,5 +72,15 @@ public abstract class BeeArmor extends TickingArmorItem {
                 }, itemInstance);
             }
         };
+    }
+
+    public static int getBeeThemedGearCount(Entity entity) {
+        int beeGearCount = 0;
+        for(ItemStack armor : entity.getArmorSlots()) {
+            if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+                beeGearCount++;
+            }
+        }
+        return beeGearCount;
     }
 }

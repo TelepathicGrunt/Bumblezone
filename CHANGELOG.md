@@ -14,6 +14,10 @@ Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking
 
 Made Honeycomb Brood Block the Creative Menu icon for Bumblezone to match 1.19.4 Bumblezone
 
+Bumblezone's Bee Armor abilities now scales with how many bee-themed armor you have equipped on. (Including a few other mod's bee armor)
+ The armors that counts towards improving abilities such as flight time are controlled by this item tag:
+ `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear`
+
 ##### Blocks:
 Fixed Crystalline Flower getting wrong enchantments if you are in flower's UI connected to server and someone else opens a flower as well.
 
