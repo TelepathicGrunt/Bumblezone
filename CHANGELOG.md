@@ -14,9 +14,26 @@ Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking
 
 Made Honeycomb Brood Block the Creative Menu icon for Bumblezone to match 1.19.4 Bumblezone
 
-Bumblezone's Bee Armor abilities now scales with how many bee-themed armor you have equipped on. (Including a few other mod's bee armor)
- The armors that counts towards improving abilities such as flight time are controlled by this item tag:
+Decreased number of Bees that needs highlighting by Stingless Bee Helmet to complete its achievement from 100 to 60.
+
+Bumblezone's Bee Armor abilities now scales with how many bee-themed armor/curios/trinkets you have equipped on. (Including a few other mod's bee armor/curios/trinkets)
+ The armors/curios/trinkets that counts towards improving abilities such as flight time are controlled by this item tag:
+
  `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear`
+
+ Compat with modded items includes:
+
+- Traveler's Backpack's Bee Backpack (Requires backpack to be in Curios slot. Enable Curios compat in Traveler's Backpack's config)
+
+- Dungeon Gear's Bee Nest and Beehive armor set.
+
+- MC Dungeons Armors's Bee Nest and Beehive armor set.
+
+- Dungeons Content's Bee Nest and Beehive armor set.
+
+- Productive Bees's Bee Nest Diamond Helmet.
+
+- Simple Hats's Bee Hat.
 
 ##### Blocks:
 Fixed Crystalline Flower getting wrong enchantments if you are in flower's UI connected to server and someone else opens a flower as well.

@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.modcompat.CuriosCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -80,6 +82,9 @@ public abstract class BeeArmor extends ArmorItem {
             if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
                 beeGearCount++;
             }
+        }
+        if (ModChecker.curiosPresent) {
+            beeGearCount += CuriosCompat.getCuriosBeeGearCount(entity);
         }
         return beeGearCount;
     }
