@@ -49,8 +49,8 @@ Fixed mobs trying to pathfind through Honey Cocoon instead of around or on top.
 ##### Fluids:
 Sugar Water fluid now can allow Lilypads and Frogspawn to be placed on it. Vanilla had a hardcoded check for vanilla water in the Lilypad code originally.
 
-Many more waterloggable blocks can be placed into Sugar Water and be waterlogged with vanilla Water. if a modded block doesn't get waterlogged,
- try adding it to this new blockstate to see if it'll waterlog when placed into Sugar Water fluid: 
+Many more waterloggable blocks can be placed into Sugar Water and be waterlogged with vanilla Water.
+ If a modded block doesn't get waterlogged, try adding it to this new blockstate to see if it'll waterlog when placed into Sugar Water fluid:
  `the_bumblezone:sugar_water/waterloggable_blocks_when_placed_in_fluid`
 
 ##### Entities:
