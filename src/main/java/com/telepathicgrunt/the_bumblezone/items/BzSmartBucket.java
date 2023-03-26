@@ -146,17 +146,19 @@ public class BzSmartBucket extends BucketItem {
             Block block = blockState.getBlock();
             Material material = blockState.getMaterial();
             boolean canBucketPlace = blockState.canBeReplaced(this.fluid);
-            boolean canFillBlock = blockState.isAir() || canBucketPlace;
+            boolean canPlaceFluid = blockState.isAir() || canBucketPlace;
             boolean feedVanillaWaterOverride = false;
-            if (!canFillBlock && block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, this.fluid)) {
-                canFillBlock = true;
-            }
-            else if (this.fluid.is(FluidTags.WATER) && !canFillBlock && block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, Fluids.WATER)) {
-                canFillBlock = true;
-                feedVanillaWaterOverride = true;
+            if (block instanceof LiquidBlockContainer) {
+                if (((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, this.fluid)) {
+                    canPlaceFluid = true;
+                }
+                if (this.fluid.is(FluidTags.WATER) && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, Fluids.WATER)) {
+                    canPlaceFluid = true;
+                    feedVanillaWaterOverride = true;
+                }
             }
 
-            if (!canFillBlock) {
+            if (!canPlaceFluid) {
                 return hitResult != null && this.emptyContents(player, world, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
             }
             else if (world.dimensionType().ultraWarm() && this.fluid.is(FluidTags.WATER)) {
