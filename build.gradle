@@ -236,3 +236,9 @@ allprojects {
         withSourcesJar()
     }
 }
+
+task buildAndReleaseAll{
+    dependsOn ':forge:buildAndRelease'
+    dependsOn ':fabric:buildAndRelease'
+    dependsOn ':quilt:buildAndRelease'
+}
