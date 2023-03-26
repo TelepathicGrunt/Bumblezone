@@ -1,0 +1,66 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:campfires",
+    "#minecraft:candles",
+    "#minecraft:climbable",
+    "#minecraft:corals",
+    "#minecraft:fences",
+    "#minecraft:leaves",
+    "#minecraft:rails",
+    "#minecraft:signs",
+    "#minecraft:slabs",
+    "#minecraft:stairs",
+    "#minecraft:trapdoors",
+    "#minecraft:walls",
+    "#minecraft:wall_corals",
+    "minecraft:amethyst_cluster",
+    "minecraft:big_dripleaf",
+    "minecraft:big_dripleaf_stem",
+    "minecraft:small_dripleaf",
+    "minecraft:chain",
+    "minecraft:chest",
+    "minecraft:ender_chest",
+    "minecraft:conduit",
+    "minecraft:seagrass",
+    "minecraft:tall_seagrass",
+    "minecraft:kelp",
+    "minecraft:kelp_plant",
+    "minecraft:glow_lichen",
+    "minecraft:hanging_roots",
+    "minecraft:iron_bars",
+    "minecraft:ladder",
+    "minecraft:lantern",
+    "minecraft:soul_lantern",
+    "minecraft:light",
+    "minecraft:lightning_rod",
+    "minecraft:pointed_dripstone",
+    "minecraft:mangrove_propagule",
+    "minecraft:mangrove_roots",
+    "minecraft:scaffolding",
+    "minecraft:sculk_vein",
+    "minecraft:sculk_sensor",
+    "minecraft:sculk_shrieker",
+    "minecraft:sea_pickle",
+    {
+      "id": "#forge:glass_panes",
+      "required": false
+    },
+    {
+      "id": "#c:glass_panes",
+      "required": false
+    },
+    {
+      "id": "#forge:chests",
+      "required": false
+    },
+    {
+      "id": "#c:chests",
+      "required": false
+    },
+    {
+      "id": "#forge:fences",
+      "required": false
+    }
+  ]
+}
