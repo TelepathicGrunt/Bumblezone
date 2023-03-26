@@ -144,7 +144,16 @@ public class BzSmartBucket extends BucketItem {
             Block block = blockState.getBlock();
             Material material = blockState.getMaterial();
             boolean canBucketPlace = blockState.canBeReplaced(this.fluid);
-            boolean canFillBlock = blockState.isAir() || canBucketPlace || block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, this.fluid);
+            boolean canFillBlock = blockState.isAir() || canBucketPlace;
+            boolean feedVanillaWaterOverride = false;
+            if (!canFillBlock && block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, this.fluid)) {
+                canFillBlock = true;
+            }
+            else if (this.fluid.is(FluidTags.WATER) && !canFillBlock && block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, Fluids.WATER)) {
+                canFillBlock = true;
+                feedVanillaWaterOverride = true;
+            }
+
             if (!canFillBlock) {
                 return hitResult != null && this.emptyContents(player, world, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
             }
@@ -161,7 +170,12 @@ public class BzSmartBucket extends BucketItem {
                 return true;
             }
             else if (block instanceof LiquidBlockContainer && this.fluid.is(FluidTags.WATER)) {
-                ((LiquidBlockContainer)block).placeLiquid(world, pos, blockState, ((FlowingFluid)this.fluid).getSource(false));
+                if (feedVanillaWaterOverride) {
+                    ((LiquidBlockContainer)block).placeLiquid(world, pos, blockState, Fluids.WATER.getSource(false));
+                }
+                else {
+                    ((LiquidBlockContainer)block).placeLiquid(world, pos, blockState, ((FlowingFluid)this.fluid).getSource(false));
+                }
                 this.playEmptySound(player, world, pos);
                 return true;
             }

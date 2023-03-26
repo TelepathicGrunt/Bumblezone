@@ -6,6 +6,8 @@ Renamed Bee Queen's Super Trades to Bonus Trades everywhere. This includes code,
  `the_bumblezone:bee_queen/forced_allow_random_bonus_trade_items`
 
 ##### Items:
+Made Honeycomb Brood Block the Creative Menu icon for Bumblezone to match 1.19.4 Bumblezone
+
 Fixed possible crash with Bee Helmet's Bee Highlighting.
 
 Fixed Stingless Bee Helmet attempting to pick up bees while shift right-clicking bees.
@@ -16,7 +18,7 @@ Decreased number of Bees that needs highlighting by Stingless Bee Helmet to comp
 
 Buffed Honeybee Leggings to become pollinated much more often when running through flowers.
 
-Made Honeycomb Brood Block the Creative Menu icon for Bumblezone to match 1.19.4 Bumblezone
+Sugar Water Bucket will now be able to do regular vanilla Water waterlogging for more waterloggable blocks by faking to be vanilla water to those blocks.
 
 Bumblezone's Bee Armor abilities now scales with how many bee-themed armor/curios/trinkets you have equipped on. (Including a few other mod's bee armor/curios/trinkets)
  The armors/curios/trinkets that counts towards improving abilities such as flight time are controlled by this item tag:
