@@ -321,9 +321,8 @@ public class HoneycombBrood extends ProperFacingBlock {
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), MobSpawnType.TRIGGERED, null, null);
 
-        if(PlatformHooks.canEntitySpawn(entity, world, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.SPAWNER) != -1) {
-            world.addFreshEntity(entity);
-        }
+        PlatformHooks.finalizeSpawn(entity, (ServerLevelAccessor) world, null, MobSpawnType.SPAWNER, null);
+        world.addFreshEntity(entity);
     }
 
 

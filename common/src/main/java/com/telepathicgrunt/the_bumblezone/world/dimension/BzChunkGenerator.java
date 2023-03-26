@@ -461,7 +461,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
                             entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
                             if (entity instanceof Mob mob) {
-                                if (PlatformHooks.canEntitySpawn(mob, serverLevelAccessor, finalX, mutableBlockPos.getY(), finalZ, null, MobSpawnType.CHUNK_GENERATION) == -1) continue;
+                                PlatformHooks.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION, null);
                                 if (mob.checkSpawnObstruction(serverLevelAccessor)) {
                                     spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata, null);
                                     mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());

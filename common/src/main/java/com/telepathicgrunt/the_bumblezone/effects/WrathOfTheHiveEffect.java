@@ -28,6 +28,7 @@ import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
@@ -117,16 +118,8 @@ public class WrathOfTheHiveEffect extends MobEffect {
                             entity.getRandom().nextFloat() * 360.0F,
                             0.0F);
 
-                    bee.finalizeSpawn(
-                            (ServerLevel) world,
-                            world.getCurrentDifficultyAt(spawnBlockPos),
-                            MobSpawnType.TRIGGERED,
-                            null,
-                            null);
-
-                    if(PlatformHooks.canEntitySpawn(bee, world, entity.position().x(), entity.position().y(), entity.position().z(), null, MobSpawnType.TRIGGERED) != -1) {
-                        world.addFreshEntity(bee);
-                    }
+                    PlatformHooks.finalizeSpawn(bee, (ServerLevelAccessor) world, null, MobSpawnType.TRIGGERED, null);
+                    world.addFreshEntity(bee);
                 }
             }
         }

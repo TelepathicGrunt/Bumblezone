@@ -51,13 +51,10 @@ public class SugarWaterBottleDispenseBehavior extends DefaultDispenseItemBehavio
                         beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                         beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
                         beeEntity.setBaby(true);
-                        if (PlatformHooks.canEntitySpawn(beeEntity, world, beeEntity.position().x(), beeEntity.position().y(), beeEntity.position().z(), null, MobSpawnType.DISPENSER) != -1) {
-                            world.addFreshEntity(beeEntity);
-                            world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, 0));
-                        }
-                        else {
-                            deniedBeeSpawn = true;
-                        }
+
+                        PlatformHooks.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER, null);
+                        deniedBeeSpawn = !world.addFreshEntity(beeEntity);
+                        world.setBlockAndUpdate(dispenseBlockPos, blockstate.setValue(HoneycombBrood.STAGE, 0));
                     }
                 }
                 else {
