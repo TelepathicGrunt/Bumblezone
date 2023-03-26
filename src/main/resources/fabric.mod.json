@@ -25,9 +25,6 @@
     "client": [
       "com.telepathicgrunt.the_bumblezone.client.BumblezoneClient"
     ],
-    "preLaunch": [
-      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
-    ],
     "cardinal-components-entity": [
       "com.telepathicgrunt.the_bumblezone.Bumblezone"
     ],

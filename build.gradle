@@ -96,7 +96,12 @@ repositories {
 			includeGroup 'dev.architectury'
 		}
 	}
-	maven { url 'https://jitpack.io' }
+	maven {
+		url 'https://jitpack.io'
+		content {
+			includeGroup 'com.github.llamalad7.mixinextras'
+		}
+	}
 }
 
 dependencies {
@@ -105,9 +110,7 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
-	modImplementation ("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
-	include ("com.github.LlamaLad7:MixinExtras:${project.mixin_extra_version}")
+	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixin_extra_version}")))
 
 	modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
 		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions
