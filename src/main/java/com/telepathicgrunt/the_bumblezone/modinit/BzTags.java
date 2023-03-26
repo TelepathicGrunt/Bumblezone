@@ -34,6 +34,7 @@ public class BzTags {
     public static final TagKey<Block> CAVE_EDGE_BLOCKS_FOR_MODDED_COMPATS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "worldgen_checks/cave_edge_blocks_for_modded_compats"));
     public static final TagKey<Block> STRING_CURTAINS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "string_curtains"));
     public static final TagKey<Block> CRYSTALLINE_FLOWER_CAN_SURVIVE_ON = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/can_be_placed_on"));
+    public static final TagKey<Block> WATERLOGGABLE_BLOCKS_WHEN_PLACED_IN_FLUID = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "sugar_water/waterloggable_blocks_when_placed_in_fluid"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));
