@@ -56,9 +56,7 @@ dependencies {
     common(project(path: ":fabric-base", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":fabric-base", configuration: "transformProductionFabric")) { transitive false }
 
-    include "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    modImplementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    annotationProcessor "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+    include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}")))
 }
 
 processResources {

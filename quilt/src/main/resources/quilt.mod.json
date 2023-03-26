@@ -22,7 +22,6 @@
         "entrypoints": {
             "init": "com.telepathicgrunt.the_bumblezone.quilt.BumblezoneQuilt",
             "client_init": "com.telepathicgrunt.the_bumblezone.quilt.BumblezoneQuiltClient",
-            "preLaunch": "com.llamalad7.mixinextras.MixinExtrasBootstrap::init",
             "modmenu": "com.telepathicgrunt.the_bumblezone.configs.fabricbase.ModMenuCompat",
             "cardinal-components-entity": "com.telepathicgrunt.the_bumblezone.modules.fabric.ComponentInitializer",
             "rei_client": "com.telepathicgrunt.the_bumblezone.modcompat.REICompat",

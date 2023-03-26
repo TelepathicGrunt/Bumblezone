@@ -25,9 +25,6 @@
         "client": [
             "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricClient"
         ],
-        "preLaunch": [
-            "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
-        ],
         "modmenu": [
             "com.telepathicgrunt.the_bumblezone.configs.fabricbase.ModMenuCompat"
         ],

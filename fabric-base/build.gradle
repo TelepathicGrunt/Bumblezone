@@ -46,9 +46,7 @@ dependencies {
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
 
-    include "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    modImplementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    annotationProcessor "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
 }
 
 processResources {

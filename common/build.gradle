@@ -9,8 +9,7 @@ dependencies {
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
     modCompileOnly("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config}")
 
-    modImplementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}")
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
 }
 
 architectury {

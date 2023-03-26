@@ -31,8 +31,6 @@ configurations {
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentForge.extendsFrom common
-    shadowMinecraftLibrary
-    minecraftLibraries.extendsFrom(shadowMinecraftLibrary)
 }
 
 dependencies {
@@ -64,10 +62,8 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
-    include "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    implementation "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    forgeRuntimeLibrary "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-    annotationProcessor "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${rootProject.mixin_extras}"))
+    implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${rootProject.mixin_extras}"))
 }
 
 processResources {
@@ -81,7 +77,7 @@ processResources {
 shadowJar {
     exclude "fabric.mod.json"
 
-    configurations = [project.configurations.shadowCommon, project.configurations.shadowMinecraftLibrary]
+    configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
 }
 
