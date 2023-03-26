@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -106,11 +107,12 @@ public class BzCreativeTabs {
     );
 
     public static void registerCreativeTabs(RegisterCreativeTabsEvent event) {
+        ItemStack iconStack = BzItems.HONEYCOMB_BROOD.get().getDefaultInstance();
+        iconStack.getOrCreateTag().putBoolean("isCreativeTabIcon", true);
         event.register(
                 new ResourceLocation(Bumblezone.MODID, "main_tab"),
-                builder -> builder.icon(() -> BzItems.HONEYCOMB_BROOD.get().getDefaultInstance())
+                builder -> builder.icon(() -> iconStack)
                         .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab")),
-                        //.withLabelColor(0x664400),
                 items -> CUSTOM_CREATIVE_TAB_ITEMS.stream().map(item -> item.get().getDefaultInstance()).forEach(items::add)
 
         );
