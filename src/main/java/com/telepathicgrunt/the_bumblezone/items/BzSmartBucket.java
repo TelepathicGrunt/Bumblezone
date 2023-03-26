@@ -14,10 +14,12 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -158,14 +160,21 @@ public class BzSmartBucket extends BucketItem {
                 return hitResult != null && this.emptyContents(player, world, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
             }
             else if (world.dimensionType().ultraWarm() && this.fluid.is(FluidTags.WATER)) {
-                int i = pos.getX();
-                int j = pos.getY();
-                int k = pos.getZ();
+                double x = pos.getX();
+                double y = pos.getY();
+                double z = pos.getZ();
                 world.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
                 for(int l = 0; l < 8; ++l) {
-                    world.addParticle(ParticleTypes.LARGE_SMOKE, (double)i + Math.random(), (double)j + Math.random(), (double)k + Math.random(), 0.0D, 0.0D, 0.0D);
+                    world.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + Math.random(), z + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
+
+                x = hitResult != null ? hitResult.getLocation().x() : pos.getX();
+                y = hitResult != null ? hitResult.getLocation().y() : pos.getY();
+                z = hitResult != null ? hitResult.getLocation().z() : pos.getZ();
+                ItemEntity itementity = new ItemEntity(world, x, y, z, Items.SUGAR.getDefaultInstance());
+                itementity.setDefaultPickUpDelay();
+                world.addFreshEntity(itementity);
 
                 return true;
             }
