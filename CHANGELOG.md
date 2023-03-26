@@ -20,6 +20,8 @@ Buffed Honeybee Leggings to become pollinated much more often when running throu
 
 Sugar Water Bucket will now be able to do regular vanilla Water waterlogging for more waterloggable blocks by faking to be vanilla water to those blocks.
 
+Sugar Water Bucket spawns Sugar item when attempted to be placed in nether or other dimension that extinguishes water.
+
 Bumblezone's Bee Armor abilities now scales with how many bee-themed armor/curios/trinkets you have equipped on. (Including a few other mod's bee armor/curios/trinkets)
  The armors/curios/trinkets that counts towards improving abilities such as flight time are controlled by this item tag:
 
