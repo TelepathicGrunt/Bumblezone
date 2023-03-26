@@ -39,6 +39,9 @@ public class BeehemothControls {
         }
     }
 
+    // Do not remove. Do not ask why or how but if we remove this code and only rely on Fabric API's stuff, Jump key no longer works in modpacks.
+    // But with this here, both vanilla and our keybinds work just fine even when assigned the same key. How ours even still works? No damn clue.
+    // Do not question it. Keep this here and keep the Fabric API's keybind registration on together. And pray this duct tape solution continues to work.
     private static KeyMapping createSafeKeyMapping(String description, int keycode) {
         InputConstants.Key key = InputConstants.Type.KEYSYM.getOrCreate(keycode);
         KeyMapping oldMapping = KeyMappingAccessor.getMAP().get(key);
