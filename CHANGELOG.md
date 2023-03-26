@@ -44,6 +44,8 @@ Fixed Crystalline Flower selecting wrong enchantment on servers if there is more
 
 Nerfed Crystalline flower so it takes 1634xp to reach max tier instead of 1451xp.
 
+Fixed mobs trying to pathfind through Honey Cocoon instead of around or on top.
+
 ##### Entities:
 If using another mod to put passengers on the Bee Queen, now those passengers are positioned properly on the queen's back.
 
