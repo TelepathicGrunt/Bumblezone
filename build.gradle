@@ -113,6 +113,9 @@ repositories {
 	}
 	maven {
 		url 'https://jitpack.io'
+		content {
+			includeGroup 'com.github.llamalad7.mixinextras'
+		}
 	}
 }
 
@@ -125,9 +128,7 @@ dependencies {
 	modImplementation libs.quilt.loader
 	modImplementation libs.quilted.fabric.api
 
-	annotationProcessor"com.github.LlamaLad7:MixinExtras:${libs.versions.mixinextra.get()}"
-	modImplementation "com.github.LlamaLad7:MixinExtras:${libs.versions.mixinextra.get()}"
-	include "com.github.LlamaLad7:MixinExtras:${libs.versions.mixinextra.get()}"
+	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${libs.versions.mixinextra.get()}")))
 
 	modImplementation "maven.modrinth:midnightlib:${libs.versions.midnightlib.get()}"
 	modRuntimeOnly "maven.modrinth:midnightlib:${libs.versions.midnightlib.get()}"
