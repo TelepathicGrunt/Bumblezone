@@ -173,6 +173,15 @@ public class BumblezoneClient {
                 (itemStack, world, livingEntity, int1) ->
                         CrystalCannon.getNumberOfCrystals(itemStack) / 10f
         );
+
+
+        // Show different stage for creative menu icon
+        ItemProperties.register(
+                BzItems.HONEYCOMB_BROOD.get(),
+                new ResourceLocation("is_creative_tab_icon"),
+                (itemStack, world, livingEntity, integer) ->
+                        itemStack.hasTag() && itemStack.getTag().getBoolean("isCreativeTabIcon") ? 1.0F : 0.0F
+        );
     }
 
     private static void registerRenderLayers() {

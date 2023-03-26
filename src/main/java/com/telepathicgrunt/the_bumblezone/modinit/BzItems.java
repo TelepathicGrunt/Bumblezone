@@ -31,7 +31,9 @@ public class BzItems {
         @Override
         // CLIENT-SIDED
         public ItemStack makeIcon() {
-            return new ItemStack(BzBlocks.HONEYCOMB_BROOD.get());
+            ItemStack iconStack = BzItems.HONEYCOMB_BROOD.get().getDefaultInstance();
+            iconStack.getOrCreateTag().putBoolean("isCreativeTabIcon", true);
+            return iconStack;
         }
     };
 
