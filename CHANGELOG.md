@@ -1,4 +1,4 @@
-### **(V.6.6.19 Changes) (1.19.4 Minecraft)**
+### **(V.6.7.0 Changes) (1.19.4 Minecraft)**
 
 ##### Misc:
 (Forge): Fixed crash with v45.0.23 Forge due to Forge breaking change.
