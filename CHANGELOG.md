@@ -1,4 +1,4 @@
-### **(V.6.6.19 Changes) (1.19.2 Minecraft)**
+### **(V.6.7.0 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:
 Renamed Bee Queen's Super Trades to Bonus Trades everywhere. This includes code, configs, and even tags such as the now-named:
