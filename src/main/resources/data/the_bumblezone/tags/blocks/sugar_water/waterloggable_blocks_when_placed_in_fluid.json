@@ -43,19 +43,31 @@
     "minecraft:sculk_shrieker",
     "minecraft:sea_pickle",
     {
-      "id": "#forge:glass_panes",
-      "required": false
-    },
-    {
       "id": "#c:glass_panes",
       "required": false
     },
     {
-      "id": "#forge:chests",
+      "id": "#c:chests",
       "required": false
     },
     {
-      "id": "#c:chests",
+      "id": "#c:chest",
+      "required": false
+    },
+    {
+      "id": "#c:wooden_chests",
+      "required": false
+    },
+    {
+      "id": "#c:leaves",
+      "required": false
+    },
+    {
+      "id": "#forge:glass_panes",
+      "required": false
+    },
+    {
+      "id": "#forge:chests",
       "required": false
     },
     {
