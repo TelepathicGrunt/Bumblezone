@@ -79,7 +79,7 @@ Increased chances of Pollinated Streams of having a spider spawner piece.
 
 Added new item tag called `the_bumblezone:structures/disallowed_flowers_in_cocoon_loot` that can disallow flowers from showing
  up in Honey Cocoons in Bumblezone's structures. This is mainly used to prevent Botania's "special" flowers from
- spawning as loot for better balancing. Regular Botania flowers can still spawn. Just now overpowered flowers now.
+ spawning as loot for better balancing. Regular Botania flowers can still spawn. Just not overpowered flowers now.
 
 Added new Entity Type tags that will be used for mod compat where a few of Bumblezone's Spider Spawners will be
  converted into spawners for certain other mod's mobs. You can use these tags to quickly add rare chances of new
