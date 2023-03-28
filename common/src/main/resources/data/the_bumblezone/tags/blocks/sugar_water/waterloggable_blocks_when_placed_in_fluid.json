@@ -73,6 +73,18 @@
     {
       "id": "#forge:fences",
       "required": false
+    },
+    {
+      "id": "#forge:clusters",
+      "required": false
+    },
+    {
+      "id": "#forge:slabs",
+      "required": false
+    },
+    {
+      "id": "#forge:scaffoldings",
+      "required": false
     }
   ]
 }

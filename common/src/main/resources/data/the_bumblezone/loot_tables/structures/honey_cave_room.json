@@ -99,11 +99,14 @@
           ]
         },
         {
-          "name": "minecraft:flowers",
-          "type": "minecraft:tag",
-          "expand": true,
-          "weight": 10,
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 15,
           "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            },
             {
               "function": "minecraft:set_count",
               "count": {
@@ -126,17 +129,6 @@
                 "max": 3.0,
                 "type": "minecraft:uniform"
               }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
-          "weight": 5,
-          "functions": [
-            {
-              "function": "the_bumblezone:tag_item_removals",
-              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
             }
           ]
         }
