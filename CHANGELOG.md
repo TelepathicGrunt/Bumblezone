@@ -4,6 +4,9 @@
 Fixed Honey Cave Room's Honey Cocoons still able to spawn Botania's Special/Mythical flowers.
  Was not properly reading from the `the_bumblezone:structures/disallowed_flowers_in_cocoon_loot` item tag.
 
+##### Items:
+(Fabric/Quilt): Spectrum's Bee Head item when worn will count towards boosting the abilities of Bumblezone's bee armors.
+
 
 ### **(V.6.7.0 Changes) (1.19.4 Minecraft)**
 

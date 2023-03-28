@@ -20,6 +20,10 @@
       "required": false
     },
     {
+      "id": "spectrum:bee_head",
+      "required": false
+    },
+    {
       "id": "travelersbackpack:bee",
       "required": false
     },
