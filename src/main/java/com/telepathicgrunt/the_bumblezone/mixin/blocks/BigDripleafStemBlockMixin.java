@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BigDripleafStemBlock;
@@ -18,7 +19,7 @@ public class BigDripleafStemBlockMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;isSourceOfType(Lnet/minecraft/world/level/material/Fluid;)Z"),
             require = 0)
     private static boolean thebumblezone_waterlogWhenPlacedIntoSugarWater(boolean isWater, LevelAccessor levelAccessor, BlockPos blockPos, FluidState fluidState) {
-        if(fluidState.is(BzTags.SUGAR_WATER_FLUID) && Blocks.BIG_DRIPLEAF.defaultBlockState().is(BzTags.WATERLOGGABLE_BLOCKS_WHEN_PLACED_IN_FLUID)) {
+        if(fluidState.is(BzTags.SUGAR_WATER_FLUID) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(Blocks.BIG_DRIPLEAF.defaultBlockState())) {
             return true;
         }
         return isWater;
