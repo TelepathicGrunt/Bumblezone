@@ -32,6 +32,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BzCustomBucketItem extends BzBucketItem {
@@ -80,12 +81,21 @@ public class BzCustomBucketItem extends BzBucketItem {
         return actionResult;
     }
 
+    // Do not change signature of this method. It will automatically override Forge's canBlockContainFluid they patched into BucketItem.
+    // We want to use our logic instead of Forge's.
     protected boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
-        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, getFluid());
+        return blockstate.getBlock() instanceof LiquidBlockContainer &&
+                (((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, getFluid()) ||
+                ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER));
+    }
+
+    // Override and redirect forge patched method to our own.
+    @PlatformOnly({"forge"})
+    public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult, @Nullable ItemStack container) {
+        return emptyContents(player, world, pos, hitResult);
     }
 
     @Override
-    @PlatformOnly({"fabric", "quilt"})
     public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult) {
         if (!(this.fluid instanceof FlowingFluid)) {
             return false;

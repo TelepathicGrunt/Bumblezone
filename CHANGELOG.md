@@ -9,6 +9,7 @@ Adjusted Bee Queen trading so it logs error instead of crashing due to empty/bro
 
 ##### Forge:
 Forge Bumblezone requires v45.0.29 or newer Forge now due to needing some new Forge changes.
+ As a result, Sugar Water Bucket now can waterlog more blocks so they become filled with vanilla Water.
 
 
 ### **(V.6.7.1 Changes) (1.19.4 Minecraft)**
