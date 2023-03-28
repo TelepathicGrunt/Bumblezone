@@ -1,3 +1,9 @@
+### **(V.6.7.2 Changes) (1.19.2 Minecraft)**
+
+##### Misc:
+Fixed crash at startup due to MixinExtras not getting packaged into the jar.
+
+
 ### **(V.6.7.1 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
