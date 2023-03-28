@@ -1,8 +1,5 @@
 ### **(V.6.7.1 Changes) (1.19.2 Minecraft)**
 
-##### Blocks:
-Fixed Empty Honeycomb Brood Block item model being broken
-
 ##### Structures:
 Fixed Honey Cave Room's Honey Cocoons still able to spawn Botania's Special/Mythical flowers. 
  Was not properly reading from the `the_bumblezone:structures/disallowed_flowers_in_cocoon_loot` item tag.
