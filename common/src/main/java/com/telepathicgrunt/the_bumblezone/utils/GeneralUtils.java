@@ -5,6 +5,7 @@ import com.google.common.primitives.Doubles;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
@@ -411,5 +412,11 @@ public class GeneralUtils {
      */
     public static int merge(int upper, int lower) {
         return (upper << 16) + (lower & 0x0000FFFF);
+    }
+
+    //////////////////////////////////////////////
+
+    public static boolean isBlockAllowedForSugarWaterWaterlogging(BlockState blockState) {
+        return blockState.is(BzTags.WATERLOGGABLE_BLOCKS_WHEN_PLACED_IN_FLUID) && !blockState.is(BzTags.FORCED_DISALLOW_WATERLOGGING_BLOCKS_WHEN_PLACED_IN_FLUID);
     }
 }
