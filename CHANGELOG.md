@@ -1,3 +1,13 @@
+### **(V.6.7.3 Changes) (1.19.2 Minecraft)**
+
+##### Structures:
+Added back Mystical Botania flowers to Honey Cocoon loot in structures. Forgot they were the "normal" flowers. 
+ The "special" Botania flowers still will not be permitted in structure loot for balance reasons.
+
+##### Entities:
+Adjusted Bee Queen trading so it logs error instead of crashing due to empty/broken item tags used for trading.
+
+
 ### **(V.6.7.2 Changes) (1.19.2 Minecraft)**
 
 ##### Misc:

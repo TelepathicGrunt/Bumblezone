@@ -251,7 +251,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(rawTradeInputEntry.entry.replace("#", "")));
             Optional<HolderSet.Named<Item>> tag = Registry.ITEM.getTag(tagKey);
             if (tag.isEmpty() && rawTradeInputEntry.required) {
-                throw new RuntimeException("Trade input entry is set to required but " + rawTradeInputEntry.entry + " tag does not exist.");
+                Bumblezone.LOGGER.error("Trade input entry is set to required but " + rawTradeInputEntry.entry + " tag does not exist.");
             }
             else if (tag.isPresent()) {
                 return new TradeWantEntry(Optional.of(tagKey), tag.get());
@@ -260,7 +260,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         else {
             Optional<Holder<Item>> item = Registry.ITEM.getHolder(ResourceKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(rawTradeInputEntry.entry)));
             if (item.isEmpty() && rawTradeInputEntry.required) {
-                throw new RuntimeException("Trade input entry is set to required but " + rawTradeInputEntry.entry + " item does not exist.");
+                Bumblezone.LOGGER.error("Trade input entry is set to required but " + rawTradeInputEntry.entry + " item does not exist.");
             }
             else if (item.isPresent()) {
                 return new TradeWantEntry(Optional.empty(), HolderSet.direct(item.get()));
@@ -277,14 +277,14 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(rawTradeOutputEntry.entry.replace("#", "")));
                 Optional<HolderSet.Named<Item>> tag = Registry.ITEM.getTag(tagKey);
                 if (tag.isEmpty() && rawTradeOutputEntry.required) {
-                    throw new RuntimeException("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " tag does not exist.");
+                    Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " tag does not exist.");
                 }
                 else tag.ifPresent(holders -> tradeResultEntries.add(new TradeResultEntry(Optional.of(tagKey), holders, rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
             else {
                 Optional<Holder<Item>> item = Registry.ITEM.getHolder(ResourceKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(rawTradeOutputEntry.entry)));
                 if (item.isEmpty() && rawTradeOutputEntry.required) {
-                    throw new RuntimeException("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " item does not exist.");
+                    Bumblezone.LOGGER.error("Trade result entry is set to required but " + rawTradeOutputEntry.entry + " item does not exist.");
                 }
                 else item.ifPresent(itemHolder -> tradeResultEntries.add(new TradeResultEntry(Optional.empty(), HolderSet.direct(itemHolder), rawTradeOutputEntry.count(), rawTradeOutputEntry.xpReward(), rawTradeOutputEntry.weight)));
             }
