@@ -1,3 +1,16 @@
+### **(V.6.7.3 Changes) (1.19.4 Minecraft)**
+
+##### Structures:
+Added back Mystical Botania flowers to Honey Cocoon loot in structures. Forgot they were the "normal" flowers.
+ The "special" Botania flowers still will not be permitted in structure loot for balance reasons.
+
+##### Entities:
+Adjusted Bee Queen trading so it logs error instead of crashing due to empty/broken item tags used for trading.
+
+##### Forge:
+Forge Bumblezone requires v45.0.29 or newer Forge now due to needing some new Forge changes.
+
+
 ### **(V.6.7.1 Changes) (1.19.4 Minecraft)**
 
 ##### Structures:
