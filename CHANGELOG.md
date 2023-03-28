@@ -1,4 +1,4 @@
-### **(V.6.7.1 Changes) (1.19.2 Minecraft)**
+### **(V.6.7.1 Changes) (1.19.4 Minecraft)**
 
 ##### Structures:
 Fixed Honey Cave Room's Honey Cocoons still able to spawn Botania's Special/Mythical flowers.
