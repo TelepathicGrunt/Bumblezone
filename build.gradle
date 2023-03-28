@@ -119,15 +119,15 @@ repositories {
         }
     }
     maven {
-        url = "https://maven.theillusivec4.top/"
+        url = 'https://jitpack.io'
         content {
-            includeGroup 'top.theillusivec4.curios'
+            includeGroup 'com.github.LlamaLad7'
         }
     }
     maven {
-        url = 'https://jitpack.io'
+        url = "https://maven.theillusivec4.top/"
         content {
-            includeGroup 'com.github.llamalad7.mixinextras'
+            includeGroup 'top.theillusivec4.curios'
         }
     }
     flatDir { dirs 'flatdir' }
@@ -136,11 +136,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${project.mixin_extras_version}"))
-    implementation(jarJar("com.github.llamalad7.mixinextras:mixinextras-forge:${project.mixin_extras_version}")) {
-        jarJar.ranged(it, "[0.2.0-beta.5,)")
-    }
-
+    shadowMinecraftLibrary "com.github.LlamaLad7:MixinExtras:0.1.1-rc.4"
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1-rc.4")
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 
     //runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
