@@ -7,6 +7,8 @@ Added back Mystical Botania flowers to Honey Cocoon loot in structures. Forgot t
 ##### Entities:
 Adjusted Bee Queen trading so it logs error instead of crashing due to empty/broken item tags used for trading.
 
+Fixed Bee Queen able to do Bonus Trades for items that should not be allowed for Bonus Trading.
+
 ##### Fluids:
 Added `the_bumblezone:sugar_water/forced_disallow_waterlogging_blocks_when_placed_in_fluid` block tag to allow fine tuning
  what blocks can be waterlogged when placed into Sugar Water Fluid to go along with other item tag
