@@ -1,7 +1,6 @@
 {
   "required": true,
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
-  "plugin": "com.telepathicgrunt.the_bumblezone.mixin.MixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "the_bumblezone.refmap.json",
   "mixins": [

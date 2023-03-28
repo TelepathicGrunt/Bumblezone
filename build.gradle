@@ -1,6 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
-
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
@@ -21,7 +18,6 @@ buildscript {
 
 plugins {
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id "net.darkhax.curseforgegradle" version "1.0.7"
     id "com.modrinth.minotaur" version "2.+"
 }
@@ -32,6 +28,8 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.moddingx.modgradle.mapping'
 
+jarJar.enable()
+
 version = "${mod_version}+${mc_version}"
 group = "com.telepathicgrunt"
 archivesBaseName = "${modid}_forge"
@@ -40,11 +38,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 sourceSets {
     api {}
-}
-
-configurations {
-    shadowMinecraftLibrary
-    minecraftLibrary.extendsFrom(shadowMinecraftLibrary)
 }
 
 minecraft {
@@ -60,9 +53,6 @@ minecraft {
                     source sourceSets.api
                     source sourceSets.main
                 }
-            }
-            lazyToken('minecraft_classpath') {
-                configurations.shadowMinecraftLibrary.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
             }
         }
         client {}
@@ -119,15 +109,15 @@ repositories {
         }
     }
     maven {
-        url = 'https://jitpack.io'
-        content {
-            includeGroup 'com.github.LlamaLad7'
-        }
-    }
-    maven {
         url = "https://maven.theillusivec4.top/"
         content {
             includeGroup 'top.theillusivec4.curios'
+        }
+    }
+    maven {
+        url = 'https://jitpack.io'
+        content {
+            includeGroup 'com.github.llamalad7.mixinextras'
         }
     }
     flatDir { dirs 'flatdir' }
@@ -136,8 +126,11 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    shadowMinecraftLibrary "com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}"
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${project.mixin_extras_version}"))
+    implementation(jarJar("com.github.llamalad7.mixinextras:mixinextras-forge:${project.mixin_extras_version}")) {
+        jarJar.ranged(it, "[${project.mixin_extras_version},)")
+    }
+
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 
     //runtimeOnly fg.deobf("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_version}")
@@ -203,49 +196,83 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
 }
 
-Map<?, ?> makeAttributes() {
-    return [
-            "Specification-Title": "${modid}",
-            "Specification-Vendor": "TelepathicGrunt",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${mod_version}+${mc_version}",
-            "Implementation-Vendor" :"TelepathicGrunt",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "${modid}.mixins.json"
-    ]
-}
-
-tasks.create('relocateShadowJar', ConfigureShadowRelocation) {
-    target(tasks.shadowJar)
-    prefix("com.telepathicgrunt.the_bumblezone.shade")
-}
-
-tasks.named('shadowJar', ShadowJar).configure {
-    archiveClassifier.set('')
-    configurations = [project.configurations.shadowMinecraftLibrary]
-    dependsOn('relocateShadowJar')
-    manifest.attributes(makeAttributes())
-    from sourceSets.api.output
-    from 'LICENSE'
-    exclude 'META-INF/services/javax.*'
-}
-
 mixin { 
     add sourceSets.main, "${modid}.refmap.json"
 }
 
-processResources {}
+processTestResources {
+    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
+}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
-jar.finalizedBy('reobfJar')
-reobf { shadowJar {} }
-shadowJar.finalizedBy('reobfShadowJar')
+tasks.jarJar.configure {
+    classifier ''
+}
 
-apply from: 'gradle/maven.gradle'
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "${modid}",
+                "Specification-Vendor": "TelepathicGrunt",
+                "Specification-Version": "1", // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${mod_version}+${mc_version}",
+                "Implementation-Vendor" :"TelepathicGrunt",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs": "${modid}.mixins.json"
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+
+            pom {
+                name = 'TheBumblezone'
+                description = 'An unBEElievable dimension full of bees that becomes REALLY angry if you take their honey!'
+                url = 'https://github.com/TelepathicGrunt/Bumblezone'
+
+                scm {
+                    connection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    developerConnection = 'git:https://github.com/TelepathicGrunt/Bumblezone.git'
+                    url = 'https://github.com/TelepathicGrunt/Bumblezone'
+                }
+
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License v3.0'
+                        url = 'https://github.com/TelepathicGrunt/Bumblezone/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'telepathic_grunt'
+                        name = 'TelepathicGrunt'
+                        email = 'asarnesespam@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri("https://nexus.resourcefulbees.com/repository/telepathicgrunt/")
+            credentials {
+                username "$System.env.MAVEN_USER"
+                password "$System.env.MAVEN_PASS"
+            }
+        }
+    }
+}
 
 String changelogText = file("CHANGELOG.md").getText('UTF-8')
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
