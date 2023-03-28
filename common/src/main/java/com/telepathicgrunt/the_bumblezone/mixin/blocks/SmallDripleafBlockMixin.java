@@ -18,7 +18,7 @@ public class SmallDripleafBlockMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;"),
             require = 0)
     private static FluidState thebumblezone_waterlogWhenPlacedIntoSugarWater(FluidState fluid) {
-        if(fluid.is(BzTags.SUGAR_WATER_FLUID) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(Blocks.BIG_DRIPLEAF.defaultBlockState())) {
+        if(fluid.is(BzTags.SUGAR_WATER_FLUID) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(Blocks.SMALL_DRIPLEAF.defaultBlockState())) {
             return Fluids.WATER.defaultFluidState();
         }
         return fluid;
