@@ -55,11 +55,23 @@
       "required": false
     },
     {
+      "id": "#c:ender_chests",
+      "required": false
+    },
+    {
       "id": "#c:wooden_chests",
       "required": false
     },
     {
+      "id": "#c:clusters",
+      "required": false
+    },
+    {
       "id": "#c:leaves",
+      "required": false
+    },
+    {
+      "id": "#c:scaffoldings",
       "required": false
     },
     {
