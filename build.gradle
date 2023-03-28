@@ -1,6 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
-
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
@@ -21,7 +18,6 @@ buildscript {
 
 plugins {
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id "net.darkhax.curseforgegradle" version "1.0.7"
     id "com.modrinth.minotaur" version "2.+"
 }
@@ -42,11 +38,6 @@ sourceSets {
     api {}
 }
 
-configurations {
-    shadowMinecraftLibrary
-    minecraftLibrary.extendsFrom(shadowMinecraftLibrary)
-}
-
 minecraft {
     mappings channel: 'parchment', version: "${parchment_version}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -60,9 +51,6 @@ minecraft {
                     source sourceSets.api
                     source sourceSets.main
                 }
-            }
-            lazyToken('minecraft_classpath') {
-                configurations.shadowMinecraftLibrary.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
             }
         }
         client {}
@@ -138,7 +126,7 @@ dependencies {
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${project.mixin_extras_version}"))
     implementation(jarJar("com.github.llamalad7.mixinextras:mixinextras-forge:${project.mixin_extras_version}")) {
-        jarJar.ranged(it, "[0.2.0-beta.5,)")
+        jarJar.ranged(it, "[${project.mixin_extras_version},)")
     }
 
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
@@ -219,21 +207,6 @@ Map<?, ?> makeAttributes() {
     ]
 }
 
-tasks.create('relocateShadowJar', ConfigureShadowRelocation) {
-    target(tasks.shadowJar)
-    prefix("com.telepathicgrunt.the_bumblezone.shade")
-}
-
-tasks.named('shadowJar', ShadowJar).configure {
-    archiveClassifier.set('')
-    configurations = [project.configurations.shadowMinecraftLibrary]
-    dependsOn('relocateShadowJar')
-    manifest.attributes(makeAttributes())
-    from sourceSets.api.output
-    from 'LICENSE'
-    exclude 'META-INF/services/javax.*'
-}
-
 mixin { 
     add sourceSets.main, "${modid}.refmap.json"
 }
@@ -245,8 +218,6 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 jar.finalizedBy('reobfJar')
-reobf { shadowJar {} }
-shadowJar.finalizedBy('reobfShadowJar')
 
 apply from: 'gradle/maven.gradle'
 
