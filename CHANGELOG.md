@@ -1,8 +1,3 @@
-### **(V.6.7.2 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-
-
 ### **(V.6.7.1 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
