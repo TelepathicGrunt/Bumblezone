@@ -1,0 +1,12 @@
+{
+  "values": [
+    "the_bumblezone:music_disc_honey_bee_rat_faced_boy",
+    "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov",
+    "the_bumblezone:music_disc_la_bee_da_loca",
+    "the_bumblezone:music_disc_bee_laxing_with_the_hom_bees",
+    {
+      "id": "windswept:music_disc_bumblebee",
+      "required": false
+    }
+  ]
+}

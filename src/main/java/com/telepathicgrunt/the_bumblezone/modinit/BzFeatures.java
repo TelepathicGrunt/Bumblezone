@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.HangingGardenMob;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneyCrystalFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombHole;
+import com.telepathicgrunt.the_bumblezone.world.features.ItemFrameWithRandomItem;
 import com.telepathicgrunt.the_bumblezone.world.features.LayeredBlockSurface;
 import com.telepathicgrunt.the_bumblezone.world.features.NbtFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.PollinatedCaves;
@@ -17,6 +18,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.StickyHoneyResidueFeatu
 import com.telepathicgrunt.the_bumblezone.world.features.WebWall;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayerConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.ItemFrameConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -41,6 +43,7 @@ public class BzFeatures {
     public static final RegistryObject<Feature<BiomeBasedLayerConfig>> LAYERED_BLOCK_SURFACE = FEATURES.register("layered_block_surface", () -> new LayeredBlockSurface(BiomeBasedLayerConfig.CODEC));
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> WEB_WALL = FEATURES.register("web_wall", () -> new WebWall(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> HANGING_GARDEN_MOB = FEATURES.register("hanging_garden_mob", () -> new HangingGardenMob(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<ItemFrameConfig>> ITEM_FRAME_WITH_RANDOM_ITEM = FEATURES.register("item_frame_with_random_item", () -> new ItemFrameWithRandomItem(ItemFrameConfig.CODEC));
 
     public static final RegistryObject<Feature<OreConfiguration>> BLOCKENTITY_COMBS_FEATURE = FEATURES.register("blockentity_combs", () -> new BlockEntityCombOre(OreConfiguration.CODEC));
 }
