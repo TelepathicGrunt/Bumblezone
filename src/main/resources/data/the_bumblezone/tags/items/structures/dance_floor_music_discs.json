@@ -7,6 +7,10 @@
     {
       "id": "windswept:music_disc_bumblebee",
       "required": false
+    },
+    {
+      "id": "biomemakeover:red_rose_music_disk",
+      "required": false
     }
   ]
 }
