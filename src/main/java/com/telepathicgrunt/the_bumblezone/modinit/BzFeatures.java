@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.HangingGardenMob;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneyCrystalFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.HoneycombHole;
+import com.telepathicgrunt.the_bumblezone.world.features.ItemFrameWithRandomItem;
 import com.telepathicgrunt.the_bumblezone.world.features.LayeredBlockSurface;
 import com.telepathicgrunt.the_bumblezone.world.features.NbtFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.PollinatedCaves;
@@ -16,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.StickyHoneyResidueFeatu
 import com.telepathicgrunt.the_bumblezone.world.features.WebWall;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayerConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.ItemFrameConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +38,7 @@ public class BzFeatures {
     public static Feature<BiomeBasedLayerConfig> LAYERED_BLOCK_SURFACE = new LayeredBlockSurface(BiomeBasedLayerConfig.CODEC);
     public static Feature<NoneFeatureConfiguration> WEB_WALL = new WebWall(NoneFeatureConfiguration.CODEC);
     public static Feature<NoneFeatureConfiguration> HANGING_GARDEN_MOB = new HangingGardenMob(NoneFeatureConfiguration.CODEC);
+    public static Feature<ItemFrameConfig> ITEM_FRAME_WITH_RANDOM_ITEM = new ItemFrameWithRandomItem(ItemFrameConfig.CODEC);
 
     public static void registerFeatures() {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "honeycomb_holes"), HONEYCOMB_HOLE);
@@ -51,5 +54,6 @@ public class BzFeatures {
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "layered_block_surface"), LAYERED_BLOCK_SURFACE);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "web_wall"), WEB_WALL);
         Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "hanging_garden_mob"), HANGING_GARDEN_MOB);
+        Registry.register(Registry.FEATURE, new ResourceLocation(Bumblezone.MODID, "item_frame_with_random_item"), ITEM_FRAME_WITH_RANDOM_ITEM);
     }
 }

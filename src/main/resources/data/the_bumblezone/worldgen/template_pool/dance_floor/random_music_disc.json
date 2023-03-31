@@ -1,0 +1,14 @@
+{
+  "name": "the_bumblezone:random_music_disc",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "feature": "the_bumblezone:structure_spawned/item_frame_with_random_music_disc",
+        "projection": "rigid",
+        "element_type": "minecraft:feature_pool_element"
+      }
+    }
+  ]
+}

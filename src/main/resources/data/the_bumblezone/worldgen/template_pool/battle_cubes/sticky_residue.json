@@ -1,0 +1,14 @@
+{
+  "name": "the_bumblezone:overgrown_flower/sticky_residue",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "feature": "the_bumblezone:structure_spawned/sticky_honey_residue",
+        "projection": "rigid",
+        "element_type": "minecraft:feature_pool_element"
+      }
+    }
+  ]
+}
