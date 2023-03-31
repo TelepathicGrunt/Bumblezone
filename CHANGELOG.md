@@ -6,6 +6,10 @@ Changed how Dance Floor structure spawns Music Discs. Now it will pick a random 
  This will allow me and modpack makers to add other mod's Music Discs that feel fits to spawn in this structure.
  Windswept's Bumblebee and Biome Makeover's Red Rose Music Disc may appear in this structure if those mods are on!
 
+##### Teleportation:
+Send some packets now when teleporting to and from Bumblezone. Might help against some issues or oddities with teleporting.
+ Will fix Modern Industrialization's Quantum Armor not having flight after going to/from Bumblezone. Now it will keep the ability.
+
 ##### Mod Compat:
 Cleaned up and updated JEED descriptions for Bumblezone's status effects.
 
