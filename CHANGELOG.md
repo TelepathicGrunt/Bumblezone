@@ -4,6 +4,10 @@
 Changed how Dance Floor structure spawns Music Discs. Now it will pick a random disc to spawn from this item tag:
  `the_bumblezone:structures/dance_floor_music_discs`
  This will allow me and modpack makers to add other mod's Music Discs that feel fits to spawn in this structure.
+ Windswept's Bumblebee and Biome Makeover's Red Rose Music Disc may appear in this structure if those mods are on!
+
+##### Mod Compat:
+Shows short description of Bumblezone's enchantments for Enchantment Lore mod.
 
 
 ### **(V.6.7.3 Changes) (1.19.4 Minecraft)**
