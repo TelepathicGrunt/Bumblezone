@@ -1,0 +1,20 @@
+{
+  "type": "jeed:effect_provider",
+  "effect":{
+    "id": "the_bumblezone:hidden"
+  },
+  "providers": [
+    {
+      "item": "the_bumblezone:bee_bread"
+    },
+    {
+      "item": "minecraft:bee_spawn_egg"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "jeed"
+    }
+  ]
+}

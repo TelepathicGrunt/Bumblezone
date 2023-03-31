@@ -12,6 +12,9 @@
     },
     {
       "item": "the_bumblezone:honeycomb_brood_block"
+    },
+    {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
     }
   ],
   "conditions": [
