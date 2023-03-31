@@ -1,0 +1,7 @@
+{
+  "config": {
+    "items_to_pick_from": "#the_bumblezone:structures/dance_floor_music_discs",
+    "attachment": "floor"
+  },
+  "type": "the_bumblezone:item_frame_with_random_item"
+}

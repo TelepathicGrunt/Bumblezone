@@ -1,3 +1,11 @@
+### **(V.6.7.4 Changes) (1.19.4 Minecraft)**
+
+##### Structures:
+Changed how Dance Floor structure spawns Music Discs. Now it will pick a random disc to spawn from this item tag:
+ `the_bumblezone:structures/dance_floor_music_discs`
+ This will allow me and modpack makers to add other mod's Music Discs that feel fits to spawn in this structure.
+
+
 ### **(V.6.7.3 Changes) (1.19.4 Minecraft)**
 
 ##### Structures:
