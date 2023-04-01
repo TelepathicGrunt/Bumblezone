@@ -10,6 +10,9 @@ Changed how Dance Floor structure spawns Music Discs. Now it will pick a random 
 Send some packets now when teleporting to and from Bumblezone. Might help against some issues or oddities with teleporting.
  Will fix Modern Industrialization's Quantum Armor not having flight after going to/from Bumblezone. Now it will keep the ability.
 
+##### Fluids:
+Got Sugar Water Fluid to now spread to neighboring waterloggable blocks if they have 2 source blocks next to them. They will get waterlogged by vanilla Water.
+
 ##### Mod Compat:
 Cleaned up and updated JEED descriptions for Bumblezone's status effects.
 
