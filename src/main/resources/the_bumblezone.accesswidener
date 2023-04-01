@@ -17,3 +17,4 @@ accessible field net/minecraft/client/renderer/RenderType$CompositeRenderType st
 accessible field net/minecraft/client/renderer/RenderType$CompositeState textureState Lnet/minecraft/client/renderer/RenderStateShard$EmptyTextureStateShard;
 accessible class net/minecraft/client/renderer/FogRenderer$FogData
 accessible class net/minecraft/client/renderer/RenderStateShard$TextureStateShard
+extendable method net/minecraft/world/level/material/FlowingFluid canHoldFluid (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
