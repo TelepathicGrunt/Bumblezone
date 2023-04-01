@@ -1,3 +1,12 @@
+### **(V.6.7.5 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Adjusted lighting of two blocks when in item form (Honeycomb Brood Block and Empty Honey Brood Block)
+
+##### Advancements:
+Changed advancement icon to match creative menu icon
+
+
 ### **(V.6.7.4 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
