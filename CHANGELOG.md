@@ -1,4 +1,13 @@
-### **(V.6.7.4 Changes) (1.19.4 Minecraft)**
+### **(V.6.7.5 Changes) (1.19.4 Minecraft)**
+
+##### Blocks:
+Adjusted lighting of two blocks when in item form (Honeycomb Brood Block and Empty Honey Brood Block)
+
+##### Advancements:
+Changed advancement icon to match creative menu icon
+
+
+#### **(V.6.7.4 Changes) (1.19.4 Minecraft)**
 
 ##### Structures:
 Changed how Dance Floor structure spawns Music Discs. Now it will pick a random disc to spawn from this item tag:

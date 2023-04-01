@@ -1,7 +1,8 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:bee_nest"
+      "item": "the_bumblezone:honeycomb_brood_block",
+      "nbt": "{\"isCreativeTabIcon\":1b}"
     },
     "title": {
       "translate": "advancements.the_bumblezone.root.title"
