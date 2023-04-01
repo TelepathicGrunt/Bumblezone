@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
@@ -18,13 +19,16 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
@@ -152,6 +156,36 @@ public abstract class SugarWaterFluid extends FlowingFluid {
     @Override
     public BlockState createLegacyBlock(FluidState state) {
         return BzFluids.SUGAR_WATER_BLOCK.defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
+    }
+
+    @Override
+    public final boolean canHoldFluid(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+        Block block = blockState.getBlock();
+        if (block instanceof LiquidBlockContainer liquidBlockContainer) {
+            return liquidBlockContainer.canPlaceLiquid(blockGetter, blockPos, blockState, fluid) || ((LiquidBlockContainer) block).canPlaceLiquid(blockGetter, blockPos, blockState, fluid == BzFluids.SUGAR_WATER_FLUID ? Fluids.WATER : Fluids.FLOWING_WATER);
+        }
+        if (block instanceof DoorBlock || blockState.is(BlockTags.SIGNS) || blockState.is(Blocks.LADDER) || blockState.is(Blocks.SUGAR_CANE) || blockState.is(Blocks.BUBBLE_COLUMN)) {
+            return false;
+        }
+        Material material = blockState.getMaterial();
+        if (material == Material.PORTAL || material == Material.STRUCTURAL_AIR || material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) {
+            return false;
+        }
+        return !material.blocksMotion();
+    }
+
+    @Override
+    protected void spreadTo(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
+        if (blockState.getBlock() instanceof LiquidBlockContainer liquidBlockContainer) {
+            boolean canTakeSugarWater = liquidBlockContainer.canPlaceLiquid(levelAccessor, blockPos, blockState, fluidState.getType());
+            liquidBlockContainer.placeLiquid(levelAccessor, blockPos, blockState, canTakeSugarWater ? fluidState : Fluids.WATER.defaultFluidState());
+        }
+        else {
+            if (!blockState.isAir()) {
+                this.beforeDestroyingBlock(levelAccessor, blockPos, blockState);
+            }
+            levelAccessor.setBlock(blockPos, fluidState.createLegacyBlock(), 3);
+        }
     }
 
     public static class Flowing extends SugarWaterFluid {
