@@ -179,7 +179,7 @@ public class BzSmartBucket extends BucketItem {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + Math.random(), z + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
 
-                if (this.getFluid().is(BzTags.SUGAR_WATER_FLUID) &&
+                if (this.fluid.is(BzTags.SUGAR_WATER_FLUID) &&
                     world instanceof ServerLevel serverLevel &&
                     world.getServer() != null)
                 {
