@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:empty",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "name": "minecraft:sugar",
+          "type": "minecraft:item"
+        }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,11 @@ Bee Stinger now can be brewed with Awkward Potion in Brewing Stand to make a Lon
 ##### Blocks:
 Adjusted lighting of two blocks when in item form (Honeycomb Brood Block and Empty Honey Brood Block)
 
+##### Fluids:
+Sugar Water Bucket evaporating the fluid when placed in Nether and the likes now uses this loot table for the Sugar item drop.
+ `the_bumblezone:fluids/sugar_water_evaporates`
+ Allows you to customize the spawned item, how many, disable it, etc by datapacks.
+
 ##### Advancements:
 Changed advancement icon to match creative menu icon
 
