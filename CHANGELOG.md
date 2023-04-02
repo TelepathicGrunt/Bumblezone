@@ -1,5 +1,11 @@
 ### **(V.6.7.5 Changes) (1.19.4 Minecraft)**
 
+##### Items:
+Bee Stinger will now drop from Bees that still have their stinger! (Also works on modded bees that extended the Bee class)
+ The drop is handled by this loot table: `the_bumblezone:entities/bee_stinger_drops`
+
+Bee Stinger now can be brewed with Awkward Potion in Brewing Stand to make a Long Poison Potion!
+
 ##### Blocks:
 Adjusted lighting of two blocks when in item form (Honeycomb Brood Block and Empty Honey Brood Block)
 

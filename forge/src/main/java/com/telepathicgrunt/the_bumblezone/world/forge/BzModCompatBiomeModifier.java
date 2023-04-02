@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.forge;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.forge.BumblezoneForge;
+import com.telepathicgrunt.the_bumblezone.modinit.forge.BzBiomeModifiers;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -15,14 +15,14 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
-public record BzBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> feature, GenerationStep.Decoration step, String modid) implements BiomeModifier {
+public record BzModCompatBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> feature, GenerationStep.Decoration step, String modid) implements BiomeModifier {
 
-    public static Codec<BzBiomeModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-            Biome.LIST_CODEC.fieldOf("biomes").forGetter(BzBiomeModifier::biomes),
-            PlacedFeature.LIST_CODEC.fieldOf("feature").forGetter(BzBiomeModifier::feature),
-            GenerationStep.Decoration.CODEC.fieldOf("step").forGetter(BzBiomeModifier::step),
-            Codec.STRING.fieldOf("required_mod").forGetter(BzBiomeModifier::modid)
-    ).apply(builder, BzBiomeModifier::new));
+    public static Codec<BzModCompatBiomeModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+            Biome.LIST_CODEC.fieldOf("biomes").forGetter(BzModCompatBiomeModifier::biomes),
+            PlacedFeature.LIST_CODEC.fieldOf("feature").forGetter(BzModCompatBiomeModifier::feature),
+            GenerationStep.Decoration.CODEC.fieldOf("step").forGetter(BzModCompatBiomeModifier::step),
+            Codec.STRING.fieldOf("required_mod").forGetter(BzModCompatBiomeModifier::modid)
+    ).apply(builder, BzModCompatBiomeModifier::new));
 
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         // add a feature to all specified biomes
@@ -51,6 +51,6 @@ public record BzBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> 
     }
 
     public Codec<? extends BiomeModifier> codec() {
-        return BumblezoneForge.BIOME_MODIFIER.get();
+        return BzBiomeModifiers.BIOME_MODIFIER.get();
     }
 }

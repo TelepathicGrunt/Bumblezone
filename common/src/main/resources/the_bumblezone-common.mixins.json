@@ -52,6 +52,7 @@
     "items.MaterialInvoker",
     "items.PlayerDamageShieldInvoker",
     "items.SpawnEggItemAccessor",
+    "loot.LootContextMixin",
     "util.WeightedRandomListAccessor",
     "world.LevelMixin",
     "world.NoiseChunkAccessor",

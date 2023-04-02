@@ -22,5 +22,6 @@ public class BzRecipes {
 
     public static void registerBrewingStandRecipes() {
         PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
+        PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
     }
 }

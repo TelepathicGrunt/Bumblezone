@@ -1,5 +1,5 @@
 {
-    "type": "the_bumblezone:additions_modifier",
+    "type": "the_bumblezone:mod_compat_additions_modifier",
     "biomes": "#the_bumblezone:the_bumblezone",
     "feature": "#the_bumblezone:buzzier_bees_blobs",
     "step": "underground_ores",
