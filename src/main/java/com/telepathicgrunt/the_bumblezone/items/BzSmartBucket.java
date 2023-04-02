@@ -1,11 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -32,9 +37,12 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class BzSmartBucket extends BucketItem {
@@ -171,12 +179,22 @@ public class BzSmartBucket extends BucketItem {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + Math.random(), z + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
 
-                x = hitResult != null ? hitResult.getLocation().x() : pos.getX();
-                y = hitResult != null ? hitResult.getLocation().y() : pos.getY();
-                z = hitResult != null ? hitResult.getLocation().z() : pos.getZ();
-                ItemEntity itementity = new ItemEntity(world, x, y, z, Items.SUGAR.getDefaultInstance());
-                itementity.setDefaultPickUpDelay();
-                world.addFreshEntity(itementity);
+                if (this.getFluid().is(BzTags.SUGAR_WATER_FLUID) &&
+                    world instanceof ServerLevel serverLevel &&
+                    world.getServer() != null)
+                {
+                    Vec3 targetPos = hitResult != null ? hitResult.getLocation() : new Vec3(pos.getX(), pos.getY(), pos.getZ());
+
+                    LootTable sugarWaterEvaporateLootTable = world.getServer().getLootTables().get(new ResourceLocation(Bumblezone.MODID, "fluids/sugar_water_evaporates"));
+                    LootContext.Builder contextBuilder = new LootContext.Builder(serverLevel).withRandom(serverLevel.random);
+                    ObjectArrayList<ItemStack> evaporateItems = sugarWaterEvaporateLootTable.getRandomItems(contextBuilder.create(sugarWaterEvaporateLootTable.getParamSet()));
+
+                    for (ItemStack itemStackToSpawn : evaporateItems) {
+                        ItemEntity itementity = new ItemEntity(world, targetPos.x(), targetPos.y(), targetPos.z(), itemStackToSpawn);
+                        itementity.setDefaultPickUpDelay();
+                        world.addFreshEntity(itementity);
+                    }
+                }
 
                 return true;
             }
