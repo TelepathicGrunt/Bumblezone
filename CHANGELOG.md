@@ -12,6 +12,8 @@ Adjusted lighting of two blocks when in item form (Honeycomb Brood Block and Emp
 ##### Advancements:
 Changed advancement icon to match creative menu icon
 
+Added advancement for brewing Long Poison potion. Easiest done by using Bee Stinger as ingredient.
+
 
 #### **(V.6.7.4 Changes) (1.19.4 Minecraft)**
 
