@@ -14,6 +14,11 @@ Changed advancement icon to match creative menu icon
 
 Added advancement for brewing Long Poison potion. Easiest done by using Bee Stinger as ingredient.
 
+##### Mod Compat:
+Having Queen Bee mod's Bee Antenna Helmet on will now count towards improving Bumblezone's bee armor abilities.
+
+Fixed Neurotoxins enchantment not being craftable with Token Enchanter mod. (Changed the 4 Suspicious Stew requirement to 1)
+
 
 ### **(V.6.7.4 Changes) (1.19.2 Minecraft)**
 
