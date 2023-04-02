@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.configs;
 public class BzGeneralConfigs {
     public static double beehemothSpeed = 0.35D;
     public static boolean specialBeeSpawning = true;
+    public static boolean beeLootInjection = true;
+    public static boolean moddedBeeLootInjection = true;
     public static int nearbyBeesPerPlayerInBz = 3;
     public static boolean dispensersDropGlassBottles = true;
     public static int broodBlocksBeeSpawnCapacity = 84;

@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.loot;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
@@ -18,13 +20,18 @@ public final class NewLootInjectorApplier {
     public static final ResourceLocation STINGER_DROP_LOOT_TABLE_RL = new ResourceLocation(Bumblezone.MODID, "entities/bee_stinger_drops");
 
     public static boolean checkIfInjectLoot(LootContext context) {
-        if(context.hasParam(LootContextParams.THIS_ENTITY)) {
-            if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee) {
-                if (!((LootContextBzVisitedLootInterface)context).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL)) {
-                    return true;
+        if (BzGeneralConfigs.beeLootInjection || BzGeneralConfigs.moddedBeeLootInjection) {
+            if(context.hasParam(LootContextParams.THIS_ENTITY)) {
+                if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
+                    if (!((LootContextBzVisitedLootInterface)context).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL)) {
+                        ResourceLocation beeRL = BuiltInRegistries.ENTITY_TYPE.getKey(bee.getType());
+                        return (BzGeneralConfigs.beeLootInjection && beeRL.getNamespace().equals("minecraft")) ||
+                                (BzGeneralConfigs.moddedBeeLootInjection && !beeRL.getNamespace().equals("minecraft"));
+                    }
                 }
             }
         }
+
         return false;
     }
 

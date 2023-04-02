@@ -3,6 +3,7 @@
 ##### Items:
 Bee Stinger will now drop from adult Bees that still have their stinger! (Also works on modded bees that extended the Bee class)
  The drop is handled by this loot table: `the_bumblezone:entities/bee_stinger_drops`
+ Also added two config options to make disabling this feature easier: beeLootInjection and moddedBeeLootInjection in configs.
 
 Bee Stinger now can be brewed with Awkward Potion in Brewing Stand to make a Long Poison Potion!
 

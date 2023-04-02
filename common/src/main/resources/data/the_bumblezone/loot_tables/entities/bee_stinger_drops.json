@@ -12,7 +12,7 @@
               "condition": "minecraft:entity_properties",
               "entity": "this",
               "predicate": {
-                "nbt": "{\"HasStung\": 0b}"
+                "nbt": "{\"HasStung\": 0b, \"Health\": 0.0f}"
               }
             }
           ]

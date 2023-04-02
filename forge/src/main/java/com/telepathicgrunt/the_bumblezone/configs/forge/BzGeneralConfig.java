@@ -8,6 +8,8 @@ public class BzGeneralConfig {
 
     public static ForgeConfigSpec.DoubleValue beehemothSpeed;
     public static ForgeConfigSpec.BooleanValue specialBeeSpawning;
+    public static ForgeConfigSpec.BooleanValue beeLootInjection;
+    public static ForgeConfigSpec.BooleanValue moddedBeeLootInjection;
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
@@ -65,6 +67,26 @@ public class BzGeneralConfig {
                 .defineInRange("nearbyBeesPerPlayerInBz", 25, 0, 1000);
 
         builder.pop();
+
+
+        builder.push("Bee Loot Injection Options");
+
+            beeLootInjection = builder
+                    .comment(" \n-----------------------------------------------------\n",
+                            " Whether Bee Stingers should drop from adult Bees that die while still having their stinger.",
+                            " This pulls from this loot table for the drops: `the_bumblezone:entities/bee_stinger_drops`\n")
+                    .translation("the_bumblezone.config.beelootinjection")
+                    .define("beeLootInjection", true);
+
+            moddedBeeLootInjection = builder
+                    .comment(" \n-----------------------------------------------------\n",
+                            " Whether Bee Stingers should drop from adult modded Bees that die while still having their stinger.",
+                            " This pulls from this loot table for the drops: `the_bumblezone:entities/bee_stinger_drops`\n")
+                    .translation("the_bumblezone.config.moddedbeelootinjection")
+                    .define("moddedBeeLootInjection", true);
+
+        builder.pop();
+
 
         builder.push("General Mechanics Options");
 
@@ -203,6 +225,8 @@ public class BzGeneralConfig {
     public static void copyToCommon() {
         BzGeneralConfigs.beehemothSpeed = beehemothSpeed.get();
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning.get();
+        BzGeneralConfigs.beeLootInjection = beeLootInjection.get();
+        BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection.get();
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz.get();
         BzGeneralConfigs.dispensersDropGlassBottles = dispensersDropGlassBottles.get();
         BzGeneralConfigs.superCandlesBurnsMobs = superCandlesBurnsMobs.get();
