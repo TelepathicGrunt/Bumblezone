@@ -655,6 +655,8 @@
   "the_bumblezone.midnightconfig.beeQueenBonusTradeDurationInTicks": "Queen Bonus Trade Duration (ticks)",
   "the_bumblezone.midnightconfig.beeQueenBonusTradeAmountTillSatified": "Trades Per Queen Bonus Trades",
   "the_bumblezone.midnightconfig.specialBeeSpawning": "Special Bee Spawning",
+  "the_bumblezone.midnightconfig.beeLootInjection": "Bee Loot Injection",
+  "the_bumblezone.midnightconfig.moddedBeeLootInjection": "Modded Bee Loot Injection",
   "the_bumblezone.midnightconfig.nearbyBeesPerPlayerInBz": "Nearby Bees Per Player In Bz",
   "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Keep Bee Essence On Respawning",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthFlightOfTheBumblebee": "Music Disc Time Length Flight Of The Bumblebee",
