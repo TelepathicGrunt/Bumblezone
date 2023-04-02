@@ -16,6 +16,10 @@
       "required": false
     },
     {
+      "id": "queen_bee:bee_antenna_helmet",
+      "required": false
+    },
+    {
       "id": "simplehats:beehat",
       "required": false
     },
