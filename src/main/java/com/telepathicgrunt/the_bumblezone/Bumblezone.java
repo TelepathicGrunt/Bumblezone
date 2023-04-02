@@ -132,6 +132,7 @@ public class Bumblezone{
         BzSounds.SOUND_EVENTS.register(modEventBus);
         BzStructures.STRUCTURES.register(modEventBus);
         BzDimension.BIOME_SOURCE.register(modEventBus);
+        BzGlobalLootModifier.GLM.register(modEventBus);
         BzParticles.PARTICLE_TYPES.register(modEventBus);
         BzPredicates.POS_RULE_TEST.register(modEventBus);
         BzDimension.CHUNK_GENERATOR.register(modEventBus);

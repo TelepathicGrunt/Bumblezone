@@ -51,6 +51,7 @@
     "items.MapItemMixin",
     "items.MaterialInvoker",
     "items.PlayerDamageShieldInvoker",
+    "loot.LootContextMixin",
     "util.WeightedRandomListAccessor",
     "world.ChunkGeneratorAccessor",
     "world.LevelMixin",
