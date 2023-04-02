@@ -141,6 +141,12 @@ public class BzConfig extends MidnightConfig {
     public static boolean specialBeeSpawning = true;
 
     @Entry
+    public static boolean beeLootInjection = true;
+
+    @Entry
+    public static boolean moddedBeeLootInjection = true;
+
+    @Entry
     public static int nearbyBeesPerPlayerInBz = 25;
 
     @Entry
