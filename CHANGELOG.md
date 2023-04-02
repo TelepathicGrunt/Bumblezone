@@ -20,6 +20,8 @@ Changed advancement icon to match creative menu icon
 
 Added advancement for brewing Long Poison potion. Easiest done by using Bee Stinger as ingredient.
 
+Added advancement to show URL to Bumblezone Wiki for those who rather look up the mod online instead.
+
 ##### Mod Compat:
 Having Queen Bee mod's Bee Antenna Helmet on will now count towards improving Bumblezone's bee armor abilities.
 
