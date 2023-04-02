@@ -20,7 +20,7 @@
       },
       {
         "item": "minecraft:suspicious_stew",
-        "count": 4
+        "count": 1
       }
     ]
   },
@@ -37,14 +37,6 @@
     {
       "type": "forge:mod_loaded",
       "modid": "tokenenchanter"
-    }
-  ],
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "tokenenchanter"
-      ]
     }
   ]
 }
