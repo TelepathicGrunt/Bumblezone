@@ -175,6 +175,7 @@ allprojects {
             url = 'https://maven.cafeteria.dev/releases'
             content {
                 includeGroup 'dev.cafeteria'
+                includeGroup 'me.luligabi'
             }
         }
         maven {

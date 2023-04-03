@@ -43,7 +43,7 @@ dependencies {
     //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
     //modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
 
-    include("me.luligabi:NoIndium:${project.noindium}")
+    include("me.luligabi:NoIndium:${rootProject.noindium}")
     //modLocalRuntime("curse.maven:indium-459496:${rootProject.indium_file_id}")
 
     //modLocalRuntime("dev.emi:emi:${rootProject.emi}")
