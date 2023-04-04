@@ -39,6 +39,18 @@
       "required": false
     },
     {
+      "id": "ecotones:clover",
+      "required": false
+    },
+    {
+      "id": "ecotones:marigold",
+      "required": false
+    },
+    {
+      "id": "ecotones:cyan_rose",
+      "required": false
+    },
+    {
       "id": "forbidden_arcanus:cherry_sapling",
       "required": false
     },

@@ -89,6 +89,10 @@
       "required": false
     },
     {
+      "id": "collectorsreap:strawberry_jam_bun",
+      "required": false
+    },
+    {
       "id": "adorn:honeycomb_crate",
       "required": false
     },

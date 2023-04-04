@@ -140,6 +140,10 @@
       "required": false
     },
     {
+      "id": "bovinesandbuttercups:custom_flower",
+      "required": false
+    },
+    {
       "id": "bushierflowers:grown_wither_rose",
       "required": false
     },
@@ -176,7 +180,19 @@
       "required": false
     },
     {
+      "id": "cinderscapes:scorched_tendrils",
+      "required": false
+    },
+    {
       "id": "cyclic:flower_lime_carnation",
+      "required": false
+    },
+    {
+      "id": "ecotones:poofy_dandelion",
+      "required": false
+    },
+    {
+      "id": "ecotones:rosemary",
       "required": false
     },
     {
