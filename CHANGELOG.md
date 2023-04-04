@@ -1,3 +1,11 @@
+### **(V.6.7.6 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Adjusted certain mod's flowers from spawning or not in the Bumblezone's Hanging Gardens structure.
+
+Adjusted some Bee Queen trades to add some more trades using some mod's items.
+
+
 ### **(V.6.7.5 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
