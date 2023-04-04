@@ -73,13 +73,7 @@ subprojects {
 
                 gameVersions = ["${rootProject.minecraft_version}"]
                 loaders = [name]
-
-                if (name == "fabric") {
-                    versionType = "BETA"
-                }
-                else {
-                    versionType = "RELEASE"
-                }
+                versionType = "RELEASE"
 
                 uploadFile = tasks.remapJar
 
@@ -104,12 +98,7 @@ subprojects {
                     id = uploadSettings["curse-id"]
                     changelogType = "markdown"
                     changelog = changeLogText
-                    if (name == "fabric") {
-                        releaseType = "beta"
-                    }
-                    else {
-                        releaseType = "release"
-                    }
+                    releaseType = "release"
 
                     addGameVersion("${rootProject.minecraft_version}")
                     addGameVersion(name.capitalize())
