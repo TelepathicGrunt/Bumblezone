@@ -20,6 +20,10 @@
       "required": false
     },
     {
+      "id": "bovinesandbuttercups:custom_flower",
+      "required": false
+    },
+    {
       "id": "bushierflowers:grown_wither_rose",
       "required": false
     },
@@ -29,6 +33,10 @@
     },
     {
       "id": "byg:pollen_block",
+      "required": false
+    },
+    {
+      "id": "ecotones:rosemary",
       "required": false
     },
     {

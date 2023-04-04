@@ -15,6 +15,22 @@
     {
       "id": "minecraft:fermented_spider_eye",
       "required": true
+    },
+    {
+      "id": "biomesoplenty:stringy_cobweb",
+      "required": false
+    },
+    {
+      "id": "blue_skies:bug_guts",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:bone_spider_eye",
+      "required": false
+    },
+    {
+      "id": "neapolitan:chocolate_spider_eye",
+      "required": false
     }
   ],
   "possible_rewards": [
