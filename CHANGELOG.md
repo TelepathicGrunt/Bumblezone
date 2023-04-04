@@ -1,5 +1,8 @@
 ### **(V.6.7.6 Changes) (1.19.4 Minecraft)**
 
+##### Items:
+(Fabric/Quilt): Fixed crash with Pollen Puff flower spawning. Had to update Fake Player API.
+
 ##### Mod Compat:
 Adjusted certain mod's flowers from spawning or not in the Bumblezone's Hanging Gardens structure.
 
