@@ -53,6 +53,14 @@
       "required": false
     },
     {
+      "id": "collectorsreap:honey_lime_chicken",
+      "required": false
+    },
+    {
+      "id": "collectorsreap:berry_limeade",
+      "required": false
+    },
+    {
       "id": "delightful:ender_nectar",
       "required": false
     },
@@ -90,6 +98,10 @@
     },
     {
       "id": "pamhc2foodcore:glowberrypieitem",
+      "required": false
+    },
+    {
+      "id": "ecotones:blueberry_jam",
       "required": false
     }
   ],

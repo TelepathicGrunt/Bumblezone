@@ -55,6 +55,18 @@
       "required": false
     },
     {
+      "id": "ecotones:clover",
+      "required": false
+    },
+    {
+      "id": "ecotones:marigold",
+      "required": false
+    },
+    {
+      "id": "ecotones:cyan_rose",
+      "required": false
+    },
+    {
       "id": "environmental:cherry_sapling",
       "required": false
     },
