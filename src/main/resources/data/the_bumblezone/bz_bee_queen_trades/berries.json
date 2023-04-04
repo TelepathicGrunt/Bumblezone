@@ -207,6 +207,10 @@
     {
       "id": "minestuck:strawberry_chunk",
       "required": false
+    },
+    {
+      "id": "ecotones:blueberries",
+      "required": false
     }
   ],
   "possible_rewards": [
