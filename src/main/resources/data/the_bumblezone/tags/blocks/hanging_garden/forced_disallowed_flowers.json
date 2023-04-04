@@ -492,6 +492,10 @@
       "required": false
     },
     {
+      "id": "rats:ratglove_flower",
+      "required": false
+    },
+    {
       "id": "regions_unexplored:wilting_trillium",
       "required": false
     },
