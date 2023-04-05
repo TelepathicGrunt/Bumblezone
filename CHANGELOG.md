@@ -3,6 +3,10 @@
 ##### Items:
 (Fabric/Quilt): Fixed crash with Pollen Puff flower spawning. Had to update Fake Player API.
 
+Fixed Carpenter Bee Boots able to mine in protected server spawn chunks by non-op players. Should not happen now.
+
+Fixed Pollen Puff thrown by non-op players able to place Pile of Pollen blocks in protected server spawn chunks. Should not happen now.
+
 ##### Mod Compat:
 Adjusted certain mod's flowers from spawning or not in the Bumblezone's Hanging Gardens structure.
 

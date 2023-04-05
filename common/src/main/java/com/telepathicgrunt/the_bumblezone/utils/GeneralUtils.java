@@ -26,6 +26,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NoiseColumn;
@@ -406,8 +407,8 @@ public class GeneralUtils {
 
     /**
      * IIntArray can only send shorts, so we need to split int values in two.
-     * @param upper The current upper split bits, recieved from network
-     * @param lower The current lower split bits, recieved from network
+     * @param upper The current upper split bits, received from network
+     * @param lower The current lower split bits, received from network
      * @return The updated value.
      */
     public static int merge(int upper, int lower) {
@@ -418,5 +419,14 @@ public class GeneralUtils {
 
     public static boolean isBlockAllowedForSugarWaterWaterlogging(BlockState blockState) {
         return blockState.is(BzTags.WATERLOGGABLE_BLOCKS_WHEN_PLACED_IN_FLUID) && !blockState.is(BzTags.FORCED_DISALLOW_WATERLOGGING_BLOCKS_WHEN_PLACED_IN_FLUID);
+    }
+
+    //////////////////////////////////////////////
+
+    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos) {
+        if (entity instanceof Player player) {
+            return player.mayInteract(level, pos);
+        }
+        return true;
     }
 }

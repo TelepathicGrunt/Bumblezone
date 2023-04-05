@@ -14,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -166,7 +167,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
-        if (possiblePlants != null) {
+        if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), this.blockPosition())) {
             boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 
             if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
@@ -182,7 +183,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
-        if(this.level.isClientSide() || consumed) return; // do not run this code if a block already was set.
+        if(this.level.isClientSide() || consumed || !GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), this.blockPosition())) return; // do not run this code if a block already was set.
 
         BlockState blockstate = this.level.getBlockState(blockHitResult.getBlockPos());
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
