@@ -15,6 +15,10 @@ Bee Stinger will now drop from adult Bees that still have their stinger! (Also w
 
 Bee Stinger now can be brewed with Awkward Potion in Brewing Stand to make a Long Poison Potion!
 
+Fixed Carpenter Bee Boots able to mine in protected server spawn chunks by non-op players. Should not happen now.
+
+Fixed Pollen Puff thrown by non-op players able to place Pile of Pollen blocks in protected server spawn chunks. Should not happen now.
+
 ##### Blocks:
 Adjusted lighting of two blocks when in item form (Honeycomb Brood Block and Empty Honey Brood Block)
 

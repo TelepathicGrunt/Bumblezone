@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -265,16 +266,16 @@ public class PileOfPollen extends FallingBlock {
         }
 
         // Make pollen puff entity grow pile of pollen
-        else if(entity.getType() == BzEntities.POLLEN_PUFF_ENTITY) {
-            if(((PollenPuffEntity)entity).isConsumed()) return; // do not run this code if a block already was set.
+        else if(entity instanceof PollenPuffEntity pollenPuffEntity) {
+            if(pollenPuffEntity.isConsumed() || !GeneralUtils.isPermissionAllowedAtSpot(world, pollenPuffEntity.getOwner(), blockPos)) return; // do not run this code if a block already was set.
 
             stackPollen(blockState, world, blockPos, BzBlocks.PILE_OF_POLLEN.defaultBlockState());
-            entity.remove(Entity.RemovalReason.DISCARDED);
-            ((PollenPuffEntity)entity).consumed();
+            pollenPuffEntity.remove(Entity.RemovalReason.DISCARDED);
+            pollenPuffEntity.consumed();
 
             if(world.isClientSide()) {
                 for(int i = 0; i < 50; i++) {
-                    spawnParticles(world, entity.position(), world.random, 0.055D, 0.0075D, 0);
+                    spawnParticles(world, pollenPuffEntity.position(), world.random, 0.055D, 0.0075D, 0);
                 }
             }
         }
