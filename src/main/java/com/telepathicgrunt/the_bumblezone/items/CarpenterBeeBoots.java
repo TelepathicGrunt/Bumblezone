@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -60,7 +61,8 @@ public class CarpenterBeeBoots extends BeeArmor {
                 xInBlock > 0.2d &&
                 xInBlock < 0.8d &&
                 zInBlock > 0.2d &&
-                zInBlock < 0.8d)
+                zInBlock < 0.8d &&
+                GeneralUtils.isPermissionAllowedAtSpot(world, player, player.blockPosition()))
             {
                 BlockPos belowBlockPos = new BlockPos(player.position().add(0, -0.1d, 0));
                 BlockState belowBlockState = world.getBlockState(belowBlockPos);
