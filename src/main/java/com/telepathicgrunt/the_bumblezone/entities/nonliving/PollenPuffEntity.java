@@ -177,7 +177,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
-        if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), this.blockPosition())) {
+        if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), new BlockPos(entityRayTraceResult.getLocation()), true)) {
             boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 
             if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
@@ -193,7 +193,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
-        if(this.level.isClientSide() || consumed || !GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), this.blockPosition())) return; // do not run this code if a block already was set.
+        if(this.level.isClientSide() || consumed || !GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), blockHitResult.getBlockPos(), true)) return; // do not run this code if a block already was set.
 
         BlockState blockstate = this.level.getBlockState(blockHitResult.getBlockPos());
         blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);

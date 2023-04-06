@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
@@ -378,10 +379,15 @@ public class GeneralUtils {
 
     //////////////////////////////////////////////
 
-    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos) {
-        if (entity instanceof Player player) {
-            return player.mayInteract(level, pos);
+    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
+        if (entity instanceof Player player && !player.mayInteract(level, pos)) {
+            return false;
         }
+
+        if (entity instanceof Player player) {
+            return PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
+        }
+
         return true;
     }
 }
