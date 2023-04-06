@@ -38,7 +38,6 @@ public abstract class ParticleEngineMixin {
     )
     private void bumblezone$onInit(CallbackInfo ci) {
         RegisterParticleEvent.EVENT.invoke(new RegisterParticleEvent(this::bumblezone$register));
-        System.out.println("bumblezone: register particles");
     }
 
     @Unique
