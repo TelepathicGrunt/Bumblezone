@@ -13,8 +13,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
-import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
-import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.resources.ResourceKey;

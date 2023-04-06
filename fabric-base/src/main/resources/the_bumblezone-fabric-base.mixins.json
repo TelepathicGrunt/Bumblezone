@@ -49,7 +49,7 @@
     "item.ItemStackMixin",
     "item.RecordItemMixin",
     "item.SimpleCookingSerializerMixin",
-    "menu.ResultSlotMixin",
-    "loot.LootTableMixin"
+    "loot.LootTableMixin",
+    "menu.ResultSlotMixin"
   ]
 }

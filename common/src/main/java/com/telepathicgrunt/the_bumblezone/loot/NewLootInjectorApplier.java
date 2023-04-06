@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
