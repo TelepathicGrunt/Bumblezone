@@ -12,6 +12,10 @@ Adjusted certain mod's flowers from spawning or not in the Bumblezone's Hanging 
 
 Adjusted some Bee Queen trades to add some more trades using some mod's items.
 
+Fixed Carpenter Bee Boots able to mine in some claimed chunks by non-claim owners players. Only works for some claim mods.
+
+Fixed Pollen Puff thrown by non-claim owner players able to place Pile of Pollen blocks in some claimed chunks. Only works for some claim mods.
+
 
 ### **(V.6.7.5 Changes) (1.19.4 Minecraft)**
 

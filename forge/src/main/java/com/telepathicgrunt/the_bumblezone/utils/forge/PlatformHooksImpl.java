@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -121,5 +123,15 @@ public class PlatformHooksImpl {
 
     public static Player getCraftingPlayer() {
         return ForgeHooks.getCraftingPlayer();
+    }
+
+    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
+        if (placingBlock) {
+            return !ForgeEventFactory.onBlockPlace(entity, BlockSnapshot.create(level.dimension(), level, pos), Direction.UP);
+        }
+        else if (entity instanceof LivingEntity livingEntity) {
+            return ForgeEventFactory.onEntityDestroyBlock(livingEntity, pos, level.getBlockState(pos));
+        }
+        return true;
     }
 }

@@ -64,7 +64,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                 xInBlock < 0.8d &&
                 zInBlock > 0.2d &&
                 zInBlock < 0.8d &&
-                GeneralUtils.isPermissionAllowedAtSpot(world, player, player.blockPosition()))
+                GeneralUtils.isPermissionAllowedAtSpot(world, player, player.blockPosition().below(), false))
             {
                 BlockPos belowBlockPos = BlockPos.containing(player.position().add(0, -0.1d, 0));
                 BlockState belowBlockState = world.getBlockState(belowBlockPos);

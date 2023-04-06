@@ -423,10 +423,10 @@ public class GeneralUtils {
 
     //////////////////////////////////////////////
 
-    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos) {
-        if (entity instanceof Player player) {
-            return player.mayInteract(level, pos);
+    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
+        if (entity instanceof Player player && !player.mayInteract(level, pos)) {
+            return false;
         }
-        return true;
+        return PlatformHooks.isPermissionAllowedAtSpot(level, entity, pos, placingBlock);
     }
 }

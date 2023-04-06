@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -268,7 +267,7 @@ public class PileOfPollen extends FallingBlock {
 
         // Make pollen puff entity grow pile of pollen
         else if(entity instanceof PollenPuffEntity pollenPuffEntity) {
-            if(pollenPuffEntity.isConsumed() || !GeneralUtils.isPermissionAllowedAtSpot(world, pollenPuffEntity.getOwner(), blockPos)) return; // do not run this code if a block already was set.
+            if(pollenPuffEntity.isConsumed() || !GeneralUtils.isPermissionAllowedAtSpot(world, pollenPuffEntity.getOwner(), blockPos, true)) return; // do not run this code if a block already was set.
 
             stackPollen(blockState, world, blockPos, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState());
             pollenPuffEntity.remove(Entity.RemovalReason.DISCARDED);
