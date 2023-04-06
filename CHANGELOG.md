@@ -7,6 +7,10 @@ Fixed Carpenter Bee Boots able to mine in protected server spawn chunks by non-o
 
 Fixed Pollen Puff thrown by non-op players able to place Pile of Pollen blocks in protected server spawn chunks. Should not happen now.
 
+##### Fluids:
+Fixed Honey Fluid and Royal Jelly Fluid able to turn all waterlogged blocks into Glistering Honey Crystal.
+ Instead, the fluid should turn into the crystal instead of the waterlogged block (unless said block is marked as replaceable in their material like Seagrass)
+
 ##### Mod Compat:
 Adjusted certain mod's flowers from spawning or not in the Bumblezone's Hanging Gardens structure.
 

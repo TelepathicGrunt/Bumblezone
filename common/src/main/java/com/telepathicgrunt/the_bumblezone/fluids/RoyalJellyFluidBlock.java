@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
@@ -84,8 +85,15 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
                     return false;
                 }
 
-                world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
-                break;
+                BlockState sideState = world.getBlockState(sidePos);
+                Material material = sideState.getMaterial();
+                if (sideState.getBlock() instanceof LiquidBlock || material.isLiquid() || material.isReplaceable()) {
+                    world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
+                }
+                else if (!currentFluid.isSource()) {
+                    world.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
+                    return false;
+                }
             }
         }
 
