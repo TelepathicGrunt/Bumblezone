@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -294,7 +295,7 @@ public class StringCurtain extends Block {
     public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         if (blockstate.is(BzTags.STRING_CURTAINS)) {
-            if (itemstack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
+            if (itemstack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS) && GeneralUtils.isPermissionAllowedAtSpot(world, playerEntity, position, true)) {
                 boolean success = extendCurtainIfPossible(blockstate, world, position);
                 if (success) {
                     if (!playerEntity.getAbilities().instabuild) {
