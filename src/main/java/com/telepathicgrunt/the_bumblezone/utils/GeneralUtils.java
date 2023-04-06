@@ -40,6 +40,8 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.util.BlockSnapshot;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -394,10 +396,18 @@ public class GeneralUtils {
 
     //////////////////////////////////////////////
 
-    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos) {
-        if (entity instanceof Player player) {
-            return player.mayInteract(level, pos);
+    public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
+        if (entity instanceof Player player && !player.mayInteract(level, pos)) {
+            return false;
         }
+
+        if (placingBlock) {
+            return !ForgeEventFactory.onBlockPlace(entity, BlockSnapshot.create(level.dimension(), level, pos), Direction.UP);
+        }
+        else if (entity instanceof LivingEntity livingEntity) {
+            return ForgeEventFactory.onEntityDestroyBlock(livingEntity, pos, level.getBlockState(pos));
+        }
+
         return true;
     }
 }
