@@ -84,7 +84,15 @@ public class RoyalJellyFluidBlock extends LiquidBlock {
                     return false;
                 }
 
-                world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState(), 3);
+                BlockState sideState = world.getBlockState(sidePos);
+                Material material = sideState.getMaterial();
+                if (sideState.getBlock() instanceof LiquidBlock || material.isLiquid() || material.isReplaceable()) {
+                    world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState(), 3);
+                }
+                else if (!currentFluid.isSource()) {
+                    world.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState(), 3);
+                    return false;
+                }
             }
         }
 
