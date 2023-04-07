@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.GoodallCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -7,6 +8,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -19,6 +22,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -83,10 +87,10 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
      */
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState thisBlockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
+    public InteractionResult use(BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult HitResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if (ModChecker.goodallPresent && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
+        if (ModChecker.goodallPresent && BzConfig.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
             if (GoodallCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -101,6 +105,6 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
             }
         }
 
-        return super.use(thisBlockState, world, position, playerEntity, playerHand, HitResult);
+        return super.use(blockState, level, position, playerEntity, playerHand, HitResult);
     }
 }

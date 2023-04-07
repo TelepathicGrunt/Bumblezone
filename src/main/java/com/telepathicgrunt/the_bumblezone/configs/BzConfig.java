@@ -171,6 +171,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
 
+    @Entry
+    public static boolean allowGoodallBottledBeesRevivingEmptyBroodBlock = true;
+
 
     @Comment
     public static Comment clientComment;
