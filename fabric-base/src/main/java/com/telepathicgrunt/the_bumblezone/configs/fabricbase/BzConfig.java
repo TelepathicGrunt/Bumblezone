@@ -58,6 +58,7 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean superCandlesBurnsMobs = true;
 
+
     @Comment
     public static Comment crystallineFlowerComment;
 
@@ -259,6 +260,8 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks;
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified;
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning;
+        BzGeneralConfigs.beeLootInjection = beeLootInjection;
+        BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee;

@@ -11,6 +11,8 @@ Goodall's Ant can now sometimes spawn in Hanging Gardens structure.
 
 (Forge): Fixed several mod compat configs not working.
 
+(Fabric/Quilt): Fixed beeLootInjection and moddedBeeLootInjection not actually applying.
+
 
 ### **(V.6.7.6 Changes) (1.19.4 Minecraft)**
 
