@@ -210,7 +210,7 @@ public class ProductiveBeesCompat {
 	}
 
 	public static boolean isFilledBeeCageItem(ItemStack stack) {
-		return (stack.is(BEE_CAGE) || stack.is(STURDY_BEE_CAGE)) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("entity");
+		return !stack.isEmpty() && (stack.is(BEE_CAGE) || stack.is(STURDY_BEE_CAGE)) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("entity");
 	}
 
 	public static InteractionResult beeCageInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {

@@ -120,7 +120,7 @@ public class ResourcefulBeesCompat {
 	}
 
 	public static boolean isFilledBeeJarItem(ItemStack stack) {
-		return stack.is(BEE_JAR) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("Entity")
+		return !stack.isEmpty() && stack.is(BEE_JAR) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("Entity")
 				&& stack.getOrCreateTag().getCompound("Entity").contains("id");
 	}
 
