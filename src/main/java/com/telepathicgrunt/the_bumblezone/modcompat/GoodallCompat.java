@@ -1,7 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,15 +12,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class GoodallCompat {
     private static Item BOTTLED_BEE;
 
     public static void setupCompat() {
-        BOTTLED_BEE = ForgeRegistries.ITEMS.getValue(new ResourceLocation("goodall", "bottled_bee"));
+        BOTTLED_BEE = Registry.ITEM.get(new ResourceLocation("goodall", "bottled_bee"));
 
-        if (BOTTLED_BEE != null && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock.get()) {
+        if (BOTTLED_BEE != Items.AIR && BzConfig.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
             GoodallBottledBeeDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BOTTLED_BEE));
             DispenserBlock.registerBehavior(BOTTLED_BEE, new GoodallBottledBeeDispenseBehavior()); // adds compatibility with bottled bee in dispensers
         }

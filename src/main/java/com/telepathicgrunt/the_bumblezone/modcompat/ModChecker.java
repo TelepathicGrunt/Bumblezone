@@ -41,8 +41,8 @@ public class ModChecker {
             currentModID = "trinkets";
             loadupModCompat(currentModID, () -> TrinketsCompat.setupCompat());
 
-			modid = "goodall";
-			loadupModCompat(modid, () -> GoodallCompat.setupCompat());
+            currentModID = "goodall";
+			loadupModCompat(currentModID, () -> GoodallCompat.setupCompat());
         }
         catch (Exception e) {
             printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");

@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
@@ -32,14 +32,14 @@ public class GoodallBottledBeeDispenseBehavior extends DefaultDispenseItemBehavi
         BlockPos position = new BlockPos(iposition);
         BlockState blockstate = world.getBlockState(position);
 
-        if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
-            world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+        if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD) {
+            world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.defaultBlockState()
                 .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
                 .setValue(HoneycombBrood.STAGE, 3));
 
             stack.shrink(1);
 
-            if(!BzGeneralConfigs.dispensersDropGlassBottles.get()) {
+            if(!BzConfig.dispensersDropGlassBottles) {
                 if (!stack.isEmpty()) {
                     addGlassBottleToDispenser(source);
                 }
