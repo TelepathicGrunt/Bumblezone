@@ -5,6 +5,10 @@ Goodall's Bottled Bee item now can be used to revive Empty Honeycomb Brood Block
 
 Goodall's Ant can now sometimes spawn in Hanging Gardens structure.
 
+(Forge): Resourceful Bees's Bee Jar now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
+
+(Forge): Fixed several mod compat configs not working.
+
 
 ### **(V.6.7.6 Changes) (1.19.4 Minecraft)**
 

@@ -16,6 +16,7 @@ public class BzModCompatibilityConfigs {
 	public static double RBOreHoneycombSpawnRateBeeDungeon = 0.045D;
 	public static double RBOreHoneycombSpawnRateSpiderBeeDungeon = 0.10D;
 	public static boolean spawnResourcefulBeesHoneycombVeins = true;
+	public static boolean allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = true;
 
 	public static boolean spawnProductiveBeesBeesMob = true;
 	public static double spawnrateOfProductiveBeesMobs = 0.1D;

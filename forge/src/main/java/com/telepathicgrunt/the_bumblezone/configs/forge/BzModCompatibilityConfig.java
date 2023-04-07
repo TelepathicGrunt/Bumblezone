@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BzModCompatibilityConfig {
 	public static final ForgeConfigSpec GENERAL_SPEC;
@@ -20,6 +21,7 @@ public class BzModCompatibilityConfig {
 	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateSpiderBeeDungeon;
 	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesHoneycombVeins;
+	public static ForgeConfigSpec.BooleanValue allowResourcefulBeesBeeJarRevivingEmptyBroodBlock;
 
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
@@ -138,7 +140,16 @@ public class BzModCompatibilityConfig {
 					.translation("the_bumblezone.config.spawnresourcefulbeeshoneycombveins")
 					.define("spawnResourcefulBeesHoneycombVeins", true);
 
-			builder.pop();
+
+			allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = builder
+				.comment(" \n-----------------------------------------------------\n",
+						" Allow Bee Jars with bees inside to turn Empty Honeycomb Brood blocks into ",
+						" a regular Honeycomb Brood Block with a larva inside! \n")
+				.translation("the_bumblezone.config.allowresourcefulbeesbeejarrevivingemptybroodblock")
+				.define("allowResourcefulBeesBeeJarRevivingEmptyBroodBlock", true);
+
+
+		builder.pop();
 
 			builder.push("Productive Bees Options");
 
@@ -337,16 +348,41 @@ public class BzModCompatibilityConfig {
 	}
 
 	public static void copyToCommon() {
-		BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock.get();
-		BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock = allowBeeBottleRevivingEmptyBroodBlock.get();
+		BzModCompatibilityConfigs.allowHoneyFluidTanksFeedingCompat = allowHoneyFluidTanksFeedingCompat.get();
+
 		BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock = allowPotionOfBeesRevivingEmptyBroodBlock.get();
+
 		BzModCompatibilityConfigs.allowBeekeeperTradesCompat = allowBeekeeperTradesCompat.get();
+
 		BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat.get();
+
 		BzModCompatibilityConfigs.injectBzItemsIntoQuarkEnchantmentTooltipsCompat = injectBzItemsIntoQuarkEnchantmentTooltipsCompat.get();
+
+		BzModCompatibilityConfigs.spawnProductiveBeesBeesMob = spawnProductiveBeesBeesMob.get();
+		BzModCompatibilityConfigs.spawnrateOfProductiveBeesMobs = spawnrateOfProductiveBeesMobs.get();
+		BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants = spawnProductiveBeesHoneycombVariants.get();
+		BzModCompatibilityConfigs.allowedCombsForDungeons = allowedCombsForDungeons.get().stream().map(String::toString).collect(Collectors.toList());
+		BzModCompatibilityConfigs.allowedBees = allowedBees.get().stream().map(String::toString).collect(Collectors.toList());
 		BzModCompatibilityConfigs.allowHoneyTreatCompat = allowHoneyTreatCompat.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon = PBOreHoneycombSpawnRateBeeDungeon.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon = PBOreHoneycombSpawnRateSpiderBeeDungeon.get();
+
+		BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock = allowBeeBottleRevivingEmptyBroodBlock.get();
 		BzModCompatibilityConfigs.spawnCrystallizedHoneyInDimension = spawnCrystallizedHoneyInDimension.get();
 		BzModCompatibilityConfigs.spawnHoneyTilesInDimension = spawnHoneyTilesInDimension.get();
+
+		BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock.get();
+
+		BzModCompatibilityConfigs.spawnPokecubeBeePokemon = spawnPokecubeBeePokemon.get();
+		BzModCompatibilityConfigs.beePokemonGetsProtectionEffect = beePokemonGetsProtectionEffect.get();
+		BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon = spawnrateOfPokecubeBeePokemon.get();
+
+		BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob = spawnResourcefulBeesBeesMob.get();
+		BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsBrood = spawnrateOfResourcefulBeesMobsBrood.get();
+		BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsOther = spawnrateOfResourcefulBeesMobsOther.get();
+		BzModCompatibilityConfigs.RBOreHoneycombSpawnRateBeeDungeon = RBOreHoneycombSpawnRateBeeDungeon.get();
+		BzModCompatibilityConfigs.RBOreHoneycombSpawnRateSpiderBeeDungeon = RBOreHoneycombSpawnRateSpiderBeeDungeon.get();
+		BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins = spawnResourcefulBeesHoneycombVeins.get();
+		BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = allowResourcefulBeesBeeJarRevivingEmptyBroodBlock.get();
 	}
 }
