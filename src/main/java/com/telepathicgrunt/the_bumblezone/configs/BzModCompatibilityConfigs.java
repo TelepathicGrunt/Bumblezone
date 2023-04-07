@@ -24,6 +24,7 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
 	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
+	public static ForgeConfigSpec.BooleanValue allowProductiveBeesBeeCageRevivingEmptyBroodBlock;
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateSpiderBeeDungeon;
@@ -139,7 +140,6 @@ public class BzModCompatibilityConfigs {
 					.translation("the_bumblezone.config.spawnresourcefulbeeshoneycombveins")
 					.define("spawnResourcefulBeesHoneycombVeins", true);
 
-
 			allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = builder
 				.comment(" \n-----------------------------------------------------\n",
 						" Allow filled Bee Jars to turn Empty Honeycomb Brood blocks into ",
@@ -252,6 +252,13 @@ public class BzModCompatibilityConfigs {
 									"productivebees:ghostly",
 									"productivebees:zombie"
 							), (t) -> true);
+
+			allowProductiveBeesBeeCageRevivingEmptyBroodBlock = builder
+				.comment(" \n-----------------------------------------------------\n",
+						" Allow filled Bee Cages to turn Empty Honeycomb Brood blocks into ",
+						" a regular Honeycomb Brood Block with a larva inside! \n")
+				.translation("the_bumblezone.config.allowproductivebeesbeecagerevivingemptybroodblock")
+				.define("allowProductiveBeesBeeCageRevivingEmptyBroodBlock", true);
 
 			allowHoneyTreatCompat = builder
 					.comment(" \n-----------------------------------------------------\n",

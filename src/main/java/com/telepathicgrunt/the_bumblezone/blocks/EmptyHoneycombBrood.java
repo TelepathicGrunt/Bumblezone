@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.GoodallCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.PotionOfBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ResourcefulBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
@@ -132,6 +133,19 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
 
         if (ModChecker.resourcefulBeesPresent && BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock.get()) {
             if (ResourcefulBeesCompat.beeJarInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
+                playerEntity.swing(playerHand);
+                level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                                .setValue(HoneycombBrood.STAGE, 3)
+                                .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
+                        3);
+
+                return InteractionResult.SUCCESS;
+            }
+        }
+
+        if (ModChecker.productiveBeesPresent && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock.get()) {
+            if (ProductiveBeesCompat.beeCageInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                 level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
