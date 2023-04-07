@@ -19,6 +19,7 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateSpiderBeeDungeon;
 	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesHoneycombVeins;
+	public static ForgeConfigSpec.BooleanValue allowResourcefulBeesBeeJarRevivingEmptyBroodBlock;
 
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
@@ -137,6 +138,14 @@ public class BzModCompatibilityConfigs {
 							" NOTE: Will require a restart of the world to take effect. \n")
 					.translation("the_bumblezone.config.spawnresourcefulbeeshoneycombveins")
 					.define("spawnResourcefulBeesHoneycombVeins", true);
+
+
+			allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = builder
+				.comment(" \n-----------------------------------------------------\n",
+						" Allow filled Bee Jars to turn Empty Honeycomb Brood blocks into ",
+						" a regular Honeycomb Brood Block with a larva inside! \n")
+				.translation("the_bumblezone.config.allowresourcefulbeesbeejarrevivingemptybroodblock")
+				.define("allowResourcefulBeesBeeJarRevivingEmptyBroodBlock", true);
 
 			builder.pop();
 

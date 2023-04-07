@@ -36,7 +36,7 @@ public class GoodallCompat {
         if (isBottledBeesItem(itemstack)) {
             if (!playerEntity.isCrouching()) {
                 if (!playerEntity.isCreative()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced potion of bee with glass bottle
+                    playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced bottled bee with glass bottle
                 }
 
                 return InteractionResult.SUCCESS;
