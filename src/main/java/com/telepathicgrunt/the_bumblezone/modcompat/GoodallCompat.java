@@ -29,7 +29,7 @@ public class GoodallCompat {
     }
 
     public static boolean isBottledBeesItem(ItemStack itemStack) {
-        return itemStack.is(BOTTLED_BEE);
+        return !itemStack.isEmpty() && itemStack.is(BOTTLED_BEE);
     }
 
     public static InteractionResult bottledBeeInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
