@@ -12,17 +12,22 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQuee
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.rei.REIQueenTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
+import me.shedaniel.rei.api.client.registry.screen.OverlayDecider;
+import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -120,5 +125,21 @@ public class REICompat implements REIClientPlugin {
 
         registry.addWorkstations(QUEEN_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG));
         registry.addWorkstations(QUEEN_RANDOMIZE_TRADES, EntryStacks.of(BzItems.BEE_QUEEN_SPAWN_EGG));
+    }
+
+    @Override
+    public void registerScreens(ScreenRegistry registry) {
+        registry.registerDecider(new OverlayDecider() {
+            @Override
+            public <R extends Screen> boolean isHandingScreen(Class<R> screen) {
+                return true;
+            }
+
+            @Override
+            public <R extends Screen> InteractionResult shouldScreenBeOverlaid(R screen) {
+                return screen.getClass() == CrystallineFlowerScreen.class ?
+                        InteractionResult.FAIL : InteractionResult.PASS;
+            }
+        });
     }
 }
