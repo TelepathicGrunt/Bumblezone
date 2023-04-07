@@ -5,6 +5,8 @@ Goodall's Bottled Bee item now can be used to revive Empty Honeycomb Brood Block
 
 Goodall's Ant can now sometimes spawn in Hanging Gardens structure.
 
+Disable REI overlay when in Crystalline Flower screen due to GUI not meshing well on full screen.
+
 (Forge): Resourceful Bees's Bee Jar now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
 
 (Forge): Productive Bees's filled Bee Cage now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
