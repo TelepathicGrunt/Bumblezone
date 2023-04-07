@@ -181,11 +181,11 @@ dependencies {
     //runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
-    runtimeOnly fg.deobf("com.teamresourceful.resourcefulbees:resourcefulbees-forge-1.19.2:1.0.0-alpha.15@jar")
-    runtimeOnly fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-1.19.2:1.1.23")
-    runtimeOnly fg.deobf("com.teamresourceful.resourcefulconfig:resourcefulconfig-forge-1.19.2:1.0.19")
-    runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.40")
-    runtimeOnly fg.deobf("net.roguelogix.phosphophyllite:Phosphophyllite:0.6.0-beta.6.4")
+    //runtimeOnly fg.deobf("com.teamresourceful.resourcefulbees:resourcefulbees-forge-1.19.2:1.0.0-alpha.15@jar")
+    //runtimeOnly fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-1.19.2:1.1.23")
+    //runtimeOnly fg.deobf("com.teamresourceful.resourcefulconfig:resourcefulconfig-forge-1.19.2:1.0.19")
+    //runtimeOnly fg.deobf("software.bernie.geckolib:geckolib-forge-1.19:3.1.40")
+    //runtimeOnly fg.deobf("net.roguelogix.phosphophyllite:Phosphophyllite:0.6.0-beta.6.4")
 
     //compileOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
     //runtimeOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
