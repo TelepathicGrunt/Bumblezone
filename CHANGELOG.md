@@ -1,3 +1,11 @@
+### **(V.6.7.7 Changes) (1.19.4 Minecraft)**
+
+##### Mod Compat:
+Goodall's Bottled Bee item now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
+
+Goodall's Ant can now sometimes spawn in Hanging Gardens structure.
+
+
 ### **(V.6.7.6 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

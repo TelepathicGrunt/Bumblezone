@@ -39,6 +39,8 @@ public class BzModCompatibilityConfigs {
 
 	public static ForgeConfigSpec.BooleanValue allowPotionOfBeesRevivingEmptyBroodBlock;
 
+	public static ForgeConfigSpec.BooleanValue allowGoodallBottledBeesRevivingEmptyBroodBlock;
+
 	public static ForgeConfigSpec.BooleanValue allowBeekeeperTradesCompat;
 
 	static {
@@ -318,6 +320,18 @@ public class BzModCompatibilityConfigs {
 							" a regular Honeycomb Brood Block with a larva inside! \n")
 					.translation("the_bumblezone.config.allowpotionofbeesrevivingemptybroodblock")
 					.define("allowPotionOfBeesRevivingEmptyBroodBlock", true);
+
+			builder.pop();
+
+
+			builder.push("Goodall Options");
+
+			allowGoodallBottledBeesRevivingEmptyBroodBlock = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Allow Bottled Bees to turn Empty Honeycomb Brood blocks into ",
+							" a regular Honeycomb Brood Block with a larva inside! \n")
+					.translation("the_bumblezone.config.allowgoodallbottledbeesrevivingemptybroodblock")
+					.define("allowGoodallBottledBeesRevivingEmptyBroodBlock", true);
 
 			builder.pop();
 

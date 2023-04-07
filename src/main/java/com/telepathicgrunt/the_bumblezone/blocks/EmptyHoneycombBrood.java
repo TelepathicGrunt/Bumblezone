@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.GoodallCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.PotionOfBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -93,6 +94,19 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
 
         if (ModChecker.potionOfBeesPresent && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock.get()) {
             if (PotionOfBeesCompat.potionOfBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
+                playerEntity.swing(playerHand);
+                level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+                level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                                .setValue(HoneycombBrood.STAGE, 3)
+                                .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
+                        3);
+
+                return InteractionResult.SUCCESS;
+            }
+        }
+
+        if (ModChecker.goodallPresent && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock.get()) {
+            if (GoodallCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                 level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
