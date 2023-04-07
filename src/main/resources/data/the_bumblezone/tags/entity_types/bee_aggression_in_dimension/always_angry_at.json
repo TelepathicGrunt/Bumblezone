@@ -38,6 +38,10 @@
       "required": false
     },
     {
+      "id": "besmirchment:beelzebub",
+      "required": false
+    },
+    {
       "id": "betterend:dragonfly",
       "required": false
     },

@@ -74,6 +74,10 @@
       "required": false
     },
     {
+      "id": "goodall:ant",
+      "required": false
+    },
+    {
       "id": "honey_bucket:glow_snail",
       "required": false
     },
