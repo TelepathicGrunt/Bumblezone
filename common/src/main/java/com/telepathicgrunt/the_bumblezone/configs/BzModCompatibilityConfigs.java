@@ -85,5 +85,7 @@ public class BzModCompatibilityConfigs {
 
 	public static boolean allowPotionOfBeesRevivingEmptyBroodBlock = true;
 
+	public static boolean allowGoodallBottledBeesRevivingEmptyBroodBlock = true;
+
 	public static boolean allowBeekeeperTradesCompat = true;
 }
