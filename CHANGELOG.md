@@ -9,6 +9,8 @@ Resourceful Bees's filled Bee Jar now can be used to revive Empty Honeycomb Broo
 
 Productive Bees's filled Bee Cage now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
 
+Disable REI overlay when in Crystalline Flower screen due to GUI not meshing well on full screen.
+
 
 ### **(V.6.7.6 Changes) (1.19.2 Minecraft)**
 
