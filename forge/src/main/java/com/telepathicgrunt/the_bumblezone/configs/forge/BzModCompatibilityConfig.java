@@ -26,6 +26,7 @@ public class BzModCompatibilityConfig {
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
 	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
+	public static ForgeConfigSpec.BooleanValue allowProductiveBeesBeeCageRevivingEmptyBroodBlock;
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateSpiderBeeDungeon;
@@ -242,6 +243,14 @@ public class BzModCompatibilityConfig {
 									"productivebees:zombie"
 							), (t) -> true);
 
+			allowProductiveBeesBeeCageRevivingEmptyBroodBlock = builder
+				.comment(" \n-----------------------------------------------------\n",
+						" Allow Bee Cages with bees inside to turn Empty Honeycomb Brood blocks into ",
+						" a regular Honeycomb Brood Block with a larva inside! \n")
+				.translation("the_bumblezone.config.allowproductivebeesbeecagerevivingemptybroodblock")
+				.define("allowProductiveBeesBeeCageRevivingEmptyBroodBlock", true);
+
+
 			allowHoneyTreatCompat = builder
 					.comment(" \n-----------------------------------------------------\n",
 							" Allow Honey Treat to be able to feed bees and Honeycomb Brood Blocks.\n")
@@ -363,6 +372,7 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.spawnProductiveBeesHoneycombVariants = spawnProductiveBeesHoneycombVariants.get();
 		BzModCompatibilityConfigs.allowedCombsForDungeons = allowedCombsForDungeons.get().stream().map(String::toString).collect(Collectors.toList());
 		BzModCompatibilityConfigs.allowedBees = allowedBees.get().stream().map(String::toString).collect(Collectors.toList());
+		BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock = allowProductiveBeesBeeCageRevivingEmptyBroodBlock.get();
 		BzModCompatibilityConfigs.allowHoneyTreatCompat = allowHoneyTreatCompat.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon = PBOreHoneycombSpawnRateBeeDungeon.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon = PBOreHoneycombSpawnRateSpiderBeeDungeon.get();

@@ -7,6 +7,8 @@ Goodall's Ant can now sometimes spawn in Hanging Gardens structure.
 
 (Forge): Resourceful Bees's Bee Jar now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
 
+(Forge): Productive Bees's filled Bee Cage now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
+
 (Forge): Fixed several mod compat configs not working.
 
 

@@ -2,8 +2,10 @@ package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehiveAbstract;
@@ -14,16 +16,25 @@ import cy.jdkdigital.productivebees.init.ModEntities;
 import cy.jdkdigital.productivebees.setup.BeeReloadListener;
 import cy.jdkdigital.productivebees.state.properties.VerticalHive;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.common.util.Lazy;
@@ -58,14 +69,30 @@ public class ProductiveBeesCompat implements ModCompat {
 
     public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation("productivebees", "solitary_overworld_nests"));
 
+    protected static Item BEE_CAGE;
+    protected static Item STURDY_BEE_CAGE;
+
     public ProductiveBeesCompat() {
+        BEE_CAGE = BuiltInRegistries.ITEM.get(new ResourceLocation("productivebees", "bee_cage"));
+        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.get(new ResourceLocation("productivebees", "sturdy_bee_cage"));
+
+        if (BEE_CAGE != Items.AIR && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
+            ProductiveBeesDispenseBehavior.DEFAULT_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BEE_CAGE));
+            DispenserBlock.registerBehavior(BEE_CAGE, new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
+        }
+
+        if (STURDY_BEE_CAGE != Items.AIR && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
+            ProductiveBeesDispenseBehavior.DEFAULT_STURDY_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(STURDY_BEE_CAGE));
+            DispenserBlock.registerBehavior(STURDY_BEE_CAGE, new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
+        }
+
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.productiveBeesPresent = true;
     }
 
     @Override
     public EnumSet<Type> compatTypes() {
-        return EnumSet.of(Type.SPAWNS, Type.COMBS, Type.BLOCK_TELEPORT, Type.COMB_ORE);
+        return EnumSet.of(Type.SPAWNS, Type.COMBS, Type.BLOCK_TELEPORT, Type.COMB_ORE, Type.EMPTY_BROOD);
     }
 
     private static boolean colorsAreClose(Color a, Color z, int threshold) {
@@ -181,5 +208,30 @@ public class ProductiveBeesCompat implements ModCompat {
             newTag.putString("type", BEE_DUNGEON_HONEYCOMBS.get().get(random.nextInt(BEE_DUNGEON_HONEYCOMBS.get().size())));
             return new StructureTemplate.StructureBlockInfo(worldPos, ModBlocks.CONFIGURABLE_COMB.get().defaultBlockState(), newTag);
         }
+    }
+
+    public static boolean isFilledBeeCageItem(ItemStack stack) {
+        return (stack.is(BEE_CAGE) || stack.is(STURDY_BEE_CAGE)) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("entity");
+    }
+
+    @Override
+    public InteractionResult onEmptyBroodInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
+        if (!BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) return InteractionResult.PASS;
+        if (isFilledBeeCageItem(itemstack)) {
+            if (!playerEntity.isCrouching()) {
+                if (!playerEntity.isCreative()) {
+                    GeneralUtils.givePlayerItem(
+                            playerEntity,
+                            playerHand,
+                            itemstack.is(ProductiveBeesCompat.STURDY_BEE_CAGE) ? ProductiveBeesCompat.STURDY_BEE_CAGE.getDefaultInstance() : ProductiveBeesCompat.BEE_CAGE.getDefaultInstance(),
+                            true,
+                            true);
+                }
+
+                return InteractionResult.SUCCESS;
+            }
+        }
+
+        return InteractionResult.FAIL;
     }
 }
