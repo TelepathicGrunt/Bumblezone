@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
-import com.telepathicgrunt.the_bumblezone.modcompat.forge.ProductiveBeesCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -37,7 +36,7 @@ public class ProductiveBeesDispenseBehavior extends DefaultDispenseItemBehavior 
                 .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
                 .setValue(HoneycombBrood.STAGE, 3));
 
-            boolean isSturdy = stack.is(ProductiveBeesCompat.STURDY_BEE_CAGE);
+            boolean isSturdy = ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent() && stack.is(ProductiveBeesCompat.STURDY_BEE_CAGE.get());
             stack.shrink(1);
 
             if (!stack.isEmpty()) {
@@ -45,21 +44,21 @@ public class ProductiveBeesDispenseBehavior extends DefaultDispenseItemBehavior 
             }
             else {
                 if (isSturdy) {
-                    stack = new ItemStack(ProductiveBeesCompat.STURDY_BEE_CAGE);
+                    stack = new ItemStack(ProductiveBeesCompat.STURDY_BEE_CAGE.get());
                 }
-                else {
-                    stack = new ItemStack(ProductiveBeesCompat.BEE_CAGE);
+                else if (ProductiveBeesCompat.BEE_CAGE.isPresent()) {
+                    stack = new ItemStack(ProductiveBeesCompat.BEE_CAGE.get());
                 }
             }
 
             return stack;
         }
         else {
-            if (stack.is(ProductiveBeesCompat.BEE_CAGE)) {
-                return ((DefaultDispenseItemBehaviorInvoker) DEFAULT_BEE_CAGED_DISPENSE_BEHAVIOR).invokeExecute(source, stack);
+            if (ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent() && stack.is(ProductiveBeesCompat.STURDY_BEE_CAGE.get())) {
+                return ((DefaultDispenseItemBehaviorInvoker) DEFAULT_STURDY_BEE_CAGED_DISPENSE_BEHAVIOR).invokeExecute(source, stack);
             }
             else {
-                return ((DefaultDispenseItemBehaviorInvoker) DEFAULT_STURDY_BEE_CAGED_DISPENSE_BEHAVIOR).invokeExecute(source, stack);
+                return ((DefaultDispenseItemBehaviorInvoker) DEFAULT_BEE_CAGED_DISPENSE_BEHAVIOR).invokeExecute(source, stack);
             }
         }
     }
@@ -78,12 +77,12 @@ public class ProductiveBeesDispenseBehavior extends DefaultDispenseItemBehavior 
     private static void addEmptyCageToDispenser(BlockSource source, boolean isSturdy) {
         if (source.getEntity() instanceof DispenserBlockEntity) {
             DispenserBlockEntity dispenser = source.getEntity();
-            ItemStack emptyCage;
-            if (isSturdy) {
-                emptyCage = new ItemStack(ProductiveBeesCompat.STURDY_BEE_CAGE);
+            ItemStack emptyCage = ItemStack.EMPTY;
+            if (isSturdy && ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent()) {
+                emptyCage = new ItemStack(ProductiveBeesCompat.STURDY_BEE_CAGE.get());
             }
-            else {
-                emptyCage = new ItemStack(ProductiveBeesCompat.BEE_CAGE);
+            else if (ProductiveBeesCompat.BEE_CAGE.isPresent()) {
+                emptyCage = new ItemStack(ProductiveBeesCompat.BEE_CAGE.get());
             }
 
             if (!HopperBlockEntity.addItem(null, dispenser, emptyCage, null).isEmpty()) {

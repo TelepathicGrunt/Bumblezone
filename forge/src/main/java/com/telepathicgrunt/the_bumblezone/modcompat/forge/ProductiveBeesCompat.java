@@ -43,6 +43,7 @@ import java.awt.*;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductiveBeesCompat implements ModCompat {
 
@@ -69,21 +70,21 @@ public class ProductiveBeesCompat implements ModCompat {
 
     public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation("productivebees", "solitary_overworld_nests"));
 
-    protected static Item BEE_CAGE;
-    protected static Item STURDY_BEE_CAGE;
+    protected static Optional<Item> BEE_CAGE;
+    protected static Optional<Item> STURDY_BEE_CAGE;
 
     public ProductiveBeesCompat() {
-        BEE_CAGE = BuiltInRegistries.ITEM.get(new ResourceLocation("productivebees", "bee_cage"));
-        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.get(new ResourceLocation("productivebees", "sturdy_bee_cage"));
+        BEE_CAGE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("productivebees", "bee_cage"));
+        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("productivebees", "sturdy_bee_cage"));
 
-        if (BEE_CAGE != Items.AIR && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
-            ProductiveBeesDispenseBehavior.DEFAULT_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BEE_CAGE));
-            DispenserBlock.registerBehavior(BEE_CAGE, new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
+        if (BEE_CAGE.isPresent() && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
+            ProductiveBeesDispenseBehavior.DEFAULT_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BEE_CAGE.get()));
+            DispenserBlock.registerBehavior(BEE_CAGE.get(), new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
         }
 
-        if (STURDY_BEE_CAGE != Items.AIR && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
-            ProductiveBeesDispenseBehavior.DEFAULT_STURDY_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(STURDY_BEE_CAGE));
-            DispenserBlock.registerBehavior(STURDY_BEE_CAGE, new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
+        if (STURDY_BEE_CAGE.isPresent() && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
+            ProductiveBeesDispenseBehavior.DEFAULT_STURDY_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(STURDY_BEE_CAGE.get()));
+            DispenserBlock.registerBehavior(STURDY_BEE_CAGE.get(), new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
         }
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -211,7 +212,8 @@ public class ProductiveBeesCompat implements ModCompat {
     }
 
     public static boolean isFilledBeeCageItem(ItemStack stack) {
-        return (stack.is(BEE_CAGE) || stack.is(STURDY_BEE_CAGE)) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("entity");
+        return ((BEE_CAGE.isPresent() && stack.is(BEE_CAGE.get())) || (STURDY_BEE_CAGE.isPresent() && stack.is(STURDY_BEE_CAGE.get()))) &&
+                !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("entity");
     }
 
     @Override
@@ -220,10 +222,19 @@ public class ProductiveBeesCompat implements ModCompat {
         if (isFilledBeeCageItem(itemstack)) {
             if (!playerEntity.isCrouching()) {
                 if (!playerEntity.isCreative()) {
+                    ItemStack itemToGive = ItemStack.EMPTY;
+
+                    if (ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent() && itemstack.is(ProductiveBeesCompat.STURDY_BEE_CAGE.get())) {
+                        itemToGive = ProductiveBeesCompat.STURDY_BEE_CAGE.get().getDefaultInstance();
+                    }
+                    else if (ProductiveBeesCompat.BEE_CAGE.isPresent() && itemstack.is(ProductiveBeesCompat.BEE_CAGE.get())) {
+                        itemToGive = ProductiveBeesCompat.BEE_CAGE.get().getDefaultInstance();
+                    }
+
                     GeneralUtils.givePlayerItem(
                             playerEntity,
                             playerHand,
-                            itemstack.is(ProductiveBeesCompat.STURDY_BEE_CAGE) ? ProductiveBeesCompat.STURDY_BEE_CAGE.getDefaultInstance() : ProductiveBeesCompat.BEE_CAGE.getDefaultInstance(),
+                            itemToGive,
                             true,
                             true);
                 }

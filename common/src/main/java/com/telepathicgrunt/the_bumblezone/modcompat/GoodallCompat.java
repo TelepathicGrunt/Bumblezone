@@ -14,16 +14,17 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 
 import java.util.EnumSet;
+import java.util.Optional;
 
 public class GoodallCompat implements ModCompat {
-    private static Item BOTTLED_BEE;
+    private static Optional<Item> BOTTLED_BEE;
 
     public GoodallCompat() {
-        BOTTLED_BEE = BuiltInRegistries.ITEM.get(new ResourceLocation("goodall", "bottled_bee"));
+        BOTTLED_BEE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("goodall", "bottled_bee"));
 
-        if (BOTTLED_BEE != Items.AIR && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
-            GoodallBottledBeeDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BOTTLED_BEE));
-            DispenserBlock.registerBehavior(BOTTLED_BEE, new GoodallBottledBeeDispenseBehavior()); // adds compatibility with bottled bee in dispensers
+        if (BOTTLED_BEE.isPresent() && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
+            GoodallBottledBeeDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BOTTLED_BEE.get()));
+            DispenserBlock.registerBehavior(BOTTLED_BEE.get(), new GoodallBottledBeeDispenseBehavior()); // adds compatibility with bottled bee in dispensers
         }
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -36,7 +37,7 @@ public class GoodallCompat implements ModCompat {
     }
 
     public static boolean isBottledBeesItem(ItemStack itemStack) {
-        return itemStack.is(BOTTLED_BEE);
+        return BOTTLED_BEE.isPresent() && itemStack.is(BOTTLED_BEE.get());
     }
 
     @Override

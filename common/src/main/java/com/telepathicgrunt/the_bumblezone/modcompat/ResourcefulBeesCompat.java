@@ -44,14 +44,14 @@ public class ResourcefulBeesCompat implements ModCompat {
     public static final TagKey<EntityType<?>> SPAWNABLE_FROM_BROOD_BLOCK_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_brood_block"));
     public static final TagKey<EntityType<?>> SPAWNABLE_FROM_CHUNK_CREATION_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_chunk_creation"));
 
-    private static Item BEE_JAR;
+    private static Optional<Item> BEE_JAR;
 
     public ResourcefulBeesCompat() {
-        BEE_JAR = BuiltInRegistries.ITEM.get(new ResourceLocation("resourcefulbees", "bee_jar"));
+        BEE_JAR = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("resourcefulbees", "bee_jar"));
 
-        if (BEE_JAR != Items.AIR && BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock) {
-            ResourcefulBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BEE_JAR));
-            DispenserBlock.registerBehavior(BEE_JAR, new ResourcefulBeesDispenseBehavior()); // adds compatibility with bottled bee in dispensers
+        if (BEE_JAR.isPresent() && BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock) {
+            ResourcefulBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BEE_JAR.get()));
+            DispenserBlock.registerBehavior(BEE_JAR.get(), new ResourcefulBeesDispenseBehavior()); // adds compatibility with bottled bee in dispensers
         }
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -142,7 +142,7 @@ public class ResourcefulBeesCompat implements ModCompat {
     }
 
     public static boolean isFilledBeeJarItem(ItemStack stack) {
-        return stack.is(BEE_JAR) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("Entity")
+        return BEE_JAR.isPresent() && stack.is(BEE_JAR.get()) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("Entity")
                 && stack.getOrCreateTag().getCompound("Entity").contains("id");
     }
 
