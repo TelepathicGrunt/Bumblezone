@@ -21,6 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
@@ -240,9 +241,16 @@ public class BzWorldSavedData extends SavedData {
 
 			serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation()));
 			serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
-			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 			serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
 			serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
+			serverPlayer.addEffect(new MobEffectInstance(
+					MobEffects.SLOW_FALLING,
+					20,
+					100,
+					false,
+					false,
+					false));
 			teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
 		}
 		else {
@@ -251,7 +259,6 @@ public class BzWorldSavedData extends SavedData {
 			if (newEntity == null) {
 				return;
 			}
-			entity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
 			newEntity.restoreFrom(entity);
 			newEntity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
 			destination.addDuringTeleport(newEntity);
