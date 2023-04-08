@@ -14,7 +14,12 @@ public class CuriosCompat {
 
 	public static int getCuriosBeeGearCount(Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
-			return CuriosApi.getCuriosHelper().findCurios(livingEntity, (itemStack) -> itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)).size();
+			return CuriosApi.getCuriosHelper().findCurios(livingEntity, (itemStack) ->  {
+				if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+					return !ModChecker.backpackedPresent || BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
+				}
+				return false;
+			}).size();
 		}
 
 		return 0;
