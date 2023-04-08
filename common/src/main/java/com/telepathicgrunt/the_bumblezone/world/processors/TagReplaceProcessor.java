@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -13,8 +14,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -100,6 +103,15 @@ public class TagReplaceProcessor extends StructureProcessor {
                         returnInfo = new StructureTemplate.StructureBlockInfo(infoIn2.pos, newBlockState, infoIn2.nbt);
                     }
                     else {
+                        if (newBlockState.getBlock() instanceof MultifaceBlock) {
+                            for(Direction direction : Direction.values()) {
+                                BooleanProperty faceProperty = MultifaceBlock.getFaceProperty(direction);
+                                if (newBlockState.hasProperty(faceProperty)) {
+                                    newBlockState = newBlockState.setValue(faceProperty, direction == Direction.DOWN);
+                                }
+                            }
+                        }
+
                         ChunkAccess chunk = worldReader.getChunk(infoIn2.pos);
                         BlockState oldBlockstate = chunk.getBlockState(infoIn2.pos);
                         BlockState belowOldBlockstate = chunk.getBlockState(infoIn2.pos.below());
