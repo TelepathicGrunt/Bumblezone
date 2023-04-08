@@ -102,6 +102,7 @@
     "client.KeyMappingAccessor",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
+    "client.ReceivingLevelScreenMixin",
     "client.RenderStateShardAccessor",
     "client.ScreenEffectRendererMixin",
     "client.TextureStateShardAccessor"
