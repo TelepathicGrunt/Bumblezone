@@ -1,4 +1,4 @@
-### **(V.6.7.7 Changes) (1.19.4 Minecraft)**
+### **(V.6.7.7 Changes) (1.19.2 Minecraft)**
 
 ##### Teleportation:
 Replaced "Loading Terrain..." screen with my own when teleporting or loading into the Bumblezone dimension.
