@@ -3,8 +3,6 @@
 ##### Teleportation:
 Replaced "Loading Terrain..." screen with my own when teleporting or loading into the Bumblezone dimension.
 
-Fixed Player teleporting out of dimension going to wrong coordinates.
-
 Fixed Players entering Bumblezone sometimes being 1 block into ground.
 
 ##### Mod Compat:
