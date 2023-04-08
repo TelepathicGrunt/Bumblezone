@@ -173,7 +173,6 @@ public class EntityTeleportationBackend {
                                 continue;
                             }
 
-                            currentPos.move(Direction.DOWN);
                             boolean isBelowSolid = chunk.getBlockState(currentPos.below()).canOcclude();
                             if (isBelowSolid) {
                                 if (chunk.getBlockState(currentPos.above(2)).isAir()) {
@@ -187,7 +186,8 @@ public class EntityTeleportationBackend {
 
                             while (!isBelowSolid && currentPos.getY() >= 45) {
                                 currentPos.move(Direction.DOWN);
-                                isBelowSolid = chunk.getBlockState(currentPos.below()).canOcclude();
+                                BlockState belowState = chunk.getBlockState(currentPos.below());
+                                isBelowSolid = belowState.canOcclude() || !belowState.getFluidState().isEmpty();
                             }
 
                             if (isBelowSolid) {
