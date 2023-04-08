@@ -1,3 +1,10 @@
+### **(V.6.7.8 Changes) (1.19.2 Minecraft)**
+
+##### Structures:
+Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock class.
+ (Example: Wilder Wilds's Glory of the Snow flowers)
+
+
 ### **(V.6.7.7 Changes) (1.19.2 Minecraft)**
 
 ##### Teleportation:
