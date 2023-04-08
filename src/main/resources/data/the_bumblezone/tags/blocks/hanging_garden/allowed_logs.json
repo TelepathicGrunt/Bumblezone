@@ -69,6 +69,10 @@
     {
       "id": "terrestria:rainbow_eucalyptus_log",
       "required": false
+    },
+    {
+      "id": "various_update:cherry_log",
+      "required": false
     }
   ]
 }

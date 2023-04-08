@@ -32,6 +32,10 @@
       "required": false
     },
     {
+      "id": "backpacked:backpack",
+      "required": false
+    },
+    {
       "id": "mcda:beehive_armor_helmet",
       "required": false
     },

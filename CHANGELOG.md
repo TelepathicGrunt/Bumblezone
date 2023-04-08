@@ -12,6 +12,8 @@ Goodall's Ant can now sometimes spawn in Hanging Gardens structure.
 
 Disable REI overlay when in Crystalline Flower screen due to GUI not meshing well on full screen.
 
+Backpacked's Honey Jar themed Backpack in a Curios slot will enchance bumblezone's bee armor abilities!
+
 
 ### **(V.6.7.6 Changes) (1.19.2 Minecraft)**
 
