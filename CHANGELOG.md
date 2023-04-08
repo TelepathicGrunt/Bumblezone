@@ -3,6 +3,8 @@
 ##### Teleportation:
 Replaced "Loading Terrain..." screen with my own when teleporting or loading into the Bumblezone dimension.
 
+Fixed Player teleporting out of dimension going to wrong coordinates.
+
 ##### Mod Compat:
 Goodall's Bottled Bee item now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
 
