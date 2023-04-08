@@ -337,6 +337,10 @@
     {
       "id": "valleycraft:wild_amethystle",
       "required": false
+    },
+    {
+      "id": "various_update:cherry_sapling",
+      "required": false
     }
   ]
 }
