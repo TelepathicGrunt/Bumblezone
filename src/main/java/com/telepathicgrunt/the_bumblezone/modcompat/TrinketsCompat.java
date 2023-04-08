@@ -19,7 +19,12 @@ public class TrinketsCompat {
 		if (entity instanceof LivingEntity livingEntity) {
 			Optional<TrinketComponent> optionalTrinketComponent = TrinketsApi.getTrinketComponent(livingEntity);
 			if (optionalTrinketComponent.isPresent()) {
-				return optionalTrinketComponent.get().getEquipped((itemStack) -> itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)).size();
+				return optionalTrinketComponent.get().getEquipped((itemStack) -> {
+					if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+						return !ModChecker.backpackedPresent || BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
+					}
+					return false;
+				}).size();
 			}
 		}
 
