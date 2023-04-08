@@ -34,6 +34,7 @@ public class ModChecker {
 	public static boolean dragonEnchantsPresent = false;
 	public static boolean sodiumPresent = false;
 	public static boolean goodallPresent = false;
+	public static boolean backpackedPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -60,6 +61,9 @@ public class ModChecker {
 
 			modid = "goodall";
 			loadupModCompat(modid, () -> new GoodallCompat());
+
+			modid = "backpacked";
+			loadupModCompat(modid, () -> new BackpackedCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

@@ -186,6 +186,10 @@
     {
       "id": "terrestria:sakura_leaves",
       "required": false
+    },
+    {
+      "id": "various_update:cherry_leaves",
+      "required": false
     }
   ]
 }
