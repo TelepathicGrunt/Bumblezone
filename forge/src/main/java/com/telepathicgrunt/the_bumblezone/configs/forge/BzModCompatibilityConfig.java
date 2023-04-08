@@ -36,9 +36,9 @@ public class BzModCompatibilityConfig {
 	public static ForgeConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
 	public static ForgeConfigSpec.BooleanValue injectBzItemsIntoQuarkEnchantmentTooltipsCompat;
 
-	public static ForgeConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
-	public static ForgeConfigSpec.BooleanValue spawnCrystallizedHoneyInDimension;
-	public static ForgeConfigSpec.BooleanValue spawnHoneyTilesInDimension;
+//	public static ForgeConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
+//	public static ForgeConfigSpec.BooleanValue spawnCrystallizedHoneyInDimension;
+//	public static ForgeConfigSpec.BooleanValue spawnHoneyTilesInDimension;
 
 	public static ForgeConfigSpec.BooleanValue allowPotionOfBeesRevivingEmptyBroodBlock;
 
@@ -293,30 +293,30 @@ public class BzModCompatibilityConfig {
 
 			builder.pop();
 
-			builder.push("Buzzier Bees Options");
-
-			allowBeeBottleRevivingEmptyBroodBlock = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Bee Bottle to turn Empty Honeycomb Brood blocks into ",
-							" a regular Honeycomb Brood Block with a larva inside! \n")
-					.translation("the_bumblezone.config.allowbeebottlerevivingemptybroodblock")
-					.define("allowBeeBottleRevivingEmptyBroodBlock", true);
-
-			spawnCrystallizedHoneyInDimension = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Buzzier Bees's Crystallized honey block to spawn in patches on surfaces in Bumblezone Dimension. ",
-							" Requires a game restart to take effect (close game and re-open) \n")
-					.translation("the_bumblezone.config.spawncrystallizedhoneyindimension")
-					.define("spawnCrystallizedHoneyInDimension", true);
-
-			spawnHoneyTilesInDimension = builder
-					.comment(" \n-----------------------------------------------------\n",
-							" Allow Buzzier Bees's Honey Tile block to spawn mainly in caves inside Bumblezone Dimension. ",
-							" Requires a game restart to take effect (close game and re-open) \n")
-					.translation("the_bumblezone.config.spawnhoneytilesindimension")
-					.define("spawnHoneyTilesInDimension", true);
-
-			builder.pop();
+//			builder.push("Buzzier Bees Options");
+//
+//			allowBeeBottleRevivingEmptyBroodBlock = builder
+//					.comment(" \n-----------------------------------------------------\n",
+//							" Allow Bee Bottle to turn Empty Honeycomb Brood blocks into ",
+//							" a regular Honeycomb Brood Block with a larva inside! \n")
+//					.translation("the_bumblezone.config.allowbeebottlerevivingemptybroodblock")
+//					.define("allowBeeBottleRevivingEmptyBroodBlock", true);
+//
+//			spawnCrystallizedHoneyInDimension = builder
+//					.comment(" \n-----------------------------------------------------\n",
+//							" Allow Buzzier Bees's Crystallized honey block to spawn in patches on surfaces in Bumblezone Dimension. ",
+//							" Requires a game restart to take effect (close game and re-open) \n")
+//					.translation("the_bumblezone.config.spawncrystallizedhoneyindimension")
+//					.define("spawnCrystallizedHoneyInDimension", true);
+//
+//			spawnHoneyTilesInDimension = builder
+//					.comment(" \n-----------------------------------------------------\n",
+//							" Allow Buzzier Bees's Honey Tile block to spawn mainly in caves inside Bumblezone Dimension. ",
+//							" Requires a game restart to take effect (close game and re-open) \n")
+//					.translation("the_bumblezone.config.spawnhoneytilesindimension")
+//					.define("spawnHoneyTilesInDimension", true);
+//
+//			builder.pop();
 
 
 			builder.push("Potion of Bees Options");
@@ -377,9 +377,9 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon = PBOreHoneycombSpawnRateBeeDungeon.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon = PBOreHoneycombSpawnRateSpiderBeeDungeon.get();
 
-		BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock = allowBeeBottleRevivingEmptyBroodBlock.get();
-		BzModCompatibilityConfigs.spawnCrystallizedHoneyInDimension = spawnCrystallizedHoneyInDimension.get();
-		BzModCompatibilityConfigs.spawnHoneyTilesInDimension = spawnHoneyTilesInDimension.get();
+//		BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock = allowBeeBottleRevivingEmptyBroodBlock.get();
+//		BzModCompatibilityConfigs.spawnCrystallizedHoneyInDimension = spawnCrystallizedHoneyInDimension.get();
+//		BzModCompatibilityConfigs.spawnHoneyTilesInDimension = spawnHoneyTilesInDimension.get();
 
 		BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock.get();
 
