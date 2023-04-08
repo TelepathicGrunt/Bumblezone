@@ -7,6 +7,9 @@ Fixed Player teleporting out of dimension going to wrong coordinates.
 
 Fixed Players entering Bumblezone sometimes being 1 block into ground.
 
+##### Items:
+Carpenter Bee Boots mining speed buffed a bit when boosted by presence of other bee gear on.
+
 ##### Mod Compat:
 Goodall's Bottled Bee item now can be used to revive Empty Honeycomb Brood Blocks by hand or Dispenser.
 
@@ -18,7 +21,7 @@ Productive Bees's filled Bee Cage now can be used to revive Empty Honeycomb Broo
 
 Disable REI overlay when in Crystalline Flower screen due to GUI not meshing well on full screen.
 
-Backpacked's Honey Jar themed Backpack in a Curios slot will enchance bumblezone's bee armor abilities!
+Backpacked's Honey Jar themed Backpack in a Curios slot will enhance Bumblezone's bee armor abilities!
 
 
 ### **(V.6.7.6 Changes) (1.19.2 Minecraft)**
