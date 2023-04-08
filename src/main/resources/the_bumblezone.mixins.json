@@ -70,7 +70,6 @@
     "client.FogRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
-    "client.ReceivingLevelScreenMixin",
     "client.RenderStateShardAccessor",
     "client.ScreenEffectRendererMixin",
     "client.TextureStateShardAccessor"

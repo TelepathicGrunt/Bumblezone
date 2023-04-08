@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
+import com.telepathicgrunt.the_bumblezone.client.rendering.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
@@ -25,6 +26,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerS
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -35,6 +37,7 @@ import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -45,6 +48,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -77,7 +81,7 @@ public class BumblezoneClient {
 
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
-
+        forgeBus.addListener(BumblezoneClient::onScreenRendering);
     }
 
     public static void registerKeyBinding(RegisterKeyMappingsEvent event) {
@@ -222,5 +226,15 @@ public class BumblezoneClient {
 
     public static void registerDimensionSpecialEffects(RegisterDimensionSpecialEffectsEvent event) {
         event.register(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+    }
+
+    public static void onScreenRendering(ScreenEvent.Render.Pre event) {
+        if (event.getScreen() instanceof ReceivingLevelScreen receivingLevelScreen &&
+            Minecraft.getInstance().player != null &&
+            Minecraft.getInstance().player.level.dimension() == BzDimension.BZ_WORLD_KEY)
+        {
+            DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getPoseStack());
+            event.setCanceled(true);
+        }
     }
 }

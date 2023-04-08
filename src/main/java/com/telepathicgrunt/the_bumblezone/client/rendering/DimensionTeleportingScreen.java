@@ -33,7 +33,6 @@ public class DimensionTeleportingScreen {
         bufferbuilder.vertex(screen.width, 0.0D, 0.0D).uv((float)screen.width / 32.0F, 0.0f).color(64, 64, 64, 255).endVertex();
         bufferbuilder.vertex(0.0D, 0.0D, 0.0D).uv(0.0F, 0.0f).color(64, 64, 64, 255).endVertex();
         tesselator.end();
-        MinecraftForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(screen, new PoseStack()));
 
         GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2 + 1, screen.height / 2 - 9, 0);
         GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2, screen.height / 2 - 10, 16774120);
