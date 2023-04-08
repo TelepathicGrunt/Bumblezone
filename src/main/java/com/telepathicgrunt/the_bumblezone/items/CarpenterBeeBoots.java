@@ -82,7 +82,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                     float miningProgress = (float) (timeDiff + 1);
 
                     float blockDestroyTime = belowBlockState.getDestroySpeed(world, belowBlockPos);
-                    float playerMiningSpeed = getPlayerDestroySpeed(player, beeBoots, ((beeGearCount - 1) * 0.067F) + 0.3F);
+                    float playerMiningSpeed = getPlayerDestroySpeed(player, beeBoots, ((beeGearCount - 1) * 0.1F) + 0.3F);
                     int finalMiningProgress = (int) ((miningProgress * playerMiningSpeed) / blockDestroyTime);
 
                     if (!(finalMiningProgress == 0 && playerMiningSpeed < 0.001f) && (finalMiningProgress != lastSentState)) {
