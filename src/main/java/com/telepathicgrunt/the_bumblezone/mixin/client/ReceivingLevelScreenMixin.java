@@ -20,7 +20,7 @@ public class ReceivingLevelScreenMixin extends Screen {
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V",
             at = @At(value = "HEAD"), cancellable = true, require = 0)
-    private void thebumblezone_glowNearbyBeesForPlayer(PoseStack poseStack, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+    private void thebumblezone_renderNewScreenWhenEnteringBumblezone(PoseStack poseStack, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level.dimension() == BzDimension.BZ_WORLD_KEY) {
             DimensionTeleportingScreen.renderScreenAndText(((ReceivingLevelScreen)(Object)this), poseStack);
             super.render(poseStack, mouseX, mouseY, partialTick);
