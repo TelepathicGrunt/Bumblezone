@@ -31,7 +31,7 @@ public class DimensionTeleportingScreen {
         bufferbuilder.vertex(0.0D, 0.0D, 0.0D).uv(0.0F, 0.0f).color(64, 64, 64, 255).endVertex();
         tesselator.end();
 
-        GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2 - 1, screen.height / 2 - 9, 0);
-        GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2, screen.height / 2 - 10, 16773085);
+        GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2 + 1, screen.height / 2 - 9, 0);
+        GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2, screen.height / 2 - 10, 16774120);
     }
 }
