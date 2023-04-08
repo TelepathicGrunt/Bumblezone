@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.client;
+package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;

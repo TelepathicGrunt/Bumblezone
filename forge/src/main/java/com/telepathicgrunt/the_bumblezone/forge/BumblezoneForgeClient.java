@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.forge;
 
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
+import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
@@ -19,9 +20,12 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.particle.ParticleProvider;
@@ -40,6 +44,7 @@ import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -59,6 +64,7 @@ public class BumblezoneForgeClient {
         forgeBus.addListener(BumblezoneForgeClient::onBlockScreen);
         forgeBus.addListener(BumblezoneForgeClient::onKeyInput);
         forgeBus.addListener(BumblezoneForgeClient::onClientTick);
+        forgeBus.addListener(BumblezoneForgeClient::onScreenRendering);
 
         modBus.addListener(BumblezoneForgeClient::onClientSetup);
         modBus.addListener(BumblezoneForgeClient::onRegisterModelLoaders);
@@ -145,9 +151,18 @@ public class BumblezoneForgeClient {
         return new RegisterParticleEvent.Registrar() {
             @Override
             public <T extends ParticleOptions> void register(ParticleType<T> type, Function<SpriteSet, ParticleProvider<T>> registration) {
-                event.register(type, registration::apply);
+                event.registerSpriteSet(type, registration::apply);
             }
         };
     }
 
+    public static void onScreenRendering(ScreenEvent.Render.Pre event) {
+        if (event.getScreen() instanceof ReceivingLevelScreen receivingLevelScreen &&
+            Minecraft.getInstance().player != null &&
+            Minecraft.getInstance().player.level.dimension() == BzDimension.BZ_WORLD_KEY)
+        {
+            DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getPoseStack());
+            event.setCanceled(true);
+        }
+    }
  }

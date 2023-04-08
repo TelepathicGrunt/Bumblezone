@@ -15,6 +15,7 @@
     "client.ModelBakeryMixin",
     "client.ModelManagerMixin",
     "client.ParticleEngineMixin",
+    "client.ReceivingLevelScreenMixin",
     "client.ScreenEffectRendererMixin",
     "mods.MidnightConfigScreenMixin"
   ],

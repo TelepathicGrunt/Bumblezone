@@ -284,6 +284,10 @@
     {
       "id": "valleycraft:cave_snail",
       "required": false
+    },
+    {
+      "id": "valleycraft:glowfly",
+      "required": false
     }
   ]
 }

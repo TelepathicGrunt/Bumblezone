@@ -240,7 +240,6 @@ public class BzWorldSavedData extends SavedData {
 
 			serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation()));
 			serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
-			serverPlayer.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z);
 			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 			serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
 			serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
