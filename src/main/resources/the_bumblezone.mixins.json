@@ -8,6 +8,7 @@
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
     "blocks.BigDripleafStemBlockMixin",
+    "blocks.BubbleColumnBlockMixin",
     "blocks.DefaultDispenseItemBehaviorInvoker",
     "blocks.DetectorRailBlockMixin",
     "blocks.DispenserBlockInvoker",
