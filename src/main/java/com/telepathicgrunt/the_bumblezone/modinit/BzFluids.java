@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidType;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBubbleColumnBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluidType;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -50,4 +51,7 @@ public class BzFluids {
 
     public static final ForgeFlowingFluid.Properties ROYAL_JELLY_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(ROYAL_JELLY_FLUID_TYPE, ROYAL_JELLY_FLUID, ROYAL_JELLY_FLUID_FLOWING)
             .bucket(BzItems.ROYAL_JELLY_BUCKET).block(ROYAL_JELLY_FLUID_BLOCK).tickRate(30);
+
+    //Bubble Columns
+    public static final RegistryObject<SugarWaterBubbleColumnBlock> SUGAR_WATER_BUBBLE_COLUMN_BLOCK = BzBlocks.BLOCKS.register("sugar_water_bubble_column_block", SugarWaterBubbleColumnBlock::new);
 }
