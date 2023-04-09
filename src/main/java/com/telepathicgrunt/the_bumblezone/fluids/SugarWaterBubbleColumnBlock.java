@@ -32,30 +32,30 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
     @Override
     public ItemStack pickupBlock(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
         levelAccessor.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 11);
-        return new ItemStack(BzItems.SUGAR_WATER_BUCKET.get());
+        return new ItemStack(BzItems.SUGAR_WATER_BUCKET);
     }
 
     @Override
     public FluidState getFluidState(BlockState blockState) {
-        return BzFluids.SUGAR_WATER_FLUID.get().getSource(false);
+        return BzFluids.SUGAR_WATER_FLUID.getSource(false);
     }
 
     @Override
     public Optional<SoundEvent> getPickupSound() {
-        return BzFluids.SUGAR_WATER_FLUID.get().getPickupSound();
+        return BzFluids.SUGAR_WATER_FLUID.getPickupSound();
     }
 
     @Override
     public boolean canSurvive(BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
         BlockState belowState = levelReader.getBlockState(blockPos.below());
-        return belowState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get()) || belowState.is(Blocks.BUBBLE_COLUMN) || belowState.is(BzTags.DOWNWARD_BUBBLE_COLUMN_CAUSING) || belowState.is(BzTags.UPWARD_BUBBLE_COLUMN_CAUSING);
+        return belowState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK) || belowState.is(Blocks.BUBBLE_COLUMN) || belowState.is(BzTags.DOWNWARD_BUBBLE_COLUMN_CAUSING) || belowState.is(BzTags.UPWARD_BUBBLE_COLUMN_CAUSING);
     }
 
     @Override
     public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor levelAccessor, BlockPos blockPos, BlockPos blockPos2) {
-        levelAccessor.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(levelAccessor));
+        levelAccessor.scheduleTick(blockPos, BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID.getTickDelay(levelAccessor));
         if (!blockState.canSurvive(levelAccessor, blockPos) || direction == Direction.DOWN || direction == Direction.UP && !blockState2.is(Blocks.BUBBLE_COLUMN) && canExistIn(blockState2)) {
-            levelAccessor.scheduleTick(blockPos, BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get(), 5);
+            levelAccessor.scheduleTick(blockPos, BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK, 5);
         }
 
         return super.updateShape(blockState, direction, blockState2, levelAccessor, blockPos, blockPos2);
@@ -75,7 +75,7 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
             BlockState sugarWaterColumnState = getColumnState(blockState2);
             levelAccessor.setBlock(blockPos, sugarWaterColumnState, 2);
             BlockPos.MutableBlockPos mutableBlockPos = blockPos.mutable().move(Direction.UP);
-            boolean isBubblePlacing = sugarWaterColumnState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get());
+            boolean isBubblePlacing = sugarWaterColumnState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK);
 
             BlockState currentState = levelAccessor.getBlockState(mutableBlockPos);
             boolean isVanilla = currentState.is(Blocks.WATER) || currentState.is(Blocks.BUBBLE_COLUMN);
@@ -97,22 +97,22 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
     }
 
     private static BlockState getColumnState(BlockState blockState) {
-        if (blockState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get())) {
+        if (blockState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK)) {
             return blockState;
         }
         else if (blockState.is(BzTags.UPWARD_BUBBLE_COLUMN_CAUSING) || (blockState.is(Blocks.BUBBLE_COLUMN) && !blockState.getValue(BubbleColumnBlock.DRAG_DOWN))) {
-            return BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get().defaultBlockState().setValue(DRAG_DOWN, false);
+            return BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.defaultBlockState().setValue(DRAG_DOWN, false);
         }
         else if (blockState.is(BzTags.DOWNWARD_BUBBLE_COLUMN_CAUSING) || (blockState.is(Blocks.BUBBLE_COLUMN) && blockState.getValue(BubbleColumnBlock.DRAG_DOWN))) {
-            return BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get().defaultBlockState().setValue(DRAG_DOWN, true);
+            return BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.defaultBlockState().setValue(DRAG_DOWN, true);
         }
         else {
-            return BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState();
+            return BzFluids.SUGAR_WATER_BLOCK.defaultBlockState();
         }
     }
 
     private static boolean canExistIn(BlockState blockState) {
-        return blockState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get()) || blockState.is(BzFluids.SUGAR_WATER_BLOCK.get()) && blockState.getFluidState().getAmount() >= 8 && blockState.getFluidState().isSource();
+        return blockState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK) || blockState.is(BzFluids.SUGAR_WATER_BLOCK) && blockState.getFluidState().getAmount() >= 8 && blockState.getFluidState().isSource();
     }
 
     /**

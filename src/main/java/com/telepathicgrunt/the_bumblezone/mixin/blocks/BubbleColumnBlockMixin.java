@@ -17,7 +17,7 @@ public class BubbleColumnBlockMixin {
             at = @At(value = "RETURN"),
             require = 0)
     private boolean thebumblezone_allowVanillaBubbleColumnOnSugarWaterBubbleColumn(boolean canSurvive, BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
-        if(!canSurvive && levelReader.getBlockState(blockPos).is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get())) {
+        if(!canSurvive && levelReader.getBlockState(blockPos).is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK)) {
             return true;
         }
         return canSurvive;
