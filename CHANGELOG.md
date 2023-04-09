@@ -1,5 +1,12 @@
 ### **(V.6.7.8 Changes) (1.19.4 Minecraft)**
 
+##### Fluids:
+Added Sugar Water Bubble Columns! These Bubble Columns are triggered with Soul Sand and Magma Block like vanilla.
+ Also, you can intermix vanilla Bubble Column and Sugar Water Bubble Column and the push/pull effect will propagate through the columns properly!
+ The Sugar Water Bubble Column uses two block tags to determine if it is created and whether it is a push or pull column:
+ `the_bumblezone:sugar_water/downward_bubble_column_causing`
+ `the_bumblezone:sugar_water/upward_bubble_column_causing`
+
 ##### Structures:
 Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock class.
  (Example: Wilder Wilds's Glory of the Snow flowers)

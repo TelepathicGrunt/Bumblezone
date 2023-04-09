@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.RoyalJellyFluidType;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBlock;
+import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterBubbleColumnBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluidType;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
@@ -41,4 +42,7 @@ public class BzFluids {
     public static final RegistryEntry<LiquidBlock> SUGAR_WATER_BLOCK = BzBlocks.BLOCKS.register("sugar_water_block", () -> new SugarWaterBlock(BzFluids.SUGAR_WATER_FLUID_TYPE.get()));
     public static final RegistryEntry<LiquidBlock> HONEY_FLUID_BLOCK = BzBlocks.BLOCKS.register("honey_fluid_block", () -> new HoneyFluidBlock(BzFluids.HONEY_FLUID_TYPE.get()));
     public static final RegistryEntry<LiquidBlock> ROYAL_JELLY_FLUID_BLOCK = BzBlocks.BLOCKS.register("royal_jelly_fluid_block", () -> new RoyalJellyFluidBlock(BzFluids.ROYAL_JELLY_FLUID_TYPE.get()));
+
+    //Bubble Columns
+    public static final RegistryEntry<SugarWaterBubbleColumnBlock> SUGAR_WATER_BUBBLE_COLUMN_BLOCK = BzBlocks.BLOCKS.register("sugar_water_bubble_column_block", SugarWaterBubbleColumnBlock::new);
 }

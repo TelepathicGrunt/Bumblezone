@@ -40,6 +40,8 @@ public class BzTags {
     public static final TagKey<Block> CRYSTALLINE_FLOWER_CAN_SURVIVE_ON = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "crystalline_flower/can_be_placed_on"));
     public static final TagKey<Block> WATERLOGGABLE_BLOCKS_WHEN_PLACED_IN_FLUID = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water/waterloggable_blocks_when_placed_in_fluid"));
     public static final TagKey<Block> FORCED_DISALLOW_WATERLOGGING_BLOCKS_WHEN_PLACED_IN_FLUID = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water/forced_disallow_waterlogging_blocks_when_placed_in_fluid"));
+    public static final TagKey<Block> DOWNWARD_BUBBLE_COLUMN_CAUSING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water/downward_bubble_column_causing"));
+    public static final TagKey<Block> UPWARD_BUBBLE_COLUMN_CAUSING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water/upward_bubble_column_causing"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));
