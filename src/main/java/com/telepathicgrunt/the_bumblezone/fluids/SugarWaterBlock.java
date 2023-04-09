@@ -8,6 +8,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,6 +27,23 @@ public class SugarWaterBlock extends LiquidBlock {
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (this.shouldSpreadLiquid(world, pos, state)) {
             world.scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(world));
+        }
+    }
+
+    @Override
+    public BlockState updateShape(BlockState blockState, Direction direction, BlockState blockState2, LevelAccessor world, BlockPos blockPos, BlockPos blockPos2) {
+        if (blockState.getFluidState().isSource()) {
+            SugarWaterBubbleColumnBlock.updateColumn(world, blockPos, world.getBlockState(blockPos.below()));
+        }
+
+        return super.updateShape(blockState, direction, blockState2, world, blockPos, blockPos2);
+    }
+
+    @Override
+    public void onPlace(BlockState blockState, Level world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
+        super.onPlace(blockState, world, blockPos, previousBlockState, notify);
+        if (blockState.getFluidState().isSource()) {
+            SugarWaterBubbleColumnBlock.updateColumn(world, blockPos, world.getBlockState(blockPos.below()));
         }
     }
 
