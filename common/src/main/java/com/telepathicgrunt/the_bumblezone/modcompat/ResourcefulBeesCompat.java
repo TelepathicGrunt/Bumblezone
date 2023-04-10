@@ -146,6 +146,10 @@ public class ResourcefulBeesCompat implements ModCompat {
                 && stack.getOrCreateTag().getCompound("Entity").contains("id");
     }
 
+    public static boolean isFilledBabyBeeJarItem(ItemStack stack) {
+        return isFilledBeeJarItem(stack) && stack.getOrCreateTag().getCompound("Entity").getBoolean("isBaby");
+    }
+
     @Override
     public InteractionResult onEmptyBroodInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
         if (!BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock) return InteractionResult.PASS;
@@ -155,7 +159,7 @@ public class ResourcefulBeesCompat implements ModCompat {
                     itemstack.getOrCreateTag().remove("Entity"); // Remove bee.
                 }
 
-                return InteractionResult.SUCCESS;
+                return isFilledBabyBeeJarItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
             }
         }
 

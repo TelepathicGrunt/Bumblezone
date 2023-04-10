@@ -216,6 +216,10 @@ public class ProductiveBeesCompat implements ModCompat {
                 !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("entity");
     }
 
+    public static boolean isFilledBabyBeeCageItem(ItemStack stack) {
+        return isFilledBeeCageItem(stack) && stack.getOrCreateTag().getInt("Age") < 0;
+    }
+
     @Override
     public InteractionResult onEmptyBroodInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
         if (!BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) return InteractionResult.PASS;
@@ -239,7 +243,7 @@ public class ProductiveBeesCompat implements ModCompat {
                             true);
                 }
 
-                return InteractionResult.SUCCESS;
+                return isFilledBabyBeeCageItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
             }
         }
 

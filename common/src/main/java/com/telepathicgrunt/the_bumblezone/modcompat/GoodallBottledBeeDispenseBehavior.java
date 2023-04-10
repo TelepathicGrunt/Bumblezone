@@ -35,7 +35,7 @@ public class GoodallBottledBeeDispenseBehavior extends DefaultDispenseItemBehavi
         if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
             world.setBlockAndUpdate(dispenseBlockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                 .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
-                .setValue(HoneycombBrood.STAGE, 3));
+                .setValue(HoneycombBrood.STAGE, GoodallCompat.isBabyBottledBeesItem(stack) ? 2 : 3));
 
             stack.shrink(1);
 

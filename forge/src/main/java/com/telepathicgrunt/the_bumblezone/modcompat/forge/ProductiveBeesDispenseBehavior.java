@@ -34,7 +34,7 @@ public class ProductiveBeesDispenseBehavior extends DefaultDispenseItemBehavior 
         if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get() && ProductiveBeesCompat.isFilledBeeCageItem(stack)) {
             world.setBlockAndUpdate(dispenseBlockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                 .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
-                .setValue(HoneycombBrood.STAGE, 3));
+                .setValue(HoneycombBrood.STAGE, ProductiveBeesCompat.isFilledBabyBeeCageItem(stack) ? 2 : 3));
 
             boolean isSturdy = ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent() && stack.is(ProductiveBeesCompat.STURDY_BEE_CAGE.get());
             stack.shrink(1);

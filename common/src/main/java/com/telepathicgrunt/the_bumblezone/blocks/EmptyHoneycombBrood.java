@@ -90,11 +90,12 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         for (ModCompat compat : ModChecker.BROOD_EMPTY_COMPATS) {
-            if (compat.onEmptyBroodInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
+            InteractionResult compatResult = compat.onEmptyBroodInteract(itemstack, playerEntity, playerHand);
+            if (compatResult == InteractionResult.SUCCESS || compatResult == InteractionResult.CONSUME_PARTIAL) {
                 playerEntity.swing(playerHand);
                 level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
                 level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
-                                .setValue(HoneycombBrood.STAGE, 3)
+                                .setValue(HoneycombBrood.STAGE, compatResult == InteractionResult.SUCCESS ? 3 : 2)
                                 .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
                         3);
                 return InteractionResult.SUCCESS;

@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -40,6 +41,18 @@ public class GoodallCompat implements ModCompat {
         return BOTTLED_BEE.isPresent() && itemStack.is(BOTTLED_BEE.get());
     }
 
+    public static boolean isBabyBottledBeesItem(ItemStack itemStack) {
+        if (!isBottledBeesItem(itemStack) || !itemStack.hasTag()) {
+            return false;
+        }
+
+        CompoundTag compoundTag = itemStack.getOrCreateTag();
+
+        return compoundTag.contains("BlockEntityTag") &&
+                compoundTag.getCompound("BlockEntityTag").contains("Entity") &&
+                compoundTag.getCompound("BlockEntityTag").getCompound("Entity").getInt("Age") < 0;
+    }
+
     @Override
     public InteractionResult onEmptyBroodInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
         if (!BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock) return InteractionResult.PASS;
@@ -49,7 +62,7 @@ public class GoodallCompat implements ModCompat {
                     playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced potion of bee with glass bottle
                 }
 
-                return InteractionResult.SUCCESS;
+                return isBabyBottledBeesItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
             }
         }
 

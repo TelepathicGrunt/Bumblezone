@@ -11,6 +11,12 @@ Added Sugar Water Bubble Columns! These Bubble Columns are triggered with Soul S
 Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock class.
  (Example: Wilder Wilds's Glory of the Snow flowers)
 
+##### Mod Compat:
+Made Empty Honeycomb Brood Block reviving go to stage 2 brood Block instead of stage 3 if given a baby bee from 
+ Productive Bees's Bee Cage, Resourceful Bees's Bee Jar, Goodall Bottled Bee, or Buzzier Bees's Bottle O' Bee.
+
+(Forge): Fixed potential deadlock with Productive Bees comb spawning in Bumblezone dimension.
+
 
 ### **(V.6.7.7 Changes) (1.19.4 Minecraft)**
 
