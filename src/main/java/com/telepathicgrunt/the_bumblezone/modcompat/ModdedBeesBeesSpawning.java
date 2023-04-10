@@ -19,7 +19,8 @@ public class ModdedBeesBeesSpawning {
 		if (event.getSpawnReason() == MobSpawnType.NATURAL ||
 			event.getSpawnReason() == MobSpawnType.SPAWNER ||
 			event.getSpawnReason() == MobSpawnType.CHUNK_GENERATION ||
-			event.getSpawnReason() == MobSpawnType.STRUCTURE)
+			event.getSpawnReason() == MobSpawnType.STRUCTURE ||
+			event.getSpawnReason() == MobSpawnType.DISPENSER)
 		{
 			Mob entity = event.getEntity();
 			ResourceLocation worldRL = entity.level.dimension().location();

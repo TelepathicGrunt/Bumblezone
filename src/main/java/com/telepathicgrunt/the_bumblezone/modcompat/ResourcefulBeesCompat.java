@@ -56,6 +56,10 @@ public class ResourcefulBeesCompat {
 	}
 
 	public static boolean RBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild, MobSpawnType spawnReason) {
+		if (event.getSpawnReason() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock.get()) {
+			return false;
+		}
+
 		Mob entity = event.getEntity();
         LevelAccessor world = event.getLevel();
 

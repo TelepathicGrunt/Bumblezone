@@ -22,6 +22,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -121,7 +122,7 @@ public class ProductiveBeesCompat {
 	}
 
 	public static boolean PBMobSpawnEvent(LivingSpawnEvent.CheckSpawn event, boolean isChild) {
-		if (ALL_BEES.get().size() == 0) {
+		if (ALL_BEES.get().size() == 0 || (event.getSpawnReason() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowProductiveBeesSpawnFromDispenserFedBroodBlock.get())) {
 			return false;
 		}
 

@@ -15,7 +15,10 @@ Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock cla
 Made Empty Honeycomb Brood Block reviving go to stage 3 brood Block instead of stage 4 if given a baby bee from
  Productive Bees's Bee Cage, Resourceful Bees's Bee Jar, Goodall Bottled Bee, or Buzzier Bees's Bottle O' Bee.
 
-(Forge): Fixed potential deadlock with Productive Bees comb spawning in Bumblezone dimension.
+Fixed potential deadlock with Productive Bees comb spawning in Bumblezone dimension.
+
+Allow Productive Bees's and Resourceful Bees's bees to spawn from Honeycomb Brood Blocks fed by a Dispenser instead of by hand.
+ Config options are added to turn this off if it breaks balance in your modpack due to automation of Brood blocks.
 
 
 ### **(V.6.7.7 Changes) (1.19.2 Minecraft)**
