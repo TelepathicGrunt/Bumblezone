@@ -35,7 +35,7 @@ public class BuzzierBeesBottledBeeDispenseBehavior extends DefaultDispenseItemBe
         if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
             world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                     .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
-                    .setValue(HoneycombBrood.STAGE, 3));
+                    .setValue(HoneycombBrood.STAGE, stack.hasTag() && stack.getOrCreateTag().getInt("Age") < 0 ? 2 : 3));
 
             stack.shrink(1);
 

@@ -124,6 +124,10 @@ public class ResourcefulBeesCompat {
 				&& stack.getOrCreateTag().getCompound("Entity").contains("id");
 	}
 
+	public static boolean isFilledBabyBeeJarItem(ItemStack stack) {
+		return isFilledBeeJarItem(stack) && stack.getOrCreateTag().getCompound("Entity").getInt("Age") < 0;
+	}
+
 	public static InteractionResult beeJarInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
 		if (isFilledBeeJarItem(itemstack)) {
 			if (!playerEntity.isCrouching()) {
@@ -131,7 +135,7 @@ public class ResourcefulBeesCompat {
 					itemstack.getOrCreateTag().remove("Entity"); // Remove bee.
 				}
 
-				return InteractionResult.SUCCESS;
+				return isFilledBabyBeeJarItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
 			}
 		}
 

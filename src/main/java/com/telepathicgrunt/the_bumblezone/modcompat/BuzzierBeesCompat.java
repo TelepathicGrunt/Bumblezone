@@ -36,7 +36,7 @@ public class BuzzierBeesCompat {
 					playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced bottled bee with glass bottle
 				}
 
-				return InteractionResult.SUCCESS;
+				return itemstack.hasTag() && itemstack.getOrCreateTag().getInt("Age") < 0 ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
 			}
 		}
 

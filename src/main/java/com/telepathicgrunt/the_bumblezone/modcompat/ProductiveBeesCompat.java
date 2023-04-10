@@ -213,6 +213,10 @@ public class ProductiveBeesCompat {
 		return !stack.isEmpty() && (stack.is(BEE_CAGE) || stack.is(STURDY_BEE_CAGE)) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("entity");
 	}
 
+	public static boolean isFilledBabyBeeCageItem(ItemStack stack) {
+		return isFilledBeeCageItem(stack) && stack.getOrCreateTag().getInt("Age") < 0;
+	}
+
 	public static InteractionResult beeCageInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
 		if (isFilledBeeCageItem(itemstack)) {
 			if (!playerEntity.isCrouching()) {
@@ -225,7 +229,7 @@ public class ProductiveBeesCompat {
 							true);
 				}
 
-				return InteractionResult.SUCCESS;
+				return isFilledBabyBeeCageItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
 			}
 		}
 

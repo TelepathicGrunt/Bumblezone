@@ -35,7 +35,7 @@ public class ResourcefulBeesDispenseBehavior extends DefaultDispenseItemBehavior
         if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get() && ResourcefulBeesCompat.isFilledBeeJarItem(stack)) {
             world.setBlockAndUpdate(position, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                 .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
-                .setValue(HoneycombBrood.STAGE, 3));
+                .setValue(HoneycombBrood.STAGE, ResourcefulBeesCompat.isFilledBabyBeeJarItem(stack) ? 2 : 3));
 
             stack.getOrCreateTag().remove("Entity");
             return stack;
