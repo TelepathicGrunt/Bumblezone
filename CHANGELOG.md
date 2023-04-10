@@ -17,6 +17,9 @@ Made Empty Honeycomb Brood Block reviving go to stage 3 brood Block instead of s
 
 (Forge): Fixed potential deadlock with Productive Bees comb spawning in Bumblezone dimension.
 
+(Forge): Allow Productive Bees's and Resourceful Bees's bees to spawn from Honeycomb Brood Blocks fed by a Dispenser instead of by hand.
+ Config options are added to turn this off if it breaks balance in your modpack due to automation of Brood blocks.
+
 
 ### **(V.6.7.7 Changes) (1.19.4 Minecraft)**
 

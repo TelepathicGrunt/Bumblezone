@@ -65,11 +65,18 @@ public class ResourcefulBeesCompat implements ModCompat {
 
     @Override
     public boolean onBeeSpawn(EntitySpawnEvent event, boolean isBaby) {
-        if (!BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob) return false;
+        if (!BzModCompatibilityConfigs.spawnResourcefulBeesBeesMob || (event.spawnType() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock)) {
+               return false;
+        }
+
         double spawnRate = event.spawnType() == MobSpawnType.SPAWNER ?
                 BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsBrood :
                 BzModCompatibilityConfigs.spawnrateOfResourcefulBeesMobsOther;
-        if (event.entity().getRandom().nextFloat() >= spawnRate) return false;
+
+        if (event.entity().getRandom().nextFloat() >= spawnRate) {
+            return false;
+        }
+
         Mob entity = event.entity();
         LevelAccessor world = event.level();
 
@@ -78,10 +85,15 @@ public class ResourcefulBeesCompat implements ModCompat {
                 event.spawnType() == MobSpawnType.CHUNK_GENERATION ?
                         SPAWNABLE_FROM_CHUNK_CREATION_TAG :
                         SPAWNABLE_FROM_BROOD_BLOCK_TAG);
-        if (optionalNamed.isEmpty()) return false;
+
+        if (optionalNamed.isEmpty()) {
+            return false;
+        }
 
         HolderSet.Named<EntityType<?>> holders = optionalNamed.get();
-        if (holders.size() == 0) return false;
+        if (holders.size() == 0) {
+            return false;
+        }
 
         EntityType<?> rbBeeType = holders.get(entity.getRandom().nextInt(holders.size())).value();
         Entity rbBeeUnchecked = rbBeeType.create(entity.getLevel());
@@ -107,6 +119,7 @@ public class ResourcefulBeesCompat implements ModCompat {
             world.addFreshEntity(rbBee);
             return true;
         }
+
         return false;
     }
 

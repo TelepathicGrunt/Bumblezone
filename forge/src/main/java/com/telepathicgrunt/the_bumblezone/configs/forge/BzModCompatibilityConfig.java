@@ -22,11 +22,13 @@ public class BzModCompatibilityConfig {
 	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateSpiderBeeDungeon;
 	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesHoneycombVeins;
 	public static ForgeConfigSpec.BooleanValue allowResourcefulBeesBeeJarRevivingEmptyBroodBlock;
+	public static ForgeConfigSpec.BooleanValue allowResourcefulBeesSpawnFromDispenserFedBroodBlock;
 
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
 	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
 	public static ForgeConfigSpec.BooleanValue allowProductiveBeesBeeCageRevivingEmptyBroodBlock;
+	public static ForgeConfigSpec.BooleanValue allowProductiveBeesSpawnFromDispenserFedBroodBlock;
 	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateBeeDungeon;
 	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateSpiderBeeDungeon;
@@ -149,8 +151,13 @@ public class BzModCompatibilityConfig {
 				.translation("the_bumblezone.config.allowresourcefulbeesbeejarrevivingemptybroodblock")
 				.define("allowResourcefulBeesBeeJarRevivingEmptyBroodBlock", true);
 
+			allowResourcefulBeesSpawnFromDispenserFedBroodBlock = builder
+				.comment(" \n-----------------------------------------------------\n",
+						" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Resourceful Bees's bees.\n")
+				.translation("the_bumblezone.config.allowresourcefulbeesspawnfromdispenserfedbroodblock")
+				.define("allowResourcefulBeesSpawnFromDispenserFedBroodBlock", true);
 
-		builder.pop();
+			builder.pop();
 
 			builder.push("Productive Bees Options");
 
@@ -250,6 +257,11 @@ public class BzModCompatibilityConfig {
 				.translation("the_bumblezone.config.allowproductivebeesbeecagerevivingemptybroodblock")
 				.define("allowProductiveBeesBeeCageRevivingEmptyBroodBlock", true);
 
+			allowProductiveBeesSpawnFromDispenserFedBroodBlock = builder
+				.comment(" \n-----------------------------------------------------\n",
+						" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Productive Bees's bees.\n")
+				.translation("the_bumblezone.config.allowproductivebeesspawnfromdispenserfedbroodblock")
+				.define("allowProductiveBeesSpawnFromDispenserFedBroodBlock", true);
 
 			allowHoneyTreatCompat = builder
 					.comment(" \n-----------------------------------------------------\n",
@@ -373,6 +385,7 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.allowedCombsForDungeons = allowedCombsForDungeons.get().stream().map(String::toString).collect(Collectors.toList());
 		BzModCompatibilityConfigs.allowedBees = allowedBees.get().stream().map(String::toString).collect(Collectors.toList());
 		BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock = allowProductiveBeesBeeCageRevivingEmptyBroodBlock.get();
+		BzModCompatibilityConfigs.allowProductiveBeesSpawnFromDispenserFedBroodBlock = allowProductiveBeesSpawnFromDispenserFedBroodBlock.get();
 		BzModCompatibilityConfigs.allowHoneyTreatCompat = allowHoneyTreatCompat.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateBeeDungeon = PBOreHoneycombSpawnRateBeeDungeon.get();
 		BzModCompatibilityConfigs.PBOreHoneycombSpawnRateSpiderBeeDungeon = PBOreHoneycombSpawnRateSpiderBeeDungeon.get();
@@ -394,5 +407,6 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.RBOreHoneycombSpawnRateSpiderBeeDungeon = RBOreHoneycombSpawnRateSpiderBeeDungeon.get();
 		BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins = spawnResourcefulBeesHoneycombVeins.get();
 		BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = allowResourcefulBeesBeeJarRevivingEmptyBroodBlock.get();
+		BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock = allowResourcefulBeesSpawnFromDispenserFedBroodBlock.get();
 	}
 }

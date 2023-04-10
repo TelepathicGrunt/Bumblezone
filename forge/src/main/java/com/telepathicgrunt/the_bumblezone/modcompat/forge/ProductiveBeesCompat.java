@@ -25,6 +25,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -118,17 +119,30 @@ public class ProductiveBeesCompat implements ModCompat {
 
     @Override
     public boolean onBeeSpawn(EntitySpawnEvent event, boolean isChild) {
-        if (!BzModCompatibilityConfigs.spawnProductiveBeesBeesMob) return false;
-        if (event.entity().getRandom().nextFloat() >= BzModCompatibilityConfigs.spawnrateOfProductiveBeesMobs)
+        if (!BzModCompatibilityConfigs.spawnProductiveBeesBeesMob) {
             return false;
-        if (ALL_BEES.get().size() == 0) return false;
+        }
+
+        if (event.entity().getRandom().nextFloat() >= BzModCompatibilityConfigs.spawnrateOfProductiveBeesMobs) {
+            return false;
+        }
+
+        if (event.spawnType() == MobSpawnType.DISPENSER && !BzModCompatibilityConfigs.allowProductiveBeesSpawnFromDispenserFedBroodBlock) {
+            return false;
+        }
+
+        if (ALL_BEES.get().size() == 0) {
+            return false;
+        }
 
         Mob entity = event.entity();
         LevelAccessor world = event.level();
 
         // randomly pick a productive bee (the nbt determines the bee)
         ConfigurableBee productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level);
-        if (productiveBeeEntity == null) return false;
+        if (productiveBeeEntity == null) {
+            return false;
+        }
 
         BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(entity.blockPosition());
         productiveBeeEntity.moveTo(
