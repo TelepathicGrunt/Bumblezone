@@ -11,6 +11,8 @@ Added Sugar Water Bubble Columns! These Bubble Columns are triggered with Soul S
 Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock class.
  (Example: Wilder Wilds's Glory of the Snow flowers)
 
+Added 2 Crystalline Flowers to Honitel structure.
+
 ##### Mod Compat:
 Made Empty Honeycomb Brood Block reviving go to stage 3 brood Block instead of stage 4 if given a baby bee from 
  Productive Bees's Bee Cage, Resourceful Bees's Bee Jar, Goodall Bottled Bee, or Buzzier Bees's Bottle O' Bee.
