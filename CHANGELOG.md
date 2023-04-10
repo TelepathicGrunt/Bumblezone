@@ -12,7 +12,7 @@ Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock cla
  (Example: Wilder Wilds's Glory of the Snow flowers)
 
 ##### Mod Compat:
-Made Empty Honeycomb Brood Block reviving go to stage 2 brood Block instead of stage 3 if given a baby bee from Goodall Bottled Bee.
+Made Empty Honeycomb Brood Block reviving go to stage 3 brood Block instead of stage 4 if given a baby bee from Goodall Bottled Bee.
 
 
 ### **(V.6.7.7 Changes) (1.19.2 Minecraft)**
