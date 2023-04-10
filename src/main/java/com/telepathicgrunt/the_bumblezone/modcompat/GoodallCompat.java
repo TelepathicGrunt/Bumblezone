@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,6 +33,18 @@ public class GoodallCompat {
         return !itemStack.isEmpty() && itemStack.is(BOTTLED_BEE);
     }
 
+    public static boolean isBabyBottledBeesItem(ItemStack itemStack) {
+        if (!isBottledBeesItem(itemStack) || !itemStack.hasTag()) {
+            return false;
+        }
+
+        CompoundTag compoundTag = itemStack.getOrCreateTag();
+
+        return compoundTag.contains("BlockEntityTag") &&
+                compoundTag.getCompound("BlockEntityTag").contains("Entity") &&
+                compoundTag.getCompound("BlockEntityTag").getCompound("Entity").getInt("Age") < 0;
+    }
+
     public static InteractionResult bottledBeeInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
         if (isBottledBeesItem(itemstack)) {
             if (!playerEntity.isCrouching()) {
@@ -39,7 +52,7 @@ public class GoodallCompat {
                     playerEntity.setItemInHand(playerHand, new ItemStack(Items.GLASS_BOTTLE)); //replaced potion of bee with glass bottle
                 }
 
-                return InteractionResult.SUCCESS;
+                return isBabyBottledBeesItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
             }
         }
 
