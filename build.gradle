@@ -165,6 +165,9 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
     //runtimeOnly fg.deobf("curse.maven:blueprint-382216:${project.blueprint_file_id}")
 
+    //runtimeOnly fg.deobf("curse.maven:goodall-613215:${project.goodall_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:geckolib-388172:${project.geckolib_file_id}")
+
     //runtimeOnly fg.deobf("curse.maven:potionofbees-355348:${project.potionofbees_file_id}")
 
     compileOnly fg.deobf("curse.maven:quark-243121:${project.quark_file_id}")
@@ -191,19 +194,6 @@ dependencies {
 
     //compileOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
     //runtimeOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
-
-    //runtimeOnly fg.deobf("curse.maven:realistic_bees-410743:4021715")
-    //runtimeOnly fg.deobf("curse.maven:collective-342584:4035506")
-
-    // Switch to `implementation` when testing mod compat
-    //runtimeOnly fg.deobf("dev.architectury:architectury-forge:${project.architectury_version}")
-    //runtimeOnly fg.deobf("curse.maven:friends_and_foes-602059:3873779")
-    //runtimeOnly fg.deobf("curse.maven:earthmobsmod-333256:3871807")
-    //runtimeOnly fg.deobf("curse.maven:token_enchanter-444421:3559237")
-    //runtimeOnly fg.deobf("curse.maven:silent_lib-242998:3708359")
-
-    //compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${pokecubeaio_file_id}")
-    //runtimeOnly fg.deobf("curse.maven:better_advancements-272515:3562206")
 }
 
 mixin { 
