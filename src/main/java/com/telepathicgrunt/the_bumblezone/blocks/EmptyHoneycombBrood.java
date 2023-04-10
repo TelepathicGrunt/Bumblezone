@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
@@ -91,20 +92,24 @@ public class EmptyHoneycombBrood extends ProperFacingBlock {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         if (ModChecker.goodallPresent && BzConfig.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
-            if (GoodallCompat.bottledBeeInteract(itemstack, playerEntity, playerHand) == InteractionResult.SUCCESS) {
-                playerEntity.swing(playerHand);
-                level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
-                level.setBlock(
-                        position, 
-                        BzBlocks.HONEYCOMB_BROOD.defaultBlockState()
-                                .setValue(HoneycombBrood.STAGE, 3)
-                                .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
-                        3);
-
-                return InteractionResult.SUCCESS;
-            }
+            InteractionResult compatResult = GoodallCompat.bottledBeeInteract(itemstack, playerEntity, playerHand);
+            if (SetBroodBlockRevivalState(blockState, level, position, playerEntity, playerHand, compatResult)) return InteractionResult.SUCCESS;
         }
 
         return super.use(blockState, level, position, playerEntity, playerHand, HitResult);
+    }
+
+    private boolean SetBroodBlockRevivalState(BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, InteractionResult compatResult) {
+        if (compatResult == InteractionResult.SUCCESS || compatResult == InteractionResult.CONSUME_PARTIAL) {
+            playerEntity.swing(playerHand);
+            level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+            level.setBlock(position, BzBlocks.HONEYCOMB_BROOD.defaultBlockState()
+                            .setValue(HoneycombBrood.STAGE, compatResult == InteractionResult.SUCCESS ? 3 : 2)
+                            .setValue(BlockStateProperties.FACING, blockState.getValue(BlockStateProperties.FACING)),
+                    3);
+
+            return true;
+        }
+        return false;
     }
 }
