@@ -212,10 +212,15 @@ public class GeneralUtils {
      * For giving the player an item properly into their inventory
      */
     public static void givePlayerItem(Player playerEntity, InteractionHand hand, ItemStack itemstackToGive, boolean giveContainerItem, boolean shrinkCurrentItem) {
+        if (playerEntity.level.isClientSide()) {
+            return;
+        }
+
         ItemStack playerItem = playerEntity.getItemInHand(hand);
         ItemStack copiedPlayerItem = playerItem.copy();
+        boolean instabuild = playerEntity.getAbilities().instabuild;
 
-        if(shrinkCurrentItem) {
+        if(!instabuild && shrinkCurrentItem) {
             playerItem.shrink(1);
         }
 
@@ -224,6 +229,11 @@ public class GeneralUtils {
             if (playerItem.isEmpty()) {
                 // places result item in hand
                 playerEntity.setItemInHand(hand, itemstackToGive);
+            }
+            else if (instabuild) {
+                if (!playerEntity.getInventory().contains(itemstackToGive)) {
+                    playerEntity.getInventory().add(itemstackToGive);
+                }
             }
             // places result item in inventory
             else if (!playerEntity.getInventory().add(itemstackToGive)) {
@@ -238,6 +248,11 @@ public class GeneralUtils {
             if (playerEntity.getItemInHand(hand).isEmpty()) {
                 // places result item in hand
                 playerEntity.setItemInHand(hand, containerItem);
+            }
+            else if (instabuild) {
+                if (!playerEntity.getInventory().contains(containerItem)) {
+                    playerEntity.getInventory().add(containerItem);
+                }
             }
             // places result item in inventory
             else if (!playerEntity.getInventory().add(containerItem)) {

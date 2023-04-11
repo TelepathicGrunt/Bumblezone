@@ -7,6 +7,12 @@ Added Sugar Water Bubble Columns! These Bubble Columns are triggered with Soul S
  `the_bumblezone:sugar_water/downward_bubble_column_causing`
  `the_bumblezone:sugar_water/upward_bubble_column_causing`
 
+##### Items:
+Fixed Sugar Water Bottle gathering by Glass Bottle in Creative mode leading to strange desync issues with inventory.
+
+##### Blocks:
+Fixed Stage 4 Honeycomb Brood Block not turning into Empty Honeycomb Brood Block if player right clicks with a Glass Bottle.
+
 ##### Structures:
 Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock class.
  (Example: Wilder Wilds's Glory of the Snow flowers)
