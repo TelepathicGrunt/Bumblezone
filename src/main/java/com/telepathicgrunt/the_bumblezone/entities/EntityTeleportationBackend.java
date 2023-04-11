@@ -104,7 +104,7 @@ public class EntityTeleportationBackend {
                 while (mutable.getY() < 255 && !bumblezoneWorld.isEmptyBlock(mutable) || bumblezoneWorld.getBlockState(mutable).getMaterial() == Material.WATER) {
                     mutable.move(Direction.UP);
                 }
-                if (bumblezoneWorld.getBlockState(mutable).getMaterial() != Material.AIR) {
+                if (!bumblezoneWorld.getBlockState(mutable).isAir()) {
                     validBlockPos = blockpos; // No air found. Let's not place player here where they could drown
                 }
                 else {
@@ -113,7 +113,7 @@ public class EntityTeleportationBackend {
             }
             //checks if spot is not a non-solid block with air block above
             else if ((!bumblezoneWorld.isEmptyBlock(validBlockPos) && bumblezoneWorld.getBlockState(validBlockPos).getMaterial() != Material.WATER) &&
-                    bumblezoneWorld.getBlockState(validBlockPos.above()).getMaterial() != Material.AIR) {
+                    !bumblezoneWorld.getBlockState(validBlockPos.above()).isAir()) {
                 validBlockPos = blockpos;
             }
         }
