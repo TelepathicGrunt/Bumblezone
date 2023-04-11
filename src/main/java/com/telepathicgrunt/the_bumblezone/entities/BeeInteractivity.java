@@ -79,9 +79,7 @@ public class BeeInteractivity {
             if (itemstack.is(BzItems.BEE_STINGER.get())) {
                 beeEntity.hasStung();
                 ((BeeEntityInvoker)beeEntity).callSetHasStung(false);
-                if (!playerEntity.getAbilities().instabuild) {
-                    GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
-                }
+                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
 
                 if (playerEntity instanceof ServerPlayer serverPlayer) {
                     EntityMisc.onBeesSaved(serverPlayer);
@@ -156,10 +154,8 @@ public class BeeInteractivity {
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.1f, 3);
             }
 
-            if (!playerEntity.isCreative()) {
-                // remove current item
-                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
-            }
+            // remove current item
+            GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
 
             if(playerEntity instanceof ServerPlayer serverPlayer) {
                 EntityMisc.onBeesFed(serverPlayer);

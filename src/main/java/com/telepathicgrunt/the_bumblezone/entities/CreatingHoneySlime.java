@@ -32,38 +32,35 @@ public class CreatingHoneySlime {
             if(honeySlimeMob == null || slimeSize > 2)
                 return InteractionResult.PASS;
 
-            if(world.isClientSide())
-                return InteractionResult.SUCCESS;
+            if(!world.isClientSide()) {
+                honeySlimeMob.moveTo(
+                        target.getX(),
+                        target.getY(),
+                        target.getZ(),
+                        target.getYRot(),
+                        target.getXRot());
 
-            honeySlimeMob.moveTo(
-                    target.getX(),
-                    target.getY(),
-                    target.getZ(),
-                    target.getYRot(),
-                    target.getXRot());
+                honeySlimeMob.setBaby(slimeSize == 1);
+                honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(new BlockPos(honeySlimeMob.position())), MobSpawnType.TRIGGERED, null, null);
+                // spawn honey slime
+                world.addFreshEntity(honeySlimeMob);
 
-            honeySlimeMob.setBaby(slimeSize == 1);
-            honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(new BlockPos(honeySlimeMob.position())), MobSpawnType.TRIGGERED, null, null);
-            // spawn honey slime
-            world.addFreshEntity(honeySlimeMob);
+                // remove original slime
+                target.discard();
 
-            // remove original slime
-            target.discard();
-
-            world.playSound(
-                    playerEntity,
-                    playerEntity.getX(),
-                    playerEntity.getY(),
-                    playerEntity.getZ(),
-                    honeySlimeMob.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL.get() : BzSounds.HONEY_SLIME_SQUISH.get(),
-                    SoundSource.NEUTRAL,
-                    1.0F,
-                    1.0F);
-
-            if (!playerEntity.isCreative()) {
-                // remove current honey item
-                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
+                world.playSound(
+                        playerEntity,
+                        playerEntity.getX(),
+                        playerEntity.getY(),
+                        playerEntity.getZ(),
+                        honeySlimeMob.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL.get() : BzSounds.HONEY_SLIME_SQUISH.get(),
+                        SoundSource.NEUTRAL,
+                        1.0F,
+                        1.0F);
             }
+
+            // remove current honey item
+            GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
 
             playerEntity.swing(hand, true);
             if(playerEntity instanceof ServerPlayer serverPlayer) {

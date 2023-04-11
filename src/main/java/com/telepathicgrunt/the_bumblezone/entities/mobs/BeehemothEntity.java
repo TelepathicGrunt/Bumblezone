@@ -353,9 +353,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             addFriendship(1);
                         }
 
-                        if (!player.isCreative()) {
-                            GeneralUtils.givePlayerItem(player, hand, ItemStack.EMPTY, true, true);
-                        }
+                        GeneralUtils.givePlayerItem(player, hand, ItemStack.EMPTY, true, true);
 
                         player.swing(hand, true);
                         return InteractionResult.CONSUME;
@@ -462,9 +460,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     }
                 }
 
-                if (!player.isCreative()) {
-                    GeneralUtils.givePlayerItem(player, hand, ItemStack.EMPTY, true, true);
-                }
+                GeneralUtils.givePlayerItem(player, hand, ItemStack.EMPTY, true, true);
                 setPersistenceRequired();
                 player.swing(hand, true);
 

@@ -221,14 +221,12 @@ public class ProductiveBeesCompat {
 	public static InteractionResult beeCageInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
 		if (isFilledBeeCageItem(itemstack)) {
 			if (!playerEntity.isCrouching()) {
-				if (!playerEntity.isCreative()) {
-					GeneralUtils.givePlayerItem(
-							playerEntity,
-							playerHand,
-							itemstack.is(ProductiveBeesCompat.STURDY_BEE_CAGE) ? ProductiveBeesCompat.STURDY_BEE_CAGE.getDefaultInstance() : ProductiveBeesCompat.BEE_CAGE.getDefaultInstance(),
-							true,
-							true);
-				}
+				GeneralUtils.givePlayerItem(
+						playerEntity,
+						playerHand,
+						itemstack.is(ProductiveBeesCompat.STURDY_BEE_CAGE) ? ProductiveBeesCompat.STURDY_BEE_CAGE.getDefaultInstance() : ProductiveBeesCompat.BEE_CAGE.getDefaultInstance(),
+						true,
+						true);
 
 				return isFilledBabyBeeCageItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
 			}

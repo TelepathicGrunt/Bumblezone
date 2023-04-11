@@ -82,9 +82,7 @@ public class PorousHoneycomb extends Block {
             world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3); // added honey to this block
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
-            if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
-            }
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
 
             return InteractionResult.SUCCESS;
         }
@@ -115,9 +113,7 @@ public class PorousHoneycomb extends Block {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
-            if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
-            }
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
 
             return InteractionResult.SUCCESS;
         }
