@@ -19,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -262,6 +263,8 @@ public class HoneyCompass extends Item implements Vanishable {
     private void setCompassData(ServerLevel serverLevel, ServerPlayer serverPlayer, InteractionHand interactionHand, ItemStack itemStack, BlockPos structurePos) {
         itemStack.getOrCreateTag().putBoolean(TAG_LOADING, false);
         serverLevel.playSound(null, serverPlayer.blockPosition(), BzSounds.HONEY_COMPASS_STRUCTURE_LOCK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+
+        serverPlayer.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
 
         if (structurePos == null) {
             serverPlayer.swing(interactionHand);
