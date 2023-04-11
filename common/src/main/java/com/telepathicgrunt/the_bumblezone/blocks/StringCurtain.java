@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -271,6 +272,10 @@ public class StringCurtain extends Block {
             if (itemstack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS) && GeneralUtils.isPermissionAllowedAtSpot(world, playerEntity, position, true)) {
                 boolean success = extendCurtainIfPossible(blockstate, world, position);
                 if (success) {
+                    if (!itemstack.isEmpty()) {
+                        playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
+                    }
+
                     if (!playerEntity.getAbilities().instabuild) {
                         itemstack.shrink(1);
                     }

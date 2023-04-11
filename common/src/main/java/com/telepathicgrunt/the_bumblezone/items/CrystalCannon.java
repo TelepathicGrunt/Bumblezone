@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -100,6 +101,8 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
                             1.9f,
                             1);
                     level.addFreshEntity(newCrystal);
+
+                    player.awardStat(Stats.ITEM_USED.get(mutableCrystalCannon.getItem()));
 
                     level.playSound(null, player.blockPosition(), BzSounds.CRYSTAL_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
                     mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));

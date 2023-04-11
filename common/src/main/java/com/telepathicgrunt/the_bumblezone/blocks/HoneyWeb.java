@@ -18,6 +18,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -227,6 +228,14 @@ public class HoneyWeb extends Block {
                 itemstack.getItem() == Items.WET_SPONGE ||
                 itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
 
+            if (!itemstack.isEmpty()) {
+                playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
+            }
+
+            if(itemstack.getItem() == Items.WET_SPONGE && playerEntity instanceof ServerPlayer) {
+                BzCriterias.CLEANUP_HONEY_WEB_TRIGGER.trigger((ServerPlayer) playerEntity);
+            }
+
             world.destroyBlock(position, false);
 
             world.playSound(
@@ -238,10 +247,6 @@ public class HoneyWeb extends Block {
                     SoundSource.PLAYERS,
                     1.0F,
                     1.0F);
-
-            if(itemstack.getItem() == Items.WET_SPONGE && playerEntity instanceof ServerPlayer) {
-                BzCriterias.CLEANUP_HONEY_WEB_TRIGGER.trigger((ServerPlayer) playerEntity);
-            }
 
             if (world.isClientSide()) {
                 for (int i = 0; i < 25; ++i) {

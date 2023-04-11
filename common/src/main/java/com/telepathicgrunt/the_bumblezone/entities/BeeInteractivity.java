@@ -19,6 +19,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -186,6 +187,11 @@ public class BeeInteractivity {
 
                     if(world.isClientSide())
                         return InteractionResult.SUCCESS;
+
+                    ItemStack playerItem = playerEntity.getItemInHand(hand);
+                    if (!playerItem.isEmpty()) {
+                        playerEntity.awardStat(Stats.ITEM_USED.get(playerItem.getItem()));
+                    }
 
                     PollenPuff.spawnItemstackEntity(world, beeEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
                     playerEntity.swing(hand, true);

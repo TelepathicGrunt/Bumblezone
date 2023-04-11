@@ -10,6 +10,8 @@ Added Sugar Water Bubble Columns! These Bubble Columns are triggered with Soul S
 ##### Items:
 Fixed Sugar Water Bottle gathering by Glass Bottle in Creative mode leading to strange desync issues with inventory.
 
+Properly record to vanilla's statistics screen more of Bumblezone's item use actions.
+
 ##### Blocks:
 Fixed Stage 4 Honeycomb Brood Block not turning into Empty Honeycomb Brood Block if player right clicks with a Glass Bottle.
 

@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -132,11 +133,18 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
             }
             else if (!blockState.getValue(LIT)) {
                 if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
-                    SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    if (SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true)) {
+                        if (!handItem.isEmpty()) {
+                            player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                        }
+                    }
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
                     boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    if (!handItem.isEmpty() && successfulLit) {
+                        player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                    }
                     if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
                         handItem.hurt(1, level.getRandom(), serverPlayer);
                     }
@@ -144,6 +152,9 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
                 }
                 else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
                     boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+                    if (!handItem.isEmpty() && successfulLit) {
+                        player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                    }
                     if (successfulLit && !player.getAbilities().instabuild) {
                         handItem.shrink(1);
                     }

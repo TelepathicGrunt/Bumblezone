@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -57,6 +58,8 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
                 if (bees.isEmpty()) {
                     return;
                 }
+
+                player.awardStat(Stats.ITEM_USED.get(beeCannon.getItem()));
 
                 float maxDistance = 15;
                 Vec3 playerEyePos = new Vec3(player.getX(), player.getEyeY() - 0.25f, player.getZ());
