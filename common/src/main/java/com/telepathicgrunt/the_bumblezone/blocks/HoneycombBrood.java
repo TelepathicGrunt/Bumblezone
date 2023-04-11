@@ -89,17 +89,16 @@ public class HoneycombBrood extends ProperFacingBlock {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         RandomSource random = playerEntity.getRandom();
 
-        //VANILLA COMPAT
         /*
          * Player is taking honey and killing larva
          */
         if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            world.setBlock(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState().setValue(BlockStateProperties.FACING, thisBlockState.getValue(BlockStateProperties.FACING)), 3); // removed honey from this block
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             //spawn angry bee if at final stage and front isn't blocked off
             int stage = thisBlockState.getValue(STAGE);
             spawnBroodMob(world, random, thisBlockState, position, stage);
-            GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
+            world.setBlock(position, BzBlocks.EMPTY_HONEYCOMB_BROOD.get().defaultBlockState().setValue(BlockStateProperties.FACING, thisBlockState.getValue(BlockStateProperties.FACING)), 3); // removed honey from this block
 
             if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
@@ -146,9 +145,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     1.0F);
 
             // removes used item
-            if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
-            }
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
             return InteractionResult.SUCCESS;
         }
         /*
@@ -228,9 +225,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     1.0F);
 
             //removes used item
-            if (!playerEntity.isCreative()) {
-                GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
-            }
+            GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
 
             return InteractionResult.SUCCESS;
         }

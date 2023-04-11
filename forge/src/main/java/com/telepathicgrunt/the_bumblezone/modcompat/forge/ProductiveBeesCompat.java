@@ -239,7 +239,7 @@ public class ProductiveBeesCompat implements ModCompat {
         if (!BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) return InteractionResult.PASS;
         if (isFilledBeeCageItem(itemstack)) {
             if (!playerEntity.isCrouching()) {
-                if (!playerEntity.isCreative()) {
+                if (!playerEntity.getAbilities().instabuild) {
                     ItemStack itemToGive = ItemStack.EMPTY;
 
                     if (ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent() && itemstack.is(ProductiveBeesCompat.STURDY_BEE_CAGE.get())) {

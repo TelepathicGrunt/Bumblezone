@@ -28,42 +28,41 @@ public class CreatingHoneySlime {
 
             Slime slimeEntity = (Slime)target;
             int slimeSize = slimeEntity.getSize();
-            HoneySlimeEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
-            if(honeySlimeMob == null || slimeSize > 2)
+            if(slimeSize > 2) {
                 return InteractionResult.PASS;
-
-            if(world.isClientSide())
-                return InteractionResult.SUCCESS;
-
-            honeySlimeMob.moveTo(
-                    target.getX(),
-                    target.getY(),
-                    target.getZ(),
-                    target.getYRot(),
-                    target.getXRot());
-
-            honeySlimeMob.setBaby(slimeSize == 1);
-            honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(honeySlimeMob.position())), MobSpawnType.TRIGGERED, null, null);
-            // spawn honey slime
-            world.addFreshEntity(honeySlimeMob);
-
-            // remove original slime
-            target.discard();
-
-            world.playSound(
-                    playerEntity,
-                    playerEntity.getX(),
-                    playerEntity.getY(),
-                    playerEntity.getZ(),
-                    honeySlimeMob.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL.get() : BzSounds.HONEY_SLIME_SQUISH.get(),
-                    SoundSource.NEUTRAL,
-                    1.0F,
-                    1.0F);
-
-            if (!playerEntity.isCreative()) {
-                // remove current honey item
-                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
             }
+
+            if(!world.isClientSide()) {
+                HoneySlimeEntity honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
+
+                honeySlimeMob.moveTo(
+                        target.getX(),
+                        target.getY(),
+                        target.getZ(),
+                        target.getYRot(),
+                        target.getXRot());
+
+                honeySlimeMob.setBaby(slimeSize == 1);
+                honeySlimeMob.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(honeySlimeMob.position())), MobSpawnType.TRIGGERED, null, null);
+                // spawn honey slime
+                world.addFreshEntity(honeySlimeMob);
+
+                // remove original slime
+                target.discard();
+
+                world.playSound(
+                        playerEntity,
+                        playerEntity.getX(),
+                        playerEntity.getY(),
+                        playerEntity.getZ(),
+                        honeySlimeMob.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL.get() : BzSounds.HONEY_SLIME_SQUISH.get(),
+                        SoundSource.NEUTRAL,
+                        1.0F,
+                        1.0F);
+            }
+
+            // remove current honey item
+            GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
 
             playerEntity.swing(hand, true);
             if(playerEntity instanceof ServerPlayer serverPlayer) {
