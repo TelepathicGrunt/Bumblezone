@@ -54,7 +54,7 @@ public class CreatingHoneySlime {
                         playerEntity.getX(),
                         playerEntity.getY(),
                         playerEntity.getZ(),
-                        honeySlimeMob.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL : BzSounds.HONEY_SLIME_SQUISH),
+                        honeySlimeMob.isBaby() ? BzSounds.HONEY_SLIME_SQUISH_SMALL : BzSounds.HONEY_SLIME_SQUISH,
                         SoundSource.NEUTRAL,
                         1.0F,
                         1.0F);
