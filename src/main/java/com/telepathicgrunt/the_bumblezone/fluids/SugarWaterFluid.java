@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -57,24 +58,38 @@ public abstract class SugarWaterFluid extends FlowingFluid {
         if (random.nextBoolean() || !world.hasChunksAt(position, position))
             return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 
-        //check one of the spot next to sugar water for sugar cane to grow
-        BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos().set(position.above());
-        blockPos.move(Direction.from2DDataValue(random.nextInt(4)));
-        BlockState blockstate = world.getBlockState(blockPos);
+        BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
 
-        if (blockstate.getBlock() == Blocks.SUGAR_CANE) {
-            int height = 1;
-            blockstate = world.getBlockState(blockPos.move(Direction.UP));
+        for (Direction direction : Direction.Plane.HORIZONTAL.shuffledCopy(random)) {
+            //check one of the spot next to sugar water for sugar cane to grow
+            blockPos.set(position.above());
+            blockPos.move(direction);
+            BlockState blockstate = world.getBlockState(blockPos);
 
-            //find top of sugar cane or
-            while (blockstate.getBlock() == Blocks.SUGAR_CANE && height < 5) {
+            if (blockstate.getBlock() == Blocks.SUGAR_CANE) {
+                int height = 1;
                 blockstate = world.getBlockState(blockPos.move(Direction.UP));
-                height++;
-            }
 
-            //at top of sugar cane. Time to see if it can grow more
-            if (height < 5 && blockstate.getMaterial() == Material.AIR) {
-                world.setBlock(blockPos, Blocks.SUGAR_CANE.defaultBlockState(), 3);
+                //find top of sugar cane
+                while (blockstate.getBlock() == Blocks.SUGAR_CANE && height < 5) {
+                    blockstate = world.getBlockState(blockPos.move(Direction.UP));
+                    height++;
+                }
+
+                if (height >= 5) {
+                    continue;
+                }
+
+                BlockState topSugarCane = world.getBlockState(blockPos.below());
+                int sugarCaneAge = topSugarCane.hasProperty(SugarCaneBlock.AGE) ? topSugarCane.getValue(SugarCaneBlock.AGE) : 0;
+                // Age up Sugar Cane
+                if (sugarCaneAge < 15) {
+                    world.setBlock(blockPos.below(), Blocks.SUGAR_CANE.defaultBlockState().setValue(SugarCaneBlock.AGE, sugarCaneAge + 1), 3);
+                }
+                //at top of sugar cane. Time to see if it can grow more
+                else if (blockstate.isAir()) {
+                    world.setBlock(blockPos, Blocks.SUGAR_CANE.defaultBlockState(), 3);
+                }
             }
         }
     }
