@@ -1,3 +1,9 @@
+### **(V.6.7.9 Changes) (1.19.4 Minecraft)**
+
+##### Fluids:
+Fixed Sugar Water not properly aging up neighboring Sugar Cane blocks and nerfed its speed at growing Sugar Cane a bit.
+
+
 ### **(V.6.7.8 Changes) (1.19.4 Minecraft)**
 
 ##### Fluids:
