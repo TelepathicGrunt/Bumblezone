@@ -20,14 +20,15 @@ import java.util.List;
 
 @Mixin(BottleItem.class)
 public class GlassBottleUseMixin {
-    //using glass bottle to get honey could anger bees
+    //using glass bottle to get sugar water
     @Inject(method = "use(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/BottleItem;turnBottleIntoItem(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             cancellable = true)
     private void thebumblezone_bottleFluidInteractSugarWater(Level world, Player user, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> cir, List<AreaEffectCloud> list, ItemStack itemStack, HitResult hitResult, BlockPos blockPos) {
-        if (GlassBottleBehavior.useBottleOnSugarWater(world, user, hand, blockPos)) {
-            cir.setReturnValue(InteractionResultHolder.success(user.getItemInHand(hand)));
+        ItemStack returnStack = GlassBottleBehavior.useBottleOnSugarWater(((BottleItem)(Object)this), world, user, hand, blockPos);
+        if (!returnStack.isEmpty()) {
+            cir.setReturnValue(InteractionResultHolder.success(returnStack));
         }
     }
 

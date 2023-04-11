@@ -280,9 +280,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
          //Bottling
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
             level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
-            if (!player.isCreative()) {
-               GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false, true);
-            }
+            GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             getHoneyFromSlime(this);
 

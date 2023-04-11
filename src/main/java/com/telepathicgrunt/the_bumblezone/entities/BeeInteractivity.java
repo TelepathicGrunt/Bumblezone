@@ -42,9 +42,7 @@ public class BeeInteractivity {
         if (itemstack.is(BzItems.BEE_STINGER)) {
             beeEntity.hasStung();
             ((BeeEntityInvoker)beeEntity).callSetHasStung(false);
-            if (!playerEntity.getAbilities().instabuild) {
-                GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
-            }
+            GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
 
             if (playerEntity instanceof ServerPlayer serverPlayer) {
                 MiscComponent.onBeesSaved(serverPlayer);
@@ -69,6 +67,9 @@ public class BeeInteractivity {
             if(removedWrath && playerEntity instanceof ServerPlayer) {
                 BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
             }
+            
+            // remove current item
+            GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
 
             playerEntity.swing(hand, true);
             return InteractionResult.PASS;
