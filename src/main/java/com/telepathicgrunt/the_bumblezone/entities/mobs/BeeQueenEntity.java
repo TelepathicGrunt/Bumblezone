@@ -505,7 +505,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
             // Grab a nearby air materialposition a bit away
             BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this, 5, 0);
-            if(this.level.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
+            if(!this.level.getBlockState(spawnBlockPos).isAir()) {
                 return;
             }
 

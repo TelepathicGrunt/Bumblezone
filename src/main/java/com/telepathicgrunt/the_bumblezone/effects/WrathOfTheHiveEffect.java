@@ -92,7 +92,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 if(entity.getRandom().nextFloat() <= 0.0045f) {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
-                    if(world.getBlockState(spawnBlockPos).getMaterial() != Material.AIR) {
+                    if(!world.getBlockState(spawnBlockPos).isAir()) {
                         return;
                     }
 
