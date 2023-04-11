@@ -13,7 +13,6 @@ import java.util.function.Supplier;
 public class BzFoodProperties extends FoodProperties {
 
     private final List<ObjectFloatPair<Supplier<MobEffectInstance>>> effects;
-    private boolean converted = false;
 
     public BzFoodProperties(int i, float f, boolean bl, boolean bl2, boolean bl3, List<ObjectFloatPair<Supplier<MobEffectInstance>>> effects) {
         super(i, f, bl, bl2, bl3, new ArrayList<>());
@@ -22,15 +21,11 @@ public class BzFoodProperties extends FoodProperties {
 
     @Override
     public List<Pair<MobEffectInstance, Float>> getEffects() {
-        if (!converted) {
-            List<Pair<MobEffectInstance, Float>> effects = super.getEffects();
-            for (var effect : this.effects) {
-                effects.add(new Pair<>(effect.first().get(), effect.secondFloat()));
-            }
-            converted = true;
-            return effects;
+        List<Pair<MobEffectInstance, Float>> effects = new ArrayList<>(super.getEffects());
+        for (var effect : this.effects) {
+            effects.add(new Pair<>(effect.first().get(), effect.secondFloat()));
         }
-        return super.getEffects();
+        return effects;
     }
 
     public static Builder builder(int hunger, float saturation) {

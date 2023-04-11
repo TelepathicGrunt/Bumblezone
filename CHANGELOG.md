@@ -12,8 +12,13 @@ Fixed Sugar Water Bottle gathering by Glass Bottle in Creative mode leading to s
 
 Properly record to vanilla's statistics screen more of Bumblezone's item use actions.
 
+(Forge): Fixed food items not giving effects after drinking it more than once. (Example: Sugar Water Bottle or Royal Jelly Bottle)
+
 ##### Blocks:
 Fixed Stage 4 Honeycomb Brood Block not turning into Empty Honeycomb Brood Block if player right clicks with a Glass Bottle.
+
+##### Entities:
+Fixed Beehemoth flying too fast when tamed and rode without a Saddle on
 
 ##### Structures:
 Fixed Hanging Gardens not spawning flowers that are using the MultifaceBlock class.

@@ -60,7 +60,8 @@ public class BeehemothRandomFlyGoal extends Goal {
                 return;
             }
 
-            beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, beehemothEntity.getFlyingSpeed());
+            float flyingSpeed = beehemothEntity.isVehicle() ? beehemothEntity.getFlyingSpeed() / 5 : beehemothEntity.getFlyingSpeed();
+            beehemothEntity.getMoveControl().setWantedPosition(target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, flyingSpeed);
         }
     }
 
