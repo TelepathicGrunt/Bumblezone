@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -118,6 +119,7 @@ public class CarvableWax extends ProperFacingBlock {
             world.setBlock(position, BzBlocks.CARVABLE_WAX.defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next()), 3);
             this.spawnDestroyParticles(world, playerEntity, position,blockState);
 
+            playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
                 BzCriterias.CARVE_CARVABLE_WAX_TRIGGER.trigger(serverPlayer, position);
 

@@ -13,6 +13,7 @@ import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -219,6 +220,10 @@ public class GeneralUtils {
         ItemStack playerItem = playerEntity.getItemInHand(hand);
         ItemStack copiedPlayerItem = playerItem.copy();
         boolean instabuild = playerEntity.getAbilities().instabuild;
+
+        if (!playerItem.isEmpty()) {
+            playerEntity.awardStat(Stats.ITEM_USED.get(playerItem.getItem()));
+        }
 
         if(!instabuild && shrinkCurrentItem) {
             playerItem.shrink(1);
