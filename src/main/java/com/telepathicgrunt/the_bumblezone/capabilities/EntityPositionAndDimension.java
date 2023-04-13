@@ -4,8 +4,10 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import org.apache.logging.log4j.Level;
 
 
@@ -76,5 +78,17 @@ public class EntityPositionAndDimension implements INBTSerializable<CompoundTag>
 
 		this.setNonBZDim(storedDimension.getPath().isEmpty() ? new ResourceLocation("minecraft", "overworld") : storedDimension);
 		this.setNonBZPos(storedPositionNonBZ);
+	}
+
+	public static void resetValueOnRespawn(PlayerEvent.Clone event) {
+		if (event.getEntity() instanceof ServerPlayer serverPlayerNew && event.getOriginal() instanceof ServerPlayer serverPlayerOld) {
+			serverPlayerOld.reviveCaps();
+
+			serverPlayerNew.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capabilityNew ->
+					serverPlayerOld.getCapability(BzCapabilities.ENTITY_POS_AND_DIM_CAPABILITY).ifPresent(capabilityOld ->
+							capabilityNew.deserializeNBT(capabilityOld.serializeNBT())));
+
+			serverPlayerOld.invalidateCaps();
+		}
 	}
 }

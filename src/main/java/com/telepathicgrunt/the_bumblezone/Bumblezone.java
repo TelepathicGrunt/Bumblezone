@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
+import com.telepathicgrunt.the_bumblezone.capabilities.EntityPositionAndDimension;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
@@ -100,6 +101,7 @@ public class Bumblezone{
         forgeBus.addListener(EntityMisc::onHoneySlimeBred);
         forgeBus.addListener(EntityMisc::onHoneyBottleDrank);
         forgeBus.addListener(EntityMisc::resetValueOnRespawn);
+        forgeBus.addListener(EntityPositionAndDimension::resetValueOnRespawn);
         forgeBus.addListener(EventPriority.LOWEST, EntityMisc::onEntityKilled);
         forgeBus.addListener(IncenseCandleBase::multiPotionCandleCrafted);
         forgeBus.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);

@@ -11,6 +11,9 @@ Honitel now spawns red flowers mostly along with several other modded red flower
 ##### Fluids:
 Fixed Sugar Water not properly aging up neighboring Sugar Cane blocks and nerfed its speed at growing Sugar Cane a bit.
 
+##### Teleportation:
+Fixed original dimension/position data for exiting Bumblezone being lost upon dying.
+
 
 ### **(V.6.7.8 Changes) (1.19.2 Minecraft)**
 
