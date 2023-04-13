@@ -1,5 +1,8 @@
 ### **(V.6.7.9 Changes) (1.19.2 Minecraft)**
 
+##### Biomes:
+Added mitigation efforts to stop out-of-control vanilla Slime spawns in Bumblezone if another mod removes the y < 40 check that vanilla Slime has.
+
 ##### Structures:
 Honitel now spawns red flowers mostly along with several other modded red flowers. Controlled by these two block tags:
 `the_bumblezone:honitel/allowed_flowers`
