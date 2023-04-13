@@ -1,5 +1,10 @@
 ### **(V.6.7.9 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Honitel now spawns red flowers mostly along with several other modded red flowers. Controlled by these two block tags:
+`the_bumblezone:honitel/allowed_flowers`
+`the_bumblezone:honitel/forced_disallowed_flowers`
+
 ##### Fluids:
 Fixed Sugar Water not properly aging up neighboring Sugar Cane blocks and nerfed its speed at growing Sugar Cane a bit.
 

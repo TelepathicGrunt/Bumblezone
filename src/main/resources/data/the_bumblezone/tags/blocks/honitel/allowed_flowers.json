@@ -1,0 +1,219 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:poppy",
+    "minecraft:red_tulip",
+    {
+      "id": "atmospheric:scalding_monkey_brush",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:rose",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:freesia",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:birds_of_paradise",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_red_tulip",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_poppy",
+      "required": false
+    },
+    {
+      "id": "byg:rose",
+      "required": false
+    },
+    {
+      "id": "byg:begonia",
+      "required": false
+    },
+    {
+      "id": "byg:amaranth",
+      "required": false
+    },
+    {
+      "id": "byg:torch_ginger",
+      "required": false
+    },
+    {
+      "id": "byg:kovan_flower",
+      "required": false
+    },
+    {
+      "id": "byg:lazarus_bellflower",
+      "required": false
+    },
+    {
+      "id": "byg:guzmania",
+      "required": false
+    },
+    {
+      "id": "byg:magenta_tulip",
+      "required": false
+    },
+    {
+      "id": "environmental:red_lotus_flower",
+      "required": false
+    },
+    {
+      "id": "environmental:red_hibiscus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_geranium",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_poppy",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_clover",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_freesia",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:lantana",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:striped_zinna",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:desert_paintbrush",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:jewel_of_the_desert",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:buckwheat_red",
+      "required": false
+    },
+    {
+      "id": "floralis:red_flower",
+      "required": false
+    },
+    {
+      "id": "goodending:spicy_wildflowers",
+      "required": false
+    },
+    {
+      "id": "habitat:blooming_dreadbud",
+      "required": false
+    },
+    {
+      "id": "habitat:red_anthurium",
+      "required": false
+    },
+    {
+      "id": "habitat:red_ball_cactus_flower",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:essitte",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:punuel",
+      "required": false
+    },
+    {
+      "id": "jafohana:red_snapdragon",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:drigean",
+      "required": false
+    },
+    {
+      "id": "promenade:red_tulip_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:poppy_pile",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:red_allium",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:red_dandelion",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:hibiscus",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:poppy_bundle",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:rose_classic",
+      "required": false
+    },
+    {
+      "id": "naturalized:rose",
+      "required": false
+    },
+    {
+      "id": "regions_unexplorered:waratah",
+      "required": false
+    },
+    {
+      "id": "regions_unexplorered:alpha_rose",
+      "required": false
+    },
+    {
+      "id": "regions_unexplorered:poppy_bush",
+      "required": false
+    },
+    {
+      "id": "regions_unexplorered:red_lupine",
+      "required": false
+    },
+    {
+      "id": "silverbirch:rose",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:columbine",
+      "required": false
+    },
+    {
+      "id": "twilightforest:thorn_rose",
+      "required": false
+    },
+    {
+      "id": "unsualprehistory:sarracenia",
+      "required": false
+    },
+    {
+      "id": "windswept:red_rose",
+      "required": false
+    },
+    {
+      "id": "valleycraft:red_lupine",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_fire_pepper",
+      "required": false
+    }
+  ]
+}
