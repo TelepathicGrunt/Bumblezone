@@ -14,6 +14,9 @@ Fixed Sugar Water not properly aging up neighboring Sugar Cane blocks and nerfed
 ##### Teleportation:
 Fixed original dimension/position data for exiting Bumblezone being lost upon dying.
 
+##### Lang:
+Added `dimension.the_bumblezone.the_bumblezone` translation key for other mods to get the correct name of my dimension easier.
+
 
 ### **(V.6.7.8 Changes) (1.19.2 Minecraft)**
 
