@@ -1,6 +1,12 @@
 {
   "processors": [
     {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:poppy",
+      "output_block_tag": "the_bumblezone:honitel/allowed_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:honitel/forced_disallowed_flowers"
+    },
+    {
       "processor_type": "the_bumblezone:pillar_processor",
       "direction": "down",
       "pillar_trigger_and_replacements": [
@@ -16,50 +22,6 @@
           }
         }
       ]
-    },
-    {
-      "rules": [
-        {
-          "output_state": {
-            "Name": "minecraft:dandelion"
-          },
-          "input_predicate": {
-            "block": "minecraft:poppy",
-            "predicate_type": "minecraft:random_block_match",
-            "probability": 0.25
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "minecraft:cornflower"
-          },
-          "input_predicate": {
-            "block": "minecraft:poppy",
-            "predicate_type": "minecraft:random_block_match",
-            "probability": 0.275
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "minecraft:lily_of_the_valley"
-          },
-          "input_predicate": {
-            "block": "minecraft:poppy",
-            "predicate_type": "minecraft:random_block_match",
-            "probability": 0.3
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        }
-      ],
-      "processor_type": "minecraft:rule"
     }
   ]
 }
