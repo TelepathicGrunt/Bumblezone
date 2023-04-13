@@ -1,3 +1,9 @@
+### **(V.6.7.10 Changes) (1.19.2 Minecraft)**
+
+##### Fluids:
+Fixed Sugar Water not turning Lava into Obsidian. Forgot to do specific thingy with Forge's Fluid API system since they removed Lava's check for Water Tagged fluids.
+
+
 ### **(V.6.7.9 Changes) (1.19.2 Minecraft)**
 
 ##### Biomes:
