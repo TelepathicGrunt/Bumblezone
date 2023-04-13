@@ -8,6 +8,8 @@ Honitel now spawns red flowers mostly along with several other modded red flower
 `the_bumblezone:honitel/allowed_flowers`
 `the_bumblezone:honitel/forced_disallowed_flowers`
 
+Added a hidden Crystalline Flower to Honey Fountain structure.
+
 ##### Fluids:
 Fixed Sugar Water not properly aging up neighboring Sugar Cane blocks and nerfed its speed at growing Sugar Cane a bit.
 
