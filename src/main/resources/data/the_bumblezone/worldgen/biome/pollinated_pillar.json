@@ -120,6 +120,10 @@
     "minecraft:phantom": {
       "energy_budget": 0.01,
       "charge": 2.5
+    },
+    "minecraft:slime": {
+      "energy_budget": 0.1,
+      "charge": 1.0
     }
   }
 }
