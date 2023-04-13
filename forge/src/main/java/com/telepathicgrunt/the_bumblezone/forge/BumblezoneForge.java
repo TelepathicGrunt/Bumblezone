@@ -41,8 +41,11 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.fluids.forge.BzFluidType;
 import com.telepathicgrunt.the_bumblezone.mixins.forge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.forge.ForgeModChecker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.forge.BzBiomeModifiers;
 import com.telepathicgrunt.the_bumblezone.modinit.forge.BzGlobalLootModifier;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.forge.ResourcefulRegistriesImpl;
@@ -64,6 +67,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -91,6 +95,7 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidInteractionRegistry;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -198,6 +203,16 @@ public class BumblezoneForge {
 
     private static void onSetup(FMLCommonSetupEvent event) {
         SetupEvent.EVENT.invoke(new SetupEvent(event::enqueueWork));
+
+        FluidInteractionRegistry.addInteraction(ForgeMod.LAVA_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+                BzFluids.SUGAR_WATER_FLUID_TYPE.get().flowing().getFluidType(),
+                fluidState -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState()
+        ));
+
+        FluidInteractionRegistry.addInteraction(ForgeMod.LAVA_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+                BzFluids.SUGAR_WATER_FLUID_TYPE.get().source().getFluidType(),
+                fluidState -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState()
+        ));
 
         event.enqueueWork(() ->
                 RegisterFlammabilityEvent.EVENT.invoke(new RegisterFlammabilityEvent((item, igniteOdds, burnOdds) ->
