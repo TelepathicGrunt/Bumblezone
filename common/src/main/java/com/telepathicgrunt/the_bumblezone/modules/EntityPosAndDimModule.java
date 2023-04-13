@@ -2,11 +2,15 @@ package com.telepathicgrunt.the_bumblezone.modules;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
 import dev.architectury.injectables.targets.ArchitecturyTarget;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 
 public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
@@ -111,6 +115,11 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
                     tag.putDouble("non_bz_position_z", module.getNonBZPos().z());
                 }
             }
+        }
+
+        @Override
+        public void onPlayerCopy(EntityPosAndDimModule oldModule, EntityPosAndDimModule thisModule, ServerPlayer player, boolean isPersistent) {
+            ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
         }
     }
 }

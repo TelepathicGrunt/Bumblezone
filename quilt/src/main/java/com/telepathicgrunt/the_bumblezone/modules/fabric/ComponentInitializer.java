@@ -26,7 +26,7 @@ public class ComponentInitializer implements EntityComponentInitializer {
     public void registerEntityComponentFactories(@NotNull EntityComponentFactoryRegistry registry) {
         ModuleRegistry.register(new ModuleRegistrar() {
             @Override
-            public <T extends Module<T>> void registerPlayerModule(ModuleHolder<T> holder, ModuleFactory<Player, T> factory) {
+            public <T extends Module<T>> void registerPlayerModule(ModuleHolder<T> holder, ModuleFactory<Player, T> factory, boolean unused) {
                 if (holder instanceof QuiltModuleHolder<T> fabricHolder) {
                     registry.registerForPlayers(
                             fabricHolder.key(),
@@ -38,7 +38,7 @@ public class ComponentInitializer implements EntityComponentInitializer {
             }
 
             @Override
-            public <T extends Module<T>> void registerLivingEntityModule(ModuleHolder<T> holder, ModuleFactory<LivingEntity, T> factory) {
+            public <T extends Module<T>> void registerLivingEntityModule(ModuleHolder<T> holder, ModuleFactory<LivingEntity, T> factory, boolean unused) {
                 if (holder instanceof QuiltModuleHolder<T> fabricHolder) {
                     registry.registerFor(
                             LivingEntity.class,

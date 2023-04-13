@@ -15,9 +15,9 @@ public class ModuleRegistry {
     public static final ModuleHolder<EntityMiscModule> ENTITY_MISC = ModuleHelper.createHolder(EntityMiscModule.SERIALIZER);
 
     public static void register(ModuleRegistrar registrar) {
-        registrar.registerLivingEntityModule(FLYING_SPEED, p -> new FlyingSpeedModule());
-        registrar.registerLivingEntityModule(NEUROTOXINS_MISSED, p -> new NeurotoxinsMissedCounterModule());
-        registrar.registerLivingEntityModule(ENTITY_POS_AND_DIM, p -> new EntityPosAndDimModule());
-        registrar.registerPlayerModule(ENTITY_MISC, p -> new EntityMiscModule());
+        registrar.registerLivingEntityModule(FLYING_SPEED, p -> new FlyingSpeedModule(), false);
+        registrar.registerLivingEntityModule(NEUROTOXINS_MISSED, p -> new NeurotoxinsMissedCounterModule(), false);
+        registrar.registerLivingEntityModule(ENTITY_POS_AND_DIM, p -> new EntityPosAndDimModule(), true);
+        registrar.registerPlayerModule(ENTITY_MISC, p -> new EntityMiscModule(), true);
     }
 }

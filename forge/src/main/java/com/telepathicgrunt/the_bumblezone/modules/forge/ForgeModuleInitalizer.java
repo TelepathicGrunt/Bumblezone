@@ -24,20 +24,29 @@ public class ForgeModuleInitalizer {
 
     private static final List<ModuleRegistryValue<?, LivingEntity>> LIVING_ENTITY_MODULES = new ArrayList<>();
     private static final List<ModuleRegistryValue<?, Player>> PLAYER_ENTITY_MODULES = new ArrayList<>();
+    private static final List<ModuleRegistryValue<?, ? extends LivingEntity>> PERSIST_PLAYER_DATA_SAVE_MODULES = new ArrayList<>();
 
     public static void init() {
         ModuleRegistry.register(new ModuleRegistrar() {
             @Override
-            public <T extends com.telepathicgrunt.the_bumblezone.modules.base.Module<T>> void registerPlayerModule(ModuleHolder<T> holder, ModuleFactory<Player, T> factory) {
+            public <T extends com.telepathicgrunt.the_bumblezone.modules.base.Module<T>> void registerPlayerModule(ModuleHolder<T> holder, ModuleFactory<Player, T> factory, boolean runDataCloneForPlayer) {
                 if (holder instanceof ForgeModuleHolder<T> forgeHolder) {
-                    PLAYER_ENTITY_MODULES.add(new ModuleRegistryValue<>(forgeHolder, factory));
+                    ModuleRegistryValue<?, Player> moduleRegistryValue = new ModuleRegistryValue<>(forgeHolder, factory);
+                    PLAYER_ENTITY_MODULES.add(moduleRegistryValue);
+                    if (runDataCloneForPlayer) {
+                        PERSIST_PLAYER_DATA_SAVE_MODULES.add(moduleRegistryValue);
+                    }
                 }
             }
 
             @Override
-            public <T extends com.telepathicgrunt.the_bumblezone.modules.base.Module<T>> void registerLivingEntityModule(ModuleHolder<T> holder, ModuleFactory<LivingEntity, T> factory) {
+            public <T extends com.telepathicgrunt.the_bumblezone.modules.base.Module<T>> void registerLivingEntityModule(ModuleHolder<T> holder, ModuleFactory<LivingEntity, T> factory, boolean runDataCloneForPlayer) {
                 if (holder instanceof ForgeModuleHolder<T> forgeHolder) {
+                    ModuleRegistryValue<?, LivingEntity> moduleRegistryValue = new ModuleRegistryValue<>(forgeHolder, factory);
                     LIVING_ENTITY_MODULES.add(new ModuleRegistryValue<>(forgeHolder, factory));
+                    if (runDataCloneForPlayer) {
+                        PERSIST_PLAYER_DATA_SAVE_MODULES.add(moduleRegistryValue);
+                    }
                 }
             }
         });
@@ -72,7 +81,7 @@ public class ForgeModuleInitalizer {
     public static void onPlayerClone(PlayerEvent.Clone event) {
         if (event.getEntity() instanceof ServerPlayer player && event.getOriginal() instanceof ServerPlayer oldPlayer) {
             oldPlayer.reviveCaps();
-            for (var value : PLAYER_ENTITY_MODULES) {
+            for (var value : PERSIST_PLAYER_DATA_SAVE_MODULES) {
                 copyData(value.holder.capability(), oldPlayer, player, !event.isWasDeath());
             }
             oldPlayer.invalidateCaps();

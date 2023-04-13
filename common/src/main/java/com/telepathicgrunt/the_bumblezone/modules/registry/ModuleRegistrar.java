@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 
 public interface ModuleRegistrar {
 
-    <T extends Module<T>> void registerPlayerModule(ModuleHolder<T> serializer, ModuleFactory<Player, T> factory);
+    <T extends Module<T>> void registerPlayerModule(ModuleHolder<T> serializer, ModuleFactory<Player, T> factory, boolean runDataCloneForPlayer);
 
-    <T extends Module<T>> void registerLivingEntityModule(ModuleHolder<T> serializer, ModuleFactory<LivingEntity, T> factory);
+    <T extends Module<T>> void registerLivingEntityModule(ModuleHolder<T> serializer, ModuleFactory<LivingEntity, T> factory, boolean runDataCloneForPlayer);
 }
