@@ -34,10 +34,6 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
 
     public CrystalCannon(Properties properties) {
         super(properties.durability(80));
-
-        if (ModChecker.projectileDamageAttributePresent) {
-            ProjectileDamageAttributeCompat.setUpCrystalCannonStats(this);
-        }
     }
 
     @Override
@@ -116,6 +112,9 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                         BzCriterias.CRYSTAL_CANNON_FULL_TRIGGER.trigger(serverPlayer);
                     }
                 }
+
+                // Consume one extra durability
+                mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
         }
     }

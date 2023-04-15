@@ -159,6 +159,7 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:ftbteams-404468:4367026")
 
     compileOnly fg.deobf("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute_version}-forge")
+    //runtimeOnly fg.deobf("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute_version}-forge")
 
     compileOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
     //runtimeOnly fg.deobf("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
