@@ -142,6 +142,8 @@ dependencies {
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${project.jeimc_version}-fabric:${project.jei_version}"
 
+	modCompileOnlyApi "maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute_version}-fabric"
+
 	//modRuntimeOnly "com.jamieswhiteshirt:reach-entity-attributes:2.3.0"
 	//modRuntimeOnly "curse.maven:travelersbackpacks-541171:4451504"
 	//modRuntimeOnly "dev.emi:trinkets:${trinkets_version}"

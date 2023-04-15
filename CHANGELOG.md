@@ -1,3 +1,12 @@
+### **(V.6.7.10 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Buffed Crystal Cannon to deal damage between 8 and 13 for each projectile and consumes 1 extra durability now.
+
+##### Mod Compat:
+Added compatibility with Projectile Damage Attribute mod with my Crystal Cannon. Should allow changing the weapon's damage and projectile speed through Projectile Damage Attribute mod.
+
+
 ### **(V.6.7.9 Changes) (1.19.2 Minecraft)**
 
 ##### Biomes:
