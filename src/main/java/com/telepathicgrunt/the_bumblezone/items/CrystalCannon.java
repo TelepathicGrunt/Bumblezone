@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProjectileDamageAttributeCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -32,6 +34,10 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
 
     public CrystalCannon(Properties properties) {
         super(properties.durability(80));
+
+        if (ModChecker.projectileDamageAttributePresent) {
+            ProjectileDamageAttributeCompat.setUpCrystalCannonStats(this);
+        }
     }
 
     @Override
@@ -57,10 +63,16 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                     }
 
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
+                    double weaponDamage = newCrystal.getBaseDamage();
+                    if (ModChecker.projectileDamageAttributePresent) {
+                        weaponDamage += ProjectileDamageAttributeCompat.getCrystalCannonBasePower(this);
+                    }
+
                     int power = crystalCannon.getEnchantmentLevel(Enchantments.POWER_ARROWS);
                     if (power > 0) {
-                        newCrystal.setBaseDamage(newCrystal.getBaseDamage() + (double)power * 0.5D + 0.5D);
+                        weaponDamage += power * 0.5D;
                     }
+                    newCrystal.setBaseDamage(weaponDamage);
 
                     int punch = crystalCannon.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);
                     if (punch > 0) {
@@ -88,11 +100,19 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                     Quaternion quaternion1 = new Quaternion(new Vector3f(upVector), offset, true);
                     Vector3f shootVector = new Vector3f(viewVector);
                     shootVector.transform(quaternion1);
+
+                    float weaponProjectileSpeed;
+                    if (ModChecker.projectileDamageAttributePresent) {
+                        weaponProjectileSpeed = (float)ProjectileDamageAttributeCompat.getCrystalCannonProjectileSpeed(this);
+                    }
+                    else {
+                        weaponProjectileSpeed = 1.9F;
+                    }
                     newCrystal.shoot(
                             shootVector.x(),
                             shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),
                             shootVector.z(),
-                            1.9f,
+                            weaponProjectileSpeed,
                             1);
                     level.addFreshEntity(newCrystal);
 
