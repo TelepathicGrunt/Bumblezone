@@ -9,6 +9,8 @@ dependencies {
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
     modCompileOnly("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config}")
 
+    modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
+
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
 }
 

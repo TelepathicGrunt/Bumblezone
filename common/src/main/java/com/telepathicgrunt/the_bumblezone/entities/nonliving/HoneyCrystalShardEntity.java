@@ -22,14 +22,14 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
 
     public HoneyCrystalShardEntity(EntityType<? extends HoneyCrystalShardEntity> entityType, Level level) {
         super(entityType, level);
-        this.setBaseDamage(3);
+        this.setBaseDamage(4);
         this.setKnockback(1);
         this.setCritArrow(true);
     }
 
     public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity) {
         super(BzEntities.HONEY_CRYSTAL_SHARD.get(), livingEntity, level);
-        this.setBaseDamage(3);
+        this.setBaseDamage(4);
         this.setKnockback(1);
         this.setCritArrow(true);
     }

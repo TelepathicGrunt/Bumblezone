@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ProjectileDamageAttributeCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -61,10 +63,13 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
                     }
 
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
+
+                    double weaponDamage = newCrystal.getBaseDamage();
                     int power = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, crystalCannon);
                     if (power > 0) {
-                        newCrystal.setBaseDamage(newCrystal.getBaseDamage() + (double)power * 0.5D + 0.5D);
+                        weaponDamage += (power * 0.5D) + 0.5D;
                     }
+                    newCrystal.setBaseDamage(weaponDamage);
 
                     int punch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, crystalCannon);
                     if (punch > 0) {
@@ -94,11 +99,13 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
                         Quaternionfc quaternion1 = new Quaternionf(upVector.x(), upVector.y(), upVector.z(), offset);
                         shootVector.rotate(quaternion1);
                     }
+
+                    float weaponProjectileSpeed = 1.9F;
                     newCrystal.shoot(
                             shootVector.x(),
                             shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),
                             shootVector.z(),
-                            1.9f,
+                            weaponProjectileSpeed,
                             1);
                     level.addFreshEntity(newCrystal);
 
@@ -111,6 +118,9 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
                         BzCriterias.CRYSTAL_CANNON_FULL_TRIGGER.trigger(serverPlayer);
                     }
                 }
+
+                // Consume one extra durability
+                mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
         }
     }
