@@ -63,14 +63,11 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                     }
 
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
-                    double weaponDamage = newCrystal.getBaseDamage();
-                    if (ModChecker.projectileDamageAttributePresent) {
-                        weaponDamage += ProjectileDamageAttributeCompat.getCrystalCannonBasePower(this);
-                    }
 
+                    double weaponDamage = newCrystal.getBaseDamage();
                     int power = crystalCannon.getEnchantmentLevel(Enchantments.POWER_ARROWS);
                     if (power > 0) {
-                        weaponDamage += power * 0.5D;
+                        weaponDamage += (power * 0.5D) + 0.5D;
                     }
                     newCrystal.setBaseDamage(weaponDamage);
 
@@ -101,13 +98,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable {
                     Vector3f shootVector = new Vector3f(viewVector);
                     shootVector.transform(quaternion1);
 
-                    float weaponProjectileSpeed;
-                    if (ModChecker.projectileDamageAttributePresent) {
-                        weaponProjectileSpeed = (float)ProjectileDamageAttributeCompat.getCrystalCannonProjectileSpeed(this);
-                    }
-                    else {
-                        weaponProjectileSpeed = 1.9F;
-                    }
+                    float weaponProjectileSpeed = 1.9F;
                     newCrystal.shoot(
                             shootVector.x(),
                             shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),

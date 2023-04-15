@@ -14,12 +14,4 @@ public class ProjectileDamageAttributeCompat {
 		((IProjectileWeapon)weaponItem).setProjectileDamage(0.5D);
 		((IProjectileWeapon)weaponItem).setMaxProjectileVelocity(1.9D);
 	}
-
-	public static double getCrystalCannonBasePower(ProjectileWeaponItem weaponItem) {
-		return ((IProjectileWeapon)weaponItem).getProjectileDamage();
-	}
-
-	public static double getCrystalCannonProjectileSpeed(ProjectileWeaponItem weaponItem) {
-		return ((IProjectileWeapon)weaponItem).getMaxProjectileVelocity();
-	}
 }
