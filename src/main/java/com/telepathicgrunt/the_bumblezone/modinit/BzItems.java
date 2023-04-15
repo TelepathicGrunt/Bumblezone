@@ -20,6 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SpawnEggItem;
+import net.projectile_damage.api.IProjectileWeapon;
+import net.projectile_damage.api.RangedWeaponKind;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +136,8 @@ public class BzItems {
      * registers the item version of the Blocks so they now exist in the registry
      */
     public static void registerItems() {
+
+        ((IProjectileWeapon)CRYSTAL_CANNON).setRangedWeaponKind(RangedWeaponKind.custom(6, 1.9D));
 
         registerItem(new ResourceLocation(Bumblezone.MODID, "pile_of_pollen"), PILE_OF_POLLEN);
         registerItemAndStore(new ResourceLocation(Bumblezone.MODID, "porous_honeycomb_block"), POROUS_HONEYCOMB);
