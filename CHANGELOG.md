@@ -5,6 +5,7 @@ Buffed Crystal Cannon to deal damage between 8 and 13 for each projectile and co
 
 ##### Mod Compat:
 Added compatibility with Projectile Damage Attribute mod with my Crystal Cannon. Should allow changing the weapon's damage and projectile speed through Projectile Damage Attribute mod.
+ If you already have Projectile Damage Attribute mod on, update it to v3.1.0 or else it will be incompatible with v6.7.10+ Bumblezone.
 
 
 ### **(V.6.7.9 Changes) (1.19.2 Minecraft)**
