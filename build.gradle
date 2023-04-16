@@ -153,7 +153,7 @@ dependencies {
 	modCompileOnlyApi "curse.maven:jei-238222:3944625"
 	//modCompileOnlyApi "mezz.jei:jei-${libs.versions.jeimc.get()}-fabric:${libs.versions.jei.get()}"
 
-	modCompileOnlyApi "maven.modrinth:projectile-damage-attribute:${project.projectile_damage_attribute_version}-fabric"
+	modCompileOnlyApi "maven.modrinth:projectile-damage-attribute:${libs.versions.projectile.damage.attribute.get()}-fabric"
 
 	//modRuntimeOnly "com.jamieswhiteshirt:reach-entity-attributes:2.3.0"
 	//modRuntimeOnly "curse.maven:travelersbackpacks-541171:4451504"
