@@ -4,12 +4,16 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 import java.util.List;
 
@@ -33,6 +37,11 @@ public class HoneyCrystalShield extends ShieldItem {
     @Override
     public EquipmentSlot getEquipmentSlot(ItemStack stack) {
         return EquipmentSlot.OFFHAND;
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        return toolAction == ToolActions.SHIELD_BLOCK && stack.is(this);
     }
 
     /**
@@ -122,5 +131,15 @@ public class HoneyCrystalShield extends ShieldItem {
     public int getBarColor(ItemStack itemStack) {
         float f = Math.max(0.0F, ((float)itemStack.getMaxDamage() - (float)itemStack.getDamageValue()) / (float)itemStack.getMaxDamage());
         return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
+    }
+
+    //extra effects for honey shield such as slow attackers or melt shield when hit by fire
+    public static void playerAttackedBehavior(LivingAttackEvent event) {
+        if(event.getEntity() instanceof Player player) {
+            HoneyCrystalShieldBehavior.slowPhysicalAttackers(event.getSource(), player);
+            if(HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(event.getSource(), player)) {
+                event.setCanceled(true);
+            }
+        }
     }
 }
