@@ -38,4 +38,8 @@ public interface ItemExtension {
     }
 
     default void bz$onArmorTick(ItemStack itemstack, Level world, Player player) { }
+
+    default boolean bz$canPerformAction(ItemStack stack, String toolAction) {
+        return false;
+    }
 }

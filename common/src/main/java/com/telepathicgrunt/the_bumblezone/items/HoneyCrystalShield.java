@@ -1,11 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -123,5 +126,19 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
     public int getBarColor(ItemStack itemStack) {
         float f = Math.max(0.0F, ((float)itemStack.getMaxDamage() - (float)itemStack.getDamageValue()) / (float)itemStack.getMaxDamage());
         return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
+    }
+
+    @Override
+    public boolean bz$canPerformAction(ItemStack stack, String toolAction) {
+        return toolAction.equals("shield_block") && stack.is(this);
+    }
+
+    //extra effects for honey shield such as slow attackers or melt shield when hit by fire
+    public static boolean handledPlayerHurtBehavior(EntityAttackedEvent event) {
+        if (event.entity() instanceof Player player) {
+            HoneyCrystalShieldBehavior.slowPhysicalAttackers(event.source(), player);
+            return HoneyCrystalShieldBehavior.damageShieldFromExplosionAndFire(event.source(), player);
+        }
+        return false;
     }
 }

@@ -7,6 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.extensions.IForgeItem;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,6 +28,10 @@ public interface ItemExtensionMixin extends IForgeItem {
 
     @Shadow
     EquipmentSlot bz$getEquipmentSlot(ItemStack stack);
+
+    @Shadow
+    boolean bz$canPerformAction(ItemStack stack, String toolAction);
+
 
     @Shadow
     void bz$onArmorTick(ItemStack itemstack, Level world, Player player);
@@ -55,5 +61,10 @@ public interface ItemExtensionMixin extends IForgeItem {
     @Override
     default void onArmorTick(ItemStack itemstack, Level world, Player player) {
         this.bz$onArmorTick(itemstack, world, player);
+    }
+
+    @Override
+    default boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        return this.bz$canPerformAction(stack, toolAction.name());
     }
 }
