@@ -76,7 +76,6 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
