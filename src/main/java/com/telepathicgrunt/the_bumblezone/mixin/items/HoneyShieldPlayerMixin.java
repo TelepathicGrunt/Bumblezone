@@ -1,9 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.mixin.items;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShieldBehavior;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,13 +18,13 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(Player.class)
 public class HoneyShieldPlayerMixin {
 
-    @Inject(method = "hurtCurrentlyUsedShield",
-            at = @At(value = "HEAD"),
-            cancellable = true)
-    private void thebumblezone_damageHoneyCrystalShield(float amount, CallbackInfo ci) {
-        if(HoneyCrystalShieldBehavior.damageHoneyCrystalShield(((Player)(Object)this), amount)) {
-            ci.cancel();
+    @WrapOperation(method = "hurtCurrentlyUsedShield",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0))
+    private boolean thebumblezone_damageHoneyCrystalShield(ItemStack callingItem, Item vanillaShield, Operation<Boolean> originalCall) {
+        if(callingItem.is(BzItems.HONEY_CRYSTAL_SHIELD)) {
+            return true;
         }
+        return originalCall.call(callingItem, vanillaShield);
     }
 
     @Inject(method = "disableShield",
