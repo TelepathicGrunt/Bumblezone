@@ -1,3 +1,9 @@
+### **(V.6.7.11 Changes) (1.19.2 Minecraft)**
+
+##### Fluids:
+Fixed Sugar Water turning vanilla Water non-sources fluid blocks above into source blocks
+
+
 ### **(V.6.7.10 Changes) (1.19.2 Minecraft)**
 
 ##### Fluids:
