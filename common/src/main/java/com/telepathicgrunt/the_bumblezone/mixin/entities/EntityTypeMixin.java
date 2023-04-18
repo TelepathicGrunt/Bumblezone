@@ -14,7 +14,7 @@ public class EntityTypeMixin {
     //bees attacks bear or non-bee insects mobs that is in the dimension
     @Inject(method = "create(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;",
             at = @At(value = "RETURN"))
-    private void thebumblezone_onAddedEntity(Level pLevel, CallbackInfoReturnable<Entity> cir) {
+    private void bumblezone$onAddedEntity(Level pLevel, CallbackInfoReturnable<Entity> cir) {
         BeeAggression.entityTypeBeeAnger(cir.getReturnValue());
     }
 }

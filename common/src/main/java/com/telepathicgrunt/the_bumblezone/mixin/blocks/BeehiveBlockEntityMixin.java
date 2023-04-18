@@ -19,7 +19,7 @@ public class BeehiveBlockEntityMixin {
     @Inject(method = "emptyAllLivingFromHive(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity$BeeReleaseStatus;)V",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity;releaseAllOccupants(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BeehiveBlockEntity$BeeReleaseStatus;)Ljava/util/List;", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILHARD)
-    private void thebumblezone_essenceBeehivePreventAnger1(Player player,
+    private void bumblezone$essenceBeehivePreventAnger1(Player player,
                                                BlockState blockState,
                                                BeehiveBlockEntity.BeeReleaseStatus beeReleaseStatus,
                                                CallbackInfo ci,

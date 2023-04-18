@@ -12,7 +12,7 @@ public class WaterEquivalenceMixin {
 
     @ModifyReturnValue(method = "isSame",
             at = @At(value = "RETURN"))
-    private boolean thebumblezone_isEquivalentToSugarWater(boolean isSame, Fluid fluid) {
+    private boolean bumblezone$isEquivalentToSugarWater(boolean isSame, Fluid fluid) {
         if(!isSame && !fluid.defaultFluidState().isEmpty() && fluid.defaultFluidState().is(BzTags.VISUAL_WATER_FLUID)) {
             return true;
         }

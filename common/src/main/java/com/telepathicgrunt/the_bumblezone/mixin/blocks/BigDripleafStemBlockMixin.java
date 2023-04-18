@@ -18,7 +18,7 @@ public class BigDripleafStemBlockMixin {
     @ModifyExpressionValue(method = "place(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/core/Direction;)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;isSourceOfType(Lnet/minecraft/world/level/material/Fluid;)Z"),
             require = 0)
-    private static boolean thebumblezone_waterlogWhenPlacedIntoSugarWater(boolean isWater, LevelAccessor levelAccessor, BlockPos blockPos, FluidState fluidState) {
+    private static boolean bumblezone$waterlogWhenPlacedIntoSugarWater(boolean isWater, LevelAccessor levelAccessor, BlockPos blockPos, FluidState fluidState) {
         if(fluidState.is(BzTags.SUGAR_WATER_FLUID) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(Blocks.BIG_DRIPLEAF_STEM.defaultBlockState())) {
             return true;
         }

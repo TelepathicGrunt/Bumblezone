@@ -19,7 +19,7 @@ public abstract class LightningBoltMixin extends Entity {
     @Inject(method = "spawnFire(I)V",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z"),
             require = 0)
-    private void thebumblezone_lightningLightsSuperOrIncenseCandles(int extraIgnitions, CallbackInfo ci) {
+    private void bumblezone$lightningLightsSuperOrIncenseCandles(int extraIgnitions, CallbackInfo ci) {
         SuperCandleWick.attemptCandleLighting(this.level, this.blockPosition());
     }
 }

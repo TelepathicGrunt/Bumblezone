@@ -65,7 +65,7 @@ public abstract class EntityMixin implements BzEntityHooks {
     // let honey fluid push entity
     @Inject(method = "updateInWaterStateAndDoWaterCurrentPushing()V",
             at = @At(value = "TAIL"))
-    private void thebumblezone_fluidPushing(CallbackInfo ci) {
+    private void bumblezone$fluidPushing(CallbackInfo ci) {
         if (this.updateFluidHeightAndDoFluidPushing(BzTags.SPECIAL_HONEY_LIKE, 0.014D)) {
             this.fallDistance = 0.0F;
             this.wasTouchingWater = true;
@@ -77,7 +77,7 @@ public abstract class EntityMixin implements BzEntityHooks {
     @WrapOperation(method = "updateFluidOnEyes()V",
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/Entity;isEyeInFluid(Lnet/minecraft/tags/TagKey;)Z"))
-    private boolean thebumblezone_markEyesInFluid1(Entity entity, TagKey<Fluid> tagKey, Operation<Boolean> original) {
+    private boolean bumblezone$markEyesInFluid1(Entity entity, TagKey<Fluid> tagKey, Operation<Boolean> original) {
         if(this.isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE)) {
             return true;
         }
@@ -88,7 +88,7 @@ public abstract class EntityMixin implements BzEntityHooks {
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/level/Level;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;"),
             cancellable = true)
-    private void thebumblezone_markEyesInFluid2(CallbackInfo ci) {
+    private void bumblezone$markEyesInFluid2(CallbackInfo ci) {
         double eyeHeight = this.getEyeY() - 0.11111111F;
         BlockPos blockPos = BlockPos.containing(this.getX(), eyeHeight, this.getZ());
         FluidState fluidState = this.level.getFluidState(blockPos);
@@ -105,7 +105,7 @@ public abstract class EntityMixin implements BzEntityHooks {
     // let honey fluid be swimmable
     @WrapOperation(method = "updateSwimming()V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;is(Lnet/minecraft/tags/TagKey;)Z"))
-    private boolean thebumblezone_setSwimming(FluidState fluidState, TagKey<Fluid> tagKey, Operation<Boolean> original) {
+    private boolean bumblezone$setSwimming(FluidState fluidState, TagKey<Fluid> tagKey, Operation<Boolean> original) {
         // check if we are swimming in honey fluid
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return true;

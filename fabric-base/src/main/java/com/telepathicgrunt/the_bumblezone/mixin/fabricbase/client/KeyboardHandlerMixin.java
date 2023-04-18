@@ -12,7 +12,7 @@ public class KeyboardHandlerMixin {
 
     @Inject(method = "keyPress",
             at = @At(value = "TAIL"))
-    private void thebumblezone_keyPressHandling(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
+    private void bumblezone$keyPressHandling(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         KeyInputEvent.EVENT.invoke(new KeyInputEvent(key, scancode, action));
     }
 }

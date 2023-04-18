@@ -25,7 +25,7 @@ public class InventoryMixin {
 
     @Inject(method = "tick()V",
             at = @At(value = "TAIL"))
-    private void thebumblezone_armorTick(CallbackInfo ci) {
+    private void bumblezone$armorTick(CallbackInfo ci) {
         armor.forEach(itemStack -> {
             if (itemStack.getItem() instanceof BeeArmor beeArmor) {
                 beeArmor.bz$onArmorTick(itemStack, player.level, player);

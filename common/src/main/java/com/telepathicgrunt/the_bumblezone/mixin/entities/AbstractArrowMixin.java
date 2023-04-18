@@ -19,7 +19,7 @@ public class AbstractArrowMixin {
 
     @Inject(method = "doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;)V",
             at = @At(value = "HEAD"))
-    private void thebumblezone_enchantmentEffects(LivingEntity livingEntity, CallbackInfo ci) {
+    private void bumblezone$enchantmentEffects(LivingEntity livingEntity, CallbackInfo ci) {
         if (((AbstractArrow)(Object)this) instanceof ThrownTrident thrownTrident) {
             ItemStack tridentItem = ((ThrownTridentAccessor)thrownTrident).getTridentItem();
             Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(tridentItem);

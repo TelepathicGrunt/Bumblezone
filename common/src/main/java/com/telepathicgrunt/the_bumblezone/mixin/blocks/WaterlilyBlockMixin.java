@@ -18,7 +18,7 @@ public class WaterlilyBlockMixin {
 
     @Inject(method = "mayPlaceOn(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
             at = @At(value = "RETURN"), cancellable = true, require = 0)
-    private void thebumblezone_allowPlacingOnSugarWater(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
+    private void bumblezone$allowPlacingOnSugarWater(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
             FluidState fluidState = blockGetter.getFluidState(blockPos);
             FluidState fluidState2 = blockGetter.getFluidState(blockPos.above());

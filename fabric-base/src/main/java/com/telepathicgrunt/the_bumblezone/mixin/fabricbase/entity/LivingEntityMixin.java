@@ -100,7 +100,7 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "baseTick()V", at = @At(value = "TAIL"))
-    private void thebumblezone_breathing(CallbackInfo ci) {
+    private void bumblezone$breathing(CallbackInfo ci) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         boolean invulnerable = livingEntity instanceof Player && ((Player) livingEntity).getAbilities().invulnerable;
         if (livingEntity.isAlive()) {
@@ -137,7 +137,7 @@ public abstract class LivingEntityMixin {
 
     @ModifyReturnValue(method = "getEquipmentSlotForItem",
             at = @At(value = "RETURN"))
-    private static EquipmentSlot thebumblezone$correctSlotForItems(EquipmentSlot equipmentSlot, ItemStack stack) {
+    private static EquipmentSlot bumblezone$correctSlotForItems(EquipmentSlot equipmentSlot, ItemStack stack) {
         if(stack.getItem() instanceof ItemExtension extension) {
             return extension.bz$getEquipmentSlot(stack);
         }
@@ -148,7 +148,7 @@ public abstract class LivingEntityMixin {
     @WrapOperation(method = "aiStep()V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFluidHeight(Lnet/minecraft/tags/TagKey;)D", ordinal = 1),
             require = 0)
-    private double thebumblezone_customFluidJumpWeaker(LivingEntity livingEntity, TagKey<Fluid> tagKey, Operation<Double> original) {
+    private double bumblezone$customFluidJumpWeaker(LivingEntity livingEntity, TagKey<Fluid> tagKey, Operation<Double> original) {
         double newFluidHeight = PlatformHooks.getFluidHeight(livingEntity, BzTags.SPECIAL_HONEY_LIKE, BzFluids.HONEY_FLUID_TYPE.get(), BzFluids.ROYAL_JELLY_FLUID_TYPE.get());
         if(newFluidHeight > 0) {
             return newFluidHeight;

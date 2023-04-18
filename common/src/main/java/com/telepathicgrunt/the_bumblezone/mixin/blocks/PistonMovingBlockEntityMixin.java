@@ -22,7 +22,7 @@ public class PistonMovingBlockEntityMixin {
     // makes entities pushed into a hive teleport to bumblezone
     @WrapOperation(method = "moveCollidedEntities(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;FLnet/minecraft/world/level/block/piston/PistonMovingBlockEntity;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/piston/PistonMovingBlockEntity;moveEntityByPiston(Lnet/minecraft/core/Direction;Lnet/minecraft/world/entity/Entity;DLnet/minecraft/core/Direction;)V", ordinal = 0))
-    private static void thebumblezone_teleportPushedEntities(Direction direction, Entity entity, double progress, Direction direction2, Operation<Void> original) {
+    private static void bumblezone$teleportPushedEntities(Direction direction, Entity entity, double progress, Direction direction2, Operation<Void> original) {
         if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide()) {
             EntityTeleportationHookup.runPistonPushed(direction, livingEntity);
         }
@@ -32,7 +32,7 @@ public class PistonMovingBlockEntityMixin {
     // makes entities stick to royal jelly block
     @ModifyReturnValue(method = "isStickyForEntities()Z",
             at = @At(value = "RETURN"))
-    private boolean thebumblezone_royalJellyBlockMoveEntities(boolean isSticky) {
+    private boolean bumblezone$royalJellyBlockMoveEntities(boolean isSticky) {
         if(!isSticky && this.movedState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
             return true;
         }

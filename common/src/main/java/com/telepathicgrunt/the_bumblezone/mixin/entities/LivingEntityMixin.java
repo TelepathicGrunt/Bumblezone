@@ -33,7 +33,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @ModifyReturnValue(method = "isImmobile()Z",
             at = @At(value = "RETURN"))
-    private boolean thebumblezone_isParalyzedCheck(boolean isImmobile) {
+    private boolean bumblezone$isParalyzedCheck(boolean isImmobile) {
         if(!isImmobile && ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
             return true;
         }
@@ -42,7 +42,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     @ModifyReturnValue(method = "getFlyingSpeed()F",
             at = @At(value = "RETURN"))
-    private float thebumblezone_flyingSpeedBeenergized(float flyingSpeed) {
+    private float bumblezone$flyingSpeedBeenergized(float flyingSpeed) {
         if(hasEffect(BzEffects.BEENERGIZED.get())) {
             return ((float) (getAttributeValue(Attributes.FLYING_SPEED) / Attributes.FLYING_SPEED.getDefaultValue()) * flyingSpeed);
         }

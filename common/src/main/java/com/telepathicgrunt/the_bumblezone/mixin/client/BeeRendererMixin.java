@@ -13,7 +13,7 @@ public class BeeRendererMixin {
 
     @ModifyReturnValue(method = "getTextureLocation(Lnet/minecraft/world/entity/animal/Bee;)Lnet/minecraft/resources/ResourceLocation;",
             at = @At(value = "RETURN"))
-    private ResourceLocation thebumblezone_alternativeBeeSkins(ResourceLocation currentSkin, Bee bee) {
+    private ResourceLocation bumblezone$alternativeBeeSkins(ResourceLocation currentSkin, Bee bee) {
         ResourceLocation newSkin = BeeVariantRenderer.getTextureLocation(bee);
         if (newSkin != null) {
             return newSkin;

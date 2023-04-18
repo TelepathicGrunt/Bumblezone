@@ -17,7 +17,7 @@ public class AmphibiousNodeEvaluatorMixin extends WalkNodeEvaluator {
     @WrapOperation(method = "getBlockPathType(Lnet/minecraft/world/level/BlockGetter;III)Lnet/minecraft/world/level/pathfinder/BlockPathTypes;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/pathfinder/AmphibiousNodeEvaluator;getBlockPathTypeRaw(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/pathfinder/BlockPathTypes;"),
             require = 0)
-    private BlockPathTypes thebumblezone_bzStringCurtainBlockingBees(BlockGetter blockGetter, BlockPos blockPos, Operation<BlockPathTypes> original) {
+    private BlockPathTypes bumblezone$bzStringCurtainBlockingBees(BlockGetter blockGetter, BlockPos blockPos, Operation<BlockPathTypes> original) {
         BlockPathTypes blockPathType = original.call(blockGetter, blockPos);
         BlockPathTypes blocked = StringCurtain.getCurtainBlockPathType(this.mob, blockGetter, blockPos, blockPathType);
         if (blocked != null) return blocked;

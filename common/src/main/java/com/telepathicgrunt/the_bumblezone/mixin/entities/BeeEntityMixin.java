@@ -31,7 +31,7 @@ public abstract class BeeEntityMixin extends Entity {
     @Inject(method = "customServerAiStep()V",
             at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Bee;isInWaterOrBubble()Z", shift = At.Shift.AFTER),
             require = 0)
-    private void thebumblezone_honeyFluidNotDrown(CallbackInfo ci) {
+    private void bumblezone$honeyFluidNotDrown(CallbackInfo ci) {
         if(this.underWaterTicks >= 10 && this.fluidHeight.getOrDefault(BzTags.SPECIAL_HONEY_LIKE, 0) > 0)
         {
             this.underWaterTicks = 9;
@@ -41,7 +41,7 @@ public abstract class BeeEntityMixin extends Entity {
     //spawns bees with chance to bee full of pollen
     @Inject(method = "<init>(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
             at = @At(value = "TAIL"))
-    private void thebumblezone_pollinateSpawnedBee(EntityType<? extends Bee> entityType, Level world, CallbackInfo ci) {
+    private void bumblezone$pollinateSpawnedBee(EntityType<? extends Bee> entityType, Level world, CallbackInfo ci) {
         if (!world.isClientSide() && world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             Bee beeEntity = (Bee)(Object)this;
 

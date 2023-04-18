@@ -14,7 +14,7 @@ public abstract class ServerPlayerMixin {
 
     @Inject(method = "doTick()V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/critereon/PlayerTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V"))
-    private void thebumblezone_checkIfInSpecialStructures(CallbackInfo ci) {
+    private void bumblezone$checkIfInSpecialStructures(CallbackInfo ci) {
         ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
         if (!EssenceOfTheBees.hasEssence(serverPlayer)) {
             BeeAggression.applyAngerIfInTaggedStructures(serverPlayer);

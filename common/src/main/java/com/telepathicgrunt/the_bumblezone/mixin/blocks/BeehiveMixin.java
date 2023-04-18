@@ -27,7 +27,7 @@ public class BeehiveMixin {
     // makes Comb Cutter increase drops from BeehiveBlocks.
     @Inject(method = "use(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/BeehiveBlock;dropHoneycomb(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"))
-    private void thebumblezone_combDropIncrease(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    private void bumblezone$combDropIncrease(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         CombCutterEnchantment.increasedCombDrops(player, world, pos);
     }
 
@@ -35,7 +35,7 @@ public class BeehiveMixin {
     @Inject(method = "angerNearbyBees(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
             at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z", ordinal = 1, remap = false),
             locals = LocalCapture.CAPTURE_FAILHARD)
-    private void thebumblezone_essenceBeehivePreventAnger2_forge(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
+    private void bumblezone$essenceBeehivePreventAnger2_forge(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
         BeeAggression.preventAngerOnEssencedPlayers(beeList, playerList);
     }
 
@@ -44,7 +44,7 @@ public class BeehiveMixin {
             at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false),
             locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
-    private void thebumblezone_essenceBeehivePreventAnger2_fabric(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
+    private void bumblezone$essenceBeehivePreventAnger2_fabric(Level level, BlockPos blockPos, CallbackInfo ci, List<Bee> beeList, List<Player> playerList) {
         BeeAggression.preventAngerOnEssencedPlayers(beeList, playerList);
         if (playerList.isEmpty()) {
             ci.cancel(); // Prevent crash if no players are around

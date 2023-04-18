@@ -21,7 +21,7 @@ public class BigDripleafBlockMixin {
     @ModifyReturnValue(method = "canReplace(Lnet/minecraft/world/level/block/state/BlockState;)Z",
             at = @At(value = "RETURN"),
             require = 0)
-    private static boolean thebumblezone_allowPlacingIntoSugarWater(boolean canReplace, BlockState blockState) {
+    private static boolean bumblezone$allowPlacingIntoSugarWater(boolean canReplace, BlockState blockState) {
         if(!canReplace && blockState.is(BzFluids.SUGAR_WATER_BLOCK.get()) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(Blocks.BIG_DRIPLEAF.defaultBlockState())) {
             return true;
         }
@@ -31,7 +31,7 @@ public class BigDripleafBlockMixin {
     @ModifyExpressionValue(method = "place(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/core/Direction;)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;isSourceOfType(Lnet/minecraft/world/level/material/Fluid;)Z"),
             require = 0)
-    private static boolean thebumblezone_waterlogWhenPlacedIntoSugarWater(boolean isWater, LevelAccessor levelAccessor, BlockPos blockPos, FluidState fluidState) {
+    private static boolean bumblezone$waterlogWhenPlacedIntoSugarWater(boolean isWater, LevelAccessor levelAccessor, BlockPos blockPos, FluidState fluidState) {
         if(fluidState.is(BzTags.SUGAR_WATER_FLUID) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(Blocks.BIG_DRIPLEAF.defaultBlockState())) {
             return true;
         }

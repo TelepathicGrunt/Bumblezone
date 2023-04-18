@@ -17,7 +17,7 @@ public class FrogspawnBlockMixin {
 
     @Inject(method = "mayPlaceOn(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
             at = @At(value = "RETURN"), cancellable = true, require = 0)
-    private static void thebumblezone_allowPlacingOnSugarWater(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
+    private static void bumblezone$allowPlacingOnSugarWater(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
             FluidState fluidState = blockGetter.getFluidState(blockPos);
             FluidState fluidState2 = blockGetter.getFluidState(blockPos.above());

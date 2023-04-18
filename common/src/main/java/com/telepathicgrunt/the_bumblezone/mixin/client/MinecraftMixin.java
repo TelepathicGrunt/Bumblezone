@@ -17,7 +17,7 @@ public class MinecraftMixin {
 
     @ModifyReturnValue(method = "shouldEntityAppearGlowing(Lnet/minecraft/world/entity/Entity;)Z",
             at = @At(value = "RETURN"))
-    private boolean thebumblezone_glowNearbyBeesForPlayer(boolean isGlowing, Entity entity) {
+    private boolean bumblezone$glowNearbyBeesForPlayer(boolean isGlowing, Entity entity) {
         if (!isGlowing && StinglessBeeHelmet.HELMET_EFFECT_COUNTER_CLIENTSIDE > 0 && player != null && StinglessBeeHelmet.shouldEntityGlow(player, entity)) {
             StinglessBeeHelmet.BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.add(entity);
             return true;

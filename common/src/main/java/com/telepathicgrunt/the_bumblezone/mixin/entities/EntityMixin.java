@@ -34,14 +34,14 @@ public abstract class EntityMixin {
     @ModifyVariable(method = "positionRider(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$MoveFunction;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getX()D"),
             require = 0)
-    private double thebumblezone_beeRidingOffset(double yOffset, Entity entity) {
+    private double bumblezone$beeRidingOffset(double yOffset, Entity entity) {
         return StinglessBeeHelmet.beeRidingOffset(yOffset, ((Entity)(Object)this), entity);
     }
 
     @ModifyReturnValue(method = "updateFluidHeightAndDoFluidPushing(Lnet/minecraft/tags/TagKey;D)Z",
             at = @At(value = "RETURN"),
             require = 0)
-    private boolean thebumblezone_applyMissingWaterPhysicsForSugarWaterFluid(boolean appliedFluidPush) {
+    private boolean bumblezone$applyMissingWaterPhysicsForSugarWaterFluid(boolean appliedFluidPush) {
         if(!appliedFluidPush) {
             return PlatformHooks.getFluidHeight((Entity) ((Object)this), BzTags.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_TYPE.get()) > 0;
         }
@@ -51,7 +51,7 @@ public abstract class EntityMixin {
     // let pollinated bees fill certain BZ blocks
     @Inject(method = "checkInsideBlocks()V",
             at = @At(value = "HEAD"))
-    private void thebumblezone_pollinatedBeeBlockFilling(CallbackInfo ci) {
+    private void bumblezone$pollinatedBeeBlockFilling(CallbackInfo ci) {
         if (((Object)this) instanceof Bee bee && (bee.hasNectar() || bee.getHealth() < bee.getMaxHealth())) {
             AABB aABB = this.getBoundingBox();
             BlockPos minBlockPos = BlockPos.containing(aABB.minX - 1.0E-7, aABB.minY - 1.0E-7, aABB.minZ - 1.0E-7);

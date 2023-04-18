@@ -13,7 +13,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity> {
     @ModifyReturnValue(method = "isShaking(Lnet/minecraft/world/entity/LivingEntity;)Z",
             at = @At(value = "RETURN"),
             require = 0)
-    private boolean thebumblezone_shakeForParalysis(boolean isShaking, T entity) {
+    private boolean bumblezone$shakeForParalysis(boolean isShaking, T entity) {
         if (!isShaking && ParalyzedEffect.isParalyzedClient(entity)) {
             return true;
         }

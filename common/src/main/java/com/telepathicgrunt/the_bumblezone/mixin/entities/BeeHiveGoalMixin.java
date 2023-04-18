@@ -21,7 +21,7 @@ public class BeeHiveGoalMixin {
      */
     @ModifyReceiver(method = "<init>(Lnet/minecraft/world/entity/animal/Bee;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/RandomSource;nextInt(I)I"))
-    private RandomSource thebumblezone_fixGoalRandomSourceUsage1(RandomSource randomSource, int range) {
+    private RandomSource bumblezone$fixGoalRandomSourceUsage1(RandomSource randomSource, int range) {
         return this$0.getRandom();
     }
 }

@@ -16,7 +16,7 @@ public class MapItemMixin {
     @ModifyExpressionValue(method = "update(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/dimension/DimensionType;hasCeiling()Z", ordinal = 1),
             require = 0)
-    private boolean thebumblezone_filledMapForDimension1(boolean ceiling, Level level) {
+    private boolean bumblezone$filledMapForDimension1(boolean ceiling, Level level) {
         if (level.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             return false;
         }
@@ -26,7 +26,7 @@ public class MapItemMixin {
     @WrapOperation(method = "update(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/chunk/LevelChunk;getHeight(Lnet/minecraft/world/level/levelgen/Heightmap$Types;II)I", ordinal = 0),
             require = 0)
-    private int thebumblezone_filledMapForDimension2(LevelChunk levelChunk, Heightmap.Types type, int x, int z, Operation<Integer> operation, Level level) {
+    private int bumblezone$filledMapForDimension2(LevelChunk levelChunk, Heightmap.Types type, int x, int z, Operation<Integer> operation, Level level) {
         int scanHeight = operation.call(levelChunk, type, x, z);
         if (level.dimension().equals(BzDimension.BZ_WORLD_KEY) && scanHeight >= 250) {
             return 110;

@@ -19,7 +19,7 @@ public abstract class FloatGoalMixin {
     // let Bumblezone fluids have entities float in its honey
     @ModifyExpressionValue(method = "canUse()Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;getFluidHeight(Lnet/minecraft/tags/TagKey;)D"))
-    private double thebumblezone_fluidFloating(double originalFluidHeight) {
+    private double bumblezone$fluidFloating(double originalFluidHeight) {
         double newFluidHeight = mob.getFluidHeight(BzTags.SPECIAL_HONEY_LIKE);
         if (newFluidHeight > originalFluidHeight) {
             return newFluidHeight;

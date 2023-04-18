@@ -24,7 +24,7 @@ public class FluidRendererMixin {
     @ModifyVariable(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)V",
             at = @At(value = "STORE", ordinal = 1),
             ordinal = 13)
-    private float thebumblezone_honeyLikeFluidChangeFluidHeight_fabric(float fluidBottomHeight, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
+    private float bumblezone$honeyLikeFluidChangeFluidHeight_fabric(float fluidBottomHeight, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f;
         }
@@ -35,7 +35,7 @@ public class FluidRendererMixin {
     @ModifyVariable(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)V",
             at = @At(value = "STORE", ordinal = 1),
             ordinal = 14)
-    private float thebumblezone_honeyLikeFluidChangeFluidHeight_forge(float fluidBottomHeight, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
+    private float bumblezone$honeyLikeFluidChangeFluidHeight_forge(float fluidBottomHeight, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return fluidState.isSource() ? 0f : fluidState.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8f;
         }
@@ -44,7 +44,7 @@ public class FluidRendererMixin {
 
     @ModifyExpressionValue(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;isFaceOccludedByNeighbor(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;FLnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0))
-    private boolean thebumblezone_honeyLikeFluidCullBottomFace(boolean willCullSide, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
+    private boolean bumblezone$honeyLikeFluidCullBottomFace(boolean willCullSide, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return willCullSide && !HoneyFluid.shouldRenderSide(blockDisplayReader, blockPos, Direction.DOWN, fluidState);
         }
@@ -53,7 +53,7 @@ public class FluidRendererMixin {
 
     @ModifyExpressionValue(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;isNeighborSameFluid(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/material/FluidState;)Z", ordinal = 0))
-    private boolean thebumblezone_honeyLikeFluidRenderAboveFace1(boolean willCullAbove, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
+    private boolean bumblezone$honeyLikeFluidRenderAboveFace1(boolean willCullAbove, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return willCullAbove && !HoneyFluid.shouldRenderSide(blockDisplayReader, blockPos, Direction.UP, fluidState);
         }
@@ -62,7 +62,7 @@ public class FluidRendererMixin {
 
     @ModifyExpressionValue(method = "tesselate(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/LiquidBlockRenderer;isFaceOccludedByNeighbor(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;FLnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 1))
-    private boolean thebumblezone_honeyLikeFluidRenderAboveFace2(boolean willCullAbove, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
+    private boolean bumblezone$honeyLikeFluidRenderAboveFace2(boolean willCullAbove, BlockAndTintGetter blockDisplayReader, BlockPos blockPos, VertexConsumer vertexBuilder, BlockState blockState, FluidState fluidState) {
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return willCullAbove && !HoneyFluid.shouldRenderSide(blockDisplayReader, blockPos, Direction.UP, fluidState);
         }
@@ -74,7 +74,7 @@ public class FluidRendererMixin {
     // make honey fluid and royal jelly have proper face culling
     @ModifyReturnValue(method = "shouldRenderFace(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/material/FluidState;)Z",
             at = @At(value = "RETURN"))
-    private static boolean thebumblezone_honeyLikeFluidCulling(boolean cullFace, BlockAndTintGetter world, BlockPos blockPos, FluidState fluidState, BlockState blockState, Direction direction, FluidState fluidState2) {
+    private static boolean bumblezone$honeyLikeFluidCulling(boolean cullFace, BlockAndTintGetter world, BlockPos blockPos, FluidState fluidState, BlockState blockState, Direction direction, FluidState fluidState2) {
         if(fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
             return HoneyFluid.shouldRenderSide(world, blockPos, direction, fluidState);
         }

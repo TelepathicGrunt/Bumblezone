@@ -32,7 +32,7 @@ public abstract class ScreenEffectRendererMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;renderTex(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lcom/mojang/blaze3d/vertex/PoseStack;)V"),
             locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
-    private static void thebumblezone$blockRenderedOnScreenEvent(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci, Player player, BlockState blockState) {
+    private static void bumblezone$blockRenderedOnScreenEvent(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci, Player player, BlockState blockState) {
         if (BlockRenderedOnScreenEvent.EVENT.invoke(new BlockRenderedOnScreenEvent(player, poseStack, BlockRenderedOnScreenEvent.Type.BLOCK, blockState, player.blockPosition()))) {
             ci.cancel();
         }

@@ -16,7 +16,7 @@ public class ShieldMobMixin {
 
     @Inject(method = "maybeDisableShield",
             at = @At(value = "TAIL"))
-    private void thebumblezone_axeDisablesHoneyCrystalShield(Player playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
+    private void bumblezone$axeDisablesHoneyCrystalShield(Player playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
         if(!itemStack.isEmpty() && !itemStack2.isEmpty() && itemStack2.getItem() instanceof BzShieldItem && itemStack.getItem() instanceof AxeItem) {
             HoneyCrystalShieldBehavior.setShieldCooldown(playerEntity, ((Mob)(Object)this));
             playerEntity.level.broadcastEntityEvent(playerEntity, (byte)30);

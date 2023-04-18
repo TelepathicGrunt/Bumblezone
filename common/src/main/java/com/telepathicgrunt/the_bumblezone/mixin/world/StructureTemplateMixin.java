@@ -21,7 +21,7 @@ public class StructureTemplateMixin {
             method = "placeInWorld(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;Lnet/minecraft/util/RandomSource;I)Z",
             at = @At(value = "HEAD")
     )
-    private void thebumblezone_preventAutoWaterlogging(ServerLevelAccessor serverLevelAccessor,
+    private void bumblezone$preventAutoWaterlogging(ServerLevelAccessor serverLevelAccessor,
                                                               BlockPos blockPos1,
                                                               BlockPos blockPos2,
                                                               StructurePlaceSettings structurePlaceSettings,
@@ -40,7 +40,7 @@ public class StructureTemplateMixin {
             method = "placeInWorld(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;Lnet/minecraft/util/RandomSource;I)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/entity/BlockEntity;setChanged()V")
     )
-    private BlockEntity thebumblezone_preventBlockEntityDeadlock(BlockEntity instance, ServerLevelAccessor serverLevelAccessor) {
+    private BlockEntity bumblezone$preventBlockEntityDeadlock(BlockEntity instance, ServerLevelAccessor serverLevelAccessor) {
         if(serverLevelAccessor instanceof WorldGenRegion && instance.hasLevel()) {
             instance.setLevel(null); // BE's level should never be set during worldgen or else deadlock due to neighbor update code ran.
         }

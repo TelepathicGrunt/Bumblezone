@@ -18,7 +18,7 @@ public class FogRendererMixin {
     @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZF)V",
             at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", ordinal = 0),
             require = 0, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void thebumblezone_reduceFogThickness(Camera camera,
+    private static void bumblezone$reduceFogThickness(Camera camera,
                                                          FogRenderer.FogMode mode,
                                                          float fogEnd,
                                                          boolean thickFog,

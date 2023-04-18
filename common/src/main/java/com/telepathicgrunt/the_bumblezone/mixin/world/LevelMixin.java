@@ -27,7 +27,7 @@ public class LevelMixin {
     @Inject(method = "setRainLevel(F)V",
             at = @At(value = "TAIL"),
             require = 0)
-    private void thebumblezone_noRainInDimension(float strength, CallbackInfo ci) {
+    private void bumblezone$noRainInDimension(float strength, CallbackInfo ci) {
         if (((Level)(Object)this).dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             oRainLevel = 0;
             rainLevel = 0;
@@ -38,7 +38,7 @@ public class LevelMixin {
     @Inject(method = "setThunderLevel(F)V",
             at = @At(value = "TAIL"),
             require = 0)
-    private void thebumblezone_noThunderInDimension(float strength, CallbackInfo ci) {
+    private void bumblezone$noThunderInDimension(float strength, CallbackInfo ci) {
         if (((Level)(Object)this).dimension().equals(BzDimension.BZ_WORLD_KEY)) {
             oThunderLevel = 0;
             thunderLevel = 0;

@@ -86,7 +86,7 @@ public abstract class PlayerMixin extends Entity {
 
     @Inject(method = "updateIsUnderwater()Z",
             at = @At(value = "RETURN"), cancellable = true)
-    private void thebumblezone$setUnderwater(CallbackInfoReturnable<Boolean> cir) {
+    private void bumblezone$setUnderwater(CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
             this.wasUnderwater = this.isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE);
             if(this.wasUnderwater) {
@@ -97,7 +97,7 @@ public abstract class PlayerMixin extends Entity {
 
     @WrapOperation(method = "hurtCurrentlyUsedShield",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0))
-    private boolean thebumblezone$damageHoneyCrystalShield(ItemStack callingItem, Item vanillaShield, Operation<Boolean> originalCall) {
+    private boolean bumblezone$damageHoneyCrystalShield(ItemStack callingItem, Item vanillaShield, Operation<Boolean> originalCall) {
         if(callingItem.is(BzItems.HONEY_CRYSTAL_SHIELD.get())) {
             return true;
         }
@@ -106,7 +106,7 @@ public abstract class PlayerMixin extends Entity {
 
     @Inject(method = "disableShield",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemCooldowns;addCooldown(Lnet/minecraft/world/item/Item;I)V"))
-    private void thebumblezone$applyCooldownForShield(boolean sprinting, CallbackInfo ci) {
+    private void bumblezone$applyCooldownForShield(boolean sprinting, CallbackInfo ci) {
         inventory.items.forEach(item -> {
             if (item.getItem() instanceof BzShieldItem) {
                 getCooldowns().addCooldown(item.getItem(), 100);

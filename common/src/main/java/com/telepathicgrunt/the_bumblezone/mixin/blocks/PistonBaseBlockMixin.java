@@ -19,7 +19,7 @@ public class PistonBaseBlockMixin {
     @Inject(method = "isPushable(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;ZLnet/minecraft/core/Direction;)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getPistonPushReaction()Lnet/minecraft/world/level/material/PushReaction;"),
             cancellable = true)
-    private static void thebumblezone_pullableOnlyBlocks1(BlockState blockState,
+    private static void bumblezone$pullableOnlyBlocks1(BlockState blockState,
                                                              Level level,
                                                              BlockPos blockPos,
                                                              Direction pushDirection,

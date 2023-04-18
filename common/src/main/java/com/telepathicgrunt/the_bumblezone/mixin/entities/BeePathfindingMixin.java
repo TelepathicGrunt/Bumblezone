@@ -19,7 +19,7 @@ public class BeePathfindingMixin {
     private Bee this$0;
 
     @Unique
-    private BeeAI.CachedPathHolder thebumblezone_cachedPathHolder;
+    private BeeAI.CachedPathHolder bumblezone$cachedPathHolder;
 
     /**
      * @author TelepathicGrunt
@@ -28,10 +28,10 @@ public class BeePathfindingMixin {
     @Inject(method = "start()V",
             at = @At(value = "HEAD"),
             cancellable = true)
-    private void thebumblezone_newWander(CallbackInfo ci){
+    private void bumblezone$newWander(CallbackInfo ci){
         // Do our own bee AI in the Bumblezone. Makes bees wander more and should be slightly better performance. Maybe...
         if(this$0.level.dimension().equals(BzDimension.BZ_WORLD_KEY)){
-            thebumblezone_cachedPathHolder = BeeAI.smartBeesTM(this$0, thebumblezone_cachedPathHolder);
+            bumblezone$cachedPathHolder = BeeAI.smartBeesTM(this$0, bumblezone$cachedPathHolder);
             ci.cancel();
         }
     }

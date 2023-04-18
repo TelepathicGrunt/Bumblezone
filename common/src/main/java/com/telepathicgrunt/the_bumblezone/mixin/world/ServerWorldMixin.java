@@ -27,21 +27,21 @@ public abstract class ServerWorldMixin extends Level {
 	}
 
 	@Unique
-	private static final int thebumblezone_updateInterval = 20;
+	private static final int bumblezone$updateInterval = 20;
 
 	@Unique
-	private static int thebumblezone_counter = 0;
+	private static int bumblezone$counter = 0;
 
 	//TODO: use events
 	@Inject(
 			method = "tick(Ljava/util/function/BooleanSupplier;)V",
 			at = @At(value = "HEAD")
 	)
-	private void thebumblezone_countBzDimEntities(CallbackInfo ci) {
+	private void bumblezone$countBzDimEntities(CallbackInfo ci) {
 		if(dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)){
-			thebumblezone_counter++;
-			if(thebumblezone_counter % thebumblezone_updateInterval == 0){
-				thebumblezone_counter = 0;
+			bumblezone$counter++;
+			if(bumblezone$counter % bumblezone$updateInterval == 0){
+				bumblezone$counter = 0;
 				GeneralUtils.updateEntityCount(((ServerLevel) (Object) this));
 				if(BzGeneralConfigs.specialBeeSpawning) {
 					BeeDedicatedSpawning.specialSpawnBees((ServerLevel) (Object) this);

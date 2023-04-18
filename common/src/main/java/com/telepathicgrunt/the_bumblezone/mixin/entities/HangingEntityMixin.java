@@ -15,7 +15,7 @@ public class HangingEntityMixin {
     @WrapOperation(method = "readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V",
             at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;)V", remap = false),
             require = 0)
-    private void thebumblezone_lowerLoggingLevel(Logger instance, String s, Object o, Operation<Void> original) {
+    private void bumblezone$lowerLoggingLevel(Logger instance, String s, Object o, Operation<Void> original) {
         instance.debug(s, o);
     }
 }

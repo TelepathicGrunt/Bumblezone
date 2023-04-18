@@ -16,7 +16,7 @@ public class BubbleColumnBlockMixin {
     @ModifyReturnValue(method = "canSurvive(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z",
             at = @At(value = "RETURN"),
             require = 0)
-    private boolean thebumblezone_allowVanillaBubbleColumnOnSugarWaterBubbleColumn(boolean canSurvive, BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
+    private boolean bumblezone$allowVanillaBubbleColumnOnSugarWaterBubbleColumn(boolean canSurvive, BlockState blockState, LevelReader levelReader, BlockPos blockPos) {
         if(!canSurvive && levelReader.getBlockState(blockPos).is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK.get())) {
             return true;
         }

@@ -24,7 +24,7 @@ public class WaterlogForPlacingBlockMixin {
     @ModifyReturnValue(method = "getPlacementState(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;",
             at = @At(value = "RETURN"),
             require = 0)
-    private BlockState thebumblezone_waterlogWhenPlacedIntoSugarWater(BlockState blockState, BlockPlaceContext blockPlaceContext) {
+    private BlockState bumblezone$waterlogWhenPlacedIntoSugarWater(BlockState blockState, BlockPlaceContext blockPlaceContext) {
         if(blockState != null && blockState.hasProperty(BlockStateProperties.WATERLOGGED) && !blockState.getValue(BlockStateProperties.WATERLOGGED) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(blockState)) {
             if (!(blockState.hasProperty(SlabBlock.TYPE) && blockState.getValue(SlabBlock.TYPE) == SlabType.DOUBLE)){
                 FluidState fluidState = blockPlaceContext.getLevel().getFluidState(blockPlaceContext.getClickedPos());

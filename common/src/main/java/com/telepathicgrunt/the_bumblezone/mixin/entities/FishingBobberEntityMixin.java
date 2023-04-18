@@ -26,7 +26,7 @@ public abstract class FishingBobberEntityMixin extends Entity {
                     target = "Lnet/minecraft/world/level/material/FluidState;is(Lnet/minecraft/tags/TagKey;)Z",
                     ordinal = 0),
             require = 0)
-    private boolean thebumblezone_bobberFloat(FluidState fluidstate, TagKey<Fluid> tagKey, Operation<Boolean> original) {
+    private boolean bumblezone$bobberFloat(FluidState fluidstate, TagKey<Fluid> tagKey, Operation<Boolean> original) {
         if(fluidstate.is(BzTags.SPECIAL_HONEY_LIKE)) {
             Vec3 vector3d = this.getDeltaMovement();
             this.setDeltaMovement(vector3d.x * 0.5D, 0, vector3d.z * 0.5D);
