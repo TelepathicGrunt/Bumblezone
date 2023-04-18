@@ -78,7 +78,7 @@ public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
             boolean isBubblePlacing = sugarWaterColumnState.is(BzFluids.SUGAR_WATER_BUBBLE_COLUMN_BLOCK);
 
             BlockState currentState = levelAccessor.getBlockState(mutableBlockPos);
-            boolean isVanilla = currentState.is(Blocks.WATER) || currentState.is(Blocks.BUBBLE_COLUMN);
+            boolean isVanilla = (currentState.is(Blocks.WATER) && currentState.getFluidState().isSource()) || currentState.is(Blocks.BUBBLE_COLUMN);
             while(canExistIn(currentState) || isVanilla) {
                 if (isVanilla) {
                     if (!levelAccessor.setBlock(mutableBlockPos, !isBubblePlacing ? Blocks.WATER.defaultBlockState() : Blocks.BUBBLE_COLUMN.defaultBlockState().setValue(DRAG_DOWN, sugarWaterColumnState.getValue(DRAG_DOWN)), 2)) {
