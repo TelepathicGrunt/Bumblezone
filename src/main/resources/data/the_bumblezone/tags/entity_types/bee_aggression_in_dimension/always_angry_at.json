@@ -110,6 +110,10 @@
       "required": false
     },
     {
+      "id": "naturalist:dragonfly",
+      "required": false
+    },
+    {
       "id": "pokecube:vibrava",
       "required": false
     },
