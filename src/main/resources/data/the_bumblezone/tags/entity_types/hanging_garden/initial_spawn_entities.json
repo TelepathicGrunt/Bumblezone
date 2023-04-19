@@ -166,6 +166,10 @@
       "required": false
     },
     {
+      "id": "naturalist:lizard",
+      "required": false
+    },
+    {
       "id": "naturalist:snail",
       "required": false
     },
