@@ -170,6 +170,10 @@
       "required": false
     },
     {
+      "id": "naturalist:lizard",
+      "required": false
+    },
+    {
       "id": "natural_decoration:white_butterfly",
       "required": false
     },
