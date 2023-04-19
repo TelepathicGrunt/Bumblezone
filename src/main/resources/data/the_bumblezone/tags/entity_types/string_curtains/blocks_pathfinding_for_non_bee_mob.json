@@ -139,6 +139,10 @@
       "required": false
     },
     {
+      "id": "naturalist:dragonfly",
+      "required": false
+    },
+    {
       "id": "natural_decoration:white_butterfly",
       "required": false
     },
