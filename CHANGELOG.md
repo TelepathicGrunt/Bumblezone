@@ -1,3 +1,9 @@
+### **(V.6.7.12 Changes) (1.19.4 Minecraft)**
+
+##### Advancements:
+(Fabric/Quilt): Fixed Bee breeding and Honey Slime breeding advancements not getting progress when breeding the mobs.
+
+
 ### **(V.6.7.11 Changes) (1.19.4 Minecraft)**
 
 ##### Fluids:

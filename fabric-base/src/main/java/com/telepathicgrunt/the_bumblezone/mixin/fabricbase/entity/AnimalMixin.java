@@ -24,7 +24,7 @@ public class AnimalMixin {
     )
     public void bumblezone$onSpawnChildFromBreeding(ServerLevel serverLevel, Animal animal, CallbackInfo ci, AgeableMob baby) {
         Animal us = (Animal)(Object)this;
-        if (BabySpawnEvent.EVENT.invoke(new BabySpawnEvent(us, animal, null, baby))) {
+        if (BabySpawnEvent.EVENT.invoke(new BabySpawnEvent(us, animal, us.getLoveCause(), baby))) {
             us.setAge(6000);
             animal.setAge(6000);
             us.resetLove();
