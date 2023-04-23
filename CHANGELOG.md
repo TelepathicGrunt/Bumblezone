@@ -3,6 +3,10 @@
 ##### Blocks:
 Fixed issue where Crystalline Flower enchantment list gets confused if player upgrades the flower while still in the UI and had selected an enchantment already.
 
+Glistering Honey Crystal now only drops a max of 4 Honey Crystal Shards when mined with Fortune 3 instead of 12 Honey Crystal Shards.
+
+4 Honey Crystal Shards in a square will now allow crafting Glistering Honey Crystal.
+
 ##### Effects:
 Slightly adjusted Wrath and Protection effect icons.
 
