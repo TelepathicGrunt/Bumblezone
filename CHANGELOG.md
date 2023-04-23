@@ -7,6 +7,9 @@ Glistering Honey Crystal now only drops a max of 4 Honey Crystal Shards when min
 
 4 Honey Crystal Shards in a square will now allow crafting Glistering Honey Crystal.
 
+##### Advancements:
+Removed Beenergized requirement from the Max Flight advancement to match the advancement description properly.
+
 ##### Effects:
 Slightly adjusted Wrath and Protection effect icons.
 
