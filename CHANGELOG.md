@@ -1,5 +1,8 @@
 ### **(V.6.7.13 Changes) (1.19.4 Minecraft)**
 
+##### Effects:
+Slightly adjusted Wrath and Protection effect icons.
+
 ##### Mod Compat:
 Added Carry On tag to disable Carry On from being able to pick up Crystalline Flower due to that action duplicating the flower.
 
