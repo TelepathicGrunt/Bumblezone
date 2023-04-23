@@ -567,7 +567,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                         tierCostLower.set(GeneralUtils.split(tierCost, false));
                     }
                 }
-                return;
             }
 
             if (player instanceof ServerPlayer serverPlayer) {

@@ -1,5 +1,8 @@
 ### **(V.6.7.13 Changes) (1.19.4 Minecraft)**
 
+##### Blocks:
+Fixed issue where Crystalline Flower enchantment list gets confused if player upgrades the flower while still in the UI and had selected an enchantment already.
+
 ##### Effects:
 Slightly adjusted Wrath and Protection effect icons.
 
