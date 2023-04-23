@@ -59,7 +59,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
     final DataSlot selectedEnchantmentIndex = DataSlot.standalone();
     final DataSlot xpBarPercent = DataSlot.standalone();
-    final DataSlot xpTier = DataSlot.standalone();
+    public final DataSlot xpTier = DataSlot.standalone();
     final DataSlot tierCostUpper = DataSlot.standalone();
     final DataSlot tierCostLower = DataSlot.standalone();
     final DataSlot bottomBlockPosXUpper = DataSlot.standalone();
@@ -570,7 +570,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                         tierCostLower.set(GeneralUtils.split(tierCost, false));
                     }
                 }
-                return;
             }
 
             if (player instanceof ServerPlayer serverPlayer) {
