@@ -226,12 +226,27 @@ public class HoneycombBrood extends ProperFacingBlock {
                 world.setBlock(position, state.setValue(STAGE, stage + 1), 2);
             }
         }
+        
         else if(BzConfig.broodBlocksBeeSpawnCapacity != 0) {
-            if((nearbyEntities != null && !nearbyEntities.isEmpty()) && GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity * 1.75f) {
-                spawnBroodMob(world, random, state, position, stage);
+            boolean playerCloseEnough = false;
+            for (Player player : world.players()) {
+                if (position.distManhattan(player.blockPosition()) < 40) {
+                    playerCloseEnough = true;
+                }
             }
-            else if(GeneralUtils.getNearbyActiveEntitiesInDimension(world, position) < BzConfig.broodBlocksBeeSpawnCapacity) {
-                spawnBroodMob(world, random, state, position, stage);
+
+            if (playerCloseEnough) {
+                int livingEntitiesNearby = world.getEntitiesOfClass(
+                    LivingEntity.class,
+                    new AABB(
+                        position.offset(-48, -48,-48),
+                        position.offset(48, 48,48)
+                    )
+                ).size();
+
+                if(livingEntitiesNearby < BzConfig.broodBlocksBeeSpawnCapacity) {
+                    spawnBroodMob(world, random, state, position, stage);
+                }
             }
         }
     }
@@ -256,7 +271,6 @@ public class HoneycombBrood extends ProperFacingBlock {
 
         super.playerWillDestroy(world, position, state, playerEntity);
     }
-
 
     private static void spawnBroodMob(Level world, RandomSource random, BlockState state, BlockPos position, int stage) {
         //the front of the block
