@@ -47,7 +47,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
 
             int alpha = 180;
             MultiBufferSource bufferToUse = buffer;
-            if (!ModChecker.sodiumPresent) {
+            if (!ModChecker.sodiumPresent && !ModChecker.rubidiumPresent) {
                 bufferToUse = new TranslucentItemRenderTypeBuffer(buffer, alpha);
             }
             this.itemRenderer.renderItem(
