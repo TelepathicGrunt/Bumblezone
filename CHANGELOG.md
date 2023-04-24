@@ -3,6 +3,9 @@
 ##### Dimension:
 Fix rare crash when mob spawns at edge of chunk creation.
 
+##### Blocks:
+Adjusted Honeycomb Brood Block's randomTick mob spawning to hopefully reduce issue of spawning too many mobs.
+
 
 ### **(V.6.7.13 Changes) (1.19.4 Minecraft)**
 
