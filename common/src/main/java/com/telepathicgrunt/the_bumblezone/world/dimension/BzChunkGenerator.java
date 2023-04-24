@@ -440,9 +440,9 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                         }
 
                         if (mobspawnsettings$spawnerdata.type.canSummon()) {
-                            float f = mobspawnsettings$spawnerdata.type.getWidth();
-                            double finalX = Math.floor(Mth.clamp(x, (double)i + (double)f, (double)i + 16.0D - (double)f)) + 0.5d;
-                            double finalZ = Math.floor(Mth.clamp(z, (double)j + (double)f, (double)j + 16.0D - (double)f)) + 0.5d;
+                            float mobWidth = mobspawnsettings$spawnerdata.type.getWidth();
+                            double finalX = Mth.clamp(x, (double)i + (double)mobWidth, (double)i + 16.0D - (double)mobWidth);
+                            double finalZ = Mth.clamp(z, (double)j + (double)mobWidth, (double)j + 16.0D - (double)mobWidth);
 
                             if (!serverLevelAccessor.getWorldBorder().isWithinBounds(finalX, finalZ) ||
                                 (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
@@ -450,23 +450,25 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                                 continue;
                             }
 
-                            Entity entity;
+                            Entity entity = null;
                             try {
                                 entity = mobspawnsettings$spawnerdata.type.create(serverLevelAccessor.getLevel());
+
+                                entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
+                                if (entity instanceof Mob mob) {
+                                    PlatformHooks.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION, null);
+
+                                    if (mob.checkSpawnObstruction(serverLevelAccessor)) {
+                                        spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata, null);
+                                        mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
+                                        serverLevelAccessor.addFreshEntityWithPassengers(mob);
+                                    }
+                                }
                             }
                             catch (Exception exception) {
-                                Bumblezone.LOGGER.warn("Failed to create mob", exception);
-                                continue;
-                            }
-
-                            entity.moveTo(finalX, mutableBlockPos.getY(), finalZ, randomSource.nextFloat() * 360.0F, 0.0F);
-                            if (entity instanceof Mob mob) {
-                                PlatformHooks.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION, null);
-                                if (mob.checkSpawnObstruction(serverLevelAccessor)) {
-                                    spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata, null);
-                                    mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
-                                    serverLevelAccessor.addFreshEntityWithPassengers(mob);
-                                }
+                                Bumblezone.LOGGER.error("Failed to create mob: {}", entity);
+                                exception.addSuppressed(new RuntimeException("Failed to create mob: " + entity));
+                                throw exception;
                             }
                         }
 
