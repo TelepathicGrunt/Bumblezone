@@ -47,6 +47,9 @@ public class ForgeModChecker {
 
             modid = "curios";
             loadupModCompat(modid, () -> new CuriosCompat());
+
+            modid = "rubidium";
+            loadupModCompat(modid, () -> new RubidiumCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
