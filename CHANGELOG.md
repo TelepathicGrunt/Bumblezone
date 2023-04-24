@@ -1,3 +1,9 @@
+### **(V.6.7.14 Changes) (1.19.2 Minecraft)**
+
+##### Dimension:
+Fix rare crash when mob spawns at edge of chunk creation.
+
+
 ### **(V.6.7.13 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
