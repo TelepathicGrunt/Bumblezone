@@ -146,7 +146,7 @@ public class BzGeneralConfig {
                         " How long in seconds this music disc will be playing music.",
                         " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthflightofthebumblebee")
-                .defineInRange("musicDiscTimeLengthFlightOfTheBumblebee", 40, 0 , 1000000);
+                .defineInRange("musicDiscTimeLengthFlightOfTheBumblebee", 84, 0 , 1000000);
 
         musicDiscTimeLengthHoneyBee = builder
                 .comment(" \n-----------------------------------------------------\n",
