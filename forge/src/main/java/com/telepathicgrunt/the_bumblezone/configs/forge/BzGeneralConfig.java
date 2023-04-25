@@ -106,7 +106,7 @@ public class BzGeneralConfig {
                         " Set this higher to allow Brood Blocks to spawn more bees in a smaller area or set it to 0 to turn ",
                         " off automatic Brood Block bee spawning.\n")
                 .translation("the_bumblezone.config.broodblocksbeespawncapacity")
-                .defineInRange("broodBlocksBeeSpawnCapacity", 60, 0, 1000);
+                .defineInRange("broodBlocksBeeSpawnCapacity", 40, 0, 1000);
 
         beeQueenBonusTradeRewardMultiplier = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -145,8 +145,8 @@ public class BzGeneralConfig {
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
                         " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
-                .translation("the_bumblezone.config.broodblocksbeespawncapacity")
-                .defineInRange("broodBlocksBeeSpawnCapacity", 84, 0 , 1000000);
+                .translation("the_bumblezone.config.musicdisctimelengthflightofthebumblebee")
+                .defineInRange("musicDiscTimeLengthFlightOfTheBumblebee", 40, 0 , 1000000);
 
         musicDiscTimeLengthHoneyBee = builder
                 .comment(" \n-----------------------------------------------------\n",

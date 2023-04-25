@@ -7,7 +7,7 @@ public class BzGeneralConfigs {
     public static boolean moddedBeeLootInjection = true;
     public static int nearbyBeesPerPlayerInBz = 3;
     public static boolean dispensersDropGlassBottles = true;
-    public static int broodBlocksBeeSpawnCapacity = 84;
+    public static int broodBlocksBeeSpawnCapacity = 40;
     public static int beeQueenBonusTradeRewardMultiplier = 2;
     public static int beeQueenBonusTradeDurationInTicks = 6000;
     public static int beeQueenBonusTradeAmountTillSatified = 3;
