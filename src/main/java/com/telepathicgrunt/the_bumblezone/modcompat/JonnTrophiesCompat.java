@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class JonnTrophiesCompat {
-	private static ResourceLocation TROPHY_RL = new ResourceLocation("trophymanager", "trophy");
+	private static final ResourceLocation TROPHY_RL = new ResourceLocation("trophymanager", "trophy");
 
 	public static void setupCompat() {
 
