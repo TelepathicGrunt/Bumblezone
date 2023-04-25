@@ -168,6 +168,9 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
     //runtimeOnly fg.deobf("curse.maven:blueprint-382216:${project.blueprint_file_id}")
 
+    //compileOnly fg.deobf("curse.maven:jonn_trophies-510170:${project.jonn_trophies_file_id}")
+    //runtimeOnly fg.deobf("curse.maven:jonn_trophies-510170:${project.jonn_trophies_file_id}")
+
     //runtimeOnly fg.deobf("curse.maven:goodall-613215:${project.goodall_file_id}")
     //runtimeOnly fg.deobf("curse.maven:geckolib-388172:${project.geckolib_file_id}")
 

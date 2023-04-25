@@ -6,6 +6,10 @@ Fix rare crash when mob spawns at edge of chunk creation.
 ##### Blocks:
 Adjusted Honeycomb Brood Block's randomTick mob spawning to hopefully reduce issue of spawning too many mobs.
 
+##### Mod Compat:
+Jonn's Trophies mod's bee-based trophies when worn on head will boost Bumblezone's Bee Armor abilities.
+ Should work for any bee entity trophies including Beehemoth, Bee Queen, or other mod's trophies.
+
 
 ### **(V.6.7.13 Changes) (1.19.2 Minecraft)**
 

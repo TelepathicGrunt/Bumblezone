@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.modcompat.CuriosCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.JonnTrophiesCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
@@ -78,8 +79,16 @@ public abstract class BeeArmor extends ArmorItem {
 
     public static int getBeeThemedGearCount(Entity entity) {
         int beeGearCount = 0;
-        for(ItemStack armor : entity.getArmorSlots()) {
-            if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+        for (ItemStack armor : entity.getArmorSlots()) {
+            if (armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+
+                if (ModChecker.jonnTrophiesPresent && JonnTrophiesCompat.isTrophy(armor)) {
+                    if (JonnTrophiesCompat.isTrophyBeeThemed(armor)) {
+                        beeGearCount++;
+                    }
+                    continue;
+                }
+
                 beeGearCount++;
             }
         }

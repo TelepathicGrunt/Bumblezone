@@ -24,6 +24,7 @@ public class ModChecker {
 	public static boolean curiosPresent = false;
 	public static boolean goodallPresent = false;
 	public static boolean backpackedPresent = false;
+	public static boolean jonnTrophiesPresent = false;
 	public static boolean projectileDamageAttributePresent = false;
 
 	/*
@@ -84,6 +85,9 @@ public class ModChecker {
 
 			modid = "backpacked";
 			loadupModCompat(modid, () -> BackpackedCompat.setupCompat());
+
+			modid = "trophymanager";
+			loadupModCompat(modid, () -> JonnTrophiesCompat.setupCompat());
 
 			modid = "projectile_damage";
 			loadupModCompat(modid, () -> ProjectileDamageAttributeCompat.setupCompat());

@@ -36,6 +36,10 @@
       "required": false
     },
     {
+      "id": "trophymanager:trophy",
+      "required": false
+    },
+    {
       "id": "mcda:beehive_armor_helmet",
       "required": false
     },

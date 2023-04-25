@@ -225,6 +225,10 @@ public class BeeAggression {
         return SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType());
     }
 
+    public static boolean isBeelikeEntityType(EntityType type) {
+        return SET_OF_BEE_NAMED_ENTITIES.contains(type);
+    }
+
     public static void playerTick(TickEvent.PlayerTickEvent event) {
         Player playerEntity = event.player;
 
