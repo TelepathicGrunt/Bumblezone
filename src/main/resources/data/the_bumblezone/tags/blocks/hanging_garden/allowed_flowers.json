@@ -147,6 +147,10 @@
       "required": false
     },
     {
+      "id": "miners_delight:gossypium",
+      "required": false
+    },
+    {
       "id": "minestuck:glowflower",
       "required": false
     },

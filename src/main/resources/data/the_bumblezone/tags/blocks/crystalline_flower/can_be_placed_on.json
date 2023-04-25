@@ -89,6 +89,10 @@
       "required": false
     },
     {
+      "id": "echoing_expanse:echo_shard_block",
+      "required": false
+    },
+    {
       "id": "forbidden_arcanus:arcane_crystal_block",
       "required": false
     },
