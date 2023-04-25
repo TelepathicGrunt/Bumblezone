@@ -45,7 +45,7 @@ public class BzConfig extends MidnightConfig {
     public static boolean dispensersDropGlassBottles = false;
 
     @Entry(min=1, max=1000)
-    public static int broodBlocksBeeSpawnCapacity = 80;
+    public static int broodBlocksBeeSpawnCapacity = 40;
 
     @Entry
     public static boolean superCandlesBurnsMobs = true;

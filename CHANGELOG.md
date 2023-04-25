@@ -6,6 +6,9 @@ Fix rare crash when mob spawns at edge of chunk creation.
 ##### Blocks:
 Adjusted Honeycomb Brood Block's randomTick mob spawning to hopefully reduce issue of spawning too many mobs.
 
+##### Configs:
+broodBlocksBeeSpawnCapacity config option default value is now lowered to 40
+
 
 ### **(V.6.7.13 Changes) (1.19.2 Minecraft)**
 
