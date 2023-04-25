@@ -50,6 +50,9 @@ public class ForgeModChecker {
 
             modid = "rubidium";
             loadupModCompat(modid, () -> new RubidiumCompat());
+
+            modid = "trophymanager";
+            loadupModCompat(modid, () -> new JonnTrophiesCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

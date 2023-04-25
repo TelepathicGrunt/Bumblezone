@@ -20,6 +20,7 @@ public class ModChecker {
 	public static final List<ModCompat> HOST_BEE_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> PROJECTILE_IMPACT_HANDLED_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> CUSTOM_EQUIPMENT_SLOTS_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> BEE_GEAR_BOOSTING_COMPATS = new ArrayList<>();
 
 	public static boolean productiveBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
@@ -37,6 +38,7 @@ public class ModChecker {
 	public static boolean goodallPresent = false;
 	public static boolean backpackedPresent = false;
 	public static boolean projectileDamageAttributePresent = false;
+	public static boolean jonnTrophiesPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -90,6 +92,7 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.HAS_HOST_BEES)) HOST_BEE_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.PROJECTILE_IMPACT_HANDLED)) PROJECTILE_IMPACT_HANDLED_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.CUSTOM_EQUIPMENT_SLOTS)) CUSTOM_EQUIPMENT_SLOTS_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.BEE_GEAR_BOOSTING)) BEE_GEAR_BOOSTING_COMPATS.add(compat);
 			}
 		}
 		catch (Throwable e) {

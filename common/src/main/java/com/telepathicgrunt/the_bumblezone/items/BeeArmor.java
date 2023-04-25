@@ -36,7 +36,9 @@ public abstract class BeeArmor extends BzArmor implements ItemExtension {
         int beeGearCount = 0;
         for(ItemStack armor : entity.getArmorSlots()) {
             if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
-                beeGearCount++;
+                if (isAllowedBeeArmorBoosting(armor)) {
+                    beeGearCount++;
+                }
             }
         }
         for (ModCompat compat : ModChecker.CUSTOM_EQUIPMENT_SLOTS_COMPATS) {
@@ -48,5 +50,14 @@ public abstract class BeeArmor extends BzArmor implements ItemExtension {
             });
         }
         return beeGearCount;
+    }
+
+    private static boolean isAllowedBeeArmorBoosting(ItemStack armor) {
+        for (ModCompat compat : ModChecker.BEE_GEAR_BOOSTING_COMPATS) {
+            if (compat.isItemExplicitlyDisallowedFromBeeGearBoosting(armor)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

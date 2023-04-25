@@ -87,6 +87,10 @@ public interface ModCompat {
         return 0;
     }
 
+    default boolean isItemExplicitlyDisallowedFromBeeGearBoosting(ItemStack itemStack) {
+        return false;
+    }
+
     enum Type {
         SPAWNS,
         EMPTY_BROOD,
@@ -97,5 +101,6 @@ public interface ModCompat {
         HAS_HOST_BEES,
         PROJECTILE_IMPACT_HANDLED,
         CUSTOM_EQUIPMENT_SLOTS,
+        BEE_GEAR_BOOSTING,
     }
 }
