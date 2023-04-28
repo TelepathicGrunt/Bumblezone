@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManage
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.emi.EMIQueenRandomizerTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.emi.EMIQueenTradesInfo;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.emi.QueenRandomizerTradesEMICategory;
@@ -74,8 +75,8 @@ public class EMICompat implements EmiPlugin {
         }
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades.isEmpty()) {
-            for (QueensTradeManager.TradeWantEntry tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
-                List<ItemStack> randomizeStack = tradeEntry.wantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
+            for (RandomizeTradeRowInput tradeEntry : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades) {
+                List<ItemStack> randomizeStack = tradeEntry.getWantItems().stream().map(e -> e.value().getDefaultInstance()).toList();
                 for (ItemStack input : randomizeStack) {
                     registry.addRecipe(new EMIQueenRandomizerTradesInfo(
                             EmiIngredient.of(Ingredient.of(input)),
