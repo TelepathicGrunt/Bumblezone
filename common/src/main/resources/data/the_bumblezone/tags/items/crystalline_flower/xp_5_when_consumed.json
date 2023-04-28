@@ -13,14 +13,7 @@
     "minecraft:golden_apple",
     "minecraft:golden_carrot",
     "minecraft:glistering_melon_slice",
-    {
-      "id": "#forge:buckets/honey",
-      "required": false
-    },
-    {
-      "id": "#c:buckets/honey",
-      "required": false
-    },
+    "#the_bumblezone:buckets/honey",
     {
       "id": "#resourcefulbees:resourceful_honey_block",
       "required": false

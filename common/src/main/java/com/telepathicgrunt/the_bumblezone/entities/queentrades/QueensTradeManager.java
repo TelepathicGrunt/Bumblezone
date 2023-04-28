@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.util.WeightedRandomListAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.Holder;
@@ -43,7 +44,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
     private final List<TradeCollection> rawTrades = new ArrayList<>();
     public Object2ObjectOpenHashMap<Item, WeightedRandomList<WeightedTradeResult>> queenTrades = new Object2ObjectOpenHashMap<>();
-    public List<TradeWantEntry> recipeViewerRandomizerTrades = new ArrayList<>();
+    public List<RandomizeTradeRowInput> recipeViewerRandomizerTrades = new ArrayList<>();
     public List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> recipeViewerMainTrades = new ArrayList<>();
 
     public record TradeCollection(
@@ -120,7 +121,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             return;
         }
 
-        List<TradeWantEntry> tempRecipeViewerRandomizerTrades = new ArrayList<>();
+        List<RandomizeTradeRowInput> tempRecipeViewerRandomizerTrades = new ArrayList<>();
         List<TradeWantEntry> tempRecipeViewerMainTagTrades = new ArrayList<>();
         List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> tempRecipeViewerMainTrades = new ArrayList<>();
 
@@ -140,7 +141,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                         continue;
                     }
 
-                    tempRecipeViewerRandomizerTrades.add(tradeRandomizeEntry);
+                    tempRecipeViewerRandomizerTrades.add(new RandomizeTradeRowInput(tradeRandomizeEntry.tagKey()));
                     populateRandomizedQueenTrades(tempQueenTradesFirstPass, tradeRandomizeEntry);
                 }
             }
@@ -171,7 +172,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
         // Do second parse for recipe viewers to set chances and stuff correctly
         tempRecipeViewerRandomizerTrades.removeIf(randomizerTrade -> {
-            Set<Item> wantSet = randomizerTrade.wantItems().stream().map(Holder::value).collect(Collectors.toUnmodifiableSet());
+            Set<Item> wantSet = randomizerTrade.getWantItems().stream().map(Holder::value).collect(Collectors.toUnmodifiableSet());
             for (Item item : wantSet) {
                 if (!tempQueenTradesFirstPass.containsKey(item)) {
                     return true;

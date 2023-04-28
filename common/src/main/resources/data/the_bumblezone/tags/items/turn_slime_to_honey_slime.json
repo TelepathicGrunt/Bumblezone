@@ -3,13 +3,6 @@
   "values": [
     "minecraft:honey_block",
     "the_bumblezone:royal_jelly_block",
-    {
-      "id": "#forge:buckets/honey",
-      "required": false
-    },
-    {
-      "id": "#c:buckets/honey",
-      "required": false
-    }
+    "#the_bumblezone:buckets/honey"
   ]
 }
