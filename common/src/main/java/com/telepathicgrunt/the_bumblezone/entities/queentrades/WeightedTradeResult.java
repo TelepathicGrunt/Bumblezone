@@ -14,12 +14,12 @@ import java.util.Optional;
 
 public class WeightedTradeResult implements WeightedEntry {
     public static final Codec<WeightedTradeResult> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
-            BuiltInRegistries.ITEM.byNameCodec().listOf().fieldOf("want_items").forGetter(e -> e.items),
-            Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
-            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("xp_reward").forGetter(e -> e.xpReward),
-            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight").forGetter(e -> e.weight),
-            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("total_group_weight").forGetter(e -> e.totalGroupWeight)
+            TagKey.codec(Registries.ITEM).optionalFieldOf("t").forGetter(e -> e.tagKey),
+            BuiltInRegistries.ITEM.byNameCodec().listOf().fieldOf("w").forGetter(e -> e.items),
+            Codec.intRange(1, 64).fieldOf("c").forGetter(e -> e.count),
+            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("xp").forGetter(e -> e.xpReward),
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("w8").forGetter(e -> e.weight),
+            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("tgw").forGetter(e -> e.totalGroupWeight)
     ).apply(instance, instance.stable(WeightedTradeResult::new)));
 
     public final Optional<TagKey<Item>> tagKey;
