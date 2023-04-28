@@ -13,11 +13,15 @@
       "required": true
     },
     {
+      "id": "#the_bumblezone:buckets/honey",
+      "required": false
+    },
+    {
       "id": "#c:beehive",
       "required": false
     },
     {
-      "id": "#c:buckets/honey",
+      "id": "#forge:beehive",
       "required": false
     },
     {

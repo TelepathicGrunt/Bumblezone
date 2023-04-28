@@ -8,9 +8,14 @@ import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManage
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -18,8 +23,17 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
-public record QueenRandomizerTradesSyncPacket(List<QueensTradeManager.TradeWantEntry> recipeViewerRandomizerTrades) {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+
+public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recipeViewerRandomizerTrades) {
     public static Gson gson = new GsonBuilder().create();
     public static final ResourceLocation PACKET_ID = new ResourceLocation(Bumblezone.MODID, "queen_randomize_trades_sync_packet");
 
@@ -34,7 +48,7 @@ public record QueenRandomizerTradesSyncPacket(List<QueensTradeManager.TradeWantE
                 });
     }
 
-    public static void sendToClient(final ServerPlayer serverPlayer, List<QueensTradeManager.TradeWantEntry> dataToCompose) {
+    public static void sendToClient(final ServerPlayer serverPlayer, List<RandomizeTradeRowInput> dataToCompose) {
         FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
         compose(dataToCompose, passedData);
         ServerPlayNetworking.send(serverPlayer, QueenRandomizerTradesSyncPacket.PACKET_ID, passedData);
@@ -44,7 +58,7 @@ public record QueenRandomizerTradesSyncPacket(List<QueensTradeManager.TradeWantE
      * How the client will read the packet.
      */
     public static QueenRandomizerTradesSyncPacket parse(final FriendlyByteBuf buf) {
-        List<QueensTradeManager.TradeWantEntry> parsedData = new ArrayList<>();
+        List<RandomizeTradeRowInput> parsedData = new ArrayList<>();
 
         CompoundTag data = buf.readAnySizeNbt();
         if (data == null) {
@@ -52,12 +66,11 @@ public record QueenRandomizerTradesSyncPacket(List<QueensTradeManager.TradeWantE
             return new QueenRandomizerTradesSyncPacket(parsedData);
         }
 
-        ListTag tagList = data.getList("randomize_trades", Tag.TAG_COMPOUND);
+        ListTag tagList = data.getList("randomize_trades", Tag.TAG_STRING);
         for (int i = 0; i < tagList.size(); i++) {
-            CompoundTag tradeCompound = tagList.getCompound(i);
-            DataResult<QueensTradeManager.TradeWantEntry> dataResult = QueensTradeManager.TradeWantEntry.CODEC.parse(NbtOps.INSTANCE, tradeCompound);
-            dataResult.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to parse Queen Randomizer Trade packet entry: {}", e.toString()));
-            dataResult.result().ifPresent(parsedData::add);
+            TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(tagList.getString(i)));
+            RandomizeTradeRowInput wantEntry = new RandomizeTradeRowInput(Optional.of(tagKey));
+            parsedData.add(wantEntry);
         }
 
         return new QueenRandomizerTradesSyncPacket(parsedData);
@@ -66,13 +79,11 @@ public record QueenRandomizerTradesSyncPacket(List<QueensTradeManager.TradeWantE
     /*
      * creates the packet buffer and sets its values
      */
-    public static void compose(final List<QueensTradeManager.TradeWantEntry> dataToCompose, final FriendlyByteBuf buf) {
+    public static void compose(final List<RandomizeTradeRowInput> dataToCompose, final FriendlyByteBuf buf) {
         CompoundTag data = new CompoundTag();
         ListTag listTag = new ListTag();
-        for (QueensTradeManager.TradeWantEntry tradeWantEntry : dataToCompose) {
-            DataResult<Tag> dataResult = QueensTradeManager.TradeWantEntry.CODEC.encodeStart(NbtOps.INSTANCE, tradeWantEntry);
-            dataResult.error().ifPresent(e -> Bumblezone.LOGGER.error("Failed to encode Queen Randomizer Trade packet entry: {}", e.toString()));
-            dataResult.result().ifPresent(listTag::add);
+        for (RandomizeTradeRowInput entry : dataToCompose) {
+            listTag.add(StringTag.valueOf(entry.tagKey().get().location().toString()));
         }
         data.put("randomize_trades", listTag);
         buf.writeNbt(data);

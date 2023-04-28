@@ -1,17 +1,8 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "minecraft:honey_block",
-      "required": true
-    },
-    {
-      "id": "the_bumblezone:royal_jelly_block",
-      "required": true
-    },
-    {
-      "id": "#c:buckets/honey",
-      "required": true
-    }
+    "minecraft:honey_block",
+    "the_bumblezone:royal_jelly_block",
+    "#the_bumblezone:buckets/honey"
   ]
 }

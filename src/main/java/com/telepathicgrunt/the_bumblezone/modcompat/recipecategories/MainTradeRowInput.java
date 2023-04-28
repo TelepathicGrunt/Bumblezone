@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public record MainTradeRowInput(Optional<TagKey<Item>> tagKey, Item item) {
     public static final Codec<MainTradeRowInput> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            TagKey.codec(Registry.ITEM_REGISTRY).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
-            Registry.ITEM.byNameCodec().fieldOf("wantItems").forGetter(e -> e.item)
+            TagKey.codec(Registry.ITEM_REGISTRY).optionalFieldOf("t").forGetter(e -> e.tagKey),
+            Registry.ITEM.byNameCodec().fieldOf("w").forGetter(e -> e.item)
     ).apply(instance, instance.stable(MainTradeRowInput::new)));
 }
