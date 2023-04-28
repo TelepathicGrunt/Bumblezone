@@ -5,14 +5,8 @@
     "minecraft:honey_bottle",
     "the_bumblezone:sugar_water_bottle",
     "the_bumblezone:royal_jelly_bottle",
-    {
-      "id": "#c:buckets/honey",
-      "required": false
-    },
-    {
-      "id": "#c:buckets/royal_jelly",
-      "required": false
-    },
+    "#the_bumblezone:buckets/honey",
+    "#the_bumblezone:buckets/royal_jelly",
     {
       "id": "productivebees:honey_treat",
       "required": false

@@ -1,3 +1,12 @@
+### **(V.6.7.15 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Cleaned up some recipes and tags to use Bumblezone's the_bumblezone:buckets/honey tag for better compatibility.
+
+##### Networking:
+Reduced amount of data being synced to clients connecting to server due to Bee Queen trade syncing.
+
+
 ### **(V.6.7.14 Changes) (1.19.2 Minecraft)**
 
 ##### Dimension:
