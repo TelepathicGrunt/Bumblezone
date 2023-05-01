@@ -80,12 +80,13 @@ public class BumblezoneForgeClient {
         RegisterClientFluidPropertiesEvent.EVENT.invoke(new RegisterClientFluidPropertiesEvent((info, properties) -> {}));
     }
 
-    @SuppressWarnings("removal")
     public static void onClientSetup(FMLClientSetupEvent event) {
-        RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
-        RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
-        RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(BumblezoneForgeClient::registerScreen));
-        RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
+        event.enqueueWork(() -> {
+            RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
+            RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
+            RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(BumblezoneForgeClient::registerScreen));
+            RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
+        });
     }
 
     private static <M extends AbstractContainerMenu, U extends Screen & MenuAccess<M>> void registerScreen(MenuType<? extends M> arg, RegisterMenuScreenEvent.ScreenConstructor<M, U> arg2) {

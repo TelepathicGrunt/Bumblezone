@@ -1,3 +1,10 @@
+### **(V.6.7.16 Changes) (1.19.4 Minecraft)**
+
+##### Client:
+(Forge): Fixed random crash that occurs due to forgetting to enqueueWork some client stuff to not be multi-threaded.
+  Thanks Forge for multithreading mod loading and causing us concurrency issues when we forget to enqueueWork.
+
+
 ### **(V.6.7.15 Changes) (1.19.4 Minecraft)**
 
 ##### Items:
