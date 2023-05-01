@@ -207,6 +207,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
             if (level.players().stream().noneMatch(p ->
                 p.containerMenu instanceof CrystallineFlowerMenu crystallineFlowerMenu &&
+                crystallineFlowerMenu.crystallineFlowerBlockEntity != null &&
                 crystallineFlowerMenu.crystallineFlowerBlockEntity.getGUID().equals(crystallineFlowerBlockEntity.getGUID())))
             {
                 if (level.isClientSide) {

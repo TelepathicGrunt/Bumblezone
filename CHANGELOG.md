@@ -1,5 +1,8 @@
 ### **(V.6.7.16 Changes) (1.19.4 Minecraft)**
 
+##### Blocks:
+Fixed super duper rare crash that magically happened for one person trying to open the Crystalline Flower UI while connected to a server.
+
 ##### Client:
 (Forge): Fixed random crash that occurs due to forgetting to enqueueWork some client stuff to not be multi-threaded.
   Thanks Forge for multithreading mod loading and causing us concurrency issues when we forget to enqueueWork.
