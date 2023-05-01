@@ -1,3 +1,9 @@
+### **(V.6.7.16 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed super duper rare crash that magically happened for one person trying to open the Crystalline Flower UI while connected to a server.
+
+
 ### **(V.6.7.15 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
