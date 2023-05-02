@@ -295,6 +295,7 @@
   "system.the_bumblezone.no_protection": "You lacked Protection of the Hive effect...",
   "system.the_bumblezone.lost_bee_essence": "Bee Essence lost upon respawning...",
   "system.the_bumblezone.entering_dimension": "Bumbling into the Bumblezone!",
+  "system.the_bumblezone.occupied_crystalline_flower": "Flower is occupied by another player...",
 
   "command.the_bumblezone.invalid_data_arg": "The data argument is invalid. Please pick one of the suggestion's entries.",
   "command.the_bumblezone.invalid_entity_arg": "The entity argument is missing for this data request. Please pick an entity from the suggestion's entries.",

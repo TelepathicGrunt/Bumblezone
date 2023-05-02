@@ -21,6 +21,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -67,6 +68,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     protected final VoxelShape shapeBody = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     private static final Component CONTAINER_TITLE = Component.translatable(Bumblezone.MODID + ".container.crystalline_flower");
+    private static final Component OCCUPIED_CRYSTALLINE_FLOWER_TEXT = Component.translatable("system.the_bumblezone.occupied_crystalline_flower");
 
     public CrystallineFlower() {
         super(Properties.of(BzBlocks.YELLOW_CRYSTAL_PLANT, MaterialColor.TERRACOTTA_YELLOW)
@@ -214,6 +216,9 @@ public class CrystallineFlower extends BaseEntityBlock {
                 player.openMenu(state.getMenuProvider(level, pos));
                 player.awardStat(BzStats.INTERACT_WITH_CRYSTALLINE_FLOWER_RL.get());
                 return InteractionResult.CONSUME;
+            }
+            else if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.displayClientMessage(OCCUPIED_CRYSTALLINE_FLOWER_TEXT, true);
             }
         }
 
