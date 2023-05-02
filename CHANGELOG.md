@@ -3,6 +3,8 @@
 ##### Blocks:
 Fixed super duper rare crash that magically happened for one person trying to open the Crystalline Flower UI while connected to a server.
 
+Trying to open Crystalline Flower UI while it is currently opened for another player will now tell you the flower is occupied so you know why it can't be opened.
+
 
 ### **(V.6.7.15 Changes) (1.19.2 Minecraft)**
 
