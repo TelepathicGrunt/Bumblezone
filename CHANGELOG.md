@@ -14,6 +14,8 @@ Fixed issue where Queen trade packet could become massive in certain situations.
 
 Fixed chances not showing correctly for left-clicked JEI Bee Queen trades.
 
+Fixed broken JEED compat.
+
 
 ### **(V.6.7.16 Changes) (1.19.2 Minecraft)**
 

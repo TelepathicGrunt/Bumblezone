@@ -1,8 +1,6 @@
 {
   "type": "jeed:effect_provider",
-  "effect":{
-    "id": "the_bumblezone:hidden"
-  },
+  "effect": "the_bumblezone:hidden",
   "providers": [
     {
       "item": "the_bumblezone:pile_of_pollen"

@@ -324,6 +324,10 @@
       "required": false
     },
     {
+      "id": "jafohana:bells_of_ireland",
+      "required": false
+    },
+    {
       "id": "kniro_flower:white_clover",
       "required": false
     },

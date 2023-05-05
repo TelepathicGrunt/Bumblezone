@@ -86,6 +86,10 @@
       "required": false
     },
     {
+      "id": "jafohana:black_bat_flower",
+      "required": false
+    },
+    {
       "id": "undergarden:tall_shimmerweed",
       "required": false
     },

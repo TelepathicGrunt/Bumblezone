@@ -1,8 +1,6 @@
 {
   "type": "jeed:effect_provider",
-  "effect":{
-    "id": "the_bumblezone:paralyzed"
-  },
+  "effect": "the_bumblezone:paralyzed",
   "providers": [
     {
       "item": "the_bumblezone:stinger_spear"
