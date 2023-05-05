@@ -1,3 +1,9 @@
+### **(V.6.7.17 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Added compat with JEED mod to show what gives the effects.
+
+
 ### **(V.6.7.16 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
