@@ -77,7 +77,7 @@ public class HoneyFluidBlock extends LiquidBlock {
                 }
                 break;
             }
-            else if(!sideFluid.isEmpty() && !sideFluid.is(BzTags.VISUAL_HONEY_FLUID)) {
+            else if(!sideFluid.isEmpty() && !sideFluid.is(BzTags.HONEY_FLUID)) {
                 FluidState currentFluid = world.getFluidState(pos);
                 if (direction == Direction.DOWN && currentFluid.hasProperty(BOTTOM_LEVEL) && currentFluid.getValue(BOTTOM_LEVEL) != 0) {
                     continue;
