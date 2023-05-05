@@ -54,28 +54,6 @@
       ]
     }
   }],
-  "born_in_chaos_v1:sir_pumpkinhead": [{
-    "plants_to_spawn": {
-      "type": "minecraft:weighted_state_provider",
-      "entries": [
-        {
-          "data": { "Name": "minecraft:pumpkin_stem" },
-          "weight": 1
-        }
-      ]
-    }
-  }],
-  "born_in_chaos_v1:sir_pumpkinhead_without_horse": [{
-    "plants_to_spawn": {
-      "type": "minecraft:weighted_state_provider",
-      "entries": [
-        {
-          "data": { "Name": "minecraft:pumpkin_stem" },
-          "weight": 1
-        }
-      ]
-    }
-  }],
   "born_in_chaos_v1:pumpkinhead": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
