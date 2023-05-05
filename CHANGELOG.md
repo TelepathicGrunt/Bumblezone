@@ -6,8 +6,15 @@ Removed Extended Mushroom's honey mushroom cap/carpet from the main Bee Queen tr
  under the minecraft:wool and Minecraft:wool_carpet tag causing weird behaviors and issues. Like blowing up my recipe viewer packets.
  Issue report I made to them about this that they closed as won't fix: https://github.com/cech12/ExtendedMushrooms/issues/66
 
+Fixed issue where Queen trade packet could become massive in certain situations. Now the tag size should be much smaller than before.
+
+##### Fluids:
+Fixed Bumblezone Honey Fluid turning other mod's tagged honey fluids into Glistering Honey Crystal block.
+
 ##### Mod Compat:
-Added compat with JEED mod to show what gives the effects.
+Fixed chances not showing correctly for left-clicked JEI Bee Queen trades.
+
+(Fabric/Quilt): Added compat with JEED mod to show what gives the effects.
 
 
 ### **(V.6.7.16 Changes) (1.19.4 Minecraft)**

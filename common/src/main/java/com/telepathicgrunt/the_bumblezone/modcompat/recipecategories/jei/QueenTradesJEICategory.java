@@ -12,10 +12,12 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
@@ -64,17 +66,24 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
 
     @Override
     public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward().xpReward), 100, 11, 0xFF808080);
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward.xpReward), 100, 11, 0xFF808080);
 
-        double percentValue = ((double)(recipe.reward().weight) / recipe.reward().getTotalWeight()) * 100D;
+        double percentValue;
+        if (recipe.reward.tagKey.isPresent() && recipe.outputFocused) {
+            percentValue = ((double)(recipe.reward.weight) / BuiltInRegistries.ITEM.getTag(recipe.reward.tagKey.get()).get().size()) * 100D;
+        }
+        else {
+            percentValue = ((double)(recipe.reward.weight) / recipe.reward.getTotalWeight()) * 100D;
+        }
+
         String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
         Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
 
-        if (recipe.input().tagKey().isPresent()) {
+        if (recipe.input.tagKey().isPresent()) {
             tagIcon.draw(stack, 11, 11);
         }
 
-        if (recipe.reward().tagKey.isPresent()) {
+        if (recipe.reward.tagKey.isPresent() && !recipe.outputFocused) {
             tagIcon.draw(stack, 69, 11);
         }
     }
@@ -82,7 +91,13 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     @Override
     public List<Component> getTooltipStrings(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         if (mouseX > 32 && mouseX < 54 && mouseY > 4 && mouseY < 24) {
-            String percent = String.valueOf((double)(recipe.reward().weight) / (recipe.reward().getTotalWeight()) * 100);
+            String percent;
+            if (recipe.reward.tagKey.isPresent() && recipe.outputFocused) {
+                percent = String.valueOf(((double)(recipe.reward.weight) / BuiltInRegistries.ITEM.getTag(recipe.reward.tagKey.get()).get().size()) * 100D);
+            }
+            else {
+                percent = String.valueOf((double)(recipe.reward.weight) / (recipe.reward.getTotalWeight()) * 100);
+            }
             return List.of(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))));
         }
         return IRecipeCategory.super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
@@ -91,13 +106,14 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, JEIQueenTradesInfo recipe, IFocusGroup focuses) {
 
-        if (recipe.input().tagKey().isPresent()) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStacks(BuiltInRegistries.ITEM.getTag(recipe.input().tagKey().get()).get().stream().map(e -> e.value().getDefaultInstance()).toList());
+        if (recipe.input.tagKey().isPresent()) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStacks(BuiltInRegistries.ITEM.getTag(recipe.input.tagKey().get()).get().stream().map(e -> e.value().getDefaultInstance()).toList());
         }
         else {
-            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStack(recipe.input().item().getDefaultInstance());
+            builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStack(recipe.input.item().getDefaultInstance());
         }
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward().items.stream().map(Item::getDefaultInstance).toList());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward.items.stream().map(e -> new ItemStack(e, recipe.reward.count)).toList());
+        recipe.outputFocused = !focuses.isEmpty() && focuses.getAllFocuses().get(0).getRole() == RecipeIngredientRole.OUTPUT;
     }
 }
