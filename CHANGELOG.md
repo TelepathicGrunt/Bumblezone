@@ -16,6 +16,8 @@ Fixed Bumblezone Honey Fluid turning other mod's tagged honey fluids into Gliste
 ##### Mod Compat:
 Fixed chances not showing correctly for left-clicked JEI Bee Queen trades.
 
+Fixed broken JEED compat.
+
 
 ### **(V.6.7.16 Changes) (1.19.2 Minecraft)**
 
