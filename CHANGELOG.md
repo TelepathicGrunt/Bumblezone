@@ -5,6 +5,14 @@ Added compat with JEED mod to show what gives the effects.
 
 Fixed potential rare crash when spawning mobs during worldgen in Bumblezone.
 
+Fixed issue where Queen trade packet could become massive in certain situations. Now the tag size should be much smaller than before.
+
+##### Fluids:
+Fixed Bumblezone Honey Fluid turning other mod's tagged honey fluids into Glistering Honey Crystal block.
+
+##### Mod Compat:
+Fixed chances not showing correctly for left-clicked JEI Bee Queen trades.
+
 
 ### **(V.6.7.16 Changes) (1.19.2 Minecraft)**
 
