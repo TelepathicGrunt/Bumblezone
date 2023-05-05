@@ -1,5 +1,11 @@
 ### **(V.6.7.17 Changes) (1.19.4 Minecraft)**
 
+##### Entities:
+Removed Extended Mushroom's honey mushroom cap/carpet from the main Bee Queen trades to stop it from blowing up my packet size
+ and polluting the main trades with all wool/carpet trades. This is because they tag ALL mushroom cap blocks and mushroom carpets
+ under the minecraft:wool and Minecraft:wool_carpet tag causing weird behaviors and issues. Like blowing up my recipe viewer packets.
+ Issue report I made to them about this that they closed as won't fix: https://github.com/cech12/ExtendedMushrooms/issues/66
+
 ##### Mod Compat:
 Added compat with JEED mod to show what gives the effects.
 
