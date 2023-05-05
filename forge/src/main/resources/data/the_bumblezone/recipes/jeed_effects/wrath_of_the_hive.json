@@ -1,8 +1,6 @@
 {
   "type": "jeed:effect_provider",
-  "effect":{
-    "id": "the_bumblezone:wrath_of_the_hive"
-  },
+  "effect": "the_bumblezone:wrath_of_the_hive",
   "providers": [
     {
       "item": "minecraft:honey_block"

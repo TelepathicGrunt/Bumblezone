@@ -14,6 +14,8 @@ Fixed Bumblezone Honey Fluid turning other mod's tagged honey fluids into Gliste
 ##### Mod Compat:
 Fixed chances not showing correctly for left-clicked JEI Bee Queen trades.
 
+(Forge): Fixed JEED compat
+
 (Fabric/Quilt): Added compat with JEED mod to show what gives the effects.
 
 
