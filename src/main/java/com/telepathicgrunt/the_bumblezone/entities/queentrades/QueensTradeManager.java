@@ -198,29 +198,6 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
             return false;
         });
 
-        // tempQueenTradesFirstPass now only has main trades left. Go nuts!
-        tempRecipeViewerMainTagTrades.forEach(tagTrades -> {
-            List<Item> taggedItems = Registry.ITEM.getTag(tagTrades.tagKey().get()).get().stream().map(Holder::value).toList();
-
-            boolean tagNeedsToBeBrokenUp = false;
-            for (Item item : taggedItems) {
-                Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>> pair = tempQueenTradesFirstPass.get(item);
-                if (pair.getSecond() != tagTrades.tagKey().get()) {
-                    tagNeedsToBeBrokenUp = true;
-                    break;
-                }
-            }
-
-            if (tagNeedsToBeBrokenUp) {
-                for (Item item : taggedItems) {
-                    Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>> pair = tempQueenTradesFirstPass.get(item);
-                    if (pair.getSecond() != tagTrades.tagKey().get()) {
-                        tempQueenTradesFirstPass.put(item, Pair.of(pair.getFirst(), null));
-                    }
-                }
-            }
-        });
-
         Set<TagKey<Item>> collectedTag = new HashSet<>();
         for (Object2ObjectMap.Entry<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> pairEntry : tempQueenTradesFirstPass.object2ObjectEntrySet()) {
             pairEntry.getValue().getFirst().unwrap().forEach(e -> e.setTotalWeight(((WeightedRandomListAccessor)pairEntry.getValue().getFirst()).getTotalWeight()));
