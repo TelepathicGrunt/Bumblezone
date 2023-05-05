@@ -3,6 +3,8 @@
 ##### Mod Compat:
 Added compat with JEED mod to show what gives the effects.
 
+Fixed potential rare crash when spawning mobs during worldgen in Bumblezone.
+
 
 ### **(V.6.7.16 Changes) (1.19.2 Minecraft)**
 
