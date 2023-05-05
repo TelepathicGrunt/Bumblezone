@@ -453,8 +453,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                 if (spawnerData.type.canSummon()) {
                     Entity entity = null;
                     float mobWidth = spawnerData.type.getWidth();
-                    double finalX = Math.floor(Mth.clamp(x, (double)i + (double)mobWidth, (double)i + 16.0 - (double)mobWidth));
-                    double finalZ = Math.floor(Mth.clamp(z, (double)j + (double)mobWidth, (double)j + 16.0 - (double)mobWidth));
+                    double finalX = Mth.clamp(x, (double)i + (double)mobWidth, (double)i + 16.0 - (double)mobWidth);
+                    double finalZ = Mth.clamp(z, (double)j + (double)mobWidth, (double)j + 16.0 - (double)mobWidth);
 
                     if (!serverLevelAccessor.getWorldBorder().isWithinBounds(finalX, finalZ) ||
                         (mutableBlockPos.getY() < serverLevelAccessor.getMinBuildHeight() || mutableBlockPos.getY() >= serverLevelAccessor.getMaxBuildHeight()))
