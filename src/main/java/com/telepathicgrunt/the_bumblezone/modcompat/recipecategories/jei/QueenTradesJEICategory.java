@@ -111,7 +111,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
             builder.addSlot(RecipeIngredientRole.INPUT, 6, 6).addItemStack(recipe.input.item().getDefaultInstance());
         }
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward.items.stream().map(e -> new ItemStack(e, recipe.reward.count)).toList());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 6).addItemStacks(recipe.reward.getItems().stream().map(e -> new ItemStack(e, recipe.reward.count)).toList());
         recipe.outputFocused = !focuses.isEmpty() && focuses.getAllFocuses().get(0).getRole() == RecipeIngredientRole.OUTPUT;
     }
 }
