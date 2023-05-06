@@ -64,7 +64,7 @@ public class EMICompat implements EmiPlugin {
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
             for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
                 for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
-                    List<EmiStack> rewardCollection = weightedTradeResult.items.stream().map(e -> EmiStack.of(new ItemStack(e, weightedTradeResult.count))).toList();
+                    List<EmiStack> rewardCollection = weightedTradeResult.getItems().stream().map(e -> EmiStack.of(new ItemStack(e, weightedTradeResult.count))).toList();
                     registry.addRecipe(new EMIQueenTradesInfo(
                             EmiIngredient.of(trade.getFirst().tagKey().isPresent() ? Ingredient.of(trade.getFirst().tagKey().get()) : Ingredient.of(trade.getFirst().item())),
                             trade.getFirst().tagKey().orElse(null),

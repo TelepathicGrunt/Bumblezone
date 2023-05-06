@@ -1,3 +1,10 @@
+### **(V.6.7.18 Changes) (1.19.2 Minecraft)**
+
+##### Entities:
+Sorry, fixed the packet size issue for real this time.
+ Made absolutely sure list of items is not included in trade entry in the packet if I have the tag already for the items.
+
+
 ### **(V.6.7.17 Changes) (1.19.4 Minecraft)**
 
 ##### Entities:
