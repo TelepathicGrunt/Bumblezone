@@ -182,7 +182,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
                 }
 
                 List<WeightedTradeResult> tradeResults = tempQueenTradesFirstPass.get(item).getFirst().unwrap();
-                if (tradeResults.stream().anyMatch(r -> r.items.stream().anyMatch(t -> !wantSet.contains(t)))) {
+                if (tradeResults.stream().anyMatch(r -> r.getItems().stream().anyMatch(t -> !wantSet.contains(t)))) {
                     for (Item item2 : wantSet) {
                         tempQueenTradesFirstPass.put(item2, Pair.of(tempQueenTradesFirstPass.get(item2).getFirst(), null));
                     }
@@ -287,7 +287,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
 
             for (TradeResultEntry tradeResultEntry : tradeResultEntries) {
                 List<Item> resultItems = tradeResultEntry.resultItems().stream().map(Holder::value).toList();
-                existingTrades.add(new WeightedTradeResult(tradeResultEntry.tagKey, resultItems, tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
+                existingTrades.add(new WeightedTradeResult(tradeResultEntry.tagKey, Optional.of(resultItems), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
             }
 
             if (needsSorting) {
@@ -303,11 +303,11 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener impleme
         for (Item item : items) {
             if (tempQueenTrades.containsKey(item)) {
                 List<WeightedTradeResult> existingTrades = new ArrayList<>(tempQueenTrades.get(item).getFirst().unwrap());
-                existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), items, 1, 0 , 1));
+                existingTrades.add(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items), 1, 0 , 1));
                 tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(existingTrades), null));
             }
             else {
-                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), items, 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
+                tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items), 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
             }
         }
     }

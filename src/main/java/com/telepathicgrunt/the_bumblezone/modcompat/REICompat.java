@@ -59,7 +59,7 @@ public class REICompat implements REIClientPlugin {
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
             for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {
                 for (WeightedTradeResult weightedTradeResult : trade.getSecond().unwrap()) {
-                    List<ItemStack> rewardCollection = weightedTradeResult.items.stream().map(e -> new ItemStack(e, weightedTradeResult.count)).toList();
+                    List<ItemStack> rewardCollection = weightedTradeResult.getItems().stream().map(e -> new ItemStack(e, weightedTradeResult.count)).toList();
                     registry.add(new REIQueenTradesInfo(
                             trade.getFirst().tagKey().isPresent() ? EntryIngredients.ofItemTag(trade.getFirst().tagKey().get()) : EntryIngredients.of(trade.getFirst().item()),
                             trade.getFirst().tagKey().orElse(null),
