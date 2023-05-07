@@ -1,3 +1,9 @@
+### **(V.6.7.19 Changes) (1.19.2 Minecraft)**
+
+##### Entities:
+Added raw meat as a possible reward for trading Rotten Flesh with Bee Queen.
+
+
 ### **(V.6.7.18 Changes) (1.19.2 Minecraft)**
 
 ##### Entities:
