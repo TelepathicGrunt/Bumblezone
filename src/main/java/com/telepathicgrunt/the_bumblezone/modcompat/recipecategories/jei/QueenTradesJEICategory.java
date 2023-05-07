@@ -66,12 +66,9 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward.xpReward), 100, 11, 0xFF808080);
 
-        double percentValue;
+        double percentValue = ((double)(recipe.reward.weight) / recipe.reward.getTotalWeight()) * 100D;
         if (recipe.reward.tagKey.isPresent() && recipe.outputFocused) {
-            percentValue = ((double)(recipe.reward.weight) / Registry.ITEM.getTag(recipe.reward.tagKey.get()).get().size()) * 100D;
-        }
-        else {
-            percentValue = ((double)(recipe.reward.weight) / recipe.reward.getTotalWeight()) * 100D;
+            percentValue *= ((double)(recipe.reward.weight) / Registry.ITEM.getTag(recipe.reward.tagKey.get()).get().size());
         }
 
         String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
@@ -89,14 +86,12 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     @Override
     public List<Component> getTooltipStrings(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         if (mouseX > 32 && mouseX < 54 && mouseY > 4 && mouseY < 24) {
-            String percent;
+            double percent = (double)(recipe.reward.weight) / (recipe.reward.getTotalWeight()) * 100;
             if (recipe.reward.tagKey.isPresent() && recipe.outputFocused) {
-                percent = String.valueOf(((double)(recipe.reward.weight) / Registry.ITEM.getTag(recipe.reward.tagKey.get()).get().size()) * 100D);
+                percent *= ((double)(recipe.reward.weight) / Registry.ITEM.getTag(recipe.reward.tagKey.get()).get().size());
             }
-            else {
-                percent = String.valueOf((double)(recipe.reward.weight) / (recipe.reward.getTotalWeight()) * 100);
-            }
-            return List.of(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))));
+            String percentString =  String.valueOf(percent);;
+            return List.of(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percentString.substring(0, Math.min(percentString.length(), 5))));
         }
         return IRecipeCategory.super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
     }
