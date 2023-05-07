@@ -20,7 +20,7 @@ For developers that want to add Bumblezone to their mod's workspace:
 
 &nbsp;
 
-Don't forget to change \<modversion> with the actual latest version of this mod like `4.1.2` for example.
+Don't forget to change \<modversion> with the actual latest version of this mod like `6.7.18` for example.
 
 <blockquote>dependencies {
 
@@ -28,7 +28,7 @@ Don't forget to change \<modversion> with the actual latest version of this mod 
 &nbsp; ...
 
 
-&nbsp; implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.18.1")
+&nbsp; implementation fg.deobf("com.telepathicgrunt:Bumblezone-Forge:\<modversion>+1.19.2")
 
 
 }</blockquote>
