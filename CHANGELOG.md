@@ -3,6 +3,9 @@
 ##### Entities:
 Added raw meat as a possible reward for trading Rotten Flesh with Bee Queen.
 
+##### Mod Compat:
+Fixed another chance calculation issue for left-clicked JEI Bee Queen trades.
+
 
 ### **(V.6.7.18 Changes) (1.19.2 Minecraft)**
 
