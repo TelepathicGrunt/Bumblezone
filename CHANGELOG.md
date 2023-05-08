@@ -1,5 +1,8 @@
 ### **(V.6.7.19 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Redid backend code for doing Crystalline Flower drops to help prevent possibly more Crystalline Flower duplicating bugs when interacting with other mod's behaviors.
+
 ##### Entities:
 Added raw meat as a possible reward for trading Rotten Flesh with Bee Queen.
 
