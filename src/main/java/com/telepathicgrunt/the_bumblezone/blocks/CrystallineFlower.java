@@ -21,6 +21,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -52,6 +53,11 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -60,6 +66,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -227,7 +234,10 @@ public class CrystallineFlower extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        level.scheduleTick(pos, state.getBlock(), 0);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+            crystallineFlowerBlockEntity.setPillar(crystallineFlowerBlockEntity.getXpTier());
+        }
     }
 
     @Override
@@ -249,143 +259,37 @@ public class CrystallineFlower extends BaseEntityBlock {
             }
         }
         else {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
-                destroyEntirePlant(level, pos, null, !crystallineFlowerBlockEntity.getIsBreaking());
-            }
-            else {
-                destroyEntirePlant(level, pos, null, true);
-            }
+            level.destroyBlock(pos, blockstate.hasProperty(FLOWER) && blockstate.getValue(FLOWER), null, 1);
         }
 
         super.neighborChanged(blockstate, level, pos, block, fromPos, notify);
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Sync data to entire stack so they can update properly and do drops properly
-        int flowerBlockAbove = flowerHeightAbove(level, pos);
-        int flowerBlockBelow = flowerHeightBelow(level, pos);
-        BlockEntity operatingBE = level.getBlockEntity(pos.below(flowerBlockBelow));
-        if (operatingBE instanceof CrystallineFlowerBlockEntity) {
-            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-            for (int i = (-flowerBlockBelow) + 1; i <= flowerBlockAbove; i++) {
-                mutableBlockPos.set(pos).move(Direction.UP, i);
-                BlockEntity blockEntity = level.getBlockEntity(mutableBlockPos);
-                if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                    crystallineFlowerBlockEntity2.load(operatingBE.getUpdateTag());
-                }
-            }
-        }
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-
-    @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
-            int tier = crystallineFlowerBlockEntity.getXpTier();
-
-            int flowerBlockAbove = flowerHeightAbove(level, pos);
-            int flowerBlockBelow = flowerHeightBelow(level, pos);
-            int height = flowerBlockAbove + flowerBlockBelow + 1;
-            if (tier == height) {
-                return;
-            }
-
-            int tierChange = tier - height;
-            boolean upward = tierChange > 0;
-            BlockPos tickedPos = pos.above(flowerBlockBelow);
-            BlockEntity originalFlowerBlockEntity = level.getBlockEntity(tickedPos);
-
-            if (flowerBlockBelow != 0) {
-                BlockEntity targetBlockEntity = level.getBlockEntity(pos.below(flowerBlockBelow));
-                if (targetBlockEntity instanceof CrystallineFlowerBlockEntity && originalFlowerBlockEntity instanceof CrystallineFlowerBlockEntity) {
-                    targetBlockEntity.load(originalFlowerBlockEntity.getUpdateTag());
-                }
-            }
-
-            for (int i = 1; i < Math.abs(tierChange); i++) {
-                BlockPos currentPos = tickedPos.above((int) (Math.signum(tierChange) * i));
-
-                level.setBlock(
-                        currentPos,
-                        upward ? BzBlocks.CRYSTALLINE_FLOWER.defaultBlockState() : Blocks.AIR.defaultBlockState(),
-                        3);
-
-                level.updateNeighborsAt(currentPos, upward ? BzBlocks.CRYSTALLINE_FLOWER : Blocks.AIR);
-
-                if (upward) {
-                    BlockEntity blockEntity2 = level.getBlockEntity(currentPos);
-                    if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                        crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
-                    }
-                }
-            }
-
-            tickedPos = tickedPos.above(tierChange);
-
-            level.setBlock(
-                    tickedPos,
-                    BzBlocks.CRYSTALLINE_FLOWER.defaultBlockState().setValue(CrystallineFlower.FLOWER, true),
-                    3);
-
-            BlockEntity blockEntity2 = level.getBlockEntity(tickedPos);
-            if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
-            }
-        }
-    }
-
-    @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState belowState = level.getBlockState(pos.below());
-        return ((belowState.is(BzTags.CRYSTALLINE_FLOWER_CAN_SURVIVE_ON) && belowState.isFaceSturdy(level, pos, Direction.UP)) ||
-                belowState.is(BzBlocks.CRYSTALLINE_FLOWER)) &&
-                flowerHeightBelow(level, pos) + flowerHeightAbove(level, pos) + 1 <= 7;
+        boolean isBelowValid =
+                (belowState.is(BzTags.CRYSTALLINE_FLOWER_CAN_SURVIVE_ON) && belowState.isFaceSturdy(level, pos, Direction.UP)) ||
+                belowState.is(BzBlocks.CRYSTALLINE_FLOWER.get());
+
+        int flowerBlockAbove = flowerHeightAbove(level, pos);
+        int flowerBlockBelow = flowerHeightBelow(level, pos);
+
+        BlockEntity operatingBE = level.getBlockEntity(pos.below(flowerBlockBelow));
+        if (operatingBE instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+            return isBelowValid && flowerBlockBelow + flowerBlockAbove + 1 == crystallineFlowerBlockEntity.getXpTier();
+        }
+        else {
+            return isBelowValid && flowerBlockBelow + flowerBlockAbove + 1 <= 7;
+        }
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        destroyEntirePlant(level, pos, player, true);
-    }
-
-    private void destroyEntirePlant(Level level, BlockPos pos, Player player, boolean dropItem) {
-        int flowerBlockAbove = flowerHeightAbove(level, pos);
-        BlockPos flowerPos = pos.above(flowerBlockAbove);
-        int flowerBlockBelow = flowerHeightBelow(level, flowerPos);
-        BlockPos bottomPos = flowerPos.below(flowerBlockBelow);
-        BlockEntity blockEntity = level.getBlockEntity(bottomPos);
-
-        // Tells entire stack of the plant that they are in destroy phase so neighbor change doesn't cuase multiple drops
-        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        for (int i = 0; i <= flowerBlockBelow; i++) {
-            mutableBlockPos.set(flowerPos).move(Direction.DOWN, i);
-            BlockEntity blockEntity2 = level.getBlockEntity(mutableBlockPos);
-            if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
-                crystallineFlowerBlockEntity.setIsBreaking(true);
-            }
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        if (state.hasProperty(FLOWER) && state.getValue(FLOWER)) {
+            return super.getDrops(state, builder);
         }
-
-        for (int i = 1; i <= flowerBlockBelow; i++) {
-            mutableBlockPos.set(flowerPos).move(Direction.DOWN, i);
-            level.destroyBlock(mutableBlockPos, false, player, 0);
-        }
-
-        if (player != null && player.getAbilities().instabuild) {
-            super.playerWillDestroy(level, flowerPos, level.getBlockState(flowerPos), player);
-            return;
-        }
-
-        if (dropItem && blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
-            ItemStack itemStack = BzItems.CRYSTALLINE_FLOWER.getDefaultInstance();
-            crystallineFlowerBlockEntity.saveToItem(itemStack);
-            ItemEntity itementity = new ItemEntity(level, (double) flowerPos.getX() + 0.5D, (double) flowerPos.getY() + 0.5D, (double) flowerPos.getZ() + 0.5D, itemStack);
-            itementity.setDefaultPickUpDelay();
-            level.addFreshEntity(itementity);
-        }
-
-        level.destroyBlock(flowerPos, false, player, 0);
+        return new ArrayList<>();
     }
 
     @Override
