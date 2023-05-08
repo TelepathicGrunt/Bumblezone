@@ -1,4 +1,37 @@
 {
   "type": "minecraft:block",
-  "pools": []
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "name": "the_bumblezone:crystalline_flower",
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "tier",
+                  "target": "BlockEntityTag.tier",
+                  "op": "replace"
+                },
+                {
+                  "source": "xp",
+                  "target": "BlockEntityTag.xp",
+                  "op": "replace"
+                },
+                {
+                  "source": "guid",
+                  "target": "BlockEntityTag.guid",
+                  "op": "replace"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
