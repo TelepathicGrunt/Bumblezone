@@ -270,7 +270,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         BlockState belowState = level.getBlockState(pos.below());
         boolean isBelowValid =
                 (belowState.is(BzTags.CRYSTALLINE_FLOWER_CAN_SURVIVE_ON) && belowState.isFaceSturdy(level, pos, Direction.UP)) ||
-                belowState.is(BzBlocks.CRYSTALLINE_FLOWER.get());
+                belowState.is(BzBlocks.CRYSTALLINE_FLOWER);
 
         int flowerBlockAbove = flowerHeightAbove(level, pos);
         int flowerBlockBelow = flowerHeightBelow(level, pos);
