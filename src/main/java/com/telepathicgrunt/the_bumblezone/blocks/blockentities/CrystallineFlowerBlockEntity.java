@@ -26,7 +26,6 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     private int xpTier = 1;
     private int currentXp = 0;
     private String guid = java.util.UUID.randomUUID().toString();
-    private Boolean isBreaking = false;
 
     protected CrystallineFlowerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -50,14 +49,6 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
 
     public void setCurrentXp(int currentXp) {
         this.currentXp = currentXp;
-    }
-
-    public boolean getIsBreaking() {
-        return this.isBreaking;
-    }
-
-    public void setIsBreaking(boolean isBreaking) {
-        this.isBreaking = isBreaking;
     }
 
     public String getGUID() {
@@ -187,13 +178,6 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                     }
                 }
 
-                for (int i = 0; i < topHeight + 1; i++) {
-                    BlockEntity blockEntity2 = level.getBlockEntity(operatingPos.above(i));
-                    if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                        crystallineFlowerBlockEntity2.setIsBreaking(true);
-                    }
-                }
-
                 boolean upward = tierChange > 0;
                 for (int i = 0; i < (upward ? this.xpTier : topHeight + 1); i++) {
                     boolean placePlant = upward || i < this.xpTier;
@@ -201,18 +185,9 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                     level.setBlock(
                             operatingPos.above(i),
                             placePlant ? BzBlocks.CRYSTALLINE_FLOWER.defaultBlockState() : Blocks.AIR.defaultBlockState(),
-                            3);
+                            2);
 
-                    level.updateNeighborsAt(operatingPos.above(i), placePlant ? BzBlocks.CRYSTALLINE_FLOWER : Blocks.AIR);
-
-                    if (placePlant) {
-                        BlockEntity blockEntity2 = level.getBlockEntity(operatingPos.above(i));
-                        if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                            crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
-                            crystallineFlowerBlockEntity2.setIsBreaking(false);
-                        }
-                    }
-                    else if (this.level instanceof ServerLevel serverLevel) {
+                    if (this.level instanceof ServerLevel serverLevel && !placePlant) {
                         for (int itemsToDrop = 0; itemsToDrop < 2 + (i / 1.5); itemsToDrop++) {
                             ItemStack stack = BzItems.HONEY_CRYSTAL_SHARDS.getDefaultInstance();
                             stack.setCount(1);
@@ -231,13 +206,18 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                 level.setBlock(
                         operatingPos,
                         BzBlocks.CRYSTALLINE_FLOWER.defaultBlockState().setValue(CrystallineFlower.FLOWER, true),
-                        3);
+                        2);
 
                 BlockEntity blockEntity2 = level.getBlockEntity(operatingPos);
                 if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                    crystallineFlowerBlockEntity2.setGUID(crystallineFlowerBlockEntity.getGUID());
-                    crystallineFlowerBlockEntity2.setIsBreaking(false);
+                    crystallineFlowerBlockEntity2.load(crystallineFlowerBlockEntity.getUpdateTag());
                 }
+            }
+
+            for (int i = 0; i < topHeight; i++) {
+                BlockPos updatePos = operatingPos.above(i);
+                BlockState state = level.getBlockState(updatePos);
+                level.updateNeighborsAt(updatePos, state.getBlock());
             }
         }
     }
