@@ -25,3 +25,14 @@ Glistering Honey Crystal should not suffocate mobs inside itself, and it blocks 
 Any Super Candle can be crafted to another color with 2 dyes now!
 
 Any String Curtain can be crafted to another color with 1 dye now!
+
+##### Items:
+Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
+
+##### Entities:
+Honey Slime is now immune to fall damage like Magma Cubes. The honey protects the Slime!
+
+##### Biomes:
+Added Bumblezone biomes to `minecraft:snow_golem_melts` biome tag to make Snow Golems melt in Bumblezone since beehives are roughly 95 degrees!
+
+Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag to make extra sure Wandering Traders do not spawn in Bumblezone.
