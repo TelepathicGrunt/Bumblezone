@@ -18,13 +18,15 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
 
 import static net.minecraft.world.level.material.FlowingFluid.FALLING;
@@ -35,8 +37,18 @@ public class HoneyFluidBlock extends BzLiquidBlock {
     public static final IntegerProperty BOTTOM_LEVEL = IntegerProperty.create("bottom_level", 0, maxBottomLayer);
     public static final BooleanProperty ABOVE_FLUID = BooleanProperty.create("above_support");
 
-    public HoneyFluidBlock(FluidInfo fluid) {
-        super(fluid, BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F, 100.0F).noLootTable().speedFactor(0.15F));
+    public HoneyFluidBlock(FluidInfo baseFluid) {
+        super(baseFluid, BlockBehaviour.Properties.of()
+                .mapColor(MapColor.TERRACOTTA_ORANGE)
+                .liquid()
+                .noCollission()
+                .strength(100.0F, 100.0F)
+                .speedFactor(0.15F)
+                .noLootTable()
+                .replaceable()
+                .sound(SoundType.EMPTY)
+                .pushReaction(PushReaction.DESTROY));
+
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(LEVEL, 0)
                 .setValue(BOTTOM_LEVEL, 0)
@@ -89,8 +101,7 @@ public class HoneyFluidBlock extends BzLiquidBlock {
                 }
 
                 BlockState sideState = world.getBlockState(sidePos);
-                Material material = sideState.getMaterial();
-                if (sideState.getBlock() instanceof LiquidBlock || material.isLiquid() || material.isReplaceable()) {
+                if (sideState.getBlock() instanceof LiquidBlock || !sideState.getFluidState().isEmpty() || sideState.canBeReplaced()) {
                     world.setBlock(sidePos, BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState(), 3);
                 }
                 else if (!currentFluid.isSource()) {

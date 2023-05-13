@@ -56,7 +56,7 @@ public class EntityTeleportationHookup {
     //Notify people of Bumblezone's advancements so they know how to enter dimension
     public static void playerTick(PlayerTickEvent event) {
         if (event.player() instanceof ServerPlayer serverPlayer) {
-            Level level = serverPlayer.level;
+            Level level = serverPlayer.level();
 
             if (level instanceof ServerLevel serverLevel &&
                 (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
@@ -82,7 +82,7 @@ public class EntityTeleportationHookup {
         LivingEntity livingEntity = event.entity();
 
         //Makes it so player does not get killed for falling into the void
-        if (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
                 if(BzDimensionConfigs.enableExitTeleportation) {
                     if(livingEntity instanceof ServerPlayer) {
@@ -93,7 +93,7 @@ public class EntityTeleportationHookup {
                         livingEntity.moveTo(livingEntity.getX(), -4, livingEntity.getZ());
                         livingEntity.absMoveTo(livingEntity.getX(), -4, livingEntity.getZ());
                         livingEntity.setDeltaMovement(0, 0, 0);
-                        if (!livingEntity.level.isClientSide()) {
+                        if (!livingEntity.level().isClientSide()) {
                             livingEntity.addEffect(new MobEffectInstance(
                                     MobEffects.SLOW_FALLING,
                                     12,
@@ -105,7 +105,7 @@ public class EntityTeleportationHookup {
                     }
                     livingEntity.fallDistance = 0;
 
-                    if (!livingEntity.level.isClientSide()) {
+                    if (!livingEntity.level().isClientSide()) {
                         teleportOutOfBz(livingEntity);
                     }
                 }
@@ -121,7 +121,7 @@ public class EntityTeleportationHookup {
                         livingEntity.absMoveTo(livingEntity.getX(), 257, livingEntity.getZ());
                     }
 
-                    if (!livingEntity.level.isClientSide()) {
+                    if (!livingEntity.level().isClientSide()) {
                         teleportOutOfBz(livingEntity);
                     }
                 }
@@ -131,7 +131,7 @@ public class EntityTeleportationHookup {
 
 
     public static void teleportOutOfBz(LivingEntity livingEntity) {
-        if (!livingEntity.level.isClientSide()) {
+        if (!livingEntity.level().isClientSide()) {
             checkAndCorrectStoredDimension(livingEntity);
             MinecraftServer minecraftServer = livingEntity.getServer(); // the server itself
             ResourceKey<Level> worldKey = null;
@@ -162,11 +162,11 @@ public class EntityTeleportationHookup {
 
     // Projectiles
     public static boolean runTeleportProjectileImpact(HitResult hitResult, Entity thrower, Entity projectile) {
-        if (thrower == null || thrower.level == null) {
+        if (thrower == null || thrower.level() == null) {
             return false;
         }
 
-        Level level = thrower.level; // world we threw in
+        Level level = thrower.level(); // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
@@ -208,11 +208,11 @@ public class EntityTeleportationHookup {
     }
 
     public static boolean runEntityHitCheck(HitResult hitResult, Entity thrower, Projectile projectile) {
-        if (thrower == null || thrower.level == null) {
+        if (thrower == null || thrower.level() == null) {
             return false;
         }
 
-        Level level = thrower.level; // world we threw in
+        Level level = thrower.level(); // world we threw in
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
@@ -285,7 +285,7 @@ public class EntityTeleportationHookup {
     }
 
     public static boolean runItemUseOn(Player user, BlockPos clickedPos, BlockState blockstate, ItemStack usingStack) {
-        Level level = user.level; // world we use in
+        Level level = user.level(); // world we use in
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
@@ -395,7 +395,7 @@ public class EntityTeleportationHookup {
 
 
     public static void runPistonPushed(Direction direction, LivingEntity pushedEntity) {
-        ServerLevel world = (ServerLevel) pushedEntity.level;
+        ServerLevel world = (ServerLevel) pushedEntity.level();
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (BzDimensionConfigs.enableEntranceTeleportation &&

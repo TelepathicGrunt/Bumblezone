@@ -20,7 +20,7 @@ public class ModdedBeesBeesSpawning {
 			event.spawnType() == MobSpawnType.STRUCTURE)
 		{
 			Mob entity = event.entity();
-			ResourceLocation worldRL = entity.level.dimension().location();
+			ResourceLocation worldRL = entity.level().dimension().location();
 
 			if (worldRL.equals(Bumblezone.MOD_DIMENSION_ID) && entity.getType() == EntityType.BEE) {
 

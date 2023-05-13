@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -12,9 +11,8 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
@@ -123,14 +121,13 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     public CrystallineFlowerScreen(CrystallineFlowerMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
-        passEvents = false;
         inventoryLabelY = imageHeight + INVENTORY_LABEL_Y_OFFSET;
         titleLabelY += TITLE_LABEL_Y_OFFSET;
     }
 
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, partialTick);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         RenderSystem.enableDepthTest();
 
         ItemStack book = this.menu.bookSlot.getItem();
@@ -145,9 +142,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         final int rowStartX = startX + ENCHANTMENT_AREA_X_OFFSET;
         final int rowStartY = startY + ENCHANTMENT_AREA_Y_OFFSET;
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
-        renderScroller(poseStack, startX + ENCHANTMENT_SCROLLBAR_X_OFFSET, startY + ENCHANTMENT_SCROLLBAR_Y_OFFSET);
+        renderScroller(guiGraphics, startX + ENCHANTMENT_SCROLLBAR_X_OFFSET, startY + ENCHANTMENT_SCROLLBAR_Y_OFFSET);
 
         handleEnchantmentAreaRow(mouseX, mouseY,
             (Integer sectionId) -> {
@@ -155,18 +150,15 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     return false;
                 }
 
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
-
                 EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(sectionId);
                 boolean isCurse = enchantmentEntry.isCurse;
                 boolean isTreasure = enchantmentEntry.isTreasure;
                 int row = sectionId - this.startIndex;
                 if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
-                            poseStack,
+                            guiGraphics,
                             rowStartX,
                             rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
                             enchantmentEntry,
@@ -176,9 +168,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_HIGHLIGHTED_U_TEXTURE, ENCHANTMENT_HIGHLIGHTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
-                            poseStack,
+                            guiGraphics,
                             rowStartX,
                             rowStartY + row * 19,
                             enchantmentEntry,
@@ -193,18 +185,15 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     return;
                 }
 
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
-
                 EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(sectionId);
                 boolean isCurse = enchantmentEntry.isCurse;
                 boolean isTreasure = enchantmentEntry.isTreasure;
                 int row = sectionId - this.startIndex;
                 if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
-                            poseStack,
+                            guiGraphics,
                             rowStartX,
                             rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
                             enchantmentEntry,
@@ -213,9 +202,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_UNSELECTED_U_TEXTURE, ENCHANTMENT_UNSELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_UNSELECTED_U_TEXTURE, ENCHANTMENT_UNSELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
-                            poseStack,
+                            guiGraphics,
                             rowStartX,
                             rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
                             enchantmentEntry,
@@ -227,22 +216,22 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
         if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
             MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
-            Screen.drawCenteredString(poseStack, font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
+            guiGraphics.drawCenteredString(font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
         }
         else if (this.menu.selectedEnchantmentIndex.get() != -1) {
             EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantmentIndex.get());
             int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
             MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost_arrow", tierCost).withStyle(ChatFormatting.BOLD);
-            Screen.drawCenteredString(poseStack, font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
+            guiGraphics.drawCenteredString(font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
         }
 
-        drawPushableButtons(poseStack, startX, startY, mouseX, mouseY);
-        drawTierState(poseStack, startX, startY);
-        renderXPBar(poseStack, startX, startY);
-        renderTooltip(poseStack, mouseX, mouseY);
+        drawPushableButtons(guiGraphics, startX, startY, mouseX, mouseY);
+        drawTierState(guiGraphics, startX, startY);
+        renderXPBar(guiGraphics, startX, startY);
+        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
-    private void drawTierState(PoseStack poseStack, int startX, int startY) {
+    private void drawTierState(GuiGraphics guiGraphics, int startX, int startY) {
         int xOffset = startX + TIER_X_OFFSET;
         int yOffset = startY + TIER_Y_OFFSET;
 
@@ -252,7 +241,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 GeneralUtils.merge(this.menu.bottomBlockPosYUpper.get(), this.menu.bottomBlockPosYLower.get()),
                 GeneralUtils.merge(this.menu.bottomBlockPosZUpper.get(), this.menu.bottomBlockPosZLower.get()));
 
-            cachedObstructions = CrystallineFlower.getObstructions(7, this.minecraft.player.getLevel(), flowerPos);
+            cachedObstructions = CrystallineFlower.getObstructions(7, this.minecraft.player.level(), flowerPos);
             cachedObstructionsTimer = 100;
         }
         cachedObstructionsTimer--;
@@ -261,7 +250,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             if (i >= this.menu.xpTier.get()) {
                 if (i < cachedObstructions.size() && cachedObstructions.get(i)) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset + (72 - (i * 12)), TIER_BLOCK_U_TEXTURE, TIER_BLOCK_V_TEXTURE, 10, 10, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset + (72 - (i * 12)), TIER_BLOCK_U_TEXTURE, TIER_BLOCK_V_TEXTURE, 10, 10, 256, 256);
                 }
                 continue;
             }
@@ -273,14 +262,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 textureV = TIER_FLOWER_V_TEXTURE;
             }
             RenderSystem.enableDepthTest();
-            blit(poseStack, xOffset, yOffset + (72 - (i * 12)), textureU, textureV, 10, 10, 256, 256);
+            guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset + (72 - (i * 12)), textureU, textureV, 10, 10, 256, 256);
         }
     }
 
-    private void drawPushableButtons(PoseStack poseStack, int startX, int startY, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
-
+    private void drawPushableButtons(GuiGraphics guiGraphics, int startX, int startY, int mouseX, int mouseY) {
         if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             if (pressedXp1Timer > 0 ||
                     this.menu.xpTier.get() == 7 ||
@@ -288,18 +274,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     !canPlayerBuyTier(1)) {
                 pressedXp1Timer--;
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
+                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
                 int xOffset = startX + XP_CONSUME_1_X_OFFSET;
                 int yOffset = startY + XP_CONSUME_1_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET, 18, 18, 256, 256);
                 }
             }
         }
@@ -311,18 +297,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     !canPlayerBuyTier(2)) {
                 pressedXp2Timer--;
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
+                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_CONSUME_2_X_OFFSET, startY + XP_CONSUME_2_Y_OFFSET, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
                 int xOffset = startX + XP_CONSUME_2_X_OFFSET;
                 int yOffset = startY + XP_CONSUME_2_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, XP_CONSUME_2_U_OFFSET, XP_CONSUME_2_V_OFFSET, 18, 18, 256, 256);
                 }
             }
         }
@@ -335,18 +321,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             {
                 pressedXp3Timer--;
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
+                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_CONSUME_3_X_OFFSET, startY + XP_CONSUME_3_Y_OFFSET, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 18, 18, 18, 256, 256);
             }
             else {
                 int xOffset = startX + XP_CONSUME_3_X_OFFSET;
                 int yOffset = startY + XP_CONSUME_3_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, xOffset, yOffset, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, XP_CONSUME_3_U_OFFSET, XP_CONSUME_3_V_OFFSET, 18, 18, 256, 256);
                 }
             }
         }
@@ -355,7 +341,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             int xOffset = startX + 26;
             int yOffset = startY + 14;
             RenderSystem.enableDepthTest();
-            blit(poseStack, xOffset, yOffset, 176, 0, 48, 58, 256, 256);
+            guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 176, 0, 48, 58, 256, 256);
         }
 
         if (pressedConsumeTimer > 0) {
@@ -364,22 +350,22 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         if (this.menu.consumeSlotFullyObstructed.get() != 1 && BzGeneralConfigs.crystallineFlowerConsumeItemUI) {
             if (pressedConsumeTimer > 0) {
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
-                blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
+                guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 18, 18, 18, 256, 256);
+                guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET + 18, 15, 11, 256, 256);
             }
             else if (this.menu.consumeSlot.hasItem() && this.menu.xpTier.get() < 7) {
                 int xOffset = startX + CONSUME_CONFIRMATION_X_OFFSET;
                 int yOffset = startY + CONSUME_CONFIRMATION_Y_OFFSET;
                 if (mouseX - xOffset >= 0.0D && mouseX - xOffset < 18.0D && mouseY - yOffset >= 0.0D && mouseY - yOffset < 18.0D) {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET + 36, 18, 18, 256, 256);
                 }
                 else {
                     RenderSystem.enableDepthTest();
-                    blit(poseStack, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
+                    guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_CONFIRMATION_X_OFFSET, startY + CONSUME_CONFIRMATION_Y_OFFSET, CONSUME_CONFIRMATION_U_OFFSET, CONSUME_CONFIRMATION_V_OFFSET, 18, 18, 256, 256);
                 }
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
+                guiGraphics.blit(CONTAINER_BACKGROUND, startX + CONSUME_ARROW_X_OFFSET, startY + CONSUME_ARROW_Y_OFFSET, CONSUME_ARROW_U_OFFSET, CONSUME_ARROW_V_OFFSET, 15, 11, 256, 256);
             }
         }
 
@@ -387,11 +373,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             int xOffset = startX + 26;
             int yOffset = startY + 78;
             RenderSystem.enableDepthTest();
-            blit(poseStack, xOffset, yOffset, 176, 59, 48, 19, 256, 256);
+            guiGraphics.blit(CONTAINER_BACKGROUND, xOffset, yOffset, 176, 59, 48, 19, 256, 256);
         }
     }
 
-    private void drawEnchantmentText(PoseStack poseStack, int rowStartX, int currentRowStartY, EnchantmentSkeleton enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor) {
+    private void drawEnchantmentText(GuiGraphics guiGraphics, int rowStartX, int currentRowStartY, EnchantmentSkeleton enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor) {
         String translatedEnchantmentName = getTruncatedString(
                 enchantmentEntry.namespace,
                 enchantmentEntry.path,
@@ -403,8 +389,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             mutableComponent2.append(Component.translatable("the_bumblezone.container.crystalline_flower.level_star"));
         }
 
-        font.draw(poseStack, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor);
-        font.draw(poseStack, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor);
+        guiGraphics.drawString(this.font, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor);
+        guiGraphics.drawString(this.font, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor);
     }
 
     @NotNull
@@ -462,33 +448,30 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
-    protected void renderBg(PoseStack poseStack, float partialtick, int x, int y) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
+    protected void renderBg(GuiGraphics guiGraphics, float partialtick, int x, int y) {
         int startX = (width - imageWidth) / 2;
         int startY = (height - imageHeight) / 2;
         RenderSystem.enableDepthTest();
-        blit(poseStack, startX, startY, 0, 0, imageWidth, MENU_HEIGHT);
-        blit(poseStack, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 71);
+        guiGraphics.blit(CONTAINER_BACKGROUND, startX, startY, 0, 0, imageWidth, MENU_HEIGHT);
+        guiGraphics.blit(CONTAINER_BACKGROUND, startX, startY + MENU_HEIGHT, 0, 126, imageWidth, 71);
     }
 
-    private void renderXPBar(PoseStack poseStack, int startX, int startY) {
+    private void renderXPBar(GuiGraphics guiGraphics, int startX, int startY) {
         if (this.menu.xpTier.get() == 7) {
             RenderSystem.enableDepthTest();
-            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE - 5, 54, 5, 256, 256);
+            guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE - 5, 54, 5, 256, 256);
         }
         else {
             RenderSystem.enableDepthTest();
-            blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE, 54, 5, 256, 256);
+            guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE, 54, 5, 256, 256);
             if (this.menu.xpBarPercent.get() > 0) {
                 RenderSystem.enableDepthTest();
-                blit(poseStack, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE + 5, (int) (54 * (this.menu.xpBarPercent.get() / 100f)), 5, 256, 256);
+                guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_BAR_X_OFFSET, startY + XP_BAR_Y_OFFSET, XP_BAR_U_TEXTURE, XP_BAR_V_TEXTURE + 5, (int) (54 * (this.menu.xpBarPercent.get() / 100f)), 5, 256, 256);
             }
         }
     }
 
-    private void renderScroller(PoseStack poseStack, int posX, int posY) {
+    private void renderScroller(GuiGraphics guiGraphics, int posX, int posY) {
         int rowCount = enchantmentsAvailable.size() + 1 - 3;
         if (rowCount > 1) {
             if (startIndex > rowCount) {
@@ -497,11 +480,11 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             startIndex = (int)((double)(this.scrollOff * (float)this.getOffscreenRows()) + 0.5D);
             int scrollPosition = (int) (scrollOff * 42);
             RenderSystem.enableDepthTest();
-            blit(poseStack, posX, posY + scrollPosition, ENCHANTMENT_SCROLLBAR_U_TEXTURE, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
+            guiGraphics.blit(CONTAINER_BACKGROUND, posX, posY + scrollPosition, ENCHANTMENT_SCROLLBAR_U_TEXTURE, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
         }
         else {
             RenderSystem.enableDepthTest();
-            blit(poseStack, posX, posY, ENCHANTMENT_SCROLLBAR_U_TEXTURE + 6.0F, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
+            guiGraphics.blit(CONTAINER_BACKGROUND, posX, posY, ENCHANTMENT_SCROLLBAR_U_TEXTURE + 6.0F, ENCHANTMENT_SCROLLBAR_V_TEXTURE, 6, 17, 256, 256);
         }
     }
 
@@ -528,8 +511,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         return targetedSectionTaskSuccess;
     }
 
-    protected void renderTooltip(PoseStack poseStack, int x, int y) {
-        super.renderTooltip(poseStack, x, y);
+    protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
+        super.renderTooltip(guiGraphics, x, y);
         int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
         int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
         int selectableSections = this.startIndex + Math.min(enchantmentsAvailable.size(), 3);
@@ -590,8 +573,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                     }
                 }
 
-                this.renderTooltip(
-                        poseStack,
+                guiGraphics.renderTooltip(
+                        this.font,
                         List.of(mutableComponent, mutableComponent2, mutableComponent3, mutableComponent4),
                         Optional.empty(),
                         x,

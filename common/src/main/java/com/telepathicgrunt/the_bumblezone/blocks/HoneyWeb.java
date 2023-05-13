@@ -43,8 +43,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -70,7 +70,14 @@ public class HoneyWeb extends Block {
     }));
 
     public HoneyWeb() {
-        this(Properties.of(Material.WEB, MaterialColor.COLOR_ORANGE).noOcclusion().noCollission().requiresCorrectToolForDrops().strength(4.0F));
+        this(Properties.of()
+                .mapColor(MapColor.TERRACOTTA_ORANGE)
+                .forceSolidOn()
+                .noOcclusion()
+                .noCollission()
+                .requiresCorrectToolForDrops()
+                .strength(4.0F)
+                .pushReaction(PushReaction.DESTROY));
     }
 
     public HoneyWeb(BlockBehaviour.Properties properties) {

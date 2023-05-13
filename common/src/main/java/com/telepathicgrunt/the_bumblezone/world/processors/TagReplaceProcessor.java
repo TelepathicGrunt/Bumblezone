@@ -63,11 +63,11 @@ public class TagReplaceProcessor extends StructureProcessor {
     }
 
     @Override
-    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldReader, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo infoIn2, StructurePlaceSettings settings) {
-        StructureTemplate.StructureBlockInfo returnInfo = infoIn2;
-        if(infoIn2.state.getBlock() == inputBlock &&
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldReader, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings settings) {
+        StructureTemplate.StructureBlockInfo returnInfo = structureBlockInfoWorld;
+        if(structureBlockInfoWorld.state().getBlock() == inputBlock &&
             settings.getBoundingBox() != null &&
-            settings.getBoundingBox().isInside(infoIn2.pos))
+            settings.getBoundingBox().isInside(structureBlockInfoWorld.pos()))
         {
             Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(outputBlockTag);
 
@@ -77,7 +77,7 @@ public class TagReplaceProcessor extends StructureProcessor {
                     randomSource = settings.getRandom(pos.above(seedRandomAddition));
                 }
                 else {
-                    randomSource = settings.getRandom(infoIn2.pos);
+                    randomSource = settings.getRandom(structureBlockInfoWorld.pos());
                 }
 
                 List<Block> blockList = GeneralUtils.getListOfNonDummyBlocks(optionalBlocks)
@@ -93,14 +93,14 @@ public class TagReplaceProcessor extends StructureProcessor {
 
                 if (blockList.size() > 0) {
                     BlockState newBlockState = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
-                    for(Property<?> property : infoIn2.state.getProperties()) {
+                    for(Property<?> property : structureBlockInfoWorld.state().getProperties()) {
                         if(newBlockState.hasProperty(property)) {
-                            newBlockState = getStateWithProperty(newBlockState, infoIn2.state, property);
+                            newBlockState = getStateWithProperty(newBlockState, structureBlockInfoWorld.state(), property);
                         }
                     }
 
                     if (doubleTallFlower) {
-                        returnInfo = new StructureTemplate.StructureBlockInfo(infoIn2.pos, newBlockState, infoIn2.nbt);
+                        returnInfo = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
                     }
                     else {
                         if (newBlockState.getBlock() instanceof MultifaceBlock) {
@@ -112,19 +112,19 @@ public class TagReplaceProcessor extends StructureProcessor {
                             }
                         }
 
-                        ChunkAccess chunk = worldReader.getChunk(infoIn2.pos);
-                        BlockState oldBlockstate = chunk.getBlockState(infoIn2.pos);
-                        BlockState belowOldBlockstate = chunk.getBlockState(infoIn2.pos.below());
+                        ChunkAccess chunk = worldReader.getChunk(structureBlockInfoWorld.pos());
+                        BlockState oldBlockstate = chunk.getBlockState(structureBlockInfoWorld.pos());
+                        BlockState belowOldBlockstate = chunk.getBlockState(structureBlockInfoWorld.pos().below());
 
-                        chunk.setBlockState(infoIn2.pos, Blocks.AIR.defaultBlockState(), false);
-                        chunk.setBlockState(infoIn2.pos.below(), Blocks.GRASS_BLOCK.defaultBlockState(), false);
+                        chunk.setBlockState(structureBlockInfoWorld.pos(), Blocks.AIR.defaultBlockState(), false);
+                        chunk.setBlockState(structureBlockInfoWorld.pos().below(), Blocks.GRASS_BLOCK.defaultBlockState(), false);
 
-                        if (newBlockState.canSurvive(worldReader, infoIn2.pos)) {
-                            returnInfo = new StructureTemplate.StructureBlockInfo(infoIn2.pos, newBlockState, infoIn2.nbt);
+                        if (newBlockState.canSurvive(worldReader, structureBlockInfoWorld.pos())) {
+                            returnInfo = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
                         }
 
-                        chunk.setBlockState(infoIn2.pos, oldBlockstate, false);
-                        chunk.setBlockState(infoIn2.pos.below(), belowOldBlockstate, false);
+                        chunk.setBlockState(structureBlockInfoWorld.pos(), oldBlockstate, false);
+                        chunk.setBlockState(structureBlockInfoWorld.pos().below(), belowOldBlockstate, false);
                     }
                 }
             }

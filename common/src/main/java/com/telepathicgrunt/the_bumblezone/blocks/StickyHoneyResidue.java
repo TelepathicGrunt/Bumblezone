@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -50,7 +49,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -84,7 +83,14 @@ public class StickyHoneyResidue extends Block {
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(BlockBehaviour.Properties.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.TERRACOTTA_ORANGE)
+                .noCollission()
+                .strength(6.0f, 0.0f)
+                .noOcclusion()
+                .replaceable()
+                .pushReaction(PushReaction.DESTROY));
+
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)
@@ -303,14 +309,6 @@ public class StickyHoneyResidue extends Block {
         super.tick(blockstate, world, currentPos, random);
         BlockState newBlockstate = this.setAttachments(blockstate, world, currentPos);
         world.setBlock(currentPos, newBlockstate, 3);
-    }
-
-    /**
-     * Destroyed by pistons.
-     */
-    @Override
-    public PushReaction getPistonPushReaction(BlockState blockstate) {
-        return PushReaction.DESTROY;
     }
 
     /**

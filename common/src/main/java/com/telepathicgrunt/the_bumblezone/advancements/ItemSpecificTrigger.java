@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
@@ -25,7 +25,7 @@ public class ItemSpecificTrigger extends SimpleCriterionTrigger<ItemSpecificTrig
     }
 
     @Override
-    public Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         return new Instance(predicate, ItemPredicate.fromJson(jsonObject.get("item")));
     }
 
@@ -36,7 +36,7 @@ public class ItemSpecificTrigger extends SimpleCriterionTrigger<ItemSpecificTrig
     public class Instance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate itemPredicate;
 
-        public Instance(EntityPredicate.Composite predicate, ItemPredicate itemPredicate) {
+        public Instance(ContextAwarePredicate predicate, ItemPredicate itemPredicate) {
             super(id, predicate);
             this.itemPredicate = itemPredicate;
         }

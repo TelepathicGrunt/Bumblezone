@@ -317,6 +317,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
             noiseChunk.advanceCellX(k1);
 
             for(int l1 = 0; l1 < j1; ++l1) {
+                int bottomBlockY = chunkAccess.getSectionsCount() - 1;
                 LevelChunkSection levelchunksection = chunkAccess.getSection(chunkAccess.getSectionsCount() - 1);
 
                 for(int i2 = z - 1; i2 >= 0; --i2) {
@@ -326,7 +327,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                         int k2 = (x + i2) * l + j2;
                         int l2 = k2 & 15;
                         int i3 = chunkAccess.getSectionIndex(k2);
-                        if (chunkAccess.getSectionIndex(levelchunksection.bottomBlockY()) != i3) {
+                        if (bottomBlockY != i3) {
                             levelchunksection = chunkAccess.getSection(i3);
                         }
 
@@ -350,11 +351,6 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                                 }
 
                                 if (blockstate != Blocks.AIR.defaultBlockState()) {
-                                    if (blockstate.getLightEmission() != 0 && chunkAccess instanceof ProtoChunk) {
-                                        blockpos$mutableblockpos.set(k3, k2, j4);
-                                        ((ProtoChunk)chunkAccess).addLight(blockpos$mutableblockpos);
-                                    }
-
                                     levelchunksection.setBlockState(l3, l2, k4, blockstate, false);
                                     heightmap.update(l3, k2, k4, blockstate);
                                     heightmap1.update(l3, k2, k4, blockstate);

@@ -178,7 +178,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     public void equipSaddle(SoundSource soundSource) {
         this.entityData.set(SADDLED, true);
         if (soundSource != null) {
-            this.level.playSound(null, this, SoundEvents.HORSE_SADDLE, soundSource, 0.5F, 1.0F);
+            this.level().playSound(null, this, SoundEvents.HORSE_SADDLE, soundSource, 0.5F, 1.0F);
         }
     }
 
@@ -221,7 +221,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource == level.damageSources().sweetBerryBush()) {
+        if (damageSource == level().damageSources().sweetBerryBush()) {
             return true;
         }
         return super.isInvulnerableTo(damageSource);
@@ -232,7 +232,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         if (isInvulnerableTo(source)) {
             return false;
         }
-        else if(isOnPortalCooldown() && source == level.damageSources().inWall()) {
+        else if(isOnPortalCooldown() && source == level().damageSources().inWall()) {
             spawnMadParticles();
             playHurtSound(source);
             return false;
@@ -248,8 +248,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     entity instanceof LivingEntity livingEntity)
                 {
                     addFriendship((int) (-amount));
-                    if (!(livingEntity instanceof Player player && (player.isCreative() || level.getDifficulty() == Difficulty.PEACEFUL)) &&
-                        (livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
+                    if (!(livingEntity instanceof Player player && (player.isCreative() || level().getDifficulty() == Difficulty.PEACEFUL)) &&
+                        (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                         !livingEntity.isSpectator())
                     {
                         if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
@@ -285,7 +285,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     @Override
     public boolean checkSpawnObstruction(LevelReader worldReader) {
         AABB box = getBoundingBox();
-        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
+        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.blocksMotion()) && worldReader.isUnobstructed(this);
     }
 
     @Override
@@ -297,7 +297,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
         ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(item);
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             if (isTame() && isOwnedBy(player)) {
                 return InteractionResult.SUCCESS;
             } 
@@ -312,43 +312,43 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     if (stack.is(BzTags.BEE_FEEDING_ITEMS) && !player.isShiftKeyDown()) {
                         if(stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                             heal(40);
-                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 30);
+                            BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 30);
                             addFriendship(1000);
                             this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 90000, 3, true, true, true));
                             for (int i = 0; i < 75; i++) {
-                                spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                                spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }
                             return InteractionResult.PASS;
                         }
                         else if(item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
                             heal(10);
-                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 1f, 10);
+                            BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 10);
                             addFriendship(250);
                             this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 20000, 3, true, true, true));
                             for (int i = 0; i < 30; i++) {
-                                spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                                spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }
                             return InteractionResult.PASS;
                         }
                         else if(item == BzItems.BEE_BREAD.get()) {
                             heal(2);
-                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
+                            BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 0.8f, 5);
                             addFriendship(5);
                             return InteractionResult.PASS;
                         }
                         else if (stack.is(BzTags.HONEY_BUCKETS)) {
                             heal(getMaxHealth() - getHealth());
-                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
+                            BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 0.8f, 5);
                             addFriendship(5);
                         }
                         else if (itemRL.getPath().contains("honey")) {
                             heal(2);
-                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.3f, 3);
+                            BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 0.3f, 3);
                             addFriendship(3);
                         }
                         else {
                             heal(1);
-                            BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.1f, 3);
+                            BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 0.1f, 3);
                             addFriendship(1);
                         }
 
@@ -367,8 +367,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             setSaddled(false);
                             ItemStack saddle = new ItemStack(Items.SADDLE);
                             if (player.addItem(saddle)) {
-                                ItemEntity entity = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), saddle);
-                                player.level.addFreshEntity(entity);
+                                ItemEntity entity = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), saddle);
+                                player.level().addFreshEntity(entity);
                             }
                         }
                         else {
@@ -380,12 +380,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     }
 
                     if (!isVehicle() && !player.isSecondaryUseActive()) {
-                        if (!this.level.isClientSide) {
+                        if (!this.level().isClientSide) {
                             player.startRiding(this);
                             setOrderedToSit(false);
                         }
 
-                        return InteractionResult.sidedSuccess(this.level.isClientSide);
+                        return InteractionResult.sidedSuccess(this.level().isClientSide);
                     }
                 }
             }
@@ -398,14 +398,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                         friendshipAmount = 1000;
                         tameChance = 1f;
                         for (int i = 0; i < 75; i++) {
-                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                         }
                     }
                     else if (item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
                         friendshipAmount = 250;
                         tameChance = 1f;
                         for (int i = 0; i < 30; i++) {
-                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                         }
                     }
                     else if (stack.is(BzTags.HONEY_BUCKETS) || item == BzItems.BEE_BREAD.get()) {
@@ -422,10 +422,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                         tame(player);
                         setFriendship(friendshipAmount);
                         setOrderedToSit(true);
-                        this.level.broadcastEntityEvent(this, (byte) 7);
+                        this.level().broadcastEntityEvent(this, (byte) 7);
                     }
                     else {
-                        this.level.broadcastEntityEvent(this, (byte) 6);
+                        this.level().broadcastEntityEvent(this, (byte) 6);
                     }
                 }
                 else {
@@ -433,14 +433,14 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
                         addFriendship(1000);
                         for (int i = 0; i < 75; i++) {
-                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                         }
                         return InteractionResult.PASS;
                     }
                     else if (item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
                         addFriendship(250);
                         for (int i = 0; i < 30; i++) {
-                            spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                         }
                         return InteractionResult.PASS;
                     }
@@ -485,8 +485,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     private void spawnMadParticles() {
-        if (!this.level.isClientSide()) {
-            ((ServerLevel) this.level).sendParticles(
+        if (!this.level().isClientSide()) {
+            ((ServerLevel) this.level()).sendParticles(
                     ParticleTypes.ANGRY_VILLAGER,
                     getX(),
                     getY(),
@@ -579,9 +579,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger(serverPlayer);
             }
 
-            if(this.level.isClientSide()) {
+            if(this.level().isClientSide()) {
                 for (int i = 0; i < 75; i++) {
-                    spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
+                    spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                 }
             }
         }
@@ -591,7 +591,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             if(this.getRandom().nextFloat() < 0.01f) spawnMadParticles();
         }
 
-        if(isOnGround()) {
+        if(onGround()) {
             this.setDeltaMovement(
                     this.getDeltaMovement().x(),
                     this.getDeltaMovement().y() - 0.006D,
@@ -700,7 +700,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     }
                 }
 
-                if(this.onGround) {
+                if(this.onGround()) {
                     forwardSpeed *= 0.025f;
                     verticalSpeed -= 0.5f;
                 }
@@ -725,7 +725,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 super.travel(moveVector);
             }
 
-            wasOnGround = this.onGround;
+            wasOnGround = this.onGround();
         }
     }
 
@@ -774,7 +774,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     Vec3 newVelocity = beehemothEntity.getDeltaMovement().add(vec3.scale(localSpeed / length));
 
                     double newYSpeed;
-                    if (beehemothEntity.isOnGround()) {
+                    if (beehemothEntity.onGround()) {
                         newYSpeed = (newVelocity.y() + 0.009D);
                     }
                     else {
@@ -791,7 +791,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     public boolean isTargetBlocked(Vec3 target) {
         Vec3 vec3 = new Vec3(getX(), getEyeY(), getZ());
-        return this.level.clip(new ClipContext(vec3, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() != HitResult.Type.MISS;
+        return this.level().clip(new ClipContext(vec3, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() != HitResult.Type.MISS;
     }
 
     public static class DirectPathNavigator extends GroundPathNavigation {

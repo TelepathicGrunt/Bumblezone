@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.Set;
 
-public interface LootContextBzVisitedLootInterface {
+public interface LootParamsBzVisitedLootInterface {
 
     Set<ResourceLocation> getVisitedBzVisitedLootRL();
 

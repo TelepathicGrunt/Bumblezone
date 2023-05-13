@@ -17,7 +17,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import org.joml.Vector3f;
 
@@ -27,7 +28,15 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public StickyHoneyRedstone() {
-        super(BlockBehaviour.Properties.of(BzBlocks.RED_NOT_SOLID, MaterialColor.TERRACOTTA_RED).lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.TERRACOTTA_RED)
+                .lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0)
+                .noCollission()
+                .strength(6.0f, 0.0f)
+                .noOcclusion()
+                .replaceable()
+                .pushReaction(PushReaction.DESTROY));
+
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)

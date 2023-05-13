@@ -73,7 +73,7 @@ public class BeehemothRandomFlyGoal extends Goal {
         double extraX = radius * Mth.sin((float) (Math.PI + angle));
         double extraZ = radius * Mth.cos(angle);
         BlockPos radialPos = BlockPos.containing(beehemothEntity.getX() + extraX, beehemothEntity.getY() + 2, beehemothEntity.getZ() + extraZ);
-        BlockPos ground = getGroundPosition(beehemothEntity.level, radialPos);
+        BlockPos ground = getGroundPosition(beehemothEntity.level(), radialPos);
         BlockPos newPos = ground.above(1 + beehemothEntity.getRandom().nextInt(6));
         if (!beehemothEntity.isTargetBlocked(Vec3.atCenterOf(newPos)) && beehemothEntity.distanceToSqr(Vec3.atCenterOf(newPos)) > 6) {
             return newPos;

@@ -157,7 +157,7 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         WING_RIGHT.xRot = 0.0f;
         ROOT.xRot = 0.0f;
         ROOT.y = 19.0f;
-        boolean onGround = entity.isOnGround();
+        boolean onGround = entity.onGround();
         boolean isSitting = entity.isInSittingPose();
         double xzSpeed = Math.abs(entity.getDeltaMovement().x()) + Math.abs(entity.getDeltaMovement().z());
         if (onGround) {

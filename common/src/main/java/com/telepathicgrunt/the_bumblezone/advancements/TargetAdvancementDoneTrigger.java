@@ -7,8 +7,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +29,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
     }
 
     @Override
-    public TargetAdvancementDoneTrigger.Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+    public TargetAdvancementDoneTrigger.Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         return new TargetAdvancementDoneTrigger.Instance(predicate, new ResourceLocation(jsonObject.get("target_advancement").getAsString()));
     }
 
@@ -40,7 +40,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
     public class Instance extends AbstractCriterionTriggerInstance {
         private final ResourceLocation targetAdvancement;
 
-        public Instance(EntityPredicate.Composite predicate, ResourceLocation targetAdvancement) {
+        public Instance(ContextAwarePredicate predicate, ResourceLocation targetAdvancement) {
             super(id, predicate);
             this.targetAdvancement = targetAdvancement;
         }

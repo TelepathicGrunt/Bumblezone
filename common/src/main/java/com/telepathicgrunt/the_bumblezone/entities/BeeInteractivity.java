@@ -51,18 +51,18 @@ public class BeeInteractivity {
         }
 
         if(entity instanceof Bee beeEntity) {
-            if(BeeInteractivity.beeFeeding(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
+            if(BeeInteractivity.beeFeeding(entity.level(), player, hand, beeEntity) == InteractionResult.SUCCESS) {
                 return InteractionResult.SUCCESS;
             }
-            else if(StinglessBeeHelmet.addBeePassenger(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
+            else if(StinglessBeeHelmet.addBeePassenger(entity.level(), player, hand, beeEntity) == InteractionResult.SUCCESS) {
                 return InteractionResult.SUCCESS;
             }
-            else if(BeeInteractivity.beeUnpollinating(entity.level, player, hand, beeEntity) == InteractionResult.SUCCESS) {
+            else if(BeeInteractivity.beeUnpollinating(entity.level(), player, hand, beeEntity) == InteractionResult.SUCCESS) {
                 return InteractionResult.SUCCESS;
             }
         }
         else if (entity instanceof Slime slimeEntity) {
-            if(CreatingHoneySlime.createHoneySlime(entity.level, player, hand, slimeEntity) == InteractionResult.SUCCESS) {
+            if(CreatingHoneySlime.createHoneySlime(entity.level(), player, hand, slimeEntity) == InteractionResult.SUCCESS) {
                 return InteractionResult.SUCCESS;
             }
         }
@@ -215,7 +215,7 @@ public class BeeInteractivity {
         if (calmed) {
             if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
                 removedWrath = true;
             }
 

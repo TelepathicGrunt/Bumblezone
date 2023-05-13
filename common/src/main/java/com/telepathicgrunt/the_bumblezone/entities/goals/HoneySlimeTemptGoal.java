@@ -37,7 +37,7 @@ public class HoneySlimeTemptGoal extends Goal {
             return false;
         }
         else {
-            this.closestPlayer = this.slime.level.getNearestPlayer(ENTITY_PREDICATE, this.slime);
+            this.closestPlayer = this.slime.level().getNearestPlayer(ENTITY_PREDICATE, this.slime);
             if (this.closestPlayer == null) {
                 return false;
             }

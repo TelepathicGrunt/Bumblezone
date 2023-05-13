@@ -60,7 +60,7 @@ public record MobEffectClientSyncPacket(int entityId, byte effectId, byte effect
     }
 
     public static void sendToClient(Entity entity, MobEffectInstance mobEffectInstance) {
-        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new MobEffectClientSyncPacket(entity.getId(), mobEffectInstance), entity.level, entity.blockPosition());
+        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new MobEffectClientSyncPacket(entity.getId(), mobEffectInstance), entity.level(), entity.blockPosition());
     }
 
     @Override

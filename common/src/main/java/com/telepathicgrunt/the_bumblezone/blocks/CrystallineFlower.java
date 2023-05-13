@@ -45,15 +45,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -74,11 +73,13 @@ public class CrystallineFlower extends BaseEntityBlock {
     private static final Component OCCUPIED_CRYSTALLINE_FLOWER_TEXT = Component.translatable("system.the_bumblezone.occupied_crystalline_flower");
 
     public CrystallineFlower() {
-        super(Properties.of(BzBlocks.YELLOW_CRYSTAL_PLANT, MaterialColor.TERRACOTTA_YELLOW)
+        super(Properties.of()
+                .mapColor(MapColor.TERRACOTTA_YELLOW)
+                .lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0)
                 .noCollission()
                 .noOcclusion()
                 .strength(0.4F, 0.01F)
-                .lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0)
+                .pushReaction(PushReaction.DESTROY)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE));
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FLOWER, false));
@@ -102,11 +103,6 @@ public class CrystallineFlower extends BaseEntityBlock {
     @Override
     public RenderShape getRenderShape(BlockState blockState) {
         return RenderShape.MODEL;
-    }
-
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.BLOCK;
     }
 
     @Override
@@ -282,7 +278,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         if (state.hasProperty(FLOWER) && state.getValue(FLOWER)) {
             return super.getDrops(state, builder);
         }

@@ -23,8 +23,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 
@@ -63,7 +63,12 @@ public class CarvableWax extends ProperFacingBlock {
     private Item item;
 
     public CarvableWax() {
-        super(Properties.of(Material.CLAY, MaterialColor.SAND).strength(0.28F, 0.28F).sound(SoundType.WOOD));
+        super(Properties.of()
+                .mapColor(MapColor.SAND)
+                .instrument(NoteBlockInstrument.FLUTE)
+                .strength(0.28F, 0.28F)
+                .sound(SoundType.WOOD));
+
         this.registerDefaultState(this.stateDefinition.any().setValue(CARVING, Carving.UNCARVED));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
     }

@@ -3,7 +3,7 @@
   "group": "the_bumblezone",
   "ingredients": [
     {
-      "item": "the_bumblezone:super_candle"
+      "tag": "the_bumblezone:super_candles"
     },
     {
       "tag": "the_bumblezone:dyes/green"

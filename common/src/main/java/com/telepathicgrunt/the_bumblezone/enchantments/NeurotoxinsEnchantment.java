@@ -59,7 +59,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
     }
 
     public static void entityHurtEvent(EntityAttackedEvent event) {
-        if(event.entity().level.isClientSide()) {
+        if(event.entity().level().isClientSide()) {
             return;
         }
 

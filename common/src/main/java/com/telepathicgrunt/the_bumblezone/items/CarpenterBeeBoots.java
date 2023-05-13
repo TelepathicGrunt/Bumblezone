@@ -149,7 +149,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         }
 
         int hangTime = tag.getInt("hangTime");
-        if(!world.isClientSide() && hangTime > 0 && player.isOnGround()) {
+        if(!world.isClientSide() && hangTime > 0 && player.onGround()) {
             hangTime = 0;
             tag.putInt("hangTime", hangTime);
         }
@@ -160,7 +160,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         if (!player.getAbilities().flying &&
             !player.isPassenger() &&
             !player.onClimbable() &&
-            !player.isOnGround() &&
+            !player.onGround() &&
             !player.isInWater() &&
             !player.isShiftKeyDown() &&
             playerDeltaY <= 0 &&
@@ -251,7 +251,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
             currentSpeed /= 5.0F;
         }
 
-        if (!player.isOnGround()) {
+        if (!player.onGround()) {
             currentSpeed /= 5.0F;
         }
 

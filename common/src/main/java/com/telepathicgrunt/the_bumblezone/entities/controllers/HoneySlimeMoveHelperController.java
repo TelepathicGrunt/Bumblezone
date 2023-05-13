@@ -43,7 +43,7 @@ public class HoneySlimeMoveHelperController extends MoveControl {
             this.mob.setZza(0.0F);
         } else {
             this.operation = MoveControl.Operation.WAIT;
-            if (this.mob.isOnGround()) {
+            if (this.mob.onGround()) {
                 this.mob.setSpeed((float) (this.speedModifier * this.mob.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue()));
                 if (this.jumpDelay-- <= 0) {
                     this.jumpDelay = this.slime.getJumpDelay();

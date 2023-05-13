@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
@@ -119,7 +119,7 @@ public class PrefillMap extends LootItemConditionalFunction {
                     }
 
                     BlockPos currentPos = new BlockPos(blockPosX, 0, blockPosZ);
-                    Multiset<MaterialColor> multiset = LinkedHashMultiset.create();
+                    Multiset<MapColor> multiset = LinkedHashMultiset.create();
                     LevelChunk levelchunk = level.getChunkAt(currentPos);
                     if (!levelchunk.isEmpty()) {
                         ChunkPos chunkpos = levelchunk.getPos();
@@ -153,7 +153,7 @@ public class PrefillMap extends LootItemConditionalFunction {
                                     --scanY;
                                     mutableBlockPos.set(chunkpos.getMinBlockX() + blockPosX, scanY, chunkpos.getMinBlockZ() + blockPosZ);
                                     blockstate = levelchunk.getBlockState(mutableBlockPos);
-                                } while(blockstate.getMapColor(level, mutableBlockPos) == MaterialColor.NONE && scanY > level.getMinBuildHeight());
+                                } while(blockstate.getMapColor(level, mutableBlockPos) == MapColor.NONE && scanY > level.getMinBuildHeight());
 
                                 if (scanY > level.getMinBuildHeight() && !blockstate.getFluidState().isEmpty()) {
                                     int secondScanY = scanY - 1;
@@ -175,30 +175,30 @@ public class PrefillMap extends LootItemConditionalFunction {
                         }
 
                         k3 /= scale * scale;
-                        MaterialColor materialcolor = Iterables.getFirst(Multisets.copyHighestCountFirst(multiset), MaterialColor.NONE);
-                        MaterialColor.Brightness materialcolor$brightness;
-                        if (materialcolor == MaterialColor.WATER) {
+                        MapColor materialcolor = Iterables.getFirst(Multisets.copyHighestCountFirst(multiset), MapColor.NONE);
+                        MapColor.Brightness materialcolor$brightness;
+                        if (materialcolor == MapColor.WATER) {
                             double d2 = (double)k3 * 0.1D;
                             if (d2 < 0.5D) {
-                                materialcolor$brightness = MaterialColor.Brightness.HIGH;
+                                materialcolor$brightness = MapColor.Brightness.HIGH;
                             }
                             else if (d2 > 0.9D) {
-                                materialcolor$brightness = MaterialColor.Brightness.LOW;
+                                materialcolor$brightness = MapColor.Brightness.LOW;
                             }
                             else {
-                                materialcolor$brightness = MaterialColor.Brightness.NORMAL;
+                                materialcolor$brightness = MapColor.Brightness.NORMAL;
                             }
                         }
                         else {
                             double slopeState = (d1 - d0) * 4.0D / (double)(scale + 4) - 0.2D;
                             if (slopeState > 0.6D) {
-                                materialcolor$brightness = MaterialColor.Brightness.HIGH;
+                                materialcolor$brightness = MapColor.Brightness.HIGH;
                             }
                             else if (slopeState < -0.6D) {
-                                materialcolor$brightness = MaterialColor.Brightness.LOW;
+                                materialcolor$brightness = MapColor.Brightness.LOW;
                             }
                             else {
-                                materialcolor$brightness = MaterialColor.Brightness.NORMAL;
+                                materialcolor$brightness = MapColor.Brightness.NORMAL;
                             }
                         }
 

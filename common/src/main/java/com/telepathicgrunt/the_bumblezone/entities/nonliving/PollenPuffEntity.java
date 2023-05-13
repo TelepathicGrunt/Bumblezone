@@ -85,14 +85,14 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
     @Override
     public void tick() {
         super.tick();
-        if(this.level.isClientSide() && (!this.isInWater() || this.random.nextFloat() < 0.06f)) {
+        if(this.level().isClientSide() && (!this.isInWater() || this.random.nextFloat() < 0.06f)) {
             for(int i = 0; i < 10; ++i) {
-                PileOfPollen.spawnParticles(this.level, this.position(), this.random, 0.015D, 0.015D, -0.001D);
+                PileOfPollen.spawnParticles(this.level(), this.position(), this.random, 0.015D, 0.015D, -0.001D);
             }
         }
 
         // make pollen puff be able to hit flowers
-        BlockHitResult raytraceresult = this.level.clip(new ClipContext(
+        BlockHitResult raytraceresult = this.level().clip(new ClipContext(
                 this.position(),
                 this.position().add(this.getDeltaMovement().multiply(1, 1, 1)),
                 ClipContext.Block.OUTLINE,
@@ -101,7 +101,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
         if (raytraceresult.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = raytraceresult.getBlockPos();
-            BlockState blockstate = this.level.getBlockState(blockpos);
+            BlockState blockstate = this.level().getBlockState(blockpos);
             if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
                 this.handleInsidePortal(blockpos);
                 this.onHit(raytraceresult);
@@ -116,19 +116,19 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
     protected void onHit(HitResult rayTraceResult) {
         super.onHit(rayTraceResult);
 
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             this.remove(RemovalReason.DISCARDED);
         }
         else {
             for(int i = 0; i < 150; ++i) {
-                PileOfPollen.spawnParticles(this.level, this.position(), this.random, 0.04D, 0.04D, -0.001D);
+                PileOfPollen.spawnParticles(this.level(), this.position(), this.random, 0.04D, 0.04D, -0.001D);
             }
         }
     }
 
     @Override
     protected void onHitEntity(EntityHitResult entityRayTraceResult) {
-        if(this.level.isClientSide() || consumed) return; // do not run this code if a block already was set.
+        if(this.level().isClientSide() || consumed) return; // do not run this code if a block already was set.
 
         super.onHitEntity(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
@@ -167,7 +167,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
-        if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), BlockPos.containing(entityRayTraceResult.getLocation()), true)) {
+        if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), BlockPos.containing(entityRayTraceResult.getLocation()), true)) {
             boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 
             if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
@@ -183,30 +183,30 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
-        if(this.level.isClientSide() || consumed || !GeneralUtils.isPermissionAllowedAtSpot(this.level, this.getOwner(), blockHitResult.getBlockPos(), true)) return; // do not run this code if a block already was set.
+        if(this.level().isClientSide() || consumed || !GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), blockHitResult.getBlockPos(), true)) return; // do not run this code if a block already was set.
 
-        BlockState blockstate = this.level.getBlockState(blockHitResult.getBlockPos());
-        blockstate.onProjectileHit(this.level, blockstate, blockHitResult, this);
+        BlockState blockstate = this.level().getBlockState(blockHitResult.getBlockPos());
+        blockstate.onProjectileHit(this.level(), blockstate, blockHitResult, this);
 
         if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
             spawnPlants(blockHitResult.getBlockPos(), (r, b) -> blockstate);
         }
         else if(blockstate.is(Blocks.HONEY_BLOCK) ||
                 blockstate.is(Blocks.SOUL_SAND) ||
-                blockstate.isFaceSturdy(this.level, blockHitResult.getBlockPos(), blockHitResult.getDirection()))
+                blockstate.isFaceSturdy(this.level(), blockHitResult.getBlockPos(), blockHitResult.getDirection()))
         {
             BlockState pileOfPollen = BzBlocks.PILE_OF_POLLEN.get().defaultBlockState();
             BlockPos impactSide = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
-            BlockState sideState = this.level.getBlockState(impactSide);
-            BlockState belowSideState = this.level.getBlockState(impactSide.below());
-            boolean belowSideStateHasCollision = !belowSideState.getCollisionShape(this.level, impactSide.below()).isEmpty();
+            BlockState sideState = this.level().getBlockState(impactSide);
+            BlockState belowSideState = this.level().getBlockState(impactSide.below());
+            boolean belowSideStateHasCollision = !belowSideState.getCollisionShape(this.level(), impactSide.below()).isEmpty();
 
             if(sideState.is(pileOfPollen.getBlock())) {
-                PileOfPollen.stackPollen(sideState, this.level, impactSide, pileOfPollen);
+                PileOfPollen.stackPollen(sideState, this.level(), impactSide, pileOfPollen);
                 consumed = true;
             }
-            else if((!belowSideStateHasCollision && sideState.isAir()) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level, impactSide) && sideState.getMaterial().isReplaceable())) {
-                this.level.setBlock(impactSide, pileOfPollen, 3);
+            else if((!belowSideStateHasCollision && sideState.isAir()) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level(), impactSide) && sideState.canBeReplaced())) {
+                this.level().setBlock(impactSide, pileOfPollen, 3);
                 consumed = true;
             }
         }
@@ -227,7 +227,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 return false;
             }
 
-            ServerPlayer fakePlayer = PlatformHooks.getFakePlayer((ServerLevel) this.level);
+            ServerPlayer fakePlayer = PlatformHooks.getFakePlayer((ServerLevel) this.level());
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;
@@ -235,7 +235,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             else if(blockstate.getBlock() instanceof VineBlock vineBlock) {
                 for(Direction direction : Direction.Plane.HORIZONTAL) {
                     BooleanProperty faceProperty = VineBlock.getPropertyForFace(direction);
-                    boolean flag = ((VineBlockAccessor)vineBlock).callCanSupportAtFace(level, newPos, direction);
+                    boolean flag = ((VineBlockAccessor)vineBlock).callCanSupportAtFace(level(), newPos, direction);
                     blockstate = blockstate.setValue(faceProperty, flag);
                 }
             }
@@ -259,23 +259,23 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             }
 
             boolean isWaterBased = blockstate.getFluidState().is(FluidTags.WATER);
-            if((isWaterBased ? this.level.getBlockState(newPos).is(Blocks.WATER) : this.level.isEmptyBlock(newPos)) && blockstate.canSurvive(this.level, newPos)) {
+            if((isWaterBased ? this.level().getBlockState(newPos).is(Blocks.WATER) : this.level().isEmptyBlock(newPos)) && blockstate.canSurvive(this.level(), newPos)) {
                 if (blockstate.is(Blocks.MOSS_CARPET)) {
-                    BlockState belowState = this.level.getBlockState(newPos.below());
-                    if (BuiltInRegistries.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level, newPos.below(), Direction.DOWN, SupportType.FULL)) {
+                    BlockState belowState = this.level().getBlockState(newPos.below());
+                    if (BuiltInRegistries.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level(), newPos.below(), Direction.DOWN, SupportType.FULL)) {
                         continue;
                     }
                 }
 
                 if (blockstate.is(Blocks.BAMBOO_SAPLING)) {
-                    BlockState belowState = this.level.getBlockState(newPos.below());
+                    BlockState belowState = this.level().getBlockState(newPos.below());
                     if (belowState.is(Blocks.BAMBOO_SAPLING) || belowState.is(Blocks.BAMBOO)) {
                         continue;
                     }
                 }
 
-                this.level.setBlock(newPos, blockstate, 3);
-                blockstate.getBlock().setPlacedBy(this.level, newPos, blockstate, fakePlayer, ItemStack.EMPTY);
+                this.level().setBlock(newPos, blockstate, 3);
+                blockstate.getBlock().setPlacedBy(this.level(), newPos, blockstate, fakePlayer, ItemStack.EMPTY);
 
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
                     EntityMiscHandler.onFlowerSpawned(serverPlayer);

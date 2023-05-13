@@ -5,8 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +25,7 @@ public class RecipeDiscoveredTrigger extends SimpleCriterionTrigger<RecipeDiscov
     }
 
     @Override
-    public Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         return new Instance(predicate, fromJson(jsonObject));
     }
 
@@ -52,7 +52,7 @@ public class RecipeDiscoveredTrigger extends SimpleCriterionTrigger<RecipeDiscov
     public static class Instance extends AbstractCriterionTriggerInstance {
         private final Set<ResourceLocation> resourceLocations;
 
-        public Instance(EntityPredicate.Composite predicate, ResourceLocation[] resourceLocations) {
+        public Instance(ContextAwarePredicate predicate, ResourceLocation[] resourceLocations) {
             super(RecipeDiscoveredTrigger.ID, predicate);
             this.resourceLocations = new HashSet<>((Arrays.asList(resourceLocations)));
         }

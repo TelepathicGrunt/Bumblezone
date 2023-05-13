@@ -31,7 +31,7 @@ public class BeehemothTemptGoal extends Goal {
     public boolean canUse() {
         if(mob.isTame()) {
             LivingEntity owner = this.mob.getOwner();
-            if (owner instanceof Player player && player.isAlive() && player.level == mob.level && shouldFollow(player)) {
+            if (owner instanceof Player player && player.isAlive() && player.level() == mob.level() && shouldFollow(player)) {
                 this.player = player;
                 this.mob.setInSittingPose(false);
                 return true;
@@ -39,7 +39,7 @@ public class BeehemothTemptGoal extends Goal {
             return false;
         }
         else {
-            this.player = this.mob.level.getNearestPlayer(this.targetingConditions, this.mob);
+            this.player = this.mob.level().getNearestPlayer(this.targetingConditions, this.mob);
             return this.player != null;
         }
     }

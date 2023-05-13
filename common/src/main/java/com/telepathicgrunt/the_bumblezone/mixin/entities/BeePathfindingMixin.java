@@ -30,7 +30,7 @@ public class BeePathfindingMixin {
             cancellable = true)
     private void bumblezone$newWander(CallbackInfo ci){
         // Do our own bee AI in the Bumblezone. Makes bees wander more and should be slightly better performance. Maybe...
-        if(this$0.level.dimension().equals(BzDimension.BZ_WORLD_KEY)){
+        if(this$0.level().dimension().equals(BzDimension.BZ_WORLD_KEY)){
             bumblezone$cachedPathHolder = BeeAI.smartBeesTM(this$0, bumblezone$cachedPathHolder);
             ci.cancel();
         }

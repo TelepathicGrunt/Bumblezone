@@ -24,22 +24,38 @@
       "conditions": {
         "recipes": [
           "the_bumblezone:string_curtain/black",
+          "the_bumblezone:string_curtain/black2",
           "the_bumblezone:string_curtain/blue",
+          "the_bumblezone:string_curtain/blue2",
           "the_bumblezone:string_curtain/brown",
+          "the_bumblezone:string_curtain/brown2",
           "the_bumblezone:string_curtain/cyan",
+          "the_bumblezone:string_curtain/cyan2",
           "the_bumblezone:string_curtain/gray",
+          "the_bumblezone:string_curtain/gray2",
           "the_bumblezone:string_curtain/green",
+          "the_bumblezone:string_curtain/green2",
           "the_bumblezone:string_curtain/light_blue",
+          "the_bumblezone:string_curtain/light_blue2",
           "the_bumblezone:string_curtain/light_gray",
+          "the_bumblezone:string_curtain/light_gray2",
           "the_bumblezone:string_curtain/lime",
+          "the_bumblezone:string_curtain/lime2",
           "the_bumblezone:string_curtain/magenta",
+          "the_bumblezone:string_curtain/magenta2",
           "the_bumblezone:string_curtain/orange",
+          "the_bumblezone:string_curtain/orange2",
           "the_bumblezone:string_curtain/pink",
+          "the_bumblezone:string_curtain/pink2",
           "the_bumblezone:string_curtain/purple",
+          "the_bumblezone:string_curtain/purple2",
           "the_bumblezone:string_curtain/red",
+          "the_bumblezone:string_curtain/red2",
           "the_bumblezone:string_curtain/white",
+          "the_bumblezone:string_curtain/white2",
           "the_bumblezone:string_curtain/white_redundant",
-          "the_bumblezone:string_curtain/yellow"
+          "the_bumblezone:string_curtain/yellow",
+          "the_bumblezone:string_curtain/yellow2"
         ]
       }
     }

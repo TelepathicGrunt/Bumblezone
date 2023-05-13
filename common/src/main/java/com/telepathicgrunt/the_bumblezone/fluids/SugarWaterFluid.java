@@ -32,7 +32,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
 
@@ -187,11 +186,10 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
         if (block instanceof DoorBlock || blockState.is(BlockTags.SIGNS) || blockState.is(Blocks.LADDER) || blockState.is(Blocks.SUGAR_CANE) || blockState.is(Blocks.BUBBLE_COLUMN)) {
             return false;
         }
-        Material material = blockState.getMaterial();
-        if (material == Material.PORTAL || material == Material.STRUCTURAL_AIR || material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) {
+        if (blockState.is(BlockTags.PORTALS) || blockState.is(Blocks.STRUCTURE_VOID) || blockState.is(BlockTags.UNDERWATER_BONEMEALS) || blockState.is(Blocks.KELP) || blockState.is(Blocks.KELP_PLANT)) {
             return false;
         }
-        return !material.blocksMotion();
+        return !blockState.blocksMotion();
     }
 
     @Override

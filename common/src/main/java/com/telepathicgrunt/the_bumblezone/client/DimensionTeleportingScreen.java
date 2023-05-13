@@ -3,12 +3,11 @@ package com.telepathicgrunt.the_bumblezone.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -18,7 +17,7 @@ public class DimensionTeleportingScreen {
     private static final Component DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT = Component.translatable("system.the_bumblezone.entering_dimension");
     private static final ResourceLocation BZ_BACKGROUND_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/gui/dimension_teleporting_background.png");
 
-    public static void renderScreenAndText(ReceivingLevelScreen screen, PoseStack poseStack) {
+    public static void renderScreenAndText(ReceivingLevelScreen screen, GuiGraphics guiGraphics) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
@@ -31,7 +30,7 @@ public class DimensionTeleportingScreen {
         bufferbuilder.vertex(0.0D, 0.0D, 0.0D).uv(0.0F, 0.0f).color(64, 64, 64, 255).endVertex();
         tesselator.end();
 
-        GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2 + 1, screen.height / 2 - 9, 0);
-        GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2, screen.height / 2 - 10, 16774120);
+        guiGraphics.drawCenteredString(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2 + 1, screen.height / 2 - 9, 0);
+        guiGraphics.drawCenteredString(Minecraft.getInstance().font, DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT, screen.width / 2, screen.height / 2 - 10, 16774120);
     }
 }

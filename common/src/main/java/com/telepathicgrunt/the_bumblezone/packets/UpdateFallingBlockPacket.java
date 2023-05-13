@@ -18,7 +18,7 @@ public record UpdateFallingBlockPacket(int fallingBlockId, short layer) implemen
     public static final Handler HANDLER = new Handler();
 
     public static void sendToClient(Entity entity, int fallingBlockId, short layer) {
-        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new UpdateFallingBlockPacket(fallingBlockId, layer), entity.level, entity.blockPosition());
+        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new UpdateFallingBlockPacket(fallingBlockId, layer), entity.level(), entity.blockPosition());
     }
 
     @Override

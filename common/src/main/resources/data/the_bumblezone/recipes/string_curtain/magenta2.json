@@ -1,0 +1,15 @@
+{
+  "type": "the_bumblezone:recipe_discovered_hooked_shapeless_recipe",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "tag": "the_bumblezone:string_curtains"
+    },
+    {
+      "tag": "the_bumblezone:dyes/magenta"
+    }
+  ],
+  "result": {
+    "item": "the_bumblezone:string_curtain_black"
+  }
+}

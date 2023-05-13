@@ -23,7 +23,7 @@ public class HoneyCrystalShieldBehavior {
      * Deals massive damage to shield when blocking explosion or getting fire damage with Honey Crystal Shield
      */
     public static boolean damageShieldFromExplosionAndFire(DamageSource source, Player player) {
-        DamageSources damageSources = player.level.damageSources();
+        DamageSources damageSources = player.level().damageSources();
 
         // checks for explosion and player
         if (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)) {
@@ -77,7 +77,7 @@ public class HoneyCrystalShieldBehavior {
         float disableChance = 0.25F + (float) EnchantmentHelper.getBlockEfficiency(livingEntity) * 0.05F;
         if (livingEntity.getRandom().nextFloat() < disableChance) {
             playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
-            livingEntity.level.broadcastEntityEvent(playerEntity, (byte)30);
+            livingEntity.level().broadcastEntityEvent(playerEntity, (byte)30);
         }
     }
 

@@ -18,8 +18,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -42,7 +42,15 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     });
 
     public RedstoneHoneyWeb() {
-        super(Properties.of(Material.WEB, MaterialColor.TERRACOTTA_RED).noCollission().requiresCorrectToolForDrops().strength(4.0F).lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10));
+        super(Properties.of()
+                .mapColor(MapColor.TERRACOTTA_RED)
+                .forceSolidOn()
+                .lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10)
+                .noCollission()
+                .requiresCorrectToolForDrops()
+                .strength(4.0F)
+                .pushReaction(PushReaction.DESTROY));
+
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTHSOUTH, false)
                 .setValue(EASTWEST, false)

@@ -49,8 +49,8 @@ public class PollenPilingProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         setSeed(worldView instanceof WorldGenRegion ? ((WorldGenRegion) worldView).getSeed() : 0);
         StructureTemplate.StructureBlockInfo structureBlockInfoToReturn = structureBlockInfoWorld;
-        BlockState structureState = structureBlockInfoToReturn.state;
-        BlockPos worldPos = structureBlockInfoToReturn.pos;
+        BlockState structureState = structureBlockInfoToReturn.state();
+        BlockPos worldPos = structureBlockInfoToReturn.pos();
 
 
         if(structureState.is(BzBlocks.PILE_OF_POLLEN.get())) {
@@ -79,7 +79,7 @@ public class PollenPilingProcessor extends StructureProcessor {
             double noiseVal = noiseGenerator.noise3_Classic(worldPos.getX() * xzScale, worldPos.getY() * yScale, worldPos.getZ() * xzScale);
             int layerHeight = Math.max(0, (int) (((noiseVal / 2D) + 0.5D) * 2.5D));
             layerHeight = Math.min(8, layerHeight + structureState.getValue(PileOfPollen.LAYERS));
-            structureBlockInfoToReturn = new StructureTemplate.StructureBlockInfo(worldPos, structureState.setValue(PileOfPollen.LAYERS, layerHeight), structureBlockInfoToReturn.nbt);
+            structureBlockInfoToReturn = new StructureTemplate.StructureBlockInfo(worldPos, structureState.setValue(PileOfPollen.LAYERS, layerHeight), structureBlockInfoToReturn.nbt());
         }
 
         if(!structureState.canOcclude()) {

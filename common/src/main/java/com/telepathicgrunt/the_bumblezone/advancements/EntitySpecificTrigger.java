@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
@@ -24,8 +25,8 @@ public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecific
     }
 
     @Override
-    public Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
-        EntityPredicate.Composite entityPredicate = EntityPredicate.Composite.fromJson(jsonObject, "entity", deserializationContext);
+    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
+        ContextAwarePredicate entityPredicate = EntityPredicate.fromJson(jsonObject, "entity", deserializationContext);
         return new Instance(predicate, entityPredicate);
     }
 
@@ -35,9 +36,9 @@ public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecific
     }
 
     public class Instance extends AbstractCriterionTriggerInstance {
-        private final EntityPredicate.Composite attackerEntityPredicate;
+        private final ContextAwarePredicate attackerEntityPredicate;
 
-        public Instance(EntityPredicate.Composite predicate, EntityPredicate.Composite attackerEntityPredicate) {
+        public Instance(ContextAwarePredicate predicate, ContextAwarePredicate attackerEntityPredicate) {
             super(id, predicate);
             this.attackerEntityPredicate = attackerEntityPredicate;
         }

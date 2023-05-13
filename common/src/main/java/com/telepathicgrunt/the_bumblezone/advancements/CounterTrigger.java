@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +22,7 @@ public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Instan
     }
 
     @Override
-    public CounterTrigger.Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+    public CounterTrigger.Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         return new CounterTrigger.Instance(predicate, jsonObject.get("target_count").getAsInt());
     }
 
@@ -33,7 +33,7 @@ public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Instan
     public class Instance extends AbstractCriterionTriggerInstance {
         private final int targetCount;
 
-        public Instance(EntityPredicate.Composite predicate, int targetCount) {
+        public Instance(ContextAwarePredicate predicate, int targetCount) {
             super(id, predicate);
             this.targetCount = targetCount;
         }

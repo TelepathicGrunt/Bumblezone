@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -18,12 +18,12 @@ public class ReceivingLevelScreenMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V",
+    @Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V",
             at = @At(value = "HEAD"), cancellable = true, require = 0)
-    private void bumblezone$renderNewScreenWhenEnteringBumblezone(PoseStack poseStack, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level.dimension() == BzDimension.BZ_WORLD_KEY) {
-            DimensionTeleportingScreen.renderScreenAndText(((ReceivingLevelScreen)(Object)this), poseStack);
-            super.render(poseStack, mouseX, mouseY, partialTick);
+    private void bumblezone$renderNewScreenWhenEnteringBumblezone(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level().dimension() == BzDimension.BZ_WORLD_KEY) {
+            DimensionTeleportingScreen.renderScreenAndText(((ReceivingLevelScreen)(Object)this), guiGraphics);
+            super.render(guiGraphics, mouseX, mouseY, partialTick);
             ci.cancel();
         }
     }

@@ -20,9 +20,9 @@ public class FluidTickProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        BlockState structureState = structureBlockInfoWorld.state;
-        if(!structureState.getFluidState().isEmpty() && structureBlockInfoWorld.pos.getY() > worldView.getMinBuildHeight() && structureBlockInfoWorld.pos.getY() < worldView.getMaxBuildHeight()) {
-            ((LevelAccessor)worldView).scheduleTick(structureBlockInfoWorld.pos, structureState.getFluidState().getType(), 0);
+        BlockState structureState = structureBlockInfoWorld.state();
+        if(!structureState.getFluidState().isEmpty() && structureBlockInfoWorld.pos().getY() > worldView.getMinBuildHeight() && structureBlockInfoWorld.pos().getY() < worldView.getMaxBuildHeight()) {
+            ((LevelAccessor)worldView).scheduleTick(structureBlockInfoWorld.pos(), structureState.getFluidState().getType(), 0);
         }
         return structureBlockInfoWorld;
     }

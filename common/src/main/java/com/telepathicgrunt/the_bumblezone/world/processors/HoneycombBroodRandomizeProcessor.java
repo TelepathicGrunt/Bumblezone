@@ -25,10 +25,10 @@ public class HoneycombBroodRandomizeProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        if(structureBlockInfoWorld.state.is(BzBlocks.HONEYCOMB_BROOD.get())) {
-            BlockState blockState = structureBlockInfoWorld.state;
-            BlockPos worldPos = structureBlockInfoWorld.pos;
-            CompoundTag nbt = structureBlockInfoWorld.nbt;
+        if(structureBlockInfoWorld.state().is(BzBlocks.HONEYCOMB_BROOD.get())) {
+            BlockState blockState = structureBlockInfoWorld.state();
+            BlockPos worldPos = structureBlockInfoWorld.pos();
+            CompoundTag nbt = structureBlockInfoWorld.nbt();
 
             return new StructureTemplate.StructureBlockInfo(
                     worldPos,

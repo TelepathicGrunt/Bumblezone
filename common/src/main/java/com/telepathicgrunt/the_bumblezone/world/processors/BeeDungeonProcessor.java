@@ -36,15 +36,15 @@ public class BeeDungeonProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        BlockState blockState = structureBlockInfoWorld.state;
-        BlockPos worldPos = structureBlockInfoWorld.pos;
+        BlockState blockState = structureBlockInfoWorld.state();
+        BlockPos worldPos = structureBlockInfoWorld.pos();
         RandomSource random = new WorldgenRandom(new LegacyRandomSource(0));
         random.setSeed(worldPos.asLong() * worldPos.getY());
-        CompoundTag nbt = structureBlockInfoWorld.nbt;
+        CompoundTag nbt = structureBlockInfoWorld.nbt();
 
         // placing altar blocks
         if (blockState.is(Blocks.STRUCTURE_BLOCK)) {
-            String metadata = structureBlockInfoWorld.nbt.getString("metadata");
+            String metadata = structureBlockInfoWorld.nbt().getString("metadata");
             BlockState belowBlock = worldView.getChunk(worldPos).getBlockState(worldPos);
 
             //altar blocks cannot be placed on air

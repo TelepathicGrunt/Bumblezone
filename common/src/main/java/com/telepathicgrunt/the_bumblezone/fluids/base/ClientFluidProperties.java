@@ -159,7 +159,7 @@ public class ClientFluidProperties {
         RenderSystem.setShaderTexture(0, texture);
         BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
         BlockPos blockpos = BlockPos.containing(player.getX(), player.getEyeY(), player.getZ());
-        float f = LightTexture.getBrightness(player.level.dimensionType(), player.level.getMaxLocalRawBrightness(blockpos));
+        float f = LightTexture.getBrightness(player.level().dimensionType(), player.level().getMaxLocalRawBrightness(blockpos));
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderColor(f, f, f, 0.1F);

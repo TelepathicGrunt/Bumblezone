@@ -15,7 +15,7 @@ public class BeeAI {
             beeEntity.blockPosition().distManhattan(cachedPathHolder.cachedPath.getTarget()) <= 4)
         {
             BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(beeEntity.blockPosition());
-            Level world = beeEntity.level;
+            Level world = beeEntity.level();
 
             for(int attempt = 0; attempt < 11 || beeEntity.blockPosition().distManhattan(mutable) <= 5; attempt++) {
                 // pick a random place to fly to

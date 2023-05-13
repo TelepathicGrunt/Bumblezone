@@ -23,25 +23,25 @@ public class RemoveFloatingBlocksProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos());
         ChunkAccess cachedChunk = worldView.getChunk(mutable);
 
         // attempts to remove invalid floating plants
-        if(structureBlockInfoWorld.state.isAir() || structureBlockInfoWorld.state.getMaterial().isLiquid()) {
+        if(structureBlockInfoWorld.state().isAir() || !structureBlockInfoWorld.state().getFluidState().isEmpty()) {
 
             // set the block in the world so that canPlaceAt's result changes
-            cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
+            cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state(), false);
             BlockState aboveWorldState = worldView.getBlockState(mutable.move(Direction.UP));
 
             // detects the invalidly placed blocks
             while(mutable.getY() < worldView.getHeight() && !aboveWorldState.canSurvive(worldView, mutable)) {
-                cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state, false);
+                cachedChunk.setBlockState(mutable, structureBlockInfoWorld.state(), false);
                 mutable.move(Direction.UP);
                 aboveWorldState = worldView.getBlockState(mutable);
             }
         }
-        else if(!structureBlockInfoWorld.state.canSurvive(worldView, mutable)) {
-            return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos, Blocks.CAVE_AIR.defaultBlockState(), null);
+        else if(!structureBlockInfoWorld.state().canSurvive(worldView, mutable)) {
+            return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), Blocks.CAVE_AIR.defaultBlockState(), null);
         }
 
         return structureBlockInfoWorld;

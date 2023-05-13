@@ -17,6 +17,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +27,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -100,12 +100,12 @@ public class EntityTeleportationBackend {
                 validBlockPos = blockpos;
             }
             //checks if spot is not two water blocks with air block able to be reached above
-            else if (bumblezoneWorld.getBlockState(validBlockPos).getMaterial() == Material.WATER &&
-                    bumblezoneWorld.getBlockState(validBlockPos.above()).getMaterial() == Material.WATER) {
+            else if (bumblezoneWorld.getBlockState(validBlockPos).getFluidState().is(FluidTags.WATER) &&
+                    bumblezoneWorld.getBlockState(validBlockPos.above()).getFluidState().is(FluidTags.WATER)) {
                 BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(validBlockPos.getX(), validBlockPos.getY(), validBlockPos.getZ());
 
                 //moves upward looking for air block while not interrupted by a solid block
-                while (mutable.getY() < 255 && !bumblezoneWorld.isEmptyBlock(mutable) || bumblezoneWorld.getBlockState(mutable).getMaterial() == Material.WATER) {
+                while (mutable.getY() < 255 && !bumblezoneWorld.isEmptyBlock(mutable) || bumblezoneWorld.getBlockState(mutable).getFluidState().is(FluidTags.WATER)) {
                     mutable.move(Direction.UP);
                 }
                 if (!bumblezoneWorld.getBlockState(mutable).isAir()) {
@@ -116,7 +116,7 @@ public class EntityTeleportationBackend {
                 }
             }
             //checks if spot is not a non-solid block with air block above
-            else if ((!bumblezoneWorld.isEmptyBlock(validBlockPos) && bumblezoneWorld.getBlockState(validBlockPos).getMaterial() != Material.WATER) &&
+            else if ((!bumblezoneWorld.isEmptyBlock(validBlockPos) && bumblezoneWorld.getBlockState(validBlockPos).getFluidState().is(FluidTags.WATER)) &&
                     !bumblezoneWorld.getBlockState(validBlockPos.above()).isAir()) {
                 validBlockPos = blockpos;
             }
@@ -240,11 +240,11 @@ public class EntityTeleportationBackend {
         Entity entity = event.entity();
 
         // store entity's last position when entering bumblezone.
-        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide() && event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (entity instanceof LivingEntity livingEntity && !livingEntity.level().isClientSide() && event.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             Optional<EntityPosAndDimModule> lazyOptional = ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM);
             if(lazyOptional.isPresent()) {
                 EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);
-                capability.setNonBZDim(entity.level.dimension().location());
+                capability.setNonBZDim(entity.level().dimension().location());
                 capability.setNonBZPos(entity.position());
             }
             else {
@@ -254,7 +254,7 @@ public class EntityTeleportationBackend {
                         entity.getDisplayName() instanceof MutableComponent mutableComponent ? mutableComponent.toString(): "N/A",
                         entity.getUUID(),
                         entity.position(),
-                        entity.level.dimension(),
+                        entity.level().dimension(),
                         event.dimension());
             }
         }

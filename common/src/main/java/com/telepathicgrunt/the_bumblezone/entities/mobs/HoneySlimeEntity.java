@@ -174,7 +174,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    }
 
    public void remove(Entity.RemovalReason removalReason) {
-      if (!this.level.isClientSide() && this.isDeadOrDying()) {
+      if (!this.level().isClientSide() && this.isDeadOrDying()) {
          if (!this.isBaby()) {
 
             Component component = this.getCustomName();
@@ -185,7 +185,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
                float xOffset = ((float)(currentNewSlime % 2) - 0.5F) * 0.5F;
                float zOffset = ((float)(currentNewSlime / 2) - 0.5F) * 0.5F;
                if (isInHoney()) {
-                  HoneySlimeEntity honeySlime = BzEntities.HONEY_SLIME.get().create(this.level);
+                  HoneySlimeEntity honeySlime = BzEntities.HONEY_SLIME.get().create(this.level());
                   if (honeySlime != null) {
                      if (this.isPersistenceRequired()) {
                         honeySlime.setPersistenceRequired();
@@ -197,11 +197,11 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
                      honeySlime.setInvulnerable(this.isInvulnerable());
                      honeySlime.setupHoneySlime(honeySlime.isBaby(), true);
                      honeySlime.moveTo(this.getX() + (double)xOffset, this.getY() + 0.5, this.getZ() + (double)zOffset, this.random.nextFloat() * 360.0F, 0.0F);
-                     this.level.addFreshEntity(honeySlime);
+                     this.level().addFreshEntity(honeySlime);
                   }
                }
                else {
-                  Slime slime = EntityType.SLIME.create(this.level);
+                  Slime slime = EntityType.SLIME.create(this.level());
                   if (slime != null) {
                      if (this.isPersistenceRequired()) {
                         slime.setPersistenceRequired();
@@ -212,14 +212,14 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
                      slime.setInvulnerable(this.isInvulnerable());
                      slime.setSize(1, true);
                      slime.moveTo(this.getX() + (double)xOffset, this.getY() + 0.5, this.getZ() + (double)zOffset, this.random.nextFloat() * 360.0F, 0.0F);
-                     this.level.addFreshEntity(slime);
+                     this.level().addFreshEntity(slime);
                   }
                }
             }
          }
 
          if (this.getLastAttacker() != null && !(this.getLastAttacker() instanceof Player player && player.isCreative())) {
-            List<HoneySlimeEntity> honeySlimes = this.level.getEntitiesOfClass(HoneySlimeEntity.class, this.getBoundingBox().inflate(24));
+            List<HoneySlimeEntity> honeySlimes = this.level().getEntitiesOfClass(HoneySlimeEntity.class, this.getBoundingBox().inflate(24));
             for (HoneySlimeEntity honeySlime : honeySlimes) {
                honeySlime.startPersistentAngerTimer();
                honeySlime.setPersistentAngerTarget(this.getLastAttacker().getUUID());
@@ -273,7 +273,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       if (!this.isBaby() && this.isInHoney()) {
          //Bottling
          if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-            level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
+            level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
             GeneralUtils.givePlayerItem(player, hand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
             getHoneyFromSlime(this);
@@ -303,7 +303,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       this.squishFactor += (this.squishAmount - this.squishFactor) * 0.5F;
       this.prevSquishFactor = this.squishFactor;
       super.tick();
-      if (this.onGround && !this.wasOnGround) {
+      if (this.onGround() && !this.wasOnGround) {
          int i = 2;
 
          if (spawnCustomParticles()) i = 0; // don't spawn particles if it's handled by the implementation itself
@@ -312,17 +312,17 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
             float f1 = this.random.nextFloat() * 0.5F + 0.5F;
             float f2 = Mth.sin(f) * (float) i * 0.5F * f1;
             float f3 = Mth.cos(f) * (float) i * 0.5F * f1;
-            this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Blocks.HONEY_BLOCK)), this.getX() + (double) f2, this.getY(), this.getZ() + (double) f3, 0.0D, 0.0D, 0.0D);
+            this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Blocks.HONEY_BLOCK)), this.getX() + (double) f2, this.getY(), this.getZ() + (double) f3, 0.0D, 0.0D, 0.0D);
          }
 
          this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F) / 0.8F);
          this.squishAmount = -0.5F;
       }
-      else if (!this.onGround && this.wasOnGround) {
+      else if (!this.onGround() && this.wasOnGround) {
          this.squishAmount = 1.0F;
       }
 
-      this.wasOnGround = this.onGround;
+      this.wasOnGround = this.onGround();
       this.alterSquishAmount();
    }
 
@@ -345,7 +345,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
                        .collect(Collectors.toCollection(HashSet::new)));
             }
 
-            if(!this.level.isClientSide() && HONEY_BASED_BLOCKS.contains(this.level.getBlockState(this.blockPosition().below()).getBlock())) {
+            if(!this.level().isClientSide() && HONEY_BASED_BLOCKS.contains(this.level().getBlockState(this.blockPosition().below()).getBlock())) {
                if(this.random.nextFloat() < 0.001)
                   setInHoneyGrowthTime(0);
             }
@@ -356,8 +356,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
 
    @Override
    protected void customServerAiStep() {
-      if (!this.level.isClientSide()) {
-         this.updatePersistentAnger((ServerLevel)this.level, false);
+      if (!this.level().isClientSide()) {
+         this.updatePersistentAnger((ServerLevel)this.level(), false);
       }
    }
 

@@ -4,8 +4,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +24,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
     }
 
     @Override
-    public KilledCounterTrigger.Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+    public KilledCounterTrigger.Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         JsonElement beeArmorJson = jsonObject.get("bee_armor_required");
         return new KilledCounterTrigger.Instance(
                 predicate,
@@ -42,7 +42,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
         private final ResourceLocation targetEntity;
         private final boolean beeArmorRequired;
 
-        public Instance(EntityPredicate.Composite predicate, ResourceLocation targetEntity, int targetCount, boolean beeArmorRequired) {
+        public Instance(ContextAwarePredicate predicate, ResourceLocation targetEntity, int targetCount, boolean beeArmorRequired) {
             super(id, predicate);
             this.targetCount = targetCount;
             this.targetEntity = targetEntity;

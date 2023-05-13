@@ -2,47 +2,16 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.*;
-import com.telepathicgrunt.the_bumblezone.mixin.items.MaterialInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 
 
 public class BzBlocks {
     public static final ResourcefulRegistry<Block> BLOCKS = ResourcefulRegistries.create(BuiltInRegistries.BLOCK, Bumblezone.MODID);
     public static final ResourcefulRegistry<Block> CURTAINS = ResourcefulRegistries.create(BLOCKS);
-
-    public static Material RED_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.TERRACOTTA_RED))
-            .getNotSolidBlocking())
-            .getDestroyOnPush()
-            .noCollider()
-            .replaceable()
-            .nonSolid()
-            .build();
-    public static Material ORANGE_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_ORANGE))
-            .getNotSolidBlocking())
-            .getDestroyOnPush()
-            .noCollider()
-            .replaceable()
-            .nonSolid()
-            .build();
-    public static Material YELLOW_NOT_SOLID = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.COLOR_YELLOW))
-            .getNotSolidBlocking())
-            .getDestroyOnPush()
-            .noCollider()
-            .replaceable()
-            .nonSolid()
-            .build();
-    public static Material YELLOW_CRYSTAL_PLANT = ((MaterialInvoker) ((MaterialInvoker) new Material.Builder(MaterialColor.TERRACOTTA_YELLOW))
-            .getNotSolidBlocking())
-            .getNotPushable()
-            .noCollider()
-            .nonSolid()
-            .build();
 
     //Blocks
     public static final RegistryEntry<Block> POROUS_HONEYCOMB = BLOCKS.register("porous_honeycomb_block", PorousHoneycomb::new);

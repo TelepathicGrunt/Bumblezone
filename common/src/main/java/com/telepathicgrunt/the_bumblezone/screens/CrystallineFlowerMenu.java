@@ -127,7 +127,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                     selectedEnchantmentIndex.set(-1);
                 }
 
-                if (!player.level.isClientSide()) {
+                if (!player.level().isClientSide()) {
                     setupResultSlot();
                     broadcastChanges();
                 }
@@ -161,7 +161,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                     selectedEnchantmentIndex.set(-1);
                 }
 
-                if (!player.level.isClientSide()) {
+                if (!player.level().isClientSide()) {
                     setupResultSlot();
                     broadcastChanges();
                 }
@@ -261,7 +261,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     public boolean clickMenuButton(Player player, int id) {
         if (id >= 0) {
             selectedEnchantmentIndex.set(id);
-            if (!player.level.isClientSide()) {
+            if (!player.level().isClientSide()) {
                 setupResultSlot();
                 broadcastChanges();
             }
@@ -270,7 +270,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         // drain xp 1
         else if (id == -2) {
             drainPlayerXPLevel(1);
-            if (!player.level.isClientSide()) {
+            if (!player.level().isClientSide()) {
                 setupResultSlot();
                 broadcastChanges();
             }
@@ -279,7 +279,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         // drain xp 2
         else if (id == -3) {
             drainPlayerXPLevel(2);
-            if (!player.level.isClientSide()) {
+            if (!player.level().isClientSide()) {
                 setupResultSlot();
                 broadcastChanges();
             }
@@ -288,7 +288,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         // drain xp 3
         else if (id == -4) {
             drainPlayerXPLevel(3);
-            if (!player.level.isClientSide()) {
+            if (!player.level().isClientSide()) {
                 setupResultSlot();
                 broadcastChanges();
             }
@@ -297,7 +297,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         // confirm consume
         else if (id == -5) {
             consumeItem();
-            if (!player.level.isClientSide()) {
+            if (!player.level().isClientSide()) {
                 setupResultSlot();
                 broadcastChanges();
             }
@@ -314,8 +314,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             !crystallineFlowerBlockEntity.isMaxTier())
         {
             int tiersToMax = 7 - crystallineFlowerBlockEntity.getXpTier();
-            int topBlock = CrystallineFlower.flowerHeightAbove(player.level, crystallineFlowerBlockEntity.getBlockPos());
-            List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, player.level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
+            int topBlock = CrystallineFlower.flowerHeightAbove(player.level(), crystallineFlowerBlockEntity.getBlockPos());
+            List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, player.level(), crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
             int xpPerCount = CrystallineFlower.getXPPerItem(consumeSlot.getItem());
             int itemCount = consumeSlot.getItem().getCount();
@@ -345,8 +345,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             crystallineFlowerBlockEntity != null)
         {
             if (!crystallineFlowerBlockEntity.isMaxTier()) {
-                int topBlock = CrystallineFlower.flowerHeightAbove(player.level, crystallineFlowerBlockEntity.getBlockPos());
-                List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(1, player.level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
+                int topBlock = CrystallineFlower.flowerHeightAbove(player.level(), crystallineFlowerBlockEntity.getBlockPos());
+                List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(1, player.level(), crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
                 if (!obstructedAbove.isEmpty() && obstructedAbove.get(0)) {
                     int xpPerCount = CrystallineFlower.getXPPerItem(consumeSlot.getItem());

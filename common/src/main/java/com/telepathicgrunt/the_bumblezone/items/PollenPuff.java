@@ -50,7 +50,7 @@ public class PollenPuff extends Item {
         // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
         // else, if done with pollen puff without room, drops pollen puff in world
         if(beeEntity.hasNectar() && itemstack.getItem().equals(BzItems.POLLEN_PUFF)) {
-            PollenPuff.spawnItemstackEntity(entity.level, playerEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
+            PollenPuff.spawnItemstackEntity(entity.level(), playerEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
             playerEntity.swing(hand, true);
             beeEntity.dropOffNectar();
             return InteractionResult.SUCCESS;

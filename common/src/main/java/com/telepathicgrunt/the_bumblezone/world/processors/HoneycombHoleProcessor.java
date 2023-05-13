@@ -33,19 +33,19 @@ public class HoneycombHoleProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        BlockState placingState = structureBlockInfoWorld.state;
-        BlockPos worldPos = structureBlockInfoWorld.pos;
+        BlockState placingState = structureBlockInfoWorld.state();
+        BlockPos worldPos = structureBlockInfoWorld.pos();
         RandomSource random = new WorldgenRandom(new LegacyRandomSource(0));
         random.setSeed(worldPos.asLong() * worldPos.getY());
 
-        ChunkAccess chunk = worldView.getChunk(structureBlockInfoWorld.pos);
-        BlockState checkedState = chunk.getBlockState(structureBlockInfoWorld.pos);
+        ChunkAccess chunk = worldView.getChunk(structureBlockInfoWorld.pos());
+        BlockState checkedState = chunk.getBlockState(structureBlockInfoWorld.pos());
 
         // does world checks for cave and pollen powder
         if(checkedState.isAir() || !checkedState.getFluidState().isEmpty()) {
             if (placingState.isAir() || placingState.is(BzBlocks.PILE_OF_POLLEN.get())) {
-                if(!checkedState.getFluidState().isEmpty() || structureBlockInfoWorld.pos.getY() <= floodLevel) {
-                    chunk.setBlockState(structureBlockInfoWorld.pos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), false);
+                if(!checkedState.getFluidState().isEmpty() || structureBlockInfoWorld.pos().getY() <= floodLevel) {
+                    chunk.setBlockState(structureBlockInfoWorld.pos(), BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), false);
                     return null;
                 }
             }
@@ -87,7 +87,7 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         // Pollen pile
         else if(placingState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             // Check if pollen pile can even be placed here safely
-            BlockState belowState = chunk.getBlockState(structureBlockInfoWorld.pos.below());
+            BlockState belowState = chunk.getBlockState(structureBlockInfoWorld.pos().below());
             if(belowState.isAir() || !belowState.getFluidState().isEmpty()) {
                 return null;
             }

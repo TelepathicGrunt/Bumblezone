@@ -46,8 +46,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
@@ -62,7 +62,14 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
     public IncenseCandleBase() {
-        super(Properties.of(Material.DECORATION, MaterialColor.SAND).noOcclusion().strength(0.1F).sound(SoundType.CANDLE).lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0));
+        super(Properties.of()
+                .mapColor(MapColor.SAND)
+                .lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0)
+                .noOcclusion()
+                .strength(0.1F)
+                .sound(SoundType.CANDLE)
+                .pushReaction(PushReaction.DESTROY));
+
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 

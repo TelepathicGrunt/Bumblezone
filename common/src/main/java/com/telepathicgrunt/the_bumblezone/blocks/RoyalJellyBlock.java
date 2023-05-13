@@ -25,8 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -35,7 +34,12 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
     public RoyalJellyBlock() {
-        super(Properties.of(Material.CLAY, MaterialColor.COLOR_PURPLE).speedFactor(0.4F).jumpFactor(0.5F).noOcclusion().sound(SoundType.HONEY_BLOCK));
+        super(Properties.of()
+                .mapColor(MapColor.COLOR_PURPLE)
+                .speedFactor(0.4F)
+                .jumpFactor(0.5F)
+                .noOcclusion()
+                .sound(SoundType.HONEY_BLOCK));
     }
 
     @Override
@@ -91,7 +95,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     }
 
     private boolean isSlidingDown(BlockPos blockPos, Entity entity) {
-        if (entity.isOnGround()) {
+        if (entity.onGround()) {
             return false;
         }
         else if (entity.getY() > (double)blockPos.getY() + 0.9375D - 1.0E-7D) {
@@ -109,8 +113,8 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
     }
 
     private void maybeDoSlideAchievement(Entity entity, BlockPos blockPos) {
-        if (entity instanceof ServerPlayer serverPlayer && serverPlayer.level.getGameTime() % 20L == 0L) {
-            CriteriaTriggers.HONEY_BLOCK_SLIDE.trigger(serverPlayer, serverPlayer.level.getBlockState(blockPos));
+        if (entity instanceof ServerPlayer serverPlayer && serverPlayer.level().getGameTime() % 20L == 0L) {
+            CriteriaTriggers.HONEY_BLOCK_SLIDE.trigger(serverPlayer, serverPlayer.level().getBlockState(blockPos));
         }
     }
 

@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.loot;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.mixin.LootContextAccessor;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +23,7 @@ public final class NewLootInjectorApplier {
         if (BzGeneralConfigs.beeLootInjection || BzGeneralConfigs.moddedBeeLootInjection) {
             if(context.hasParam(LootContextParams.THIS_ENTITY)) {
                 if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
-                    if (!((LootContextBzVisitedLootInterface)context).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL)) {
+                    if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL)) {
                         ResourceLocation beeRL = BuiltInRegistries.ENTITY_TYPE.getKey(bee.getType());
                         return (BzGeneralConfigs.beeLootInjection && beeRL.getNamespace().equals("minecraft")) ||
                                 (BzGeneralConfigs.moddedBeeLootInjection && !beeRL.getNamespace().equals("minecraft"));
@@ -35,9 +36,9 @@ public final class NewLootInjectorApplier {
     }
 
     public static void injectLoot(LootContext context, List<ItemStack> originalLoot) {
-        LootTable stingerLootTable = context.getLevel().getServer().getLootTables().get(STINGER_DROP_LOOT_TABLE_RL);
-        ((LootContextBzVisitedLootInterface)context).addVisitedBzVisitedLootRL(STINGER_DROP_LOOT_TABLE_RL);
-        ObjectArrayList<ItemStack> newItems = stingerLootTable.getRandomItems(context);
+        LootTable stingerLootTable = context.getLevel().getServer().getLootData().getLootTable(STINGER_DROP_LOOT_TABLE_RL);
+        ((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).addVisitedBzVisitedLootRL(STINGER_DROP_LOOT_TABLE_RL);
+        ObjectArrayList<ItemStack> newItems = stingerLootTable.getRandomItems(((LootContextAccessor)context).getParams());
         originalLoot.addAll(newItems);
     }
 }

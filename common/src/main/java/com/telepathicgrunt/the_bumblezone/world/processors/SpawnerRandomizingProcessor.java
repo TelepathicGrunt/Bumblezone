@@ -45,16 +45,16 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        if (structureBlockInfoWorld.state.getBlock() instanceof SpawnerBlock) {
-            BlockPos worldPos = structureBlockInfoWorld.pos;
+        if (structureBlockInfoWorld.state().getBlock() instanceof SpawnerBlock) {
+            BlockPos worldPos = structureBlockInfoWorld.pos();
             RandomSource randomSource = structurePlacementData.getRandom(worldPos);
 
             CompoundTag newSpawnerData;
             if (overrideMobsToPickFrom.isPresent() && overrideMobsToPickFrom.get().size() > 0 && randomSource.nextFloat() < chanceToOverrideWithTaggedMobs) {
-                newSpawnerData = SetMobSpawnerEntity(overrideMobsToPickFrom.get().get(randomSource.nextInt(overrideMobsToPickFrom.get().size())).value(), structureBlockInfoWorld.nbt);
+                newSpawnerData = SetMobSpawnerEntity(overrideMobsToPickFrom.get().get(randomSource.nextInt(overrideMobsToPickFrom.get().size())).value(), structureBlockInfoWorld.nbt());
             }
             else if (mainSpawnerData.size() > 0) {
-                newSpawnerData = SetMobSpawnerEntity(GeneralUtils.getRandomEntry(mainSpawnerData, randomSource), structureBlockInfoWorld.nbt);
+                newSpawnerData = SetMobSpawnerEntity(GeneralUtils.getRandomEntry(mainSpawnerData, randomSource), structureBlockInfoWorld.nbt());
             }
             else {
                 return structureBlockInfoWorld;
@@ -62,7 +62,7 @@ public class SpawnerRandomizingProcessor extends StructureProcessor {
 
             return new StructureTemplate.StructureBlockInfo(
                     worldPos,
-                    structureBlockInfoWorld.state,
+                    structureBlockInfoWorld.state(),
                     newSpawnerData);
         }
         return structureBlockInfoWorld;

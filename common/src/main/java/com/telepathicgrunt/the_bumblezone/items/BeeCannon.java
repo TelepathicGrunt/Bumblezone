@@ -139,7 +139,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack beeCannon, Player playerEntity, LivingEntity entity, InteractionHand playerHand) {
-        if(playerEntity.level.isClientSide() ||
+        if(playerEntity.level().isClientSide() ||
             !(entity instanceof Bee bee) ||
             bee.isAngry() ||
             bee.getType().is(BzTags.DISALLOWED_BEE_CANNON_BEES))

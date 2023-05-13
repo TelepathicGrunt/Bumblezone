@@ -88,7 +88,7 @@ public class StinglessBeeHelmet extends BeeArmor {
             BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.clear();
             StinglessBeeHelmet.BEE_GEAR_COUNT = beeGearCount;
 
-            if (player.isShiftKeyDown() && player.isOnGround()) {
+            if (player.isShiftKeyDown() && player.onGround()) {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = ((beeGearCount - 1) * 65) + 6;
 
                 if(!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {

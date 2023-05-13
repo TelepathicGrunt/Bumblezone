@@ -54,7 +54,7 @@ public class HiddenEffect extends BzEffect {
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         if (amplifier >= 1) {
             SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D);
-            List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
+            List<Bee> beeList = entity.level().getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
 
             for (Bee bee : beeList) {
                 if(bee.getTarget() == entity) {

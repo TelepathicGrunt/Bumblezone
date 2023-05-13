@@ -53,8 +53,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -72,7 +71,13 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     public static final int waterDropDelay = 150;
 
     public HoneyCocoon() {
-        super(Properties.of(Material.EGG, MaterialColor.COLOR_YELLOW).strength(0.3F, 0.3F).randomTicks().noOcclusion().sound(SoundType.HONEY_BLOCK));
+        super(Properties.of()
+                .mapColor(MapColor.COLOR_YELLOW)
+                .strength(0.3F, 0.3F)
+                .randomTicks()
+                .noOcclusion()
+                .sound(SoundType.HONEY_BLOCK));
+
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
 
         VoxelShape voxelshape = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 14.0D, 15.0D);

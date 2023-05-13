@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mojang.serialization.DataResult;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
@@ -10,12 +9,9 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTr
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;

@@ -23,7 +23,6 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.CommonLevelAccessor;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -96,7 +95,7 @@ public class ResourcefulBeesCompat implements ModCompat {
         }
 
         EntityType<?> rbBeeType = holders.get(entity.getRandom().nextInt(holders.size())).value();
-        Entity rbBeeUnchecked = rbBeeType.create(entity.getLevel());
+        Entity rbBeeUnchecked = rbBeeType.create(entity.level());
 
         if (rbBeeUnchecked instanceof Bee rbBee) {
             BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(entity.blockPosition());

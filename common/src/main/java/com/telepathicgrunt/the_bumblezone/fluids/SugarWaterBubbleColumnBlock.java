@@ -16,10 +16,12 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BubbleColumnBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 import java.util.Optional;
 
@@ -27,7 +29,15 @@ import java.util.Optional;
 public class SugarWaterBubbleColumnBlock extends BubbleColumnBlock {
 
     public SugarWaterBubbleColumnBlock() {
-        super(BlockBehaviour.Properties.of(Material.BUBBLE_COLUMN).noCollission().noLootTable());
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.WATER)
+                .liquid()
+                .noCollission()
+                .strength(100.0F, 100.0F)
+                .noLootTable()
+                .replaceable()
+                .sound(SoundType.EMPTY)
+                .pushReaction(PushReaction.DESTROY));
     }
 
     @Override

@@ -68,7 +68,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         int loyalty = this.entityData.get(ID_LOYALTY);
         if (loyalty > 0 && (this.dealtDamage || this.isNoPhysics()) && entity != null) {
             if (!this.isAcceptibleReturnOwner()) {
-                if (!this.level.isClientSide && this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                if (!this.level().isClientSide && this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
 
@@ -78,7 +78,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                 this.setNoPhysics(true);
                 Vec3 vec3 = entity.getEyePosition().subtract(this.position());
                 this.setPosRaw(this.getX(), this.getY() + vec3.y * 0.015D * (double)loyalty, this.getZ());
-                if (this.level.isClientSide) {
+                if (this.level().isClientSide) {
                     this.yOld = this.getY();
                 }
 

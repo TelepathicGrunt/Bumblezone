@@ -40,7 +40,7 @@ public class BumbleBeeChestplate extends BeeArmor {
         boolean isFlying = tag.getBoolean("isFlying");
         int flyCounter = tag.getInt("flyCounter");
         if(world.isClientSide()) {
-            if (flyCounter > 0 && !player.isOnGround() && !player.isInWater() && ((LivingEntityAccessor)player).isJumping() && !player.getAbilities().flying && !player.isPassenger() && !player.onClimbable()) {
+            if (flyCounter > 0 && !player.onGround() && !player.isInWater() && ((LivingEntityAccessor)player).isJumping() && !player.getAbilities().flying && !player.isPassenger() && !player.onClimbable()) {
                 if(!isFlying) {
                     LivingEntityFlyingSoundInstance.playSound(player, BzSounds.BUMBLE_BEE_CHESTPLATE_FLYING.get());
                     BumbleBeeChestplateFlyingPacket.sendToServer(true);
@@ -98,7 +98,7 @@ public class BumbleBeeChestplate extends BeeArmor {
             }
         }
 
-        if(player.isOnGround()) {
+        if(player.onGround()) {
             tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
         }
     }

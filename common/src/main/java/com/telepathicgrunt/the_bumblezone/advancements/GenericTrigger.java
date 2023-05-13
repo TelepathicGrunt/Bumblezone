@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,7 +21,7 @@ public class GenericTrigger extends SimpleCriterionTrigger<GenericTrigger.Instan
     }
 
     @Override
-    public Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         return new Instance(predicate);
     }
 
@@ -30,7 +30,7 @@ public class GenericTrigger extends SimpleCriterionTrigger<GenericTrigger.Instan
     }
 
     public class Instance extends AbstractCriterionTriggerInstance {
-        public Instance(EntityPredicate.Composite predicate) {
+        public Instance(ContextAwarePredicate predicate) {
             super(id, predicate);
         }
     }

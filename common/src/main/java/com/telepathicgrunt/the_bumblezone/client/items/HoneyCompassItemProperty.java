@@ -36,8 +36,8 @@ public class HoneyCompassItemProperty {
                     return 0.0F;
                 }
                 else {
-                    if (clientLevel == null && entity.level instanceof ClientLevel) {
-                        clientLevel = (ClientLevel)entity.level;
+                    if (clientLevel == null && entity.level() instanceof ClientLevel) {
+                        clientLevel = (ClientLevel)entity.level();
                     }
 
                     BlockPos blockPos = this.getStructurePosition(clientLevel, itemStack.getOrCreateTag());

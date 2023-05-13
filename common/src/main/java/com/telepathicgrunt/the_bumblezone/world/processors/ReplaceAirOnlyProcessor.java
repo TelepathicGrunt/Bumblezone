@@ -36,11 +36,11 @@ public class ReplaceAirOnlyProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        if(!blocksToAlwaysReplace.contains(structureBlockInfoWorld.state.getBlock())) {
+        if(!blocksToAlwaysReplace.contains(structureBlockInfoWorld.state().getBlock())) {
             return structureBlockInfoWorld;
         }
 
-        BlockPos position = structureBlockInfoWorld.pos;
+        BlockPos position = structureBlockInfoWorld.pos();
         BlockState worldState = worldView.getBlockState(position);
         if(worldState.isAir()) {
             return structureBlockInfoWorld;

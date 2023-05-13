@@ -41,13 +41,13 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
 
     public void tick() {
         super.tick();
-        if (this.level.isClientSide) {
-            if (!this.inGround && this.level.getGameTime() % 5 == this.random.nextInt(3)) {
+        if (this.level().isClientSide) {
+            if (!this.inGround && this.level().getGameTime() % 5 == this.random.nextInt(3)) {
                 this.makeParticle(1);
             }
         }
         else if (this.inGround && this.inGroundTime != 0 && this.inGroundTime >= 600) {
-            this.level.broadcastEntityEvent(this, (byte)0);
+            this.level().broadcastEntityEvent(this, (byte)0);
         }
     }
 
@@ -58,7 +58,7 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
             double blue = 0.1d;
 
             for(int i = 0; i < particlesToSpawn; ++i) {
-                this.level.addParticle(
+                this.level().addParticle(
                         ParticleTypes.ENTITY_EFFECT,
                         this.getRandomX(0.5D),
                         this.getRandomY(),
@@ -78,9 +78,9 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
     @Override
     protected boolean tryPickup(Player player) {
         if (player.position().closerThan(this.position(), 0.85f)) {
-            if(this.level instanceof ServerLevel serverLevel) {
+            if(this.level() instanceof ServerLevel serverLevel) {
                 showParticles(serverLevel, player.getRandom(), this, 5);
-                level.playSound(null,
+                level().playSound(null,
                         player.blockPosition(),
                         BzSounds.HONEY_CRYSTAL_SHARD_SHATTER.get(),
                         SoundSource.PLAYERS,

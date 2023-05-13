@@ -30,7 +30,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,7 +66,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
      */
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-        Level world = entity.level;
+        Level world = entity.level();
 
         if (entity instanceof Mob mob && mob.isNoAi()) {
             return;
@@ -124,7 +123,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
             }
         }
         //Anything lower than 2 is medium aggression
-        else if ((entity.getLevel().getGameTime() + entity.getUUID().getLeastSignificantBits()) % 20 == 0) {
+        else if ((entity.level().getGameTime() + entity.getUUID().getLeastSignificantBits()) % 20 == 0) {
             mediumAggression(world, entity);
         }
 
@@ -269,7 +268,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
     public static void onLivingEntityDeath(EntityDeathEvent event) {
         LivingEntity livingEntity = event.entity();
         if (livingEntity != null) {
-            WrathOfTheHiveEffect.calmTheBees(livingEntity.level, livingEntity);
+            WrathOfTheHiveEffect.calmTheBees(livingEntity.level(), livingEntity);
         }
     }
 }

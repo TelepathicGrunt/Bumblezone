@@ -48,7 +48,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
 
         SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D);
-        List<Bee> beeList = entity.level.getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
+        List<Bee> beeList = entity.level().getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
 
         for (Bee bee : beeList) {
             if(bee.getTarget() == entity && !bee.isNoAi()) {
@@ -72,7 +72,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
            }
 
            if(!(entity.getLastHurtByMob() instanceof Bee)) {
-               resetBeeAngry(entity.level, entity.getLastHurtByMob());
+               resetBeeAngry(entity.level(), entity.getLastHurtByMob());
                entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
                if (entity instanceof ServerPlayer) {
                    BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.trigger((ServerPlayer) entity, entity.getLastHurtByMob());

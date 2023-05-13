@@ -56,18 +56,18 @@ public class NoiseReplaceWithPropertiesProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldReader, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo infoIn2, StructurePlaceSettings settings) {
         setSeed(worldReader instanceof WorldGenRegion ? ((WorldGenRegion) worldReader).getSeed() : 0);
 
-        if(infoIn2.state.getBlock() == inputBlock) {
-            BlockPos worldPos = infoIn2.pos;
+        if(infoIn2.state().getBlock() == inputBlock) {
+            BlockPos worldPos = infoIn2.pos();
             double noiseVal = noiseGenerator.noise3_Classic(worldPos.getX() * xzScale, worldPos.getY() * yScale, worldPos.getZ() * xzScale);
 
             if((noiseVal / 2D) + 0.5D < threshold) {
                 BlockState newBlockState = outputBlock.defaultBlockState();
-                for(Property<?> property : infoIn2.state.getProperties()) {
+                for(Property<?> property : infoIn2.state().getProperties()) {
                     if(newBlockState.hasProperty(property)) {
-                        newBlockState = getStateWithProperty(newBlockState, infoIn2.state, property);
+                        newBlockState = getStateWithProperty(newBlockState, infoIn2.state(), property);
                     }
                 }
-                return new StructureTemplate.StructureBlockInfo(infoIn2.pos, newBlockState, infoIn2.nbt);
+                return new StructureTemplate.StructureBlockInfo(infoIn2.pos(), newBlockState, infoIn2.nbt());
             }
         }
         return infoIn2;

@@ -31,8 +31,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -41,7 +41,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class FilledPorousHoneycomb extends Block {
 
     public FilledPorousHoneycomb() {
-        super(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK).speedFactor(0.8F));
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_ORANGE)
+                .instrument(NoteBlockInstrument.BANJO)
+                .strength(0.5F, 0.5F)
+                .sound(SoundType.CORAL_BLOCK)
+                .speedFactor(0.8F));
     }
 
     /**
@@ -59,7 +64,7 @@ public class FilledPorousHoneycomb extends Block {
             world.setBlock(position, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState(), 3); // removed honey from this block
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
-            if ((playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            if ((playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&

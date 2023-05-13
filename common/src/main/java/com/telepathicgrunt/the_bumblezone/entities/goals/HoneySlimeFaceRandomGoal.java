@@ -21,7 +21,7 @@ public class HoneySlimeFaceRandomGoal extends Goal {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean canUse() {
-        return this.slime.getTarget() == null && (this.slime.isOnGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+        return this.slime.getTarget() == null && (this.slime.onGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
     }
 
     /**

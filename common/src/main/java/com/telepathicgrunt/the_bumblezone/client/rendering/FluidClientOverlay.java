@@ -22,7 +22,7 @@ public class FluidClientOverlay {
     private static final ResourceLocation ROYAL_JELLY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/royal_jelly_fluid_underwater.png");
 
     public static boolean renderHoneyOverlay(Player clientPlayerEntity, PoseStack matrixStack) {
-        BlockState state = clientPlayerEntity.level.getBlockState(BlockPos.containing(clientPlayerEntity.getEyePosition(1)));
+        BlockState state = clientPlayerEntity.level().getBlockState(BlockPos.containing(clientPlayerEntity.getEyePosition(1)));
         if (state.is(BzFluids.HONEY_FLUID_BLOCK.get()) || state.is(BzFluids.ROYAL_JELLY_FLUID_BLOCK.get())) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, state.is(BzFluids.HONEY_FLUID_BLOCK.get()) ? HONEY_TEXTURE_UNDERWATER : ROYAL_JELLY_TEXTURE_UNDERWATER);
@@ -30,7 +30,7 @@ public class FluidClientOverlay {
             // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
             float brightness = (float) Math.max(
                     Math.pow(FluidClientOverlay.getDimensionBrightnessAtEyes(clientPlayerEntity), 2D),
-                    clientPlayerEntity.level.dimensionType().ambientLight()
+                    clientPlayerEntity.level().dimensionType().ambientLight()
             );
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
@@ -52,7 +52,7 @@ public class FluidClientOverlay {
     }
 
     public static float getDimensionBrightnessAtEyes(Entity entity) {
-        float lightLevelAtEyes = entity.level.getRawBrightness(BlockPos.containing(entity.getEyePosition(1)), 0);
+        float lightLevelAtEyes = entity.level().getRawBrightness(BlockPos.containing(entity.getEyePosition(1)), 0);
         return lightLevelAtEyes / 15f;
     }
 }

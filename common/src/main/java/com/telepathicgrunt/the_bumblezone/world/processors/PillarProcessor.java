@@ -64,9 +64,9 @@ public class PillarProcessor extends StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader, BlockPos templateOffset, BlockPos worldOffset, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
 
-        BlockState blockState = structureBlockInfoWorld.state;
+        BlockState blockState = structureBlockInfoWorld.state();
         if (pillarTriggerAndReplacementBlocks.containsKey(blockState)) {
-            BlockPos worldPos = structureBlockInfoWorld.pos;
+            BlockPos worldPos = structureBlockInfoWorld.pos();
             RandomSource random = RandomSource.create();
             random.setSeed(worldPos.asLong());
 
@@ -107,12 +107,12 @@ public class PillarProcessor extends StructureProcessor {
                         if(newPillarState2 == null) {
                             break;
                         }
-                        newPillarState2 = processor.processBlock(levelReader, newPillarState1.pos, newPillarState2.pos, newPillarState1, newPillarState2, structurePlacementData);
+                        newPillarState2 = processor.processBlock(levelReader, newPillarState1.pos(), newPillarState2.pos(), newPillarState1, newPillarState2, structurePlacementData);
                     }
                 }
 
                 if(newPillarState2 != null) {
-                    levelReader.getChunk(currentPos).setBlockState(currentPos, newPillarState2.state, false);
+                    levelReader.getChunk(currentPos).setBlockState(currentPos, newPillarState2.state(), false);
                 }
 
                 currentPos.move(direction);

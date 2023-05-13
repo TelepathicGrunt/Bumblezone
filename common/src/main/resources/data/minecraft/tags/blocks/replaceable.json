@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:sticky_honey_residue",
+    "the_bumblezone:sticky_honey_redstone",
+    "the_bumblezone:honey_web",
+    "the_bumblezone:redstone_honey_web",
+    "the_bumblezone:pile_of_pollen",
+    "the_bumblezone:super_candle_wick",
+    "the_bumblezone:crystalline_flower"
+  ]
+}

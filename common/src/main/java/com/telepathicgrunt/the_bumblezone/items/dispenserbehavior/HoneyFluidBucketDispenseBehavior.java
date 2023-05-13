@@ -49,7 +49,7 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
                 blockpos.move(blockstate.getValue(HoneycombBrood.FACING).getOpposite());
 
                 // do nothing if front is blocked off
-                if (!world.getBlockState(blockpos).getMaterial().isSolid()) {
+                if (!world.getBlockState(blockpos).isSolid()) {
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
                     beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);

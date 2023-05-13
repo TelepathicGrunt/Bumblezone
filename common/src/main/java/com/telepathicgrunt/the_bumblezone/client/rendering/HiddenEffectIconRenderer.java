@@ -7,8 +7,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.effect.MobEffectInstance;
 
-import static net.minecraft.client.gui.GuiComponent.blit;
-
 public class HiddenEffectIconRenderer implements MobEffectRenderer {
 
     @Override
@@ -16,7 +14,8 @@ public class HiddenEffectIconRenderer implements MobEffectRenderer {
         TextureAtlasSprite textureatlassprite = Minecraft.getInstance().getMobEffectTextures().get(instance.getEffect());
         RenderSystem.setShaderTexture(0, textureatlassprite.atlasLocation());
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, instance.getAmplifier() == 0 ? 0.5f : 1f);
-        blit(poseStack, x + 3, y + 3, (int) z, 18, 18, textureatlassprite);
+        // TODO: Fix when forge active
+        //blit(poseStack, x + 3, y + 3, (int) z, 18, 18, textureatlassprite);
         return true;
     }
 }

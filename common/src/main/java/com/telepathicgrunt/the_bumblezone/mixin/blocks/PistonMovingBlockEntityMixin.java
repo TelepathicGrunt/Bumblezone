@@ -23,7 +23,7 @@ public class PistonMovingBlockEntityMixin {
     @WrapOperation(method = "moveCollidedEntities(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;FLnet/minecraft/world/level/block/piston/PistonMovingBlockEntity;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/piston/PistonMovingBlockEntity;moveEntityByPiston(Lnet/minecraft/core/Direction;Lnet/minecraft/world/entity/Entity;DLnet/minecraft/core/Direction;)V", ordinal = 0))
     private static void bumblezone$teleportPushedEntities(Direction direction, Entity entity, double progress, Direction direction2, Operation<Void> original) {
-        if (entity instanceof LivingEntity livingEntity && !livingEntity.level.isClientSide()) {
+        if (entity instanceof LivingEntity livingEntity && !livingEntity.level().isClientSide()) {
             EntityTeleportationHookup.runPistonPushed(direction, livingEntity);
         }
         original.call(direction, entity, progress, direction2);

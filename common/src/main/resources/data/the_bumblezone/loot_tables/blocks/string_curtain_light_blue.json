@@ -5,7 +5,7 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:alternatives",
+          "type": "minecraft:any_of",
           "children": [
             {
               "name": "the_bumblezone:string_curtain_light_blue",

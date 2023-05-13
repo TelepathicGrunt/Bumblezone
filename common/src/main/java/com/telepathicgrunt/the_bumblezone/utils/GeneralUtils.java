@@ -219,7 +219,7 @@ public class GeneralUtils {
      * For giving the player an item properly into their inventory
      */
     public static void givePlayerItem(Player playerEntity, InteractionHand hand, ItemStack itemstackToGive, boolean giveContainerItem, boolean shrinkCurrentItem) {
-        if (playerEntity.level.isClientSide()) {
+        if (playerEntity.level().isClientSide()) {
             return;
         }
 
@@ -277,9 +277,9 @@ public class GeneralUtils {
 
     // More optimized with checking if the jigsaw blocks can connect
     public static boolean canJigsawsAttach(StructureTemplate.StructureBlockInfo jigsaw1, StructureTemplate.StructureBlockInfo jigsaw2) {
-        FrontAndTop prop1 = jigsaw1.state.getValue(JigsawBlock.ORIENTATION);
-        FrontAndTop prop2 = jigsaw2.state.getValue(JigsawBlock.ORIENTATION);
-        String joint = jigsaw1.nbt.getString("joint");
+        FrontAndTop prop1 = jigsaw1.state().getValue(JigsawBlock.ORIENTATION);
+        FrontAndTop prop2 = jigsaw2.state().getValue(JigsawBlock.ORIENTATION);
+        String joint = jigsaw1.nbt().getString("joint");
         if(joint.isEmpty()) {
             joint = prop1.front().getAxis().isHorizontal() ? "aligned" : "rollable";
         }
@@ -287,7 +287,7 @@ public class GeneralUtils {
         boolean isRollable = joint.equals("rollable");
         return prop1.front() == prop2.front().getOpposite() &&
                 (isRollable || prop1.top() == prop2.top()) &&
-                jigsaw1.nbt.getString("target").equals(jigsaw2.nbt.getString("name"));
+                jigsaw1.nbt().getString("target").equals(jigsaw2.nbt().getString("name"));
     }
 
     //////////////////////////////////////////////
@@ -307,7 +307,7 @@ public class GeneralUtils {
     }
 
     private static boolean isReplaceableByStructures(BlockState blockState) {
-        return blockState.isAir() || blockState.getMaterial().isLiquid() || blockState.getMaterial().isReplaceable() || blockState.is(BzBlocks.HONEY_CRYSTAL.get());
+        return blockState.isAir() || !blockState.getFluidState().isEmpty() || blockState.canBeReplaced() || blockState.is(BzBlocks.HONEY_CRYSTAL.get());
     }
 
     //////////////////////////////////////////////

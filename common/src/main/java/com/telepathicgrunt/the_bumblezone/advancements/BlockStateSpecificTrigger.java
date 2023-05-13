@@ -3,8 +3,8 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.BlockPredicate;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.BlockPos;
@@ -26,18 +26,18 @@ public class BlockStateSpecificTrigger extends SimpleCriterionTrigger<BlockState
     }
 
     @Override
-    public Instance createInstance(JsonObject jsonObject, EntityPredicate.Composite predicate, DeserializationContext deserializationContext) {
+    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         return new Instance(predicate, BlockPredicate.fromJson(jsonObject.get("block")));
     }
 
     public void trigger(ServerPlayer serverPlayer, BlockPos pos) {
-        super.trigger(serverPlayer, (instance) -> instance.matches(serverPlayer.getLevel(), pos));
+        super.trigger(serverPlayer, (instance) -> instance.matches((ServerLevel) serverPlayer.level(), pos));
     }
 
     public class Instance extends AbstractCriterionTriggerInstance {
         private final BlockPredicate blockPredicate;
 
-        public Instance(EntityPredicate.Composite predicate, BlockPredicate blockPredicate) {
+        public Instance(ContextAwarePredicate predicate, BlockPredicate blockPredicate) {
             super(id, predicate);
             this.blockPredicate = blockPredicate;
         }

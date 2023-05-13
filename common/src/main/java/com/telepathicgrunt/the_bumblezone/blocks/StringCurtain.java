@@ -33,8 +33,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
@@ -57,11 +56,14 @@ public class StringCurtain extends Block {
     protected final Map<Pair<Direction, Boolean>, VoxelShape> collisionShapeByMap;
 
     public StringCurtain() {
-        this(Properties.of(Material.CLOTH_DECORATION, MaterialColor.WOOL)
-                .noOcclusion()
+        this(Properties.of()
+                .mapColor(MapColor.WOOL)
                 .lightLevel((blockState) -> 1)
+                .noOcclusion()
                 .sound(SoundType.WOOL)
-                .strength(0.3F));
+                .strength(0.3F)
+                .ignitedByLava()
+                .pushReaction(PushReaction.DESTROY));
     }
 
     public StringCurtain(Properties properties) {
@@ -305,9 +307,9 @@ public class StringCurtain extends Block {
             }
 
             BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
-            BlockState aboveState = player.getLevel().getBlockState(pos);
+            BlockState aboveState = player.level().getBlockState(pos);
             if (aboveState.is(BzTags.STRING_CURTAINS)) {
-                InteractionResult interactionResult = aboveState.use(player.getLevel(), player, interactionHand, new BlockHitResult(
+                InteractionResult interactionResult = aboveState.use(player.level(), player, interactionHand, new BlockHitResult(
                         hitResult.getLocation().add(0, 1, 0),
                         hitResult.getDirection(),
                         pos,
@@ -381,11 +383,6 @@ public class StringCurtain extends Block {
         }
 
         return comparatorPower;
-    }
-
-    @Override
-    public PushReaction getPistonPushReaction(BlockState pState) {
-        return PushReaction.DESTROY;
     }
 
     @Nullable

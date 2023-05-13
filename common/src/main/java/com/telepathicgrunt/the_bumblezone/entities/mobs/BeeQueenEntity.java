@@ -77,7 +77,6 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -195,7 +194,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             setRemainingBonusTradeTime(0);
         }
 
-        this.readPersistentAngerSaveData(this.level, tag);
+        this.readPersistentAngerSaveData(this.level(), tag);
     }
 
     public void setQueenPose(BeeQueenPose beeQueenPose) {
@@ -233,7 +232,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     @Override
     public boolean checkSpawnObstruction(LevelReader worldReader) {
         AABB box = getBoundingBox();
-        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.getMaterial().blocksMotion()) && worldReader.isUnobstructed(this);
+        return !worldReader.containsAnyLiquid(box) && worldReader.getBlockStates(box).noneMatch(state -> state.blocksMotion()) && worldReader.isUnobstructed(this);
     }
 
     @Override
@@ -262,7 +261,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource == level.damageSources().sweetBerryBush()) {
+        if (damageSource == level().damageSources().sweetBerryBush()) {
             return true;
         }
         return super.isInvulnerableTo(damageSource);
@@ -281,7 +280,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         if (isInvulnerableTo(source)) {
             return false;
         }
-        else if(isOnPortalCooldown() && source == level.damageSources().inWall()) {
+        else if(isOnPortalCooldown() && source == level().damageSources().inWall()) {
             spawnAngryParticles(6);
             playHurtSound(source);
             return false;
@@ -290,12 +289,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             if (!this.isNoAi()) {
                 Entity entity = source.getEntity();
                 if (entity instanceof LivingEntity livingEntity && !livingEntity.isSpectator()) {
-                    if (livingEntity instanceof Player player && (level.getDifficulty() == Difficulty.PEACEFUL || player.isCreative())) {
+                    if (livingEntity instanceof Player player && (level().getDifficulty() == Difficulty.PEACEFUL || player.isCreative())) {
                         spawnAngryParticles(6);
                         return super.hurt(source, amount);
                     }
 
-                    if ((livingEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+                    if ((livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                         BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                         BzBeeAggressionConfigs.aggressiveBees)
                     {
@@ -328,11 +327,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         if (this.underWaterTicks > 100) {
-            this.hurt(level.damageSources().drown(), 3.0F);
+            this.hurt(level().damageSources().drown(), 3.0F);
         }
 
-        if (!this.level.isClientSide) {
-            this.updatePersistentAnger((ServerLevel)this.level, false);
+        if (!this.level().isClientSide) {
+            this.updatePersistentAnger((ServerLevel)this.level(), false);
         }
     }
 
@@ -341,9 +340,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             return;
         }
 
-        StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
+        StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE).isValid() &&
-            !serverPlayer.level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty())
+            !serverPlayer.level().getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty())
         {
             serverPlayer.addEffect(new MobEffectInstance(
                     MobEffects.DIG_SLOWDOWN,
@@ -384,11 +383,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         if (!this.isNoAi()) {
-            if (!this.getLevel().isClientSide() && this.getLevel().getGameTime() % 200 == 0) {
+            if (!this.level().isClientSide() && this.level().getGameTime() % 200 == 0) {
                 this.heal(1);
             }
 
-            if (!this.level.isClientSide()) {
+            if (!this.level().isClientSide()) {
                 if (this.isAngry()) {
                     performAngryActions();
                 }
@@ -402,7 +401,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void performBonusTradeTick() {
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier <= 1 ||
                 BzGeneralConfigs.beeQueenBonusTradeDurationInTicks == 0 ||
                 BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified == 0)
@@ -426,15 +425,15 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 this.acknowledgedPlayers.clear();
             }
 
-            if (hasTrades && !this.isAngry() && (this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
-                List<Player> nearbyPlayers = this.level.getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
+            if (hasTrades && !this.isAngry() && (this.level().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0) {
+                List<Player> nearbyPlayers = this.level().getNearbyPlayers(PLAYER_ACKNOWLEDGE_SIGHT, this, this.getBoundingBox().inflate(8));
 
                 if (getRemainingBonusTradeTime() == 0) {
                     if (nearbyPlayers.size() > 0) {
                         setRemainingBonusTradeTime(BzGeneralConfigs.beeQueenBonusTradeDurationInTicks);
 
                         List<Item> allowedBonusTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet().stream()
-                                .filter(i -> ((i.isEnabled(level.enabledFeatures()) &&
+                                .filter(i -> ((i.isEnabled(level().enabledFeatures()) &&
                                         !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_BONUS_TRADE_ITEMS)) ||
                                         i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS)))
                                 .toList();
@@ -484,7 +483,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                                 mutableComponent.withStyle(ChatFormatting.YELLOW);
                             }
 
-                            if (player.inventoryMenu.slots.stream().anyMatch(s -> s.getItem().sameItem(getBonusTradeItem()))) {
+                            if (player.inventoryMenu.slots.stream().anyMatch(s -> s.getItem().is(getBonusTradeItem().getItem()))) {
                                 player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_inventory", itemName).withStyle(ChatFormatting.WHITE), true);
                             }
                             else {
@@ -504,7 +503,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void performAngryActions() {
-        if (level.getDifficulty() == Difficulty.PEACEFUL && this.getTarget() instanceof Player) {
+        if (level().getDifficulty() == Difficulty.PEACEFUL && this.getTarget() instanceof Player) {
             this.stopBeingAngry();
             return;
         }
@@ -515,11 +514,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
             // Grab a nearby air materialposition a bit away
             BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this, 5, 0);
-            if(!this.level.getBlockState(spawnBlockPos).isAir()) {
+            if(!this.level().getBlockState(spawnBlockPos).isAir()) {
                 return;
             }
 
-            Bee bee = EntityType.BEE.create(this.level);
+            Bee bee = EntityType.BEE.create(this.level());
             if(bee == null) return;
             ((NeutralMob)bee).setRemainingPersistentAngerTime(this.getRemainingPersistentAngerTime());
             ((NeutralMob)bee).setPersistentAngerTarget(this.getPersistentAngerTarget());
@@ -533,8 +532,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     0.0F);
 
             bee.finalizeSpawn(
-                    (ServerLevel) this.level,
-                    this.level.getCurrentDifficultyAt(spawnBlockPos),
+                    (ServerLevel) this.level(),
+                    this.level().getCurrentDifficultyAt(spawnBlockPos),
                     MobSpawnType.TRIGGERED,
                     null,
                     null);
@@ -547,7 +546,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     false,
                     false));
 
-            this.level.addFreshEntity(bee);
+            this.level().addFreshEntity(bee);
             this.spawnAngryParticles(6);
             setQueenPose(BeeQueenPose.ATTACKING);
         }
@@ -562,11 +561,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             setThrowCooldown(throwCooldown - 1);
         }
 
-        if ((this.getLevel().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0 && throwCooldown <= 0) {
+        if ((this.level().getGameTime() + this.getUUID().getLeastSignificantBits()) % 20 == 0 && throwCooldown <= 0) {
             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
             AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
-            List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
+            List<ItemEntity> items = this.level().getEntitiesOfClass(ItemEntity.class, scanArea);
             items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
                 int tradedItems = 0;
                 Item item = itemEntity.getItem().getItem();
@@ -586,7 +585,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 else {
                     itemEntity.remove(RemovalReason.DISCARDED);
                     ItemEntity rejectedItemEntity = new ItemEntity(
-                            this.level,
+                            this.level(),
                             this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
                             this.getY() + 0.3,
                             this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
@@ -594,7 +593,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 3,
                             0.4f,
                             (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 3);
-                    this.level.addFreshEntity(rejectedItemEntity);
+                    this.level().addFreshEntity(rejectedItemEntity);
                     rejectedItemEntity.setDefaultPickUpDelay();
                     spawnAngryParticles(2);
                     setQueenPose(BeeQueenPose.ITEM_REJECT);
@@ -603,7 +602,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 setThrowCooldown(50);
 
                 if (tradedItems > 0 && itemEntity.getOwner() != null) {
-                    if (level.getPlayerByUUID(itemEntity.getOwner().getUUID()) instanceof ServerPlayer serverPlayer) {
+                    if (level().getPlayerByUUID(itemEntity.getOwner().getUUID()) instanceof ServerPlayer serverPlayer) {
                         BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
                         EntityMiscHandler.onQueenBeeTrade(serverPlayer, tradedItems);
 
@@ -646,14 +645,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                     }
                     else {
-                        long timeDiff = this.level.getGameTime() - capability.tradeResetPrimedTime;
+                        long timeDiff = this.level().getGameTime() - capability.tradeResetPrimedTime;
                         if (timeDiff < 200 && timeDiff > 10) {
                             resetAdvancementTree(serverPlayer, BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
                             capability.resetAllTrackerStats();
                             serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                         }
                         else {
-                            capability.tradeResetPrimedTime = this.level.getGameTime();
+                            capability.tradeResetPrimedTime = this.level().getGameTime();
                             serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                         }
                     }
@@ -665,7 +664,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         boolean traded = false;
         if (QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
-            if (this.level.isClientSide()) {
+            if (this.level().isClientSide()) {
                 return InteractionResult.SUCCESS;
             }
 
@@ -679,7 +678,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
         }
 
-        if (!this.level.isClientSide()) {
+        if (!this.level().isClientSide()) {
             if (!traded) {
                 spawnAngryParticles(2);
                 setQueenPose(BeeQueenPose.ITEM_REJECT);
@@ -746,14 +745,14 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, WeightedTradeResult reward, ItemStack originalItem, UUID playerUUID) {
         int rewardMultiplier = 1;
-        if (getBonusTradeItem().sameItem(originalItem) && BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier > 1) {
+        if (getBonusTradeItem().is(originalItem.getItem()) && BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier > 1) {
             rewardMultiplier = BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier;
             getBonusTradeItem().shrink(1);
             if (getBonusTradeItem().isEmpty()) {
                 setBonusTradeItem(ItemStack.EMPTY);
             }
 
-            Player player = level.getPlayerByUUID(playerUUID);
+            Player player = level().getPlayerByUUID(playerUUID);
             if (player != null) {
                 if (!getBonusTradeItem().isEmpty()) {
                     player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_performed", BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier).withStyle(ChatFormatting.WHITE), true);
@@ -777,7 +776,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             if (originalItem.is(ItemTags.BANNERS) && rewardItem.is(ItemTags.BANNERS) && originalItem.hasTag()) {
                 rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
             }
-            else if (originalItem.sameItem(rewardItem) && originalItem.hasTag()) {
+            else if (originalItem.is(rewardItem.getItem()) && originalItem.hasTag()) {
                 rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
             }
             else if (isContainerBlockEntity(originalItem) && isContainerBlockEntity(rewardItem) && originalItem.hasTag()) {
@@ -789,7 +788,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             remainingItemToSpawn -= currentItemStackCount;
 
             ItemEntity rewardItemEntity = new ItemEntity(
-                    this.level,
+                    this.level(),
                     this.getX() + (sideVect.x() * 0.9d) + (forwardVect.x() * 1),
                     this.getY() + 0.3d,
                     this.getZ() + (sideVect.z() * 0.9d) + (forwardVect.x() * 1),
@@ -797,11 +796,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 4d,
                     0.3f,
                     (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 4d);
-            this.level.addFreshEntity(rewardItemEntity);
+            this.level().addFreshEntity(rewardItemEntity);
             rewardItemEntity.setDefaultPickUpDelay();
             spawnHappyParticles();
 
-            if (reward.xpReward > 0 && this.level instanceof ServerLevel serverLevel) {
+            if (reward.xpReward > 0 && this.level() instanceof ServerLevel serverLevel) {
                 ExperienceOrb.award(
                         serverLevel,
                         new Vec3(this.getX() + (forwardVect.x() * 1),
@@ -811,7 +810,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
         }
 
-        this.level.playSound(
+        this.level().playSound(
                 null,
                 this.blockPosition(),
                 BzSounds.BEE_QUEEN_HAPPY.get(),
@@ -821,8 +820,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     public void spawnAngryParticles(int particles) {
-        if(!this.level.isClientSide()) {
-            ((ServerLevel)this.level).sendParticles(
+        if(!this.level().isClientSide()) {
+            ((ServerLevel)this.level()).sendParticles(
                     ParticleTypes.ANGRY_VILLAGER,
                     getX(),
                     getY() + 0.45f,
@@ -836,7 +835,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void spawnHappyParticles() {
-        ((ServerLevel)this.level).sendParticles(
+        ((ServerLevel)this.level()).sendParticles(
                 ParticleTypes.HAPPY_VILLAGER,
                 getX(),
                 getY() + 0.75d,

@@ -31,10 +31,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
@@ -63,11 +63,14 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     private Item item;
 
     public HoneyCrystal() {
-        super(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW)
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.TERRACOTTA_YELLOW)
+                .instrument(NoteBlockInstrument.HAT)
                 .lightLevel((blockState) -> 1)
                 .strength(0.3F, 0.3f)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE)
-                .noOcclusion());
+                .noOcclusion()
+                .pushReaction(PushReaction.DESTROY));
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
@@ -180,14 +183,6 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
         }
 
         return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
-    }
-
-    /**
-     * Breaks by pistons
-     */
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
     }
 
     /**

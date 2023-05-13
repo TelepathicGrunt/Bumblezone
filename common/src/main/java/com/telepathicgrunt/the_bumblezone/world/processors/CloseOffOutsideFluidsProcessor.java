@@ -26,11 +26,11 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos());
         ChunkAccess cachedChunk = worldView.getChunk(mutable);
-        BlockPos worldPos = structureBlockInfoWorld.pos;
+        BlockPos worldPos = structureBlockInfoWorld.pos();
 
-        if(structureBlockInfoWorld.state.isAir()) {
+        if(structureBlockInfoWorld.state().isAir()) {
             BlockPos.MutableBlockPos sidePos = new BlockPos.MutableBlockPos();
             for(Direction direction : Direction.values()) {
                 if(Direction.DOWN == direction) continue;

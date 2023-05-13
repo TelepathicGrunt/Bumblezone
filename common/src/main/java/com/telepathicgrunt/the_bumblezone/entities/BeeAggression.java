@@ -84,14 +84,14 @@ public class BeeAggression {
     private static void angerBees(ServerPlayer player) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
-        if ((player.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+        if ((player.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                 BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                 BzBeeAggressionConfigs.aggressiveBees &&
                 !player.isCreative() &&
                 !player.isSpectator())
         {
             if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                if (!EssenceOfTheBees.hasEssence(player) && player.level.getDifficulty() != Difficulty.PEACEFUL) {
+                if (!EssenceOfTheBees.hasEssence(player) && player.level().getDifficulty() != Difficulty.PEACEFUL) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     player.displayClientMessage(message, true);
 
@@ -114,11 +114,11 @@ public class BeeAggression {
         LivingEntity livingEntity = event.entity();
         if (event.amount() > 0 &&
             livingEntity != null &&
-            !livingEntity.level.isClientSide() &&
+            !livingEntity.level().isClientSide() &&
             livingEntity instanceof Bee &&
             event.source() != null &&
             event.source().getEntity() != null &&
-            livingEntity.level.getDifficulty() != Difficulty.PEACEFUL)
+            livingEntity.level().getDifficulty() != Difficulty.PEACEFUL)
         {
             beeHitAndAngered(livingEntity, event.source().getEntity());
         }
@@ -134,9 +134,9 @@ public class BeeAggression {
         {
             if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                WrathOfTheHiveEffect.calmTheBees(player.level, player); // prevent bees from be naturally angry
+                WrathOfTheHiveEffect.calmTheBees(player.level(), player); // prevent bees from be naturally angry
             }
-            else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            else if((entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     BzBeeAggressionConfigs.aggressiveBees)
             {
@@ -156,9 +156,9 @@ public class BeeAggression {
         else if(attackerEntity instanceof Mob mob) {
             if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                WrathOfTheHiveEffect.calmTheBees(mob.level, mob); // prevent bees from be naturally angry
+                WrathOfTheHiveEffect.calmTheBees(mob.level(), mob); // prevent bees from be naturally angry
             }
-            else if((entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            else if((entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     BzBeeAggressionConfigs.aggressiveBees)
             {
@@ -184,7 +184,7 @@ public class BeeAggression {
                     true));
         }
 
-        if (entity != null && entity.level != null && !entity.level.isClientSide() && entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (entity != null && entity.level() != null && !entity.level().isClientSide() && entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             for (ModCompat compat : ModChecker.DIM_SPAWN_COMPATS) {
                 compat.onEntitySpawnInDimension(entity);
             }
@@ -196,9 +196,9 @@ public class BeeAggression {
 
         //Also checks to make sure we are in the dimension.
         if (entity != null &&
-            entity.level != null &&
-            !entity.level.isClientSide() &&
-            entity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
+            entity.level() != null &&
+            !entity.level().isClientSide() &&
+            entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             BzBeeAggressionConfigs.aggressiveBees &&
             entity instanceof Mob mobEntity &&
             !mobEntity.isNoAi())
@@ -234,21 +234,21 @@ public class BeeAggression {
         Player playerEntity = event.player();
 
         //removes the wrath of the hive if it is disallowed outside dimension
-        if(!playerEntity.level.isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-            if (playerEntity.level.getDifficulty() == Difficulty.PEACEFUL) {
+        if(!playerEntity.level().isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+            if (playerEntity.level().getDifficulty() == Difficulty.PEACEFUL) {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
             }
             else if (!(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone ||
-                    playerEntity.level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
+                    playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
             {
                 playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
             }
         }
 
         //Makes the fog redder when this effect is active
-        if(playerEntity.level.isClientSide()) {
+        if(playerEntity.level().isClientSide()) {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
             if(wrathEffect) {
                 if(BzClientConfigs.playWrathOfHiveEffectMusic) {
@@ -264,7 +264,7 @@ public class BeeAggression {
             }
             else if(WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect) {
                 MusicHandler.stopAngryBeeMusic(playerEntity);
-                WrathOfTheHiveEffect.calmTheBees(playerEntity.level, playerEntity);
+                WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
                 WrathOfTheHiveEffect.ACTIVE_WRATH = false;
             }
         }
@@ -275,12 +275,12 @@ public class BeeAggression {
         if(serverPlayer.isCreative() ||
             serverPlayer.isSpectator() ||
             !BzBeeAggressionConfigs.aggressiveBees ||
-            serverPlayer.level.getDifficulty() == Difficulty.PEACEFUL)
+            serverPlayer.level().getDifficulty() == Difficulty.PEACEFUL)
         {
             return;
         }
 
-        StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
+        StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
             if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
@@ -317,7 +317,7 @@ public class BeeAggression {
     // Make Essence of the Bees players be able to take shear hive blocks without angering bees
     public static void preventAngerOnEssencedPlayers(Player player, List<Entity> entityList) {
         // Don't spawn bees on client side. Server can handle that just fine. Prevents bees from briefly appearing on clientside for 1 frame.
-        if (player != null && player.level.isClientSide() || (player instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer))) {
+        if (player != null && player.level().isClientSide() || (player instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer))) {
             entityList.clear();
         }
     }

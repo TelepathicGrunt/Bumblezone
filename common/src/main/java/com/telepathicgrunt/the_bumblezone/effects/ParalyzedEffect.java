@@ -37,7 +37,7 @@ public class ParalyzedEffect extends MobEffect {
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-        if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel) {
+        if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {
             MobEffectClientSyncPacket.sendToClient(entity, effect);
         }
         super.addAttributeModifiers(entity, attributes, amplifier);
@@ -46,7 +46,7 @@ public class ParalyzedEffect extends MobEffect {
     @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-        if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel) {
+        if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {
             MobEffectClientSyncPacket.sendToClient(
                 entity,
                 new MobEffectInstance(

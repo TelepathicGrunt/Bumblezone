@@ -53,7 +53,7 @@ public abstract class ExperienceOrbMixin extends Entity {
             for (int x = (int) -distanceThreshold; x <= distanceThreshold; x += distanceThreshold) {
                 for (int z = (int) -distanceThreshold; z <= distanceThreshold; z += distanceThreshold) {
                     mutableBlockPos.set(this.getX() + x, 0, this.getZ() + z);
-                    ChunkAccess chunk = this.level.getChunk(mutableBlockPos);
+                    ChunkAccess chunk = this.level().getChunk(mutableBlockPos);
                     if(chunk instanceof LevelChunk) chunksInRange.add((LevelChunk)chunk);
                 }
             }
@@ -77,7 +77,7 @@ public abstract class ExperienceOrbMixin extends Entity {
                 return;
             }
 
-            BlockState state = this.level.getBlockState(this.bumblezone$trackedCrystalFlower);
+            BlockState state = this.level().getBlockState(this.bumblezone$trackedCrystalFlower);
             if(state.getBlock() instanceof CrystallineFlower) {
                 double speedFactor = 1.0D - Math.sqrt(sqrDistance) / distanceThreshold;
                 this.setDeltaMovement(this.getDeltaMovement().add(vec3.normalize().scale(speedFactor * speedFactor * 0.11D)));

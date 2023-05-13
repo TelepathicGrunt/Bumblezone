@@ -37,8 +37,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
@@ -56,7 +55,14 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     private final boolean isSoul;
 
     public SuperCandleWick(boolean isSoul) {
-        super(Properties.of(Material.AIR, MaterialColor.COLOR_BLACK).noCollission().lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0));
+        super(Properties.of()
+                .mapColor(MapColor.COLOR_BLACK)
+                .lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0)
+                .replaceable()
+                .noCollission()
+                .noLootTable()
+                .air());
+
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
         this.isSoul = isSoul;
     }

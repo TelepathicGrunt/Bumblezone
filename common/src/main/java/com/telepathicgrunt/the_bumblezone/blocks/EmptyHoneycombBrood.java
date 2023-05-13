@@ -22,8 +22,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -31,7 +31,12 @@ import net.minecraft.world.phys.Vec3;
 public class EmptyHoneycombBrood extends ProperFacingBlock {
 
     public EmptyHoneycombBrood() {
-        super(BlockBehaviour.Properties.of(Material.CLAY, MaterialColor.COLOR_ORANGE).strength(0.5F, 0.5F).sound(SoundType.CORAL_BLOCK));
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_ORANGE)
+                .instrument(NoteBlockInstrument.BANJO)
+                .strength(0.5F, 0.5F)
+                .sound(SoundType.CORAL_BLOCK));
+
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH));
     }
 

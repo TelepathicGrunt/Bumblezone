@@ -45,7 +45,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -80,10 +81,13 @@ public class PileOfPollen extends FallingBlock {
     private Item item;
 
     public PileOfPollen() {
-        super(BlockBehaviour.Properties.of(BzBlocks.YELLOW_NOT_SOLID)
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_YELLOW)
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .noOcclusion()
                 .strength(0.1F)
+                .replaceable()
+                .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.SNOW));
     }
 
@@ -146,10 +150,10 @@ public class PileOfPollen extends FallingBlock {
     @Override
     public boolean canSurvive(BlockState blockState, LevelReader world, BlockPos blockPos) {
         BlockState blockstate = world.getBlockState(blockPos.below());
-        if(blockstate.is(Blocks.ICE) || blockstate.is(Blocks.PACKED_ICE) || blockstate.is(Blocks.BARRIER) || !world.getBlockState(blockPos).getFluidState().isEmpty()) {
+        if(blockstate.is(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON) || !world.getBlockState(blockPos).getFluidState().isEmpty()) {
             return false;
         }
-        else if(blockstate.isAir() || blockstate.is(BzBlocks.PILE_OF_POLLEN.get()) || blockstate.is(Blocks.HONEY_BLOCK) || blockstate.is(Blocks.SOUL_SAND)) {
+        else if(blockstate.isAir() || blockstate.is(BzBlocks.PILE_OF_POLLEN.get()) || blockstate.is(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)) {
             return true;
         }
         else {
@@ -173,9 +177,8 @@ public class PileOfPollen extends FallingBlock {
     }
 
     private static boolean canFall(BlockState blockState) {
-        Material material = blockState.getMaterial();
         boolean isFullPollenPile = blockState.is(BzBlocks.PILE_OF_POLLEN.get()) && blockState.getValue(PileOfPollen.LAYERS) == 8;
-        return !isFullPollenPile && (blockState.isAir() || blockState.is(BlockTags.FIRE) || material.isLiquid() || material.isReplaceable());
+        return !isFullPollenPile && (blockState.isAir() || blockState.is(BlockTags.FIRE) || !blockState.getFluidState().isEmpty() || blockState.canBeReplaced());
     }
 
     @Override
@@ -377,7 +380,7 @@ public class PileOfPollen extends FallingBlock {
         AABB aabb = livingEntity.getBoundingBox();
         BlockPos minCorner = BlockPos.containing(aabb.minX + 0.001D, aabb.minY + 0.001D, aabb.minZ + 0.001D);
         BlockPos maxCorner = BlockPos.containing(aabb.maxX - 0.001D, aabb.maxY - 0.001D, aabb.maxZ - 0.001D);
-        Level level = livingEntity.level;
+        Level level = livingEntity.level();
         if (level.hasChunksAt(minCorner, maxCorner)) {
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 
@@ -452,8 +455,8 @@ public class PileOfPollen extends FallingBlock {
     }
 
     public static void pandaSneezing(Panda pandaEntity) {
-        if(!pandaEntity.level.isClientSide()) {
-            if(pandaEntity.getRandom().nextFloat() < 0.005f && pandaEntity.level.getBlockState(pandaEntity.blockPosition()).is(BzBlocks.PILE_OF_POLLEN.get())) {
+        if(!pandaEntity.level().isClientSide()) {
+            if(pandaEntity.getRandom().nextFloat() < 0.005f && pandaEntity.level().getBlockState(pandaEntity.blockPosition()).is(BzBlocks.PILE_OF_POLLEN.get())) {
                 pandaEntity.sneeze(true);
             }
         }
