@@ -1,10 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -92,6 +98,29 @@ public class ThreadExecutor {
         );
         return new LocateTask<>(level.getServer(), completableFuture, future);
     }
+    public static LocateTask<BlockPos> locate(
+            ServerLevel level,
+            ResourceKey<Structure> structureKey,
+            BlockPos pos,
+            int searchRadius,
+            boolean skipKnownStructures)
+    {
+        queuedSearches.getAndIncrement();
+        CompletableFuture<BlockPos> completableFuture = new CompletableFuture<>();
+        Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
+                () ->  {
+                    try {
+                        runningSearches.getAndIncrement();
+                        queuedSearches.getAndDecrement();
+                        doLocateLevel(completableFuture, level, structureKey, pos, searchRadius, skipKnownStructures);
+                    }
+                    catch (Exception e) {
+                        Bumblezone.LOGGER.error("Off thread structure locating crashed. Exception is: ", e);
+                    }
+                }
+        );
+        return new LocateTask<>(level.getServer(), completableFuture, future);
+    }
 
     public static LocateTask<Optional<Vec3>> dimensionDestinationSearch(MinecraftServer minecraftServer, Supplier<Optional<Vec3>> searchFunction) {
         CompletableFuture<Optional<Vec3>> completableFuture = new CompletableFuture<>();
@@ -116,8 +145,33 @@ public class ThreadExecutor {
             int searchRadius,
             boolean skipExistingChunks)
     {
-        BlockPos foundPos = level.findNearestMapStructure(structureTag, pos, searchRadius, skipExistingChunks);
+        BlockPos foundPos = level.findNearestMapStructure(
+                structureTag,
+                pos,
+                searchRadius,
+                skipExistingChunks);
+
         completableFuture.complete(foundPos);
+        runningSearches.getAndDecrement();
+    }
+
+    private static void doLocateLevel(
+            CompletableFuture<BlockPos> completableFuture,
+            ServerLevel level,
+            ResourceKey<Structure> structureKey,
+            BlockPos pos,
+            int searchRadius,
+            boolean skipExistingChunks)
+    {
+        Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Pair<BlockPos, Holder<Structure>> foundPos = level.getChunkSource().getGenerator().findNearestMapStructure(
+                level,
+                HolderSet.direct(structureRegistry.getHolder(structureKey).get()),
+                pos,
+                searchRadius,
+                skipExistingChunks);
+
+        completableFuture.complete(foundPos != null ? foundPos.getFirst() : null);
         runningSearches.getAndDecrement();
     }
 

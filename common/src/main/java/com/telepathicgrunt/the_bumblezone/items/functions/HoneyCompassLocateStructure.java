@@ -10,8 +10,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.Structures;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
@@ -26,7 +30,10 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
     public static final int DEFAULT_SEARCH_RADIUS = 50;
@@ -59,9 +66,26 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
             if (vec3 != null) {
                 BlockPos blockPos = BlockPos.containing(vec3);
                 itemStack.getOrCreateTag().putBoolean(HoneyCompass.TAG_LOADING, true);
-                HoneyCompass.setStructureTags(itemStack.getOrCreateTag(), destination);
-                ThreadExecutor.locate(lootContext.getLevel(), destination, blockPos, 100, false)
-                        .thenOnServerThread(foundPos -> setCompassData(itemStack, lootContext, foundPos));
+                ResourceKey<Structure> structure = null;
+
+                Registry<Structure> structureRegistry = lootContext.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE);
+                List<Structure> structuresList = structureRegistry
+                        .getTag(destination)
+                        .map(holders -> holders
+                            .stream()
+                            .map(Holder::value)
+                            .toList()
+                        ).orElseGet(ArrayList::new);
+
+                if (!structuresList.isEmpty()) {
+                    structure = structureRegistry.getResourceKey(structuresList.get(lootContext.getRandom().nextInt(structuresList.size()))).get();
+                }
+
+                if (structure != null) {
+                    HoneyCompass.setStructureTags(itemStack.getOrCreateTag(), destination);
+                    ThreadExecutor.locate(lootContext.getLevel(), structure, blockPos, 100, false)
+                            .thenOnServerThread(foundPos -> setCompassData(itemStack, lootContext, foundPos));
+                }
             }
             else if (itemStack.hasTag()) {
                 itemStack.setTag(new CompoundTag());

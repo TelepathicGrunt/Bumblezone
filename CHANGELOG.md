@@ -40,6 +40,10 @@ Hanging Gardens now can spawn Torch Flower, Pitcher Plant, Pink Petal, Cherry Le
 Cell Maze now will always have 1 Throne locating Honey Compass always in its center start room.
  The structure can also now have a Mystery locating Honey Compass
 
+Honey Compasses to Mystery Structures now will try to point to different structures even if you got multiple compasses from the same structure's loot.
+
+Lesser Mystery Honey Compasses are added to several structure's loot where these compasses point to smaller Bumblezone structures.
+
 ##### Biomes:
 Added Bumblezone biomes to `minecraft:snow_golem_melts` biome tag to make Snow Golems melt in Bumblezone since beehives are roughly 95 degrees!
 

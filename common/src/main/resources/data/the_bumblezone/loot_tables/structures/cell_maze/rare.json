@@ -502,7 +502,7 @@
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
           "weight": 1,
-          "quality": 2,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -525,8 +525,34 @@
           ]
         },
         {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 1,
+          "quality": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/lesser_misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+        {
           "type": "minecraft:empty",
-          "weight": 8
+          "weight": 14
         }
       ]
     }
