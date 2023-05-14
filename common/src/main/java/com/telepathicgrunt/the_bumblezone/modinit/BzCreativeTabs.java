@@ -2,10 +2,12 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
+import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -106,17 +108,18 @@ public class BzCreativeTabs {
             BzItems.ESSENCE_OF_THE_BEES
     );
 
-    public static void registerCreativeTabs(RegisterCreativeTabsEvent event) {
-        ItemStack iconStack = BzItems.HONEYCOMB_BROOD.get().getDefaultInstance();
-        iconStack.getOrCreateTag().putBoolean("isCreativeTabIcon", true);
-        event.register(
-                new ResourceLocation(Bumblezone.MODID, "main_tab"),
-                builder -> builder.icon(() -> iconStack)
-                        .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab")),
-                items -> CUSTOM_CREATIVE_TAB_ITEMS.stream().map(item -> item.get().getDefaultInstance()).forEach(items::add)
+    public static final ResourcefulRegistry<CreativeModeTab> CREATIVE_MODE_TABS = ResourcefulRegistries.create(BuiltInRegistries.CREATIVE_MODE_TAB, Bumblezone.MODID);
 
-        );
-    }
+    public static final RegistryEntry<CreativeModeTab> BUMBLEZONE_MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", () ->
+            CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+                    .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab"))
+                    .icon(() -> {
+                        ItemStack iconStack = BzItems.HONEYCOMB_BROOD.get().getDefaultInstance();
+                        iconStack.getOrCreateTag().putBoolean("isCreativeTabIcon", true);
+                        return iconStack;
+                    })
+                    .displayItems((itemDisplayParameters, output) ->
+                            CUSTOM_CREATIVE_TAB_ITEMS.stream().map(item -> item.get().getDefaultInstance()).forEach(output::accept)).build());
 
     public static void addCreativeTabEntries(AddCreativeTabEntriesEvent event) {
         if (event.type() == AddCreativeTabEntriesEvent.Type.REDSTONE) {

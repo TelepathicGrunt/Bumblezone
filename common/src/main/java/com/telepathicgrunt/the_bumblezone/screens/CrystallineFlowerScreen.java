@@ -163,7 +163,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
                             enchantmentEntry,
                             isCurse ? 0x990000 : isTreasure ? 0xFFF000 : 0xFFD000,
-                            0xC0FF00
+                            0xC0FF00,
+                            true
                     );
                 }
                 else {
@@ -175,7 +176,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             rowStartY + row * 19,
                             enchantmentEntry,
                             isCurse ? 0x800000 : isTreasure ? 0xFFFF50 : 0x402020,
-                            0x304000
+                            0x304000,
+                            false
                     );
                 }
                 return true;
@@ -198,7 +200,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
                             enchantmentEntry,
                             isCurse ? 0x990000 : isTreasure ? 0xFFF000 : 0xFFD000,
-                            0xC0FF00);
+                            0xC0FF00,
+                            true
+                    );
                 }
                 else {
                     RenderSystem.enableDepthTest();
@@ -209,7 +213,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
                             enchantmentEntry,
                             isCurse ? 0xFF2000 : isTreasure ? 0xFFF000 : 0xD0B0F0,
-                            0x00DD40);
+                            0x00DD40,
+                            true
+                    );
                 }
             });
 
@@ -377,7 +383,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
-    private void drawEnchantmentText(GuiGraphics guiGraphics, int rowStartX, int currentRowStartY, EnchantmentSkeleton enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor) {
+    private void drawEnchantmentText(GuiGraphics guiGraphics, int rowStartX, int currentRowStartY, EnchantmentSkeleton enchantmentEntry, int enchantmentNameColor, int enchantmentLevelColor, boolean shadow) {
         String translatedEnchantmentName = getTruncatedString(
                 enchantmentEntry.namespace,
                 enchantmentEntry.path,
@@ -389,8 +395,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             mutableComponent2.append(Component.translatable("the_bumblezone.container.crystalline_flower.level_star"));
         }
 
-        guiGraphics.drawString(this.font, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor);
-        guiGraphics.drawString(this.font, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor);
+        guiGraphics.drawString(this.font, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor, shadow);
+        guiGraphics.drawString(this.font, mutableComponent2, rowStartX + 5, currentRowStartY + 8, enchantmentLevelColor, shadow);
     }
 
     @NotNull

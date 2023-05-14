@@ -5,7 +5,7 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:any_of",
+          "type": "minecraft:alternatives",
           "children": [
             {
               "name": "the_bumblezone:carvable_wax_wavy",

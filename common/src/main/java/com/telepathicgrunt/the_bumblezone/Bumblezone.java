@@ -22,7 +22,6 @@ import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
@@ -114,7 +113,6 @@ public class Bumblezone{
         FinalSetupEvent.EVENT.addListener(Bumblezone::onFinalSetup); //run after all mods
         RegisterFlammabilityEvent.EVENT.addListener(Bumblezone::onRegisterFlammablity);
         SetupEvent.EVENT.addListener(DispenserAddedSpawnEgg::onSetup);
-        RegisterCreativeTabsEvent.EVENT.addListener(BzCreativeTabs::registerCreativeTabs);
         AddCreativeTabEntriesEvent.EVENT.addListener(BzCreativeTabs::addCreativeTabEntries);
         RegisterEntityAttributesEvent.EVENT.addListener(BzEntities::registerEntityAttributes);
         RegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);
@@ -145,6 +143,7 @@ public class Bumblezone{
         BzBlockEntities.BLOCK_ENTITIES.init();
         BzPlacements.PLACEMENT_MODIFIER.init();
         BzProcessors.STRUCTURE_PROCESSOR.init();
+        BzCreativeTabs.CREATIVE_MODE_TABS.init();
         BzBiomeHeightRegistry.BIOME_HEIGHT.init();
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.init();
     }

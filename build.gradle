@@ -161,13 +161,6 @@ allprojects {
             }
         }
         maven {
-            url = 'https://maven.cafeteria.dev/releases'
-            content {
-                includeGroup 'dev.cafeteria'
-                includeGroup 'me.luligabi'
-            }
-        }
-        maven {
             name = 'Ladysnake Mods'
             url = 'https://ladysnake.jfrog.io/artifactory/mods'
             content {

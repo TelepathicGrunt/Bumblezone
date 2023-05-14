@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "minecraft:birch_log",
+    "minecraft:cherry_log",
     {
       "id": "ars_nouveau:purple_archwood_log",
       "required": false

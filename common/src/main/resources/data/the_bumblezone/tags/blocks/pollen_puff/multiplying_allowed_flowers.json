@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#flowers",
+    "minecraft:cherry_sapling",
     {
       "id": "biomesoplenty:pink_cherry_sapling",
       "required": false

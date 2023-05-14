@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.BabySpawnEvent;
@@ -134,7 +133,6 @@ public class BumblezoneForge {
         modEventBus.addListener(BumblezoneForge::onRegisterAttributes);
         modEventBus.addListener(BumblezoneForge::onSetup);
         modEventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onFinalSetup);
-        modEventBus.addListener(BumblezoneForge::onRegisterCreativeTabs);
         modEventBus.addListener(BumblezoneForge::onAddTabContents);
         modEventBus.addListener(BumblezoneForge::onSpawnPlacements);
 
@@ -186,19 +184,6 @@ public class BumblezoneForge {
         else if (CreativeModeTabs.SPAWN_EGGS.equals(tab)) return AddCreativeTabEntriesEvent.Type.SPAWN_EGGS;
         else if (CreativeModeTabs.OP_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.OPERATOR;
         return AddCreativeTabEntriesEvent.Type.CUSTOM;
-    }
-
-    private static void onRegisterCreativeTabs(CreativeModeTabEvent.Register event) {
-        RegisterCreativeTabsEvent.EVENT.invoke(new RegisterCreativeTabsEvent((id, operator, initialDisplayItems) ->
-                event.registerCreativeModeTab(id, builder -> {
-                    operator.accept(builder);
-                    builder.displayItems((flag, output) -> {
-                        List<ItemStack> stacks = Lists.newArrayList();
-                        initialDisplayItems.accept(stacks);
-                        output.acceptAll(stacks);
-                    });
-                })
-        ));
     }
 
     private static void onSetup(FMLCommonSetupEvent event) {

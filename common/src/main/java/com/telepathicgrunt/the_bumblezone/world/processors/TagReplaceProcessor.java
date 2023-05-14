@@ -14,9 +14,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.MultifaceBlock;
+import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -87,7 +90,7 @@ public class TagReplaceProcessor extends StructureProcessor {
 
                 if (doubleTallFlower) {
                     blockList = blockList.stream()
-                            .filter(f -> f instanceof TallFlowerBlock)
+                            .filter(block -> block instanceof DoublePlantBlock)
                             .collect(Collectors.toList());
                 }
 
@@ -110,6 +113,10 @@ public class TagReplaceProcessor extends StructureProcessor {
                                     newBlockState = newBlockState.setValue(faceProperty, direction == Direction.DOWN);
                                 }
                             }
+                        }
+
+                        if (newBlockState.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
+                            newBlockState = newBlockState.setValue(BlockStateProperties.FLOWER_AMOUNT, 4);
                         }
 
                         ChunkAccess chunk = worldReader.getChunk(structureBlockInfoWorld.pos());

@@ -1,23 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.fabricbase;
 
-import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
-import com.telepathicgrunt.the_bumblezone.events.RegisterCreativeTabsEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.Util;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.IdentityHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FabricBaseEventManager {
@@ -37,18 +31,6 @@ public class FabricBaseEventManager {
     });
 
     public static void init() {
-        RegisterCreativeTabsEvent.EVENT.invoke(new RegisterCreativeTabsEvent((id, initializer, initialDisplayItems) -> {
-            CreativeModeTab.Builder builder = FabricItemGroup.builder();
-            builder.title(Component.translatable("itemGroup." + id.getNamespace() + "." + id.getPath()));
-            initializer.accept(builder);
-            builder.displayItems((flags, output) -> {
-                List<ItemStack> stacks = Lists.newArrayList();
-                initialDisplayItems.accept(stacks);
-                output.acceptAll(stacks);
-            });
-            builder.build();
-        }));
-
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) ->
                 AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(TYPES.getOrDefault(tab, AddCreativeTabEntriesEvent.Type.CUSTOM), tab, entries::accept)));
 

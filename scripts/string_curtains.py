@@ -150,7 +150,7 @@ for color in colors:
             "rolls": 1,
             "entries": [
             {
-                "type": "minecraft:any_of",
+                "type": "minecraft:alternatives",
                 "children": [
                 {
                     "name": f"the_bumblezone:string_curtain_{color}",

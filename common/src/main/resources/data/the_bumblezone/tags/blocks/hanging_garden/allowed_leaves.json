@@ -3,6 +3,7 @@
   "values": [
     "minecraft:birch_leaves",
     "minecraft:flowering_azalea_leaves",
+    "minecraft:cherry_leaves",
     {
       "id": "atmospheric:flowering_morado_leaves",
       "required": false

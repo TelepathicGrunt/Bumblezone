@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.fabricbase.PlatformSharedData;
-import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
+import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.loader.api.FabricLoader;
@@ -105,8 +105,7 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static ServerPlayer getFakePlayer(ServerLevel level) {
-        return new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"))
-                .create(level.getServer(), level, "fake_player");
+        return FakePlayer.get(level);
     }
 
     @Contract(pure = true)

@@ -54,11 +54,6 @@ dependencies {
         force = true
     }
 
-    modImplementation("dev.cafeteria:fake-player-api:${rootProject.fake_player_api}") {
-        transitive = false //This API doesnt use fabric but includes it so we need to exclude it as its from 1.19.1
-    }
-    include("dev.cafeteria:fake-player-api:${rootProject.fake_player_api}")
-
     modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
 
     modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
