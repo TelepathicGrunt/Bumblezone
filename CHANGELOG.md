@@ -32,6 +32,9 @@ Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag
 ##### Entities:
 Honey Slime is now immune to fall damage like Magma Cubes. The honey protects the Slime!
 
+##### Structures:
+Hanging Gardens now can spawn Torch Flower, Pitcher Plant, Pink Petal, Cherry Leaves, Cherry Logs, and Cherry Saplings!.
+
 ##### Biomes:
 Added Bumblezone biomes to `minecraft:snow_golem_melts` biome tag to make Snow Golems melt in Bumblezone since beehives are roughly 95 degrees!
 
