@@ -28,7 +28,7 @@ public class InventoryMixin {
     private void bumblezone$armorTick(CallbackInfo ci) {
         armor.forEach(itemStack -> {
             if (itemStack.getItem() instanceof BeeArmor beeArmor) {
-                beeArmor.bz$onArmorTick(itemStack, player.level, player);
+                beeArmor.bz$onArmorTick(itemStack, player.level(), player);
             }
         });
     }

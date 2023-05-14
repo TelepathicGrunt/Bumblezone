@@ -62,7 +62,7 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	public static void queueEntityToTeleport(Entity entity, ResourceKey<Level> destination) {
-		if(entity != null && !entity.level.isClientSide() && !isEntityQueuedToTeleportAlready(entity)) {
+		if(entity != null && !entity.level().isClientSide() && !isEntityQueuedToTeleportAlready(entity)) {
 			QUEUED_ENTITIES_TO_TELEPORT.add(new QueuedEntityData(entity, destination));
 		}
 	}
@@ -159,7 +159,7 @@ public class BzWorldSavedData extends SavedData {
 
 	public static void enteringBumblezone(Entity entity, Vec3 destinationPosFound, Set<Entity> teleportedEntities) {
 		//Note, the player does not hold the previous dimension oddly enough.
-		if (!entity.level.isClientSide()) {
+		if (!entity.level().isClientSide()) {
 			MinecraftServer minecraftServer = entity.getServer(); // the server itself
 			ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
 			BlockPos blockPos = BlockPos.containing(destinationPosFound);
@@ -186,7 +186,7 @@ public class BzWorldSavedData extends SavedData {
 
 			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
-				capability.setNonBZDim(entity.level.dimension().location());
+				capability.setNonBZDim(entity.level().dimension().location());
 
 				// Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
 				if (bumblezoneWorld == null) {
@@ -201,7 +201,7 @@ public class BzWorldSavedData extends SavedData {
 
 				Entity baseVehicle = entity.getRootVehicle();
 				teleportEntityAndAssignToVehicle(baseVehicle, null, bumblezoneWorld, destinationPosFound, teleportedEntities);
-				((ServerLevel) entity.level).resetEmptyTime();
+				((ServerLevel) entity.level()).resetEmptyTime();
 				bumblezoneWorld.resetEmptyTime();
 			});
 		}
@@ -215,7 +215,7 @@ public class BzWorldSavedData extends SavedData {
 		}
 		Entity baseVehicle = entity.getRootVehicle();
 		teleportEntityAndAssignToVehicle(baseVehicle, null, destination, destinationPosition, teleportedEntities);
-		((ServerLevel) entity.level).resetEmptyTime();
+		((ServerLevel) entity.level()).resetEmptyTime();
 		destination.resetEmptyTime();
 	}
 
@@ -229,7 +229,7 @@ public class BzWorldSavedData extends SavedData {
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
 			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
 				capability.setNonBZPos(entity.position());
-				capability.setNonBZDim(entity.level.dimension().location());
+				capability.setNonBZDim(entity.level().dimension().location());
 			});
 		}
 
@@ -239,7 +239,7 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.stopSleepInBed(true, true);
 			}
 
-			serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation()));
+			serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()));
 			serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
 			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 			serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);

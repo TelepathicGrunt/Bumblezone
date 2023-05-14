@@ -129,7 +129,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             BlockState belowState = world.getBlockState(position);
             position.move(Direction.UP);
 
-            if(!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.getMaterial().blocksMotion()) {
+            if(!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.blocksMotion()) {
                 world.setBlock(position, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), 3);
                 world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN.get(), 0);
 

@@ -108,7 +108,7 @@ public abstract class LivingEntityMixin {
                 if (!livingEntity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(livingEntity) && !invulnerable) {
                     int respiration = EnchantmentHelper.getRespiration(livingEntity);
                     livingEntity.setAirSupply(
-                            respiration > 0 && livingEntity.level.random.nextInt(respiration + 1) > 0 ?
+                            respiration > 0 && livingEntity.level().random.nextInt(respiration + 1) > 0 ?
                                     livingEntity.getAirSupply() - 4 :
                                     livingEntity.getAirSupply() - 5
                     );
@@ -121,14 +121,14 @@ public abstract class LivingEntityMixin {
                             double d2 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
                             double d3 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
                             double d4 = livingEntity.getRandom().nextDouble() - livingEntity.getRandom().nextDouble();
-                            livingEntity.level.addParticle(simpleParticleType, livingEntity.getX() + d2, livingEntity.getY() + d3, livingEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
+                            livingEntity.level().addParticle(simpleParticleType, livingEntity.getX() + d2, livingEntity.getY() + d3, livingEntity.getZ() + d4, vector3d.x, vector3d.y, vector3d.z);
                         }
 
-                        livingEntity.hurt(livingEntity.level.damageSources().drown(), 2.0F);
+                        livingEntity.hurt(livingEntity.level().damageSources().drown(), 2.0F);
                     }
                 }
 
-                if (!livingEntity.level.isClientSide() && livingEntity.isPassenger() && livingEntity.getVehicle() != null && livingEntity.getVehicle().dismountsUnderwater()) {
+                if (!livingEntity.level().isClientSide() && livingEntity.isPassenger() && livingEntity.getVehicle() != null && livingEntity.getVehicle().dismountsUnderwater()) {
                     livingEntity.stopRiding();
                 }
             }

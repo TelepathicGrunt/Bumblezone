@@ -25,7 +25,7 @@ public class PacketChannelHelperImpl {
     public static <T extends Packet<T>> void registerC2SPacket(ResourceLocation channel, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {
         ServerPlayNetworking.registerGlobalReceiver(createChannelLocation(channel, id), (server, player, handler1, buf, responseSender) -> {
             T decode = handler.decode(buf);
-            server.execute(() -> handler.handle(decode).apply(player, player.level));
+            server.execute(() -> handler.handle(decode).apply(player, player.level()));
         });
     }
 

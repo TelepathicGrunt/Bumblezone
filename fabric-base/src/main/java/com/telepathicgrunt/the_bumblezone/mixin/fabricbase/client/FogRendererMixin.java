@@ -42,7 +42,7 @@ public class FogRendererMixin {
 
     @Inject(method = "setupFog", at = @At("TAIL"))
     private static void bumblzone$onRenderFog(Camera camera, FogRenderer.FogMode fogMode, float renderDistance, boolean bl, float partialTicks, CallbackInfo ci) {
-        FluidState state = camera.getEntity().level.getFluidState(camera.getBlockPosition());
+        FluidState state = camera.getEntity().level().getFluidState(camera.getBlockPosition());
         if (state.getType() instanceof BzFlowingFluid bzFluid) {
             ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties().id());
             if (properties != null) {

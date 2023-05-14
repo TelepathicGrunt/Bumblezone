@@ -29,7 +29,7 @@ public class ServerPlayerMixin {
             method = "teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDFF)V",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;getLevel()Lnet/minecraft/server/level/ServerLevel;"
+                    target = "Lnet/minecraft/server/level/ServerPlayer;level()Lnet/minecraft/world/level/Level;"
             ),
             cancellable = true
     )

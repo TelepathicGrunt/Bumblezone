@@ -10,6 +10,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +22,7 @@ import java.util.Map;
 
 public class FabricBaseEventManager {
 
-    private static final Map<CreativeModeTab, AddCreativeTabEntriesEvent.Type> TYPES = Util.make(new IdentityHashMap<>(), map -> {
+    private static final Map<ResourceKey<CreativeModeTab>, AddCreativeTabEntriesEvent.Type> TYPES = Util.make(new IdentityHashMap<>(), map -> {
         map.put(CreativeModeTabs.BUILDING_BLOCKS, AddCreativeTabEntriesEvent.Type.BUILDING);
         map.put(CreativeModeTabs.COLORED_BLOCKS, AddCreativeTabEntriesEvent.Type.COLORED);
         map.put(CreativeModeTabs.NATURAL_BLOCKS, AddCreativeTabEntriesEvent.Type.NATURAL);
@@ -36,7 +38,8 @@ public class FabricBaseEventManager {
 
     public static void init() {
         RegisterCreativeTabsEvent.EVENT.invoke(new RegisterCreativeTabsEvent((id, initializer, initialDisplayItems) -> {
-            CreativeModeTab.Builder builder = FabricItemGroup.builder(id);
+            CreativeModeTab.Builder builder = FabricItemGroup.builder();
+            builder.title(Component.translatable("itemGroup." + id.getNamespace() + "." + id.getPath()));
             initializer.accept(builder);
             builder.displayItems((flags, output) -> {
                 List<ItemStack> stacks = Lists.newArrayList();
