@@ -29,11 +29,16 @@ Any String Curtain can be crafted to another color with 1 dye now!
 ##### Items:
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
 
+Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not want it to be too easy to multiply (Pitcher Plant cannot be bonemealed)
+
 ##### Entities:
 Honey Slime is now immune to fall damage like Magma Cubes. The honey protects the Slime!
 
 ##### Structures:
 Hanging Gardens now can spawn Torch Flower, Pitcher Plant, Pink Petal, Cherry Leaves, Cherry Logs, and Cherry Saplings!.
+
+Cell Maze now will always have 1 Throne locating Honey Compass always in its center start room.
+ The structure can also now have a Mystery locating Honey Compass
 
 ##### Biomes:
 Added Bumblezone biomes to `minecraft:snow_golem_melts` biome tag to make Snow Golems melt in Bumblezone since beehives are roughly 95 degrees!

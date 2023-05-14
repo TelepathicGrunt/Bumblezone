@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:small_flowers",
     "minecraft:pink_petals",
     "minecraft:cherry_sapling",
+    "#minecraft:small_flowers",
     {
       "id": "atmospheric:flowering_morado_leaf_carpet",
       "required": false

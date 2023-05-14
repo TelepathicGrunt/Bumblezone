@@ -506,11 +506,11 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_throne_structure\"}"
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_mystery_structure\"}"
             },
             {
               "function": "minecraft:set_nbt",
-              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_throne_description\"}"
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
             },
             {
               "function": "minecraft:set_nbt",
@@ -518,15 +518,15 @@
             },
             {
               "function": "the_bumblezone:honey_compass_locate_structure",
-              "destination": "the_bumblezone:honey_compass/throne_locating",
+              "destination": "the_bumblezone:honey_compass/misc_locating",
               "skip_existing_chunks": false,
-              "search_radius": 40
+              "search_radius": 50
             }
           ]
         },
         {
           "type": "minecraft:empty",
-          "weight": 9
+          "weight": 8
         }
       ]
     }
