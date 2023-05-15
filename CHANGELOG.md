@@ -48,3 +48,6 @@ Lesser Mystery Honey Compasses are added to several structure's loot where these
 Added Bumblezone biomes to `minecraft:snow_golem_melts` biome tag to make Snow Golems melt in Bumblezone since beehives are roughly 95 degrees!
 
 Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag to make extra sure Wandering Traders do not spawn in Bumblezone.
+
+##### Dimension:
+Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.

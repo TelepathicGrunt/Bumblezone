@@ -1,0 +1,9 @@
+{
+  "parent": "the_bumblezone:block/detailed_stairs",
+  "textures": {
+    "full": "the_bumblezone:block/ancient_wax/bricks",
+    "halves": "the_bumblezone:block/ancient_wax/bricks_half",
+    "half_top": "the_bumblezone:block/ancient_wax/bricks_half_double",
+    "side": "the_bumblezone:block/ancient_wax/bricks_half"
+  }
+}

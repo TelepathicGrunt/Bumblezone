@@ -105,7 +105,19 @@ public class BzCreativeTabs {
             BzItems.HONEY_SLIME_SPAWN_EGG,
             BzItems.BEEHEMOTH_SPAWN_EGG,
             BzItems.BEE_QUEEN_SPAWN_EGG,
-            BzItems.ESSENCE_OF_THE_BEES
+            BzItems.ESSENCE_OF_THE_BEES,
+            BzItems.ANCIENT_WAX_BRICKS,
+            BzItems.ANCIENT_WAX_COMPOUND_EYES,
+            BzItems.ANCIENT_WAX_DIAMOND,
+            BzItems.ANCIENT_WAX_BRICKS_STAIRS,
+            BzItems.LUMINESCENT_WAX_CHANNEL_RED,
+            BzItems.LUMINESCENT_WAX_CHANNEL_PURPLE,
+            BzItems.LUMINESCENT_WAX_CHANNEL_BLUE,
+            BzItems.LUMINESCENT_WAX_CHANNEL_GREEN,
+            BzItems.LUMINESCENT_WAX_CHANNEL_YELLOW,
+            BzItems.LUMINESCENT_WAX_CHANNEL_WHITE,
+            BzItems.BEE_SOUP,
+            BzItems.BUZZING_BRIEFCASE
     );
 
     public static final ResourcefulRegistry<CreativeModeTab> CREATIVE_MODE_TABS = ResourcefulRegistries.create(BuiltInRegistries.CREATIVE_MODE_TAB, Bumblezone.MODID);

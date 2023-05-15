@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.MapColor;
 
 
 public class BzBlocks {
@@ -31,6 +32,16 @@ public class BzBlocks {
     public static final RegistryEntry<Block> ROYAL_JELLY_BLOCK = BLOCKS.register("royal_jelly_block", RoyalJellyBlock::new);
     public static final RegistryEntry<Block> GLISTERING_HONEY_CRYSTAL = BLOCKS.register("glistering_honey_crystal", GlisteringHoneyCrystal::new);
     public static final RegistryEntry<Block> CARVABLE_WAX = BLOCKS.register("carvable_wax", CarvableWax::new);
+    public static final RegistryEntry<Block> ANCIENT_WAX_BRICKS = BLOCKS.register("ancient_wax_bricks", AncientWax::new);
+    public static final RegistryEntry<Block> ANCIENT_WAX_COMPOUND_EYES = BLOCKS.register("ancient_wax_compound_eyes", AncientWax::new);
+    public static final RegistryEntry<Block> ANCIENT_WAX_DIAMOND = BLOCKS.register("ancient_wax_diamond", AncientWax::new);
+    public static final RegistryEntry<Block> ANCIENT_WAX_BRICKS_STAIRS = BLOCKS.register("ancient_wax_bricks_stairs", () -> new AncientWaxStairs(BzBlocks.ANCIENT_WAX_BRICKS.get().defaultBlockState()));
+    public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_RED = BLOCKS.register("luminescent_wax_channel_red", () -> new LuminescentWax(MapColor.COLOR_RED));
+    public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_PURPLE = BLOCKS.register("luminescent_wax_channel_purple", () -> new LuminescentWax(MapColor.COLOR_PURPLE));
+    public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_BLUE = BLOCKS.register("luminescent_wax_channel_blue", () -> new LuminescentWax(MapColor.COLOR_BLUE));
+    public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_GREEN = BLOCKS.register("luminescent_wax_channel_green", () -> new LuminescentWax(MapColor.COLOR_GREEN));
+    public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_YELLOW = BLOCKS.register("luminescent_wax_channel_yellow", () -> new LuminescentWax(MapColor.COLOR_YELLOW));
+    public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_WHITE = BLOCKS.register("luminescent_wax_channel_white", () -> new LuminescentWax(MapColor.SNOW));
     public static final RegistryEntry<Block> SUPER_CANDLE_BASE = BLOCKS.register("super_candle_base", SuperCandleBase::new);
     public static final RegistryEntry<Block> SUPER_CANDLE_WICK = BLOCKS.register("super_candle_wick", () -> new SuperCandleWick(false));
     public static final RegistryEntry<Block> SUPER_CANDLE_WICK_SOUL = BLOCKS.register("super_candle_wick_soul", () -> new SuperCandleWick(true));

@@ -2,7 +2,7 @@
   "effects": "the_bumblezone:sky_property",
   "ultrawarm": false,
   "natural": true,
-  "ambient_light": 0.25,
+  "ambient_light": 0.14,
   "has_skylight": false,
   "has_ceiling": true,
   "infiniburn": "#minecraft:infiniburn_overworld",
