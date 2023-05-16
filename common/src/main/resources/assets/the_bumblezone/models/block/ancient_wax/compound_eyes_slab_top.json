@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "the_bumblezone:block/ancient_wax/compound_eyes",
+    "side": "the_bumblezone:block/ancient_wax/compound_eyes_half_double",
+    "top": "the_bumblezone:block/ancient_wax/compound_eyes"
+  }
+}

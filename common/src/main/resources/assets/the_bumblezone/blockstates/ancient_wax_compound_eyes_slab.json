@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "the_bumblezone:block/ancient_wax/compound_eyes_slab_bottom"
+    },
+    "type=double": {
+      "model": "the_bumblezone:block/ancient_wax/compound_eyes_slab_double"
+    },
+    "type=top": {
+      "model": "the_bumblezone:block/ancient_wax/compound_eyes_slab_top"
+    }
+  }
+}

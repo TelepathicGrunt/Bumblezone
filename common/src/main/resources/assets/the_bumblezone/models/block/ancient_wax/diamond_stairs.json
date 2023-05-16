@@ -1,0 +1,9 @@
+{
+  "parent": "the_bumblezone:block/detailed_stairs",
+  "textures": {
+    "full": "the_bumblezone:block/ancient_wax/diamond",
+    "halves": "the_bumblezone:block/ancient_wax/diamond_half",
+    "half_top": "the_bumblezone:block/ancient_wax/diamond_half_double",
+    "side": "the_bumblezone:block/ancient_wax/diamond_half"
+  }
+}

@@ -47,6 +47,11 @@ public class BzItems {
     public static final RegistryEntry<Item> ANCIENT_WAX_COMPOUND_EYES = ITEMS.register("ancient_wax_compound_eyes", () -> new BlockItem(BzBlocks.ANCIENT_WAX_COMPOUND_EYES.get(), new Item.Properties()));
     public static final RegistryEntry<Item> ANCIENT_WAX_DIAMOND = ITEMS.register("ancient_wax_diamond", () -> new BlockItem(BzBlocks.ANCIENT_WAX_DIAMOND.get(), new Item.Properties()));
     public static final RegistryEntry<Item> ANCIENT_WAX_BRICKS_STAIRS = ITEMS.register("ancient_wax_bricks_stairs", () -> new BlockItem(BzBlocks.ANCIENT_WAX_BRICKS_STAIRS.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> ANCIENT_WAX_COMPOUND_EYES_STAIRS = ITEMS.register("ancient_wax_compound_eyes_stairs", () -> new BlockItem(BzBlocks.ANCIENT_WAX_COMPOUND_EYES_STAIRS.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> ANCIENT_WAX_DIAMOND_STAIRS = ITEMS.register("ancient_wax_diamond_stairs", () -> new BlockItem(BzBlocks.ANCIENT_WAX_DIAMOND_STAIRS.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> ANCIENT_WAX_BRICKS_SLAB = ITEMS.register("ancient_wax_bricks_slab", () -> new BlockItem(BzBlocks.ANCIENT_WAX_BRICKS_SLAB.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> ANCIENT_WAX_COMPOUND_EYES_SLAB = ITEMS.register("ancient_wax_compound_eyes_slab", () -> new BlockItem(BzBlocks.ANCIENT_WAX_COMPOUND_EYES_SLAB.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> ANCIENT_WAX_DIAMOND_SLAB = ITEMS.register("ancient_wax_diamond_slab", () -> new BlockItem(BzBlocks.ANCIENT_WAX_DIAMOND_SLAB.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_CHANNEL_RED = ITEMS.register("luminescent_wax_channel_red", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CHANNEL_RED.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_CHANNEL_PURPLE = ITEMS.register("luminescent_wax_channel_purple", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CHANNEL_PURPLE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_CHANNEL_BLUE = ITEMS.register("luminescent_wax_channel_blue", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CHANNEL_BLUE.get(), new Item.Properties()));

@@ -1,0 +1,8 @@
+{
+  "parent": "the_bumblezone:block/detailed_stairs_outer",
+  "textures": {
+    "bottom": "the_bumblezone:block/ancient_wax/compound_eyes",
+    "side": "the_bumblezone:block/ancient_wax/compound_eyes_half",
+    "top": "the_bumblezone:block/ancient_wax/compound_eyes_quarter"
+  }
+}

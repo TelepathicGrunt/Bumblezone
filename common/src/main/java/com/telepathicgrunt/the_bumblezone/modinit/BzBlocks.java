@@ -36,6 +36,11 @@ public class BzBlocks {
     public static final RegistryEntry<Block> ANCIENT_WAX_COMPOUND_EYES = BLOCKS.register("ancient_wax_compound_eyes", AncientWax::new);
     public static final RegistryEntry<Block> ANCIENT_WAX_DIAMOND = BLOCKS.register("ancient_wax_diamond", AncientWax::new);
     public static final RegistryEntry<Block> ANCIENT_WAX_BRICKS_STAIRS = BLOCKS.register("ancient_wax_bricks_stairs", () -> new AncientWaxStairs(BzBlocks.ANCIENT_WAX_BRICKS.get().defaultBlockState()));
+    public static final RegistryEntry<Block> ANCIENT_WAX_COMPOUND_EYES_STAIRS = BLOCKS.register("ancient_wax_compound_eyes_stairs", () -> new AncientWaxStairs(BzBlocks.ANCIENT_WAX_COMPOUND_EYES.get().defaultBlockState()));
+    public static final RegistryEntry<Block> ANCIENT_WAX_DIAMOND_STAIRS = BLOCKS.register("ancient_wax_diamond_stairs", () -> new AncientWaxStairs(BzBlocks.ANCIENT_WAX_DIAMOND.get().defaultBlockState()));
+    public static final RegistryEntry<Block> ANCIENT_WAX_BRICKS_SLAB = BLOCKS.register("ancient_wax_bricks_slab", AncientWaxSlab::new);
+    public static final RegistryEntry<Block> ANCIENT_WAX_COMPOUND_EYES_SLAB = BLOCKS.register("ancient_wax_compound_eyes_slab", AncientWaxSlab::new);
+    public static final RegistryEntry<Block> ANCIENT_WAX_DIAMOND_SLAB = BLOCKS.register("ancient_wax_diamond_slab", AncientWaxSlab::new);
     public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_RED = BLOCKS.register("luminescent_wax_channel_red", () -> new LuminescentWax(MapColor.COLOR_RED));
     public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_PURPLE = BLOCKS.register("luminescent_wax_channel_purple", () -> new LuminescentWax(MapColor.COLOR_PURPLE));
     public static final RegistryEntry<Block> LUMINESCENT_WAX_CHANNEL_BLUE = BLOCKS.register("luminescent_wax_channel_blue", () -> new LuminescentWax(MapColor.COLOR_BLUE));
