@@ -1,11 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 
 
-public class LuminescentWax extends Block {
+public class LuminescentWax extends AxisFacingBlock {
 
     public LuminescentWax(MapColor mapColor) {
         super(Properties.of()

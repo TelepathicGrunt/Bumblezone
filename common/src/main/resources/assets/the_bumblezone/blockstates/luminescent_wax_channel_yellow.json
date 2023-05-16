@@ -1,5 +1,79 @@
 {
   "variants": {
-    "": { "model": "the_bumblezone:block/luminescent_wax/channel_yellow" }
+    "facing=north,axis=y": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow"
+    },
+    "facing=east,axis=y": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "y": 90
+    },
+    "facing=south,axis=y": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "y": 180
+    },
+    "facing=west,axis=y": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "y": 270
+    },
+
+
+    "facing=up,axis=x": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow_rotated",
+      "x": 90,
+      "y": 90
+    },
+    "facing=down,axis=x": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "x": 90,
+      "y": 90
+    },
+    "facing=up,axis=z": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow_rotated",
+      "x": 90
+    },
+    "facing=down,axis=z": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "x": 90
+    },
+
+
+    "facing=up,axis=y": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow"
+    },
+    "facing=down,axis=y": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow"
+    },
+    "facing=north,axis=x": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "x": 90
+    },
+    "facing=east,axis=x": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "x": 90
+    },
+    "facing=south,axis=x": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "x": 90
+    },
+    "facing=west,axis=x": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "x": 90
+    },
+    "facing=north,axis=z": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "z": 90
+    },
+    "facing=east,axis=z": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "z": 90
+    },
+    "facing=south,axis=z": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "z": 90
+    },
+    "facing=west,axis=z": {
+      "model": "the_bumblezone:block/luminescent_wax/channel_yellow",
+      "z": 90
+    }
   }
 }

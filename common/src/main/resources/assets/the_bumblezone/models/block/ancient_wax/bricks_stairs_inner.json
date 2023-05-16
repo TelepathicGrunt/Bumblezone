@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:block/detailed_stairs_inner",
   "textures": {
     "bottom": "the_bumblezone:block/ancient_wax/bricks",
-    "side": "the_bumblezone:block/ancient_wax/bricks_half",
+    "side": "the_bumblezone:block/ancient_wax/bricks_half_double",
     "top": "the_bumblezone:block/ancient_wax/bricks_quarter"
   }
 }
