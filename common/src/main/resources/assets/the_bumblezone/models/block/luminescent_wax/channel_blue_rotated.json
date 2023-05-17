@@ -1,7 +1,6 @@
 {
   "parent": "block/block",
   "textures": {
-    "base": "the_bumblezone:block/luminescent_wax/channel",
     "side": "the_bumblezone:block/luminescent_wax/channel_side_rotated",
     "light": "the_bumblezone:block/luminescent_wax/channel_light_blue",
     "particle": "the_bumblezone:block/luminescent_wax/channel"

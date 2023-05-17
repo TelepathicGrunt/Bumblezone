@@ -1,13 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 
 
-public class AncientWaxSlab extends SlabBlock {
+public class AncientWaxSlab extends SlabBlock implements AncientWaxBase {
 
     public AncientWaxSlab() {
         super(Properties.of()
