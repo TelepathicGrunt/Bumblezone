@@ -12,11 +12,11 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.Vec3;
 
-public class DirectionFacingBlock extends Block {
+public class RotationFacingBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
 
-    protected DirectionFacingBlock(Properties settings) {
+    protected RotationFacingBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(ROTATION, 1)

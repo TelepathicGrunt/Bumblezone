@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
@@ -56,7 +57,7 @@ public class RandomReplaceWithPropertiesProcessor extends StructureProcessor {
                     BlockState newBlockState = outputBlock.get().defaultBlockState();
                     for(Property<?> property : structureBlockInfoWorld.state().getProperties()) {
                         if(newBlockState.hasProperty(property)) {
-                            newBlockState = getStateWithProperty(newBlockState, structureBlockInfoWorld.state(), property);
+                            newBlockState = GeneralUtils.getStateWithProperty(newBlockState, structureBlockInfoWorld.state(), property);
                         }
                     }
                     return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
@@ -65,7 +66,7 @@ public class RandomReplaceWithPropertiesProcessor extends StructureProcessor {
                     BlockState newBlockState = outputBlocks.get(random.nextInt(outputBlocks.size())).defaultBlockState();
                     for(Property<?> property : structureBlockInfoWorld.state().getProperties()) {
                         if(newBlockState.hasProperty(property)) {
-                            newBlockState = getStateWithProperty(newBlockState, structureBlockInfoWorld.state(), property);
+                            newBlockState = GeneralUtils.getStateWithProperty(newBlockState, structureBlockInfoWorld.state(), property);
                         }
                     }
                     return new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
@@ -76,10 +77,6 @@ public class RandomReplaceWithPropertiesProcessor extends StructureProcessor {
             }
         }
         return structureBlockInfoWorld;
-    }
-
-    private <T extends Comparable<T>> BlockState getStateWithProperty(BlockState state, BlockState stateToCopy, Property<T> property) {
-        return state.setValue(property, stateToCopy.getValue(property));
     }
 
     @Override

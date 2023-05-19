@@ -1,5 +1,6 @@
 {
   "type": "minecraft:chest",
+  "random_sequence": "the_bumblezone:structures",
   "pools": [
     {
       "rolls": 1,

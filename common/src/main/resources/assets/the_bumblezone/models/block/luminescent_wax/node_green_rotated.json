@@ -1,0 +1,26 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "node_start": "the_bumblezone:block/luminescent_wax/channel_node_start_light_green",
+    "node_end": "the_bumblezone:block/luminescent_wax/channel_node_end_light_green",
+    "node_start_rotated": "the_bumblezone:block/luminescent_wax/channel_node_start_light_green_rotated",
+    "node_end_rotated": "the_bumblezone:block/luminescent_wax/channel_node_end_light_green_rotated",
+    "turn": "the_bumblezone:block/luminescent_wax/channel_corner_light_green",
+    "turn_rotated": "the_bumblezone:block/luminescent_wax/channel_corner_light_green_rotated",
+    "particle": "the_bumblezone:block/luminescent_wax/channel_node"
+  },
+  "elements": [
+    {
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "down":  { "texture": "#node_end_rotated", "cullface": "down" },
+        "up":    { "texture": "#node_start_rotated", "cullface": "up" },
+        "north": { "texture": "#turn", "cullface": "north" },
+        "south": { "texture": "#turn_rotated", "cullface": "south" },
+        "west":  { "texture": "#node_end", "cullface": "west" },
+        "east":  { "texture": "#node_start", "cullface": "east" }
+      }
+    }
+  ]
+}

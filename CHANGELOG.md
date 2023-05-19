@@ -3,6 +3,24 @@
 ##### Major:
 Updated to 1.20!
 
+
+:Additions:
+
+##### Blocks:
+Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 
+ anyone who has not consumed Essence of the Bees before and are standing on said Ancient Wax blocks. You can use shears to 
+ convert between 3 different patterns for these blocks. Only found in Sempiternal Sanctum. Can be crafted into stairs or slabs.
+
+Added Luminescent Wax Channel blocks and Luminescent Wax Node blocks! Very high blast resistance, uncraftable, and will 
+ give Slowness, Weakness, and Mining Fatigue to anyone who has not consumed Essence of the Bees before and are standing 
+ on said Ancient Wax blocks. If the block has a light in it, people who consumed Essence of the Bees before and standing 
+ on said blocks will get Speed, Damage Resistance, and Beenergized. The light forms will repel Piglins and Hoglins and 
+ also will count towards empowering Enchanting Table like Bookshelves do. You can use shears to change the direction of these blocks.
+ Only found in Sempiternal Sanctum.
+
+
+:Changes:
+
 ##### Blocks:
 Walking through Pile of Pollen should not trigger Sculk Sensor now.
 
@@ -31,6 +49,9 @@ Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag
 
 Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not want it to be too easy to multiply (Pitcher Plant cannot be bonemealed)
 
+##### Enchantments:
+Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
+
 ##### Entities:
 Honey Slime is now immune to fall damage like Magma Cubes. The honey protects the Slime!
 
@@ -51,3 +72,6 @@ Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag
 
 ##### Dimension:
 Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
+
+
+#TODO: add recipe view descriptions of new blocks and items.

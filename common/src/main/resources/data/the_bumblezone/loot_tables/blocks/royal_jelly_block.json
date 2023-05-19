@@ -1,5 +1,6 @@
 {
   "type": "minecraft:block",
+  "random_sequence": "the_bumblezone:blocks",
   "pools": [
     {
       "rolls": 1.0,

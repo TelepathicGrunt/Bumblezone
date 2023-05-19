@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -74,7 +75,13 @@ public class CombCutterEnchantment extends BzEnchantment {
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-            event.speed().addAndGet(equipmentLevel * equipmentLevel + (lesserTarget ? 3 : 13));
+            double newSpeed = (equipmentLevel * equipmentLevel) + (lesserTarget ? 3 : 13);
+
+            if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
+                newSpeed /= ((playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier() + 2) * 20);
+            }
+
+            event.speed().addAndGet(newSpeed);
         }
     }
 

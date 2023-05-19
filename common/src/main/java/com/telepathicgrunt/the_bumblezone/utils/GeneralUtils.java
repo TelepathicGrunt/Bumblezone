@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.RandomState;
@@ -448,5 +449,11 @@ public class GeneralUtils {
             return false;
         }
         return PlatformHooks.isPermissionAllowedAtSpot(level, entity, pos, placingBlock);
+    }
+
+    ///////////////////////////////////////////////
+
+    public static <T extends Comparable<T>> BlockState getStateWithProperty(BlockState state, BlockState stateToCopy, Property<T> property) {
+        return state.setValue(property, stateToCopy.getValue(property));
     }
 }

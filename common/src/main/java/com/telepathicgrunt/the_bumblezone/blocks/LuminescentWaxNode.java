@@ -1,11 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
@@ -17,14 +19,14 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 
-public class LuminescentWaxNode extends DirectionFacingBlock implements LuminescentWaxBase {
+public class LuminescentWaxNode extends RotationFacingBlock implements LuminescentWaxBase {
 
-    public LuminescentWaxNode(MapColor mapColor, LuminescentWaxBase.COLOR color) {
+    public LuminescentWaxNode(MapColor mapColor) {
         super(Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
-                .lightLevel((blockState) -> color != LuminescentWaxBase.COLOR.NONE ? 0 : 14)
-                .strength(2.0F, 16.0F));
+                .lightLevel((blockState) -> blockState.is(BzTags.LUMINESCENT_WAX_LIGHT_NODES) ? 14 : 0)
+                .strength(3.0F, 19.0F));
     }
 
     @Override
@@ -47,7 +49,7 @@ public class LuminescentWaxNode extends DirectionFacingBlock implements Luminesc
                     .setValue(ROTATION, newRotateProperty),
             3);
 
-            this.spawnDestroyParticles(world, playerEntity, position,blockState);
+            this.spawnDestroyParticles(world, playerEntity, position, blockState);
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
@@ -62,4 +64,9 @@ public class LuminescentWaxNode extends DirectionFacingBlock implements Luminesc
         return super.use(blockState, world, position, playerEntity, playerHand, raytraceResult);
     }
 
+    @Override
+    public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
+        this.applyEntityEffects(BzTags.LUMINESCENT_WAX_LIGHT_NODES, state, entity);
+        super.stepOn(level, blockPos, state, entity);
+    }
 }

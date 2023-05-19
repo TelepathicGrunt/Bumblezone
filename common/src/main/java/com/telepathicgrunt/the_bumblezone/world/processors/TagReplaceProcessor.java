@@ -98,7 +98,7 @@ public class TagReplaceProcessor extends StructureProcessor {
                     BlockState newBlockState = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
                     for(Property<?> property : structureBlockInfoWorld.state().getProperties()) {
                         if(newBlockState.hasProperty(property)) {
-                            newBlockState = getStateWithProperty(newBlockState, structureBlockInfoWorld.state(), property);
+                            newBlockState = GeneralUtils.getStateWithProperty(newBlockState, structureBlockInfoWorld.state(), property);
                         }
                     }
 
@@ -137,10 +137,6 @@ public class TagReplaceProcessor extends StructureProcessor {
             }
         }
         return returnInfo;
-    }
-
-    private <T extends Comparable<T>> BlockState getStateWithProperty(BlockState state, BlockState stateToCopy, Property<T> property) {
-        return state.setValue(property, stateToCopy.getValue(property));
     }
 
     @Override

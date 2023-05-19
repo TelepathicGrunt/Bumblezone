@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:glistering_honey_crystal"
+    "the_bumblezone:glistering_honey_crystal",
+    "#the_bumblezone:ancient_wax/full_blocks",
+    "#the_bumblezone:ancient_wax/slabs",
+    "#the_bumblezone:ancient_wax/stairs"
   ]
 }

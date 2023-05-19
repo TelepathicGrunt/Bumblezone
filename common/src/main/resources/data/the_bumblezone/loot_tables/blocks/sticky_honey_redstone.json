@@ -1,4 +1,5 @@
 {
   "type": "minecraft:block",
+  "random_sequence": "the_bumblezone:blocks",
   "pools": []
 }

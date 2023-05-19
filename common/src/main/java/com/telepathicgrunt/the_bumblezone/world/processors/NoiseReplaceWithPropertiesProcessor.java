@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.processors;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -64,17 +65,13 @@ public class NoiseReplaceWithPropertiesProcessor extends StructureProcessor {
                 BlockState newBlockState = outputBlock.defaultBlockState();
                 for(Property<?> property : infoIn2.state().getProperties()) {
                     if(newBlockState.hasProperty(property)) {
-                        newBlockState = getStateWithProperty(newBlockState, infoIn2.state(), property);
+                        newBlockState = GeneralUtils.getStateWithProperty(newBlockState, infoIn2.state(), property);
                     }
                 }
                 return new StructureTemplate.StructureBlockInfo(infoIn2.pos(), newBlockState, infoIn2.nbt());
             }
         }
         return infoIn2;
-    }
-
-    private <T extends Comparable<T>> BlockState getStateWithProperty(BlockState state, BlockState stateToCopy, Property<T> property) {
-        return state.setValue(property, stateToCopy.getValue(property));
     }
 
     @Override

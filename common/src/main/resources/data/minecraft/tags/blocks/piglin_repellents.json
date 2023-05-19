@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:super_candle_wick_soul"
+    "the_bumblezone:super_candle_wick_soul",
+    "#the_bumblezone:luminescent_wax/light_channels",
+    "#the_bumblezone:luminescent_wax/light_nodes"
   ]
 }

@@ -3,6 +3,11 @@
   "values": [
     "the_bumblezone:beehive_beeswax",
     "the_bumblezone:carvable_wax",
+    "#the_bumblezone:ancient_wax/full_blocks",
+    "#the_bumblezone:ancient_wax/slabs",
+    "#the_bumblezone:ancient_wax/stairs",
+    "#the_bumblezone:luminescent_wax/channels",
+    "#the_bumblezone:luminescent_wax/nodes",
     "#minecraft:planks",
     "#minecraft:logs",
     "#minecraft:leaves",

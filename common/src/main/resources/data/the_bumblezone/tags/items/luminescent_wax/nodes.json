@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:luminescent_wax_node",
+    "#the_bumblezone:luminescent_wax/light_nodes"
+  ]
+}

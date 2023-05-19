@@ -42,6 +42,11 @@ public class BzTags {
     public static final TagKey<Block> FORCED_DISALLOW_WATERLOGGING_BLOCKS_WHEN_PLACED_IN_FLUID = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water/forced_disallow_waterlogging_blocks_when_placed_in_fluid"));
     public static final TagKey<Block> DOWNWARD_BUBBLE_COLUMN_CAUSING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water/downward_bubble_column_causing"));
     public static final TagKey<Block> UPWARD_BUBBLE_COLUMN_CAUSING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sugar_water/upward_bubble_column_causing"));
+    public static final TagKey<Block> ANCIENT_WAX_FULL_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "ancient_wax/full_blocks"));
+    public static final TagKey<Block> ANCIENT_WAX_SLABS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "ancient_wax/slabs"));
+    public static final TagKey<Block> ANCIENT_WAX_STAIRS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "ancient_wax/stairs"));
+    public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_CHANNELS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_channels"));
+    public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_NODES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_nodes"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));
