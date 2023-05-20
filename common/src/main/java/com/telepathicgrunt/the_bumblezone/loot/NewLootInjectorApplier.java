@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.loot;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.mixin.LootContextAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.loot.LootContextAccessor;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;

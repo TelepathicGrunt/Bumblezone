@@ -1,5 +1,5 @@
 {
-    "parent": "item/generated",
+    "parent": "minecraft:item/generated",
     "textures": {
         "layer0": "the_bumblezone:item/stingless_bee_helmet_2"
     }

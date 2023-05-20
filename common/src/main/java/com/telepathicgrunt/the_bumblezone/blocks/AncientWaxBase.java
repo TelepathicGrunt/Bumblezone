@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -33,6 +34,10 @@ public interface AncientWaxBase {
             !collidingEntity.level().isClientSide() &&
             collidingEntity.tickCount % 10 == 0)
         {
+            if (livingEntity instanceof Player player && (!player.isCreative() || !player.isSpectator())) {
+                return;
+            }
+
             if (!(livingEntity instanceof ServerPlayer player && EssenceOfTheBees.hasEssence(player))) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,

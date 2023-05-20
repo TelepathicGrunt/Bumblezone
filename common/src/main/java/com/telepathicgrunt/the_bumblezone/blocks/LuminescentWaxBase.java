@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -18,6 +19,12 @@ public interface LuminescentWaxBase {
                 !collidingEntity.level().isClientSide() &&
                 collidingEntity.tickCount % 10 == 0)
         {
+            if (livingEntity instanceof Player player &&
+                (!player.isCreative() || !player.isSpectator() || player.level().isClientSide()))
+            {
+                return;
+            }
+
             if (livingEntity instanceof ServerPlayer player && EssenceOfTheBees.hasEssence(player)) {
                 if (currentState.is(lightBlockTag)) {
                     livingEntity.addEffect(new MobEffectInstance(

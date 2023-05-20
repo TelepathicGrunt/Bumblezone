@@ -4,7 +4,7 @@
 Updated to 1.20!
 
 
-:Additions:
+#### *\*Additions*
 
 ##### Blocks:
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 
@@ -18,8 +18,13 @@ Added Luminescent Wax Channel blocks and Luminescent Wax Node blocks! Very high 
  also will count towards empowering Enchanting Table like Bookshelves do. You can use shears to change the direction of these blocks.
  Only found in Sempiternal Sanctum.
 
+Windy Air added that will push any entity in whatever direction the air block is blowing! Only found in certain structures.
+ Can be found in Creative Menu for builders!
 
-:Changes:
+Heavy Air added that will pull entities down and remove Levitation, Slow Falling, Jump Boost, and non-creative flying! 
+ Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctum. Can be found in Creative Menu for builders!
+
+#### *\*Changes*
 
 ##### Blocks:
 Walking through Pile of Pollen should not trigger Sculk Sensor now.

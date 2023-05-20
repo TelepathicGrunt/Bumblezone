@@ -195,8 +195,8 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
     @Override
     protected void spreadTo(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
         if (blockState.getBlock() instanceof LiquidBlockContainer liquidBlockContainer) {
-            boolean canTakeSugarWater = liquidBlockContainer.canPlaceLiquid(levelAccessor, blockPos, blockState, fluidState.getType());
-            liquidBlockContainer.placeLiquid(levelAccessor, blockPos, blockState, canTakeSugarWater ? fluidState : Fluids.WATER.defaultFluidState());
+            boolean canPlaceLiquid = liquidBlockContainer.canPlaceLiquid(levelAccessor, blockPos, blockState, fluidState.getType());
+            liquidBlockContainer.placeLiquid(levelAccessor, blockPos, blockState, canPlaceLiquid ? fluidState : Fluids.WATER.defaultFluidState());
         }
         else {
             if (!blockState.isAir()) {

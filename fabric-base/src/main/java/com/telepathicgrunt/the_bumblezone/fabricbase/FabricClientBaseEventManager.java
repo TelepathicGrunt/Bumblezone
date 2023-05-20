@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fabricbase;
 
 import com.telepathicgrunt.the_bumblezone.client.bakemodel.ConnectedModelVariantProvider;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
+import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
@@ -63,6 +64,7 @@ public class FabricClientBaseEventManager {
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(manager -> new ConnectedModelVariantProvider());
 
         RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
+        ClientSetupEvent.EVENT.invoke(new ClientSetupEvent(Runnable::run));
     }
 
     private static <T extends AbstractContainerMenu, U extends Screen & MenuAccess<T>> void registerScreen(MenuType<T> type, RegisterMenuScreenEvent.ScreenConstructor<T, U> provider) {

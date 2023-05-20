@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "the_bumblezone:item/honey_slime_spawn_egg",
     "layer1": "the_bumblezone:item/honey_slime_spawn_egg_overlay"

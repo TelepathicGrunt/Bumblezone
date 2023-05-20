@@ -15,4 +15,6 @@ public class BzParticles {
     public static final RegistryEntry<SimpleParticleType> HONEY_PARTICLE = PARTICLE_TYPES.register("honey_particle", () -> new SimpleParticleType(false){});
     public static final RegistryEntry<SimpleParticleType> SPARKLE_PARTICLE = PARTICLE_TYPES.register("sparkle_particle", () -> new SimpleParticleType(false){});
     public static final RegistryEntry<SimpleParticleType> ROYAL_JELLY_PARTICLE = PARTICLE_TYPES.register("royal_jelly_particle", () -> new SimpleParticleType(false){});
+    public static final RegistryEntry<SimpleParticleType> DUST_PARTICLE = PARTICLE_TYPES.register("dust_particle", () -> new SimpleParticleType(false){});
+    public static final RegistryEntry<SimpleParticleType> WIND_PARTICLE = PARTICLE_TYPES.register("wind_particle", () -> new SimpleParticleType(false){});
 }

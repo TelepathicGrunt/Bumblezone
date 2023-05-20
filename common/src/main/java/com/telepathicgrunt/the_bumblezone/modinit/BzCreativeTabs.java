@@ -130,7 +130,9 @@ public class BzCreativeTabs {
             BzItems.LUMINESCENT_WAX_NODE_YELLOW,
             BzItems.LUMINESCENT_WAX_NODE_WHITE,
             BzItems.BEE_SOUP,
-            BzItems.BUZZING_BRIEFCASE
+            BzItems.BUZZING_BRIEFCASE,
+            BzItems.HEAVY_AIR,
+            BzItems.WINDY_AIR
     );
 
     public static final ResourcefulRegistry<CreativeModeTab> CREATIVE_MODE_TABS = ResourcefulRegistries.create(BuiltInRegistries.CREATIVE_MODE_TAB, Bumblezone.MODID);

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin;
+package com.telepathicgrunt.the_bumblezone.mixin.loot;
 
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;

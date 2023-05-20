@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
@@ -81,6 +82,7 @@ public class BumblezoneForgeClient {
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {
+        ClientSetupEvent.EVENT.invoke(new ClientSetupEvent(Runnable::run));
         event.enqueueWork(() -> {
             RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
             RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));

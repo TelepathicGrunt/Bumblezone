@@ -92,4 +92,6 @@ public class BzBlocks {
     public static final RegistryEntry<Block> STRING_CURTAIN_YELLOW = CURTAINS.register("string_curtain_yellow", StringCurtain::new);
     public static final RegistryEntry<Block> INCENSE_BASE_CANDLE = BLOCKS.register("incense_candle_base", IncenseCandleBase::new);
     public static final RegistryEntry<Block> CRYSTALLINE_FLOWER = BLOCKS.register("crystalline_flower", CrystallineFlower::new);
+    public static final RegistryEntry<Block> HEAVY_AIR = BLOCKS.register("heavy_air", HeavyAir::new);
+    public static final RegistryEntry<Block> WINDY_AIR = BLOCKS.register("windy_air", WindyAir::new);
 }

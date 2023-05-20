@@ -3,7 +3,8 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LootContextAccessor",
+    "world.ClientLevelAccessor",
+    "loot.LootContextAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",

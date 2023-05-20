@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
   "textures": { "layer0": "the_bumblezone:item/music_disc_flight_of_the_bumblebee_rimsky_korsakov" }
 }
 
