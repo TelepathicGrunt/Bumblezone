@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import org.checkerframework.checker.units.qual.A;
 
 
 public class LuminescentWaxChannel extends AxisFacingBlock implements LuminescentWaxBase{
