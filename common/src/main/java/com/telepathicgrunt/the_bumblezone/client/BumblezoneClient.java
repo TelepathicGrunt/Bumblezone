@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
@@ -28,6 +29,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen.PileOfPo
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterArmorProviderEvent;
@@ -47,6 +49,7 @@ import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.mixin.world.ClientLevelAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -60,6 +63,7 @@ import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -83,7 +87,7 @@ public class BumblezoneClient {
             }
         });
 
-        ClientTickEvent.EVENT.addListener(BumblezoneClient::clientSetup);
+        ClientSetupEvent.EVENT.addListener(BumblezoneClient::clientSetup);
         BlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         KeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
         RegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
@@ -94,11 +98,17 @@ public class BumblezoneClient {
         RegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
     }
 
-    public static void clientSetup(ClientTickEvent event) {
+    public static void clientSetup(ClientSetupEvent event) {
         Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.getMARKER_PARTICLE_ITEMS());
         particleMarkerBlocks.add(BzItems.HEAVY_AIR.get());
         particleMarkerBlocks.add(BzItems.WINDY_AIR.get());
         ClientLevelAccessor.setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
+
+        registerBlockEntityRenderers();
+    }
+
+    public static void registerBlockEntityRenderers() {
+        BlockEntityRenderers.register(BzBlockEntities.WHITE_ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
     }
 
     public static void registerEffectRenderers(RegisterEffectRenderersEvent event) {
