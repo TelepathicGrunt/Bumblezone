@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.functions.DropContainerItems;
 import com.telepathicgrunt.the_bumblezone.items.functions.HoneyCompassLocateStructure;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
+import com.telepathicgrunt.the_bumblezone.items.functions.TagItemRemovals;
 import com.telepathicgrunt.the_bumblezone.items.functions.UniquifyIfHasItems;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +22,6 @@ public class BzLootFunctionTypes {
         UNIQUIFY_IF_HAS_ITEMS = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Bumblezone.MODID, "uniquify_if_has_items"), new LootItemFunctionType(new UniquifyIfHasItems.Serializer()));
         HONEY_COMPASS_LOCATE_STRUCTURE = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_compass_locate_structure"), new LootItemFunctionType(new HoneyCompassLocateStructure.Serializer()));
         PREFILL_MAP = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Bumblezone.MODID, "prefill_map"), new LootItemFunctionType(new PrefillMap.Serializer()));
-        TAG_ITEM_REMOVALS = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Bumblezone.MODID, "tag_item_removals"), new LootItemFunctionType(new PrefillMap.Serializer()));
+        TAG_ITEM_REMOVALS = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(Bumblezone.MODID, "tag_item_removals"), new LootItemFunctionType(new TagItemRemovals.Serializer()));
     }
 }
