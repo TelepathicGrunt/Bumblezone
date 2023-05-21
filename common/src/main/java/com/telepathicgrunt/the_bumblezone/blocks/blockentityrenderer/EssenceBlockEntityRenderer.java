@@ -1,9 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer;
 
+import com.google.common.collect.ImmutableMap;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferVertexConsumer;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import net.minecraft.client.Minecraft;
@@ -13,6 +17,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
@@ -31,6 +36,8 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/base_background.png");
 	public static final ResourceLocation BEE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
 
+	public static final VertexFormatElement ELEMENT_UV3D = new VertexFormatElement(0, VertexFormatElement.Type.FLOAT, VertexFormatElement.Usage.UV, 3);
+	public static final VertexFormat POSITION_COLOR_TEX3D = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder().put("Position", DefaultVertexFormat.ELEMENT_POSITION).put("Color", DefaultVertexFormat.ELEMENT_COLOR).put("UV3D", ELEMENT_UV3D).build());
 	RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
 			RenderType.create(
 					"bumblezone_essence_block",
@@ -42,7 +49,7 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 					RenderType.CompositeState.builder()
 							.setShaderState(new RenderStateShard.ShaderStateShard(() -> {
 								try {
-									return new ShaderInstance(Minecraft.getInstance().getResourceManager(), "rendertype_bumblezone_essence", DefaultVertexFormat.POSITION_COLOR);
+									return new ShaderInstance(Minecraft.getInstance().getResourceManager(), "rendertype_bumblezone_essence", POSITION_COLOR_TEX3D);
 								}
 								catch (IOException e) {
 									e.printStackTrace();
@@ -77,12 +84,22 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 	}
 
 	private void renderSide(EssenceBlockEntity entity, Matrix4f model, VertexConsumer vertices, float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4, float red, float green, float blue, Direction direction) {
-		if (entity.shouldDrawSide(direction)) {
-			vertices.vertex(model, x1, y1, z1).color(red, green, blue, 1).endVertex();
-			vertices.vertex(model, x2, y1, z2).color(red, green, blue, 1).endVertex();
-			vertices.vertex(model, x2, y2, z3).color(red, green, blue, 1).endVertex();
-			vertices.vertex(model, x1, y2, z4).color(red, green, blue, 1).endVertex();
+		if (entity.shouldDrawSide(direction) && vertices instanceof BufferVertexConsumer bufferVertexConsumer) {
+			BlockPos blockPos = entity.getBlockPos();
+
+			addPortalVertex(bufferVertexConsumer, model, x1, y1, z1, red, green, blue, blockPos.getX() + x1, blockPos.getZ() + z1, blockPos.getY() + y2);
+			addPortalVertex(bufferVertexConsumer, model, x2, y1, z2, red, green, blue, blockPos.getX() + x2, blockPos.getZ() + z1, blockPos.getY() + y1);
+			addPortalVertex(bufferVertexConsumer, model, x2, y2, z3, red, green, blue, blockPos.getX() + x2, blockPos.getZ() + z2, blockPos.getY() + y1);
+			addPortalVertex(bufferVertexConsumer, model, x1, y2, z4, red, green, blue, blockPos.getX() + x1, blockPos.getZ() + z2, blockPos.getY() + y2);
 		}
+	}
+
+	private static void addPortalVertex(BufferVertexConsumer buffer, Matrix4f mat, float x, float y, float z, float red, float green, float blue, float s, float t, float p) {
+		buffer.vertex(mat, x, y, z).color(red, green, blue, 1);
+		buffer.putFloat(0, s);
+		buffer.putFloat(4, t);
+		buffer.putFloat(8, p);
+		buffer.endVertex();
 	}
 
 	protected RenderType getType() {
