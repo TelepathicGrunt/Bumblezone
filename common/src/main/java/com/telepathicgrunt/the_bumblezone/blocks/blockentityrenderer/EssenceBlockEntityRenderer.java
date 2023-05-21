@@ -26,8 +26,10 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 	public EssenceBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
 	}
 
-	private static final Random RANDOM = new Random(31100L);
-	public static final ResourceLocation MAIN_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
+	private static final long RANDOM_SEED = 31100L;
+	private static final Random RANDOM = new Random(RANDOM_SEED);
+	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/base_background.png");
+	public static final ResourceLocation BEE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
 
 	RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
 			RenderType.create(
@@ -41,20 +43,22 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 							.setShaderState(new RenderStateShard.ShaderStateShard(() -> {
 								try {
 									return new ShaderInstance(Minecraft.getInstance().getResourceManager(), "rendertype_bumblezone_essence", DefaultVertexFormat.POSITION_COLOR);
-								} catch (IOException e) {
+								}
+								catch (IOException e) {
 									e.printStackTrace();
 								}
 								return null;
 							}))
-							.setTextureState(RenderStateShard.MultiTextureStateShard.builder().add(MAIN_TEXTURE, false, false)
-									.add(MAIN_TEXTURE, false, false)
+							.setTextureState(RenderStateShard.MultiTextureStateShard.builder()
+									.add(BASE_TEXTURE, false, false)
+									.add(BEE_TEXTURE, false, false)
 									.build())
 							.createCompositeState(false)
 			);
 
 	@Override
 	public void render(EssenceBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int brightness, int overlayType) {
-		RANDOM.setSeed(31100L);
+		RANDOM.setSeed(RANDOM_SEED);
 		Matrix4f matrix4f = poseStack.last().pose();
 		this.renderSides(blockEntity, matrix4f, multiBufferSource.getBuffer(this.getType()));
 	}
