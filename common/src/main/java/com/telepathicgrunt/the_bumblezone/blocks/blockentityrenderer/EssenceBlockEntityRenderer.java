@@ -39,7 +39,7 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 	RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
 			RenderType.create(
 					"bumblezone_essence_block",
-					DefaultVertexFormat.POSITION_COLOR,
+					POSITION_COLOR_NORMAL,
 					VertexFormat.Mode.QUADS,
 					256,
 					false,

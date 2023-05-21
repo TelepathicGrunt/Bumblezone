@@ -17,11 +17,15 @@ out vec4 vertexColor;
 
 vec4 ModelPos = vec4(Position, 1.0);
 mat4 ICamJiggleMat = mat4(inverse(mat3(ProjMat))) * ProjMat;
-//mat3 Rotate = mat3(
-//    Normal.x, 1.0, 1.0,
-//    1.0, Normal.y, 1.0,
-//    1.0, 1.0, Normal.z
-//);
+
+vec3 InitialDirection = vec3(1.0, 0.0, 0.0);
+vec3 crossProduct = cross(InitialDirection, Normal);
+
+mat3 Rotate = mat3(
+    1.0, -crossProduct.z, crossProduct.y,
+    crossProduct.z, 1.0, -crossProduct.x,
+    -crossProduct.y, crossProduct.x, 1.0
+);
 
 void main() {
     ICamJiggleMat[2].w = 0.0;
@@ -29,7 +33,7 @@ void main() {
 
     gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
 
-    view = IViewRotMat * (ICamJiggleMat * ModelPos).xyz;
+    view = Rotate * IViewRotMat * (ICamJiggleMat * ModelPos).xyz;
     vertexColor = Color;
     texProj0 = projection_from_position(gl_Position);
 }
