@@ -18,7 +18,7 @@ out vec4 vertexColor;
 vec4 ModelPos = vec4(Position, 1.0);
 mat4 ICamJiggleMat = mat4(inverse(mat3(ProjMat))) * ProjMat;
 
-vec3 InitialDirection = vec3(1.0, 0.0, 0.0);
+vec3 InitialDirection = vec3(0.0, 0.0, 1.0);
 vec3 crossProduct = cross(InitialDirection, Normal);
 
 mat3 Rotate = mat3(
