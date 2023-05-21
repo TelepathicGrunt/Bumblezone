@@ -4,7 +4,7 @@
 
 in vec3 Position;
 in vec4 Color;
-in vec3 UV3D;
+in vec3 Normal;
 
 uniform mat4 ModelViewMat;
 uniform mat4 ProjMat;
@@ -17,6 +17,11 @@ out vec4 vertexColor;
 
 vec4 ModelPos = vec4(Position, 1.0);
 mat4 ICamJiggleMat = mat4(inverse(mat3(ProjMat))) * ProjMat;
+//mat3 Rotate = mat3(
+//    Normal.x, 1.0, 1.0,
+//    1.0, Normal.y, 1.0,
+//    1.0, 1.0, Normal.z
+//);
 
 void main() {
     ICamJiggleMat[2].w = 0.0;
@@ -24,7 +29,6 @@ void main() {
 
     gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
 
-    uv3d = UV3D;
     view = IViewRotMat * (ICamJiggleMat * ModelPos).xyz;
     vertexColor = Color;
     texProj0 = projection_from_position(gl_Position);

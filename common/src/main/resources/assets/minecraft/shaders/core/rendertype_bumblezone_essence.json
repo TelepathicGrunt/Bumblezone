@@ -7,7 +7,8 @@
     "vertex": "rendertype_bumblezone_essence",
     "fragment": "rendertype_bumblezone_essence",
     "attributes": [
-        "Color"
+        "Color",
+        "Normal"
     ],
     "samplers": [
         { "name": "Sampler0" },

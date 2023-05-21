@@ -12,7 +12,6 @@ uniform int EndPortalLayers;
 in vec4 vertexColor;
 in vec4 texProj0;
 in vec3 view;
-in vec3 uv3d;
 
 const vec3[] COLORS = vec3[](
     vec3(0.925, 0.925, 0.925),
@@ -28,28 +27,30 @@ vec2 angle2vec2(float radians) {
 }
 
 vec3 base_layer() {
-    float time = GameTime * 20.0;
-    vec3 translate = vec3(1.0, 1.0, 1.0);
+    float time = GameTime * 50.0;
+    float scale = 0.2;
+    mat3 translate = mat3(
+        scale, 0.0, 0.0,
+        0.0, scale, time,
+        0.0, 0.0, scale
+    );
 
-    float scale = 0.1;
-
-    return (uv3d.stp - (view + translate).xyz * uv3d.p) * scale;
+    return -view.xyz * translate;
 }
 
 vec3 bee_layer(float layer) {
-    float time = (GameTime * (100.0 + layer));
-    vec3 translate = vec3(1.0, 1.0, 1.0);
+    float time = (GameTime * (100.0 + (layer * 10)));
 
     float scale = 0.2 - (layer / 50);
     float rotation = ((layer * layer * 4321.0) + layer + 1) * 9.5;
     vec2 dir_vec = angle2vec2(radians(rotation));
-    mat3 rotate = mat3(
+    mat3 rotateAndTranslate = mat3(
         dir_vec.x * scale, -dir_vec.y * scale, 0.0,
         dir_vec.y * scale, dir_vec.x * scale, time,
-        0.0, 0.0, 1.0
+        0.0, 0.0, scale
     );
 
-    return (uv3d.stp - (view + translate).xyz * (uv3d.p + layer + 1)) * rotate;
+    return (-view.xyz * (layer + 1)) * rotateAndTranslate;
 }
 
 out vec4 fragColor;
