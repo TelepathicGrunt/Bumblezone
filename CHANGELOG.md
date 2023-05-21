@@ -1,3 +1,9 @@
+### **(V.6.7.20 Changes) (1.19.2 Minecraft)**
+
+##### Structures:
+Fixed Botania special flowers not being filtered out of Bumblezone structure loot due to me forgetting to register a loot function type properly.
+
+
 ### **(V.6.7.19 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
