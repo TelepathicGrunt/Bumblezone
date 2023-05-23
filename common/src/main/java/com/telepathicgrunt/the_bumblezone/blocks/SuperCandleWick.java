@@ -20,11 +20,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractCandleBlock;
+import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -89,8 +91,14 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     @Override
     public void neighborChanged(BlockState blockstate, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (!this.canSurvive(blockstate, level, pos)) {
-            extinguish(null, blockstate, level, pos);
-            level.destroyBlock(pos, false);
+            // Can't use destroyBlock because it skips air marked blocks like this wick.
+            FluidState fluidState = level.getFluidState(pos);
+            level.levelEvent(2001, pos, Block.getId(blockstate));
+
+            boolean bl2 = level.setBlock(pos, fluidState.createLegacyBlock(), 3, 512);
+            if (bl2) {
+                level.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(null, blockstate));
+            }
         }
         else {
             super.neighborChanged(blockstate, level, pos, block, fromPos, notify);
