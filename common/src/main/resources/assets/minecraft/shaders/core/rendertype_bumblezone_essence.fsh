@@ -14,7 +14,7 @@ in vec4 texProj0;
 in vec3 view;
 
 const vec3[] COLORS = vec3[](
-    vec3(0.925, 0.925, 0.925),
+    vec3(0.92, 0.92, 0.92),
     vec3(0.75, 0.1, 0.1),
     vec3(0.65, 0.65, 0.1),
     vec3(0.1, 0.75, 0.1),
@@ -27,7 +27,7 @@ vec2 angle2vec2(float radians) {
 }
 
 vec3 base_layer() {
-    float time = GameTime * 50.0;
+    float time = GameTime * 10.0;
     float scale = 0.2;
     mat3 translate = mat3(
         scale, 0.0, 0.0,
@@ -39,9 +39,9 @@ vec3 base_layer() {
 }
 
 vec3 bee_layer(float layer) {
-    float time = (GameTime * (100.0 + (layer * 10)));
+    float time = (GameTime * (25.0 + (layer * 8)));
+    float scale = 2.0 - (layer / 100);
 
-    float scale = 0.2 - (layer / 50);
     float rotation = ((layer * layer * 4321.0) + layer + 1) * 9.5;
     vec2 dir_vec = angle2vec2(radians(rotation));
     mat3 rotateAndTranslate = mat3(
@@ -50,7 +50,7 @@ vec3 bee_layer(float layer) {
         0.0, 0.0, scale
     );
 
-    return (-view.xyz * (layer + 1)) * rotateAndTranslate;
+    return -view.xyz * (layer + 1) * rotateAndTranslate;
 }
 
 out vec4 fragColor;

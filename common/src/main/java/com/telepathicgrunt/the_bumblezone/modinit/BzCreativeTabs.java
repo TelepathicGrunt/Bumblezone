@@ -131,7 +131,12 @@ public class BzCreativeTabs {
             BzItems.LUMINESCENT_WAX_NODE_WHITE,
             BzItems.BEE_SOUP,
             BzItems.BUZZING_BRIEFCASE,
-            BzItems.WHITE_ESSENCE_BLOCK,
+            BzItems.ESSENCE_BLOCK_RED,
+            BzItems.ESSENCE_BLOCK_PURPLE,
+            BzItems.ESSENCE_BLOCK_BLUE,
+            BzItems.ESSENCE_BLOCK_GREEN,
+            BzItems.ESSENCE_BLOCK_YELLOW,
+            BzItems.ESSENCE_BLOCK_WHITE,
             BzItems.HEAVY_AIR,
             BzItems.WINDY_AIR
     );

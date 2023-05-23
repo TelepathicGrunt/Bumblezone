@@ -53,5 +53,4 @@ void main() {
 
     view = Rotate * IViewRotMat * (ICamJiggleMat * ModelPos).xyz;
     vertexColor = Color;
-    texProj0 = projection_from_position(gl_Position);
 }

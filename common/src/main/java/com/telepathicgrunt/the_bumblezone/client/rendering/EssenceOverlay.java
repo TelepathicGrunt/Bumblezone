@@ -23,7 +23,7 @@ public class EssenceOverlay {
 
     public static boolean portalOverlay(Player player, PoseStack matrixStack) {
 
-        if (player.level().getBlockState(BlockPos.containing(player.getEyePosition(1))).getBlock() == BzBlocks.WHITE_ESSENCE_BLOCK.get()) {
+        if (player.level().getBlockState(BlockPos.containing(player.getEyePosition(1))).getBlock() == BzBlocks.ESSENCE_BLOCK_WHITE.get()) {
 
             BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
             RenderSystem.setShader(GameRenderer::getPositionColorTexShader);

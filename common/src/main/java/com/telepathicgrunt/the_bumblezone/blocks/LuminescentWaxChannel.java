@@ -20,11 +20,11 @@ import net.minecraft.world.phys.BlockHitResult;
 
 
 public class LuminescentWaxChannel extends AxisFacingBlock implements LuminescentWaxBase{
-    public LuminescentWaxChannel(MapColor mapColor) {
+    public LuminescentWaxChannel(MapColor mapColor, int light) {
         super(Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
-                .lightLevel((blockState) -> blockState.is(BzTags.LUMINESCENT_WAX_LIGHT_CHANNELS) ? 14 : 0)
+                .lightLevel((blockState) -> light)
                 .strength(3.0F, 19.0F));
     }
 

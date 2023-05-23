@@ -108,7 +108,7 @@ public class BumblezoneClient {
     }
 
     public static void registerBlockEntityRenderers() {
-        BlockEntityRenderers.register(BzBlockEntities.WHITE_ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
+        BlockEntityRenderers.register(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
     }
 
     public static void registerEffectRenderers(RegisterEffectRenderersEvent event) {

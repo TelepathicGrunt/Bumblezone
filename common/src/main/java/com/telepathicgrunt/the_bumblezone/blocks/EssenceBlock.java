@@ -3,12 +3,13 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -16,8 +17,9 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -25,10 +27,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 
-public class EssenceBlock extends BaseEntityBlock {
-    public EssenceBlock() {
-        super(Properties.of()
-                .mapColor(MapColor.SNOW)
+public abstract class EssenceBlock extends BaseEntityBlock {
+    public EssenceBlock(Properties properties) {
+        super(properties
                 .strength(-1.0f, 3600000.8f)
                 .lightLevel((blockState) -> 15)
                 .noCollission()
@@ -63,6 +64,22 @@ public class EssenceBlock extends BaseEntityBlock {
             }
 
             if (!(entity instanceof ServerPlayer serverPlayer) || !EssenceOfTheBees.hasEssence(serverPlayer)) {
+
+                if (entity instanceof LivingEntity && entity.getBoundingBox().inflate(0.01D).intersects(new AABB(pos, pos.offset(1, 1, 1)))) {
+                    if (entity instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.displayClientMessage(
+                                Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
+                                true);
+                    }
+
+                    Vec3 center = Vec3.atCenterOf(pos);
+                    entity.hurt(entity.damageSources().magic(), 1);
+                    entity.push(
+                            entity.getX() - center.x(),
+                            entity.getY() - center.y(),
+                            entity.getZ() - center.z());
+                }
+
                 return Shapes.block();
             }
         }

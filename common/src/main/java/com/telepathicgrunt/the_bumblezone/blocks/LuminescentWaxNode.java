@@ -21,11 +21,11 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class LuminescentWaxNode extends RotationFacingBlock implements LuminescentWaxBase {
 
-    public LuminescentWaxNode(MapColor mapColor) {
+    public LuminescentWaxNode(MapColor mapColor, int light) {
         super(Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
-                .lightLevel((blockState) -> blockState.is(BzTags.LUMINESCENT_WAX_LIGHT_NODES) ? 14 : 0)
+                .lightLevel((blockState) -> light)
                 .strength(3.0F, 19.0F));
     }
 

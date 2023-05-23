@@ -21,7 +21,7 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     public EssenceBlockEntity(BlockPos blockPos, BlockState blockState) {
-        this(BzBlockEntities.WHITE_ESSENCE_BLOCK.get(), blockPos, blockState);
+        this(BzBlockEntities.ESSENCE_BLOCK.get(), blockPos, blockState);
     }
 
     @Override
