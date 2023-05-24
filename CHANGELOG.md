@@ -82,3 +82,5 @@ Bumblezone dimension is slightly darker now to make lighting pop better from lig
 
 
 #TODO: add recipe view descriptions of new blocks and items.
+
+#TODO: Scale max health of beehemoth based on friendship?
