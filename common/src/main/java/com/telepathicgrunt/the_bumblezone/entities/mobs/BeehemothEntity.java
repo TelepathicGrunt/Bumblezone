@@ -116,7 +116,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 42.0D)
+                .add(Attributes.MAX_HEALTH, 60.0D)
                 .add(Attributes.FLYING_SPEED, 0.4000000059604645D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
