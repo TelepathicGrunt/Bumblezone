@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -77,12 +78,21 @@ public class WindyAir extends ProperFacingBlock {
             }
         }
 
-        if (!entity.blockPosition().equals(blockPos) && !BlockPos.containing(entity.getEyePosition()).equals(blockPos)) {
+        //TODO: Mark entity pushed for tick and reset at end of tick
+        if (!entity.getBoundingBox().intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
             return;
         }
 
         Direction windDirection = blockState.getValue(FACING);
         double strength = windDirection == Direction.UP ? 0.05D : 0.0275D;
+        double size = entity.getBoundingBox().getSize();
+        if (size <= 1) {
+            strength = strength * (1 / (size / 2 + 0.5d));
+        }
+        else {
+            strength = strength * (1 / (size * 2));
+        }
+
 
         Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getNormal()).scale(strength);
         Vec3 newVelocity = entity.getDeltaMovement().add(pushPower);
