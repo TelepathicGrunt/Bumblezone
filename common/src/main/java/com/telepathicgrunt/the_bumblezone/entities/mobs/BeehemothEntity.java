@@ -500,7 +500,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    public void positionRider(Entity passenger) {
+    public void positionRider(Entity passenger, MoveFunction moveFunction) {
         if (hasPassenger(passenger)) {
             float radius = -0.25F;
             float angle = (0.01745329251F * this.yBodyRot);

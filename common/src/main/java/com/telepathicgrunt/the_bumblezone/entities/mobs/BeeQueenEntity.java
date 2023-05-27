@@ -241,16 +241,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public void positionRider(Entity entity) {
-        this.positionRider(entity, Entity::setPos);
-    }
-
-    @Override
     public double getPassengersRidingOffset() {
         return this.getDimensions(Pose.STANDING).height * 0.90f;
     }
 
-    private void positionRider(Entity entity, MoveFunction moveFunction) {
+    @Override
+    public void positionRider(Entity entity, MoveFunction moveFunction) {
         if (this.hasPassenger(entity)) {
             double riderYOffset = this.getY() + this.getPassengersRidingOffset() + entity.getMyRidingOffset();
             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());

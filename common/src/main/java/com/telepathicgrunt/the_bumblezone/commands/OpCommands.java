@@ -148,7 +148,7 @@ public class OpCommands {
                 EssenceOfTheBees.setEssence(targetPlayer, bool);
             }
             MutableComponent mutableComponent = Component.translatable("command.the_bumblezone.data_change_success");
-            commandSourceStack.sendSuccess(mutableComponent, true);
+            commandSourceStack.sendSuccess(() -> mutableComponent, true);
             return;
         }
     }
@@ -173,7 +173,7 @@ public class OpCommands {
                                 "command.the_bumblezone.does_not_have_bee_essence",
                         targetPlayer.getDisplayName()
                 );
-                commandSourceStack.sendSuccess(mutableComponent, false);
+                commandSourceStack.sendSuccess(() -> mutableComponent, false);
                 return;
             }
 
@@ -184,34 +184,34 @@ public class OpCommands {
 
             switch (dataArg) {
                 case QUEENS_DESIRED_CRAFTED_BEEHIVE -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", targetPlayer.getDisplayName(), capability.craftedBeehives),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_crafted_beehive", targetPlayer.getDisplayName(), capability.craftedBeehives),
                         false));
                 case QUEENS_DESIRED_BEES_BRED -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_bees_bred", targetPlayer.getDisplayName(), capability.beesBred),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_bees_bred", targetPlayer.getDisplayName(), capability.beesBred),
                         false));
                 case QUEENS_DESIRED_FLOWERS_SPAWNED -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_flowers_spawned", targetPlayer.getDisplayName(), capability.flowersSpawned),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_flowers_spawned", targetPlayer.getDisplayName(), capability.flowersSpawned),
                         false));
                 case QUEENS_DESIRED_HONEY_BOTTLE_DRANK -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_honey_bottle_drank", targetPlayer.getDisplayName(), capability.honeyBottleDrank),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_honey_bottle_drank", targetPlayer.getDisplayName(), capability.honeyBottleDrank),
                         false));
                 case QUEENS_DESIRED_BEE_STINGERS_FIRED -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_bee_stingers_fired", targetPlayer.getDisplayName(), capability.beeStingersFired),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_bee_stingers_fired", targetPlayer.getDisplayName(), capability.beeStingersFired),
                         false));
                 case QUEENS_DESIRED_BEE_SAVED -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_bee_saved", targetPlayer.getDisplayName(), capability.beeSaved),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_bee_saved", targetPlayer.getDisplayName(), capability.beeSaved),
                         false));
                 case QUEENS_DESIRED_POLLEN_PUFF_HITS -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_pollen_puff_hits", targetPlayer.getDisplayName(), capability.pollenPuffHits),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_pollen_puff_hits", targetPlayer.getDisplayName(), capability.pollenPuffHits),
                         false));
                 case QUEENS_DESIRED_HONEY_SLIME_BRED -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_honey_slime_bred", targetPlayer.getDisplayName(), capability.honeySlimeBred),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_honey_slime_bred", targetPlayer.getDisplayName(), capability.honeySlimeBred),
                         false));
                 case QUEENS_DESIRED_BEES_FED -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_bees_fed", targetPlayer.getDisplayName(), capability.beesFed),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_bees_fed", targetPlayer.getDisplayName(), capability.beesFed),
                         false));
                 case QUEENS_DESIRED_QUEEN_BEE_TRADE -> ModuleHelper.getModule(targetPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> commandSourceStack.sendSuccess(
-                        Component.translatable("command.the_bumblezone.queens_desired_queen_bee_trade", targetPlayer.getDisplayName(), capability.queenBeeTrade),
+                        () -> Component.translatable("command.the_bumblezone.queens_desired_queen_bee_trade", targetPlayer.getDisplayName(), capability.queenBeeTrade),
                         false));
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
                     if (killedEntityRL != null) {
@@ -229,7 +229,7 @@ public class OpCommands {
                             }
 
                             commandSourceStack.sendSuccess(
-                                    Component.translatable(translationKey,
+                                    () -> Component.translatable(translationKey,
                                             targetPlayer.getDisplayName(),
                                             killed,
                                             Component.translatable(Util.makeDescriptionId("entity", killedEntityRL))),
@@ -237,7 +237,7 @@ public class OpCommands {
                         });
                     }
                     else {
-                        commandSourceStack.sendSuccess(Component.translatable("command.the_bumblezone.invalid_entity_arg"), false);
+                        commandSourceStack.sendSuccess(() -> Component.translatable("command.the_bumblezone.invalid_entity_arg"), false);
                         return;
                     }
                 }
