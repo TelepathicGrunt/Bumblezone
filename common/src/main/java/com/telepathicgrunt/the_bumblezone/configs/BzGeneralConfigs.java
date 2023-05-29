@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.configs;
 
 public class BzGeneralConfigs {
     public static double beehemothSpeed = 0.35D;
+    public static boolean beehemothFriendlyFire = true;
     public static boolean specialBeeSpawning = true;
     public static boolean beeLootInjection = true;
     public static boolean moddedBeeLootInjection = true;

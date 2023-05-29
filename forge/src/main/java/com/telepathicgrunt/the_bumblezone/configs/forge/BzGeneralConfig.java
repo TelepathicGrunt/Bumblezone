@@ -7,6 +7,7 @@ public class BzGeneralConfig {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     public static ForgeConfigSpec.DoubleValue beehemothSpeed;
+    public static ForgeConfigSpec.BooleanValue beehemothFriendlyFire;
     public static ForgeConfigSpec.BooleanValue specialBeeSpawning;
     public static ForgeConfigSpec.BooleanValue beeLootInjection;
     public static ForgeConfigSpec.BooleanValue moddedBeeLootInjection;
@@ -42,8 +43,14 @@ public class BzGeneralConfig {
         beehemothSpeed = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Base speed for the Beehemoth when being rode by a player.\n")
-                .translation("the_bumblezone.config.beehemothSpeed")
+                .translation("the_bumblezone.config.beehemothspeed")
                 .defineInRange("beehemothSpeed", 0.95D, 0D, 100D);
+
+        beehemothFriendlyFire = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Allows tamed Beehemoths to take damage from owner.\n")
+                .translation("the_bumblezone.config.beehemothfriendlyfire")
+                .define("beehemothFriendlyFire", true);
 
         builder.pop();
 
@@ -224,6 +231,7 @@ public class BzGeneralConfig {
 
     public static void copyToCommon() {
         BzGeneralConfigs.beehemothSpeed = beehemothSpeed.get();
+        BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire.get();
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning.get();
         BzGeneralConfigs.beeLootInjection = beeLootInjection.get();
         BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection.get();

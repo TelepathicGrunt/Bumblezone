@@ -63,7 +63,11 @@ Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
 ##### Entities:
 Honey Slime is now immune to fall damage like Magma Cubes. The honey protects the Slime!
 
-Beehemoth buffed to 60 health points.
+Beehemoth now starts with 40 health points and will get more health as friendship increases! Maxes out at 60 health points.
+
+Tamed Beehemoths will show friendship amount above when owner is looking at it.
+
+Added beehemothFriendlyFire config option, so you can disable accidentally hurting your flying friend! Set to true by default to allow owners to kill their Beehemoth by attacking.
 
 ##### Structures:
 Hanging Gardens now can spawn Torch Flower, Pitcher Plant, Pink Petal, Cherry Leaves, Cherry Logs, and Cherry Saplings!.
@@ -85,5 +89,3 @@ Bumblezone dimension is slightly darker now to make lighting pop better from lig
 
 
 #TODO: add recipe view descriptions of new blocks and items.
-
-#TODO: Scale max health of beehemoth based on friendship?

@@ -137,6 +137,9 @@ public class BzConfig extends MidnightConfig {
     @Entry(min=0, max=100)
     public static double beehemothSpeed = 0.95;
 
+    @Entry
+    public static boolean beehemothFriendlyFire = true;
+
     @Entry(min=0, max=256)
     public static int beeQueenBonusTradeRewardMultiplier = 3;
 
@@ -256,6 +259,7 @@ public class BzConfig extends MidnightConfig {
 
         //General
         BzGeneralConfigs.beehemothSpeed = beehemothSpeed;
+        BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire;
         BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier;
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks;
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified;

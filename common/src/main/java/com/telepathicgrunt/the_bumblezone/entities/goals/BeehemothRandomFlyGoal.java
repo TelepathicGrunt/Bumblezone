@@ -82,11 +82,8 @@ public class BeehemothRandomFlyGoal extends Goal {
     }
 
     private BlockPos getGroundPosition(Level level, BlockPos radialPos) {
-        while (radialPos.getY() > 1 && level.isEmptyBlock(radialPos)) {
+        while (level.isEmptyBlock(radialPos)) {
             radialPos = radialPos.below();
-        }
-        if (radialPos.getY() <= 1) {
-            return new BlockPos(radialPos.getX(), level.getSeaLevel(), radialPos.getZ());
         }
         return radialPos;
     }

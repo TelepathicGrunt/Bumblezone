@@ -47,6 +47,8 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.PlayerRideable;
 import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -73,6 +75,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
 
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
@@ -86,6 +90,9 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     public boolean movingStraightDown = false;
     private boolean wasOnGround = false;
     public float flyingSpeed = 0.02F;
+
+    private static final UUID FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID = UUID.fromString("EBFE5A86-FE64-11ED-BE56-0242AC120002");
+    private static final int MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT = 20;
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
         super(type, world);
@@ -116,7 +123,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 60.0D)
+                .add(Attributes.MAX_HEALTH, 40.0D)
                 .add(Attributes.FLYING_SPEED, 0.4000000059604645D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, 4.0D)
@@ -201,10 +208,48 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     public void setFriendship(Integer newFriendship) {
         this.entityData.set(FRIENDSHIP, Math.min(Math.max(newFriendship, -100), 1000));
+        setMaxHealth();
     }
 
     public void addFriendship(Integer deltaFriendship) {
         this.entityData.set(FRIENDSHIP, Math.min(Math.max(getFriendship() + deltaFriendship, -100), 1000));
+        setMaxHealth();
+    }
+
+    public void setMaxHealth() {
+        int healthBoost;
+
+        if (this.isQueen()) {
+            healthBoost = MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT;
+        }
+        else {
+            healthBoost = (int) (Math.max(getFriendship() / 1000D, 0D) * MAX_FRIENDSHIP_HEALTH_BOOST_AMOUNT);
+        }
+
+        int oldHealthBoost = 0;
+        boolean doNothingWithCurrentHealth = false;
+        AttributeInstance attributeInstance = this.getAttribute(Attributes.MAX_HEALTH);
+        if (attributeInstance != null) {
+            AttributeModifier attributeModifier = attributeInstance.getModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID);
+
+            if (attributeModifier != null) {
+                if (attributeModifier.getAmount() == healthBoost) {
+                    doNothingWithCurrentHealth = true;
+                }
+                else {
+                    oldHealthBoost = (int) attributeModifier.getAmount();
+                }
+            }
+
+            if (!doNothingWithCurrentHealth) {
+                attributeInstance.removeModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID);
+                attributeInstance.addTransientModifier(new AttributeModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID, "Friendship Health Boost", healthBoost, AttributeModifier.Operation.ADDITION));
+
+                if (oldHealthBoost < healthBoost) {
+                    this.heal(healthBoost - oldHealthBoost);
+                }
+            }
+        }
     }
 
     public boolean isStopWandering() {
@@ -240,6 +285,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         else {
             Entity entity = source.getEntity();
             if (!this.isNoAi()) {
+                if (!BzGeneralConfigs.beehemothFriendlyFire && entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                    return false;
+                }
+
                 if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
                     addFriendship((int) (-3 * amount));
                 }
