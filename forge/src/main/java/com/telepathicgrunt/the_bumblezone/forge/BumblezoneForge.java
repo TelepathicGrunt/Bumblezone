@@ -89,6 +89,7 @@ import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
@@ -228,7 +229,7 @@ public class BumblezoneForge {
                         (id, serializer) -> EntityDataSerializers.registerSerializer(serializer))));
     }
 
-    private static void onServerStarting(ServerStartingEvent event) {
+    private static void onServerStarting(ServerAboutToStartEvent event) {
         ServerGoingToStartEvent.EVENT.invoke(new ServerGoingToStartEvent(event.getServer()));
     }
 

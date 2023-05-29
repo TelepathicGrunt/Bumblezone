@@ -1,3 +1,12 @@
+### **(V.6.7.20 Changes) (1.19.4 Minecraft)**
+
+##### Loot:
+(Forge): Made the Bee Stinger loot table not run other mod's GLM to help prevent duplicate drops when killing bee mobs.
+
+##### Misc:
+(Forge): Fixed crash at startup due to wrong event used.
+
+
 ### **(V.6.7.19 Changes) (1.19.4 Minecraft)**
 
 ##### Blocks:
