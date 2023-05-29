@@ -22,11 +22,9 @@ public final class NewLootInjectorApplier {
         if (BzGeneralConfigs.beeLootInjection.get() || BzGeneralConfigs.moddedBeeLootInjection.get()) {
             if (context.hasParam(LootContextParams.THIS_ENTITY)) {
                 if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
-                    if (!((LootContextBzVisitedLootInterface) context).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL)) {
-                        ResourceLocation beeRL = Registry.ENTITY_TYPE.getKey(bee.getType());
-                        return (BzGeneralConfigs.beeLootInjection.get() && beeRL.getNamespace().equals("minecraft")) ||
-                                (BzGeneralConfigs.moddedBeeLootInjection.get() && !beeRL.getNamespace().equals("minecraft"));
-                    }
+                    ResourceLocation beeRL = Registry.ENTITY_TYPE.getKey(bee.getType());
+                    return (BzGeneralConfigs.beeLootInjection.get() && beeRL.getNamespace().equals("minecraft")) ||
+                            (BzGeneralConfigs.moddedBeeLootInjection.get() && !beeRL.getNamespace().equals("minecraft"));
                 }
             }
         }
@@ -35,8 +33,8 @@ public final class NewLootInjectorApplier {
 
     public static void injectLoot(LootContext context, List<ItemStack> originalLoot) {
         LootTable stingerLootTable = context.getLevel().getServer().getLootTables().get(STINGER_DROP_LOOT_TABLE_RL);
-        ((LootContextBzVisitedLootInterface)context).addVisitedBzVisitedLootRL(STINGER_DROP_LOOT_TABLE_RL);
-        ObjectArrayList<ItemStack> newItems = stingerLootTable.getRandomItems(context);
+        ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
+        stingerLootTable.getRandomItems(context, newItems::add);
         originalLoot.addAll(newItems);
     }
 }

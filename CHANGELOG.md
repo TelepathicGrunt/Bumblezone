@@ -1,3 +1,9 @@
+### **(V.6.7.20 Changes) (1.19.2 Minecraft)**
+
+##### Loot:
+Made the Bee Stinger loot table not run other mod's GLM to help prevent duplicate drops when killing bee mobs.
+
+
 ### **(V.6.7.19 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
