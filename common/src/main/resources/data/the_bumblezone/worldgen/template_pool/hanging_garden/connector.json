@@ -1,5 +1,4 @@
 {
-  "name": "the_bumblezone:hanging_garden/connector",
   "fallback": "minecraft:empty",
   "elements": [
     {

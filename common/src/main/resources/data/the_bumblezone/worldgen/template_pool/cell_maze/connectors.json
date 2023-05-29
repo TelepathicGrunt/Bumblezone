@@ -1,5 +1,4 @@
 {
-  "name": "the_bumblezone:cell_maze/connectors",
   "fallback": "minecraft:empty",
   "elements": [
     {

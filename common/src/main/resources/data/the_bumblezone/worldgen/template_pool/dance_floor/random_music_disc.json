@@ -1,5 +1,4 @@
 {
-  "name": "the_bumblezone:random_music_disc",
   "fallback": "minecraft:empty",
   "elements": [
     {

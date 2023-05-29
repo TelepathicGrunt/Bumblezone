@@ -4,8 +4,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:throne_pillar/web_top_3",
-        "processors": "the_bumblezone:throne_pillar_web_processors",
+        "location": "the_bumblezone:sempiternal_sanctum/white/final_vent",
+        "processors": "the_bumblezone:sempiternal_sanctum_white",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

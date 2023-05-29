@@ -1,5 +1,4 @@
 {
-  "name": "the_bumblezone:pollinated_stream/waterfall_start",
   "fallback": "minecraft:empty",
   "elements": [
     {

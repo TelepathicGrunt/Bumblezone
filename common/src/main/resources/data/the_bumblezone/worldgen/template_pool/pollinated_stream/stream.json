@@ -1,5 +1,4 @@
 {
-  "name": "the_bumblezone:pollinated_stream/stream",
   "fallback": "the_bumblezone:pollinated_stream/end_pool",
   "elements": [
     {

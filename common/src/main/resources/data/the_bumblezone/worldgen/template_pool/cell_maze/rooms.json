@@ -1,5 +1,4 @@
 {
-  "name": "the_bumblezone:cell_maze/rooms",
   "fallback": "minecraft:empty",
   "elements": [
     {
