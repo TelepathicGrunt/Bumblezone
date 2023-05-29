@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.particles.ParticleTypes;
@@ -83,7 +83,7 @@ public class BeeInteractivity {
                 GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, false, true);
 
                 if (playerEntity instanceof ServerPlayer serverPlayer) {
-                    EntityMiscHandler.onBeesSaved(serverPlayer);
+                    PlayerDataHandler.onBeesSaved(serverPlayer);
                 }
 
                 return InteractionResult.SUCCESS;
@@ -159,7 +159,7 @@ public class BeeInteractivity {
             GeneralUtils.givePlayerItem(playerEntity, hand, ItemStack.EMPTY, true, true);
 
             if(playerEntity instanceof ServerPlayer serverPlayer) {
-                EntityMiscHandler.onBeesFed(serverPlayer);
+                PlayerDataHandler.onBeesFed(serverPlayer);
 
                 if(removedWrath) {
                     BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger(serverPlayer, itemstackOriginal);

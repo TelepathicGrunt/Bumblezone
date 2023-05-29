@@ -8,7 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modules.NeurotoxinsMissedCounterModule;
+import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
@@ -93,10 +93,10 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
             }
 
             float applyChance = 1.0f;
-            NeurotoxinsMissedCounterModule capability = null;
+            LivingEntityDataModule capability = null;
 
             if(attacker != null) {
-                Optional<NeurotoxinsMissedCounterModule> capOptional = ModuleHelper.getModule(attacker, ModuleRegistry.NEUROTOXINS_MISSED);
+                Optional<LivingEntityDataModule> capOptional = ModuleHelper.getModule(attacker, ModuleRegistry.LIVING_ENTITY_DATA);
                 if (capOptional.isPresent()) {
                     capability = capOptional.orElseThrow(RuntimeException::new);
                     float healthModifier = Math.max(100 - livingEntity.getHealth(), 10) / 100f;

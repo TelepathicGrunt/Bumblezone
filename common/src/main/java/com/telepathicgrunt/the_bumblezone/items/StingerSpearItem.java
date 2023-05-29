@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
@@ -130,7 +130,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         if (user instanceof ServerPlayer serverPlayer &&
                 enemy.getType() == EntityType.WITHER &&
                 enemy.isDeadOrDying() &&
-                EntityMiscHandler.rootAdvancementDone(serverPlayer)) {
+                PlayerDataHandler.rootAdvancementDone(serverPlayer)) {
             BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
         }
 

@@ -57,7 +57,7 @@ import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemS
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.QueenRandomizerTradesSyncPacket;
@@ -99,7 +99,7 @@ public class Bumblezone{
         EntityAttackedEvent.EVENT.addListener(NeurotoxinsEnchantment::entityHurtEvent);
         EntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
         PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantment::attemptFasterMining);
-        EntityMiscHandler.initEvents();
+        PlayerDataHandler.initEvents();
         PlayerCraftedItemEvent.EVENT.addListener(IncenseCandleBase::multiPotionCandleCrafted);
         PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         RegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);

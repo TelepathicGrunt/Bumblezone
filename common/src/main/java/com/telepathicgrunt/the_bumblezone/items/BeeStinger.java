@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.BzArrowItem;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,7 +23,7 @@ public class BeeStinger extends BzArrowItem {
     @Override
     public AbstractArrow createArrow(@NotNull Level level, ItemStack stack, @NotNull LivingEntity livingEntity) {
         if (!stack.is(BzItems.CRYSTAL_CANNON.get()) && livingEntity instanceof ServerPlayer serverPlayer) {
-            EntityMiscHandler.onBeeStingerFired(serverPlayer);
+            PlayerDataHandler.onBeeStingerFired(serverPlayer);
         }
         return new BeeStingerEntity(level, livingEntity);
     }

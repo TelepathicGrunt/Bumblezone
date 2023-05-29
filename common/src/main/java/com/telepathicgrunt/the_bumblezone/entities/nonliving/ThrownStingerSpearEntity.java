@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -130,7 +130,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                 BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
             }
 
-            if (entity.getType() == EntityType.WITHER && EntityMiscHandler.rootAdvancementDone(serverPlayer)) {
+            if (entity.getType() == EntityType.WITHER && PlayerDataHandler.rootAdvancementDone(serverPlayer)) {
                 BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
             }
         }

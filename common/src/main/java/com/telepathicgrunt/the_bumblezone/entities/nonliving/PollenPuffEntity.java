@@ -12,7 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.UpdateFallingBlockPacket;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -163,7 +163,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
         }
 
         if(entity instanceof LivingEntity && this.getOwner() instanceof ServerPlayer serverPlayer) {
-            EntityMiscHandler.onPollenHit(serverPlayer);
+            PlayerDataHandler.onPollenHit(serverPlayer);
         }
 
         WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
@@ -278,7 +278,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 blockstate.getBlock().setPlacedBy(this.level(), newPos, blockstate, fakePlayer, ItemStack.EMPTY);
 
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
-                    EntityMiscHandler.onFlowerSpawned(serverPlayer);
+                    PlayerDataHandler.onFlowerSpawned(serverPlayer);
                     if(isTallPlant) {
                         BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger(serverPlayer);
                     }

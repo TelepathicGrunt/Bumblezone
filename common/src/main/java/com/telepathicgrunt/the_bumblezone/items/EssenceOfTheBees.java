@@ -120,11 +120,11 @@ public class EssenceOfTheBees extends Item {
     }
 
     public static void setEssence(ServerPlayer serverPlayer, boolean newValue) {
-        ModuleHelper.getModule(serverPlayer, ModuleRegistry.ENTITY_MISC).ifPresent(capability -> capability.isBeeEssenced = newValue);
+        ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> capability.isBeeEssenced = newValue);
     }
 
     public static boolean hasEssence(ServerPlayer serverPlayer) {
-        return ModuleHelper.getModule(serverPlayer, ModuleRegistry.ENTITY_MISC)
+        return ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA)
                 .map(c -> c.isBeeEssenced)
                 .orElse(false);
     }

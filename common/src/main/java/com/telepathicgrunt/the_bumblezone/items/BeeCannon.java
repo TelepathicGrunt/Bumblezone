@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -108,7 +108,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
 
                         if(player instanceof ServerPlayer serverPlayer &&
                             targetEntity.getType() == EntityType.ENDER_DRAGON &&
-                            EntityMiscHandler.rootAdvancementDone(serverPlayer))
+                            PlayerDataHandler.rootAdvancementDone(serverPlayer))
                         {
                             BzCriterias.BEE_CANNON_ENDERDRAGON_TRIGGER.trigger(serverPlayer);
                         }

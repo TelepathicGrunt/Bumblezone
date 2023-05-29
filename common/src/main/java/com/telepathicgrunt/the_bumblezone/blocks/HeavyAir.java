@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.google.common.collect.MapMaker;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -20,8 +21,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
+
 
 public class HeavyAir extends Block {
+    private static final ConcurrentMap<UUID, Integer> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
+
     public HeavyAir() {
         super(Properties.of()
                 .strength(-1.0f, 3600000.8f)
@@ -63,6 +69,10 @@ public class HeavyAir extends Block {
             return;
         }
 
+        if (APPLIED_PUSH_FOR_ENTITY.getOrDefault(entity.getUUID(), -1) == level.getGameTime()) {
+            return;
+        }
+
         if (entity instanceof LivingEntity livingEntity && livingEntity.tickCount % 10 == 0) {
             if (livingEntity.hasEffect(MobEffects.LEVITATION)) {
                 livingEntity.removeEffect(MobEffects.LEVITATION);
@@ -85,6 +95,7 @@ public class HeavyAir extends Block {
         }
 
         entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.015, 0));
+        APPLIED_PUSH_FOR_ENTITY.put(entity.getUUID(), entity.tickCount);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {

@@ -16,9 +16,9 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Map;
 
-public class EntityMiscModule implements Module<EntityMiscModule> {
+public class PlayerDataModule implements Module<PlayerDataModule> {
 
-    public static final ModuleSerializer<EntityMiscModule> SERIALIZER = new Serializer();
+    public static final ModuleSerializer<PlayerDataModule> SERIALIZER = new Serializer();
 
     public boolean isBeeEssenced = false;
     public boolean receivedEssencePrize = false;
@@ -52,27 +52,24 @@ public class EntityMiscModule implements Module<EntityMiscModule> {
     }
 
     @Override
-    public ModuleSerializer<EntityMiscModule> serializer() {
+    public ModuleSerializer<PlayerDataModule> serializer() {
         return SERIALIZER;
     }
 
-    private static final class Serializer implements ModuleSerializer<EntityMiscModule> {
+    private static final class Serializer implements ModuleSerializer<PlayerDataModule> {
 
         @Override
-        public Class<EntityMiscModule> moduleClass() {
-            return EntityMiscModule.class;
+        public Class<PlayerDataModule> moduleClass() {
+            return PlayerDataModule.class;
         }
 
         @Override
         public ResourceLocation id() {
-            if ("forge".equals(ArchitecturyTarget.getCurrentTarget())) {
-                return new ResourceLocation(Bumblezone.MODID, "entity_misc");
-            }
-            return new ResourceLocation(Bumblezone.MODID, "misc_component");
+            return new ResourceLocation(Bumblezone.MODID, "player_data");
         }
 
         @Override
-        public void read(EntityMiscModule module, CompoundTag tag) {
+        public void read(PlayerDataModule module, CompoundTag tag) {
             module.mobsKilledTracker.clear();
             module.isBeeEssenced = tag.getBoolean("is_bee_essenced");
             module.receivedEssencePrize = tag.getBoolean("received_essence_prize");
@@ -99,7 +96,7 @@ public class EntityMiscModule implements Module<EntityMiscModule> {
         }
 
         @Override
-        public void write(CompoundTag tag, EntityMiscModule module) {
+        public void write(CompoundTag tag, PlayerDataModule module) {
             tag.putBoolean("is_bee_essenced", module.isBeeEssenced);
             tag.putBoolean("received_essence_prize", module.receivedEssencePrize);
             tag.putLong("trade_reset_primed_time", module.tradeResetPrimedTime);
@@ -125,7 +122,7 @@ public class EntityMiscModule implements Module<EntityMiscModule> {
         }
 
         @Override
-        public void onPlayerCopy(EntityMiscModule oldModule, EntityMiscModule thisModule, ServerPlayer player, boolean isPersistent) {
+        public void onPlayerCopy(PlayerDataModule oldModule, PlayerDataModule thisModule, ServerPlayer player, boolean isPersistent) {
             if (isPersistent) {
                 ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
             } else if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning) {

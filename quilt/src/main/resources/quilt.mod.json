@@ -59,9 +59,9 @@
         "the_bumblezone-common.mixins.json"
     ],
     "cardinal-components": [
-        "the_bumblezone:entity_component",
+        "the_bumblezone:entity_dim_component",
         "the_bumblezone:original_flying_speed",
-        "the_bumblezone:neurotoxins_missed_counter",
-        "the_bumblezone:misc_component"
+        "the_bumblezone:living_entity_data",
+        "the_bumblezone:player_data"
     ]
 }

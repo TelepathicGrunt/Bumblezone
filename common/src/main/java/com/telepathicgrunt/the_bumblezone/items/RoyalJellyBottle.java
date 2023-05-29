@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.modules.EntityMiscHandler;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -105,7 +105,7 @@ public class RoyalJellyBottle extends Item {
             itemstack.shrink(1);
         }
 
-        EntityMiscHandler.onBeesFed(playerEntity);
+        PlayerDataHandler.onBeesFed(playerEntity);
         playerEntity.swing(playerHand, true);
         return InteractionResult.SUCCESS;
     }

@@ -56,7 +56,7 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
 
         @Override
         public ResourceLocation id() {
-            return new ResourceLocation(Bumblezone.MODID, "entity_component");
+            return new ResourceLocation(Bumblezone.MODID, "entity_dim_component");
         }
 
         @Override
