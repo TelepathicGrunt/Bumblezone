@@ -38,7 +38,8 @@ public final class NewLootInjectorApplier {
     public static void injectLoot(LootContext context, List<ItemStack> originalLoot) {
         LootTable stingerLootTable = context.getLevel().getServer().getLootData().getLootTable(STINGER_DROP_LOOT_TABLE_RL);
         ((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).addVisitedBzVisitedLootRL(STINGER_DROP_LOOT_TABLE_RL);
-        ObjectArrayList<ItemStack> newItems = stingerLootTable.getRandomItems(((LootContextAccessor)context).getParams());
+        ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
+        stingerLootTable.getRandomItems(((LootContextAccessor)context).getParams(), newItems::add);
         originalLoot.addAll(newItems);
     }
 }

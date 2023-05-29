@@ -78,7 +78,7 @@ public class WindyAir extends ProperFacingBlock {
             }
         }
 
-        //TODO: Mark entity pushed for tick and reset at end of tick
+        //TODO: Mark entity pushed for tick and reset at end of tick. Same for heavy air
         if (!entity.getBoundingBox().intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
             return;
         }

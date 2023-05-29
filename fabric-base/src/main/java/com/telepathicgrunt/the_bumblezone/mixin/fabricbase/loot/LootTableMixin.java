@@ -20,7 +20,7 @@ public class LootTableMixin {
      * Allow us to add bee stinger drops to any entity that extends Bee
      * @author TelepathicGrunt
      */
-    @Inject(method = "getRandomItems(Lnet/minecraft/world/level/storage/loot/LootContext;Ljava/util/function/Consumer;)V",
+    @Inject(method = "getRandomItemsRaw(Lnet/minecraft/world/level/storage/loot/LootContext;Ljava/util/function/Consumer;)V",
             at = @At(value = "TAIL"))
     private void bumblezone_injectStingerLootForBees(LootContext lootContext, Consumer<ItemStack> consumer, CallbackInfo ci) {
         if (NewLootInjectorApplier.checkIfInjectLoot(lootContext)) {
