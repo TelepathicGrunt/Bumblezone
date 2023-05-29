@@ -14,7 +14,9 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEv
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.fluids.fabric.PropertyFluiderRenderHandler;
+import com.telepathicgrunt.the_bumblezone.fluids.fabric.BiomeColorFluidRenderHandler;
+import com.telepathicgrunt.the_bumblezone.fluids.fabric.HoneyFluidRenderHandler;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -48,7 +50,14 @@ public class FabricClientBaseEventManager {
                 });
 
         RegisterClientFluidPropertiesEvent.EVENT.invoke(new RegisterClientFluidPropertiesEvent(
-                (info, properties) -> fluidHandler.register(info.source(), info.flowing(), new PropertyFluiderRenderHandler(properties))));
+                (info, properties) -> {
+                    if (info.block() == BzFluids.HONEY_FLUID_BLOCK.get() || info.block() == BzFluids.ROYAL_JELLY_FLUID_BLOCK.get()) {
+                        fluidHandler.register(info.source(), info.flowing(), new HoneyFluidRenderHandler(properties));
+                    }
+                    else {
+                        fluidHandler.register(info.source(), info.flowing(), new BiomeColorFluidRenderHandler(properties));
+                    }
+                }));
 
         FabricArmorRenderer.setupArmor();
         RegisterEntityRenderersEvent.EVENT.invoke(new RegisterEntityRenderersEvent(EntityRendererRegistry::register));

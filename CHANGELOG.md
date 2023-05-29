@@ -54,6 +54,9 @@ Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag
 
 Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not want it to be too easy to multiply (Pitcher Plant cannot be bonemealed)
 
+##### Fluids:
+(Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
+
 ##### Enchantments:
 Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
 
@@ -84,5 +87,3 @@ Bumblezone dimension is slightly darker now to make lighting pop better from lig
 #TODO: add recipe view descriptions of new blocks and items.
 
 #TODO: Scale max health of beehemoth based on friendship?
-
-#TODO: figure out why honey fluid doesn't render opposite face through fluid

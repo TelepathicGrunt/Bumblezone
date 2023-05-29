@@ -7,11 +7,11 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
 
-public class PropertyFluiderRenderHandler extends SimpleFluidRenderHandler {
+public class BiomeColorFluidRenderHandler extends SimpleFluidRenderHandler {
 
     private final ClientFluidProperties properties;
 
-    public PropertyFluiderRenderHandler(ClientFluidProperties properties) {
+    public BiomeColorFluidRenderHandler(ClientFluidProperties properties) {
         super(properties.still(), properties.flowing(), properties.overlay());
         this.properties = properties;
     }

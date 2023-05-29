@@ -68,7 +68,6 @@
   ],
   "client": [
     "client.BeeRendererMixin",
-    "client.FluidRendererMixin",
     "client.FogRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
