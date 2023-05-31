@@ -19,8 +19,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
-import net.minecraft.util.Mth;
-import org.joml.Math;
 import org.joml.Matrix4f;
 
 import java.io.IOException;

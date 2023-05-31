@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
-import dev.architectury.injectables.targets.ArchitecturyTarget;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;

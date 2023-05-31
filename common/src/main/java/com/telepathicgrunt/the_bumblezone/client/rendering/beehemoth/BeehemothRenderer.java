@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import org.joml.Matrix4f;
 
 public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothModel> {

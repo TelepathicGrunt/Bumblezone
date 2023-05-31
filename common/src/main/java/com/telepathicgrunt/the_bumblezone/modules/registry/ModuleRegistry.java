@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modules.registry;
 
-import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.FlyingSpeedModule;
 import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 
