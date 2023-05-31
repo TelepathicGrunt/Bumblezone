@@ -27,7 +27,7 @@ import java.util.List;
 
 public class LifeEssence extends AbilityEssenceItem {
 
-    private static final int cooldownLengthInTicks = 18000;
+    private static final int cooldownLengthInTicks = 12000;
     private static final int abilityUseAmount = 1000;
     private static final String ABILITY_USE_REMAINING_TAG = "abilityUseRemaining";
     private static final String LAST_ABILITY_CHARGE_TIMESTAMP_TAG = "lastChargeTime";
@@ -108,7 +108,7 @@ public class LifeEssence extends AbilityEssenceItem {
 
     @Override
     void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
+        if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 10L == 0) {
             int radius = 16;
             healFriendlyNearby(stack, level, serverPlayer, radius);
             growNearbyPlants(stack, level, serverPlayer, radius);
@@ -118,6 +118,7 @@ public class LifeEssence extends AbilityEssenceItem {
             setForcedCooldown(stack, true);
             setCooldownTime(stack, 0);
             setIsActive(stack, false);
+            serverPlayer.getCooldowns().addCooldown(stack.getItem(), cooldownLengthInTicks);
         }
     }
 

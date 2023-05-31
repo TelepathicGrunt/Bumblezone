@@ -26,9 +26,9 @@ Heavy Air added that will pull entities down and remove Levitation, Slow Falling
  Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctum. Can be found in Creative Menu for builders!
 
 ##### Items:
-Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand will grow crops nearby,
- heal mobs tamed by you, and heal other mobs or players on the same team as you! It has 1000 use before it is depleted and 
- needs 15 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
+Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand will grow 
+ crops and saplings nearby, heal mobs tamed by you, and heal other mobs or players on the same team as you! It has 1000 use 
+ before it is depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
 
 
 #### *\*Changes*
