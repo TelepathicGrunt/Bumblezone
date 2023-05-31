@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -10,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -30,69 +28,49 @@ public class LifeEssence extends AbilityEssenceItem {
     private static final int cooldownLengthInTicks = 12000;
     private static final int abilityUseAmount = 1000;
     private static final String ABILITY_USE_REMAINING_TAG = "abilityUseRemaining";
-    private static final String LAST_ABILITY_CHARGE_TIMESTAMP_TAG = "lastChargeTime";
 
     public LifeEssence(Properties properties) {
         super(properties, cooldownLengthInTicks);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        if (getIsActive(stack)) {
-            components.add(Component.translatable("item.the_bumblezone.essence_active"));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), abilityUseAmount));
-        }
-        else if (getForcedCooldown(stack)) {
-            components.add(Component.translatable("item.the_bumblezone.essence_depleted"));
-            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", (cooldownLengthInTicks - getCooldownTime(stack)) / 20));
-        }
-        else {
-            components.add(Component.translatable("item.the_bumblezone.essence_ready"));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), abilityUseAmount));
-        }
     }
 
     public static void setAbilityUseRemaining(ItemStack stack, int abilityUseRemaining) {
         stack.getOrCreateTag().putInt(ABILITY_USE_REMAINING_TAG, abilityUseRemaining);
     }
 
-    public static int getAbilityUseRemaining(ItemStack stack) {
+    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer) {
+        int getRemainingUse = getAbilityUseRemaining(stack) - 1;
+        setAbilityUseRemaining(stack, getRemainingUse);
+        if (getRemainingUse == 0) {
+            setDepleted(stack, serverPlayer, false);
+        }
+    }
+
+    @Override
+    public int getAbilityUseRemaining(ItemStack stack) {
         if (!stack.getOrCreateTag().contains(ABILITY_USE_REMAINING_TAG)) {
-            setAbilityUseRemaining(stack, abilityUseAmount);
-            return abilityUseAmount;
+            setAbilityUseRemaining(stack, getMaxAbilityUseAmount(stack));
+            return getMaxAbilityUseAmount(stack);
         }
 
         return stack.getOrCreateTag().getInt(ABILITY_USE_REMAINING_TAG);
     }
 
-    public static void decrementAbilityUseRemaining(ItemStack stack) {
-        int getRemainingUse = getAbilityUseRemaining(stack) - 1;
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setIsActive(stack, false);
-            setForcedCooldown(stack, true);
-        }
-    }
-
-    public static void setLastAbilityChargeTimestamp(ItemStack stack, int gametime) {
-        stack.getOrCreateTag().putInt(LAST_ABILITY_CHARGE_TIMESTAMP_TAG, gametime);
-    }
-
-    public static int getLastAbilityChargeTimestamp(ItemStack stack) {
-        return stack.getOrCreateTag().getInt(LAST_ABILITY_CHARGE_TIMESTAMP_TAG);
+    @Override
+    int getMaxAbilityUseAmount(ItemStack stack) {
+        return abilityUseAmount;
     }
 
     @Override
     void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
         int abilityUseRemaining = getAbilityUseRemaining(stack);
-        if (abilityUseRemaining < abilityUseAmount) {
+        if (abilityUseRemaining < getMaxAbilityUseAmount(stack)) {
             int lastChargeTime = getLastAbilityChargeTimestamp(stack);
             if (lastChargeTime == 0 || serverPlayer.tickCount < lastChargeTime) {
                 setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
             }
             else {
                 int timeFromLastCharge = serverPlayer.tickCount - lastChargeTime;
-                int chargeTimeIncrement = cooldownLengthInTicks / abilityUseAmount;
+                int chargeTimeIncrement = getCooldownTickLength() / getMaxAbilityUseAmount(stack);
                 if (timeFromLastCharge % chargeTimeIncrement == 0) {
                     setAbilityUseRemaining(stack, abilityUseRemaining + 1);
                     setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
@@ -103,7 +81,7 @@ public class LifeEssence extends AbilityEssenceItem {
 
     @Override
     void rechargeAbilityEntirely(ItemStack stack) {
-        setAbilityUseRemaining(stack, abilityUseAmount);
+        setAbilityUseRemaining(stack, getMaxAbilityUseAmount(stack));
     }
 
     @Override
@@ -113,16 +91,9 @@ public class LifeEssence extends AbilityEssenceItem {
             healFriendlyNearby(stack, level, serverPlayer, radius);
             growNearbyPlants(stack, level, serverPlayer, radius);
         }
-
-        if (getAbilityUseRemaining(stack) <= 0) {
-            setForcedCooldown(stack, true);
-            setCooldownTime(stack, 0);
-            setIsActive(stack, false);
-            serverPlayer.getCooldowns().addCooldown(stack.getItem(), cooldownLengthInTicks);
-        }
     }
 
-    private static void healFriendlyNearby(ItemStack stack, Level level, ServerPlayer serverPlayer, int radius) {
+    private void healFriendlyNearby(ItemStack stack, Level level, ServerPlayer serverPlayer, int radius) {
         List<Entity> entities = level.getEntities(serverPlayer, new AABB(
                 serverPlayer.getX() - radius,
                 serverPlayer.getY() - radius,
@@ -133,7 +104,7 @@ public class LifeEssence extends AbilityEssenceItem {
         ));
 
         for (Entity entity : entities) {
-            healFriendlyEntity(serverPlayer, entity);
+            healFriendlyEntity(stack, serverPlayer, entity);
 
             if (getForcedCooldown(stack)) {
                 return;
@@ -141,20 +112,22 @@ public class LifeEssence extends AbilityEssenceItem {
         }
     }
 
-    private static void healFriendlyEntity(ServerPlayer serverPlayer, Entity entity) {
+    private void healFriendlyEntity(ItemStack stack, ServerPlayer serverPlayer, Entity entity) {
         if (entity instanceof TamableAnimal tamableAnimal && tamableAnimal.isOwnedBy(serverPlayer)) {
             if (tamableAnimal.getHealth() < tamableAnimal.getMaxHealth()) {
                 tamableAnimal.heal(1);
+                decrementAbilityUseRemaining(stack, serverPlayer);
             }
         }
         else if (entity instanceof LivingEntity livingEntity && entity.getTeam() != null && entity.getTeam().isAlliedTo(serverPlayer.getTeam())) {
             if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
                 livingEntity.heal(1);
+                decrementAbilityUseRemaining(stack, serverPlayer);
             }
         }
     }
 
-    private static void growNearbyPlants(ItemStack stack, Level level, ServerPlayer serverPlayer, int radius) {
+    private void growNearbyPlants(ItemStack stack, Level level, ServerPlayer serverPlayer, int radius) {
         if (getForcedCooldown(stack)) {
             return;
         }
@@ -185,7 +158,7 @@ public class LifeEssence extends AbilityEssenceItem {
                     mutableBlockPos.set(x, y, z);
                     BlockState state = cachedChunk.getBlockState(mutableBlockPos);
 
-                    growPlantBlock(stack, level, mutableBlockPos, state);
+                    growPlantBlock(stack, level, serverPlayer, mutableBlockPos, state);
                     if (getForcedCooldown(stack)) {
                         return;
                     }
@@ -194,7 +167,7 @@ public class LifeEssence extends AbilityEssenceItem {
         }
     }
 
-    private static void growPlantBlock(ItemStack stack, Level level, BlockPos blockPos, BlockState state) {
+    private void growPlantBlock(ItemStack stack, Level level, ServerPlayer serverPlayer, BlockPos blockPos, BlockState state) {
         if (state.is(BlockTags.BEE_GROWABLES) || state.is(BlockTags.SAPLINGS)) {
             Block block = state.getBlock();
             boolean grewBlock = false;
@@ -230,7 +203,7 @@ public class LifeEssence extends AbilityEssenceItem {
             }
 
             if (grewBlock) {
-                decrementAbilityUseRemaining(stack);
+                decrementAbilityUseRemaining(stack, serverPlayer);
             }
         }
     }

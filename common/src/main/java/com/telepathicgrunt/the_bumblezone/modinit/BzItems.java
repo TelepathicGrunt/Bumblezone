@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.items.essence.LifeEssence;
+import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
@@ -108,12 +109,6 @@ public class BzItems {
     public static final RegistryEntry<Item> STRING_CURTAIN_PINK = ITEMS.register("string_curtain_pink", () -> new BlockItem(BzBlocks.STRING_CURTAIN_PINK.get(), new Item.Properties()));
     public static final RegistryEntry<Item> PILE_OF_POLLEN = ITEMS.register("pile_of_pollen", () -> new BlockItem(BzBlocks.PILE_OF_POLLEN.get(), new Item.Properties())); // Not obtainable by default. Purely for advancement icon.
     public static final RegistryEntry<Item> ROYAL_JELLY_BLOCK = ITEMS.register("royal_jelly_block", () -> new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK.get(), new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_RED.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_PURPLE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_BLUE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_GREEN.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_WHITE = ITEMS.register("essence_white", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_WHITE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> HEAVY_AIR = ITEMS.register("heavy_air", () -> new BlockItem(BzBlocks.HEAVY_AIR.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> WINDY_AIR = ITEMS.register("windy_air", () -> new BlockItem(BzBlocks.WINDY_AIR.get(), new Item.Properties().rarity(Rarity.EPIC)));
 
@@ -152,4 +147,10 @@ public class BzItems {
     public static final RegistryEntry<Item> BEEHEMOTH_SPAWN_EGG = ITEMS.register("beehemoth_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEEHEMOTH, 0xFFCA47, 0x68372A, (new Item.Properties())));
     public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC))));
     public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+    public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_RED.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_PURPLE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_BLUE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_WHITE = ITEMS.register("essence_white", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_WHITE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 }
