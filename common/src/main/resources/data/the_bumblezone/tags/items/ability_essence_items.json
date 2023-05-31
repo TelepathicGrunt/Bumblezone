@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:essence_red",
+    "the_bumblezone:essence_purple",
+    "the_bumblezone:essence_blue",
+    "the_bumblezone:essence_green",
+    "the_bumblezone:essence_yellow",
+    "the_bumblezone:essence_white"
+  ]
+}

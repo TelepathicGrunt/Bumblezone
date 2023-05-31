@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeRevengeGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
-import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;

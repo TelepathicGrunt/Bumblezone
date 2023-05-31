@@ -5,6 +5,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.items.*;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.items.essence.LifeEssence;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
@@ -106,12 +108,12 @@ public class BzItems {
     public static final RegistryEntry<Item> STRING_CURTAIN_PINK = ITEMS.register("string_curtain_pink", () -> new BlockItem(BzBlocks.STRING_CURTAIN_PINK.get(), new Item.Properties()));
     public static final RegistryEntry<Item> PILE_OF_POLLEN = ITEMS.register("pile_of_pollen", () -> new BlockItem(BzBlocks.PILE_OF_POLLEN.get(), new Item.Properties())); // Not obtainable by default. Purely for advancement icon.
     public static final RegistryEntry<Item> ROYAL_JELLY_BLOCK = ITEMS.register("royal_jelly_block", () -> new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK.get(), new Item.Properties().rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLOCK_RED = ITEMS.register("essence_block_red", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_RED.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLOCK_PURPLE = ITEMS.register("essence_block_purple", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_PURPLE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLOCK_BLUE = ITEMS.register("essence_block_blue", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_BLUE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLOCK_GREEN = ITEMS.register("essence_block_green", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_GREEN.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLOCK_YELLOW = ITEMS.register("essence_block_yellow", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_YELLOW.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLOCK_WHITE = ITEMS.register("essence_block_white", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_WHITE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_RED.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_PURPLE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_BLUE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_GREEN.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_WHITE = ITEMS.register("essence_white", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_WHITE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> HEAVY_AIR = ITEMS.register("heavy_air", () -> new BlockItem(BzBlocks.HEAVY_AIR.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> WINDY_AIR = ITEMS.register("windy_air", () -> new BlockItem(BzBlocks.WINDY_AIR.get(), new Item.Properties().rarity(Rarity.EPIC)));
 
@@ -123,7 +125,7 @@ public class BzItems {
     public static final RegistryEntry<Item> SUGAR_WATER_BOTTLE = ITEMS.register("sugar_water_bottle", () -> new SugarWaterBottle((new Item.Properties()).craftRemainder(Items.GLASS_BOTTLE).food(BzFoodProperties.builder(1, 0.05F).effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build()).stacksTo(16)));
     public static final RegistryEntry<Item> HONEY_COMPASS = ITEMS.register("honey_compass", () -> new HoneyCompass(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryEntry<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food(BzFoodProperties.builder(8, 0.12F).alwaysEat().effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build())));
-    public static final RegistryEntry<Item> BEE_SOUP = ITEMS.register("bee_soup", () -> new Item(new Item.Properties().food(BzFoodProperties.builder(15, 24F).alwaysEat().effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 12000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.LEVITATION, 800, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.POISON, 800, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, 6000, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.LUCK, 18000, 0), 0.2F).effect(() -> new MobEffectInstance(BzEffects.PARALYZED.get(), 200, 0), 0.2F).build())));
+    public static final RegistryEntry<Item> BEE_SOUP = ITEMS.register("bee_soup", () -> new FoodBowlItem(new Item.Properties().craftRemainder(Items.BOWL).food(BzFoodProperties.builder(15, 24F).effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 12000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.LEVITATION, 800, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.POISON, 800, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, 6000, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.LUCK, 18000, 0), 0.2F).effect(() -> new MobEffectInstance(BzEffects.PARALYZED.get(), 200, 0), 0.2F).build())));
     public static final RegistryEntry<Item> BUZZING_BRIEFCASE = ITEMS.register("buzzing_briefcase", () -> new Item(new Item.Properties().stacksTo(1)));
     public static final RegistryEntry<Item> POLLEN_PUFF = ITEMS.register("pollen_puff", () -> new PollenPuff(new Item.Properties().stacksTo(16)));
     public static final RegistryEntry<HoneyCrystalShards> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build())));

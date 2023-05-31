@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
-import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

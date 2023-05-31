@@ -85,6 +85,7 @@ public class BzTags {
     public static final TagKey<Item> ITEM_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_special_dedicated_compat"));
     public static final TagKey<Item> HONEY_DRUNK_TRIGGER_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "queens_desire/honey_drunk_trigger_items"));
     public static final TagKey<Item> BZ_ARMOR_ABILITY_ENHANCING_GEAR = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_armors/bz_armor_ability_enhancing_gear"));
+    public static final TagKey<Item> ABILITY_ESSENCE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "ability_essence_items"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));

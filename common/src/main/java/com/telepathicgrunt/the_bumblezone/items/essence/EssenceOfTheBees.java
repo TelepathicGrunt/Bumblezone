@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.items;
+package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;

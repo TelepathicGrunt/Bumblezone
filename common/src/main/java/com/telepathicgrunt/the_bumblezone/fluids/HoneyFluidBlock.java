@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
-import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;

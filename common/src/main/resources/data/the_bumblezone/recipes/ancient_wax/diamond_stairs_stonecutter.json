@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "the_bumblezone:ancient_wax_diamond"
+  },
+  "result": "the_bumblezone:ancient_wax_diamond_stairs"
+}

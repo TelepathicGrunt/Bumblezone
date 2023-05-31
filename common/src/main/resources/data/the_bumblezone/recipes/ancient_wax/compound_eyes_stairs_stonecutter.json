@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "the_bumblezone:ancient_wax_compound_eyes"
+  },
+  "result": "the_bumblezone:ancient_wax_compound_eyes_stairs"
+}

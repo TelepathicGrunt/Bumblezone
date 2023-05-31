@@ -10,6 +10,7 @@ Updated to 1.20!
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 
  anyone who has not consumed Essence of the Bees before and are standing on said Ancient Wax blocks. You can use shears to 
  convert between 3 different patterns for these blocks. Only found in Sempiternal Sanctum. Can be crafted into stairs or slabs.
+ Stonecutter has more efficient recipe for making stairs/slabs.
 
 Added Luminescent Wax Channel blocks and Luminescent Wax Node blocks! Very high blast resistance, uncraftable, and will 
  give Slowness, Weakness, and Mining Fatigue to anyone who has not consumed Essence of the Bees before and are standing 
@@ -23,6 +24,12 @@ Windy Air added that will push any entity in whatever direction the air block is
 
 Heavy Air added that will pull entities down and remove Levitation, Slow Falling, Jump Boost, and non-creative flying! 
  Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctum. Can be found in Creative Menu for builders!
+
+##### Items:
+Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand will grow crops nearby,
+ heal mobs tamed by you, and heal other mobs or players on the same team as you! It has 1000 use before it is depleted and 
+ needs 15 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
+
 
 #### *\*Changes*
 
@@ -68,6 +75,8 @@ Beehemoth now starts with 40 health points and will get more health as friendshi
 Tamed Beehemoths will show friendship amount above when owner is looking at it.
 
 Added beehemothFriendlyFire config option, so you can disable accidentally hurting your flying friend! Set to true by default to allow owners to kill their Beehemoth by attacking.
+
+Fixed bug where Beehemoths always fly straight up if below sealevel.
 
 ##### Structures:
 Hanging Gardens now can spawn Torch Flower, Pitcher Plant, Pink Petal, Cherry Leaves, Cherry Logs, and Cherry Saplings!.
