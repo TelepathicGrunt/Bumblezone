@@ -107,5 +107,7 @@ Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag
 ##### Dimension:
 Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
 
+##### Mod Compat:
+Added tag translations for Bumblezone item tags so that EMI mod can display them.
 
 #TODO: add recipe view descriptions of new blocks and items.
