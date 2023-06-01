@@ -317,7 +317,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             int topBlock = CrystallineFlower.flowerHeightAbove(player.level(), crystallineFlowerBlockEntity.getBlockPos());
             List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, player.level(), crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
-            int xpPerCount = CrystallineFlower.getXPPerItem(consumeSlot.getItem());
+            int xpPerCount = CrystallineFlower.getXpPerItem(consumeSlot.getItem());
             int itemCount = consumeSlot.getItem().getCount();
             int xpForStack = itemCount * xpPerCount;
 
@@ -349,7 +349,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(1, player.level(), crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
                 if (!obstructedAbove.isEmpty() && obstructedAbove.get(0)) {
-                    int xpPerCount = CrystallineFlower.getXPPerItem(consumeSlot.getItem());
+                    int xpPerCount = CrystallineFlower.getXpPerItem(consumeSlot.getItem());
                     int xpToMaxTier = crystallineFlowerBlockEntity.getXpForNextTiers(1) - 1;
                     int itemsConsumable = xpToMaxTier / xpPerCount;
                     fullyObstructed = itemsConsumable == 0;

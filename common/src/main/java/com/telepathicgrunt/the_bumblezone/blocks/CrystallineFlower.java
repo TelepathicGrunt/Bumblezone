@@ -152,7 +152,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                 int topBlock = CrystallineFlower.flowerHeightAbove(level, crystallineFlowerBlockEntity.getBlockPos());
                 List<Boolean> obstructedAbove = CrystallineFlower.getObstructions(tiersToMax, level, crystallineFlowerBlockEntity.getBlockPos().above(topBlock + 1));
 
-                int xpPerCount = getXPPerItem(stack);
+                int xpPerCount = getXpPerItem(stack);
                 int itemCount = stack.getCount();
                 int xpForStack = itemCount * xpPerCount;
 
@@ -357,7 +357,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         return obstructions;
     }
 
-    public static int getXPPerItem(ItemStack stack) {
+    public static int getXpPerItem(ItemStack stack) {
         if (stack.is(BzTags.XP_2_WHEN_CONSUMED_ITEMS)) {
             return 2;
         }
