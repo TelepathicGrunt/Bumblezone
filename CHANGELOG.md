@@ -1,3 +1,9 @@
+### **(V.6.7.21 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Fixed incompat where Ars Nouveau's Break Glyph duplicates Honey Cocoon.
+
+
 ### **(V.6.7.20 Changes) (1.19.2 Minecraft)**
 
 ##### Loot:

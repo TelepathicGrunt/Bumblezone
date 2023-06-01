@@ -325,44 +325,6 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
-            if (!level.isClientSide() && player.isCreative() && !honeyCocoonBlockEntity.isEmpty()) {
-                ItemStack itemStack = BzItems.HONEY_COCOON.get().getDefaultInstance();
-                blockEntity.saveToItem(itemStack);
-                if (honeyCocoonBlockEntity.hasCustomName()) {
-                    itemStack.setHoverName(honeyCocoonBlockEntity.getCustomName());
-                }
-
-                CompoundTag parentTag = null;
-                CompoundTag tag = itemStack.getTag();
-                if(tag != null) {
-                    if(tag.contains("BlockEntityTag")) {
-                        parentTag = tag;
-                        tag = tag.getCompound("BlockEntityTag");
-                    }
-                    if(!tag.contains("UUID")) {
-                        if(parentTag != null) {
-                            parentTag.putString("UUID", UUID.randomUUID().toString());
-                        }
-                        else {
-                            tag.putString("UUID", UUID.randomUUID().toString());
-                        }
-                    }
-                }
-
-                ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
-                itementity.setDefaultPickUpDelay();
-                level.addFreshEntity(itementity);
-            }
-            else {
-                honeyCocoonBlockEntity.unpackLootTable(player);
-            }
-        }
-    }
-
-    @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack itemStack) {
         if (itemStack.getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0 && player instanceof ServerPlayer serverPlayer) {
             BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
