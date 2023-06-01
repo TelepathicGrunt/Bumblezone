@@ -47,6 +47,8 @@ public class BzTags {
     public static final TagKey<Block> ANCIENT_WAX_STAIRS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "ancient_wax/stairs"));
     public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_CHANNELS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_channels"));
     public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_NODES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_nodes"));
+    public static final TagKey<Block> BLOCK_ENTITY_FORCED_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_entity_forced_highlighting"));
+    public static final TagKey<Block> BLOCK_ENTITY_PREVENT_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_entity_prevent_highlighting"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));
@@ -110,6 +112,15 @@ public class BzTags {
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_high"));
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_LOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_low"));
     public static final TagKey<EntityType<?>> TELEPORT_PROJECTILES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/teleport_projectiles"));
+    public static final TagKey<EntityType<?>> ENTITY_PREVENT_HIGHLIGHTING = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/prevent_highlighting"));
+    public static final TagKey<EntityType<?>> ENTITY_FORCED_WHITE_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_white_highlight"));
+    public static final TagKey<EntityType<?>> ENTITY_FORCED_PURPLE_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_purple_highlight"));
+    public static final TagKey<EntityType<?>> ENTITY_FORCED_CYAN_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_cyan_highlight"));
+    public static final TagKey<EntityType<?>> ENTITY_FORCED_GREEN_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_green_highlight"));
+    public static final TagKey<EntityType<?>> ENTITY_FORCED_YELLOW_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_yellow_highlight"));
+    public static final TagKey<EntityType<?>> ENTITY_FORCED_ORANGE_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_orange_highlight"));
+    public static final TagKey<EntityType<?>> ENTITY_FORCED_RED_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_red_highlight"));
+    public static final TagKey<EntityType<?>> BOSSES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bosses"));
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
     public static final TagKey<Structure> NO_CAVES = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_caves"));

@@ -12,7 +12,7 @@ import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.KnowingEssenceLootBlockOutlining;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;

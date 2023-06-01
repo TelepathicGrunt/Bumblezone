@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:crystalline_flower",
+    "minecraft:beacon",
+    "minecraft:conduit",
+    "minecraft:spawner"
+  ]
+}

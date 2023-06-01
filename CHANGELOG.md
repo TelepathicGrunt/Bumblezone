@@ -35,6 +35,11 @@ Essence of Radiance - The reward for beating the Green Sempiternal Sanctum struc
  Haste 2, and Damage Resistance 2. It will also slowly heal your armor durability as well over time! It has 4800 use before it is 
  depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
 
+Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum structure! Holding this item in offhand will highlight mobs
+ and outlinecertain block entities near you! Allowing you to see what monster is nearby or hidden chests or suspicious blocks! It has 
+ 1200 use before it is depleted and needs 15 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
+ This highlighting can be configured on client side by config. Server owners can use the block and entity tags to force things to be highlighted
+ or not regardless of what the client config is set as. (The tags can be used to also correct highlighting issues on other mod's mobs with this item on)
 
 
 #### *\*Changes*

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering;
+package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.mixin.RandomizableContainerBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.client.LevelRendererAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,7 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
@@ -34,6 +36,7 @@ import net.minecraft.world.level.block.EnderChestBlock;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -79,10 +82,14 @@ public class KnowingEssenceLootBlockOutlining {
                     LevelChunk chunk = level.getChunk(x + centerChunkPos.x, z + centerChunkPos.z);
                     for (Map.Entry<BlockPos, BlockEntity> blockEntityEntry : chunk.getBlockEntities().entrySet()) {
                         BlockEntity blockEntity = blockEntityEntry.getValue();
-                        Block block = blockEntity.getBlockState().getBlock();
-                        if (blockEntityEntry.getValue() instanceof RandomizableContainerBlockEntity ||
-                            blockEntityEntry.getValue() instanceof EnderChestBlockEntity ||
+                        BlockState blockState = blockEntity.getBlockState();
+                        Block block = blockState.getBlock();
+                        if ((blockState.is(BzTags.BLOCK_ENTITY_FORCED_HIGHLIGHTING) ||
+                            blockEntity instanceof RandomizableContainerBlockEntity ||
+                            blockEntity instanceof BrushableBlockEntity ||
+                            blockEntity instanceof EnderChestBlockEntity ||
                             block instanceof EnderChestBlock)
+                                && !blockState.is(BzTags.BLOCK_ENTITY_PREVENT_HIGHLIGHTING))
                         {
                              BlockPos lootBlockPos = blockEntityEntry.getKey();
 
@@ -97,35 +104,10 @@ public class KnowingEssenceLootBlockOutlining {
                                 continue;
                             }
 
-                            int red = 255;
-                            int green = 255;
-                            int blue = 255;
-                            int alpha = 255;
-
-                            // TODO: Add tags for this
-                            if (blockEntity instanceof ShulkerBoxBlockEntity || block instanceof ShulkerBoxBlock) {
-                                //purple
-                                green = 0;
-                            }
-                            else if (blockEntity instanceof ChestBlockEntity || block instanceof ChestBlock) {
-                                //yellow
-                                blue = 0;
-                            }
-                            else if (blockEntity instanceof BarrelBlockEntity || block instanceof BarrelBlock) {
-                                //orange
-                                green = 155;
-                                blue = 0;
-                            }
-                            else if (blockEntity instanceof EnderChestBlockEntity || block instanceof EnderChestBlock) {
-                                //dark green
-                                red = 0;
-                                green = 150;
-                                blue = 100;
-                            }
-                            else {
-                                //translucent white
-                                alpha /= 2;
-                            }
+                            int colorInt = block.defaultMapColor().col;
+                            int red = FastColor.ARGB32.red(colorInt);
+                            int green = FastColor.ARGB32.green(colorInt);
+                            int blue = FastColor.ARGB32.blue(colorInt);
 
                             renderLineBox(
                                     bufferbuilder,
@@ -139,7 +121,7 @@ public class KnowingEssenceLootBlockOutlining {
                                     red,
                                     green,
                                     blue,
-                                    alpha);
+                                    255);
                         }
                     }
                 }

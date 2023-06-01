@@ -202,6 +202,36 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean playWrathOfHiveEffectMusic = true;
 
+    @Entry
+    public static boolean renderBeeQueenBonusTradeItem = true;
+
+    @Comment
+    public static Comment knowingEssenceComment;
+
+    @Entry
+    public static boolean knowingEssenceHighlightBosses = true;
+
+    @Entry
+    public static boolean knowingEssenceHighlightMonsters = true;
+
+    @Entry
+    public static boolean knowingEssenceHighlightTamed = true;
+
+    @Entry
+    public static boolean knowingEssenceHighlightLivingEntities = true;
+
+    @Entry
+    public static boolean knowingEssenceHighlightCommonItems = true;
+
+    @Entry
+    public static boolean knowingEssenceHighlightUncommonItems = true;
+
+    @Entry
+    public static boolean knowingEssenceHighlightRareItems = true;
+
+    @Entry
+    public static boolean knowingEssenceHighlightEpicItems = true;
+
     @ApiStatus.Internal
     public static void setup() {
         MidnightConfig.init(Bumblezone.MODID, BzConfig.class);
@@ -282,6 +312,15 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.lgbtBeeRate = lgbtBeeRate;
         BzClientConfigs.ukraineBeeRate = ukraineBeeRate;
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
+        BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem;
+        BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses;
+        BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters;
+        BzClientConfigs.knowingEssenceHighlightTamed = knowingEssenceHighlightTamed;
+        BzClientConfigs.knowingEssenceHighlightLivingEntities = knowingEssenceHighlightLivingEntities;
+        BzClientConfigs.knowingEssenceHighlightCommonItems = knowingEssenceHighlightCommonItems;
+        BzClientConfigs.knowingEssenceHighlightUncommonItems = knowingEssenceHighlightUncommonItems;
+        BzClientConfigs.knowingEssenceHighlightRareItems = knowingEssenceHighlightRareItems;
+        BzClientConfigs.knowingEssenceHighlightEpicItems = knowingEssenceHighlightEpicItems;
     }
 
 }

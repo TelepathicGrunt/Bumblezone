@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering;
+package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -21,6 +21,7 @@ import org.joml.Matrix4f;
 public class EssenceOverlay {
     private static final ResourceLocation TEXTURE_OVERLAY_1 = new ResourceLocation(Bumblezone.MODID, "textures/rainbow_overlay.png");
 
+    // Currently unused but may utilize later
     public static boolean portalOverlay(Player player, PoseStack matrixStack) {
 
         if (player.level().getBlockState(BlockPos.containing(player.getEyePosition(1))).getBlock() == BzBlocks.ESSENCE_BLOCK_WHITE.get()) {
