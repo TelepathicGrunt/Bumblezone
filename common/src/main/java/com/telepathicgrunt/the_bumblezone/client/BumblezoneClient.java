@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
@@ -61,6 +62,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -105,6 +107,11 @@ public class BumblezoneClient {
         ClientLevelAccessor.setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
 
         registerBlockEntityRenderers();
+
+        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, result) -> {
+            KnowingEssenceLootBlockOutlining.outlineLootBlocks(worldRenderContext.matrixStack(), worldRenderContext.camera(), worldRenderContext.worldRenderer());
+            return true;
+        });
     }
 
     public static void registerBlockEntityRenderers() {

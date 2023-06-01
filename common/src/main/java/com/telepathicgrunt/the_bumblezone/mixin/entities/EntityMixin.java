@@ -29,7 +29,7 @@ public abstract class EntityMixin {
     public abstract AABB getBoundingBox();
 
     @Shadow
-    public Level level;
+    public abstract Level level();
 
     @ModifyVariable(method = "positionRider(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$MoveFunction;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getX()D"),
@@ -58,7 +58,7 @@ public abstract class EntityMixin {
             BlockPos maxBlockPos = BlockPos.containing(aABB.maxX + 1.0E-7, aABB.maxY + 1.0E-7, aABB.maxZ + 1.0E-7);
             BlockPos minThreshold = BlockPos.containing(aABB.minX + 1.0E-7, aABB.minY + 1.0E-7, aABB.minZ + 1.0E-7);
             BlockPos maxThreshold = BlockPos.containing(aABB.maxX - 1.0E-7, aABB.maxY - 1.0E-7, aABB.maxZ - 1.0E-7);
-            if (this.level.hasChunksAt(minThreshold, maxThreshold)) {
+            if (level().hasChunksAt(minThreshold, maxThreshold)) {
                 BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 
                 for(int x = minBlockPos.getX(); x <= maxBlockPos.getX(); ++x) {
@@ -86,15 +86,15 @@ public abstract class EntityMixin {
 
                             if (sideCheckPassed == 1) {
                                 mutableBlockPos.set(x, y, z);
-                                BlockState blockState = this.level.getBlockState(mutableBlockPos);
+                                BlockState blockState = level().getBlockState(mutableBlockPos);
                                 if (blockState.is(BzBlocks.POROUS_HONEYCOMB.get())) {
-                                    PorousHoneycomb.beeHoneyFill(blockState, this.level, mutableBlockPos, ((Entity)(Object)this));
+                                    PorousHoneycomb.beeHoneyFill(blockState, level(), mutableBlockPos, ((Entity)(Object)this));
                                 }
                                 else if (blockState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
-                                    FilledPorousHoneycomb.beeHoneyTake(blockState, this.level, mutableBlockPos, ((Entity)(Object)this));
+                                    FilledPorousHoneycomb.beeHoneyTake(blockState, level(), mutableBlockPos, ((Entity)(Object)this));
                                 }
                                 else if (blockState.is(BzBlocks.EMPTY_HONEYCOMB_BROOD.get())) {
-                                    EmptyHoneycombBrood.beeHoneyFill(blockState, this.level, mutableBlockPos, ((Entity)(Object)this));
+                                    EmptyHoneycombBrood.beeHoneyFill(blockState, level(), mutableBlockPos, ((Entity)(Object)this));
                                 }
                             }
                         }

@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.items.*;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.LifeEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
 import com.telepathicgrunt.the_bumblezone.items.materials.BeeArmorMaterial;
@@ -148,7 +149,7 @@ public class BzItems {
     public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC))));
     public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
     public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_RED.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_PURPLE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_BLUE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
