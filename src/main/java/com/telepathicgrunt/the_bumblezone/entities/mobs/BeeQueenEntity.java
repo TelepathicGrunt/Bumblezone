@@ -937,6 +937,16 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         return BzSounds.BEE_QUEEN_DEATH;
     }
 
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return false;
+    }
+
+    @Override
+    public Vec3 getLeashOffset() {
+        return new Vec3(0.0, 0.5f * this.getEyeHeight(), this.getBbWidth() * 0.2f);
+    }
+
     public static class DirectPathNavigator extends GroundPathNavigation {
 
         private final Mob mob;

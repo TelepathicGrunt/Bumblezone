@@ -268,6 +268,9 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        float scale = 1.6f;
+        poseStack.scale(scale, scale, scale);
+        poseStack.translate(0, -0.5, 0);
         ROOT.render(poseStack, buffer, packedLight, packedOverlay);
     }
 }
