@@ -41,6 +41,14 @@ Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum struc
  This highlighting can be configured on client side by config. Server owners can use the block and entity tags to force things to be highlighted
  or not regardless of what the client config is set as. (The tags can be used to also correct highlighting issues on other mod's mobs with this item on)
 
+Essence of Calming - The reward for beating the Blue Sempiternal Sanctum structure! Holding this item in offhand will make mobs
+ nearby no longer get angry at you! (Let me know if a modded mob still attacks you while this essence is active) The effect is lost
+ early if the player sprints while it is active or gets hurt by any mob or attacks any mob. It has 600 use (seconds) before it is 
+ depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
+ The entity type tag `the_bumblezone:essence/calming/allow_anger_through` can be used to mark entities that should keep staying angry 
+ at players with this calming effect active. Note, due to implementation, this tag may not always work but let me know if it fails so
+ I can investigate the specific use case.
+
 Essence of Continuity - The reward for beating the White Sempiternal Sanctum structure! Holding this item in offhand will make dying
  not kill you and instead teleport you back to your respawn point with all health restored, hunger bar filled, neutral and 
  negative status effects removed, and fire removed. It only has 1 use before it is depleted and needs 4 hours to recharge 

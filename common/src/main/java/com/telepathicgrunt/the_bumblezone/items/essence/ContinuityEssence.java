@@ -11,8 +11,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,14 +29,9 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
     private static final int cooldownLengthInTicks = 288000;
     private static final int abilityUseAmount = 1;
-    private static final String ABILITY_USE_REMAINING_TAG = "abilityUseRemaining";
 
     public ContinuityEssence(Properties properties) {
-        super(properties, cooldownLengthInTicks);
-    }
-
-    public static void setAbilityUseRemaining(ItemStack stack, int abilityUseRemaining) {
-        stack.getOrCreateTag().putInt(ABILITY_USE_REMAINING_TAG, abilityUseRemaining);
+        super(properties, cooldownLengthInTicks, abilityUseAmount);
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
@@ -47,41 +40,6 @@ public class ContinuityEssence extends AbilityEssenceItem {
         if (getRemainingUse == 0) {
             setDepleted(stack, serverPlayer, true);
         }
-    }
-
-    @Override
-    public int getAbilityUseRemaining(ItemStack stack) {
-        if (!stack.getOrCreateTag().contains(ABILITY_USE_REMAINING_TAG)) {
-            setAbilityUseRemaining(stack, getMaxAbilityUseAmount(stack));
-            return getMaxAbilityUseAmount(stack);
-        }
-
-        return stack.getOrCreateTag().getInt(ABILITY_USE_REMAINING_TAG);
-    }
-
-    @Override
-    int getMaxAbilityUseAmount(ItemStack stack) {
-        return abilityUseAmount;
-    }
-
-    @Override
-    public void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        int abilityUseRemaining = getAbilityUseRemaining(stack);
-        if (abilityUseRemaining < getMaxAbilityUseAmount(stack)) {
-            int lastChargeTime = getLastAbilityChargeTimestamp(stack);
-            if (lastChargeTime == 0 || serverPlayer.tickCount < lastChargeTime) {
-                setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
-            }
-            else {
-                setAbilityUseRemaining(stack, abilityUseRemaining + 1);
-                setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
-            }
-        }
-    }
-
-    @Override
-    public void rechargeAbilityEntirely(ItemStack stack) {
-        setAbilityUseRemaining(stack, getMaxAbilityUseAmount(stack));
     }
 
     @Override

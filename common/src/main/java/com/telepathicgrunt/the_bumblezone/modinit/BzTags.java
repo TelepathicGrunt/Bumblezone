@@ -112,6 +112,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_high"));
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_LOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_low"));
     public static final TagKey<EntityType<?>> TELEPORT_PROJECTILES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/teleport_projectiles"));
+    public static final TagKey<EntityType<?>> ALLOW_ANGER_THROUGH = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming/allow_anger_through"));
     public static final TagKey<EntityType<?>> ENTITY_PREVENT_HIGHLIGHTING = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/prevent_highlighting"));
     public static final TagKey<EntityType<?>> ENTITY_FORCED_WHITE_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_white_highlight"));
     public static final TagKey<EntityType<?>> ENTITY_FORCED_PURPLE_HIGHLIGHT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/knowing/forced_purple_highlight"));

@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
+import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -43,5 +44,8 @@ public class FabricBaseEventManager {
 
         ServerLivingEntityEvents.ALLOW_DEATH.register((livingEntity, damageSource, damage) ->
                 ContinuityEssence.CancelledDeath(livingEntity));
+
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((livingEntity, damageSource, damage) ->
+                CalmingEssence.OnAttack(livingEntity, damageSource));
     }
 }

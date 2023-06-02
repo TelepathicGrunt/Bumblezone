@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.items.*;
+import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
@@ -151,7 +152,7 @@ public class BzItems {
     public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
     public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_RED.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new BlockItem(BzBlocks.ESSENCE_BLOCK_BLUE.get(), new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new CalmingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> ESSENCE_WHITE = ITEMS.register("essence_white", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));

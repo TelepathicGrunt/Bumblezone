@@ -18,11 +18,14 @@ public abstract class AbilityEssenceItem extends Item {
     private static final String COOLDOWN_TIME_TAG = "cooldownTime";
     private static final String FORCED_COOLDOWN_TAG = "forcedCooldown";
     private static final String LAST_ABILITY_CHARGE_TIMESTAMP_TAG = "lastChargeTime";
+    private static final String ABILITY_USE_REMAINING_TAG = "abilityUseRemaining";
     private final int cooldownTickLength;
+    private final int abilityUseAmount;
 
-    public AbilityEssenceItem(Properties properties, int cooldownTickLength) {
+    public AbilityEssenceItem(Properties properties, int cooldownTickLength, int abilityUseAmount) {
         super(properties);
         this.cooldownTickLength = cooldownTickLength;
+        this.abilityUseAmount = abilityUseAmount;
     }
 
     public int getCooldownTickLength() {
@@ -114,7 +117,7 @@ public abstract class AbilityEssenceItem extends Item {
     public void appendHoverText(ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
         if (getIsActive(stack)) {
             components.add(Component.translatable("item.the_bumblezone.essence_active").withStyle(ChatFormatting.RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount(stack)).withStyle(ChatFormatting.YELLOW));
+            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
         }
         else if (getForcedCooldown(stack)) {
             components.add(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
@@ -122,17 +125,48 @@ public abstract class AbilityEssenceItem extends Item {
         }
         else {
             components.add(Component.translatable("item.the_bumblezone.essence_ready").withStyle(ChatFormatting.GREEN));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount(stack)).withStyle(ChatFormatting.YELLOW));
+            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
         }
     }
 
     abstract void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer);
 
-    abstract void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer);
+    public int getAbilityUseRemaining(ItemStack stack) {
+        if (!stack.getOrCreateTag().contains(ABILITY_USE_REMAINING_TAG)) {
+            setAbilityUseRemaining(stack, getMaxAbilityUseAmount());
+            return getMaxAbilityUseAmount();
+        }
 
-    abstract void rechargeAbilityEntirely(ItemStack stack);
+        return stack.getOrCreateTag().getInt(ABILITY_USE_REMAINING_TAG);
+    }
 
-    abstract int getAbilityUseRemaining(ItemStack stack);
+    int getMaxAbilityUseAmount() {
+        return abilityUseAmount;
+    }
 
-    abstract int getMaxAbilityUseAmount(ItemStack stack);
+    public void setAbilityUseRemaining(ItemStack stack, int abilityUseRemaining) {
+        stack.getOrCreateTag().putInt(ABILITY_USE_REMAINING_TAG, abilityUseRemaining);
+    }
+
+    public void rechargeAbilityEntirely(ItemStack stack) {
+        setAbilityUseRemaining(stack, getMaxAbilityUseAmount());
+    }
+
+    public void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
+        int abilityUseRemaining = getAbilityUseRemaining(stack);
+        if (abilityUseRemaining < getMaxAbilityUseAmount()) {
+            int lastChargeTime = getLastAbilityChargeTimestamp(stack);
+            if (lastChargeTime == 0 || serverPlayer.tickCount < lastChargeTime) {
+                setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
+            }
+            else {
+                int timeFromLastCharge = serverPlayer.tickCount - lastChargeTime;
+                int chargeTimeIncrement = Math.max(getCooldownTickLength() / getMaxAbilityUseAmount(), 1);
+                if (timeFromLastCharge % chargeTimeIncrement == 0) {
+                    setAbilityUseRemaining(stack, abilityUseRemaining + 1);
+                    setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
+                }
+            }
+        }
+    }
 }

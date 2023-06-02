@@ -4,8 +4,6 @@ import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,22 +14,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
-
-import java.security.PublicKey;
 
 public class KnowingEssence extends AbilityEssenceItem {
 
     private static final int cooldownLengthInTicks = 18000;
     private static final int abilityUseAmount = 1200;
-    private static final String ABILITY_USE_REMAINING_TAG = "abilityUseRemaining";
 
     public KnowingEssence(Properties properties) {
-        super(properties, cooldownLengthInTicks);
-    }
-
-    public static void setAbilityUseRemaining(ItemStack stack, int abilityUseRemaining) {
-        stack.getOrCreateTag().putInt(ABILITY_USE_REMAINING_TAG, abilityUseRemaining);
+        super(properties, cooldownLengthInTicks, abilityUseAmount);
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer) {
@@ -43,31 +33,16 @@ public class KnowingEssence extends AbilityEssenceItem {
     }
 
     @Override
-    public int getAbilityUseRemaining(ItemStack stack) {
-        if (!stack.getOrCreateTag().contains(ABILITY_USE_REMAINING_TAG)) {
-            setAbilityUseRemaining(stack, getMaxAbilityUseAmount(stack));
-            return getMaxAbilityUseAmount(stack);
-        }
-
-        return stack.getOrCreateTag().getInt(ABILITY_USE_REMAINING_TAG);
-    }
-
-    @Override
-    int getMaxAbilityUseAmount(ItemStack stack) {
-        return abilityUseAmount;
-    }
-
-    @Override
     public void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
         int abilityUseRemaining = getAbilityUseRemaining(stack);
-        if (abilityUseRemaining < getMaxAbilityUseAmount(stack)) {
+        if (abilityUseRemaining < getMaxAbilityUseAmount()) {
             int lastChargeTime = getLastAbilityChargeTimestamp(stack);
             if (lastChargeTime == 0 || serverPlayer.tickCount < lastChargeTime) {
                 setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
             }
             else {
                 int timeFromLastCharge = serverPlayer.tickCount - lastChargeTime;
-                int chargeTimeIncrement = getCooldownTickLength() / getMaxAbilityUseAmount(stack);
+                int chargeTimeIncrement = Math.max(getCooldownTickLength() / getMaxAbilityUseAmount(), 1);
                 if (timeFromLastCharge % chargeTimeIncrement == 0) {
                     setAbilityUseRemaining(stack, abilityUseRemaining + 1);
                     setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
@@ -78,7 +53,7 @@ public class KnowingEssence extends AbilityEssenceItem {
 
     @Override
     public void rechargeAbilityEntirely(ItemStack stack) {
-        setAbilityUseRemaining(stack, getMaxAbilityUseAmount(stack));
+        setAbilityUseRemaining(stack, getMaxAbilityUseAmount());
     }
 
     @Override

@@ -5,13 +5,17 @@ import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
+import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -21,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
@@ -99,6 +104,25 @@ public abstract class EntityMixin {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    @Inject(method = "isAlliedTo(Lnet/minecraft/world/entity/Entity;)Z",
+            at = @At(value = "RETURN"),
+            cancellable = true)
+    private void bumblezone$preventAngerableAtPlayer2(Entity comparer, CallbackInfoReturnable<Boolean> cir) {
+        Entity current = (Entity) (Object) this;
+        if (current instanceof Mob || comparer instanceof Mob) {
+            if (current instanceof Player player && CalmingEssence.IsCalmingEssenceActive(player)) {
+                if (!comparer.getType().is(BzTags.ALLOW_ANGER_THROUGH)) {
+                    cir.setReturnValue(false);
+                }
+            }
+            else if (comparer instanceof Player player && CalmingEssence.IsCalmingEssenceActive(player)) {
+                if (!current.getType().is(BzTags.ALLOW_ANGER_THROUGH)) {
+                    cir.setReturnValue(false);
                 }
             }
         }
