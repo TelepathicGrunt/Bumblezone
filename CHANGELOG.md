@@ -89,6 +89,8 @@ Honey Slime is now immune to fall damage like Magma Cubes. The honey protects th
 
 Fixed dimensions for baby Honey Slimes.
 
+Fixed z-fighting on bottom of Honey Slime and ground.
+
 Fixed Bee Queen able to be leashed when it shouldn't.
 
 Beehemoth now starts with 40 health points and will get more health as friendship increases! Maxes out at 60 health points.
