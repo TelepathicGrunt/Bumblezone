@@ -27,13 +27,12 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
     @Override
     public void render(BeeQueenEntity beeQueenEntity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         stack.pushPose();
-        float scale = 2.6f;
-        stack.scale(scale, scale, scale);
         super.render(beeQueenEntity, entityYaw, partialTicks, stack, buffer, packedLight);
         stack.popPose();
 
         if (!beeQueenEntity.isAngry() && BzClientConfigs.renderBeeQueenBonusTradeItem.get() && !beeQueenEntity.getBonusTradeItem().isEmpty()) {
             stack.pushPose();
+            float scale = 2.6f;
             stack.scale(scale, scale, scale);
             float rotYaw = Mth.rotLerp(partialTicks, beeQueenEntity.yBodyRotO, beeQueenEntity.yBodyRot);
             stack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotYaw + 180.0f));

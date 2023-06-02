@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -31,6 +32,10 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock {
     public GlisteringHoneyCrystal() {
         super(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.TERRACOTTA_YELLOW)
                 .lightLevel((blockState) -> 11)
+                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
+                .isRedstoneConductor((blockState, blockGetter, blockPos) -> false)
+                .isSuffocating((blockState, blockGetter, blockPos) -> false)
+                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
                 .strength(0.4F, 0.4f)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE)
                 .noOcclusion());

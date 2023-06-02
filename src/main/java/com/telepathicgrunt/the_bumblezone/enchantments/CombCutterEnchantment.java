@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -71,7 +72,11 @@ public class CombCutterEnchantment extends Enchantment {
         ItemStack itemStack = playerEntity.getMainHandItem();
         int equipmentLevel = EnchantmentHelper.getEnchantmentLevel(BzEnchantments.COMB_CUTTER.get(), playerEntity);
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
-            breakSpeed += (float)(equipmentLevel * equipmentLevel + (lesserTarget ? 3 : 13));
+            breakSpeed = (equipmentLevel * equipmentLevel) + (lesserTarget ? 3 : 13);
+
+            if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
+                breakSpeed /= ((Math.pow(playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier(), 6) + 2) * 20);
+            }
         }
         event.setNewSpeed(breakSpeed);
     }

@@ -110,7 +110,7 @@ public class CrystallineFlower extends BaseEntityBlock {
 
     @Override
     public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.BLOCK;
+        return PushReaction.DESTROY;
     }
 
     @Override
