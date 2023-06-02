@@ -22,8 +22,6 @@ public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothMod
     @Override
     public void render(BeehemothEntity beehemothEntity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         stack.pushPose();
-        float scale = 1.6f;
-        stack.scale(scale, scale, scale);
         super.render(beehemothEntity, entityYaw, partialTicks, stack, buffer, packedLight);
         stack.popPose();
 

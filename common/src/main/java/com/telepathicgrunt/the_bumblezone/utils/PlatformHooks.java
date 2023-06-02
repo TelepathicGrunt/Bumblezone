@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 public class PlatformHooks {
 
     @ExpectPlatform
-    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
         throw new NotImplementedException("PlatformHooks createEntityType is not implemented!");
     }
 

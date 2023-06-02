@@ -129,30 +129,31 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
     private static void respawn(ItemStack stack, ContinuityEssence continuityEssence, ServerPlayer serverPlayer, MinecraftServer server) {
         ResourceKey<Level> respawnDimension = serverPlayer.getRespawnDimension();
-        BlockPos respawnPosition = serverPlayer.getRespawnPosition();
+        BlockPos respawningLinkedPosition = serverPlayer.getRespawnPosition();
         float respawnAngle = serverPlayer.getRespawnAngle();
         boolean forcedRespawn = serverPlayer.isRespawnForced();
 
         ServerLevel desiredDestination = server.getLevel(respawnDimension);
-        Optional<Vec3> optionalRespawnPoint = desiredDestination != null && respawnPosition != null ? Player.findRespawnPositionAndUseSpawnBlock(desiredDestination, respawnPosition, respawnAngle, forcedRespawn, true) : Optional.empty();
+        Optional<Vec3> optionalRespawnPoint = desiredDestination != null && respawningLinkedPosition != null ? Player.findRespawnPositionAndUseSpawnBlock(desiredDestination, respawningLinkedPosition, respawnAngle, forcedRespawn, true) : Optional.empty();
         ServerLevel finalDestination = desiredDestination != null && optionalRespawnPoint.isPresent() ? desiredDestination : server.overworld();
 
         if (optionalRespawnPoint.isPresent()) {
-            BlockPos playerRespawnPosition = BlockPos.containing(optionalRespawnPoint.get());
+            Vec3 playerRespawnPosition = optionalRespawnPoint.get();
+            BlockPos playerRespawnBlockPos = BlockPos.containing(playerRespawnPosition);
 
-            BlockState blockState = finalDestination.getBlockState(respawnPosition);
+            BlockState blockState = finalDestination.getBlockState(respawningLinkedPosition);
             boolean isRespawnAnchor = blockState.is(Blocks.RESPAWN_ANCHOR);
 
-            BzWorldSavedData.queueEntityToGenericTeleport(serverPlayer, finalDestination.dimension(), playerRespawnPosition, () -> {
-                spawnParticles(serverPlayer.serverLevel(), optionalRespawnPoint.get(), serverPlayer.getRandom());
+            BzWorldSavedData.queueEntityToGenericTeleport(serverPlayer, finalDestination.dimension(), playerRespawnBlockPos, () -> {
+                spawnParticles(finalDestination, playerRespawnPosition, finalDestination.getRandom());
                 continuityEssence.decrementAbilityUseRemaining(stack, serverPlayer, 1);
 
                 if (isRespawnAnchor) {
-                    serverPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, respawnPosition.getX(), respawnPosition.getY(), respawnPosition.getZ(), 1.0f, 1.0f, finalDestination.getRandom().nextLong()));
+                    serverPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, respawningLinkedPosition.getX(), respawningLinkedPosition.getY(), respawningLinkedPosition.getZ(), 1.0f, 1.0f, finalDestination.getRandom().nextLong()));
                 }
             });
         }
-        else if (respawnPosition != null) {
+        else if (respawningLinkedPosition != null) {
             serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.NO_RESPAWN_BLOCK_AVAILABLE, 0.0f));
         }
     }

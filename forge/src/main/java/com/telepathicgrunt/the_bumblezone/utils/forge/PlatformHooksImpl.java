@@ -38,7 +38,7 @@ import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, int clientTrackingRange, int updateInterval, String buildName) {
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(size, size)
