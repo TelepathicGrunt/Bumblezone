@@ -13,9 +13,7 @@ Fixed dimensions for baby Honey Slimes.
 Tamed Beehemoths will show friendship amount above when owner is looking at it.
 
 ##### Blocks:
-Walking through Pile of Pollen should not trigger Sculk Sensor now.
-
-String Curtains should properly block Sculk Sensor's detection if between it and the sound source.
+Walking through Pile of Pollen should not trigger Sculk Sensor now. Pile of Pollen will also block Sculk Sensor's detection if between it and the sound source.
 
 Fluids should not show drip animations under Glistering Honey Crystal now.
 
