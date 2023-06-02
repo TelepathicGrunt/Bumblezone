@@ -51,7 +51,7 @@ Essence of Continuity - The reward for beating the White Sempiternal Sanctum str
 #### *\*Changes*
 
 ##### Blocks:
-Walking through Pile of Pollen should not trigger Sculk Sensor now.
+Walking through Pile of Pollen should not trigger Sculk Sensor now. Pile of Pollen will also block Sculk Sensor's detection if between it and the sound source.
 
 String Curtains should properly block Sculk Sensor's detection if between it and the sound source.
 
