@@ -654,9 +654,15 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
+    public Vec3 getLeashOffset() {
+        return new Vec3(0.0, 0.5f * this.getEyeHeight(), this.getBbWidth() * 0.2f);
+    }
+
+    @Override
     public boolean isFlying() {
         return this.tickCount % TICKS_PER_FLAP == 0;
     }
+
     // If our flyingSpeed is manually modified by something (like Beenergized effect),
     public float getFinalFlyingSpeed() {
         float percentDiff = (float) getAttributeValue(Attributes.FLYING_SPEED) / 0.6f;

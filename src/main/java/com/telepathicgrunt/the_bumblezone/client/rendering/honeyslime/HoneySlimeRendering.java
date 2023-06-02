@@ -24,9 +24,10 @@ public class HoneySlimeRendering extends MobRenderer<HoneySlimeEntity, SlimeMode
     }
 
     @Override
-    public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i) {
+    public void render(HoneySlimeEntity honeySlimeEntity, float f, float g, PoseStack poseStack, MultiBufferSource vertexConsumerProvider, int i) {
         this.shadowRadius = 0.25F * (honeySlimeEntity.isBaby() ? 1f : 2f);
-        super.render(honeySlimeEntity, f, g, matrixStack, vertexConsumerProvider, i);
+        poseStack.translate(0, -0.0001f, 0);
+        super.render(honeySlimeEntity, f, g, poseStack, vertexConsumerProvider, i);
     }
 
     // unused. Dont ask how the scaling even works automatically
