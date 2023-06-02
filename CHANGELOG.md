@@ -25,6 +25,10 @@ Windy Air added that will push any entity in whatever direction the air block is
 Heavy Air added that will pull entities down and remove Levitation, Slow Falling, Jump Boost, and non-creative flying! 
  Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctum. Can be found in Creative Menu for builders!
 
+Suspicious Pile of Pollen is added now! You may find these scattered throughout Bumblezone in certain structures. Brush them for loot!
+ Also found in Creative Menu for builders, but you'll need to set the items or loot table for the block by command.
+
+
 ##### Items:
 Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand will grow 
  crops and saplings nearby, heal mobs tamed by you, and heal other mobs or players on the same team as you! It has 1000 use 

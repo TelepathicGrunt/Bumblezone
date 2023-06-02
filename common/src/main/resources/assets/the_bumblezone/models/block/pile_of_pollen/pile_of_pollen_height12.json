@@ -1,7 +1,7 @@
 {
     "textures": {
-        "particle": "the_bumblezone:block/pile_of_pollen",
-        "texture": "the_bumblezone:block/pile_of_pollen"
+        "particle": "the_bumblezone:block/pile_of_pollen/pile_of_pollen",
+        "texture": "the_bumblezone:block/pile_of_pollen/pile_of_pollen"
     },
     "elements": [
         {

@@ -26,6 +26,7 @@ public class BzBlocks {
     public static final RegistryEntry<Block> STICKY_HONEY_REDSTONE = BLOCKS.register("sticky_honey_redstone", StickyHoneyRedstone::new);
     public static final RegistryEntry<Block> BEEHIVE_BEESWAX = BLOCKS.register("beehive_beeswax", BeehiveBeeswax::new);
     public static final RegistryEntry<Block> PILE_OF_POLLEN = BLOCKS.register("pile_of_pollen", PileOfPollen::new);
+    public static final RegistryEntry<Block> PILE_OF_POLLEN_SUSPICIOUS = BLOCKS.register("pile_of_pollen_suspicious", PileOfPollenSuspicious::new);
     public static final RegistryEntry<Block> HONEY_WEB = BLOCKS.register("honey_web", HoneyWeb::new);
     public static final RegistryEntry<Block> REDSTONE_HONEY_WEB = BLOCKS.register("redstone_honey_web", RedstoneHoneyWeb::new);
     public static final RegistryEntry<Block> HONEY_COCOON = BLOCKS.register("honey_cocoon", HoneyCocoon::new);

@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#the_bumblezone:string_curtains",
-    "the_bumblezone:pile_of_pollen"
+    "the_bumblezone:pile_of_pollen",
+    "the_bumblezone:pile_of_pollen_suspicious"
   ]
 }
