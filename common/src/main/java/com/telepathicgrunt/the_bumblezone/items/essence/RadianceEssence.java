@@ -1,11 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.Vec3;
 
 public class RadianceEssence extends AbilityEssenceItem {
 
@@ -26,11 +31,13 @@ public class RadianceEssence extends AbilityEssenceItem {
 
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 25L == 0) {
+        if (!getForcedCooldown(stack) && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13) {
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 12L == 0) {
+                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+            }
 
-            if (!getForcedCooldown(stack) &&
-                level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13)
-            {
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 25L == 0) {
+
                 serverPlayer.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SPEED,
                         120,
@@ -98,5 +105,18 @@ public class RadianceEssence extends AbilityEssenceItem {
                 }
             }
         }
+    }
+
+    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random) {
+        world.sendParticles(
+                ParticleTypes.CHERRY_LEAVES,
+                location.x(),
+                location.y() + 1,
+                location.z(),
+                1,
+                random.nextGaussian() * 0.15D,
+                (random.nextGaussian() * 0.2D) + 0.1,
+                random.nextGaussian() * 0.15D,
+                0.0D);
     }
 }

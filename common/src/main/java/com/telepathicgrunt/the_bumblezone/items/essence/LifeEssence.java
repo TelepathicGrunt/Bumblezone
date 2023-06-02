@@ -1,12 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -23,6 +26,7 @@ import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
@@ -77,12 +81,14 @@ public class LifeEssence extends AbilityEssenceItem {
         if (entity instanceof TamableAnimal tamableAnimal && tamableAnimal.isOwnedBy(serverPlayer)) {
             if (tamableAnimal.getHealth() < tamableAnimal.getMaxHealth()) {
                 tamableAnimal.heal(1);
+                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
                 decrementAbilityUseRemaining(stack, serverPlayer);
             }
         }
         else if (entity instanceof LivingEntity livingEntity && entity.getTeam() != null && entity.getTeam().isAlliedTo(serverPlayer.getTeam())) {
             if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
                 livingEntity.heal(1);
+                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
                 decrementAbilityUseRemaining(stack, serverPlayer);
             }
         }
@@ -179,8 +185,11 @@ public class LifeEssence extends AbilityEssenceItem {
                 grewBlock = true;
             }
 
-            if (grewBlock && level.getRandom().nextFloat() < 0.4F) {
-                decrementAbilityUseRemaining(stack, serverPlayer);
+            if (grewBlock) {
+                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+                if (level.getRandom().nextFloat() < 0.4F) {
+                    decrementAbilityUseRemaining(stack, serverPlayer);
+                }
             }
         }
     }
@@ -194,5 +203,18 @@ public class LifeEssence extends AbilityEssenceItem {
         }
 
         return true;
+    }
+
+    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random) {
+        world.sendParticles(
+                ParticleTypes.HAPPY_VILLAGER,
+                location.x(),
+                location.y() + 1,
+                location.z(),
+                2,
+                random.nextGaussian() * 0.2D,
+                (random.nextGaussian() * 0.25D) + 0.1,
+                random.nextGaussian() * 0.2D,
+                random.nextFloat() * 0.2 + 0.1f);
     }
 }

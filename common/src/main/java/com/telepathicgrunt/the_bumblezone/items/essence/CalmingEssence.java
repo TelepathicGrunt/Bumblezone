@@ -1,11 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.ServerStatsCounter;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -19,6 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.Vec3;
 
 public class CalmingEssence extends AbilityEssenceItem {
 
@@ -39,9 +44,12 @@ public class CalmingEssence extends AbilityEssenceItem {
 
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
+        if (!getForcedCooldown(stack)) {
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 15L == 0) {
+                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+            }
 
-            if (!getForcedCooldown(stack)) {
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
                 serverPlayer.getStats().setValue(serverPlayer, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), 0);
 
                 for (Entity entity : level.getEntities(serverPlayer, serverPlayer.getBoundingBox().inflate(60))) {
@@ -99,5 +107,18 @@ public class CalmingEssence extends AbilityEssenceItem {
             }
         }
         return true;
+    }
+
+    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random) {
+        world.sendParticles(
+                BzParticles.SPARKLE_PARTICLE.get(),
+                location.x(),
+                location.y() + 1,
+                location.z(),
+                1,
+                random.nextGaussian() * 0.2D,
+                (random.nextGaussian() * 0.25D) + 0.1,
+                random.nextGaussian() * 0.2D,
+                0);
     }
 }

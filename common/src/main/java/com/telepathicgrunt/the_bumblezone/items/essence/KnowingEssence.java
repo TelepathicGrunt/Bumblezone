@@ -3,7 +3,10 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class KnowingEssence extends AbilityEssenceItem {
 
@@ -58,8 +62,12 @@ public class KnowingEssence extends AbilityEssenceItem {
 
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
-            if (!getForcedCooldown(stack)) {
+        if (!getForcedCooldown(stack)) {
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 5L == 0) {
+                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+            }
+
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
                 decrementAbilityUseRemaining(stack, serverPlayer);
             }
         }
@@ -158,5 +166,18 @@ public class KnowingEssence extends AbilityEssenceItem {
         }
 
         return NO_HIGHLIGHT;
+    }
+
+    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random) {
+        world.sendParticles(
+                ParticleTypes.ENCHANT,
+                location.x(),
+                location.y() + 1,
+                location.z(),
+                1,
+                random.nextGaussian() * 0.1D,
+                (random.nextGaussian() * 0.1D) + 0.1,
+                random.nextGaussian() * 0.1D,
+                random.nextFloat() * 0.3 + 0.1f);
     }
 }
