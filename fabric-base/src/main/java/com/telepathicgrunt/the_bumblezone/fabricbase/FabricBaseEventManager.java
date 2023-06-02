@@ -4,6 +4,9 @@ import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
+import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.Util;
@@ -37,5 +40,8 @@ public class FabricBaseEventManager {
         RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
         SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
+
+        ServerLivingEntityEvents.ALLOW_DEATH.register((livingEntity, damageSource, damage) ->
+                ContinuityEssence.CancelledDeath(livingEntity));
     }
 }

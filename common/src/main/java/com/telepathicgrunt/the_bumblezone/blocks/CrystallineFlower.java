@@ -117,10 +117,15 @@ public class CrystallineFlower extends BaseEntityBlock {
             livingEntity.makeStuckInBlock(state, new Vec3(0.95F, 2, 0.95F));
             entity.fallDistance = fallDistance;
 
-            if (!level.isClientSide && (livingEntity.xOld != livingEntity.getX() || livingEntity.zOld != livingEntity.getZ())) {
+            if (!level.isClientSide &&
+                (livingEntity.xOld != livingEntity.getX() ||
+                livingEntity.yOld != livingEntity.getY() ||
+                livingEntity.zOld != livingEntity.getZ()))
+            {
                 double xDiff = Math.abs(livingEntity.getX() - livingEntity.xOld);
+                double yDiff = Math.abs(livingEntity.getY() - livingEntity.yOld);
                 double zDiff = Math.abs(livingEntity.getZ() - livingEntity.zOld);
-                if (xDiff >= (double)0.001F || zDiff >= (double)0.001F) {
+                if (xDiff >= (double)0.001F || yDiff >= (double)0.75F || zDiff >= (double)0.001F) {
                     livingEntity.hurt(level.damageSources().source(BzDamageSources.CRYSTALLINE_FLOWER_TYPE), 1.5f);
 
                     if (livingEntity.isDeadOrDying() &&

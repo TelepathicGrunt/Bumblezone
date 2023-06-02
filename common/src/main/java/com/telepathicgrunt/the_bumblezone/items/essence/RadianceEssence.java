@@ -45,7 +45,7 @@ public class RadianceEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
+    public void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
         int abilityUseRemaining = getAbilityUseRemaining(stack);
         if (abilityUseRemaining < getMaxAbilityUseAmount(stack)) {
             int lastChargeTime = getLastAbilityChargeTimestamp(stack);
@@ -64,12 +64,12 @@ public class RadianceEssence extends AbilityEssenceItem {
     }
 
     @Override
-    void rechargeAbilityEntirely(ItemStack stack) {
+    public void rechargeAbilityEntirely(ItemStack stack) {
         setAbilityUseRemaining(stack, getMaxAbilityUseAmount(stack));
     }
 
     @Override
-    void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
+    public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
         if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 25L == 0) {
 
             if (!getForcedCooldown(stack) &&

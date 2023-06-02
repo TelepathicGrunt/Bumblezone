@@ -42,7 +42,8 @@ import java.util.Set;
 public class BzWorldSavedData extends SavedData {
 	private static final String TELEPORTATION_DATA = Bumblezone.MODID + "teleportation";
 	private static final BzWorldSavedData CLIENT_DUMMY = new BzWorldSavedData(null);
-	private static final List<QueuedEntityData> QUEUED_ENTITIES_TO_TELEPORT = new ArrayList<>();
+	private static final List<QueuedEntityData> QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE = new ArrayList<>();
+	private static final List<QueuedEntityData> QUEUED_ENTITIES_TO_GENERIC_TELEPORT = new ArrayList<>();
 
 	public BzWorldSavedData(CompoundTag tag) {}
 
@@ -63,12 +64,22 @@ public class BzWorldSavedData extends SavedData {
 
 	public static void queueEntityToTeleport(Entity entity, ResourceKey<Level> destination) {
 		if(entity != null && !entity.level().isClientSide() && !isEntityQueuedToTeleportAlready(entity)) {
-			QUEUED_ENTITIES_TO_TELEPORT.add(new QueuedEntityData(entity, destination));
+			QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.add(new QueuedEntityData(entity, destination));
+		}
+	}
+
+	public static void queueEntityToGenericTeleport(Entity entity, ResourceKey<Level> destination, BlockPos destinationPos, Runnable runnable) {
+		if (entity != null && !entity.level().isClientSide() && !isEntityQueuedToGenericTeleportAlready(entity)) {
+			QUEUED_ENTITIES_TO_GENERIC_TELEPORT.add(new QueuedEntityData(entity, destination, destinationPos, runnable));
 		}
 	}
 
 	public static boolean isEntityQueuedToTeleportAlready(Entity entity) {
-		return QUEUED_ENTITIES_TO_TELEPORT.stream().anyMatch(entry -> entry.getEntity().equals(entity));
+		return QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.stream().anyMatch(entry -> entry.getEntity().equals(entity));
+	}
+
+	public static boolean isEntityQueuedToGenericTeleportAlready(Entity entity) {
+		return QUEUED_ENTITIES_TO_GENERIC_TELEPORT.stream().anyMatch(entry -> entry.getEntity().equals(entity));
 	}
 
 	public static void worldTick(ServerLevelTickEvent event){
@@ -78,83 +89,100 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	public static void tick(ServerLevel world) {
-		if(QUEUED_ENTITIES_TO_TELEPORT.size() == 0) return;
-
-		Set<Entity> teleportedEntities = new HashSet<>();
-		for (QueuedEntityData entry : QUEUED_ENTITIES_TO_TELEPORT) {
-			if (!entry.getIsCurrentTeleporting()) {
-				entry.setIsCurrentTeleporting(true);
+		if(QUEUED_ENTITIES_TO_GENERIC_TELEPORT.size() != 0) {
+			Set<Entity> teleportedEntities = new HashSet<>();
+			for (QueuedEntityData entry : QUEUED_ENTITIES_TO_GENERIC_TELEPORT) {
 				ResourceKey<Level> destinationKey = entry.getDestination();
-				if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
-					if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_into_bz"), true);
-					}
-
-					ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
-							try {
-								ServerLevel bumblezoneWorld = world.getServer().getLevel(BzDimension.BZ_WORLD_KEY);
-								return Optional.of(EntityTeleportationBackend.getBzCoordinate(entry.getEntity(), world, bumblezoneWorld));
-							}
-							catch (Throwable e){
-								Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);
-								return Optional.empty();
-							}
-						})
-						.thenOnServerThread(entry::setDestinationPosFound);
-				}
-				else {
-					if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_out_of_bz"), true);
-					}
-
-					ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
-							try {
-								ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
-								return Optional.of(EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entry.getEntity(), destination));
-							}
-							catch (Throwable e){
-								Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);
-								return Optional.empty();
-							}
-						})
-						.thenOnServerThread(entry::setDestinationPosFound);
-				}
-			}
-			else if (entry.getDestinationPosFound() != null) {
-				// Skip entities that were already teleported due to riding a vehicle that teleported
+				BlockPos destinationPos = entry.getDestinationPos();
 				Entity entity = entry.getEntity();
-				if(teleportedEntities.contains(entity)) continue;
 
-				ResourceKey<Level> destinationKey = entry.getDestination();
 				ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
+				baseTeleporting(entity, destinationPos.getCenter(), destination, teleportedEntities, entity);
+				entry.runnable.run();
+			}
 
-				if (entry.getDestinationPosFound().isPresent()) {
-					Vec3 destinationPos = entry.getDestinationPosFound().get();
-					// Teleport the entity's root vehicle and its passengers to the desired dimension.
-					// Also updates teleportedEntities to keep track of which entity was teleported.
+			// remove all entities that were teleported from the queue
+			QUEUED_ENTITIES_TO_GENERIC_TELEPORT.removeIf(entry -> teleportedEntities.contains(entry.getEntity()));
+		}
+
+		if(QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.size() != 0) {
+			Set<Entity> teleportedEntities = new HashSet<>();
+			for (QueuedEntityData entry : QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE) {
+				if (!entry.getIsCurrentTeleporting()) {
+					entry.setIsCurrentTeleporting(true);
+					ResourceKey<Level> destinationKey = entry.getDestination();
 					if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
-						enteringBumblezone(entity, destinationPos, teleportedEntities);
+						if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
+							serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_into_bz"), true);
+						}
+
+						ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
+								try {
+									ServerLevel bumblezoneWorld = world.getServer().getLevel(BzDimension.BZ_WORLD_KEY);
+									return Optional.of(EntityTeleportationBackend.getBzCoordinate(entry.getEntity(), world, bumblezoneWorld));
+								}
+								catch (Throwable e){
+									Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);
+									return Optional.empty();
+								}
+							})
+							.thenOnServerThread(entry::setDestinationPosFound);
 					}
 					else {
-						if (entity.getControllingPassenger() != null) {
-							exitingBumblezone(entity.getControllingPassenger(), destinationPos, destination, teleportedEntities);
+						if (entry.getEntity() instanceof ServerPlayer serverPlayer) {
+							serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.teleporting_out_of_bz"), true);
 						}
-						else {
-							exitingBumblezone(entity, destinationPos, destination, teleportedEntities);
-						}
+
+						ThreadExecutor.dimensionDestinationSearch(world.getServer(), () -> {
+								try {
+									ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
+									return Optional.of(EntityTeleportationBackend.destPostFromOutOfBoundsTeleport(entry.getEntity(), destination));
+								}
+								catch (Throwable e){
+									Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Error:", e);
+									return Optional.empty();
+								}
+							})
+							.thenOnServerThread(entry::setDestinationPosFound);
 					}
 				}
-				else {
-					teleportedEntities.add(entity);
-					if (entity instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.failed_teleporting"), false);
-						Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
+				else if (entry.getDestinationPosFound() != null) {
+					// Skip entities that were already teleported due to riding a vehicle that teleported
+					Entity entity = entry.getEntity();
+					if(teleportedEntities.contains(entity)) continue;
+
+					ResourceKey<Level> destinationKey = entry.getDestination();
+					ServerLevel destination = world.getLevel().getServer().getLevel(destinationKey);
+
+					if (entry.getDestinationPosFound().isPresent()) {
+						Vec3 destinationPos = entry.getDestinationPosFound().get();
+						// Teleport the entity's root vehicle and its passengers to the desired dimension.
+						// Also updates teleportedEntities to keep track of which entity was teleported.
+						if (destinationKey.equals(BzDimension.BZ_WORLD_KEY)) {
+							enteringBumblezone(entity, destinationPos, teleportedEntities);
+						}
+						else {
+							if (entity.getControllingPassenger() != null) {
+								exitingBumblezone(entity.getControllingPassenger(), destinationPos, destination, teleportedEntities);
+							}
+							else {
+								exitingBumblezone(entity, destinationPos, destination, teleportedEntities);
+							}
+						}
+					}
+					else {
+						teleportedEntities.add(entity);
+						if (entity instanceof ServerPlayer serverPlayer) {
+							serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.failed_teleporting"), false);
+							Bumblezone.LOGGER.error("Bumblezone: Failed to teleport entity. Aborting teleportation. Please retry. Entity: {}-{} Pos: {} Destination: {}", entity.getClass().getSimpleName(), entity.getName(), entity.position(), destinationKey);
+						}
 					}
 				}
 			}
+
+			// remove all entities that were teleported from the queue
+			QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.removeIf(entry -> teleportedEntities.contains(entry.getEntity()));
 		}
-		// remove all entities that were teleported from the queue
-		QUEUED_ENTITIES_TO_TELEPORT.removeIf(entry -> teleportedEntities.contains(entry.getEntity()));
 	}
 
 	public static void enteringBumblezone(Entity entity, Vec3 destinationPosFound, Set<Entity> teleportedEntities) {
@@ -200,9 +228,7 @@ public class BzWorldSavedData extends SavedData {
 				}
 
 				Entity baseVehicle = entity.getRootVehicle();
-				teleportEntityAndAssignToVehicle(baseVehicle, null, bumblezoneWorld, destinationPosFound, teleportedEntities);
-				((ServerLevel) entity.level()).resetEmptyTime();
-				bumblezoneWorld.resetEmptyTime();
+				baseTeleporting(entity, destinationPosFound, bumblezoneWorld, teleportedEntities, baseVehicle);
 			});
 		}
 	}
@@ -214,11 +240,14 @@ public class BzWorldSavedData extends SavedData {
 			destination.setBlock(destBlockPos.above(), Blocks.AIR.defaultBlockState(), 3);
 		}
 		Entity baseVehicle = entity.getRootVehicle();
+		baseTeleporting(entity, destinationPosition, destination, teleportedEntities, baseVehicle);
+	}
+
+	private static void baseTeleporting(Entity entity, Vec3 destinationPosition, ServerLevel destination, Set<Entity> teleportedEntities, Entity baseVehicle) {
 		teleportEntityAndAssignToVehicle(baseVehicle, null, destination, destinationPosition, teleportedEntities);
 		((ServerLevel) entity.level()).resetEmptyTime();
 		destination.resetEmptyTime();
 	}
-
 
 	private static void teleportEntityAndAssignToVehicle(Entity entity, Entity vehicle, ServerLevel destination, Vec3 destinationPosition, Set<Entity> teleportedEntities) {
 		Entity teleportedEntity;
@@ -321,12 +350,27 @@ public class BzWorldSavedData extends SavedData {
 	private static final class QueuedEntityData {
 		private final Entity entity;
 		private final ResourceKey<Level> destination;
+		private final BlockPos destinationPos;
+		private final Runnable runnable;
 		private boolean isCurrentTeleporting = false;
 		private Optional<Vec3> destinationPosFound = null;
 
 		public QueuedEntityData(Entity entity, ResourceKey<Level> destination) {
 			this.entity = entity;
 			this.destination = destination;
+			this.destinationPos = null;
+			this.runnable = null;
+		}
+
+		public QueuedEntityData(Entity entity,
+								ResourceKey<Level> destination,
+								BlockPos destinationPos,
+								Runnable runnable)
+		{
+			this.entity = entity;
+			this.destination = destination;
+			this.destinationPos = destinationPos;
+			this.runnable = runnable;
 		}
 
 		public Entity getEntity() {
@@ -335,6 +379,14 @@ public class BzWorldSavedData extends SavedData {
 
 		public ResourceKey<Level> getDestination() {
 			return destination;
+		}
+
+		public BlockPos getDestinationPos() {
+			return destinationPos;
+		}
+
+		public Runnable getRunnable() {
+			return runnable;
 		}
 
 		public Optional<Vec3> getDestinationPosFound() {
