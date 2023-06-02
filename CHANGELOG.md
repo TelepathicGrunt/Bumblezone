@@ -53,6 +53,14 @@ Essence of Calming - The reward for beating the Blue Sempiternal Sanctum structu
  at players with this calming effect active. Note, due to implementation, this tag may not always work but let me know if it fails so
  I can investigate the specific use case.
 
+Essence of Raging - The reward for beating the Red Sempiternal Sanctum structure! Holding this item in offhand will highlight
+ 4 nearby hostile mobs in red. Killing them will grant you Strength status effect and it will highlight more hostile mobs nearby 
+ (never more than 4 at a time) Each highlighted kill makes Strength effect stronger and maxes out at strength 16 after killing 7 highlighted mobs!
+ Making this a powerful boss destroyer weapon! The Strength only lasts 15 seconds between kills. If time runs out or you kill a non-highlighted mob,
+ the item goes into 10 second cooldown. Making any kill after maxed Strength will also set the item onto 10 second cooldown. 
+ It has 24 use (highlighted kills) before it is depleted and needs 30 minutes to recharge by being in the inventory of a player 
+ that had consumed Essence of the Bees in the past.
+
 Essence of Continuity - The reward for beating the White Sempiternal Sanctum structure! Holding this item in offhand will make dying
  not kill you and instead teleport you back to your respawn point with all health restored, hunger bar filled, neutral and 
  negative status effects removed, and fire removed. It only has 1 use before it is depleted and needs 4 hours to recharge 

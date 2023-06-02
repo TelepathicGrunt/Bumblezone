@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.client;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
+import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
@@ -25,6 +26,9 @@ public class MinecraftMixin {
                 return true;
             }
             else if (KnowingEssence.IsKnowingEssenceActive(player) && KnowingEssence.IsValidEntityToGlow(entity, player)) {
+                return true;
+            }
+            else if (RagingEssence.IsRagingEssenceActive(player) && RagingEssence.IsValidEntityToGlow(entity, player)) {
                 return true;
             }
         }
