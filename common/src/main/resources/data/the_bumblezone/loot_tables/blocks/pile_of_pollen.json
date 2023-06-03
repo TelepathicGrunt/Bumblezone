@@ -318,7 +318,7 @@
                 {
                   "function": "minecraft:limit_count",
                   "limit": {
-                    "max": 9,
+                    "max": 8,
                     "min": 4
                   }
                 }
