@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "the_bumblezone",
+  "pattern": [
+    "ppp",
+    "ppp",
+    "ppp"
+  ],
+  "key": {
+    "p": {
+      "item": "the_bumblezone:pollen_puff"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:pile_of_pollen"
+  }
+}

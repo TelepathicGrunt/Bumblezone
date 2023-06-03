@@ -67,6 +67,9 @@ Essence of Continuity - The reward for beating the White Sempiternal Sanctum str
  by being in the inventory of a player that had consumed Essence of the Bees in the past. It will set cooldown on all other
  Essence of Continuity that player has as well due to how powerful this item is. It even works in hardcore worlds!
 
+Pile of Pollen item form is now available in Creative Menu and can be crafted from 9 Pollen Puff in Crafting Table.
+ Silk Touch mining a Pile of Pollen that is layer 8 will drop the Pile of Pollen item instead of the Pollen Puff items.
+
 
 #### *\*Changes*
 

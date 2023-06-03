@@ -283,6 +283,19 @@
                   "properties": {
                     "layers": "8"
                   }
+                },
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:match_tool",
+                    "predicate": {
+                      "enchantments": [
+                        {
+                          "enchantment": "minecraft:silk_touch"
+                        }
+                      ]
+                    }
+                  }
                 }
               ],
               "functions": [
@@ -299,13 +312,13 @@
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:uniform_bonus_count",
                   "parameters": {
-                    "bonusMultiplier": 1
+                    "bonusMultiplier": 2
                   }
                 },
                 {
                   "function": "minecraft:limit_count",
                   "limit": {
-                    "max": 8,
+                    "max": 9,
                     "min": 4
                   }
                 }
@@ -313,6 +326,40 @@
               "name": "the_bumblezone:pollen_puff"
             }
           ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "the_bumblezone:pile_of_pollen",
+              "properties": {
+                "layers": "8"
+              }
+            },
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "enchantments": [
+                  {
+                    "enchantment": "minecraft:silk_touch"
+                  }
+                ]
+              }
+            }
+          ],
+          "functions": [],
+          "name": "the_bumblezone:pile_of_pollen"
         }
       ],
       "conditions": [

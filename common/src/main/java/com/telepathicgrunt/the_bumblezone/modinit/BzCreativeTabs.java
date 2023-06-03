@@ -37,6 +37,7 @@ public class BzCreativeTabs {
             BzItems.CARVABLE_WAX_CHAINS,
             BzItems.HONEY_COCOON,
             BzItems.CRYSTALLINE_FLOWER,
+            BzItems.PILE_OF_POLLEN,
             BzItems.PILE_OF_POLLEN_SUSPICIOUS,
             BzItems.SUGAR_INFUSED_STONE,
             BzItems.SUGAR_INFUSED_COBBLESTONE,
