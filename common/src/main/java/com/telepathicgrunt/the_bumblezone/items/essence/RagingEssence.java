@@ -299,7 +299,6 @@ public class RagingEssence extends AbilityEssenceItem {
         int rageState = RagingEssence.getRageState(stack);
         List<UUID> currentTargetsToKill = RagingEssence.getCurrentTargets(stack);
 
-        //TODO: make sure this works with clients connected to dedicated servers.
         if ((rageState == RagingEssence.maxRageState && isTargetable(entity, player.getUUID())) ||
             currentTargetsToKill.contains(entity.getUUID()))
         {
