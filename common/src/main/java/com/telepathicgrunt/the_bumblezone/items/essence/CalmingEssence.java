@@ -3,7 +3,9 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.ServerStatsCounter;
@@ -25,6 +27,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class CalmingEssence extends AbilityEssenceItem {
 
     private static final int cooldownLengthInTicks = 12000;
@@ -43,9 +47,16 @@ public class CalmingEssence extends AbilityEssenceItem {
     }
 
     @Override
+    void addDescriptionComponents(List<Component> components) {
+        components.add(Component.translatable("item.the_bumblezone.essence_blue_description_1").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_blue_description_2").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_blue_description_3").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+    }
+
+    @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (!getForcedCooldown(stack)) {
-            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 15L == 0) {
+        if (getIsActive(stack)) {
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 12L == 0) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
             }
 
@@ -71,7 +82,7 @@ public class CalmingEssence extends AbilityEssenceItem {
                 }
 
                 if (serverPlayer.isSprinting()) {
-                    depleteEssence(stack, serverPlayer);
+                    decrementAbilityUseRemaining(stack, serverPlayer, 60);
                 }
                 else {
                     decrementAbilityUseRemaining(stack, serverPlayer, 1);
@@ -88,7 +99,7 @@ public class CalmingEssence extends AbilityEssenceItem {
     public static boolean IsCalmingEssenceActive(Player player) {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
-            return offHandItem.is(BzItems.ESSENCE_BLUE.get()) && !getForcedCooldown(offHandItem);
+            return offHandItem.is(BzItems.ESSENCE_BLUE.get()) && getIsActive(offHandItem);
         }
         return false;
     }

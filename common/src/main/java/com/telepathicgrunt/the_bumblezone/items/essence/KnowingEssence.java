@@ -3,7 +3,9 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -19,6 +21,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class KnowingEssence extends AbilityEssenceItem {
 
     private static final int cooldownLengthInTicks = 18000;
@@ -26,6 +30,12 @@ public class KnowingEssence extends AbilityEssenceItem {
 
     public KnowingEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
+    }
+
+    @Override
+    void addDescriptionComponents(List<Component> components) {
+        components.add(Component.translatable("item.the_bumblezone.essence_purple_description_1").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_purple_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer) {
@@ -62,7 +72,7 @@ public class KnowingEssence extends AbilityEssenceItem {
 
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (!getForcedCooldown(stack)) {
+        if (getIsActive(stack)) {
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 5L == 0) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
             }
@@ -76,7 +86,7 @@ public class KnowingEssence extends AbilityEssenceItem {
     public static boolean IsKnowingEssenceActive(Player player) {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
-            return offHandItem.is(BzItems.ESSENCE_PURPLE.get()) && !getForcedCooldown(offHandItem);
+            return offHandItem.is(BzItems.ESSENCE_PURPLE.get()) && getIsActive(offHandItem);
         }
         return false;
     }

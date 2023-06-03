@@ -93,7 +93,7 @@ public class EssenceOfTheBees extends Item {
      */
     @Override
     public int getUseDuration(ItemStack itemStack) {
-        return 150;
+        return 75;
     }
 
     /**

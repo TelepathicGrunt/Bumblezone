@@ -2,14 +2,17 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -39,8 +42,14 @@ public class LifeEssence extends AbilityEssenceItem {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer) {
-        int getRemainingUse = getAbilityUseRemaining(stack) - 1;
+    @Override
+    void addDescriptionComponents(List<Component> components) {
+        components.add(Component.translatable("item.the_bumblezone.essence_yellow_description_1").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_yellow_description_2").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
+    }
+
+    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int amount) {
+        int getRemainingUse = getAbilityUseRemaining(stack) - amount;
         setAbilityUseRemaining(stack, getRemainingUse);
         if (getRemainingUse == 0) {
             setDepleted(stack, serverPlayer, false);
@@ -50,7 +59,8 @@ public class LifeEssence extends AbilityEssenceItem {
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
         if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 10L == 0 &&
-            level instanceof ServerLevel serverLevel)
+            level instanceof ServerLevel serverLevel &&
+            getIsActive(stack))
         {
             int radius = 16;
             healFriendlyNearby(stack, serverLevel, serverPlayer, radius);
@@ -82,14 +92,30 @@ public class LifeEssence extends AbilityEssenceItem {
             if (tamableAnimal.getHealth() < tamableAnimal.getMaxHealth()) {
                 tamableAnimal.heal(1);
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
-                decrementAbilityUseRemaining(stack, serverPlayer);
+                decrementAbilityUseRemaining(stack, serverPlayer, 1);
+            }
+            if (tamableAnimal.hasEffect(MobEffects.POISON)) {
+                tamableAnimal.removeEffect(MobEffects.POISON);
+                decrementAbilityUseRemaining(stack, serverPlayer, 1);
+            }
+            if (tamableAnimal.hasEffect(MobEffects.WITHER)) {
+                tamableAnimal.removeEffect(MobEffects.WITHER);
+                decrementAbilityUseRemaining(stack, serverPlayer, 1);
             }
         }
         else if (entity instanceof LivingEntity livingEntity && entity.getTeam() != null && entity.getTeam().isAlliedTo(serverPlayer.getTeam())) {
             if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
                 livingEntity.heal(1);
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
-                decrementAbilityUseRemaining(stack, serverPlayer);
+                decrementAbilityUseRemaining(stack, serverPlayer, 1);
+            }
+            if (livingEntity.hasEffect(MobEffects.POISON)) {
+                livingEntity.removeEffect(MobEffects.POISON);
+                decrementAbilityUseRemaining(stack, serverPlayer, 1);
+            }
+            if (livingEntity.hasEffect(MobEffects.WITHER)) {
+                livingEntity.removeEffect(MobEffects.WITHER);
+                decrementAbilityUseRemaining(stack, serverPlayer, 1);
             }
         }
     }
@@ -188,7 +214,7 @@ public class LifeEssence extends AbilityEssenceItem {
             if (grewBlock) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
                 if (level.getRandom().nextFloat() < 0.4F) {
-                    decrementAbilityUseRemaining(stack, serverPlayer);
+                    decrementAbilityUseRemaining(stack, serverPlayer, 1);
                 }
             }
         }

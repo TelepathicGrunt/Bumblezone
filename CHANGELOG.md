@@ -31,8 +31,9 @@ Suspicious Pile of Pollen is added now! You may find these scattered throughout 
 
 ##### Items:
 Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand will grow 
- crops and saplings nearby, heal mobs tamed by you, and heal other mobs or players on the same team as you! It has 1000 use 
- before it is depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
+ crops and saplings nearby, heal mobs tamed by you, and heal other mobs or players on the same team as you! Also, will cure 
+ Poison and Wither effect from the healed mobs. It has 1000 use before it is depleted and needs 10 minutes to recharge by 
+ being in the inventory of a player that had consumed Essence of the Bees in the past.
 
 Essence of Radiance - The reward for beating the Green Sempiternal Sanctum structure! Holding this item in offhand while being
  in a spot with sky brightnes 13 or above (basically in view of the sky) will grant you Regeneration 1, Saturation 1, Speed 1,
@@ -47,8 +48,8 @@ Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum struc
 
 Essence of Calming - The reward for beating the Blue Sempiternal Sanctum structure! Holding this item in offhand will make mobs
  nearby no longer get angry at you! (Let me know if a modded mob still attacks you while this essence is active) The effect is lost
- early if the player sprints while it is active or gets hurt by any mob or attacks any mob. It has 600 use (seconds) before it is 
- depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
+ early  gets hurt by any mob or attacks any mob. If the player sprints while it is active, the item loses power crazy quickly! No rushing! 
+ It has 600 use (seconds) before it is depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
  The entity type tag `the_bumblezone:essence/calming/allow_anger_through` can be used to mark entities that should keep staying angry 
  at players with this calming effect active. Note, due to implementation, this tag may not always work but let me know if it fails so
  I can investigate the specific use case.
@@ -59,7 +60,8 @@ Essence of Raging - The reward for beating the Red Sempiternal Sanctum structure
  Making this a powerful boss destroyer weapon! The Strength only lasts 15 seconds between kills. If time runs out or you kill a non-highlighted mob,
  the item goes into 10 second cooldown. Making any kill after maxed Strength will also set the item onto 10 second cooldown. 
  It has 24 use (highlighted kills) before it is depleted and needs 30 minutes to recharge by being in the inventory of a player 
- that had consumed Essence of the Bees in the past.
+ that had consumed Essence of the Bees in the past. It will set cooldown on all other Essence of Raging that player has as well 
+ due to how powerful this item is.
 
 Essence of Continuity - The reward for beating the White Sempiternal Sanctum structure! Holding this item in offhand will make dying
  not kill you and instead teleport you back to your respawn point with all health restored, hunger bar filled, neutral and 
@@ -100,6 +102,8 @@ Any String Curtain can be crafted to another color with 1 dye now!
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
 
 Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not want it to be too easy to multiply (Pitcher Plant cannot be bonemealed)
+
+Essence of the Bees takes less time to consume now.
 
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.

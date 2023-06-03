@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -12,6 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class RadianceEssence extends AbilityEssenceItem {
 
     private static final int cooldownLengthInTicks = 12000;
@@ -19,6 +23,12 @@ public class RadianceEssence extends AbilityEssenceItem {
 
     public RadianceEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
+    }
+
+    @Override
+    void addDescriptionComponents(List<Component> components) {
+        components.add(Component.translatable("item.the_bumblezone.essence_green_description_1").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_green_description_2").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
@@ -31,8 +41,8 @@ public class RadianceEssence extends AbilityEssenceItem {
 
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (!getForcedCooldown(stack) && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13) {
-            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 12L == 0) {
+        if (getIsActive(stack) && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13 && level.isDay()) {
+            if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % (serverPlayer.isSprinting() ? 2L : 12L) == 0) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
             }
 

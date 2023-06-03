@@ -15,6 +15,7 @@ import java.util.List;
 public abstract class AbilityEssenceItem extends Item {
 
     private static final String ACTIVE_TAG = "isActive";
+    private static final String LOCKED_TAG = "isLocked";
     private static final String COOLDOWN_TIME_TAG = "cooldownTime";
     private static final String FORCED_COOLDOWN_TAG = "forcedCooldown";
     private static final String LAST_ABILITY_CHARGE_TIMESTAMP_TAG = "lastChargeTime";
@@ -46,6 +47,15 @@ public abstract class AbilityEssenceItem extends Item {
 
     public static boolean getIsActive(ItemStack stack) {
         return stack.getOrCreateTag().getBoolean(ACTIVE_TAG);
+    }
+
+
+    public static void setIsLocked(ItemStack stack, boolean isLocked) {
+        stack.getOrCreateTag().putBoolean(LOCKED_TAG, isLocked);
+    }
+
+    public static boolean getIsLocked(ItemStack stack) {
+        return stack.getOrCreateTag().getBoolean(LOCKED_TAG);
     }
 
     public static void setForcedCooldown(ItemStack stack, boolean forcedCooldown) {
@@ -89,10 +99,17 @@ public abstract class AbilityEssenceItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean bl) {
-        if (stack.is(BzTags.ABILITY_ESSENCE_ITEMS) &&
-            entity instanceof ServerPlayer serverPlayer &&
-            EssenceOfTheBees.hasEssence(serverPlayer))
-        {
+        if (stack.is(BzTags.ABILITY_ESSENCE_ITEMS) && entity instanceof ServerPlayer serverPlayer) {
+
+            if (!EssenceOfTheBees.hasEssence(serverPlayer)) {
+                setIsActive(stack, false);
+                setIsLocked(stack, true);
+                return;
+            }
+            else if (getIsLocked(stack)) {
+                setIsLocked(stack, false);
+            }
+
             if (getForcedCooldown(stack)) {
                 incrementCooldownTime(stack);
             }
@@ -115,19 +132,32 @@ public abstract class AbilityEssenceItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        if (getIsActive(stack)) {
+        if (getIsLocked(stack)) {
+            components.add(Component.translatable("item.the_bumblezone.essence_locked").withStyle(ChatFormatting.DARK_RED));
+            components.add(Component.translatable("item.the_bumblezone.essence_locked_description_1").withStyle(ChatFormatting.GRAY));
+            components.add(Component.translatable("item.the_bumblezone.essence_locked_description_2").withStyle(ChatFormatting.GRAY));
+        }
+        else if (getIsActive(stack)) {
             components.add(Component.translatable("item.the_bumblezone.essence_active").withStyle(ChatFormatting.RED));
             components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
+            components.add(Component.empty());
+            addDescriptionComponents(components);
         }
         else if (getForcedCooldown(stack)) {
             components.add(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
             components.add(Component.translatable("item.the_bumblezone.essence_cooldown", (getCooldownTickLength() - getCooldownTime(stack)) / 20).withStyle(ChatFormatting.DARK_RED));
+            components.add(Component.empty());
+            addDescriptionComponents(components);
         }
         else {
             components.add(Component.translatable("item.the_bumblezone.essence_ready").withStyle(ChatFormatting.GREEN));
             components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
+            components.add(Component.empty());
+            addDescriptionComponents(components);
         }
     }
+
+    abstract void addDescriptionComponents(List<Component> components);
 
     abstract void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer);
 

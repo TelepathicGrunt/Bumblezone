@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -57,6 +58,12 @@ public class RagingEssence extends AbilityEssenceItem {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
     }
 
+    @Override
+    void addDescriptionComponents(List<Component> components) {
+        components.add(Component.translatable("item.the_bumblezone.essence_red_description_1").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_red_description_2").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
+    }
+
     public static void setRageState(ItemStack stack, short rageState) {
         stack.getOrCreateTag().putShort(RAGE_STATE_TAG, rageState);
     }
@@ -102,7 +109,7 @@ public class RagingEssence extends AbilityEssenceItem {
 
     @Override
     public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (!getForcedCooldown(stack)) {
+        if (getIsActive(stack)) {
 
             int rageState = getRageState(stack);
             if (rageState > 0 && ((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 5L == 0) {
@@ -273,7 +280,7 @@ public class RagingEssence extends AbilityEssenceItem {
             ItemStack offHandItem = player.getOffhandItem();
 
             return offHandItem.is(BzItems.ESSENCE_RED.get()) &&
-                    !getForcedCooldown(offHandItem) &&
+                    getIsActive(offHandItem) &&
                     !player.getCooldowns().isOnCooldown(offHandItem.getItem());
         }
         return false;
@@ -288,7 +295,7 @@ public class RagingEssence extends AbilityEssenceItem {
 
     public static int GetTeamColor(Entity entity, Player player) {
         ItemStack stack = player.getOffhandItem();
-        
+
         int rageState = RagingEssence.getRageState(stack);
         List<UUID> currentTargetsToKill = RagingEssence.getCurrentTargets(stack);
 

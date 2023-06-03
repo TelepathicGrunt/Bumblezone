@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.resources.ResourceKey;
@@ -13,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,14 +27,23 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ContinuityEssence extends AbilityEssenceItem {
 
     private static final int cooldownLengthInTicks = 288000;
     private static final int abilityUseAmount = 1;
+    private static final ConcurrentLinkedQueue<TickCapsule> NEXT_TICK_PARTICLES = new ConcurrentLinkedQueue<>();
+    private record TickCapsule(Runnable runnable, long tickTarget) {}
 
     public ContinuityEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
+    }
+
+    @Override
+    void addDescriptionComponents(List<Component> components) {
+        components.add(Component.translatable("item.the_bumblezone.essence_white_description_1").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_white_description_2").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
@@ -43,15 +55,28 @@ public class ContinuityEssence extends AbilityEssenceItem {
     }
 
     @Override
-    public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean bl) {
+        TickCapsule tickCapsule = NEXT_TICK_PARTICLES.poll();
+        if (tickCapsule != null) {
+            if (level.getGameTime() > tickCapsule.tickTarget) {
+                tickCapsule.runnable().run();
+            }
+            else {
+                NEXT_TICK_PARTICLES.add(tickCapsule);
+            }
+        }
+        super.inventoryTick(stack, level, entity, i, bl);
     }
+
+    @Override
+    void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {}
 
     public static boolean CancelledDeath(LivingEntity livingEntity) {
         if (livingEntity instanceof ServerPlayer player) {
             ItemStack stack = player.getOffhandItem();
             if (player.isDeadOrDying() &&
                 stack.getItem() instanceof ContinuityEssence continuityEssence &&
-                !getForcedCooldown(stack) &&
+                getIsActive(stack) &&
                 !player.getCooldowns().isOnCooldown(stack.getItem()))
             {
                 player.setHealth(player.getMaxHealth());
@@ -66,6 +91,8 @@ public class ContinuityEssence extends AbilityEssenceItem {
                 player.removeVehicle();
                 player.ejectPassengers();
                 player.setPortalCooldown(40);
+                player.setDeltaMovement(new Vec3(0, 0, 0));
+                player.setOldPosAndRot();
 
                 List<MobEffectInstance> mobEffectInstances = new ArrayList<>(player.getActiveEffects());
                 for (MobEffectInstance mobEffectInstance : mobEffectInstances) {
@@ -103,12 +130,13 @@ public class ContinuityEssence extends AbilityEssenceItem {
             boolean isRespawnAnchor = blockState.is(Blocks.RESPAWN_ANCHOR);
 
             BzWorldSavedData.queueEntityToGenericTeleport(serverPlayer, finalDestination.dimension(), playerRespawnBlockPos, () -> {
-                spawnParticles(finalDestination, playerRespawnPosition, finalDestination.getRandom());
                 continuityEssence.decrementAbilityUseRemaining(stack, serverPlayer, 1);
 
                 if (isRespawnAnchor) {
                     serverPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, respawningLinkedPosition.getX(), respawningLinkedPosition.getY(), respawningLinkedPosition.getZ(), 1.0f, 1.0f, finalDestination.getRandom().nextLong()));
                 }
+
+                NEXT_TICK_PARTICLES.add(new TickCapsule(() -> spawnParticles(finalDestination, playerRespawnPosition, finalDestination.getRandom()), serverPlayer.serverLevel().getGameTime() + 5));
             });
         }
         else if (respawningLinkedPosition != null) {
