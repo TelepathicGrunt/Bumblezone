@@ -1,17 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,6 +35,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LifeEssence extends AbilityEssenceItem {
@@ -94,13 +99,11 @@ public class LifeEssence extends AbilityEssenceItem {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
                 decrementAbilityUseRemaining(stack, serverPlayer, 1);
             }
-            if (tamableAnimal.hasEffect(MobEffects.POISON)) {
-                tamableAnimal.removeEffect(MobEffects.POISON);
-                decrementAbilityUseRemaining(stack, serverPlayer, 1);
-            }
-            if (tamableAnimal.hasEffect(MobEffects.WITHER)) {
-                tamableAnimal.removeEffect(MobEffects.WITHER);
-                decrementAbilityUseRemaining(stack, serverPlayer, 1);
+            for (MobEffectInstance effect : new ArrayList<>(tamableAnimal.getActiveEffects())) {
+                if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.LIFE_CURE_EFFECTS, effect.getEffect())) {
+                    tamableAnimal.removeEffect(effect.getEffect());
+                    decrementAbilityUseRemaining(stack, serverPlayer, 1);
+                }
             }
         }
         else if (entity instanceof LivingEntity livingEntity && entity.getTeam() != null && entity.getTeam().isAlliedTo(serverPlayer.getTeam())) {
@@ -109,13 +112,11 @@ public class LifeEssence extends AbilityEssenceItem {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
                 decrementAbilityUseRemaining(stack, serverPlayer, 1);
             }
-            if (livingEntity.hasEffect(MobEffects.POISON)) {
-                livingEntity.removeEffect(MobEffects.POISON);
-                decrementAbilityUseRemaining(stack, serverPlayer, 1);
-            }
-            if (livingEntity.hasEffect(MobEffects.WITHER)) {
-                livingEntity.removeEffect(MobEffects.WITHER);
-                decrementAbilityUseRemaining(stack, serverPlayer, 1);
+            for (MobEffectInstance effect : new ArrayList<>(livingEntity.getActiveEffects())) {
+                if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.LIFE_CURE_EFFECTS, effect.getEffect())) {
+                    livingEntity.removeEffect(effect.getEffect());
+                    decrementAbilityUseRemaining(stack, serverPlayer, 1);
+                }
             }
         }
     }

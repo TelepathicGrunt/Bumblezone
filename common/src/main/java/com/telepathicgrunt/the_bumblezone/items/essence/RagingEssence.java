@@ -1,8 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -12,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -186,12 +191,30 @@ public class RagingEssence extends AbilityEssenceItem {
 
                 // damage boost and particles
                 if (rageState > 0) {
-                    serverPlayer.addEffect(new MobEffectInstance(
-                            MobEffects.DAMAGE_BOOST,
-                            getEmpoweredTimeRemaining(stack) * 4,
-                            RAGE_TO_STRENGTH.get(rageState),
-                            false,
-                            false));
+                    List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.RAGING_RAGE_EFFECTS)
+                            .stream()
+                            .flatMap(HolderSet.ListBacked::stream)
+                            .filter(Holder::isBound)
+                            .toList();
+
+                    for (Holder<MobEffect> effectHolder : radianceEffects) {
+                        if (effectHolder.value() == MobEffects.DAMAGE_BOOST) {
+                            serverPlayer.addEffect(new MobEffectInstance(
+                                    MobEffects.DAMAGE_BOOST,
+                                    getEmpoweredTimeRemaining(stack) * 4,
+                                    RAGE_TO_STRENGTH.get(rageState),
+                                    false,
+                                    false));
+                        }
+                        else {
+                            serverPlayer.addEffect(new MobEffectInstance(
+                                    effectHolder.value(),
+                                    getEmpoweredTimeRemaining(stack) * 4,
+                                    rageState,
+                                    false,
+                                    false));
+                        }
+                    }
                 }
             }
         }
@@ -242,7 +265,17 @@ public class RagingEssence extends AbilityEssenceItem {
     private static void resetRage(ItemStack stack, ServerPlayer serverPlayer) {
         setCurrentTargets(stack, new ArrayList<>());
         setRageState(stack, (short)0);
-        serverPlayer.removeEffect(MobEffects.DAMAGE_BOOST);
+
+        List<Holder<MobEffect>> radianceEffects = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.RAGING_RAGE_EFFECTS)
+                .stream()
+                .flatMap(HolderSet.ListBacked::stream)
+                .filter(Holder::isBound)
+                .toList();
+
+        for (Holder<MobEffect> effectHolder : radianceEffects) {
+            serverPlayer.removeEffect(effectHolder.value());
+        }
+
         serverPlayer.getCooldowns().addCooldown(stack.getItem(), 200);
     }
 

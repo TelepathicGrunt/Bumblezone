@@ -135,6 +135,9 @@ public class BzTags {
     public static final TagKey<Structure> BEE_QUEEN_MINING_FATIGUE = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "bee_queen_mining_fatigue"));
 
     public static final TagKey<MobEffect> DISALLOWED_INCENSE_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "incense_candle/disallowed_effects"));
+    public static final TagKey<MobEffect> LIFE_CURE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/life/cure_effects"));
+    public static final TagKey<MobEffect> RADIANCE_SUN_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/radiance/sun_effects"));
+    public static final TagKey<MobEffect> RAGING_RAGE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/raging/rage_effects"));
 
     public static final TagKey<PoiType> IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI = TagKey.create(Registries.POINT_OF_INTEREST_TYPE, new ResourceLocation(Bumblezone.MODID, "is_near_beehive_advancement_trigger"));
 

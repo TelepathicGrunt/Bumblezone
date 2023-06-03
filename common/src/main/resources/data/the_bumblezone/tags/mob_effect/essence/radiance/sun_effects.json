@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:speed",
+    "minecraft:regeneration",
+    "minecraft:resistance",
+    "minecraft:saturation",
+    "minecraft:haste"
+  ]
+}
