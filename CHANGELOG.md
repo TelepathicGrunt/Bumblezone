@@ -119,6 +119,8 @@ Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not 
 
 Essence of the Bees takes less time to consume now.
 
+All color Essence items added plus Essence of the Bees is now fire-resistant and won't be destroyed by lava/fire.
+
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 

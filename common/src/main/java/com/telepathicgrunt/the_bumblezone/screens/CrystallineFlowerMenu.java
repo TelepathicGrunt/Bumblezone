@@ -81,10 +81,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     long lastSoundTime;
 
     public CrystallineFlowerMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory, ContainerLevelAccess.NULL, 0, 0, null);
+        this(containerId, playerInventory, ContainerLevelAccess.NULL, null);
     }
 
-    public CrystallineFlowerMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access, int searchLevel, int searchTreasure, CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
+    public CrystallineFlowerMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access, CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
         super(BzMenuTypes.CRYSTALLINE_FLOWER.get(), containerId);
         this.access = access;
         this.player = playerInventory.player;

@@ -422,8 +422,6 @@ public class CrystallineFlower extends BaseEntityBlock {
                         containerId,
                         inventory,
                         ContainerLevelAccess.create(level, pos.below(flowerBlockBelow)),
-                        finalSearchLevel,
-                        finalSearchTreasure,
                         finalCrystallineFlowerBlockEntity
                 ), CONTAINER_TITLE);
     }

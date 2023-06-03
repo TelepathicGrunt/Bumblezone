@@ -127,7 +127,7 @@ public class BzItems {
     public static final RegistryEntry<Item> HONEY_COMPASS = ITEMS.register("honey_compass", () -> new HoneyCompass(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryEntry<Item> BEE_BREAD = ITEMS.register("bee_bread", () -> new BeeBread(new Item.Properties().food(BzFoodProperties.builder(8, 0.12F).alwaysEat().effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 120, 1), 1.0F).build())));
     public static final RegistryEntry<Item> BEE_SOUP = ITEMS.register("bee_soup", () -> new FoodBowlItem(new Item.Properties().craftRemainder(Items.BOWL).food(BzFoodProperties.builder(15, 24F).effect(() -> new MobEffectInstance(BzEffects.BEENERGIZED.get(), 12000, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.LEVITATION, 800, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.POISON, 800, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, 6000, 0), 0.2F).effect(() -> new MobEffectInstance(MobEffects.LUCK, 18000, 0), 0.2F).effect(() -> new MobEffectInstance(BzEffects.PARALYZED.get(), 200, 0), 0.2F).build())));
-    public static final RegistryEntry<Item> BUZZING_BRIEFCASE = ITEMS.register("buzzing_briefcase", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryEntry<Item> BUZZING_BRIEFCASE = ITEMS.register("buzzing_briefcase", () -> new BuzzingBriefcase(new Item.Properties().stacksTo(1)));
     public static final RegistryEntry<Item> POLLEN_PUFF = ITEMS.register("pollen_puff", () -> new PollenPuff(new Item.Properties().stacksTo(16)));
     public static final RegistryEntry<HoneyCrystalShards> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.15F).build())));
     public static final RegistryEntry<Item> BEE_STINGER = ITEMS.register("bee_stinger", () -> new BeeStinger(new Item.Properties()));
@@ -152,11 +152,11 @@ public class BzItems {
     public static final RegistryEntry<Item> HONEY_SLIME_SPAWN_EGG = ITEMS.register("honey_slime_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties())));
     public static final RegistryEntry<Item> BEEHEMOTH_SPAWN_EGG = ITEMS.register("beehemoth_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEEHEMOTH, 0xFFCA47, 0x68372A, (new Item.Properties())));
     public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC))));
-    public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
-    public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new RagingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new CalmingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
-    public static final RegistryEntry<Item> ESSENCE_WHITE = ITEMS.register("essence_white", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new RagingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new CalmingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_WHITE = ITEMS.register("essence_white", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 }

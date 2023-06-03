@@ -59,6 +59,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
+import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
@@ -156,6 +157,7 @@ public class BumblezoneClient {
         event.register(BzMenuTypes.STRICT_9x5.get(), StrictChestScreen::new);
         event.register(BzMenuTypes.STRICT_9x6.get(), StrictChestScreen::new);
         event.register(BzMenuTypes.CRYSTALLINE_FLOWER.get(), CrystallineFlowerScreen::new);
+        event.register(BzMenuTypes.BUZZING_BRIEFCASE.get(), BuzzingBriefcaseScreen::new);
     }
 
     private static void registerItemProperties(RegisterItemPropertiesEvent event) {

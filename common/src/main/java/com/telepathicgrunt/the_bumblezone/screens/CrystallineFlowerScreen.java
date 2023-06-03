@@ -125,6 +125,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         titleLabelY += TITLE_LABEL_Y_OFFSET;
     }
 
+    @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
@@ -454,6 +455,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
+    @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialtick, int x, int y) {
         int startX = (width - imageWidth) / 2;
         int startY = (height - imageHeight) / 2;
@@ -517,6 +519,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         return targetedSectionTaskSuccess;
     }
 
+    @Override
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
         int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
@@ -590,6 +593,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
+    @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         this.scrolling = false;
 
@@ -692,6 +696,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
+    @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if (this.scrolling && canScroll(enchantmentsAvailable.size())) {
             int topY = this.topPos + ENCHANTMENT_SCROLLBAR_Y_OFFSET;
@@ -706,6 +711,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
     }
 
+    @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         if (canScroll(enchantmentsAvailable.size())) {
             int offscreenRows = this.getOffscreenRows();
