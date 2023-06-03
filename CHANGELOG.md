@@ -47,6 +47,18 @@ Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum struc
  1200 use before it is depleted and needs 15 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
  This highlighting can be configured on client side by config. Server owners can use the block and entity tags to force things to be highlighted
  or not regardless of what the client config is set as. (The tags can be used to also correct highlighting issues on other mod's mobs with this item on)
+ The entity type tags you can edit are these. Disable tag overrides all:
+ `the_bumblezone:essence/knowing/prevent_highlighting`
+ `the_bumblezone:essence/knowing/forced_green_highlight`
+ `the_bumblezone:essence/knowing/forced_cyan_highlight`
+ `the_bumblezone:essence/knowing/forced_purple_highlight`
+ `the_bumblezone:essence/knowing/forced_red_highlight`
+ `the_bumblezone:essence/knowing/forced_orange_highlight`
+ `the_bumblezone:essence/knowing/forced_yellow_highlight`
+ `the_bumblezone:essence/knowing/forced_white_highlight`
+ The block tags you can edit are these. Disable tag overrides all:
+ `the_bumblezone:essence/knowing/block_entity_forced_highlighting`
+ `the_bumblezone:essence/knowing/block_entity_prevent_highlighting`
 
 Essence of Calming - The reward for beating the Blue Sempiternal Sanctum structure! Holding this item in offhand will make mobs
  nearby no longer get angry at you! (Let me know if a modded mob still attacks you while this essence is active) The effect is lost
