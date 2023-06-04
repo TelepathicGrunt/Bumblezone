@@ -205,6 +205,11 @@
           "weight": 3
         },
         {
+          "name": "the_bumblezone:bee_soup",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
           "name": "minecraft:orange_candle",
           "type": "minecraft:item",
           "weight": 3,

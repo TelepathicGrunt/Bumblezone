@@ -50,6 +50,11 @@
           "weight": 3
         },
         {
+          "name": "the_bumblezone:bee_soup",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
           "name": "the_bumblezone:stinger_spear",
           "type": "minecraft:item",
           "weight": 1

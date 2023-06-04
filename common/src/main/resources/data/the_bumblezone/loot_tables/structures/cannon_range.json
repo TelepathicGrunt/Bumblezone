@@ -12,7 +12,7 @@
         {
           "name": "minecraft:cookie",
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -27,7 +27,7 @@
         {
           "name": "minecraft:carrot",
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -42,7 +42,7 @@
         {
           "name": "minecraft:bread",
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -53,6 +53,11 @@
               }
             }
           ]
+        },
+        {
+          "name": "the_bumblezone:bee_soup",
+          "type": "minecraft:item",
+          "weight": 1
         }
       ]
     },

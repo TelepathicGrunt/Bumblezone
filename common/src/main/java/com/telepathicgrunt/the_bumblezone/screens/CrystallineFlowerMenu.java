@@ -256,8 +256,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         }
     }
 
+    @Override
     public void slotsChanged(Container inventory) {}
 
+    @Override
     public boolean clickMenuButton(Player player, int id) {
         if (id >= 0) {
             selectedEnchantmentIndex.set(id);
@@ -431,6 +433,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     /**
      * Called when the container is closed.
      */
+    @Override
     public void removed(Player player) {
         super.removed(player);
         access.execute((level, blockPos) -> clearContainer(player, inputContainer));
@@ -439,6 +442,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     /**
      * Determines whether supplied player can use this container
      */
+    @Override
     public boolean stillValid(Player player) {
         return stillValid(access, player, BzBlocks.CRYSTALLINE_FLOWER.get());
     }
@@ -447,6 +451,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
      * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
      * inventory and the other inventory(s).
      */
+    @Override
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
@@ -592,6 +597,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
      * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in is
      * null for the initial slot that was double-clicked.
      */
+    @Override
     public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
         return super.canTakeItemForPickAll(stack, slot);
     }

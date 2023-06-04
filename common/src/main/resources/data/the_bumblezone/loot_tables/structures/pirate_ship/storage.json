@@ -178,6 +178,21 @@
           "weight": 3
         },
         {
+          "name": "the_bumblezone:bee_soup",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
           "weight": 1

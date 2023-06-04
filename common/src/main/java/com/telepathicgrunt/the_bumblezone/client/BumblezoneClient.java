@@ -12,7 +12,6 @@ import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
@@ -20,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenMode
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.RoyalJellyClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.SugarWaterClientProperties;

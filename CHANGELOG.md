@@ -86,6 +86,18 @@ Essence of Continuity - The reward for beating the White Sempiternal Sanctum str
 Pile of Pollen item form is now available in Creative Menu and can be crafted from 9 Pollen Puff in Crafting Table.
  Silk Touch mining a Pile of Pollen that is layer 8 will drop the Pile of Pollen item instead of the Pollen Puff items.
 
+Added Buzzing Briefcase item! Rare drop from Bee House and Honitel structure's loot. Also, a rare drop from tier 4 
+ Bee Queen trades (Honey Block/Honey Buckets mainly as want items). Right click (or hold right click) on a bee to stuff
+ it into the briefcase. It can hold up to 14 bees of any kind. Shift right click to open the briefcase UI where you can
+ heal bees, put stingers back on, pollinate them, or grow babies up to be an adult. You can release the bees from the briefcase
+ by UI or by left clicking on a block. Left clicking on an entity releases the bees and have them attack the entity you left clicked.
+ Do shift left click to release all the bees at once from briefcase.
+
+Added Bee Soup that is craftable from Bee Bread, Bowl, Beetroot, Potato, 2 Honey Combs, and 1 Bee Stinger. Drinking this
+ soup gives you a long level 2 Beenergized effect and has a chance of inflicting Levitation, Slow Falling, Poison, Paralysis, 
+ or Luck status effect on you. You could get multiple of these effects at once if you're unlucky (or lucky if it is good effects)!
+ Can be found in some structures's loot!
+
 
 #### *\*Changes*
 

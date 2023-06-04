@@ -12,7 +12,7 @@
         {
           "name": "the_bumblezone:bee_bread",
           "type": "minecraft:item",
-          "weight": 9,
+          "weight": 18,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -27,7 +27,7 @@
         {
           "name": "minecraft:honeycomb",
           "type": "minecraft:item",
-          "weight": 6,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -42,7 +42,7 @@
         {
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
-          "weight": 5,
+          "weight": 10,
           "functions": [
             {
               "function": "the_bumblezone:tag_item_removals",
@@ -53,7 +53,7 @@
         {
           "name": "the_bumblezone:bee_stinger",
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 6,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -64,6 +64,17 @@
               }
             }
           ]
+        },
+        {
+          "name": "the_bumblezone:bee_soup",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
+          "type": "minecraft:item",
+          "quality": 2,
+          "weight": 1
         }
       ]
     },

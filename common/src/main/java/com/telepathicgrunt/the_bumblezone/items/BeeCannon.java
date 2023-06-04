@@ -40,6 +40,7 @@ import java.util.List;
 
 public class BeeCannon extends Item implements Vanishable, ItemExtension {
     public static final String TAG_BEES = "BeesStored";
+    public static final int MAX_NUMBER_OF_BEES = 3;
 
     public BeeCannon(Properties properties) {
         super(properties.durability(50));
@@ -94,19 +95,19 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
                     bee.setDeltaMovement(player.getLookAngle().multiply(2.5d, 2.5d, 2.5d));
                     level.addFreshEntity(bee);
 
-                    if(bee instanceof NeutralMob &&
+                    if (bee instanceof NeutralMob neutralMob &&
                         entityHitResult != null &&
                         entityHitResult.getType() != HitResult.Type.MISS &&
                         entityHitResult.getEntity() instanceof LivingEntity targetEntity
                         && !(targetEntity instanceof Bee))
                     {
-                        ((NeutralMob)bee).setRemainingPersistentAngerTime(60);
-                        ((NeutralMob)bee).setPersistentAngerTarget(targetEntity.getUUID());
-                        if(bee instanceof Bee trueBee) {
+                        neutralMob.setRemainingPersistentAngerTime(60);
+                        neutralMob.setPersistentAngerTarget(targetEntity.getUUID());
+                        if (bee instanceof Bee trueBee) {
                             trueBee.setTarget(targetEntity);
                         }
 
-                        if(player instanceof ServerPlayer serverPlayer &&
+                        if (player instanceof ServerPlayer serverPlayer &&
                             targetEntity.getType() == EntityType.ENDER_DRAGON &&
                             PlayerDataHandler.rootAdvancementDone(serverPlayer))
                         {
@@ -118,7 +119,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
                 });
 
                 level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
-                if(numberOfBees >= 3 && player instanceof ServerPlayer serverPlayer) {
+                if (numberOfBees >= MAX_NUMBER_OF_BEES && player instanceof ServerPlayer serverPlayer) {
                     BzCriterias.BEE_CANNON_FULL_TRIGGER.trigger(serverPlayer);
                 }
             }
@@ -139,7 +140,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack beeCannon, Player playerEntity, LivingEntity entity, InteractionHand playerHand) {
-        if(playerEntity.level().isClientSide() ||
+        if (playerEntity.level().isClientSide() ||
             !(entity instanceof Bee bee) ||
             bee.isAngry() ||
             bee.getType().is(BzTags.DISALLOWED_BEE_CANNON_BEES))
@@ -149,7 +150,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
 
         ItemStack mutableBeeCannon = playerEntity.getItemInHand(playerHand);
         boolean addedBee = tryAddBee(mutableBeeCannon, entity);
-        if(addedBee) {
+        if (addedBee) {
             playerEntity.swing(playerHand, true);
             return InteractionResult.SUCCESS;
         }
@@ -159,11 +160,11 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
     }
 
     public static List<Entity> tryReleaseBees(Level level, ItemStack beeCannonItem) {
-        if(getNumberOfBees(beeCannonItem) > 0) {
+        if (getNumberOfBees(beeCannonItem) > 0) {
             CompoundTag tag = beeCannonItem.getOrCreateTag();
             ListTag beeList = tag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
             List<Entity> releasedBees = new ObjectArrayList<>();
-            for(int i = beeList.size() - 1; i >= 0; i--) {
+            for (int i = beeList.size() - 1; i >= 0; i--) {
                 CompoundTag beeTag = beeList.getCompound(0);
                 beeList.remove(0);
                 releasedBees.add(EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx));
@@ -174,7 +175,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
     }
 
     public static boolean tryAddBee(ItemStack beeCannonItem, Entity bee) {
-        if(getNumberOfBees(beeCannonItem) < 3) {
+        if (getNumberOfBees(beeCannonItem) < MAX_NUMBER_OF_BEES) {
             CompoundTag cannonTag = beeCannonItem.getOrCreateTag();
             ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
             CompoundTag beeTag = new CompoundTag();
@@ -193,9 +194,9 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
     }
 
     public static int getNumberOfBees(ItemStack beeCannonItem) {
-        if(beeCannonItem.hasTag()) {
+        if (beeCannonItem.hasTag()) {
             CompoundTag tag = beeCannonItem.getTag();
-            if(tag.contains(TAG_BEES)) {
+            if (tag.contains(TAG_BEES)) {
                 ListTag beeList = tag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
                 return beeList.size();
             }
@@ -232,7 +233,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
 
     @Override
     public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if(enchantment == Enchantments.QUICK_CHARGE) {
+        if (enchantment == Enchantments.QUICK_CHARGE) {
             return OptionalBoolean.TRUE;
         }
 
