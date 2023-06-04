@@ -1,3 +1,33 @@
+
+#TODO: add recipe view descriptions of new blocks and items.
+
+#TODO: Add sound event for buzzing briefcase bee releasing
+
+#TODO: Add barrier blocks for essence events
+
+#TODO: create essence events
+
+#TODO: get music for essence events and sanctum
+
+#TODO: Spawn the sanctums in the world with compasses to them that spawn only if player has essence of the bees on. Sanctum needs mining fatigue and warning system for non essence players
+
+#TODO: Implement rootmin.
+
+#TODO: implement sentry watcher
+
+#TODO: pay someone to make crystalline flower hold items in slots.
+
+#TODO: Buzzing briefcase dynamic coloring of bee icons?
+
+#TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
+
+#TODO: Wind sound for when in Windy Air
+
+#TODO: Bee Subway and Ancient Shrine structure. Add Suspicious Pollen to structures
+
+#TODO: Re-evaluate advancements. Add more for new additions as well. Remove Bee Cannon Enderdragon advancement.
+
+
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
 
 ##### Major:
@@ -190,4 +220,4 @@ Bumblezone dimension is slightly darker now to make lighting pop better from lig
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
 
-#TODO: add recipe view descriptions of new blocks and items.
+

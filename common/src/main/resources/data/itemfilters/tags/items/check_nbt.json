@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:buzzing_briefcase",
+    "the_bumblezone:honey_compass",
+    "#the_bumblezone:tools/cannons",
+    "#the_bumblezone:tools/shields",
+    "#the_bumblezone:essence_items"
+  ]
+}
