@@ -95,6 +95,12 @@
         "weight": 5,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "the_bumblezone:variant_bee",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 2
       }
     ],
     "ambient": [],

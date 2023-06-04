@@ -109,8 +109,8 @@ public class StinglessBeeHelmet extends BeeArmor {
                 (beeGearCount < 4 && beeRidingTimer > beeGearCount * 600))
             {
                 for (Entity passenger : player.getPassengers()) {
-                    if ((passenger instanceof Bee && !passenger.getType().is(BzTags.DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS)) ||
-                        passenger.getType().is(BzTags.FORCED_ALLOWED_STINGLESS_BEE_HELMET_PASSENGERS))
+                    if ((passenger instanceof Bee && !passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
+                        passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
                     {
                         passenger.stopRiding();
                         if (passenger instanceof Mob mob) {
@@ -147,8 +147,8 @@ public class StinglessBeeHelmet extends BeeArmor {
             playerEntity.getItemInHand(playerEntity.getUsedItemHand()).isEmpty() &&
             playerEntity.getPassengers().isEmpty())
         {
-            if ((entity instanceof Bee && !entity.getType().is(BzTags.DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS)) ||
-                entity.getType().is(BzTags.FORCED_ALLOWED_STINGLESS_BEE_HELMET_PASSENGERS))
+            if ((entity instanceof Bee && !entity.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
+                entity.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
             {
                 entity.startRiding(playerEntity);
 

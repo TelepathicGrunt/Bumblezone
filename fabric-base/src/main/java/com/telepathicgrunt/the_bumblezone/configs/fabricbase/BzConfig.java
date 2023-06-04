@@ -10,6 +10,9 @@ import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import eu.midnightdust.lib.config.MidnightConfig;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class BzConfig extends MidnightConfig {
 
     @Comment
@@ -134,6 +137,21 @@ public class BzConfig extends MidnightConfig {
     @Comment
     public static Comment generalComment;
 
+    @Entry
+    public static List<String> variantBeeTypes = Arrays.asList(
+            "redtail_bee",
+            "green_bee",
+            "blue_bee",
+            "white_bee",
+            "ukraine_bee",
+            "trans_bee",
+            "asexual_bee",
+            "agender_bee",
+            "aroace_bee",
+            "aromantic_bee",
+            "bisexual_bee");
+
+
     @Entry(min=0, max=100)
     public static double beehemothSpeed = 0.95;
 
@@ -189,15 +207,6 @@ public class BzConfig extends MidnightConfig {
 
     @Comment
     public static Comment clientComment;
-
-    @Entry(min=0, max=1)
-    public static double lgbtBeeRate = 0.013;
-
-    @Entry(min=0, max=1)
-    public static double ukraineBeeRate = 0.004;
-
-    @Entry
-    public static boolean enableAltBeeSkinRenderer = true;
 
     @Entry
     public static boolean playWrathOfHiveEffectMusic = true;
@@ -288,6 +297,7 @@ public class BzConfig extends MidnightConfig {
         BzWorldgenConfigs.spawnerRateSpiderBeeDungeon = spawnerRateSpiderBeeDungeon;
 
         //General
+        BzGeneralConfigs.variantBeeTypes = variantBeeTypes;
         BzGeneralConfigs.beehemothSpeed = beehemothSpeed;
         BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire;
         BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier;
@@ -308,9 +318,6 @@ public class BzConfig extends MidnightConfig {
         BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock;
 
         //Client
-        BzClientConfigs.enableAltBeeSkinRenderer = enableAltBeeSkinRenderer;
-        BzClientConfigs.lgbtBeeRate = lgbtBeeRate;
-        BzClientConfigs.ukraineBeeRate = ukraineBeeRate;
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem;
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses;

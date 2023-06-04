@@ -2,28 +2,36 @@ package com.telepathicgrunt.the_bumblezone.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBriefcaseMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(Bumblezone.MODID, "textures/gui/buzzing_briefcase/background.png");
@@ -119,15 +127,57 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - mainY >= 0.0D &&
                     mouseY - mainY < 22.0D)
             {
-                guiGraphics.renderTooltip(
+                String type;
+                if (beeState.beeEntity().getType() == EntityType.BEE) {
+                    type = "normal";
+                }
+                else if (beeState.beeEntity() instanceof VariantBeeEntity variantBeeEntity) {
+                    type = variantBeeEntity.getVariant();
+                }
+                // TODO: add resourceful bees and productive bees check here
+                else {
+                    type = "unknown";
+                }
+
+                if (type.isEmpty()) {
+                    type = "unknown";
+                }
+
+                Language language = Language.getInstance();
+                if (language.has("buzzing_briefcase.the_bumblezone.bee_typing." + type)) {
+                    type = "buzzing_briefcase.the_bumblezone.bee_typing." + type;
+                }
+                else {
+                    type = type.length() > 2 ? Arrays.stream(type
+                            .split("_"))
+                            .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
+                            .collect(Collectors.joining(" "))
+                            : type;
+                }
+
+                if (this.minecraft != null && this.minecraft.options.advancedItemTooltips) {
+                    guiGraphics.renderTooltip(
                         this.font,
                         List.of(
                             Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_name", beeState.beeEntity().getName().getString()),
-                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType()))
+                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", Component.translatable(type)).withStyle(ChatFormatting.YELLOW),
+                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_registry_name", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType())).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)
                         ),
                         Optional.empty(),
                         mouseX,
                         mouseY);
+                }
+                else {
+                    guiGraphics.renderTooltip(
+                        this.font,
+                        List.of(
+                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_name", beeState.beeEntity().getName().getString()),
+                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", Component.translatable(type)).withStyle(ChatFormatting.YELLOW)
+                        ),
+                        Optional.empty(),
+                        mouseX,
+                        mouseY);
+                }
             }
             else if (mouseX - (mainX + 22) >= 0.0D &&
                     mouseX - (mainX + 22) < 11.0D &&
@@ -424,8 +474,12 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     private static void renderPollenButton(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean hasPollenPuff, int mainX, int mainY, BeeState beeState) {
+        // Cannot pollinate
+        if (!beeState.beeEntity().getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
+            guiGraphics.blit(BEE_SLOT_BACKGROUND, mainX + 11, mainY + 33, 22, 22, 11, 11, 64, 64);
+        }
         //cannot pollinate button
-        if (beeState.beeEntity().hasNectar()) {
+        else if (beeState.beeEntity().hasNectar()) {
             guiGraphics.blit(GENERAL_ICONS, mainX + 11, mainY + 33, 11, 22, 11, 11, 64, 64);
         }
         //no inventory pollen puff button
@@ -543,7 +597,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 33) >= 0.0D &&
                     mouseY - (mainY + 33) < 11.0D)
             {
-                if (!bee.hasNectar()) {
+                if (!bee.hasNectar() && bee.getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.POLLEN_ID);
 
                     int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());

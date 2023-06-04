@@ -100,9 +100,11 @@ public class BzTags {
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "convertible_to_sugar_water"));
 
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff/can_pollinate"));
-    public static final TagKey<EntityType<?>> DISALLOWED_BEE_CANNON_BEES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_cannon/disallowed_bee_pickup"));
-    public static final TagKey<EntityType<?>> FORCED_ALLOWED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/forced_allowed_passengers"));
-    public static final TagKey<EntityType<?>> DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/disallowed_passengers"));
+    public static final TagKey<EntityType<?>> BUZZING_BRIEFCASE_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "buzzing_briefcase/can_pollinate"));
+    public static final TagKey<EntityType<?>> BUZZING_BRIEFCASE_DISALLOWED_BEE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "buzzing_briefcase/disallowed_bee_pickup"));
+    public static final TagKey<EntityType<?>> CANNON_BEES_DISALLOWED_BEE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_cannon/disallowed_bee_pickup"));
+    public static final TagKey<EntityType<?>> STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/forced_allowed_passengers"));
+    public static final TagKey<EntityType<?>> STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/disallowed_passengers"));
     public static final TagKey<EntityType<?>> FORCED_BEE_ANGRY_AT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/always_angry_at"));
     public static final TagKey<EntityType<?>> FORCED_BEE_CALM_AT = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/forced_calm_at"));
     public static final TagKey<EntityType<?>> HANGING_GARDENS_INITIAL_SPAWN_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "hanging_garden/initial_spawn_entities"));

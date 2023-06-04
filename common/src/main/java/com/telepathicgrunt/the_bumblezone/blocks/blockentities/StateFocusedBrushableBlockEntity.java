@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.StateReturningBrushableBlock;
-import com.telepathicgrunt.the_bumblezone.mixin.BlockEntityAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.BlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;

@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.VariantBeeRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
@@ -70,6 +71,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 
 import java.util.HashSet;
@@ -284,6 +286,7 @@ public class BumblezoneClient {
     }
 
     public static void registerEntityRenderers(RegisterEntityRenderersEvent event) {
+        event.register((EntityType) BzEntities.VARIANT_BEE.get(), VariantBeeRenderer::new);
         event.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         event.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
         event.register(BzEntities.BEE_QUEEN.get(), BeeQueenRenderer::new);

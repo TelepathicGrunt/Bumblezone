@@ -143,7 +143,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
         if (playerEntity.level().isClientSide() ||
             !(entity instanceof Bee bee) ||
             bee.isAngry() ||
-            bee.getType().is(BzTags.DISALLOWED_BEE_CANNON_BEES))
+            bee.getType().is(BzTags.CANNON_BEES_DISALLOWED_BEE))
         {
             return InteractionResult.PASS;
         }

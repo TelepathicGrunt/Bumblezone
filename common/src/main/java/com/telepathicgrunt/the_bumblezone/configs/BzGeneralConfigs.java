@@ -1,6 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.configs;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class BzGeneralConfigs {
+    public static List<String> variantBeeTypes = Arrays.asList(
+            "redtail_bee",
+            "green_bee",
+            "blue_bee",
+            "white_bee",
+            "ukraine_bee",
+            "trans_bee",
+            "asexual_bee",
+            "agender_bee",
+            "aroace_bee",
+            "aromantic_bee",
+            "bisexual_bee");
     public static double beehemothSpeed = 0.35D;
     public static boolean beehemothFriendlyFire = true;
     public static boolean specialBeeSpawning = true;

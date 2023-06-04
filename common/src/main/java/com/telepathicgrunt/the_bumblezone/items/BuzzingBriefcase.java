@@ -44,7 +44,7 @@ public class BuzzingBriefcase extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (player.isCrouching()) {
+        if (player.isShiftKeyDown()) {
             player.openMenu(new BuzzingBriefcaseMenuProvider(stack));
 
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
@@ -74,7 +74,7 @@ public class BuzzingBriefcase extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack beeCannon, Player player, LivingEntity entity, InteractionHand playerHand) {
-        if (!(entity instanceof Bee bee) || bee.getType().is(BzTags.DISALLOWED_BEE_CANNON_BEES)) {
+        if (!(entity instanceof Bee bee) || bee.getType().is(BzTags.BUZZING_BRIEFCASE_DISALLOWED_BEE)) {
             return InteractionResult.PASS;
         }
 

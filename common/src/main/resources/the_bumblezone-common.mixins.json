@@ -3,7 +3,7 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BlockEntityAccessor",
+    "blocks.BlockEntityAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -69,7 +69,6 @@
     "world.WorldGenRegionAccessor"
   ],
   "client": [
-    "client.BeeRendererMixin",
     "client.ClientEntityMixin",
     "client.FogRendererMixin",
     "client.LevelRendererAccessor",

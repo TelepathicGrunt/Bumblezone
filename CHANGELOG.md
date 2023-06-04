@@ -98,6 +98,17 @@ Added Bee Soup that is craftable from Bee Bread, Bowl, Beetroot, Potato, 2 Honey
  or Luck status effect on you. You could get multiple of these effects at once if you're unlucky (or lucky if it is good effects)!
  Can be found in some structures's loot!
 
+##### Entities:
+Added a new entity called Variant Bee! It is exactly like the vanilla bee in behavior but has a different skin on. This replaces
+ the old UUID system Bumblezone had to replace vanilla bee skins. Now that system is gone and the bee variants are now a dedicated
+ entity for Bumblezone! 4 new variants were added as well. The variant's types are exposed by a "variant" string tag in their nbt. 
+ You can add or remove variants to spawn by editing the variantBeeTypes config entry (Server config takes priority over client's). 
+ Be sure to add new bee textures to these files for the new bee variant you added to spawn with the textures it needs!
+ `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee.png`
+ `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry.png`
+ `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry_nectar.png`
+ `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_nectar.png`
+
 
 #### *\*Changes*
 

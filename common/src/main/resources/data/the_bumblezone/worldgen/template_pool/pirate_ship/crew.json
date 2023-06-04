@@ -2,7 +2,7 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_mary_read",
         "processors": "minecraft:empty",
@@ -11,7 +11,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_anne_bonny",
         "processors": "minecraft:empty",
@@ -20,7 +20,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_long_john_silver",
         "processors": "minecraft:empty",
@@ -29,7 +29,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_robert_tucker",
         "processors": "minecraft:empty",
@@ -38,7 +38,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_jan_van_der_groote",
         "processors": "minecraft:empty",
@@ -47,7 +47,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_joshamee_gibbs",
         "processors": "minecraft:empty",
@@ -56,7 +56,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_frank_connery",
         "processors": "minecraft:empty",
@@ -65,7 +65,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_robert_greene",
         "processors": "minecraft:empty",
@@ -74,7 +74,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_jimmy_legs",
         "processors": "minecraft:empty",
@@ -83,7 +83,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_bosun",
         "processors": "minecraft:empty",
@@ -92,7 +92,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_malcom_hatcher",
         "processors": "minecraft:empty",
@@ -101,7 +101,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_sam_johnson",
         "processors": "minecraft:empty",
@@ -110,7 +110,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_penny_finch",
         "processors": "minecraft:empty",
@@ -119,7 +119,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_tai_huang",
         "processors": "minecraft:empty",
@@ -128,7 +128,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_lieutenant_theodore_groves",
         "processors": "minecraft:empty",
@@ -137,7 +137,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_anamaria",
         "processors": "minecraft:empty",
@@ -146,7 +146,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_roger_prescott",
         "processors": "minecraft:empty",
@@ -155,7 +155,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_henry_turner",
         "processors": "minecraft:empty",
@@ -164,7 +164,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_tim",
         "processors": "minecraft:empty",
@@ -173,7 +173,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_tim",
         "processors": "minecraft:empty",
@@ -182,9 +182,200 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "the_bumblezone:bees/pirate_sam_hopkins",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+
+
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_mary_read_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_anne_bonny_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_long_john_silver_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_robert_tucker_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_jan_van_der_groote_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_joshamee_gibbs_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_frank_connery_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_robert_greene_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_jimmy_legs_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_bosun_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_malcom_hatcher_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_sam_johnson_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_penny_finch_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_tai_huang_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_lieutenant_theodore_groves_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_anamaria_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_roger_prescott_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_henry_turner_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_tim_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_tim_variant",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:bees/pirate_sam_hopkins_variant",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

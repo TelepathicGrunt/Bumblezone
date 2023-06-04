@@ -10,9 +10,6 @@ public class BzClientConfig {
     public static ForgeConfigSpec.DoubleValue fogBrightnessPercentage;
     public static ForgeConfigSpec.DoubleValue fogThickness;
     public static ForgeConfigSpec.BooleanValue enableDimensionFog;
-    public static ForgeConfigSpec.DoubleValue lgbtBeeRate;
-    public static ForgeConfigSpec.DoubleValue ukraineBeeRate;
-    public static ForgeConfigSpec.BooleanValue enableAltBeeSkinRenderer;
     public static ForgeConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
     public static ForgeConfigSpec.BooleanValue renderBeeQueenBonusTradeItem;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightBosses;
@@ -112,25 +109,6 @@ public class BzClientConfig {
 
         builder.pop();
 
-        lgbtBeeRate = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Rate for how often a bee will have an LGBT+ pajama!\n")
-                .translation("the_bumblezone.config.lgbtbeerate")
-                .defineInRange("lgbt+ bee rates", 0.013D, 0D, 1D);
-
-        ukraineBeeRate = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Rate for how often a bee will have an Ukraine pajama!\n")
-                .translation("the_bumblezone.config.ukrainebeerate")
-                .defineInRange("ukraine bee rates", 0.004D, 0D, 1D);
-
-        enableAltBeeSkinRenderer = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Enable replacing the bee renderer for alternative skins.",
-                        " Set this to false if the render is messing with other mod's bee renderers.\n")
-                .translation("the_bumblezone.config.enablelgbtbeerenderer")
-                .define("Enable lgbt+ bee renderer", true);
-
         playWrathOfHiveEffectMusic = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
@@ -148,9 +126,6 @@ public class BzClientConfig {
         BzDimensionConfigs.fogBrightnessPercentage = fogBrightnessPercentage.get();
         BzDimensionConfigs.fogThickness = fogThickness.get();
         BzDimensionConfigs.enableDimensionFog = enableDimensionFog.get();
-        BzClientConfigs.lgbtBeeRate = lgbtBeeRate.get();
-        BzClientConfigs.ukraineBeeRate = ukraineBeeRate.get();
-        BzClientConfigs.enableAltBeeSkinRenderer = enableAltBeeSkinRenderer.get();
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic.get();
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem.get();
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses.get();
