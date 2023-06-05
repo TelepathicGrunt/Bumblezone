@@ -1,6 +1,4 @@
 
-#TODO: add recipe view descriptions of new blocks and items.
-
 #TODO: Add barrier blocks for essence events
 
 #TODO: create essence events

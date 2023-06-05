@@ -16,8 +16,8 @@ public interface LuminescentWaxBase {
 
     default void applyEntityEffects(TagKey<Block> lightBlockTag, BlockState currentState, Entity collidingEntity) {
         if (collidingEntity instanceof LivingEntity livingEntity &&
-                !collidingEntity.level().isClientSide() &&
-                collidingEntity.tickCount % 10 == 0)
+            !collidingEntity.level().isClientSide() &&
+            collidingEntity.tickCount % 10 == 0)
         {
             if (livingEntity instanceof Player player &&
                 (!player.isCreative() || !player.isSpectator() || player.level().isClientSide()))

@@ -12,7 +12,7 @@ public class BeehiveBeeswax extends Block {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WOOD)
                 .instrument(NoteBlockInstrument.BASS)
-                .strength(0.3F, 0.3F)
+                .strength(0.6F, 0.3F)
                 .sound(SoundType.WOOD));
     }
 }
