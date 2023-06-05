@@ -3,8 +3,10 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.google.common.collect.MapMaker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -120,6 +122,11 @@ public class WindyAir extends ProperFacingBlock {
                     pushPower.x() + (randomSource.nextGaussian() * 0.003d),
                     pushPower.y() + (randomSource.nextGaussian() * 0.003d),
                     pushPower.z() + (randomSource.nextGaussian() * 0.003d));
+
+            Player nearestPlayer = level.getNearestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 3, true);
+            if (nearestPlayer != null) {
+                level.playSound(null, blockPos, BzSounds.WINDY_AIR_BLOWS.get(), SoundSource.AMBIENT, (randomSource.nextFloat() * 0.05F) + 0.5F, (randomSource.nextFloat() * 0.1F) + 0.8F);
+            }
         }
     }
 }

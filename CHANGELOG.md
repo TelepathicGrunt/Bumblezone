@@ -1,8 +1,6 @@
 
 #TODO: add recipe view descriptions of new blocks and items.
 
-#TODO: Add sound event for buzzing briefcase bee releasing
-
 #TODO: Add barrier blocks for essence events
 
 #TODO: create essence events
@@ -21,11 +19,9 @@
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
-#TODO: Wind sound for when in Windy Air
-
 #TODO: Bee Subway and Ancient Shrine structure. Add Suspicious Pollen to structures
 
-#TODO: Re-evaluate advancements. Add more for new additions as well. Remove Bee Cannon Enderdragon advancement.
+#TODO: Re-evaluate advancements. Add more for new additions as well. 
 
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
@@ -65,6 +61,9 @@ Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structur
  Poison and Wither effect from the healed mobs. It has 1000 use before it is depleted and needs 10 minutes to recharge by 
  being in the inventory of a player that had consumed Essence of the Bees in the past. Add more effects to 
  `the_bumblezone:essence/life/cure_effects` mob effects tag for this item to be able to remove said tagged effects from allies/pets!
+ Use the following two tags to control what plants can be grown or not with this item. Let me know if a modded plant is not able to be grown:
+ `the_bumblezone:essence/life/grow_plants`
+ `the_bumblezone:essence/life/force_disallowed_grow_plant`
 
 Essence of Radiance - The reward for beating the Green Sempiternal Sanctum structure! Holding this item in offhand while being
  in a spot with sky brightnes 13 or above (basically in view of the sky) will grant you Regeneration 1, Saturation 1, Speed 1,
@@ -216,6 +215,13 @@ Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag
 
 ##### Dimension:
 Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
+
+##### Advancements:
+Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
+
+Added "is_target_tag" field to the_bumblezone:killed_counter trigger for advancements. Now you can make "target_entity" point to a tag.
+ As a result, the Queen's Desire's Too Many legs advancement now counts more modded spiders towards the advancement. The new entity tag is:
+ `the_bumblezone:queens_desire/too_many_legs_spiders`
 
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.

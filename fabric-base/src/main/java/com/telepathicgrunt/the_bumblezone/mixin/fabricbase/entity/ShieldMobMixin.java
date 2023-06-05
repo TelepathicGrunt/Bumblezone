@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity;
 
 import com.telepathicgrunt.the_bumblezone.items.BzShieldItem;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShieldBehavior;
+import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -18,7 +18,7 @@ public class ShieldMobMixin {
             at = @At(value = "TAIL"))
     private void bumblezone$axeDisablesHoneyCrystalShield(Player playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
         if(!itemStack.isEmpty() && !itemStack2.isEmpty() && itemStack2.getItem() instanceof BzShieldItem && itemStack.getItem() instanceof AxeItem) {
-            HoneyCrystalShieldBehavior.setShieldCooldown(playerEntity, ((Mob)(Object)this));
+            HoneyCrystalShield.setShieldCooldown(playerEntity, ((Mob)(Object)this));
             playerEntity.level().broadcastEntityEvent(playerEntity, (byte)30);
         }
     }

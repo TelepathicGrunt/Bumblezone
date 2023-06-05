@@ -1,0 +1,130 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:spider",
+    {
+      "id": "alchemists_garden:spiderling",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:spider_queen",
+      "required": false
+    },
+    {
+      "id": "betteranimalsplus:tarantula",
+      "required": false
+    },
+    {
+      "id": "blue_skies:nested_spider",
+      "required": false
+    },
+    {
+      "id": "blue_skies:venom_spider",
+      "required": false
+    },
+    {
+      "id": "blue_skies:arachnarch",
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:wither_scuttler",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:black_widow",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:orb_weaver",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:wolf_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:jumping_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:hard_shell_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:molten_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:diving_bell_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:end_luker",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:hunter_spider",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:sand_biter",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:end_luker",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:soul_eater",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:crimson_crawler",
+      "required": false
+    },
+    {
+      "id": "canes_wonderful_spiders:warped_walker",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:bone_spider",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:stray_bone_spider",
+      "required": false
+    },
+    {
+      "id": "earthtojavamobs:bone_spider",
+      "required": false
+    },
+    {
+      "id": "minecraft_earth_mod:bone_spider",
+      "required": false
+    },
+    {
+      "id": "mutantmonsters:spider_pig",
+      "required": false
+    },
+    {
+      "id": "tofucraft:tofuspider",
+      "required": false
+    },
+    {
+      "id": "tofucraft:shudofuspider",
+      "required": false
+    },
+    {
+      "id": "twilightforest:hedge_spider",
+      "required": false
+    },
+    {
+      "id": "twilightforest:swarm_spider",
+      "required": false
+    },
+    {
+      "id": "twilightforest:king_spider",
+      "required": false
+    }
+  ]
+}

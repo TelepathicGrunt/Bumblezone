@@ -21,7 +21,6 @@ public class BzCriterias {
     // CRITERIA TRIGGERS
     public static final CounterTrigger BEE_BREEDING_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_breeding"));
     public static final GenericTrigger BEENERGIZED_MAXED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "beenergized_maxed"));
-    public static final GenericTrigger BEE_CANNON_ENDERDRAGON_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_cannon_enderdragon"));
     public static final GenericTrigger BEE_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_cannon_full"));
     public static final ItemSpecificTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "bee_drop_pollen_puff"));
     public static final CounterTrigger BEE_FED_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_fed"));
@@ -92,7 +91,6 @@ public class BzCriterias {
     public static void registerCriteriaTriggers() {
         register(BEE_BREEDING_TRIGGER);
         register(BEENERGIZED_MAXED_TRIGGER);
-        register(BEE_CANNON_ENDERDRAGON_TRIGGER);
         register(BEE_CANNON_FULL_TRIGGER);
         register(BEE_DROP_POLLEN_PUFF_TRIGGER);
         register(BEE_FED_TRIGGER);

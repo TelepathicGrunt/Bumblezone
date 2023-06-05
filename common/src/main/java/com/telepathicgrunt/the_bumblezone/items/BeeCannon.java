@@ -106,13 +106,6 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
                         if (bee instanceof Bee trueBee) {
                             trueBee.setTarget(targetEntity);
                         }
-
-                        if (player instanceof ServerPlayer serverPlayer &&
-                            targetEntity.getType() == EntityType.ENDER_DRAGON &&
-                            PlayerDataHandler.rootAdvancementDone(serverPlayer))
-                        {
-                            BzCriterias.BEE_CANNON_ENDERDRAGON_TRIGGER.trigger(serverPlayer);
-                        }
                     }
 
                     mutableBeeCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));

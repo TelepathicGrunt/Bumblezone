@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:bee_growables",
+    "#minecraft:saplings",
+    "minecraft:nether_wart"
+  ]
+}

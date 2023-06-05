@@ -73,7 +73,7 @@ public class PlayerDataHandler {
                 ResourceLocation id = EntityType.getKey(event.entity().getType());
                 if (id != null) {
                     module.mobsKilledTracker.merge(id, 1, Integer::sum);
-                    BzCriterias.KILLED_COUNTER_TRIGGER.trigger(player, id, module.mobsKilledTracker.get(id));
+                    BzCriterias.KILLED_COUNTER_TRIGGER.trigger(player, event.entity(), module.mobsKilledTracker.get(id));
                 }
 
             });

@@ -33,6 +33,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> HONEY_COMPASS_BLOCK_LOCK = registerSoundEvent("item.the_bumblezone.honey_compass.block_lock");
     public static final RegistryEntry<SoundEvent> HONEY_COMPASS_STRUCTURE_LOCK = registerSoundEvent("item.the_bumblezone.honey_compass.structure_lock");
     public static final RegistryEntry<SoundEvent> BEE_CANNON_FIRES = registerSoundEvent("item.the_bumblezone.bee_cannon.fire");
+    public static final RegistryEntry<SoundEvent> BUZZING_BRIEFCASE_RELEASES = registerSoundEvent("item.the_bumblezone.buzzing_briefcase.releases");
     public static final RegistryEntry<SoundEvent> CRYSTAL_CANNON_FIRES = registerSoundEvent("item.the_bumblezone.crystal_cannon.fire");
     public static final RegistryEntry<SoundEvent> SUGAR_WATER_DRINK = registerSoundEvent("item.the_bumblezone.sugar_water_bottle.drink");
     public static final RegistryEntry<SoundEvent> ROYAL_JELLY_DRINK = registerSoundEvent("item.the_bumblezone.royal_jelly_bottle.drink");
@@ -60,6 +61,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> HONEY_CRYSTAL_BLOCK_FALL = registerSoundEvent("block.the_bumblezone.honey_crystal_block.fall");
     public static final RegistryEntry<SoundEvent> HONEY_CRYSTAL_BLOCK_CHIME = registerSoundEvent("block.the_bumblezone.honey_crystal_block.chime");
     public static final RegistryEntry<SoundEvent> HONEY_CRYSTAL_BLOCK_BREAK = registerSoundEvent("block.the_bumblezone.honey_crystal_block.break");
+    public static final RegistryEntry<SoundEvent> WINDY_AIR_BLOWS = registerSoundEvent("block.the_bumblezone.windy_air.blows");
 
     public static final PlatformSoundType HONEY_CRYSTALS_TYPE = new PlatformSoundType(
             1.0F,

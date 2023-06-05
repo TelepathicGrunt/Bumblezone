@@ -594,6 +594,19 @@
     ],
     "subtitle": "subtitles.item.the_bumblezone.honey_compass.structure_lock"
   },
+  "item.the_bumblezone.buzzing_briefcase.releases": {
+    "sounds": [
+      {
+        "name": "block/wooden_door/open1",
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:block/wooden_door/open2",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.item.the_bumblezone.buzzing_briefcase.releases"
+  },
   "item.the_bumblezone.bee_cannon.fire": {
     "sounds": [
       {
@@ -1092,5 +1105,26 @@
       }
     ],
     "subtitle": "subtitles.block.the_bumblezone.honey_crystal_block.chime"
+  },
+  "block.the_bumblezone.windy_air.blows": {
+    "sounds": [
+      {
+        "name": "ambient/nether/soulsand_valley/wind1",
+        "volume": 0.5
+      },
+      {
+        "name": "ambient/nether/soulsand_valley/wind2",
+        "volume": 0.5
+      },
+      {
+        "name": "ambient/nether/soulsand_valley/wind3",
+        "volume": 0.5
+      },
+      {
+        "name": "ambient/nether/soulsand_valley/wind4",
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "subtitles.block.the_bumblezone.windy_air.blows"
   }
 }

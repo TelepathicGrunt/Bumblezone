@@ -347,6 +347,7 @@
   "subtitles.item.the_bumblezone.honey_compass.block_lock": "Honey Compass locks onto a block",
   "subtitles.item.the_bumblezone.honey_compass.structure_lock": "Honey Compass locks onto a structure",
   "subtitles.item.the_bumblezone.bee_cannon.fire": "Bee Cannon fires",
+  "subtitles.item.the_bumblezone.buzzing_briefcase.releases": "Buzzing Briefcase releases",
   "subtitles.item.the_bumblezone.crystal_cannon.fire": "Crystal Cannon fires",
   "subtitles.item.the_bumblezone.sugar_water_bottle.drink": "Gulping",
   "subtitles.item.the_bumblezone.royal_jelly_bottle.drink": "Gulping",
@@ -356,6 +357,7 @@
   "subtitles.block.the_bumblezone.royal_jelly_block.slide": "Sliding down a royal jelly block",
   "subtitles.block.the_bumblezone.crystalline_flower.use": "Crystalline Flower enchanted",
   "subtitles.block.the_bumblezone.honey_crystal_block.chime": "Honey crystal chimes",
+  "subtitles.block.the_bumblezone.windy_air.blows": "Wind blows",
 
   "key.categories.the_bumblezone": "The Bumblezone",
   "key.the_bumblezone.beehemoth_down": "Beehemoth Fly Down",
@@ -620,7 +622,7 @@
   "advancements.the_bumblezone.the_queens_desire.the_great_dragon_slayer.title": "The Great Dragon Slayer",
   "advancements.the_bumblezone.the_queens_desire.the_great_dragon_slayer.description": "Become legendary by slaying the Enderdragon with full Bee Armor on",
   "advancements.the_bumblezone.the_queens_desire.too_many_legs.title": "Too Many Legs",
-  "advancements.the_bumblezone.the_queens_desire.too_many_legs.description": "Smash and kill 64 Spiders for their icky-ness",
+  "advancements.the_bumblezone.the_queens_desire.too_many_legs.description": "Smash and kill 64 Spiders for their icky-ness (Cave Spiders don't count)",
   "advancements.the_bumblezone.the_queens_desire.vip_trader.title": "VIP Trader",
   "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Trade 256 times with the Bee Queen. Does not need to be bonus trades. Any trade works!",
 
