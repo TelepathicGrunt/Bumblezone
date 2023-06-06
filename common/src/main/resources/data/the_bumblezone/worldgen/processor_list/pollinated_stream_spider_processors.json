@@ -1,0 +1,145 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:pollen_piling_processor",
+      "xz_scale": 0.075,
+      "y_scale": 0.025,
+      "pollen_replace_solids": true
+    },
+    {
+      "processor_type": "the_bumblezone:close_off_outside_fluids_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:fluid_tick_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_processor_list": "the_bumblezone:pollinated_stream_processors",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:honeycomb_block"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 6,
+          "min_inclusive": 4
+        }
+      },
+      "pillar_processor_list": "the_bumblezone:pollinated_stream_processors",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:orange_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:honeycomb_block"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
+      "output_block": "the_bumblezone:porous_honeycomb_block",
+      "input_block": "minecraft:honeycomb_block",
+      "threshold": 0.2,
+      "xz_scale": 0.05,
+      "y_scale": 0.05
+    },
+    {
+      "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
+      "output_block": "the_bumblezone:filled_porous_honeycomb_block",
+      "input_block": "minecraft:honeycomb_block",
+      "threshold": 0.55,
+      "xz_scale": 0.1,
+      "y_scale": 0.1
+    },
+    {
+      "spawner_mob_entries": [
+        {
+          "resourcelocation": "minecraft:spider",
+          "weight": 100
+        }
+      ],
+      "chance_to_override_with_tagged_mobs":  0.222,
+      "override_mobs_to_pick_from": "#the_bumblezone:structure_spawner_mobs/pollinated_stream_rare_spawner_type",
+      "processor_type": "the_bumblezone:spawner_randomizing_processor"
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:capped",
+      "limit": 6,
+      "delegate": {
+        "processor_type": "minecraft:rule",
+        "rules": [
+          {
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "the_bumblezone:archaeology/pollinated_stream_suspicious"
+            },
+            "input_predicate": {
+              "block_state": {
+                "Name": "the_bumblezone:pile_of_pollen",
+                "Properties": {
+                  "layers": "8"
+                }
+              },
+              "predicate_type": "minecraft:blockstate_match"
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "output_state": {
+              "Name": "the_bumblezone:pile_of_pollen_suspicious",
+              "Properties": {
+                "dusted": "0"
+              }
+            }
+          },
+          {
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "the_bumblezone:archaeology/pollinated_stream_suspicious"
+            },
+            "input_predicate": {
+              "block_state": {
+                "Name": "the_bumblezone:pile_of_pollen",
+                "Properties": {
+                  "layers": "7"
+                }
+              },
+              "predicate_type": "minecraft:blockstate_match"
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "output_state": {
+              "Name": "the_bumblezone:pile_of_pollen_suspicious",
+              "Properties": {
+                "dusted": "0"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

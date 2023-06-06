@@ -110,10 +110,10 @@
       }
     },
     {
-      "weight": 6,
+      "weight": 8,
       "element": {
         "location": "the_bumblezone:pollinated_stream/cave_spider_den",
-        "processors": "the_bumblezone:pollinated_stream_processors",
+        "processors": "the_bumblezone:pollinated_stream_spider_processors",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

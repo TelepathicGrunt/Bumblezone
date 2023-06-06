@@ -5,7 +5,7 @@
     "state": {
       "Name": "the_bumblezone:pile_of_pollen",
       "Properties": {
-        "layer": "8"
+        "layers": "8"
       }
     }
   },

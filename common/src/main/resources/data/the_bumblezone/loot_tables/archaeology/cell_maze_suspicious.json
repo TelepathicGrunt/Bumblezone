@@ -1,0 +1,108 @@
+{
+  "type": "minecraft:archaeology",
+  "random_sequence": "the_bumblezone:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "minecraft:friend_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:explorer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:heart_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:prize_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:diamond",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:echo_shard",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:amethyst_shard",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:emerald",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:tipped_arrow",
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion:\"minecraft:poison\"}"
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:bee_bread",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:spider_eye",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:flower_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:mojang_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:globe_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:raiser_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:ward_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

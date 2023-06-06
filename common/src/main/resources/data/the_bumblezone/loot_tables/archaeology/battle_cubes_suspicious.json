@@ -1,0 +1,77 @@
+{
+  "type": "minecraft:archaeology",
+  "random_sequence": "the_bumblezone:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "minecraft:blade_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:explorer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:burn_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:heartbreak_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:diamond",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:emerald",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:spectral_arrow",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:spider_eye",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:bone",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:skeleton_skull",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:flower_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:wild_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

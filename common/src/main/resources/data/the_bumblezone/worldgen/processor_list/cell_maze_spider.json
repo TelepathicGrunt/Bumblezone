@@ -45,6 +45,87 @@
       "chance_to_override_with_tagged_mobs":  0.222,
       "override_mobs_to_pick_from": "#the_bumblezone:structure_spawner_mobs/cell_maze_rare_spawner_type",
       "processor_type": "the_bumblezone:spawner_randomizing_processor"
+    },
+    {
+      "processor_type": "minecraft:capped",
+      "limit": 2,
+      "delegate": {
+        "processor_type": "minecraft:rule",
+        "rules": [
+          {
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "the_bumblezone:archaeology/cell_maze_suspicious"
+            },
+            "input_predicate": {
+              "block_state": {
+                "Name": "the_bumblezone:pile_of_pollen",
+                "Properties": {
+                  "layers": "8"
+                }
+              },
+              "predicate_type": "minecraft:blockstate_match"
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "output_state": {
+              "Name": "the_bumblezone:pile_of_pollen_suspicious",
+              "Properties": {
+                "dusted": "0"
+              }
+            }
+          },
+          {
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "the_bumblezone:archaeology/cell_maze_suspicious"
+            },
+            "input_predicate": {
+              "block_state": {
+                "Name": "the_bumblezone:pile_of_pollen",
+                "Properties": {
+                  "layers": "7"
+                }
+              },
+              "predicate_type": "minecraft:blockstate_match"
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "output_state": {
+              "Name": "the_bumblezone:pile_of_pollen_suspicious",
+              "Properties": {
+                "dusted": "0"
+              }
+            }
+          },
+          {
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "the_bumblezone:archaeology/cell_maze_suspicious"
+            },
+            "input_predicate": {
+              "block_state": {
+                "Name": "the_bumblezone:pile_of_pollen",
+                "Properties": {
+                  "layers": "6"
+                }
+              },
+              "predicate_type": "minecraft:blockstate_match"
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "output_state": {
+              "Name": "the_bumblezone:pile_of_pollen_suspicious",
+              "Properties": {
+                "dusted": "0"
+              }
+            }
+          }
+        ]
+      }
     }
   ]
 }
