@@ -53,6 +53,7 @@ Heavy Air added that will pull entities down and remove Levitation, Slow Falling
 
 Suspicious Pile of Pollen is added now! You may find these scattered throughout Bumblezone in certain structures. Brush them for loot!
  Also found in Creative Menu for builders, but you'll need to set the items or loot table for the block by command.
+ They can also be found throughout the Pollinated Fields biomes with a decent amount of possible loot!
 
 
 ##### Items:

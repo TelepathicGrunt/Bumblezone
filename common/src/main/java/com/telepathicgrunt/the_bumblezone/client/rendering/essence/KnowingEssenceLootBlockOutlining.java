@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.StateFocusedBrushableBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.mixin.client.LevelRendererAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -70,7 +71,7 @@ public class KnowingEssenceLootBlockOutlining {
                             blockEntity instanceof BrushableBlockEntity ||
                             blockEntity instanceof EnderChestBlockEntity ||
                             block instanceof EnderChestBlock)
-                                && !blockState.is(BzTags.BLOCK_ENTITY_PREVENT_HIGHLIGHTING))
+                            && !blockState.is(BzTags.BLOCK_ENTITY_PREVENT_HIGHLIGHTING))
                         {
                              BlockPos lootBlockPos = blockEntityEntry.getKey();
 

@@ -1,0 +1,373 @@
+{
+  "type": "minecraft:archaeology",
+  "random_sequence": "the_bumblezone:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "minecraft:diamond",
+          "type": "minecraft:item",
+          "weight": 90
+        },
+        {
+          "name": "minecraft:emerald",
+          "type": "minecraft:item",
+          "weight": 90
+        },
+        {
+          "name": "minecraft:arrow",
+          "type": "minecraft:item",
+          "weight": 70
+        },
+        {
+          "name": "minecraft:slime_ball",
+          "type": "minecraft:item",
+          "weight": 70
+        },
+        {
+          "name": "minecraft:spider_eye",
+          "type": "minecraft:item",
+          "weight": 70
+        },
+        {
+          "name": "minecraft:ender_pearl",
+          "type": "minecraft:item",
+          "weight": 70
+        },
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 70
+        },
+        {
+          "name": "the_bumblezone:bee_bread",
+          "type": "minecraft:item",
+          "weight": 70
+        },
+        {
+          "name": "the_bumblezone:honey_crystal_shards",
+          "type": "minecraft:item",
+          "weight": 70,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:compass",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "minecraft:clock",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "minecraft:golden_apple",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "minecraft:enchanted_golden_apple",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "minecraft:archer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "minecraft:explorer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "minecraft:flower_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "name": "minecraft:dune_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 40,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 40,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/lesser_misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_leggings",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_chestplate",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_leggings",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_chestplate",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:stingless_bee_helmet_1",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:stingless_bee_helmet_2",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_1",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_2",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_trans_1",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:bumble_bee_chestplate_trans_2",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_bee_leggings_1",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_bee_leggings_2",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:carpenter_bee_boots_1",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:carpenter_bee_boots_2",
+          "weight": 7,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

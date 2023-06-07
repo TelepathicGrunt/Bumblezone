@@ -7,7 +7,15 @@
       "Properties": {
         "layers": "8"
       }
-    }
+    },
+    "rare_state": {
+      "Name": "the_bumblezone:pile_of_pollen_suspicious",
+      "Properties": {
+        "dusted": "0"
+      }
+    },
+    "rare_state_chance": 0.1,
+    "suspicious_block_loot": "the_bumblezone:archaeology/pollinated_field_suspicious"
   },
   "type": "the_bumblezone:layered_block_surface"
 }
