@@ -11,6 +11,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class AbilityEssenceItem extends Item {
 
@@ -20,17 +21,17 @@ public abstract class AbilityEssenceItem extends Item {
     private static final String FORCED_COOLDOWN_TAG = "forcedCooldown";
     private static final String LAST_ABILITY_CHARGE_TIMESTAMP_TAG = "lastChargeTime";
     private static final String ABILITY_USE_REMAINING_TAG = "abilityUseRemaining";
-    private final int cooldownTickLength;
-    private final int abilityUseAmount;
+    private final Supplier<Integer> cooldownTickLength;
+    private final Supplier<Integer> abilityUseAmount;
 
-    public AbilityEssenceItem(Properties properties, int cooldownTickLength, int abilityUseAmount) {
+    public AbilityEssenceItem(Properties properties, Supplier<Integer> cooldownTickLength, Supplier<Integer> abilityUseAmount) {
         super(properties);
         this.cooldownTickLength = cooldownTickLength;
         this.abilityUseAmount = abilityUseAmount;
     }
 
     public int getCooldownTickLength() {
-        return cooldownTickLength;
+        return cooldownTickLength.get();
     }
 
     public static void setLastAbilityChargeTimestamp(ItemStack stack, int gametime) {
@@ -77,7 +78,7 @@ public abstract class AbilityEssenceItem extends Item {
     public void incrementCooldownTime(ItemStack stack) {
         if (getForcedCooldown(stack)) {
             int currentCooldownTime = getCooldownTime(stack);
-            if (currentCooldownTime < cooldownTickLength) {
+            if (currentCooldownTime < cooldownTickLength.get()) {
                 setCooldownTime(stack, currentCooldownTime + 1);
             }
             else {
@@ -171,7 +172,7 @@ public abstract class AbilityEssenceItem extends Item {
     }
 
     int getMaxAbilityUseAmount() {
-        return abilityUseAmount;
+        return abilityUseAmount.get();
     }
 
     public void setAbilityUseRemaining(ItemStack stack, int abilityUseRemaining) {

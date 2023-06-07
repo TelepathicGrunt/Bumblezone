@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -28,11 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Supplier;
 
 public class ContinuityEssence extends AbilityEssenceItem {
 
-    private static final int cooldownLengthInTicks = 288000;
-    private static final int abilityUseAmount = 1;
+    private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.continuityEssenceCooldown;
+    private static final Supplier<Integer> abilityUseAmount = () -> 1;
     private static final ConcurrentLinkedQueue<TickCapsule> NEXT_TICK_PARTICLES = new ConcurrentLinkedQueue<>();
     private record TickCapsule(Runnable runnable, long tickTarget) {}
 

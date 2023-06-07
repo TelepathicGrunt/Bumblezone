@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
@@ -34,11 +35,12 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class LifeEssence extends AbilityEssenceItem {
 
-    private static final int cooldownLengthInTicks = 12000;
-    private static final int abilityUseAmount = 1000;
+    private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.lifeEssenceCooldown;
+    private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.lifeEssenceAbilityUse;
 
     public LifeEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);

@@ -17,7 +17,7 @@
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
-#TODO: Bee Subway and Ancient Shrine structure. Add Suspicious Pollen to structures
+#TODO: Bee Subway and Ancient Shrine structure
 
 #TODO: Re-evaluate advancements. Add more for new additions as well. 
 

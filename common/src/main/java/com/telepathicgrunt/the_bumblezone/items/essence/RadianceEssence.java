@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -19,11 +20,12 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class RadianceEssence extends AbilityEssenceItem {
 
-    private static final int cooldownLengthInTicks = 12000;
-    private static final int abilityUseAmount = 4800;
+    private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.radianceEssenceCooldown;
+    private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.radianceEssenceAbilityUse;
 
     public RadianceEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -21,11 +22,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class CalmingEssence extends AbilityEssenceItem {
 
-    private static final int cooldownLengthInTicks = 12000;
-    private static final int abilityUseAmount = 600;
+    private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.calmingEssenceCooldown;
+    private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.calmingEssenceAbilityUse;
 
     public CalmingEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);

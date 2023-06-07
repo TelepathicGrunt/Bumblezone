@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
@@ -33,11 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 public class RagingEssence extends AbilityEssenceItem {
 
-    private static final int cooldownLengthInTicks = 36000;
-    private static final int abilityUseAmount = 24;
+    private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.ragingEssenceCooldown;
+    private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.ragingEssenceAbilityUse;
 
     private static final int radius = 24;
     private static final int trackingRange = radius * radius * 4;

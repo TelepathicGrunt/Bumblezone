@@ -88,6 +88,46 @@ public class BzConfig extends MidnightConfig {
 
 
     @Comment
+    public static Comment essenceComment;
+
+    @Entry
+    public static boolean keepEssenceOfTheBeesOnRespawning = true;
+
+    @Entry
+    public static int ragingEssenceAbilityUse = 24;
+
+    @Entry
+    public static int ragingEssenceCooldown = 36000;
+
+    @Entry
+    public static int knowingEssenceAbilityUse = 1200;
+
+    @Entry
+    public static int knowingEssenceCooldown = 18000;
+
+    @Entry
+    public static int calmingEssenceAbilityUse = 600;
+
+    @Entry
+    public static int calmingEssenceCooldown = 12000;
+
+    @Entry
+    public static int radianceEssenceAbilityUse = 4800;
+
+    @Entry
+    public static int radianceEssenceCooldown = 12000;
+
+    @Entry
+    public static int lifeEssenceAbilityUse = 1000;
+
+    @Entry
+    public static int lifeEssenceCooldown = 12000;
+
+    @Entry
+    public static int continuityEssenceCooldown = 288000;
+
+
+    @Comment
     public static Comment dimensionComment;
 
     @Entry(min=0, max=100000)
@@ -178,9 +218,6 @@ public class BzConfig extends MidnightConfig {
 
     @Entry
     public static int nearbyBeesPerPlayerInBz = 25;
-
-    @Entry
-    public static boolean keepEssenceOfTheBeesOnRespawning = true;
 
     @Entry
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 84;
@@ -307,11 +344,22 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeLootInjection = beeLootInjection;
         BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
-        BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee;
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee;
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca;
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees;
+        BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
+        BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse;
+        BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown;
+        BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse;
+        BzGeneralConfigs.knowingEssenceCooldown = knowingEssenceCooldown;
+        BzGeneralConfigs.calmingEssenceAbilityUse = calmingEssenceAbilityUse;
+        BzGeneralConfigs.calmingEssenceCooldown = calmingEssenceCooldown;
+        BzGeneralConfigs.radianceEssenceAbilityUse = radianceEssenceAbilityUse;
+        BzGeneralConfigs.radianceEssenceCooldown = radianceEssenceCooldown;
+        BzGeneralConfigs.lifeEssenceAbilityUse = lifeEssenceAbilityUse;
+        BzGeneralConfigs.lifeEssenceCooldown = lifeEssenceCooldown;
+        BzGeneralConfigs.continuityEssenceCooldown = continuityEssenceCooldown;
 
         //Compat
         BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat;

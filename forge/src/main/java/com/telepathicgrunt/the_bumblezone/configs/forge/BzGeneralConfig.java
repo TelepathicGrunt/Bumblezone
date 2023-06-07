@@ -18,7 +18,6 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
     public static ForgeConfigSpec.BooleanValue superCandlesBurnsMobs;
-    public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
@@ -30,6 +29,18 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue crystallineFlowerEnchantingPowerAllowedPerTier;
     public static ForgeConfigSpec.IntValue crystallineFlowerExtraXpNeededForTiers;
     public static ForgeConfigSpec.IntValue crystallineFlowerExtraTierCost;
+    public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
+    public static ForgeConfigSpec.IntValue ragingEssenceAbilityUse;
+    public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
+    public static ForgeConfigSpec.IntValue knowingEssenceAbilityUse;
+    public static ForgeConfigSpec.IntValue knowingEssenceCooldown;
+    public static ForgeConfigSpec.IntValue calmingEssenceAbilityUse;
+    public static ForgeConfigSpec.IntValue calmingEssenceCooldown;
+    public static ForgeConfigSpec.IntValue radianceEssenceAbilityUse;
+    public static ForgeConfigSpec.IntValue radianceEssenceCooldown;
+    public static ForgeConfigSpec.IntValue lifeEssenceAbilityUse;
+    public static ForgeConfigSpec.IntValue lifeEssenceCooldown;
+    public static ForgeConfigSpec.IntValue continuityEssenceCooldown;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -141,13 +152,6 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.supercandlesburnsmobs")
                 .define("superCandlesBurnsMobs", true);
 
-        keepEssenceOfTheBeesOnRespawning = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether Essence of the Bees's effect should stay on the player if they die and then respawn.\n")
-                .translation("the_bumblezone.config.keepessenceofthebeesonrespawning")
-                .define("keepEssenceOfTheBeesOnRespawning", true);
-
-
         musicDiscTimeLengthFlightOfTheBumblebee = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
@@ -227,6 +231,88 @@ public class BzGeneralConfig {
                 .defineInRange("crystallineFlowerExtraTierCost", 0, -5, 5);
 
         builder.pop();
+
+        builder.push("Essence Options");
+
+        keepEssenceOfTheBeesOnRespawning = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Essence of the Bees's effect should stay on the player if they die and then respawn.\n")
+                .translation("the_bumblezone.config.keepessenceofthebeesonrespawning")
+                .define("keepEssenceOfTheBeesOnRespawning", true);
+
+
+        ragingEssenceAbilityUse = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much ability use this item has before depleted.\n")
+                .translation("the_bumblezone.config.ragingessenceabilityuse")
+                .defineInRange("ragingEssenceAbilityUse", 24, 0, 1000000);
+
+        ragingEssenceCooldown = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long the cooldown is in ticks before recharged for this item.\n")
+                .translation("the_bumblezone.config.ragingessencecooldown")
+                .defineInRange("ragingEssenceCooldown", 36000, 0, 1000000);
+
+
+        knowingEssenceAbilityUse = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much ability use (per second) this item has before depleted.\n")
+                .translation("the_bumblezone.config.knowingessenceabilityuse")
+                .defineInRange("knowingEssenceAbilityUse", 1200, 0, 1000000);
+
+        knowingEssenceCooldown = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long the cooldown is in ticks before recharged for this item.\n")
+                .translation("the_bumblezone.config.knowingessencecooldown")
+                .defineInRange("knowingEssenceCooldown", 18000, 0, 1000000);
+
+
+        calmingEssenceAbilityUse = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much ability use (per second) this item has before depleted.\n")
+                .translation("the_bumblezone.config.calmingessenceabilityuse")
+                .defineInRange("calmingEssenceAbilityUse", 600, 0, 1000000);
+
+        calmingEssenceCooldown = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long the cooldown is in ticks before recharged for this item.\n")
+                .translation("the_bumblezone.config.calmingessencecooldown")
+                .defineInRange("calmingEssenceCooldown", 12000, 0, 1000000);
+
+
+        radianceEssenceAbilityUse = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much ability use (per 25 ticks) this item has before depleted.\n")
+                .translation("the_bumblezone.config.radianceessenceabilityuse")
+                .defineInRange("radianceEssenceAbilityUse", 4800, 0, 1000000);
+
+        radianceEssenceCooldown = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long the cooldown is in ticks before recharged for this item.\n")
+                .translation("the_bumblezone.config.radianceessencecooldown")
+                .defineInRange("radianceEssenceCooldown", 12000, 0, 1000000);
+
+
+        lifeEssenceAbilityUse = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much ability use this item has before depleted.\n")
+                .translation("the_bumblezone.config.lifeessenceabilityuse")
+                .defineInRange("lifeEssenceAbilityUse", 1000, 0, 1000000);
+
+        lifeEssenceCooldown = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long the cooldown is in ticks before recharged for this item.\n")
+                .translation("the_bumblezone.config.lifeessencecooldown")
+                .defineInRange("lifeEssenceCooldown", 12000, 0, 1000000);
+
+
+        continuityEssenceCooldown = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long the cooldown is in ticks before recharged for this item.\n")
+                .translation("the_bumblezone.config.continuityessencecooldown")
+                .defineInRange("continuityEssenceCooldown", 288000, 0, 1000000);
+
+        builder.pop();
     }
 
     public static void copyToCommon() {
@@ -238,7 +324,6 @@ public class BzGeneralConfig {
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz.get();
         BzGeneralConfigs.dispensersDropGlassBottles = dispensersDropGlassBottles.get();
         BzGeneralConfigs.superCandlesBurnsMobs = superCandlesBurnsMobs.get();
-        BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning.get();
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee.get();
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees.get();
@@ -250,5 +335,17 @@ public class BzGeneralConfig {
         BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier = crystallineFlowerEnchantingPowerAllowedPerTier.get();
         BzGeneralConfigs.crystallineFlowerExtraXpNeededForTiers = crystallineFlowerExtraXpNeededForTiers.get();
         BzGeneralConfigs.crystallineFlowerExtraTierCost = crystallineFlowerExtraTierCost.get();
+        BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning.get();
+        BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();
+        BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();
+        BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse.get();
+        BzGeneralConfigs.knowingEssenceCooldown = knowingEssenceCooldown.get();
+        BzGeneralConfigs.calmingEssenceAbilityUse = calmingEssenceAbilityUse.get();
+        BzGeneralConfigs.calmingEssenceCooldown = calmingEssenceCooldown.get();
+        BzGeneralConfigs.radianceEssenceAbilityUse = radianceEssenceAbilityUse.get();
+        BzGeneralConfigs.radianceEssenceCooldown = radianceEssenceCooldown.get();
+        BzGeneralConfigs.lifeEssenceAbilityUse = lifeEssenceAbilityUse.get();
+        BzGeneralConfigs.lifeEssenceCooldown = lifeEssenceCooldown.get();
+        BzGeneralConfigs.continuityEssenceCooldown = continuityEssenceCooldown.get();
     }
 }

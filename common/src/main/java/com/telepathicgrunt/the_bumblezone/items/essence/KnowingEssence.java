@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
@@ -22,11 +23,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class KnowingEssence extends AbilityEssenceItem {
 
-    private static final int cooldownLengthInTicks = 18000;
-    private static final int abilityUseAmount = 1200;
+    private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.knowingEssenceCooldown;
+    private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.knowingEssenceAbilityUse;
 
     public KnowingEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
