@@ -43,8 +43,8 @@ dependencies {
 
     //modLocalRuntime("dev.emi:emi:${rootProject.emi}")
 
-    modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
-    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
+    //modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
+    //modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
