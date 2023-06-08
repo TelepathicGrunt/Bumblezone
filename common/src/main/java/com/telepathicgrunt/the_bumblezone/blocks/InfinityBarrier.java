@@ -30,8 +30,10 @@ public class InfinityBarrier extends BaseEntityBlock {
     }
 
     public void playerDestroy(Level level, Player player, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack itemStack) {
-        player.hurt(level.damageSources().source(BzDamageSources.ARCHITECTS_TYPE), Float.MAX_VALUE);
-        level.setBlock(blockPos, BzBlocks.INFINITY_BARRIER.get().defaultBlockState(), 3);
+        if (!player.isCreative()) {
+            player.hurt(level.damageSources().source(BzDamageSources.ARCHITECTS_TYPE), Float.MAX_VALUE);
+            level.setBlock(blockPos, BzBlocks.INFINITY_BARRIER.get().defaultBlockState(), 3);
+        }
     }
 
     @Nullable
