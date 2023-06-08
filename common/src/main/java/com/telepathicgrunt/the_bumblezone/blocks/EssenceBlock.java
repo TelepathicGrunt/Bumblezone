@@ -36,6 +36,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 .noLootTable()
                 .noOcclusion()
                 .forceSolidOn()
+                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
                 .pushReaction(PushReaction.BLOCK));
     }
 

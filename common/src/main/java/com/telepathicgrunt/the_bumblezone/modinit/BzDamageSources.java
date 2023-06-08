@@ -8,4 +8,5 @@ import net.minecraft.world.damagesource.DamageType;
 
 public class BzDamageSources {
     public static final ResourceKey<DamageType> CRYSTALLINE_FLOWER_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"));
+    public static final ResourceKey<DamageType> ARCHITECTS_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "architects"));
 }

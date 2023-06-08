@@ -14,6 +14,8 @@
 
   "death.attack.crystalline_flower": "%1$s was poked to death by a crystalline flower",
   "death.attack.crystalline_flower.player": "%1$s was poked to death by a crystalline flower whilst trying to escape %2$s",
+  "death.attack.architects": "%1$s was killed for trying to escape an Essence Event",
+  "death.attack.architects.player": "%1$s was killed for trying to escape an Essence Event",
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",
@@ -105,6 +107,7 @@
   "block.the_bumblezone.essence_block_white": "White Essence Block",
   "block.the_bumblezone.heavy_air": "Heavy Air",
   "block.the_bumblezone.windy_air": "Windy Air",
+  "block.the_bumblezone.infinity_barrier": "Infinity Barrier",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",

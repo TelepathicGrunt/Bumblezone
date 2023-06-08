@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.InfinityBarrierBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
@@ -120,6 +121,7 @@ public class BumblezoneClient {
 
     public static void registerBlockEntityRenderers() {
         BlockEntityRenderers.register(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
+        BlockEntityRenderers.register(BzBlockEntities.INFINITY_BARRIER.get(), InfinityBarrierBlockEntityRenderer::new);
         BlockEntityRenderers.register(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
     }
 

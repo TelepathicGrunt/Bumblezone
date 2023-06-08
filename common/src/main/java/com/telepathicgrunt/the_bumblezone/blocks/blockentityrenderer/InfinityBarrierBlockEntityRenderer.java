@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -25,20 +26,24 @@ import java.io.IOException;
 import java.util.Random;
 
 
-public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBlockEntity> {
+public class InfinityBarrierBlockEntityRenderer implements BlockEntityRenderer<InfinityBarrierBlockEntity> {
 
-	public EssenceBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+	public InfinityBarrierBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
 	}
 
 	private static final long RANDOM_SEED = 31100L;
 	private static final Random RANDOM = new Random(RANDOM_SEED);
-	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/base_background.png");
-	public static final ResourceLocation BEE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
+	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/infinity_barrier/blank_background.png");
+	public static final ResourceLocation LAYER_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/infinity_barrier/barrier_background.png");
 
-	public static final VertexFormat POSITION_COLOR_NORMAL = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder().put("Position", DefaultVertexFormat.ELEMENT_POSITION).put("Color", DefaultVertexFormat.ELEMENT_COLOR).put("Normal", DefaultVertexFormat.ELEMENT_NORMAL).build());
-	public RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
+	public static final VertexFormat POSITION_COLOR_NORMAL = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder()
+			.put("Position", DefaultVertexFormat.ELEMENT_POSITION)
+			.put("Color", DefaultVertexFormat.ELEMENT_COLOR)
+			.put("Normal", DefaultVertexFormat.ELEMENT_NORMAL).build());
+
+	RenderType.CompositeRenderType BARRIER_RENDER_TYPE =
 			RenderType.create(
-					"bumblezone_essence_block",
+					"bumblezone_infinity_barrier",
 					POSITION_COLOR_NORMAL,
 					VertexFormat.Mode.QUADS,
 					256,
@@ -47,7 +52,7 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 					RenderType.CompositeState.builder()
 							.setShaderState(new RenderStateShard.ShaderStateShard(() -> {
 								try {
-									return new ShaderInstance(Minecraft.getInstance().getResourceManager(), "rendertype_bumblezone_essence", POSITION_COLOR_NORMAL);
+									return new ShaderInstance(Minecraft.getInstance().getResourceManager(), "rendertype_bumblezone_infinity_barrier", POSITION_COLOR_NORMAL);
 								}
 								catch (IOException e) {
 									e.printStackTrace();
@@ -56,20 +61,20 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 							}))
 							.setTextureState(RenderStateShard.MultiTextureStateShard.builder()
 									.add(BASE_TEXTURE, false, false)
-									.add(BEE_TEXTURE, false, false)
+									.add(LAYER_TEXTURE, false, false)
 									.build())
 							.createCompositeState(false)
 			);
 
 	@Override
-	public void render(EssenceBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int brightness, int overlayType) {
+	public void render(InfinityBarrierBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int brightness, int overlayType) {
 		RANDOM.setSeed(RANDOM_SEED);
 		Matrix4f matrix4f = poseStack.last().pose();
 		this.renderSides(blockEntity, matrix4f, multiBufferSource.getBuffer(this.getType()));
 	}
 
-	private void renderSides(EssenceBlockEntity blockEntity, Matrix4f matrix4f, VertexConsumer vertexConsumer) {
-		int colorInt = blockEntity.getBlockState().getMapColor(blockEntity.getLevel(), blockEntity.getBlockPos()).col;
+	private void renderSides(InfinityBarrierBlockEntity blockEntity, Matrix4f matrix4f, VertexConsumer vertexConsumer) {
+		int colorInt = 7467520;
 
 		float red = FastColor.ARGB32.red(colorInt) / 255f;
 		float green = FastColor.ARGB32.green(colorInt) / 255f;
@@ -83,17 +88,17 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 		this.renderSide(blockEntity, matrix4f, vertexConsumer, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 0.0F, 0.0F, red, green, blue, Direction.UP);
 	}
 
-	private void renderSide(EssenceBlockEntity blockEntity, Matrix4f model, VertexConsumer vertexConsumer, float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4, float red, float green, float blue, Direction direction) {
+	private void renderSide(InfinityBarrierBlockEntity blockEntity, Matrix4f model, VertexConsumer vertexConsumer, float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4, float red, float green, float blue, Direction direction) {
 		if (blockEntity.shouldDrawSide(direction)) {
 			Vec3i normal = direction.getNormal();
-			addPortalVertex(vertexConsumer, model, x1, y1, z1, red, green, blue, normal);
-			addPortalVertex(vertexConsumer, model, x2, y1, z2, red, green, blue, normal);
-			addPortalVertex(vertexConsumer, model, x2, y2, z3, red, green, blue, normal);
-			addPortalVertex(vertexConsumer, model, x1, y2, z4, red, green, blue, normal);
+			addVertex(vertexConsumer, model, x1, y1, z1, red, green, blue, normal);
+			addVertex(vertexConsumer, model, x2, y1, z2, red, green, blue, normal);
+			addVertex(vertexConsumer, model, x2, y2, z3, red, green, blue, normal);
+			addVertex(vertexConsumer, model, x1, y2, z4, red, green, blue, normal);
 		}
 	}
 
-	private static void addPortalVertex(VertexConsumer vertexConsumer, Matrix4f mat, float x, float y, float z, float red, float green, float blue, Vec3i normal) {
+	private static void addVertex(VertexConsumer vertexConsumer, Matrix4f mat, float x, float y, float z, float red, float green, float blue, Vec3i normal) {
 		vertexConsumer
 				.vertex(mat, x, y, z)
 				.color(red, green, blue, 1)
@@ -106,6 +111,6 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 	}
 
 	protected RenderType getType() {
-		return ESSENCE_RENDER_TYPE;
+		return BARRIER_RENDER_TYPE;
 	}
 }

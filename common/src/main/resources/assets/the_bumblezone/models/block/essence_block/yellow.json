@@ -1,5 +1,5 @@
 {
   "textures": {
-    "particle": "minecraft:block/yellow_concrete"
+    "particle": "the_bumblezone:item/essence/yellow"
   }
 }

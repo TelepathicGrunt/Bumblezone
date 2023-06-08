@@ -101,4 +101,5 @@ public class BzBlocks {
     public static final RegistryEntry<Block> ESSENCE_BLOCK_WHITE = BLOCKS.register("essence_block_white", EssenceBlockWhite::new);
     public static final RegistryEntry<Block> HEAVY_AIR = BLOCKS.register("heavy_air", HeavyAir::new);
     public static final RegistryEntry<Block> WINDY_AIR = BLOCKS.register("windy_air", WindyAir::new);
+    public static final RegistryEntry<Block> INFINITY_BARRIER = BLOCKS.register("infinity_barrier", InfinityBarrier::new);
    }

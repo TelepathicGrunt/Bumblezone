@@ -1,0 +1,7 @@
+{
+  "effects": "hurt",
+  "exhaustion": 0,
+  "message_id": "architects",
+  "scaling": "never",
+  "death_message_type": "default"
+}
