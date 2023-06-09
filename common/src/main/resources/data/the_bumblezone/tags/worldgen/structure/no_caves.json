@@ -1,15 +1,16 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:throne_pillar",
-    "the_bumblezone:hanging_garden",
-    "the_bumblezone:candle_parkour",
+    "the_bumblezone:ancient_hoops",
     "the_bumblezone:battle_cubes",
-    "the_bumblezone:honey_fountain",
-    "the_bumblezone:stinger_spear_shrine",
-    "the_bumblezone:pirate_ship",
-    "the_bumblezone:dance_floor",
+    "the_bumblezone:candle_parkour",
     "the_bumblezone:cannon_range",
-    "the_bumblezone:honitel"
+    "the_bumblezone:dance_floor",
+    "the_bumblezone:hanging_garden",
+    "the_bumblezone:honey_fountain",
+    "the_bumblezone:honitel",
+    "the_bumblezone:pirate_ship",
+    "the_bumblezone:stinger_spear_shrine",
+    "the_bumblezone:throne_pillar"
   ]
 }

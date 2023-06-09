@@ -1,7 +1,8 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:throne_pillar",
-    "the_bumblezone:hanging_garden"
+    "the_bumblezone:ancient_hoops",
+    "the_bumblezone:hanging_garden",
+    "the_bumblezone:throne_pillar"
   ]
 }

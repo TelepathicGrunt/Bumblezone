@@ -68,6 +68,32 @@ public class OptimizedJigsawManager {
             int maxDistanceFromCenter,
             BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster
     ) {
+        return assembleJigsawStructure(
+                context,
+                startPoolHolder,
+                size,
+                structureID,
+                startPos,
+                doBoundaryAdjustments,
+                heightmapType,
+                maxDistanceFromCenter,
+                Optional.empty(),
+                structureBoundsAdjuster
+        );
+    }
+
+    public static Optional<Structure.GenerationStub> assembleJigsawStructure(
+            Structure.GenerationContext context,
+            Holder<StructureTemplatePool> startPoolHolder,
+            int size,
+            ResourceLocation structureID,
+            BlockPos startPos,
+            boolean doBoundaryAdjustments,
+            Optional<Heightmap.Types> heightmapType,
+            int maxDistanceFromCenter,
+            Optional<Integer> minYLimit,
+            BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster
+    ) {
         // Get a random orientation for the starting piece
         WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
         random.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
@@ -146,7 +172,7 @@ public class OptimizedJigsawManager {
                 boxOctree.addBox(AABB.of(pieceBoundingBox));
                 Entry startPieceEntry = new Entry(startPiece, new MutableObject<>(boxOctree), finalPieceCenterY + 80, 0);
 
-                Assembler assembler = new Assembler(jigsawPoolRegistry, size, context, components, random);
+                Assembler assembler = new Assembler(jigsawPoolRegistry, size, context, components, random, minYLimit);
                 assembler.availablePieces.addLast(startPieceEntry);
 
                 while (!assembler.availablePieces.isEmpty()) {
@@ -186,13 +212,15 @@ public class OptimizedJigsawManager {
         private final StructureTemplateManager structureTemplateManager;
         private final List<? super PoolElementStructurePiece> structurePieces;
         private final RandomSource random;
+        private final Optional<Integer> minYLimit;
         public final Deque<Entry> availablePieces = Queues.newArrayDeque();
 
         public Assembler(Registry<StructureTemplatePool> poolRegistry,
                          int maxDepth,
                          Structure.GenerationContext context,
                          List<? super PoolElementStructurePiece> structurePieces,
-                         RandomSource random
+                         RandomSource random,
+                         Optional<Integer> minYLimit
         ) {
             this.poolRegistry = poolRegistry;
             this.maxDepth = maxDepth;
@@ -201,6 +229,7 @@ public class OptimizedJigsawManager {
             this.structureTemplateManager = context.structureTemplateManager();
             this.structurePieces = structurePieces;
             this.random = random;
+            this.minYLimit = minYLimit;
         }
 
         public void generatePiece(PoolElementStructurePiece piece, 
@@ -379,6 +408,10 @@ public class OptimizedJigsawManager {
                             if (candidateHeightAdjustments > 0) {
                                 int k2 = Math.max(candidateHeightAdjustments + 1, adjustedCandidateBoundingBox.maxY() - adjustedCandidateBoundingBox.minY());
                                 adjustedCandidateBoundingBox.encapsulate(new BlockPos(adjustedCandidateBoundingBox.minX(), adjustedCandidateBoundingBox.minY() + k2, adjustedCandidateBoundingBox.minZ()));
+                            }
+
+                            if (adjustedCandidateJigsawBlockRelativePos.getY() < minYLimit.orElse(Integer.MIN_VALUE)) {
+                                continue;
                             }
 
                             AABB axisAlignedBB = AABB.of(adjustedCandidateBoundingBox);

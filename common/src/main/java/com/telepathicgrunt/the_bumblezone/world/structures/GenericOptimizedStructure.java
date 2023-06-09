@@ -31,7 +31,8 @@ public class GenericOptimizedStructure extends Structure {
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
-                    Codec.intRange(1, 100).optionalFieldOf("valid_biome_radius_check").forGetter(structure -> structure.biomeRadius)
+                    Codec.intRange(1, 100).optionalFieldOf("valid_biome_radius_check").forGetter(structure -> structure.biomeRadius),
+                    Codec.intRange(1, 100).optionalFieldOf("min_y_limit").forGetter(structure -> structure.minYLimit)
             ).apply(instance, GenericOptimizedStructure::new)).codec();
 
     private final Holder<StructureTemplatePool> startPool;
@@ -41,6 +42,7 @@ public class GenericOptimizedStructure extends Structure {
     private final Optional<Heightmap.Types> projectStartToHeightmap;
     private final int maxDistanceFromCenter;
     public final Optional<Integer> biomeRadius;
+    public final Optional<Integer> minYLimit;
 
     public GenericOptimizedStructure(StructureSettings config,
                                      Holder<StructureTemplatePool> startPool,
@@ -49,7 +51,8 @@ public class GenericOptimizedStructure extends Structure {
                                      HeightProvider startHeight,
                                      Optional<Heightmap.Types> projectStartToHeightmap,
                                      int maxDistanceFromCenter,
-                                     Optional<Integer> biomeRadius)
+                                     Optional<Integer> biomeRadius,
+                                     Optional<Integer> minYLimit)
     {
         super(config);
         this.startPool = startPool;
@@ -59,6 +62,7 @@ public class GenericOptimizedStructure extends Structure {
         this.projectStartToHeightmap = projectStartToHeightmap;
         this.maxDistanceFromCenter = maxDistanceFromCenter;
         this.biomeRadius = biomeRadius;
+        this.minYLimit = minYLimit;
     }
 
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
@@ -100,6 +104,7 @@ public class GenericOptimizedStructure extends Structure {
                 false,
                 this.projectStartToHeightmap,
                 this.maxDistanceFromCenter,
+                minYLimit,
                 (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces));
     }
 

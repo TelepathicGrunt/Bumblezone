@@ -37,6 +37,9 @@ Added Subway structure that is a massive tunnel system with flowing air that bee
  Lots of loots scattered throughout from all the travelers that has gone through this subway. 
  Can you fight against the airflow to explore everything?
 
+Added Ancient Hoops structure which are many old pillars of wax that are decaying. Some pillars still have a hoop
+ on top that mysteriously pulls air flow through. Grab a Bumblebee Chestplate and start flying from pillar to pillar!
+
 ##### Blocks:
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 
  anyone who has not consumed Essence of the Bees before and are standing on said Ancient Wax blocks. You can use shears to 

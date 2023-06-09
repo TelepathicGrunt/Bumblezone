@@ -13,7 +13,7 @@
       "weight": 2
     },
     {
-      "structure": "the_bumblezone:hive_temple",
+      "structure": "the_bumblezone:ancient_hoops",
       "weight": 4
     },
     {
@@ -25,6 +25,18 @@
       "weight": 4
     },
     {
+      "structure": "the_bumblezone:cannon_range",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:dance_floor",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:hive_temple",
+      "weight": 4
+    },
+    {
       "structure": "the_bumblezone:honey_fountain",
       "weight": 4
     },
@@ -33,19 +45,11 @@
       "weight": 4
     },
     {
-      "structure": "the_bumblezone:stinger_spear_shrine",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:dance_floor",
-      "weight": 4
-    },
-    {
-      "structure": "the_bumblezone:cannon_range",
-      "weight": 4
-    },
-    {
       "structure": "the_bumblezone:pirate_ship",
+      "weight": 4
+    },
+    {
+      "structure": "the_bumblezone:stinger_spear_shrine",
       "weight": 4
     },
     {

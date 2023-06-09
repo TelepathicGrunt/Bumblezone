@@ -1,0 +1,14 @@
+{
+  "fallback": "the_bumblezone:ancient_hoops/hoops",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:ancient_hoops/hoops",
+        "processors": "the_bumblezone:ancient_hoops",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
