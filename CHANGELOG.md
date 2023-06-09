@@ -17,7 +17,7 @@
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
-#TODO: Bee Subway and Ancient Shrine structure
+#TODO: Ancient Shrine structure
 
 #TODO: Re-evaluate advancements. Add more for new additions as well. 
 
@@ -31,6 +31,11 @@ Updated to 1.20!
 
 
 #### *\*Additions*
+
+##### Structures:
+Added Subway structure that is a massive tunnel system with flowing air that bees uses to travel around quickly! 
+ Lots of loots scattered throughout from all the travelers that has gone through this subway. 
+ Can you fight against the airflow to explore everything?
 
 ##### Blocks:
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 

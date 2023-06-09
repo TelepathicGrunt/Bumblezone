@@ -5,7 +5,7 @@
     {
       "rolls": {
         "min": 2.0,
-        "max": 4.0,
+        "max": 3.0,
         "type": "minecraft:uniform"
       },
       "entries": [
@@ -239,7 +239,12 @@
               }
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
         {
           "name": "minecraft:brush",
           "type": "minecraft:item",

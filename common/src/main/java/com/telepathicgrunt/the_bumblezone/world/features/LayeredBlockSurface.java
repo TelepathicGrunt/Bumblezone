@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
+import com.mojang.datafixers.optics.profunctors.Cocartesian;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayerConfig;
@@ -88,6 +89,12 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                         }
 
                         for (int height = 1; height <= configHeight; height++) {
+                            BlockPos finalPosition = mutable.above(height);
+                            BlockState finalBlockState = chunk.getBlockState(finalPosition);
+                            if (!finalBlockState.isAir()) {
+                                break;
+                            }
+
                             int layerHeight = 8;
                             if (height == configHeight) {
                                 float xzScale = 0.035f;
@@ -107,13 +114,13 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
 
                             // Vary the pollen piles
                             if (blockToPlace.hasProperty(BlockStateProperties.LAYERS)) {
-                                chunk.setBlockState(mutable.above(height), blockToPlace.setValue(BlockStateProperties.LAYERS, layerHeight), false);
-                                context.level().scheduleTick(mutable.above(height), blockToPlace.getBlock(), 0);
+                                chunk.setBlockState(finalPosition, blockToPlace.setValue(BlockStateProperties.LAYERS, layerHeight), false);
+                                context.level().scheduleTick(finalPosition, blockToPlace.getBlock(), 0);
                             }
                             else {
-                                chunk.setBlockState(mutable.above(height), blockToPlace, false);
+                                chunk.setBlockState(finalPosition, blockToPlace, false);
                                 if (blockToPlace.hasBlockEntity()) {
-                                    BlockEntity blockEntity = ((EntityBlock)blockToPlace.getBlock()).newBlockEntity(mutable.above(height), blockToPlace);
+                                    BlockEntity blockEntity = ((EntityBlock)blockToPlace.getBlock()).newBlockEntity(finalPosition, blockToPlace);
                                     if (blockEntity != null) {
                                         if (blockEntity instanceof BrushableBlockEntity brushableBlock && context.config().suspiciousBlockLoot.isPresent()) {
                                             brushableBlock.setLootTable(context.config().suspiciousBlockLoot.get(), random.nextLong());

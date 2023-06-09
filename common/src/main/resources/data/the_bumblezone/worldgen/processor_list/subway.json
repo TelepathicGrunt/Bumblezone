@@ -2,6 +2,34 @@
   "processors": [
     {
       "processor_type": "the_bumblezone:waterlogging_fix_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:white_concrete"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:orange_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:white_concrete"
+          }
+        }
+      ]
     }
   ]
 }

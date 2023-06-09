@@ -1,7 +1,8 @@
 {
   "replace": false,
   "values": [
-	  "the_bumblezone:cell_maze",
-	  "the_bumblezone:hive_temple"
+    "the_bumblezone:cell_maze",
+    "the_bumblezone:hive_temple",
+    "the_bumblezone:subway"
   ]
 }

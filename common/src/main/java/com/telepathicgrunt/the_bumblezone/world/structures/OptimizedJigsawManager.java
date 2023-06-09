@@ -305,8 +305,6 @@ public class OptimizedJigsawManager {
                 }
 
                 StructurePoolElement candidatePiece = chosenPiecePair.getFirst();
-
-                // Vanilla check. Not sure on the implications of this.
                 if (candidatePiece == EmptyPoolElement.INSTANCE) {
                     return null;
                 }

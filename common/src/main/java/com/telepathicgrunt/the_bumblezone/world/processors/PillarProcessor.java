@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -69,6 +70,7 @@ public class PillarProcessor extends StructureProcessor {
             BlockPos worldPos = structureBlockInfoWorld.pos();
             RandomSource random = RandomSource.create();
             random.setSeed(worldPos.asLong());
+            boolean isNotInWorldgen = levelReader instanceof ServerLevel;
 
             BlockState replacementState = pillarTriggerAndReplacementBlocks.get(blockState);
             BlockPos.MutableBlockPos currentPos = new BlockPos.MutableBlockPos().set(worldPos);
@@ -112,7 +114,12 @@ public class PillarProcessor extends StructureProcessor {
                 }
 
                 if(newPillarState2 != null) {
-                    levelReader.getChunk(currentPos).setBlockState(currentPos, newPillarState2.state(), false);
+                    if (isNotInWorldgen) {
+                        ((ServerLevel)levelReader).setBlock(currentPos, newPillarState2.state(), 3);
+                    }
+                    else {
+                        levelReader.getChunk(currentPos).setBlockState(currentPos, newPillarState2.state(), false);
+                    }
                 }
 
                 currentPos.move(direction);
