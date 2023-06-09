@@ -12,6 +12,10 @@
     {
       "id": "pokecube:combee",
       "required": false
+    },
+    {
+      "id": "plenty_of_golems:honey_golem",
+      "required": false
     }
   ]
 }

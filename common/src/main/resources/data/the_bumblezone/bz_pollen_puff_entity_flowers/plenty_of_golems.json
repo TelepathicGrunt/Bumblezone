@@ -1,0 +1,50 @@
+{
+  "plenty_of_golems:hay_golem": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:wheat" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:air" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "plenty_of_golems:melon_golem": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:melon_stem" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "plenty_of_golems:bamboo_golem": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:bamboo_sapling" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "plenty_of_golems:dark_oak_golem": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:dark_oak_sapling" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}
