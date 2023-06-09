@@ -1,0 +1,95 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_1",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_2",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_3",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_4",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_5",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_6",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_7",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_8",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_9",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/decor_small_10",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

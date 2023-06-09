@@ -1,0 +1,14 @@
+{
+  "fallback": "the_bumblezone:subway/end",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/straight",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

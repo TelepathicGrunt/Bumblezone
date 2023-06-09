@@ -1,0 +1,62 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:waterlogging_fix_processor"
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
+            "loot_table": "the_bumblezone:archaeology/subway_suspicious"
+          },
+          "input_predicate": {
+            "probability": 0.5,
+            "block_state": {
+              "Name": "the_bumblezone:pile_of_pollen",
+              "Properties": {
+                "layers": "8"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "the_bumblezone:pile_of_pollen_suspicious",
+            "Properties": {
+              "dusted": "0"
+            }
+          }
+        },
+        {
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
+            "loot_table": "the_bumblezone:archaeology/subway_suspicious"
+          },
+          "input_predicate": {
+            "probability": 0.25,
+            "block_state": {
+              "Name": "the_bumblezone:pile_of_pollen",
+              "Properties": {
+                "layers": "7"
+              }
+            },
+            "predicate_type": "minecraft:random_blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "the_bumblezone:pile_of_pollen_suspicious",
+            "Properties": {
+              "dusted": "0"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

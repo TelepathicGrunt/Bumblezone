@@ -102,7 +102,7 @@
         {
           "type": "minecraft:loot_table",
           "name": "the_bumblezone:structures/flowers",
-          "weight": 1,
+          "weight": 3,
           "functions": [
             {
               "function": "the_bumblezone:tag_item_removals",

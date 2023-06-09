@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:archaeology",
+  "random_sequence": "the_bumblezone:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "minecraft:miner_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:explorer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:howl_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:mourner_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:echo_shard",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:minecart",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:lantern",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:rail",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:powered_rail",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:activator_rail",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:detector_rail",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:flower_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:raiser_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

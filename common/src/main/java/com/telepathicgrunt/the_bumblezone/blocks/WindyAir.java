@@ -23,12 +23,14 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
 
 public class WindyAir extends ProperFacingBlock {
-    private static final ConcurrentMap<UUID, Integer> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
+    private static final ConcurrentMap<UUID, Map<Direction, Integer>> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
 
     public WindyAir() {
         super(Properties.of()
@@ -85,11 +87,19 @@ public class WindyAir extends ProperFacingBlock {
             }
         }
 
-        if (APPLIED_PUSH_FOR_ENTITY.getOrDefault(entity.getUUID(), -1) == entity.tickCount) {
-            return;
+        if (APPLIED_PUSH_FOR_ENTITY.size() >= 200) {
+            APPLIED_PUSH_FOR_ENTITY.clear();
+        }
+
+        if (!APPLIED_PUSH_FOR_ENTITY.containsKey(entity.getUUID())) {
+            APPLIED_PUSH_FOR_ENTITY.put(entity.getUUID(), new HashMap<>());
         }
 
         Direction windDirection = blockState.getValue(FACING);
+        if (APPLIED_PUSH_FOR_ENTITY.get(entity.getUUID()).getOrDefault(windDirection, -1) == entity.tickCount) {
+            return;
+        }
+
         double strength = windDirection == Direction.UP ? 0.085D : 0.0275D;
         double size = entity.getBoundingBox().getSize();
         if (size <= 1) {
@@ -100,12 +110,13 @@ public class WindyAir extends ProperFacingBlock {
         }
 
         Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getNormal()).scale(strength);
-        Vec3 newVelocity = entity.getDeltaMovement().add(pushPower);
+        Vec3 newVelocity = entity.getDeltaMovement();
+        newVelocity = newVelocity.add(pushPower);
         if (!entity.onGround() && newVelocity.y() < 0 && windDirection != Direction.DOWN) {
             newVelocity = newVelocity.add(0, -newVelocity.y() + 0.04F, 0);
         }
         entity.setDeltaMovement(newVelocity);
-        APPLIED_PUSH_FOR_ENTITY.put(entity.getUUID(), entity.tickCount);
+        APPLIED_PUSH_FOR_ENTITY.get(entity.getUUID()).put(windDirection, entity.tickCount);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {

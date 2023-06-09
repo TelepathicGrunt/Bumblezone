@@ -107,6 +107,17 @@
           "weight": 50
         },
         {
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 40,
+          "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            }
+          ]
+        },
+        {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
           "weight": 40,
@@ -353,17 +364,6 @@
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
-            }
-          ]
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "the_bumblezone:tag_item_removals",
-              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
             }
           ]
         }

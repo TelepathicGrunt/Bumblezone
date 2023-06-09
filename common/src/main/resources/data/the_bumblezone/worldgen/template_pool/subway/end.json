@@ -1,0 +1,104 @@
+{
+  "fallback": "the_bumblezone:subway/end",
+  "elements": [
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_beehemoth",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_candles",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_cocoons",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_crystalline_flowers",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_curtains",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_pollen",
+        "processors": "the_bumblezone:subway_suspicious",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_shield",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_slimes",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_sugar_cane",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_workstations",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:subway/end_cap",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -1,0 +1,487 @@
+{
+  "type": "minecraft:chest",
+  "random_sequence": "the_bumblezone:structures",
+  "pools": [
+    {
+      "rolls": {
+        "min": 2.0,
+        "max": 4.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "name": "the_bumblezone:bee_bread",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:bread",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:cookie",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:honeycomb",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "the_bumblezone:structures/flowers",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "the_bumblezone:tag_item_removals",
+              "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:bee_soup",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "the_bumblezone:sugar_water_bottle",
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:beetroot_soup",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:pumpkin_pie",
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:baked_potato",
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:string",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:arrow",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:glass_bottle",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:gold_nugget",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:iron_nugget",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:paper",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:brush",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:chest",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:oak_chest_boat",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:lead",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:spyglass",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:saddle",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:compass",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:clock",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:rabbit_foot",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:shears",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:name_tag",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:writable_book",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:disc_fragment_5",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:painting",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:bowl",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:potato",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:poisonous_potato",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_boots",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"display\": {\"color\":16701501}}"
+            }
+          ]
+        },
+        {
+          "name": "minecraft:music_disc_13",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:music_disc_blocks",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:map",
+          "weight": 3
+        },
+        {
+          "weight": 1,
+          "quality": 1,
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/lesser_misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "quality": 2,
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 69,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 5.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
