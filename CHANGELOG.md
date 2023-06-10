@@ -186,6 +186,8 @@ All color Essence items added plus Essence of the Bees is now fire-resistant and
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 
+Sugar Water Fluid and vanilla Water both now are tinted more light blue when in Bumblezone rather than the yellowish color before.
+
 ##### Enchantments:
 Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
 
