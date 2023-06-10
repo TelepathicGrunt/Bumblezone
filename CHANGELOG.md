@@ -17,8 +17,6 @@
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
-#TODO: Ancient Shrine structure
-
 #TODO: Re-evaluate advancements. Add more for new additions as well. 
 
 #TODO: Enqueue item property registering in forge 
@@ -39,6 +37,9 @@ Added Subway structure that is a massive tunnel system with flowing air that bee
 
 Added Ancient Hoops structure which are many old pillars of wax that are decaying. Some pillars still have a hoop
  on top that mysteriously pulls air flow through. Grab a Bumblebee Chestplate and start flying from pillar to pillar!
+
+Added Ancient Shrine structure that resembles a giant flower filled with pollen! Though the pollen looks suspicious...
+ Maybe try some archaeology in this structure?
 
 ##### Blocks:
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 

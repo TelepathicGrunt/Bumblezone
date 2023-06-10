@@ -16,7 +16,7 @@
     "hidden": true
   },
   "rewards": {
-    "experience": 1000
+    "experience": 2500
   },
   "criteria": {
     "in_cell_maze": {
@@ -29,6 +29,38 @@
             "predicate": {
               "location": {
                 "structure": "the_bumblezone:cell_maze"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_ancient_hoops": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:ancient_hoops"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_ancient_shrine": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:ancient_shrine"
               }
             }
           }
@@ -275,6 +307,22 @@
         ]
       }
     },
+    "in_subway": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:subway"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_throne_pillar": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -295,6 +343,12 @@
   "requirements": [
     [
       "in_cell_maze"
+    ],
+    [
+      "in_ancient_hoops"
+    ],
+    [
+      "in_ancient_shrine"
     ],
     [
       "in_battle_cubes"
@@ -340,6 +394,9 @@
     ],
     [
       "in_stinger_spear_shrine"
+    ],
+    [
+      "in_subway"
     ],
     [
       "in_throne_pillar"

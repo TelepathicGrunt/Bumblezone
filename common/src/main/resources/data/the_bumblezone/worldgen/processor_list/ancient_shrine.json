@@ -1,0 +1,51 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:ancient_wax_bricks"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:capped",
+      "limit": 30,
+      "delegate": {
+        "processor_type": "minecraft:rule",
+        "rules": [
+          {
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "the_bumblezone:archaeology/ancient_shrine_suspicious"
+            },
+            "input_predicate": {
+              "block_state": {
+                "Name": "the_bumblezone:pile_of_pollen",
+                "Properties": {
+                  "layers": "8"
+                }
+              },
+              "predicate_type": "minecraft:blockstate_match"
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "output_state": {
+              "Name": "the_bumblezone:pile_of_pollen_suspicious",
+              "Properties": {
+                "dusted": "0"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

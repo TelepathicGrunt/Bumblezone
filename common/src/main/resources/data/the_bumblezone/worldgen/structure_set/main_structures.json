@@ -13,6 +13,10 @@
       "weight": 2
     },
     {
+      "structure": "the_bumblezone:ancient_shrine",
+      "weight": 3
+    },
+    {
       "structure": "the_bumblezone:ancient_hoops",
       "weight": 4
     },

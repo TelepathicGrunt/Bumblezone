@@ -1,0 +1,451 @@
+{
+  "type": "minecraft:archaeology",
+  "random_sequence": "the_bumblezone:archaeology",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "minecraft:emerald",
+          "type": "minecraft:item",
+          "weight": 5
+        },
+        {
+          "name": "minecraft:amethyst_shard",
+          "type": "minecraft:item",
+          "weight": 5
+        },
+        {
+          "name": "minecraft:raw_gold",
+          "type": "minecraft:item",
+          "weight": 5
+        },
+        {
+          "name": "minecraft:raw_iron",
+          "type": "minecraft:item",
+          "weight": 5
+        },
+        {
+          "name": "minecraft:raw_copper",
+          "type": "minecraft:item",
+          "weight": 5
+        },
+        {
+          "name": "minecraft:diamond",
+          "type": "minecraft:item",
+          "weight": 4
+        },
+        {
+          "name": "minecraft:glow_berries",
+          "type": "minecraft:item",
+          "weight": 4
+        },
+        {
+          "name": "minecraft:spectral_arrow",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:torchflower_seeds",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:pitcher_pod",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:ender_pearl",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:bone",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "the_bumblezone:bee_stinger",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:string",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:skeleton_skull",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:painting",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:chain",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:flower_pot",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:writable_book",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:book",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:book",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "name": "minecraft:disc_fragment_5",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:brush",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:shears",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:name_tag",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "minecraft:potion",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion:\"minecraft:strong_strength\"}"
+            }
+          ]
+        },
+        {
+          "name": "minecraft:potion",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion:\"minecraft:long_poison\"}"
+            }
+          ]
+        },
+        {
+          "name": "minecraft:potion",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion:\"minecraft:regeneration\"}"
+            }
+          ]
+        },
+        {
+          "name": "minecraft:potion",
+          "type": "minecraft:item",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{Potion:\"minecraft:awkward\"}"
+            }
+          ]
+        },
+        {
+          "name": "minecraft:brown_candle",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:super_candle_brown",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:orange_candle",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:super_candle_orange",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:yellow_candle",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:super_candle_yellow",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:purple_candle",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:super_candle_purple",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:experience_bottle",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:sniffer_egg",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:angler_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:archer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:arms_up_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:blade_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:brewer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:burn_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:danger_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:explorer_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:friend_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:heart_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:heartbreak_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:howl_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:miner_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:mourner_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:plenty_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:prize_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:sheaf_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:shelter_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:skull_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:snort_pottery_sherd",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:flower_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:creeper_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:skull_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:mojang_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:globe_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:piglin_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:netherite_upgrade_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:coast_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:dune_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:dune_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:host_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:raiser_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:rib_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:sentry_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:shaper_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:silence_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:snout_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:spire_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:tide_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:vex_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:ward_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:wayfinder_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "minecraft:wild_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
