@@ -1,33 +1,15 @@
-### **(V.6.7.22 Changes) (1.19.2 Minecraft)**
-
-##### Enchantments:
-Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
+### **(V.6.7.23 Changes) (1.19.2 Minecraft)**
 
 ##### Entities:
-Fixed Bee Queen able to be leashed when it shouldn't.
+Fixed possible crash with Bee Queen trading.
 
-Fixed Leash rendering for Beehemoth.
-
-Fixed dimensions for baby Honey Slimes.
-
-Tamed Beehemoths will show friendship amount above when owner is looking at it.
-
-##### Blocks:
-Walking through Pile of Pollen should not trigger Sculk Sensor now. Pile of Pollen will also block Sculk Sensor's detection if between it and the sound source.
-
-Fluids should not show drip animations under Glistering Honey Crystal now.
-
-Snow should now be placeable on Royal Jelly Block.
-
-Axes are now the efficient tools for breaking Beehive Beeswax blocks.
-
-Crystalline Flower can be broken by pistons now and drop itself.
-
-Glistering Honey Crystal should not suffocate mobs inside itself, and it blocks Redstone power like how Glowstone blocks power.
+##### Fluids:
+Sugar Water Fluid and vanilla Water both now are tinted more light blue when in Bumblezone rather than the yellowish color before.
 
 ##### Items:
-Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
+Essence of the Bees takes less time to consume now.
 
-##### Mod Compat:
-Added tag translations for Bumblezone item tags so that EMI mod can display them.
+##### Structures:
+Honey Compasses to Mystery Structures now will try to point to different structures even if you got multiple compasses from the same structure's loot.
 
+Lesser Mystery Honey Compasses are added to several structure's loot where these compasses point to smaller Bumblezone structures.
