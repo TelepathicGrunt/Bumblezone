@@ -4,11 +4,13 @@ import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
@@ -32,6 +34,7 @@ import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -45,6 +48,7 @@ import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
+import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -66,6 +70,7 @@ public class BumblezoneForgeClient {
         forgeBus.addListener(BumblezoneForgeClient::onKeyInput);
         forgeBus.addListener(BumblezoneForgeClient::onClientTick);
         forgeBus.addListener(BumblezoneForgeClient::onScreenRendering);
+        forgeBus.addListener(BumblezoneForgeClient::onBeforeBlockOutlineRendering);
 
         modBus.addListener(BumblezoneForgeClient::onClientSetup);
         modBus.addListener(BumblezoneForgeClient::onRegisterModelLoaders);
@@ -82,12 +87,13 @@ public class BumblezoneForgeClient {
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {
-        ClientSetupEvent.EVENT.invoke(new ClientSetupEvent(Runnable::run));
         event.enqueueWork(() -> {
+            ClientSetupEnqueuedEvent.EVENT.invoke(new ClientSetupEnqueuedEvent(Runnable::run));
             RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
             RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
             RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(BumblezoneForgeClient::registerScreen));
             RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
+            RegisterBlockEntityRendererEvent.EVENT.invoke(new RegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         });
     }
 
@@ -162,10 +168,14 @@ public class BumblezoneForgeClient {
     public static void onScreenRendering(ScreenEvent.Render.Pre event) {
         if (event.getScreen() instanceof ReceivingLevelScreen receivingLevelScreen &&
             Minecraft.getInstance().player != null &&
-            Minecraft.getInstance().player.level.dimension() == BzDimension.BZ_WORLD_KEY)
+            Minecraft.getInstance().player.level().dimension() == BzDimension.BZ_WORLD_KEY)
         {
-            DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getPoseStack());
+            DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getGuiGraphics());
             event.setCanceled(true);
         }
+    }
+
+    public static void onBeforeBlockOutlineRendering(RenderHighlightEvent event) {
+        KnowingEssenceLootBlockOutlining.outlineLootBlocks(event.getPoseStack(), event.getCamera(), event.getLevelRenderer());
     }
  }

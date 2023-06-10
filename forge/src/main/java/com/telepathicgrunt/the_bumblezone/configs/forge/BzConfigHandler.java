@@ -7,7 +7,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fml.loading.FileUtils;
+
+import java.nio.file.Files;
 
 public class BzConfigHandler {
 
@@ -16,13 +17,18 @@ public class BzConfigHandler {
         bus.addListener(BzConfigHandler::onConfigLoad);
         bus.addListener(BzConfigHandler::onConfigReload);
 
-        FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve("the_bumblezone"), "the_bumblezone");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, BzClientConfig.GENERAL_SPEC, "the_bumblezone/client.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzGeneralConfig.GENERAL_SPEC, "the_bumblezone/general.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzWorldgenConfig.GENERAL_SPEC, "the_bumblezone/worldgen.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzDimensionConfig.GENERAL_SPEC, "the_bumblezone/dimension.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzBeeAggressionConfig.GENERAL_SPEC, "the_bumblezone/bee_aggression.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzModCompatibilityConfig.GENERAL_SPEC, "the_bumblezone/mod_compatibility.toml");
+        try {
+            Files.createDirectories(FMLPaths.CONFIGDIR.get().resolve("the_bumblezone"));
+            ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, BzClientConfig.GENERAL_SPEC, "the_bumblezone/client.toml");
+            ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzGeneralConfig.GENERAL_SPEC, "the_bumblezone/general.toml");
+            ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzWorldgenConfig.GENERAL_SPEC, "the_bumblezone/worldgen.toml");
+            ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzDimensionConfig.GENERAL_SPEC, "the_bumblezone/dimension.toml");
+            ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzBeeAggressionConfig.GENERAL_SPEC, "the_bumblezone/bee_aggression.toml");
+            ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BzModCompatibilityConfig.GENERAL_SPEC, "the_bumblezone/mod_compatibility.toml");
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Failed to create Bumblezone config files: ", e);
+        }
     }
 
     private static void onConfigLoad(ModConfigEvent.Loading event) {

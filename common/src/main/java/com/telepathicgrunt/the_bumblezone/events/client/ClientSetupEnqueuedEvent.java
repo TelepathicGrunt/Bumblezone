@@ -4,9 +4,9 @@ import com.telepathicgrunt.the_bumblezone.events.base.EventHandler;
 
 import java.util.function.Consumer;
 
-public record ClientSetupEvent(Consumer<Runnable> enqueue) {
+public record ClientSetupEnqueuedEvent(Consumer<Runnable> enqueue) {
 
-    public static final EventHandler<ClientSetupEvent> EVENT = new EventHandler<>();
+    public static final EventHandler<ClientSetupEnqueuedEvent> EVENT = new EventHandler<>();
 
     /**
      * Forge runs in parallel with other mods so we need to enqueue some things.

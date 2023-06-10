@@ -21,7 +21,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenMode
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.RoyalJellyClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.SugarWaterClientProperties;
@@ -32,11 +31,12 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen.PileOfPo
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterArmorProviderEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
@@ -65,7 +65,6 @@ import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -94,7 +93,7 @@ public class BumblezoneClient {
             }
         });
 
-        ClientSetupEvent.EVENT.addListener(BumblezoneClient::clientSetup);
+        ClientSetupEnqueuedEvent.EVENT.addListener(BumblezoneClient::clientSetup);
         BlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         KeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
         RegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
@@ -103,23 +102,17 @@ public class BumblezoneClient {
         RegisterRenderTypeEvent.EVENT.addListener(BumblezoneClient::registerRenderTypes);
         RegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
         RegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
+        RegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
     }
 
-    public static void clientSetup(ClientSetupEvent event) {
+    public static void clientSetup(ClientSetupEnqueuedEvent event) {
         Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.getMARKER_PARTICLE_ITEMS());
         particleMarkerBlocks.add(BzItems.HEAVY_AIR.get());
         particleMarkerBlocks.add(BzItems.WINDY_AIR.get());
         ClientLevelAccessor.setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
-
-        registerBlockEntityRenderers();
-
-        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((worldRenderContext, result) -> {
-            KnowingEssenceLootBlockOutlining.outlineLootBlocks(worldRenderContext.matrixStack(), worldRenderContext.camera(), worldRenderContext.worldRenderer());
-            return true;
-        });
     }
 
-    public static void registerBlockEntityRenderers() {
+    public static void registerBlockEntityRenderers(RegisterBlockEntityRendererEvent<?> event) {
         BlockEntityRenderers.register(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
         BlockEntityRenderers.register(BzBlockEntities.INFINITY_BARRIER.get(), InfinityBarrierBlockEntityRenderer::new);
         BlockEntityRenderers.register(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);

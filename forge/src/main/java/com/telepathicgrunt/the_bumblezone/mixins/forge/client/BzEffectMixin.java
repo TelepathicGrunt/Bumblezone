@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.MobEffectRenderer;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffect;
 import com.telepathicgrunt.the_bumblezone.utils.LazySupplier;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,8 +27,8 @@ public class BzEffectMixin extends MobEffect {
         consumer.accept(new IClientMobEffectExtensions() {
 
             @Override
-            public boolean renderGuiIcon(MobEffectInstance instance, Gui gui, PoseStack poseStack, int x, int y, float z, float alpha) {
-                return renderer.getOptional().map(r -> r.renderGuiIcon(instance, gui, poseStack, x, y, z, alpha)).orElse(false);
+            public boolean renderGuiIcon(MobEffectInstance instance, Gui gui, GuiGraphics guiGraphics, int x, int y, float z, float alpha) {
+                return renderer.getOptional().map(r -> r.renderGuiIcon(instance, gui, guiGraphics, x, y, z, alpha)).orElse(false);
             }
         });
     }

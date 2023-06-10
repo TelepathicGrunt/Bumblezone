@@ -98,6 +98,7 @@ public class ThreadExecutor {
         );
         return new LocateTask<>(level.getServer(), completableFuture, future);
     }
+
     public static LocateTask<BlockPos> locate(
             ServerLevel level,
             ResourceKey<Structure> structureKey,

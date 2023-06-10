@@ -58,7 +58,8 @@ public class PokecubeCompat implements ModCompat {
     public boolean onBeeSpawn(EntitySpawnEvent event, boolean isBaby) {
         if (event.entity().getRandom().nextFloat() >= BzModCompatibilityConfigs.spawnrateOfPokecubeBeePokemon) return false;
         if (!isBaby) return false;
-        List<PokedexEntry> pokemonListToUse = isBaby ? BABY_POKECUBE_POKEMON_LIST : POKECUBE_POKEMON_LIST;
+
+        List<PokedexEntry> pokemonListToUse = BABY_POKECUBE_POKEMON_LIST;
         if (pokemonListToUse.size() == 0) {
             Bumblezone.LOGGER.warn(
                     "Error! List of POKECUBE_POKEMON_LIST is empty! Cannot spawn their bees. " +
@@ -76,22 +77,13 @@ public class PokecubeCompat implements ModCompat {
         PokedexEntry pokemonDatabase = pokemonListToUse.get(world.getRandom().nextInt(pokemonListToUse.size()));
         PokedexEntry.SpawnData spawn = pokemonDatabase.getSpawnData();
         if(spawn == null) return false;
-        Mob pokemon = PokecubeCore.createPokemob(pokemonDatabase, entity.level);
+        Mob pokemon = PokecubeCore.createPokemob(pokemonDatabase, entity.level());
         if (pokemon == null) return false;
 
         pokemon.setHealth(pokemon.getMaxHealth());
         pokemon.setBaby(isBaby);
 
         BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(entity.blockPosition());
-        ChunkAccess chunkAccess = world.getChunk(blockpos);
-        if (!isBaby) {
-            BlockState currentState = chunkAccess.getBlockState(blockpos);
-            while (!currentState.canOcclude() && currentState.getFluidState().isEmpty() && blockpos.getY() > world.getMinBuildHeight()) {
-                blockpos.move(Direction.DOWN);
-                currentState = chunkAccess.getBlockState(blockpos);
-            }
-            blockpos.move(Direction.UP);
-        }
 
         pokemon.moveTo(
                 blockpos.getX() + 0.5f,
@@ -101,18 +93,7 @@ public class PokecubeCompat implements ModCompat {
                 0.0F);
 
         IPokemob pokemob = PokemobCaps.getPokemobFor(pokemon);
-        if(!isBaby) {
-            try {
-                SpawnBiomeMatcher spawnMatcher = spawn.getMatcher(((ServerLevel) world), Vector3.entity(pokemon), null);
-                pokemob.spawnInit(spawnMatcher.spawnRule);
-            }
-            catch (Exception e) {
-                e.addSuppressed(new RuntimeException("Mob: " + pokemob.getDisplayName() + ", Position: " + blockpos + ", Dimension: " + ((ServerLevel) world).dimension().location()));
-                Bumblezone.LOGGER.error("", e);
-            }
-        } else {
-            pokemob.setExp(0, false);
-        }
+        pokemob.setExp(0, false);
 
         pokemon.finalizeSpawn(
                 (ServerLevelAccessor) world,

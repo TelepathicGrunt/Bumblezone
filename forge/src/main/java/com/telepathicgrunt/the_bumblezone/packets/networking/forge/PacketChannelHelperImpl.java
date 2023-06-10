@@ -34,7 +34,7 @@ public class PacketChannelHelperImpl {
             NetworkEvent.Context context = ctx.get();
             Player player = context.getSender() == null ? getPlayer() : null;
             if (player != null) {
-                context.enqueueWork(() -> handler.handle(msg).apply(player, player.level));
+                context.enqueueWork(() -> handler.handle(msg).apply(player, player.level()));
             }
             context.setPacketHandled(true);
         });
@@ -49,7 +49,7 @@ public class PacketChannelHelperImpl {
             NetworkEvent.Context context = ctx.get();
             Player player = context.getSender();
             if (player != null) {
-                context.enqueueWork(() -> handler.handle(msg).apply(player, player.level));
+                context.enqueueWork(() -> handler.handle(msg).apply(player, player.level()));
             }
             context.setPacketHandled(true);
         });

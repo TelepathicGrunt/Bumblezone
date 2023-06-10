@@ -2,8 +2,11 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.FoxAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.packets.SyncHorseOwnerUUIDPacketFromServer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -13,9 +16,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -138,12 +143,22 @@ public class KnowingEssence extends AbilityEssenceItem {
                 return PURPLE;
             }
         }
-        else if (entity instanceof Monster) {
+        else if (entity instanceof Enemy && !(entity instanceof HoneySlimeEntity)) {
             if (BzClientConfigs.knowingEssenceHighlightMonsters) {
                 return RED;
             }
         }
-        else if (entity instanceof TamableAnimal tamableAnimal && tamableAnimal.isOwnedBy(player)) {
+        else if (entity instanceof OwnableEntity ownableEntity &&
+                ownableEntity.getOwnerUUID() != null &&
+                ownableEntity.getOwnerUUID().equals(player.getUUID()))
+        {
+            if (BzClientConfigs.knowingEssenceHighlightTamed) {
+                return GREEN;
+            }
+        }
+        else if (entity instanceof Fox fox &&
+                ((FoxAccessor)fox).callTrusts(player.getUUID()))
+        {
             if (BzClientConfigs.knowingEssenceHighlightTamed) {
                 return GREEN;
             }

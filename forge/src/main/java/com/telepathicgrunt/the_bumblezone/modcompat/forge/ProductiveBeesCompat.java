@@ -139,7 +139,7 @@ public class ProductiveBeesCompat implements ModCompat {
         LevelAccessor world = event.level();
 
         // randomly pick a productive bee (the nbt determines the bee)
-        ConfigurableBee productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level);
+        ConfigurableBee productiveBeeEntity = ModEntities.CONFIGURABLE_BEE.get().create(entity.level());
         if (productiveBeeEntity == null) {
             return false;
         }
