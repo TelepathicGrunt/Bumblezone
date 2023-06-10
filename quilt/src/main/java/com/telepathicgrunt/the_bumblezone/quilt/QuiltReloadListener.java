@@ -7,11 +7,9 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.qsl.resource.loader.api.reloader.IdentifiableResourceReloader;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-@ParametersAreNonnullByDefault
 public class QuiltReloadListener implements IdentifiableResourceReloader {
 
     private final ResourceLocation id;

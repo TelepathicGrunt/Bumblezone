@@ -3,7 +3,7 @@ dependencies {
     // Do NOT use other classes from fabric loader
     modImplementation("net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}")
 
-    modCompileOnly("mezz.jei:jei-${project.jei_mc}-forge-api:${project.jei}")
+    modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-forge-api:${rootProject.jei}")
     modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")

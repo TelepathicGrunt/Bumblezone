@@ -49,6 +49,7 @@ dependencies {
     modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
     //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
+    //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
     //modLocalRuntime("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
     //modLocalRuntime("dev.architectury:architectury-forge:${project.architectury}")
@@ -56,8 +57,8 @@ dependencies {
     //modLocalRuntime("top.theillusivec4.curios:curios-forge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
-    //modLocalRuntime("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
-    //modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
+    modLocalRuntime("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
+    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
