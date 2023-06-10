@@ -189,7 +189,7 @@
       ]
     },
     {
-      "rolls": 1,
+      "rolls": 2,
       "entries": [
         {
           "weight": 1,
@@ -211,6 +211,31 @@
             {
               "function": "the_bumblezone:honey_compass_locate_structure",
               "destination": "the_bumblezone:honey_compass/misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/lesser_misc_locating",
               "skip_existing_chunks": false,
               "search_radius": 50
             }

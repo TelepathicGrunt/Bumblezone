@@ -67,10 +67,10 @@ public class WeightedTradeResult implements WeightedEntry {
 
     public List<Item> getItems() {
         List<Item> itemsToReturn = new ArrayList<>();
-        if (tagKey.isPresent()) {
+        if (tagKey != null && tagKey.isPresent()) {
             itemsToReturn = tagKey.map(Registry.ITEM::getOrCreateTag).get().stream().map(Holder::value).toList();
         }
-        else if (items.isPresent()){
+        else if (items != null && items.isPresent()){
             itemsToReturn = items.get();
         }
 
