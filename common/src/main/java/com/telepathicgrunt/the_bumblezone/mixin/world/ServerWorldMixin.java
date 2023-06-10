@@ -32,7 +32,6 @@ public abstract class ServerWorldMixin extends Level {
 	@Unique
 	private static int bumblezone$counter = 0;
 
-	//TODO: use events
 	@Inject(
 			method = "tick(Ljava/util/function/BooleanSupplier;)V",
 			at = @At(value = "HEAD")

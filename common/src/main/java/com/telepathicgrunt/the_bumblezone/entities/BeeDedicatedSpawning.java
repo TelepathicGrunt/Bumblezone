@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
@@ -59,7 +60,9 @@ public final class BeeDedicatedSpawning {
                         continue;
                     }
 
-                    Bee newBee = EntityType.BEE.create(world);
+                    Bee newBee = (BzGeneralConfigs.variantBeeTypes.size() > 0 && world.getRandom().nextFloat() < 0.05f) ?
+                            BzEntities.VARIANT_BEE.get().create(world) : EntityType.BEE.create(world);
+
                     newBee.setPos(Vec3.atCenterOf(newBeePos));
                     newBee.setDeltaMovement(new Vec3(0, 1D, 0));
                     newBee.setSpeed(0);

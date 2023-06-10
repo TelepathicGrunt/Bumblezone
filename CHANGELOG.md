@@ -17,9 +17,7 @@
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
-#TODO: Re-evaluate advancements. Add more for new additions as well. 
-
-#TODO: Enqueue item property registering in forge 
+#TODO: Re-evaluate advancements. Add more for new additions as well.
 
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
