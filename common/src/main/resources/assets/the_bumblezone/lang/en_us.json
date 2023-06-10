@@ -294,6 +294,8 @@
   "biome.the_bumblezone.pollinated_pillar": "Pollinated Pillar",
   "biome.the_bumblezone.crystal_canyon": "Crystal Canyon",
 
+  "structure.the_bumblezone.ancient_shrine": "Ancient Shrine",
+  "structure.the_bumblezone.ancient_hoops": "Ancient Hoops",
   "structure.the_bumblezone.battle_cubes": "Battle Cubes",
   "structure.the_bumblezone.bee_house": "Bee House",
   "structure.the_bumblezone.candle_parkour": "Candle Parkour",
@@ -303,12 +305,14 @@
   "structure.the_bumblezone.hanging_garden": "Hanging Garden",
   "structure.the_bumblezone.hive_temple": "Hive Temple",
   "structure.the_bumblezone.honey_cave_room": "Honey Cave Room",
+  "structure.the_bumblezone.honey_fountain": "Honey Fountain",
   "structure.the_bumblezone.honitel": "Honitel",
   "structure.the_bumblezone.ice_monolith": "Ice Monolith",
   "structure.the_bumblezone.overgrown_flower": "Overgrown Flower",
   "structure.the_bumblezone.pirate_ship": "Pirate Ship",
   "structure.the_bumblezone.pollinated_stream": "Pollinated Stream",
   "structure.the_bumblezone.stinger_spear_shrine": "Stinger Spear Shrine",
+  "structure.the_bumblezone.subway": "Subway",
   "structure.the_bumblezone.throne_pillar": "Throne Pillar",
 
   "effect.the_bumblezone.wrath_of_the_hive": "Wrath of the Hive",
