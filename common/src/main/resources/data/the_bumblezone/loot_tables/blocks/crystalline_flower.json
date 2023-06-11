@@ -29,6 +29,9 @@
                   "op": "replace"
                 }
               ]
+            },
+            {
+              "function": "the_bumblezone:drop_container_loot"
             }
           ]
         }

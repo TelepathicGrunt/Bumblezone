@@ -11,8 +11,6 @@
 
 #TODO: implement sentry watcher
 
-#TODO: pay someone to make crystalline flower hold items in slots.
-
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
@@ -169,6 +167,10 @@ Glistering Honey Crystal should not suffocate mobs inside itself, and it blocks 
 Any Super Candle can be crafted to another color with 2 dyes now!
 
 Any String Curtain can be crafted to another color with 1 dye now!
+
+Crystalline Flower now will hold items in its consume slot and to-enchant slot even when exiting the UI. These items will drop when flower breaks.
+
+Fixed bug where Crystalline Flower drop loses their xp progress when in item form.
 
 ##### Items:
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.

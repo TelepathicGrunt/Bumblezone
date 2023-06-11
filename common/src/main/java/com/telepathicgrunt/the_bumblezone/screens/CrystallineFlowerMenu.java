@@ -112,6 +112,11 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             public void setChanged() {
                 this.container.setChanged();
                 consumeSlotFullyObstructed();
+
+                if (!player.level().isClientSide()) {
+                    crystallineFlowerBlockEntity.setConsumeSlotItems(consumeSlot.getItem());
+                    crystallineFlowerBlockEntity.syncPillar();
+                }
             }
         });
         this.bookSlot = addSlot(new Slot(inputContainer, BOOK_SLOT, BOOK_SLOT_X, BOOK_SLOT_Y) {
@@ -130,6 +135,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 if (!player.level().isClientSide()) {
                     setupResultSlot();
                     broadcastChanges();
+                    crystallineFlowerBlockEntity.setBookSlotItems(bookSlot.getItem());
+                    crystallineFlowerBlockEntity.syncPillar();
                 }
             }
         });
@@ -164,6 +171,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 if (!player.level().isClientSide()) {
                     setupResultSlot();
                     broadcastChanges();
+                    crystallineFlowerBlockEntity.setBookSlotItems(bookSlot.getItem());
+                    crystallineFlowerBlockEntity.syncPillar();
                 }
 
                 super.onTake(player, itemStack);
@@ -221,6 +230,11 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         addDataSlot(this.bottomBlockPosYLower);
         addDataSlot(this.bottomBlockPosZUpper);
         addDataSlot(this.bottomBlockPosZLower);
+
+        if (this.crystallineFlowerBlockEntity != null) {
+            this.bookSlot.set(this.crystallineFlowerBlockEntity.getBookSlotItems());
+            this.consumeSlot.set(this.crystallineFlowerBlockEntity.getConsumeSlotItems());
+        }
     }
 
     private void syncXpTier() {
@@ -338,6 +352,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 BzCriterias.GROW_CRYSTALLINE_FLOWER_TRIGGER.trigger(serverPlayer);
             }
             syncXpTier();
+            crystallineFlowerBlockEntity.syncPillar();
         }
     }
 
@@ -369,6 +384,8 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             }
 
             broadcastChanges();
+            crystallineFlowerBlockEntity.setConsumeSlotItems(consumeSlot.getItem());
+            crystallineFlowerBlockEntity.syncPillar();
         }
 
     }
@@ -427,7 +444,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     @Override
     protected void clearContainer(Player player, Container container) {
         enchantedSlot.container.removeItemNoUpdate(enchantedSlot.index);
-        super.clearContainer(player, container);
+        //super.clearContainer(player, container);
     }
 
     /**
@@ -436,7 +453,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        access.execute((level, blockPos) -> clearContainer(player, inputContainer));
+        access.execute((level, blockPos) -> {
+            clearContainer(player, inputContainer);
+        });
     }
 
     /**
