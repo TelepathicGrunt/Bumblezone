@@ -22,6 +22,7 @@ import net.minecraft.client.resources.LegacyStuffWrapper;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.locale.Language;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -103,17 +104,25 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (!BEE_INVENTORY.isEmpty() || !menu.getItems().get(0).isEmpty()) {
-            BEE_INVENTORY.clear();
 
             List<Entity> beesStored = BuzzingBriefcase.getBeesStored(inventory.player.level(), menu.getItems().get(0), false);
-            for (Entity entity : beesStored) {
-                if (entity instanceof Bee bee) {
-                    try {
-                        bee.stopBeingAngry();
-                        addBeeWithColor(bee);
-                    }
-                    catch (IOException e) {
-                        BEE_INVENTORY.add(new BeeState(bee, NORMAL_PRIMARY_COLOR, NORMAL_SECONDARY_COLOR));
+            if (isDiffFoundInBeeList(beesStored)) {
+
+                BEE_INVENTORY.clear();
+                for (Entity entity : beesStored) {
+
+                    if (entity instanceof Bee bee) {
+                        try {
+                            bee.stopBeingAngry();
+                            addBeeWithColor(bee);
+                        }
+                        catch (IOException e) {
+                            BEE_INVENTORY.add(new BeeState(bee, NORMAL_PRIMARY_COLOR, NORMAL_SECONDARY_COLOR));
+                            Bumblezone.LOGGER.warn("Bumblezone Buzzing Briefcase Clientside: Error trying to dynamically get color for following bee -");
+                            CompoundTag tag = new CompoundTag();
+                            bee.saveWithoutId(tag);
+                            Bumblezone.LOGGER.warn("Bee: {}", tag);
+                        }
                     }
                 }
             }
@@ -124,6 +133,34 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         RenderSystem.enableDepthTest();
 
         drawBeeSlots(guiGraphics, leftPos, topPos, mouseX, mouseY);
+    }
+
+    private boolean isDiffFoundInBeeList(List<Entity> beesStored) {
+        if (BEE_INVENTORY.size() != beesStored.size()) {
+            return true;
+        }
+        else {
+            for (int i = 0; i < beesStored.size(); i++) {
+                Entity beeFound = beesStored.get(i);
+                Bee beeSaved = BEE_INVENTORY.get(i).beeEntity();
+
+                if (beeFound instanceof Bee bee) {
+                    if (bee.hasNectar() != beeSaved.hasNectar()) {
+                        return true;
+                    }
+                    else if (bee.getHealth() != beeSaved.getHealth()) {
+                        return true;
+                    }
+                    else if (bee.isBaby() != beeSaved.isBaby()) {
+                        return true;
+                    }
+                    else if (bee.hasStung() != beeSaved.hasStung()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private void addBeeWithColor(Bee bee) throws IOException {

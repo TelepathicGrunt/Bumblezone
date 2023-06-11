@@ -201,11 +201,11 @@ public class PlatformHooksImpl {
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         if (placingBlock) {
             if (entity instanceof Player player) {
-                return PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
+                return player.mayInteract(level, pos) && PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
             }
         }
         else if (entity instanceof Player player) {
-            return PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
+            return player.mayInteract(level, pos) && PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
         }
         return true;
     }

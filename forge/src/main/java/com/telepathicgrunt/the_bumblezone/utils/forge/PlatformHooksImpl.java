@@ -126,6 +126,10 @@ public class PlatformHooksImpl {
     }
 
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
+        if (entity instanceof Player player && !player.mayInteract(level, pos)) {
+            return false;
+        }
+
         if (placingBlock) {
             return !ForgeEventFactory.onBlockPlace(entity, BlockSnapshot.create(level.dimension(), level, pos), Direction.UP);
         }

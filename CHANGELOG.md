@@ -13,8 +13,6 @@
 
 #TODO: pay someone to make crystalline flower hold items in slots.
 
-#TODO: Buzzing briefcase dynamic coloring of bee icons?
-
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
