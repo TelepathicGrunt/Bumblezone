@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.JEIIntegration;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

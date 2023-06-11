@@ -8,7 +8,6 @@ import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.Util;

@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.world.features;
 
-import com.mojang.datafixers.optics.profunctors.Cocartesian;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayerConfig;

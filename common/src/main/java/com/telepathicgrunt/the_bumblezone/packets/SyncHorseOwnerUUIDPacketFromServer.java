@@ -10,8 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) implements Packet<SyncHorseOwnerUUIDPacketFromServer> {
 

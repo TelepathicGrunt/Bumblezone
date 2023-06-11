@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import net.minecraft.client.gui.GuiGraphics;
