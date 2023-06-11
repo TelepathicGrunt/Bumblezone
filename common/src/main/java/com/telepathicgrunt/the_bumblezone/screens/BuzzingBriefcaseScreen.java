@@ -69,11 +69,6 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             new Color(3156791),
             new Color(16252413),
             new Color(15856352),
-            new Color(16768196),
-            new Color(15452837),
-            new Color(14267789),
-            new Color(16306357),
-            new Color(11175522),
             new Color(6238757)
     };
     private static final float SCALE = 1.25f;
@@ -112,8 +107,10 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 for (Entity entity : beesStored) {
 
                     if (entity instanceof Bee bee) {
+                        bee.stopBeingAngry();
+                        boolean pollinated = bee.hasNectar();
+                        ((BeeEntityInvoker)bee).callSetHasNectar(false);
                         try {
-                            bee.stopBeingAngry();
                             addBeeWithColor(bee);
                         }
                         catch (IOException e) {
@@ -123,6 +120,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                             bee.saveWithoutId(tag);
                             Bumblezone.LOGGER.warn("Bee: {}", tag);
                         }
+                        ((BeeEntityInvoker)bee).callSetHasNectar(pollinated);
                     }
                 }
             }
@@ -190,7 +188,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 if (color.getAlpha() > 0.15) {
                     boolean isColorSimilarToDisallowedColors = false;
                     for (Color disallowedColor : IGNORE_COLORS) {
-                        if (GeneralUtilsClient.isSimilarInColor(color, disallowedColor, 5)) {
+                        if (GeneralUtilsClient.isSimilarInColor(color, disallowedColor, 1)) {
                             isColorSimilarToDisallowedColors = true;
                             break;
                         }
