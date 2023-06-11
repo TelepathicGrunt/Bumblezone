@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -13,9 +15,14 @@ public class EssenceBlockWhite extends EssenceBlock {
         super(Properties.of().mapColor(MapColor.SNOW));
     }
 
+//    @Override
+//    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+//        if (entity instanceof Player player) {
+//        }
+//    }
+
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof Player player) {
-        }
+    public ResourceLocation getArenaNbt() {
+        return new ResourceLocation(Bumblezone.MODID, "essence/white_arena");
     }
 }

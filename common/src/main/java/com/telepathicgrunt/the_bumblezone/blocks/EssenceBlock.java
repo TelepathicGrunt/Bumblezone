@@ -1,11 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -14,9 +23,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -26,8 +44,19 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+import java.util.Optional;
+
 
 public abstract class EssenceBlock extends BaseEntityBlock {
+    public static final GeneralUtils.Lazy<StructurePlaceSettings> PLACEMENT_SETTINGS = new GeneralUtils.Lazy<>(() ->
+            new StructurePlaceSettings()
+                .setRotation(Rotation.NONE)
+                .setMirror(Mirror.NONE)
+                .setKeepLiquids(false)
+                .setIgnoreEntities(true)
+                .addProcessor(new BlockIgnoreProcessor(List.of(BzBlocks.ESSENCE_BLOCK_WHITE.get()))));
+
     public EssenceBlock(Properties properties) {
         super(properties
                 .strength(-1.0f, 3600000.8f)
@@ -57,24 +86,27 @@ public abstract class EssenceBlock extends BaseEntityBlock {
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
         if (context instanceof EntityCollisionContext ctx) {
             Entity entity = ctx.getEntity();
             if (entity == null) {
                 return Shapes.empty();
             }
 
-            if (!(entity instanceof ServerPlayer serverPlayer) || !EssenceOfTheBees.hasEssence(serverPlayer)) {
-
-                if (entity instanceof LivingEntity && entity.getBoundingBox().inflate(0.01D).intersects(new AABB(pos, pos.offset(1, 1, 1)))) {
+            if ((entity instanceof LivingEntity && !(entity instanceof ServerPlayer)) ||
+                (entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)))
+            {
+                if (entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
                     if (entity instanceof ServerPlayer serverPlayer) {
                         serverPlayer.displayClientMessage(
                                 Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
                                 true);
                     }
+                    else if (!(entity instanceof Player)) {
+                        entity.hurt(entity.damageSources().magic(), 1);
+                    }
 
-                    Vec3 center = Vec3.atCenterOf(pos);
-                    entity.hurt(entity.damageSources().magic(), 1);
+                    Vec3 center = Vec3.atCenterOf(blockPos);
                     entity.push(
                             entity.getX() - center.x(),
                             entity.getY() - center.y(),
@@ -83,15 +115,86 @@ public abstract class EssenceBlock extends BaseEntityBlock {
 
                 return Shapes.block();
             }
+
+            if (entity instanceof ServerPlayer serverPlayer) {
+                entityInside(blockState, serverPlayer.level(), blockPos, serverPlayer);
+            }
         }
         return Shapes.empty();
     }
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof Player player) {
+        if (entity instanceof ServerPlayer player
+            && EssenceOfTheBees.hasEssence(player) &&
+            blockState.getBlock() instanceof EssenceBlock essenceBlock)
+        {
+            ServerLevel serverLevel = ((ServerLevel) level);
+            BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
+            if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.testTick == Integer.MAX_VALUE) {
+
+                StructureTemplateManager structureTemplateManager = serverLevel.getStructureManager();
+                Optional<StructureTemplate> optionalStructureTemplate = structureTemplateManager.get(getArenaNbt());
+                optionalStructureTemplate.ifPresent(loadingStructureTemplate -> {
+                    Vec3i size = loadingStructureTemplate.getSize();
+                    BlockPos negativeHalfLengths = new BlockPos(-size.getX() / 2, -size.getY() / 2, -size.getZ() / 2);
+
+                    // Save area
+                    StructureTemplate savingStructureTemplate;
+                    try {
+                        savingStructureTemplate = structureTemplateManager.getOrCreate(essenceBlockEntity.getSavedNbt());
+                    }
+                    catch (ResourceLocationException resourceLocationException) {
+                        Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to create the NBT file to save area - {} - {}", essenceBlockEntity, blockState);
+                        return;
+                    }
+                    savingStructureTemplate.fillFromWorld(serverLevel, blockPos.offset(negativeHalfLengths), size, !PLACEMENT_SETTINGS.getOrFillFromInternal().isIgnoreEntities(), essenceBlock);
+                    try {
+                        structureTemplateManager.save(essenceBlockEntity.getSavedNbt());
+                    }
+                    catch (ResourceLocationException resourceLocationException) {
+                        Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to save area into NBT file - {} - {}", essenceBlockEntity, blockState);
+                        return;
+                    }
+
+                    // load arena
+                    loadingStructureTemplate.placeInWorld(
+                            serverLevel,
+                            blockPos.offset(negativeHalfLengths),
+                            blockPos.offset(negativeHalfLengths),
+                            PLACEMENT_SETTINGS.getOrFillFromInternal(),
+                            serverLevel.getRandom(),
+                            Block.UPDATE_CLIENTS
+                    );
+
+                    Vec3 centerPos = Vec3.atCenterOf(blockPos);
+                    Direction direction = Direction.NORTH;
+                    double largestDistance = Float.MIN_VALUE;
+                    double xDiff = centerPos.x() - entity.getX();
+                    double yDiff = centerPos.y() - entity.getY();
+                    double zDiff = centerPos.z() - entity.getZ();
+                    for (Direction direction2 : Direction.Plane.HORIZONTAL) {
+                        double distance = xDiff * (float)direction2.getNormal().getX() + yDiff * (float)direction2.getNormal().getY() + zDiff * (float)direction2.getNormal().getZ();
+                        if (!(distance > largestDistance)) continue;
+                        largestDistance = distance;
+                        direction = direction2;
+                    }
+
+                    entity.setDeltaMovement(0, 0, 0);
+                    entity.teleportTo(
+                        blockPos.getX() - (7 * direction.getStepX()),
+                        blockPos.getY() + negativeHalfLengths.getY() + 1,
+                        blockPos.getZ() - (7 * direction.getStepZ())
+                    );
+                });
+
+                essenceBlockEntity.testTick = serverLevel.getGameTime();
+                essenceBlockEntity.setChanged();
+            }
         }
     }
+
+    public abstract ResourceLocation getArenaNbt();
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
         if (randomSource.nextFloat() < 0.1f) {
@@ -104,5 +207,16 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                     randomSource.nextGaussian() * 0.003d,
                     randomSource.nextGaussian() * 0.003d);
         }
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+        return EssenceBlock.createEssenceTicker(level, blockEntityType, BzBlockEntities.ESSENCE_BLOCK.get());
+    }
+
+    @Nullable
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createEssenceTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends EssenceBlockEntity> blockEntityType2) {
+        return level.isClientSide ? null : EssenceBlock.createTickerHelper(blockEntityType, blockEntityType2, EssenceBlockEntity::serverTick);
     }
 }

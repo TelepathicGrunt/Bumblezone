@@ -140,6 +140,11 @@ public class GeneralUtils {
     public static final class Lazy<T> {
 
         private volatile T value;
+        private Supplier<T> supplierValue;
+
+        public Lazy() {}
+
+        public Lazy(Supplier<T> supplierValue) { this.supplierValue = supplierValue; }
 
         public T getOrCompute(Supplier<T> supplier) {
             final T result = value; // Just one volatile read
@@ -151,6 +156,11 @@ public class GeneralUtils {
                 value = requireNonNull(supplier.get());
             }
             return value;
+        }
+
+        public T getOrFillFromInternal() {
+            final T result = value; // Just one volatile read
+            return result == null ? maybeCompute(supplierValue) : result;
         }
     }
 
