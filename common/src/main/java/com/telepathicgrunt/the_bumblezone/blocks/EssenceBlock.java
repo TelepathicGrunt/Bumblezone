@@ -12,6 +12,7 @@ import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -55,6 +56,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 .setMirror(Mirror.NONE)
                 .setKeepLiquids(false)
                 .setIgnoreEntities(true)
+                .setKnownShape(true)
                 .addProcessor(new BlockIgnoreProcessor(List.of(BzBlocks.ESSENCE_BLOCK_WHITE.get()))));
 
     public EssenceBlock(Properties properties) {
@@ -68,6 +70,10 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
                 .pushReaction(PushReaction.BLOCK));
     }
+
+    public abstract ResourceLocation getArenaNbt();
+
+    public abstract long getEventTimeFrame();
 
     @Nullable
     @Override
@@ -131,7 +137,9 @@ public abstract class EssenceBlock extends BaseEntityBlock {
         {
             ServerLevel serverLevel = ((ServerLevel) level);
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-            if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.testTick == Integer.MAX_VALUE) {
+            if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
+                essenceBlockEntity.getPlayerInArena().isEmpty())
+            {
 
                 StructureTemplateManager structureTemplateManager = serverLevel.getStructureManager();
                 Optional<StructureTemplate> optionalStructureTemplate = structureTemplateManager.get(getArenaNbt());
@@ -158,43 +166,56 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                     }
 
                     // load arena
-                    loadingStructureTemplate.placeInWorld(
+                    GeneralUtils.placeInWorldWithouNeighborUpdate(
                             serverLevel,
+                            loadingStructureTemplate,
                             blockPos.offset(negativeHalfLengths),
                             blockPos.offset(negativeHalfLengths),
                             PLACEMENT_SETTINGS.getOrFillFromInternal(),
                             serverLevel.getRandom(),
-                            Block.UPDATE_CLIENTS
+                            Block.UPDATE_CLIENTS + Block.UPDATE_KNOWN_SHAPE
                     );
 
-                    Vec3 centerPos = Vec3.atCenterOf(blockPos);
-                    Direction direction = Direction.NORTH;
-                    double largestDistance = Float.MIN_VALUE;
-                    double xDiff = centerPos.x() - entity.getX();
-                    double yDiff = centerPos.y() - entity.getY();
-                    double zDiff = centerPos.z() - entity.getZ();
-                    for (Direction direction2 : Direction.Plane.HORIZONTAL) {
-                        double distance = xDiff * (float)direction2.getNormal().getX() + yDiff * (float)direction2.getNormal().getY() + zDiff * (float)direction2.getNormal().getZ();
-                        if (!(distance > largestDistance)) continue;
-                        largestDistance = distance;
-                        direction = direction2;
+//                    Vec3 centerPos = Vec3.atCenterOf(blockPos);
+//                    Direction direction = Direction.NORTH;
+//                    double largestDistance = Float.MIN_VALUE;
+//                    double xDiff = centerPos.x() - entity.getX();
+//                    double yDiff = centerPos.y() - entity.getY();
+//                    double zDiff = centerPos.z() - entity.getZ();
+//                    for (Direction direction2 : Direction.Plane.HORIZONTAL) {
+//                        double distance = xDiff * (float)direction2.getNormal().getX() + yDiff * (float)direction2.getNormal().getY() + zDiff * (float)direction2.getNormal().getZ();
+//                        if (!(distance > largestDistance)) continue;
+//                        largestDistance = distance;
+//                        direction = direction2;
+//                    }
+
+                    List<ServerPlayer> players = ((ServerLevel) level).getPlayers(p ->
+                            (blockPos.getX() + size.getX()) > p.blockPosition().getX() &&
+                            (blockPos.getY() + size.getY()) > p.blockPosition().getY() &&
+                            (blockPos.getZ() + size.getZ()) > p.blockPosition().getZ() &&
+                            (blockPos.getX() - size.getX()) < p.blockPosition().getX() &&
+                            (blockPos.getY() - size.getY()) < p.blockPosition().getY() &&
+                            (blockPos.getZ() - size.getZ()) < p.blockPosition().getZ()
+                    );
+
+                    essenceBlockEntity.getPlayerInArena().clear();
+                    for (int i = 0; i < players.size(); i++) {
+                        ServerPlayer serverPlayer = players.get(i);
+                        essenceBlockEntity.getPlayerInArena().add(serverPlayer.getUUID());
+                        spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
+//                        serverPlayer.setDeltaMovement(0, 0, 0);
+//                        serverPlayer.teleportTo(
+//                            blockPos.getX() - ((7 * direction.getStepX()) + (i % 2 == 0 ? i : -i)),
+//                            blockPos.getY() + negativeHalfLengths.getY() + 1,
+//                            blockPos.getZ() - (7 * direction.getStepZ())
+//                        );
                     }
-
-                    entity.setDeltaMovement(0, 0, 0);
-                    entity.teleportTo(
-                        blockPos.getX() - (7 * direction.getStepX()),
-                        blockPos.getY() + negativeHalfLengths.getY() + 1,
-                        blockPos.getZ() - (7 * direction.getStepZ())
-                    );
                 });
 
-                essenceBlockEntity.testTick = serverLevel.getGameTime();
-                essenceBlockEntity.setChanged();
+                essenceBlockEntity.setEventTimer(serverLevel.getGameTime());
             }
         }
     }
-
-    public abstract ResourceLocation getArenaNbt();
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
         if (randomSource.nextFloat() < 0.1f) {
@@ -207,6 +228,30 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                     randomSource.nextGaussian() * 0.003d,
                     randomSource.nextGaussian() * 0.003d);
         }
+    }
+
+    public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random) {
+        world.sendParticles(
+                ParticleTypes.FIREWORK,
+                location.x(),
+                location.y() + 1,
+                location.z(),
+                100,
+                random.nextGaussian() * 0.1D,
+                (random.nextGaussian() * 0.1D) + 0.1,
+                random.nextGaussian() * 0.1D,
+                random.nextFloat() * 0.4 + 0.2f);
+
+        world.sendParticles(
+                ParticleTypes.ENCHANT,
+                location.x(),
+                location.y() + 1,
+                location.z(),
+                400,
+                1,
+                1,
+                1,
+                random.nextFloat() * 0.5 + 1.2f);
     }
 
     @Override

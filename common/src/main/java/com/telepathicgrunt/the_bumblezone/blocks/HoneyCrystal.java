@@ -107,7 +107,6 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      */
     @Override
     public boolean canSurvive(BlockState blockstate, LevelReader world, BlockPos pos) {
-
         Direction direction = blockstate.getValue(FACING);
         BlockState attachedBlockstate = world.getBlockState(pos.relative(direction.getOpposite()));
         return attachedBlockstate.isFaceSturdy(world, pos.relative(direction.getOpposite()), direction);
@@ -167,9 +166,13 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      */
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState blockstate, Level world,
-                              BlockPos position, Player playerEntity,
-                              InteractionHand playerHand, BlockHitResult raytraceResult) {
+    public InteractionResult use(BlockState blockstate,
+                                 Level world,
+                                 BlockPos position,
+                                 Player playerEntity,
+                                 InteractionHand playerHand,
+                                 BlockHitResult raytraceResult)
+    {
 
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 

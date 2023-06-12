@@ -15,14 +15,13 @@ public class EssenceBlockWhite extends EssenceBlock {
         super(Properties.of().mapColor(MapColor.SNOW));
     }
 
-//    @Override
-//    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-//        if (entity instanceof Player player) {
-//        }
-//    }
-
     @Override
     public ResourceLocation getArenaNbt() {
         return new ResourceLocation(Bumblezone.MODID, "essence/white_arena");
+    }
+
+    @Override
+    public long getEventTimeFrame() {
+        return 200;
     }
 }

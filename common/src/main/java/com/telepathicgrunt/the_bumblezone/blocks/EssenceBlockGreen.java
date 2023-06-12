@@ -15,13 +15,12 @@ public class EssenceBlockGreen extends EssenceBlock {
     }
 
     @Override
-    public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof Player player) {
-        }
+    public ResourceLocation getArenaNbt() {
+        return null;
     }
 
     @Override
-    public ResourceLocation getArenaNbt() {
-        return null;
+    public long getEventTimeFrame() {
+        return 2000;
     }
 }
