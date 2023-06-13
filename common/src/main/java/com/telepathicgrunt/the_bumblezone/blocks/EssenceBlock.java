@@ -77,7 +77,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
 
     public abstract int getEventTimeFrame();
 
-    public abstract void performUniqueArenaTick(Level level, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity);
+    public abstract void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity);
 
     public abstract ServerEssenceEvent getServerEssenceEvent();
 

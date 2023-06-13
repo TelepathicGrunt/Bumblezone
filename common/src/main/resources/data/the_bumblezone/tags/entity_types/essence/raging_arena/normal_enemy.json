@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:magma_cube",
+    "minecraft:husk",
+    "minecraft:cave_spider",
+    "minecraft:zombified_piglin",
+    "minecraft:wolf"
+  ]
+}

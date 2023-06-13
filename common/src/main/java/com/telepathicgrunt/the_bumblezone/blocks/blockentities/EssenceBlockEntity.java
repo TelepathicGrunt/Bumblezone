@@ -20,6 +20,10 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -28,6 +32,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -37,15 +42,18 @@ import java.util.UUID;
 
 public class EssenceBlockEntity extends BlockEntity {
     private static final String UUID_TAG = "uuid";
-    private static final String EVENT_TIMER_TAG = "event_timer";
-    private static final String PLAYERS_IN_ARENA_TAG = "players_in_arena";
-    private UUID uuid = null;
-    private int eventTimer = Integer.MAX_VALUE;
+    private static final String EVENT_TIMER_TAG = "eventTimer";
+    private static final String PLAYERS_IN_ARENA_TAG = "playersInArena";
+    private static final String EVENT_ENTITIES_IN_ARENA_TAG = "eventEntitiesInArena";
     public static final int DEFAULT_EVENT_RANGE = 16;
 
+    private UUID uuid = null;
+    private int eventTimer = Integer.MAX_VALUE;
     private List<UUID> playerInArena = new ArrayList<>();
     private ServerEssenceEvent eventBar = null;
     // Add object to hold all spawned entities of this event and wipe when done
+    public record EventEntities(UUID uuid) {}
+    private List<EventEntities> eventEntitiesInArena = new ArrayList<>();
 
     protected EssenceBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -92,12 +100,20 @@ public class EssenceBlockEntity extends BlockEntity {
         this.eventBar = eventBar;
     }
 
+    public List<EventEntities> getEventEntitiesInArena() {
+        return eventEntitiesInArena;
+    }
+
+    public void setEventEntitiesInArena(List<EventEntities> eventEntitiesInArena) {
+        this.eventEntitiesInArena = eventEntitiesInArena;
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
         if (compoundTag != null) {
             this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
-            this.eventBar.setEndEventTimer((int) this.eventTimer);
+            this.eventBar.setEndEventTimer(this.eventTimer);
             if (compoundTag.contains(UUID_TAG)) {
                 this.uuid = compoundTag.getUUID(UUID_TAG);
             }
@@ -109,6 +125,13 @@ public class EssenceBlockEntity extends BlockEntity {
                 this.playerInArena.clear();
                 for (Tag tag : compoundTag.getList(PLAYERS_IN_ARENA_TAG, Tag.TAG_INT_ARRAY)) {
                     this.playerInArena.add(NbtUtils.loadUUID(tag));
+                }
+            }
+
+            if (compoundTag.contains(EVENT_ENTITIES_IN_ARENA_TAG)) {
+                this.eventEntitiesInArena.clear();
+                for (Tag tag : compoundTag.getList(EVENT_ENTITIES_IN_ARENA_TAG, Tag.TAG_INT_ARRAY)) {
+                    this.eventEntitiesInArena.add(new EventEntities(NbtUtils.loadUUID(tag)));
                 }
             }
         }
@@ -133,6 +156,12 @@ public class EssenceBlockEntity extends BlockEntity {
             players.add(NbtUtils.createUUID(target));
         }
         compoundTag.put(PLAYERS_IN_ARENA_TAG, players);
+
+        ListTag eventEntities = new ListTag();
+        for (EventEntities target : this.eventEntitiesInArena) {
+            eventEntities.add(NbtUtils.createUUID(target.uuid()));
+        }
+        compoundTag.put(EVENT_ENTITIES_IN_ARENA_TAG, eventEntities);
     }
 
     public ResourceLocation getSavedNbt() {
@@ -161,16 +190,16 @@ public class EssenceBlockEntity extends BlockEntity {
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
         if (level instanceof ServerLevel serverLevel) {
-            if (!essenceBlockEntity.playerInArena.isEmpty()) {
-                performArenaTick(level, blockPos, blockState, essenceBlockEntity, serverLevel);
+            if (!essenceBlockEntity.getPlayerInArena().isEmpty()) {
+                performArenaTick(serverLevel, blockPos, blockState, essenceBlockEntity);
             }
         }
     }
 
-    private static void performArenaTick(Level level, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity, ServerLevel serverLevel) {
+    private static void performArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
         boolean endEvent = false;
 
-        if (level.getGameTime() % 20 == 0) {
+        if (serverLevel.getGameTime() % 20 == 0) {
             for (int i = essenceBlockEntity.getPlayerInArena().size() - 1; i >= 0; i--) {
                 UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(i);
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
@@ -204,12 +233,12 @@ public class EssenceBlockEntity extends BlockEntity {
             essenceBlockEntity.setEventTimer(essenceBlockEntity.getEventTimer() - 1);
             essenceBlockEntity.getEventBar().setEndEventTimer(essenceBlockEntity.getEventTimer());
             if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
-                essenceBlock.performUniqueArenaTick(level, blockPos, blockState, essenceBlockEntity);
+                essenceBlock.performUniqueArenaTick(serverLevel, blockPos, blockState, essenceBlockEntity);
             }
         }
     }
 
-    private static void EndEvent(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity, boolean won) {
+    public static void EndEvent(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity, boolean won) {
         Optional<StructureTemplate> optionalStructureTemplate = serverLevel.getStructureManager().get(essenceBlockEntity.getSavedNbt());
         optionalStructureTemplate.ifPresentOrElse(structureTemplate -> {
             Vec3i size = structureTemplate.getSize();
@@ -253,6 +282,24 @@ public class EssenceBlockEntity extends BlockEntity {
                             }
                         }
                     }
+                }
+            }
+
+            List<Entity> entities = serverLevel.getEntities(null, new AABB(
+                    blockPos.getX() + size.getX(),
+                    blockPos.getY() + size.getY(),
+                    blockPos.getZ() + size.getZ(),
+                    blockPos.getX() - size.getX(),
+                    blockPos.getY() - size.getY(),
+                    blockPos.getZ() - size.getZ())
+            );
+
+            // Remove lingering enemies in arena
+            for (Entity entity : entities) {
+                if ((entity instanceof NeutralMob neutralMob && neutralMob.getTarget() instanceof Player) ||
+                    (entity instanceof Mob mob && mob.getTarget() instanceof Player))
+                {
+                    entity.remove(Entity.RemovalReason.DISCARDED);
                 }
             }
 

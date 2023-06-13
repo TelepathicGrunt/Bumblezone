@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wither_skeleton",
+    "minecraft:hoglin",
+    "minecraft:zoglin",
+    "minecraft:polar_bear",
+    "minecraft:rabbit"
+  ]
+}
