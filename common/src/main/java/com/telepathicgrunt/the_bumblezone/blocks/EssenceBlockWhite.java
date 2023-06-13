@@ -1,8 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -21,7 +26,21 @@ public class EssenceBlockWhite extends EssenceBlock {
     }
 
     @Override
-    public long getEventTimeFrame() {
+    public int getEventTimeFrame() {
         return 200;
+    }
+
+    @Override
+    public ServerEssenceEvent getServerEssenceEvent() {
+        return (ServerEssenceEvent) new ServerEssenceEvent(
+                "essence.the_bumblezone.white_essence_event",
+                BossEvent.BossBarColor.WHITE,
+                BossEvent.BossBarOverlay.NOTCHED_10
+        ).setDarkenScreen(true);
+    }
+
+    @Override
+    public void performUniqueArenaTick(Level level, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
+        essenceBlockEntity.getEventBar().setProgress((float)essenceBlockEntity.getEventTimer() / getEventTimeFrame());
     }
 }

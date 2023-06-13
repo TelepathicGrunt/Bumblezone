@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
@@ -38,24 +39,32 @@ public class EssenceBlockEntity extends BlockEntity {
     private static final String EVENT_TIMER_TAG = "event_timer";
     private static final String PLAYERS_IN_ARENA_TAG = "players_in_arena";
     private UUID uuid = null;
-    private long eventTimer = Integer.MAX_VALUE;
+    private int eventTimer = Integer.MAX_VALUE;
     public static final int DEFAULT_EVENT_RANGE = 16;
 
     private List<UUID> playerInArena = new ArrayList<>();
+    private ServerEssenceEvent eventBar = null;
+    // Add object to hold all spawned entities of this event and wipe when done
 
     protected EssenceBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
+        if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
+            eventBar = essenceBlock.getServerEssenceEvent();
+        }
     }
 
     public EssenceBlockEntity(BlockPos blockPos, BlockState blockState) {
         this(BzBlockEntities.ESSENCE_BLOCK.get(), blockPos, blockState);
+        if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
+            eventBar = essenceBlock.getServerEssenceEvent();
+        }
     }
 
-    public long getEventTimer() {
+    public int getEventTimer() {
         return this.eventTimer;
     }
 
-    public void setEventTimer(long eventTimer) {
+    public void setEventTimer(int eventTimer) {
         this.eventTimer = eventTimer;
     }
 
@@ -74,11 +83,20 @@ public class EssenceBlockEntity extends BlockEntity {
         this.playerInArena = playerInArena;
     }
 
+    public ServerEssenceEvent getEventBar() {
+        return eventBar;
+    }
+
+    public void setEventBar(ServerEssenceEvent eventBar) {
+        this.eventBar = eventBar;
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
         if (compoundTag != null) {
-            this.eventTimer = compoundTag.getLong(EVENT_TIMER_TAG);
+            this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
+            this.eventBar.setEndEventTimer((int) this.eventTimer);
             if (compoundTag.contains(UUID_TAG)) {
                 this.uuid = compoundTag.getUUID(UUID_TAG);
             }
@@ -107,7 +125,7 @@ public class EssenceBlockEntity extends BlockEntity {
 
     private void saveFieldsToTag(CompoundTag compoundTag) {
         compoundTag.put(UUID_TAG, NbtUtils.createUUID(this.getUUID()));
-        compoundTag.putLong(EVENT_TIMER_TAG, this.eventTimer);
+        compoundTag.putInt(EVENT_TIMER_TAG, this.eventTimer);
 
         ListTag players = new ListTag();
         for (UUID target : this.playerInArena) {
@@ -145,10 +163,6 @@ public class EssenceBlockEntity extends BlockEntity {
             if (!essenceBlockEntity.playerInArena.isEmpty()) {
                 performArenaTick(level, blockPos, blockState, essenceBlockEntity, serverLevel);
             }
-            else if (level.getGameTime() % 20 == 0) {
-                List<ServerPlayer> nearbyPlayers = ((ServerLevel) level).getPlayers(p -> p.blockPosition().distManhattan(blockPos) < 20);
-
-            }
         }
     }
 
@@ -156,27 +170,29 @@ public class EssenceBlockEntity extends BlockEntity {
         boolean endEvent = false;
 
         if (level.getGameTime() % 20 == 0) {
-            for (int i = essenceBlockEntity.playerInArena.size() - 1; i >= 0; i--) {
-                UUID playerUUID = essenceBlockEntity.playerInArena.get(i);
+            for (int i = essenceBlockEntity.getPlayerInArena().size() - 1; i >= 0; i--) {
+                UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(i);
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
                 if (serverPlayer != null) {
                     if (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > DEFAULT_EVENT_RANGE ||
                         Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > DEFAULT_EVENT_RANGE ||
                         Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > DEFAULT_EVENT_RANGE)
                     {
-                        essenceBlockEntity.playerInArena.remove(playerUUID);
+                        essenceBlockEntity.getPlayerInArena().remove(playerUUID);
                         essenceBlockEntity.setChanged();
+                        essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
+                    }
+                    else {
+                        essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
                     }
                 }
             }
-            if (essenceBlockEntity.playerInArena.isEmpty()) {
+            if (essenceBlockEntity.getPlayerInArena().isEmpty()) {
                 endEvent = true;
             }
         }
 
-        if (blockState.getBlock() instanceof EssenceBlock essenceBlock &&
-                level.getGameTime() - essenceBlockEntity.eventTimer > essenceBlock.getEventTimeFrame())
-        {
+        if (essenceBlockEntity.getEventTimer() <= 0) {
             endEvent = true;
         }
 
@@ -196,7 +212,7 @@ public class EssenceBlockEntity extends BlockEntity {
                         Block.UPDATE_CLIENTS
                 );
 
-                for (UUID playerUUID : essenceBlockEntity.playerInArena) {
+                for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
                     ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
                     if (serverPlayer != null) {
                         if ((blockPos.getX() + size.getX()) > serverPlayer.blockPosition().getX() &&
@@ -216,12 +232,21 @@ public class EssenceBlockEntity extends BlockEntity {
                             EssenceBlock.spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
                         }
                     }
+
                 }
             }, () -> Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to restore area from saved NBT - {} - {}", essenceBlockEntity, blockState));
 
-            essenceBlockEntity.eventTimer = Integer.MAX_VALUE;
-            essenceBlockEntity.playerInArena.clear();
+            essenceBlockEntity.getEventBar().removeAllPlayers();
+            essenceBlockEntity.setEventTimer(Integer.MAX_VALUE);
+            essenceBlockEntity.getPlayerInArena().clear();
             essenceBlockEntity.setChanged();
+        }
+        else {
+            essenceBlockEntity.setEventTimer(essenceBlockEntity.getEventTimer() - 1);
+            essenceBlockEntity.getEventBar().setEndEventTimer(essenceBlockEntity.getEventTimer());
+            if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
+                essenceBlock.performUniqueArenaTick(level, blockPos, blockState, essenceBlockEntity);
+            }
         }
     }
 }

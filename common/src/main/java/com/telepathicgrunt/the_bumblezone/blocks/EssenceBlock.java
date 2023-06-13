@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
@@ -73,7 +74,11 @@ public abstract class EssenceBlock extends BaseEntityBlock {
 
     public abstract ResourceLocation getArenaNbt();
 
-    public abstract long getEventTimeFrame();
+    public abstract int getEventTimeFrame();
+
+    public abstract void performUniqueArenaTick(Level level, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity);
+
+    public abstract ServerEssenceEvent getServerEssenceEvent();
 
     @Nullable
     @Override
@@ -223,7 +228,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                     }
                 });
 
-                essenceBlockEntity.setEventTimer(serverLevel.getGameTime());
+                essenceBlockEntity.setEventTimer(this.getEventTimeFrame());
                 essenceBlockEntity.setChanged();
             }
         }
