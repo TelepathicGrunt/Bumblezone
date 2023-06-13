@@ -124,9 +124,11 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
         public void onPlayerCopy(PlayerDataModule oldModule, PlayerDataModule thisModule, ServerPlayer player, boolean isPersistent) {
             if (isPersistent) {
                 ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
-            } else if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning) {
+            }
+            else if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning) {
                 thisModule.isBeeEssenced = oldModule.isBeeEssenced;
-            } else {
+            }
+            else {
                 thisModule.isBeeEssenced = false;
                 Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                 player.displayClientMessage(message, true);

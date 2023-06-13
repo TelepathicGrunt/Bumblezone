@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
@@ -48,6 +49,7 @@ import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -71,6 +73,7 @@ public class BumblezoneForgeClient {
         forgeBus.addListener(BumblezoneForgeClient::onClientTick);
         forgeBus.addListener(BumblezoneForgeClient::onScreenRendering);
         forgeBus.addListener(BumblezoneForgeClient::onBeforeBlockOutlineRendering);
+        forgeBus.addListener(BumblezoneForgeClient::onGuiRendering);
 
         modBus.addListener(BumblezoneForgeClient::onClientSetup);
         modBus.addListener(BumblezoneForgeClient::onRegisterModelLoaders);
@@ -173,6 +176,13 @@ public class BumblezoneForgeClient {
             DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getGuiGraphics());
             event.setCanceled(true);
         }
+    }
+
+    public static void onGuiRendering(RenderGuiOverlayEvent event) {
+        //TODO: can this even work?
+//        if (Minecraft.getInstance().player != null) {
+//            EssenceOverlay.nearEssenceOverlay(Minecraft.getInstance().player, event.getGuiGraphics());
+//        }
     }
 
     public static void onBeforeBlockOutlineRendering(RenderHighlightEvent event) {

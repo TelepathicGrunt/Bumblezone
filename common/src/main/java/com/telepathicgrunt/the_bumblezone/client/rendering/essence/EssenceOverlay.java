@@ -9,30 +9,68 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.Util;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.chunk.LevelChunk;
 import org.joml.Matrix4f;
+
+import java.awt.*;
+import java.util.Map;
 
 public class EssenceOverlay {
     private static final ResourceLocation TEXTURE_OVERLAY_1 = new ResourceLocation(Bumblezone.MODID, "textures/rainbow_overlay.png");
 
-    // Currently unused but may utilize later
-    public static boolean portalOverlay(Player player, PoseStack matrixStack) {
+    public static boolean nearEssenceOverlay(Player player, GuiGraphics guiGraphics) {
+        if (player.level().dimension().equals(Level.OVERWORLD)) {
+            // Find distance to essence block
+            BlockPos playerPos = player.blockPosition();
+            Level level = player.level();
+            ChunkPos currentChunkPos = new ChunkPos(playerPos);
+            int distanceToEssenceBlock = Integer.MAX_VALUE;
+            Block essenceBlock = null;
+            int diameter = 2;
+            for (int chunkX = 0; chunkX <= diameter; chunkX++) {
+                for (int chunkZ = 0; chunkZ <= diameter; chunkZ++) {
+                    LevelChunk levelChunk = level.getChunk(
+                        currentChunkPos.x + chunkX - (chunkX == diameter ? -3 : 0),
+                        currentChunkPos.z + chunkZ - (chunkZ == diameter ? -3 : 0)
+                    );
 
-        if (player.level().getBlockState(BlockPos.containing(player.getEyePosition(1))).getBlock() == BzBlocks.ESSENCE_BLOCK_WHITE.get()) {
+                    Map<BlockPos, BlockEntity> blockEntities = levelChunk.getBlockEntities();
+                    for (Map.Entry<BlockPos, BlockEntity> blockPosBlockEntityEntry : blockEntities.entrySet()) {
+                        if (blockPosBlockEntityEntry.getValue() instanceof EssenceBlockEntity) {
+                            int distance = playerPos.distManhattan(blockPosBlockEntityEntry.getKey());
+                            if (distance < distanceToEssenceBlock) {
+                                distanceToEssenceBlock = distance;
+                                essenceBlock = blockPosBlockEntityEntry.getValue().getBlockState().getBlock();
+                            }
+                        }
+                    }
+                }
+            }
 
+            // Check if too far, if so exit early
+            if (distanceToEssenceBlock > 16) {
+                return false;
+            }
+
+            // Draw using distance as part of alpha
             BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
             RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-            RenderSystem.depthFunc(519);
-            RenderSystem.depthMask(false);
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
             RenderSystem.setShaderTexture(0, TEXTURE_OVERLAY_1);
+            RenderSystem.enableBlend();
 
 
             float minU = -0f;
@@ -55,28 +93,32 @@ public class EssenceOverlay {
             float rSpinStartSpeed = 1f;
             float alpha = 0.37f;
 
+            Color color = new Color(essenceBlock.defaultMapColor().col);
+            float red = color.getRed() / 256f;
+            float green = color.getGreen() / 256f;
+            float blue = color.getBlue() / 256f;
+
             for(int r = 0; r < 6; ++r) {
                 int altR = ((r % 2) * 2) - 1;
                 float scaledSizeR = (r * rSizeScale);
                 float scaledSpinR = altR * ((r + rSpinStartSpeed) * rSpinScale);
 
-                matrixStack.pushPose();
-                matrixStack.mulPose(Axis.ZP.rotationDegrees((scaledSpinR * ((Util.getMillis() * 10101) % 1000000000000000000L / 100000.0F))));
-                Matrix4f matrix4f = matrixStack.last().pose();
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().mulPose(Axis.ZP.rotationDegrees((scaledSpinR * ((Util.getMillis() * 10101) % 1000000000000000000L / 100000.0F))));
+                Matrix4f matrix4f = guiGraphics.pose().last().pose();
                 bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
-                bufferBuilder.vertex(matrix4f, -scale - scaledSizeR, -scale - scaledSizeR, -0.5F).color(1.0F, 1.0F, 1.0F, alpha).uv(lerp2, lerp4).endVertex();
-                bufferBuilder.vertex(matrix4f, scale + scaledSizeR, -scale - scaledSizeR, -0.5F).color(1.0F, 1.0F, 1.0F, alpha).uv(lerp1, lerp4).endVertex();
-                bufferBuilder.vertex(matrix4f, scale + scaledSizeR, scale + scaledSizeR, -0.5F).color(1.0F, 1.0F, 1.0F, alpha).uv(lerp1, lerp3).endVertex();
-                bufferBuilder.vertex(matrix4f, -scale - scaledSizeR, scale + scaledSizeR, -0.5F).color(1.0F, 1.0F, 1.0F, alpha).uv(lerp2, lerp3).endVertex();
+                bufferBuilder.vertex(matrix4f, -scale - scaledSizeR, -scale - scaledSizeR, -0.5F).color(red, green, blue, alpha).uv(lerp2, lerp4).endVertex();
+                bufferBuilder.vertex(matrix4f, scale + scaledSizeR, -scale - scaledSizeR, -0.5F).color(red, green, blue, alpha).uv(lerp1, lerp4).endVertex();
+                bufferBuilder.vertex(matrix4f, scale + scaledSizeR, scale + scaledSizeR, -0.5F).color(red, green, blue, alpha).uv(lerp1, lerp3).endVertex();
+                bufferBuilder.vertex(matrix4f, -scale - scaledSizeR, scale + scaledSizeR, -0.5F).color(red, green, blue, alpha).uv(lerp2, lerp3).endVertex();
                 BufferUploader.drawWithShader(bufferBuilder.end());
-                matrixStack.popPose();
+                guiGraphics.pose().popPose();
             }
 
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             RenderSystem.disableBlend();
-            RenderSystem.depthMask(true);
-            RenderSystem.depthFunc(515);
 
-            return true;
+            return false;
         }
 
         return false;

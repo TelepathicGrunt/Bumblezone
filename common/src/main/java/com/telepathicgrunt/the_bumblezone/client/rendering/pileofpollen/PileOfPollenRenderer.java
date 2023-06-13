@@ -48,11 +48,14 @@ public class PileOfPollenRenderer {
                         BlockPos eyeBlockPos = BlockPos.containing(eyePosition);
                         BlockState eyeBlock = playerEntity.level().getBlockState(eyeBlockPos);
                         VoxelShape blockBounds = eyeBlock.getShape(playerEntity.level(), eyeBlockPos);
-                        if (!blockBounds.isEmpty() && blockBounds.bounds().contains(eyePosition.subtract(Vec3.atLowerCornerOf(eyeBlockPos)))) {
-                            isInPollen = true;
-                            x = 2;
-                            z = 2;
-                            break;
+                        if (!blockBounds.isEmpty()) {
+                            Vec3 eyePos = eyePosition.subtract(Vec3.atLowerCornerOf(eyeBlockPos));
+                            if (blockBounds.bounds().contains(eyePos)) {
+                                isInPollen = true;
+                                x = 2;
+                                z = 2;
+                                break;
+                            }
                         }
                     }
                 }
