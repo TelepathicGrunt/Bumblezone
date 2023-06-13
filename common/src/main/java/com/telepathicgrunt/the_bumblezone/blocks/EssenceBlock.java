@@ -22,6 +22,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -79,6 +80,10 @@ public abstract class EssenceBlock extends BaseEntityBlock {
     public abstract void performUniqueArenaTick(Level level, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity);
 
     public abstract ServerEssenceEvent getServerEssenceEvent();
+
+    public abstract ItemStack getEssenceItemReward();
+
+    public abstract int getEssenceXpReward();
 
     @Nullable
     @Override

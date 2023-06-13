@@ -1,12 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -34,6 +36,16 @@ public class EssenceBlockRed extends EssenceBlock {
                 BossEvent.BossBarColor.RED,
                 BossEvent.BossBarOverlay.NOTCHED_20
         ).setDarkenScreen(true);
+    }
+
+    @Override
+    public ItemStack getEssenceItemReward() {
+        return BzItems.ESSENCE_RED.get().getDefaultInstance();
+    }
+
+    @Override
+    public int getEssenceXpReward() {
+        return 3000;
     }
 
     @Override

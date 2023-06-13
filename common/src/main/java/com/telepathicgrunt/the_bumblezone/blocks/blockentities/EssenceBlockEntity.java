@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -197,49 +198,7 @@ public class EssenceBlockEntity extends BlockEntity {
         }
 
         if (endEvent) {
-            Optional<StructureTemplate> optionalStructureTemplate = serverLevel.getStructureManager().get(essenceBlockEntity.getSavedNbt());
-            optionalStructureTemplate.ifPresentOrElse(structureTemplate -> {
-                Vec3i size = structureTemplate.getSize();
-                BlockPos negativeHalfLengths = new BlockPos(-size.getX() / 2, -size.getY() / 2, -size.getZ() / 2);
-
-                //reset area
-                structureTemplate.placeInWorld(
-                        serverLevel,
-                        blockPos.offset(negativeHalfLengths),
-                        blockPos.offset(negativeHalfLengths),
-                        EssenceBlock.PLACEMENT_SETTINGS.getOrFillFromInternal(),
-                        serverLevel.getRandom(),
-                        Block.UPDATE_CLIENTS
-                );
-
-                for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
-                    ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
-                    if (serverPlayer != null) {
-                        if ((blockPos.getX() + size.getX()) > serverPlayer.blockPosition().getX() &&
-                            (blockPos.getY() + size.getY()) > serverPlayer.blockPosition().getY() &&
-                            (blockPos.getZ() + size.getZ()) > serverPlayer.blockPosition().getZ() &&
-                            (blockPos.getX() - size.getX()) < serverPlayer.blockPosition().getX() &&
-                            (blockPos.getY() - size.getY()) < serverPlayer.blockPosition().getY() &&
-                            (blockPos.getZ() - size.getZ()) < serverPlayer.blockPosition().getZ())
-                        {
-                            serverPlayer.setDeltaMovement(0, 0, 0);
-                            serverPlayer.teleportTo(
-                                    blockPos.getX() - 8 + 0.5f,
-                                    blockPos.getY() + negativeHalfLengths.getY() + 2,
-                                    blockPos.getZ() + 0.5f
-                            );
-                            serverPlayer.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(blockPos));
-                            EssenceBlock.spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
-                        }
-                    }
-
-                }
-            }, () -> Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to restore area from saved NBT - {} - {}", essenceBlockEntity, blockState));
-
-            essenceBlockEntity.getEventBar().removeAllPlayers();
-            essenceBlockEntity.setEventTimer(Integer.MAX_VALUE);
-            essenceBlockEntity.getPlayerInArena().clear();
-            essenceBlockEntity.setChanged();
+            EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, false);
         }
         else {
             essenceBlockEntity.setEventTimer(essenceBlockEntity.getEventTimer() - 1);
@@ -248,5 +207,63 @@ public class EssenceBlockEntity extends BlockEntity {
                 essenceBlock.performUniqueArenaTick(level, blockPos, blockState, essenceBlockEntity);
             }
         }
+    }
+
+    private static void EndEvent(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity, boolean won) {
+        Optional<StructureTemplate> optionalStructureTemplate = serverLevel.getStructureManager().get(essenceBlockEntity.getSavedNbt());
+        optionalStructureTemplate.ifPresentOrElse(structureTemplate -> {
+            Vec3i size = structureTemplate.getSize();
+            BlockPos negativeHalfLengths = new BlockPos(-size.getX() / 2, -size.getY() / 2, -size.getZ() / 2);
+
+            //reset area
+            structureTemplate.placeInWorld(
+                    serverLevel,
+                    blockPos.offset(negativeHalfLengths),
+                    blockPos.offset(negativeHalfLengths),
+                    EssenceBlock.PLACEMENT_SETTINGS.getOrFillFromInternal(),
+                    serverLevel.getRandom(),
+                    Block.UPDATE_CLIENTS
+            );
+
+            for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
+                ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
+                if (serverPlayer != null) {
+                    if ((blockPos.getX() + size.getX()) > serverPlayer.blockPosition().getX() &&
+                        (blockPos.getY() + size.getY()) > serverPlayer.blockPosition().getY() &&
+                        (blockPos.getZ() + size.getZ()) > serverPlayer.blockPosition().getZ() &&
+                        (blockPos.getX() - size.getX()) < serverPlayer.blockPosition().getX() &&
+                        (blockPos.getY() - size.getY()) < serverPlayer.blockPosition().getY() &&
+                        (blockPos.getZ() - size.getZ()) < serverPlayer.blockPosition().getZ())
+                    {
+                        serverPlayer.setDeltaMovement(0, 0, 0);
+                        serverPlayer.teleportTo(
+                                blockPos.getX() - 8 + 0.5f,
+                                blockPos.getY() + negativeHalfLengths.getY() + 2,
+                                blockPos.getZ() + 0.5f
+                        );
+                        serverPlayer.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(blockPos));
+                        EssenceBlock.spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
+
+                        if (won) {
+                            if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
+                                if (!serverPlayer.addItem(essenceBlock.getEssenceItemReward())) {
+                                    serverPlayer.drop(essenceBlock.getEssenceItemReward(), false);
+                                }
+                                serverPlayer.giveExperiencePoints(essenceBlock.getEssenceXpReward());
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!essenceBlockEntity.getPlayerInArena().isEmpty() && won) {
+                serverLevel.setBlock(blockPos, BzBlocks.HEAVY_AIR.get().defaultBlockState(), 3);
+            }
+        }, () -> Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to restore area from saved NBT - {} - {}", essenceBlockEntity, blockState));
+
+        essenceBlockEntity.getEventBar().removeAllPlayers();
+        essenceBlockEntity.setEventTimer(Integer.MAX_VALUE);
+        essenceBlockEntity.getPlayerInArena().clear();
+        essenceBlockEntity.setChanged();
     }
 }
