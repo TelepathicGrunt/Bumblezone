@@ -9,6 +9,10 @@
       "required": true
     },
     {
+      "id": "#the_bumblezone:carvable_wax",
+      "required": true
+    },
+    {
       "id": "minecraft:honeycomb",
       "required": true
     },

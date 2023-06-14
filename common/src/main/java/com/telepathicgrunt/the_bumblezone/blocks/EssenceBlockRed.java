@@ -107,9 +107,6 @@ public class EssenceBlockRed extends EssenceBlock {
                         Player player = serverLevel.getPlayerByUUID(playerUUID);
 
                         mob.setTarget(player);
-                        if (entity instanceof Rabbit rabbit) {
-                            rabbit.setVariant(Rabbit.Variant.EVIL);
-                        }
                     }
                 }
             }

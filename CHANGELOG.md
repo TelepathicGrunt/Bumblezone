@@ -15,6 +15,8 @@
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
 
+#TODO: adjust textures on bee armor
+
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
 
@@ -181,6 +183,8 @@ Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not 
 Essence of the Bees takes less time to consume now.
 
 All color Essence items added plus Essence of the Bees is now fire-resistant and won't be destroyed by lava/fire.
+
+Removed Carvable Wax from forge:wax/c:wax item tag to prevent recipe conflict with other mod's candle recipes.
 
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.

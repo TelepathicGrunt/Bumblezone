@@ -28,6 +28,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
@@ -60,7 +61,14 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 .setKeepLiquids(false)
                 .setIgnoreEntities(true)
                 .setKnownShape(true)
-                .addProcessor(new BlockIgnoreProcessor(List.of(BzBlocks.ESSENCE_BLOCK_WHITE.get()))));
+                .addProcessor(new BlockIgnoreProcessor(List.of(
+                    BzBlocks.ESSENCE_BLOCK_RED.get(),
+                    BzBlocks.ESSENCE_BLOCK_PURPLE.get(),
+                    BzBlocks.ESSENCE_BLOCK_BLUE.get(),
+                    BzBlocks.ESSENCE_BLOCK_GREEN.get(),
+                    BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
+                    BzBlocks.ESSENCE_BLOCK_WHITE.get()
+                ))));
 
     public EssenceBlock(Properties properties) {
         super(properties
@@ -71,6 +79,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 .noOcclusion()
                 .forceSolidOn()
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
+                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
                 .pushReaction(PushReaction.BLOCK));
     }
 

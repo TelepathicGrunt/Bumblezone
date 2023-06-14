@@ -50,7 +50,7 @@ public class EssenceBlockEntity extends BlockEntity {
     public static final int DEFAULT_EVENT_RANGE = 16;
 
     private UUID uuid = null;
-    private int eventTimer = Integer.MAX_VALUE;
+    private int eventTimer = 0;
     private List<UUID> playerInArena = new ArrayList<>();
     private ServerEssenceEvent eventBar = null;
     // Add object to hold all spawned entities of this event and wipe when done
@@ -225,6 +225,9 @@ public class EssenceBlockEntity extends BlockEntity {
             if (!essenceBlockEntity.getPlayerInArena().isEmpty()) {
                 performArenaTick(serverLevel, blockPos, blockState, essenceBlockEntity);
             }
+            else if (essenceBlockEntity.getEventTimer() > 0) {
+                EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, false);
+            }
         }
     }
 
@@ -336,15 +339,24 @@ public class EssenceBlockEntity extends BlockEntity {
                 }
             }
 
+            // remove missed entities
+            for (EventEntities eventEntities : essenceBlockEntity.getEventEntitiesInArena()) {
+                Entity entity = serverLevel.getEntity(eventEntities.uuid());
+                if (entity != null) {
+                    entity.remove(Entity.RemovalReason.DISCARDED);
+                }
+            }
+
             if (!essenceBlockEntity.getPlayerInArena().isEmpty() && won) {
                 serverLevel.setBlock(blockPos, BzBlocks.HEAVY_AIR.get().defaultBlockState(), 3);
             }
         }, () -> Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to restore area from saved NBT - {} - {}", essenceBlockEntity, blockState));
 
         essenceBlockEntity.getEventBar().removeAllPlayers();
-        essenceBlockEntity.setEventTimer(Integer.MAX_VALUE);
         essenceBlockEntity.getPlayerInArena().clear();
+        essenceBlockEntity.getEventEntitiesInArena().clear();
         essenceBlockEntity.setExtraEventTrackingProgress(0);
+        essenceBlockEntity.setEventTimer(0);
         essenceBlockEntity.setChanged();
     }
 }
