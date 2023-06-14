@@ -10,7 +10,9 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -65,7 +67,7 @@ public class HeavyAir extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof Bee || entity instanceof BeehemothEntity) {
+        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof Projectile || entity instanceof Ghast) {
             return;
         }
 

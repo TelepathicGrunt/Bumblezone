@@ -24,6 +24,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -118,9 +119,8 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                                 Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
                                 true);
                     }
-                    else if (!(entity instanceof Player)) {
-                        entity.hurt(entity.damageSources().magic(), 1);
-                    }
+
+                    entity.hurt(entity.damageSources().magic(), 0.5f);
 
                     Vec3 center = Vec3.atCenterOf(blockPos);
                     entity.push(
@@ -230,6 +230,13 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                         }
 
                         spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
+
+                        for (int x = -1; x <= 1; x++) {
+                            for (int z = -1; z <= 1; z++) {
+                                ChunkPos chunkPos = new ChunkPos(blockPos);
+                                serverLevel.getChunk(chunkPos.x + x, chunkPos.z + z).setInhabitedTime(1512000);
+                            }
+                        }
                     }
                 });
 

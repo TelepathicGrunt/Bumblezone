@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.scores.PlayerTeam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,7 @@ public class EssenceBlockEntity extends BlockEntity {
     private static final String EVENT_TIMER_TAG = "eventTimer";
     private static final String PLAYERS_IN_ARENA_TAG = "playersInArena";
     private static final String EVENT_ENTITIES_IN_ARENA_TAG = "eventEntitiesInArena";
+    private static final String EXTRA_EVENT_TRACKING_PROGRESS_TAG = "extraEventTrackingProgress";
     public static final int DEFAULT_EVENT_RANGE = 16;
 
     private UUID uuid = null;
@@ -54,6 +56,7 @@ public class EssenceBlockEntity extends BlockEntity {
     // Add object to hold all spawned entities of this event and wipe when done
     public record EventEntities(UUID uuid) {}
     private List<EventEntities> eventEntitiesInArena = new ArrayList<>();
+    private int extraEventTrackingProgress = 0;
 
     protected EssenceBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -108,11 +111,20 @@ public class EssenceBlockEntity extends BlockEntity {
         this.eventEntitiesInArena = eventEntitiesInArena;
     }
 
+    public int getExtraEventTrackingProgress() {
+        return extraEventTrackingProgress;
+    }
+
+    public void setExtraEventTrackingProgress(int extraEventTrackingProgress) {
+        this.extraEventTrackingProgress = extraEventTrackingProgress;
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
         if (compoundTag != null) {
             this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
+            this.extraEventTrackingProgress = compoundTag.getInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG);
             this.eventBar.setEndEventTimer(this.eventTimer);
             if (compoundTag.contains(UUID_TAG)) {
                 this.uuid = compoundTag.getUUID(UUID_TAG);
@@ -145,11 +157,31 @@ public class EssenceBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag compoundTag) {
         super.saveAdditional(compoundTag);
         saveFieldsToTag(compoundTag);
+
+        // In case player teleports away and chunk unloads this block
+        if (this.getLevel() != null) {
+            for (int i = this.getPlayerInArena().size() - 1; i >= 0; i--) {
+                UUID playerUUID = this.getPlayerInArena().get(i);
+                ServerPlayer serverPlayer = (ServerPlayer) this.getLevel().getPlayerByUUID(playerUUID);
+                if (serverPlayer != null) {
+                    if (serverPlayer.isDeadOrDying() ||
+                        (Math.abs(serverPlayer.blockPosition().getX() - this.getBlockPos().getX()) > DEFAULT_EVENT_RANGE ||
+                        Math.abs(serverPlayer.blockPosition().getY() - this.getBlockPos().getY()) > DEFAULT_EVENT_RANGE ||
+                        Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > DEFAULT_EVENT_RANGE))
+                    {
+                        this.getPlayerInArena().remove(playerUUID);
+                        this.setChanged();
+                        this.getEventBar().removePlayer(serverPlayer);
+                    }
+                }
+            }
+        }
     }
 
     private void saveFieldsToTag(CompoundTag compoundTag) {
         compoundTag.put(UUID_TAG, NbtUtils.createUUID(this.getUUID()));
         compoundTag.putInt(EVENT_TIMER_TAG, this.eventTimer);
+        compoundTag.putInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG, this.extraEventTrackingProgress);
 
         ListTag players = new ListTag();
         for (UUID target : this.playerInArena) {
@@ -204,9 +236,10 @@ public class EssenceBlockEntity extends BlockEntity {
                 UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(i);
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
                 if (serverPlayer != null) {
-                    if (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > DEFAULT_EVENT_RANGE ||
+                    if (serverPlayer.isDeadOrDying() ||
+                        (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > DEFAULT_EVENT_RANGE ||
                         Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > DEFAULT_EVENT_RANGE ||
-                        Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > DEFAULT_EVENT_RANGE)
+                        Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > DEFAULT_EVENT_RANGE))
                     {
                         essenceBlockEntity.getPlayerInArena().remove(playerUUID);
                         essenceBlockEntity.setChanged();
@@ -311,6 +344,7 @@ public class EssenceBlockEntity extends BlockEntity {
         essenceBlockEntity.getEventBar().removeAllPlayers();
         essenceBlockEntity.setEventTimer(Integer.MAX_VALUE);
         essenceBlockEntity.getPlayerInArena().clear();
+        essenceBlockEntity.setExtraEventTrackingProgress(0);
         essenceBlockEntity.setChanged();
     }
 }
