@@ -49,10 +49,11 @@ Added Luminescent Wax Channel blocks and Luminescent Wax Node blocks! Very high 
  Only found in Sempiternal Sanctum.
 
 Windy Air added that will push any entity in whatever direction the air block is blowing! Only found in certain structures.
- Can be found in Creative Menu for builders!
+ Can be found in Creative Menu for builders! Can be controlled by this entity type tag: `the_bumblezone:windy_air/immune_to_push_effect`
 
 Heavy Air added that will pull entities down and remove Levitation, Slow Falling, Jump Boost, and non-creative flying! 
  Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctum. Can be found in Creative Menu for builders!
+ Can be controlled by this entity type tag: `the_bumblezone:heavy_air/immune_to_gravity_effect`
 
 Suspicious Pile of Pollen is added now! You may find these scattered throughout Bumblezone in certain structures. Brush them for loot!
  Also found in Creative Menu for builders, but you'll need to set the items or loot table for the block by command.

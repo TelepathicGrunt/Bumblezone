@@ -4,6 +4,7 @@ import com.google.common.collect.MapMaker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -85,6 +86,9 @@ public class WindyAir extends ProperFacingBlock {
             if ((player.isCreative() && player.getAbilities().flying) || player.isSpectator()) {
                 return;
             }
+        }
+        else if (entity.getType().is(BzTags.WINDY_AIR_IMMUNE)) {
+            return;
         }
 
         if (APPLIED_PUSH_FOR_ENTITY.size() >= 200) {
