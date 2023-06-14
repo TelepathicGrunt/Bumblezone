@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ghast",
+    "minecraft:blaze",
+    "minecraft:phantom",
+    "minecraft:allay",
+    "minecraft:vex",
+    "#the_bumblezone:bee_like",
+    "#the_bumblezone:bees"
+  ]
+}
