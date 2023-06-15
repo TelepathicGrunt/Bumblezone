@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
@@ -34,6 +35,7 @@ public class BzEntities {
     public static final RegistryEntry<EntityType<ThrownStingerSpearEntity>> THROWN_STINGER_SPEAR_ENTITY = ENTITIES.register("thrown_stinger_spear", () -> PlatformHooks.createEntityType(ThrownStingerSpearEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "thrown_stinger_spear"));
     public static final RegistryEntry<EntityType<BeeStingerEntity>> BEE_STINGER_ENTITY = ENTITIES.register("bee_stinger", () -> PlatformHooks.createEntityType(BeeStingerEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "bee_stinger"));
     public static final RegistryEntry<EntityType<HoneyCrystalShardEntity>> HONEY_CRYSTAL_SHARD = ENTITIES.register("honey_crystal_shard", () -> PlatformHooks.createEntityType(HoneyCrystalShardEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "honey_crystal_shard"));
+    public static final RegistryEntry<EntityType<ElectricRingEntity>> ELECTRIC_RING_ENTITY = ENTITIES.register("electric_ring_entity", () -> PlatformHooks.createEntityType(ElectricRingEntity::new, MobCategory.MISC, 2F, true, 4, 20, "electric_ring_entity"));
 
     public static void registerEntitySpawnRestrictions(RegisterSpawnPlacementsEvent event) {
         event.register(HONEY_SLIME.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);

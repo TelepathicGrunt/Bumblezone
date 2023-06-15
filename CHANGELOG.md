@@ -17,6 +17,12 @@
 
 #TODO: adjust textures on bee armor
 
+#TODO: Lootr integration with Honey Cocoon https://github.com/noobanidus/Lootr/blob/1.18/src/main/java/noobanidus/mods/lootr/api/ILootrAPI.java#L24
+a) in your "open container",
+b) check if lootr is loaded; if not, fall back on your default (you will need to give each container a uuid that gets saved)
+c) have a wrapper method like LootrIntegration which has a method for createMenu
+d) access the LootrAPI there, pass the player and the uuid
+
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
 
