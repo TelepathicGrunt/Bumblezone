@@ -88,7 +88,6 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
             ServerLevel serverLevel = (ServerLevel)level;
             BlockPos entityPos = entity.blockPosition();
             for (int i = 0; i < 2; ++i) {
-                serverLevel.sendParticles(ParticleTypes.SPLASH, (double)entityPos.getX() + level.random.nextDouble(), entityPos.getY() + 0.5f + level.random.nextDouble(), (double)entityPos.getZ() + level.random.nextDouble(), 1, 0.0, 0.0, 0.0, 1.0);
                 serverLevel.sendParticles(ParticleTypes.BUBBLE, (double)entityPos.getX() + level.random.nextDouble(), entityPos.getY() + 0.5f + level.random.nextDouble(), (double)entityPos.getZ() + level.random.nextDouble(), 1, 0.0, 0.01, 0.0, 0.2);
             }
         }
