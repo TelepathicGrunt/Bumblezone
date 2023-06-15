@@ -166,7 +166,14 @@ public class EssenceBlockBlue extends EssenceBlock {
             return;
         }
 
-        Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(direction.getStepX() * 5, direction.getStepY() * 5, direction.getStepZ() * 5), MobSpawnType.TRIGGERED);
+        Entity entity = entityTypeToSpawn.spawn(
+            serverLevel,
+            blockPos.offset(
+                direction.getStepX() * 3, 
+                direction.getStepY() * 3,
+                direction.getStepZ() * 3
+            ),
+            MobSpawnType.TRIGGERED);
         if (entity == null) {
             return;
         }
@@ -316,9 +323,11 @@ public class EssenceBlockBlue extends EssenceBlock {
 
                     if (drowned.getMainHandItem().isEmpty()) {
                         drowned.setItemSlot(EquipmentSlot.MAINHAND, bonusItem);
+                        drowned.setDropChance(EquipmentSlot.MAINHAND, 0.85f);
                     }
                     else if (drowned.getOffhandItem().isEmpty()) {
                         drowned.setItemSlot(EquipmentSlot.OFFHAND, bonusItem);
+                        drowned.setDropChance(EquipmentSlot.OFFHAND, 0.85f);
                     }
                 }
             }
