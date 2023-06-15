@@ -169,7 +169,7 @@ public class EssenceBlockBlue extends EssenceBlock {
         Entity entity = entityTypeToSpawn.spawn(
             serverLevel,
             blockPos.offset(
-                direction.getStepX() * 3, 
+                direction.getStepX() * 3,
                 direction.getStepY() * 3,
                 direction.getStepZ() * 3
             ),
@@ -276,8 +276,8 @@ public class EssenceBlockBlue extends EssenceBlock {
                     drowned.setDropChance(EquipmentSlot.CHEST, 0.2f);
 
                     ItemStack helmet = serverLevel.getRandom().nextFloat() < 0.1f ?
-                            Items.LEATHER_HELMET.getDefaultInstance() :
-                            Items.TURTLE_HELMET.getDefaultInstance();
+                            Items.TURTLE_HELMET.getDefaultInstance() :
+                            Items.LEATHER_HELMET.getDefaultInstance();
                     if (serverLevel.getRandom().nextFloat() < 0.75f) {
                         helmet.enchant(Enchantments.AQUA_AFFINITY, 1);
                     }
@@ -321,13 +321,13 @@ public class EssenceBlockBlue extends EssenceBlock {
                                 true));
                     }
 
-                    if (drowned.getMainHandItem().isEmpty()) {
+                    if (drowned.getMainHandItem().isEmpty() && serverLevel.getRandom().nextFloat() < 0.3f) {
                         drowned.setItemSlot(EquipmentSlot.MAINHAND, bonusItem);
-                        drowned.setDropChance(EquipmentSlot.MAINHAND, 0.85f);
+                        drowned.setDropChance(EquipmentSlot.MAINHAND, 2.0f);
                     }
-                    else if (drowned.getOffhandItem().isEmpty()) {
+                    else if (drowned.getOffhandItem().isEmpty() && serverLevel.getRandom().nextFloat() < 0.3f) {
                         drowned.setItemSlot(EquipmentSlot.OFFHAND, bonusItem);
-                        drowned.setDropChance(EquipmentSlot.OFFHAND, 0.85f);
+                        drowned.setDropChance(EquipmentSlot.OFFHAND, 2.0f);
                     }
                 }
             }
