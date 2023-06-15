@@ -165,6 +165,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 optionalStructureTemplate.ifPresent(loadingStructureTemplate -> {
                     Vec3i size = loadingStructureTemplate.getSize();
                     BlockPos negativeHalfLengths = new BlockPos(-size.getX() / 2, -size.getY() / 2, -size.getZ() / 2);
+                    essenceBlockEntity.setArenaSize(new BlockPos(size));
 
                     // Save area
                     StructureTemplate savingStructureTemplate;

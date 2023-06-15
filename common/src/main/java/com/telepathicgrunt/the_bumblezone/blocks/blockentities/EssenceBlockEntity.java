@@ -47,7 +47,7 @@ public class EssenceBlockEntity extends BlockEntity {
     private static final String PLAYERS_IN_ARENA_TAG = "playersInArena";
     private static final String EVENT_ENTITIES_IN_ARENA_TAG = "eventEntitiesInArena";
     private static final String EXTRA_EVENT_TRACKING_PROGRESS_TAG = "extraEventTrackingProgress";
-    public static final int DEFAULT_EVENT_RANGE = 16;
+    private static final String ARENA_SIZE_TAG = "arenaSize";
 
     private UUID uuid = null;
     private int eventTimer = 0;
@@ -57,6 +57,7 @@ public class EssenceBlockEntity extends BlockEntity {
     public record EventEntities(UUID uuid) {}
     private List<EventEntities> eventEntitiesInArena = new ArrayList<>();
     private int extraEventTrackingProgress = 0;
+    private BlockPos arenaSize = BlockPos.ZERO;
 
     protected EssenceBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -119,6 +120,14 @@ public class EssenceBlockEntity extends BlockEntity {
         this.extraEventTrackingProgress = extraEventTrackingProgress;
     }
 
+    public BlockPos getArenaSize() {
+        return arenaSize;
+    }
+
+    public void setArenaSize(BlockPos arenaSize) {
+        this.arenaSize = arenaSize;
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
@@ -146,6 +155,10 @@ public class EssenceBlockEntity extends BlockEntity {
                     this.eventEntitiesInArena.add(new EventEntities(NbtUtils.loadUUID(tag)));
                 }
             }
+
+            if (compoundTag.contains(ARENA_SIZE_TAG)) {
+                this.arenaSize = NbtUtils.readBlockPos(compoundTag.getCompound(ARENA_SIZE_TAG));
+            }
         }
 
         if (this.level instanceof ClientLevel) {
@@ -165,9 +178,9 @@ public class EssenceBlockEntity extends BlockEntity {
                 ServerPlayer serverPlayer = (ServerPlayer) this.getLevel().getPlayerByUUID(playerUUID);
                 if (serverPlayer != null) {
                     if (serverPlayer.isDeadOrDying() ||
-                        (Math.abs(serverPlayer.blockPosition().getX() - this.getBlockPos().getX()) > DEFAULT_EVENT_RANGE ||
-                        Math.abs(serverPlayer.blockPosition().getY() - this.getBlockPos().getY()) > DEFAULT_EVENT_RANGE ||
-                        Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > DEFAULT_EVENT_RANGE))
+                        (Math.abs(serverPlayer.blockPosition().getX() - this.getBlockPos().getX()) > ((this.getArenaSize().getX() + 1) / 2) ||
+                        Math.abs(serverPlayer.blockPosition().getY() - this.getBlockPos().getY()) > ((this.getArenaSize().getY() + 1) / 2) ||
+                        Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > ((this.getArenaSize().getZ() + 1) / 2)))
                     {
                         this.getPlayerInArena().remove(playerUUID);
                         this.setChanged();
@@ -194,6 +207,7 @@ public class EssenceBlockEntity extends BlockEntity {
             eventEntities.add(NbtUtils.createUUID(target.uuid()));
         }
         compoundTag.put(EVENT_ENTITIES_IN_ARENA_TAG, eventEntities);
+        compoundTag.put(ARENA_SIZE_TAG, NbtUtils.writeBlockPos(this.arenaSize));
     }
 
     public ResourceLocation getSavedNbt() {
@@ -240,9 +254,9 @@ public class EssenceBlockEntity extends BlockEntity {
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
                 if (serverPlayer != null) {
                     if (serverPlayer.isDeadOrDying() ||
-                        (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > DEFAULT_EVENT_RANGE ||
-                        Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > DEFAULT_EVENT_RANGE ||
-                        Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > DEFAULT_EVENT_RANGE))
+                        (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > ((essenceBlockEntity.getArenaSize().getX() + 1) / 2) ||
+                        Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > ((essenceBlockEntity.getArenaSize().getY() + 1) / 2) ||
+                        Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > ((essenceBlockEntity.getArenaSize().getZ() + 1) / 2)))
                     {
                         essenceBlockEntity.getPlayerInArena().remove(playerUUID);
                         essenceBlockEntity.setChanged();
@@ -300,11 +314,12 @@ public class EssenceBlockEntity extends BlockEntity {
                         (blockPos.getY() - size.getY()) < serverPlayer.blockPosition().getY() &&
                         (blockPos.getZ() - size.getZ()) < serverPlayer.blockPosition().getZ())
                     {
+                        Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(serverLevel.getRandom());
                         serverPlayer.setDeltaMovement(0, 0, 0);
                         serverPlayer.teleportTo(
-                                blockPos.getX() - 8 + 0.5f,
+                                blockPos.getX() + (direction.getStepX() * ((negativeHalfLengths.getX() + 1) / -2f)) + 0.5f,
                                 blockPos.getY() + negativeHalfLengths.getY() + 2,
-                                blockPos.getZ() + 0.5f
+                                blockPos.getX() + (direction.getStepZ() * ((negativeHalfLengths.getZ() + 1) / -2f)) + 0.5f
                         );
                         serverPlayer.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(blockPos));
                         EssenceBlock.spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
@@ -357,6 +372,7 @@ public class EssenceBlockEntity extends BlockEntity {
         essenceBlockEntity.getEventEntitiesInArena().clear();
         essenceBlockEntity.setExtraEventTrackingProgress(0);
         essenceBlockEntity.setEventTimer(0);
+        essenceBlockEntity.setArenaSize(BlockPos.ZERO);
         essenceBlockEntity.setChanged();
     }
 }
