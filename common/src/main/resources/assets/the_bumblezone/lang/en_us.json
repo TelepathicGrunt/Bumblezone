@@ -108,6 +108,8 @@
   "block.the_bumblezone.heavy_air": "Heavy Air",
   "block.the_bumblezone.windy_air": "Windy Air",
   "block.the_bumblezone.infinity_barrier": "Infinity Barrier",
+  "block.the_bumblezone.sugar_water_bubble_column_block": "Sugar Water Bubble Column",
+  "block.the_bumblezone.dense_bubble_block": "Dense Bubble Block",
 
   "fluid.the_bumblezone.sugar_water_still": "Sugar Water",
   "fluid.the_bumblezone.sugar_water_flowing": "Sugar Water",

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:bone",
+    "minecraft:glow_ink_sac",
+    "minecraft:apple",
+    "minecraft:wet_sponge",
+    "minecraft:prismarine_crystals",
+    "minecraft:raw_copper",
+    "minecraft:emerald",
+    "minecraft:diamond",
+    "minecraft:brush",
+    "minecraft:spyglass"
+  ]
+}

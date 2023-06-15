@@ -90,6 +90,7 @@ public class BzTags {
     public static final TagKey<Item> ITEM_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_special_dedicated_compat"));
     public static final TagKey<Item> HONEY_DRUNK_TRIGGER_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "queens_desire/honey_drunk_trigger_items"));
     public static final TagKey<Item> BZ_ARMOR_ABILITY_ENHANCING_GEAR = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_armors/bz_armor_ability_enhancing_gear"));
+    public static final TagKey<Item> CALMING_DROWNED_BONUS_HELD_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/calming_drowned_bonus_held_item"));
     public static final TagKey<Item> ABILITY_ESSENCE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "ability_essence_items"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
@@ -134,6 +135,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> ESSENCE_RAGING_ARENA_STRONG_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/raging_arena/strong_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_RAGING_ARENA_BOSS_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/raging_arena/boss_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_NORMAL_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/normal_enemy"));
+    public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_LATE_NORMAL_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/late_normal_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_STRONG_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/strong_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_BOSS_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/boss_enemy"));
 

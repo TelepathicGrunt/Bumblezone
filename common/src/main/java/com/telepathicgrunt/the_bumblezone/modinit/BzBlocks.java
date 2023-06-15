@@ -102,4 +102,5 @@ public class BzBlocks {
     public static final RegistryEntry<Block> HEAVY_AIR = BLOCKS.register("heavy_air", HeavyAir::new);
     public static final RegistryEntry<Block> WINDY_AIR = BLOCKS.register("windy_air", WindyAir::new);
     public static final RegistryEntry<Block> INFINITY_BARRIER = BLOCKS.register("infinity_barrier", InfinityBarrier::new);
+    public static final RegistryEntry<Block> DENSE_BUBBLE_BLOCK = BLOCKS.register("dense_bubble_block", DenseBubbleBlock::new);
    }

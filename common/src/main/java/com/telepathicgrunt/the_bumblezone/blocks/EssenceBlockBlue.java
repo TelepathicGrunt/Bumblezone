@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
@@ -15,6 +16,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -25,8 +28,10 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -53,7 +58,7 @@ public class EssenceBlockBlue extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 8000;
+        return 10000;
     }
 
     @Override
@@ -115,7 +120,7 @@ public class EssenceBlockBlue extends EssenceBlock {
             }
         }
 
-        handleGiantBubbles(serverLevel, blockPos, blockState, essenceBlockEntity);
+        handleGiantBubbles(serverLevel, blockPos);
 
         float newProgress = entitiesKilled / ENTITIES_TO_KILL;
         essenceBlockEntity.getEventBar().setProgress(1 - newProgress);
@@ -129,17 +134,20 @@ public class EssenceBlockBlue extends EssenceBlock {
         TagKey<EntityType<?>> enemyTagToUse = BzTags.ESSENCE_CALMING_ARENA_NORMAL_ENEMY;
         boolean isStrong = false;
         int entityToSpawnIndex = currentEntityCount + 1;
-        if ((entityToSpawnIndex % 15) == 0 ||
-            entityToSpawnIndex == 29 ||
+        if (entityToSpawnIndex == 28 ||
+            entityToSpawnIndex == 35 ||
             entityToSpawnIndex == 48 ||
             entityToSpawnIndex == 49 ||
             entityToSpawnIndex == 50)
         {
-            enemyTagToUse = BzTags.ESSENCE_CALMING_ARENA_BOSS_ENEMY; // boss at 15, 29, 30, 48, 49, and 50
+            enemyTagToUse = BzTags.ESSENCE_CALMING_ARENA_BOSS_ENEMY; // boss at 28, 35, 48, 49, and 50
         }
         else if ((entityToSpawnIndex % 5) == 0) {
             enemyTagToUse = BzTags.ESSENCE_CALMING_ARENA_STRONG_ENEMY; // strong at every 5 except when boss
             isStrong = true;
+        }
+        else if (entityToSpawnIndex >= ENTITIES_TO_KILL / 2) {
+            enemyTagToUse = BzTags.ESSENCE_CALMING_ARENA_LATE_NORMAL_ENEMY; // guardians past 25
         }
 
         List<? extends EntityType<?>> entityTypeList = BuiltInRegistries.ENTITY_TYPE
@@ -151,119 +159,180 @@ public class EssenceBlockBlue extends EssenceBlock {
                 ).orElseGet(ArrayList::new);
 
         Direction direction = Direction.getRandom(serverLevel.getRandom());
-        EntityType<?> entityTypeToSpawn = entityTypeList.get(serverLevel.getRandom().nextInt(entityTypeList.size()));
+
+        EntityType<?> entityTypeToSpawn = entityTypeList.isEmpty() ?
+                null : entityTypeList.get(serverLevel.getRandom().nextInt(entityTypeList.size()));
+        if (entityTypeToSpawn == null) {
+            return;
+        }
+
         Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(direction.getStepX() * 5, direction.getStepY() * 5, direction.getStepZ() * 5), MobSpawnType.TRIGGERED);
+        if (entity == null) {
+            return;
+        }
+        eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
 
-        if (entity != null) {
-            eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
+        UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
+        Player player = serverLevel.getPlayerByUUID(playerUUID);
+        if (player instanceof ServerPlayer serverPlayer) {
+            float maxHeart = serverPlayer.getMaxHealth();
+            float maxArmor = serverPlayer.getArmorValue();
+            float mobHealthBoost = (maxHeart / 15) + (maxArmor / 20);
+            float mobAttackBoost = (maxHeart / 25) + (maxArmor / 10);
 
-            UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
-            Player player = serverLevel.getPlayerByUUID(playerUUID);
-            if (player instanceof ServerPlayer serverPlayer) {
-                float maxHeart = serverPlayer.getMaxHealth();
-                float maxArmor = serverPlayer.getArmorValue();
-                float mobHealthBoost = (maxHeart / 15) + (maxArmor / 10);
-                float mobAttackBoost = (maxHeart / 20) + (maxArmor / 15);
+            boolean isEssenced = EssenceOfTheBees.hasEssence(serverPlayer);
+            if (!isEssenced) {
+                mobHealthBoost *= 1.5f;
+                mobAttackBoost *= 1.5f;
+            }
 
-                boolean isEssenced = EssenceOfTheBees.hasEssence(serverPlayer);
-                if (!isEssenced) {
-                    mobHealthBoost *= 1.5f;
-                    mobAttackBoost *= 1.5f;
+            if (entity instanceof LivingEntity livingEntity) {
+                AttributeInstance livingEntityAttributeHealth = livingEntity.getAttribute(Attributes.MAX_HEALTH);
+                if (livingEntityAttributeHealth != null) {
+                    livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
+                            UUID.fromString("03c85bd0-09eb-11ee-be56-0242ac120002"),
+                            "Essence Arena Health Boost",
+                            mobHealthBoost,
+                            AttributeModifier.Operation.ADDITION));
                 }
 
-                if (entity instanceof LivingEntity livingEntity) {
-                    AttributeInstance livingEntityAttributeHealth = livingEntity.getAttribute(Attributes.MAX_HEALTH);
-                    if (livingEntityAttributeHealth != null) {
-                        livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
-                                UUID.fromString("03c85bd0-09eb-11ee-be56-0242ac120002"),
-                                "Essence Arena Health Boost",
-                                mobHealthBoost,
-                                AttributeModifier.Operation.ADDITION));
-                    }
-
-                    AttributeInstance livingEntityAttributeAttack = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
-                    if (livingEntityAttributeAttack != null) {
-                        livingEntityAttributeAttack.addPermanentModifier(new AttributeModifier(
-                                UUID.fromString("355141f8-09eb-11ee-be56-0242ac120002"),
-                                "Essence Arena Damage Boost",
-                                mobAttackBoost,
-                                AttributeModifier.Operation.ADDITION));
-                    }
-
-                    AttributeInstance livingEntityAttributeSpeed = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
-                    if (livingEntityAttributeSpeed != null) {
-                        livingEntityAttributeSpeed.addPermanentModifier(new AttributeModifier(
-                                UUID.fromString("39ca0496-fa37-488f-8199-c4779f1afe0c"),
-                                "Essence Arena Speed Boost",
-                                isEssenced ? 0.02 : 0.04,
-                                AttributeModifier.Operation.ADDITION));
-                    }
-
-                    AttributeInstance livingEntityAttributeFlyingSpeed = livingEntity.getAttribute(Attributes.FLYING_SPEED);
-                    if (livingEntityAttributeFlyingSpeed != null) {
-                        livingEntityAttributeFlyingSpeed.addPermanentModifier(new AttributeModifier(
-                                UUID.fromString("c762c216-0a3a-11ee-be56-0242ac120002"),
-                                "Essence Arena Flying Speed Boost",
-                                0.02,
-                                AttributeModifier.Operation.ADDITION));
-                    }
-
-                    AttributeInstance livingEntityAttributeFollowRange = livingEntity.getAttribute(Attributes.FOLLOW_RANGE);
-                    if (livingEntityAttributeFollowRange != null) {
-                        livingEntityAttributeFollowRange.addPermanentModifier(new AttributeModifier(
-                                UUID.fromString("23a7a8a9-85bc-4dc3-9417-a4bd4b1b95a2"),
-                                "Essence Arena Sight Boost",
-                                32,
-                                AttributeModifier.Operation.ADDITION));
-                    }
+                AttributeInstance livingEntityAttributeAttack = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);
+                if (livingEntityAttributeAttack != null) {
+                    livingEntityAttributeAttack.addPermanentModifier(new AttributeModifier(
+                            UUID.fromString("355141f8-09eb-11ee-be56-0242ac120002"),
+                            "Essence Arena Damage Boost",
+                            mobAttackBoost,
+                            AttributeModifier.Operation.ADDITION));
                 }
 
-                if (entity instanceof NeutralMob neutralMob) {
-                    neutralMob.setRemainingPersistentAngerTime(Integer.MAX_VALUE);
-                    neutralMob.setPersistentAngerTarget(playerUUID);
-                    neutralMob.setTarget(serverPlayer);
+                AttributeInstance livingEntityAttributeSpeed = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
+                if (livingEntityAttributeSpeed != null) {
+                    livingEntityAttributeSpeed.addPermanentModifier(new AttributeModifier(
+                            UUID.fromString("39ca0496-fa37-488f-8199-c4779f1afe0c"),
+                            "Essence Arena Speed Boost",
+                            isEssenced ? 0.04 : 0.08,
+                            AttributeModifier.Operation.ADDITION));
                 }
-                else if (entity instanceof Mob mob) {
-                    mob.setTarget(serverPlayer);
-                    if (mob instanceof Drowned drowned) {
-                        ItemStack swimBoots = Items.LEATHER_BOOTS.getDefaultInstance();
-                        swimBoots.enchant(Enchantments.DEPTH_STRIDER, 3);
-                        drowned.equipItemIfPossible(swimBoots);
-                        drowned.setDropChance(EquipmentSlot.FEET, 0.2f);
 
-                        if (isStrong) {
-                            ItemStack trident = Items.TRIDENT.getDefaultInstance();
-                            if (serverLevel.getRandom().nextFloat() < 0.25) {
-                                trident.enchant(Enchantments.CHANNELING, 1);
-                            }
-                            else if (serverLevel.getRandom().nextFloat() < 0.25) {
-                                trident.enchant(Enchantments.LOYALTY, 1);
-                            }
-                            else if (serverLevel.getRandom().nextFloat() < 0.25) {
-                                trident.enchant(Enchantments.IMPALING, 1);
-                            }
-                            else {
-                                trident.enchant(Enchantments.RIPTIDE, 1);
-                            }
-                            drowned.setItemSlot(EquipmentSlot.MAINHAND, trident);
-                            drowned.setDropChance(EquipmentSlot.MAINHAND, 0.5f);
+                AttributeInstance livingEntityAttributeFlyingSpeed = livingEntity.getAttribute(Attributes.FLYING_SPEED);
+                if (livingEntityAttributeFlyingSpeed != null) {
+                    livingEntityAttributeFlyingSpeed.addPermanentModifier(new AttributeModifier(
+                            UUID.fromString("c762c216-0a3a-11ee-be56-0242ac120002"),
+                            "Essence Arena Flying Speed Boost",
+                            0.02,
+                            AttributeModifier.Operation.ADDITION));
+                }
+
+                AttributeInstance livingEntityAttributeFollowRange = livingEntity.getAttribute(Attributes.FOLLOW_RANGE);
+                if (livingEntityAttributeFollowRange != null) {
+                    livingEntityAttributeFollowRange.addPermanentModifier(new AttributeModifier(
+                            UUID.fromString("23a7a8a9-85bc-4dc3-9417-a4bd4b1b95a2"),
+                            "Essence Arena Sight Boost",
+                            32,
+                            AttributeModifier.Operation.ADDITION));
+                }
+            }
+
+            if (entity instanceof NeutralMob neutralMob) {
+                neutralMob.setRemainingPersistentAngerTime(Integer.MAX_VALUE);
+                neutralMob.setPersistentAngerTarget(playerUUID);
+                neutralMob.setTarget(serverPlayer);
+            }
+            else if (entity instanceof Mob mob) {
+                List<Item> itemList = BuiltInRegistries.ITEM
+                        .getTag(BzTags.CALMING_DROWNED_BONUS_HELD_ITEM)
+                        .map(holders -> holders
+                                .stream()
+                                .map(Holder::value)
+                                .toList()
+                        ).orElseGet(ArrayList::new);
+
+                ItemStack bonusItem = itemList.isEmpty() ?
+                        ItemStack.EMPTY :
+                        itemList.get(serverLevel.getRandom().nextInt(itemList.size())).getDefaultInstance();
+
+                mob.setTarget(serverPlayer);
+                if (mob instanceof Drowned drowned) {
+                    ItemStack swimBoots = Items.LEATHER_BOOTS.getDefaultInstance();
+                    swimBoots.enchant(Enchantments.DEPTH_STRIDER, 3);
+                    drowned.equipItemIfPossible(swimBoots);
+                    drowned.setDropChance(EquipmentSlot.FEET, 0.2f);
+
+                    ItemStack leggings = Items.LEATHER_LEGGINGS.getDefaultInstance();
+                    leggings.enchant(Enchantments.THORNS, 1);
+                    drowned.equipItemIfPossible(leggings);
+                    drowned.setDropChance(EquipmentSlot.LEGS, 0.2f);
+
+                    ItemStack chestplate = Items.LEATHER_CHESTPLATE.getDefaultInstance();
+                    chestplate.enchant(Enchantments.PROJECTILE_PROTECTION, 1);
+                    drowned.equipItemIfPossible(chestplate);
+                    drowned.setDropChance(EquipmentSlot.CHEST, 0.2f);
+
+                    ItemStack helmet = serverLevel.getRandom().nextFloat() < 0.1f ?
+                            Items.LEATHER_HELMET.getDefaultInstance() :
+                            Items.TURTLE_HELMET.getDefaultInstance();
+                    if (serverLevel.getRandom().nextFloat() < 0.75f) {
+                        helmet.enchant(Enchantments.AQUA_AFFINITY, 1);
+                    }
+                    else {
+                        helmet.enchant(Enchantments.RESPIRATION, 3);
+                    }
+                    drowned.equipItemIfPossible(helmet);
+                    drowned.setDropChance(EquipmentSlot.HEAD, 0.15f);
+
+                    if (isStrong) {
+                        ItemStack trident = Items.TRIDENT.getDefaultInstance();
+                        if (serverLevel.getRandom().nextFloat() < 0.25) {
+                            trident.enchant(Enchantments.CHANNELING, 1);
+                        }
+                        else if (serverLevel.getRandom().nextFloat() < 0.25) {
+                            trident.enchant(Enchantments.LOYALTY, 1);
+                        }
+                        else if (serverLevel.getRandom().nextFloat() < 0.25) {
+                            trident.enchant(Enchantments.IMPALING, 1);
                         }
                         else {
+                            trident.enchant(Enchantments.RIPTIDE, 1);
+                        }
+                        drowned.setItemSlot(EquipmentSlot.MAINHAND, trident);
+                        drowned.setDropChance(EquipmentSlot.MAINHAND, 0.9f);
+                    }
+                    else {
+                        if (drowned.getMainHandItem().is(Items.TRIDENT)) {
                             drowned.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                         }
+                        else if (drowned.getOffhandItem().is(Items.TRIDENT)) {
+                            drowned.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+                        }
+
+                        drowned.addEffect(new MobEffectInstance(
+                                MobEffects.MOVEMENT_SPEED,
+                                Integer.MAX_VALUE,
+                                4,
+                                false,
+                                false,
+                                true));
+                    }
+
+                    if (drowned.getMainHandItem().isEmpty()) {
+                        drowned.setItemSlot(EquipmentSlot.MAINHAND, bonusItem);
+                    }
+                    else if (drowned.getOffhandItem().isEmpty()) {
+                        drowned.setItemSlot(EquipmentSlot.OFFHAND, bonusItem);
                     }
                 }
             }
         }
     }
 
-    public void handleGiantBubbles(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
+    public void handleGiantBubbles(ServerLevel serverLevel, BlockPos blockPos) {
         long gameTime = serverLevel.getGameTime();
 
-        if (gameTime % 25 == 0) {
+        int bubbleMoveTime = 23;
+        if (gameTime % bubbleMoveTime == 0) {
             for (Direction direction : Direction.Plane.HORIZONTAL) {
                 int offSetBubble = direction.getAxis() == Direction.Axis.X ? 0 : 8;
-                int currentProgress = (int) (((gameTime / 25) + offSetBubble) % 16);
+                int currentProgress = (int) (((gameTime / bubbleMoveTime) + offSetBubble) % 16);
                 BlockPos bubbleCenter = blockPos.offset(direction.getStepX() * 10, currentProgress - 8, direction.getStepZ() * 10);
 
                 BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
@@ -278,7 +347,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                                     serverLevel.setBlock(mutableBlockPos, Blocks.WATER.defaultBlockState(), 2);
                                 }
                                 else {
-                                    serverLevel.setBlock(mutableBlockPos, Blocks.LIGHT.defaultBlockState(), 2);
+                                    serverLevel.setBlock(mutableBlockPos, BzBlocks.DENSE_BUBBLE_BLOCK.get().defaultBlockState(), 2);
                                 }
                                 mutableBlockPos.move(Direction.SOUTH, -z);
                             }
