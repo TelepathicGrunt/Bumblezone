@@ -138,6 +138,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_LATE_NORMAL_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/late_normal_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_STRONG_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/strong_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_BOSS_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/boss_enemy"));
+    public static final TagKey<EntityType<?>> ESSENCE_LIFE_ARENA_NORMAL_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/life_arena/normal_enemy"));
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
     public static final TagKey<Structure> NO_CAVES = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_caves"));

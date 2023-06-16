@@ -37,6 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.PlayerTeam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,7 +56,7 @@ public class EssenceBlockEntity extends BlockEntity {
     private ServerEssenceEvent eventBar = null;
     // Add object to hold all spawned entities of this event and wipe when done
     public record EventEntities(UUID uuid) {}
-    private List<EventEntities> eventEntitiesInArena = new ArrayList<>();
+    private List<EventEntities> eventEntitiesInArena = Collections.synchronizedList(new ArrayList<>());
     private int extraEventTrackingProgress = 0;
     private BlockPos arenaSize = BlockPos.ZERO;
 
@@ -261,6 +262,9 @@ public class EssenceBlockEntity extends BlockEntity {
                         essenceBlockEntity.getPlayerInArena().remove(playerUUID);
                         essenceBlockEntity.setChanged();
                         essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
+                        if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                            essenceBlock.onEventEnd(serverLevel, essenceBlockEntity);
+                        }
                     }
                     else {
                         essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
@@ -319,7 +323,7 @@ public class EssenceBlockEntity extends BlockEntity {
                         serverPlayer.teleportTo(
                                 blockPos.getX() + (direction.getStepX() * ((negativeHalfLengths.getX() + 1) / -2f)) + 0.5f,
                                 blockPos.getY() + negativeHalfLengths.getY() + 2,
-                                blockPos.getX() + (direction.getStepZ() * ((negativeHalfLengths.getZ() + 1) / -2f)) + 0.5f
+                                blockPos.getZ() + (direction.getStepZ() * ((negativeHalfLengths.getZ() + 1) / -2f)) + 0.5f
                         );
                         serverPlayer.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(blockPos));
                         EssenceBlock.spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());

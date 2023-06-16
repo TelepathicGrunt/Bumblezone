@@ -161,38 +161,6 @@
       "required": false
     },
     {
-      "id": "geode:nether_quartz_crystal_block",
-      "required": false
-    },
-    {
-      "id": "geode:budding_echo",
-      "required": false
-    },
-    {
-      "id": "geode:wrappist_block",
-      "required": false
-    },
-    {
-      "id": "geode:budding_wrappist",
-      "required": false
-    },
-    {
-      "id": "geode:lapis_cluster_block",
-      "required": false
-    },
-    {
-      "id": "geode:redstone_crystal_block",
-      "required": false
-    },
-    {
-      "id": "geode:emerald_cluster_block",
-      "required": false
-    },
-    {
-      "id": "geode:diamond_crystal_block",
-      "required": false
-    },
-    {
       "id": "geode_plus:nether_quartz_crystal_block",
       "required": false
     },
@@ -206,6 +174,22 @@
     },
     {
       "id": "geode_plus:budding_wrappist",
+      "required": false
+    },
+    {
+      "id": "geode_plus:pink_topaz_block",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_pink_topaz",
+      "required": false
+    },
+    {
+      "id": "geode_plus:celestite_block",
+      "required": false
+    },
+    {
+      "id": "geode_plus:budding_celestite",
       "required": false
     },
     {

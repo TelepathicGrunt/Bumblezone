@@ -60,9 +60,10 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         poseStack.pushPose();
         float m = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
 
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.scale(-1.0f, -1.0f, 1.0f);
         poseStack.translate(0.0f, -1.0f, 0.0f);
+        poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
+        poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
         n = 0.0f;
         float o = 0.0f;
         ((EntityModel)this.model).prepareMobModel(ringEntity, o, n, g);

@@ -21,14 +21,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
@@ -83,6 +81,12 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 .pushReaction(PushReaction.BLOCK));
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new EssenceBlockEntity(blockPos, blockState);
+    }
+
     public abstract ResourceLocation getArenaNbt();
 
     public abstract int getEventTimeFrame();
@@ -95,10 +99,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
 
     public abstract int getEssenceXpReward();
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new EssenceBlockEntity(blockPos, blockState);
+    public void onEventEnd(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity) {
     }
 
     @Override
