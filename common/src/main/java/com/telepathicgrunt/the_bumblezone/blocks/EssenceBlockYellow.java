@@ -130,7 +130,7 @@ public class EssenceBlockYellow extends EssenceBlock {
         int y = (-(arenaSize.getY() / 2) + 1);
         int z = (arenaSize.getZ() / 2) - 5;
 
-        y = (int) Math.min(y + (1 * ((currentRingsPassed * 12) / RINGS_TO_PASS)), (arenaSize.getY() / 2f) - 3);
+        y = (int) Math.min(y + (random.nextFloat() * ((currentRingsPassed * 12) / RINGS_TO_PASS)), (arenaSize.getY() / 2f) - 3);
 
         switch (currentRingsPassed % 4) {
             case 0 -> {

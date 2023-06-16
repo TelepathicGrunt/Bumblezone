@@ -3,6 +3,8 @@
 
 #TODO: create essence events
 
+#TODO: Electric Ring Textures/animations
+
 #TODO: get music for essence events and sanctum
 
 #TODO: Spawn the sanctums in the world with compasses to them that spawn only if player has essence of the bees on. Sanctum needs mining fatigue and warning system for non essence players
