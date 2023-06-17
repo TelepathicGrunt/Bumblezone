@@ -21,6 +21,8 @@ public class BzGeneralConfigs {
     public static boolean specialBeeSpawning = true;
     public static boolean beeLootInjection = true;
     public static boolean moddedBeeLootInjection = true;
+    public static boolean glisteringHoneyBrewingRecipe = true;
+    public static boolean beeStingerBrewingRecipe = true;
     public static int nearbyBeesPerPlayerInBz = 3;
     public static boolean dispensersDropGlassBottles = true;
     public static int broodBlocksBeeSpawnCapacity = 40;

@@ -194,6 +194,8 @@ All color Essence items added plus Essence of the Bees is now fire-resistant and
 
 Removed Carvable Wax from forge:wax/c:wax item tag to prevent recipe conflict with other mod's candle recipes.
 
+Added configs to turn off Brewing Recipes
+
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 

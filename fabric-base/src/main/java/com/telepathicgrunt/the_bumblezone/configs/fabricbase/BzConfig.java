@@ -175,6 +175,16 @@ public class BzConfig extends MidnightConfig {
 
 
     @Comment
+    public static Comment brewingRecipeComment;
+
+    @Entry
+    public static boolean glisteringHoneyBrewingRecipe = true;
+
+    @Entry
+    public static boolean beeStingerBrewingRecipe = true;
+
+
+    @Comment
     public static Comment generalComment;
 
     @Entry
@@ -343,6 +353,8 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning;
         BzGeneralConfigs.beeLootInjection = beeLootInjection;
         BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection;
+        BzGeneralConfigs.glisteringHoneyBrewingRecipe = glisteringHoneyBrewingRecipe;
+        BzGeneralConfigs.beeStingerBrewingRecipe = beeStingerBrewingRecipe;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee;
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee;
