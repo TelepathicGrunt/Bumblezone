@@ -202,8 +202,13 @@ public class EssenceBlockPurple extends EssenceBlock {
             EssenceBlockEntity.EventEntities eventEntities = eventEntitiesInArena.get(newX + (newZ * columnLength));
             Entity entity = serverLevel.getEntity(eventEntities.uuid());
             if (entity instanceof PurpleSpikeEntity purpleSpikeEntity) {
-                purpleSpikeEntity.setSpikeChargeTimer(chargeTime);
-                purpleSpikeEntity.addSpikeTimer(spikeTime);
+                //if (!purpleSpikeEntity.hasSpike()) {
+                    purpleSpikeEntity.setSpikeChargeTimer(chargeTime);
+                    purpleSpikeEntity.addSpikeTimer(spikeTime);
+//                }
+//                else {
+//                    purpleSpikeEntity.addSpikeTimer(spikeTime + chargeTime);
+//                }
             }
         }
     }

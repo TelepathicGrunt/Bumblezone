@@ -31,6 +31,8 @@ public class PurpleSpikeEntity extends Entity {
 
     public int spikeChargeTimer = 0;
     public int spikeTimer = 0;
+    public boolean spikeChargeClientPhaseTracker = false;
+    public int spikeChargeClientTimeTracker = 0;
 
     public PurpleSpikeEntity(EntityType<? extends PurpleSpikeEntity> entityType, Level level) {
         super(entityType, level);
@@ -97,6 +99,21 @@ public class PurpleSpikeEntity extends Entity {
             else if (!this.hasSpikeCharge() && this.hasSpike()){
                 this.makeParticle(3, false);
             }
+
+            if (this.spikeChargeClientPhaseTracker != this.hasSpikeCharge()) {
+                if (!this.spikeChargeClientPhaseTracker && this.hasSpike()) {
+                    this.spikeChargeClientTimeTracker = 0;
+                }
+                this.spikeChargeClientPhaseTracker = this.hasSpikeCharge();
+            }
+
+            if (!this.hasSpikeCharge() && !this.hasSpike()) {
+                this.spikeChargeClientTimeTracker = 0;
+            }
+            else {
+                this.spikeChargeClientTimeTracker++;
+            }
+
         }
         else {
             this.setHasSpike(this.getSpikeTimer() > 0);
@@ -118,8 +135,12 @@ public class PurpleSpikeEntity extends Entity {
                         float damageAmount;
 
                         if (entity instanceof ServerPlayer serverPlayer) {
+                            if (serverPlayer.isCreative()) {
+                                continue;
+                            }
+
                             if (EssenceOfTheBees.hasEssence(serverPlayer)) {
-                                damageAmount = serverPlayer.getMaxHealth() / 2;
+                                damageAmount = serverPlayer.getMaxHealth() / 5;
                             }
                             else {
                                 damageAmount = serverPlayer.getMaxHealth() / 3;
@@ -201,18 +222,4 @@ public class PurpleSpikeEntity extends Entity {
         this.setSpikeTimer(compoundTag.getInt("spike_timer"));
         this.setSpikeChargeTimer(compoundTag.getInt("spike_charge_timer"));
     }
-
-//    @Override
-//    public void recreateFromPacket(ClientboundAddEntityPacket clientboundAddEntityPacket) {
-//        double d = clientboundAddEntityPacket.getX();
-//        double e = clientboundAddEntityPacket.getY();
-//        double f = clientboundAddEntityPacket.getZ();
-//        float g = clientboundAddEntityPacket.getYRot();
-//        float h = clientboundAddEntityPacket.getXRot();
-//        this.syncPacketPositionCodec(d, e, f);
-//        this.setId(clientboundAddEntityPacket.getId());
-//        this.setUUID(clientboundAddEntityPacket.getUUID());
-//        this.absMoveTo(d, e, f, g, h);
-//        this.setDeltaMovement(clientboundAddEntityPacket.getXa(), clientboundAddEntityPacket.getYa(), clientboundAddEntityPacket.getZa());
-//    }
 }

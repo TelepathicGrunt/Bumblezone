@@ -51,8 +51,10 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         poseStack.pushPose();
         float m = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
 
+        float offSet = 1.0f + Math.min(ringEntity.spikeChargeClientTimeTracker / 40f, 0.5f);
+
         poseStack.scale(1.0f, 1.0f, 1.0f);
-        poseStack.translate(0.0f, 1.5f, 0.0f);
+        poseStack.translate(0.0f, offSet, 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
         n = 0.0f;

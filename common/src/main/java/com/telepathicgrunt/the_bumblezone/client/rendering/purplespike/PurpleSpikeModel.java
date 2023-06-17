@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T> {
@@ -23,6 +24,7 @@ public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T
     private final ModelPart bottomSpike;
 
     public PurpleSpikeModel(ModelPart root) {
+        super(RenderType::entityTranslucent);
         this.topSpike = root.getChild("topSpike");
         this.bottomSpike = root.getChild("bottomSpike");
     }

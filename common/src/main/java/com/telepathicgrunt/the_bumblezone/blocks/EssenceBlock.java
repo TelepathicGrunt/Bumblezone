@@ -125,9 +125,14 @@ public abstract class EssenceBlock extends BaseEntityBlock {
             {
                 if (entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
                     if (entity instanceof ServerPlayer serverPlayer) {
-                        serverPlayer.displayClientMessage(
-                                Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
-                                true);
+                        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+                        if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
+                            essenceBlockEntity.getPlayerInArena().isEmpty())
+                        {
+                            serverPlayer.displayClientMessage(
+                                    Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
+                                    true);
+                        }
                     }
 
                     entity.hurt(entity.damageSources().magic(), 0.5f);
@@ -151,8 +156,8 @@ public abstract class EssenceBlock extends BaseEntityBlock {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof ServerPlayer player
-            && EssenceOfTheBees.hasEssence(player) &&
+        if (entity instanceof ServerPlayer touchingPlayer
+            && EssenceOfTheBees.hasEssence(touchingPlayer) &&
             blockState.getBlock() instanceof EssenceBlock essenceBlock)
         {
             ServerLevel serverLevel = ((ServerLevel) level);
@@ -197,19 +202,6 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                             Block.UPDATE_CLIENTS + Block.UPDATE_KNOWN_SHAPE
                     );
 
-                    Vec3 centerPos = Vec3.atCenterOf(blockPos);
-                    Direction direction = Direction.NORTH;
-                    double largestDistance = Float.MIN_VALUE;
-                    double xDiff = centerPos.x() - entity.getX();
-                    double yDiff = centerPos.y() - entity.getY();
-                    double zDiff = centerPos.z() - entity.getZ();
-                    for (Direction direction2 : Direction.Plane.HORIZONTAL) {
-                        double distance = xDiff * (float)direction2.getNormal().getX() + yDiff * (float)direction2.getNormal().getY() + zDiff * (float)direction2.getNormal().getZ();
-                        if (!(distance > largestDistance)) continue;
-                        largestDistance = distance;
-                        direction = direction2;
-                    }
-
                     List<ServerPlayer> players = ((ServerLevel) level).getPlayers(p ->
                             (blockPos.getX() + size.getX()) > p.blockPosition().getX() &&
                             (blockPos.getY() + size.getY()) > p.blockPosition().getY() &&
@@ -220,25 +212,16 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                     );
 
                     essenceBlockEntity.getPlayerInArena().clear();
-                    for (int i = 0; i < players.size(); i++) {
-                        ServerPlayer serverPlayer = players.get(i);
+                    for (ServerPlayer serverPlayer : players) {
                         essenceBlockEntity.getPlayerInArena().add(serverPlayer.getUUID());
 
-                        // Prevent players stuck in walls
-                        if ((blockPos.getX() + size.getX() - 2) < serverPlayer.blockPosition().getX() ||
-                            (blockPos.getY() + size.getY() - 2) < serverPlayer.blockPosition().getY() ||
-                            (blockPos.getZ() + size.getZ() - 2) < serverPlayer.blockPosition().getZ() ||
-                            (blockPos.getX() - size.getX() + 2) > serverPlayer.blockPosition().getX() ||
-                            (blockPos.getY() - size.getY() + 2) > serverPlayer.blockPosition().getY() ||
-                            (blockPos.getZ() - size.getZ() + 2) > serverPlayer.blockPosition().getZ())
-                        {
-                            serverPlayer.setDeltaMovement(0, 0, 0);
-                            serverPlayer.teleportTo(
-                                    blockPos.getX() - ((7 * direction.getStepX()) + (i % 2 == 0 ? i : -i)),
-                                    blockPos.getY() + negativeHalfLengths.getY() + 1,
-                                    blockPos.getZ() - (7 * direction.getStepZ())
-                            );
-                        }
+                        // Teleport everyone to trigger player.
+                        serverPlayer.setDeltaMovement(0, 0, 0);
+                        serverPlayer.teleportTo(
+                                touchingPlayer.getX(),
+                                touchingPlayer.getY(),
+                                touchingPlayer.getZ()
+                        );
 
                         spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
 
