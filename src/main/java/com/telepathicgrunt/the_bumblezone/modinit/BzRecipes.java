@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.RecipeDiscoveredHookedShapedRecipe;
@@ -20,7 +21,11 @@ public class BzRecipes {
     public static final RegistryObject<RecipeSerializer<RecipeDiscoveredHookedShapedRecipe>> RECIPE_DISCOVERED_HOOKED_RECIPE = RECIPES.register("recipe_discovered_hooked_recipe", RecipeDiscoveredHookedShapedRecipe.Serializer::new);
 
     public static void registerBrewingStandRecipes() {
-        PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
-        PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
+        if (BzGeneralConfigs.glisteringHoneyBrewingRecipe.get()) {
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
+        }
+        if (BzGeneralConfigs.beeStingerBrewingRecipe.get()) {
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
+        }
     }
 }

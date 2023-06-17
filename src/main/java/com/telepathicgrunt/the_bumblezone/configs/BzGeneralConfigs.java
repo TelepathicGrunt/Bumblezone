@@ -9,6 +9,8 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.BooleanValue specialBeeSpawning;
     public static ForgeConfigSpec.BooleanValue beeLootInjection;
     public static ForgeConfigSpec.BooleanValue moddedBeeLootInjection;
+    public static ForgeConfigSpec.BooleanValue glisteringHoneyBrewingRecipe;
+    public static ForgeConfigSpec.BooleanValue beeStingerBrewingRecipe;
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
@@ -83,6 +85,23 @@ public class BzGeneralConfigs {
                         " This pulls from this loot table for the drops: `the_bumblezone:entities/bee_stinger_drops`\n")
                 .translation("the_bumblezone.config.moddedbeelootinjection")
                 .define("moddedBeeLootInjection", true);
+
+        builder.pop();
+
+
+        builder.push("Brewing Recipe Options");
+
+            glisteringHoneyBrewingRecipe = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Glistering Honey Crystals can be used to make Potions of Luck")
+                .translation("the_bumblezone.config.glisteringhoneybrewingrecipe")
+                .define("glisteringHoneyBrewingRecipe", true);
+
+            beeStingerBrewingRecipe = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Bee Stingers can be used to make Potions of Long Poison")
+                .translation("the_bumblezone.config.beestingerbrewingrecipe")
+                .define("beeStingerBrewingRecipe", true);
 
         builder.pop();
 
