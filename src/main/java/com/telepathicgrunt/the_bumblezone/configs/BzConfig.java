@@ -123,6 +123,16 @@ public class BzConfig extends MidnightConfig {
 
 
     @Comment
+    public static Comment brewingRecipeComment;
+
+    @Entry
+    public static boolean glisteringHoneyBrewingRecipe = true;
+
+    @Entry
+    public static boolean beeStingerBrewingRecipe = true;
+
+
+    @Comment
     public static Comment generalComment;
 
     @Entry(min=0, max=100)
