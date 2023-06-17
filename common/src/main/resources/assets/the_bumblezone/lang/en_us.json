@@ -16,6 +16,8 @@
   "death.attack.crystalline_flower.player": "%1$s was poked to death by a crystalline flower whilst trying to escape %2$s",
   "death.attack.architects": "%1$s was killed for trying to escape an Essence Event",
   "death.attack.architects.player": "%1$s was killed for trying to escape an Essence Event",
+  "death.attack.spikes": "%1$s was impaled during an Knowing Essence Event",
+  "death.attack.spikes.player": "%1$s was impaled during an Knowing Essence Event",
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",
@@ -393,12 +395,12 @@
   "system.the_bumblezone.occupied_crystalline_flower": "Flower is occupied by another player...",
 
   "essence.the_bumblezone.missing_essence_effect": "You need to consume Essence of the Bees first...",
-  "essence.the_bumblezone.red_essence_event": "Essence of Raging - Lose in %s",
-  "essence.the_bumblezone.purple_essence_event": "Essence of Knowing - Lose in %s",
-  "essence.the_bumblezone.blue_essence_event": "Essence of Calming - Lose in %s",
-  "essence.the_bumblezone.green_essence_event": "Essence of Radiance - Lose in %s",
-  "essence.the_bumblezone.yellow_essence_event": "Essence of Life - Lose in %s",
-  "essence.the_bumblezone.white_essence_event": "Essence of Continuity - Lose in %s",
+  "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cLose§f in %s",
+  "essence.the_bumblezone.purple_essence_event": "§dEssence of Knowing§f - §6Win§f in %s",
+  "essence.the_bumblezone.blue_essence_event": "§bEssence of Calming§f - §cLose§f in %s",
+  "essence.the_bumblezone.green_essence_event": "§aEssence of Radiance§f - §cLose§f in %s",
+  "essence.the_bumblezone.yellow_essence_event": "§eEssence of Life§f - §cLose§f in %s",
+  "essence.the_bumblezone.white_essence_event": "Essence of Continuity - §cLose§f in %s",
 
   "buzzing_briefcase.the_bumblezone.bee_typing.normal": "Normal",
   "buzzing_briefcase.the_bumblezone.bee_typing.unknown": "Unknown",

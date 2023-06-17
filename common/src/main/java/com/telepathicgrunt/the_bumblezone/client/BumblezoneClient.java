@@ -31,6 +31,8 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.Hon
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlimeRendering;
 import com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen.PileOfPollenRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.purplespike.PurpleSpikeModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.purplespike.PurpleSpikeRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
@@ -282,6 +284,7 @@ public class BumblezoneClient {
         event.register(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
         event.register(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
         event.register(ElectricRingModel.LAYER_LOCATION, ElectricRingModel::createBodyLayer);
+        event.register(PurpleSpikeModel.LAYER_LOCATION, PurpleSpikeModel::createBodyLayer);
     }
 
     public static void registerEntityRenderers(RegisterEntityRenderersEvent event) {
@@ -294,6 +297,7 @@ public class BumblezoneClient {
         event.register(BzEntities.BEE_STINGER_ENTITY.get(), BeeStingerRenderer::new);
         event.register(BzEntities.HONEY_CRYSTAL_SHARD.get(), HoneyCrystalShardRenderer::new);
         event.register(BzEntities.ELECTRIC_RING_ENTITY.get(), ElectricRingRenderer::new);
+        event.register(BzEntities.PURPLE_SPIKE_ENTITY.get(), PurpleSpikeRenderer::new);
     }
 
     public static void onParticleSetup(RegisterParticleEvent event) {

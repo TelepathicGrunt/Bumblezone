@@ -104,7 +104,7 @@ public class WindyAir extends ProperFacingBlock {
             return;
         }
 
-        double strength = windDirection == Direction.UP ? 0.085D : 0.0275D;
+        double strength = windDirection == Direction.UP ? 0.0885D : 0.0275D;
         double size = entity.getBoundingBox().getSize();
         if (size <= 1) {
             strength = strength * (1 / (size / 2 + 0.5D));

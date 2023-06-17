@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
@@ -22,7 +23,7 @@ public class EssenceBlockGreen extends EssenceBlock {
 
     @Override
     public ResourceLocation getArenaNbt() {
-        return null;
+        return new ResourceLocation(Bumblezone.MODID, "essence/green_arena");
     }
 
     @Override
@@ -33,7 +34,7 @@ public class EssenceBlockGreen extends EssenceBlock {
     @Override
     public ServerEssenceEvent getServerEssenceEvent() {
         return (ServerEssenceEvent) new ServerEssenceEvent(
-                "Essence of Continuity",
+                "essence.the_bumblezone.green_essence_event",
                 BossEvent.BossBarColor.GREEN,
                 BossEvent.BossBarOverlay.NOTCHED_6
         ).setDarkenScreen(true);
@@ -51,6 +52,6 @@ public class EssenceBlockGreen extends EssenceBlock {
 
     @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
-
+        essenceBlockEntity.getEventBar().setProgress((float)essenceBlockEntity.getEventTimer() / getEventTimeFrame());
     }
 }
