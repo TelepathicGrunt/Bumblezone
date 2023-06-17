@@ -91,54 +91,48 @@ public class PurpleSpikeEntity extends Entity {
     public void tick() {
         super.tick();
         if (this.level().isClientSide()) {
-            if (this.tickCount % 3 == 0 && this.hasSpikeCharge()) {
+            if (this.tickCount % 5 == 0 && this.hasSpikeCharge()) {
                 this.makeParticle(1, false);
             }
             else if (!this.hasSpikeCharge() && this.hasSpike()){
-                this.makeParticle(1, false);
+                this.makeParticle(3, false);
             }
         }
         else {
             this.setHasSpike(this.getSpikeTimer() > 0);
             this.setHasSpikeCharge(this.getSpikeChargeTimer() > 0);
 
-            if (this.hasSpike()) {
-                List<Entity> list = this.level().getEntities(this, this.getBoundingBox());
-                if (!list.isEmpty()) {
-                    for (Entity entity : list) {
-                        if (entity instanceof LivingEntity livingEntity) {
-                            if (hasSpikeCharge()) {
-                                livingEntity.hurt(level().damageSources().source(BzDamageSources.ARCHITECTS_TYPE), 0);
-                            }
-                            else {
-                                float damageAmount;
-
-                                if (entity instanceof ServerPlayer serverPlayer) {
-                                    if (EssenceOfTheBees.hasEssence(serverPlayer)) {
-                                        damageAmount = serverPlayer.getMaxHealth() / 2;
-                                    }
-                                    else {
-                                        damageAmount = serverPlayer.getMaxHealth() / 3;
-                                    }
-                                }
-                                else {
-                                    damageAmount = livingEntity.getMaxHealth() / 10;
-                                }
-
-                                livingEntity.hurt(level().damageSources().source(BzDamageSources.ARCHITECTS_TYPE), damageAmount);
-                                this.makeParticle(20, true);
-                                this.setHasSpike(false);
-                            }
-                        }
-                    }
-                }
-            }
-
             if (this.spikeChargeTimer > 0) {
                 this.spikeChargeTimer--;
             }
             else if (this.spikeTimer > 0) {
                 this.spikeTimer--;
+            }
+        }
+
+        if (this.hasSpike() && !hasSpikeCharge()) {
+            List<Entity> list = this.level().getEntities(this, this.getBoundingBox());
+            if (!list.isEmpty()) {
+                for (Entity entity : list) {
+                    if (entity instanceof LivingEntity livingEntity) {
+                        float damageAmount;
+
+                        if (entity instanceof ServerPlayer serverPlayer) {
+                            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                                damageAmount = serverPlayer.getMaxHealth() / 2;
+                            }
+                            else {
+                                damageAmount = serverPlayer.getMaxHealth() / 3;
+                            }
+                        }
+                        else {
+                            damageAmount = livingEntity.getMaxHealth() / 10;
+                        }
+
+                        livingEntity.hurt(level().damageSources().source(BzDamageSources.SPIKE_TYPE), damageAmount);
+                        this.makeParticle(1, true);
+                    }
+                }
             }
         }
     }
@@ -148,25 +142,33 @@ public class PurpleSpikeEntity extends Entity {
         super.baseTick();
     }
 
-    private void makeParticle(int particlesToSpawn, boolean server) {
+    private void makeParticle(int particlesToSpawn, boolean hit) {
         if (particlesToSpawn > 0) {
-            if (server) {
+            if (hit) {
                 Vec3 center = this.blockPosition().getCenter();
-                ((ServerLevel)this.level()).sendParticles(
-                        ParticleTypes.ENCHANTED_HIT,
-                        center.x(),
-                        center.y(),
-                        center.z(),
-                        particlesToSpawn,
-                        (this.random.nextFloat() - 0.5f) * 0.25f,
-                        (this.random.nextFloat() + 0.5f) * 0.25f,
-                        (this.random.nextFloat() - 0.5f) * 0.25f,
-                        0.1D);
+                for(int i = 0; i < particlesToSpawn; ++i) {
+                    this.level().addParticle(
+                            ParticleTypes.CRIT,
+                            center.x(),
+                            center.y() - 0.5,
+                            center.z(),
+                            (this.random.nextFloat() - 0.5f),
+                            (this.random.nextFloat() + 0.5f),
+                            (this.random.nextFloat() - 0.5f));
+                    this.level().addParticle(
+                            ParticleTypes.DAMAGE_INDICATOR,
+                            center.x(),
+                            center.y() - 0.5,
+                            center.z(),
+                            (this.random.nextFloat() - 0.5f),
+                            (this.random.nextFloat() + 0.5f),
+                            (this.random.nextFloat() - 0.5f));
+                }
             }
             else {
                 double size = this.getBoundingBox().getSize();
                 double x = this.getX() + ((this.random.nextFloat() - 0.5f) * size);
-                double y = this.getY() + (size / 2) + ((this.random.nextFloat() - 0.5f) * size);
+                double y = this.getY() + (size / 3) + ((this.random.nextFloat() - 0.5f) * size);
                 double z = this.getZ() + ((this.random.nextFloat() - 0.5f) * size);
 
                 for(int i = 0; i < particlesToSpawn; ++i) {

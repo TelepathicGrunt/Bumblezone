@@ -1,0 +1,7 @@
+{
+  "effects": "thorns",
+  "exhaustion": 0.2,
+  "message_id": "spikes",
+  "scaling": "never",
+  "death_message_type": "default"
+}
