@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.PotionBrewingAccessor;
@@ -19,7 +20,11 @@ public class BzRecipes {
     }
 
     public static void registerBrewingStandRecipes() {
-        PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL, Potions.LUCK);
-        PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER, Potions.LONG_POISON);
+        if (BzConfig.glisteringHoneyBrewingRecipe) {
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL, Potions.LUCK);
+        }
+        if (BzConfig.beeStingerBrewingRecipe) {
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER, Potions.LONG_POISON);
+        }
     }
 }
