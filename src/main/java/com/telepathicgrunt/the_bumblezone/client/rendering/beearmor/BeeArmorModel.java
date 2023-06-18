@@ -69,11 +69,12 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 if (!itemStack.isEmpty() && itemStack.getOrCreateTag().getBoolean("isFlying")) {
                     long time = System.currentTimeMillis();
                     double currentProg = Math.abs(Math.sin(time / 40d));
-                    leftWing.yRot = -45;
+                    leftWing.yRot = -45f;
                     leftWing.xRot = (float) Mth.lerp(currentProg, -0.5f, 1.5f);
                     rightWing.yRot = 45;
                     rightWing.xRot = (float) Mth.lerp(currentProg, -0.5f, 1.5f);
                     if (itemStack.getItem() instanceof BeeArmor beeArmor && beeArmor.getVariant() == 2) {
+                        leftWing.yRot = -44.5f;
                         rightWing.zRot = 0f;
                     }
                 }
