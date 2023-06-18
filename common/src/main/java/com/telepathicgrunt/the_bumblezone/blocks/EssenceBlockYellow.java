@@ -283,8 +283,9 @@ public class EssenceBlockYellow extends EssenceBlock {
         removeEffectBonusesFromAllPlayers(serverLevel, essenceBlockEntity);
     }
 
-    public void ringActivated(EssenceBlockEntity essenceBlockEntity, ServerPlayer serverPlayer) {
+    public void ringActivated(ElectricRingEntity electricRingEntity, EssenceBlockEntity essenceBlockEntity, ServerPlayer serverPlayer) {
         int ringsPassed = essenceBlockEntity.getExtraEventTrackingProgress();
+        essenceBlockEntity.getEventEntitiesInArena().removeIf(e -> e.uuid().equals(electricRingEntity.getUUID()));
 
         if (ringsPassed + 1 >= RINGS_TO_PASS) {
             removeBonusEffectsFromPlayer(serverPlayer);

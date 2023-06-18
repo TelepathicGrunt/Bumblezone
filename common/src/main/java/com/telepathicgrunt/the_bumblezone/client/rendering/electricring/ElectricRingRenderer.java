@@ -54,7 +54,14 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
 
         poseStack.pushPose();
         float rotationLerp = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
-        float scale = Math.min((ringEntity.tickCount + g) / 20f, 1.0f);
+        float scale;
+        if (ringEntity.disappearingTime >= 0) {
+            scale = Math.min((ringEntity.disappearingTime - g) / ElectricRingEntity.DISAPPERING_TIMESPAN, 1.0f);
+        }
+        else {
+            scale = Math.min((ringEntity.tickCount + g) / ElectricRingEntity.APPERING_TIMESPAN, 1.0f);
+        }
+
         poseStack.scale(-scale, -scale, scale);
         poseStack.translate(0.0f, -1.0f - (1.5f - (scale * 1.5f)), 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));

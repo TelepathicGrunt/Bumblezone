@@ -1,39 +1,48 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
-import com.google.common.base.Objects;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlockYellow;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
-import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
-import net.minecraft.world.effect.MobEffectUtil;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 public class ElectricRingEntity extends Entity {
+    private static final EntityDataAccessor<Boolean> DATA_ID_DISAPPEARING_SET = SynchedEntityData.defineId(PurpleSpikeEntity.class, EntityDataSerializers.BOOLEAN);
+    public static final int DISAPPERING_TIMESPAN = 20;
+    public static final int APPERING_TIMESPAN = 20;
 
     public BlockEntity blockEntity = null;
+    public int disappearingTime = -1;
 
     public ElectricRingEntity(EntityType<? extends ElectricRingEntity> entityType, Level level) {
         super(entityType, level);
     }
 
     @Override
-    protected void defineSynchedData() {}
+    protected void defineSynchedData() {
+        this.entityData.define(DATA_ID_DISAPPEARING_SET, this.disappearingTime > 0);
+    }
+
+    public boolean getDisappearingMarker() {
+        return this.entityData.get(DATA_ID_DISAPPEARING_SET);
+    }
+
+    protected void setDisappearingMarker(boolean disappearingMarker) {
+        this.entityData.set(DATA_ID_DISAPPEARING_SET, disappearingMarker);
+    }
 
     @Override
     protected float getEyeHeight(Pose pose, EntityDimensions entityDimensions) {
@@ -42,15 +51,28 @@ public class ElectricRingEntity extends Entity {
 
     public void tick() {
         super.tick();
+        this.setRot(this.getYRot(), this.getXRot());
+
         if (this.level().isClientSide()) {
             if (this.tickCount % 2 == 0) {
                 this.makeParticle(1);
+            }
+
+            if (this.getDisappearingMarker() && disappearingTime == -1) {
+                disappearingTime = DISAPPERING_TIMESPAN;
             }
         }
         else if (tickCount == 1) {
             this.makeServerParticle(50, (ServerLevel) this.level());
         }
-        this.setRot(this.getYRot(), this.getXRot());
+
+        if (disappearingTime > 0) {
+            disappearingTime--;
+        }
+
+        if (disappearingTime == 0) {
+            this.discard();
+        }
     }
 
     @Override
@@ -127,7 +149,7 @@ public class ElectricRingEntity extends Entity {
 
     @Override
     public void playerTouch(Player player) {
-        if (!this.level().isClientSide() && !this.isRemoved()) {
+        if (!this.level().isClientSide() && !this.isRemoved() && this.disappearingTime == -1) {
 
             double ringRadiusSq = Math.pow((this.getBoundingBox().getSize() / 2) + 0.2, 2);
             Vec3 centerOfRing = this.getEyePosition();
@@ -167,10 +189,11 @@ public class ElectricRingEntity extends Entity {
             if (distanceBetweenPlayerAndPlane < rangeCheck) {
                 // Notify Essence Block
                 if (this.blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlockYellow essenceBlockYellow) {
-                    essenceBlockYellow.ringActivated(essenceBlockEntity, (ServerPlayer) player);
+                    essenceBlockYellow.ringActivated(this, essenceBlockEntity, (ServerPlayer) player);
                 }
                 this.makeServerParticle(50, (ServerLevel) this.level());
-                this.remove(RemovalReason.DISCARDED);
+                this.disappearingTime = DISAPPERING_TIMESPAN;
+                this.setDisappearingMarker(true);
                 return true;
             }
         }
@@ -183,10 +206,16 @@ public class ElectricRingEntity extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compoundTag) {}
+    protected void readAdditionalSaveData(CompoundTag compoundTag) {
+        this.disappearingTime = compoundTag.getInt("disappearingTime");
+        this.setDisappearingMarker(compoundTag.getBoolean("disappearingMarker"));
+    }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compoundTag) {}
+    protected void addAdditionalSaveData(CompoundTag compoundTag) {
+        compoundTag.putInt("disappearingTime", this.disappearingTime);
+        compoundTag.putBoolean("disappearingMarker", this.getDisappearingMarker());
+    }
 
     @Override
     public void recreateFromPacket(ClientboundAddEntityPacket clientboundAddEntityPacket) {
