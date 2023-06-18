@@ -173,6 +173,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       this.xpReward = isBaby ? 1 : 2;
    }
 
+   @Override
    public void remove(Entity.RemovalReason removalReason) {
       if (!this.level().isClientSide() && this.isDeadOrDying()) {
          if (!this.isBaby()) {
@@ -505,10 +506,12 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
       this.setRemainingPersistentAngerTime(MAX_ANGER_DURATION.sample(this.random));
    }
 
+   @Override
    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
       return this.isBaby() ? BzSounds.HONEY_SLIME_HURT_SMALL.get() : BzSounds.HONEY_SLIME_HURT.get();
    }
 
+   @Override
    protected SoundEvent getDeathSound() {
       return this.isBaby() ? BzSounds.HONEY_SLIME_DEATH_SMALL.get() : BzSounds.HONEY_SLIME_DEATH.get();
    }

@@ -4,12 +4,14 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PurpleSpikeEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterSpawnPlacementsEvent;
@@ -32,6 +34,8 @@ public class BzEntities {
     public static final RegistryEntry<EntityType<HoneySlimeEntity>> HONEY_SLIME = ENTITIES.register("honey_slime", () -> PlatformHooks.createEntityType(HoneySlimeEntity::new, MobCategory.CREATURE, 1F, true, 8, 3, "honey_slime"));
     public static final RegistryEntry<EntityType<BeehemothEntity>> BEEHEMOTH = ENTITIES.register("beehemoth", () -> PlatformHooks.createEntityType(BeehemothEntity::new, MobCategory.CREATURE, 1.2F, false, 16, 3, "beehemoth"));
     public static final RegistryEntry<EntityType<BeeQueenEntity>> BEE_QUEEN = ENTITIES.register("bee_queen", () -> PlatformHooks.createEntityType(BeeQueenEntity::new, MobCategory.CREATURE, 2.9F, false, 16, 3, "bee_queen"));
+    public static final RegistryEntry<EntityType<RootminEntity>> ROOTMIN = ENTITIES.register("rootmin", () -> PlatformHooks.createEntityType(RootminEntity::new, MobCategory.MONSTER, 1F, 1.56f, true, 8, 3, "rootmin"));
+    public static final RegistryEntry<EntityType<SentryWatcherEntity>> SENTRY_WATCHER = ENTITIES.register("sentry_watcher", () -> PlatformHooks.createEntityType(SentryWatcherEntity::new, MobCategory.MISC, 2F, 1.45f, true, 16, 3, "sentry_watcher"));
     public static final RegistryEntry<EntityType<PollenPuffEntity>> POLLEN_PUFF_ENTITY = ENTITIES.register("pollen_puff", () -> PlatformHooks.createEntityType(PollenPuffEntity::new, MobCategory.MISC, 0.25F, false, 4, 10, "pollen_puff"));
     public static final RegistryEntry<EntityType<ThrownStingerSpearEntity>> THROWN_STINGER_SPEAR_ENTITY = ENTITIES.register("thrown_stinger_spear", () -> PlatformHooks.createEntityType(ThrownStingerSpearEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "thrown_stinger_spear"));
     public static final RegistryEntry<EntityType<BeeStingerEntity>> BEE_STINGER_ENTITY = ENTITIES.register("bee_stinger", () -> PlatformHooks.createEntityType(BeeStingerEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "bee_stinger"));
@@ -43,6 +47,7 @@ public class BzEntities {
         event.register(HONEY_SLIME.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
         event.register(BEEHEMOTH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules);
         event.register(BEE_QUEEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeeQueenEntity::checkMobSpawnRules);
+        event.register(ROOTMIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
     }
 
     public static void registerEntityAttributes(RegisterEntityAttributesEvent event) {
@@ -50,5 +55,6 @@ public class BzEntities {
         event.register(HONEY_SLIME.get(), HoneySlimeEntity.getAttributeBuilder());
         event.register(BEEHEMOTH.get(), BeehemothEntity.getAttributeBuilder());
         event.register(BEE_QUEEN.get(), BeeQueenEntity.getAttributeBuilder());
+        event.register(ROOTMIN.get(), RootminEntity.getAttributeBuilder());
     }
 }

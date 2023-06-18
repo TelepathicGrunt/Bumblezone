@@ -61,6 +61,17 @@ public class PlatformHooksImpl {
                 .build();
     }
 
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+        return FabricEntityTypeBuilder
+                .<T>createMob()
+                .spawnGroup(category)
+                .entityFactory(entityFactory)
+                .dimensions(scalable ? EntityDimensions.scalable(xzSize, ySize) : EntityDimensions.fixed(xzSize, ySize))
+                .trackRangeChunks(clientTrackingRange)
+                .trackedUpdateRate(updateInterval)
+                .build();
+    }
+
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return FabricLoader.getInstance()
                 .getModContainer(modid)

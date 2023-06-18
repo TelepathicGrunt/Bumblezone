@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import com.telepathicgrunt.the_bumblezone.utils.fabricbase.PlatformSharedData;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,6 +57,17 @@ public class PlatformHooksImpl {
                 .spawnGroup(category)
                 .entityFactory(entityFactory)
                 .setDimensions(scalable ? EntityDimensions.scalable(size, size) : EntityDimensions.fixed(size, size))
+                .maxChunkTrackingRange(clientTrackingRange)
+                .trackingTickInterval(updateInterval)
+                .build();
+    }
+
+    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+        return QuiltEntityTypeBuilder
+                .<T>createMob()
+                .spawnGroup(category)
+                .entityFactory(entityFactory)
+                .setDimensions(scalable ? EntityDimensions.scalable(xzSize, ySize) : EntityDimensions.fixed(xzSize, ySize))
                 .maxChunkTrackingRange(clientTrackingRange)
                 .trackingTickInterval(updateInterval)
                 .build();

@@ -33,8 +33,13 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlime
 import com.telepathicgrunt.the_bumblezone.client.rendering.pileofpollen.PileOfPollenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.purplespike.PurpleSpikeModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.purplespike.PurpleSpikeRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryWatcherModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryWatcherRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
@@ -278,6 +283,8 @@ public class BumblezoneClient {
     public static void registerEntityLayers(RegisterEntityLayersEvent event) {
         event.register(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
         event.register(BeeQueenModel.LAYER_LOCATION, BeeQueenModel::createBodyLayer);
+        event.register(SentryWatcherModel.LAYER_LOCATION, SentryWatcherModel::createBodyLayer);
+        event.register(RootminModel.LAYER_LOCATION, RootminModel::createBodyLayer);
         event.register(StingerSpearModel.LAYER_LOCATION, StingerSpearModel::createLayer);
         event.register(BeeStingerModel.LAYER_LOCATION, BeeStingerModel::createLayer);
         event.register(HoneyCrystalShardModel.LAYER_LOCATION, HoneyCrystalShardModel::createLayer);
@@ -292,6 +299,8 @@ public class BumblezoneClient {
         event.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         event.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
         event.register(BzEntities.BEE_QUEEN.get(), BeeQueenRenderer::new);
+        event.register(BzEntities.ROOTMIN.get(), RootminRenderer::new);
+        event.register(BzEntities.SENTRY_WATCHER.get(), SentryWatcherRenderer::new);
         event.register(BzEntities.POLLEN_PUFF_ENTITY.get(), ThrownItemRenderer::new);
         event.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), StingerSpearRenderer::new);
         event.register(BzEntities.BEE_STINGER_ENTITY.get(), BeeStingerRenderer::new);

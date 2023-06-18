@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -38,10 +39,19 @@ import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
 
-    public static <T extends Mob> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
         return EntityType.Builder
                 .of(entityFactory, category)
                 .sized(size, size)
+                .clientTrackingRange(clientTrackingRange)
+                .updateInterval(updateInterval)
+                .build(buildName);
+    }
+
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+        return EntityType.Builder
+                .of(entityFactory, category)
+                .sized(xzSize, ySize)
                 .clientTrackingRange(clientTrackingRange)
                 .updateInterval(updateInterval)
                 .build(buildName);
