@@ -106,7 +106,14 @@ public class BumbleBeeChestplate extends BeeArmor {
         }
 
         if(player.isOnGround()) {
-            tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
+            if (tag.contains("forcedMaxFlyingTickTime")) {
+                if (!tag.contains("requiredGearCountForForcedFlyingTime") || tag.getInt("requiredGearCountForForcedFlyingTime") == beeGearCount) {
+                    tag.putInt("flyCounter", tag.getInt("forcedMaxFlyingTickTime"));
+                }
+            }
+            else {
+                tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
+            }
         }
     }
 
