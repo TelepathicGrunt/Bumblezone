@@ -103,6 +103,9 @@ public class BumbleBeeChestplate extends BeeArmor {
                 if (!tag.contains("requiredGearCountForForcedFlyingTime") || tag.getInt("requiredGearCountForForcedFlyingTime") >= beeGearCount) {
                     tag.putInt("flyCounter", tag.getInt("forcedMaxFlyingTickTime"));
                 }
+                else {
+                    tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
+                }
             }
             else {
                 tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
