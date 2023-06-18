@@ -107,7 +107,7 @@ public class BumbleBeeChestplate extends BeeArmor {
 
         if(player.isOnGround()) {
             if (tag.contains("forcedMaxFlyingTickTime")) {
-                if (!tag.contains("requiredGearCountForForcedFlyingTime") || tag.getInt("requiredGearCountForForcedFlyingTime") == beeGearCount) {
+                if (!tag.contains("requiredGearCountForForcedFlyingTime") || tag.getInt("requiredGearCountForForcedFlyingTime") >= beeGearCount) {
                     tag.putInt("flyCounter", tag.getInt("forcedMaxFlyingTickTime"));
                 }
             }
