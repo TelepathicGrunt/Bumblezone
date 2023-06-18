@@ -36,7 +36,7 @@ public class EmptyHoneycombBroodLoader implements IGeometryLoader<EmptyHoneycomb
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation)
         {
-            return new EmptyHoneycombBroodBlockModel(modelLocation, botLeft, botRight, topLeft, topRight, particle, side, front);
+            return new EmptyHoneycombBroodBlockModel(modelLocation, botLeft, botRight, topLeft, topRight, particle, side, front, spriteGetter);
         }
 
         @Override
