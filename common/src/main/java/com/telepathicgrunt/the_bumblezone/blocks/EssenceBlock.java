@@ -216,12 +216,14 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                         essenceBlockEntity.getPlayerInArena().add(serverPlayer.getUUID());
 
                         // Teleport everyone to trigger player.
-                        serverPlayer.setDeltaMovement(0, 0, 0);
-                        serverPlayer.teleportTo(
-                                touchingPlayer.getX(),
-                                touchingPlayer.getY(),
-                                touchingPlayer.getZ()
-                        );
+                        if (serverPlayer != touchingPlayer) {
+                            serverPlayer.setDeltaMovement(0, 0, 0);
+                            serverPlayer.teleportTo(
+                                    touchingPlayer.getX(),
+                                    touchingPlayer.getY(),
+                                    touchingPlayer.getZ()
+                            );
+                        }
 
                         spawnParticles(serverLevel, serverPlayer.position(), serverPlayer.getRandom());
 
@@ -241,7 +243,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
-        if (randomSource.nextFloat() < 0.1f) {
+        for (int i = 0; i <= 2; i++) {
             level.addParticle(
                     BzParticles.SPARKLE_PARTICLE.get(),
                     (double)blockPos.getX() + (randomSource.nextDouble() * 1.5D) - 0.25D,

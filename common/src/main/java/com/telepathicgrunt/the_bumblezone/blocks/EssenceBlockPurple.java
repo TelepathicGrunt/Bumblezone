@@ -148,11 +148,11 @@ public class EssenceBlockPurple extends EssenceBlock {
             }
             else if (currentTime % 600 == 200) {
                 patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) -> Math.abs(x % 2) == 1 && Math.abs(z % 2) == 1);
+                        (x, z) -> Math.abs((x + z) % 2) == 0);
             }
             else if (currentTime % 600 == 300) {
                 patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) -> x % 2 == 0 && z % 2 == 0);
+                        (x, z) ->Math.abs((x + z) % 2) == 1);
             }
             else if (currentTime % 600 == 400) {
                 patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
