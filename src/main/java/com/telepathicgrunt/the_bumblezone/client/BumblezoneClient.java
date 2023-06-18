@@ -70,9 +70,7 @@ public class BumblezoneClient {
         modEventBus.addListener(IncenseCandleColoring::registerBlockColors);
         modEventBus.addListener(IncenseCandleColoring::registerItemColors);
         modEventBus.addListener(PorousHoneycombBlockModel::registerModelLoaders);
-        modEventBus.addListener(PorousHoneycombBlockModel::onBakingCompleted);
         modEventBus.addListener(EmptyHoneycombBroodBlockModel::registerModelLoaders);
-        modEventBus.addListener(EmptyHoneycombBroodBlockModel::onBakingCompleted);
         forgeBus.addListener((TickEvent.ClientTickEvent event) -> {
             if (event.phase == TickEvent.Phase.END) {
                 StinglessBeeHelmet.decrementHighlightingCounter(Minecraft.getInstance().player);

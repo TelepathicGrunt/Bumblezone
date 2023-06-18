@@ -17,10 +17,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.BlockModelRotation;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.client.resources.model.SimpleBakedModel;
+import net.minecraft.client.resources.model.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -43,12 +40,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 public class PorousHoneycombBlockModel implements IDynamicBakedModel {
 
     private static final ChunkRenderTypeSet CUTOUT_CHUNK_RENDER_TYPE = ChunkRenderTypeSet.of(RenderType.cutout());
     public static final ModelProperty<Map<Direction, Set<CORNERS>>> DIRECTION_OF_HONEY_MERGERS = new ModelProperty<>();
-    public static final List<PorousHoneycombBlockModel> INSTANCES = new ArrayList<>();
     public static final Direction[] DIRECTIONS = Direction.values();
     public static final Direction.AxisDirection[] AXIS_DIRECTIONS = Direction.AxisDirection.values();
 
@@ -66,6 +63,8 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
     private TextureAtlasSprite particleTex;
     private Map<Direction, BakedModel[]> cache;
     private BakedModel mainModel;
+    // temporary variable to avoid passing this as a parameter everywhere
+    private Function<Material, TextureAtlasSprite> spriteGetter;
 
     private enum CORNERS {
         TOP_LEFT,
@@ -180,7 +179,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
 
     }
 
-    public PorousHoneycombBlockModel(ResourceLocation modelLocation, ResourceLocation botLeft, ResourceLocation botRight, ResourceLocation topLeft, ResourceLocation topRight, ResourceLocation particle, ResourceLocation base) {
+    public PorousHoneycombBlockModel(ResourceLocation modelLocation, ResourceLocation botLeft, ResourceLocation botRight, ResourceLocation topLeft, ResourceLocation topRight, ResourceLocation particle, ResourceLocation base, Function<Material, TextureAtlasSprite> spriteGetter) {
         this.particle = particle;
         this.modelLocation = modelLocation;
         this.botLeft = botLeft;
@@ -188,7 +187,9 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         this.topLeft = topLeft;
         this.topRight = topRight;
         this.base = base;
-        INSTANCES.add(this);
+        this.spriteGetter = spriteGetter;
+        this.init();
+        this.spriteGetter = null; // avoid memory leaks
     }
 
     public void init()
@@ -198,7 +199,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         this.particleTex = getTexture(particle);
     }
 
-    private static Map<Direction, BakedModel[]> buildCache(ResourceLocation modelLocation, ResourceLocation particle, ResourceLocation[] cornerLocations) {
+    private Map<Direction, BakedModel[]> buildCache(ResourceLocation modelLocation, ResourceLocation particle, ResourceLocation[] cornerLocations) {
         final Map<Direction, BakedModel[]> map = new EnumMap<>(Direction.class);
         for (Direction d : DIRECTIONS) map.put(d, new BakedModel[4]);
         for (CORNERS corner : CORNERS.values()) {
@@ -234,7 +235,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         map.get(d)[corner.ordinal()] = model;
     }
 
-    private static BakedModel buildBlock(ResourceLocation textureLocation, ResourceLocation modelLocation) {
+    private BakedModel buildBlock(ResourceLocation textureLocation, ResourceLocation modelLocation) {
         final BlockModel dummy = new BlockModel(null, new ArrayList<>(), new HashMap<>(), false, BlockModel.GuiLight.FRONT, ItemTransforms.NO_TRANSFORMS, new ArrayList<>());
         final TextureAtlasSprite tex = getTexture(textureLocation);
         final Map<Direction, BlockElementFace> mapFacesIn = Maps.newEnumMap(Direction.class);
@@ -251,7 +252,7 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         return builder.build(NamedRenderTypeManager.get(new ResourceLocation("solid")));
     }
 
-    private static BakedModel bakedModel(Vector3f from, Vector3f to, Direction direction, CORNERS corner, ResourceLocation modelLocation, ResourceLocation particleLocation, ResourceLocation[] textures) {
+    private BakedModel bakedModel(Vector3f from, Vector3f to, Direction direction, CORNERS corner, ResourceLocation modelLocation, ResourceLocation particleLocation, ResourceLocation[] textures) {
         final BlockElement element = blockElement(from, to, direction);
         final BlockModel dummy = new BlockModel(null, new ArrayList<>(), new HashMap<>(), false, BlockModel.GuiLight.FRONT, ItemTransforms.NO_TRANSFORMS, new ArrayList<>());
         final SimpleBakedModel.Builder builder = new SimpleBakedModel.Builder(dummy, ItemOverrides.EMPTY, false).particle(getTexture(particleLocation));
@@ -259,8 +260,8 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
         return builder.build(NamedRenderTypeManager.get(new ResourceLocation("cutout")));
     }
 
-    private static TextureAtlasSprite getTexture(ResourceLocation id) {
-        return Minecraft.getInstance().getTextureAtlas(BLOCK_ATLAS).apply(id);
+    private TextureAtlasSprite getTexture(ResourceLocation id) {
+        return this.spriteGetter.apply(new Material(TextureAtlas.LOCATION_BLOCKS, id));
     }
 
     private static BakedQuad makeBakedQuad(BlockElement BlockElement, BlockElementFace partFace, TextureAtlasSprite atlasSprite, Direction dir, BlockModelRotation modelRotation, ResourceLocation modelResLoc) {
@@ -364,10 +365,6 @@ public class PorousHoneycombBlockModel implements IDynamicBakedModel {
 
     public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
         event.register("porous_honeycomb", new PorousHoneycombLoader());
-    }
-
-    public static void onBakingCompleted(ModelEvent.BakingCompleted event) {
-        INSTANCES.forEach(PorousHoneycombBlockModel::init);
     }
 
 }

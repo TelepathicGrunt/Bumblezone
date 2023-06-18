@@ -36,7 +36,7 @@ public class PorousHoneycombLoader implements IGeometryLoader<PorousHoneycombLoa
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation)
         {
-            return new PorousHoneycombBlockModel(modelLocation, botLeft, botRight, topLeft, topRight, particle, base);
+            return new PorousHoneycombBlockModel(modelLocation, botLeft, botRight, topLeft, topRight, particle, base, spriteGetter);
         }
 
         @Override
