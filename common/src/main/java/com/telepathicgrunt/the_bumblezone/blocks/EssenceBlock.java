@@ -217,7 +217,11 @@ public abstract class EssenceBlock extends BaseEntityBlock {
 
                         // Teleport everyone to trigger player.
                         if (serverPlayer != touchingPlayer) {
-                            serverPlayer.setDeltaMovement(0, 0, 0);
+                            serverPlayer.setDeltaMovement(
+                                    touchingPlayer.getDeltaMovement().x(),
+                                    touchingPlayer.getDeltaMovement().y(),
+                                    touchingPlayer.getDeltaMovement().z()
+                            );
                             serverPlayer.teleportTo(
                                     touchingPlayer.getX(),
                                     touchingPlayer.getY(),
