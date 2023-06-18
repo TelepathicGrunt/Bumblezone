@@ -75,6 +75,7 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                     rightWing.xRot = (float) Mth.lerp(currentProg, -0.5f, 1.5f);
                     if (itemStack.getItem() instanceof BeeArmor beeArmor && beeArmor.getVariant() == 2) {
                         rightWing.zRot = 0f;
+                        leftWing.yRot = -44.5f;
                     }
                 }
                 else {

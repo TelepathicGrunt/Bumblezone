@@ -196,6 +196,13 @@ Removed Carvable Wax from forge:wax/c:wax item tag to prevent recipe conflict wi
 
 Added configs to turn off Brewing Recipes
 
+Added two new nbt that modpack makers can set for Bumble Bee Chestplate to change the flight time. 
+ Add "forcedMaxFlyingTickTime" int to the item's nbt to set the new maximum flight time for that item.
+ Add "requiredGearCountForForcedFlyingTime" to make the above nbt only apply if player has the correct number of bee gear equipped.
+ "forcedMaxFlyingTickTime", if present, will always apply if "requiredGearCountForForcedFlyingTime" is not present
+
+Fixed one Bumble Bee Chestplate's wings being off when viewed from above and is flying.
+
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 
