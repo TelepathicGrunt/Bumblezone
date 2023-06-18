@@ -259,12 +259,12 @@ public class EssenceBlockEntity extends BlockEntity {
                         Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > ((essenceBlockEntity.getArenaSize().getY() + 1) / 2) ||
                         Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > ((essenceBlockEntity.getArenaSize().getZ() + 1) / 2)))
                     {
-                        essenceBlockEntity.getPlayerInArena().remove(playerUUID);
-                        essenceBlockEntity.setChanged();
-                        essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
                         if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
                             essenceBlock.onEventEnd(serverLevel, essenceBlockEntity);
                         }
+                        essenceBlockEntity.getPlayerInArena().remove(playerUUID);
+                        essenceBlockEntity.setChanged();
+                        essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
                     }
                     else {
                         essenceBlockEntity.getEventBar().addPlayer(serverPlayer);

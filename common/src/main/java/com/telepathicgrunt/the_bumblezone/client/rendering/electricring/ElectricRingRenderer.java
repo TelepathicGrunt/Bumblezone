@@ -1,42 +1,36 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.electricring;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         extends EntityRenderer<ElectricRingEntity>
         implements RenderLayerParent<ElectricRingEntity, M>
 {
-    private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring.png");
+    private static final ResourceLocation SKIN_1 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/ring_1.png");
     protected ElectricRingModel<ElectricRingEntity> model;
     protected final List<RenderLayer<ElectricRingEntity, M>> layers = Lists.newArrayList();
 
@@ -56,31 +50,30 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
 
     @Override
     public void render(ElectricRingEntity ringEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
-        float n;
-        poseStack.pushPose();
-        float m = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
+        i = 255;
 
+        poseStack.pushPose();
+        float rotationLerp = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
         float scale = Math.min((ringEntity.tickCount + g) / 20f, 1.0f);
         poseStack.scale(-scale, -scale, scale);
         poseStack.translate(0.0f, -1.0f - (1.5f - (scale * 1.5f)), 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
-        n = 0.0f;
-        float o = 0.0f;
-        ((EntityModel)this.model).prepareMobModel(ringEntity, o, n, g);
-        ((EntityModel)this.model).setupAnim(ringEntity, o, n, 0, 0, m);
+        poseStack.mulPose(Axis.ZN.rotationDegrees((ringEntity.tickCount + g) * 5f % 360));
+        ((EntityModel)this.model).prepareMobModel(ringEntity, 0, 0, g);
+        ((EntityModel)this.model).setupAnim(ringEntity, 0, 0, 0, 0, rotationLerp);
         Minecraft minecraft = Minecraft.getInstance();
-        boolean bl = this.isBodyVisible(ringEntity);
-        boolean bl2 = !bl && !ringEntity.isInvisibleTo(minecraft.player);
-        boolean bl3 = minecraft.shouldEntityAppearGlowing(ringEntity);
-        RenderType renderType = this.getRenderType(ringEntity, bl, bl2, bl3);
+        boolean bodyVisible = this.isBodyVisible(ringEntity);
+        boolean hidden = !bodyVisible && !ringEntity.isInvisibleTo(minecraft.player);
+        boolean glowing = minecraft.shouldEntityAppearGlowing(ringEntity);
+        RenderType renderType = this.getRenderType(ringEntity, bodyVisible, hidden, glowing);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, 0, 1.0f, 1.0f, 1.0f, bl2 ? 0.15f : 1.0f);
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, 0, 1.0f, 1.0f, 1.0f, 1.0f);
         }
         if (!ringEntity.isSpectator()) {
             for (RenderLayer<ElectricRingEntity, M> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, i, ringEntity, o, n, g, 0, 0, m);
+                renderLayer.render(poseStack, multiBufferSource, i, ringEntity, 0, 0, g, 0, 0, rotationLerp);
             }
         }
         poseStack.popPose();
@@ -88,15 +81,12 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
     }
 
     @Nullable
-    protected RenderType getRenderType(ElectricRingEntity ringEntity, boolean bl, boolean bl2, boolean bl3) {
+    protected RenderType getRenderType(ElectricRingEntity ringEntity, boolean bodyVisible, boolean hidden, boolean glowing) {
         ResourceLocation resourceLocation = this.getTextureLocation(ringEntity);
-        if (bl2) {
-            return RenderType.itemEntityTranslucentCull(resourceLocation);
-        }
-        if (bl) {
+        if (bodyVisible) {
             return this.model.renderType(resourceLocation);
         }
-        if (bl3) {
+        if (glowing) {
             return RenderType.outline(resourceLocation);
         }
         return null;
@@ -108,6 +98,6 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
 
     @Override
     public ResourceLocation getTextureLocation(ElectricRingEntity ringEntity) {
-        return SKIN;
+        return SKIN_1;
     }
 }
