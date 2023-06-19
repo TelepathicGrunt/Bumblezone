@@ -1,3 +1,9 @@
+### **(V.6.7.25 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Fixed recipe for Trans Bumble Bee Chestplate nuking the NBT of the original chestplate
+
+
 ### **(V.6.7.24 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
