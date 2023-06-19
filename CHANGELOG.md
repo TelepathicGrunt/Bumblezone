@@ -203,6 +203,8 @@ Added two new nbt that modpack makers can set for Bumble Bee Chestplate to chang
 
 Fixed one Bumble Bee Chestplate's wings being off when viewed from above and is flying.
 
+Fixed recipe for Trans Bumble Bee Chestplate nuking the NBT of the original chestplate
+
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 

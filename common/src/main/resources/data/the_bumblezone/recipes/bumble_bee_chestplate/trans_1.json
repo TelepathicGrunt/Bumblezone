@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "the_bumblezone:nbt_keeping_shapeless_recipe",
   "group": "the_bumblezone",
   "ingredients": [
     {
@@ -23,5 +23,8 @@
   ],
   "result": {
     "item": "the_bumblezone:bumble_bee_chestplate_trans_1"
+  },
+  "keep_nbt_of": {
+    "item": "the_bumblezone:bumble_bee_chestplate_1"
   }
 }
