@@ -57,6 +57,8 @@ dependencies {
     //modLocalRuntime("top.theillusivec4.curios:curios-forge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
+    // modLocalRuntime("curse.maven:huge-structure-blocks-474114:4555169")
+    modLocalRuntime("curse.maven:worldedit-225608:4586218")
     modLocalRuntime("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
     modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
 
@@ -65,6 +67,7 @@ dependencies {
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${rootProject.mixin_extras}"))
     implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${rootProject.mixin_extras}"))
+
 }
 
 processResources {

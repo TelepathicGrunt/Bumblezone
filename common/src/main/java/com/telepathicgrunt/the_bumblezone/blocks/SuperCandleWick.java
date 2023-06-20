@@ -60,8 +60,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0)
                 .replaceable()
                 .noCollission()
-                .noLootTable()
-                .air());
+                .noLootTable());
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
         this.isSoul = isSoul;
