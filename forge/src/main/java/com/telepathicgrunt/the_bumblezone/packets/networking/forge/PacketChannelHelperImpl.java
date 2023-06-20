@@ -6,8 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -55,7 +53,6 @@ public class PacketChannelHelperImpl {
         });
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static Player getPlayer() {
         return Minecraft.getInstance().player;
     }
