@@ -5,8 +5,6 @@
     "node_end": "the_bumblezone:block/luminescent_wax/channel_node_end_light_white",
     "node_start_rotated": "the_bumblezone:block/luminescent_wax/channel_node_start_light_white_rotated",
     "node_end_rotated": "the_bumblezone:block/luminescent_wax/channel_node_end_light_white_rotated",
-    "turn": "the_bumblezone:block/luminescent_wax/channel_corner_light_white",
-    "turn_rotated": "the_bumblezone:block/luminescent_wax/channel_corner_light_white_rotated",
     "particle": "the_bumblezone:block/luminescent_wax/channel_node"
   },
   "elements": [
@@ -14,12 +12,12 @@
       "from": [ 0, 0, 0 ],
       "to": [ 16, 16, 16 ],
       "faces": {
-        "down":  { "texture": "#node_end_rotated", "cullface": "down" },
-        "up":    { "texture": "#node_start_rotated", "cullface": "up" },
-        "north": { "texture": "#turn", "cullface": "north" },
-        "south": { "texture": "#turn_rotated", "cullface": "south" },
-        "west":  { "texture": "#node_end", "cullface": "west" },
-        "east":  { "texture": "#node_start", "cullface": "east" }
+        "down":  { "texture": "#node_start_rotated", "rotation": 180, "cullface": "down" },
+        "up":    { "texture": "#node_end_rotated", "rotation": 270, "cullface": "up" },
+        "north": { "texture": "#node_start", "cullface": "north" },
+        "south": { "texture": "#node_end", "rotation": 90, "cullface": "south" },
+        "west":  { "texture": "#node_end", "rotation": 180, "cullface": "west" },
+        "east":  { "texture": "#node_start", "rotation": 270, "cullface": "east" }
       }
     }
   ]

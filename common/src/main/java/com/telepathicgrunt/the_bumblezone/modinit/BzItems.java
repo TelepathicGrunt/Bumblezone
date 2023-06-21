@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
+import com.telepathicgrunt.the_bumblezone.blocks.LuminescentWaxCornerNode;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
@@ -67,6 +68,13 @@ public class BzItems {
     public static final RegistryEntry<Item> LUMINESCENT_WAX_CHANNEL_GREEN = ITEMS.register("luminescent_wax_channel_green", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CHANNEL_GREEN.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_CHANNEL_YELLOW = ITEMS.register("luminescent_wax_channel_yellow", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CHANNEL_YELLOW.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_CHANNEL_WHITE = ITEMS.register("luminescent_wax_channel_white", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CHANNEL_WHITE.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> LUMINESCENT_WAX_CORNER = ITEMS.register("luminescent_wax_corner", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CORNER.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> LUMINESCENT_WAX_CORNER_RED = ITEMS.register("luminescent_wax_corner_red", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CORNER_RED.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> LUMINESCENT_WAX_CORNER_PURPLE = ITEMS.register("luminescent_wax_corner_purple", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CORNER_PURPLE.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> LUMINESCENT_WAX_CORNER_BLUE = ITEMS.register("luminescent_wax_corner_blue", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CORNER_BLUE.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> LUMINESCENT_WAX_CORNER_GREEN = ITEMS.register("luminescent_wax_corner_green", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CORNER_GREEN.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> LUMINESCENT_WAX_CORNER_YELLOW = ITEMS.register("luminescent_wax_corner_yellow", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CORNER_YELLOW.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> LUMINESCENT_WAX_CORNER_WHITE = ITEMS.register("luminescent_wax_corner_white", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_CORNER_WHITE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_NODE = ITEMS.register("luminescent_wax_node", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_NODE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_NODE_RED = ITEMS.register("luminescent_wax_node_red", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_NODE_RED.get(), new Item.Properties()));
     public static final RegistryEntry<Item> LUMINESCENT_WAX_NODE_PURPLE = ITEMS.register("luminescent_wax_node_purple", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_NODE_PURPLE.get(), new Item.Properties()));
@@ -76,6 +84,7 @@ public class BzItems {
     public static final RegistryEntry<Item> LUMINESCENT_WAX_NODE_WHITE = ITEMS.register("luminescent_wax_node_white", () -> new BlockItem(BzBlocks.LUMINESCENT_WAX_NODE_WHITE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> HONEY_COCOON = ITEMS.register("honey_cocoon", () -> new BzBlockItem(BzBlocks.HONEY_COCOON.get(), new Item.Properties(), false, true));
     public static final RegistryEntry<Item> CRYSTALLINE_FLOWER = ITEMS.register("crystalline_flower", () -> new BzBlockItem(BzBlocks.CRYSTALLINE_FLOWER.get(), new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), true, true));
+    public static final RegistryEntry<Item> PILE_OF_POLLEN = ITEMS.register("pile_of_pollen", () -> new BzBlockItem(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, 8), new Item.Properties()));
     public static final RegistryEntry<Item> PILE_OF_POLLEN_SUSPICIOUS = ITEMS.register("pile_of_pollen_suspicious", () -> new BlockItem(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get(), new Item.Properties()));
     public static final RegistryEntry<Item> SUGAR_INFUSED_STONE = ITEMS.register("sugar_infused_stone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> SUGAR_INFUSED_COBBLESTONE = ITEMS.register("sugar_infused_cobblestone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties()));
@@ -113,7 +122,6 @@ public class BzItems {
     public static final RegistryEntry<Item> STRING_CURTAIN_PURPLE = ITEMS.register("string_curtain_purple", () -> new BlockItem(BzBlocks.STRING_CURTAIN_PURPLE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> STRING_CURTAIN_MAGENTA = ITEMS.register("string_curtain_magenta", () -> new BlockItem(BzBlocks.STRING_CURTAIN_MAGENTA.get(), new Item.Properties()));
     public static final RegistryEntry<Item> STRING_CURTAIN_PINK = ITEMS.register("string_curtain_pink", () -> new BlockItem(BzBlocks.STRING_CURTAIN_PINK.get(), new Item.Properties()));
-    public static final RegistryEntry<Item> PILE_OF_POLLEN = ITEMS.register("pile_of_pollen", () -> new BzBlockItem(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, 8), new Item.Properties()));
     public static final RegistryEntry<Item> ROYAL_JELLY_BLOCK = ITEMS.register("royal_jelly_block", () -> new BlockItem(BzBlocks.ROYAL_JELLY_BLOCK.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> HEAVY_AIR = ITEMS.register("heavy_air", () -> new BlockItem(BzBlocks.HEAVY_AIR.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryEntry<Item> WINDY_AIR = ITEMS.register("windy_air", () -> new BlockItem(BzBlocks.WINDY_AIR.get(), new Item.Properties().rarity(Rarity.EPIC)));

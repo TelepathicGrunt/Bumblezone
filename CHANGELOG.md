@@ -48,21 +48,21 @@ Added Ancient Shrine structure that resembles a giant flower filled with pollen!
 ##### Blocks:
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 
  anyone who has not consumed Essence of the Bees before and are standing on said Ancient Wax blocks. You can use shears to 
- convert between 3 different patterns for these blocks. Only found in Sempiternal Sanctum. Can be crafted into stairs or slabs.
+ convert between 3 different patterns for these blocks. Only found in certain structures. Can be crafted into stairs or slabs.
  Stonecutter has more efficient recipe for making stairs/slabs.
 
-Added Luminescent Wax Channel blocks and Luminescent Wax Node blocks! Very high blast resistance, uncraftable, and will 
- give Slowness, Weakness, and Mining Fatigue to anyone who has not consumed Essence of the Bees before and are standing 
- on said Ancient Wax blocks. If the block has a light in it, people who consumed Essence of the Bees before and standing 
- on said blocks will get Speed, Damage Resistance, and Beenergized. The light forms will repel Piglins and Hoglins and 
- also will count towards empowering Enchanting Table like Bookshelves do. You can use shears to change the direction of these blocks.
- Only found in Sempiternal Sanctum.
+Added Luminescent Wax Channel blocks, Luminescent Wax Corner blocks, and Luminescent Wax Node blocks! 
+ Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to anyone who has 
+ not consumed Essence of the Bees before and are standing on said Ancient Wax blocks. If the block has a light in it, 
+ people who consumed Essence of the Bees before and standing on said blocks will get Speed, Damage Resistance, 
+ and Beenergized. The light forms will repel Piglins and Hoglins and also will count towards empowering Enchanting Table 
+ like Bookshelves do. You can use shears to change the direction of these blocks. Only found in certain structures.
 
 Windy Air added that will push any entity in whatever direction the air block is blowing! Only found in certain structures.
  Can be found in Creative Menu for builders! Can be controlled by this entity type tag: `the_bumblezone:windy_air/immune_to_push_effect`
 
 Heavy Air added that will pull entities down and remove Levitation, Slow Falling, Jump Boost, and non-creative flying! 
- Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctum. Can be found in Creative Menu for builders!
+ Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctums. Can be found in Creative Menu for builders!
  Can be controlled by this entity type tag: `the_bumblezone:heavy_air/immune_to_gravity_effect`
 
 Suspicious Pile of Pollen is added now! You may find these scattered throughout Bumblezone in certain structures. Brush them for loot!

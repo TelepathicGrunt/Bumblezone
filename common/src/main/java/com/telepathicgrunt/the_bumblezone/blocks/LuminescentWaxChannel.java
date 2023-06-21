@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -68,7 +67,7 @@ public class LuminescentWaxChannel extends AxisFacingBlock implements Luminescen
 
     @Override
     public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
-        this.applyEntityEffects(BzTags.LUMINESCENT_WAX_LIGHT_CHANNELS, state, entity);
+        this.applyEntityEffects(entity);
         super.stepOn(level, blockPos, state, entity);
     }
 }

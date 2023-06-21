@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:luminescent_wax_corner_red",
+    "the_bumblezone:luminescent_wax_corner_purple",
+    "the_bumblezone:luminescent_wax_corner_blue",
+    "the_bumblezone:luminescent_wax_corner_green",
+    "the_bumblezone:luminescent_wax_corner_yellow",
+    "the_bumblezone:luminescent_wax_corner_white"
+  ]
+}

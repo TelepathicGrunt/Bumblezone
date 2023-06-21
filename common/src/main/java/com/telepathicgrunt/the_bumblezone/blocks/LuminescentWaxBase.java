@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public interface LuminescentWaxBase {
 
-    default void applyEntityEffects(TagKey<Block> lightBlockTag, BlockState currentState, Entity collidingEntity) {
+    default void applyEntityEffects(Entity collidingEntity) {
         if (collidingEntity instanceof LivingEntity livingEntity &&
             !collidingEntity.level().isClientSide() &&
             collidingEntity.tickCount % 10 == 0)
@@ -26,31 +26,29 @@ public interface LuminescentWaxBase {
             }
 
             if (livingEntity instanceof ServerPlayer player && EssenceOfTheBees.hasEssence(player)) {
-                if (currentState.is(lightBlockTag)) {
-                    livingEntity.addEffect(new MobEffectInstance(
-                            MobEffects.MOVEMENT_SPEED,
-                            50,
-                            0,
-                            false,
-                            false,
-                            true));
+                livingEntity.addEffect(new MobEffectInstance(
+                        MobEffects.MOVEMENT_SPEED,
+                        50,
+                        0,
+                        false,
+                        false,
+                        true));
 
-                    livingEntity.addEffect(new MobEffectInstance(
-                            MobEffects.DAMAGE_RESISTANCE,
-                            50,
-                            0,
-                            false,
-                            false,
-                            true));
+                livingEntity.addEffect(new MobEffectInstance(
+                        MobEffects.DAMAGE_RESISTANCE,
+                        50,
+                        0,
+                        false,
+                        false,
+                        true));
 
-                    livingEntity.addEffect(new MobEffectInstance(
-                            BzEffects.BEENERGIZED.get(),
-                            50,
-                            0,
-                            false,
-                            false,
-                            true));
-                }
+                livingEntity.addEffect(new MobEffectInstance(
+                        BzEffects.BEENERGIZED.get(),
+                        50,
+                        0,
+                        false,
+                        false,
+                        true));
             }
             else {
                 livingEntity.addEffect(new MobEffectInstance(

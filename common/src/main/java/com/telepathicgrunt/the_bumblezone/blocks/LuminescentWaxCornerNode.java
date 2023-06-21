@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,9 +18,9 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 
-public class LuminescentWaxNode extends RotationFacingBlock implements LuminescentWaxBase {
+public class LuminescentWaxCornerNode extends RotationFacingBlock implements LuminescentWaxBase {
 
-    public LuminescentWaxNode(MapColor mapColor, int light) {
+    public LuminescentWaxCornerNode(MapColor mapColor, int light) {
         super(Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
@@ -34,7 +33,7 @@ public class LuminescentWaxNode extends RotationFacingBlock implements Luminesce
     public InteractionResult use(BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if (blockState.getBlock() instanceof LuminescentWaxNode && (itemstack.getItem() instanceof ShearsItem || itemstack.getItem() instanceof SwordItem)) {
+        if (blockState.getBlock() instanceof LuminescentWaxCornerNode && (itemstack.getItem() instanceof ShearsItem || itemstack.getItem() instanceof SwordItem)) {
 
             Direction newDirectProperty = blockState.getValue(FACING);
             int newRotateProperty = blockState.getValue(ROTATION) + 1;
@@ -66,7 +65,7 @@ public class LuminescentWaxNode extends RotationFacingBlock implements Luminesce
 
     @Override
     public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
-        this.applyEntityEffects(BzTags.LUMINESCENT_WAX_LIGHT_NODES, state, entity);
+        this.applyEntityEffects(entity);
         super.stepOn(level, blockPos, state, entity);
     }
 }

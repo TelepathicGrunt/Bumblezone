@@ -46,6 +46,7 @@ public class BzTags {
     public static final TagKey<Block> ANCIENT_WAX_SLABS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "ancient_wax/slabs"));
     public static final TagKey<Block> ANCIENT_WAX_STAIRS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "ancient_wax/stairs"));
     public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_CHANNELS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_channels"));
+    public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_CORNERS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_corners"));
     public static final TagKey<Block> LUMINESCENT_WAX_LIGHT_NODES = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/light_nodes"));
     public static final TagKey<Block> BLOCK_ENTITY_FORCED_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_entity_forced_highlighting"));
     public static final TagKey<Block> BLOCK_ENTITY_PREVENT_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_entity_prevent_highlighting"));

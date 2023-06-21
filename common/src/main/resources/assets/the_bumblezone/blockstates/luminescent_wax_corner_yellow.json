@@ -1,0 +1,33 @@
+{
+  "variants": {
+    "facing=down,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow_rotated"},
+    "facing=down,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow_rotated", "y": 270},
+    "facing=down,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow_rotated", "y": 180},
+    "facing=down,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow_rotated", "y": 90},
+
+    "facing=up,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "y": 180},
+    "facing=up,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "y": 90},
+    "facing=up,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow"},
+    "facing=up,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "y": 270},
+
+    "facing=north,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 0, "y": 90},
+    "facing=north,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 90, "y": 90},
+    "facing=north,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 180, "y": 90},
+    "facing=north,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 270, "y": 90},
+
+    "facing=south,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 90, "y": 90},
+    "facing=south,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 0, "y": 90},
+    "facing=south,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 270, "y": 90},
+    "facing=south,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 180, "y": 90},
+
+    "facing=west,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 0, "y": 0},
+    "facing=west,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 90, "y": 0},
+    "facing=west,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 180, "y": 0},
+    "facing=west,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 270, "y": 0},
+
+    "facing=east,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 90, "y": 0},
+    "facing=east,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 0, "y": 0},
+    "facing=east,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 270, "y": 0},
+    "facing=east,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/corner_yellow", "x": 180, "y": 0}
+  }
+}

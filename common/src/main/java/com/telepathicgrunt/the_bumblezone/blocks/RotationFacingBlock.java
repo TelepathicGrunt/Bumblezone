@@ -37,10 +37,7 @@ public class RotationFacingBlock extends Block {
     }
 
     private static int getRotatedRotation(Direction attachmentFace, int rotationIndex, Rotation rotation) {
-        if (attachmentFace == Direction.DOWN) {
-            return (rotationIndex + rotation.ordinal()) % 4;
-        }
-        else if (attachmentFace == Direction.UP) {
+        if (attachmentFace.getAxis() == Direction.Axis.Y) {
             return (rotationIndex + 4 - rotation.ordinal()) % 4;
         }
         else {
@@ -115,15 +112,15 @@ public class RotationFacingBlock extends Block {
                     rotation = 0;
                 }
                 else {
-                    rotation = 3;
+                    rotation = 2;
                 }
             }
             else {
                 if (zSpot > 0) {
-                    rotation = 1;
+                    rotation = clickFaceDirection == Direction.WEST ? 3 : 1;
                 }
                 else {
-                    rotation = 2;
+                    rotation = clickFaceDirection == Direction.WEST ? 1 : 3;
                 }
             }
         }
@@ -138,10 +135,10 @@ public class RotationFacingBlock extends Block {
             }
             else {
                 if (xSpot > 0) {
-                    rotation = 1;
+                    rotation = clickFaceDirection == Direction.SOUTH ? 3 : 1;
                 }
                 else {
-                    rotation = 3;
+                    rotation = clickFaceDirection == Direction.SOUTH ? 1 : 3;
                 }
             }
         }

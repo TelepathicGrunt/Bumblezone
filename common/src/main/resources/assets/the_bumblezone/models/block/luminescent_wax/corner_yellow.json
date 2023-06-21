@@ -1,0 +1,22 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "turn": "the_bumblezone:block/luminescent_wax/channel_corner_light_yellow",
+    "turn_reversed": "the_bumblezone:block/luminescent_wax/channel_corner_light_yellow_reversed",
+    "particle": "the_bumblezone:block/luminescent_wax/channel_corner"
+  },
+  "elements": [
+    {
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "down":  { "texture": "#turn_reversed", "rotation": 180, "cullface": "down" },
+        "up":    { "texture": "#turn",          "rotation": 90,  "cullface": "up" },
+        "north": { "texture": "#turn",          "rotation": 180, "cullface": "north" },
+        "south": { "texture": "#turn_reversed", "rotation": 270, "cullface": "south" },
+        "west":  { "texture": "#turn",          "rotation": 90,  "cullface": "west" },
+        "east":  { "texture": "#turn_reversed", "rotation": 0,   "cullface": "east"}
+      }
+    }
+  ]
+}
