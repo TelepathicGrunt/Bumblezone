@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentMap;
 
 
 public class HeavyAir extends Block {
-    private static final ConcurrentMap<UUID, Integer> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
+    private static final ConcurrentMap<String, Integer> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
 
     public HeavyAir() {
         super(Properties.of()
@@ -75,7 +75,7 @@ public class HeavyAir extends Block {
             return;
         }
 
-        if (APPLIED_PUSH_FOR_ENTITY.getOrDefault(entity.getUUID(), -1) == level.getGameTime()) {
+        if (APPLIED_PUSH_FOR_ENTITY.getOrDefault(entity.getStringUUID(), -1) == entity.tickCount) {
             return;
         }
 
@@ -101,7 +101,7 @@ public class HeavyAir extends Block {
         }
 
         entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.015, 0));
-        APPLIED_PUSH_FOR_ENTITY.put(entity.getUUID(), entity.tickCount);
+        APPLIED_PUSH_FOR_ENTITY.put(entity.getStringUUID(), entity.tickCount);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {

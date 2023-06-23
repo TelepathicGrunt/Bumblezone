@@ -30,14 +30,14 @@ public interface AncientWaxBase {
             !collidingEntity.level().isClientSide() &&
             collidingEntity.tickCount % 10 == 0)
         {
-            if (livingEntity instanceof Player player && (!player.isCreative() || !player.isSpectator())) {
+            if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
                 return;
             }
 
             if (!(livingEntity instanceof ServerPlayer player && EssenceOfTheBees.hasEssence(player))) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
-                        70,
+                        95,
                         0,
                         false,
                         false,
@@ -45,7 +45,7 @@ public interface AncientWaxBase {
 
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.DIG_SLOWDOWN,
-                        75,
+                        100,
                         2,
                         false,
                         false,
@@ -53,7 +53,7 @@ public interface AncientWaxBase {
 
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.WEAKNESS,
-                        75,
+                        100,
                         2,
                         false,
                         false,

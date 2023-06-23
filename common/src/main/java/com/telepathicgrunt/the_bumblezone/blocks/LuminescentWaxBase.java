@@ -19,9 +19,7 @@ public interface LuminescentWaxBase {
             !collidingEntity.level().isClientSide() &&
             collidingEntity.tickCount % 10 == 0)
         {
-            if (livingEntity instanceof Player player &&
-                (!player.isCreative() || !player.isSpectator() || player.level().isClientSide()))
-            {
+            if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
                 return;
             }
 
@@ -53,7 +51,7 @@ public interface LuminescentWaxBase {
             else {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SLOWDOWN,
-                        70,
+                        95,
                         0,
                         false,
                         false,
@@ -61,7 +59,7 @@ public interface LuminescentWaxBase {
 
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.DIG_SLOWDOWN,
-                        75,
+                        100,
                         2,
                         false,
                         false,
@@ -69,7 +67,7 @@ public interface LuminescentWaxBase {
 
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.WEAKNESS,
-                        75,
+                        100,
                         2,
                         false,
                         false,

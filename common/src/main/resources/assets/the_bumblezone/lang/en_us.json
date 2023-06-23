@@ -197,6 +197,8 @@
   "item.the_bumblezone.honey_compass_mystery_structure_description": "Where does this leads to?",
   "item.the_bumblezone.honey_compass_lesser_mystery_structure": "Honey Compass - Lesser Mystery Structure",
   "item.the_bumblezone.honey_compass_lesser_mystery_structure_description": "Where does this leads to?",
+  "item.the_bumblezone.honey_compass_sanctum_structure": "Honey Compass - Sempiternal Sanctum",
+  "item.the_bumblezone.honey_compass_sanctum_structure_description": "Whispering voices begs you to follow...",
   "item.the_bumblezone.bee_cannon": "Bee Cannon",
   "item.the_bumblezone.crystal_cannon": "Crystal Cannon",
   "item.the_bumblezone.stingless_bee_helmet_1": "Stingless Bee Helmet",
@@ -400,6 +402,7 @@
   "system.the_bumblezone.lost_bee_essence": "Bee Essence lost upon respawning...",
   "system.the_bumblezone.entering_dimension": "Bumbling into the Bumblezone!",
   "system.the_bumblezone.occupied_crystalline_flower": "Flower is occupied by another player...",
+  "system.the_bumblezone.no_essence": "You lacked Essence of the Bees's effect...",
 
   "essence.the_bumblezone.missing_essence_effect": "You need to consume Essence of the Bees first...",
   "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cLose§f in %s",

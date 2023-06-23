@@ -7,8 +7,6 @@
 
 #TODO: get music for essence events and sanctum
 
-#TODO: Spawn the sanctums in the world with compasses to them that spawn only if player has essence of the bees on. Sanctum needs mining fatigue and warning system for non essence players
-
 #TODO: Implement rootmin.
 
 #TODO: implement sentry watcher
@@ -16,6 +14,8 @@
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
+
+#TODO: Fix windy air with item entities
 
 #TODO: Lootr integration with Honey Cocoon https://github.com/noobanidus/Lootr/blob/1.18/src/main/java/noobanidus/mods/lootr/api/ILootrAPI.java#L24
 a) in your "open container",

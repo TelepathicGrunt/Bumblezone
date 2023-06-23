@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentMap;
 
 
 public class WindyAir extends ProperFacingBlock {
-    private static final ConcurrentMap<UUID, Map<Direction, Integer>> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
+    private static final ConcurrentMap<String, Map<Direction, Integer>> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
 
     public WindyAir() {
         super(Properties.of()
@@ -95,12 +95,12 @@ public class WindyAir extends ProperFacingBlock {
             APPLIED_PUSH_FOR_ENTITY.clear();
         }
 
-        if (!APPLIED_PUSH_FOR_ENTITY.containsKey(entity.getUUID())) {
-            APPLIED_PUSH_FOR_ENTITY.put(entity.getUUID(), new HashMap<>());
+        if (!APPLIED_PUSH_FOR_ENTITY.containsKey(entity.getStringUUID())) {
+            APPLIED_PUSH_FOR_ENTITY.put(entity.getStringUUID(), new HashMap<>());
         }
 
         Direction windDirection = blockState.getValue(FACING);
-        if (APPLIED_PUSH_FOR_ENTITY.get(entity.getUUID()).getOrDefault(windDirection, -1) == entity.tickCount) {
+        if (APPLIED_PUSH_FOR_ENTITY.get(entity.getStringUUID()).getOrDefault(windDirection, -1) == entity.tickCount) {
             return;
         }
 
@@ -120,7 +120,7 @@ public class WindyAir extends ProperFacingBlock {
             newVelocity = newVelocity.add(0, -newVelocity.y() + 0.04F, 0);
         }
         entity.setDeltaMovement(newVelocity);
-        APPLIED_PUSH_FOR_ENTITY.get(entity.getUUID()).put(windDirection, entity.tickCount);
+        APPLIED_PUSH_FOR_ENTITY.get(entity.getStringUUID()).put(windDirection, entity.tickCount);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {

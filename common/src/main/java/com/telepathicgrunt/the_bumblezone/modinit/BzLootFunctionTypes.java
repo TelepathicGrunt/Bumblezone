@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.functions.DropContainerItems;
+import com.telepathicgrunt.the_bumblezone.items.conditions.EssenceOnlySpawn;
 import com.telepathicgrunt.the_bumblezone.items.functions.HoneyCompassLocateStructure;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
 import com.telepathicgrunt.the_bumblezone.items.functions.TagItemRemovals;
