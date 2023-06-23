@@ -1,0 +1,245 @@
+{
+  "processors": [
+    {
+      "rules": [
+        {
+          "rules": [
+            {
+              "output_state": {
+                "Name": "minecraft:structure_void"
+              },
+              "input_predicate": {
+                "predicate_type": "minecraft:always_true"
+              },
+              "location_predicate": {
+                "block_state": {
+                  "Name": "the_bumblezone:carvable_wax",
+                  "Properties": {
+                    "carving": "chains"
+                  }
+                },
+                "predicate_type": "minecraft:blockstate_match"
+              }
+            },
+            {
+              "output_state": {
+                "Name": "minecraft:structure_void"
+              },
+              "input_predicate": {
+                "predicate_type": "minecraft:always_true"
+              },
+              "location_predicate": {
+                "block": "minecraft:chain",
+                "predicate_type": "minecraft:block_match"
+              }
+            }
+          ],
+          "processor_type": "minecraft:rule"
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:grass_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:lime_concrete",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "the_bumblezone:sugar_water_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:cyan_stained_glass",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:dirt"
+          },
+          "input_predicate": {
+            "block": "minecraft:brown_concrete",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:grass_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:green_wool",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "the_bumblezone:sugar_water_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:green_wool",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:dirt"
+          },
+          "input_predicate": {
+            "block": "minecraft:brown_wool",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "the_bumblezone:sugar_water_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:green_wool",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "the_bumblezone:sugar_water_block"
+          },
+          "input_predicate": {
+            "block": "minecraft:brown_wool",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:green_stained_glass",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_stained_glass",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "the_bumblezone:sugar_infused_cobblestone"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:sugar_infused_stone",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:green_concrete",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_thin_tree_leaves",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_thin_tree_leaves",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 234
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:green_stained_glass",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_thin_tree_leaves",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_thin_tree_leaves",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 234
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:pink_concrete",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_fancy_tree_leaves",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_fancy_tree_leaves",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 867
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:pink_stained_glass",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_fancy_tree_leaves",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_fancy_tree_leaves",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 867
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:oak_log",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_thin_tree_logs",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_thin_tree_logs",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 980
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:cherry_log",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_fancy_tree_logs",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_fancy_tree_logs",
+      "double_tall_flower": false,
+      "same_throughout_piece": true,
+      "seed_random_addition": 345
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:waterlogging_fix_processor"
+    }
+  ]
+}

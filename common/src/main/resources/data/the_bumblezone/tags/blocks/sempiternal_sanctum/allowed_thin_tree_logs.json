@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:oak_log",
+    "minecraft:spruce_log",
+    {
+      "id": "byg:rainbow_eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "byg:aspen_log",
+      "required": false
+    }
+  ]
+}

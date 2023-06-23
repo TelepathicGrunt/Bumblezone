@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:oak_leaves",
+    "minecraft:birch_leaves",
+    "minecraft:spruce_leaves",
+    "minecraft:azalea_leaves",
+    {
+      "id": "biomesoplenty:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "blossom:flowering_oak_leaves",
+      "required": false
+    },
+    {
+      "id": "byg:flowering_orchard_leaves",
+      "required": false
+    },
+    {
+      "id": "fruittrees:apple_leaves",
+      "required": false
+    }
+  ]
+}

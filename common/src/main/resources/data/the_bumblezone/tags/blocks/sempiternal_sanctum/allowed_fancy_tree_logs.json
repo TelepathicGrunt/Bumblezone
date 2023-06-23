@@ -1,0 +1,72 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:birch_log",
+    "minecraft:cherry_log",
+    "minecraft:mangrove_log",
+    {
+      "id": "ars_nouveau:purple_archwood_log",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:red_archwood_log",
+      "required": false
+    },
+    {
+      "id": "ars_elemental:yellow_archwood_log",
+      "required": false
+    },
+    {
+      "id": "aurorasdeco:flowering_azalea_log",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:cherry_log",
+      "required": false
+    },
+    {
+      "id": "botania:glimmering_dreamwood_log",
+      "required": false
+    },
+    {
+      "id": "byg:white_mangrove_log",
+      "required": false
+    },
+    {
+      "id": "ecologics:flowering_azalea_log",
+      "required": false
+    },
+    {
+      "id": "fruittrees:cherry_log",
+      "required": false
+    },
+    {
+      "id": "minestuck:flowery_vine_log",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:mottled_aurel_log",
+      "required": false
+    },
+    {
+      "id": "promenade:cherry_oak_log",
+      "required": false
+    },
+    {
+      "id": "premium_wood:purple_heart_log",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "terrestria:rainbow_eucalyptus_log",
+      "required": false
+    },
+    {
+      "id": "various_update:cherry_log",
+      "required": false
+    }
+  ]
+}

@@ -4,6 +4,19 @@
       "rules": [
         {
           "output_state": {
+            "Name": "minecraft:air"
+          },
+          "input_predicate": {
+            "block": "minecraft:lily_of_the_valley",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.55
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
             "Name": "minecraft:structure_void"
           },
           "input_predicate": {
@@ -18,9 +31,47 @@
             },
             "predicate_type": "minecraft:blockstate_match"
           }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "location_predicate": {
+            "block": "minecraft:chain",
+            "predicate_type": "minecraft:block_match"
+          }
         }
       ],
       "processor_type": "minecraft:rule"
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:lily_of_the_valley",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_white_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_white_flowers",
+      "double_tall_flower": false,
+      "same_throughout_piece": false,
+      "seed_random_addition": 929
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:black_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:chain",
+            "Properties": {
+              "axis": "y"
+            }
+          }
+        }
+      ]
     },
     {
       "processor_type": "the_bumblezone:pillar_processor",

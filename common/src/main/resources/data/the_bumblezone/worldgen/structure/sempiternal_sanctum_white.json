@@ -7,7 +7,7 @@
   "step": "surface_structures",
   "terrain_adaptation": "none",
   "start_height": {
-    "absolute": 120
+    "absolute": 80
   },
   "spawn_overrides": {}
 }
