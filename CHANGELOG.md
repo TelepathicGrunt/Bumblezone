@@ -232,6 +232,8 @@ Fixed bug where Beehemoths always fly straight up if below sealevel.
 
 Fixed Leash rendering for Beehemoth.
 
+Beehemoth will not lose friendship if it suffers in-wall suffocation damage
+
 ##### Structures:
 Hanging Gardens now can spawn Torch Flower, Pitcher Plant, Pink Petal, Cherry Leaves, Cherry Logs, and Cherry Saplings!.
 

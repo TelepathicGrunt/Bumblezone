@@ -36,6 +36,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
@@ -289,31 +290,34 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                     return false;
                 }
 
-                if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
-                    addFriendship((int) (-3 * amount));
-                }
-                if (BzBeeAggressionConfigs.aggressiveBees &&
-                    BzBeeAggressionConfigs.beehemothTriggersWrath &&
-                    entity instanceof LivingEntity livingEntity)
-                {
-                    addFriendship((int) (-amount));
-                    if (!(livingEntity instanceof Player player && (player.isCreative() || level().getDifficulty() == Difficulty.PEACEFUL)) &&
-                        (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
-                        !livingEntity.isSpectator())
+                setOrderedToSit(false);
+
+                if (source.type() != level().damageSources().inWall().type()) {
+                    if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                        addFriendship((int) (-3 * amount));
+                    }
+                    if (BzBeeAggressionConfigs.aggressiveBees &&
+                            BzBeeAggressionConfigs.beehemothTriggersWrath &&
+                            entity instanceof LivingEntity livingEntity)
                     {
-                        if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                            livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                        }
-                        else {
-                            //Now all bees nearby in Bumblezone will get VERY angry!!!
-                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
+                        addFriendship((int) (-amount));
+                        if (!(livingEntity instanceof Player player && (player.isCreative() || level().getDifficulty() == Difficulty.PEACEFUL)) &&
+                                (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
+                                !livingEntity.isSpectator())
+                        {
+                            if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                                livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                            }
+                            else {
+                                //Now all bees nearby in Bumblezone will get VERY angry!!!
+                                livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
+                            }
                         }
                     }
+                    else {
+                        addFriendship((int) -amount);
+                    }
                 }
-                else {
-                    addFriendship((int) -amount);
-                }
-                setOrderedToSit(false);
             }
 
             spawnMadParticles();
