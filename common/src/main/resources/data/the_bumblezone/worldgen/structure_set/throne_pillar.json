@@ -6,9 +6,13 @@
     }
   ],
   "placement": {
+    "type": "the_bumblezone:advanced_random_spread",
     "salt": 17240798,
-    "spacing": 100,
-    "separation": 40,
-    "type": "minecraft:random_spread"
+    "spacing": 75,
+    "separation": 55,
+    "exclusion_zone": {
+      "other_set": "#the_bumblezone:avoiding/for_throne_pillar",
+      "chunk_count": 5
+    }
   }
 }

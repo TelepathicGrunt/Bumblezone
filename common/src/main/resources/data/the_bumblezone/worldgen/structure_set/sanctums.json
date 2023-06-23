@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "the_bumblezone:sempiternal_sanctum_white",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "the_bumblezone:advanced_random_spread",
+    "salt": 54356565,
+    "spacing": 75,
+    "separation": 55,
+    "min_distance_from_world_origin": 4000
+  }
+}

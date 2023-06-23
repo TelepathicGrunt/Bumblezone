@@ -146,6 +146,7 @@ public class Bumblezone{
         BzCreativeTabs.CREATIVE_MODE_TABS.init();
         BzBiomeHeightRegistry.BIOME_HEIGHT.init();
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.init();
+        BzStructurePlacementType.STRUCTURE_PLACEMENT_TYPE.init();
     }
 
     public static void onRegisterFlammablity(RegisterFlammabilityEvent event) {

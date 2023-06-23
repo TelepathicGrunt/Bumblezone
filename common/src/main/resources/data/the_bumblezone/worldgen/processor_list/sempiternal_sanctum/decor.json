@@ -1,41 +1,42 @@
 {
   "processors": [
     {
+      "processor_type": "minecraft:rule",
       "rules": [
         {
-          "rules": [
-            {
-              "output_state": {
-                "Name": "minecraft:structure_void"
-              },
-              "input_predicate": {
-                "predicate_type": "minecraft:always_true"
-              },
-              "location_predicate": {
-                "block_state": {
-                  "Name": "the_bumblezone:carvable_wax",
-                  "Properties": {
-                    "carving": "chains"
-                  }
-                },
-                "predicate_type": "minecraft:blockstate_match"
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "location_predicate": {
+            "block_state": {
+              "Name": "the_bumblezone:carvable_wax",
+              "Properties": {
+                "carving": "chains"
               }
             },
-            {
-              "output_state": {
-                "Name": "minecraft:structure_void"
-              },
-              "input_predicate": {
-                "predicate_type": "minecraft:always_true"
-              },
-              "location_predicate": {
-                "block": "minecraft:chain",
-                "predicate_type": "minecraft:block_match"
-              }
-            }
-          ],
-          "processor_type": "minecraft:rule"
+            "predicate_type": "minecraft:blockstate_match"
+          }
         },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "location_predicate": {
+            "block": "minecraft:chain",
+            "predicate_type": "minecraft:block_match"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
         {
           "output_state": {
             "Name": "minecraft:grass_block"
@@ -173,8 +174,7 @@
             "predicate_type": "minecraft:always_true"
           }
         }
-      ],
-      "processor_type": "minecraft:rule"
+      ]
     },
     {
       "processor_type": "the_bumblezone:tag_replace_processor",

@@ -6,9 +6,13 @@
     }
   ],
   "placement": {
+    "type": "the_bumblezone:advanced_random_spread",
     "salt": 223986734,
     "spacing": 49,
     "separation": 23,
-    "type": "minecraft:random_spread"
+    "exclusion_zone": {
+      "other_set": "#the_bumblezone:avoiding/for_hanging_garden",
+      "chunk_count": 5
+    }
   }
 }

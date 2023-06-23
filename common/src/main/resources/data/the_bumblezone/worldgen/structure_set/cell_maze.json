@@ -6,9 +6,9 @@
     }
   ],
   "placement": {
+    "type": "the_bumblezone:advanced_random_spread",
     "salt": 456768898,
     "spacing": 80,
-    "separation": 35,
-    "type": "minecraft:random_spread"
+    "separation": 35
   }
 }

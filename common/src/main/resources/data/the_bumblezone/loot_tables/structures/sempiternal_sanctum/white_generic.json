@@ -1,0 +1,79 @@
+{
+  "type": "minecraft:chest",
+  "random_sequence": "the_bumblezone:structures",
+  "pools": [
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 4.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "name": "minecraft:honeycomb",
+          "type": "minecraft:item",
+          "weight": 16,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "min": 1.0,
+        "max": 2.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "name": "minecraft:emerald",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "minecraft:diamond",
+          "type": "minecraft:item",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 2,
+      "entries": [
+        {
+          "name": "minecraft:spider_eye",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

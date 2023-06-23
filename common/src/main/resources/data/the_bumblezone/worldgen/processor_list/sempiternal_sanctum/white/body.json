@@ -1,6 +1,7 @@
 {
   "processors": [
     {
+      "processor_type": "minecraft:rule",
       "rules": [
         {
           "output_state": {
@@ -44,8 +45,7 @@
             "predicate_type": "minecraft:block_match"
           }
         }
-      ],
-      "processor_type": "minecraft:rule"
+      ]
     },
     {
       "processor_type": "the_bumblezone:tag_replace_processor",

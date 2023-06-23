@@ -5,7 +5,7 @@
       "weight": 1,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/lower_tunnels",
-        "processors": "the_bumblezone:sempiternal_sanctum/inside_white",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

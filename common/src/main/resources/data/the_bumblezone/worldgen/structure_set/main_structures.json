@@ -62,13 +62,13 @@
     }
   ],
   "placement": {
+    "type": "the_bumblezone:advanced_random_spread",
     "salt": 578754875,
     "spacing": 19,
     "separation": 4,
-    "exclusion_zone": {
-      "other_set": "the_bumblezone:cell_maze",
+    "super_exclusion_zone": {
+      "other_set": "#the_bumblezone:avoiding/for_main_structures",
       "chunk_count": 5
-    },
-    "type": "minecraft:random_spread"
+    }
   }
 }
