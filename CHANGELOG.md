@@ -17,8 +17,6 @@
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
 
-#TODO: adjust textures on bee armor
-
 #TODO: Lootr integration with Honey Cocoon https://github.com/noobanidus/Lootr/blob/1.18/src/main/java/noobanidus/mods/lootr/api/ILootrAPI.java#L24
 a) in your "open container",
 b) check if lootr is loaded; if not, fall back on your default (you will need to give each container a uuid that gets saved)
@@ -204,6 +202,8 @@ Added two new nbt that modpack makers can set for Bumble Bee Chestplate to chang
 Fixed one Bumble Bee Chestplate's wings being off when viewed from above and is flying.
 
 Fixed recipe for Trans Bumble Bee Chestplate nuking the NBT of the original chestplate
+
+Adjusted texture on one Trans Bumble Bee armor variant to make it more distinct.
 
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
