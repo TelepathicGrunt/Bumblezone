@@ -1,11 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.InfinityBarrierBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
+import com.telepathicgrunt.the_bumblezone.client.items.InfinityBarrierColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.DustParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
@@ -95,6 +97,7 @@ public class BumblezoneClient {
         RegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
         RegisterKeyMappingEvent.EVENT.addListener(BumblezoneClient::registerKeyBinding);
         RegisterDimensionEffectsEvent.EVENT.addListener(BumblezoneClient::registerDimensionEffects);
+        RegisterBlockColorEvent.EVENT.addListener(InfinityBarrierColoring::registerBlockColors);
         RegisterBlockColorEvent.EVENT.addListener(IncenseCandleColoring::registerBlockColors);
         RegisterItemColorEvent.EVENT.addListener(IncenseCandleColoring::registerItemColors);
         ClientTickEvent.EVENT.addListener(event -> {
@@ -268,7 +271,8 @@ public class BumblezoneClient {
                 BzBlocks.INCENSE_BASE_CANDLE.get(),
                 BzBlocks.CRYSTALLINE_FLOWER.get(),
                 BzBlocks.POROUS_HONEYCOMB.get(),
-                BzBlocks.EMPTY_HONEYCOMB_BROOD.get()
+                BzBlocks.EMPTY_HONEYCOMB_BROOD.get(),
+                BzBlocks.INFINITY_BARRIER.get()
         );
 
         BzBlocks.CURTAINS.stream().map(RegistryEntry::get).forEach(block -> event.register(RenderType.cutout(), block));

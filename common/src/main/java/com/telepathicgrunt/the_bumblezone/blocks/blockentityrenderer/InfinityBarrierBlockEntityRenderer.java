@@ -67,9 +67,9 @@ public class InfinityBarrierBlockEntityRenderer implements BlockEntityRenderer<I
 
 	@Override
 	public void render(InfinityBarrierBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int brightness, int overlayType) {
-		RANDOM.setSeed(RANDOM_SEED);
-		Matrix4f matrix4f = poseStack.last().pose();
-		this.renderSides(blockEntity, matrix4f, multiBufferSource.getBuffer(this.getType()));
+//		RANDOM.setSeed(RANDOM_SEED);
+//		Matrix4f matrix4f = poseStack.last().pose();
+//		this.renderSides(blockEntity, matrix4f, multiBufferSource.getBuffer(this.getType()));
 	}
 
 	private void renderSides(InfinityBarrierBlockEntity blockEntity, Matrix4f matrix4f, VertexConsumer vertexConsumer) {

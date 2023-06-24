@@ -1,5 +1,33 @@
 {
   "textures": {
-    "particle": "minecraft:block/white_concrete"
-  }
+    "0": "the_bumblezone:block/infinity_barrier/primary_backup",
+    "1": "the_bumblezone:block/infinity_barrier/secondary_backup",
+    "particle": "the_bumblezone:block/infinity_barrier/secondary_backup"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1 },
+        "east": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1 },
+        "south": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1 },
+        "west": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1 },
+        "up": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1 },
+        "down": {"uv": [0, 0, 16, 16], "texture": "#1", "tintindex": 1 }
+      }
+    },
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0 },
+        "east": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0 },
+        "south": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0 },
+        "west": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0 },
+        "up": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0 },
+        "down": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0 }
+      }
+    }
+  ]
 }

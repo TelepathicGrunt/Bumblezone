@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -26,6 +27,11 @@ public class InfinityBarrier extends BaseEntityBlock {
                 .noOcclusion()
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
                 .pushReaction(PushReaction.BLOCK));
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState arg) {
+        return RenderShape.MODEL;
     }
 
     @Override

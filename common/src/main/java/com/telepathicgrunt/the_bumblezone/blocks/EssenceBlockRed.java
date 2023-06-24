@@ -149,7 +149,7 @@ public class EssenceBlockRed extends EssenceBlock {
                 ).orElseGet(ArrayList::new);
 
         EntityType<?> entityTypeToSpawn = entityTypeList.get(serverLevel.getRandom().nextInt(entityTypeList.size()));
-        int yOffset = (essenceBlockEntity.getArenaSize().getY() - 4) / 2;
+        int yOffset = (-(essenceBlockEntity.getArenaSize().getY()) / 2) + 2;
         Entity entity = entityTypeToSpawn.spawn(serverLevel, blockPos.offset(0, yOffset, 0), MobSpawnType.TRIGGERED);
         if (entity != null) {
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
