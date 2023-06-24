@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
@@ -56,6 +57,12 @@ import java.util.function.Supplier;
 import static java.util.Objects.requireNonNull;
 
 public class GeneralUtilsClient {
+
+    public static Player getClientPlayer() {
+        return Minecraft.getInstance().player;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
 
     public static boolean isSimilarInColor(Color color1, Color color2, int threshold) {
         return (Math.abs(color1.getRed() - color2.getRed()) +

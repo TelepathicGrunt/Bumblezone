@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.client;
 
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
@@ -21,7 +22,7 @@ public class ReceivingLevelScreenMixin extends Screen {
     @Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V",
             at = @At(value = "HEAD"), cancellable = true, require = 0)
     private void bumblezone$renderNewScreenWhenEnteringBumblezone(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
-        if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.level().dimension() == BzDimension.BZ_WORLD_KEY) {
+        if (GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY) {
             DimensionTeleportingScreen.renderScreenAndText(((ReceivingLevelScreen)(Object)this), guiGraphics);
             super.render(guiGraphics, mouseX, mouseY, partialTick);
             ci.cancel();

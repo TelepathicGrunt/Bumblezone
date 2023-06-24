@@ -27,6 +27,7 @@ import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
@@ -170,8 +171,8 @@ public class BumblezoneForgeClient {
 
     public static void onScreenRendering(ScreenEvent.Render.Pre event) {
         if (event.getScreen() instanceof ReceivingLevelScreen receivingLevelScreen &&
-            Minecraft.getInstance().player != null &&
-            Minecraft.getInstance().player.level().dimension() == BzDimension.BZ_WORLD_KEY)
+            GeneralUtilsClient.getClientPlayer() != null &&
+            GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
         {
             DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getGuiGraphics());
             event.setCanceled(true);

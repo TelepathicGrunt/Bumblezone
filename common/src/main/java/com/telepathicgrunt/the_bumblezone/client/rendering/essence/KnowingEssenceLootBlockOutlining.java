@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.mixin.client.LevelRendererAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -36,7 +37,7 @@ import java.util.Map;
 
 public class KnowingEssenceLootBlockOutlining {
     public static void outlineLootBlocks(PoseStack poseStack, Camera camera, LevelRenderer levelRenderer) {
-        Player player = Minecraft.getInstance().player;
+        Player player = GeneralUtilsClient.getClientPlayer();
         if (KnowingEssence.IsKnowingEssenceActive(player)) {
             Level level = player.level();
 

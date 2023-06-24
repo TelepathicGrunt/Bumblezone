@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.packets.networking.forge;
 
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,9 +31,14 @@ public class PacketChannelHelperImpl {
         }
         channel.channel.registerMessage(++channel.packets, packetClass, handler::encode, handler::decode, (msg, ctx) -> {
             NetworkEvent.Context context = ctx.get();
-            Player player = context.getSender() == null ? getPlayer() : null;
+            Player player = null;
+            if (context.getSender() == null) {
+                player = GeneralUtilsClient.getClientPlayer();
+            }
+
             if (player != null) {
-                context.enqueueWork(() -> handler.handle(msg).apply(player, player.level()));
+                Player finalPlayer = player;
+                context.enqueueWork(() -> handler.handle(msg).apply(finalPlayer, finalPlayer.level()));
             }
             context.setPacketHandled(true);
         });
@@ -51,10 +57,6 @@ public class PacketChannelHelperImpl {
             }
             context.setPacketHandled(true);
         });
-    }
-
-    private static Player getPlayer() {
-        return Minecraft.getInstance().player;
     }
 
     public static <T extends Packet<T>> void sendToServer(ResourceLocation name, T packet) {

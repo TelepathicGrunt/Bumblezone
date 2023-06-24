@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -27,8 +28,8 @@ public class BeehemothControls {
     );
 
     public static void keyInput(KeyInputEvent event) {
-        if (Minecraft.getInstance().player != null &&
-            Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity beehemothEntity)
+        if (GeneralUtilsClient.getClientPlayer() != null &&
+            GeneralUtilsClient.getClientPlayer().getVehicle() instanceof BeehemothEntity beehemothEntity)
         {
             boolean upKeyAction = KEY_BIND_BEEHEMOTH_UP.matches(event.key(), event.scancode());
             boolean downKeyAction = KEY_BIND_BEEHEMOTH_DOWN.matches(event.key(), event.scancode());
@@ -59,8 +60,8 @@ public class BeehemothControls {
         BEEHEMOTH_KEY_CONTEXT {
             @Override
             public boolean isActive() {
-                return Minecraft.getInstance().player != null &&
-                        Minecraft.getInstance().player.getVehicle() instanceof BeehemothEntity;
+                return GeneralUtilsClient.getClientPlayer() != null &&
+                    GeneralUtilsClient.getClientPlayer().getVehicle() instanceof BeehemothEntity;
             }
 
             @Override

@@ -72,6 +72,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -98,7 +99,7 @@ public class BumblezoneClient {
         RegisterItemColorEvent.EVENT.addListener(IncenseCandleColoring::registerItemColors);
         ClientTickEvent.EVENT.addListener(event -> {
             if (event.end()) {
-                StinglessBeeHelmet.decrementHighlightingCounter(Minecraft.getInstance().player);
+                StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
             }
         });
 

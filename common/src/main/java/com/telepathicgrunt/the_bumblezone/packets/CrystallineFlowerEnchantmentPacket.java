@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -51,7 +52,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
         @Override
         public PacketContext handle(CrystallineFlowerEnchantmentPacket message) {
             return (player, level) -> {
-                if(Minecraft.getInstance().player != null && Minecraft.getInstance().player.containerMenu.containerId == message.containerId){
+                if(GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().containerMenu.containerId == message.containerId){
                     CrystallineFlowerScreen.enchantmentsAvailable = message.enchantmentSkeletons();
                 }
             };
