@@ -1,8 +1,8 @@
 {
   "textures": {
-    "0": "the_bumblezone:block/infinity_barrier/primary_backup",
-    "1": "the_bumblezone:block/infinity_barrier/secondary_backup",
-    "particle": "the_bumblezone:block/infinity_barrier/secondary_backup"
+    "0": "the_bumblezone:block/infinity_barrier/primary",
+    "1": "the_bumblezone:block/infinity_barrier/secondary",
+    "particle": "the_bumblezone:block/infinity_barrier/secondary"
   },
   "elements": [
     {

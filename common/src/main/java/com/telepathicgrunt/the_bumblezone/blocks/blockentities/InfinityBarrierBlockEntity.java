@@ -80,10 +80,6 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
         return tag;
     }
 
-    public boolean shouldDrawSide(Direction direction) {
-        return Block.shouldRenderFace(this.getBlockState(), this.getLevel(), this.getBlockPos(), direction, this.getBlockPos().relative(direction));
-    }
-
     public static int getBlockColor(BlockAndTintGetter world, BlockPos pos, int tintIndex) {
         if (world != null) {
             BlockEntity blockEntity = world.getBlockEntity(pos);

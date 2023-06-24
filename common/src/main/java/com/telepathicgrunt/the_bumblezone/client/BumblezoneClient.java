@@ -1,9 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
-import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.InfinityBarrierBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
@@ -25,7 +23,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStinger
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.RoyalJellyClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.SugarWaterClientProperties;
@@ -41,7 +38,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryW
 import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryWatcherRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
@@ -127,7 +123,6 @@ public class BumblezoneClient {
 
     public static void registerBlockEntityRenderers(RegisterBlockEntityRendererEvent<?> event) {
         BlockEntityRenderers.register(BzBlockEntities.ESSENCE_BLOCK.get(), EssenceBlockEntityRenderer::new);
-        BlockEntityRenderers.register(BzBlockEntities.INFINITY_BARRIER.get(), InfinityBarrierBlockEntityRenderer::new);
         BlockEntityRenderers.register(BzBlockEntities.STATE_FOCUSED_BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
     }
 
