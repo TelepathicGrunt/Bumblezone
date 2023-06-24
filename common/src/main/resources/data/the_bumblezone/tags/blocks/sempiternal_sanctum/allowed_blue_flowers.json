@@ -2,6 +2,514 @@
   "replace": false,
   "values": [
     "minecraft:blue_orchid",
-    "minecraft:cornflower"
+    "minecraft:cornflower",
+    {
+      "id": "andycats_flowers:blue_cowslip",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_iris",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:blue_allium",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:light_blue_allium",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:ice_blue_allium",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:cyan_allium",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:navy_allium",
+      "required": false
+    },
+    {
+      "id": "blue_skies:frose",
+      "required": false
+    },
+    {
+      "id": "blue_skies:moonlit_bloom",
+      "required": false
+    },
+    {
+      "id": "botania:light_blue_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:blue_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:cyan_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:hydroangeas",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:tropical_blue",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:chargelily",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_blue_orchid",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_cornflower",
+      "required": false
+    },
+    {
+      "id": "byg:blue_sage",
+      "required": false
+    },
+    {
+      "id": "byg:cyan_amaranth",
+      "required": false
+    },
+    {
+      "id": "byg:cyan_rose",
+      "required": false
+    },
+    {
+      "id": "byg:winter_scilla",
+      "required": false
+    },
+    {
+      "id": "byg:cyan_tulip",
+      "required": false
+    },
+    {
+      "id": "byg:winter_cyclamen",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:blue_azalea_sapling",
+      "required": false
+    },
+    {
+      "id": "ecotones:bluebell",
+      "required": false
+    },
+    {
+      "id": "ecotones:cyan_rose",
+      "required": false
+    },
+    {
+      "id": "environmental:bluebell",
+      "required": false
+    },
+    {
+      "id": "fabled_flowers:fabled_hydrangea_plant",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cloud_blue_corydalis",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cyan_hyacinth",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:light_blue_forget_me_not",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:forget_me_not",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:light_blue_lobelia",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:medium_blue_lobelia",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:royal_blue_lobelia",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:morning_glory",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:blue_bachelor_button",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:blue_bell_bachelor_button",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:borage",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:dark_blue_borage",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:commelina",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:grape_hyacinth",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:virgina_cowslip",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:baby_blue_eyes",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:baby_blue_eyes_small",
+      "required": false
+    },
+    {
+      "id": "floralis:blue_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:light_blue_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:cyan_flower",
+      "required": false
+    },
+    {
+      "id": "hexerei:mandrake_flower",
+      "required": false
+    },
+    {
+      "id": "jafohana:dayflower",
+      "required": false
+    },
+    {
+      "id": "jafohana:bluebell",
+      "required": false
+    },
+    {
+      "id": "jafohana:forget_me_not",
+      "required": false
+    },
+    {
+      "id": "many_flowers:diamond_flower",
+      "required": false
+    },
+    {
+      "id": "meadow:enzian",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:essence_flower",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:purple_tulip",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:blue_tulip",
+      "required": false
+    },
+    {
+      "id": "supplementaries:wild_flax",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_lupine",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:felicia_daisy",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:blue_hydrangea",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:himalayan_poppy",
+      "required": false
+    },
+    {
+      "id": "undergarden:miserabell",
+      "required": false
+    },
+    {
+      "id": "valleycraft:light_blue_tulip",
+      "required": false
+    },
+    {
+      "id": "valleycraft:goddess_lily",
+      "required": false
+    },
+    {
+      "id": "windswept:blue_rose",
+      "required": false
+    },
+    {
+      "id": "windswept:bluebells",
+      "required": false
+    }
   ]
 }

@@ -2,6 +2,330 @@
   "replace": false,
   "values": [
     "minecraft:red_tulip",
-    "minecraft:poppy"
+    "minecraft:poppy",
+    {
+      "id": "andycats_flowers:cape_aloe",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:crimson_allium",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:red_allium",
+      "required": false
+    },
+    {
+      "id": "atmospheric:scalding_monkey_brush",
+      "required": false
+    },
+    {
+      "id": "blue_skies:flare_floret",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:rose",
+      "required": false
+    },
+    {
+      "id": "botania:red_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:marigolds",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:freesia",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_poppy",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:red_tulip",
+      "required": false
+    },
+    {
+      "id": "byg:magenta_tulip",
+      "required": false
+    },
+    {
+      "id": "byg:protea_flower",
+      "required": false
+    },
+    {
+      "id": "byg:amaranth",
+      "required": false
+    },
+    {
+      "id": "byg:osiria_rose",
+      "required": false
+    },
+    {
+      "id": "byg:kovan_flower",
+      "required": false
+    },
+    {
+      "id": "byg:begonia",
+      "required": false
+    },
+    {
+      "id": "byg:fairy_slipper",
+      "required": false
+    },
+    {
+      "id": "byg:lazarus_bellflower",
+      "required": false
+    },
+    {
+      "id": "byg:torch_ginger",
+      "required": false
+    },
+    {
+      "id": "byg:rose",
+      "required": false
+    },
+    {
+      "id": "byg:magenta_tulip",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:red_azalea_sapling",
+      "required": false
+    },
+    {
+      "id": "ecotones:flame_lily",
+      "required": false
+    },
+    {
+      "id": "environmental:red_lotus_flower",
+      "required": false
+    },
+    {
+      "id": "environmental:red_hibiscus",
+      "required": false
+    },
+    {
+      "id": "fabled_flowers:fabled_columbine_plant",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_geranium",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_poppy",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_clover",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:red_freesia",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:bucketwheat_red",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:jewel_of_the_desert",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:desert_paintbrush",
+      "required": false
+    },
+    {
+      "id": "floralis:red_flower",
+      "required": false
+    },
+    {
+      "id": "habitat:blooming_dreadbud",
+      "required": false
+    },
+    {
+      "id": "habitat:red_anthurium",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:punuel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:calendula",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:essitte",
+      "required": false
+    },
+    {
+      "id": "jafohana:red_snapdragon",
+      "required": false
+    },
+    {
+      "id": "jafohana:red_spider_lily",
+      "required": false
+    },
+    {
+      "id": "many_flowers:oriental_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:rose",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:red_dandelion",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:drigean",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:red_lupine",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:waratah",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:alpha_rose",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:poppy_bush",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:columbine",
+      "required": false
+    },
+    {
+      "id": "spectrum:blood_orchid",
+      "required": false
+    },
+    {
+      "id": "terrestria:indian_paintbrush",
+      "required": false
+    },
+    {
+      "id": "twilightforest:thorn_rose",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:sarracenia",
+      "required": false
+    },
+    {
+      "id": "valleycraft:red_lupine",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_fire_pepper",
+      "required": false
+    },
+    {
+      "id": "windswept:red_rose",
+      "required": false
+    }
   ]
 }

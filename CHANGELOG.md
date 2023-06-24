@@ -19,6 +19,10 @@
 
 #TODO: test dedicated server
 
+#TODO: Add music for sanctums and events
+
+#TODO: Add sounds for Rootmin and Sentry Watcher
+
 #TODO: Lootr integration with Honey Cocoon https://github.com/noobanidus/Lootr/blob/1.18/src/main/java/noobanidus/mods/lootr/api/ILootrAPI.java#L24
 a) in your "open container",
 b) check if lootr is loaded; if not, fall back on your default (you will need to give each container a uuid that gets saved)

@@ -469,6 +469,10 @@
       "required": false
     },
     {
+      "id": "twigs:cut_amethyst",
+      "required": false
+    },
+    {
       "id": "twigs:polished_amethyst_bricks",
       "required": false
     },

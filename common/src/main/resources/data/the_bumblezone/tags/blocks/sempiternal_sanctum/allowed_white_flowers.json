@@ -4,6 +4,262 @@
     "minecraft:azure_bluet",
     "minecraft:white_tulip",
     "minecraft:oxeye_daisy",
-    "minecraft:lily_of_the_valley"
+    "minecraft:lily_of_the_valley",
+    {
+      "id": "andycats_flowers:white_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:white_allium",
+      "required": false
+    },
+    {
+      "id": "atmospheric:yucca_flower",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:glowflower",
+      "required": false
+    },
+    {
+      "id": "blue_skies:snowbloom",
+      "required": false
+    },
+    {
+      "id": "botania:white_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:pure_daisy",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:snowdrop",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_white_tulip",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_oxeye_daisy",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_azure_bluet",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_lily_of_the_valley",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:white_clover",
+      "required": false
+    },
+    {
+      "id": "byg:bistort",
+      "required": false
+    },
+    {
+      "id": "byg:white_sage",
+      "required": false
+    },
+    {
+      "id": "byg:angelica",
+      "required": false
+    },
+    {
+      "id": "byg:snowdrops",
+      "required": false
+    },
+    {
+      "id": "byg:white_anemone",
+      "required": false
+    },
+    {
+      "id": "byg:winter_rose",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:white_azalea_sapling",
+      "required": false
+    },
+    {
+      "id": "ecotones:poofy_dandelion",
+      "required": false
+    },
+    {
+      "id": "environmental:white_lotus_flower",
+      "required": false
+    },
+    {
+      "id": "fabled_flowers:fabled_camella_plant",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_carrots",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:snapdragon_white",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:lily_of_the_valley",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:calla_lily",
+      "required": false
+    },
+    {
+      "id": "floralis:white_flower",
+      "required": false
+    },
+    {
+      "id": "jafohana:white_egret_orchid",
+      "required": false
+    },
+    {
+      "id": "jafohana:white_african_daisy",
+      "required": false
+    },
+    {
+      "id": "jafohana:evening_primrose",
+      "required": false
+    },
+    {
+      "id": "habitat:white_anthurium",
+      "required": false
+    },
+    {
+      "id": "habitat:edelweiss",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:ceillis",
+      "required": false
+    },
+    {
+      "id": "many_flowers:iron_flower",
+      "required": false
+    },
+    {
+      "id": "meadow:eriophorum",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:white_allium",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:white_cornflower",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:white_orchid",
+      "required": false
+    },
+    {
+      "id": "oaks_nature:white_dandelion",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:ancient_flower",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:grass_flowering",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:cloudsbluff",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:daisy",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_trillium",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:seeding_dandelion",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:fleabane",
+      "required": false
+    },
+    {
+      "id": "upgrade_aquatic:white_searocket",
+      "required": false
+    },
+    {
+      "id": "valleycraft:fluffy_dandelion",
+      "required": false
+    },
+    {
+      "id": "valleycraft:white_poppy",
+      "required": false
+    },
+    {
+      "id": "valleycraft:snowflower",
+      "required": false
+    },
+    {
+      "id": "valleycraft:wild_puff_ball",
+      "required": false
+    },
+    {
+      "id": "windswept:white_rose",
+      "required": false
+    },
+    {
+      "id": "wilderwild:seeding_dandelion",
+      "required": false
+    },
+    {
+      "id": "windswept:nightshade",
+      "required": false
+    }
   ]
 }

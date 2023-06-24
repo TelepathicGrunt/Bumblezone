@@ -2,6 +2,219 @@
   "replace": false,
   "values": [
     "minecraft:fern",
-    "minecraft:grass"
+    "minecraft:grass",
+    "minecraft:azalea",
+    {
+      "id": "andycats_flowers:big_leaf",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_dandelion",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_allium",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:lime_daisy",
+      "required": false
+    },
+    {
+      "id": "alchemists_garden:creeper_orchid",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:clover",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:sprout",
+      "required": false
+    },
+    {
+      "id": "botania:green_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "botania:lime_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:limelight",
+      "required": false
+    },
+    {
+      "id": "byg:green_tulip",
+      "required": false
+    },
+    {
+      "id": "environmental:dianthus",
+      "required": false
+    },
+    {
+      "id": "fabled_flowers:fabled_maidenhair_fern_plant",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:albuca_namaquensis",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:clover_leaves",
+      "required": false
+    },
+    {
+      "id": "floralis:lime_flower",
+      "required": false
+    },
+    {
+      "id": "floralis:green_flower",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:nipa",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:chervil",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:fennsel",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:marjoram",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:rosemary",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:tarragon",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:thyme",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:thyocielle",
+      "required": false
+    },
+    {
+      "id": "hibernalherbs:fennkystral",
+      "required": false
+    },
+    {
+      "id": "jafohana:bells_of_ireland",
+      "required": false
+    },
+    {
+      "id": "many_flowers:emerald_flower",
+      "required": false
+    },
+    {
+      "id": "naturalized:alive_bush",
+      "required": false
+    },
+    {
+      "id": "naturalized:wild_grass_small",
+      "required": false
+    },
+    {
+      "id": "snowyspirit:wild_ginger",
+      "required": false
+    },
+    {
+      "id": "spelunkery:sporophyte",
+      "required": false
+    },
+    {
+      "id": "terrestria:aloe_vera",
+      "required": false
+    },
+    {
+      "id": "terrestria:monsteras",
+      "required": false
+    },
+    {
+      "id": "twilightforest:mayapple",
+      "required": false
+    },
+    {
+      "id": "twilightforest:fiddlehead",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:horsetail",
+      "required": false
+    },
+    {
+      "id": "valleycraft:moss_sproutlet",
+      "required": false
+    },
+    {
+      "id": "valleycraft:clover",
+      "required": false
+    },
+    {
+      "id": "valleycraft:leatherleaf_fern",
+      "required": false
+    },
+    {
+      "id": "wilderwild:bush",
+      "required": false
+    }
   ]
 }

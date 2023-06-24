@@ -2,6 +2,294 @@
   "replace": false,
   "values": [
     "minecraft:dandelion",
-    "minecraft:orange_tulip"
+    "minecraft:orange_tulip",
+    {
+      "id": "andycats_flowers:yellow_cowslip",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:mixed_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_cosmos",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_echinacea",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_daffodil",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_calla_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_gladiolus",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_mallow",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_commelina",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_cornflower",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_lily",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_orchid",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_poppy",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_allium",
+      "required": false
+    },
+    {
+      "id": "andycats_flowers:yellow_daisy",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:orange_cosmos",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:burning_blossom",
+      "required": false
+    },
+    {
+      "id": "botania:yellow_mystical_flower",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:buttercup",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:buttercup",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_dandelion",
+      "required": false
+    },
+    {
+      "id": "bushierflowers:grown_orange_tulip",
+      "required": false
+    },
+    {
+      "id": "byg:yellow_tulip",
+      "required": false
+    },
+    {
+      "id": "byg:lollipop_flower",
+      "required": false
+    },
+    {
+      "id": "byg:orange_amaranth",
+      "required": false
+    },
+    {
+      "id": "colorfulazaleas:yellow_azalea_sapling",
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:buttercup",
+      "required": false
+    },
+    {
+      "id": "earthtojavamobs:buttercup",
+      "required": false
+    },
+    {
+      "id": "environmental:yellow_hibiscus",
+      "required": false
+    },
+    {
+      "id": "fabled_flowers:fabled_daffodilq_plant",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_cabbages",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:orange_lupin",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_cosmos",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_crocus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_freesia",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:corydalis",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_lupin",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:golden_bean",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:narcissus",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:cinquefoil",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_daffodil",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:white_daffodil",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:lady_slipper_orchid",
+      "required": false
+    },
+    {
+      "id": "ferdinandsflowers:yellow_starthistle",
+      "required": false
+    },
+    {
+      "id": "floralis:yellow_flower",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:yellow_orchid",
+      "required": false
+    },
+    {
+      "id": "friendsandfoes:buttercup",
+      "required": false
+    },
+    {
+      "id": "habitat:yellow_anthurium",
+      "required": false
+    },
+    {
+      "id": "honey_bucket:golden_bloom",
+      "required": false
+    },
+    {
+      "id": "jafohana:yellow_snapdragon",
+      "required": false
+    },
+    {
+      "id": "jafohana:yellow_african_daisy",
+      "required": false
+    },
+    {
+      "id": "many_flowers:gold_flower",
+      "required": false
+    },
+    {
+      "id": "many_flowers:diamond_flower",
+      "required": false
+    },
+    {
+      "id": "many_flowers:gaillardia",
+      "required": false
+    },
+    {
+      "id": "meadow:pine_poppy",
+      "required": false
+    },
+    {
+      "id": "minecraft_earth_mod:buttercup",
+      "required": false
+    },
+    {
+      "id": "naturalized:marigold",
+      "required": false
+    },
+    {
+      "id": "naturalized:yarrow",
+      "required": false
+    },
+    {
+      "id": "naturalized:buttercup",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:buttercup",
+      "required": false
+    },
+    {
+      "id": "nature_expansion:yellow_tulip",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:luminar",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:yellow_lupine",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:alpha_dandelion",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:leefructus",
+      "required": false
+    },
+    {
+      "id": "valleycraft:honeycluster",
+      "required": false
+    },
+    {
+      "id": "valleycraft:yellow_poppy",
+      "required": false
+    },
+    {
+      "id": "valleycraft:lily_of_the_mountains",
+      "required": false
+    },
+    {
+      "id": "valleycraft:yellow_tulip",
+      "required": false
+    },
+    {
+      "id": "valleycraft:yellow_lupine",
+      "required": false
+    },
+    {
+      "id": "windswept:yellow_rose",
+      "required": false
+    },
+    {
+      "id": "woods_and_mires:tansy",
+      "required": false
+    }
   ]
 }
