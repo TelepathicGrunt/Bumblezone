@@ -59,7 +59,9 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         if (!this.tryLoadLootTable(compoundTag) && compoundTag.contains("Items", 9)) {
             ContainerHelper.loadAllItems(compoundTag, this.itemStacks);
         }
-        this.blockEntityUuid = compoundTag.getUUID("blockEntityUuid");
+        if (compoundTag.hasUUID("blockEntityUuid")) {
+            this.blockEntityUuid = compoundTag.getUUID("blockEntityUuid");
+        }
     }
 
     @Override
