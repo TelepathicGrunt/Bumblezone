@@ -44,7 +44,12 @@ public class TagIgnoreProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldReader, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings settings) {
-        return (structureBlockInfoWorld != null && structureBlockInfoWorld.state().is(this.ignoreBlocksTag)) ? null : structureBlockInfoWorld;
+        if (structureBlockInfoWorld == null) {
+            return null;
+        }
+
+        BlockState worldState = worldReader.getBlockState(structureBlockInfoWorld.pos());
+        return worldState.is(this.ignoreBlocksTag) ? null : structureBlockInfoWorld;
     }
 
     @Override

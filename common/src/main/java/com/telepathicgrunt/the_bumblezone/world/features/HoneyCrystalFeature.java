@@ -31,8 +31,8 @@ public class HoneyCrystalFeature extends Feature<HoneyCrystalFeatureConfig> {
         ChunkPos currentChunkPos = new ChunkPos(blockpos$Mutable);
 
         if (originalBlockstate.getBlock() == Blocks.CAVE_AIR ||
-            originalBlockstate.getFluidState().is(FluidTags.WATER) ||
-            (context.config().exposed && originalBlockstate.isAir()))
+            (context.config().exposed && originalBlockstate.isAir()) ||
+            (originalBlockstate.getFluidState().is(FluidTags.WATER)) && originalBlockstate.getCollisionShape(context.level(), blockpos$Mutable).isEmpty())
         {
 
             for (Direction face : Direction.values()) {

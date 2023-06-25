@@ -4,7 +4,7 @@
   "pools": [
     {
       "rolls": {
-        "min": 2.0,
+        "min": 1.0,
         "max": 3.0,
         "type": "minecraft:uniform"
       },
@@ -402,15 +402,15 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 6
+          "weight": 14
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:map",
-          "weight": 3
+          "weight": 7
         },
         {
-          "weight": 1,
+          "weight": 2,
           "quality": 1,
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",

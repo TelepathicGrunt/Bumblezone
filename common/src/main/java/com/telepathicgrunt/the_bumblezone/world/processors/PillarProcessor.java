@@ -17,6 +17,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
@@ -94,8 +95,11 @@ public class PillarProcessor extends StructureProcessor {
                 }
             }
 
+            boolean isVertical = direction.getAxis() == Direction.Axis.Y;
+            ChunkAccess currentChunk = levelReader.getChunk(worldPos);
+
             // Creates the pillars in the world that replaces air and liquids
-            BlockState currentBlock = levelReader.getBlockState(worldPos.below());
+            BlockState currentBlock = currentChunk.getBlockState(worldPos.below());
             while((forcePlacement || !currentBlock.canOcclude()) &&
                 (forcePlacement || currentPos.getY() >= terrainY) &&
                 !levelReader.isOutsideBuildHeight(currentPos.getY()) &&
@@ -118,7 +122,12 @@ public class PillarProcessor extends StructureProcessor {
                         ((ServerLevel)levelReader).setBlock(currentPos, newPillarState2.state(), 3);
                     }
                     else {
-                        levelReader.getChunk(currentPos).setBlockState(currentPos, newPillarState2.state(), false);
+                        if (isVertical) {
+                            currentChunk.setBlockState(currentPos, newPillarState2.state(), false);
+                        }
+                        else {
+                            levelReader.getChunk(currentPos).setBlockState(currentPos, newPillarState2.state(), false);
+                        }
                     }
                 }
 
