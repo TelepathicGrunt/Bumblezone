@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#the_bumblezone:ancient_wax/full_blocks",
+    "#the_bumblezone:ancient_wax/slabs",
+    "#the_bumblezone:ancient_wax/stairs",
+    "#the_bumblezone:luminescent_wax/channels",
+    "#the_bumblezone:luminescent_wax/corners",
+    "#the_bumblezone:luminescent_wax/nodes",
+    "minecraft:chain"
+  ]
+}

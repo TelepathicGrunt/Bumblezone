@@ -1,21 +1,12 @@
 {
   "processors": [
     {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
       "processor_type": "minecraft:rule",
       "rules": [
-        {
-          "output_state": {
-            "Name": "minecraft:air"
-          },
-          "input_predicate": {
-            "block": "minecraft:lily_of_the_valley",
-            "predicate_type": "minecraft:random_block_match",
-            "probability": 0.55
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
-        },
         {
           "output_state": {
             "Name": "minecraft:structure_void"
@@ -35,14 +26,15 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:structure_void"
+            "Name": "minecraft:air"
           },
           "input_predicate": {
-            "predicate_type": "minecraft:always_true"
+            "block": "minecraft:lily_of_the_valley",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.55
           },
           "location_predicate": {
-            "block": "minecraft:chain",
-            "predicate_type": "minecraft:block_match"
+            "predicate_type": "minecraft:always_true"
           }
         }
       ]

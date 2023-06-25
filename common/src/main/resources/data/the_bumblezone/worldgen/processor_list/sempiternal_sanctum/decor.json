@@ -1,6 +1,10 @@
 {
   "processors": [
     {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
       "processor_type": "minecraft:rule",
       "rules": [
         {
@@ -18,18 +22,6 @@
               }
             },
             "predicate_type": "minecraft:blockstate_match"
-          }
-        },
-        {
-          "output_state": {
-            "Name": "minecraft:structure_void"
-          },
-          "input_predicate": {
-            "predicate_type": "minecraft:always_true"
-          },
-          "location_predicate": {
-            "block": "minecraft:chain",
-            "predicate_type": "minecraft:block_match"
           }
         }
       ]

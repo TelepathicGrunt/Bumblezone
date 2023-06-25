@@ -18,6 +18,7 @@ import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceAirOnlyProcess
 import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.TagIgnoreProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.TagReplaceProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.WaterloggingFixProcessor;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -41,5 +42,6 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<RandomReplaceWithPropertiesProcessor>> RANDOM_REPLACE_WITH_PROPERTIES_PROCESSOR = STRUCTURE_PROCESSOR.register("random_replace_with_properties_processor", () -> () -> RandomReplaceWithPropertiesProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<PillarProcessor>> PILLAR_PROCESSOR = STRUCTURE_PROCESSOR.register("pillar_processor", () -> () -> PillarProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<TagReplaceProcessor>> TAG_REPLACE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_replace_processor", () -> () -> TagReplaceProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<TagIgnoreProcessor>> TAG_IGNORE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_ignore_processor", () -> () -> TagIgnoreProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
 }

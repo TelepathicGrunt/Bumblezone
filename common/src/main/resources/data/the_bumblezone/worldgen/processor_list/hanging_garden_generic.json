@@ -1,6 +1,10 @@
 {
   "processors": [
     {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
       "processor_type": "the_bumblezone:tag_replace_processor",
       "input_block": "minecraft:poppy",
       "output_block_tag": "the_bumblezone:hanging_garden/allowed_flowers",
