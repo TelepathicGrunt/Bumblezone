@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.fabricbase;
+package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
