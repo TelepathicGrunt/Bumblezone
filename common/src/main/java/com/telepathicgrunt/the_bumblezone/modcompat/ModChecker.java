@@ -39,6 +39,7 @@ public class ModChecker {
 	public static boolean backpackedPresent = false;
 	public static boolean projectileDamageAttributePresent = false;
 	public static boolean jonnTrophiesPresent = false;
+	public static boolean lootrPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
