@@ -19,12 +19,8 @@ import net.minecraft.world.phys.Vec3;
 import noobanidus.mods.lootr.api.LootrAPI;
 
 public class LootrCompatImpl {
-  public static MenuProvider getCocoonMenu(ServerPlayer player, BlockState state, Level level, BlockPos position) {
-    if (level.getBlockEntity(position) instanceof HoneyCocoonBlockEntity blockEntity) {
-      return LootrAPI.getModdedMenu(blockEntity.getLevel(), blockEntity.getBlockEntityUuid(), blockEntity.getBlockPos(), player, blockEntity, (lootPlayer, inventory, table, seed) -> LootrCompat.unpackLootTable(blockEntity, lootPlayer, inventory, table, seed), blockEntity::getLootTable, blockEntity::getLootSeed);
-    }
-
-    return null;
+  public static MenuProvider getCocoonMenu(ServerPlayer player, HoneyCocoonBlockEntity blockEntity) {
+      return LootrAPI.getModdedMenu(blockEntity.getLevel(), blockEntity.getBlockEntityUuid(), blockEntity.getBlockPos(), player, blockEntity, (lootPlayer, inventory, table, seed) -> LootrCompat.unpackLootTable(blockEntity, lootPlayer, inventory, table, seed), blockEntity::getLootTable, blockEntity::getLootSeed, LootrCompat::menuBuilder);
   }
 
   public static void unpackLootTable(HoneyCocoonBlockEntity blockEntity, Player player, Container inventory, ResourceLocation table, long seed) {

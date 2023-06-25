@@ -72,6 +72,9 @@ public class ModChecker {
 
 			modid = "projectile_damage";
 			loadupModCompat(modid, () -> new ProjectileDamageAttributeCompat());
+
+			modid = "lootr";
+			loadupModCompat(modid, () -> new LootrCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

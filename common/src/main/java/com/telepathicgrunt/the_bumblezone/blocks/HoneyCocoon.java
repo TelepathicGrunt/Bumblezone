@@ -276,10 +276,15 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
             return InteractionResult.SUCCESS;
         }
         else {
-            MenuProvider menuprovider;
+            MenuProvider menuprovider = null;
             if (ModChecker.lootrPresent) {
-                menuprovider = LootrCompat.getCocoonMenu((ServerPlayer)playerEntity, blockstate, world, position);
-            } else {
+                if (world.getBlockEntity(position) instanceof HoneyCocoonBlockEntity blockEntity && blockEntity.getLootTable() != null) {
+                    menuprovider = LootrCompat.getCocoonMenu((ServerPlayer) playerEntity, blockEntity);
+                }
+            }
+            // IDE never realizes `ModChecker.lootrPresent` changes to true so it always thinks menuprovider is null.
+            //noinspection ConstantValue
+            if (menuprovider == null) {
                 menuprovider = this.getMenuProvider(blockstate, world, position);
             }
             if (menuprovider != null) {
