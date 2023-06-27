@@ -187,6 +187,10 @@ Crystalline Flower now will hold items in its consume slot and to-enchant slot e
 
 Fixed bug where Crystalline Flower drop loses their xp progress when in item form.
 
+Honeycomb Brood Block feeding now can grant you Protection of the Hive even when you have Wrath of the Hive.
+
+Increased duration of Protection of the Hive obtained from Honeycomb Brood Block feeding.
+
 ##### Items:
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
 
@@ -268,4 +272,6 @@ Added "is_target_tag" field to the_bumblezone:killed_counter trigger for advance
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
 
+##### Config:
+(Forge): Updated comment on warnPlayersOfWrongBlockUnderHive config option to be more clear on tag to edit.
 

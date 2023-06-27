@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
@@ -137,6 +138,10 @@ public class HoneycombBrood extends ProperFacingBlock {
                     int stageIncrease = random.nextFloat() < 0.2f ? 2 : 1;
                     world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, Math.min(3, stage + stageIncrease)));
                 }
+
+                if (random.nextFloat() < 0.30F) {
+                    applyProtection(playerEntity, itemstack);
+                }
             }
 
             // block grew one stage or bee was spawned
@@ -165,18 +170,13 @@ public class HoneycombBrood extends ProperFacingBlock {
                 if (itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
                     if (random.nextFloat() < 0.30F)
                         successfulGrowth = true;
-                } else {
+                }
+                else {
                     successfulGrowth = true;
                 }
 
                 if (successfulGrowth && random.nextFloat() < 0.30F) {
-                    if(!playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-                        playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), (int) (BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts * 0.75f), 1, false, false,  true));
-
-                        if (playerEntity instanceof ServerPlayer serverPlayer) {
-                            BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
-                        }
-                    }
+                    applyProtection(playerEntity, itemstack);
                 }
 
                 //grows larva
@@ -237,6 +237,19 @@ public class HoneycombBrood extends ProperFacingBlock {
         }
 
         return super.use(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+    }
+
+    private static void applyProtection(Player playerEntity, ItemStack itemstack) {
+        playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts, 1, false, false,  true));
+
+        if (playerEntity instanceof ServerPlayer serverPlayer) {
+            BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
+        }
+
+        if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+            playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+            WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
+        }
     }
 
 
