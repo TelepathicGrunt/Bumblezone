@@ -50,7 +50,7 @@ public class NbtKeepingShapelessRecipe extends ShapelessRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE.get();
+        return BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE;
     }
 
     public static class Serializer implements RecipeSerializer<NbtKeepingShapelessRecipe> {
@@ -82,7 +82,7 @@ public class NbtKeepingShapelessRecipe extends ShapelessRecipe {
 
         public JsonObject toJson(NbtKeepingShapelessRecipe recipe) {
             JsonObject json = new JsonObject();
-            json.addProperty("type", Registry.RECIPE_SERIALIZER.getKey(BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE.get()).toString());
+            json.addProperty("type", Registry.RECIPE_SERIALIZER.getKey(BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE).toString());
             json.addProperty("group", recipe.getGroup());
 
             JsonArray ingredients = new JsonArray();
