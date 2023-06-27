@@ -25,6 +25,9 @@ dependencies {
         force = true
     }
 
+    modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
+    modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
+
     modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
 
     modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
@@ -35,6 +38,7 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
     //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
     //modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
 

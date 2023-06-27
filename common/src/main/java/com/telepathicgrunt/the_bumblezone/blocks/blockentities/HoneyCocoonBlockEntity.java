@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -11,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -19,11 +21,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     private NonNullList<ItemStack> itemStacks = NonNullList.withSize(18, ItemStack.EMPTY);
+    private UUID blockEntityUuid = null;
 
     protected HoneyCocoonBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -54,6 +59,9 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         if (!this.tryLoadLootTable(compoundTag) && compoundTag.contains("Items", 9)) {
             ContainerHelper.loadAllItems(compoundTag, this.itemStacks);
         }
+        if (compoundTag.hasUUID("blockEntityUuid")) {
+            this.blockEntityUuid = compoundTag.getUUID("blockEntityUuid");
+        }
     }
 
     @Override
@@ -62,6 +70,7 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         if (!this.trySaveLootTable(tag)) {
             ContainerHelper.saveAllItems(tag, this.itemStacks);
         }
+        tag.putUUID("blockEntityUuid", this.getBlockEntityUuid());
     }
 
     @Override
@@ -105,6 +114,10 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
 
     @Override
     public void unpackLootTable(Player player) {
+        if (ModChecker.lootrPresent) {
+            return;
+        }
+
         super.unpackLootTable(player);
 
         if (this.level != null) {
@@ -114,5 +127,22 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
                 this.level.scheduleTick(this.worldPosition, blockState.getBlock(), HoneyCocoon.waterDropDelay);
             }
         }
+    }
+
+    public UUID getBlockEntityUuid () {
+        if (this.blockEntityUuid == null) {
+            this.blockEntityUuid = UUID.randomUUID();
+        }
+
+        return this.blockEntityUuid;
+    }
+
+    @Nullable
+    public ResourceLocation getLootTable () {
+        return this.lootTable;
+    }
+
+    public long getLootSeed () {
+        return this.lootTableSeed;
     }
 }

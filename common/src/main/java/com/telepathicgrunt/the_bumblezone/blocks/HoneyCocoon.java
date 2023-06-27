@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
+import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -65,6 +67,8 @@ import java.util.List;
 
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty IS_LOOT_CONTAINER = BooleanProperty.create("is_loot");
+
     protected final VoxelShape shape;
     public static final int waterDropDelay = 150;
 
@@ -76,7 +80,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 .noOcclusion()
                 .sound(SoundType.HONEY_BLOCK));
 
-        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(IS_LOOT_CONTAINER, Boolean.FALSE));
 
         VoxelShape voxelshape = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 14.0D, 15.0D);
         voxelshape = Shapes.or(voxelshape, Block.box(2.0D, 0.0D, 2.0D, 14.0D, 1.0D, 14.0D));
@@ -105,7 +109,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      */
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(WATERLOGGED);
+        builder.add(WATERLOGGED, IS_LOOT_CONTAINER);
     }
 
     /**
@@ -155,7 +159,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         if(!blockState.getValue(WATERLOGGED)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
-                if (!honeyCocoonBlockEntity.isUnpackedLoottable()) {
+                if (!honeyCocoonBlockEntity.isUnpackedLoottable() || blockState.getValue(IS_LOOT_CONTAINER)) {
                     return;
                 }
 
@@ -224,7 +228,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         if(blockState.getValue(WATERLOGGED)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
-                if (!honeyCocoonBlockEntity.isUnpackedLoottable()) {
+                if (!honeyCocoonBlockEntity.isUnpackedLoottable() || blockState.getValue(IS_LOOT_CONTAINER)) {
                     return;
                 }
 
@@ -272,7 +276,17 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
             return InteractionResult.SUCCESS;
         }
         else {
-            MenuProvider menuprovider = this.getMenuProvider(blockstate, world, position);
+            MenuProvider menuprovider = null;
+            if (ModChecker.lootrPresent) {
+                if (world.getBlockEntity(position) instanceof HoneyCocoonBlockEntity blockEntity && blockEntity.getLootTable() != null) {
+                    menuprovider = LootrCompat.getCocoonMenu((ServerPlayer) playerEntity, blockEntity);
+                }
+            }
+            // IDE never realizes `ModChecker.lootrPresent` changes to true so it always thinks menuprovider is null.
+            //noinspection ConstantValue
+            if (menuprovider == null) {
+                menuprovider = this.getMenuProvider(blockstate, world, position);
+            }
             if (menuprovider != null) {
                 playerEntity.openMenu(menuprovider);
             }
