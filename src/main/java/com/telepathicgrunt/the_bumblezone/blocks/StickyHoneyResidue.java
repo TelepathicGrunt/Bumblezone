@@ -158,13 +158,13 @@ public class StickyHoneyResidue extends Block {
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState p_181239_, BlockGetter p_181240_, BlockPos p_181241_) {
+    public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
         return true;
     }
 
-    public static boolean isAcceptableNeighbour(BlockGetter p_57854_, BlockPos p_57855_, Direction p_57856_) {
-        BlockState blockstate = p_57854_.getBlockState(p_57855_);
-        return Block.isFaceFull(blockstate.getCollisionShape(p_57854_, p_57855_), p_57856_.getOpposite());
+    public static boolean isAcceptableNeighbour(BlockGetter blockGetter, BlockPos blockPos, Direction p_direction7856_) {
+        BlockState blockstate = blockGetter.getBlockState(blockPos);
+        return Block.isFaceFull(blockstate.getCollisionShape(blockGetter, blockPos), p_direction7856_.getOpposite());
     }
 
     private int countFaces(BlockState blockState) {
