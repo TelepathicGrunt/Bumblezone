@@ -95,8 +95,8 @@ public class BzDimensionConfigs{
 
             warnPlayersOfWrongBlockUnderHive = builder
                 .comment(" \n-----------------------------------------------------\n",
-                       " If the block tag file required_block_under_hive.json has blocks specified ",
-                       " and this config is set to true, then player will get a warning if they",
+                       " If the block tag the_bumblezone:dimension_teleportation/required_blocks_under_beehive_to_teleport",
+                       " has blocks specified and this config is set to true, then player will get a warning if they",
                        " throw an Enderpearl at a Bee Nest/Beehive but the block under it is ",
                        " not the correct required block. It will also tell the player what ",
                        " block is needed under the Bee Nest/Beehive to teleport to the dimension.\n")
