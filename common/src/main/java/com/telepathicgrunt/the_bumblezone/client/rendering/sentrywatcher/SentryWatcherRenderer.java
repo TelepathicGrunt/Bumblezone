@@ -50,7 +50,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         float rotationLerp = Mth.lerp(g, sentryWatcherEntity.xRotO, sentryWatcherEntity.getXRot());
         poseStack.scale(1, 1, 1);
         poseStack.translate(0.0f, sentryWatcherEntity.getBoundingBox().getYsize() + 0.05f, 0.0f);
-        poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - sentryWatcherEntity.getYRot()));
+        poseStack.mulPose(Axis.YN.rotationDegrees(sentryWatcherEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - sentryWatcherEntity.getXRot()));
         ((EntityModel)this.model).prepareMobModel(sentryWatcherEntity, 0, 0, g);
         ((EntityModel)this.model).setupAnim(sentryWatcherEntity, 0, 0, 0, 0, rotationLerp);
