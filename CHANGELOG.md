@@ -262,6 +262,8 @@ Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag
 ##### Dimension:
 Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
 
+Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dimension
+
 ##### Advancements:
 Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
 

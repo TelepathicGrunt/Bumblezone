@@ -148,8 +148,8 @@ public class BumblezoneForgeClient {
             case FIRE -> BlockRenderedOnScreenEvent.Type.FIRE;
             case WATER -> BlockRenderedOnScreenEvent.Type.WATER;
         };
-        BlockRenderedOnScreenEvent.EVENT.invoke(new BlockRenderedOnScreenEvent(
-                event.getPlayer(), event.getPoseStack(), type, event.getBlockState(), event.getBlockPos()));
+        event.setCanceled(BlockRenderedOnScreenEvent.EVENT.invoke(new BlockRenderedOnScreenEvent(
+                event.getPlayer(), event.getPoseStack(), type, event.getBlockState(), event.getBlockPos())));
     }
 
     public static void onRegisterModelLoaders(ModelEvent.RegisterGeometryLoaders event) {

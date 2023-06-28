@@ -31,6 +31,7 @@ public class FogRendererMixin {
     {
 
         if (mode == FogRenderer.FogMode.FOG_TERRAIN &&
+            fogType == FogType.NONE &&
             thickFog &&
             GeneralUtilsClient.getClientPlayer() != null &&
             GeneralUtilsClient.getClientPlayer().level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
