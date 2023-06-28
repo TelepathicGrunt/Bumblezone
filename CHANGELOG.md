@@ -23,11 +23,7 @@
 
 #TODO: Add sounds for Rootmin and Sentry Watcher
 
-#TODO: Lootr integration with Honey Cocoon https://github.com/noobanidus/Lootr/blob/1.18/src/main/java/noobanidus/mods/lootr/api/ILootrAPI.java#L24
-a) in your "open container",
-b) check if lootr is loaded; if not, fall back on your default (you will need to give each container a uuid that gets saved)
-c) have a wrapper method like LootrIntegration which has a method for createMenu
-d) access the LootrAPI there, pass the player and the uuid
+#TODO: Fix pile of pollen overlay being pitch black
 
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
@@ -156,6 +152,10 @@ Added a new entity called Variant Bee! It is exactly like the vanilla bee in beh
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry.png`
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry_nectar.png`
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_nectar.png`
+
+##### Mod Compat:
+Integration with Lootr was added by Nooby! Special thanks to him! 
+ Worldgen placed Honey Cocoons will have a different texture when Lootr is on and have per-player loot.
 
 
 #### *\*Changes*

@@ -13,11 +13,13 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -73,14 +75,32 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         tag.putUUID("blockEntityUuid", this.getBlockEntityUuid());
     }
 
+    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+        if (level instanceof ServerLevel serverLevel) {
+            if (honeyCocoonBlockEntity.getLootTable() != null && blockState.getValue(HoneyCocoon.IS_LOOT_CONTAINER) != ModChecker.lootrPresent) {
+                serverLevel.setBlock(blockPos, blockState.setValue(HoneyCocoon.IS_LOOT_CONTAINER, ModChecker.lootrPresent), 2);
+            }
+        }
+    }
+
     @Override
     protected NonNullList<ItemStack> getItems() {
+        if (isLootWithLootrOn()) {
+            return NonNullList.create();
+        }
         return this.itemStacks;
     }
 
     @Override
     protected void setItems(@NotNull NonNullList<ItemStack> itemStacks) {
+        if (isLootWithLootrOn()) {
+            return;
+        }
         this.itemStacks = itemStacks;
+    }
+
+    private boolean isLootWithLootrOn() {
+        return this.getLootTable() != null && this.getBlockState().getValue(HoneyCocoon.IS_LOOT_CONTAINER) && ModChecker.lootrPresent;
     }
 
     @Override
@@ -96,6 +116,22 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     @Override
     public Direction getInputDirection() {
         return Direction.UP;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int i, @NotNull ItemStack stack, Direction direction) {
+        if (isLootWithLootrOn()) {
+            return false;
+        }
+        return super.canPlaceItemThroughFace(i, stack, direction);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int i, @NotNull ItemStack stack, @NotNull Direction direction) {
+        if (isLootWithLootrOn()) {
+            return false;
+        }
+        return super.canTakeItemThroughFace(i, stack, direction);
     }
 
     @Override

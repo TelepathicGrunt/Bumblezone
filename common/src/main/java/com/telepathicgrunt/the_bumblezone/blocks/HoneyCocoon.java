@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
@@ -48,6 +49,8 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -277,7 +280,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         }
         else {
             MenuProvider menuprovider = null;
-            if (ModChecker.lootrPresent) {
+            if (ModChecker.lootrPresent && blockstate.getValue(IS_LOOT_CONTAINER)) {
                 if (world.getBlockEntity(position) instanceof HoneyCocoonBlockEntity blockEntity && blockEntity.getLootTable() != null) {
                     menuprovider = LootrCompat.getCocoonMenu((ServerPlayer) playerEntity, blockEntity);
                 }
@@ -428,5 +431,16 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 0.0D,
                 0.0D,
                 0.0D);
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+        return HoneyCocoon.createCocoonTicker(level, blockEntityType, BzBlockEntities.HONEY_COCOON.get());
+    }
+
+    @Nullable
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createCocoonTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends HoneyCocoonBlockEntity> blockEntityType2) {
+        return level.isClientSide ? null : HoneyCocoon.createTickerHelper(blockEntityType, blockEntityType2, HoneyCocoonBlockEntity::serverTick);
     }
 }

@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "the_bumblezone:block/honey_cocoon" }
+    "is_loot=false": { "model": "the_bumblezone:block/honey_cocoon" },
+    "is_loot=true": { "model": "the_bumblezone:block/honey_cocoon_lootr" }
   }
 }

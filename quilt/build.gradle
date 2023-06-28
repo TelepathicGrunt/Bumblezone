@@ -55,7 +55,7 @@ dependencies {
     }
 
     modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
-    modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
+    //modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
 
     modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
 
