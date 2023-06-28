@@ -87,7 +87,11 @@ public class FogRendererMixin {
                                                          FogRenderer.FogData fogData)
     {
 
-        if (mode == FogRenderer.FogMode.FOG_TERRAIN && thickFog && Minecraft.getInstance().player.getLevel().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
+        if (mode == FogRenderer.FogMode.FOG_TERRAIN &&
+            fogType == FogType.NONE &&
+            thickFog &&
+            Minecraft.getInstance().player.getLevel().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+        {
             BzSkyProperty.fogThicknessAdjustments(fogEnd, fogData);
         }
     }
