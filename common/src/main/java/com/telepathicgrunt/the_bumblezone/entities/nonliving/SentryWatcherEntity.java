@@ -191,7 +191,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    protected float getWaterSlowDown() {
-      return 0.8F;
+      return 0.95F;
    }
 
    @Override
@@ -379,9 +379,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          }
       }
       else if (this.tickCount % 10 == 0 && this.getYRot() == this.getTargetFacing().toYRot()) {
+         int sightRange = 36;
          Vec3 eyePosition = this.getEyePosition();
-         Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(20)));
-         AABB boundsForChecking = this.getBoundingBox().inflate(20);
+         Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
+         AABB boundsForChecking = this.getBoundingBox().inflate(sightRange);
 
          EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
                  this.level(),
@@ -396,6 +397,25 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.setHasActivated(true);
             this.setShakingTime(40);
             this.setHasShaking(true);
+         }
+         else {
+            finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
+            boundsForChecking = this.getBoundingBox().inflate(sightRange);
+
+            EntityHitResult entityHitResult2 = ProjectileUtil.getEntityHitResult(
+                    this.level(),
+                    this,
+                    eyePosition,
+                    finalPos,
+                    boundsForChecking,
+                    (entity) -> entity instanceof LivingEntity && !BeeAggression.isBeelikeEntity(entity)
+            );
+
+            if (entityHitResult2 != null) {
+               this.setHasActivated(true);
+               this.setShakingTime(40);
+               this.setHasShaking(true);
+            }
          }
       }
    }
