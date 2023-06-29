@@ -86,7 +86,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    protected void defineSynchedData() {
       this.entityData.define(DATA_ID_ACTIVATED, false);
-      this.entityData.define(DATA_ID_SHAKING, shakingTime > 0);
+      this.entityData.define(DATA_ID_SHAKING, false);
    }
 
    public boolean hasActivated() {
@@ -128,6 +128,8 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.setHasShaking(compound.getBoolean("shaking"));
       this.setShakingTime(compound.getInt("shakingTime"));
       this.setTargetFacing(Direction.byName(compound.getString("targetFacing")));
+
+      this.setHasShaking(this.getShakingTime() > 0);
    }
 
    @Override
@@ -302,6 +304,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          if (this.getShakingTime() > 0) {
             //play shake animation
             this.setShakingTime(this.getShakingTime() - 1);
+
+            if (this.getShakingTime() <= 0) {
+               this.setHasShaking(false);
+            }
          }
          else {
             Vec3 currentVelocity = this.getDeltaMovement();
@@ -339,6 +345,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          if (entityHitResult != null) {
             this.setHasActivated(true);
             this.setShakingTime(40);
+            this.setHasShaking(true);
          }
       }
    }

@@ -23,8 +23,6 @@
 
 #TODO: Add sounds for Rootmin and Sentry Watcher
 
-#TODO: Fix pile of pollen overlay being pitch black
-
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
 

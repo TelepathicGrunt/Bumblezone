@@ -9,15 +9,23 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.model.SpiderModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.layers.SpiderEyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Spider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -33,6 +41,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
     public SentryWatcherRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.model = new SentryWatcherModel(context.bakeLayer(SentryWatcherModel.LAYER_LOCATION));
+        this.addLayer(new SentryWatcherRenderer.EyeLayerRenderer<>(this));
     }
 
     protected final boolean addLayer(RenderLayer<SentryWatcherEntity, M> renderLayer) {
@@ -50,7 +59,13 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         float rotationLerp = Mth.lerp(g, sentryWatcherEntity.xRotO, sentryWatcherEntity.getXRot());
         poseStack.scale(1, 1, 1);
         poseStack.translate(0.0f, sentryWatcherEntity.getBoundingBox().getYsize() + 0.05f, 0.0f);
-        poseStack.mulPose(Axis.YN.rotationDegrees(sentryWatcherEntity.getYRot()));
+
+        float shakeEffect = 0;
+        if (sentryWatcherEntity.hasShaking()) {
+            shakeEffect += (float)(Math.cos((double)sentryWatcherEntity.tickCount * 3.25) * Math.PI * (double)0.4f);
+        }
+
+        poseStack.mulPose(Axis.YN.rotationDegrees(sentryWatcherEntity.getYRot() + shakeEffect));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - sentryWatcherEntity.getXRot()));
         ((EntityModel)this.model).prepareMobModel(sentryWatcherEntity, 0, 0, g);
         ((EntityModel)this.model).setupAnim(sentryWatcherEntity, 0, 0, 0, 0, rotationLerp);
@@ -86,5 +101,27 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
     @Override
     public ResourceLocation getTextureLocation(SentryWatcherEntity sentryWatcherEntity) {
         return SKIN;
+    }
+
+    static class EyeLayerRenderer<T extends Entity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+        private static final ResourceLocation EYES = new ResourceLocation(Bumblezone.MODID, "textures/entity/sentry_watcher_eyes.png");
+        private static final RenderType RENDER_TYPE_EYES = RenderType.eyes(EYES);
+        protected SentryWatcherModel model;
+
+        public EyeLayerRenderer(RenderLayerParent<T, M> renderLayerParent) {
+            super(renderLayerParent);
+        }
+
+        @Override
+        public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T entity, float f, float g, float h, float j, float k, float l) {
+            if (entity instanceof SentryWatcherEntity sentryWatcherEntity && sentryWatcherEntity.hasActivated()) {
+                VertexConsumer vertexConsumer = multiBufferSource.getBuffer(this.renderType());
+                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
+        }
+
+        public RenderType renderType() {
+            return RENDER_TYPE_EYES;
+        }
     }
 }
