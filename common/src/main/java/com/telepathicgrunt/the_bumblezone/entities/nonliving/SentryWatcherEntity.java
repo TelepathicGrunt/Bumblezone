@@ -4,10 +4,12 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -297,11 +299,59 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.setDeltaMovement(vec37.x, q * 0.9800000190734863, vec37.z);
          }
       }
+      else {
+         if (this.level().isClientSide() && this.onGround() && (Math.abs(this.getDeltaMovement().x()) > 0.001d || Math.abs(this.getDeltaMovement().z()) > 0.001d)) {
+            int particlesToSpawn = (int) (1 + Math.abs(this.getDeltaMovement().x() * 50) + Math.abs(this.getDeltaMovement().z() + 50));
+            for (int i = 0; i < particlesToSpawn; i++) {
+               this.level().addParticle(ParticleTypes.SMOKE,
+                       this.position().x() + random.nextGaussian() * 0.3d + 0.3d,
+                       this.position().y() + random.nextGaussian() * 0.1d + 0.2d,
+                       this.position().z() + random.nextGaussian() * 0.3d + 0.3d,
+                       random.nextGaussian() * 0.01d + 0.01d,
+                       random.nextGaussian() * 0.01d + 0.01d,
+                       random.nextGaussian() * 0.01d + 0.01d);
+            }
+         }
+      }
    }
 
    protected void serverAiStep() {
       if (this.hasActivated()) {
-         if (this.getShakingTime() > 0) {
+         if (this.horizontalCollision && this.getDeltaMovement().length() < 0.07841f) {
+            this.setHasActivated(false);
+            this.setTargetFacing(this.getTargetFacing().getOpposite());
+
+            if (this.level() instanceof ServerLevel serverLevel) {
+               serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
+                       this.position().x(),
+                       this.position().y() + 0.2d,
+                       this.position().z(),
+                       40,
+                       1,
+                       1,
+                       1,
+                       0.1D);
+               serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
+                       this.position().x(),
+                       this.position().y() + 0.5d,
+                       this.position().z(),
+                       40,
+                       1,
+                       1,
+                       1,
+                       0.1D);
+               serverLevel.sendParticles(ParticleTypes.CRIT,
+                       this.position().x(),
+                       this.position().y() + 1d,
+                       this.position().z(),
+                       40,
+                       1,
+                       1,
+                       1,
+                       0.1D);
+            }
+         }
+         else if (this.getShakingTime() > 0) {
             //play shake animation
             this.setShakingTime(this.getShakingTime() - 1);
 
@@ -467,11 +517,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       Vec3 deltaMovement = this.getDeltaMovement();
       if (this.horizontalCollision && (this.getFeetBlockState().is(Blocks.POWDER_SNOW) && PowderSnowBlock.canEntityWalkOnPowderSnow(this))) {
          deltaMovement = new Vec3(deltaMovement.x, 0.2, deltaMovement.z);
-      }
-
-      if (this.isEffectiveAi() && this.horizontalCollision && this.hasActivated() && deltaMovement.length() < 0.00001f) {
-         this.setHasActivated(false);
-         this.setTargetFacing(this.getTargetFacing().getOpposite());
       }
 
       return deltaMovement;

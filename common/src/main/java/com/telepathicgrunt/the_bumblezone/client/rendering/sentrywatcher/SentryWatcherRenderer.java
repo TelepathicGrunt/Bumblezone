@@ -12,6 +12,7 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.SpiderModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -74,8 +75,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         RenderType renderType = this.getRenderType(sentryWatcherEntity, true, false, glowing);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            int overlayTint = OverlayTexture.pack(OverlayTexture.u(f), OverlayTexture.v(false));
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, overlayTint, 1.0f, 1.0f, 1.0f, 1.0f);
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
         }
         if (!sentryWatcherEntity.isSpectator()) {
             for (RenderLayer<SentryWatcherEntity, M> renderLayer : this.layers) {
@@ -116,7 +116,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T entity, float f, float g, float h, float j, float k, float l) {
             if (entity instanceof SentryWatcherEntity sentryWatcherEntity && sentryWatcherEntity.hasActivated()) {
                 VertexConsumer vertexConsumer = multiBufferSource.getBuffer(this.renderType());
-                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_SKY, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             }
         }
 
