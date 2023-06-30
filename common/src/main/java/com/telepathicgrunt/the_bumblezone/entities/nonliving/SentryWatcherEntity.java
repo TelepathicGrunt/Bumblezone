@@ -554,7 +554,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
       if (this.isEffectiveAi() && !this.hasActivated() && this.getYRot() != this.getTargetFacing().toYRot()) {
          float targetY = this.getTargetFacing().toYRot();
-         float newYDiff = Math.max(Math.min(targetY - this.getYRot(), 1), -1);
+         float currentY = this.getYRot();
+         float diff = targetY - currentY;
+         float diff2 = targetY - (currentY + 360);
+         float diffToUse = diff;
+         if (Math.abs(diff) > Math.abs(diff2)) {
+            diffToUse = diff2;
+         }
+         float newYDiff = Math.max(Math.min(diffToUse, 1), -1);
          this.setYRot(this.getYRot() + newYDiff);
       }
 
@@ -641,7 +648,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          Vec3 currentVelocity = this.getDeltaMovement();
          Vec3 victimVelocity = entity.getDeltaMovement();
          Vec3 diffVelocity = currentVelocity.subtract(victimVelocity);
-         double speedDiff = this.targetFacing.getStepX() != 0 ? Math.abs(diffVelocity.x()) : Math.abs(diffVelocity.z());
+         double speedDiff = this.getTargetFacing().getStepX() != 0 ? Math.abs(diffVelocity.x()) : Math.abs(diffVelocity.z());
          if (speedDiff > 0.3d) {
             speedDiff -= 0.2d;
 

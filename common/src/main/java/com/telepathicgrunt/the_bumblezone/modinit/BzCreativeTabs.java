@@ -109,6 +109,7 @@ public class BzCreativeTabs {
             BzItems.HONEY_SLIME_SPAWN_EGG,
             BzItems.BEEHEMOTH_SPAWN_EGG,
             BzItems.BEE_QUEEN_SPAWN_EGG,
+            BzItems.SENTRY_WATCHER_SPAWN_EGG,
             BzItems.ESSENCE_OF_THE_BEES,
             BzItems.ANCIENT_WAX_BRICKS,
             BzItems.ANCIENT_WAX_DIAMOND,

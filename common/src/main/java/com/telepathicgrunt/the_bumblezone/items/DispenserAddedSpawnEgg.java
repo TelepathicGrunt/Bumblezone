@@ -32,20 +32,23 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
         super(null, primaryColorIn, secondaryColorIn, builder);
         this.entityType = typeIn;
 
+        setupDispenserBehavior();
+        SPAWN_EGGS.add(new Pair<>(typeIn, this));
+    }
+
+    protected void setupDispenserBehavior() {
         // Have to manually add dispenser behavior due to forge item registry event running too late.
         DispenserBlock.registerBehavior(
-            this,
-            new DefaultDispenseItemBehavior() {
-                public ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
-                    Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-                    EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
-                    entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
-                    stack.shrink(1);
-                    return stack;
-                }
-            });
-
-        SPAWN_EGGS.add(new Pair<>(typeIn, this));
+                this,
+                new DefaultDispenseItemBehavior() {
+                    public ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
+                        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+                        EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
+                        entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
+                        stack.shrink(1);
+                        return stack;
+                    }
+                });
     }
 
     @Override
