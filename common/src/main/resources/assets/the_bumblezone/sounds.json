@@ -168,6 +168,39 @@
     "subtitle": "subtitles.entity.the_bumblezone.beehemoth.loop"
   },
 
+  "entity.the_bumblezone.sentry_watcher.crash": {
+    "sounds": [
+      {
+        "attenuation_distance": 16,
+        "name": "random/explode1",
+        "volume": 1.0,
+        "pitch": 0.65
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.sentry_watcher.crash"
+  },
+  "entity.the_bumblezone.sentry_watcher.activating": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "mob/polarbear/warning3",
+        "volume": 1.0,
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.sentry_watcher.activating"
+  },
+  "entity.the_bumblezone.sentry_watcher.moving": {
+    "sounds": [
+      {
+        "name": "ambient/nether/soulsand_valley/wind1",
+        "volume": 1.0,
+        "pitch": 0.6
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.sentry_watcher.moving"
+  },
+
   "entity.the_bumblezone.bee_queen.hurt": {
     "sounds": [
       {
@@ -505,6 +538,16 @@
       "random/bow"
     ],
     "subtitle": "subtitles.entity.the_bumblezone.pollen_puff.throw"
+  },
+  "entity.the_bumblezone.dirt_pellet.throw": {
+    "sounds": [
+      {
+        "name": "random/bow",
+        "volume": 0.9,
+        "pitch": 0.65
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.dirt_pellet.throw"
   },
   "item.the_bumblezone.sugar_water_bottle.drink": {
     "sounds": [

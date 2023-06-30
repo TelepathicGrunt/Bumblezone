@@ -10,4 +10,5 @@ public class BzDamageSources {
     public static final ResourceKey<DamageType> CRYSTALLINE_FLOWER_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "crystalline_flower"));
     public static final ResourceKey<DamageType> ARCHITECTS_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "architects"));
     public static final ResourceKey<DamageType> SPIKE_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "spikes"));
+    public static final ResourceKey<DamageType> SENTRY_WATCHER_CRUSHING_TYPE = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher_crushing"));
 }

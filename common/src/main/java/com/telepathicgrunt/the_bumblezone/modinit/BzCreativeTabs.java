@@ -84,6 +84,7 @@ public class BzCreativeTabs {
             BzItems.HONEY_COMPASS,
             BzItems.BEE_BREAD,
             BzItems.POLLEN_PUFF,
+            BzItems.DIRT_PELLET,
             BzItems.HONEY_CRYSTAL_SHARDS,
             BzItems.BEE_STINGER,
             BzItems.STINGER_SPEAR,

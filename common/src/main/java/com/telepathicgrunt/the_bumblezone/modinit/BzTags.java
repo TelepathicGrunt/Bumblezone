@@ -53,6 +53,8 @@ public class BzTags {
     public static final TagKey<Block> FORCE_DISALLOWED_GROW_PLANT = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/force_disallowed_grow_plant"));
     public static final TagKey<Block> GROW_PLANTS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/grow_plants"));
     public static final TagKey<Block> POLLEN_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen"));
+    public static final TagKey<Block> SENTRY_WATCHER_ALWAYS_DESTROY = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/always_destroy"));
+    public static final TagKey<Block> SENTRY_WATCHER_FORCED_NEVER_DESTROY = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/forced_never_destroy"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));
@@ -114,6 +116,10 @@ public class BzTags {
     public static final TagKey<EntityType<?>> HANGING_GARDENS_INITIAL_SPAWN_ENTITIES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "hanging_garden/initial_spawn_entities"));
     public static final TagKey<EntityType<?>> STRING_CURTAIN_BLOCKS_PATHFINDING_FOR_NON_BEE_MOB = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "string_curtains/blocks_pathfinding_for_non_bee_mob"));
     public static final TagKey<EntityType<?>> STRING_CURTAIN_FORCE_ALLOW_PATHFINDING = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "string_curtains/force_allow_pathfinding"));
+    public static final TagKey<EntityType<?>> DIRT_PELLET_EXTRA_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dirt_pellet/extra_damage_dealt_to"));
+    public static final TagKey<EntityType<?>> DIRT_PELLET_FORCE_NO_EXTRA_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dirt_pellet/forced_no_extra_damage_dealt_to"));
+    public static final TagKey<EntityType<?>> SENTRY_WATCHER_ACTIVATES_WHEN_SEEN = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/activates_when_seen"));
+    public static final TagKey<EntityType<?>> SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/forced_never_activates_when_seen"));
     public static final TagKey<EntityType<?>> BEE_LIKE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_like"));
     public static final TagKey<EntityType<?>> HEAVY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "heavy_air/immune_to_gravity_effect"));
     public static final TagKey<EntityType<?>> WINDY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "windy_air/immune_to_push_effect"));

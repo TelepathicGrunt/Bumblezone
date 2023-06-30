@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.BeeStingerEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.HoneyCrystalShardEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
@@ -37,6 +38,7 @@ public class BzEntities {
     public static final RegistryEntry<EntityType<RootminEntity>> ROOTMIN = ENTITIES.register("rootmin", () -> PlatformHooks.createEntityType(RootminEntity::new, MobCategory.MONSTER, 1F, 1.56f, true, 8, 3, "rootmin"));
     public static final RegistryEntry<EntityType<SentryWatcherEntity>> SENTRY_WATCHER = ENTITIES.register("sentry_watcher", () -> PlatformHooks.createEntityType(SentryWatcherEntity::new, MobCategory.MISC, 2F, 1.45f, true, 16, 3, "sentry_watcher"));
     public static final RegistryEntry<EntityType<PollenPuffEntity>> POLLEN_PUFF_ENTITY = ENTITIES.register("pollen_puff", () -> PlatformHooks.createEntityType(PollenPuffEntity::new, MobCategory.MISC, 0.25F, false, 4, 10, "pollen_puff"));
+    public static final RegistryEntry<EntityType<DirtPelletEntity>> DIRT_PELLET_ENTITY = ENTITIES.register("dirt_pellet", () -> PlatformHooks.createEntityType(DirtPelletEntity::new, MobCategory.MISC, 0.25F, false, 4, 10, "dirt_pellet"));
     public static final RegistryEntry<EntityType<ThrownStingerSpearEntity>> THROWN_STINGER_SPEAR_ENTITY = ENTITIES.register("thrown_stinger_spear", () -> PlatformHooks.createEntityType(ThrownStingerSpearEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "thrown_stinger_spear"));
     public static final RegistryEntry<EntityType<BeeStingerEntity>> BEE_STINGER_ENTITY = ENTITIES.register("bee_stinger", () -> PlatformHooks.createEntityType(BeeStingerEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "bee_stinger"));
     public static final RegistryEntry<EntityType<HoneyCrystalShardEntity>> HONEY_CRYSTAL_SHARD = ENTITIES.register("honey_crystal_shard", () -> PlatformHooks.createEntityType(HoneyCrystalShardEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "honey_crystal_shard"));

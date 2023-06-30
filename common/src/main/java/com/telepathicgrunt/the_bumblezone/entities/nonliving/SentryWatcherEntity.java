@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,7 +15,9 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
@@ -67,6 +72,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private int shakingTime = 0;
    private Direction targetFacing;
    private boolean explosionPrimed = false;
+   private boolean prevShaking;
 
    public SentryWatcherEntity(Level worldIn) {
       super(BzEntities.SENTRY_WATCHER.get(), worldIn);
@@ -135,7 +141,9 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       compound.putBoolean("activated", this.hasActivated());
       compound.putBoolean("shaking", this.hasShaking());
       compound.putInt("shakingTime", this.getShakingTime());
-      compound.putString("targetFacing", this.getTargetFacing().name());
+
+      String targetFacingName = this.getTargetFacing().getName();
+      compound.putString("targetFacing", targetFacingName);
    }
 
    @Override
@@ -144,9 +152,11 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.setHasActivated(compound.getBoolean("activated"));
       this.setHasShaking(compound.getBoolean("shaking"));
       this.setShakingTime(compound.getInt("shakingTime"));
-      this.setTargetFacing(Direction.byName(compound.getString("targetFacing")));
-
       this.setHasShaking(this.getShakingTime() > 0);
+
+      String targetFacingName = compound.getString("targetFacing");
+      Direction targetDirection = Direction.byName(targetFacingName);
+      this.setTargetFacing(targetDirection);
    }
 
    @Override
@@ -355,19 +365,40 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.setDeltaMovement(vec37.x, q * 0.9800000190734863, vec37.z);
          }
       }
-      else {
-         if (this.level().isClientSide() && this.hasActivated() && this.onGround() && (Math.abs(this.getDeltaMovement().x()) > 0.001d || Math.abs(this.getDeltaMovement().z()) > 0.001d)) {
+      else if (this.level().isClientSide()) {
+         if (this.hasActivated() && this.onGround() && (Math.abs(this.getDeltaMovement().x()) > 0.001d || Math.abs(this.getDeltaMovement().z()) > 0.001d)) {
             int particlesToSpawn = (int) (1 + Math.abs(this.getDeltaMovement().x() * 50) + Math.abs(this.getDeltaMovement().z() + 50));
             for (int i = 0; i < particlesToSpawn; i++) {
                this.level().addParticle(ParticleTypes.SMOKE,
-                       this.position().x() + random.nextGaussian() * 0.3d + 0.3d,
+                       this.position().x() + random.nextGaussian() * 0.6d,
                        this.position().y() + random.nextGaussian() * 0.1d + 0.2d,
-                       this.position().z() + random.nextGaussian() * 0.3d + 0.3d,
+                       this.position().z() + random.nextGaussian() * 0.6d,
                        random.nextGaussian() * 0.01d + 0.01d,
                        random.nextGaussian() * 0.01d + 0.01d,
                        random.nextGaussian() * 0.01d + 0.01d);
             }
          }
+
+         if (this.hasShaking() && !prevShaking) {
+            this.level().playLocalSound(
+                    this.blockPosition(),
+                    BzSounds.SENTRY_WATCHER_ACTIVATING.get(),
+                    SoundSource.NEUTRAL,
+                    2.0F,
+                    1.0f,
+                    false);
+         }
+         else if (this.hasActivated() && this.prevShaking && !this.hasShaking()) {
+            this.level().playLocalSound(
+                    this.blockPosition(),
+                    BzSounds.SENTRY_WATCHER_MOVING.get(),
+                    SoundSource.NEUTRAL,
+                    2.0F,
+                    1.0f,
+                    false);
+         }
+
+         this.prevShaking = this.hasShaking();
       }
    }
 
@@ -379,32 +410,40 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
             if (this.level() instanceof ServerLevel serverLevel) {
                serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
-                       this.position().x(),
-                       this.position().y() + 0.2d,
-                       this.position().z(),
+                       this.getX(),
+                       this.getY() + 0.2d,
+                       this.getZ(),
                        40,
                        1,
                        1,
                        1,
                        0.1D);
                serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
-                       this.position().x(),
-                       this.position().y() + 0.5d,
-                       this.position().z(),
+                       this.getX(),
+                       this.getY() + 0.5d,
+                       this.getZ(),
                        40,
                        1,
                        1,
                        1,
                        0.1D);
                serverLevel.sendParticles(ParticleTypes.CRIT,
-                       this.position().x(),
-                       this.position().y() + 1d,
-                       this.position().z(),
+                       this.getX(),
+                       this.getY() + 1,
+                       this.getZ(),
                        40,
                        1,
                        1,
                        1,
                        0.1D);
+
+               serverLevel.playSound(
+                       this,
+                       this.blockPosition(),
+                       BzSounds.SENTRY_WATCHER_CRASH.get(),
+                       SoundSource.NEUTRAL,
+                       2.0F,
+                       1.0f);
             }
          }
          else if (this.getShakingTime() > 0) {
@@ -464,7 +503,19 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                     eyePosition,
                     finalPos,
                     boundsForChecking,
-                    (entity) -> entity instanceof LivingEntity && !BeeAggression.isBeelikeEntity(entity)
+                    (entity) -> {
+                       if (entity.getType().is(BzTags.SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN) || entity.isSpectator()) {
+                          return false;
+                       }
+                       else if (entity.getType().is(BzTags.SENTRY_WATCHER_ACTIVATES_WHEN_SEEN)) {
+                          return true;
+                       }
+                       else if (!(entity instanceof LivingEntity) || BeeAggression.isBeelikeEntity(entity)) {
+                          return false;
+                       }
+
+                       return !(entity instanceof Player player) || !player.isCreative();
+                    }
             );
 
             if (entityHitResult2 != null) {
@@ -593,8 +644,16 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          double speedDiff = this.targetFacing.getStepX() != 0 ? Math.abs(diffVelocity.x()) : Math.abs(diffVelocity.z());
          if (speedDiff > 0.3d) {
             speedDiff -= 0.2d;
-            entity.hurt(this.level().damageSources().cramming(), (float) (speedDiff * 15));
-            entity.push(this.getDeltaMovement().x() * 0.6d, 0, this.getDeltaMovement().z() * 0.6d);
+
+            double pushEffect = 0.6d;
+            float damageMultiplier = 15;
+            if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
+               damageMultiplier = 10;
+               pushEffect = 0.45d;
+            }
+
+            entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) (speedDiff * damageMultiplier));
+            entity.push(this.getDeltaMovement().x() * pushEffect, 0, this.getDeltaMovement().z() * pushEffect);
          }
          else {
             entity.push(this);
@@ -678,70 +737,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
          Vec3 deltaMovement = this.getDeltaMovement();
          if (this.horizontalCollision && (Math.abs(deltaMovement.x()) + Math.abs(deltaMovement.z()) > 0.01)) {
-            Direction facing = this.getTargetFacing();
-            AABB aabb = this.getBoundingBox();
-            BlockPos min = null;
-            BlockPos max = null;
-            double xStep = (facing.getStepX() / 3d);
-            double zStep = (facing.getStepZ() / 3d);
-            switch (facing) {
-               case NORTH -> {
-                  min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
-                  max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001f), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
-               }
-               case SOUTH -> {
-                  min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
-                  max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
-               }
-               case WEST -> {
-                  min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
-                  max = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
-               }
-               case EAST -> {
-                  min = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
-                  max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
-               }
-            }
-
-            if (min != null) {
-               boolean canDemolish = true;
-               double totalhardness = 0;
-               List<BlockPos> demolishPos = new ArrayList<>();
-               for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-
-                  BlockState state = this.level().getBlockState(pos);
-                  if (!state.getCollisionShape(this.level(), pos).isEmpty()) {
-                     if (state.is(BlockTags.DRAGON_IMMUNE) || state.is(BlockTags.WITHER_IMMUNE)) {
-                        canDemolish = false;
-                        break;
-                     }
-                     else {
-                        demolishPos.add(pos.immutable());
-                        totalhardness += state.getBlock().getExplosionResistance();
-                     }
-                  }
-
-                  BlockState aboveState = this.level().getBlockState(pos.above());
-                  if (!aboveState.getCollisionShape(this.level(), pos).isEmpty()) {
-                     if (state.is(BlockTags.DRAGON_IMMUNE) || state.is(BlockTags.WITHER_IMMUNE)) {
-                        canDemolish = false;
-                        break;
-                     }
-                     else {
-                        demolishPos.add(pos.above());
-                        totalhardness += aboveState.getBlock().getExplosionResistance();
-                     }
-                  }
-               }
-
-               if (canDemolish && ((demolishPos.size() <= 1 && totalhardness < 10) || totalhardness < 5.95f)) {
-                  for (BlockPos pos : demolishPos) {
-                     this.level().destroyBlock(pos, true);
-                  }
-
-                  this.horizontalCollision = false;
-               }
-            }
+            destroyBlocksInWay();
          }
 
          if (this.horizontalCollision) {
@@ -830,6 +826,85 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
 
             this.level().getProfiler().pop();
+         }
+      }
+   }
+
+   private void destroyBlocksInWay() {
+      Direction facing = this.getTargetFacing();
+      AABB aabb = this.getBoundingBox();
+      BlockPos min = null;
+      BlockPos max = null;
+      double xStep = (facing.getStepX() / 3d);
+      double zStep = (facing.getStepZ() / 3d);
+      switch (facing) {
+         case NORTH -> {
+            min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+            max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001f), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+         }
+         case SOUTH -> {
+            min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+            max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+         }
+         case WEST -> {
+            min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+            max = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+         }
+         case EAST -> {
+            min = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+            max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+         }
+      }
+
+      if (min != null) {
+         boolean canDemolish = true;
+         double totalhardness = 0;
+         int alwaysDestroyCounter = 0;
+         List<BlockPos> demolishPos = new ArrayList<>();
+         for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+
+            BlockState state = this.level().getBlockState(pos);
+            if (!state.getCollisionShape(this.level(), pos).isEmpty()) {
+               if (state.is(BzTags.SENTRY_WATCHER_FORCED_NEVER_DESTROY)) {
+                  canDemolish = false;
+                  break;
+               }
+               else {
+                  demolishPos.add(pos.immutable());
+                  totalhardness += state.getBlock().getExplosionResistance();
+                  if (state.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
+                     alwaysDestroyCounter++;
+                  }
+               }
+            }
+
+            BlockPos abovePos = pos.above();
+            BlockState aboveState = this.level().getBlockState(abovePos);
+            if (!aboveState.getCollisionShape(this.level(), abovePos).isEmpty()) {
+               if (aboveState.is(BzTags.SENTRY_WATCHER_FORCED_NEVER_DESTROY)) {
+                  canDemolish = false;
+                  break;
+               }
+               else {
+                  demolishPos.add(abovePos);
+                  totalhardness += aboveState.getBlock().getExplosionResistance();
+                  if (aboveState.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
+                     alwaysDestroyCounter++;
+                  }
+               }
+            }
+         }
+
+         if (canDemolish &&
+                 (alwaysDestroyCounter == demolishPos.size() ||
+                 (demolishPos.size() <= 1 && totalhardness < 10) ||
+                 totalhardness < 5.95f))
+         {
+            for (BlockPos pos : demolishPos) {
+               this.level().destroyBlock(pos, true);
+            }
+
+            this.horizontalCollision = false;
          }
       }
    }

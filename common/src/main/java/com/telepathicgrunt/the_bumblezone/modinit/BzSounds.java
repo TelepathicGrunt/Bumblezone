@@ -20,6 +20,9 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> BEEHEMOTH_HURT = registerSoundEvent("entity.the_bumblezone.beehemoth.hurt");
     public static final RegistryEntry<SoundEvent> BEEHEMOTH_DEATH = registerSoundEvent("entity.the_bumblezone.beehemoth.death");
     public static final RegistryEntry<SoundEvent> BEEHEMOTH_LOOP = registerSoundEvent("entity.the_bumblezone.beehemoth.loop");
+    public static final RegistryEntry<SoundEvent> SENTRY_WATCHER_CRASH = registerSoundEvent("entity.the_bumblezone.sentry_watcher.crash");
+    public static final RegistryEntry<SoundEvent> SENTRY_WATCHER_ACTIVATING = registerSoundEvent("entity.the_bumblezone.sentry_watcher.activating");
+    public static final RegistryEntry<SoundEvent> SENTRY_WATCHER_MOVING = registerSoundEvent("entity.the_bumblezone.sentry_watcher.moving");
     public static final RegistryEntry<SoundEvent> BEE_ESSENCE_CONSUMED = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consumed");
     public static final RegistryEntry<SoundEvent> BEE_ESSENCE_CONSUMING = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consuming");
     public static final RegistryEntry<SoundEvent> STINGER_SPEAR_HIT = registerSoundEvent("entity.the_bumblezone.stinger_spear.hit");
@@ -51,6 +54,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> HONEY_SLIME_SQUISH_SMALL = registerSoundEvent("entity.the_bumblezone.honey_slime.squish_small");
     public static final RegistryEntry<SoundEvent> HONEY_SLIME_JUMP_SMALL = registerSoundEvent("entity.the_bumblezone.honey_slime.jump_small");
     public static final RegistryEntry<SoundEvent> POLLEN_PUFF_THROW = registerSoundEvent("entity.the_bumblezone.pollen_puff.throw");
+    public static final RegistryEntry<SoundEvent> DIRT_PELLET_THROW = registerSoundEvent("entity.the_bumblezone.dirt_pellet.throw");
     public static final RegistryEntry<SoundEvent> BEE_QUEEN_HURT = registerSoundEvent("entity.the_bumblezone.bee_queen.hurt");
     public static final RegistryEntry<SoundEvent> BEE_QUEEN_DEATH = registerSoundEvent("entity.the_bumblezone.bee_queen.death");
     public static final RegistryEntry<SoundEvent> BEE_QUEEN_LOOP = registerSoundEvent("entity.the_bumblezone.bee_queen.loop");

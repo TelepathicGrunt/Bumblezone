@@ -1,6 +1,3 @@
-
-#TODO: Add barrier blocks for essence events
-
 #TODO: create essence events
 
 #TODO: Electric Ring Textures/animations
@@ -9,7 +6,7 @@
 
 #TODO: Implement rootmin.
 
-#TODO: implement sentry watcher
+#TODO: improved sentry watcher textures and add it to sanctum. (Make sure rotation works when spawned by nbt)
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
@@ -140,6 +137,11 @@ Added Bee Soup that is craftable from Bee Bread, Bowl, Beetroot, Potato, 2 Honey
  or Luck status effect on you. You could get multiple of these effects at once if you're unlucky (or lucky if it is good effects)!
  Can be found in some structures's loot!
 
+Added Dirt Pellet item craftable from Coarse Dirt + Rooted Dirt. It can be thrown like a Snowball for 1 point of damage.
+ However, it will deal 3 points of damage to most flying mobs (modded included)! Controlled by these entity tags to change what will receive bonus damage:
+ `the_bumblezone:dirt_pellet/extra_damage_dealt_to`
+ `the_bumblezone:dirt_pellet/forced_no_extra_damage_dealt_to`
+
 ##### Entities:
 Added a new entity called Variant Bee! It is exactly like the vanilla bee in behavior but has a different skin on. This replaces
  the old UUID system Bumblezone had to replace vanilla bee skins. Now that system is gone and the bee variants are now a dedicated
@@ -150,6 +152,14 @@ Added a new entity called Variant Bee! It is exactly like the vanilla bee in beh
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry.png`
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry_nectar.png`
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_nectar.png`
+
+Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sanctum and will blow up if taken out of the structure or somehow killed.
+ This bee status will charge at any living non-bee mob in front of it and will break through many blocks up to a certain total explosion resistance of the wall of blocks.
+ The damage it deals to all in its way will increase the faster the statue is moving. Some tags to configure its behavior are:
+ `the_bumblezone:sentry_watcher/always_destroy` (block tag)
+ `the_bumblezone:sentry_watcher/forced_never_destroy` (block tag)
+ `the_bumblezone:sentry_watcher/activates_when_seen` (entity tag)
+ `the_bumblezone:sentry_watcher/forced_never_activates_when_seen` (entity tag)
 
 ##### Mod Compat:
 Integration with Lootr was added by Nooby! Special thanks to him! 

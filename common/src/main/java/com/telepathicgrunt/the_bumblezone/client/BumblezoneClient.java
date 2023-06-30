@@ -302,6 +302,7 @@ public class BumblezoneClient {
         event.register(BzEntities.ROOTMIN.get(), RootminRenderer::new);
         event.register(BzEntities.SENTRY_WATCHER.get(), SentryWatcherRenderer::new);
         event.register(BzEntities.POLLEN_PUFF_ENTITY.get(), ThrownItemRenderer::new);
+        event.register(BzEntities.DIRT_PELLET_ENTITY.get(), ThrownItemRenderer::new);
         event.register(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), StingerSpearRenderer::new);
         event.register(BzEntities.BEE_STINGER_ENTITY.get(), BeeStingerRenderer::new);
         event.register(BzEntities.HONEY_CRYSTAL_SHARD.get(), HoneyCrystalShardRenderer::new);

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:bat",
+    "minecraft:bee",
+    "minecraft:parrot",
+    "minecraft:allay",
+    "minecraft:vex",
+    "minecraft:ghast",
+    "minecraft:blaze",
+    "minecraft:phantom",
+    "minecraft:wither",
+    "minecraft:ender_dragon",
+    "the_bumblezone:beehemoth",
+    "the_bumblezone:variant_bee"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "item": "minecraft:coarse_dirt"
+    },
+    {
+      "item": "minecraft:rooted_dirt"
+    }
+  ],
+  "result": {
+    "item": "the_bumblezone:dirt_pellet",
+    "count": 8
+  }
+}
