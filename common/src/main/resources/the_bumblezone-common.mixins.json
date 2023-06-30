@@ -34,6 +34,7 @@
     "entities.BeeGoToKnownFlowerGoalMixin",
     "entities.BeeHiveGoalMixin",
     "entities.BeePathfindingMixin",
+    "entities.EntityAccessor",
     "entities.EntityMixin",
     "entities.EntityTypeMixin",
     "entities.ExperienceOrbAccessor",

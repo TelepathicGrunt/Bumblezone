@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -11,7 +13,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -24,6 +28,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -31,9 +36,16 @@ import net.minecraft.world.level.block.PowderSnowBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,15 +66,16 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private float speed;
    private int shakingTime = 0;
    private Direction targetFacing;
+   private boolean explosionPrimed = false;
 
    public SentryWatcherEntity(Level worldIn) {
       super(BzEntities.SENTRY_WATCHER.get(), worldIn);
-      this.setMaxUpStep(0.65f);
+      this.setMaxUpStep(0.8f);
    }
 
    public SentryWatcherEntity(EntityType<? extends SentryWatcherEntity> type, Level worldIn) {
       super(type, worldIn);
-      this.setMaxUpStep(0.65f);
+      this.setMaxUpStep(0.8f);
    }
 
    public int getShakingTime() {
@@ -118,6 +131,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    @Override
    public void addAdditionalSaveData(CompoundTag compound) {
+      compound.putBoolean("explosionPrimed", explosionPrimed);
       compound.putBoolean("activated", this.hasActivated());
       compound.putBoolean("shaking", this.hasShaking());
       compound.putInt("shakingTime", this.getShakingTime());
@@ -126,6 +140,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    @Override
    public void readAdditionalSaveData(CompoundTag compound) {
+      this.explosionPrimed = compound.getBoolean("explosionPrimed");
       this.setHasActivated(compound.getBoolean("activated"));
       this.setHasShaking(compound.getBoolean("shaking"));
       this.setShakingTime(compound.getInt("shakingTime"));
@@ -138,10 +153,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    public void remove(RemovalReason removalReason) {
       super.remove(removalReason);
 
-      if (!this.level().isClientSide() && (removalReason == RemovalReason.KILLED || removalReason == RemovalReason.DISCARDED)) {
-         this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6, Level.ExplosionInteraction.MOB);
-         this.level().explode(this, this.getX(), this.getY(), this.getZ(), 9, Level.ExplosionInteraction.MOB);
+      if (this.explosionPrimed && !this.level().isClientSide() && removalReason == RemovalReason.KILLED) {
+         largeExplosion();
       }
+   }
+
+   private void largeExplosion() {
+      this.level().explode(this, this.getX(), this.getY(), this.getZ(), 6, Level.ExplosionInteraction.MOB);
+      this.level().explode(this, this.getX(), this.getY(), this.getZ(), 9, Level.ExplosionInteraction.MOB);
    }
 
    @Override
@@ -192,6 +211,44 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    protected float getWaterSlowDown() {
       return 0.95F;
+   }
+
+   @Override
+   public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tagKey, double d) {
+      if (this.touchingUnloadedChunk()) {
+         return false;
+      }
+      else {
+         AABB aABB = this.getBoundingBox().deflate(0.001);
+         int i = Mth.floor(aABB.minX);
+         int j = Mth.ceil(aABB.maxX);
+         int k = Mth.floor(aABB.minY);
+         int l = Mth.ceil(aABB.maxY);
+         int m = Mth.floor(aABB.minZ);
+         int n = Mth.ceil(aABB.maxZ);
+         double e = 0.0;
+         boolean bl2 = false;
+         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+
+         for(int p = i; p < j; ++p) {
+            for(int q = k; q < l; ++q) {
+               for(int r = m; r < n; ++r) {
+                  mutableBlockPos.set(p, q, r);
+                  FluidState fluidState = this.level().getFluidState(mutableBlockPos);
+                  if (fluidState.is(tagKey)) {
+                     double f = (float)q + fluidState.getHeight(this.level(), mutableBlockPos);
+                     if (f >= aABB.minY) {
+                        bl2 = true;
+                        e = Math.max(f - aABB.minY, e);
+                     }
+                  }
+               }
+            }
+         }
+
+         this.fluidHeight.put(tagKey, e);
+         return bl2;
+      }
    }
 
    @Override
@@ -283,7 +340,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             float p = this.level().getBlockState(blockPos).getBlock().getFriction();
             Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement(vec3, p);
             double q = vec37.y;
-
             if (this.level().isClientSide && !this.level().hasChunkAt(blockPos)) {
                if (this.getY() > (double)this.level().getMinBuildHeight()) {
                   q = -0.1;
@@ -300,7 +356,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          }
       }
       else {
-         if (this.level().isClientSide() && this.onGround() && (Math.abs(this.getDeltaMovement().x()) > 0.001d || Math.abs(this.getDeltaMovement().z()) > 0.001d)) {
+         if (this.level().isClientSide() && this.hasActivated() && this.onGround() && (Math.abs(this.getDeltaMovement().x()) > 0.001d || Math.abs(this.getDeltaMovement().z()) > 0.001d)) {
             int particlesToSpawn = (int) (1 + Math.abs(this.getDeltaMovement().x() * 50) + Math.abs(this.getDeltaMovement().z() + 50));
             for (int i = 0; i < particlesToSpawn; i++) {
                this.level().addParticle(ParticleTypes.SMOKE,
@@ -418,6 +474,13 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
          }
       }
+
+      if (this.explosionPrimed && this.tickCount % 20 == 0 && this.level() instanceof ServerLevel serverLevel) {
+         StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(this.blockPosition(), BzTags.SEMPITERNAL_SANCTUMS);
+         if (structureStart == null || !structureStart.isValid()) {
+            this.kill();
+         }
+      }
    }
 
    public void aiStep() {
@@ -493,10 +556,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
 
       this.level().getProfiler().pop();
-      this.level().getProfiler().push("push");
-
-      this.pushEntities();
-      this.level().getProfiler().pop();
    }
 
    protected void pushEntities() {
@@ -523,12 +582,27 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                this.doPush(entity);
             }
          }
-
       }
    }
 
    protected void doPush(Entity entity) {
-      entity.push(this);
+      if (entity instanceof LivingEntity) {
+         Vec3 currentVelocity = this.getDeltaMovement();
+         Vec3 victimVelocity = entity.getDeltaMovement();
+         Vec3 diffVelocity = currentVelocity.subtract(victimVelocity);
+         double speedDiff = this.targetFacing.getStepX() != 0 ? Math.abs(diffVelocity.x()) : Math.abs(diffVelocity.z());
+         if (speedDiff > 0.3d) {
+            speedDiff -= 0.2d;
+            entity.hurt(this.level().damageSources().cramming(), (float) (speedDiff * 15));
+            entity.push(this.getDeltaMovement().x() * 0.6d, 0, this.getDeltaMovement().z() * 0.6d);
+         }
+         else {
+            entity.push(this);
+         }
+      }
+      else {
+         entity.push(this);
+      }
    }
 
    public Vec3 handleRelativeFrictionAndCalculateMovement(Vec3 vec3, float f) {
@@ -559,6 +633,232 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
    }
 
+   @Override
+   public void move(MoverType moverType, Vec3 vec3) {
+      if (this.noPhysics) {
+         this.setPos(this.getX() + vec3.x, this.getY() + vec3.y, this.getZ() + vec3.z);
+      }
+      else {
+         this.wasOnFire = this.isOnFire();
+         if (moverType == MoverType.PISTON) {
+            vec3 = this.limitPistonMovement(vec3);
+            if (vec3.equals(Vec3.ZERO)) {
+               return;
+            }
+         }
+
+         this.level().getProfiler().push("move");
+         if (this.stuckSpeedMultiplier.lengthSqr() > 1.0E-7) {
+            vec3 = vec3.multiply(this.stuckSpeedMultiplier);
+            this.stuckSpeedMultiplier = Vec3.ZERO;
+            this.setDeltaMovement(Vec3.ZERO);
+         }
+
+         vec3 = this.maybeBackOffFromEdge(vec3, moverType);
+         Vec3 collision = this.collide(vec3);
+         double d = collision.lengthSqr();
+         if (d > 1.0E-7) {
+            if (this.fallDistance != 0.0F && d >= 1.0) {
+               BlockHitResult blockHitResult = this.level().clip(new ClipContext(this.position(), this.position().add(collision), ClipContext.Block.FALLDAMAGE_RESETTING, net.minecraft.world.level.ClipContext.Fluid.WATER, this));
+               if (blockHitResult.getType() != HitResult.Type.MISS) {
+                  this.resetFallDistance();
+               }
+            }
+
+            this.setPos(this.getX() + collision.x, this.getY() + collision.y, this.getZ() + collision.z);
+         }
+
+         this.level().getProfiler().pop();
+         this.level().getProfiler().push("rest");
+         boolean loseXSpeed = !Mth.equal(vec3.x, collision.x);
+         boolean loseZSpeed = !Mth.equal(vec3.z, collision.z);
+         this.horizontalCollision = loseXSpeed || loseZSpeed;
+         this.verticalCollision = vec3.y != collision.y;
+         this.verticalCollisionBelow = this.verticalCollision && vec3.y < 0.0;
+
+         Vec3 deltaMovement = this.getDeltaMovement();
+         if (this.horizontalCollision && (Math.abs(deltaMovement.x()) + Math.abs(deltaMovement.z()) > 0.01)) {
+            Direction facing = this.getTargetFacing();
+            AABB aabb = this.getBoundingBox();
+            BlockPos min = null;
+            BlockPos max = null;
+            double xStep = (facing.getStepX() / 3d);
+            double zStep = (facing.getStepZ() / 3d);
+            switch (facing) {
+               case NORTH -> {
+                  min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+                  max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001f), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+               }
+               case SOUTH -> {
+                  min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+                  max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+               }
+               case WEST -> {
+                  min = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+                  max = new BlockPos((int) Math.floor(aabb.minX + xStep + 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+               }
+               case EAST -> {
+                  min = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.minZ + zStep + 0.0001d));
+                  max = new BlockPos((int) Math.floor(aabb.maxX + xStep - 0.0001d), (int)Math.floor(aabb.minY), (int)Math.floor(aabb.maxZ + zStep - 0.0001d));
+               }
+            }
+
+            if (min != null) {
+               boolean canDemolish = true;
+               double totalhardness = 0;
+               List<BlockPos> demolishPos = new ArrayList<>();
+               for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+
+                  BlockState state = this.level().getBlockState(pos);
+                  if (!state.getCollisionShape(this.level(), pos).isEmpty()) {
+                     if (state.is(BlockTags.DRAGON_IMMUNE) || state.is(BlockTags.WITHER_IMMUNE)) {
+                        canDemolish = false;
+                        break;
+                     }
+                     else {
+                        demolishPos.add(pos.immutable());
+                        totalhardness += state.getBlock().getExplosionResistance();
+                     }
+                  }
+
+                  BlockState aboveState = this.level().getBlockState(pos.above());
+                  if (!aboveState.getCollisionShape(this.level(), pos).isEmpty()) {
+                     if (state.is(BlockTags.DRAGON_IMMUNE) || state.is(BlockTags.WITHER_IMMUNE)) {
+                        canDemolish = false;
+                        break;
+                     }
+                     else {
+                        demolishPos.add(pos.above());
+                        totalhardness += aboveState.getBlock().getExplosionResistance();
+                     }
+                  }
+               }
+
+               if (canDemolish && ((demolishPos.size() <= 1 && totalhardness < 10) || totalhardness < 5.95f)) {
+                  for (BlockPos pos : demolishPos) {
+                     this.level().destroyBlock(pos, true);
+                  }
+
+                  this.horizontalCollision = false;
+               }
+            }
+         }
+
+         if (this.horizontalCollision) {
+            this.minorHorizontalCollision = this.isHorizontalCollisionMinor(collision);
+         }
+         else {
+            this.minorHorizontalCollision = false;
+         }
+
+         this.pushEntities();
+
+         this.setOnGroundWithKnownMovement(this.verticalCollisionBelow, collision);
+         BlockPos blockPos = this.getOnPosLegacy();
+         BlockState blockState = this.level().getBlockState(blockPos);
+         this.checkFallDamage(collision.y, this.onGround(), blockState, blockPos);
+         if (this.isRemoved()) {
+            this.level().getProfiler().pop();
+         }
+         else {
+            if (this.horizontalCollision) {
+               Vec3 vec33 = this.getDeltaMovement();
+               this.setDeltaMovement(loseXSpeed ? 0.0 : vec33.x, vec33.y, loseZSpeed ? 0.0 : vec33.z);
+            }
+
+            net.minecraft.world.level.block.Block block = blockState.getBlock();
+            if (vec3.y != collision.y) {
+               block.updateEntityAfterFallOn(this.level(), this);
+            }
+
+            if (this.onGround()) {
+               block.stepOn(this.level(), blockPos, blockState, this);
+            }
+
+            MovementEmission movementEmission = this.getMovementEmission();
+            if (movementEmission.emitsAnything() && !this.isPassenger()) {
+               double e = collision.x;
+               double f = collision.y;
+               double g = collision.z;
+               this.flyDist += (float)(collision.length() * 0.6);
+               BlockPos blockPos2 = this.getOnPos();
+               BlockState blockState2 = this.level().getBlockState(blockPos2);
+
+               this.walkDist += (float)collision.horizontalDistance() * 0.6F;
+               this.moveDist += (float)Math.sqrt(e * e + f * f + g * g) * 0.6F;
+               if (this.moveDist > ((EntityAccessor) this).getNextStep() && !blockState2.isAir()) {
+                  boolean bl4 = blockPos2.equals(blockPos);
+                  boolean bl5 = ((EntityAccessor)this).callVibrationAndSoundEffectsFromBlock(blockPos, blockState, movementEmission.emitsSounds(), bl4, vec3);
+                  if (!bl4) {
+                     bl5 |= ((EntityAccessor)this).callVibrationAndSoundEffectsFromBlock(blockPos2, blockState2, false, movementEmission.emitsEvents(), vec3);
+                  }
+
+                  if (bl5) {
+                     ((EntityAccessor) this).setNextStep(this.nextStep());
+                  }
+                  else if (this.isInWater()) {
+                     ((EntityAccessor) this).setNextStep(this.nextStep());
+                     if (movementEmission.emitsSounds()) {
+                        this.waterSwimSound();
+                     }
+
+                     if (movementEmission.emitsEvents()) {
+                        this.gameEvent(GameEvent.SWIM);
+                     }
+                  }
+               }
+               else if (blockState2.isAir()) {
+                  this.processFlappingMovement();
+               }
+            }
+
+            this.tryCheckInsideBlocks();
+            float h = this.getBlockSpeedFactor();
+            this.setDeltaMovement(this.getDeltaMovement().multiply(h, 1.0, h));
+            if (this.level().getBlockStatesIfLoaded(this.getBoundingBox().deflate(1.0E-6)).noneMatch((blockStatex) -> blockStatex.is(BlockTags.FIRE) || blockStatex.is(Blocks.LAVA))) {
+               if (this.getRemainingFireTicks() <= 0) {
+                  this.setRemainingFireTicks(-this.getFireImmuneTicks());
+               }
+
+               if (this.wasOnFire && (this.isInPowderSnow || this.isInWaterRainOrBubble())) {
+                  this.playEntityOnFireExtinguishedSound();
+               }
+            }
+
+            if (this.isOnFire() && (this.isInPowderSnow || this.isInWaterRainOrBubble())) {
+               this.setRemainingFireTicks(-this.getFireImmuneTicks());
+            }
+
+            this.level().getProfiler().pop();
+         }
+      }
+   }
+
+   private Vec3 collide(Vec3 vec3) {
+      AABB aABB = this.getBoundingBox();
+      List<VoxelShape> list = this.level().getEntityCollisions(this, aABB.expandTowards(vec3));
+      Vec3 vec32 = vec3.lengthSqr() == 0.0 ? vec3 : collideBoundingBox(this, vec3, aABB, this.level(), list);
+      boolean bl = vec3.x != vec32.x;
+      boolean bl2 = vec3.y != vec32.y;
+      boolean bl3 = vec3.z != vec32.z;
+      boolean bl4 = this.onGround() || bl2 && vec3.y < 0.0;
+      if (this.maxUpStep() > 0.0F && bl4 && (bl || bl3)) {
+         Vec3 vec33 = collideBoundingBox(this, new Vec3(vec3.x, this.maxUpStep(), vec3.z), aABB, this.level(), list);
+         Vec3 vec34 = collideBoundingBox(this, new Vec3(0.0, this.maxUpStep(), 0.0), aABB.expandTowards(vec3.x, 0.0, vec3.z), this.level(), list);
+         if (vec34.y < (double)this.maxUpStep()) {
+            Vec3 vec35 = collideBoundingBox(this, new Vec3(vec3.x, 0.0, vec3.z), aABB.move(vec34), this.level(), list).add(vec34);
+            if (vec35.horizontalDistanceSqr() > vec33.horizontalDistanceSqr()) {
+               vec33 = vec35;
+            }
+         }
+
+         if (vec33.horizontalDistanceSqr() > vec32.horizontalDistanceSqr()) {
+            return vec33.add(collideBoundingBox(this, new Vec3(0.0, -vec33.y + vec3.y, 0.0), aABB.move(vec33), this.level(), list));
+         }
+      }
+
+      return vec32;
+   }
 
    private float getFrictionInfluencedSpeed() {
       return this.getSpeed();
