@@ -1,0 +1,17 @@
+{
+  "wants" : [
+    {
+      "id": "minecraft:clay",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:snow_block",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}

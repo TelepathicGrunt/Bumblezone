@@ -60,6 +60,7 @@ import java.util.List;
 public class SentryWatcherEntity extends Entity implements Enemy {
    private static final EntityDataAccessor<Boolean> DATA_ID_ACTIVATED = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
    private static final EntityDataAccessor<Boolean> DATA_ID_SHAKING = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
+   private static final EntityDataAccessor<Direction> DATA_ID_TARGET_FACING = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.DIRECTION);
 
    public float xxa;
    public float zza;
@@ -112,12 +113,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    public void setTargetFacing(Direction targetFacing) {
       this.targetFacing = targetFacing;
+      setTargetFacingForSync();
    }
 
    @Override
    protected void defineSynchedData() {
       this.entityData.define(DATA_ID_ACTIVATED, false);
       this.entityData.define(DATA_ID_SHAKING, false);
+      this.entityData.define(DATA_ID_TARGET_FACING, this.getTargetFacing());
    }
 
    public boolean hasActivated() {
@@ -134,6 +137,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    protected void setHasShaking(boolean isShaking) {
       this.entityData.set(DATA_ID_SHAKING, isShaking);
+   }
+
+   public Direction getTargetFacingFromSync() {
+      return this.entityData.get(DATA_ID_TARGET_FACING);
+   }
+
+   protected void setTargetFacingForSync() {
+      this.entityData.set(DATA_ID_TARGET_FACING, this.getTargetFacing());
    }
 
    @Override
@@ -423,11 +434,11 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                     this.blockPosition(),
                     BzSounds.SENTRY_WATCHER_ACTIVATING.get(),
                     SoundSource.NEUTRAL,
-                    2.0F,
+                    2.5F,
                     1.0f,
                     false);
          }
-         else if (this.hasActivated() && this.prevShaking && !this.hasShaking()) {
+         else if (this.hasActivated() && !this.hasShaking() && this.tickCount % 10 == 0) {
             this.level().playLocalSound(
                     this.blockPosition(),
                     BzSounds.SENTRY_WATCHER_MOVING.get(),
@@ -585,7 +596,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                  this.blockPosition(),
                  BzSounds.SENTRY_WATCHER_CRASH.get(),
                  SoundSource.NEUTRAL,
-                 2.0F,
+                 2.5F,
                  1.0f);
       }
    }
@@ -673,7 +684,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    private void turnToTargetFacing() {
-      if (this.isEffectiveAi() && !this.hasActivated() && this.getYRot() != this.getTargetFacing().toYRot()) {
+      if (!this.hasActivated() && this.getYRot() != this.getTargetFacingFromSync().toYRot()) {
          double targetY = this.getTargetFacing().toYRot();
          double currentY = this.getYRot();
          double diff = targetY - currentY;
@@ -691,6 +702,16 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             newY -= 360;
          }
          this.setYRot((float)newY);
+
+         if (this.tickCount % 20 == 0) {
+            this.level().playLocalSound(
+                    this.blockPosition(),
+                    BzSounds.SENTRY_WATCHER_MOVING.get(),
+                    SoundSource.NEUTRAL,
+                    0.4F,
+                    0.2f,
+                    false);
+         }
       }
    }
 

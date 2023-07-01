@@ -14,7 +14,7 @@
 
 #TODO: Add music for sanctums and events
 
-#TODO: Add sounds for Rootmin and Sentry Watcher
+#TODO: Add sounds for Rootmin 
 
 #TODO: Add more sanctum rooms and verify that channel block rotates properly (Change it's blockstate to axis + rotation)
 
@@ -158,6 +158,8 @@ Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sa
  `the_bumblezone:sentry_watcher/forced_never_destroy` (block tag)
  `the_bumblezone:sentry_watcher/activates_when_seen` (entity tag)
  `the_bumblezone:sentry_watcher/forced_never_activates_when_seen` (entity tag)
+
+Added Snow Block to Clay Block and its opposite to Bee Queen Trades. 
 
 ##### Mod Compat:
 Integration with Lootr was added by Nooby! Special thanks to him! 
