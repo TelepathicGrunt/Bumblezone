@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -113,8 +114,15 @@ public class WindyAir extends ProperFacingBlock {
             strength = strength * (1 / (size * 2));
         }
 
+        if (entity instanceof ItemEntity) {
+            strength *= windDirection == Direction.UP ? 0.9f : 0.7f;
+        }
+
         Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getNormal()).scale(strength);
         Vec3 newVelocity = entity.getDeltaMovement();
+        if (entity instanceof ItemEntity) {
+            newVelocity = newVelocity.add(newVelocity.scale(-0.15f));
+        }
         newVelocity = newVelocity.add(pushPower);
         if (!entity.onGround() && newVelocity.y() < 0 && windDirection != Direction.DOWN) {
             newVelocity = newVelocity.add(0, -newVelocity.y() + 0.04F, 0);

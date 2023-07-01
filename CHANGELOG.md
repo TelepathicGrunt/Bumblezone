@@ -10,13 +10,13 @@
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
 
-#TODO: Fix windy air with item entities
-
 #TODO: test dedicated server
 
 #TODO: Add music for sanctums and events
 
 #TODO: Add sounds for Rootmin and Sentry Watcher
+
+#TODO: Add more sanctum rooms and verify that channel block rotates properly (Change it's blockstate to axis + rotation)
 
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
