@@ -163,6 +163,9 @@ Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sa
 Integration with Lootr was added by Nooby! Special thanks to him! 
  Worldgen placed Honey Cocoons will have a different texture when Lootr is on and have per-player loot.
 
+Added emissive textures for some entities and blocks. 
+ These will take effect if Optifine or Continuity or other rendering mod is on that reads _e Optifine emissive textures.
+
 
 #### *\*Changes*
 
