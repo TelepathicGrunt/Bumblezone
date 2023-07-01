@@ -6,7 +6,7 @@
 
 #TODO: Implement rootmin.
 
-#TODO: improved sentry watcher textures and add it to sanctum. (Make sure rotation works when spawned by nbt)
+#TODO: improved sentry watcher textures and make sure it can plow through slabs. Also push player when still
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 

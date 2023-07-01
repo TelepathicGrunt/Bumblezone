@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
@@ -33,11 +34,14 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.PowderSnowBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
@@ -174,12 +178,52 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    @Override
+   public boolean isSpectator() {
+      return false;
+   }
+
+   @Override
+   public boolean isPickable() {
+      return true;
+   }
+
+   @Override
+   public ItemStack getPickResult() {
+      return BzItems.SENTRY_WATCHER_SPAWN_EGG.get().getDefaultInstance();
+   }
+
+   @Override
    public void refreshDimensions() {
       double x = this.getX();
       double y = this.getY();
       double z = this.getZ();
       super.refreshDimensions();
       this.absMoveTo(x, y, z);
+   }
+
+   @Override
+   public float rotate(Rotation rotation) {
+      this.setTargetFacing(rotation.rotate(this.getTargetFacing()));
+
+      float f = Mth.wrapDegrees(this.getYRot());
+      return switch (rotation) {
+         case CLOCKWISE_180 -> f + 180.0F;
+         case COUNTERCLOCKWISE_90 -> f + 270.0F;
+         case CLOCKWISE_90 -> f + 90.0F;
+         default -> f;
+      };
+   }
+
+   @Override
+   public float mirror(Mirror mirror) {
+      this.setTargetFacing(mirror.mirror(this.getTargetFacing()));
+
+      float f = Mth.wrapDegrees(this.getYRot());
+      return switch (mirror) {
+         case FRONT_BACK -> -f;
+         case LEFT_RIGHT -> 180.0F - f;
+         default -> f;
+      };
    }
 
    @Override
@@ -404,47 +448,8 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    protected void serverAiStep() {
       if (this.hasActivated()) {
-         if (this.horizontalCollision && this.getDeltaMovement().length() < 0.07841f) {
-            this.setHasActivated(false);
-            this.setTargetFacing(this.getTargetFacing().getOpposite());
-
-            if (this.level() instanceof ServerLevel serverLevel) {
-               serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
-                       this.getX(),
-                       this.getY() + 0.2d,
-                       this.getZ(),
-                       40,
-                       1,
-                       1,
-                       1,
-                       0.1D);
-               serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
-                       this.getX(),
-                       this.getY() + 0.5d,
-                       this.getZ(),
-                       40,
-                       1,
-                       1,
-                       1,
-                       0.1D);
-               serverLevel.sendParticles(ParticleTypes.CRIT,
-                       this.getX(),
-                       this.getY() + 1,
-                       this.getZ(),
-                       40,
-                       1,
-                       1,
-                       1,
-                       0.1D);
-
-               serverLevel.playSound(
-                       this,
-                       this.blockPosition(),
-                       BzSounds.SENTRY_WATCHER_CRASH.get(),
-                       SoundSource.NEUTRAL,
-                       2.0F,
-                       1.0f);
-            }
+         if (this.horizontalCollision && this.getDeltaMovement().x() < 0.0001f && this.getDeltaMovement().z() < 0.0001f) {
+            deactivate();
          }
          else if (this.getShakingTime() > 0) {
             //play shake animation
@@ -485,7 +490,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                  eyePosition,
                  finalPos,
                  boundsForChecking,
-                 (entity) -> entity instanceof LivingEntity && !BeeAggression.isBeelikeEntity(entity)
+                 SentryWatcherEntity::canSeeEntity
          );
 
          if (entityHitResult != null) {
@@ -503,19 +508,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                     eyePosition,
                     finalPos,
                     boundsForChecking,
-                    (entity) -> {
-                       if (entity.getType().is(BzTags.SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN) || entity.isSpectator()) {
-                          return false;
-                       }
-                       else if (entity.getType().is(BzTags.SENTRY_WATCHER_ACTIVATES_WHEN_SEEN)) {
-                          return true;
-                       }
-                       else if (!(entity instanceof LivingEntity) || BeeAggression.isBeelikeEntity(entity)) {
-                          return false;
-                       }
-
-                       return !(entity instanceof Player player) || !player.isCreative();
-                    }
+                    SentryWatcherEntity::canSeeEntity
             );
 
             if (entityHitResult2 != null) {
@@ -532,6 +525,64 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.kill();
          }
       }
+   }
+
+   private void deactivate() {
+      this.setHasActivated(false);
+      this.setTargetFacing(this.getTargetFacing().getOpposite());
+      this.setDeltaMovement(0, this.getDeltaMovement().y(), 0);
+
+      if (this.level() instanceof ServerLevel serverLevel) {
+         serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE,
+                 this.getX(),
+                 this.getY() + 0.2d,
+                 this.getZ(),
+                 40,
+                 1,
+                 1,
+                 1,
+                 0.1D);
+         serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
+                 this.getX(),
+                 this.getY() + 0.5d,
+                 this.getZ(),
+                 40,
+                 1,
+                 1,
+                 1,
+                 0.1D);
+         serverLevel.sendParticles(ParticleTypes.CRIT,
+                 this.getX(),
+                 this.getY() + 1,
+                 this.getZ(),
+                 40,
+                 1,
+                 1,
+                 1,
+                 0.1D);
+
+         serverLevel.playSound(
+                 this,
+                 this.blockPosition(),
+                 BzSounds.SENTRY_WATCHER_CRASH.get(),
+                 SoundSource.NEUTRAL,
+                 2.0F,
+                 1.0f);
+      }
+   }
+
+   private static boolean canSeeEntity(Entity entity) {
+      if (entity.getType().is(BzTags.SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN) || entity.isSpectator()) {
+         return false;
+      }
+      else if (entity.getType().is(BzTags.SENTRY_WATCHER_ACTIVATES_WHEN_SEEN)) {
+         return true;
+      }
+      else if (entity instanceof Player player && player.isCreative()) {
+         return false;
+      }
+
+      return (entity instanceof LivingEntity) && !BeeAggression.isBeelikeEntity(entity);
    }
 
    public void aiStep() {
@@ -552,18 +603,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          this.setRot(this.getYRot(), this.getXRot());
       }
 
-      if (this.isEffectiveAi() && !this.hasActivated() && this.getYRot() != this.getTargetFacing().toYRot()) {
-         float targetY = this.getTargetFacing().toYRot();
-         float currentY = this.getYRot();
-         float diff = targetY - currentY;
-         float diff2 = targetY - (currentY + 360);
-         float diffToUse = diff;
-         if (Math.abs(diff) > Math.abs(diff2)) {
-            diffToUse = diff2;
-         }
-         float newYDiff = Math.max(Math.min(diffToUse, 1), -1);
-         this.setYRot(this.getYRot() + newYDiff);
-      }
+      turnToTargetFacing();
 
       Vec3 vec3 = this.getDeltaMovement();
       double newX = vec3.x;
@@ -596,8 +636,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.level().getProfiler().pop();
 
       this.level().getProfiler().push("travel");
-      this.xxa *= 1.02F;
-      this.zza *= 1.02F;
+      acceleration();
 
       Vec3 vec32 = new Vec3(this.xxa, this.yya, this.zza);
       this.travel(vec32);
@@ -614,6 +653,33 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
 
       this.level().getProfiler().pop();
+   }
+
+   private void acceleration() {
+      this.xxa *= 1.03F;
+      this.zza *= 1.03F;
+   }
+
+   private void turnToTargetFacing() {
+      if (this.isEffectiveAi() && !this.hasActivated() && this.getYRot() != this.getTargetFacing().toYRot()) {
+         double targetY = this.getTargetFacing().toYRot();
+         double currentY = this.getYRot();
+         double diff = targetY - currentY;
+         double diff2 = targetY - (currentY + 360d);
+         double diffToUse = diff;
+         if (Math.abs(diff) > Math.abs(diff2)) {
+            diffToUse = diff2;
+         }
+         double newYDiff = Math.max(Math.min(diffToUse, 1), -1);
+         double newY = currentY + newYDiff;
+         if (newY < 0) {
+            newY += 360;
+         }
+         else if (newY >= 360) {
+            newY -= 360;
+         }
+         this.setYRot((float)newY);
+      }
    }
 
    protected void pushEntities() {
@@ -663,13 +729,19 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             entity.push(this.getDeltaMovement().x() * pushEffect, 0, this.getDeltaMovement().z() * pushEffect);
          }
          else {
-            entity.push(this);
+            super.push(entity);
          }
       }
+      else if (entity instanceof SentryWatcherEntity) {
+         deactivate();
+      }
       else {
-         entity.push(this);
+         super.push(entity);
       }
    }
+
+   @Override
+   public void push(double d, double e, double f) {}
 
    public Vec3 handleRelativeFrictionAndCalculateMovement(Vec3 vec3, float f) {
       this.moveRelative(this.getFrictionInfluencedSpeed(), vec3);
@@ -902,11 +974,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
          }
 
-         if (canDemolish &&
-                 (alwaysDestroyCounter == demolishPos.size() ||
-                 (demolishPos.size() <= 1 && totalhardness < 10) ||
-                 totalhardness < 5.95f))
-         {
+         if (canDemolish && (alwaysDestroyCounter == demolishPos.size() || totalhardness < 20)) {
             for (BlockPos pos : demolishPos) {
                this.level().destroyBlock(pos, true);
             }
