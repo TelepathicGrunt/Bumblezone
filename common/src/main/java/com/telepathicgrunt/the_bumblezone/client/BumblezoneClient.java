@@ -276,7 +276,13 @@ public class BumblezoneClient {
         event.register(RenderType.translucent(),
                 BzBlocks.HONEY_CRYSTAL.get(),
                 BzBlocks.GLISTERING_HONEY_CRYSTAL.get(),
-                BzBlocks.ROYAL_JELLY_BLOCK.get()
+                BzBlocks.ROYAL_JELLY_BLOCK.get(),
+                BzBlocks.ESSENCE_BLOCK_RED.get(),
+                BzBlocks.ESSENCE_BLOCK_PURPLE.get(),
+                BzBlocks.ESSENCE_BLOCK_BLUE.get(),
+                BzBlocks.ESSENCE_BLOCK_GREEN.get(),
+                BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
+                BzBlocks.ESSENCE_BLOCK_WHITE.get()
         );
     }
 
