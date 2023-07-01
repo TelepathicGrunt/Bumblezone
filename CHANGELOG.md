@@ -6,8 +6,6 @@
 
 #TODO: Implement rootmin.
 
-#TODO: improved sentry watcher textures and make sure it can plow through slabs. Also push player when still
-
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.

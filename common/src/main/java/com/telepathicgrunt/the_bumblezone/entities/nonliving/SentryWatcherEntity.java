@@ -53,6 +53,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -77,15 +78,16 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private Direction targetFacing;
    private boolean explosionPrimed = false;
    private boolean prevShaking;
+   private Vec3 prevVelocity;
 
    public SentryWatcherEntity(Level worldIn) {
       super(BzEntities.SENTRY_WATCHER.get(), worldIn);
-      this.setMaxUpStep(0.8f);
+      this.setMaxUpStep(0.75f);
    }
 
    public SentryWatcherEntity(EntityType<? extends SentryWatcherEntity> type, Level worldIn) {
       super(type, worldIn);
-      this.setMaxUpStep(0.8f);
+      this.setMaxUpStep(0.75f);
    }
 
    public int getShakingTime() {
@@ -332,7 +334,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
 
       this.level().getProfiler().pop();
-      //this.animStep += h;
    }
 
    public void travel(Vec3 vec3) {
@@ -444,12 +445,34 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
          this.prevShaking = this.hasShaking();
       }
+
+      this.pushEntities();
    }
 
    protected void serverAiStep() {
       if (this.hasActivated()) {
-         if (this.horizontalCollision && this.getDeltaMovement().x() < 0.0001f && this.getDeltaMovement().z() < 0.0001f) {
+         if (this.horizontalCollision && this.getDeltaMovement().horizontalDistance() < 0.0001f) {
             deactivate();
+
+            double pastSpeed = this.prevVelocity.horizontalDistance();
+            if (pastSpeed > 0.01d) {
+               List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
+
+               for (Entity entity : list) {
+                  entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), 1);
+                  if (entity instanceof LivingEntity livingEntity) {
+                     float oldHealth = livingEntity.getHealth();
+                     float maxhealth = livingEntity.getMaxHealth();
+                     double healthToLose = Mth.clampedLerp(maxhealth / 3f, maxhealth - 1, pastSpeed - 0.2d);
+                     double possibleNewHealth = oldHealth - healthToLose;
+                     double newHealth = Math.max(possibleNewHealth, 1);
+                     livingEntity.setHealth((float) newHealth);
+
+                     double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
+                     livingEntity.hurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) armorDamage);
+                  }
+               }
+            }
          }
          else if (this.getShakingTime() > 0) {
             //play shake animation
@@ -670,7 +693,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          if (Math.abs(diff) > Math.abs(diff2)) {
             diffToUse = diff2;
          }
-         double newYDiff = Math.max(Math.min(diffToUse, 1), -1);
+         double newYDiff = Math.max(Math.min(diffToUse, 1.5f), -1.5f);
          double newY = currentY + newYDiff;
          if (newY < 0) {
             newY += 360;
@@ -715,18 +738,31 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          Vec3 victimVelocity = entity.getDeltaMovement();
          Vec3 diffVelocity = currentVelocity.subtract(victimVelocity);
          double speedDiff = this.getTargetFacing().getStepX() != 0 ? Math.abs(diffVelocity.x()) : Math.abs(diffVelocity.z());
-         if (speedDiff > 0.3d) {
-            speedDiff -= 0.2d;
+         if (speedDiff > 0.2d) {
+            speedDiff -= 0.1d;
 
-            double pushEffect = 0.6d;
-            float damageMultiplier = 15;
-            if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
-               damageMultiplier = 10;
-               pushEffect = 0.45d;
-            }
-
-            entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) (speedDiff * damageMultiplier));
+            double pushEffect = 1.1d;
+            entity.setDeltaMovement(0, entity.getDeltaMovement().y(), 0);
             entity.push(this.getDeltaMovement().x() * pushEffect, 0, this.getDeltaMovement().z() * pushEffect);
+
+            AABB sentryBounds = this.getBoundingBox();
+            Vec3 pushToSpot = entity.position();
+            switch (this.getTargetFacing()) {
+               case NORTH -> pushToSpot = new Vec3(pushToSpot.x(), pushToSpot.y(), sentryBounds.minZ);
+               case SOUTH -> pushToSpot = new Vec3(pushToSpot.x(), pushToSpot.y(), sentryBounds.maxZ);
+               case WEST -> pushToSpot = new Vec3(sentryBounds.minX, pushToSpot.y(), pushToSpot.z());
+               case EAST -> pushToSpot = new Vec3(sentryBounds.maxX, pushToSpot.y(), pushToSpot.z());
+            }
+            entity.setPos(pushToSpot);
+
+            if (!this.level().isClientSide()) {
+               float damageMultiplier = 45;
+               if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
+                  damageMultiplier = 25;
+               }
+
+               entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) (speedDiff * damageMultiplier));
+            }
          }
          else {
             super.push(entity);
@@ -808,6 +844,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
          this.level().getProfiler().pop();
          this.level().getProfiler().push("rest");
+         this.prevVelocity = vec3;
          boolean loseXSpeed = !Mth.equal(vec3.x, collision.x);
          boolean loseZSpeed = !Mth.equal(vec3.z, collision.z);
          this.horizontalCollision = loseXSpeed || loseZSpeed;
@@ -825,8 +862,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          else {
             this.minorHorizontalCollision = false;
          }
-
-         this.pushEntities();
 
          this.setOnGroundWithKnownMovement(this.verticalCollisionBelow, collision);
          BlockPos blockPos = this.getOnPosLegacy();
@@ -984,30 +1019,61 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
    }
 
-   private Vec3 collide(Vec3 vec3) {
-      AABB aABB = this.getBoundingBox();
-      List<VoxelShape> list = this.level().getEntityCollisions(this, aABB.expandTowards(vec3));
-      Vec3 vec32 = vec3.lengthSqr() == 0.0 ? vec3 : collideBoundingBox(this, vec3, aABB, this.level(), list);
-      boolean bl = vec3.x != vec32.x;
-      boolean bl2 = vec3.y != vec32.y;
-      boolean bl3 = vec3.z != vec32.z;
-      boolean bl4 = this.onGround() || bl2 && vec3.y < 0.0;
-      if (this.maxUpStep() > 0.0F && bl4 && (bl || bl3)) {
-         Vec3 vec33 = collideBoundingBox(this, new Vec3(vec3.x, this.maxUpStep(), vec3.z), aABB, this.level(), list);
-         Vec3 vec34 = collideBoundingBox(this, new Vec3(0.0, this.maxUpStep(), 0.0), aABB.expandTowards(vec3.x, 0.0, vec3.z), this.level(), list);
+   private Vec3 collide(Vec3 incomingSpeed) {
+      AABB sentryBoundingBox = this.getBoundingBox();
+      List<VoxelShape> shapesCollidedWith = this.level().getEntityCollisions(this, sentryBoundingBox.expandTowards(incomingSpeed));
+      Vec3 collidedVelocity = incomingSpeed.lengthSqr() == 0.0 ?
+              incomingSpeed :
+              collideBoundingBox(
+                      this,
+                      incomingSpeed,
+                      sentryBoundingBox,
+                      this.level(),
+                      shapesCollidedWith);
+
+      boolean xCollided = incomingSpeed.x != collidedVelocity.x;
+      boolean zCollided = incomingSpeed.z != collidedVelocity.z;
+
+      if (this.maxUpStep() > 0.0F && (xCollided || zCollided)) {
+         Vec3 vec33 = collideBoundingBox(
+                 this,
+                 new Vec3(incomingSpeed.x, this.maxUpStep(), incomingSpeed.z),
+                 sentryBoundingBox,
+                 this.level(),
+                 shapesCollidedWith);
+
+         Vec3 vec34 = collideBoundingBox(
+                 this,
+                 new Vec3(0.0, this.maxUpStep(), 0.0),
+                 sentryBoundingBox.expandTowards(incomingSpeed.x, 0.0, incomingSpeed.z),
+                 this.level(),
+                 shapesCollidedWith);
+
          if (vec34.y < (double)this.maxUpStep()) {
-            Vec3 vec35 = collideBoundingBox(this, new Vec3(vec3.x, 0.0, vec3.z), aABB.move(vec34), this.level(), list).add(vec34);
+
+            Vec3 vec35 = collideBoundingBox(
+                    this,
+                    new Vec3(incomingSpeed.x, 0.0, incomingSpeed.z),
+                    sentryBoundingBox.move(vec34),
+                    this.level(),
+                    shapesCollidedWith).add(vec34);
+
             if (vec35.horizontalDistanceSqr() > vec33.horizontalDistanceSqr()) {
                vec33 = vec35;
             }
          }
 
-         if (vec33.horizontalDistanceSqr() > vec32.horizontalDistanceSqr()) {
-            return vec33.add(collideBoundingBox(this, new Vec3(0.0, -vec33.y + vec3.y, 0.0), aABB.move(vec33), this.level(), list));
+         if (vec33.horizontalDistanceSqr() > collidedVelocity.horizontalDistanceSqr()) {
+            return vec33.add(collideBoundingBox(
+                    this,
+                    new Vec3(0.0, -vec33.y + incomingSpeed.y, 0.0),
+                    sentryBoundingBox.move(vec33),
+                    this.level(),
+                    shapesCollidedWith));
          }
       }
 
-      return vec32;
+      return collidedVelocity;
    }
 
    private float getFrictionInfluencedSpeed() {
