@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
@@ -277,25 +278,25 @@ public class PileOfPollen extends FallingBlock {
             double chance = 0.22D + layerValueMinusOne * 0.09D;
 
             ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
-            if(!beeLeggings.isEmpty()) {
+            if (!beeLeggings.isEmpty()) {
                 speedReduction = Math.max(0.9D, speedReduction);
             }
 
             Vec3 deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
 
-            if(entity instanceof ServerPlayer && entity.fallDistance > 18 && newYDelta < -0.9D && blockState.getValue(LAYERS) >= 7) {
+            if (entity instanceof ServerPlayer && entity.fallDistance > 18 && newYDelta < -0.9D && blockState.getValue(LAYERS) >= 7) {
                 BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger((ServerPlayer) entity);
             }
 
-            if(deltaMovement.y > 0) {
+            if (deltaMovement.y > 0) {
                 newYDelta *= (1D - layerValueMinusOne * 0.01D);
             }
             else {
                 newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
             }
 
-            if (!(entity instanceof Bee || entity instanceof BeehemothEntity)) {
+            if (!entity.getType().is(BzTags.PILE_OF_POLLEN_CANNOT_SLOW)) {
                 entity.setDeltaMovement(new Vec3(
                         deltaMovement.x * speedReduction,
                         newYDelta,

@@ -20,7 +20,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -34,7 +33,6 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -53,7 +51,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -65,7 +62,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private static final EntityDataAccessor<Boolean> DATA_ID_SHAKING = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
 
    public float xxa;
-   public float yya;
    public float zza;
    protected int lerpSteps;
    protected double lerpX;
@@ -73,21 +69,29 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    protected double lerpZ;
    protected double lerpYRot;
    protected double lerpXRot;
-   private float speed;
    private int shakingTime = 0;
    private Direction targetFacing;
    private boolean explosionPrimed = false;
    private boolean prevShaking;
    private Vec3 prevVelocity;
+   private Vec3 activatedStart;
+
+   private static final int MAX_CHARGING_DISTANCE = 80;
+   private static final int UNABLE_TO_DESTROY_TOTAL_BLOCK_HARDNESS = 20;
+   private static final float MAX_STEP_UP = 0.75f;
+   private static final float ROTATION_SPEED = 1.5f;
+   private static final float ACCELERATION = 0.975f;
+   private static final float ACCELERATION_FLUID = 0.95f;
+   private static final float ACCELERATION_GRAVITY = 0.9800000190734863F;
 
    public SentryWatcherEntity(Level worldIn) {
       super(BzEntities.SENTRY_WATCHER.get(), worldIn);
-      this.setMaxUpStep(0.75f);
+      this.setMaxUpStep(MAX_STEP_UP);
    }
 
    public SentryWatcherEntity(EntityType<? extends SentryWatcherEntity> type, Level worldIn) {
       super(type, worldIn);
-      this.setMaxUpStep(0.75f);
+      this.setMaxUpStep(MAX_STEP_UP);
    }
 
    public int getShakingTime() {
@@ -144,6 +148,8 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    public void addAdditionalSaveData(CompoundTag compound) {
       compound.putBoolean("explosionPrimed", explosionPrimed);
+      compound.putDouble("activatedStartX", this.activatedStart.x());
+      compound.putDouble("activatedStartZ", this.activatedStart.z());
       compound.putBoolean("activated", this.hasActivated());
       compound.putBoolean("shaking", this.hasShaking());
       compound.putInt("shakingTime", this.getShakingTime());
@@ -155,6 +161,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    public void readAdditionalSaveData(CompoundTag compound) {
       this.explosionPrimed = compound.getBoolean("explosionPrimed");
+      this.activatedStart = new Vec3(compound.getDouble("activatedStartX"), 0, compound.getDouble("activatedStartZ"));
       this.setHasActivated(compound.getBoolean("activated"));
       this.setHasShaking(compound.getBoolean("shaking"));
       this.setShakingTime(compound.getInt("shakingTime"));
@@ -265,8 +272,12 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       return false;
    }
 
-   protected float getWaterSlowDown() {
-      return 0.95F;
+   public float getFluidSpeed() {
+      return ACCELERATION_FLUID;
+   }
+
+   public float getSpeed() {
+      return ACCELERATION;
    }
 
    @Override
@@ -315,6 +326,13 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          this.aiStep();
       }
 
+      if (this.hasActivated() &&
+           this.activatedStart != null &&
+           Math.abs(this.position().horizontalDistance() - this.activatedStart.horizontalDistance()) > MAX_CHARGING_DISTANCE)
+      {
+         deactivate();
+      }
+
       this.level().getProfiler().push("rangeChecks");
 
       while(this.getYRot() - this.yRotO < -180.0F) {
@@ -336,15 +354,15 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.level().getProfiler().pop();
    }
 
-   public void travel(Vec3 vec3) {
+   public void travel() {
       if (this.isControlledByLocalInstance()) {
-         double d = 0.08;
-         boolean bl = this.getDeltaMovement().y <= 0.0;
+         double gravityModifier = 0.08;
+         boolean isFalling = this.getDeltaMovement().y <= 0.0;
 
          double e;
-         if (this.isInWater()) {
+         if (this.isInWater() || this.isInLava()) {
             e = this.getY();
-            float f = this.isSprinting() ? 0.9F : this.getWaterSlowDown();
+            float speed = this.getFluidSpeed();
             float g = 0.02F;
             float h = 0;
             if (!this.onGround()) {
@@ -352,62 +370,38 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
 
             if (h > 0.0F) {
-               f += (0.54600006F - f) * h / 3.0F;
-               g += (this.getSpeed() - g) * h / 3.0F;
+               speed += (0.54600006F - speed) * h / 3.0F;
+               g += (this.getFluidSpeed() - g) * h / 3.0F;
             }
 
-            this.moveRelative(g, vec3);
+            this.moveRelative(g, Vec3.ZERO);
             this.move(MoverType.SELF, this.getDeltaMovement());
             Vec3 vec32 = this.getDeltaMovement();
 
-            this.setDeltaMovement(vec32.multiply(f, 0.800000011920929, f));
-            Vec3 vec33 = this.getFluidFallingAdjustedMovement(d, bl, this.getDeltaMovement());
+            this.setDeltaMovement(vec32.multiply(speed, 0.800000011920929, speed));
+            Vec3 vec33 = this.getFluidFallingAdjustedMovement(gravityModifier, isFalling, this.getDeltaMovement());
             this.setDeltaMovement(vec33);
             if (this.horizontalCollision && this.isFree(vec33.x, vec33.y + 0.6000000238418579 - this.getY() + e, vec33.z)) {
                this.setDeltaMovement(vec33.x, 0.30000001192092896, vec33.z);
             }
          }
-         else if (this.isInLava()) {
-            e = this.getY();
-            this.moveRelative(0.02F, vec3);
-            this.move(MoverType.SELF, this.getDeltaMovement());
-            Vec3 vec34;
-            if (this.getFluidHeight(FluidTags.LAVA) <= this.getFluidJumpThreshold()) {
-               this.setDeltaMovement(this.getDeltaMovement().multiply(0.5, 0.800000011920929, 0.5));
-               vec34 = this.getFluidFallingAdjustedMovement(d, bl, this.getDeltaMovement());
-               this.setDeltaMovement(vec34);
-            }
-            else {
-               this.setDeltaMovement(this.getDeltaMovement().scale(0.5));
-            }
-
-            if (!this.isNoGravity()) {
-               this.setDeltaMovement(this.getDeltaMovement().add(0.0, -d / 4.0, 0.0));
-            }
-
-            vec34 = this.getDeltaMovement();
-            if (this.horizontalCollision && this.isFree(vec34.x, vec34.y + 0.6000000238418579 - this.getY() + e, vec34.z)) {
-               this.setDeltaMovement(vec34.x, 0.30000001192092896, vec34.z);
-            }
-         }
          else {
             BlockPos blockPos = this.getBlockPosBelowThatAffectsMyMovement();
-            float p = this.level().getBlockState(blockPos).getBlock().getFriction();
-            Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement(vec3, p);
-            double q = vec37.y;
+            Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement();
+            double ySpeed = vec37.y;
             if (this.level().isClientSide && !this.level().hasChunkAt(blockPos)) {
                if (this.getY() > (double)this.level().getMinBuildHeight()) {
-                  q = -0.1;
+                  ySpeed = -0.1;
                }
                else {
-                  q = 0.0;
+                  ySpeed = 0.0;
                }
             }
             else if (!this.isNoGravity()) {
-               q -= d;
+               ySpeed -= gravityModifier;
             }
 
-            this.setDeltaMovement(vec37.x, q * 0.9800000190734863, vec37.z);
+            this.setDeltaMovement(vec37.x, ySpeed * ACCELERATION_GRAVITY, vec37.z);
          }
       }
       else if (this.level().isClientSide()) {
@@ -520,6 +514,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.setHasActivated(true);
             this.setShakingTime(40);
             this.setHasShaking(true);
+            this.activatedStart = this.position();
          }
          else {
             finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
@@ -538,6 +533,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                this.setHasActivated(true);
                this.setShakingTime(40);
                this.setHasShaking(true);
+               this.activatedStart = this.position();
             }
          }
       }
@@ -659,10 +655,8 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.level().getProfiler().pop();
 
       this.level().getProfiler().push("travel");
-      acceleration();
 
-      Vec3 vec32 = new Vec3(this.xxa, this.yya, this.zza);
-      this.travel(vec32);
+      this.travel();
 
       this.level().getProfiler().pop();
       this.level().getProfiler().push("freezing");
@@ -678,11 +672,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.level().getProfiler().pop();
    }
 
-   private void acceleration() {
-      this.xxa *= 1.03F;
-      this.zza *= 1.03F;
-   }
-
    private void turnToTargetFacing() {
       if (this.isEffectiveAi() && !this.hasActivated() && this.getYRot() != this.getTargetFacing().toYRot()) {
          double targetY = this.getTargetFacing().toYRot();
@@ -693,7 +682,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          if (Math.abs(diff) > Math.abs(diff2)) {
             diffToUse = diff2;
          }
-         double newYDiff = Math.max(Math.min(diffToUse, 1.5f), -1.5f);
+         double newYDiff = Math.max(Math.min(diffToUse, ROTATION_SPEED), -ROTATION_SPEED);
          double newY = currentY + newYDiff;
          if (newY < 0) {
             newY += 360;
@@ -779,8 +768,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    public void push(double d, double e, double f) {}
 
-   public Vec3 handleRelativeFrictionAndCalculateMovement(Vec3 vec3, float f) {
-      this.moveRelative(this.getFrictionInfluencedSpeed(), vec3);
+   public Vec3 handleRelativeFrictionAndCalculateMovement() {
       this.move(MoverType.SELF, this.getDeltaMovement());
       Vec3 deltaMovement = this.getDeltaMovement();
       if (this.horizontalCollision && (this.getFeetBlockState().is(Blocks.POWDER_SNOW) && PowderSnowBlock.canEntityWalkOnPowderSnow(this))) {
@@ -923,8 +911,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
 
             this.tryCheckInsideBlocks();
-            float h = this.getBlockSpeedFactor();
-            this.setDeltaMovement(this.getDeltaMovement().multiply(h, 1.0, h));
             if (this.level().getBlockStatesIfLoaded(this.getBoundingBox().deflate(1.0E-6)).noneMatch((blockStatex) -> blockStatex.is(BlockTags.FIRE) || blockStatex.is(Blocks.LAVA))) {
                if (this.getRemainingFireTicks() <= 0) {
                   this.setRemainingFireTicks(-this.getFireImmuneTicks());
@@ -978,7 +964,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
 
             BlockState state = this.level().getBlockState(pos);
-            if (!state.getCollisionShape(this.level(), pos).isEmpty()) {
+            if (!state.getCollisionShape(this.level(), pos).isEmpty() || state.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
                if (state.is(BzTags.SENTRY_WATCHER_FORCED_NEVER_DESTROY)) {
                   canDemolish = false;
                   break;
@@ -994,7 +980,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
             BlockPos abovePos = pos.above();
             BlockState aboveState = this.level().getBlockState(abovePos);
-            if (!aboveState.getCollisionShape(this.level(), abovePos).isEmpty()) {
+            if (!aboveState.getCollisionShape(this.level(), abovePos).isEmpty() || aboveState.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
                if (aboveState.is(BzTags.SENTRY_WATCHER_FORCED_NEVER_DESTROY)) {
                   canDemolish = false;
                   break;
@@ -1009,7 +995,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
          }
 
-         if (canDemolish && (alwaysDestroyCounter == demolishPos.size() || totalhardness < 20)) {
+         if (canDemolish && (alwaysDestroyCounter == demolishPos.size() || totalhardness < UNABLE_TO_DESTROY_TOTAL_BLOCK_HARDNESS)) {
             for (BlockPos pos : demolishPos) {
                this.level().destroyBlock(pos, true);
             }
@@ -1074,18 +1060,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
 
       return collidedVelocity;
-   }
-
-   private float getFrictionInfluencedSpeed() {
-      return this.getSpeed();
-   }
-
-   public float getSpeed() {
-      return this.speed;
-   }
-
-   public void setSpeed(float f) {
-      this.speed = f;
    }
 
    public void lerpTo(double d, double e, double f, float g, float h, int i, boolean bl) {

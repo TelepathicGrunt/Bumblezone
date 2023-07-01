@@ -106,6 +106,7 @@ public class BzTags {
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "convertible_to_sugar_water"));
 
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff/can_pollinate"));
+    public static final TagKey<EntityType<?>> PILE_OF_POLLEN_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pile_of_pollen/cannot_slow"));
     public static final TagKey<EntityType<?>> BUZZING_BRIEFCASE_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "buzzing_briefcase/can_pollinate"));
     public static final TagKey<EntityType<?>> BUZZING_BRIEFCASE_DISALLOWED_BEE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "buzzing_briefcase/disallowed_bee_pickup"));
     public static final TagKey<EntityType<?>> CANNON_BEES_DISALLOWED_BEE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_cannon/disallowed_bee_pickup"));

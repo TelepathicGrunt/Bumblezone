@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "minecraft:bee",
     "the_bumblezone:variant_bee"
   ]
 }

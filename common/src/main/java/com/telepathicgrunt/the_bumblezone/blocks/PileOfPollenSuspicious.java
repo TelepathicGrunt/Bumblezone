@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.StateFocusedBrushableBlockEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -220,14 +221,14 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger((ServerPlayer) entity);
             }
 
-            if(deltaMovement.y > 0) {
-                newYDelta *= (1D - layerValueMinusOne * 0.01D);
-            }
-            else {
-                newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
-            }
+            if (!entity.getType().is(BzTags.PILE_OF_POLLEN_CANNOT_SLOW)) {
+                if(deltaMovement.y > 0) {
+                    newYDelta *= (1D - layerValueMinusOne * 0.01D);
+                }
+                else {
+                    newYDelta *= (0.84D - layerValueMinusOne * 0.03D);
+                }
 
-            if (!(entity instanceof Bee || entity instanceof BeehemothEntity)) {
                 entity.setDeltaMovement(new Vec3(
                         deltaMovement.x * speedReduction,
                         newYDelta,
