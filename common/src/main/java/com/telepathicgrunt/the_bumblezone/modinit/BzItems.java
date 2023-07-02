@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CarvableWax;
-import com.telepathicgrunt.the_bumblezone.blocks.LuminescentWaxCornerNode;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
@@ -164,10 +163,10 @@ public class BzItems {
     public static final RegistryEntry<Item> BEE_QUEEN_SPAWN_EGG = ITEMS.register("bee_queen_spawn_egg", () -> new DispenserAddedSpawnEgg(BzEntities.BEE_QUEEN, 0xFFFFFF, 0xFFFFFF, (new Item.Properties().rarity(Rarity.EPIC))));
     public static final RegistryEntry<Item> SENTRY_WATCHER_SPAWN_EGG = ITEMS.register("sentry_watcher_spawn_egg", () -> new SentryWatcherSpawnEgg(BzEntities.SENTRY_WATCHER, (new Item.Properties().rarity(Rarity.RARE))));
     public static final RegistryEntry<Item> ESSENCE_OF_THE_BEES = ITEMS.register("essence_of_the_bees", () -> new EssenceOfTheBees(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
-    public static final RegistryEntry<Item> ESSENCE_RED = ITEMS.register("essence_red", () -> new RagingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final RegistryEntry<Item> ESSENCE_PURPLE = ITEMS.register("essence_purple", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final RegistryEntry<Item> ESSENCE_BLUE = ITEMS.register("essence_blue", () -> new CalmingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final RegistryEntry<Item> ESSENCE_GREEN = ITEMS.register("essence_green", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final RegistryEntry<Item> ESSENCE_YELLOW = ITEMS.register("essence_yellow", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
-    public static final RegistryEntry<Item> ESSENCE_WHITE = ITEMS.register("essence_white", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_RAGING = ITEMS.register("essence_raging", () -> new RagingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_KNOWING = ITEMS.register("essence_knowing", () -> new KnowingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_CALMING = ITEMS.register("essence_calming", () -> new CalmingEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_LIFE = ITEMS.register("essence_life", () -> new LifeEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_RADIANCE = ITEMS.register("essence_radiance", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    public static final RegistryEntry<Item> ESSENCE_CONTINUITY = ITEMS.register("essence_continuity", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 }

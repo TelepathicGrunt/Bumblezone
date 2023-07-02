@@ -48,9 +48,9 @@ public class BzGeneralConfigs {
     public static int knowingEssenceCooldown = 18000;
     public static int calmingEssenceAbilityUse = 600;
     public static int calmingEssenceCooldown = 12000;
-    public static int radianceEssenceAbilityUse = 4800;
-    public static int radianceEssenceCooldown = 12000;
     public static int lifeEssenceAbilityUse = 1000;
     public static int lifeEssenceCooldown = 12000;
+    public static int radianceEssenceAbilityUse = 4800;
+    public static int radianceEssenceCooldown = 12000;
     public static int continuityEssenceCooldown = 288000;
 }

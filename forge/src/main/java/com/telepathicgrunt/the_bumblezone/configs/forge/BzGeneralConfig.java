@@ -38,10 +38,10 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue knowingEssenceCooldown;
     public static ForgeConfigSpec.IntValue calmingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue calmingEssenceCooldown;
-    public static ForgeConfigSpec.IntValue radianceEssenceAbilityUse;
-    public static ForgeConfigSpec.IntValue radianceEssenceCooldown;
     public static ForgeConfigSpec.IntValue lifeEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue lifeEssenceCooldown;
+    public static ForgeConfigSpec.IntValue radianceEssenceAbilityUse;
+    public static ForgeConfigSpec.IntValue radianceEssenceCooldown;
     public static ForgeConfigSpec.IntValue continuityEssenceCooldown;
 
     static {
@@ -299,19 +299,6 @@ public class BzGeneralConfig {
                 .defineInRange("calmingEssenceCooldown", 12000, 0, 1000000);
 
 
-        radianceEssenceAbilityUse = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " How much ability use (per 25 ticks) this item has before depleted.\n")
-                .translation("the_bumblezone.config.radianceessenceabilityuse")
-                .defineInRange("radianceEssenceAbilityUse", 4800, 0, 1000000);
-
-        radianceEssenceCooldown = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " How long the cooldown is in ticks before recharged for this item.\n")
-                .translation("the_bumblezone.config.radianceessencecooldown")
-                .defineInRange("radianceEssenceCooldown", 12000, 0, 1000000);
-
-
         lifeEssenceAbilityUse = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How much ability use this item has before depleted.\n")
@@ -323,6 +310,19 @@ public class BzGeneralConfig {
                         " How long the cooldown is in ticks before recharged for this item.\n")
                 .translation("the_bumblezone.config.lifeessencecooldown")
                 .defineInRange("lifeEssenceCooldown", 12000, 0, 1000000);
+
+
+        radianceEssenceAbilityUse = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much ability use (per 25 ticks) this item has before depleted.\n")
+                .translation("the_bumblezone.config.radianceessenceabilityuse")
+                .defineInRange("radianceEssenceAbilityUse", 4800, 0, 1000000);
+
+        radianceEssenceCooldown = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long the cooldown is in ticks before recharged for this item.\n")
+                .translation("the_bumblezone.config.radianceessencecooldown")
+                .defineInRange("radianceEssenceCooldown", 12000, 0, 1000000);
 
 
         continuityEssenceCooldown = builder
@@ -363,10 +363,10 @@ public class BzGeneralConfig {
         BzGeneralConfigs.knowingEssenceCooldown = knowingEssenceCooldown.get();
         BzGeneralConfigs.calmingEssenceAbilityUse = calmingEssenceAbilityUse.get();
         BzGeneralConfigs.calmingEssenceCooldown = calmingEssenceCooldown.get();
-        BzGeneralConfigs.radianceEssenceAbilityUse = radianceEssenceAbilityUse.get();
-        BzGeneralConfigs.radianceEssenceCooldown = radianceEssenceCooldown.get();
         BzGeneralConfigs.lifeEssenceAbilityUse = lifeEssenceAbilityUse.get();
         BzGeneralConfigs.lifeEssenceCooldown = lifeEssenceCooldown.get();
+        BzGeneralConfigs.radianceEssenceAbilityUse = radianceEssenceAbilityUse.get();
+        BzGeneralConfigs.radianceEssenceCooldown = radianceEssenceCooldown.get();
         BzGeneralConfigs.continuityEssenceCooldown = continuityEssenceCooldown.get();
     }
 }

@@ -64,7 +64,7 @@ Suspicious Pile of Pollen is added now! You may find these scattered throughout 
 
 
 ##### Items:
-Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand will grow 
+Essence of Life - The reward for beating the Green Sempiternal Sanctum structure! Holding this item in offhand will grow 
  crops and saplings nearby, heal mobs tamed by you, and heal other mobs or players on the same team as you! Also, will cure 
  Poison and Wither effect from the healed mobs. It has 1000 use before it is depleted and needs 10 minutes to recharge by 
  being in the inventory of a player that had consumed Essence of the Bees in the past. Add more effects to 
@@ -73,8 +73,8 @@ Essence of Life - The reward for beating the Yellow Sempiternal Sanctum structur
  `the_bumblezone:essence/life/grow_plants`
  `the_bumblezone:essence/life/force_disallowed_grow_plant`
 
-Essence of Radiance - The reward for beating the Green Sempiternal Sanctum structure! Holding this item in offhand while being
- in a spot with sky brightnes 13 or above (basically in view of the sky) will grant you Regeneration 1, Saturation 1, Speed 1,
+Essence of Radiance - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand while being
+ in a spot with sky brightness 13 or above (basically in view of the sky) will grant you Regeneration 1, Saturation 1, Speed 1,
  Haste 2, and Damage Resistance 2. It will also slowly heal your armor durability as well over time! It has 4800 use before it is 
  depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
  Add or remove effects to give to player by editing `the_bumblezone:essence/radiance/sun_effects` mob effects tag.

@@ -1,0 +1,12 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": { "layer0": "the_bumblezone:item/essence/radiance" },
+    "overrides": [
+        { "predicate": { "state": 0 }, "model": "the_bumblezone:item/essence/radiance" },
+        { "predicate": { "state": 0.1 }, "model": "the_bumblezone:item/essence/radiance_ready" },
+        { "predicate": { "state": 0.15 }, "model": "the_bumblezone:item/essence/radiance_ready_used" },
+        { "predicate": { "state": 0.2 }, "model": "the_bumblezone:item/essence/radiance_active" },
+        { "predicate": { "state": 0.25 }, "model": "the_bumblezone:item/essence/radiance_active_used" },
+        { "predicate": { "state": 0.3 }, "model": "the_bumblezone:item/essence/radiance_disabled" }
+    ]
+}

@@ -18,7 +18,6 @@ import net.minecraft.world.level.material.MapColor;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 
 public class EssenceBlockPurple extends EssenceBlock {
@@ -47,7 +46,7 @@ public class EssenceBlockPurple extends EssenceBlock {
 
     @Override
     public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_PURPLE.get().getDefaultInstance();
+        return BzItems.ESSENCE_KNOWING.get().getDefaultInstance();
     }
 
     @Override

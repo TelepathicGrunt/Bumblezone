@@ -28,7 +28,6 @@ import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -72,7 +71,7 @@ public class EssenceBlockBlue extends EssenceBlock {
 
     @Override
     public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_BLUE.get().getDefaultInstance();
+        return BzItems.ESSENCE_CALMING.get().getDefaultInstance();
     }
 
     @Override

@@ -26,10 +26,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.scores.PlayerTeam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +62,7 @@ public class EssenceBlockRed extends EssenceBlock {
 
     @Override
     public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_RED.get().getDefaultInstance();
+        return BzItems.ESSENCE_RAGING.get().getDefaultInstance();
     }
 
     @Override

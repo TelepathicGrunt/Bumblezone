@@ -45,8 +45,8 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
     @Override
     void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_white_description_1").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_white_description_2").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_continuity_description_1").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_continuity_description_2").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {

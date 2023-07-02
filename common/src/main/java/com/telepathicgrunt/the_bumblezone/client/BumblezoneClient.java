@@ -75,7 +75,6 @@ import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
@@ -249,12 +248,12 @@ public class BumblezoneClient {
 
 
         // Show state of essence
-        registerEssenceItemProperty(event, BzItems.ESSENCE_RED.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_PURPLE.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_BLUE.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_GREEN.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_YELLOW.get());
-        registerEssenceItemProperty(event, BzItems.ESSENCE_WHITE.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_RAGING.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_KNOWING.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_CALMING.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_LIFE.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_RADIANCE.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_CONTINUITY.get());
     }
 
     private static void registerEssenceItemProperty(RegisterItemPropertiesEvent event, Item item) {

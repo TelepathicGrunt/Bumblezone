@@ -143,12 +143,12 @@ public class BzCreativeTabs {
             BzItems.BEE_QUEEN_SPAWN_EGG,
             BzItems.SENTRY_WATCHER_SPAWN_EGG,
             BzItems.ESSENCE_OF_THE_BEES,
-            BzItems.ESSENCE_RED,
-            BzItems.ESSENCE_PURPLE,
-            BzItems.ESSENCE_BLUE,
-            BzItems.ESSENCE_GREEN,
-            BzItems.ESSENCE_YELLOW,
-            BzItems.ESSENCE_WHITE,
+            BzItems.ESSENCE_RAGING,
+            BzItems.ESSENCE_KNOWING,
+            BzItems.ESSENCE_CALMING,
+            BzItems.ESSENCE_LIFE,
+            BzItems.ESSENCE_RADIANCE,
+            BzItems.ESSENCE_CONTINUITY,
             BzItems.HEAVY_AIR,
             BzItems.WINDY_AIR
     );

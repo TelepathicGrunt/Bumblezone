@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 
 public class ElectricRingEntity extends Entity {
-    private static final EntityDataAccessor<Boolean> DATA_ID_DISAPPEARING_SET = SynchedEntityData.defineId(PurpleSpikeEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_ID_DISAPPEARING_SET = SynchedEntityData.defineId(ElectricRingEntity.class, EntityDataSerializers.BOOLEAN);
     public static final int DISAPPERING_TIMESPAN = 20;
     public static final int APPEARING_TIMESPAN = 20;
 

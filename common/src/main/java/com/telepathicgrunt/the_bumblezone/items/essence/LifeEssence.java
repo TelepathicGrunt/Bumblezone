@@ -47,8 +47,8 @@ public class LifeEssence extends AbilityEssenceItem {
 
     @Override
     void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_yellow_description_1").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_yellow_description_2").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_life_description_1").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_life_description_2").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int amount) {

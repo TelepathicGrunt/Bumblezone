@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:essence_red",
-    "the_bumblezone:essence_purple",
-    "the_bumblezone:essence_blue",
-    "the_bumblezone:essence_green",
-    "the_bumblezone:essence_yellow",
-    "the_bumblezone:essence_white"
+    "the_bumblezone:essence_raging",
+    "the_bumblezone:essence_knowing",
+    "the_bumblezone:essence_calming",
+    "the_bumblezone:essence_life",
+    "the_bumblezone:essence_radiance",
+    "the_bumblezone:essence_continuity"
   ]
 }

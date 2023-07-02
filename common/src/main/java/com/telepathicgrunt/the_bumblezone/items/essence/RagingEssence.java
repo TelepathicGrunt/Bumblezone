@@ -68,8 +68,8 @@ public class RagingEssence extends AbilityEssenceItem {
 
     @Override
     void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_red_description_1").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_red_description_2").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_raging_description_1").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_raging_description_2").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
     }
 
     public static void setRageState(ItemStack stack, short rageState) {
@@ -317,7 +317,7 @@ public class RagingEssence extends AbilityEssenceItem {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
 
-            return offHandItem.is(BzItems.ESSENCE_RED.get()) &&
+            return offHandItem.is(BzItems.ESSENCE_RAGING.get()) &&
                     getIsActive(offHandItem) &&
                     !player.getCooldowns().isOnCooldown(offHandItem.getItem());
         }

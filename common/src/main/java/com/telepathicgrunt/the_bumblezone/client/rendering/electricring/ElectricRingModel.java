@@ -19,12 +19,13 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static net.minecraft.client.renderer.RenderStateShard.*;
+import static net.minecraft.client.renderer.RenderStateShard.NO_CULL;
+import static net.minecraft.client.renderer.RenderStateShard.NO_OVERLAY;
+import static net.minecraft.client.renderer.RenderStateShard.NO_TRANSPARENCY;
+import static net.minecraft.client.renderer.RenderStateShard.RENDERTYPE_ENERGY_SWIRL_SHADER;
 
 public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor

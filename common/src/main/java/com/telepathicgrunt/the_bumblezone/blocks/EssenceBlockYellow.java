@@ -69,7 +69,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public ItemStack getEssenceItemReward() {
-        return BzItems.ESSENCE_YELLOW.get().getDefaultInstance();
+        return BzItems.ESSENCE_RADIANCE.get().getDefaultInstance();
     }
 
     @Override

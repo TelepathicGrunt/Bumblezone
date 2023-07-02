@@ -39,8 +39,8 @@ public class KnowingEssence extends AbilityEssenceItem {
 
     @Override
     void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_purple_description_1").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_purple_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_1").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
     }
 
     public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer) {
@@ -91,7 +91,7 @@ public class KnowingEssence extends AbilityEssenceItem {
     public static boolean IsKnowingEssenceActive(Player player) {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
-            return offHandItem.is(BzItems.ESSENCE_PURPLE.get()) && getIsActive(offHandItem);
+            return offHandItem.is(BzItems.ESSENCE_KNOWING.get()) && getIsActive(offHandItem);
         }
         return false;
     }

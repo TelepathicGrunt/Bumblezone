@@ -44,9 +44,9 @@ public class CalmingEssence extends AbilityEssenceItem {
 
     @Override
     void addDescriptionComponents(List<Component> components) {
-        components.add(Component.translatable("item.the_bumblezone.essence_blue_description_1").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_blue_description_2").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
-        components.add(Component.translatable("item.the_bumblezone.essence_blue_description_3").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_calming_description_1").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_calming_description_2").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
+        components.add(Component.translatable("item.the_bumblezone.essence_calming_description_3").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
     }
 
     @Override
@@ -95,7 +95,7 @@ public class CalmingEssence extends AbilityEssenceItem {
     public static boolean IsCalmingEssenceActive(Player player) {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
-            return offHandItem.is(BzItems.ESSENCE_BLUE.get()) && getIsActive(offHandItem);
+            return offHandItem.is(BzItems.ESSENCE_CALMING.get()) && getIsActive(offHandItem);
         }
         return false;
     }
