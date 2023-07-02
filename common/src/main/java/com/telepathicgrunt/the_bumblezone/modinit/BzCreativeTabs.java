@@ -115,9 +115,9 @@ public class BzCreativeTabs {
             BzItems.BUZZING_BRIEFCASE,
             BzItems.BEE_BREAD,
             BzItems.BEE_SOUP,
+            BzItems.HONEY_CRYSTAL_SHARDS,
             BzItems.POLLEN_PUFF,
             BzItems.DIRT_PELLET,
-            BzItems.HONEY_CRYSTAL_SHARDS,
             BzItems.BEE_STINGER,
             BzItems.STINGER_SPEAR,
             BzItems.BEE_CANNON,
@@ -272,6 +272,7 @@ public class BzCreativeTabs {
 
         if (event.type() == AddCreativeTabEntriesEvent.Type.FOOD) {
             Stream.of(
+                    BzItems.HONEY_CRYSTAL_SHARDS,
                     BzItems.BEE_BREAD,
                     BzItems.BEE_SOUP,
                     BzItems.ROYAL_JELLY_BOTTLE
