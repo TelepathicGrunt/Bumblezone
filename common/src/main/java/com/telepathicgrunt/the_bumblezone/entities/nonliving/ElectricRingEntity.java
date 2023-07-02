@@ -22,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
 public class ElectricRingEntity extends Entity {
     private static final EntityDataAccessor<Boolean> DATA_ID_DISAPPEARING_SET = SynchedEntityData.defineId(PurpleSpikeEntity.class, EntityDataSerializers.BOOLEAN);
     public static final int DISAPPERING_TIMESPAN = 20;
-    public static final int APPERING_TIMESPAN = 20;
+    public static final int APPEARING_TIMESPAN = 20;
 
     public BlockEntity blockEntity = null;
     public int disappearingTime = -1;
@@ -207,7 +207,9 @@ public class ElectricRingEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
-        this.disappearingTime = compoundTag.getInt("disappearingTime");
+        if (compoundTag.contains("disappearingTime")) {
+            this.disappearingTime = compoundTag.getInt("disappearingTime");
+        }
         this.setDisappearingMarker(compoundTag.getBoolean("disappearingMarker"));
     }
 

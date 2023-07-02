@@ -34,7 +34,7 @@ public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel
 
     private static final Function<ResourceLocation, RenderType> RING = Util.memoize((resourceLocation) -> {
         RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
-                .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER)
+                .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
                 .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
                 .setTransparencyState(NO_TRANSPARENCY)
                 .setCullState(NO_CULL)

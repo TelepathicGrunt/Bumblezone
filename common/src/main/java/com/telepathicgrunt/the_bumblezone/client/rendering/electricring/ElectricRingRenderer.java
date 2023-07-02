@@ -1,19 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.electricring;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -24,13 +21,12 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         extends EntityRenderer<ElectricRingEntity>
         implements RenderLayerParent<ElectricRingEntity, M>
 {
-    private static final ResourceLocation SKIN_1 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/ring_1.png");
+    static final ResourceLocation SKIN_1 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/ring_1.png");
     protected ElectricRingModel<ElectricRingEntity> model;
     protected final List<RenderLayer<ElectricRingEntity, M>> layers = Lists.newArrayList();
 
@@ -49,25 +45,25 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
     }
 
     @Override
-    public void render(ElectricRingEntity ringEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
-        i = 255;
+    public void render(ElectricRingEntity ringEntity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
+        packedLight = LightTexture.FULL_BRIGHT;
 
         poseStack.pushPose();
-        float rotationLerp = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
+        float rotationLerp = Mth.lerp(partialTicks, ringEntity.xRotO, ringEntity.getXRot());
         float scale;
         if (ringEntity.disappearingTime >= 0) {
-            scale = Math.min((ringEntity.disappearingTime - g) / ElectricRingEntity.DISAPPERING_TIMESPAN, 1.0f);
+            scale = Math.min((ringEntity.disappearingTime - partialTicks) / ElectricRingEntity.DISAPPERING_TIMESPAN, 1.0f);
         }
         else {
-            scale = Math.min((ringEntity.tickCount + g) / ElectricRingEntity.APPERING_TIMESPAN, 1.0f);
+            scale = Math.min((ringEntity.tickCount + partialTicks) / ElectricRingEntity.APPEARING_TIMESPAN, 1.0f);
         }
 
         poseStack.scale(-scale, -scale, scale);
         poseStack.translate(0.0f, -1.0f - (1.5f - (scale * 1.5f)), 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
-        poseStack.mulPose(Axis.ZN.rotationDegrees((ringEntity.tickCount + g) * 5f % 360));
-        ((EntityModel)this.model).prepareMobModel(ringEntity, 0, 0, g);
+        poseStack.mulPose(Axis.ZN.rotationDegrees((ringEntity.tickCount + partialTicks) * 5f % 360));
+        ((EntityModel)this.model).prepareMobModel(ringEntity, 0, 0, partialTicks);
         ((EntityModel)this.model).setupAnim(ringEntity, 0, 0, 0, 0, rotationLerp);
         Minecraft minecraft = Minecraft.getInstance();
         boolean bodyVisible = this.isBodyVisible(ringEntity);
@@ -76,15 +72,15 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         RenderType renderType = this.getRenderType(ringEntity, bodyVisible, hidden, glowing);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, 0, 1.0f, 1.0f, 1.0f, 1.0f);
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, packedLight, 0, 1.0f, 1.0f, 1.0f, 1.0f);
         }
         if (!ringEntity.isSpectator()) {
             for (RenderLayer<ElectricRingEntity, M> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, i, ringEntity, 0, 0, g, 0, 0, rotationLerp);
+                renderLayer.render(poseStack, multiBufferSource, packedLight, ringEntity, 0, 0, partialTicks, 0, 0, rotationLerp);
             }
         }
         poseStack.popPose();
-        super.render(ringEntity, f, g, poseStack, multiBufferSource, i);
+        super.render(ringEntity, yRot, partialTicks, poseStack, multiBufferSource, packedLight);
     }
 
     @Nullable
