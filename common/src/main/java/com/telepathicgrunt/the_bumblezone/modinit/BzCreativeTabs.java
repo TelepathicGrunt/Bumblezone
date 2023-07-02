@@ -41,6 +41,36 @@ public class BzCreativeTabs {
             BzItems.PILE_OF_POLLEN_SUSPICIOUS,
             BzItems.SUGAR_INFUSED_STONE,
             BzItems.SUGAR_INFUSED_COBBLESTONE,
+            BzItems.ANCIENT_WAX_BRICKS,
+            BzItems.ANCIENT_WAX_DIAMOND,
+            BzItems.ANCIENT_WAX_COMPOUND_EYES,
+            BzItems.ANCIENT_WAX_BRICKS_STAIRS,
+            BzItems.ANCIENT_WAX_DIAMOND_STAIRS,
+            BzItems.ANCIENT_WAX_COMPOUND_EYES_STAIRS,
+            BzItems.ANCIENT_WAX_BRICKS_SLAB,
+            BzItems.ANCIENT_WAX_DIAMOND_SLAB,
+            BzItems.ANCIENT_WAX_COMPOUND_EYES_SLAB,
+            BzItems.LUMINESCENT_WAX_CHANNEL,
+            BzItems.LUMINESCENT_WAX_CHANNEL_RED,
+            BzItems.LUMINESCENT_WAX_CHANNEL_PURPLE,
+            BzItems.LUMINESCENT_WAX_CHANNEL_BLUE,
+            BzItems.LUMINESCENT_WAX_CHANNEL_GREEN,
+            BzItems.LUMINESCENT_WAX_CHANNEL_YELLOW,
+            BzItems.LUMINESCENT_WAX_CHANNEL_WHITE,
+            BzItems.LUMINESCENT_WAX_CORNER,
+            BzItems.LUMINESCENT_WAX_CORNER_RED,
+            BzItems.LUMINESCENT_WAX_CORNER_PURPLE,
+            BzItems.LUMINESCENT_WAX_CORNER_BLUE,
+            BzItems.LUMINESCENT_WAX_CORNER_GREEN,
+            BzItems.LUMINESCENT_WAX_CORNER_YELLOW,
+            BzItems.LUMINESCENT_WAX_CORNER_WHITE,
+            BzItems.LUMINESCENT_WAX_NODE,
+            BzItems.LUMINESCENT_WAX_NODE_RED,
+            BzItems.LUMINESCENT_WAX_NODE_PURPLE,
+            BzItems.LUMINESCENT_WAX_NODE_BLUE,
+            BzItems.LUMINESCENT_WAX_NODE_GREEN,
+            BzItems.LUMINESCENT_WAX_NODE_YELLOW,
+            BzItems.LUMINESCENT_WAX_NODE_WHITE,
             BzItems.INCENSE_CANDLE,
             BzItems.SUPER_CANDLE,
             BzItems.SUPER_CANDLE_WHITE,
@@ -82,7 +112,9 @@ public class BzCreativeTabs {
             BzItems.ROYAL_JELLY_BLOCK,
             BzItems.HONEY_BUCKET,
             BzItems.HONEY_COMPASS,
+            BzItems.BUZZING_BRIEFCASE,
             BzItems.BEE_BREAD,
+            BzItems.BEE_SOUP,
             BzItems.POLLEN_PUFF,
             BzItems.DIRT_PELLET,
             BzItems.HONEY_CRYSTAL_SHARDS,
@@ -111,38 +143,6 @@ public class BzCreativeTabs {
             BzItems.BEE_QUEEN_SPAWN_EGG,
             BzItems.SENTRY_WATCHER_SPAWN_EGG,
             BzItems.ESSENCE_OF_THE_BEES,
-            BzItems.ANCIENT_WAX_BRICKS,
-            BzItems.ANCIENT_WAX_DIAMOND,
-            BzItems.ANCIENT_WAX_COMPOUND_EYES,
-            BzItems.ANCIENT_WAX_BRICKS_STAIRS,
-            BzItems.ANCIENT_WAX_DIAMOND_STAIRS,
-            BzItems.ANCIENT_WAX_COMPOUND_EYES_STAIRS,
-            BzItems.ANCIENT_WAX_BRICKS_SLAB,
-            BzItems.ANCIENT_WAX_DIAMOND_SLAB,
-            BzItems.ANCIENT_WAX_COMPOUND_EYES_SLAB,
-            BzItems.LUMINESCENT_WAX_CHANNEL,
-            BzItems.LUMINESCENT_WAX_CHANNEL_RED,
-            BzItems.LUMINESCENT_WAX_CHANNEL_PURPLE,
-            BzItems.LUMINESCENT_WAX_CHANNEL_BLUE,
-            BzItems.LUMINESCENT_WAX_CHANNEL_GREEN,
-            BzItems.LUMINESCENT_WAX_CHANNEL_YELLOW,
-            BzItems.LUMINESCENT_WAX_CHANNEL_WHITE,
-            BzItems.LUMINESCENT_WAX_CORNER,
-            BzItems.LUMINESCENT_WAX_CORNER_RED,
-            BzItems.LUMINESCENT_WAX_CORNER_PURPLE,
-            BzItems.LUMINESCENT_WAX_CORNER_BLUE,
-            BzItems.LUMINESCENT_WAX_CORNER_GREEN,
-            BzItems.LUMINESCENT_WAX_CORNER_YELLOW,
-            BzItems.LUMINESCENT_WAX_CORNER_WHITE,
-            BzItems.LUMINESCENT_WAX_NODE,
-            BzItems.LUMINESCENT_WAX_NODE_RED,
-            BzItems.LUMINESCENT_WAX_NODE_PURPLE,
-            BzItems.LUMINESCENT_WAX_NODE_BLUE,
-            BzItems.LUMINESCENT_WAX_NODE_GREEN,
-            BzItems.LUMINESCENT_WAX_NODE_YELLOW,
-            BzItems.LUMINESCENT_WAX_NODE_WHITE,
-            BzItems.BEE_SOUP,
-            BzItems.BUZZING_BRIEFCASE,
             BzItems.ESSENCE_RED,
             BzItems.ESSENCE_PURPLE,
             BzItems.ESSENCE_BLUE,
@@ -264,12 +264,34 @@ public class BzCreativeTabs {
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 
+        if (event.type() == AddCreativeTabEntriesEvent.Type.TOOLS) {
+            Stream.of(
+                    BzItems.BUZZING_BRIEFCASE
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
+        }
+
+        if (event.type() == AddCreativeTabEntriesEvent.Type.FOOD) {
+            Stream.of(
+                    BzItems.BEE_BREAD,
+                    BzItems.BEE_SOUP,
+                    BzItems.ROYAL_JELLY_BOTTLE
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
+        }
+
         if (event.type() == AddCreativeTabEntriesEvent.Type.SPAWN_EGGS) {
             Stream.of(
-                    BzItems.VARIANT_BEE_SPAWN_EGG,
                     BzItems.HONEY_SLIME_SPAWN_EGG,
+                    BzItems.VARIANT_BEE_SPAWN_EGG,
                     BzItems.BEEHEMOTH_SPAWN_EGG,
-                    BzItems.BEE_QUEEN_SPAWN_EGG
+                    BzItems.BEE_QUEEN_SPAWN_EGG,
+                    BzItems.SENTRY_WATCHER_SPAWN_EGG
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
+        }
+
+        if (event.type() == AddCreativeTabEntriesEvent.Type.OPERATOR && event.hasPermission()) {
+            Stream.of(
+                    BzItems.HEAVY_AIR,
+                    BzItems.WINDY_AIR
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
     }

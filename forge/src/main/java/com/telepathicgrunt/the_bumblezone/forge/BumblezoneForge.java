@@ -49,8 +49,10 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.forge.ResourcefulRegi
 import com.telepathicgrunt.the_bumblezone.modules.forge.ForgeModuleInitalizer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
@@ -165,10 +167,10 @@ public class BumblezoneForge {
     }
 
     private static void onAddTabContents(BuildCreativeModeTabContentsEvent event) {
-        AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(toType(event.getTab()), event.getTab(), event::accept));
+        AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(toType(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(event.getTab()).orElse(null)), event.getTab(), event.hasPermissions(), event::accept));
     }
 
-    private static AddCreativeTabEntriesEvent.Type toType(CreativeModeTab tab) {
+    private static AddCreativeTabEntriesEvent.Type toType(ResourceKey<CreativeModeTab> tab) {
         if (CreativeModeTabs.BUILDING_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.BUILDING;
         else if (CreativeModeTabs.COLORED_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.COLORED;
         else if (CreativeModeTabs.NATURAL_BLOCKS.equals(tab)) return AddCreativeTabEntriesEvent.Type.NATURAL;

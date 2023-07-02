@@ -1,10 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -13,8 +17,9 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class AbilityEssenceItem extends Item {
+public abstract class AbilityEssenceItem extends Item implements ItemExtension {
 
+    private static final String IS_IN_INVENTORY_TAG = "isInInventory";
     private static final String ACTIVE_TAG = "isActive";
     private static final String LOCKED_TAG = "isLocked";
     private static final String COOLDOWN_TIME_TAG = "cooldownTime";
@@ -50,6 +55,13 @@ public abstract class AbilityEssenceItem extends Item {
         return stack.getOrCreateTag().getBoolean(ACTIVE_TAG);
     }
 
+    public static void setIsInInventory(ItemStack stack, boolean isInInventory) {
+        stack.getOrCreateTag().putBoolean(IS_IN_INVENTORY_TAG, isInInventory);
+    }
+
+    public static boolean getIsInInventory(ItemStack stack) {
+        return stack.getOrCreateTag().getBoolean(IS_IN_INVENTORY_TAG);
+    }
 
     public static void setIsLocked(ItemStack stack, boolean isLocked) {
         stack.getOrCreateTag().putBoolean(LOCKED_TAG, isLocked);
@@ -101,6 +113,9 @@ public abstract class AbilityEssenceItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean bl) {
         if (stack.is(BzTags.ABILITY_ESSENCE_ITEMS) && entity instanceof ServerPlayer serverPlayer) {
+            if (!getIsInInventory(stack)) {
+                setIsInInventory(stack, true);
+            }
 
             if (!EssenceOfTheBees.hasEssence(serverPlayer)) {
                 setIsActive(stack, false);
@@ -171,7 +186,7 @@ public abstract class AbilityEssenceItem extends Item {
         return stack.getOrCreateTag().getInt(ABILITY_USE_REMAINING_TAG);
     }
 
-    int getMaxAbilityUseAmount() {
+    public int getMaxAbilityUseAmount() {
         return abilityUseAmount.get();
     }
 
@@ -199,5 +214,31 @@ public abstract class AbilityEssenceItem extends Item {
                 }
             }
         }
+    }
+
+    @Override
+    public EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
+        return EquipmentSlot.OFFHAND;
+    }
+
+    @Override
+    public boolean isBarVisible(ItemStack itemStack) {
+        int remainingUse = this.getAbilityUseRemaining(itemStack);
+        return remainingUse != 0 && this.getMaxAbilityUseAmount() != remainingUse;
+    }
+
+    @Override
+    public int getBarWidth(ItemStack itemStack) {
+        float remainingUse = (float)this.getAbilityUseRemaining(itemStack);
+        float maxAmount = (float)this.getMaxAbilityUseAmount();
+        return Math.round((remainingUse / maxAmount) * 13.0F);
+    }
+
+    @Override
+    public int getBarColor(ItemStack itemStack) {
+        float remainingUse = (float)this.getAbilityUseRemaining(itemStack);
+        float maxAmount = (float)this.getMaxAbilityUseAmount();
+        float redValue = Math.max(0.0F, remainingUse / maxAmount);
+        return Mth.hsvToRgb(redValue / 3.0F, 1.0F, 1.0F);
     }
 }

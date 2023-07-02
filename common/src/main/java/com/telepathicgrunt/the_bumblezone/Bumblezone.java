@@ -54,6 +54,9 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
+import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
+import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
+import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modinit.*;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
@@ -83,10 +86,13 @@ public class Bumblezone{
         EntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::onEntitySpawn);
         PlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
         PlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
+        EntityHurtEvent.EVENT_LOWEST.addListener(CalmingEssence::OnAttack);
         EntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
         BlockBreakEvent.EVENT_LOWEST.addListener(BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         PlayerEntityInteractEvent.EVENT.addListener(BeeInteractivity::onEntityInteractEvent);
         EntityDeathEvent.EVENT.addListener(WrathOfTheHiveEffect::onLivingEntityDeath);
+        EntityDeathEvent.EVENT.addListener(RagingEssence::OnEntityDeath);
+        EntityDeathEvent.EVENT.addListener(ContinuityEssence::CancelledDeath);
         ServerLevelTickEvent.EVENT.addListener(BzWorldSavedData::worldTick);
         PlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
         EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);

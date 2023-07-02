@@ -1,21 +1,12 @@
 {
     "parent": "minecraft:item/generated",
     "textures": { "layer0": "the_bumblezone:item/essence/red" },
-    "display": {
-        "thirdperson_righthand": {
-            "scale": [0, 0, 0]
-        },
-        "thirdperson_lefthand": {
-            "scale": [0, 0, 0]
-        },
-        "firstperson_righthand": {
-            "scale": [0, 0, 0]
-        },
-        "firstperson_lefthand": {
-            "scale": [0, 0, 0]
-        },
-        "head": {
-            "scale": [0, 0, 0]
-        }
-    }
+    "overrides": [
+        { "predicate": { "state": 0 }, "model": "the_bumblezone:item/essence/red" },
+        { "predicate": { "state": 0.1 }, "model": "the_bumblezone:item/essence/red_ready" },
+        { "predicate": { "state": 0.15 }, "model": "the_bumblezone:item/essence/red_ready_used" },
+        { "predicate": { "state": 0.2 }, "model": "the_bumblezone:item/essence/red_active" },
+        { "predicate": { "state": 0.25 }, "model": "the_bumblezone:item/essence/red_active_used" },
+        { "predicate": { "state": 0.3 }, "model": "the_bumblezone:item/essence/red_disabled" }
+    ]
 }

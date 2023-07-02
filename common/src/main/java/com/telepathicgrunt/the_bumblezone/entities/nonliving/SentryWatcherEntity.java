@@ -82,7 +82,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private static final int UNABLE_TO_DESTROY_TOTAL_BLOCK_HARDNESS = 20;
    private static final float MAX_STEP_UP = 0.75f;
    private static final float ROTATION_SPEED = 1.5f;
-   private static final float ACCELERATION = 0.975f;
    private static final float ACCELERATION_FLUID = 0.95f;
    private static final float ACCELERATION_GRAVITY = 0.9800000190734863F;
 
@@ -287,11 +286,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    public float getFluidSpeed() {
       return ACCELERATION_FLUID;
    }
-
-   public float getSpeed() {
-      return ACCELERATION;
-   }
-
    @Override
    public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tagKey, double d) {
       if (this.touchingUnloadedChunk()) {
@@ -794,8 +788,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    public void push(double d, double e, double f) {}
 
    public Vec3 handleRelativeFrictionAndCalculateMovement() {
-      this.move(MoverType.SELF, this.getDeltaMovement());
       Vec3 deltaMovement = this.getDeltaMovement();
+      if (!this.hasActivated()) {
+         deltaMovement = deltaMovement.multiply(0.9d, 1, 0.9d);
+      }
+
+      this.move(MoverType.SELF, deltaMovement);
+
+      deltaMovement = this.getDeltaMovement();
       if (this.horizontalCollision && (this.getFeetBlockState().is(Blocks.POWDER_SNOW) && PowderSnowBlock.canEntityWalkOnPowderSnow(this))) {
          deltaMovement = new Vec3(deltaMovement.x, 0.2, deltaMovement.z);
       }

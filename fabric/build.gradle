@@ -38,7 +38,7 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
     //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
     //modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
 

@@ -8,9 +8,11 @@ import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -36,21 +38,14 @@ public class FabricBaseEventManager {
 
     public static void init() {
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) ->
-                AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(TYPES.getOrDefault(tab, AddCreativeTabEntriesEvent.Type.CUSTOM), tab, entries::accept)));
+                AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(
+                        TYPES.getOrDefault(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElse(null), AddCreativeTabEntriesEvent.Type.CUSTOM),
+                        tab,
+                        entries.shouldShowOpRestrictedItems(),
+                        entries::accept)));
 
         RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
         SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
-
-        ServerLivingEntityEvents.ALLOW_DEATH.register((livingEntity, damageSource, damage) ->
-                ContinuityEssence.CancelledDeath(livingEntity));
-
-        ServerLivingEntityEvents.ALLOW_DEATH.register((livingEntity, damageSource, damage) -> {
-                RagingEssence.OnEntityDeath(livingEntity, damageSource);
-                return true;
-            });
-
-        ServerLivingEntityEvents.ALLOW_DAMAGE.register((livingEntity, damageSource, damage) ->
-                CalmingEssence.OnAttack(livingEntity, damageSource));
     }
 }

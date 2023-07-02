@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
@@ -41,7 +42,7 @@ public class RagingEssence extends AbilityEssenceItem {
     private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.ragingEssenceCooldown;
     private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.ragingEssenceAbilityUse;
 
-    private static final int radius = 24;
+    private static final int radius = 28;
     private static final int trackingRange = radius * radius * 4;
     private static final int maxRageState = 7;
     private static final int maxEmpoweredTimeFramePer5Ticks = 75;
@@ -222,7 +223,9 @@ public class RagingEssence extends AbilityEssenceItem {
         }
     }
 
-    public static void OnEntityDeath(LivingEntity livingEntity, DamageSource damageSource) {
+    public static void OnEntityDeath(EntityDeathEvent event) {
+        DamageSource damageSource = event.source();
+        LivingEntity livingEntity = event.entity();
         if (damageSource.getEntity() instanceof ServerPlayer player) {
             ItemStack stack = player.getOffhandItem();
             if (livingEntity.isDeadOrDying() &&

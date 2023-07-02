@@ -110,7 +110,7 @@ Essence of Raging - The reward for beating the Red Sempiternal Sanctum structure
  (never more than 4 at a time) Each highlighted kill makes Strength effect stronger and maxes out at strength 16 after killing 7 highlighted mobs!
  Making this a powerful boss destroyer weapon! The Strength only lasts 15 seconds between kills. If time runs out or you kill a non-highlighted mob,
  the item goes into 10 second cooldown. Making any kill after maxed Strength will also set the item onto 10 second cooldown. 
- It has 24 use (highlighted kills) before it is depleted and needs 30 minutes to recharge by being in the inventory of a player 
+ It has 28 use (highlighted kills) before it is depleted and needs 30 minutes to recharge by being in the inventory of a player 
  that had consumed Essence of the Bees in the past. It will set cooldown on all other Essence of Raging that player has as well 
  due to how powerful this item is. Add or remove effects to give to player by editing `the_bumblezone:essence/raging/rage_effects` mob effects tag.
 

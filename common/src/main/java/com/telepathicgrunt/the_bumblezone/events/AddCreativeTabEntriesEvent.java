@@ -7,7 +7,7 @@ import net.minecraft.world.level.ItemLike;
 
 import java.util.function.Consumer;
 
-public record AddCreativeTabEntriesEvent(Type type, CreativeModeTab tab, Consumer<ItemStack> adder) {
+public record AddCreativeTabEntriesEvent(Type type, CreativeModeTab tab, boolean hasPermission, Consumer<ItemStack> adder) {
 
     public static final EventHandler<AddCreativeTabEntriesEvent> EVENT = new EventHandler<>();
 

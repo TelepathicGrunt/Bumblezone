@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -99,7 +100,9 @@ public class CalmingEssence extends AbilityEssenceItem {
         return false;
     }
 
-    public static boolean OnAttack(LivingEntity livingEntity, DamageSource damageSource) {
+    public static void OnAttack(EntityHurtEvent event) {
+        DamageSource damageSource = event.source();
+        LivingEntity livingEntity = event.entity();
         if (livingEntity instanceof Mob && damageSource.getEntity() instanceof ServerPlayer serverPlayer) {
             ItemStack offHandItem = serverPlayer.getOffhandItem();
             if (offHandItem.getItem() instanceof CalmingEssence calmingEssence && IsCalmingEssenceActive(serverPlayer)) {
@@ -112,7 +115,6 @@ public class CalmingEssence extends AbilityEssenceItem {
                 calmingEssence.depleteEssence(offHandItem, serverPlayer);
             }
         }
-        return true;
     }
 
     public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random) {

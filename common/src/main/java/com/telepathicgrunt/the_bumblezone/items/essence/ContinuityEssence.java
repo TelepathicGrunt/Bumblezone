@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -67,13 +68,20 @@ public class ContinuityEssence extends AbilityEssenceItem {
                 NEXT_TICK_PARTICLES.add(tickCapsule);
             }
         }
+
+        // Uncomment this for debugging purposes
+//        if (entity instanceof ServerPlayer serverPlayer) {
+//            serverPlayer.getCooldowns().removeCooldown(this);
+//        }
+
         super.inventoryTick(stack, level, entity, i, bl);
     }
 
     @Override
     void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {}
 
-    public static boolean CancelledDeath(LivingEntity livingEntity) {
+    public static boolean CancelledDeath(EntityDeathEvent event) {
+        LivingEntity livingEntity = event.entity();
         if (livingEntity instanceof ServerPlayer player) {
             ItemStack stack = player.getOffhandItem();
             if (player.isDeadOrDying() &&
@@ -108,10 +116,10 @@ public class ContinuityEssence extends AbilityEssenceItem {
                     spawnParticles(player.serverLevel(), player.position(), player.getRandom());
                     respawn(stack, continuityEssence, player, server);
                 }
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private static void respawn(ItemStack stack, ContinuityEssence continuityEssence, ServerPlayer serverPlayer, MinecraftServer server) {

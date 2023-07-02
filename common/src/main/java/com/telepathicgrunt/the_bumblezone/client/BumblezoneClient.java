@@ -59,6 +59,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
+import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.mixin.world.ClientLevelAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -244,6 +245,41 @@ public class BumblezoneClient {
                 new ResourceLocation("is_creative_tab_icon"),
                 (itemStack, world, livingEntity, integer) ->
                         itemStack.hasTag() && itemStack.getTag().getBoolean("isCreativeTabIcon") ? 1.0F : 0.0F
+        );
+
+
+        // Show state of essence
+        registerEssenceItemProperty(event, BzItems.ESSENCE_RED.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_PURPLE.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_BLUE.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_GREEN.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_YELLOW.get());
+        registerEssenceItemProperty(event, BzItems.ESSENCE_WHITE.get());
+    }
+
+    private static void registerEssenceItemProperty(RegisterItemPropertiesEvent event, Item item) {
+        event.register(
+            item,
+            new ResourceLocation("state"),
+            (itemStack, world, livingEntity, integer) -> {
+                if (itemStack.getItem() instanceof AbilityEssenceItem abilityEssenceItem) {
+                    if (!AbilityEssenceItem.getIsInInventory(itemStack)) {
+                        return 0.0F;
+                    }
+                    else if (AbilityEssenceItem.getIsActive(itemStack)) {
+                        return abilityEssenceItem.getAbilityUseRemaining(itemStack) == abilityEssenceItem.getMaxAbilityUseAmount() ?
+                              0.2F : 0.25F;
+                    }
+                    else if (AbilityEssenceItem.getIsLocked(itemStack) || AbilityEssenceItem.getForcedCooldown(itemStack)) {
+                        return 0.3F;
+                    }
+                    else {
+                        return abilityEssenceItem.getAbilityUseRemaining(itemStack) == abilityEssenceItem.getMaxAbilityUseAmount() ?
+                                0.1F : 0.15F;
+                    }
+                }
+                return 0.0F;
+            }
         );
     }
 
