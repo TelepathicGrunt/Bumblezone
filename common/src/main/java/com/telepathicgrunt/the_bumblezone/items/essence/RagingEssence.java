@@ -158,7 +158,7 @@ public class RagingEssence extends AbilityEssenceItem {
                             (e) -> !currentTargetsToKill.contains(e.getUUID()) && isTargetable(e, serverPlayer.getUUID())
                     );
 
-                    if (!entities.isEmpty() && (!currentTargetsToKill.isEmpty() || entities.size() >= maxCurrentTargets)) {
+                    if (!entities.isEmpty() && currentTargetsToKill.size() < maxCurrentTargets) {
 
                         // Lower health entities to kill first
                         entities.sort((e1, e2) -> (int) (((LivingEntity)e1).getHealth() - ((LivingEntity)e2).getHealth()));
