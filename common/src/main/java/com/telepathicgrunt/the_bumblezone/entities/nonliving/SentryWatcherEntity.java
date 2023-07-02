@@ -74,6 +74,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private Direction targetFacing;
    private boolean explosionPrimed = false;
    private boolean prevShaking;
+   private int shakeStartTick;
    private Vec3 prevVelocity;
    private Vec3 activatedStart;
 
@@ -429,7 +430,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
          }
 
-         if (this.hasShaking() && !prevShaking) {
+         if (this.hasShaking() && (!prevShaking || (this.tickCount - this.shakeStartTick) % 10 == 0)) {
             this.level().playLocalSound(
                     this.blockPosition(),
                     BzSounds.SENTRY_WATCHER_ACTIVATING.get(),
@@ -448,6 +449,9 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                     false);
          }
 
+         if (!this.prevShaking && this.hasShaking()) {
+            this.shakeStartTick = this.tickCount;
+         }
          this.prevShaking = this.hasShaking();
       }
 
