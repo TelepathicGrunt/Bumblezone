@@ -92,29 +92,23 @@ public class LifeEssence extends AbilityEssenceItem {
 
     private void healFriendlyEntity(ItemStack stack, ServerPlayer serverPlayer, Entity entity) {
         if (entity instanceof TamableAnimal tamableAnimal && tamableAnimal.isOwnedBy(serverPlayer)) {
-            if (tamableAnimal.getHealth() < tamableAnimal.getMaxHealth()) {
-                tamableAnimal.heal(1);
-                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
-                decrementAbilityUseRemaining(stack, serverPlayer, 1);
-            }
-            for (MobEffectInstance effect : new ArrayList<>(tamableAnimal.getActiveEffects())) {
-                if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.LIFE_CURE_EFFECTS, effect.getEffect())) {
-                    tamableAnimal.removeEffect(effect.getEffect());
-                    decrementAbilityUseRemaining(stack, serverPlayer, 1);
-                }
-            }
+            cureEntityOfEffects(stack, serverPlayer, tamableAnimal);
         }
         else if (entity instanceof LivingEntity livingEntity && entity.getTeam() != null && entity.getTeam().isAlliedTo(serverPlayer.getTeam())) {
-            if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
-                livingEntity.heal(1);
-                spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+            cureEntityOfEffects(stack, serverPlayer, livingEntity);
+        }
+    }
+
+    private void cureEntityOfEffects(ItemStack stack, ServerPlayer serverPlayer, LivingEntity livingEntity) {
+        if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
+            livingEntity.heal(1);
+            spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+            decrementAbilityUseRemaining(stack, serverPlayer, 1);
+        }
+        for (MobEffectInstance effect : new ArrayList<>(livingEntity.getActiveEffects())) {
+            if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.LIFE_CURE_EFFECTS, effect.getEffect())) {
+                livingEntity.removeEffect(effect.getEffect());
                 decrementAbilityUseRemaining(stack, serverPlayer, 1);
-            }
-            for (MobEffectInstance effect : new ArrayList<>(livingEntity.getActiveEffects())) {
-                if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.LIFE_CURE_EFFECTS, effect.getEffect())) {
-                    livingEntity.removeEffect(effect.getEffect());
-                    decrementAbilityUseRemaining(stack, serverPlayer, 1);
-                }
             }
         }
     }
