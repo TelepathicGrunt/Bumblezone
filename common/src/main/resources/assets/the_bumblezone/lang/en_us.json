@@ -416,8 +416,8 @@
   "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cLose§f in %s",
   "essence.the_bumblezone.purple_essence_event": "§dEssence of Knowing§f - §6Win§f in %s",
   "essence.the_bumblezone.blue_essence_event": "§bEssence of Calming§f - §cLose§f in %s",
-  "essence.the_bumblezone.green_essence_event": "§eEssence of Life§f - §cLose§f in %s",
-  "essence.the_bumblezone.yellow_essence_event": "§aEssence of Radiance§f - §cLose§f in %s",
+  "essence.the_bumblezone.green_essence_event": "§aEssence of Life§f - §cLose§f in %s",
+  "essence.the_bumblezone.yellow_essence_event": "§eEssence of Radiance§f - §cLose§f in %s",
   "essence.the_bumblezone.white_essence_event": "Essence of Continuity - §cLose§f in %s",
 
   "buzzing_briefcase.the_bumblezone.bee_typing.normal": "Normal",
