@@ -130,8 +130,8 @@ public class RagingEssence extends AbilityEssenceItem {
                 if (empoweredTimeRemaining == 0) {
                     // reset as empowered phase is done
                     resetRage(stack, serverPlayer);
-                    Component message = Component.literal("DEBUG: Rage state is " + 0);
-                    serverPlayer.displayClientMessage(message, true);
+//                    Component message = Component.literal("DEBUG: Rage state is " + 0);
+//                    serverPlayer.displayClientMessage(message, true);
 
                     // drain power
                     decrementAbilityUseRemaining(stack, serverPlayer, 1);
@@ -247,8 +247,8 @@ public class RagingEssence extends AbilityEssenceItem {
                         RagingEssence.setCurrentTargets(stack, currentTargetsToKill);
                         ragingEssence.decrementAbilityUseRemaining(stack, player, 1);
 
-                        Component message = Component.literal("DEBUG: Rage state is " + rageState);
-                        player.displayClientMessage(message, true);
+//                        Component message = Component.literal("DEBUG: Rage state is " + rageState);
+//                        player.displayClientMessage(message, true);
                     }
                 }
                 else {

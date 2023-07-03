@@ -85,9 +85,9 @@ public class ContinuityEssence extends AbilityEssenceItem {
         }
 
         // Uncomment this for debugging purposes
-        if (entity instanceof ServerPlayer serverPlayer) {
-            serverPlayer.getCooldowns().removeCooldown(this);
-        }
+//        if (entity instanceof ServerPlayer serverPlayer) {
+//            serverPlayer.getCooldowns().removeCooldown(this);
+//        }
 
         super.inventoryTick(stack, level, entity, i, bl);
     }
