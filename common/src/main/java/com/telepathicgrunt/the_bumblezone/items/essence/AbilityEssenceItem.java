@@ -6,9 +6,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -161,7 +161,7 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         }
         else if (getForcedCooldown(stack)) {
             components.add(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", (getCooldownTickLength() - getCooldownTime(stack)) / 20).withStyle(ChatFormatting.DARK_RED));
+            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", StringUtil.formatTickDuration(getCooldownTickLength() - getCooldownTime(stack))).withStyle(ChatFormatting.DARK_RED));
             components.add(Component.empty());
             addDescriptionComponents(components);
         }

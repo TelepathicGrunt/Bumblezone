@@ -264,7 +264,7 @@ public class BzGeneralConfig {
                 .comment(" \n-----------------------------------------------------\n",
                         " How much ability use this item has before depleted.\n")
                 .translation("the_bumblezone.config.ragingessenceabilityuse")
-                .defineInRange("ragingEssenceAbilityUse", 24, 0, 1000000);
+                .defineInRange("ragingEssenceAbilityUse", 28, 0, 1000000);
 
         ragingEssenceCooldown = builder
                 .comment(" \n-----------------------------------------------------\n",

@@ -94,7 +94,7 @@ public class BzConfig extends MidnightConfig {
     public static boolean keepEssenceOfTheBeesOnRespawning = true;
 
     @Entry
-    public static int ragingEssenceAbilityUse = 24;
+    public static int ragingEssenceAbilityUse = 28;
 
     @Entry
     public static int ragingEssenceCooldown = 36000;

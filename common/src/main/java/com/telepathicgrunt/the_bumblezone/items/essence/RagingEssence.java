@@ -42,7 +42,7 @@ public class RagingEssence extends AbilityEssenceItem {
     private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.ragingEssenceCooldown;
     private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.ragingEssenceAbilityUse;
 
-    private static final int radius = 28;
+    private static final int radius = 24;
     private static final int trackingRange = radius * radius * 4;
     private static final int maxRageState = 7;
     private static final int maxEmpoweredTimeFramePer5Ticks = 75;
