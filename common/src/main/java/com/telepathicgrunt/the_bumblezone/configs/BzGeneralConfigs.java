@@ -52,5 +52,5 @@ public class BzGeneralConfigs {
     public static int lifeEssenceCooldown = 12000;
     public static int radianceEssenceAbilityUse = 4800;
     public static int radianceEssenceCooldown = 12000;
-    public static int continuityEssenceCooldown = 288000;
+    public static int continuityEssenceCooldown = 48000;
 }

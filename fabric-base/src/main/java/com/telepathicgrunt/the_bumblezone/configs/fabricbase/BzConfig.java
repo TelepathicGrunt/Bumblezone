@@ -124,7 +124,7 @@ public class BzConfig extends MidnightConfig {
     public static int radianceEssenceCooldown = 12000;
 
     @Entry
-    public static int continuityEssenceCooldown = 288000;
+    public static int continuityEssenceCooldown = 48000;
 
 
     @Comment

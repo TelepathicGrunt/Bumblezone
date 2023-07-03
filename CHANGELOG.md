@@ -114,9 +114,10 @@ Essence of Raging - The reward for beating the Red Sempiternal Sanctum structure
 
 Essence of Continuity - The reward for beating the White Sempiternal Sanctum structure! Holding this item in offhand will make dying
  not kill you and instead teleport you back to your respawn point with all health restored, hunger bar filled, neutral and 
- negative status effects removed, and fire removed. It only has 1 use before it is depleted and needs 4 hours to recharge 
+ negative status effects removed, and fire removed. It only has 1 use before it is depleted and needs 40 minutes to recharge 
  by being in the inventory of a player that had consumed Essence of the Bees in the past. It will set cooldown on all other
  Essence of Continuity that player has as well due to how powerful this item is. It even works in hardcore worlds!
+ It will also give you a Written Book with details of where you were and how you almost died.
 
 Pile of Pollen item form is now available in Creative Menu and can be crafted from 9 Pollen Puff in Crafting Table.
  Silk Touch mining a Pile of Pollen that is layer 8 will drop the Pile of Pollen item instead of the Pollen Puff items.

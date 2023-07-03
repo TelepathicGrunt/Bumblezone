@@ -329,7 +329,7 @@ public class BzGeneralConfig {
                 .comment(" \n-----------------------------------------------------\n",
                         " How long the cooldown is in ticks before recharged for this item.\n")
                 .translation("the_bumblezone.config.continuityessencecooldown")
-                .defineInRange("continuityEssenceCooldown", 288000, 0, 1000000);
+                .defineInRange("continuityEssenceCooldown", 48000, 0, 1000000);
 
         builder.pop();
     }
