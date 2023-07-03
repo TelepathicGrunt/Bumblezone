@@ -16,6 +16,8 @@
 
 #TODO: Add more sanctum rooms and verify that channel block rotates properly (Change it's blockstate to axis + rotation)
 
+#TODO: Trinkets/Curios for essence items? (Make only one essence active at a time)
+
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
 
