@@ -173,6 +173,10 @@
       "required": false
     },
     {
+      "id": "snifferplus:fiddlefern",
+      "required": false
+    },
+    {
       "id": "snowyspirit:wild_ginger",
       "required": false
     },

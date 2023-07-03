@@ -10,8 +10,6 @@
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
 
-#TODO: test dedicated server
-
 #TODO: Add music for sanctums and events
 
 #TODO: Add sounds for Rootmin 
