@@ -9,7 +9,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class BzSkyProperty extends DimensionSpecialEffects {
     public BzSkyProperty() {
-        super(1000, true, SkyType.NONE, false, false);
+        super(-1000000f, true, SkyType.NONE, false, false);
     }
 
     @Override

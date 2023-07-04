@@ -3,8 +3,12 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.rootmin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenAnimations;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,13 +18,19 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.AnimationState;
 
-public class RootminModel extends EntityModel<RootminEntity> {
+public class RootminModel extends HierarchicalModel<RootminEntity> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "rootmin"), "main");
     private final ModelPart root;
 
     public RootminModel(ModelPart root) {
         this.root = root.getChild("root");
+    }
+
+    @Override
+    public ModelPart root() {
+        return this.root;
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -67,11 +77,21 @@ public class RootminModel extends EntityModel<RootminEntity> {
 
     @Override
     public void setupAnim(RootminEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+        this.root().getAllParts().forEach(ModelPart::resetPose);
+        this.animate(entity.idleAnimationState, RootminAnimations.IDLE, ageInTicks);
+        this.animate(entity.angryAnimationState, RootminAnimations.ANGRY, ageInTicks);
+        this.animate(entity.curiousAnimationState, RootminAnimations.CURIOUS, ageInTicks);
+        this.animate(entity.curseAnimationState, RootminAnimations.CURSE, ageInTicks);
+        this.animate(entity.embarassedAnimationState, RootminAnimations.EMBARASSED, ageInTicks);
+        this.animate(entity.shockAnimationState, RootminAnimations.SHOCK, ageInTicks);
+        this.animate(entity.shootAnimationState, RootminAnimations.SHOOT, ageInTicks);
+        this.animate(entity.runAnimationState, RootminAnimations.RUN, ageInTicks);
+        this.animate(entity.walkAnimationState, RootminAnimations.WALK, ageInTicks);
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
+
 }

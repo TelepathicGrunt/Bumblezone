@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
@@ -130,29 +131,21 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         if (QUEEN_POSE.equals(entityDataAccessor)) {
             BeeQueenPose pose = this.getQueenPose();
-            if (pose == BeeQueenPose.ATTACKING) {
-                this.attackAnimationState.start(this.tickCount);
-            }
-            else {
-                this.attackAnimationState.stop();
-            }
-
-            if (pose == BeeQueenPose.ITEM_REJECT) {
-                this.itemRejectAnimationState.start(this.tickCount);
-            }
-            else {
-                this.itemRejectAnimationState.stop();
-            }
-
-            if (pose == BeeQueenPose.ITEM_THROW) {
-                this.itemThrownAnimationState.start(this.tickCount);
-            }
-            else {
-                this.itemThrownAnimationState.stop();
-            }
+            setAnimationState(pose, BeeQueenPose.ATTACKING, this.attackAnimationState);
+            setAnimationState(pose, BeeQueenPose.ITEM_REJECT, this.itemRejectAnimationState);
+            setAnimationState(pose, BeeQueenPose.ITEM_THROW, this.itemThrownAnimationState);
         }
 
         super.onSyncedDataUpdated(entityDataAccessor);
+    }
+
+    private void setAnimationState(BeeQueenPose pose, BeeQueenPose poseToCheckFor, AnimationState animationState) {
+        if (pose == poseToCheckFor) {
+            animationState.start(this.tickCount);
+        }
+        else {
+            animationState.stop();
+        }
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {

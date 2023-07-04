@@ -1,74 +1,67 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeAngerAttackingGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFaceRandomGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeRevengeGoal;
-import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
-import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.util.TimeUtil;
-import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.BreedGoal;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 public class RootminEntity extends PathfinderMob implements Enemy {
+
+   private static final EntityDataAccessor<Optional<BlockState>> FLOWER_BLOCK_STATE = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_STATE);
+
+   public final AnimationState idleAnimationState = new AnimationState();
+   public final AnimationState angryAnimationState = new AnimationState();
+   public final AnimationState curiousAnimationState = new AnimationState();
+   public final AnimationState curseAnimationState = new AnimationState();
+   public final AnimationState embarassedAnimationState = new AnimationState();
+   public final AnimationState shockAnimationState = new AnimationState();
+   public final AnimationState shootAnimationState = new AnimationState();
+   public final AnimationState runAnimationState = new AnimationState();
+   public final AnimationState walkAnimationState = new AnimationState();
+
+   public static final EntityDataSerializer<RootminPose> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(RootminPose.class);
+   private static final EntityDataAccessor<RootminPose> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
 
    public RootminEntity(Level worldIn) {
       super(BzEntities.ROOTMIN.get(), worldIn);
@@ -76,6 +69,23 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public RootminEntity(EntityType<? extends RootminEntity> type, Level worldIn) {
       super(type, worldIn);
+   }
+
+   public void setFlowerBlock(@Nullable BlockState blockState) {
+      this.entityData.set(FLOWER_BLOCK_STATE, Optional.ofNullable(blockState));
+   }
+
+   @Nullable
+   public BlockState getFlowerBlock() {
+      return this.entityData.get(FLOWER_BLOCK_STATE).orElse(null);
+   }
+
+   public void setQueenPose(RootminPose rootminPose) {
+      this.entityData.set(ROOTMIN_POSE, rootminPose);
+   }
+
+   public RootminPose getRootminPose() {
+      return this.entityData.get(ROOTMIN_POSE);
    }
 
    @Override
@@ -90,27 +100,63 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    @Override
    protected void defineSynchedData() {
       super.defineSynchedData();
+      this.entityData.define(FLOWER_BLOCK_STATE, Optional.empty());
+      this.entityData.define(ROOTMIN_POSE, RootminPose.NONE);
    }
 
    @Override
-   public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+   public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
       this.refreshDimensions();
       this.setYRot(this.yHeadRot);
       this.setYBodyRot(this.yHeadRot);
       if (this.isInWater() && this.random.nextInt(20) == 0) {
          this.doWaterSplashEffect();
       }
-      super.onSyncedDataUpdated(key);
+
+      if (ROOTMIN_POSE.equals(entityDataAccessor)) {
+         RootminPose pose = this.getRootminPose();
+         setAnimationState(pose, RootminPose.ANGRY, this.angryAnimationState);
+         setAnimationState(pose, RootminPose.CURIOUS, this.curiousAnimationState);
+         setAnimationState(pose, RootminPose.CURSE, this.curseAnimationState);
+         setAnimationState(pose, RootminPose.EMBARASSED, this.embarassedAnimationState);
+         setAnimationState(pose, RootminPose.SHOCK, this.shockAnimationState);
+         setAnimationState(pose, RootminPose.SHOOT, this.shootAnimationState);
+         setAnimationState(pose, RootminPose.RUN, this.runAnimationState);
+         setAnimationState(pose, RootminPose.WALK, this.walkAnimationState);
+      }
+
+      super.onSyncedDataUpdated(entityDataAccessor);
+   }
+
+   private void setAnimationState(RootminPose pose, RootminPose poseToCheckFor, AnimationState animationState) {
+      if (pose == poseToCheckFor) {
+         animationState.start(this.tickCount);
+      }
+      else {
+         animationState.stop();
+      }
    }
 
    @Override
    public void addAdditionalSaveData(CompoundTag compound) {
       super.addAdditionalSaveData(compound);
+      BlockState blockState = this.getFlowerBlock();
+      if (blockState != null) {
+         compound.put("flowerBlock", NbtUtils.writeBlockState(blockState));
+      }
    }
 
    @Override
    public void readAdditionalSaveData(CompoundTag compound) {
       super.readAdditionalSaveData(compound);
+      BlockState blockState = null;
+      if (compound.contains("flowerBlock", 10) &&
+           (blockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK),
+           compound.getCompound("flowerBlock"))).isAir())
+      {
+         blockState = null;
+      }
+      this.setFlowerBlock(blockState);
    }
 
    public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -134,12 +180,43 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public InteractionResult mobInteract(Player player, InteractionHand hand) {
       ItemStack itemstack = player.getItemInHand(hand);
 
+      if (itemstack.getItem() instanceof BlockItem blockItem) {
+         BlockState blockState = blockItem.getBlock().defaultBlockState();
+
+         if (blockState.is(BzTags.ROOTMIN_ALLOWED_FLOWER) && !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWER)) {
+            if (!this.level().isClientSide()) {
+               if (!player.getAbilities().instabuild && this.getFlowerBlock() != null) {
+                  ItemStack itemStack = new ItemStack(Items.DIAMOND_AXE);
+                  itemStack.enchant(Enchantments.SILK_TOUCH, 1);
+                  LootParams.Builder builder = new LootParams.Builder((ServerLevel)this.level()).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, itemStack).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
+                  List<ItemStack> flowerDrops = this.getFlowerBlock().getDrops(builder);
+                  for (ItemStack flowerDrop : flowerDrops) {
+                     this.spawnAtLocation(flowerDrop);
+                  }
+               }
+
+               this.setFlowerBlock(blockState);
+               player.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
+               if (!player.getAbilities().instabuild) {
+                  itemstack.shrink(1);
+               }
+            }
+            return InteractionResult.SUCCESS;
+         }
+      }
+
       return super.mobInteract(player, hand);
    }
 
    @Override
    public void tick() {
       super.tick();
+      if (this.isAlive()) {
+         this.idleAnimationState.startIfStopped(this.tickCount);
+      }
+      else {
+         this.idleAnimationState.stop();
+      }
    }
 
    @Override
@@ -153,7 +230,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-      return 0.75F * sizeIn.height;
+      return 0.65F * sizeIn.height;
    }
 
    @Override

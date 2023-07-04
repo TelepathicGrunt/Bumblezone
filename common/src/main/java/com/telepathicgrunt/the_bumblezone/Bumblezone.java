@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.entities.ItemUseOnBlock;
 import com.telepathicgrunt.the_bumblezone.entities.ProjectileImpact;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
@@ -172,6 +173,7 @@ public class Bumblezone{
 
     private static void registerDataSerializers(RegisterDataSerializersEvent event) {
         event.register(new ResourceLocation(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
+        event.register(new ResourceLocation(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
     }
 
     private static void onFinalSetup(final FinalSetupEvent event) {

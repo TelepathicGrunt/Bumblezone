@@ -55,6 +55,8 @@ public class BzTags {
     public static final TagKey<Block> POLLEN_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen"));
     public static final TagKey<Block> SENTRY_WATCHER_ALWAYS_DESTROY = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/always_destroy"));
     public static final TagKey<Block> SENTRY_WATCHER_FORCED_NEVER_DESTROY = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/forced_never_destroy"));
+    public static final TagKey<Block> ROOTMIN_ALLOWED_FLOWER = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "rootmin/allowed_flower"));
+    public static final TagKey<Block> ROOTMIN_FORCED_DISALLOWED_FLOWER = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "rootmin/forced_disallowed_flower"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));
