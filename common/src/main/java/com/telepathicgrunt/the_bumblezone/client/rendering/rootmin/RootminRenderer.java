@@ -13,7 +13,10 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Quaternionf;
 
 public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/rootmin.png");
@@ -51,19 +54,13 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
                 return;
             }
 
-            ModelPart bodyModel = this.getParentModel().root().getChild("body");
-            double xSize = rootminEntity.getBoundingBox().getXsize();
-            double ySize = rootminEntity.getBoundingBox().getYsize();
-            double zSize = rootminEntity.getBoundingBox().getZsize();
-
+            ModelPart rootModel = this.getParentModel().root();
+            ModelPart bodyModel = rootModel.getChild("body");
             poseStack.pushPose();
-            poseStack.translate(bodyModel.x, -bodyModel.y, bodyModel.z);
-            poseStack.mulPose(Axis.XP.rotationDegrees(bodyModel.xRot));
-            poseStack.mulPose(Axis.YP.rotationDegrees(bodyModel.yRot));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(bodyModel.zRot));
-            poseStack.translate(-xSize/2, bodyModel.y - 0.05f, -zSize/2);
-            poseStack.scale(1, -1, 1);
-
+            rootModel.translateAndRotate(poseStack);
+            bodyModel.translateAndRotate(poseStack);
+            poseStack.translate(-0.5f, -15/16f, -0.5f);
+            poseStack.scale(1,-1,1);
             this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, i, OverlayTexture.NO_OVERLAY);
             poseStack.popPose();
         }
