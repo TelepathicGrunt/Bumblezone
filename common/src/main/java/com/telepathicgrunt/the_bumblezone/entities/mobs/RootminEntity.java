@@ -2,9 +2,12 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
 import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -32,17 +35,20 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,12 +69,16 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public static final EntityDataSerializer<RootminPose> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(RootminPose.class);
    private static final EntityDataAccessor<RootminPose> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
 
+   private boolean checkedDefaultFlowerTag = false;
+
    public RootminEntity(Level worldIn) {
       super(BzEntities.ROOTMIN.get(), worldIn);
+      getFlowerBlock();
    }
 
    public RootminEntity(EntityType<? extends RootminEntity> type, Level worldIn) {
       super(type, worldIn);
+      getFlowerBlock();
    }
 
    public void setFlowerBlock(@Nullable BlockState blockState) {
@@ -77,7 +87,34 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Nullable
    public BlockState getFlowerBlock() {
-      return this.entityData.get(FLOWER_BLOCK_STATE).orElse(null);
+      BlockState state = this.entityData.get(FLOWER_BLOCK_STATE).orElse(null);
+      state = getFlowerOrSetIfMissing(state);
+      return state;
+   }
+
+   @Nullable
+   private BlockState getFlowerOrSetIfMissing(BlockState state) {
+      if (state == null && !this.level().isClientSide() && !this.checkedDefaultFlowerTag) {
+         List<Block> blockList = BuiltInRegistries.BLOCK
+                 .getTag(BzTags.ROOTMIN_DEFAULT_FLOWERS)
+                 .map(holders -> holders
+                         .stream()
+                         .map(Holder::value)
+                         .toList()
+                 ).orElseGet(ArrayList::new);
+
+         state = blockList.isEmpty() ?
+                 null :
+                 blockList.get(this.level().getRandom().nextInt(blockList.size())).defaultBlockState();
+
+         if (state != null && state.isAir()) {
+            state = null;
+         }
+
+         setFlowerBlock(state);
+         this.checkedDefaultFlowerTag = true;
+      }
+      return state;
    }
 
    public void setQueenPose(RootminPose rootminPose) {
@@ -179,13 +216,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    @Override
    public InteractionResult mobInteract(Player player, InteractionHand hand) {
       ItemStack itemstack = player.getItemInHand(hand);
+      boolean instantBuild = player.getAbilities().instabuild;
 
-      if (itemstack.getItem() instanceof BlockItem blockItem) {
+      if (itemstack.getItem() instanceof BlockItem blockItem && (instantBuild || BeeArmor.getBeeThemedGearCount(player) > 0)) {
          BlockState blockState = blockItem.getBlock().defaultBlockState();
 
          if (blockState.is(BzTags.ROOTMIN_ALLOWED_FLOWER) && !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWER)) {
             if (!this.level().isClientSide()) {
-               if (!player.getAbilities().instabuild && this.getFlowerBlock() != null) {
+               if (!instantBuild && this.getFlowerBlock() != null) {
                   ItemStack itemStack = new ItemStack(Items.DIAMOND_AXE);
                   itemStack.enchant(Enchantments.SILK_TOUCH, 1);
                   LootParams.Builder builder = new LootParams.Builder((ServerLevel)this.level()).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, itemStack).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
@@ -197,7 +235,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
                this.setFlowerBlock(blockState);
                player.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
-               if (!player.getAbilities().instabuild) {
+               if (!instantBuild) {
                   itemstack.shrink(1);
                }
             }
