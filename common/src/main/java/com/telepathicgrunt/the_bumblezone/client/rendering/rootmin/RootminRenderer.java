@@ -28,7 +28,10 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ColorResolver;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Quaternionf;
 
 import java.awt.*;
 
@@ -164,21 +167,15 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
                 return;
             }
 
-            ModelPart bodyModel = this.getParentModel().root().getChild("body");
-            double xSize = rootminEntity.getBoundingBox().getXsize();
-            double ySize = rootminEntity.getBoundingBox().getYsize();
-            double zSize = rootminEntity.getBoundingBox().getZsize();
-
-            stack.pushPose();
-            stack.translate(bodyModel.x, -bodyModel.y, bodyModel.z);
-            stack.mulPose(Axis.XP.rotationDegrees(bodyModel.xRot));
-            stack.mulPose(Axis.YP.rotationDegrees(bodyModel.yRot));
-            stack.mulPose(Axis.ZP.rotationDegrees(bodyModel.zRot));
-            stack.translate(-xSize/2, bodyModel.y - 0.05f, -zSize/2);
-            stack.scale(1, -1, 1);
-
-            this.blockRenderer.renderSingleBlock(blockState, stack, multiBufferSource, i, OverlayTexture.NO_OVERLAY);
-            stack.popPose();
+            ModelPart rootModel = this.getParentModel().root();
+            ModelPart bodyModel = rootModel.getChild("body");
+            poseStack.pushPose();
+            rootModel.translateAndRotate(poseStack);
+            bodyModel.translateAndRotate(poseStack);
+            poseStack.translate(-0.5f, -15/16f, -0.5f);
+            poseStack.scale(1,-1,1);
+            this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, i, OverlayTexture.NO_OVERLAY);
+            poseStack.popPose();
         }
     }
 }
