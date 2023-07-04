@@ -172,8 +172,8 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             poseStack.pushPose();
             rootModel.translateAndRotate(poseStack);
             bodyModel.translateAndRotate(poseStack);
-            poseStack.translate(-0.5f, -15/16f, -0.5f);
-            poseStack.scale(1,-1,1);
+            poseStack.translate(-0.5f, -15/16f, 0.5f);
+            poseStack.scale(1,-1,-1);
             this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, i, OverlayTexture.NO_OVERLAY);
             poseStack.popPose();
         }
