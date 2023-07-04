@@ -161,7 +161,7 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
         }
 
         @Override
-        public void render(PoseStack stack, MultiBufferSource multiBufferSource, int i, RootminEntity rootminEntity, float f, float g, float h, float j, float k, float l) {
+        public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, RootminEntity rootminEntity, float f, float g, float h, float j, float k, float l) {
             BlockState blockState = rootminEntity.getFlowerBlock();
             if (blockState == null) {
                 return;
