@@ -80,7 +80,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private boolean checkedDefaultFlowerTag = false;
    private boolean isHidden = false;
    private int delayTillIdle = -1;
-   private int animationTimeBetweenHiding = 0;
+   public int animationTimeBetweenHiding = 0;
 
    public RootminEntity(Level worldIn) {
       super(BzEntities.ROOTMIN.get(), worldIn);
@@ -139,22 +139,27 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    public void runAngry() {
+      this.delayTillIdle = 40;
       setRootminPose(RootminPose.ANGRY);
    }
 
    public void runCurious() {
+      this.delayTillIdle = 28;
       setRootminPose(RootminPose.CURIOUS);
    }
 
    public void runCurse() {
+      this.delayTillIdle = 80;
       setRootminPose(RootminPose.CURSE);
    }
 
    public void runEmbarrassed() {
+      this.delayTillIdle = 60;
       setRootminPose(RootminPose.EMBARRASSED);
    }
 
    public void runShock() {
+      this.delayTillIdle = 10;
       setRootminPose(RootminPose.SHOCK);
    }
 
@@ -197,7 +202,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
       if (ROOTMIN_POSE.equals(entityDataAccessor)) {
          RootminPose pose = this.getRootminPose();
-         setAnimationState(pose, RootminPose.NONE, this.idleAnimationState);
+         setAnimationState(pose, RootminPose.NONE, this.idleAnimationState, this.tickCount - 27);
          setAnimationState(pose, RootminPose.ANGRY, this.angryAnimationState);
          setAnimationState(pose, RootminPose.CURIOUS, this.curiousAnimationState);
          setAnimationState(pose, RootminPose.CURSE, this.curseAnimationState);
@@ -314,7 +319,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                   LootParams.Builder builder = new LootParams.Builder((ServerLevel)this.level()).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, itemStack).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
                   List<ItemStack> flowerDrops = this.getFlowerBlock().getDrops(builder);
                   for (ItemStack flowerDrop : flowerDrops) {
-                     this.spawnAtLocation(flowerDrop);
+                     this.spawnAtLocation(flowerDrop, 1.0f);
                   }
                }
 
@@ -326,10 +331,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             }
             return InteractionResult.SUCCESS;
          }
-      }
-
-      if (itemstack.isEmpty() && !this.level().isClientSide()) {
-         shootDirt(null);
       }
 
       return super.mobInteract(player, hand);
@@ -422,7 +423,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                  .withOptionalParameter(LootContextParams.THIS_ENTITY, sourceEntity);
          List<ItemStack> flowerDrops = flower.getDrops(builder);
          for (ItemStack flowerDrop : flowerDrops) {
-            this.spawnAtLocation(flowerDrop);
+            this.spawnAtLocation(flowerDrop, 0.5f);
          }
       }
       super.dropAllDeathLoot(damageSource);

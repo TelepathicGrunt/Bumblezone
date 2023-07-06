@@ -56,6 +56,9 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
     }
 
     private void renderGrassBodyTop(RootminEntity rootminEntity, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
+
+        adjustShadow(rootminEntity, partialTicks);
+
         float belowEyeHeight;
         this.model.attackTime = this.getAttackAnim(rootminEntity, partialTicks);
         this.model.riding = rootminEntity.isPassenger();
@@ -131,6 +134,19 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
                 ((Model) this.model).renderToBuffer(stack, vertexConsumer, packedLight, p, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, bl2 ? 0.15f : 1.0f);
             }
         }
+    }
+
+    private void adjustShadow(RootminEntity rootminEntity, float partialTicks) {
+        RootminPose pose = rootminEntity.getRootminPose();
+        float percentage = (20f - Math.max(rootminEntity.animationTimeBetweenHiding - partialTicks, 0)) / 20f;
+
+        float target = pose == RootminPose.ENTITY_TO_BLOCK ? 0f : 0.7f;
+        float from = pose != RootminPose.ENTITY_TO_BLOCK ? 0f : 0.7f;
+        this.shadowRadius = Mth.lerp(percentage, from, target);
+
+        target = pose == RootminPose.ENTITY_TO_BLOCK ? 0f : 1.0f;
+        from = pose != RootminPose.ENTITY_TO_BLOCK ? 0f : 1.0f;
+        this.shadowStrength = Mth.lerp(percentage, from, target);
     }
 
     protected RenderType getRenderTypeGrass(boolean bl, boolean bl2, boolean bl3) {
