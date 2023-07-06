@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -16,6 +17,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -23,8 +25,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -37,7 +41,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -130,6 +136,32 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public RootminPose getRootminPose() {
       return this.entityData.get(ROOTMIN_POSE);
+   }
+
+   public void runAngry() {
+      setRootminPose(RootminPose.ANGRY);
+   }
+
+   public void runCurious() {
+      setRootminPose(RootminPose.CURIOUS);
+   }
+
+   public void runCurse() {
+      setRootminPose(RootminPose.CURSE);
+   }
+
+   public void runEmbarrassed() {
+      setRootminPose(RootminPose.EMBARRASSED);
+   }
+
+   public void runShock() {
+      setRootminPose(RootminPose.SHOCK);
+   }
+
+   public void runShoot(@Nullable LivingEntity target) {
+      this.shootDirt(target);
+      this.delayTillIdle = 8;
+      setRootminPose(RootminPose.SHOOT);
    }
 
    public void exposeFromBlock() {
@@ -235,8 +267,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       this.setFlowerBlock(blockState);
       this.isHidden = compound.getBoolean("hidden");
       this.delayTillIdle = compound.getInt("delayTillIdle");
-      if (compound.contains("animationState")) {
-         this.setRootminPose(RootminPose.valueOf(compound.getString("animationState")));
+      if (this.isHidden) {
+         this.setRootminPose(RootminPose.ENTITY_TO_BLOCK);
+      }
+      else {
+         if (compound.contains("animationState")) {
+            this.setRootminPose(RootminPose.valueOf(compound.getString("animationState")));
+         }
       }
    }
 
@@ -259,6 +296,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+      if (hand != InteractionHand.MAIN_HAND) {
+         return InteractionResult.PASS;
+      }
+
       ItemStack itemstack = player.getItemInHand(hand);
       boolean instantBuild = player.getAbilities().instabuild;
 
@@ -268,7 +309,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          if (blockState.is(BzTags.ROOTMIN_ALLOWED_FLOWER) && !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWER)) {
             if (!this.level().isClientSide()) {
                if (!instantBuild && this.getFlowerBlock() != null) {
-                  ItemStack itemStack = new ItemStack(Items.DIAMOND_AXE);
+                  ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
                   itemStack.enchant(Enchantments.SILK_TOUCH, 1);
                   LootParams.Builder builder = new LootParams.Builder((ServerLevel)this.level()).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, itemStack).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
                   List<ItemStack> flowerDrops = this.getFlowerBlock().getDrops(builder);
@@ -288,22 +329,56 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       }
 
       if (itemstack.isEmpty() && !this.level().isClientSide()) {
-         if (!this.isHidden) {
-            hideAsBlock();
-         }
-         else {
-            exposeFromBlock();
-         }
+         shootDirt(null);
       }
 
       return super.mobInteract(player, hand);
+   }
+
+   public void shootDirt(@Nullable LivingEntity livingEntity) {
+      if (!this.level().isClientSide()) {
+         DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
+         pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
+
+         if (livingEntity != null) {
+            double x = livingEntity.getX() - this.getX();
+            double y = livingEntity.getY(0.3333333333333333) - pelletEntity.getY();
+            double z = livingEntity.getZ() - this.getZ();
+            double archOffset = Math.sqrt(x * x + z * z);
+            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f, 1);
+         }
+         else {
+            double defaultSpeed = 5;
+            double x = this.getLookAngle().x() * defaultSpeed;
+            double y = 0.3333333333333333;
+            double z = this.getLookAngle().z() * defaultSpeed;
+            double archOffset = Math.sqrt(x * x + z * z);
+            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f, 1);
+         }
+
+         // #TODO: custom shoot sound
+         this.playSound(SoundEvents.SKELETON_SHOOT, 1.0f, 1.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
+         this.level().addFreshEntity(pelletEntity);
+      }
    }
 
    @Override
    public void tick() {
       super.tick();
 
+      if (this.hurtTime > 0) {
+         this.isHidden = false;
+      }
+
       if (!this.level().isClientSide()) {
+         double horizontalSpeed = this.getDeltaMovement().horizontalDistance();
+         if (horizontalSpeed > 0.2d || this.hurtTime > 0) {
+            setRootminPose(RootminPose.RUN);
+         }
+         else if (horizontalSpeed > 0.01d) {
+            setRootminPose(RootminPose.WALK);
+         }
+
          if (this.delayTillIdle >= 0) {
             if (delayTillIdle == 0) {
                setRootminPose(RootminPose.NONE);
@@ -311,7 +386,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             this.delayTillIdle--;
          }
          else {
-            if (!isHidden && this.getRootminPose() != RootminPose.NONE && this.isAlive()) {
+            if (!isHidden && this.getRootminPose() != RootminPose.NONE && this.isAlive() && horizontalSpeed <= 0.01d) {
                setRootminPose(RootminPose.NONE);
             }
          }
@@ -332,6 +407,25 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    protected void customServerAiStep() {
+   }
+
+   @Override
+   protected void dropAllDeathLoot(DamageSource damageSource) {
+      BlockState flower = this.getFlowerBlock();
+      Entity sourceEntity = damageSource.getEntity() == null ? this : damageSource.getEntity();
+      if (flower != null) {
+         ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
+         itemStack.enchant(Enchantments.SILK_TOUCH, 1);
+         LootParams.Builder builder = new LootParams.Builder((ServerLevel)this.level())
+                 .withParameter(LootContextParams.ORIGIN, this.position())
+                 .withParameter(LootContextParams.TOOL, itemStack)
+                 .withOptionalParameter(LootContextParams.THIS_ENTITY, sourceEntity);
+         List<ItemStack> flowerDrops = flower.getDrops(builder);
+         for (ItemStack flowerDrop : flowerDrops) {
+            this.spawnAtLocation(flowerDrop);
+         }
+      }
+      super.dropAllDeathLoot(damageSource);
    }
 
    @Override

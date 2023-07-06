@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "the_bumblezone:bee_stinger"
+          "name": "minecraft:grass_block"
         }
       ]
     }
