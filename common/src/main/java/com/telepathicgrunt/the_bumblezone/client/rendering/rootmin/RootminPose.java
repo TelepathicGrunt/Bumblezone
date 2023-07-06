@@ -5,9 +5,11 @@ public enum RootminPose {
     ANGRY,
     CURIOUS,
     CURSE,
-    EMBARASSED,
+    EMBARRASSED,
     SHOCK,
     SHOOT,
     RUN,
-    WALK
+    WALK,
+    ENTITY_TO_BLOCK,
+    BLOCK_TO_ENTITY
 }

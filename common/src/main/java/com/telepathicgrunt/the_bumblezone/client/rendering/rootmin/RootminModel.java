@@ -87,6 +87,8 @@ public class RootminModel extends HierarchicalModel<RootminEntity> {
         this.animate(entity.shootAnimationState, RootminAnimations.SHOOT, ageInTicks);
         this.animate(entity.runAnimationState, RootminAnimations.RUN, ageInTicks);
         this.animate(entity.walkAnimationState, RootminAnimations.WALK, ageInTicks);
+        this.animate(entity.blockToEntityAnimationState, RootminAnimations.BLOCK_TO_ENTITY, ageInTicks);
+        this.animate(entity.entityToBlockAnimationState, RootminAnimations.ENTITY_TO_BLOCK, ageInTicks);
     }
 
     @Override
