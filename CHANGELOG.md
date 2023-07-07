@@ -2,21 +2,19 @@
 
 #TODO: Electric Ring Textures/animations
 
-#TODO: get music for essence events and sanctum
-
 #TODO: Implement rootmin.
-
-#TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
 
-#TODO: Add music for sanctums and events
+#TODO: Add music for essence events
+
+#TODO: Add music for sanctums
 
 #TODO: Add sounds for Rootmin 
 
-#TODO: Add more sanctum rooms
+#TODO: Add more sanctum rooms and add welcome statues and add rootmin entries. Do sanctum variants
 
-#TODO: Trinkets/Curios for essence items? (Make only one essence active at a time)
+#TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 
 ### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
@@ -154,7 +152,8 @@ Added a new entity called Variant Bee! It is exactly like the vanilla bee in beh
 
 Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sanctum and will blow up if taken out of the structure or somehow killed.
  This bee status will charge at any living non-bee mob in front of it and will break through many blocks up to a certain total explosion resistance of the wall of blocks.
- The damage it deals to all in its way will increase the faster the statue is moving. Some tags to configure its behavior are:
+ The damage it deals to all in its way will increase the faster the statue is moving. Wear Bee Armor or Bee Curios/Trinkets will reduce a bit of damage as well.
+ Some tags to configure its behavior are:
  `the_bumblezone:sentry_watcher/always_destroy` (block tag)
  `the_bumblezone:sentry_watcher/forced_never_destroy` (block tag)
  `the_bumblezone:sentry_watcher/activates_when_seen` (entity tag)

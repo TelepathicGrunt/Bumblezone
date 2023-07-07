@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
@@ -764,10 +765,13 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             entity.setPos(pushToSpot);
 
             if (!this.level().isClientSide()) {
-               float damageMultiplier = 45;
+               float damageMultiplier = 30;
                if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
-                  damageMultiplier = 25;
+                  damageMultiplier = 16;
                }
+
+               int beeArmorOn = BeeArmor.getBeeThemedGearCount(entity);
+               damageMultiplier -= (beeArmorOn * 1.333333f);
 
                entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) (speedDiff * damageMultiplier));
             }
