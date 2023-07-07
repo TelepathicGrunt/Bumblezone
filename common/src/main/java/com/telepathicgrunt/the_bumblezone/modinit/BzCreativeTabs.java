@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
@@ -165,7 +166,8 @@ public class BzCreativeTabs {
                         return iconStack;
                     })
                     .displayItems((itemDisplayParameters, output) ->
-                            CUSTOM_CREATIVE_TAB_ITEMS.stream().map(item -> item.get().getDefaultInstance()).forEach(output::accept)).build());
+                            CUSTOM_CREATIVE_TAB_ITEMS.stream().map(item -> setSpecialItemStackNbt(item.get().getDefaultInstance())).forEach(output::accept)
+                    ).build());
 
     public static void addCreativeTabEntries(AddCreativeTabEntriesEvent event) {
         if (event.type() == AddCreativeTabEntriesEvent.Type.REDSTONE) {
@@ -262,7 +264,7 @@ public class BzCreativeTabs {
                     BzItems.HONEY_BEE_LEGGINGS_2,
                     BzItems.CARPENTER_BEE_BOOTS_1,
                     BzItems.CARPENTER_BEE_BOOTS_2
-            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
+            ).map(item -> setSpecialItemStackNbt(item.get().getDefaultInstance())).forEach(event::add);
         }
 
         if (event.type() == AddCreativeTabEntriesEvent.Type.TOOLS) {
@@ -296,5 +298,12 @@ public class BzCreativeTabs {
                     BzItems.WINDY_AIR
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
+    }
+
+    private static ItemStack setSpecialItemStackNbt(ItemStack itemStack) {
+        if (itemStack.getItem() instanceof HoneyBeeLeggings) {
+            HoneyBeeLeggings.setPollinated(itemStack);
+        }
+        return itemStack;
     }
 }

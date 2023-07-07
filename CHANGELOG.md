@@ -227,6 +227,10 @@ Fixed recipe for Trans Bumble Bee Chestplate nuking the NBT of the original ches
 
 Adjusted texture on one Trans Bumble Bee armor variant to make it more distinct.
 
+Adjusted texture for one Honey Bee Leggings to make it more distinct from the other variant.
+
+Honey Bee Leggings item texture will now show pollen if the item actually has pollen set in nbt.
+
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 

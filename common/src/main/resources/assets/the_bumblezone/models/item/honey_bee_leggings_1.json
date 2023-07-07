@@ -3,5 +3,9 @@
     "textures": {
         "layer0": "the_bumblezone:item/honey_bee_leggings_1",
         "layer1": "the_bumblezone:item/honey_bee_leggings_1_overlay"
-    }
+    },
+    "overrides": [
+        { "predicate": { "pollen": 0 }, "model": "the_bumblezone:item/honey_bee_leggings/1" },
+        { "predicate": { "pollen": 1 }, "model": "the_bumblezone:item/honey_bee_leggings/1_with_pollen" }
+    ]
 }
