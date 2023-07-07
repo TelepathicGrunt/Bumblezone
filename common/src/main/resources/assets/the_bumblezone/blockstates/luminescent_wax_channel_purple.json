@@ -1,88 +1,18 @@
 {
   "variants": {
-    "facing=north,axis=y": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple"
-    },
-    "facing=east,axis=y": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "y": 90
-    },
-    "facing=south,axis=y": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "y": 180
-    },
-    "facing=west,axis=y": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "y": 270
-    },
-    "facing=up,axis=y": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 180
-    },
-    "facing=down,axis=y": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 180,
-      "y": 90
-    },
-    "facing=up,axis=x": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple_rotated",
-      "x": 90,
-      "y": 90
-    },
-    "facing=down,axis=x": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 270,
-      "y": 90
-    },
-    "facing=north,axis=x": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple_rotated",
-      "x": 90,
-      "y": 270
-    },
-    "facing=south,axis=x": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple_rotated",
-      "x": 270,
-      "y": 90
-    },
-    "facing=east,axis=x": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 90,
-      "y": 90
-    },
-    "facing=west,axis=x": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 270,
-      "y": 270
-    },
+    "axis=y,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/channel_purple"},
+    "axis=y,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 180},
+    "axis=y,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "y": 90},
+    "axis=y,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 180, "y": 90},
 
-    "facing=up,axis=z": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple_rotated",
-      "x": 90,
-      "y": 180
-    },
-    "facing=down,axis=z": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 90
-    },
-    "facing=north,axis=z": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple_rotated",
-      "x": 270,
-      "y": 180
-    },
-    "facing=south,axis=z": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple_rotated",
-      "x": 90,
-      "y": 0
-    },
-    "facing=east,axis=z": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 270,
-      "y": 0
-    },
-    "facing=west,axis=z": {
-      "model": "the_bumblezone:block/luminescent_wax/channel_purple",
-      "x": 90,
-      "y": 180
-    }
+    "axis=x,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 90, "y": 90},
+    "axis=x,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 90, "y": 270},
+    "axis=x,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/channel_purple_rotated", "x": 90, "y": 90},
+    "axis=x,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/channel_purple_rotated", "x": 90, "y": 270},
+
+    "axis=z,rotation=0": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 90},
+    "axis=z,rotation=1": {"model":"the_bumblezone:block/luminescent_wax/channel_purple", "x": 90, "y": 180},
+    "axis=z,rotation=2": {"model":"the_bumblezone:block/luminescent_wax/channel_purple_rotated", "x": 90},
+    "axis=z,rotation=3": {"model":"the_bumblezone:block/luminescent_wax/channel_purple_rotated", "x": 90, "y": 180}
   }
 }

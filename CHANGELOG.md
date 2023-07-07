@@ -14,7 +14,7 @@
 
 #TODO: Add sounds for Rootmin 
 
-#TODO: Add more sanctum rooms and verify that channel block rotates properly (Change it's blockstate to axis + rotation)
+#TODO: Add more sanctum rooms
 
 #TODO: Trinkets/Curios for essence items? (Make only one essence active at a time)
 

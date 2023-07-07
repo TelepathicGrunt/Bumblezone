@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 
-public class LuminescentWaxChannel extends AxisFacingBlock implements LuminescentWaxBase{
+public class LuminescentWaxChannel extends RotationAxisBlock implements LuminescentWaxBase{
     public LuminescentWaxChannel(MapColor mapColor, int light) {
         super(Properties.of()
                 .mapColor(mapColor)
@@ -34,20 +35,20 @@ public class LuminescentWaxChannel extends AxisFacingBlock implements Luminescen
 
         if (blockState.getBlock() instanceof LuminescentWaxChannel && (itemstack.getItem() instanceof ShearsItem || itemstack.getItem() instanceof SwordItem)) {
 
-            Direction.Axis newAxisProperty = blockState.getValue(AXIS);
-            Direction newDirectProperty = blockState.getValue(FACING);
-            if (newDirectProperty.get3DDataValue() == 5) {
-                newAxisProperty = Direction.Axis.VALUES[(newAxisProperty.ordinal() + 1) % 3];
-                newDirectProperty = Direction.from3DDataValue(0);
-            }
-            else {
-                newDirectProperty = Direction.from3DDataValue(newDirectProperty.get3DDataValue() + 1);
+            Direction.Axis newAxisProp = blockState.getValue(AXIS);
+            int newRotateProperty = blockState.getValue(ROTATION) + 2;
+
+            boolean isLuminescent = blockState.is(BzTags.LUMINESCENT_WAX_LIGHT_CHANNELS);
+
+            if (newRotateProperty > (isLuminescent ? 3 : 2)) {
+                newAxisProp = Direction.Axis.values()[(newAxisProp.ordinal() + 1) % 3];
+                newRotateProperty = 0;
             }
 
             world.setBlock(position,
                     blockState
-                            .setValue(FACING, newDirectProperty)
-                            .setValue(AXIS, newAxisProperty),
+                        .setValue(AXIS, newAxisProp)
+                        .setValue(ROTATION, newRotateProperty),
                     3);
 
             this.spawnDestroyParticles(world, playerEntity, position, blockState);
