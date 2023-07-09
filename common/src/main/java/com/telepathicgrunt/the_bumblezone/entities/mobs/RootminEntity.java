@@ -214,19 +214,20 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public void hideAsBlock() {
       this.isHidden = true;
       this.animationTimeBetweenHiding = 20;
-      this.getNavigation().stop();
       setRootminPose(RootminPose.ENTITY_TO_BLOCK);
+      this.getNavigation().stop();
    }
 
    @Override
    protected void registerGoals() {
       this.goalSelector.addGoal(0, new FloatGoal(this));
-      this.goalSelector.addGoal(2, new HideGoal(this));
-      this.goalSelector.addGoal(4, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 16.0f, 1.5, 2.5));
-      this.goalSelector.addGoal(7, new EmbarrassedCurseGoal(this));
-      this.goalSelector.addGoal(8, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
-      this.targetSelector.addGoal(9, new HurtByTargetGoal(this));
-      this.targetSelector.addGoal(10, new NearestAttackableTargetGoal(this, true));
+      this.goalSelector.addGoal(4, new HiddenGoal(this));
+      this.goalSelector.addGoal(5, new HideGoal(this));
+      this.goalSelector.addGoal(10, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 16.0f, 1.5, 2.5));
+      this.goalSelector.addGoal(13, new EmbarrassedCurseGoal(this));
+      this.goalSelector.addGoal(14, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
+      this.targetSelector.addGoal(15, new HurtByTargetGoal(this));
+      this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, true));
       this.goalSelector.addGoal(22, new WaterAvoidingRandomStrollGoal(this, 1.0));
       this.goalSelector.addGoal(23, new LookAtPlayerGoal(this, Player.class, 6.0F));
       this.goalSelector.addGoal(24, new RandomLookAroundGoal(this));
@@ -289,6 +290,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
       if (ROOTMIN_POSE.equals(entityDataAccessor)) {
          RootminPose pose = this.getRootminPose();
+         if (pose== RootminPose.BLOCK_TO_ENTITY || pose == RootminPose.ENTITY_TO_BLOCK) {
+            this.animationTimeBetweenHiding = 20;
+         }
+
          setAnimationState(pose, RootminPose.NONE, this.idleAnimationState, this.tickCount - 27);
          setAnimationState(pose, RootminPose.ANGRY, this.angryAnimationState);
          setAnimationState(pose, RootminPose.CURIOUS, this.curiousAnimationState);
@@ -299,11 +304,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          setAnimationState(pose, RootminPose.RUN, this.runAnimationState);
          setAnimationState(pose, RootminPose.WALK, this.walkAnimationState);
          setAnimationState(pose, RootminPose.BLOCK_TO_ENTITY, this.blockToEntityAnimationState);
-         setAnimationState(pose, RootminPose.ENTITY_TO_BLOCK, this.entityToBlockAnimationState, this.tickCount <= 20 ? -100000 : this.tickCount);
+         setAnimationState(pose, RootminPose.ENTITY_TO_BLOCK, this.entityToBlockAnimationState, this.tickCount <= 10 ? -100000 : this.tickCount);
 
-         if (this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY || this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
-            this.animationTimeBetweenHiding = 20;
-         }
       }
 
       this.refreshDimensions();
@@ -319,7 +321,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private void setAnimationState(RootminPose pose, RootminPose poseToCheckFor, AnimationState animationState) {
       if (pose == poseToCheckFor) {
          animationState.start(this.tickCount);
-      } else {
+      }
+      else {
          animationState.stop();
       }
    }
@@ -327,7 +330,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private void setAnimationState(RootminPose pose, RootminPose poseToCheckFor, AnimationState animationState, int tickCount) {
       if (pose == poseToCheckFor) {
          animationState.start(tickCount);
-      } else {
+      }
+      else {
          animationState.stop();
       }
    }
@@ -394,7 +398,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             double z = livingEntity.getZ() - this.getZ();
             double archOffset = Math.sqrt(x * x + z * z);
             pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f, 1);
-         } else {
+         }
+         else {
             double defaultSpeed = 5;
             double x = this.getLookAngle().x() * defaultSpeed;
             double y = 0.3333333333333333;
@@ -414,9 +419,11 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       super.tick();
 
       if (this.hurtTime > 0) {
-         this.isHidden = false;
-         if (this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
-            runShock();
+         if (!this.level().isClientSide()) {
+            this.isHidden = false;
+            if (this.getRootminPose() != RootminPose.SHOOT) {
+               runShock();
+            }
          }
       }
 
@@ -482,13 +489,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    public boolean canBeCollidedWith() {
-      return this.isHidden && this.isAlive();
+      return this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK && !this.isDeadOrDying();
    }
 
    @Override
    protected AABB makeBoundingBox() {
       if (this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY || this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
-         AABB currentAABB = this.getBoundingBox();
+         AABB currentAABB = super.makeBoundingBox();
          float target = this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY ? 1.56f : 1f;
          float from = this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY ? 1f : 1.56f;
          float percentage = (20f - this.animationTimeBetweenHiding) / 20f;
@@ -597,6 +604,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       @Nullable
       protected Path path;
       protected final PathNavigation pathNav;
+      @Nullable
+      protected Vec3 destination;
 
       public HideGoal(RootminEntity pathfinderMob) {
          this.mob = pathfinderMob;
@@ -628,12 +637,12 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          List<Entity> existingRootmins = level.getEntities(
                  this.mob,
                  new AABB(
-                      chosenPos.getX(),
-                      chosenPos.getY(),
-                      chosenPos.getZ(),
-                      chosenPos.getX() + 1,
-                      chosenPos.getY() + 1,
-                      chosenPos.getZ() + 1
+                         chosenPos.getX(),
+                         chosenPos.getY(),
+                         chosenPos.getZ(),
+                         chosenPos.getX() + 1,
+                         chosenPos.getY() + 1,
+                         chosenPos.getZ() + 1
                  ),
                  (entity) -> entity.getType() == BzEntities.ROOTMIN.get()
          );
@@ -642,23 +651,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             return false;
          }
 
-         this.path = this.pathNav.createPath(chosenPos.getX(), chosenPos.getY() + 0.1d, chosenPos.getZ(), 0);
+         this.destination = new Vec3(chosenPos.getX() + 0.5d, chosenPos.getY(), chosenPos.getZ() + 0.5d);
+         this.path = this.pathNav.createPath(chosenPos.getX() + 0.5d, chosenPos.getY(), chosenPos.getZ() + 0.5d, 0);
          return this.path != null;
       }
 
       @Override
       public boolean canContinueToUse() {
-         if (this.pathNav.isDone() && this.mob.getRootminPose() != RootminPose.ENTITY_TO_BLOCK) {
-            Vec3 lookAngle = this.mob.getLookAngle();
-            Direction direction = Direction.getNearest(lookAngle.x(), lookAngle.y(), lookAngle.z());
-            AABB bounds = this.mob.getBoundingBox();
-            this.mob.moveTo(bounds.getCenter().x(), bounds.minY, bounds.getCenter().z(), direction.toYRot(), 0);
-            this.mob.setDeltaMovement(Vec3.ZERO);
-            this.mob.refreshDimensions();
-            this.mob.hideAsBlock();
-         }
-
-         return (!this.pathNav.isDone() || this.mob.isHidden) && !this.mob.isDeadOrDying();
+         return !this.pathNav.isDone() && !this.mob.isDeadOrDying();
       }
 
       @Override
@@ -668,12 +668,54 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void stop() {
+         if (this.destination != null) {
+            this.mob.moveTo(this.destination);
+         }
+         this.mob.setDeltaMovement(Vec3.ZERO);
+
+         this.mob.hideAsBlock();
       }
 
       @Override
       public void tick() {
          boolean isFleeing = (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 200);
          this.mob.getNavigation().setSpeedModifier(isFleeing ? 2.0 : 1.0);
+      }
+   }
+
+   private static class HiddenGoal extends Goal {
+      protected final RootminEntity mob;
+
+      public HiddenGoal(RootminEntity pathfinderMob) {
+         this.mob = pathfinderMob;
+         this.setFlags(EnumSet.of(Flag.MOVE));
+      }
+
+      @Override
+      public boolean canUse() {
+         return this.mob.isHidden;
+      }
+
+      @Override
+      public boolean canContinueToUse() {
+         return this.mob.isHidden && this.mob.hurtTime == 0 && !this.mob.isDeadOrDying();
+      }
+
+      @Override
+      public void start() {
+      }
+
+      @Override
+      public void stop() {
+      }
+
+      @Override
+      public void tick() {
+         float lookAngle = this.mob.getYRot();
+         Direction direction = Direction.fromYRot(lookAngle);
+         Vec3 lookVec = Vec3.atLowerCornerOf(direction.getNormal()).add(this.mob.position());
+         this.mob.getLookControl().setLookAt(lookVec.x(), lookVec.y(), lookVec.z(), 60, 0);
+         this.mob.setYRot(direction.toYRot());
       }
    }
 

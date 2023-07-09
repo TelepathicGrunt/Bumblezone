@@ -177,7 +177,7 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
         }
 
         @Override
-        public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, RootminEntity rootminEntity, float f, float g, float h, float j, float k, float l) {
+        public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, RootminEntity rootminEntity, float f, float g, float h, float j, float k, float l) {
             BlockState blockState = rootminEntity.getFlowerBlock();
             if (blockState == null) {
                 return;
@@ -190,7 +190,7 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             bodyModel.translateAndRotate(poseStack);
             poseStack.translate(-0.5f, -15/16f, 0.5f);
             poseStack.scale(1,-1,-1);
-            this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, i, OverlayTexture.NO_OVERLAY);
+            this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, packedLight, OverlayTexture.NO_OVERLAY);
             poseStack.popPose();
         }
     }
