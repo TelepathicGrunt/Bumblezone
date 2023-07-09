@@ -115,7 +115,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
                 player.stopSleeping();
                 player.removeVehicle();
                 player.ejectPassengers();
-                player.setPortalCooldown(40);
+                player.setPortalCooldown();
                 player.setDeltaMovement(new Vec3(0, 0, 0));
                 player.setOldPosAndRot();
 

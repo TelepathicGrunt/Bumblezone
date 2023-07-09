@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
@@ -80,6 +81,8 @@ import java.util.function.Predicate;
 public class RootminEntity extends PathfinderMob implements Enemy {
 
    private static final EntityDataAccessor<Optional<BlockState>> FLOWER_BLOCK_STATE = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_STATE);
+   public static final EntityDataSerializer<RootminPose> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(RootminPose.class);
+   private static final EntityDataAccessor<RootminPose> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
 
    public final AnimationState idleAnimationState = new AnimationState();
    public final AnimationState angryAnimationState = new AnimationState();
@@ -93,13 +96,11 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public final AnimationState blockToEntityAnimationState = new AnimationState();
    public final AnimationState entityToBlockAnimationState = new AnimationState();
 
-   public static final EntityDataSerializer<RootminPose> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(RootminPose.class);
-   private static final EntityDataAccessor<RootminPose> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
-
    private boolean checkedDefaultFlowerTag = false;
    private boolean isHidden = false;
    private boolean disableAttackGoals = false;
    private RootminEntity rootminToLookAt = null;
+   private LivingEntity attackerMemory = null;
    private int delayTillIdle = -1;
    private boolean takePotShot = false;
    private int exposedTimer = 0;
@@ -214,6 +215,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public void hideAsBlock() {
       this.isHidden = true;
+      this.delayTillIdle = -1;
       this.animationTimeBetweenHiding = 20;
       setRootminPose(RootminPose.ENTITY_TO_BLOCK);
       this.getNavigation().stop();
@@ -222,16 +224,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    @Override
    protected void registerGoals() {
       this.goalSelector.addGoal(0, new FloatGoal(this));
+      this.goalSelector.addGoal(3, new EmbarrassedCurseGoal(this));
       this.goalSelector.addGoal(4, new HiddenGoal(this));
-      this.goalSelector.addGoal(5, new HideGoal(this));
-      this.goalSelector.addGoal(10, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 16.0f, 1.5, 2.5));
-      this.goalSelector.addGoal(13, new EmbarrassedCurseGoal(this));
+      this.goalSelector.addGoal(5, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 16.0f, 1.5, 2.5));
+      this.goalSelector.addGoal(6, new HideGoal(this));
       this.goalSelector.addGoal(14, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
       this.targetSelector.addGoal(15, new HurtByTargetGoal(this));
       this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, true));
-      this.goalSelector.addGoal(22, new WaterAvoidingRandomStrollGoal(this, 1.0));
-      this.goalSelector.addGoal(23, new LookAtPlayerGoal(this, Player.class, 6.0F));
-      this.goalSelector.addGoal(24, new RandomLookAroundGoal(this));
    }
 
    public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -263,7 +262,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                       compound.getCompound("flowerBlock"))).isAir()) {
          blockState = null;
       }
-      this.setFlowerBlock(blockState);
+
+      if (blockState == null) {
+         this.getFlowerBlock();
+      }
+      else {
+         this.setFlowerBlock(blockState);
+      }
+
       this.isHidden = compound.getBoolean("hidden");
       this.delayTillIdle = compound.getInt("delayTillIdle");
       if (this.isHidden) {
@@ -305,7 +311,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          setAnimationState(pose, RootminPose.RUN, this.runAnimationState);
          setAnimationState(pose, RootminPose.WALK, this.walkAnimationState);
          setAnimationState(pose, RootminPose.BLOCK_TO_ENTITY, this.blockToEntityAnimationState);
-         setAnimationState(pose, RootminPose.ENTITY_TO_BLOCK, this.entityToBlockAnimationState, this.tickCount <= 10 ? -100000 : this.tickCount);
+         setAnimationState(pose, RootminPose.ENTITY_TO_BLOCK, this.entityToBlockAnimationState, this.tickCount <= 2 ? -100000 : this.tickCount);
 
       }
 
@@ -422,7 +428,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       if (this.hurtTime > 0) {
          if (!this.level().isClientSide()) {
             this.isHidden = false;
-            if (this.getRootminPose() != RootminPose.SHOOT) {
+            if (this.getRootminPose() != RootminPose.SHOOT && this.getRootminPose() != RootminPose.CURSE) {
                runShock();
             }
          }
@@ -469,7 +475,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    protected void customServerAiStep() {
       if (this.exposedTimer > 0) {
          this.exposedTimer--;
-         this.takePotShot = false;
       }
    }
 
@@ -550,6 +555,18 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       return this.isBaby() ? BzSounds.HONEY_SLIME_DEATH_SMALL.get() : BzSounds.HONEY_SLIME_DEATH.get();
    }
 
+   private static boolean isFacingMob(RootminEntity rootminEntity, LivingEntity target) {
+      Vec3 targetView = target.getLookAngle().normalize();
+      Vec3 currentDirection = rootminEntity.position().subtract(target.position()).normalize();
+
+      double dotProduct =
+              (currentDirection.x() * targetView.x()) +
+              (currentDirection.y() * targetView.y()) +
+              (currentDirection.z() * targetView.z());
+
+      return dotProduct >= 0;
+   }
+
 
    ///////////////////////////////////////////////////////
    //GOALS
@@ -572,6 +589,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canContinueToUse() {
+         Bumblezone.LOGGER.warn("Rootmin event: {}, {}, {}, {}", this.mob, this.timer, this.mob.getRootminPose().name(), this.mob.delayTillIdle);
+
          return this.timer > 0 &&
                  this.mob.rootminToLookAt != null &&
                  !this.mob.isDeadOrDying() &&
@@ -588,6 +607,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.timer = 0;
          this.mob.disableAttackGoals = false;
          this.mob.rootminToLookAt = null;
+         this.mob.exposedTimer = 0;
          this.mob.setRootminPose(RootminPose.NONE);
       }
 
@@ -620,12 +640,23 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canUse() {
-         // check if seen or not here
-         // And if target exist or not
-         if (this.mob.exposedTimer != 0) {
+         if (this.mob.exposedTimer != 0 || this.mob.rootminToLookAt != null) {
             return false;
          }
 
+         if (this.mob.getTarget() != null && !(this.mob.getTarget() instanceof Player)) {
+            return false;
+         }
+
+         if (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 1200 &&
+              this.mob.attackerMemory != null &&
+              !this.mob.attackerMemory.isDeadOrDying() &&
+              this.mob.attackerMemory.blockPosition().distManhattan(this.mob.blockPosition()) < 25)
+         {
+            if (isFacingMob(this.mob, this.mob.attackerMemory)) {
+               return false;
+            }
+         }
 
          Level level = this.mob.level();
          RandomSource randomSource = this.mob.getRandom();
@@ -672,22 +703,24 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void start() {
-         this.pathNav.moveTo(this.path, (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 200) ? 2.0 : 1.0);
+         this.pathNav.moveTo(this.path,
+                 (this.mob.takePotShot || this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 200) ?
+                 2.0 : 1.0);
       }
 
       @Override
       public void stop() {
-         if (this.destination != null) {
+         if (this.destination != null && this.mob.position().subtract(this.destination).length() < 1) {
             this.mob.moveTo(this.destination);
          }
          this.mob.setDeltaMovement(Vec3.ZERO);
-
+         this.mob.takePotShot = false;
          this.mob.hideAsBlock();
       }
 
       @Override
       public void tick() {
-         boolean isFleeing = (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 200);
+         boolean isFleeing = (this.mob.takePotShot || this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 200);
          this.mob.getNavigation().setSpeedModifier(isFleeing ? 2.0 : 1.0);
       }
    }
@@ -739,13 +772,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                if (target != null) {
                   int distance = target.blockPosition().distManhattan(this.mob.blockPosition());
                   if (distance >= 8 && distance <= 26) {
-                     Vec3 targetView = target.getLookAngle().normalize();
-                     Vec3 currentDirection = target.position().subtract(this.mob.position()).normalize();
-                     Vector2d targetXZ = new Vector2d(targetView.x(), targetView.z()).normalize();
-                     Vector2d currentXZ = new Vector2d(currentDirection.x(), currentDirection.z()).normalize();
-
-                     double angle = (180.0 / Math.PI) * Mth.atan2(targetXZ.x() - currentXZ.x(), targetXZ.y() - currentXZ.y());
-                     if (Math.abs(angle) >= 90) {
+                     if (!isFacingMob(this.mob, target)) {
                         this.unhidingTimer = 20;
                         this.mob.exposeFromBlock();
                         this.mob.exposedTimer = 160;
@@ -795,20 +822,33 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canUse() {
-         this.toAvoid = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
-                         LivingEntity.class,
-                         this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist),
-                         livingEntity -> livingEntity.getType().is(this.avoidTag)),
-                 this.avoidEntityTargeting,
-                 this.mob,
-                 this.mob.getX(),
-                 this.mob.getY(),
-                 this.mob.getZ());
+         if (this.mob.animationTimeBetweenHiding > 0 || this.mob.isHidden) {
+            return false;
+         }
+
+         if (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 1200 && this.mob.attackerMemory != null) {
+            this.toAvoid = this.mob.attackerMemory;
+         }
+         else if (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 1200 && this.mob.getLastHurtByMob() != null) {
+            this.toAvoid = this.mob.getLastHurtByMob();
+            this.mob.attackerMemory = this.mob.getLastHurtByMob();
+         }
+         else {
+            this.toAvoid = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
+                            LivingEntity.class,
+                            this.mob.getBoundingBox().inflate(this.maxDist, 3.0, this.maxDist),
+                            livingEntity -> livingEntity.getType().is(this.avoidTag)),
+                    this.avoidEntityTargeting,
+                    this.mob,
+                    this.mob.getX(),
+                    this.mob.getY(),
+                    this.mob.getZ());
+         }
 
          if (this.toAvoid == null) {
             return false;
          }
-         Vec3 vec3 = DefaultRandomPos.getPosAway(this.mob, 16, 7, this.toAvoid.position());
+         Vec3 vec3 = DefaultRandomPos.getPosAway(this.mob, 26, 8, this.toAvoid.position());
          if (vec3 == null) {
             return false;
          }
@@ -821,7 +861,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canContinueToUse() {
-         if (this.pathNav.isDone()) {
+         if (this.pathNav.isDone() || (this.toAvoid != null && this.toAvoid.isDeadOrDying())) {
+            return false;
+         }
+         else if (this.mob.animationTimeBetweenHiding > 0 || this.mob.isHidden) {
             return false;
          }
          else {
@@ -832,7 +875,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void start() {
-         this.pathNav.moveTo(this.path, this.walkSpeedModifier);
+         this.pathNav.moveTo(this.path, this.mob.distanceToSqr(this.toAvoid) < (14 * 14) ? this.sprintSpeedModifier : this.walkSpeedModifier);
       }
 
       @Override
@@ -1001,6 +1044,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             }
             float f = (float) Math.sqrt(d) / this.attackRadius;
             this.rootminEntity.runShoot(this.target);
+            this.rootminEntity.exposedTimer = 0;
             this.attackTime = Mth.floor(f * (float) (this.attackIntervalMax - this.attackIntervalMin) + (float) this.attackIntervalMin);
          }
          else if (this.attackTime < 0) {
@@ -1026,7 +1070,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                return false;
             }
             else {
-               if (livingEntity instanceof RootminEntity rootminEntityAttacker && this.mob instanceof RootminEntity rootminEntity) {
+               if (livingEntity instanceof RootminEntity rootminEntityAttacker &&
+                    this.mob instanceof RootminEntity rootminEntity &&
+                    !rootminEntity.isInvulnerable())
+               {
                   rootminEntity.runCurse();
                   rootminEntityAttacker.runEmbarrassed();
 

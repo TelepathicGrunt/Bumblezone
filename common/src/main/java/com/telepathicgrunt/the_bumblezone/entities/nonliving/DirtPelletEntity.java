@@ -11,6 +11,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.joml.Vector2d;
 
 public class DirtPelletEntity extends ThrowableItemProjectile {
     private boolean eventBased = false;
@@ -95,6 +97,15 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         }
 
         entity.hurt(this.damageSources().thrown(this, this.getOwner()), (float)damage);
+        if (entity instanceof LivingEntity livingEntity) {
+            Vector2d direction = new Vector2d(this.getDeltaMovement().x(), this.getDeltaMovement().z()).normalize();
+            double yRotHitRadian = Mth.atan2(direction.x(), direction.y());
+            livingEntity.knockback(
+                1d,
+                -Mth.sin((float) yRotHitRadian),
+                -Mth.cos((float) yRotHitRadian)
+            );
+        }
     }
 
     @Override

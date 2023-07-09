@@ -134,7 +134,7 @@ Added Bee Soup that is craftable from Bee Bread, Bowl, Beetroot, Potato, 2 Honey
  or Luck status effect on you. You could get multiple of these effects at once if you're unlucky (or lucky if it is good effects)!
  Can be found in some structures's loot!
 
-Added Dirt Pellet item craftable from Coarse Dirt + Rooted Dirt. It can be thrown like a Snowball for 1 point of damage.
+Added Dirt Pellet item craftable from Coarse Dirt + Rooted Dirt. It can be thrown like a Snowball for 1 point of damage and high knockback.
  However, it will deal 3 points of damage to most flying mobs (modded included)! Controlled by these entity tags to change what will receive bonus damage:
  `the_bumblezone:dirt_pellet/extra_damage_dealt_to`
  `the_bumblezone:dirt_pellet/forced_no_extra_damage_dealt_to`
@@ -278,6 +278,8 @@ Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag
 Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
 
 Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dimension
+
+Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaining issues.
 
 ##### Advancements:
 Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
