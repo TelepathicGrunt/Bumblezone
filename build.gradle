@@ -216,6 +216,30 @@ allprojects {
     java {
         withSourcesJar()
     }
+
+    task optimizePng {
+        def pngPatterns = ["**/*.png"]
+        doFirst {
+            println 'Executing oxipng task...'
+        }
+        doLast {
+            //Ensure the logo is minimized (we add this file to each jar)
+            //Minimize any PNGs in the source sets
+            for (dir in sourceSets.main.resources.srcDirs) {
+                fileTree(dir: dir, includes: pngPatterns).each { minimizePNGFile(it) }
+            }
+            println 'Finished oxipng task...'
+        }
+    }
+}
+
+//Minimize/optimize all png files, requires optipng on the PATH
+// Credits: BrainStone
+void minimizePNGFile(File file) {
+    exec {
+        executable "./oxipng.exe"
+        args "-o", "6", "-i", "0", "--strip", "all", "-a", "-Z", file
+    }
 }
 
 task buildAndReleaseAll{
