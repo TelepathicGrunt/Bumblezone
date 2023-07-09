@@ -4,8 +4,12 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -21,6 +25,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -209,13 +214,15 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public void hideAsBlock() {
       this.isHidden = true;
       this.animationTimeBetweenHiding = 20;
+      this.getNavigation().stop();
       setRootminPose(RootminPose.ENTITY_TO_BLOCK);
    }
 
    @Override
    protected void registerGoals() {
       this.goalSelector.addGoal(0, new FloatGoal(this));
-      this.goalSelector.addGoal(2, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 16.0f, 1.5, 2.5));
+      this.goalSelector.addGoal(2, new HideGoal(this));
+      this.goalSelector.addGoal(4, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 16.0f, 1.5, 2.5));
       this.goalSelector.addGoal(7, new EmbarrassedCurseGoal(this));
       this.goalSelector.addGoal(8, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
       this.targetSelector.addGoal(9, new HurtByTargetGoal(this));
@@ -408,6 +415,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       if (this.hurtTime > 0) {
          this.isHidden = false;
+         if (this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+            runShock();
+         }
       }
 
       if (!this.level().isClientSide()) {
@@ -415,7 +425,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          if (!POSES_THAT_CANT_BE_MOTION_INTERRUPTED.contains(getRootminPose())) {
             if (horizontalSpeed > 0.2d || this.hurtTime > 0) {
                setRootminPose(RootminPose.RUN);
-            } else if (horizontalSpeed > 0.01d) {
+            }
+            else if (horizontalSpeed > 0.01d) {
                setRootminPose(RootminPose.WALK);
             }
          }
@@ -425,7 +436,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                setRootminPose(RootminPose.NONE);
             }
             this.delayTillIdle--;
-         } else {
+         }
+         else {
             if (!isHidden && this.getRootminPose() != RootminPose.NONE && this.isAlive() && horizontalSpeed <= 0.01d) {
                setRootminPose(RootminPose.NONE);
             }
@@ -470,7 +482,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    public boolean canBeCollidedWith() {
-      return this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK && this.isAlive();
+      return this.isHidden && this.isAlive();
    }
 
    @Override
@@ -577,6 +589,91 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             this.mob.lookAt(this.mob.rootminToLookAt, 30, 30);
             this.timer--;
          }
+      }
+   }
+
+   private static class HideGoal extends Goal {
+      protected final RootminEntity mob;
+      @Nullable
+      protected Path path;
+      protected final PathNavigation pathNav;
+
+      public HideGoal(RootminEntity pathfinderMob) {
+         this.mob = pathfinderMob;
+         this.setFlags(EnumSet.of(Flag.MOVE));
+         this.pathNav = pathfinderMob.getNavigation();
+      }
+
+      @Override
+      public boolean canUse() {
+         // check if seen or not here
+         // And if target exist or not
+
+         Level level = this.mob.level();
+         RandomSource randomSource = this.mob.getRandom();
+         BlockPos chosenPos = this.mob.blockPosition().offset(
+                 randomSource.nextInt(11) - 5,
+                 randomSource.nextInt(5) - 2,
+                 randomSource.nextInt(11) - 5);
+
+         if (!level.isEmptyBlock(chosenPos)) {
+            return false;
+         }
+
+         BlockState belowState = level.getBlockState(chosenPos.below());
+         if (!belowState.isCollisionShapeFullBlock(level, chosenPos.below())) {
+            return false;
+         }
+
+         List<Entity> existingRootmins = level.getEntities(
+                 this.mob,
+                 new AABB(
+                      chosenPos.getX(),
+                      chosenPos.getY(),
+                      chosenPos.getZ(),
+                      chosenPos.getX() + 1,
+                      chosenPos.getY() + 1,
+                      chosenPos.getZ() + 1
+                 ),
+                 (entity) -> entity.getType() == BzEntities.ROOTMIN.get()
+         );
+
+         if (!existingRootmins.isEmpty()) {
+            return false;
+         }
+
+         this.path = this.pathNav.createPath(chosenPos.getX(), chosenPos.getY() + 0.1d, chosenPos.getZ(), 0);
+         return this.path != null;
+      }
+
+      @Override
+      public boolean canContinueToUse() {
+         if (this.pathNav.isDone() && this.mob.getRootminPose() != RootminPose.ENTITY_TO_BLOCK) {
+            Vec3 lookAngle = this.mob.getLookAngle();
+            Direction direction = Direction.getNearest(lookAngle.x(), lookAngle.y(), lookAngle.z());
+            AABB bounds = this.mob.getBoundingBox();
+            this.mob.moveTo(bounds.getCenter().x(), bounds.minY, bounds.getCenter().z(), direction.toYRot(), 0);
+            this.mob.setDeltaMovement(Vec3.ZERO);
+            this.mob.refreshDimensions();
+            this.mob.hideAsBlock();
+         }
+
+         return (!this.pathNav.isDone() || this.mob.isHidden) && !this.mob.isDeadOrDying();
+      }
+
+      @Override
+      public void start() {
+         this.pathNav.moveTo(this.path, (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 200) ? 2.0 : 1.0);
+      }
+
+      @Override
+      public void stop() {
+      }
+
+      @Override
+      public void tick() {
+         boolean isFleeing = (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 200);
+         this.mob.getNavigation().setSpeedModifier(isFleeing ? 2.0 : 1.0);
       }
    }
 
@@ -873,6 +970,127 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.timestamp = this.mob.getLastHurtByMobTimestamp();
          this.unseenMemoryTicks = 300;
          super.start();
+      }
+   }
+
+   private static class LookAtPlayerGoal extends Goal {
+      public static final float DEFAULT_PROBABILITY = 0.02f;
+      protected final Mob mob;
+      @Nullable
+      protected Entity lookAt;
+      protected final float lookDistance;
+      private int lookTime;
+      protected final float probability;
+      private final boolean onlyHorizontal;
+      protected final Class<? extends LivingEntity> lookAtType;
+      protected final TargetingConditions lookAtContext;
+
+      public LookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> class_, float f) {
+         this(mob, class_, f, DEFAULT_PROBABILITY);
+      }
+
+      public LookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> class_, float f, float g) {
+         this(mob, class_, f, g, false);
+      }
+
+      public LookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> class_, float f, float g, boolean bl) {
+         this.mob = mob;
+         this.lookAtType = class_;
+         this.lookDistance = f;
+         this.probability = g;
+         this.onlyHorizontal = bl;
+         this.setFlags(EnumSet.of(Goal.Flag.LOOK));
+         this.lookAtContext = class_ == Player.class ? TargetingConditions.forNonCombat().range(f).selector(livingEntity -> EntitySelector.notRiding(mob).test((Entity)livingEntity)) : TargetingConditions.forNonCombat().range(f);
+      }
+
+      @Override
+      public boolean canUse() {
+         if (this.mob instanceof RootminEntity rootminEntity && rootminEntity.isHidden) {
+            return false;
+         }
+         if (this.mob.getRandom().nextFloat() >= this.probability) {
+            return false;
+         }
+         if (this.mob.getTarget() != null) {
+            this.lookAt = this.mob.getTarget();
+         }
+         this.lookAt = this.lookAtType == Player.class ? this.mob.level().getNearestPlayer(this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ()) : this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate(this.lookDistance, 3.0, this.lookDistance), livingEntity -> true), this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
+         return this.lookAt != null;
+      }
+
+      @Override
+      public boolean canContinueToUse() {
+         if (!this.lookAt.isAlive()) {
+            return false;
+         }
+         if (this.mob.distanceToSqr(this.lookAt) > (double)(this.lookDistance * this.lookDistance)) {
+            return false;
+         }
+         return this.lookTime > 0;
+      }
+
+      @Override
+      public void start() {
+         this.lookTime = this.adjustedTickDelay(40 + this.mob.getRandom().nextInt(40));
+      }
+
+      @Override
+      public void stop() {
+         this.lookAt = null;
+      }
+
+      @Override
+      public void tick() {
+         if (!this.lookAt.isAlive()) {
+            return;
+         }
+         double d = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
+         this.mob.getLookControl().setLookAt(this.lookAt.getX(), d, this.lookAt.getZ());
+         --this.lookTime;
+      }
+   }
+
+   private static class RandomLookAroundGoal extends Goal {
+      private final Mob mob;
+      private double relX;
+      private double relZ;
+      private int lookTime;
+
+      public RandomLookAroundGoal(Mob mob) {
+         this.mob = mob;
+         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+      }
+
+      @Override
+      public boolean canUse() {
+         if (this.mob instanceof RootminEntity rootminEntity && rootminEntity.isHidden) {
+            return false;
+         }
+         return this.mob.getRandom().nextFloat() < 0.02f;
+      }
+
+      @Override
+      public boolean canContinueToUse() {
+         return this.lookTime >= 0;
+      }
+
+      @Override
+      public void start() {
+         double d = Math.PI * 2 * this.mob.getRandom().nextDouble();
+         this.relX = Math.cos(d);
+         this.relZ = Math.sin(d);
+         this.lookTime = 20 + this.mob.getRandom().nextInt(20);
+      }
+
+      @Override
+      public boolean requiresUpdateEveryTick() {
+         return true;
+      }
+
+      @Override
+      public void tick() {
+         --this.lookTime;
+         this.mob.getLookControl().setLookAt(this.mob.getX() + this.relX, this.mob.getEyeY(), this.mob.getZ() + this.relZ);
       }
    }
 }
