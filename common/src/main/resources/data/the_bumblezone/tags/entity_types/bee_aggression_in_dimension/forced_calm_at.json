@@ -1,10 +1,8 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "alexsmobs:lobster",
-      "required": false
-    },
+    { "id": "alexsmobs:lobster",
+      "required": false },
     {
       "id": "alexsmobs:endergrade",
       "required": false

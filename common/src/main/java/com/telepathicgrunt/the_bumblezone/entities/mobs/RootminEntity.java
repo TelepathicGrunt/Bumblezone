@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -45,8 +44,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -68,8 +65,10 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector2d;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -102,6 +101,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private boolean disableAttackGoals = false;
    private RootminEntity rootminToLookAt = null;
    private int delayTillIdle = -1;
+   private boolean takePotShot = false;
+   private int exposedTimer = 0;
    public int animationTimeBetweenHiding = 0;
 
    private static final Set<RootminPose> POSES_THAT_CANT_BE_MOTION_INTERRUPTED = Set.of(
@@ -466,6 +467,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    protected void customServerAiStep() {
+      if (this.exposedTimer > 0) {
+         this.exposedTimer--;
+         this.takePotShot = false;
+      }
    }
 
    @Override
@@ -617,6 +622,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       public boolean canUse() {
          // check if seen or not here
          // And if target exist or not
+         if (this.mob.exposedTimer != 0) {
+            return false;
+         }
+
 
          Level level = this.mob.level();
          RandomSource randomSource = this.mob.getRandom();
@@ -685,6 +694,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    private static class HiddenGoal extends Goal {
       protected final RootminEntity mob;
+      protected int unhidingTimer = 0;
+      protected int stayHidingTimer = 200;
 
       public HiddenGoal(RootminEntity pathfinderMob) {
          this.mob = pathfinderMob;
@@ -698,11 +709,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canContinueToUse() {
-         return this.mob.isHidden && this.mob.hurtTime == 0 && !this.mob.isDeadOrDying();
+         return (this.unhidingTimer > 0 || this.mob.isHidden) && this.mob.hurtTime == 0 && !this.mob.isDeadOrDying();
       }
 
       @Override
       public void start() {
+         this.stayHidingTimer = 200;
+         this.unhidingTimer = 0;
       }
 
       @Override
@@ -716,6 +729,35 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          Vec3 lookVec = Vec3.atLowerCornerOf(direction.getNormal()).add(this.mob.position());
          this.mob.getLookControl().setLookAt(lookVec.x(), lookVec.y(), lookVec.z(), 60, 0);
          this.mob.setYRot(direction.toYRot());
+
+         if (this.stayHidingTimer == 0) {
+            if (this.unhidingTimer > 0) {
+               this.unhidingTimer--;
+            }
+            else if (this.unhidingTimer == 0) {
+               LivingEntity target = this.mob.getTarget();
+               if (target != null) {
+                  int distance = target.blockPosition().distManhattan(this.mob.blockPosition());
+                  if (distance >= 8 && distance <= 26) {
+                     Vec3 targetView = target.getLookAngle().normalize();
+                     Vec3 currentDirection = target.position().subtract(this.mob.position()).normalize();
+                     Vector2d targetXZ = new Vector2d(targetView.x(), targetView.z()).normalize();
+                     Vector2d currentXZ = new Vector2d(currentDirection.x(), currentDirection.z()).normalize();
+
+                     double angle = (180.0 / Math.PI) * Mth.atan2(targetXZ.x() - currentXZ.x(), targetXZ.y() - currentXZ.y());
+                     if (Math.abs(angle) >= 90) {
+                        this.unhidingTimer = 20;
+                        this.mob.exposeFromBlock();
+                        this.mob.exposedTimer = 160;
+                        this.mob.takePotShot = true;
+                     }
+                  }
+               }
+            }
+         }
+         else {
+            this.stayHidingTimer--;
+         }
       }
    }
 
