@@ -122,6 +122,9 @@ public class BzTags {
     public static final TagKey<EntityType<?>> STRING_CURTAIN_FORCE_ALLOW_PATHFINDING = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "string_curtains/force_allow_pathfinding"));
     public static final TagKey<EntityType<?>> DIRT_PELLET_EXTRA_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dirt_pellet/extra_damage_dealt_to"));
     public static final TagKey<EntityType<?>> DIRT_PELLET_FORCE_NO_EXTRA_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dirt_pellet/forced_no_extra_damage_dealt_to"));
+    public static final TagKey<EntityType<?>> ROOTMIN_PANIC_AVOID = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "rootmin/panic_avoid"));
+    public static final TagKey<EntityType<?>> ROOTMIN_TARGETS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "rootmin/targets"));
+    public static final TagKey<EntityType<?>> ROOTMIN_FORCED_DO_NOT_TARGET = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "rootmin/forced_do_not_target"));
     public static final TagKey<EntityType<?>> SENTRY_WATCHER_ACTIVATES_WHEN_SEEN = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/activates_when_seen"));
     public static final TagKey<EntityType<?>> SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/forced_never_activates_when_seen"));
     public static final TagKey<EntityType<?>> BEE_LIKE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_like"));

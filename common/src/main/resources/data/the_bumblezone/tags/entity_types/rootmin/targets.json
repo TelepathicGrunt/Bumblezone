@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:player",
+    "minecraft:iron_golem",
+    "minecraft:blaze",
+    "#the_bumblezone:bee_aggression_in_dimension/always_angry_at"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:sentry_watcher",
+    "minecraft:iron_golem",
+    "minecraft:blaze",
+    "minecraft:wither",
+    "minecraft:warden"
+  ]
+}
