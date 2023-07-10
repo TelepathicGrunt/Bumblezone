@@ -226,7 +226,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       this.goalSelector.addGoal(0, new FloatGoal(this));
       this.goalSelector.addGoal(3, new EmbarrassedCurseGoal(this));
       this.goalSelector.addGoal(4, new HiddenGoal(this));
-      this.goalSelector.addGoal(5, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 16.0f, 1.5, 2.5));
+      this.goalSelector.addGoal(5, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 24.0f, 1.75, 2.5));
       this.goalSelector.addGoal(6, new HideGoal(this));
       this.goalSelector.addGoal(14, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
       this.targetSelector.addGoal(15, new HurtByTargetGoal(this));
@@ -698,7 +698,17 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canContinueToUse() {
-         return !this.pathNav.isDone() && !this.mob.isDeadOrDying();
+         if (this.pathNav.isDone()) {
+            if (this.destination != null && this.mob.position().subtract(this.destination).length() < 1) {
+               this.mob.moveTo(this.destination);
+            }
+            this.mob.setDeltaMovement(Vec3.ZERO);
+            this.mob.takePotShot = false;
+            this.mob.hideAsBlock();
+            return false;
+         }
+
+         return !this.mob.isDeadOrDying();
       }
 
       @Override
@@ -710,12 +720,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void stop() {
-         if (this.destination != null && this.mob.position().subtract(this.destination).length() < 1) {
-            this.mob.moveTo(this.destination);
-         }
-         this.mob.setDeltaMovement(Vec3.ZERO);
-         this.mob.takePotShot = false;
-         this.mob.hideAsBlock();
+         this.pathNav.stop();
       }
 
       @Override
@@ -772,7 +777,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                if (target != null) {
                   int distance = target.blockPosition().distManhattan(this.mob.blockPosition());
                   if (distance >= 8 && distance <= 26) {
-                     if (!isFacingMob(this.mob, target)) {
+                     if (!(target instanceof Player) || !isFacingMob(this.mob, target)) {
                         this.unhidingTimer = 20;
                         this.mob.exposeFromBlock();
                         this.mob.exposedTimer = 160;
@@ -827,11 +832,17 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          }
 
          if (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 1200 && this.mob.attackerMemory != null) {
-            this.toAvoid = this.mob.attackerMemory;
+            int distApart = this.mob.attackerMemory.blockPosition().distManhattan(this.mob.blockPosition());
+            if (distApart < this.maxDist) {
+               this.toAvoid = this.mob.attackerMemory;
+            }
          }
          else if (this.mob.tickCount - this.mob.getLastHurtByMobTimestamp() < 1200 && this.mob.getLastHurtByMob() != null) {
-            this.toAvoid = this.mob.getLastHurtByMob();
-            this.mob.attackerMemory = this.mob.getLastHurtByMob();
+            int distApart = this.mob.getLastHurtByMob().blockPosition().distManhattan(this.mob.blockPosition());
+            if (distApart < this.maxDist) {
+               this.toAvoid = this.mob.getLastHurtByMob();
+               this.mob.attackerMemory = this.mob.getLastHurtByMob();
+            }
          }
          else {
             this.toAvoid = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
@@ -880,6 +891,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void stop() {
+         this.pathNav.stop();
          this.toAvoid = null;
       }
 
@@ -1101,127 +1113,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.timestamp = this.mob.getLastHurtByMobTimestamp();
          this.unseenMemoryTicks = 300;
          super.start();
-      }
-   }
-
-   private static class LookAtPlayerGoal extends Goal {
-      public static final float DEFAULT_PROBABILITY = 0.02f;
-      protected final Mob mob;
-      @Nullable
-      protected Entity lookAt;
-      protected final float lookDistance;
-      private int lookTime;
-      protected final float probability;
-      private final boolean onlyHorizontal;
-      protected final Class<? extends LivingEntity> lookAtType;
-      protected final TargetingConditions lookAtContext;
-
-      public LookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> class_, float f) {
-         this(mob, class_, f, DEFAULT_PROBABILITY);
-      }
-
-      public LookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> class_, float f, float g) {
-         this(mob, class_, f, g, false);
-      }
-
-      public LookAtPlayerGoal(Mob mob, Class<? extends LivingEntity> class_, float f, float g, boolean bl) {
-         this.mob = mob;
-         this.lookAtType = class_;
-         this.lookDistance = f;
-         this.probability = g;
-         this.onlyHorizontal = bl;
-         this.setFlags(EnumSet.of(Goal.Flag.LOOK));
-         this.lookAtContext = class_ == Player.class ? TargetingConditions.forNonCombat().range(f).selector(livingEntity -> EntitySelector.notRiding(mob).test((Entity)livingEntity)) : TargetingConditions.forNonCombat().range(f);
-      }
-
-      @Override
-      public boolean canUse() {
-         if (this.mob instanceof RootminEntity rootminEntity && rootminEntity.isHidden) {
-            return false;
-         }
-         if (this.mob.getRandom().nextFloat() >= this.probability) {
-            return false;
-         }
-         if (this.mob.getTarget() != null) {
-            this.lookAt = this.mob.getTarget();
-         }
-         this.lookAt = this.lookAtType == Player.class ? this.mob.level().getNearestPlayer(this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ()) : this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(this.lookAtType, this.mob.getBoundingBox().inflate(this.lookDistance, 3.0, this.lookDistance), livingEntity -> true), this.lookAtContext, this.mob, this.mob.getX(), this.mob.getEyeY(), this.mob.getZ());
-         return this.lookAt != null;
-      }
-
-      @Override
-      public boolean canContinueToUse() {
-         if (!this.lookAt.isAlive()) {
-            return false;
-         }
-         if (this.mob.distanceToSqr(this.lookAt) > (double)(this.lookDistance * this.lookDistance)) {
-            return false;
-         }
-         return this.lookTime > 0;
-      }
-
-      @Override
-      public void start() {
-         this.lookTime = this.adjustedTickDelay(40 + this.mob.getRandom().nextInt(40));
-      }
-
-      @Override
-      public void stop() {
-         this.lookAt = null;
-      }
-
-      @Override
-      public void tick() {
-         if (!this.lookAt.isAlive()) {
-            return;
-         }
-         double d = this.onlyHorizontal ? this.mob.getEyeY() : this.lookAt.getEyeY();
-         this.mob.getLookControl().setLookAt(this.lookAt.getX(), d, this.lookAt.getZ());
-         --this.lookTime;
-      }
-   }
-
-   private static class RandomLookAroundGoal extends Goal {
-      private final Mob mob;
-      private double relX;
-      private double relZ;
-      private int lookTime;
-
-      public RandomLookAroundGoal(Mob mob) {
-         this.mob = mob;
-         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-      }
-
-      @Override
-      public boolean canUse() {
-         if (this.mob instanceof RootminEntity rootminEntity && rootminEntity.isHidden) {
-            return false;
-         }
-         return this.mob.getRandom().nextFloat() < 0.02f;
-      }
-
-      @Override
-      public boolean canContinueToUse() {
-         return this.lookTime >= 0;
-      }
-
-      @Override
-      public void start() {
-         double d = Math.PI * 2 * this.mob.getRandom().nextDouble();
-         this.relX = Math.cos(d);
-         this.relZ = Math.sin(d);
-         this.lookTime = 20 + this.mob.getRandom().nextInt(20);
-      }
-
-      @Override
-      public boolean requiresUpdateEveryTick() {
-         return true;
-      }
-
-      @Override
-      public void tick() {
-         --this.lookTime;
-         this.mob.getLookControl().setLookAt(this.mob.getX() + this.relX, this.mob.getEyeY(), this.mob.getZ() + this.relZ);
       }
    }
 }
