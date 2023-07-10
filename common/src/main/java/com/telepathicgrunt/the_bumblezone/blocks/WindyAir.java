@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -110,7 +111,7 @@ public class WindyAir extends ProperFacingBlock {
             return;
         }
 
-        double strength = windDirection == Direction.UP ? 0.0885D : 0.0275D;
+        double strength = windDirection == Direction.UP ? 0.089D : 0.0275D;
         double size = entity.getBoundingBox().getSize();
         if (size <= 1) {
             strength = strength * (1 / (size / 2 + 0.5D));
@@ -122,16 +123,25 @@ public class WindyAir extends ProperFacingBlock {
         if (entity instanceof ItemEntity) {
             strength *= windDirection == Direction.UP ? 0.9f : 0.7f;
         }
+        else if (entity instanceof Mob) {
+            strength *= windDirection == Direction.UP ? 2.0f : 0.7f;
+        }
 
         Vec3 pushPower = Vec3.atLowerCornerOf(windDirection.getNormal()).scale(strength);
         Vec3 newVelocity = entity.getDeltaMovement();
         if (entity instanceof ItemEntity) {
             newVelocity = newVelocity.add(newVelocity.scale(-0.15f));
         }
+
         newVelocity = newVelocity.add(pushPower);
         if (!entity.onGround() && newVelocity.y() < 0 && windDirection != Direction.DOWN) {
             newVelocity = newVelocity.add(0, -newVelocity.y() + 0.04F, 0);
         }
+
+        if (windDirection == Direction.UP && newVelocity.y() > -0.05) {
+            entity.fallDistance = 0;
+        }
+
         entity.setDeltaMovement(newVelocity);
         APPLIED_PUSH_FOR_ENTITY.get(entity.getStringUUID()).put(windDirection, entity.tickCount);
     }
