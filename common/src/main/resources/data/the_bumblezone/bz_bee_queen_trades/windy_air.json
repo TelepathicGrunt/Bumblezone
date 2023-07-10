@@ -1,0 +1,63 @@
+{
+  "wants" : [
+    {
+      "id": "#the_bumblezone:tools/cannons",
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:tools/shields",
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:tools/spears",
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:armors/boots",
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:armors/chestplates",
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:armors/helmets",
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:armors/leggings",
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:armors/helmets",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:honey_compass",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "the_bumblezone:windy_air",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:windy_air",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:windy_air",
+      "count": 3,
+      "xp_reward": 1,
+      "weight": 2,
+      "required": true
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.world;
+package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.item.Item;

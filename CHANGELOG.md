@@ -51,6 +51,7 @@ Added Luminescent Wax Channel blocks, Luminescent Wax Corner blocks, and Lumines
 
 Windy Air added that will push any entity in whatever direction the air block is blowing! Only found in certain structures.
  Can be found in Creative Menu for builders! Can be controlled by this entity type tag: `the_bumblezone:windy_air/immune_to_push_effect`
+ Bee Queen will give you Windy Air for Bumblezone armor or tools as an easy way to dispose of those unstackable items.
 
 Heavy Air added that will pull entities down and remove Levitation, Slow Falling, Jump Boost, and non-creative flying! 
  Has no effect on Bees and Beehemoth. Only found in Sempiternal Sanctums. Can be found in Creative Menu for builders!

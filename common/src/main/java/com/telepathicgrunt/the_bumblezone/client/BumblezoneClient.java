@@ -61,7 +61,7 @@ import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
-import com.telepathicgrunt.the_bumblezone.mixin.world.ClientLevelAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.client.ClientLevelAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -119,7 +119,6 @@ public class BumblezoneClient {
     public static void clientSetup(ClientSetupEnqueuedEvent event) {
         Set<Item> particleMarkerBlocks = new HashSet<>(ClientLevelAccessor.getMARKER_PARTICLE_ITEMS());
         particleMarkerBlocks.add(BzItems.HEAVY_AIR.get());
-        particleMarkerBlocks.add(BzItems.WINDY_AIR.get());
         ClientLevelAccessor.setMARKER_PARTICLE_ITEMS(particleMarkerBlocks);
     }
 

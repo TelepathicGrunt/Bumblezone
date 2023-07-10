@@ -60,7 +60,6 @@
     "loot.LootContextAccessor",
     "loot.LootParamsMixin",
     "util.WeightedRandomListAccessor",
-    "world.ClientLevelAccessor",
     "world.LevelMixin",
     "world.NoiseChunkAccessor",
     "world.ServerWorldMixin",
@@ -73,6 +72,8 @@
   ],
   "client": [
     "client.ClientEntityMixin",
+    "client.ClientLevelAccessor",
+    "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",
     "client.FogRendererMixin",

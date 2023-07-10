@@ -5,9 +5,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -22,6 +26,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.CubeVoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -36,7 +41,7 @@ public class WindyAir extends ProperFacingBlock {
 
     public WindyAir() {
         super(Properties.of()
-                .strength(-1.0f, 3600000.8f)
+                .strength(0.01f, 3600000.8f)
                 .noCollission()
                 .replaceable()
                 .noLootTable()
@@ -151,5 +156,40 @@ public class WindyAir extends ProperFacingBlock {
                 level.playSound(null, blockPos, BzSounds.WINDY_AIR_BLOWS.get(), SoundSource.AMBIENT, (randomSource.nextFloat() * 0.05F) + 0.5F, (randomSource.nextFloat() * 0.1F) + 0.8F);
             }
         }
+    }
+
+    @Override
+    protected void spawnDestroyParticles(Level level, Player player, BlockPos blockPos, BlockState blockState) {
+        VoxelShape voxelshape = Shapes.block();
+        voxelshape.forAllBoxes((x1, y1, z1, x2, y2, z2) -> {
+            double d1 = Math.min(1.0, x2 - x1);
+            double d2 = Math.min(1.0, y2 - y1);
+            double d3 = Math.min(1.0, z2 - z1);
+            int i = Math.max(2, Mth.ceil(d1 / 0.25));
+            int j = Math.max(2, Mth.ceil(d2 / 0.25));
+            int k = Math.max(2, Mth.ceil(d3 / 0.25));
+
+            for(int x = 0; x < i; ++x) {
+                for(int y = 0; y < j; ++y) {
+                    for(int z = 0; z < k; ++z) {
+                        double d4 = ((double)x + 0.5) / (double)i;
+                        double d5 = ((double)y + 0.5) / (double)j;
+                        double d6 = ((double)z + 0.5) / (double)k;
+                        double d7 = d4 * d1 + x1;
+                        double d8 = d5 * d2 + y1;
+                        double d9 = d6 * d3 + z1;
+                        level.addParticle(
+                            new BlockParticleOption(ParticleTypes.BLOCK, blockState),
+                            (double)blockPos.getX() + d7,
+                            (double)blockPos.getY() + d8,
+                            (double)blockPos.getZ() + d9,
+                            d4 - 0.5,
+                            d5 - 0.5,
+                            d6 - 0.5
+                        );
+                    }
+                }
+            }
+        });
     }
 }
