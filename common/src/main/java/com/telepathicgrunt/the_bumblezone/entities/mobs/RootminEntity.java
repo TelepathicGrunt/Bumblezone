@@ -223,14 +223,15 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    protected void registerGoals() {
+      // Add curious and shock goal
       this.goalSelector.addGoal(0, new FloatGoal(this));
       this.goalSelector.addGoal(3, new EmbarrassedCurseGoal(this));
-      this.goalSelector.addGoal(4, new HiddenGoal(this));
-      this.goalSelector.addGoal(5, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 24.0f, 1.75, 2.5));
-      this.goalSelector.addGoal(6, new HideGoal(this));
-      this.goalSelector.addGoal(14, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
-      this.targetSelector.addGoal(15, new HurtByTargetGoal(this));
-      this.targetSelector.addGoal(16, new NearestAttackableTargetGoal(this, true));
+      this.goalSelector.addGoal(6, new HiddenGoal(this));
+      this.goalSelector.addGoal(7, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 24.0f, 1.75, 2.5));
+      this.goalSelector.addGoal(8, new HideGoal(this));
+      this.goalSelector.addGoal(9, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
+      this.targetSelector.addGoal(10, new HurtByTargetGoal(this));
+      this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, true));
    }
 
    public static AttributeSupplier.Builder getAttributeBuilder() {

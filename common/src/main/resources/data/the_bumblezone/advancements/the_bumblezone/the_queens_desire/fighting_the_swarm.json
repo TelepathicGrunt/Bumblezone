@@ -25,8 +25,9 @@
     "silverfish_killed": {
       "trigger": "the_bumblezone:killed_counter",
       "conditions": {
-        "target_count": 24,
-        "target_entity": "minecraft:silverfish"
+        "target_count": 16,
+        "target_entity": "the_bumblezone:queens_desire/fighting_the_swarm_silverfish",
+        "is_target_tag": true
       }
     }
   },

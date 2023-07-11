@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:endermite",
+    {
+      "id": "occultism:possessed_endermite",
+      "required": false
+    }
+  ]
+}

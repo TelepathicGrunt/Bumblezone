@@ -286,8 +286,11 @@ Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaini
 Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
 
 Added "is_target_tag" field to the_bumblezone:killed_counter trigger for advancements. Now you can make "target_entity" point to a tag.
- As a result, the Queen's Desire's Too Many legs advancement now counts more modded spiders towards the advancement. The new entity tag is:
+ As a result, some of the Queen's Desire's advancements now checks entity tags for what counts towards them. These are:
  `the_bumblezone:queens_desire/too_many_legs_spiders`
+ `the_bumblezone:queens_desire/fighting_the_swarm_silverfish`
+ `the_bumblezone:queens_desire/otherworldly_mites_endermite`
+ `the_bumblezone:queens_desire/terror_fangs_cave_spider`
 
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
