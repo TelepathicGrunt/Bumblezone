@@ -2,7 +2,7 @@
 
 #TODO: Electric Ring Textures/animations
 
-#TODO: Implement rootmin.
+#TODO: Implement rootmin essence event.
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
 
@@ -10,7 +10,7 @@
 
 #TODO: Add music for sanctums
 
-#TODO: Add sounds for Rootmin 
+#TODO: Add sounds and particles for Rootmin 
 
 #TODO: Add more sanctum rooms and add welcome statues and add rootmin entries. Do sanctum variants
 

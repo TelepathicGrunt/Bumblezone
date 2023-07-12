@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
@@ -45,7 +44,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -66,16 +64,15 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector2d;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 public class RootminEntity extends PathfinderMob implements Enemy {
@@ -101,10 +98,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private boolean disableAttackGoals = false;
    private RootminEntity rootminToLookAt = null;
    private LivingEntity attackerMemory = null;
+   private UUID superHatedPlayer = null;
    private int delayTillIdle = -1;
    private boolean takePotShot = false;
    private int exposedTimer = 0;
+   private int curiosityCooldown = 0;
+   private int stayHidingTimer = 200;
    public int animationTimeBetweenHiding = 0;
+   public UUID essenceController = null;
 
    private static final Set<RootminPose> POSES_THAT_CANT_BE_MOTION_INTERRUPTED = Set.of(
            RootminPose.ANGRY,
@@ -167,6 +168,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       return state;
    }
 
+   public UUID getEssenceController() {
+      return essenceController;
+   }
+
+   public void setEssenceController(UUID essenceController) {
+      this.essenceController = essenceController;
+   }
+
    public void setRootminPose(RootminPose rootminPose) {
       this.entityData.set(ROOTMIN_POSE, rootminPose);
    }
@@ -223,15 +232,16 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    protected void registerGoals() {
-      // Add curious and shock goal
       this.goalSelector.addGoal(0, new FloatGoal(this));
-      this.goalSelector.addGoal(3, new EmbarrassedCurseGoal(this));
-      this.goalSelector.addGoal(6, new HiddenGoal(this));
-      this.goalSelector.addGoal(7, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 24.0f, 1.75, 2.5));
-      this.goalSelector.addGoal(8, new HideGoal(this));
-      this.goalSelector.addGoal(9, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
-      this.targetSelector.addGoal(10, new HurtByTargetGoal(this));
-      this.targetSelector.addGoal(11, new NearestAttackableTargetGoal(this, true));
+      this.goalSelector.addGoal(1, new AntiGoal(this));
+      this.goalSelector.addGoal(2, new EmbarrassedCurseGoal(this));
+      this.goalSelector.addGoal(3, new CuriosityGoal(this));
+      this.goalSelector.addGoal(4, new HiddenGoal(this));
+      this.goalSelector.addGoal(5, new AvoidEntityGoal(this, BzTags.ROOTMIN_PANIC_AVOID, 24.0f, 1.75, 2.5));
+      this.goalSelector.addGoal(6, new HideGoal(this));
+      this.goalSelector.addGoal(7, new RangedAttackGoal(this, 1.25, 20, 15, 30.0f));
+      this.targetSelector.addGoal(8, new HurtByTargetGoal(this));
+      this.targetSelector.addGoal(9, new NearestAttackableTargetGoal(this, true));
    }
 
    public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -252,6 +262,12 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       compound.putBoolean("hidden", this.isHidden);
       compound.putInt("delayTillIdle", this.delayTillIdle);
       compound.putString("animationState", this.getRootminPose().name());
+      if (this.superHatedPlayer != null) {
+         compound.putUUID("superHatedPlayer", this.superHatedPlayer);
+      }
+      if (this.getEssenceController() != null) {
+         compound.putUUID("essenceController", this.getEssenceController());
+      }
    }
 
    @Override
@@ -273,9 +289,16 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       this.isHidden = compound.getBoolean("hidden");
       this.delayTillIdle = compound.getInt("delayTillIdle");
+      if (compound.contains("essenceController")) {
+         this.setEssenceController(compound.getUUID("essenceController"));
+      }
+      if (compound.contains("superHatedPlayer")) {
+         this.superHatedPlayer = compound.getUUID("superHatedPlayer");
+      }
       if (this.isHidden) {
          this.setRootminPose(RootminPose.ENTITY_TO_BLOCK);
-      } else {
+      }
+      else {
          if (compound.contains("animationState")) {
             this.setRootminPose(RootminPose.valueOf(compound.getString("animationState")));
          }
@@ -572,6 +595,135 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    ///////////////////////////////////////////////////////
    //GOALS
 
+   private static class AntiGoal extends Goal {
+      protected final RootminEntity mob;
+
+      public AntiGoal(RootminEntity pathfinderMob) {
+         this.mob = pathfinderMob;
+         this.setFlags(EnumSet.of(Flag.MOVE));
+      }
+
+      @Override
+      public boolean canUse() {
+         return this.mob.getEssenceController() != null;
+      }
+
+      @Override
+      public boolean canContinueToUse() {
+         return this.mob.getEssenceController() != null;
+      }
+
+      @Override
+      public void start() {}
+
+      @Override
+      public void stop() {}
+
+      @Override
+      public void tick() {}
+   }
+
+   private static class CuriosityGoal extends Goal {
+      protected final RootminEntity mob;
+      protected boolean isCuriousNow = false;
+      protected LivingEntity inspect = null;
+      protected TargetingConditions targetConditions;
+      protected int exposingTiming = 0;
+      protected int curiosityWaiting = 0;
+
+      public CuriosityGoal(RootminEntity pathfinderMob) {
+         this.mob = pathfinderMob;
+         this.setFlags(EnumSet.of(Flag.MOVE));
+         this.targetConditions = TargetingConditions.forCombat().range(this.mob.getAttributeValue(Attributes.FOLLOW_RANGE)).selector(null);
+      }
+
+      protected AABB getTargetSearchArea(double d) {
+         return this.mob.getBoundingBox().inflate(d, 4.0, d);
+      }
+
+      @Override
+      public boolean canUse() {
+         if (this.mob.getRootminPose() != RootminPose.ENTITY_TO_BLOCK) {
+            return false;
+         }
+
+         if (this.mob.getTarget() != null) {
+            return false;
+         }
+
+         if (this.mob.curiosityCooldown > 0) {
+            return false;
+         }
+
+         double seeRange = this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
+         this.inspect = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
+                         LivingEntity.class,
+                         this.getTargetSearchArea(seeRange),
+                         livingEntity -> BeeArmor.getBeeThemedGearCount(livingEntity) > 0),
+                 this.targetConditions,
+                 this.mob,
+                 this.mob.getX(),
+                 this.mob.getEyeY(),
+                 this.mob.getZ());
+
+         if (this.inspect == null) {
+            return false;
+         }
+
+         return this.inspect.distanceToSqr(this.mob) <= 32 * 32;
+      }
+
+      @Override
+      public boolean canContinueToUse() {
+         return !this.mob.isDeadOrDying() &&
+                 this.inspect != null &&
+                 !this.inspect.isDeadOrDying() &&
+                 (!this.isCuriousNow || this.curiosityWaiting > 0 || this.mob.getRootminPose() == RootminPose.CURIOUS) &&
+                 BeeArmor.getBeeThemedGearCount(this.inspect) > 0 &&
+                 this.mob.blockPosition().distManhattan(this.inspect.blockPosition()) < 32;
+      }
+
+      @Override
+      public void start() {
+         if (this.mob.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+            this.mob.exposeFromBlock();
+            this.exposingTiming = 20;
+         }
+         this.curiosityWaiting = 0;
+      }
+
+      @Override
+      public void stop() {
+         this.mob.curiosityCooldown = 600;
+         this.mob.exposedTimer = 0;
+         this.exposingTiming = 0;
+         this.curiosityWaiting = 0;
+         this.mob.setRootminPose(RootminPose.NONE);
+      }
+
+      @Override
+      public void tick() {
+         if (this.curiosityWaiting > 0) {
+            this.curiosityWaiting--;
+            this.mob.lookAt(this.inspect, 60, 30);
+         }
+         else if (this.exposingTiming > 0) {
+            exposingTiming--;
+         }
+         else if (!this.isCuriousNow) {
+            if (this.mob.distanceToSqr(this.inspect) < 5 * 5) {
+               this.mob.getNavigation().stop();
+               this.isCuriousNow = true;
+               this.mob.runCurious();
+               this.curiosityWaiting = 60;
+            }
+            else {
+               this.mob.getNavigation().moveTo(this.inspect, 1);
+            }
+         }
+      }
+   }
+
    private static class EmbarrassedCurseGoal extends Goal {
       protected final RootminEntity mob;
       protected int timer = 0;
@@ -590,8 +742,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canContinueToUse() {
-         Bumblezone.LOGGER.warn("Rootmin event: {}, {}, {}, {}", this.mob, this.timer, this.mob.getRootminPose().name(), this.mob.delayTillIdle);
-
          return this.timer > 0 &&
                  this.mob.rootminToLookAt != null &&
                  !this.mob.isDeadOrDying() &&
@@ -734,7 +884,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private static class HiddenGoal extends Goal {
       protected final RootminEntity mob;
       protected int unhidingTimer = 0;
-      protected int stayHidingTimer = 200;
 
       public HiddenGoal(RootminEntity pathfinderMob) {
          this.mob = pathfinderMob;
@@ -753,7 +902,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void start() {
-         this.stayHidingTimer = 200;
+         this.mob.stayHidingTimer = 200;
          this.unhidingTimer = 0;
       }
 
@@ -769,7 +918,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.mob.getLookControl().setLookAt(lookVec.x(), lookVec.y(), lookVec.z(), 60, 0);
          this.mob.setYRot(direction.toYRot());
 
-         if (this.stayHidingTimer == 0) {
+         if (this.mob.stayHidingTimer == 0) {
             if (this.unhidingTimer > 0) {
                this.unhidingTimer--;
             }
@@ -789,7 +938,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             }
          }
          else {
-            this.stayHidingTimer--;
+            this.mob.stayHidingTimer--;
          }
       }
    }
@@ -912,7 +1061,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                this.mob.setRootminPose(RootminPose.WALK);
             }
          }
-
       }
    }
 
@@ -960,6 +1108,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                                     !livingEntity.getType().is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET);
 
                             if (canTarget && livingEntity instanceof Player player) {
+                               if (this.mob instanceof RootminEntity rootminEntity && player.getUUID().equals(rootminEntity.superHatedPlayer)) {
+                                  rootminEntity.stayHidingTimer = 0;
+                                  return true;
+                               }
                                if (BeeArmor.getBeeThemedGearCount(player) > 0) {
                                   return false;
                                }
@@ -1015,7 +1167,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       @Override
       public boolean canUse() {
          LivingEntity livingEntity = this.mob.getTarget();
-         if (livingEntity == null || !livingEntity.isAlive() || (this.mob instanceof RootminEntity rootminEntity && rootminEntity.disableAttackGoals)) {
+         if (livingEntity == null || !livingEntity.isAlive() || (this.mob instanceof RootminEntity rootminEntity2 && rootminEntity2.disableAttackGoals)) {
             return false;
          }
          this.target = livingEntity;
@@ -1114,6 +1266,18 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.timestamp = this.mob.getLastHurtByMobTimestamp();
          this.unseenMemoryTicks = 300;
          super.start();
+
+         if (this.targetMob != null) {
+            List<RootminEntity> rootminEntities = this.mob.level().getEntitiesOfClass(RootminEntity.class, this.mob.getBoundingBox().inflate(30));
+            for(RootminEntity rootminEntity : rootminEntities) {
+               if (rootminEntity != this.mob && rootminEntity.getTarget() != this.targetMob && !POSES_THAT_CANT_BE_MOTION_INTERRUPTED.contains(rootminEntity.getRootminPose())) {
+                  rootminEntity.runAngry();
+               }
+
+               rootminEntity.setTarget(this.targetMob);
+               rootminEntity.superHatedPlayer = this.targetMob.getUUID();
+            }
+         }
       }
    }
 }
