@@ -1,0 +1,9 @@
+{
+  "is_color_randomizer_trade": true,
+  "randomizes": [
+    {
+      "id": "#the_bumblezone:luminescent_wax/light_channels",
+      "required": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "the_bumblezone",
+  "ingredients": [
+    {
+      "tag": "the_bumblezone:luminescent_wax/light_channels"
+    }
+  ],
+  "result": {
+    "item": "the_bumblezone:luminescent_wax_channel"
+  }
+}

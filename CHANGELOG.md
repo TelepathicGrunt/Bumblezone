@@ -48,6 +48,7 @@ Added Luminescent Wax Channel blocks, Luminescent Wax Corner blocks, and Lumines
  people who consumed Essence of the Bees before and standing on said blocks will get Speed, Damage Resistance, 
  and Beenergized. The light forms will repel Piglins and Hoglins and also will count towards empowering Enchanting Table 
  like Bookshelves do. You can use shears to change the direction of these blocks. Only found in certain structures.
+ The light forms can be crafted into lightless forms.
 
 Windy Air added that will push any entity in whatever direction the air block is blowing! Only found in certain structures.
  Can be found in Creative Menu for builders! Can be controlled by this entity type tag: `the_bumblezone:windy_air/immune_to_push_effect`

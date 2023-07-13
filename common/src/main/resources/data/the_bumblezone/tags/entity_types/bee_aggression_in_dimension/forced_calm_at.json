@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "the_bumblezone:rootmin",
     {
       "id": "alexsmobs:lobster",
       "required": false

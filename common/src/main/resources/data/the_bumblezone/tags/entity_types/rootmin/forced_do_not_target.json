@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "#the_bumblezone:bee_aggression_in_dimension/forced_calm_at"
+    "#the_bumblezone:bee_aggression_in_dimension/forced_calm_at",
+    "#the_bumblezone:bees",
+    "#the_bumblezone:bee_like"
   ]
 }

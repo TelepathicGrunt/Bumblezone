@@ -1246,6 +1246,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                return false;
             }
             else {
+               if (livingEntity.getType().is(BzTags.ROOTMIN_FORCED_DO_NOT_TARGET)) {
+                  return false;
+               }
+
                if (livingEntity instanceof RootminEntity rootminEntityAttacker &&
                     this.mob instanceof RootminEntity rootminEntity &&
                     !rootminEntity.isInvulnerable())
