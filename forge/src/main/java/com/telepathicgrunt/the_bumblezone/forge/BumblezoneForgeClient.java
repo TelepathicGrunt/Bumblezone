@@ -52,6 +52,7 @@ import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -186,7 +187,9 @@ public class BumblezoneForgeClient {
 //        }
     }
 
-    public static void onBeforeBlockOutlineRendering(RenderHighlightEvent event) {
-        KnowingEssenceLootBlockOutlining.outlineLootBlocks(event.getPoseStack(), event.getCamera(), event.getLevelRenderer());
+    public static void onBeforeBlockOutlineRendering(RenderLevelStageEvent event) {
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
+            KnowingEssenceLootBlockOutlining.outlineLootBlocks(event.getPoseStack(), event.getCamera(), event.getLevelRenderer());
+        }
     }
  }
