@@ -1109,8 +1109,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
                             if (canTarget && livingEntity instanceof Player player) {
                                if (this.mob instanceof RootminEntity rootminEntity && player.getUUID().equals(rootminEntity.superHatedPlayer)) {
-                                  rootminEntity.stayHidingTimer = 0;
-                                  return true;
+                                  if (player.isCreative() || player.isSpectator() || player.isDeadOrDying()) {
+                                     rootminEntity.superHatedPlayer = null;
+                                     return false;
+                                  }
+                                  else {
+                                     rootminEntity.stayHidingTimer = 0;
+                                     return true;
+                                  }
                                }
                                if (BeeArmor.getBeeThemedGearCount(player) > 0) {
                                   return false;
@@ -1195,7 +1201,12 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       public void tick() {
          double d = this.mob.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
          boolean bl = this.mob.getSensing().hasLineOfSight(this.target);
-         this.seeTime = bl ? ++this.seeTime : 0;
+
+         Level level = this.mob.level();
+         BlockPos posInFront = this.mob.blockPosition().relative(this.mob.getDirection());
+         boolean blockBlockingInFront = level.getBlockState(posInFront).isCollisionShapeFullBlock(level, posInFront);
+
+         this.seeTime = (bl && !blockBlockingInFront) ? ++this.seeTime : 0;
          if (d > (double) this.attackRadiusSqr || this.seeTime < 5) {
             this.mob.getNavigation().moveTo(this.target, this.speedModifier);
          }
@@ -1204,7 +1215,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          }
          this.mob.getLookControl().setLookAt(this.target, 30.0f, 30.0f);
          if (--this.attackTime == 0) {
-            if (!bl) {
+            if (!bl || blockBlockingInFront) {
                return;
             }
             float f = (float) Math.sqrt(d) / this.attackRadius;

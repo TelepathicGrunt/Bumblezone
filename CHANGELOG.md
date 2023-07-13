@@ -12,7 +12,7 @@
 
 #TODO: Add sounds and particles for Rootmin 
 
-#TODO: Add more sanctum rooms and add welcome statues and add rootmin entries. Do sanctum variants
+#TODO: Add more sanctum rooms and add welcome statues. Do sanctum variants
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 

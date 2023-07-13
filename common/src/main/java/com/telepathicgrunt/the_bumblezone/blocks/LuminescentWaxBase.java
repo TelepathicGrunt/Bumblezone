@@ -26,7 +26,7 @@ public interface LuminescentWaxBase {
             if (livingEntity instanceof ServerPlayer player && EssenceOfTheBees.hasEssence(player)) {
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.MOVEMENT_SPEED,
-                        50,
+                        110,
                         0,
                         false,
                         false,
@@ -34,7 +34,7 @@ public interface LuminescentWaxBase {
 
                 livingEntity.addEffect(new MobEffectInstance(
                         MobEffects.DAMAGE_RESISTANCE,
-                        50,
+                        110,
                         0,
                         false,
                         false,
@@ -42,7 +42,7 @@ public interface LuminescentWaxBase {
 
                 livingEntity.addEffect(new MobEffectInstance(
                         BzEffects.BEENERGIZED.get(),
-                        50,
+                        110,
                         0,
                         false,
                         false,
