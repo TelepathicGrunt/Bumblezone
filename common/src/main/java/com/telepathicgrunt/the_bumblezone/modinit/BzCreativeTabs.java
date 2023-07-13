@@ -288,6 +288,7 @@ public class BzCreativeTabs {
                     BzItems.VARIANT_BEE_SPAWN_EGG,
                     BzItems.BEEHEMOTH_SPAWN_EGG,
                     BzItems.BEE_QUEEN_SPAWN_EGG,
+                    BzItems.ROOTMIN_SPAWN_EGG,
                     BzItems.SENTRY_WATCHER_SPAWN_EGG
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
