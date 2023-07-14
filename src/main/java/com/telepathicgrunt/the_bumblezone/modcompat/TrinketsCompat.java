@@ -15,12 +15,12 @@ public class TrinketsCompat {
 		ModChecker.TrinketsPresent = true;
 	}
 
-	public static int getTrinketsBeeGearCount(Entity entity) {
+	public static int getTrinketsBeeWearablesCount(Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			Optional<TrinketComponent> optionalTrinketComponent = TrinketsApi.getTrinketComponent(livingEntity);
 			if (optionalTrinketComponent.isPresent()) {
 				return optionalTrinketComponent.get().getEquipped((itemStack) -> {
-					if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+					if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
 						return !ModChecker.backpackedPresent || BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
 					}
 					return false;
