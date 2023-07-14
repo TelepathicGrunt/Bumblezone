@@ -1,6 +1,6 @@
 {
   "type": "the_bumblezone:container_shapeless_recipe_bz",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:royal_jelly_bucket",
   "ingredients": [
     {
       "item": "the_bumblezone:royal_jelly_bottle"

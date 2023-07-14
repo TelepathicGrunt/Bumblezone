@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:redstone_honey_web",
   "ingredients": [
     {
       "item": "the_bumblezone:honey_web"

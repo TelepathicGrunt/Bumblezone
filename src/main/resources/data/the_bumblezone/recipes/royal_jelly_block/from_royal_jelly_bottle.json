@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:royal_jelly_block",
   "pattern": [
     "bb",
     "bb"

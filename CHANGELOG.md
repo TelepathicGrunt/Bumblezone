@@ -2,3 +2,6 @@
 
 ##### Dimension:
 Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dimension
+
+##### Items:
+Cleaned up how Bumblezone items are grouped in vanilla Recipe Book

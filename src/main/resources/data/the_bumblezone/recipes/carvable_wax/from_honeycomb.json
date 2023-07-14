@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:carvable_wax",
   "pattern": [
     "hhh",
     "hhh",

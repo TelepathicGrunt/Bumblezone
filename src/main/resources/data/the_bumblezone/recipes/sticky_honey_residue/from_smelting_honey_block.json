@@ -1,5 +1,6 @@
 {
   "type": "minecraft:smelting",
+  "group": "the_bumblezone:sticky_honey_residue",
   "ingredient": {
     "item": "minecraft:honey_block"
   },
