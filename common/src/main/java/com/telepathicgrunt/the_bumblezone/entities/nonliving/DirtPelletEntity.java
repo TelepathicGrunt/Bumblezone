@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -100,8 +101,10 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         if (entity instanceof LivingEntity livingEntity) {
             Vector2d direction = new Vector2d(this.getDeltaMovement().x(), this.getDeltaMovement().z()).normalize();
             double yRotHitRadian = Mth.atan2(direction.x(), direction.y());
+            double knockbackStrength = livingEntity instanceof RootminEntity ? 0.1D : 1D;
+
             livingEntity.knockback(
-                1d,
+                knockbackStrength,
                 -Mth.sin((float) yRotHitRadian),
                 -Mth.cos((float) yRotHitRadian)
             );

@@ -14,6 +14,8 @@
 
 #TODO: Add more sanctum rooms. Do sanctum variants
 
+#TODO: on screen and player character spike effects for essence items active.
+
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 
@@ -285,6 +287,8 @@ Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaini
 
 ##### Advancements:
 Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
+
+Renamed VIP Trader advancement to Crazy Trader to reduce confusion.
 
 Added "is_target_tag" field to the_bumblezone:killed_counter trigger for advancements. Now you can make "target_entity" point to a tag.
  As a result, some of the Queen's Desire's advancements now checks entity tags for what counts towards them. These are:

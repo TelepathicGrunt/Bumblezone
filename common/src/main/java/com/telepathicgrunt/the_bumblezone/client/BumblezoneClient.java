@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.RoyalJellyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
+import com.telepathicgrunt.the_bumblezone.client.particles.VoiceParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.VariantBeeRenderer;
@@ -376,6 +377,11 @@ public class BumblezoneClient {
         event.register(BzParticles.ROYAL_JELLY_PARTICLE.get(), RoyalJellyParticle.Factory::new);
         event.register(BzParticles.DUST_PARTICLE.get(), DustParticle.Factory::new);
         event.register(BzParticles.WIND_PARTICLE.get(), WindParticle.Factory::new);
+        event.register(BzParticles.ANGRY_PARTICLE.get(), VoiceParticle.Factory::new);
+        event.register(BzParticles.CURIOUS_PARTICLE.get(), VoiceParticle.Factory::new);
+        event.register(BzParticles.CURSING_PARTICLE.get(), VoiceParticle.Factory::new);
+        event.register(BzParticles.EMBARRASSED_PARTICLE.get(), VoiceParticle.Factory::new);
+        event.register(BzParticles.SHOCK_PARTICLE.get(), VoiceParticle.Factory::new);
     }
 
     public static void registerDimensionEffects(RegisterDimensionEffectsEvent event) {
