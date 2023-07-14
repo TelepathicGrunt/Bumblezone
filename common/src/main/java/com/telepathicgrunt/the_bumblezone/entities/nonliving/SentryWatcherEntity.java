@@ -792,7 +792,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                   damageMultiplier = 16;
                }
 
-               int beeArmorOn = BeeArmor.getBeeThemedGearCount(entity);
+               int beeArmorOn = BeeArmor.getBeeThemedWearablesCount(entity);
                damageMultiplier -= (beeArmorOn * 1.333333f);
 
                entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) (speedDiff * damageMultiplier));

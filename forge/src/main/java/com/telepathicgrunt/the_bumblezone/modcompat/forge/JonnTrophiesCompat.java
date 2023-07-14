@@ -20,11 +20,11 @@ public class JonnTrophiesCompat implements ModCompat {
 
 	@Override
 	public EnumSet<Type> compatTypes() {
-		return EnumSet.of(Type.BEE_GEAR_BOOSTING);
+		return EnumSet.of(Type.BEE_WEARABLES_BOOSTING);
 	}
 
 	@Override
-	public boolean isItemExplicitlyDisallowedFromBeeGearBoosting(ItemStack itemStack) {
+	public boolean isItemExplicitlyDisallowedFromBeeWearablesBoosting(ItemStack itemStack) {
 		if (JonnTrophiesCompat.isTrophy(itemStack)) {
 			return !JonnTrophiesCompat.isTrophyBeeThemed(itemStack);
 		}

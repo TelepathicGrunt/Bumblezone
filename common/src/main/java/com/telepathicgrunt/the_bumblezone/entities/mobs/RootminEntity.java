@@ -415,7 +415,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       ItemStack itemstack = player.getItemInHand(hand);
       boolean instantBuild = player.getAbilities().instabuild;
 
-      if (itemstack.getItem() instanceof BlockItem blockItem && (instantBuild || BeeArmor.getBeeThemedGearCount(player) > 0)) {
+      if (itemstack.getItem() instanceof BlockItem blockItem && (instantBuild || BeeArmor.getBeeThemedWearablesCount(player) > 0)) {
          BlockState blockState = blockItem.getBlock().defaultBlockState();
 
          if (blockState.is(BzTags.ROOTMIN_ALLOWED_FLOWER) && !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWER)) {
@@ -657,7 +657,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             return true;
          }
 
-         if (BeeArmor.getBeeThemedGearCount(player) > 0) {
+         if (BeeArmor.getBeeThemedWearablesCount(player) > 0) {
             return false;
          }
       }
@@ -790,7 +790,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.inspect = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
                          LivingEntity.class,
                          this.getTargetSearchArea(seeRange),
-                         livingEntity -> BeeArmor.getBeeThemedGearCount(livingEntity) > 0),
+                         livingEntity -> BeeArmor.getBeeThemedWearablesCount(livingEntity) > 0),
                  this.targetConditions,
                  this.mob,
                  this.mob.getX(),
@@ -810,7 +810,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                  this.inspect != null &&
                  !this.inspect.isDeadOrDying() &&
                  (!this.isCuriousNow || this.curiosityWaiting > 0 || this.mob.getRootminPose() == RootminPose.CURIOUS) &&
-                 BeeArmor.getBeeThemedGearCount(this.inspect) > 0 &&
+                 BeeArmor.getBeeThemedWearablesCount(this.inspect) > 0 &&
                  this.mob.blockPosition().distManhattan(this.inspect.blockPosition()) < 32;
       }
 

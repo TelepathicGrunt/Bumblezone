@@ -207,6 +207,10 @@ Honeycomb Brood Block feeding now can grant you Protection of the Hive even when
 Increased duration of Protection of the Hive obtained from Honeycomb Brood Block feeding.
 
 ##### Items:
+Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
+
+Renamed the Bumble Bee Chestplate optional nbt from `requiredGearCountForForcedFlyingTime` to `requiredWearablesCountForForcedFlyingTime`
+
 Cleaned up how Bumblezone items are grouped in vanilla Recipe Book
 
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
@@ -223,8 +227,8 @@ Added configs to turn off Brewing Recipes
 
 Added two new nbt that modpack makers can set for Bumble Bee Chestplate to change the flight time. 
  Add "forcedMaxFlyingTickTime" int to the item's nbt to set the new maximum flight time for that item.
- Add "requiredGearCountForForcedFlyingTime" to make the above nbt only apply if player has the correct number of bee gear equipped.
- "forcedMaxFlyingTickTime", if present, will always apply if "requiredGearCountForForcedFlyingTime" is not present
+ Add "requiredWearablesCountForForcedFlyingTime" to make the above nbt only apply if player has the correct number of bee wearables equipped.
+ "forcedMaxFlyingTickTime", if present, will always apply if "requiredWearablesCountForForcedFlyingTime" is not present
 
 Fixed one Bumble Bee Chestplate's wings being off when viewed from above and is flying.
 

@@ -87,7 +87,7 @@ public interface ModCompat {
         return 0;
     }
 
-    default boolean isItemExplicitlyDisallowedFromBeeGearBoosting(ItemStack itemStack) {
+    default boolean isItemExplicitlyDisallowedFromBeeWearablesBoosting(ItemStack itemStack) {
         return false;
     }
 
@@ -101,6 +101,6 @@ public interface ModCompat {
         HAS_HOST_BEES,
         PROJECTILE_IMPACT_HANDLED,
         CUSTOM_EQUIPMENT_SLOTS,
-        BEE_GEAR_BOOSTING,
+        BEE_WEARABLES_BOOSTING,
     }
 }

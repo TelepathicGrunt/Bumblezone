@@ -67,7 +67,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
             }
 
             return entityMatch &&
-                    (!this.beeArmorRequired || BeeArmor.getBeeThemedGearCount(serverPlayer) >= 4) &&
+                    (!this.beeArmorRequired || BeeArmor.getBeeThemedWearablesCount(serverPlayer) >= 4) &&
                     currentCount >= this.targetCount;
         }
 

@@ -32,29 +32,29 @@ public abstract class BeeArmor extends BzArmor implements ItemExtension {
 
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) { }
 
-    public static int getBeeThemedGearCount(Entity entity) {
-        int beeGearCount = 0;
+    public static int getBeeThemedWearablesCount(Entity entity) {
+        int beeWearablesCount = 0;
         for(ItemStack armor : entity.getArmorSlots()) {
-            if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+            if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
                 if (isAllowedBeeArmorBoosting(armor)) {
-                    beeGearCount++;
+                    beeWearablesCount++;
                 }
             }
         }
         for (ModCompat compat : ModChecker.CUSTOM_EQUIPMENT_SLOTS_COMPATS) {
-            beeGearCount += compat.getNumberOfMatchingEquippedItemsInCustomSlots(entity, (itemStack) -> {
-                if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+            beeWearablesCount += compat.getNumberOfMatchingEquippedItemsInCustomSlots(entity, (itemStack) -> {
+                if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
                     return !ModChecker.backpackedPresent || BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
                 }
                 return false;
             });
         }
-        return beeGearCount;
+        return beeWearablesCount;
     }
 
     private static boolean isAllowedBeeArmorBoosting(ItemStack armor) {
-        for (ModCompat compat : ModChecker.BEE_GEAR_BOOSTING_COMPATS) {
-            if (compat.isItemExplicitlyDisallowedFromBeeGearBoosting(armor)) {
+        for (ModCompat compat : ModChecker.BEE_WEARABLES_BOOSTING_COMPATS) {
+            if (compat.isItemExplicitlyDisallowedFromBeeWearablesBoosting(armor)) {
                 return false;
             }
         }
