@@ -1,6 +1,7 @@
 {
   "type": "minecraft:smelting",
-  "group": "the_bumblezone",
+  "category": "blocks",
+  "group": "the_bumblezone:carvable_wax",
   "ingredient": {
     "item": "the_bumblezone:beehive_beeswax"
   },

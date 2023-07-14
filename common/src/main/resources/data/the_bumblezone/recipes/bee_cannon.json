@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "the_bumblezone",
+  "category": "equipment",
+  "group": "the_bumblezone:bee_cannon",
   "pattern": [
     "s s",
     "sgs",

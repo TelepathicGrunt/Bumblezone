@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "the_bumblezone",
+  "category": "redstone",
+  "group": "the_bumblezone:redstone_honey_web",
   "pattern": [
     "s",
     "s",

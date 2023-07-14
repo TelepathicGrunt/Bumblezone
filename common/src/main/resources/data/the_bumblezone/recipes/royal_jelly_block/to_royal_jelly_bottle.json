@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "the_bumblezone",
+  "category": "misc",
+  "group": "the_bumblezone:royal_jelly_bottle",
   "ingredients": [
     {
       "item": "the_bumblezone:royal_jelly_block"

@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "the_bumblezone",
+  "category": "building",
   "ingredients": [
     {
       "tag": "the_bumblezone:luminescent_wax/light_corners"

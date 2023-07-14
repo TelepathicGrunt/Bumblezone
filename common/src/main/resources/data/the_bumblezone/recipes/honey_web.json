@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "the_bumblezone",
+  "category": "misc",
+  "group": "the_bumblezone:honey_web",
   "pattern": [
     "s",
     "s",

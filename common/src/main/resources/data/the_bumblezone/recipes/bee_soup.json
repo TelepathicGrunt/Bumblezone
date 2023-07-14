@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "the_bumblezone",
+  "category": "misc",
+  "group": "the_bumblezone:bee_soup",
   "ingredients": [
     {
       "item": "the_bumblezone:bee_bread"

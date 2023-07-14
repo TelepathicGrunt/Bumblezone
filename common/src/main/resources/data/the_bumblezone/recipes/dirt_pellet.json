@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "the_bumblezone",
+  "category": "misc",
+  "group": "the_bumblezone:dirt_pellet",
   "ingredients": [
     {
       "item": "minecraft:coarse_dirt"

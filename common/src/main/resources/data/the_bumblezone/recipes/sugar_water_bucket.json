@@ -1,6 +1,7 @@
 {
   "type": "the_bumblezone:container_shapeless_recipe_bz",
-  "group": "the_bumblezone",
+  "category": "misc",
+  "group": "the_bumblezone:sugar_water_bucket",
   "ingredients": [
     {
       "item": "minecraft:water_bucket"

@@ -1,6 +1,7 @@
 {
   "type": "the_bumblezone:container_shapeless_recipe_bz",
-  "group": "the_bumblezone",
+  "category": "misc",
+  "group": "the_bumblezone:honey_bucket",
   "ingredients": [
     {
       "item": "minecraft:bucket"

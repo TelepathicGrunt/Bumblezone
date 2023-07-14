@@ -207,6 +207,8 @@ Honeycomb Brood Block feeding now can grant you Protection of the Hive even when
 Increased duration of Protection of the Hive obtained from Honeycomb Brood Block feeding.
 
 ##### Items:
+Cleaned up how Bumblezone items are grouped in vanilla Recipe Book
+
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
 
 Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not want it to be too easy to multiply (Pitcher Plant cannot be bonemealed)

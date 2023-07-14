@@ -1,6 +1,7 @@
 {
   "type": "the_bumblezone:recipe_discovered_hooked_shapeless_recipe",
-  "group": "the_bumblezone",
+  "category": "building",
+  "group": "the_bumblezone:string_curtain",
   "ingredients": [
     {
       "tag": "the_bumblezone:string_curtains"

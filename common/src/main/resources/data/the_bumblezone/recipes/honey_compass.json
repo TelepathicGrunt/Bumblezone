@@ -1,6 +1,7 @@
 {
   "type": "the_bumblezone:container_shapeless_recipe_bz",
-  "group": "the_bumblezone",
+  "category": "equipment",
+  "group": "the_bumblezone:honey_compass",
   "ingredients": [
     {
       "item": "minecraft:compass"
