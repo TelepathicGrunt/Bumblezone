@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:string_curtain",
   "pattern": [
     "ttt",
     "sgs",

@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:crystal_cannon",
   "pattern": [
     "cbc",
     " h "

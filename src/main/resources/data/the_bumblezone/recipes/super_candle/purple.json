@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:super_candle",
   "ingredients": [
     {
       "item": "the_bumblezone:super_candle"

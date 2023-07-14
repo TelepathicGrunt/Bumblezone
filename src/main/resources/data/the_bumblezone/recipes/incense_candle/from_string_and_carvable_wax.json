@@ -1,6 +1,6 @@
 {
   "type": "the_bumblezone:incense_candle_recipe",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:incense_candle",
   "pattern": [
     "s",
     "h",

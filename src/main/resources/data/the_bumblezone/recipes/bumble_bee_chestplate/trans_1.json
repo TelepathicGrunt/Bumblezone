@@ -1,6 +1,6 @@
 {
   "type": "the_bumblezone:nbt_keeping_shapeless_recipe",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:chestplate",
   "ingredients": [
     {
       "item": "the_bumblezone:bumble_bee_chestplate_1"
