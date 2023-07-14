@@ -77,24 +77,24 @@ public abstract class BeeArmor extends ArmorItem {
         });
     }
 
-    public static int getBeeThemedGearCount(Entity entity) {
-        int beeGearCount = 0;
+    public static int getBeeThemedWearablesCount(Entity entity) {
+        int beeWearablesCount = 0;
         for (ItemStack armor : entity.getArmorSlots()) {
-            if (armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+            if (armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
 
                 if (ModChecker.jonnTrophiesPresent && JonnTrophiesCompat.isTrophy(armor)) {
                     if (JonnTrophiesCompat.isTrophyBeeThemed(armor)) {
-                        beeGearCount++;
+                        beeWearablesCount++;
                     }
                     continue;
                 }
 
-                beeGearCount++;
+                beeWearablesCount++;
             }
         }
         if (ModChecker.curiosPresent) {
-            beeGearCount += CuriosCompat.getCuriosBeeGearCount(entity);
+            beeWearablesCount += CuriosCompat.getCuriosBeeWearablesCount(entity);
         }
-        return beeGearCount;
+        return beeWearablesCount;
     }
 }

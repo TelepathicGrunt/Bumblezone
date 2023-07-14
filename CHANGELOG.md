@@ -4,4 +4,8 @@
 Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dimension
 
 ##### Items:
+Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
+
+Renamed the Bumble Bee Chestplate optional nbt from `requiredGearCountForForcedFlyingTime` to `requiredWearablesCountForForcedFlyingTime`
+
 Cleaned up how Bumblezone items are grouped in vanilla Recipe Book

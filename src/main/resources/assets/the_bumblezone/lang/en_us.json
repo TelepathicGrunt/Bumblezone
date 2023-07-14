@@ -630,7 +630,7 @@
   "the_bumblezone.crystalline_flower.description": " An uncommon flower made of magical honey crystals that consumes items or experience to grow! It can survive only on Glistering Honey Crystal, Amethyst, or some other modded crystalline-like blocks that gives the same general crystal feel that Amethyst does. Mobs walking through will be harmed by its spikes. \n\n You can right click it to bring up a screen to feed the flower or add enchantments to books/enchanted books! The higher the flower's tier, more enchantments become available that you can apply. The level of the enchantments will increase too!\n\n Max tier will grant you access to 'treasure' marked enchantments! (Note: Enchanted books can be manually fed only in UI to reclaim some xp or add more enchantments) \n\nDoes not require Silk Touch to mine. It'll drop itself with its tiers still saved into the item.",
 
   "tag.item.the_bumblezone.bee_aggression_in_dimension.wrath_activating_items_when_picked_up": "Bumblezone Wrath Activating Pickup Item",
-  "tag.item.the_bumblezone.bee_armors.bz_armor_ability_enhancing_gear": "Bumblezone Armor Ability Enhancing Gear",
+  "tag.item.the_bumblezone.bee_armors.bz_armor_ability_enhancing_wearables": "Bumblezone Armor Ability Enhancing Wearables",
   "tag.item.the_bumblezone.bee_queen.disallowed_random_bonus_trade_items": "Bee Queen Disallowed Bonus Trade Item",
   "tag.item.the_bumblezone.bee_queen.forced_allow_random_bonus_trade_items": "Bee Queen Force Allowed Bonus Trade Item",
   "tag.item.the_bumblezone.bee_queen_randomize_trades.concrete_powder_trades": "Concrete Powders",

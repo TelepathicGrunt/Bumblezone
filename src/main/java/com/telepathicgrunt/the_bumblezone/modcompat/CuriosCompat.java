@@ -12,10 +12,10 @@ public class CuriosCompat {
 		ModChecker.curiosPresent = true;
 	}
 
-	public static int getCuriosBeeGearCount(Entity entity) {
+	public static int getCuriosBeeWearablesCount(Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			return CuriosApi.getCuriosHelper().findCurios(livingEntity, (itemStack) ->  {
-				if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
+				if (itemStack.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
 					return !ModChecker.backpackedPresent || BackpackedCompat.isBackpackedHoneyThemedOrOtherItem(itemStack);
 				}
 				return false;
