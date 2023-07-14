@@ -224,12 +224,20 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       setRootminPose(RootminPose.BLOCK_TO_ENTITY);
    }
 
-   public void hideAsBlock() {
+   public void hideAsBlock(Vec3 destination) {
       this.isHidden = true;
       this.delayTillIdle = -1;
       this.animationTimeBetweenHiding = 20;
       setRootminPose(RootminPose.ENTITY_TO_BLOCK);
       this.getNavigation().stop();
+
+      if (destination != null && this.position().subtract(destination).length() < 1) {
+         this.moveTo(destination);
+      }
+      else {
+         this.moveTo(Vec3.atCenterOf(this.blockPosition()));
+      }
+      this.setDeltaMovement(Vec3.ZERO);
    }
 
    @Override
@@ -981,12 +989,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       @Override
       public boolean canContinueToUse() {
          if (this.pathNav.isDone()) {
-            if (this.destination != null && this.mob.position().subtract(this.destination).length() < 1) {
-               this.mob.moveTo(this.destination);
-            }
-            this.mob.setDeltaMovement(Vec3.ZERO);
+
             this.mob.takePotShot = false;
-            this.mob.hideAsBlock();
+            this.mob.hideAsBlock(this.destination);
             return false;
          }
 
