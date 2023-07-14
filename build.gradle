@@ -219,7 +219,7 @@ modrinth {
 	gameVersions = ["1.19.2"]
 	loaders = ["fabric"]
 	dependencies {
-		required.project "qsl"
+		required.project "fabric-api"
 		required.project "midnightlib"
 		optional.project "continuity"
 		optional.project "unofficial-sodium-biome-blending-fix"
