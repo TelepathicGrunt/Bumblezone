@@ -50,7 +50,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
         }
 
         public boolean matches(ServerPlayer serverPlayer, ResourceLocation currentEntity, int currentCount) {
-            return (!beeArmorRequired || BeeArmor.getBeeThemedGearCount(serverPlayer) >= 4) &&
+            return (!beeArmorRequired || BeeArmor.getBeeThemedWearablesCount(serverPlayer) >= 4) &&
                     currentEntity.equals(this.targetEntity) &&
                     currentCount >= this.targetCount;
         }
