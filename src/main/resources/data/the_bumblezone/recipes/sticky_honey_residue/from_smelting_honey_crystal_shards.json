@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:sticky_honey_residue",
   "ingredient": {
     "item": "the_bumblezone:honey_crystal_shards"
   },

@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "group": "the_bumblezone",
+  "group": "the_bumblezone:stone",
   "ingredient": {
     "item": "the_bumblezone:sugar_infused_stone"
   },
