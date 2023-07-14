@@ -663,8 +663,8 @@
   "advancements.the_bumblezone.the_queens_desire.the_great_dragon_slayer.description": "Become legendary by slaying the Enderdragon with full Bee Armor on",
   "advancements.the_bumblezone.the_queens_desire.too_many_legs.title": "Too Many Legs",
   "advancements.the_bumblezone.the_queens_desire.too_many_legs.description": "Smash and kill 64 Spiders for their icky-ness (Cave Spiders don't count)",
-  "advancements.the_bumblezone.the_queens_desire.vip_trader.title": "VIP Trader",
-  "advancements.the_bumblezone.the_queens_desire.vip_trader.description": "Trade 256 times with the Bee Queen. Does not need to be bonus trades. Any trade works!",
+  "advancements.the_bumblezone.the_queens_desire.crazy_trader.title": "Crazy Trader",
+  "advancements.the_bumblezone.the_queens_desire.crazy_trader.description": "Trade 256 times with the Bee Queen. Does not need to be bonus trades. Any trade works!",
 
   "the_bumblezone.recipe_viewers.bee_queen_trades": "Bee Queen Trades",
   "the_bumblezone.recipe_viewers.queen_trade_chance_tooltip": "Chance: %s%%",

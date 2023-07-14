@@ -5,10 +5,10 @@
       "item": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.the_queens_desire.vip_trader.title"
+      "translate": "advancements.the_bumblezone.the_queens_desire.crazy_trader.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.the_queens_desire.vip_trader.description"
+      "translate": "advancements.the_bumblezone.the_queens_desire.crazy_trader.description"
     },
     "frame": "challenge",
     "show_toast": true,

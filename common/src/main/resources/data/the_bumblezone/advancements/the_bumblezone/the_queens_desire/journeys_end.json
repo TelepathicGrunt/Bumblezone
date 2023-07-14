@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/vip_trader",
+  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/crazy_trader",
   "display": {
     "icon": {
       "item": "the_bumblezone:essence_of_the_bees"
@@ -121,7 +121,7 @@
     "target_advancement_done_17": {
       "trigger": "the_bumblezone:target_advancement_done",
       "conditions": {
-        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/vip_trader"
+        "target_advancement": "the_bumblezone:the_bumblezone/the_queens_desire/crazy_trader"
       }
     }
   },
