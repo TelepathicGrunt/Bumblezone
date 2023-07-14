@@ -30,7 +30,7 @@ import java.util.Set;
 
 public class StinglessBeeHelmet extends BeeArmor {
     public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
-    public static int BEE_GEAR_COUNT = 0;
+    public static int BEE_WEARABLES_COUNT = 0;
     public static Set<Entity> BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE = new ObjectArraySet<>();
     public static int PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;
 
@@ -48,11 +48,11 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     @Override
     public void onArmorTick(ItemStack beeHelmet, Level world, Player player) {
-        int beeGearCount = BeeArmor.getBeeThemedGearCount(player);
+        int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
 
         MobEffectInstance nausea = player.getEffect(MobEffects.CONFUSION);
         if (nausea != null) {
-            int decreaseSpeed = (int)((beeGearCount * 3d) - 2);
+            int decreaseSpeed = (int)((beeWearablesCount * 3d) - 2);
             for (int i = 0; i < decreaseSpeed; i++) {
                 ((MobEffectInstanceAccessor) nausea).callTickDownDuration();
                 if (!world.isClientSide() &&
@@ -65,8 +65,8 @@ public class StinglessBeeHelmet extends BeeArmor {
         }
 
         MobEffectInstance poison = player.getEffect(MobEffects.POISON);
-        if (poison != null && (beeGearCount >= 4 || world.getGameTime() % (beeGearCount == 3 ? 2 : 3) == 0)) {
-            for (int i = 0; i <= Math.max(beeGearCount - 3, 1); i++) {
+        if (poison != null && (beeWearablesCount >= 4 || world.getGameTime() % (beeWearablesCount == 3 ? 2 : 3) == 0)) {
+            for (int i = 0; i <= Math.max(beeWearablesCount - 3, 1); i++) {
                 if (poison.getDuration() > 0) {
                     ((MobEffectInstanceAccessor) poison).callTickDownDuration();
                 }
@@ -91,10 +91,10 @@ public class StinglessBeeHelmet extends BeeArmor {
                 }
             }
             BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.clear();
-            StinglessBeeHelmet.BEE_GEAR_COUNT = beeGearCount;
+            StinglessBeeHelmet.BEE_WEARABLES_COUNT = beeWearablesCount;
 
             if (player.isShiftKeyDown() && player.isOnGround()) {
-                HELMET_EFFECT_COUNTER_CLIENTSIDE = ((beeGearCount - 1) * 65) + 6;
+                HELMET_EFFECT_COUNTER_CLIENTSIDE = ((beeWearablesCount - 1) * 65) + 6;
 
                 if (!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {
                     beeHelmet.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
@@ -111,7 +111,7 @@ public class StinglessBeeHelmet extends BeeArmor {
                 player.isUnderWater() ||
                 player.isHurt() ||
                 player.isShiftKeyDown() ||
-                (beeGearCount < 4 && beeRidingTimer > beeGearCount * 600))
+                (beeWearablesCount < 4 && beeRidingTimer > beeWearablesCount * 600))
             {
                 for (Entity passenger : player.getPassengers()) {
                     if ((passenger instanceof Bee && !passenger.getType().is(BzTags.DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS)) ||
@@ -140,7 +140,7 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     public static boolean shouldEntityGlow(Player player, Entity entity) {
         if(entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof BeeQueenEntity) {
-            return entity.blockPosition().closerThan(player.blockPosition(), (BEE_GEAR_COUNT * 16.5d) + 14);
+            return entity.blockPosition().closerThan(player.blockPosition(), (BEE_WEARABLES_COUNT * 16.5d) + 14);
         }
         return false;
     }

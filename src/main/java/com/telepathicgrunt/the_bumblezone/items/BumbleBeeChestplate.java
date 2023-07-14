@@ -61,7 +61,7 @@ public class BumbleBeeChestplate extends BeeArmor {
             }
         }
 
-        int beeGearCount = BeeArmor.getBeeThemedGearCount(player);
+        int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
         MobEffectInstance beenergized = player.getEffect(BzEffects.BEENERGIZED);
         boolean isBeenergized = beenergized != null;
 
@@ -99,7 +99,7 @@ public class BumbleBeeChestplate extends BeeArmor {
             }
             else {
                 tag.putBoolean("isFlying", false);
-                if(beeGearCount >= 4 && player instanceof ServerPlayer) {
+                if(beeWearablesCount >= 4 && player instanceof ServerPlayer) {
                     BzCriterias.BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER.trigger((ServerPlayer) player);
                 }
             }
@@ -107,15 +107,15 @@ public class BumbleBeeChestplate extends BeeArmor {
 
         if(player.isOnGround()) {
             if (tag.contains("forcedMaxFlyingTickTime")) {
-                if (!tag.contains("requiredGearCountForForcedFlyingTime") || tag.getInt("requiredGearCountForForcedFlyingTime") >= beeGearCount) {
+                if (!tag.contains("requiredWearablesCountForForcedFlyingTime") || tag.getInt("requiredWearablesCountForForcedFlyingTime") >= beeWearablesCount) {
                     tag.putInt("flyCounter", tag.getInt("forcedMaxFlyingTickTime"));
                 }
                 else {
-                    tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
+                    tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeWearablesCount - 1) * 0.5F) + 1)));
                 }
             }
             else {
-                tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeGearCount - 1) * 0.5F) + 1)));
+                tag.putInt("flyCounter", (int) (20 * (isBeenergized ? 1.5F : 1) * (((beeWearablesCount - 1) * 0.5F) + 1)));
             }
         }
     }
