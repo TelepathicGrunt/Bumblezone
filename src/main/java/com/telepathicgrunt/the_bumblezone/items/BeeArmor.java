@@ -78,16 +78,16 @@ public abstract class BeeArmor extends TickingArmorItem {
         };
     }
 
-    public static int getBeeThemedGearCount(Entity entity) {
-        int beeGearCount = 0;
+    public static int getBeeThemedWearablesCount(Entity entity) {
+        int beeWearablesCount = 0;
         for(ItemStack armor : entity.getArmorSlots()) {
-            if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_GEAR)) {
-                beeGearCount++;
+            if(armor.is(BzTags.BZ_ARMOR_ABILITY_ENHANCING_WEARABLES)) {
+                beeWearablesCount++;
             }
         }
         if (ModChecker.TrinketsPresent) {
-            beeGearCount += TrinketsCompat.getTrinketsBeeGearCount(entity);
+            beeWearablesCount += TrinketsCompat.getTrinketsBeeWearablesCount(entity);
         }
-        return beeGearCount;
+        return beeWearablesCount;
     }
 }
