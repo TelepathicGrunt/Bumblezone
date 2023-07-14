@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
@@ -326,6 +328,15 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    @Override
+   public boolean canCollideWith(Entity entity) {
+      if (entity instanceof RootminEntity rootminEntity && rootminEntity.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+         return false;
+      }
+
+      return entity.canBeCollidedWith() && !this.isPassengerOfSameVehicle(entity);
+   }
+
+   @Override
    public void tick() {
       super.tick();
 
@@ -506,45 +517,9 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          }
       }
       else if (this.tickCount % 10 == 0 && this.getYRot() == this.getTargetFacing().toYRot()) {
-         int sightRange = 36;
-         Vec3 eyePosition = this.getEyePosition();
-         Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
-         AABB boundsForChecking = this.getBoundingBox().inflate(sightRange);
-
-         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
-                 this.level(),
-                 this,
-                 eyePosition,
-                 finalPos,
-                 boundsForChecking,
-                 SentryWatcherEntity::canSeeEntity
-         );
-
-         if (entityHitResult != null) {
-            this.setHasActivated(true);
-            this.setShakingTime(40);
-            this.setHasShaking(true);
-            this.activatedStart = this.position();
-         }
-         else {
-            finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
-            boundsForChecking = this.getBoundingBox().inflate(sightRange);
-
-            EntityHitResult entityHitResult2 = ProjectileUtil.getEntityHitResult(
-                    this.level(),
-                    this,
-                    eyePosition,
-                    finalPos,
-                    boundsForChecking,
-                    SentryWatcherEntity::canSeeEntity
-            );
-
-            if (entityHitResult2 != null) {
-               this.setHasActivated(true);
-               this.setShakingTime(40);
-               this.setHasShaking(true);
-               this.activatedStart = this.position();
-            }
+         Vec3 offset = Vec3.atLowerCornerOf(Rotation.CLOCKWISE_90.rotate(this.getTargetFacing()).getNormal()).scale(0.5D);
+         if (!scanAndBeginActivationIfEnemyFound(offset)) {
+            scanAndBeginActivationIfEnemyFound(offset.scale(-1));
          }
       }
 
@@ -554,6 +529,53 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.kill();
          }
       }
+   }
+
+   private boolean scanAndBeginActivationIfEnemyFound(Vec3 offset) {
+      int sightRange = 36;
+      Vec3 eyePosition = this.getEyePosition().add(offset);
+      Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
+      AABB boundsForChecking = this.getBoundingBox().inflate(sightRange);
+
+      EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
+              this.level(),
+              this,
+              eyePosition,
+              finalPos,
+              boundsForChecking,
+              SentryWatcherEntity::canSeeEntity
+      );
+
+      if (entityHitResult != null) {
+         this.setHasActivated(true);
+         this.setShakingTime(40);
+         this.setHasShaking(true);
+         this.activatedStart = this.position();
+         return true;
+      }
+      else {
+         finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
+         boundsForChecking = this.getBoundingBox().inflate(sightRange);
+
+         EntityHitResult entityHitResult2 = ProjectileUtil.getEntityHitResult(
+                 this.level(),
+                 this,
+                 eyePosition,
+                 finalPos,
+                 boundsForChecking,
+                 SentryWatcherEntity::canSeeEntity
+         );
+
+         if (entityHitResult2 != null) {
+            this.setHasActivated(true);
+            this.setShakingTime(40);
+            this.setHasShaking(true);
+            this.activatedStart = this.position();
+            return true;
+         }
+      }
+
+      return false;
    }
 
    private void deactivate() {
