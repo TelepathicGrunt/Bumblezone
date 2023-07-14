@@ -2,7 +2,7 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/mob/grass_none",
         "processors": "the_bumblezone:sempiternal_sanctum/white/body",
