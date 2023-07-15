@@ -82,6 +82,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
 
         if (entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
             entity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+            WrathOfTheHiveEffect.calmTheBees(entity.level, entity);
         }
     }
 
