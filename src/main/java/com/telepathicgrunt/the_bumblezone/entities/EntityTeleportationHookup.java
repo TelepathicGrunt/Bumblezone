@@ -2,11 +2,14 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
@@ -50,6 +53,15 @@ public class EntityTeleportationHookup {
     public static void playerTick(ServerPlayer serverPlayer) {
         Level level = serverPlayer.level;
 
+        Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
+        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
+        if (advancement != null &&
+                advancementsProgressMap.containsKey(advancement) &&
+                advancementsProgressMap.get(advancement).isDone())
+        {
+            return;
+        }
+
         if (level instanceof ServerLevel serverLevel &&
                 (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
                 !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
@@ -64,6 +76,7 @@ public class EntityTeleportationHookup {
 
             if (poiInRange.size() > 0) {
                 BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
+                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
             }
         }
     }

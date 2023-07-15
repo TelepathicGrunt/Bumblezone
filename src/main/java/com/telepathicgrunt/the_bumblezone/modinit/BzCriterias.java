@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 public class BzCriterias {
     public static final ResourceLocation QUEENS_DESIRE_ROOT_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/the_queens_desire/the_beginning");
     public static final ResourceLocation QUEENS_DESIRE_FINAL_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/the_queens_desire/journeys_end");
+    public static final ResourceLocation IS_NEAR_BEEHIVE_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/teleportation/is_near_beehive");
 
     // CRITERIA TRIGGERS
     public static final CounterTrigger BEE_BREEDING_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_breeding"));
