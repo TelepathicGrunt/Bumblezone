@@ -9,3 +9,8 @@ Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumb
 Renamed the Bumble Bee Chestplate optional nbt from `requiredGearCountForForcedFlyingTime` to `requiredWearablesCountForForcedFlyingTime`
 
 Cleaned up how Bumblezone items are grouped in vanilla Recipe Book
+
+##### Advancements:
+Improved performance of is_near_beehive advancement.
+
+Will now display a message to user saying to checkout Bumblezone's advancements for progression when they obtain the is_near_beehive advancement. 
