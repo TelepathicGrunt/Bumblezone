@@ -1,9 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
+import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 
-public class BeenergizedEffect extends MobEffect {
+public class BeenergizedEffect extends MobEffect implements EffectExtension {
 
     public BeenergizedEffect(MobEffectCategory type, int potionColor) {
         super(type, potionColor);

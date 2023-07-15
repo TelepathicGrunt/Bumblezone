@@ -291,6 +291,11 @@ Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dim
 
 Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaining issues.
 
+##### Effects:
+(Forge): Removed Milk as a curative item for Wrath of the Hive. Now many other mod's methods of removing the effect should no longer work.
+
+Protection of the Hive will now always remove Wrath of the Hive effect if you managed to get both on together.
+
 ##### Advancements:
 Improved performance of is_near_beehive advancement.
 

@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
+import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
@@ -27,15 +28,18 @@ import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class WrathOfTheHiveEffect extends MobEffect {
+public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
     private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight();
     private final static TargetingConditions LINE_OF_SIGHT = (TargetingConditions.forCombat());
     public static boolean ACTIVE_WRATH = false;
@@ -270,5 +274,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
         if (livingEntity != null) {
             WrathOfTheHiveEffect.calmTheBees(livingEntity.level(), livingEntity);
         }
+    }
+
+    public List<ItemStack> bz$getCurativeItems() {
+        return new ArrayList<>();
     }
 }

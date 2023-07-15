@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.effects;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class ProtectionOfTheHiveEffect extends MobEffect {
+public class ProtectionOfTheHiveEffect extends MobEffect implements EffectExtension {
     private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight();
 
     public ProtectionOfTheHiveEffect(MobEffectCategory type, int potionColor) {
@@ -66,18 +67,22 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
      */
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-       if(entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
+       if (entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
            if (entity.getLastHurtByMob() instanceof Player player && player.isCreative()) {
                return;
            }
 
-           if(!(entity.getLastHurtByMob() instanceof Bee)) {
+           if (!(entity.getLastHurtByMob() instanceof Bee)) {
                resetBeeAngry(entity.level(), entity.getLastHurtByMob());
                entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
                if (entity instanceof ServerPlayer) {
                    BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.trigger((ServerPlayer) entity, entity.getLastHurtByMob());
                }
            }
+       }
+
+       if (entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+           entity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
        }
     }
 

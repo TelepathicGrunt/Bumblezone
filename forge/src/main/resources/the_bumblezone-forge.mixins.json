@@ -8,6 +8,7 @@
         "block.BzLiquidBlockMixin",
         "block.BzRandomizableContainerBlockEntityMixin",
         "block.FireBlockInvoker",
+        "effect.EffectExtensionMixin",
         "enchantment.BzEnchantmentMixin",
         "item.BzBucketItemMixin",
         "item.IncenseCandleRecipeMixin",

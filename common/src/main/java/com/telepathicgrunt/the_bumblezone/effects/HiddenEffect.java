@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,7 +14,7 @@ import net.minecraft.world.entity.animal.Bee;
 
 import java.util.List;
 
-public class HiddenEffect extends BzEffect {
+public class HiddenEffect extends BzEffect implements EffectExtension {
     private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight();
 
     public HiddenEffect(MobEffectCategory type, int potionColor) {
