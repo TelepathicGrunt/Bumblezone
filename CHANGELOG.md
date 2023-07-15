@@ -10,6 +10,9 @@ Renamed the Bumble Bee Chestplate optional nbt from `requiredGearCountForForcedF
 
 Cleaned up how Bumblezone items are grouped in vanilla Recipe Book
 
+##### Effects:
+Protection of the Hive will now always remove Wrath of the Hive effect if you managed to get both on together.
+
 ##### Advancements:
 Improved performance of is_near_beehive advancement.
 

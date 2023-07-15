@@ -79,6 +79,10 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
                }
            }
        }
+
+        if (entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE)) {
+            entity.removeEffect(BzEffects.WRATH_OF_THE_HIVE);
+        }
     }
 
     /**
