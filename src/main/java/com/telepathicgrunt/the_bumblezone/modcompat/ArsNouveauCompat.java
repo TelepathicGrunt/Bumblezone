@@ -59,7 +59,7 @@ public class ArsNouveauCompat {
 					(stack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE_CROUCHING) && player.isShiftKeyDown()))
 				{
 					BlockHitResult blockHitResult = (BlockHitResult) event.rayTraceResult;
-					EntityTeleportationHookup.runItemUseOn(player, blockHitResult.getBlockPos(), player.getLevel().getBlockState(blockHitResult.getBlockPos()), stack);
+					EntityTeleportationHookup.runItemUseOn(player, blockHitResult.getBlockPos(), stack);
 				}
 
 				return;

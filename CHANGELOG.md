@@ -19,3 +19,6 @@ Protection of the Hive will now always remove Wrath of the Hive effect if you ma
 Improved performance of is_near_beehive advancement.
 
 Will now display a message to user saying to check out Bumblezone's advancements for progression when they obtain the is_near_beehive advancement. 
+
+##### Mod Compat:
+Added compat with Mekanism's Meka Tool's teleporting to now allow teleport to Bumblezone when used on Beehive/Bee Nests.

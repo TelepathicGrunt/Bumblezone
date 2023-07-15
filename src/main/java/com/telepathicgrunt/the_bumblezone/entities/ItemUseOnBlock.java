@@ -23,7 +23,7 @@ public class ItemUseOnBlock {
             }
         }
 
-        if(EntityTeleportationHookup.runItemUseOn(event.getEntity(), event.getPos(), event.getLevel().getBlockState(event.getPos()), itemStack)) {
+        if(EntityTeleportationHookup.runItemUseOn(event.getEntity(), event.getPos(), itemStack)) {
             event.setCanceled(true);
         }
     }
@@ -44,7 +44,7 @@ public class ItemUseOnBlock {
         HitResult hitResult = player.pick(player.isCreative() ? 5.0f : 4.5f, 1.0f, false);
 
         if (hitResult.getType() == HitResult.Type.BLOCK && hitResult instanceof BlockHitResult blockHitResult) {
-            if (EntityTeleportationHookup.runItemUseOn(player, blockHitResult.getBlockPos(), event.getLevel().getBlockState(blockHitResult.getBlockPos()), itemStack)) {
+            if (EntityTeleportationHookup.runItemUseOn(player, blockHitResult.getBlockPos(), itemStack)) {
                 event.setCanceled(true);
             }
         }

@@ -18,6 +18,7 @@ public class ModChecker {
 	public static boolean quarkPresent = false;
 	public static boolean potionOfBeesPresent = false;
 	public static boolean arsNouveauPresent = false;
+	public static boolean mekanismPresent = false;
 	public static boolean arsElementalPresent = false;
 	public static boolean twilightForestPresent = false;
 	public static boolean dragonEnchantsPresent = false;
@@ -91,6 +92,9 @@ public class ModChecker {
 
 			modid = "projectile_damage";
 			loadupModCompat(modid, () -> ProjectileDamageAttributeCompat.setupCompat());
+
+			modid = "mekanism";
+			loadupModCompat(modid, () -> MekanismCompat.setupCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
