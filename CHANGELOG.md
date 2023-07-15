@@ -10,7 +10,12 @@ Renamed the Bumble Bee Chestplate optional nbt from `requiredGearCountForForcedF
 
 Cleaned up how Bumblezone items are grouped in vanilla Recipe Book
 
+##### Effects:
+Removed Milk as a curative item for Wrath of the Hive. Now many other mod's methods of removing the effect should no longer work.
+
+Protection of the Hive will now always remove Wrath of the Hive effect if you managed to get both on together.
+
 ##### Advancements:
 Improved performance of is_near_beehive advancement.
 
-Will now display a message to user saying to checkout Bumblezone's advancements for progression when they obtain the is_near_beehive advancement. 
+Will now display a message to user saying to check out Bumblezone's advancements for progression when they obtain the is_near_beehive advancement. 
