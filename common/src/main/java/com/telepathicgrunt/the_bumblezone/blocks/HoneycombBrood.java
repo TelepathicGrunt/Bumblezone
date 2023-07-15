@@ -245,11 +245,6 @@ public class HoneycombBrood extends ProperFacingBlock {
         if (playerEntity instanceof ServerPlayer serverPlayer) {
             BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
         }
-
-        if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-            playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-            WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
-        }
     }
 
 

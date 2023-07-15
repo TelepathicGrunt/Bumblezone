@@ -299,7 +299,7 @@ Protection of the Hive will now always remove Wrath of the Hive effect if you ma
 ##### Advancements:
 Improved performance of is_near_beehive advancement.
 
-Will now display a message to user saying to checkout Bumblezone's advancements for progression when they obtain the is_near_beehive advancement.
+Will now display a message to user saying to check out Bumblezone's advancements for progression when they obtain the is_near_beehive advancement.
 
 Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
 
