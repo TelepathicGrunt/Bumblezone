@@ -7,12 +7,14 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -59,6 +61,23 @@ public class BumblezoneAPI {
         return EntityTeleportationHookup.runTeleportProjectileImpact(hitResult, entity, pearlEntity);
     }
 
+    /**
+     * Will check if the clicked position is a beehive or bee nest and teleport the thrower to Bumblezone.
+     * Please only call this for right click item use methods that teleport the entity like Traveler Anchors's staffs.
+     * @return - Whether the projectile hit a beehive or bee nest.
+     */
+    public static boolean runItemUseOn(Player user, BlockPos clickedPos, ItemStack usingStack) {
+        return EntityTeleportationHookup.runItemUseOn(user, clickedPos, usingStack);
+    }
+
+    /**
+     * Will check if the passed in position is a beehive or bee nest and teleport the thrower to Bumblezone.
+     * Last resort method to call if none of the other methods fits your case.
+     * @return - Whether the projectile hit a beehive or bee nest.
+     */
+    public static boolean runGenericTeleport(Player user, BlockPos targetPos) {
+        return EntityTeleportationHookup.runGenericTeleport(user, targetPos);
+    }
 
     /**
      * Will check if entity is pushed by piston into a beehive or bee nest and teleport to Bumblezone if so.
