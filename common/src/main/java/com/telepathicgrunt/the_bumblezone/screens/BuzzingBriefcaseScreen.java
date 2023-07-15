@@ -573,7 +573,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             }
         }
 
-        float healthPercentage = beeState.beeEntity().getHealth() / beeState.beeEntity().getMaxHealth();
+        float healthPercentage = Math.min(1, beeState.beeEntity().getHealth() / beeState.beeEntity().getMaxHealth());
         int barColor = Mth.hsvToRgb(healthPercentage / 3.0f, 1.0f, 1.0f);
         int barWidth = (int) (Math.max(1, 16 * healthPercentage));
         guiGraphics.fill(RenderType.guiOverlay(), mainX + 3, mainY + 19, mainX + 3 + barWidth, mainY + 18, barColor | 0xFF000000);

@@ -155,7 +155,7 @@ public class EssenceBlockRed extends EssenceBlock {
             UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
             Player player = serverLevel.getPlayerByUUID(playerUUID);
             if (player instanceof ServerPlayer serverPlayer) {
-                float maxHeart = serverPlayer.getMaxHealth();
+                float maxHeart = Math.max(serverPlayer.getHealth(), serverPlayer.getMaxHealth());
                 float maxArmor = serverPlayer.getArmorValue();
                 float mobHealthBoost = (maxHeart / 15) + (maxArmor / 10);
                 float mobAttackBoost = (maxHeart / 20) + (maxArmor / 15);

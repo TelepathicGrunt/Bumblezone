@@ -133,21 +133,22 @@ public class PurpleSpikeEntity extends Entity {
                 for (Entity entity : list) {
                     if (entity instanceof LivingEntity livingEntity) {
                         float damageAmount;
+                        float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
 
-                        if (entity instanceof ServerPlayer serverPlayer) {
+                        if (livingEntity instanceof ServerPlayer serverPlayer) {
                             if (serverPlayer.isCreative()) {
                                 continue;
                             }
 
                             if (EssenceOfTheBees.hasEssence(serverPlayer)) {
-                                damageAmount = serverPlayer.getMaxHealth() / 5;
+                                damageAmount = maxHealth / 5;
                             }
                             else {
-                                damageAmount = serverPlayer.getMaxHealth() / 3;
+                                damageAmount = maxHealth / 3;
                             }
                         }
                         else {
-                            damageAmount = livingEntity.getMaxHealth() / 10;
+                            damageAmount = maxHealth / 10;
                         }
 
                         livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE), damageAmount);

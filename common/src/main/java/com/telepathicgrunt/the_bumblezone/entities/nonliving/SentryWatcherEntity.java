@@ -477,7 +477,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                   entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), 1);
                   if (entity instanceof LivingEntity livingEntity) {
                      float oldHealth = livingEntity.getHealth();
-                     float maxhealth = livingEntity.getMaxHealth();
+                     float maxhealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
                      double healthToLose = Mth.clampedLerp(maxhealth / 3f, maxhealth - 1, pastSpeed - 0.2d);
                      double possibleNewHealth = oldHealth - healthToLose;
                      double newHealth = Math.max(possibleNewHealth, 1);

@@ -37,7 +37,7 @@ public class InfinityBarrier extends BaseEntityBlock {
     @Override
     public void playerDestroy(Level level, Player player, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack itemStack) {
         if (!player.isCreative()) {
-            player.hurt(level.damageSources().source(BzDamageSources.ARCHITECTS_TYPE), player.getMaxHealth() / 2);
+            player.hurt(level.damageSources().source(BzDamageSources.ARCHITECTS_TYPE), Math.max(player.getHealth(), player.getMaxHealth()) / 2);
         }
     }
 
