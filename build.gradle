@@ -207,10 +207,10 @@ dependencies {
     //runtimeOnly fg.deobf("flatdir:Beekeeper-1.19:1.0.5")
 
     compileOnly "mekanism:Mekanism:${project.mekanism}:api"
-//    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}")// core
-//    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
-//    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
-//    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
+    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}")// core
+    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
+    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
+    runtimeOnly fg.deobf("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
 }
 
 mixin { 

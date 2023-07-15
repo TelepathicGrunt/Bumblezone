@@ -94,13 +94,19 @@ public class ModChecker {
 			loadupModCompat(modid, () -> ProjectileDamageAttributeCompat.setupCompat());
 
 			modid = "mekanism";
-			loadupModCompat(modid, () -> MekanismCompat.setupCompat());
+			loadupModCompatWithVersionCheck(modid, "10.3.9", false, () -> MekanismCompat.setupCompat());
 		}
 		catch (Throwable e) {
 			printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
 			e.printStackTrace();
 		}
     }
+
+	private static void loadupModCompatWithVersionCheck(String modid, String minVersion, boolean checkQualifierInstead, Runnable runnable){
+		if (isNotOutdated(modid, minVersion, checkQualifierInstead)) {
+			loadupModCompat(modid, runnable);
+		}
+	}
 
     private static void loadupModCompat(String modid, Runnable runnable){
 		try {
