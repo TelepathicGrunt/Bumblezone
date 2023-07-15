@@ -183,8 +183,7 @@ dependencies {
     //runtimeOnly fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
     compileOnly fg.deobf("curse.maven:ars_elemental-561470:${project.ars_elemental}")
     //runtimeOnly fg.deobf("curse.maven:ars_elemental-561470:${project.ars_elemental}")
-    //runtimeOnly fg.deobf("curse.maven:patchouli-250363:${project.autoreglib_file_id}")
-    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
+    //runtimeOnly fg.deobf("curse.maven:patchouli-306770:${project.patchouli_file_id}")
     //runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.2.2")
 
     //runtimeOnly fg.deobf("curse.maven:backpacked-352835:4480724")
