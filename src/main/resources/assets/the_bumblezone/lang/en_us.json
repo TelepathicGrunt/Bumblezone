@@ -299,7 +299,7 @@
   "system.the_bumblezone.lost_bee_essence": "Bee Essence lost upon respawning...",
   "system.the_bumblezone.entering_dimension": "Bumbling into the Bumblezone!",
   "system.the_bumblezone.occupied_crystalline_flower": "Flower is occupied by another player...",
-  "system.the_bumblezone.advancement_hint": "Check out The Bumblezone's advancement tab for everything on the mod, including progression and how to play!",
+  "system.the_bumblezone.advancement_hint": "★ Check out §6The Bumblezone§r's §aadvancement tab§r for everything on the mod, including progression and how to play! ★",
 
   "command.the_bumblezone.invalid_data_arg": "The data argument is invalid. Please pick one of the suggestion's entries.",
   "command.the_bumblezone.invalid_entity_arg": "The entity argument is missing for this data request. Please pick an entity from the suggestion's entries.",
