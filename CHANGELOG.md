@@ -243,6 +243,10 @@ Honey Bee Leggings item texture will now show pollen if the item actually has po
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 
+(Forge): Fixed unable to swim in Sugar Water Fluid.
+
+(Forge): Fixed Night Vision not applying to Sugar Water Fluid when inside it.
+
 Sugar Water Fluid and vanilla Water both now are tinted more light blue when in Bumblezone rather than the yellowish color before.
 
 ##### Enchantments:
