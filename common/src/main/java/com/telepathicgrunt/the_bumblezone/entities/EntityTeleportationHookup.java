@@ -297,14 +297,14 @@ public class EntityTeleportationHookup {
         return false;
     }
 
-    public static boolean runItemUseOn(Player user, BlockPos clickedPos, BlockState blockstate, ItemStack usingStack) {
+    public static boolean runItemUseOn(Player user, BlockPos clickedPos, ItemStack usingStack) {
         Level level = user.level(); // world we use in
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (isTeleportAllowedInDimension(level)) {
 
-            if(!EntityTeleportationBackend.isValidBeeHive(blockstate)) {
+            if(!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(clickedPos))) {
                 return false;
             }
 
@@ -331,6 +331,31 @@ public class EntityTeleportationHookup {
 
             //checks if block under hive is correct if config needs one
             boolean validBelowBlock = isValidBelowBlock(level, user, clickedPos);
+
+            //if the item is valid for teleport on a beehive, begin the teleportation.
+            if (validBelowBlock) {
+                if (user instanceof ServerPlayer serverPlayer) {
+                    BzWorldSavedData.queueEntityToTeleport(serverPlayer, BzDimension.BZ_WORLD_KEY);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean runGenericTeleport(Player user, BlockPos targetPosition) {
+        Level level = user.level(); // world we use in
+
+        // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
+        // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
+        if (isTeleportAllowedInDimension(level)) {
+
+            if(!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(targetPosition))) {
+                return false;
+            }
+
+            //checks if block under hive is correct if config needs one
+            boolean validBelowBlock = isValidBelowBlock(level, user, targetPosition);
 
             //if the item is valid for teleport on a beehive, begin the teleportation.
             if (validBelowBlock) {

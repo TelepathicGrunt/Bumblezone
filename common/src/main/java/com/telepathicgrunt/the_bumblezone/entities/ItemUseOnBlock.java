@@ -16,7 +16,7 @@ public class ItemUseOnBlock {
             return InteractionResult.PASS;
         }
 
-        boolean success = EntityTeleportationHookup.runItemUseOn(event.user(), event.hitResult().getBlockPos(), event.level().getBlockState(event.hitResult().getBlockPos()), event.usingStack());
+        boolean success = EntityTeleportationHookup.runItemUseOn(event.user(), event.hitResult().getBlockPos(), event.usingStack());
 
         return success ? InteractionResult.SUCCESS : null;
     }
@@ -30,7 +30,7 @@ public class ItemUseOnBlock {
         HitResult hitResult = player.pick(player.isCreative() ? 5.0f : 4.5f, 1.0f, false);
 
         if (hitResult.getType() == HitResult.Type.BLOCK && hitResult instanceof BlockHitResult blockHitResult) {
-            return EntityTeleportationHookup.runItemUseOn(player, blockHitResult.getBlockPos(), event.level().getBlockState(blockHitResult.getBlockPos()), event.usingStack());
+            return EntityTeleportationHookup.runItemUseOn(player, blockHitResult.getBlockPos(), event.usingStack());
         }
 
         return false;

@@ -206,6 +206,12 @@ allprojects {
                 includeGroup 'com.github.llamalad7.mixinextras'
             }
         }
+        maven {
+            url 'https://modmaven.dev/'
+            content {
+                includeGroup 'mekanism'
+            }
+        }
     }
 
     tasks.withType(JavaCompile) {

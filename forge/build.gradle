@@ -51,6 +51,12 @@ dependencies {
     modCompileOnly("curse.maven:quark-243121:${project.quark_file_id}")
     modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
+    modCompileOnly("mekanism:Mekanism:${project.mekanism}:api")
+//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}")// core
+//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:additions")// Mekanism: Additions
+//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
+//    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
+
     //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
     //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
