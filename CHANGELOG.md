@@ -3,6 +3,11 @@
 ##### Dimension:
 Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dimension
 
+##### Fluids:
+Fixed unable to swim in Sugar Water Fluid.
+
+Fixed Night Vision not applying to Sugar Water Fluid when inside it.
+
 ##### Items:
 Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
 
