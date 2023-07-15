@@ -292,6 +292,10 @@ Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dim
 Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaining issues.
 
 ##### Advancements:
+Improved performance of is_near_beehive advancement.
+
+Will now display a message to user saying to checkout Bumblezone's advancements for progression when they obtain the is_near_beehive advancement.
+
 Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
 
 Renamed VIP Trader advancement to Crazy Trader to reduce confusion.

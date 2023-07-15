@@ -414,6 +414,7 @@
   "system.the_bumblezone.entering_dimension": "Bumbling into the Bumblezone!",
   "system.the_bumblezone.occupied_crystalline_flower": "Flower is occupied by another player...",
   "system.the_bumblezone.no_essence": "You lacked Essence of the Bees's effect...",
+  "system.the_bumblezone.advancement_hint": "Check out The Bumblezone's advancement tab for everything on the mod, including progression and how to play!",
 
   "essence.the_bumblezone.missing_essence_effect": "You need to consume Essence of the Bees first...",
   "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cLose§f in %s",

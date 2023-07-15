@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -12,6 +13,8 @@ import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
@@ -55,8 +58,17 @@ public class EntityTeleportationHookup {
 
     //Notify people of Bumblezone's advancements so they know how to enter dimension
     public static void playerTick(PlayerTickEvent event) {
-        if (event.player() instanceof ServerPlayer serverPlayer) {
+        if (event.player() instanceof ServerPlayer serverPlayer && event.end()) {
             Level level = serverPlayer.level();
+
+            Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
+            Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+            if (advancement != null &&
+                advancementsProgressMap.containsKey(advancement) &&
+                advancementsProgressMap.get(advancement).isDone())
+            {
+                return;
+            }
 
             if (level instanceof ServerLevel serverLevel &&
                 (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
@@ -72,6 +84,7 @@ public class EntityTeleportationHookup {
 
                 if (poiInRange.size() > 0) {
                     BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
+                    serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
                 }
             }
         }
