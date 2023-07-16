@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
@@ -20,11 +21,15 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -62,6 +67,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -107,8 +113,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private int exposedTimer = 0;
    private int curiosityCooldown = 60;
    private int stayHidingTimer = 200;
+   private UUID essenceController = null;
+   private BlockPos essenceControllerBlockPos = null;
+   private ResourceKey<Level> essenceControllerDimension = null;
    public int animationTimeBetweenHiding = 0;
-   public UUID essenceController = null;
 
    private static final Set<RootminPose> POSES_THAT_CANT_BE_MOTION_INTERRUPTED = Set.of(
            RootminPose.ANGRY,
@@ -179,6 +187,22 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       this.essenceController = essenceController;
    }
 
+   public BlockPos getEssenceControllerBlockPos() {
+      return essenceControllerBlockPos;
+   }
+
+   public void setEssenceControllerBlockPos(BlockPos essenceControllerBlockPos) {
+      this.essenceControllerBlockPos = essenceControllerBlockPos;
+   }
+
+   public ResourceKey<Level> getEssenceControllerDimension() {
+      return essenceControllerDimension;
+   }
+
+   public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
+      this.essenceControllerDimension = essenceControllerDimension;
+   }
+
    public void setRootminPose(RootminPose rootminPose) {
       this.entityData.set(ROOTMIN_POSE, rootminPose);
    }
@@ -189,13 +213,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public void runAngry() {
       if (this.getRootminPose() != RootminPose.ANGRY) {
-         this.level().playSound(
-                 null,
-                 this.blockPosition(),
-                 BzSounds.ROOTMIN_ANGRY.get(),
-                 SoundSource.HOSTILE,
-                 1.0F,
-                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+         this.playSound(BzSounds.ROOTMIN_ANGRY.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 40;
@@ -204,13 +222,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public void runCurious() {
       if (this.getRootminPose() != RootminPose.CURIOUS) {
-         this.level().playSound(
-                 null,
-                 this.blockPosition(),
-                 BzSounds.ROOTMIN_CURIOUS.get(),
-                 SoundSource.HOSTILE,
-                 1.0F,
-                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+         this.playSound(BzSounds.ROOTMIN_CURIOUS.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 28;
@@ -219,13 +231,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public void runCurse() {
       if (this.getRootminPose() != RootminPose.CURSE) {
-         this.level().playSound(
-                 null,
-                 this.blockPosition(),
-                 BzSounds.ROOTMIN_CURSING.get(),
-                 SoundSource.HOSTILE,
-                 1.0F,
-                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+         this.playSound(BzSounds.ROOTMIN_CURSING.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 80;
@@ -234,13 +240,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public void runEmbarrassed() {
       if (this.getRootminPose() != RootminPose.EMBARRASSED) {
-         this.level().playSound(
-                 null,
-                 this.blockPosition(),
-                 BzSounds.ROOTMIN_EMBARRASSED.get(),
-                 SoundSource.HOSTILE,
-                 1.0F,
-                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+         this.playSound(BzSounds.ROOTMIN_EMBARRASSED.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 60;
@@ -249,13 +249,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    public void runShock() {
       if (this.getRootminPose() != RootminPose.SHOCK) {
-         this.level().playSound(
-                 null,
-                 this.blockPosition(),
-                 BzSounds.ROOTMIN_SHOCK.get(),
-                 SoundSource.HOSTILE,
-                 1.0F,
-                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+         this.playSound(BzSounds.ROOTMIN_SHOCK.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 10;
@@ -266,14 +260,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       this.shootDirt(target);
       this.delayTillIdle = 8;
       setRootminPose(RootminPose.SHOOT);
-
-      this.level().playSound(
-              null,
-              this.blockPosition(),
-              BzSounds.ROOTMIN_SHOOT.get(),
-              SoundSource.HOSTILE,
-              1.0F,
-              (this.getRandom().nextFloat() * 0.2F) + 0.8F);
    }
 
    public void exposeFromBlock() {
@@ -338,6 +324,12 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       if (this.getEssenceController() != null) {
          compound.putUUID("essenceController", this.getEssenceController());
       }
+      if (this.getEssenceControllerBlockPos() != null) {
+         compound.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
+      }
+      if (this.getEssenceControllerDimension() != null) {
+         compound.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
+      }
    }
 
    @Override
@@ -359,9 +351,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       this.isHidden = compound.getBoolean("hidden");
       this.delayTillIdle = compound.getInt("delayTillIdle");
-      if (compound.contains("essenceController")) {
-         this.setEssenceController(compound.getUUID("essenceController"));
-      }
       if (compound.contains("superHatedPlayer")) {
          this.superHatedPlayer = compound.getUUID("superHatedPlayer");
       }
@@ -372,6 +361,16 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          if (compound.contains("animationState")) {
             this.setRootminPose(RootminPose.valueOf(compound.getString("animationState")));
          }
+      }
+
+      if (compound.contains("essenceController")) {
+         this.setEssenceController(compound.getUUID("essenceController"));
+      }
+      if (compound.contains("essenceControllerBlockPos")) {
+         this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compound.getCompound("essenceControllerBlockPos")));
+      }
+      if (compound.contains("essenceControllerDimension")) {
+         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("essenceControllerDimension"))));
       }
    }
 
@@ -512,6 +511,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
          pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
 
+         if (this.getEssenceController() != null) {
+            pelletEntity.setEventBased(true);
+         }
+
          if (livingEntity != null) {
             double x = livingEntity.getX() - this.getX();
             double y = livingEntity.getY(0.3333333333333333) - pelletEntity.getY();
@@ -528,20 +531,33 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f, 1);
          }
 
-         // #TODO: custom shoot sound
-         this.playSound(SoundEvents.SKELETON_SHOOT, 1.0f, 1.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
+         this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
          this.level().addFreshEntity(pelletEntity);
       }
+   }
+
+   @Override
+   public boolean isInvulnerableTo(DamageSource damageSource) {
+      if (this.getEssenceController() != null &&
+        !(damageSource.getDirectEntity() instanceof DirtPelletEntity dirtPelletEntity && dirtPelletEntity.isEventBased()))
+      {
+         return true;
+      }
+
+      return super.isInvulnerableTo(damageSource);
    }
 
    @Override
    public void tick() {
       super.tick();
 
-      if (this.hurtTime > 0) {
+      if (this.hurtTime == 9) {
          if (!this.level().isClientSide()) {
             this.isHidden = false;
-            if (this.getRootminPose() != RootminPose.SHOOT && this.getRootminPose() != RootminPose.CURSE) {
+            if (this.getRootminPose() != RootminPose.SHOOT &&
+                 this.getRootminPose() != RootminPose.CURSE &&
+                 this.getRootminPose() != RootminPose.SHOCK)
+            {
                runShock();
             }
          }
@@ -676,15 +692,18 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       return 0;
    }
 
-   // TODO: custom sounds for rootmin
    @Override
    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-      return this.isBaby() ? BzSounds.HONEY_SLIME_HURT_SMALL.get() : BzSounds.HONEY_SLIME_HURT.get();
+      return BzSounds.ROOTMIN_SHOCK.get();
    }
 
    @Override
    protected SoundEvent getDeathSound() {
-      return this.isBaby() ? BzSounds.HONEY_SLIME_DEATH_SMALL.get() : BzSounds.HONEY_SLIME_DEATH.get();
+      return BzSounds.ROOTMIN_SHOCK.get();
+   }
+
+   public SoundSource getSoundSource() {
+      return SoundSource.HOSTILE;
    }
 
    private static boolean isFacingMob(RootminEntity rootminEntity, LivingEntity target) {
@@ -764,17 +783,57 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public boolean canContinueToUse() {
-         return this.mob.getEssenceController() != null;
+         UUID essenceUuid = this.mob.getEssenceController();
+         ResourceKey<Level> essenceDimension = this.mob.getEssenceControllerDimension();
+         BlockPos essenceBlockPos = this.mob.getEssenceControllerBlockPos();
+
+         return essenceUuid != null && essenceDimension != null && essenceBlockPos != null;
       }
 
       @Override
-      public void start() {}
+      public void start() {
+         this.mob.setRootminPose(RootminPose.NONE);
+      }
 
       @Override
-      public void stop() {}
+      public void stop() {
+         this.mob.setEssenceController(null);
+         this.mob.setEssenceControllerDimension(null);
+         this.mob.setEssenceControllerBlockPos(null);
+      }
 
       @Override
-      public void tick() {}
+      public void tick() {
+         UUID essenceUuid = this.mob.getEssenceController();
+         ResourceKey<Level> essenceDimension = this.mob.getEssenceControllerDimension();
+         BlockPos essenceBlockPos = this.mob.getEssenceControllerBlockPos();
+
+         Level level = this.mob.level();
+         BlockPos rootminBlockPos = this.mob.blockPosition();
+
+         if (essenceUuid != null && essenceDimension != null && essenceBlockPos != null) {
+            if (level.dimension().equals(essenceDimension)) {
+               BlockEntity blockEntity = level.getBlockEntity(essenceBlockPos);
+
+               if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity) {
+                  if (essenceBlockEntity.getUUID().equals(essenceUuid)) {
+                     BlockPos arenaSize = essenceBlockEntity.getArenaSize();
+
+                     if (Math.abs(rootminBlockPos.getX() - essenceBlockPos.getX()) <= (arenaSize.getX() / 2) &&
+                          Math.abs(rootminBlockPos.getY() - essenceBlockPos.getY()) <= (arenaSize.getY() / 2) &&
+                          Math.abs(rootminBlockPos.getZ() - essenceBlockPos.getZ()) <= (arenaSize.getZ() / 2))
+                     {
+                        // Passed checks. Keep goal alive.
+                        return;
+                     }
+                  }
+               }
+            }
+
+            //Failed check. Kill goal.
+            this.mob.setEssenceController(null);
+         }
+      }
    }
 
    private static class AngryGoal extends Goal {

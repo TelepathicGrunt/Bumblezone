@@ -11,6 +11,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -44,6 +45,14 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
 
     public DirtPelletEntity(Level world, double x, double y, double z) {
         super(BzEntities.DIRT_PELLET_ENTITY.get(), x, y, z, world);
+    }
+
+    public boolean isEventBased() {
+        return eventBased;
+    }
+
+    public void setEventBased(boolean eventBased) {
+        this.eventBased = eventBased;
     }
 
     @Override
@@ -105,7 +114,11 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         if (entity instanceof LivingEntity livingEntity) {
             Vector2d direction = new Vector2d(this.getDeltaMovement().x(), this.getDeltaMovement().z()).normalize();
             double yRotHitRadian = Mth.atan2(direction.x(), direction.y());
-            double knockbackStrength = livingEntity instanceof RootminEntity ? 0.1D : 1D;
+            double knockbackStrength = 1D;
+
+            if (livingEntity instanceof RootminEntity) {
+                knockbackStrength = this.isEventBased() ? 0 : 0.1D;
+            }
 
             livingEntity.knockback(
                 knockbackStrength,
@@ -123,5 +136,17 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
             this.level().playSound(null, this.blockPosition(), BzSounds.DIRT_PELLET_HIT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
             this.discard();
         }
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        compoundTag.putBoolean("isEvent", this.isEventBased());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        this.setEventBased(compoundTag.getBoolean("isEvent"));
     }
 }
