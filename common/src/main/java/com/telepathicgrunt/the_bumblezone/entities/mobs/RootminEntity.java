@@ -23,6 +23,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -187,26 +188,76 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    public void runAngry() {
+      if (this.getRootminPose() != RootminPose.ANGRY) {
+         this.level().playSound(
+                 null,
+                 this.blockPosition(),
+                 BzSounds.ROOTMIN_ANGRY.get(),
+                 SoundSource.HOSTILE,
+                 1.0F,
+                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+      }
+
       this.delayTillIdle = 40;
       setRootminPose(RootminPose.ANGRY);
    }
 
    public void runCurious() {
+      if (this.getRootminPose() != RootminPose.CURIOUS) {
+         this.level().playSound(
+                 null,
+                 this.blockPosition(),
+                 BzSounds.ROOTMIN_CURIOUS.get(),
+                 SoundSource.HOSTILE,
+                 1.0F,
+                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+      }
+
       this.delayTillIdle = 28;
       setRootminPose(RootminPose.CURIOUS);
    }
 
    public void runCurse() {
+      if (this.getRootminPose() != RootminPose.CURSE) {
+         this.level().playSound(
+                 null,
+                 this.blockPosition(),
+                 BzSounds.ROOTMIN_CURSING.get(),
+                 SoundSource.HOSTILE,
+                 1.0F,
+                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+      }
+
       this.delayTillIdle = 80;
       setRootminPose(RootminPose.CURSE);
    }
 
    public void runEmbarrassed() {
+      if (this.getRootminPose() != RootminPose.EMBARRASSED) {
+         this.level().playSound(
+                 null,
+                 this.blockPosition(),
+                 BzSounds.ROOTMIN_EMBARRASSED.get(),
+                 SoundSource.HOSTILE,
+                 1.0F,
+                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+      }
+
       this.delayTillIdle = 60;
       setRootminPose(RootminPose.EMBARRASSED);
    }
 
    public void runShock() {
+      if (this.getRootminPose() != RootminPose.SHOCK) {
+         this.level().playSound(
+                 null,
+                 this.blockPosition(),
+                 BzSounds.ROOTMIN_SHOCK.get(),
+                 SoundSource.HOSTILE,
+                 1.0F,
+                 (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+      }
+
       this.delayTillIdle = 10;
       setRootminPose(RootminPose.SHOCK);
    }
@@ -215,6 +266,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       this.shootDirt(target);
       this.delayTillIdle = 8;
       setRootminPose(RootminPose.SHOOT);
+
+      this.level().playSound(
+              null,
+              this.blockPosition(),
+              BzSounds.ROOTMIN_SHOOT.get(),
+              SoundSource.HOSTILE,
+              1.0F,
+              (this.getRandom().nextFloat() * 0.2F) + 0.8F);
    }
 
    public void exposeFromBlock() {

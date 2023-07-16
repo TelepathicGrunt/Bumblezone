@@ -10,7 +10,7 @@
 
 #TODO: Add music for sanctums
 
-#TODO: Add sounds for Rootmin 
+#TODO: Hire someone for sounds for Rootmin 
 
 #TODO: Add more sanctum rooms. Do sanctum variants
 

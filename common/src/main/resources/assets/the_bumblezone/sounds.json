@@ -2,7 +2,7 @@
   "beehive_ambience": {
     "sounds": [
       {
-        "name": "the_bumblezone:beehive_sounds_compressed",
+        "name": "the_bumblezone:ambience/beehive_sounds_compressed",
         "stream": true,
         "volume": 0.025
       }
@@ -11,17 +11,17 @@
   "biome_music": {
     "sounds": [
       {
-        "name": "the_bumblezone:honey_bee_rat_faced_boy",
+        "name": "the_bumblezone:music/honey_bee_rat_faced_boy",
         "stream": true,
         "volume": 1
       },
       {
-        "name": "the_bumblezone:la_bee_da_loca",
+        "name": "the_bumblezone:music/la_bee_da_loca",
         "stream": true,
         "volume": 1
       },
       {
-        "name": "the_bumblezone:bee_laxing_with_the_hom_bees",
+        "name": "the_bumblezone:music/bee_laxing_with_the_hom_bees",
         "stream": true,
         "volume": 1
       }
@@ -30,7 +30,7 @@
   "angered_bees": {
     "sounds": [
       {
-        "name": "the_bumblezone:flight_of_the_bumblebee_rimsky_korsakov",
+        "name": "the_bumblezone:music/flight_of_the_bumblebee_rimsky_korsakov",
         "stream": true,
         "volume": 0.9
       }
@@ -39,7 +39,7 @@
   "music_disc.honey_bee_rat_faced_boy": {
     "sounds": [
       {
-        "name": "the_bumblezone:honey_bee_rat_faced_boy",
+        "name": "the_bumblezone:music/honey_bee_rat_faced_boy",
         "stream": true
       }
     ]
@@ -47,7 +47,7 @@
   "music_disc.flight_of_the_bumblebee_rimsky_korsakov": {
     "sounds": [
       {
-        "name": "the_bumblezone:flight_of_the_bumblebee_rimsky_korsakov",
+        "name": "the_bumblezone:music/flight_of_the_bumblebee_rimsky_korsakov",
         "stream": true
       }
     ]
@@ -55,7 +55,7 @@
   "music_disc.la_bee_da_loca": {
     "sounds": [
       {
-        "name": "the_bumblezone:la_bee_da_loca",
+        "name": "the_bumblezone:music/la_bee_da_loca",
         "stream": true
       }
     ]
@@ -63,7 +63,7 @@
   "music_disc.bee_laxing_with_the_hom_bees": {
     "sounds": [
       {
-        "name": "the_bumblezone:bee_laxing_with_the_hom_bees",
+        "name": "the_bumblezone:music/bee_laxing_with_the_hom_bees",
         "stream": true
       }
     ]
@@ -533,6 +533,39 @@
     ],
     "subtitle": "subtitles.entity.the_bumblezone.honey_slime.squish"
   },
+  "entity.the_bumblezone.rootmin.angry": {
+    "sounds": [
+      "the_bumblezone:mob/rootmin_angry"
+    ]
+  },
+  "entity.the_bumblezone.rootmin.curious": {
+    "sounds": [
+      "the_bumblezone:mob/rootmin_curious"
+    ]
+  },
+  "entity.the_bumblezone.rootmin.cursing": {
+    "sounds": [
+      "the_bumblezone:mob/rootmin_cursing"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.rootmin.cursing"
+  },
+  "entity.the_bumblezone.rootmin.embarrassed": {
+    "sounds": [
+      "the_bumblezone:mob/rootmin_embarrassed"
+    ]
+  },
+  "entity.the_bumblezone.rootmin.shock": {
+    "sounds": [
+      "the_bumblezone:mob/rootmin_shock"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.rootmin.shock"
+  },
+  "entity.the_bumblezone.rootmin.shoot": {
+    "sounds": [
+      "the_bumblezone:mob/rootmin_shoot"
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.rootmin.shoot"
+  },
   "entity.the_bumblezone.pollen_puff.throw": {
     "sounds": [
       "random/bow"
@@ -548,6 +581,41 @@
       }
     ],
     "subtitle": "subtitles.entity.the_bumblezone.dirt_pellet.throw"
+  },
+  "entity.the_bumblezone.dirt_pellet.hit": {
+    "sounds": [
+      {
+        "name": "block/mud/break1",
+        "volume": 0.45,
+        "pitch": 0.95
+      },
+      {
+        "name": "block/mud/break2",
+        "volume": 0.45,
+        "pitch": 0.95
+      },
+      {
+        "name": "block/mud/break3",
+        "volume": 0.45,
+        "pitch": 0.95
+      },
+      {
+        "name": "block/mud/break4",
+        "volume": 0.45,
+        "pitch": 0.95
+      },
+      {
+        "name": "block/mud/break5",
+        "volume": 0.45,
+        "pitch": 0.95
+      },
+      {
+        "name": "block/mud/break6",
+        "volume": 0.45,
+        "pitch": 0.95
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.dirt_pellet.hit"
   },
   "item.the_bumblezone.sugar_water_bottle.drink": {
     "sounds": [
