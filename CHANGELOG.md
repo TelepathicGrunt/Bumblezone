@@ -19,10 +19,14 @@
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
 
-### **(V.7.0.0 Changes) (1.12.0 Minecraft)**
+### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
 ##### Major:
-Updated to 1.20!
+Updated to 1.20.1!
+
+NOTE: Forge users must use 1.20.1 Forge up to v47.1.3 and nothing newer. 
+ Forge starting merging in low-quality, breaking code changes that helps no one. 
+ v47.1.3 Forge is most stable and is what I will build against until neoForged is publicly available.
 
 
 #### *\*Additions*

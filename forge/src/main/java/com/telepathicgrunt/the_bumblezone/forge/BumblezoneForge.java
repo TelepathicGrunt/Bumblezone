@@ -144,7 +144,7 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onProjectileHit);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUseOnBlock);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUse);
-        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onProjectileHitHigh);
+        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onProjectileHitHighPriority);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onBlockBreak);
         eventBus.addListener(BumblezoneForge::onPlayerTick);
         eventBus.addListener(BumblezoneForge::onPickupItem);
@@ -301,7 +301,7 @@ public class BumblezoneForge {
         }
     }
 
-    private static void onProjectileHitHigh(ProjectileImpactEvent event) {
+    private static void onProjectileHitHighPriority(ProjectileImpactEvent event) {
         boolean cancel = ProjectileHitEvent.EVENT_HIGH.invoke(new ProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);

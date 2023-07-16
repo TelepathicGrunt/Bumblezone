@@ -18,9 +18,9 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
 [[dependencies.the_bumblezone]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20,)"
+    versionRange="[1.20.1,)"
 
 [[dependencies.the_bumblezone]]
     modId="forge"
     mandatory=true
-    versionRange="[46.0.1,)"
+    versionRange="[47.1.0,47.1.3]"
