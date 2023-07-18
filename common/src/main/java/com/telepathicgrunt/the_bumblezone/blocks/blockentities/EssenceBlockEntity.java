@@ -382,4 +382,9 @@ public class EssenceBlockEntity extends BlockEntity {
         essenceBlockEntity.setArenaSize(BlockPos.ZERO);
         essenceBlockEntity.setChanged();
     }
+
+    public void setRemoved() {
+        super.setRemoved();
+        this.getEventBar().removeAllPlayers();
+    }
 }

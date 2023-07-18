@@ -169,6 +169,16 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
     }
 
     @Override
+    protected boolean canHitEntity(Entity entity) {
+        if (entity instanceof DirtPelletEntity dirtPelletEntity2) {
+            if (dirtPelletEntity2.getOwner() == this.getOwner()) {
+                return false;
+            }
+        }
+        return super.canHitEntity(entity);
+    }
+
+    @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         Entity entity = entityHitResult.getEntity();

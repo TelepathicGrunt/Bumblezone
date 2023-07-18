@@ -63,6 +63,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -600,30 +601,31 @@ public class GeneralUtils {
         }
 
         if (!structurePlaceSettings.isIgnoreEntities()) {
-            Mirror mirror = structurePlaceSettings.getMirror();
-            Rotation rotation = structurePlaceSettings.getRotation();
+            placeEntities(serverLevelAccessor, structureTemplate, blockPos, structurePlaceSettings.getMirror(), structurePlaceSettings.getRotation(), structurePlaceSettings.getRotationPivot(), boundingBox, structurePlaceSettings.shouldFinalizeEntities());
+        }
+    }
 
-            for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).getEntityInfoList()) {
-                BlockPos blockPos3 = StructureTemplate.transform(structureEntityInfo.blockPos, mirror, rotation, blockPos2).offset(blockPos);
-                if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
-                CompoundTag compoundTag = structureEntityInfo.nbt.copy();
-                Vec3 vec3 = StructureTemplate.transform(structureEntityInfo.pos, mirror, rotation, blockPos2);
-                Vec3 vec32 = vec3.add(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-                ListTag listTag = new ListTag();
-                listTag.add(DoubleTag.valueOf(vec32.x));
-                listTag.add(DoubleTag.valueOf(vec32.y));
-                listTag.add(DoubleTag.valueOf(vec32.z));
-                compoundTag.put("Pos", listTag);
-                compoundTag.remove("UUID");
-                createEntityIgnoreException(serverLevelAccessor, compoundTag).ifPresent(entity -> {
-                    float rotate = entity.rotate(rotation);
-                    entity.moveTo(vec3.x, vec3.y, vec3.z, rotate + (entity.mirror(mirror) - entity.getYRot()), entity.getXRot());
-                    if (structurePlaceSettings.shouldFinalizeEntities() && entity instanceof Mob) {
-                        ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null, compoundTag);
-                    }
-                    serverLevelAccessor.addFreshEntityWithPassengers(entity);
-                });
-            }
+    private static void placeEntities(ServerLevelAccessor serverLevelAccessor, StructureTemplate structureTemplate, BlockPos blockPos, Mirror mirror, Rotation rotation, BlockPos blockPos2, @Nullable BoundingBox boundingBox, boolean bl) {
+        for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).getEntityInfoList()) {
+            BlockPos blockPos3 = StructureTemplate.transform(structureEntityInfo.blockPos, mirror, rotation, blockPos2).offset(blockPos);
+            if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
+            CompoundTag compoundTag = structureEntityInfo.nbt.copy();
+            Vec3 vec3 = StructureTemplate.transform(structureEntityInfo.pos, mirror, rotation, blockPos2);
+            Vec3 vec32 = vec3.add(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            ListTag listTag = new ListTag();
+            listTag.add(DoubleTag.valueOf(vec32.x));
+            listTag.add(DoubleTag.valueOf(vec32.y));
+            listTag.add(DoubleTag.valueOf(vec32.z));
+            compoundTag.put("Pos", listTag);
+            compoundTag.remove("UUID");
+            createEntityIgnoreException(serverLevelAccessor, compoundTag).ifPresent(entity -> {
+                float f = entity.rotate(rotation);
+                entity.moveTo(vec3.x, vec3.y, vec3.z, f += entity.mirror(mirror) - entity.getYRot(), entity.getXRot());
+                if (bl && entity instanceof Mob) {
+                    ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null, compoundTag);
+                }
+                serverLevelAccessor.addFreshEntityWithPassengers(entity);
+            });
         }
     }
 

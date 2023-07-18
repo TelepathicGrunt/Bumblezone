@@ -255,6 +255,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                     }
                 });
 
+                essenceBlockEntity.getEventBar().setProgress(1f);
                 essenceBlockEntity.setEventTimer(this.getEventTimeFrame());
                 essenceBlockEntity.setChanged();
             }

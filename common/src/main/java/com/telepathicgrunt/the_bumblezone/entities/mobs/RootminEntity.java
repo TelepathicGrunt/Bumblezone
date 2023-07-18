@@ -77,6 +77,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -269,8 +271,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       setRootminPose(RootminPose.SHOOT);
    }
 
-   public void runMultiShoot(@Nullable LivingEntity target, float speedMultipiler, boolean isHoming) {
-      this.shootDirt(target, speedMultipiler);
+   public void runMultiShoot(@Nullable LivingEntity target, float speedMultipiler, int projectiles) {
+      this.shootDirt(target, speedMultipiler, projectiles);
       this.delayTillIdle = 8;
       setRootminPose(RootminPose.SHOOT);
    }
@@ -549,32 +551,51 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultipiler) {
+      this.shootDirt(livingEntity, 1, 1);
+   }
+
+   public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultipiler, int totalProjectiles) {
       if (!this.level().isClientSide()) {
-         DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
-         pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
+         for (int currentProjectile = 0; currentProjectile < totalProjectiles; currentProjectile++) {
+            DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
+            pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
 
-         if (this.getEssenceController() != null) {
-            pelletEntity.setEventBased(true);
-         }
+            if (this.getEssenceController() != null) {
+               pelletEntity.setEventBased(true);
+            }
 
-         if (livingEntity != null) {
-            double x = livingEntity.getX() - this.getX();
-            double y = livingEntity.getY(1.333333 - speedMultipiler) - pelletEntity.getY();
-            double z = livingEntity.getZ() - this.getZ();
-            double archOffset = Math.sqrt(x * x + z * z);
-            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f * speedMultipiler, 1);
-         }
-         else {
-            double defaultSpeed = 5;
-            double x = this.getLookAngle().x() * defaultSpeed;
-            double y = 0.3333333333333333;
-            double z = this.getLookAngle().z() * defaultSpeed;
-            double archOffset = Math.sqrt(x * x + z * z);
-            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f * speedMultipiler, 1);
-         }
+            Vec3 shootAngle;
+            if (livingEntity != null) {
+               double x = livingEntity.getX() - this.getX();
+               double y = livingEntity.getY(1.3 - speedMultipiler * 1.3) - pelletEntity.getY();
+               double z = livingEntity.getZ() - this.getZ();
+               shootAngle = new Vec3(x, y, z);
+            }
+            else {
+               double defaultSpeed = 5;
+               double x = this.getLookAngle().x() * defaultSpeed;
+               double y = 0.3333333333333333;
+               double z = this.getLookAngle().z() * defaultSpeed;
+               shootAngle = new Vec3(x, y, z);
+            }
 
-         this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
-         this.level().addFreshEntity(pelletEntity);
+            double archOffset = Math.sqrt((shootAngle.x() * shootAngle.x()) + (shootAngle.z() * shootAngle.z()));
+
+            Vec3 vec3 = this.getUpVector(1.0f);
+            int angle = (currentProjectile - (int)(totalProjectiles / 2f)) * 3;
+            Quaternionf quaternionf = new Quaternionf().setAngleAxis(angle * ((float)Math.PI / 180), vec3.x, vec3.y, vec3.z);
+            Vector3f rotatedShootAngle = shootAngle.toVector3f().rotate(quaternionf);
+
+            pelletEntity.shoot(
+                    rotatedShootAngle.x(),
+                    rotatedShootAngle.y() + archOffset * (double) 0.2f,
+                    rotatedShootAngle.z(),
+                    1.5f * speedMultipiler,
+                    1);
+
+            this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+            this.level().addFreshEntity(pelletEntity);
+         }
       }
    }
 

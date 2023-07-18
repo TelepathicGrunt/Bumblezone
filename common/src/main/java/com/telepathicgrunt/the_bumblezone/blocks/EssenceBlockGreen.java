@@ -33,6 +33,9 @@ import java.util.UUID;
 
 public class EssenceBlockGreen extends EssenceBlock {
     private static final int ROOTMIN_HEALTH = 30;
+    private static final float STAGE_2_THRESHOLD = 0.75f;
+    private static final float STAGE_3_THRESHOLD = 0.55f;
+    private static final float STAGE_4_THRESHOLD = 0.25f;
 
     public EssenceBlockGreen() {
         super(Properties.of().mapColor(MapColor.COLOR_GREEN));
@@ -110,13 +113,13 @@ public class EssenceBlockGreen extends EssenceBlock {
                 EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
             }
 
-            float rootminHealthPercent = rootminEntity.getHealth() / ROOTMIN_HEALTH;
             float progress = essenceBlockEntity.getEventBar().getProgress();
             int hitsLeft = Math.round(progress * ROOTMIN_HEALTH);
             RootminPose rootminPose = rootminEntity.getRootminPose();
             if (!rootminEntity.isDeadOrDying()) {
                 rootminEntity.setHealth(hitsLeft);
             }
+            float rootminHealthPercent = rootminEntity.getHealth() / ROOTMIN_HEALTH;
 
             if (rootminEntity.getLastHurtByMob() != null &&
                 (rootminPose == RootminPose.SHOCK || rootminPose == RootminPose.ANGRY || rootminPose == RootminPose.CURSE))
@@ -138,19 +141,19 @@ public class EssenceBlockGreen extends EssenceBlock {
                     if (!rootminEntity.position().equals(desiredRootminSpot)) {
                         Vec3 diff = desiredRootminSpot.subtract(rootminEntity.position());
 
-                        if (diff.length() <= 3) {
+                        if (diff.length() <= 3 && diff.length() > 0.05d) {
                             Vec3 moveDirection = diff.scale(0.1d);
                             rootminEntity.setDeltaMovement(moveDirection.x(), moveDirection.y(), moveDirection.z());
                         }
-                        else {
+                        else if (diff.length() > 3) {
                             rootminEntity.moveTo(desiredRootminSpot);
                         }
                     }
                 }
 
-                int interval = rootminHealthPercent > 0.25f && rootminHealthPercent < 0.55f ? Mth.lerpInt(rootminHealthPercent, 15, 35) : Mth.lerpInt(rootminHealthPercent, 10, 45);
-                int offset = rootminHealthPercent < 0.25f ? 3 : 0;
-                if (rootminEntity.tickCount % interval == 0 && (rootminEntity.tickCount + offset) % interval == 0 ) {
+                int interval = rootminHealthPercent > STAGE_4_THRESHOLD && rootminHealthPercent <= STAGE_3_THRESHOLD ? Mth.lerpInt(rootminHealthPercent, 15, 35) : Mth.lerpInt(rootminHealthPercent, 10, 45);
+                int offset = rootminHealthPercent <= STAGE_4_THRESHOLD ? 5 : 0;
+                if (rootminEntity.tickCount % interval == 0 || (rootminEntity.tickCount + offset) % interval == 0 ) {
                     BlockPos playerArea = blockPos.offset(-9, -3, 0);
                     List<Player> players = serverLevel.getEntitiesOfClass(
                         Player.class,
@@ -166,7 +169,7 @@ public class EssenceBlockGreen extends EssenceBlock {
 
                     if (!players.isEmpty()) {
                         // Do behavior of shooting and stuff
-                        boolean isHoming = rootminHealthPercent > 0.25f && rootminHealthPercent < 0.55f;
+                        boolean isHoming = rootminHealthPercent > STAGE_4_THRESHOLD && rootminHealthPercent <= STAGE_3_THRESHOLD;
 
                         if (isHoming) {
                             RandomSource randomSource = rootminEntity.getRandom();
@@ -182,7 +185,20 @@ public class EssenceBlockGreen extends EssenceBlock {
                             rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, players.get(0).position());
                         }
 
-                        rootminEntity.runShoot(players.get(0), isHoming ? 0.8F : (float)Mth.lerp(rootminHealthPercent, 1.7D, 0.85D), isHoming);
+                        if (rootminHealthPercent > STAGE_3_THRESHOLD && rootminHealthPercent <= STAGE_2_THRESHOLD) {
+                            rootminEntity.runMultiShoot(
+                                players.get(0),
+                                (float)Mth.lerp(rootminHealthPercent, 1.7D, 0.85D),
+                                3
+                            );
+                        }
+                        else {
+                            rootminEntity.runShoot(
+                                players.get(0),
+                                isHoming ? 0.8F : (float)Mth.lerp(rootminHealthPercent, 1.7D, 0.85D),
+                                isHoming
+                            );
+                        }
                     }
                     else {
                         rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, Vec3.atLowerCornerOf(Direction.WEST.getNormal()).add(rootminEntity.position()));
