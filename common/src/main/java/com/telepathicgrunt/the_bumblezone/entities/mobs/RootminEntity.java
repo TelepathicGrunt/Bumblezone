@@ -220,7 +220,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.playSound(BzSounds.ROOTMIN_ANGRY.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
-      this.delayTillIdle = 40;
+      this.delayTillIdle = 80;
       setRootminPose(RootminPose.ANGRY);
    }
 
@@ -238,7 +238,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.playSound(BzSounds.ROOTMIN_CURSING.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
-      this.delayTillIdle = 80;
+      this.delayTillIdle = 40;
       setRootminPose(RootminPose.CURSE);
    }
 
@@ -410,9 +410,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          }
 
          setAnimationState(pose, RootminPose.NONE, this.idleAnimationState, this.tickCount - 27);
-         setAnimationState(pose, RootminPose.ANGRY, this.angryAnimationState, BzParticles.ANGRY_PARTICLE.get(), 35, 1D);
+         setAnimationState(pose, RootminPose.ANGRY, this.angryAnimationState, BzParticles.ANGRY_PARTICLE.get(), 75, 1D);
          setAnimationState(pose, RootminPose.CURIOUS, this.curiousAnimationState, BzParticles.CURIOUS_PARTICLE.get(), 23, 1D);
-         setAnimationState(pose, RootminPose.CURSE, this.curseAnimationState, BzParticles.CURSING_PARTICLE.get(), 75, 1D);
+         setAnimationState(pose, RootminPose.CURSE, this.curseAnimationState, BzParticles.CURSING_PARTICLE.get(), 35, 1D);
          setAnimationState(pose, RootminPose.EMBARRASSED, this.embarassedAnimationState, BzParticles.EMBARRASSED_PARTICLE.get(), 55, 1D);
          setAnimationState(pose, RootminPose.SHOCK, this.shockAnimationState);
          setAnimationState(pose, RootminPose.SHOOT, this.shootAnimationState);
@@ -610,7 +610,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                     EssenceOfTheBees.hasEssence(serverPlayer) &&
                     this.getRootminPose() != RootminPose.ANGRY &&
                     this.getRootminPose() != RootminPose.CURSE &&
-                    this.getRootminPose() != RootminPose.SHOCK)
+                    this.getRootminPose() != RootminPose.SHOCK &&
+                    this.hurtTime == 0)
             {
                return super.isInvulnerableTo(damageSource);
             }

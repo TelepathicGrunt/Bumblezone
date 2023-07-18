@@ -1,8 +1,8 @@
-#TODO: create essence events
+#TODO: create white essence event
+
+#TODO: create purple essence event
 
 #TODO: Electric Ring Textures/animations
-
-#TODO: Implement rootmin essence event.
 
 #TODO: Re-evaluate advancements. Add more for new additions as well.
 

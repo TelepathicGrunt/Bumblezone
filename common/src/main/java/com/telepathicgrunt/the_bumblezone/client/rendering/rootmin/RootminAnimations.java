@@ -3654,7 +3654,7 @@ public class RootminAnimations {
                                     AnimationChannel.Interpolations.LINEAR),
                             new Keyframe(3f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR))).build();
-    public static final AnimationDefinition CURSE = AnimationDefinition.Builder.withLength(4f)
+    public static final AnimationDefinition ANGRY = AnimationDefinition.Builder.withLength(4f)
             .addAnimation("body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
@@ -4049,7 +4049,7 @@ public class RootminAnimations {
                                     AnimationChannel.Interpolations.LINEAR),
                             new Keyframe(3.9583435f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR))).build();
-    public static final AnimationDefinition ANGRY = AnimationDefinition.Builder.withLength(2f)
+    public static final AnimationDefinition CURSE = AnimationDefinition.Builder.withLength(2f)
             .addAnimation("body",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
                             new Keyframe(0f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
