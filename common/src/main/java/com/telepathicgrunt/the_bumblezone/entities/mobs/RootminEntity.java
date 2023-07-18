@@ -628,8 +628,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       if (this.hurtTime == 9) {
          if (!this.level().isClientSide()) {
             this.isHidden = false;
-            if (this.getRootminPose() != RootminPose.SHOOT &&
-                 this.getRootminPose() != RootminPose.CURSE &&
+            if (this.getRootminPose() != RootminPose.CURSE &&
                  this.getRootminPose() != RootminPose.SHOCK)
             {
                runShock();

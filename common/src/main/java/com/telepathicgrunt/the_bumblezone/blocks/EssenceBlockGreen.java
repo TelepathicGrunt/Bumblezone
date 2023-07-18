@@ -96,6 +96,7 @@ public class EssenceBlockGreen extends EssenceBlock {
 
                 entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atLowerCornerOf(Direction.SOUTH.getNormal()));
                 eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
+                essenceBlockEntity.setChanged();
             }
         }
 
@@ -208,6 +209,7 @@ public class EssenceBlockGreen extends EssenceBlock {
 
             float newProgress = ((float)hitsLeft) / ROOTMIN_HEALTH;
             essenceBlockEntity.getEventBar().setProgress(newProgress);
+            essenceBlockEntity.setChanged();
         }
     }
 }

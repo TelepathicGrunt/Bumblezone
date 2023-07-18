@@ -174,6 +174,12 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
             if (dirtPelletEntity2.getOwner() == this.getOwner()) {
                 return false;
             }
+            else if (this.position().closerThan(dirtPelletEntity2.position(), 0.5d)) {
+                return super.canHitEntity(entity);
+            }
+            else {
+                return false;
+            }
         }
         return super.canHitEntity(entity);
     }
@@ -205,8 +211,8 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
             }
         }
 
-        if (eventBased) {
-            if (entity instanceof RootminEntity rootminEntity && rootminEntity.getEssenceController() != null) {
+        if (eventBased || (entity instanceof RootminEntity rootminEntity && rootminEntity.getEssenceController() != null)) {
+            if (entity instanceof RootminEntity) {
                 damage = 1;
             }
             else if (entity instanceof ServerPlayer serverPlayer) {
