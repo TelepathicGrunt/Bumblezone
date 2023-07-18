@@ -100,7 +100,7 @@ public class HeavyAir extends Block {
             }
         }
 
-        entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.015, 0));
+        entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.0175, 0));
         APPLIED_PUSH_FOR_ENTITY.put(entity.getStringUUID(), entity.tickCount);
     }
 

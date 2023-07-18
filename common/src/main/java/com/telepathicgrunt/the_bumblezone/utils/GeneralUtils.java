@@ -16,6 +16,8 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
@@ -23,7 +25,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -40,6 +45,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JigsawBlock;
 import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -484,13 +491,13 @@ public class GeneralUtils {
     ///////////////////////////////////////////////
 
 
-    public static void placeInWorldWithouNeighborUpdate(ServerLevelAccessor serverLevelAccessor,
-                                                        StructureTemplate structureTemplate,
-                                                        BlockPos blockPos,
-                                                        BlockPos blockPos2,
-                                                        StructurePlaceSettings structurePlaceSettings,
-                                                        RandomSource randomSource,
-                                                        int i)
+    public static void placeInWorldWithoutNeighborUpdate(ServerLevelAccessor serverLevelAccessor,
+                                                         StructureTemplate structureTemplate,
+                                                         BlockPos blockPos,
+                                                         BlockPos blockPos2,
+                                                         StructurePlaceSettings structurePlaceSettings,
+                                                         RandomSource randomSource,
+                                                         int i)
     {
         if (((StructureTemplateAccessor)structureTemplate).getBlocks().isEmpty()) {
             return;
@@ -590,6 +597,42 @@ public class GeneralUtils {
                 if (pair.getSecond() == null || (blockEntity = serverLevelAccessor.getBlockEntity(blockPos7)) == null) continue;
                 blockEntity.setChanged();
             }
+        }
+
+        if (!structurePlaceSettings.isIgnoreEntities()) {
+            Mirror mirror = structurePlaceSettings.getMirror();
+            Rotation rotation = structurePlaceSettings.getRotation();
+
+            for (StructureTemplate.StructureEntityInfo structureEntityInfo : ((StructureTemplateAccessor)structureTemplate).getEntityInfoList()) {
+                BlockPos blockPos3 = StructureTemplate.transform(structureEntityInfo.blockPos, mirror, rotation, blockPos2).offset(blockPos);
+                if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
+                CompoundTag compoundTag = structureEntityInfo.nbt.copy();
+                Vec3 vec3 = StructureTemplate.transform(structureEntityInfo.pos, mirror, rotation, blockPos2);
+                Vec3 vec32 = vec3.add(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                ListTag listTag = new ListTag();
+                listTag.add(DoubleTag.valueOf(vec32.x));
+                listTag.add(DoubleTag.valueOf(vec32.y));
+                listTag.add(DoubleTag.valueOf(vec32.z));
+                compoundTag.put("Pos", listTag);
+                compoundTag.remove("UUID");
+                createEntityIgnoreException(serverLevelAccessor, compoundTag).ifPresent(entity -> {
+                    float rotate = entity.rotate(rotation);
+                    entity.moveTo(vec3.x, vec3.y, vec3.z, rotate + (entity.mirror(mirror) - entity.getYRot()), entity.getXRot());
+                    if (structurePlaceSettings.shouldFinalizeEntities() && entity instanceof Mob) {
+                        ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null, compoundTag);
+                    }
+                    serverLevelAccessor.addFreshEntityWithPassengers(entity);
+                });
+            }
+        }
+    }
+
+    private static Optional<Entity> createEntityIgnoreException(ServerLevelAccessor serverLevelAccessor, CompoundTag compoundTag) {
+        try {
+            return EntityType.create(compoundTag, serverLevelAccessor.getLevel());
+        }
+        catch (Exception exception) {
+            return Optional.empty();
         }
     }
 }

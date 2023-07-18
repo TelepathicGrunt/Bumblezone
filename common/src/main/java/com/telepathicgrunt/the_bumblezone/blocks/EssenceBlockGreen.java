@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -11,18 +12,28 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public class EssenceBlockGreen extends EssenceBlock {
+    private static final int ROOTMIN_HEALTH = 30;
+
     public EssenceBlockGreen() {
         super(Properties.of().mapColor(MapColor.COLOR_GREEN));
     }
@@ -34,7 +45,7 @@ public class EssenceBlockGreen extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 2000;
+        return 6000;
     }
 
     @Override
@@ -58,22 +69,33 @@ public class EssenceBlockGreen extends EssenceBlock {
 
     @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
-        essenceBlockEntity.getEventBar().setProgress((float)essenceBlockEntity.getEventTimer() / getEventTimeFrame());
-        BlockPos rootminPos = blockPos.offset(9, -3, 0);
 
+        BlockPos rootminPos = blockPos.offset(9, -3, 0);
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
+
         if (eventEntitiesInArena.isEmpty()) {
             Entity entity = BzEntities.ROOTMIN.get().spawn(serverLevel, rootminPos, MobSpawnType.TRIGGERED);
             if (entity instanceof RootminEntity rootminEntity) {
                 rootminEntity.setEssenceController(essenceBlockEntity.getUUID());
                 rootminEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
                 rootminEntity.setEssenceControllerDimension(serverLevel.dimension());
+
+                AttributeInstance livingEntityAttributeHealth = rootminEntity.getAttribute(Attributes.MAX_HEALTH);
+                if (livingEntityAttributeHealth != null) {
+                    float extraHealth = ROOTMIN_HEALTH - rootminEntity.getMaxHealth();
+                    livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
+                            UUID.fromString("03c85bd0-09eb-11ee-be56-0242ac120002"),
+                            "Essence Arena Health Boost",
+                            extraHealth,
+                            AttributeModifier.Operation.ADDITION));
+                    rootminEntity.heal(extraHealth + rootminEntity.getMaxHealth());
+                }
+
                 entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atLowerCornerOf(Direction.SOUTH.getNormal()));
                 eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
             }
         }
 
-        // Do behavior of shooting and stuff
         if (!eventEntitiesInArena.isEmpty()) {
             EssenceBlockEntity.EventEntities eventEntity = eventEntitiesInArena.get(0);
             Entity entity = serverLevel.getEntity(eventEntity.uuid());
@@ -84,13 +106,92 @@ public class EssenceBlockGreen extends EssenceBlock {
                 eventEntitiesInArena.remove(0);
                 return;
             }
-
-            entity.moveTo(Vec3.atCenterOf(rootminPos).add(0, -0.5d, 0));
-            entity.lookAt(EntityAnchorArgument.Anchor.FEET, Vec3.atLowerCornerOf(Direction.WEST.getNormal()).add(entity.position()));
-
-            if (entity.tickCount % 20 == 0) {
-                //rootminEntity.setTarget(serverPlayer);
+            else if (((RootminEntity) entity).isDeadOrDying()) {
+                EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
             }
+
+            float rootminHealthPercent = rootminEntity.getHealth() / ROOTMIN_HEALTH;
+            float progress = essenceBlockEntity.getEventBar().getProgress();
+            int hitsLeft = Math.round(progress * ROOTMIN_HEALTH);
+            RootminPose rootminPose = rootminEntity.getRootminPose();
+            if (!rootminEntity.isDeadOrDying()) {
+                rootminEntity.setHealth(hitsLeft);
+            }
+
+            if (rootminEntity.getLastHurtByMob() != null &&
+                (rootminPose == RootminPose.SHOCK || rootminPose == RootminPose.ANGRY || rootminPose == RootminPose.CURSE))
+            {
+                if (rootminPose == RootminPose.SHOCK) {
+                    if (rootminHealthPercent < 0.2) {
+                        rootminEntity.runCurse();
+                    }
+                    else {
+                        rootminEntity.runAngry();
+                    }
+                    hitsLeft--;
+                }
+            }
+            else {
+                if (rootminPose != RootminPose.ANGRY && rootminPose != RootminPose.SHOCK) {
+                    Vec3 desiredRootminSpot = Vec3.atCenterOf(rootminPos).add(0, -0.5d, 0);
+
+                    if (!rootminEntity.position().equals(desiredRootminSpot)) {
+                        Vec3 diff = desiredRootminSpot.subtract(rootminEntity.position());
+
+                        if (diff.length() <= 3) {
+                            Vec3 moveDirection = diff.scale(0.1d);
+                            rootminEntity.setDeltaMovement(moveDirection.x(), moveDirection.y(), moveDirection.z());
+                        }
+                        else {
+                            rootminEntity.moveTo(desiredRootminSpot);
+                        }
+                    }
+                }
+
+                int interval = rootminHealthPercent > 0.25f && rootminHealthPercent < 0.55f ? Mth.lerpInt(rootminHealthPercent, 15, 35) : Mth.lerpInt(rootminHealthPercent, 10, 45);
+                int offset = rootminHealthPercent < 0.25f ? 3 : 0;
+                if (rootminEntity.tickCount % interval == 0 && (rootminEntity.tickCount + offset) % interval == 0 ) {
+                    BlockPos playerArea = blockPos.offset(-9, -3, 0);
+                    List<Player> players = serverLevel.getEntitiesOfClass(
+                        Player.class,
+                        new AABB(
+                            playerArea.getX() - 1,
+                            playerArea.getY() - 1,
+                            playerArea.getZ() - 1,
+                            playerArea.getX() + 2,
+                            playerArea.getY() + 3,
+                            playerArea.getZ() + 2
+                        )
+                    );
+
+                    if (!players.isEmpty()) {
+                        // Do behavior of shooting and stuff
+                        boolean isHoming = rootminHealthPercent > 0.25f && rootminHealthPercent < 0.55f;
+
+                        if (isHoming) {
+                            RandomSource randomSource = rootminEntity.getRandom();
+                            rootminEntity.lookAt(
+                                EntityAnchorArgument.Anchor.FEET,
+                                players.get(0).position().add(
+                                    randomSource.nextDouble() * 21 - 10,
+                                    randomSource.nextDouble() * 21 - 10,
+                                    randomSource.nextDouble() * 21 - 10
+                                ));
+                        }
+                        else {
+                            rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, players.get(0).position());
+                        }
+
+                        rootminEntity.runShoot(players.get(0), isHoming ? 0.8F : (float)Mth.lerp(rootminHealthPercent, 1.7D, 0.85D), isHoming);
+                    }
+                    else {
+                        rootminEntity.lookAt(EntityAnchorArgument.Anchor.FEET, Vec3.atLowerCornerOf(Direction.WEST.getNormal()).add(rootminEntity.position()));
+                    }
+                }
+            }
+
+            float newProgress = ((float)hitsLeft) / ROOTMIN_HEALTH;
+            essenceBlockEntity.getEventBar().setProgress(newProgress);
         }
     }
 }

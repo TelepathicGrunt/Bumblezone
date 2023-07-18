@@ -45,6 +45,7 @@ import java.util.UUID;
 public class EssenceBlockEntity extends BlockEntity {
     private static final String UUID_TAG = "uuid";
     private static final String EVENT_TIMER_TAG = "eventTimer";
+    private static final String PROGRESS_TAG = "eventBarProgress";
     private static final String PLAYERS_IN_ARENA_TAG = "playersInArena";
     private static final String EVENT_ENTITIES_IN_ARENA_TAG = "eventEntitiesInArena";
     private static final String EXTRA_EVENT_TRACKING_PROGRESS_TAG = "extraEventTrackingProgress";
@@ -133,8 +134,9 @@ public class EssenceBlockEntity extends BlockEntity {
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
         if (compoundTag != null) {
-            this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
+            this.eventBar.setProgress(compoundTag.getFloat(PROGRESS_TAG));
             this.extraEventTrackingProgress = compoundTag.getInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG);
+            this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
             this.eventBar.setEndEventTimer(this.eventTimer);
             if (compoundTag.contains(UUID_TAG)) {
                 this.uuid = compoundTag.getUUID(UUID_TAG);
@@ -196,6 +198,7 @@ public class EssenceBlockEntity extends BlockEntity {
         compoundTag.put(UUID_TAG, NbtUtils.createUUID(this.getUUID()));
         compoundTag.putInt(EVENT_TIMER_TAG, this.eventTimer);
         compoundTag.putInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG, this.extraEventTrackingProgress);
+        compoundTag.putFloat(PROGRESS_TAG, this.eventBar.getProgress());
 
         ListTag players = new ListTag();
         for (UUID target : this.playerInArena) {

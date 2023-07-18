@@ -11,4 +11,7 @@ public interface StructureTemplateAccessor {
 
     @Accessor("palettes")
     List<StructureTemplate.Palette> getBlocks();
+
+    @Accessor("entityInfoList")
+    List<StructureTemplate.StructureEntityInfo> getEntityInfoList();
 }

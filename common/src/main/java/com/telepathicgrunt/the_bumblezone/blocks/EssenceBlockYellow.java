@@ -224,6 +224,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                                 "Essence Arena Health Boost",
                                 mobHealthBoost,
                                 AttributeModifier.Operation.ADDITION));
+                        livingEntity.heal(mobHealthBoost);
                     }
 
                     AttributeInstance livingEntityAttributeAttack = livingEntity.getAttribute(Attributes.ATTACK_DAMAGE);

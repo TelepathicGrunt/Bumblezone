@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -24,6 +25,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -256,8 +258,19 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       setRootminPose(RootminPose.SHOCK);
    }
 
-   public void runShoot(@Nullable LivingEntity target) {
-      this.shootDirt(target);
+   public void runShoot(@Nullable LivingEntity target, float speedMultipiler, boolean isHoming) {
+      if (isHoming && target != null) {
+         this.shootHomingDirt(target, speedMultipiler);
+      }
+      else {
+         this.shootDirt(target, speedMultipiler);
+      }
+      this.delayTillIdle = 8;
+      setRootminPose(RootminPose.SHOOT);
+   }
+
+   public void runMultiShoot(@Nullable LivingEntity target, float speedMultipiler, boolean isHoming) {
+      this.shootDirt(target, speedMultipiler);
       this.delayTillIdle = 8;
       setRootminPose(RootminPose.SHOOT);
    }
@@ -506,7 +519,36 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       return super.mobInteract(player, hand);
    }
 
+   // Add homing missile dirt
+   public void shootHomingDirt(LivingEntity livingEntity, float speedMultipiler) {
+      if (!this.level().isClientSide()) {
+         DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
+         pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
+
+         if (this.getEssenceController() != null) {
+            pelletEntity.setEventBased(true);
+         }
+
+         pelletEntity.setHoming(true);
+         pelletEntity.setHomingTargetUUID(livingEntity.getUUID());
+
+         double x = livingEntity.getX() - this.getX();
+         double y = livingEntity.getY(1.333333 - speedMultipiler) - pelletEntity.getY();
+         double z = livingEntity.getZ() - this.getZ();
+         double archOffset = Math.sqrt(x * x + z * z);
+         Vec3 lookAngle = this.getLookAngle();
+         pelletEntity.shoot(lookAngle.x(), y + archOffset * (double) 0.01f, lookAngle.z(), 1.5f * speedMultipiler, 1);
+
+         this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
+         this.level().addFreshEntity(pelletEntity);
+      }
+   }
+
    public void shootDirt(@Nullable LivingEntity livingEntity) {
+      this.shootDirt(livingEntity, 1);
+   }
+
+   public void shootDirt(@Nullable LivingEntity livingEntity, float speedMultipiler) {
       if (!this.level().isClientSide()) {
          DirtPelletEntity pelletEntity = new DirtPelletEntity(this.level(), this);
          pelletEntity.setPos(pelletEntity.position().add(this.getLookAngle().x(), 0, this.getLookAngle().z()));
@@ -517,10 +559,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
          if (livingEntity != null) {
             double x = livingEntity.getX() - this.getX();
-            double y = livingEntity.getY(0.3333333333333333) - pelletEntity.getY();
+            double y = livingEntity.getY(1.333333 - speedMultipiler) - pelletEntity.getY();
             double z = livingEntity.getZ() - this.getZ();
             double archOffset = Math.sqrt(x * x + z * z);
-            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f, 1);
+            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f * speedMultipiler, 1);
          }
          else {
             double defaultSpeed = 5;
@@ -528,7 +570,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             double y = 0.3333333333333333;
             double z = this.getLookAngle().z() * defaultSpeed;
             double archOffset = Math.sqrt(x * x + z * z);
-            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f, 1);
+            pelletEntity.shoot(x, y + archOffset * (double) 0.2f, z, 1.5f * speedMultipiler, 1);
          }
 
          this.playSound(BzSounds.ROOTMIN_SHOOT.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
@@ -538,9 +580,20 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    public boolean isInvulnerableTo(DamageSource damageSource) {
-      if (this.getEssenceController() != null &&
-        !(damageSource.getDirectEntity() instanceof DirtPelletEntity dirtPelletEntity && dirtPelletEntity.isEventBased()))
-      {
+      if (this.getEssenceController() != null) {
+         if (damageSource.getDirectEntity() instanceof DirtPelletEntity dirtPelletEntity) {
+            if (dirtPelletEntity.isEventBased()) {
+               return super.isInvulnerableTo(damageSource);
+            }
+            else if (dirtPelletEntity.getOwner() instanceof ServerPlayer serverPlayer &&
+                    EssenceOfTheBees.hasEssence(serverPlayer) &&
+                    this.getRootminPose() != RootminPose.ANGRY &&
+                    this.getRootminPose() != RootminPose.CURSE &&
+                    this.getRootminPose() != RootminPose.SHOCK)
+            {
+               return super.isInvulnerableTo(damageSource);
+            }
+         }
          return true;
       }
 
@@ -1476,7 +1529,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                return;
             }
             float f = (float) Math.sqrt(d) / this.attackRadius;
-            this.rootminEntity.runShoot(this.target);
+            this.rootminEntity.runShoot(this.target, 1, false);
             this.rootminEntity.exposedTimer = 0;
             this.attackTime = Mth.floor(f * (float) (this.attackIntervalMax - this.attackIntervalMin) + (float) this.attackIntervalMin);
          }

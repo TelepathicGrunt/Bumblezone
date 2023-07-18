@@ -11,7 +11,6 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -58,6 +57,22 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                 .setMirror(Mirror.NONE)
                 .setKeepLiquids(false)
                 .setIgnoreEntities(true)
+                .setKnownShape(true)
+                .addProcessor(new BlockIgnoreProcessor(List.of(
+                    BzBlocks.ESSENCE_BLOCK_RED.get(),
+                    BzBlocks.ESSENCE_BLOCK_PURPLE.get(),
+                    BzBlocks.ESSENCE_BLOCK_BLUE.get(),
+                    BzBlocks.ESSENCE_BLOCK_GREEN.get(),
+                    BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
+                    BzBlocks.ESSENCE_BLOCK_WHITE.get()
+                ))));
+
+    public static final GeneralUtils.Lazy<StructurePlaceSettings> PLACEMENT_SETTINGS_WITH_ENTITIES = new GeneralUtils.Lazy<>(() ->
+            new StructurePlaceSettings()
+                .setRotation(Rotation.NONE)
+                .setMirror(Mirror.NONE)
+                .setKeepLiquids(false)
+                .setIgnoreEntities(false)
                 .setKnownShape(true)
                 .addProcessor(new BlockIgnoreProcessor(List.of(
                     BzBlocks.ESSENCE_BLOCK_RED.get(),
@@ -192,12 +207,12 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                     }
 
                     // load arena
-                    GeneralUtils.placeInWorldWithouNeighborUpdate(
+                    GeneralUtils.placeInWorldWithoutNeighborUpdate(
                             serverLevel,
                             loadingStructureTemplate,
                             blockPos.offset(negativeHalfLengths),
                             blockPos.offset(negativeHalfLengths),
-                            PLACEMENT_SETTINGS.getOrFillFromInternal(),
+                            PLACEMENT_SETTINGS_WITH_ENTITIES.getOrFillFromInternal(),
                             serverLevel.getRandom(),
                             Block.UPDATE_CLIENTS + Block.UPDATE_KNOWN_SHAPE
                     );
