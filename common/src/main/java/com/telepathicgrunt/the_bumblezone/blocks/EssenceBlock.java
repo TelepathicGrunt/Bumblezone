@@ -212,7 +212,7 @@ public abstract class EssenceBlock extends BaseEntityBlock {
                             loadingStructureTemplate,
                             blockPos.offset(negativeHalfLengths),
                             blockPos.offset(negativeHalfLengths),
-                            PLACEMENT_SETTINGS_WITH_ENTITIES.getOrFillFromInternal(),
+                            PLACEMENT_SETTINGS_WITH_ENTITIES.getOrFillFromInternal().setRotationPivot(blockPos),
                             serverLevel.getRandom(),
                             Block.UPDATE_CLIENTS + Block.UPDATE_KNOWN_SHAPE
                     );

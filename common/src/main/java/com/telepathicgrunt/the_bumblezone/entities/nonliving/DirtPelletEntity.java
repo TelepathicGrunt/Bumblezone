@@ -146,7 +146,9 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
             double magicSideGravityConstant = 0.022D;
             Vec3 sideGravityVector = vectorToProjectionPoint.scale(magicSideGravityConstant);
 
-            this.setDeltaMovement(deltaMovement.add(sideGravityVector));
+            if (Double.isFinite(sideGravityVector.x()) && Double.isFinite(sideGravityVector.z())) {
+                this.setDeltaMovement(deltaMovement.add(sideGravityVector));
+            }
         }
     }
 

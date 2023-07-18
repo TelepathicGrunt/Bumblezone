@@ -414,7 +414,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          setAnimationState(pose, RootminPose.CURIOUS, this.curiousAnimationState, BzParticles.CURIOUS_PARTICLE.get(), 23, 1D);
          setAnimationState(pose, RootminPose.CURSE, this.curseAnimationState, BzParticles.CURSING_PARTICLE.get(), 75, 1D);
          setAnimationState(pose, RootminPose.EMBARRASSED, this.embarassedAnimationState, BzParticles.EMBARRASSED_PARTICLE.get(), 55, 1D);
-         setAnimationState(pose, RootminPose.SHOCK, this.shockAnimationState, BzParticles.SHOCK_PARTICLE.get(), 10, 1.5D);
+         setAnimationState(pose, RootminPose.SHOCK, this.shockAnimationState);
          setAnimationState(pose, RootminPose.SHOOT, this.shootAnimationState);
          setAnimationState(pose, RootminPose.RUN, this.runAnimationState);
          setAnimationState(pose, RootminPose.WALK, this.walkAnimationState);
@@ -668,6 +668,21 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          animationTimeBetweenHiding--;
          if (this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY || this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
             this.refreshDimensions();
+         }
+      }
+
+      if (this.level() instanceof ServerLevel serverLevel) {
+         if (this.getRootminPose() == RootminPose.SHOCK && this.delayTillIdle == 8) {
+            serverLevel.sendParticles(
+                    BzParticles.SHOCK_PARTICLE.get(),
+                    this.getX(),
+                    this.getBoundingBox().maxY + 1.5D,
+                    this.getZ(),
+                    0,
+                    1,
+                    1,
+                    1,
+                    8);
          }
       }
    }

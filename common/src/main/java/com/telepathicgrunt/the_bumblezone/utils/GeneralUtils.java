@@ -620,7 +620,7 @@ public class GeneralUtils {
             compoundTag.remove("UUID");
             createEntityIgnoreException(serverLevelAccessor, compoundTag).ifPresent(entity -> {
                 float f = entity.rotate(rotation);
-                entity.moveTo(vec3.x, vec3.y, vec3.z, f += entity.mirror(mirror) - entity.getYRot(), entity.getXRot());
+                entity.moveTo(vec32.x, vec32.y, vec32.z, f + (entity.mirror(mirror) - entity.getYRot()), entity.getXRot());
                 if (bl && entity instanceof Mob) {
                     ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null, compoundTag);
                 }
