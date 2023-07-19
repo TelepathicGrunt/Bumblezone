@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/tools/honey_compass_use",
+  "parent": "the_bumblezone:the_bumblezone/music_discs/obtain_all_music_discs",
   "display": {
     "icon": {
       "item": "minecraft:honeycomb"

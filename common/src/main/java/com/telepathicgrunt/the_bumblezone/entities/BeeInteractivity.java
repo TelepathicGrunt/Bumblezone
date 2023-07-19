@@ -226,6 +226,10 @@ public class BeeInteractivity {
                     false,
                     false,
                     true));
+
+            if (playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
+            }
         }
 
         if (world instanceof ServerLevel serverLevel &&

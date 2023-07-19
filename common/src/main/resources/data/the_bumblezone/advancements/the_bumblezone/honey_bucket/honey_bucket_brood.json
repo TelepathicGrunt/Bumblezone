@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_bucket/honey_bucket_porous_honeycomb",
+  "parent": "the_bumblezone:the_bumblezone/honey_bucket/honey_bucket_bee_grow",
   "display": {
     "icon": {
       "item": "the_bumblezone:honey_bucket"

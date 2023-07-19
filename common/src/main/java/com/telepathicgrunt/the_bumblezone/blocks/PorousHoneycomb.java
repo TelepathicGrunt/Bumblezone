@@ -107,10 +107,6 @@ public class PorousHoneycomb extends Block {
                         filledNeighbors++;
                     }
 
-                    if(filledNeighbors == 1 && playerEntity instanceof ServerPlayer) {
-                        BzCriterias.HONEY_BUCKET_POROUS_HONEYCOMB_TRIGGER.trigger((ServerPlayer) playerEntity);
-                    }
-
                     if(filledNeighbors == 2) break;
                 }
             }

@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/teleportation/teleport_out_of_bumblezone",
+  "parent": "the_bumblezone:the_bumblezone/effects/beenergized_maxed",
   "display": {
     "icon": {
       "item": "the_bumblezone:carvable_wax"

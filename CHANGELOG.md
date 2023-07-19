@@ -4,8 +4,6 @@
 
 #TODO: Electric Ring Textures/animations
 
-#TODO: Re-evaluate advancements. Add more for new additions as well.
-
 #TODO: Add music for essence events
 
 #TODO: Add music for sanctums
@@ -14,9 +12,15 @@
 
 #TODO: Add more sanctum rooms. Do sanctum variants
 
+#TODO: On screen message for players entering sanctum and when near essence block before activating event
+
 #TODO: on screen and player character spike effects for essence items active.
 
+#TODO: Re-evaluate advancements. Add more for new additions as well.
+
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
+
+#TODO: profile performance of every event
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
@@ -169,6 +173,20 @@ Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sa
 
 Added Snow Block to Clay Block and its opposite to Bee Queen Trades. 
 
+##### Advancements:
+New advancements added! 
+ Along with the entire Bumblezone advancement layout completely redone and some annoying/useless advancements nerfed or removed.
+ Some advancements now has more info to be more clear of what to do.
+
+Will now display a message to user saying to check out Bumblezone's advancements for progression when they obtain the is_near_beehive advancement.
+
+Added "is_target_tag" field to the_bumblezone:killed_counter trigger for advancements. Now you can make "target_entity" point to a tag.
+ As a result, some of the Queen's Desire's advancements now checks entity tags for what counts towards them. These are:
+ `the_bumblezone:queens_desire/too_many_legs_spiders`
+ `the_bumblezone:queens_desire/fighting_the_swarm_silverfish`
+ `the_bumblezone:queens_desire/otherworldly_mites_endermite`
+ `the_bumblezone:queens_desire/terror_fangs_cave_spider`
+
 ##### Mod Compat:
 Integration with Lootr was added by Nooby! Special thanks to him! 
  Worldgen placed Honey Cocoons will have a different texture when Lootr is on and have per-player loot.
@@ -305,20 +323,10 @@ Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaini
 Protection of the Hive will now always remove Wrath of the Hive effect if you managed to get both on together.
 
 ##### Advancements:
+
 Improved performance of is_near_beehive advancement.
 
-Will now display a message to user saying to check out Bumblezone's advancements for progression when they obtain the is_near_beehive advancement.
-
-Removed Intimidation advancement in the Queen's Desire advancement line. Too silly and pointless.
-
 Renamed VIP Trader advancement to Crazy Trader to reduce confusion.
-
-Added "is_target_tag" field to the_bumblezone:killed_counter trigger for advancements. Now you can make "target_entity" point to a tag.
- As a result, some of the Queen's Desire's advancements now checks entity tags for what counts towards them. These are:
- `the_bumblezone:queens_desire/too_many_legs_spiders`
- `the_bumblezone:queens_desire/fighting_the_swarm_silverfish`
- `the_bumblezone:queens_desire/otherworldly_mites_endermite`
- `the_bumblezone:queens_desire/terror_fangs_cave_spider`
 
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.

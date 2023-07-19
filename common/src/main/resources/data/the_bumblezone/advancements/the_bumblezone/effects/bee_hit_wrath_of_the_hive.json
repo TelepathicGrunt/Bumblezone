@@ -5,10 +5,10 @@
       "item": "minecraft:bee_spawn_egg"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.extended_wrath_of_the_hive.title"
+      "translate": "advancements.the_bumblezone.bee_hit_wrath_of_the_hive.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.extended_wrath_of_the_hive.description"
+      "translate": "advancements.the_bumblezone.bee_hit_wrath_of_the_hive.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,14 +19,14 @@
     "experience": 20
   },
   "criteria": {
-    "extended_wrath_of_the_hive": {
-      "trigger": "the_bumblezone:extended_wrath_of_the_hive",
+    "bee_hit_wrath_of_the_hive": {
+      "trigger": "the_bumblezone:bee_hit_wrath_of_the_hive",
       "conditions": {}
     }
   },
   "requirements": [
     [
-      "extended_wrath_of_the_hive"
+      "bee_hit_wrath_of_the_hive"
     ]
   ]
 }

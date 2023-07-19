@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/teleportation/teleport_out_of_bumblezone",
+  "parent": "the_bumblezone:the_bumblezone/crystalline_flower/enter_garden",
   "display": {
     "icon": {
       "item": "the_bumblezone:bee_queen_spawn_egg"

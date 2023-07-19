@@ -25,7 +25,7 @@
     "beehive_crafted": {
       "trigger": "the_bumblezone:beehive_crafted",
       "conditions": {
-        "target_count": 24
+        "target_count": 12
       }
     }
   },

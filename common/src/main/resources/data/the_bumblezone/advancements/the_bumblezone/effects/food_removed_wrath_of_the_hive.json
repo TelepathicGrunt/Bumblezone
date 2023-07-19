@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/effects/extended_wrath_of_the_hive",
+  "parent": "the_bumblezone:the_bumblezone/effects/bee_hit_wrath_of_the_hive",
   "display": {
     "icon": {
       "item": "minecraft:bee_spawn_egg"

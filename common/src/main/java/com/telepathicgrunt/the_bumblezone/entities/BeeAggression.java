@@ -140,8 +140,8 @@ public class BeeAggression {
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     BzBeeAggressionConfigs.aggressiveBees)
             {
-                if(player instanceof ServerPlayer && player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-                    BzCriterias.EXTENDED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) player, attackerEntity);
+                if(player instanceof ServerPlayer) {
+                    BzCriterias.BEE_HIT_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) player, attackerEntity);
                 }
 
                 player.addEffect(new MobEffectInstance(

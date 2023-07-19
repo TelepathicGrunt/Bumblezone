@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_bucket/honey_bucket_brood",
+  "parent": "the_bumblezone:the_bumblezone/honey_bucket/obtain_honey_bucket",
   "display": {
     "icon": {
       "item": "the_bumblezone:royal_jelly_bottle"
