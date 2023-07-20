@@ -16,7 +16,7 @@
 
 #TODO: on screen and player character spike effects for essence items active.
 
-#TODO: Re-evaluate advancements. Add more for new additions as well.
+#TODO: Add new sempiternal sanctums to advancements
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 
@@ -193,6 +193,8 @@ Integration with Lootr was added by Nooby! Special thanks to him!
 
 Added emissive textures for some entities and blocks. 
  These will take effect if Optifine or Continuity or other rendering mod is on that reads _e Optifine emissive textures.
+
+Better Advancements is now a recommended optional mod to use with Bumblezone so Bumblezone's advancements are easier to read.
 
 
 #### *\*Changes*

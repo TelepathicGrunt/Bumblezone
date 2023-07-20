@@ -44,14 +44,18 @@ subprojects {
             "fabric": [
                     "fabric-api": true,
                     "midnightlib": true,
-                    "indium": false
+                    "indium": false,
+                    "better-advancements": false
             ],
             "quilt": [
                     "qsl": true,
                     "midnightlib": true,
-                    "indium": false
+                    "indium": false,
+                    "better-advancements": false
             ],
-            "forge": []
+            "forge": [
+                    "better-advancements": false
+            ]
     ]
 
     var env = System.getenv()
