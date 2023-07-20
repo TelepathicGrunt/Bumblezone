@@ -2,8 +2,10 @@ package com.telepathicgrunt.the_bumblezone.screens;
 
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
@@ -78,6 +80,10 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
 
                 if (!playerHoneyBottleStack.isEmpty()) {
                     bee.heal(2);
+
+                    if(player instanceof ServerPlayer) {
+                        BzCriterias.BUZZING_BRIEFCASE_HEAL_TRIGGER.trigger((ServerPlayer) player);
+                    }
 
                     if (!player.getAbilities().instabuild) {
                         playerHoneyBottleStack.shrink(1);

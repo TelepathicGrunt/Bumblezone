@@ -5,10 +5,10 @@
       "item": "the_bumblezone:carvable_wax"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.carve_carvable_wax.title"
+      "translate": "advancements.the_bumblezone.carve_wax.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.carve_carvable_wax.description"
+      "translate": "advancements.the_bumblezone.carve_wax.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,8 +19,8 @@
     "experience": 2
   },
   "criteria": {
-    "carve_carvable_wax_1": {
-      "trigger": "the_bumblezone:carve_carvable_wax",
+    "carve_wax_1": {
+      "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
           "blocks": [ "the_bumblezone:carvable_wax" ],
@@ -30,8 +30,8 @@
         }
       }
     },
-    "carve_carvable_wax_2": {
-      "trigger": "the_bumblezone:carve_carvable_wax",
+    "carve_wax_2": {
+      "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
           "blocks": [ "the_bumblezone:carvable_wax" ],
@@ -41,8 +41,8 @@
         }
       }
     },
-    "carve_carvable_wax_3": {
-      "trigger": "the_bumblezone:carve_carvable_wax",
+    "carve_wax_3": {
+      "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
           "blocks": [ "the_bumblezone:carvable_wax" ],
@@ -52,8 +52,8 @@
         }
       }
     },
-    "carve_carvable_wax_4": {
-      "trigger": "the_bumblezone:carve_carvable_wax",
+    "carve_wax_4": {
+      "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
           "blocks": [ "the_bumblezone:carvable_wax" ],
@@ -63,8 +63,8 @@
         }
       }
     },
-    "carve_carvable_wax_5": {
-      "trigger": "the_bumblezone:carve_carvable_wax",
+    "carve_wax_5": {
+      "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
           "blocks": [ "the_bumblezone:carvable_wax" ],
@@ -74,8 +74,8 @@
         }
       }
     },
-    "carve_carvable_wax_6": {
-      "trigger": "the_bumblezone:carve_carvable_wax",
+    "carve_wax_6": {
+      "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
           "blocks": [ "the_bumblezone:carvable_wax" ],
@@ -85,8 +85,8 @@
         }
       }
     },
-    "carve_carvable_wax_7": {
-      "trigger": "the_bumblezone:carve_carvable_wax",
+    "carve_wax_7": {
+      "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
           "blocks": [ "the_bumblezone:carvable_wax" ],
@@ -99,25 +99,25 @@
   },
   "requirements": [
     [
-      "carve_carvable_wax_1"
+      "carve_wax_1"
     ],
     [
-      "carve_carvable_wax_2"
+      "carve_wax_2"
     ],
     [
-      "carve_carvable_wax_3"
+      "carve_wax_3"
     ],
     [
-      "carve_carvable_wax_4"
+      "carve_wax_4"
     ],
     [
-      "carve_carvable_wax_5"
+      "carve_wax_5"
     ],
     [
-      "carve_carvable_wax_6"
+      "carve_wax_6"
     ],
     [
-      "carve_carvable_wax_7"
+      "carve_wax_7"
     ]
   ]
 }

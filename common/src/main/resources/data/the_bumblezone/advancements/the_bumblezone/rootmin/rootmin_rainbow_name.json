@@ -1,0 +1,48 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/rootmin/rootmin_flower_swap",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:rootmin_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.rootmin_rainbow_name.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.rootmin_rainbow_name.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "rootmin_rainbow_name": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "items": [
+            "minecraft:name_tag"
+          ],
+          "nbt": "{display:{Name:'{\"text\":\"jeb_\"}'}}"
+        },
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "the_bumblezone:rootmin"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "rootmin_rainbow_name"
+    ]
+  ]
+}

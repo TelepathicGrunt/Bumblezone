@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,12 +44,14 @@ public class BeeDungeon extends NbtFeature {
 
     protected static boolean isValidDungeonSpot(FeaturePlaceContext<?> context) {
         Registry<Structure> configuredStructureFeatureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
-        StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
+        if (context.level() instanceof WorldGenRegion) {
+            StructureManager structureManager = ((WorldGenRegionAccessor) context.level()).getStructureManager();
 
-        for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.NO_DUNGEONS)) {
-            StructureStart startForFeature = structureManager.getStructureAt(context.origin(), configuredStructureFeature.value());
-            if (startForFeature.isValid()) {
-                return false;
+            for (Holder<Structure> configuredStructureFeature : configuredStructureFeatureRegistry.getTagOrEmpty(BzTags.NO_DUNGEONS)) {
+                StructureStart startForFeature = structureManager.getStructureAt(context.origin(), configuredStructureFeature.value());
+                if (startForFeature.isValid()) {
+                    return false;
+                }
             }
         }
 

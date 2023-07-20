@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/structures/enter_cell_maze",
+  "parent": "the_bumblezone:the_bumblezone/armor/warrior_bee",
   "display": {
     "icon": {
       "item": "the_bumblezone:stinger_spear"

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -52,6 +53,8 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.CARVE_WAX_TRIGGER.trigger(serverPlayer, position);
+
                 if (!serverPlayer.getAbilities().instabuild) {
                     itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);
                 }

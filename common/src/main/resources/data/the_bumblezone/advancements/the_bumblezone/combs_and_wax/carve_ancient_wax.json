@@ -1,0 +1,54 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/combs_and_wax/carve_carvable_wax",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:ancient_wax_bricks"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.carve_ancient_wax.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.carve_ancient_wax.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "ancient_wax_full_blocks": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "tag": "the_bumblezone:ancient_wax/full_blocks"
+        }
+      }
+    },
+    "ancient_wax_slab": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "tag": "the_bumblezone:ancient_wax/slabs"
+        }
+      }
+    },
+    "ancient_wax_stairs": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "tag": "the_bumblezone:ancient_wax/stairs"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ancient_wax_full_blocks",
+      "ancient_wax_slab",
+      "ancient_wax_stairs"
+    ]
+  ]
+}

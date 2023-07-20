@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/tools/buzzing_briefcase_full",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:buzzing_briefcase"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.buzzing_briefcase_heal.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.buzzing_briefcase_heal.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "buzzing_briefcase_heal": {
+      "trigger": "the_bumblezone:buzzing_briefcase_heal"
+    }
+  },
+  "requirements": [
+    [
+      "buzzing_briefcase_heal"
+    ]
+  ]
+}

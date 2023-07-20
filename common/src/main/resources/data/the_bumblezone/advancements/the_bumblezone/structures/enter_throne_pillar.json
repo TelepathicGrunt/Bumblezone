@@ -1,14 +1,14 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_crystal/obtain_glistering_honey_crystal_block",
+  "parent": "the_bumblezone:the_bumblezone/structures/enter_cell_maze",
   "display": {
     "icon": {
-      "item": "the_bumblezone:crystalline_flower"
+      "item": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.enter_garden.title"
+      "translate": "advancements.the_bumblezone.enter_throne_pillar.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.enter_garden.description"
+      "translate": "advancements.the_bumblezone.enter_throne_pillar.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,7 +19,7 @@
     "experience": 100
   },
   "criteria": {
-    "in_hanging_garden": {
+    "in_throne_pillar": {
       "trigger": "minecraft:location",
       "conditions": {
         "player": [
@@ -28,7 +28,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:hanging_garden"
+                "structure": "the_bumblezone:throne_pillar"
               }
             }
           }
@@ -38,7 +38,7 @@
   },
   "requirements": [
     [
-      "in_hanging_garden"
+      "in_throne_pillar"
     ]
   ]
 }

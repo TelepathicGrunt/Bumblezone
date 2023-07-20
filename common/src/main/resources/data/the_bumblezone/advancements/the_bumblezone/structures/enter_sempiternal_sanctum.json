@@ -1,14 +1,14 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/tools/honey_compass_use",
+  "parent": "the_bumblezone:the_bumblezone/essence/bee_essence_infusion",
   "display": {
     "icon": {
-      "item": "minecraft:honeycomb"
+      "item": "the_bumblezone:luminescent_wax_corner_white"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.enter_cell_maze.title"
+      "translate": "advancements.the_bumblezone.enter_sempiternal_sanctum.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.enter_cell_maze.description"
+      "translate": "advancements.the_bumblezone.enter_sempiternal_sanctum.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,7 +19,7 @@
     "experience": 100
   },
   "criteria": {
-    "in_cell_maze": {
+    "sempiternal_sanctum_white": {
       "trigger": "minecraft:location",
       "conditions": {
         "player": [
@@ -28,7 +28,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:cell_maze"
+                "structure": "the_bumblezone:sempiternal_sanctum_white"
               }
             }
           }
@@ -38,7 +38,7 @@
   },
   "requirements": [
     [
-      "in_cell_maze"
+      "sempiternal_sanctum_white"
     ]
   ]
 }

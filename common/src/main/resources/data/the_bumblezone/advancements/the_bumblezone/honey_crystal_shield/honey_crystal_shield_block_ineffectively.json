@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_crystal/obtain_honey_crystal_shield",
+  "parent": "the_bumblezone:the_bumblezone/honey_crystal_shield/obtain_honey_crystal_shield",
   "display": {
     "icon": {
       "item": "the_bumblezone:honey_crystal_shield"

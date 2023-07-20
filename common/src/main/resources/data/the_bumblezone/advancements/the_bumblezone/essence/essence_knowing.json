@@ -1,0 +1,36 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/essence/essence_raging",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:essence_knowing"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.essence_knowing.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.essence_knowing.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "essence_knowing": {
+      "trigger": "the_bumblezone:essence_event_reward",
+      "conditions": {
+        "item": {
+          "items": ["the_bumblezone:essence_knowing"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "essence_knowing"
+    ]
+  ]
+}

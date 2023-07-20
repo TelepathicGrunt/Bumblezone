@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/combs_and_wax/honey_cocoon_silk_touch",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:rootmin_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.rootmin_flower_swap.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.rootmin_flower_swap.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "rootmin_flower_swap": {
+      "trigger": "the_bumblezone:rootmin_flower_swap"
+    }
+  },
+  "requirements": [
+    [
+      "rootmin_flower_swap"
+    ]
+  ]
+}

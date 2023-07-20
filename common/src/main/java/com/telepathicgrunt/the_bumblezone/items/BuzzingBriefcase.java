@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseMenuProvider;
@@ -8,6 +9,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -55,6 +57,11 @@ public class BuzzingBriefcase extends Item {
 
     public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos, Player player) {
         List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
+
+        if(player instanceof ServerPlayer && !releasedBees.isEmpty()) {
+            BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
+        }
+
         return releasedBees.isEmpty();
     }
 
@@ -67,6 +74,10 @@ public class BuzzingBriefcase extends Item {
                     neutralMob.setRemainingPersistentAngerTime(400); // 20 seconds
                     neutralMob.setPersistentAngerTarget(victim.getUUID());
                 }
+            }
+
+            if(player instanceof ServerPlayer && !releasedBees.isEmpty()) {
+                BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
             }
         }
         return true;
@@ -87,6 +98,11 @@ public class BuzzingBriefcase extends Item {
         if (addedBee) {
             player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
             player.swing(playerHand, true);
+
+            if(player instanceof ServerPlayer && getBeesStored(player.level(), briefcaseItem, false).size() == MAX_NUMBER_OF_BEES) {
+                BzCriterias.BUZZING_BRIEFCASE_FULL_TRIGGER.trigger((ServerPlayer) player);
+            }
+
             return InteractionResult.SUCCESS;
         }
         else {

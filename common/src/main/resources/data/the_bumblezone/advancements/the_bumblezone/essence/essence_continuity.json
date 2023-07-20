@@ -1,0 +1,36 @@
+{
+  "parent": "the_bumblezone:the_bumblezone/essence/essence_radiance",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:essence_continuity"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.essence_continuity.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.essence_continuity.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "essence_continuity": {
+      "trigger": "the_bumblezone:essence_event_reward",
+      "conditions": {
+        "item": {
+          "items": ["the_bumblezone:essence_continuity"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "essence_continuity"
+    ]
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/crystalline_flower/enter_garden",
+  "parent": "the_bumblezone:the_bumblezone/structures/enter_garden",
   "display": {
     "icon": {
       "item": "the_bumblezone:crystalline_flower"

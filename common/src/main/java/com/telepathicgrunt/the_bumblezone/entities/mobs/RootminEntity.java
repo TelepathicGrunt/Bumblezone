@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -507,6 +508,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                player.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
                if (!instantBuild) {
                   itemstack.shrink(1);
+               }
+
+               if (player instanceof ServerPlayer serverPlayer) {
+                  BzCriterias.ROOTMIN_FLOWER_SWAP_TRIGGER.trigger(serverPlayer);
                }
             }
             return InteractionResult.SUCCESS;

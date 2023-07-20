@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -334,7 +335,9 @@ public class EssenceBlockEntity extends BlockEntity {
                         if (won) {
                             if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
                                 if (!serverPlayer.addItem(essenceBlock.getEssenceItemReward())) {
-                                    serverPlayer.drop(essenceBlock.getEssenceItemReward(), false);
+                                    ItemStack reward = essenceBlock.getEssenceItemReward();
+                                    BzCriterias.ESSENCE_EVENT_REWARD_TRIGGER.trigger(serverPlayer, reward);
+                                    serverPlayer.drop(reward, false);
                                 }
                                 serverPlayer.giveExperiencePoints(essenceBlock.getEssenceXpReward());
                             }

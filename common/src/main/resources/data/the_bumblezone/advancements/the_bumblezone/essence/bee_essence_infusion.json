@@ -1,14 +1,14 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/the_queens_desire/journeys_end",
+  "parent": "the_bumblezone:the_bumblezone/structures/enter_throne_pillar",
   "display": {
     "icon": {
       "item": "the_bumblezone:essence_of_the_bees"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.essence_infusion.title"
+      "translate": "advancements.the_bumblezone.bee_essence_infusion.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.essence_infusion.description"
+      "translate": "advancements.the_bumblezone.bee_essence_infusion.description"
     },
     "frame": "challenge",
     "show_toast": true,

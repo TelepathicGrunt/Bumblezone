@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
@@ -702,11 +701,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
 
-    private static final ResourceLocation ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/the_queens_desire/essence_infusion");
+    private static final ResourceLocation BEE_ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/essence/bee_essence_infusion");
     private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
         Iterable<Advancement> advancements = serverPlayer.server.getAdvancements().getAdvancement(advancementRL).getChildren();
         for (Advancement advancement : advancements) {
-            if (advancement.getId().equals(ESSENCE_ADVANCEMENT_RL)) {
+            if (advancement.getId().equals(BEE_ESSENCE_ADVANCEMENT_RL)) {
                 continue;
             }
 

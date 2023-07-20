@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_bumblezone/music_discs/obtain_all_music_discs",
   "display": {
     "icon": {
-      "item": "minecraft:honeycomb"
+      "item": "minecraft:filled_map"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enter_all_structures.title"
@@ -291,6 +291,22 @@
         ]
       }
     },
+    "in_sempiternal_sanctum_white": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:sempiternal_sanctum_white"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_stinger_spear_shrine": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -391,6 +407,9 @@
     ],
     [
       "in_pollinated_stream"
+    ],
+    [
+      "in_sempiternal_sanctum_white"
     ],
     [
       "in_stinger_spear_shrine"

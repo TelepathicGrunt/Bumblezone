@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/candles/carve_carvable_wax",
+  "parent": "the_bumblezone:the_bumblezone/effects/beenergized_maxed",
   "display": {
     "icon": {
       "item": "the_bumblezone:string_curtain_white"

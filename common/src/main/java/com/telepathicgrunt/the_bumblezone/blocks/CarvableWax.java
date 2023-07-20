@@ -138,7 +138,7 @@ public class CarvableWax extends ProperFacingBlock {
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.CARVE_CARVABLE_WAX_TRIGGER.trigger(serverPlayer, position);
+                BzCriterias.CARVE_WAX_TRIGGER.trigger(serverPlayer, position);
 
                 if (!serverPlayer.getAbilities().instabuild) {
                     itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);
