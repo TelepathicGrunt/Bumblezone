@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_bucket/obtain_honey_bucket",
+  "parent": "the_bumblezone:the_bumblezone/structures/enter_throne_pillar",
   "display": {
     "icon": {
       "item": "the_bumblezone:royal_jelly_bottle"

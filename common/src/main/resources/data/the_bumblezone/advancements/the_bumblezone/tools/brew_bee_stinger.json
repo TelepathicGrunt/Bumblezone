@@ -2,7 +2,8 @@
   "parent": "the_bumblezone:the_bumblezone/tools/bee_stinger_paralysis",
   "display": {
     "icon": {
-      "item": "minecraft:potion"
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\":\"minecraft:long_poison\"}"
     },
     "title": {
       "translate": "advancements.the_bumblezone.brew_bee_stinger.title"
