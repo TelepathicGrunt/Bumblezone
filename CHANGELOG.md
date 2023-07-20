@@ -12,11 +12,13 @@
 
 #TODO: Add more sanctum rooms. Do sanctum variants
 
-#TODO: On screen message for players entering sanctum and when near essence block before activating event
-
 #TODO: on screen and player character spike effects for essence items active.
 
 #TODO: Add new sempiternal sanctums to advancements
+
+#TODO: Sentry Watcher Survival Spawn Egg? Store owner and disable block breaking. Owner double right click with empty hand to go back to spawn egg. Message saying this
+
+#TODO: New grass flower biome? Rootmin spawn here. Add all biome discovered advancement
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
 

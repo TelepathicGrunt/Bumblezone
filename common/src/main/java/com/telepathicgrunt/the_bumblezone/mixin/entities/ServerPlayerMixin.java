@@ -20,7 +20,7 @@ public abstract class ServerPlayerMixin {
         if (!EssenceOfTheBees.hasEssence(serverPlayer)) {
             BeeAggression.applyAngerIfInTaggedStructures(serverPlayer);
             BeeQueenEntity.applyMiningFatigueInStructures(serverPlayer);
-            SempiternalSanctumBehavior.applyFatigueIfInTaggedStructures(serverPlayer);
         }
+        SempiternalSanctumBehavior.runStructureMessagesAndFatigue(serverPlayer);
     }
 }
