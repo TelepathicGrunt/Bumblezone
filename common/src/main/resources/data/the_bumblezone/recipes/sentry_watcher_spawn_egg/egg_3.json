@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "the_bumblezone:sentry_watcher_spawn_egg",
+  "pattern": [
+    " a ",
+    "ala",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "tag": "the_bumblezone:ancient_wax/full_blocks"
+    },
+    "l": {
+      "tag": "the_bumblezone:luminescent_wax/light_nodes"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:sentry_watcher_spawn_egg"
+  }
+}

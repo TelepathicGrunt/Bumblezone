@@ -19,87 +19,84 @@ public class EssenceOverlay {
     private static final ResourceLocation TEXTURE_OVERLAY_1 = new ResourceLocation(Bumblezone.MODID, "textures/misc/active_essence_overlay.png");
 
     public static void nearEssenceOverlay(Player player, GuiGraphics guiGraphics) {
-        if (player.level().dimension().equals(Level.OVERWORLD)) {
-            ItemStack offhandItem = player.getOffhandItem();
+        ItemStack offhandItem = player.getOffhandItem();
 
-            if (!(offhandItem.getItem() instanceof AbilityEssenceItem abilityEssenceItem)) {
-                return;
-            }
-
-            if (!AbilityEssenceItem.getIsActive(offhandItem)) {
-                return;
-            }
-
-            RenderSystem.disableDepthTest();
-            RenderSystem.depthMask(false);
-            RenderSystem.enableBlend();
-
-            Color color = new Color(abilityEssenceItem.getColor());
-            float red = color.getRed() / 256f;
-            float green = color.getGreen() / 256f;
-            float blue = color.getBlue() / 256f;
-
-            int remainingUse = abilityEssenceItem.getAbilityUseRemaining(offhandItem);
-            float percentageLeft = (float)remainingUse / abilityEssenceItem.getMaxAbilityUseAmount();
-            float opacity = 0.1f + (percentageLeft * 0.2f);
-            guiGraphics.setColor(red, green, blue, opacity);
-
-            PoseStack poseStack = guiGraphics.pose();
-
-            float rotationX = guiGraphics.guiWidth() / 2f;
-            float rotationY = guiGraphics.guiHeight();
-
-
-            for(int layer = 0; layer < 3; layer++) {
-                poseStack.pushPose();
-
-                int rotationDirection = layer % 2 == 1 ? -1 : 1;
-                float squash = 0.12f - (layer * 0.04f);
-                double spinSlowdown = 200 + (layer * 150);
-                double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
-                double degrees = (currentMillisecond / spinSlowdown) * rotationDirection;
-                float angle = (float) (degrees * Mth.DEG_TO_RAD);
-
-                Matrix4f rotationMatrix = new Matrix4f(
-                        Mth.cos(angle), -Mth.sin(angle), 0, 0,
-                        Mth.sin(angle), Mth.cos(angle), 0, 0,
-                        0, 0, 1, 0,
-                        0, 0, 0, 1
-                );
-                Matrix4f scalingMatrix = new Matrix4f(
-                        1, 0, 0, 0,
-                        0, squash, 0, 0,
-                        0, 0, 1, 0,
-                        0, 0, 0, 1
-                );
-                Matrix4f translationMatrix = new Matrix4f(
-                        1, 0, 0, 0,
-                        0, 1, 0, 0,
-                        0, 0, 1, 0,
-                        rotationX, rotationY, 0, 1
-                );
-
-                poseStack.mulPoseMatrix(translationMatrix.mul(scalingMatrix).mul(rotationMatrix));
-
-                guiGraphics.blit(TEXTURE_OVERLAY_1,
-                        (int) -rotationX,
-                        (int) -rotationX,
-                        -90,
-                        0.0F,
-                        0.0F,
-                        guiGraphics.guiWidth(),
-                        guiGraphics.guiWidth(),
-                        guiGraphics.guiWidth(),
-                        guiGraphics.guiWidth());
-
-                poseStack.popPose();
-            }
-
-            RenderSystem.disableBlend();
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        if (!(offhandItem.getItem() instanceof AbilityEssenceItem abilityEssenceItem)) {
+            return;
         }
 
+        if (!AbilityEssenceItem.getIsActive(offhandItem)) {
+            return;
+        }
+
+        RenderSystem.disableDepthTest();
+        RenderSystem.depthMask(false);
+        RenderSystem.enableBlend();
+
+        Color color = new Color(abilityEssenceItem.getColor());
+        float red = color.getRed() / 256f;
+        float green = color.getGreen() / 256f;
+        float blue = color.getBlue() / 256f;
+
+        int remainingUse = abilityEssenceItem.getAbilityUseRemaining(offhandItem);
+        float percentageLeft = (float)remainingUse / abilityEssenceItem.getMaxAbilityUseAmount();
+        float opacity = 0.1f + (percentageLeft * 0.2f);
+        guiGraphics.setColor(red, green, blue, opacity);
+
+        PoseStack poseStack = guiGraphics.pose();
+
+        float rotationX = guiGraphics.guiWidth() / 2f;
+        float rotationY = guiGraphics.guiHeight();
+
+
+        for(int layer = 0; layer < 3; layer++) {
+            poseStack.pushPose();
+
+            int rotationDirection = layer % 2 == 1 ? -1 : 1;
+            float squash = 0.12f - (layer * 0.04f);
+            double spinSlowdown = 200 + (layer * 150);
+            double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
+            double degrees = (currentMillisecond / spinSlowdown) * rotationDirection;
+            float angle = (float) (degrees * Mth.DEG_TO_RAD);
+
+            Matrix4f rotationMatrix = new Matrix4f(
+                    Mth.cos(angle), -Mth.sin(angle), 0, 0,
+                    Mth.sin(angle), Mth.cos(angle), 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1
+            );
+            Matrix4f scalingMatrix = new Matrix4f(
+                    1, 0, 0, 0,
+                    0, squash, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1
+            );
+            Matrix4f translationMatrix = new Matrix4f(
+                    1, 0, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, 0,
+                    rotationX, rotationY, 0, 1
+            );
+
+            poseStack.mulPoseMatrix(translationMatrix.mul(scalingMatrix).mul(rotationMatrix));
+
+            guiGraphics.blit(TEXTURE_OVERLAY_1,
+                    (int) -rotationX,
+                    (int) -rotationX,
+                    -90,
+                    0.0F,
+                    0.0F,
+                    guiGraphics.guiWidth(),
+                    guiGraphics.guiWidth(),
+                    guiGraphics.guiWidth(),
+                    guiGraphics.guiWidth());
+
+            poseStack.popPose();
+        }
+
+        RenderSystem.disableBlend();
+        RenderSystem.depthMask(true);
+        RenderSystem.enableDepthTest();
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

@@ -14,8 +14,6 @@
 
 #TODO: Add new sempiternal sanctums to advancements
 
-#TODO: Sentry Watcher Survival Spawn Egg? Store owner and disable block breaking. Owner double right click with empty hand to go back to spawn egg. Message saying this
-
 #TODO: New grass flower biome? Rootmin spawn here. Add all biome discovered advancement
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
@@ -80,7 +78,9 @@ Essence of Life - The reward for beating the Green Sempiternal Sanctum structure
  being in the inventory of a player that had consumed Essence of the Bees in the past. Add more effects to 
  `the_bumblezone:essence/life/cure_effects` mob effects tag for this item to be able to remove said tagged effects from allies/pets!
  Use the following two tags to control what plants can be grown or not with this item. Let me know if a modded plant is not able to be grown:
+ 
  `the_bumblezone:essence/life/grow_plants`
+
  `the_bumblezone:essence/life/force_disallowed_grow_plant`
 
 Essence of Radiance - The reward for beating the Yellow Sempiternal Sanctum structure! Holding this item in offhand while being
@@ -95,16 +95,27 @@ Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum struc
  This highlighting can be configured on client side by config. Server owners can use the block and entity tags to force things to be highlighted
  or not regardless of what the client config is set as. (The tags can be used to also correct highlighting issues on other mod's mobs with this item on)
  The entity type tags you can edit are these. Disable tag overrides all:
+
  `the_bumblezone:essence/knowing/prevent_highlighting`
+
  `the_bumblezone:essence/knowing/forced_green_highlight`
+
  `the_bumblezone:essence/knowing/forced_cyan_highlight`
+
  `the_bumblezone:essence/knowing/forced_purple_highlight`
+
  `the_bumblezone:essence/knowing/forced_red_highlight`
+
  `the_bumblezone:essence/knowing/forced_orange_highlight`
+
  `the_bumblezone:essence/knowing/forced_yellow_highlight`
+
  `the_bumblezone:essence/knowing/forced_white_highlight`
+
  The block tags you can edit are these. Disable tag overrides all:
+
  `the_bumblezone:essence/knowing/block_entity_forced_highlighting`
+
  `the_bumblezone:essence/knowing/block_entity_prevent_highlighting`
 
 Essence of Calming - The reward for beating the Blue Sempiternal Sanctum structure! Holding this item in offhand will make mobs
@@ -148,7 +159,9 @@ Added Bee Soup that is craftable from Bee Bread, Bowl, Beetroot, Potato, 2 Honey
 
 Added Dirt Pellet item craftable from Coarse Dirt + Rooted Dirt. It can be thrown like a Snowball for 1 point of damage and high knockback.
  However, it will deal 3 points of damage to most flying mobs (modded included)! Controlled by these entity tags to change what will receive bonus damage:
+ 
  `the_bumblezone:dirt_pellet/extra_damage_dealt_to`
+
  `the_bumblezone:dirt_pellet/forced_no_extra_damage_dealt_to`
 
 ##### Entities:
@@ -157,19 +170,31 @@ Added a new entity called Variant Bee! It is exactly like the vanilla bee in beh
  entity for Bumblezone! 4 new variants were added as well. The variant's types are exposed by a "variant" string tag in their nbt. 
  You can add or remove variants to spawn by editing the variantBeeTypes config entry (Server config takes priority over client's). 
  Be sure to add new bee textures to these files for the new bee variant you added to spawn with the textures it needs!
+
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee.png`
+
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry.png`
+
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_angry_nectar.png`
+
  `assets/the_bumblezone/textures/entity/bee_variants/<VariantType>/bee_nectar.png`
 
 Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sanctum and will blow up if taken out of the structure or somehow killed.
- This bee status will charge at any living non-bee mob in front of it and will break through many blocks up to a certain total explosion resistance of the wall of blocks.
+ This bee statue will charge at any living non-bee mob in front of it and will break through many blocks up to a certain total explosion resistance of the wall of blocks.
  The damage it deals to all in its way will increase the faster the statue is moving. Wear Bee Armor or Bee Curios/Trinkets will reduce a bit of damage as well.
  Some tags to configure its behavior are:
+
  `the_bumblezone:sentry_watcher/always_destroy` (block tag)
+
  `the_bumblezone:sentry_watcher/forced_never_destroy` (block tag)
+
  `the_bumblezone:sentry_watcher/activates_when_seen` (entity tag)
+
  `the_bumblezone:sentry_watcher/forced_never_activates_when_seen` (entity tag)
+
+ A survival craftable spawn egg is also available where these egg-spawned watchers cannot destroy blocks and can be removed by owner double right clicking on it,
+ The watcher will not charge at their owner as well. If spawned from a Dispenser, anyone can double right click remove the entity. 
+ These spawn eggs cannot be set into a Spawner unless the player is in Creative Mode.
 
 Added Snow Block to Clay Block and its opposite to Bee Queen Trades. 
 
@@ -182,9 +207,13 @@ Will now display a message to user saying to check out Bumblezone's advancements
 
 Added "is_target_tag" field to the_bumblezone:killed_counter trigger for advancements. Now you can make "target_entity" point to a tag.
  As a result, some of the Queen's Desire's advancements now checks entity tags for what counts towards them. These are:
+
  `the_bumblezone:queens_desire/too_many_legs_spiders`
+
  `the_bumblezone:queens_desire/fighting_the_swarm_silverfish`
+
  `the_bumblezone:queens_desire/otherworldly_mites_endermite`
+
  `the_bumblezone:queens_desire/terror_fangs_cave_spider`
 
 ##### Mod Compat:

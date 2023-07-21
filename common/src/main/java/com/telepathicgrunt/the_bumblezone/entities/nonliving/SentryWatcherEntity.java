@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
+import com.telepathicgrunt.the_bumblezone.items.SentryWatcherSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
@@ -11,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,6 +27,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -39,6 +43,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.PowderSnowBlock;
@@ -59,11 +64,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class SentryWatcherEntity extends Entity implements Enemy {
    private static final EntityDataAccessor<Boolean> DATA_ID_ACTIVATED = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
    private static final EntityDataAccessor<Boolean> DATA_ID_SHAKING = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
    private static final EntityDataAccessor<Direction> DATA_ID_TARGET_FACING = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.DIRECTION);
+   private static final EntityDataAccessor<Optional<UUID>> DATA_ID_OWNER = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
    public float xxa;
    public float zza;
@@ -80,6 +88,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private int shakeStartTick;
    private Vec3 prevVelocity;
    private Vec3 activatedStart;
+   private int lastRightClicked = -100;
 
    private static final int MAX_CHARGING_DISTANCE = 80;
    private static final int UNABLE_TO_DESTROY_TOTAL_BLOCK_HARDNESS = 20;
@@ -124,6 +133,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.entityData.define(DATA_ID_ACTIVATED, false);
       this.entityData.define(DATA_ID_SHAKING, false);
       this.entityData.define(DATA_ID_TARGET_FACING, this.getTargetFacing());
+      this.entityData.define(DATA_ID_OWNER, Optional.empty());
    }
 
    public boolean hasActivated() {
@@ -146,8 +156,16 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       return this.entityData.get(DATA_ID_TARGET_FACING);
    }
 
-   protected void setTargetFacingForSync() {
+   public void setTargetFacingForSync() {
       this.entityData.set(DATA_ID_TARGET_FACING, this.getTargetFacing());
+   }
+
+   public Optional<UUID> getOwner() {
+      return this.entityData.get(DATA_ID_OWNER);
+   }
+
+   public void setOwner(Optional<UUID> owner) {
+      this.entityData.set(DATA_ID_OWNER, owner);
    }
 
    @Override
@@ -162,8 +180,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    public void addAdditionalSaveData(CompoundTag compound) {
       compound.putBoolean("explosionPrimed", explosionPrimed);
-      compound.putDouble("activatedStartX", this.activatedStart.x());
-      compound.putDouble("activatedStartZ", this.activatedStart.z());
+      if (this.activatedStart != null) {
+         compound.putDouble("activatedStartX", this.activatedStart.x());
+         compound.putDouble("activatedStartZ", this.activatedStart.z());
+      }
       compound.putBoolean("activated", this.hasActivated());
       compound.putBoolean("shaking", this.hasShaking());
       compound.putInt("shakingTime", this.getShakingTime());
@@ -337,6 +357,29 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    @Override
+   public InteractionResult interact(Player player, InteractionHand interactionHand) {
+      if (player != null &&
+           interactionHand == InteractionHand.MAIN_HAND &&
+           this.getOwner().isPresent() &&
+           (this.getOwner().get().equals(player.getUUID()) || this.getOwner().get().equals(SentryWatcherSpawnEgg.DISPENSER_OWNER_UUID)))
+      {
+         if (this.tickCount - this.lastRightClicked < 40) {
+            GeneralUtils.givePlayerItem(player, interactionHand, BzItems.SENTRY_WATCHER_SPAWN_EGG.get().getDefaultInstance(), false, false);
+            this.remove(RemovalReason.DISCARDED);
+         }
+         else {
+            this.lastRightClicked = this.tickCount;
+            this.setHasShaking(true);
+            this.setShakingTime(40);
+         }
+
+         return InteractionResult.SUCCESS;
+      }
+
+      return InteractionResult.PASS;
+   }
+
+   @Override
    public void tick() {
       super.tick();
 
@@ -465,6 +508,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    protected void serverAiStep() {
+      if (this.getShakingTime() > 0) {
+         //play shake animation
+         this.setShakingTime(this.getShakingTime() - 1);
+
+         if (this.getShakingTime() <= 0) {
+            this.setHasShaking(false);
+         }
+      }
       if (this.hasActivated()) {
          if (this.horizontalCollision && this.getDeltaMovement().horizontalDistance() < 0.0001f) {
             deactivate();
@@ -489,15 +540,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                }
             }
          }
-         else if (this.getShakingTime() > 0) {
-            //play shake animation
-            this.setShakingTime(this.getShakingTime() - 1);
-
-            if (this.getShakingTime() <= 0) {
-               this.setHasShaking(false);
-            }
-         }
-         else {
+         else if (this.getShakingTime() <= 0) {
             Vec3 currentVelocity = this.getDeltaMovement();
             double newX = currentVelocity.x();
             double newY = currentVelocity.y();
@@ -543,7 +586,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
               eyePosition,
               finalPos,
               boundsForChecking,
-              SentryWatcherEntity::canSeeEntity
+              this::canSeeEntity
       );
 
       if (entityHitResult != null) {
@@ -563,7 +606,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                  eyePosition,
                  finalPos,
                  boundsForChecking,
-                 SentryWatcherEntity::canSeeEntity
+                 this::canSeeEntity
          );
 
          if (entityHitResult2 != null) {
@@ -622,14 +665,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
    }
 
-   private static boolean canSeeEntity(Entity entity) {
+   private boolean canSeeEntity(Entity entity) {
       if (entity.getType().is(BzTags.SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN) || entity.isSpectator()) {
          return false;
       }
       else if (entity.getType().is(BzTags.SENTRY_WATCHER_ACTIVATES_WHEN_SEEN)) {
          return true;
       }
-      else if (entity instanceof Player player && player.isCreative()) {
+      else if (entity instanceof Player player && (player.isCreative() || player.getUUID().equals(this.getOwner().orElse(null)))) {
          return false;
       }
 
@@ -915,7 +958,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                this.setDeltaMovement(loseXSpeed ? 0.0 : vec33.x, vec33.y, loseZSpeed ? 0.0 : vec33.z);
             }
 
-            net.minecraft.world.level.block.Block block = blockState.getBlock();
+            Block block = blockState.getBlock();
             if (vec3.y != collision.y) {
                block.updateEntityAfterFallOn(this.level(), this);
             }
@@ -1007,7 +1050,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          }
       }
 
-      if (min != null) {
+      if (min != null && this.getOwner().isEmpty()) {
          boolean canDemolish = true;
          double totalhardness = 0;
          int alwaysDestroyCounter = 0;

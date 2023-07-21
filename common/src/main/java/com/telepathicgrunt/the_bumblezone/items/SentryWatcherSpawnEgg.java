@@ -2,12 +2,15 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,10 +37,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class SentryWatcherSpawnEgg extends Item {
     private final Supplier<? extends EntityType<? extends Entity>> entityType;
+    public static final UUID DISPENSER_OWNER_UUID = new UUID(0, 0);
 
     public SentryWatcherSpawnEgg(Supplier<? extends EntityType<? extends Entity>> typeIn, Properties builder) {
         super(builder);
@@ -57,6 +63,7 @@ public class SentryWatcherSpawnEgg extends Item {
                         Entity entity = entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
                         if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                             sentryWatcherEntity.setTargetFacing(direction);
+                            sentryWatcherEntity.setOwner(Optional.of(DISPENSER_OWNER_UUID));
                         }
 
                         stack.shrink(1);
@@ -67,7 +74,12 @@ public class SentryWatcherSpawnEgg extends Item {
 
     public InteractionResult useOn(UseOnContext useOnContext) {
         Level level = useOnContext.getLevel();
-        if (!(level instanceof ServerLevel)) {
+        Player player = useOnContext.getPlayer();
+
+        if (player == null) {
+            return InteractionResult.PASS;
+        }
+        else if (!(level instanceof ServerLevel)) {
             return InteractionResult.SUCCESS;
         }
         else {
@@ -75,7 +87,7 @@ public class SentryWatcherSpawnEgg extends Item {
             BlockPos blockPos = useOnContext.getClickedPos();
             Direction direction = useOnContext.getClickedFace();
             BlockState blockState = level.getBlockState(blockPos);
-            if (blockState.is(Blocks.SPAWNER)) {
+            if (blockState.is(Blocks.SPAWNER) && player.getAbilities().instabuild) {
                 BlockEntity blockEntity = level.getBlockEntity(blockPos);
                 if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
                     EntityType<?> entityType = this.getType(itemStack.getTag());
@@ -100,7 +112,19 @@ public class SentryWatcherSpawnEgg extends Item {
             Entity entity = entityType2.spawn((ServerLevel)level, itemStack, useOnContext.getPlayer(), blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP);
             if (entity != null) {
                 if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
-                    sentryWatcherEntity.setTargetFacing(useOnContext.getHorizontalDirection());
+                    if (useOnContext.getClickedFace().getAxis() != Direction.Axis.Y) {
+                        sentryWatcherEntity.setTargetFacing(useOnContext.getHorizontalDirection().getOpposite());
+                    }
+                    else {
+                        sentryWatcherEntity.setTargetFacing(useOnContext.getHorizontalDirection());
+                    }
+
+                    if (!player.getAbilities().instabuild) {
+                        sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
+                        if (player instanceof ServerPlayer) {
+                            player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
+                        }
+                    }
                 }
 
                 itemStack.shrink(1);
