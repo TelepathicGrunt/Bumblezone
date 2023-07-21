@@ -1,0 +1,38 @@
+{
+  "parent": "the_bumblezone:honey_crystal/consume_honey_crystal_shards",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_crystal"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_honey_crystal_block.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_honey_crystal_block.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "criteria": {
+    "obtain_honey_crystal_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:honey_crystal"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_honey_crystal_block"
+    ]
+  ]
+}

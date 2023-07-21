@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:honey_slime/honey_slime_creation",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_slime_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.honey_slime_harvest.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.honey_slime_harvest.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "honey_slime_harvest": {
+      "trigger": "the_bumblezone:honey_slime_harvest",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "honey_slime_harvest"
+    ]
+  ]
+}

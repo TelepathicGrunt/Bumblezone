@@ -1,0 +1,36 @@
+{
+  "parent": "the_bumblezone:structures/enter_throne_pillar",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:essence_of_the_bees"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.bee_essence_infusion.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.bee_essence_infusion.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "consume_essence": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["the_bumblezone:essence_of_the_bees"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "consume_essence"
+    ]
+  ]
+}

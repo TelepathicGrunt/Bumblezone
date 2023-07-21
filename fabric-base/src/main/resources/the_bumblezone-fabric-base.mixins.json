@@ -23,7 +23,6 @@
   "mixins": [
     "block.PistonStructureResolverMixin",
     "block.ShulkerBoxBlockEntityMixin",
-    "container.ResultSlotMixin",
     "entity.AbstractArrowMixin",
     "entity.AbstractHurtingProjectileMixin",
     "entity.AnimalMixin",

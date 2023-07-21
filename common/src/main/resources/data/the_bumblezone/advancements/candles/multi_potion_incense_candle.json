@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:candles/obtain_all_colored_super_candles",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:incense_candle"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.multi_potion_incense_candle.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.multi_potion_incense_candle.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "craft_multi_potion_incense_candle": {
+      "trigger": "the_bumblezone:craft_multi_potion_incense_candle",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "craft_multi_potion_incense_candle"
+    ]
+  ]
+}

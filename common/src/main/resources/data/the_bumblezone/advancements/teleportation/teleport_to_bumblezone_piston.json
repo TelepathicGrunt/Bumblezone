@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:teleportation/is_near_beehive",
+  "display": {
+    "icon": {
+      "item": "minecraft:piston"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.teleport_to_bumblezone_piston.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.teleport_to_bumblezone_piston.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "teleport_to_bumblezone_piston": {
+      "trigger": "the_bumblezone:teleport_to_bumblezone_piston",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "teleport_to_bumblezone_piston"
+    ]
+  ]
+}

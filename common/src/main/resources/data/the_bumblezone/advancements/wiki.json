@@ -1,0 +1,30 @@
+{
+  "parent": "the_bumblezone:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.wiki.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.wiki.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {},
+  "criteria": {
+    "instant_granted": {
+      "trigger": "minecraft:tick",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "instant_granted"
+    ]
+  ]
+}

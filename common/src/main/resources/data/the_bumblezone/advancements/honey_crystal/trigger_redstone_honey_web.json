@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:honey_crystal/cleanup_honey_web",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:redstone_honey_web"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.trigger_redstone_honey_web.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.trigger_redstone_honey_web.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "trigger_redstone_honey_web": {
+      "trigger": "the_bumblezone:trigger_redstone_honey_web",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "trigger_redstone_honey_web"
+    ]
+  ]
+}

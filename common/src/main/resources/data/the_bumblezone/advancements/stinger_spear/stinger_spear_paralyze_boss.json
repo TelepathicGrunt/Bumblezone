@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:stinger_spear/stinger_spear_paralyzing",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:stinger_spear"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.stinger_spear_paralyze_boss.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.stinger_spear_paralyze_boss.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "criteria": {
+    "stinger_spear_paralyze_boss": {
+      "trigger": "the_bumblezone:stinger_spear_paralyze_boss",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "stinger_spear_paralyze_boss"
+    ]
+  ]
+}

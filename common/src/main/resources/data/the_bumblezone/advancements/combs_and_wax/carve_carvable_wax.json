@@ -1,0 +1,123 @@
+{
+  "parent": "the_bumblezone:effects/beenergized_maxed",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:carvable_wax"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.carve_wax.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.carve_wax.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "carve_wax_1": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "uncarved"
+          }
+        }
+      }
+    },
+    "carve_wax_2": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "wavy"
+          }
+        }
+      }
+    },
+    "carve_wax_3": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "flower"
+          }
+        }
+      }
+    },
+    "carve_wax_4": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "chiseled"
+          }
+        }
+      }
+    },
+    "carve_wax_5": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "diamond"
+          }
+        }
+      }
+    },
+    "carve_wax_6": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "bricks"
+          }
+        }
+      }
+    },
+    "carve_wax_7": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "chains"
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "carve_wax_1"
+    ],
+    [
+      "carve_wax_2"
+    ],
+    [
+      "carve_wax_3"
+    ],
+    [
+      "carve_wax_4"
+    ],
+    [
+      "carve_wax_5"
+    ],
+    [
+      "carve_wax_6"
+    ],
+    [
+      "carve_wax_7"
+    ]
+  ]
+}

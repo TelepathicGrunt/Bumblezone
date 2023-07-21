@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:sugar_water/obtain_sugar_infused_stones",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:bee_cannon"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.bee_cannon_full.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.bee_cannon_full.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 15
+  },
+  "criteria": {
+    "bee_cannon_full": {
+      "trigger": "the_bumblezone:bee_cannon_full"
+    }
+  },
+  "requirements": [
+    [
+      "bee_cannon_full"
+    ]
+  ]
+}

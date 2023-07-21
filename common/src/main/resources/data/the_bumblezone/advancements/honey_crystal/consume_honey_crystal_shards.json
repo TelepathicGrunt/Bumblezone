@@ -1,0 +1,36 @@
+{
+  "parent": "the_bumblezone:effects/beenergized_maxed",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_crystal_shards"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.consume_honey_crystal_shards.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.consume_honey_crystal_shards.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "consume_honey_crystal_shards": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["the_bumblezone:honey_crystal_shards"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "consume_honey_crystal_shards"
+    ]
+  ]
+}

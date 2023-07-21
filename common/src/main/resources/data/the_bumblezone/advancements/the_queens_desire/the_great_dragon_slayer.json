@@ -1,0 +1,39 @@
+{
+  "parent": "the_bumblezone:the_queens_desire/otherworldly_mites",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.the_great_dragon_slayer.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.the_great_dragon_slayer.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 150,
+    "loot": [
+      "the_bumblezone:advancements/queens_desire"
+    ]
+  },
+  "criteria": {
+    "enderdragon_killed": {
+      "trigger": "the_bumblezone:killed_counter",
+      "conditions": {
+        "target_count": 1,
+        "target_entity": "minecraft:ender_dragon",
+        "bee_armor_required": true
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enderdragon_killed"
+    ]
+  ]
+}

@@ -22,7 +22,6 @@
     "blocks.WaterEquivalenceMixin",
     "blocks.WaterlilyBlockMixin",
     "blocks.WaterlogForPlacingBlockMixin",
-    "containers.CraftingMenuMixin",
     "containers.PotionBrewingAccessor",
     "containers.ShapedRecipeAccessor",
     "effects.MobEffectInstanceAccessor",

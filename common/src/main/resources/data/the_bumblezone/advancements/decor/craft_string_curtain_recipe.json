@@ -1,0 +1,258 @@
+{
+  "parent": "the_bumblezone:effects/beenergized_maxed",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:string_curtain_white"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.craft_string_curtain_recipe.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.craft_string_curtain_recipe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "string_curtain_recipe_black": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/black"
+      }
+    },
+    "string_curtain_recipe_black2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/black2"
+      }
+    },
+    "string_curtain_recipe_blue": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/blue"
+      }
+    },
+    "string_curtain_recipe_blue2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/blue2"
+      }
+    },
+    "string_curtain_recipe_brown": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/brown"
+      }
+    },
+    "string_curtain_recipe_brown2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/brown2"
+      }
+    },
+    "string_curtain_recipe_cyan": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/cyan"
+      }
+    },
+    "string_curtain_recipe_cyan2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/cyan2"
+      }
+    },
+    "string_curtain_recipe_gray": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/gray"
+      }
+    },
+    "string_curtain_recipe_gray2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/gray2"
+      }
+    },
+    "string_curtain_recipe_green": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/green"
+      }
+    },
+    "string_curtain_recipe_green2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/green2"
+      }
+    },
+    "string_curtain_recipe_light_blue": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/light_blue"
+      }
+    },
+    "string_curtain_recipe_light_blue2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/light_blue2"
+      }
+    },
+    "string_curtain_recipe_light_gray": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/light_gray"
+      }
+    },
+    "string_curtain_recipe_light_gray2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/light_gray2"
+      }
+    },
+    "string_curtain_recipe_lime": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/lime"
+      }
+    },
+    "string_curtain_recipe_lime2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/lime2"
+      }
+    },
+    "string_curtain_recipe_magenta": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/magenta"
+      }
+    },
+    "string_curtain_recipe_magenta2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/magenta2"
+      }
+    },
+    "string_curtain_recipe_orange": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/orange"
+      }
+    },
+    "string_curtain_recipe_orange2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/orange2"
+      }
+    },
+    "string_curtain_recipe_pink": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/pink"
+      }
+    },
+    "string_curtain_recipe_pink2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/pink2"
+      }
+    },
+    "string_curtain_recipe_purple": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/purple"
+      }
+    },
+    "string_curtain_recipe_purple2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/purple2"
+      }
+    },
+    "string_curtain_recipe_red": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/red"
+      }
+    },
+    "string_curtain_recipe_red2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/red2"
+      }
+    },
+    "string_curtain_recipe_white": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/white"
+      }
+    },
+    "string_curtain_recipe_white2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/white2"
+      }
+    },
+    "string_curtain_recipe_white_redundant": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/white_redundant"
+      }
+    },
+    "string_curtain_recipe_yellow": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/yellow"
+      }
+    },
+    "string_curtain_recipe_yellow2": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:string_curtain/yellow2"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "string_curtain_recipe_black",
+      "string_curtain_recipe_black2",
+      "string_curtain_recipe_blue",
+      "string_curtain_recipe_blue2",
+      "string_curtain_recipe_brown",
+      "string_curtain_recipe_brown2",
+      "string_curtain_recipe_cyan",
+      "string_curtain_recipe_cyan2",
+      "string_curtain_recipe_gray",
+      "string_curtain_recipe_gray2",
+      "string_curtain_recipe_green",
+      "string_curtain_recipe_green2",
+      "string_curtain_recipe_light_blue",
+      "string_curtain_recipe_light_blue2",
+      "string_curtain_recipe_light_gray",
+      "string_curtain_recipe_light_gray2",
+      "string_curtain_recipe_lime",
+      "string_curtain_recipe_lime2",
+      "string_curtain_recipe_magenta",
+      "string_curtain_recipe_magenta2",
+      "string_curtain_recipe_orange",
+      "string_curtain_recipe_orange2",
+      "string_curtain_recipe_pink",
+      "string_curtain_recipe_pink2",
+      "string_curtain_recipe_purple",
+      "string_curtain_recipe_purple2",
+      "string_curtain_recipe_red",
+      "string_curtain_recipe_red2",
+      "string_curtain_recipe_white",
+      "string_curtain_recipe_white2",
+      "string_curtain_recipe_white_redundant",
+      "string_curtain_recipe_yellow",
+      "string_curtain_recipe_yellow2"
+    ]
+  ]
+}

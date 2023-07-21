@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:candles/light_soul_incense_candle",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:incense_candle"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.projectile_light_instant_incense_candle.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.projectile_light_instant_incense_candle.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "projectile_light_instant_incense_candle": {
+      "trigger": "the_bumblezone:projectile_light_instant_incense_candle",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "projectile_light_instant_incense_candle"
+    ]
+  ]
+}

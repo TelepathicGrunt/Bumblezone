@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:honey_crystal/obtain_sticky_honey_redstone",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:sticky_honey_residue"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.cleanup_sticky_honey_residue.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.cleanup_sticky_honey_residue.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "cleanup_sticky_honey_residue": {
+      "trigger": "the_bumblezone:cleanup_sticky_honey_residue",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "cleanup_sticky_honey_residue"
+    ]
+  ]
+}

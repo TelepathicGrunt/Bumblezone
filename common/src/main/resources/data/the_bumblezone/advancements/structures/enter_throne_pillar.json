@@ -1,0 +1,44 @@
+{
+  "parent": "the_bumblezone:structures/enter_cell_maze",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.enter_throne_pillar.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.enter_throne_pillar.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "in_throne_pillar": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:throne_pillar"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_throne_pillar"
+    ]
+  ]
+}

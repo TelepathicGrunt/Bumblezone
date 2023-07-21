@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.advancements.EntitySpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.GenericTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.ItemSpecificTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.KilledCounterTrigger;
-import com.telepathicgrunt.the_bumblezone.advancements.RecipeDiscoveredTrigger;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.CriterionTrigger;
@@ -15,9 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.apache.commons.lang3.NotImplementedException;
 
 public class BzCriterias {
-    public static final ResourceLocation QUEENS_DESIRE_ROOT_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/the_queens_desire/the_beginning");
-    public static final ResourceLocation QUEENS_DESIRE_FINAL_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/the_queens_desire/journeys_end");
-    public static final ResourceLocation IS_NEAR_BEEHIVE_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/teleportation/is_near_beehive");
+    public static final ResourceLocation QUEENS_DESIRE_ROOT_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_queens_desire/the_beginning");
+    public static final ResourceLocation QUEENS_DESIRE_FINAL_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_queens_desire/journeys_end");
+    public static final ResourceLocation IS_NEAR_BEEHIVE_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "teleportation/is_near_beehive");
 
     // CRITERIA TRIGGERS
     public static final CounterTrigger BEE_BREEDING_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_breeding"));
@@ -76,9 +75,9 @@ public class BzCriterias {
     public static final GenericTrigger PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "projectile_light_instant_incense_candle"));
     public static final EntitySpecificTrigger PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "protection_of_the_hive_defense"));
     public static final GenericTrigger QUEEN_BEEHEMOTH_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "created_queen_beehemoth"));
-    public static final RecipeDiscoveredTrigger RECIPE_DISCOVERED_TRIGGER = new RecipeDiscoveredTrigger();
     public static final GenericTrigger ROOTMIN_FLOWER_SWAP_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "rootmin_flower_swap"));
     public static final GenericTrigger ROYAL_JELLY_BLOCK_PISTON_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "royal_jelly_block_piston"));
+    public static final GenericTrigger SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "sentry_watcher_spawn_egg_used"));
     public static final GenericTrigger STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_killed_with_wither"));
     public static final GenericTrigger STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_long_range_kill"));
     public static final GenericTrigger STINGER_SPEAR_PARALYZE_BOSS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_paralyze_boss"));
@@ -149,9 +148,9 @@ public class BzCriterias {
         register(PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER);
         register(BEE_QUEEN_TRADING_TRIGGER);
         register(QUEEN_BEEHEMOTH_TRIGGER);
-        register(RECIPE_DISCOVERED_TRIGGER);
         register(ROOTMIN_FLOWER_SWAP_TRIGGER);
         register(ROYAL_JELLY_BLOCK_PISTON_TRIGGER);
+        register(SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER);
         register(STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER);
         register(STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER);
         register(STINGER_SPEAR_PARALYZE_BOSS_TRIGGER);

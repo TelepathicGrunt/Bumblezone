@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:combs_and_wax/carve_luminescent_wax",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:sentry_watcher_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.sentry_watcher_use_egg.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.sentry_watcher_use_egg.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "sentry_watcher_spawn_egg": {
+      "trigger": "the_bumblezone:sentry_watcher_spawn_egg_used"
+    }
+  },
+  "requirements": [
+    [
+      "sentry_watcher_spawn_egg"
+    ]
+  ]
+}

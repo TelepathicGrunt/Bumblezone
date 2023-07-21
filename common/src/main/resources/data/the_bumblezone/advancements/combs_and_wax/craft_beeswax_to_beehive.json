@@ -1,0 +1,34 @@
+{
+  "parent": "the_bumblezone:combs_and_wax/comb_cutter_tool",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:beehive_beeswax"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.craft_beeswax_to_beehive.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.craft_beeswax_to_beehive.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "craft_beeswax_to_beehive": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "the_bumblezone:beehive_beeswax_to_bee_nest"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "craft_beeswax_to_beehive"
+    ]
+  ]
+}

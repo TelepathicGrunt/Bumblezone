@@ -1,0 +1,424 @@
+{
+  "parent": "the_bumblezone:music_discs/obtain_all_music_discs",
+  "display": {
+    "icon": {
+      "item": "minecraft:filled_map"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.enter_all_structures.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.enter_all_structures.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "rewards": {
+    "experience": 2500
+  },
+  "criteria": {
+    "in_cell_maze": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:cell_maze"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_ancient_hoops": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:ancient_hoops"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_ancient_shrine": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:ancient_shrine"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_battle_cubes": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:battle_cubes"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_bee_house": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:bee_house"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_candle_parkour": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:candle_parkour"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_cannon_range": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:cannon_range"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_dance_floor": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:dance_floor"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_hanging_garden": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:hanging_garden"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_hive_temple": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:hive_temple"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_honey_cave_room": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:honey_cave_room"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_honey_fountain": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:honey_fountain"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_honitel": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:honitel"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_ice_monolith": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:ice_monolith"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_overgrown_flower": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:overgrown_flower"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_pirate_ship": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:pirate_ship"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_pollinated_stream": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:pollinated_stream"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_sempiternal_sanctum_white": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:sempiternal_sanctum_white"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_stinger_spear_shrine": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:stinger_spear_shrine"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_subway": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:subway"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_throne_pillar": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:throne_pillar"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "in_cell_maze"
+    ],
+    [
+      "in_ancient_hoops"
+    ],
+    [
+      "in_ancient_shrine"
+    ],
+    [
+      "in_battle_cubes"
+    ],
+    [
+      "in_bee_house"
+    ],
+    [
+      "in_candle_parkour"
+    ],
+    [
+      "in_cannon_range"
+    ],
+    [
+      "in_dance_floor"
+    ],
+    [
+      "in_hanging_garden"
+    ],
+    [
+      "in_hive_temple"
+    ],
+    [
+      "in_honey_cave_room"
+    ],
+    [
+      "in_honey_fountain"
+    ],
+    [
+      "in_honitel"
+    ],
+    [
+      "in_ice_monolith"
+    ],
+    [
+      "in_overgrown_flower"
+    ],
+    [
+      "in_pirate_ship"
+    ],
+    [
+      "in_pollinated_stream"
+    ],
+    [
+      "in_sempiternal_sanctum_white"
+    ],
+    [
+      "in_stinger_spear_shrine"
+    ],
+    [
+      "in_subway"
+    ],
+    [
+      "in_throne_pillar"
+    ]
+  ]
+}

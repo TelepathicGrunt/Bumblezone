@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:tools/craft_honey_compass",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_compass"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.honey_compass_use.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.honey_compass_use.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "honey_compass": {
+      "trigger": "the_bumblezone:honey_compass_use"
+    }
+  },
+  "requirements": [
+    [
+      "honey_compass"
+    ]
+  ]
+}

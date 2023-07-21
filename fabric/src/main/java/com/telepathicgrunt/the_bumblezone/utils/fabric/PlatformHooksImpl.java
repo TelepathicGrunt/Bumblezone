@@ -204,11 +204,6 @@ public class PlatformHooksImpl {
             }
         }
     }
-
-    public static Player getCraftingPlayer() {
-        return PlatformSharedData.craftingPlayer;
-    }
-
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         if (placingBlock) {
             if (entity instanceof Player player) {

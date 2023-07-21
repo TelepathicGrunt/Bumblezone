@@ -1,0 +1,47 @@
+{
+  "parent": "the_bumblezone:dirt_pellet/dirt_pellet_return_to_sender",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:dirt_pellet"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.dirt_pellet_kill_phantom.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.dirt_pellet_kill_phantom.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "killed_phantom": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:phantom"
+            }
+          }
+        ],
+        "killing_blow": {
+          "direct_entity": {
+            "type": "the_bumblezone:dirt_pellet"
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "killed_phantom"
+    ]
+  ]
+}

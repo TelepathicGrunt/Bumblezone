@@ -1,5 +1,5 @@
 {
-  "type": "the_bumblezone:recipe_discovered_hooked_shapeless_recipe",
+  "type": "minecraft:crafting_shapeless",
   "category": "building",
   "group": "the_bumblezone:string_curtain",
   "ingredients": [
@@ -11,6 +11,6 @@
     }
   ],
   "result": {
-    "item": "the_bumblezone:string_curtain_black"
+    "item": "the_bumblezone:string_curtain_purple"
   }
 }

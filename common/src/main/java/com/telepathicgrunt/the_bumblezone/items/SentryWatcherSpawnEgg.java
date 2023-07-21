@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
@@ -119,6 +121,10 @@ public class SentryWatcherSpawnEgg extends Item {
                         sentryWatcherEntity.setTargetFacing(useOnContext.getHorizontalDirection());
                     }
 
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.trigger(serverPlayer);
+                    }
+
                     if (!player.getAbilities().instabuild) {
                         sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
                         if (player instanceof ServerPlayer) {
@@ -158,6 +164,17 @@ public class SentryWatcherSpawnEgg extends Item {
                 else {
                     if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                         sentryWatcherEntity.setTargetFacing(player.getDirection());
+
+                        if (player instanceof ServerPlayer serverPlayer) {
+                            BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.trigger(serverPlayer);
+                        }
+
+                        if (!player.getAbilities().instabuild) {
+                            sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
+                            if (player instanceof ServerPlayer) {
+                                player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
+                            }
+                        }
                     }
 
                     if (!player.getAbilities().instabuild) {

@@ -1,0 +1,246 @@
+{
+  "parent": "the_bumblezone:effects/beenergized_maxed",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:super_candle"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_all_colored_super_candles.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_all_colored_super_candles.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "criteria": {
+    "super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle"]
+          }
+        ]
+      }
+    },
+    "black_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_black"]
+          }
+        ]
+      }
+    },
+    "blue_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_blue"]
+          }
+        ]
+      }
+    },
+    "brown_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_brown"]
+          }
+        ]
+      }
+    },
+    "cyan_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_cyan"]
+          }
+        ]
+      }
+    },
+    "gray_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_gray"]
+          }
+        ]
+      }
+    },
+    "green_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_green"]
+          }
+        ]
+      }
+    },
+    "light_blue_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_light_blue"]
+          }
+        ]
+      }
+    },
+    "light_gray_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_light_gray"]
+          }
+        ]
+      }
+    },
+    "lime_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_lime"]
+          }
+        ]
+      }
+    },
+    "magenta_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_magenta"]
+          }
+        ]
+      }
+    },
+    "orange_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_orange"]
+          }
+        ]
+      }
+    },
+    "pink_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_pink"]
+          }
+        ]
+      }
+    },
+    "purple_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_purple"]
+          }
+        ]
+      }
+    },
+    "red_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_red"]
+          }
+        ]
+      }
+    },
+    "white_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_white"]
+          }
+        ]
+      }
+    },
+    "yellow_super_candle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:super_candle_yellow"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "super_candle"
+    ],
+    [
+      "black_super_candle"
+    ],
+    [
+      "blue_super_candle"
+    ],
+    [
+      "brown_super_candle"
+    ],
+    [
+      "cyan_super_candle"
+    ],
+    [
+      "gray_super_candle"
+    ],
+    [
+      "green_super_candle"
+    ],
+    [
+      "light_blue_super_candle"
+    ],
+    [
+      "light_gray_super_candle"
+    ],
+    [
+      "lime_super_candle"
+    ],
+    [
+      "magenta_super_candle"
+    ],
+    [
+      "orange_super_candle"
+    ],
+    [
+      "pink_super_candle"
+    ],
+    [
+      "purple_super_candle"
+    ],
+    [
+      "red_super_candle"
+    ],
+    [
+      "white_super_candle"
+    ],
+    [
+      "yellow_super_candle"
+    ]
+  ]
+}

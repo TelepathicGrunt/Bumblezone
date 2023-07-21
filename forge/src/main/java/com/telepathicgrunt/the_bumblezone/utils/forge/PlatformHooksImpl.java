@@ -131,10 +131,6 @@ public class PlatformHooksImpl {
         return InteractionResultHolder.pass(user.getItemInHand(hand));
     }
 
-    public static Player getCraftingPlayer() {
-        return ForgeHooks.getCraftingPlayer();
-    }
-
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         if (entity instanceof Player player && !player.mayInteract(level, pos)) {
             return false;

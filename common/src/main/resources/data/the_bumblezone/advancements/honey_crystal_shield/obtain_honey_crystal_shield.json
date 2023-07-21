@@ -1,0 +1,38 @@
+{
+  "parent": "the_bumblezone:armor/warrior_bee",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_crystal_shield"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_honey_crystal_shield.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_honey_crystal_shield.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "obtain_honey_crystal_shield": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:honey_crystal_shield"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_honey_crystal_shield"
+    ]
+  ]
+}

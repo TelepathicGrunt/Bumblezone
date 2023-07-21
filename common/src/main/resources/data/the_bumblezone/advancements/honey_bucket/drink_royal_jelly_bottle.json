@@ -1,0 +1,36 @@
+{
+  "parent": "the_bumblezone:structures/enter_throne_pillar",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:royal_jelly_bottle"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.drink_royal_jelly_bottle.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.drink_royal_jelly_bottle.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "criteria": {
+    "drink_royal_jelly_bottle": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["the_bumblezone:royal_jelly_bottle"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "drink_royal_jelly_bottle"
+    ]
+  ]
+}

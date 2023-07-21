@@ -701,7 +701,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
 
-    private static final ResourceLocation BEE_ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "the_bumblezone/essence/bee_essence_infusion");
+    private static final ResourceLocation BEE_ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "essence/bee_essence_infusion");
     private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
         Iterable<Advancement> advancements = serverPlayer.server.getAdvancements().getAdvancement(advancementRL).getChildren();
         for (Advancement advancement : advancements) {

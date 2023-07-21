@@ -129,11 +129,6 @@ public class PlatformHooks {
     }
 
     @ExpectPlatform
-    public static Player getCraftingPlayer() {
-        throw new NotImplementedException("PlatformHooks getCraftingPlayer is not implemented!");
-    }
-
-    @ExpectPlatform
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         throw new NotImplementedException("PlatformHooks isPermissionAllowedAtSpot is not implemented!");
     }

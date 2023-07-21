@@ -1,0 +1,38 @@
+{
+  "parent": "the_bumblezone:honey_crystal/consume_honey_crystal_shards",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:sticky_honey_residue"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_sticky_honey_residue.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_sticky_honey_residue.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "obtain_sticky_honey_redstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:sticky_honey_residue"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_sticky_honey_redstone"
+    ]
+  ]
+}

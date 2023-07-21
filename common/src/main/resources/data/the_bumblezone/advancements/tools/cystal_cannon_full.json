@@ -1,0 +1,31 @@
+{
+  "parent": "the_bumblezone:tools/bee_cannon_full",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:crystal_cannon"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.crystal_cannon_full.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.crystal_cannon_full.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 15
+  },
+  "criteria": {
+    "crystal_cannon_full": {
+      "trigger": "the_bumblezone:crystal_cannon_full"
+    }
+  },
+  "requirements": [
+    [
+      "crystal_cannon_full"
+    ]
+  ]
+}

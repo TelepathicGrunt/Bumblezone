@@ -1,0 +1,37 @@
+{
+  "parent": "the_bumblezone:the_queens_desire/too_many_legs",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.honey_drunk.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.honey_drunk.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100,
+    "loot": [
+      "the_bumblezone:advancements/queens_desire"
+    ]
+  },
+  "criteria": {
+    "honey_bottle_drank": {
+      "trigger": "the_bumblezone:honey_bottle_drank",
+      "conditions": {
+        "target_count": 16
+      }
+    }
+  },
+  "requirements": [
+    [
+      "honey_bottle_drank"
+    ]
+  ]
+}

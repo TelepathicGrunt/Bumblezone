@@ -1,0 +1,181 @@
+{
+  "parent": "the_bumblezone:the_queens_desire/crazy_trader",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:essence_of_the_bees"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.journeys_end.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.the_queens_desire.journeys_end.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 1500,
+    "loot": [
+      "the_bumblezone:advancements/queens_desire_end"
+    ]
+  },
+  "criteria": {
+    "target_advancement_done_1": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/back_in_action"
+      }
+    },
+    "target_advancement_done_2": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/fighting_the_swarm"
+      }
+    },
+    "target_advancement_done_3": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/flooding_the_housing_market"
+      }
+    },
+    "target_advancement_done_4": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/honey_drunk"
+      }
+    },
+    "target_advancement_done_5": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/hungry_hungry_bees"
+      }
+    },
+    "target_advancement_done_6": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/intimidation"
+      }
+    },
+    "target_advancement_done_7": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/love_bees"
+      }
+    },
+    "target_advancement_done_8": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/otherworldly_mites"
+      }
+    },
+    "target_advancement_done_9": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/peak_inefficiency"
+      }
+    },
+    "target_advancement_done_10": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/poison_warfare"
+      }
+    },
+    "target_advancement_done_11": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/pollen_fight"
+      }
+    },
+    "target_advancement_done_12": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/slimy_mitosis"
+      }
+    },
+    "target_advancement_done_13": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/terror_fangs"
+      }
+    },
+    "target_advancement_done_14": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/the_crazy_florist"
+      }
+    },
+    "target_advancement_done_15": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/the_great_dragon_slayer"
+      }
+    },
+    "target_advancement_done_16": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/too_many_legs"
+      }
+    },
+    "target_advancement_done_17": {
+      "trigger": "the_bumblezone:target_advancement_done",
+      "conditions": {
+        "target_advancement": "the_bumblezone:the_queens_desire/crazy_trader"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "target_advancement_done_1"
+    ],
+    [
+      "target_advancement_done_2"
+    ],
+    [
+      "target_advancement_done_3"
+    ],
+    [
+      "target_advancement_done_4"
+    ],
+    [
+      "target_advancement_done_5"
+    ],
+    [
+      "target_advancement_done_6"
+    ],
+    [
+      "target_advancement_done_7"
+    ],
+    [
+      "target_advancement_done_8"
+    ],
+    [
+      "target_advancement_done_9"
+    ],
+    [
+      "target_advancement_done_10"
+    ],
+    [
+      "target_advancement_done_11"
+    ],
+    [
+      "target_advancement_done_12"
+    ],
+    [
+      "target_advancement_done_13"
+    ],
+    [
+      "target_advancement_done_14"
+    ],
+    [
+      "target_advancement_done_15"
+    ],
+    [
+      "target_advancement_done_16"
+    ],
+    [
+      "target_advancement_done_17"
+    ]
+  ]
+}

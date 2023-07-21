@@ -1,0 +1,49 @@
+{
+  "parent": "the_bumblezone:sugar_water/consume_sugar_water_bottle",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:sugar_infused_cobblestone"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_sugar_infused_stones.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_sugar_infused_stones.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "obtain_sugar_infused_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:sugar_infused_stone"]
+          }
+        ]
+      }
+    },
+    "obtain_sugar_infused_cobblestone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:sugar_infused_cobblestone"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_sugar_infused_stone",
+      "obtain_sugar_infused_cobblestone"
+    ]
+  ]
+}

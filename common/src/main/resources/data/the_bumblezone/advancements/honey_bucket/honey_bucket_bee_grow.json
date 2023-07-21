@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:honey_bucket/honey_bucket_bee_love",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_bucket"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.honey_bucket_bee_grow.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.honey_bucket_bee_grow.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "honey_bucket_bee_grow": {
+      "trigger": "the_bumblezone:honey_bucket_bee_grow",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "honey_bucket_bee_grow"
+    ]
+  ]
+}

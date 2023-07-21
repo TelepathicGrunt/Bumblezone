@@ -1,0 +1,42 @@
+{
+  "parent": "the_bumblezone:pollen_pile/fall_onto_pollen_pile",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:pile_of_pollen"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.hide_in_pollen_pile.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.hide_in_pollen_pile.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+
+  "criteria": {
+    "strong_hidden": {
+      "trigger": "minecraft:effects_changed",
+      "conditions": {
+        "effects": {
+          "the_bumblezone:hidden": {
+            "amplifier": {
+              "max": 255,
+              "min": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "strong_hidden"
+    ]
+  ]
+}
