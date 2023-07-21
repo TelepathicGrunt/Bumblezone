@@ -34,10 +34,7 @@ public abstract class LivingEntityMixin extends Entity {
     @ModifyReturnValue(method = "isImmobile()Z",
             at = @At(value = "RETURN"))
     private boolean bumblezone$isParalyzedCheck(boolean isImmobile) {
-        if(!isImmobile && ParalyzedEffect.isParalyzed((LivingEntity)(Object)this)) {
-            return true;
-        }
-        return isImmobile;
+        return isImmobile || ParalyzedEffect.isParalyzed((LivingEntity)(Object)this);
     }
 
     @ModifyReturnValue(method = "getFlyingSpeed()F",

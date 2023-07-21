@@ -1,0 +1,158 @@
+{
+  "parent": "the_bumblezone:music_discs/obtain_all_music_discs",
+  "display": {
+    "icon": {
+      "item": "minecraft:spyglass"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.discover_all_biomes.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.discover_all_biomes.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "hive_pillar": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "the_bumblezone:hive_pillar"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "hive_wall": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "the_bumblezone:hive_wall"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pollinated_fields": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "the_bumblezone:pollinated_fields"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pollinated_pillar": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "the_bumblezone:pollinated_pillar"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "sugar_water_floor": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "the_bumblezone:sugar_water_floor"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "crystal_canyon": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "the_bumblezone:crystal_canyon"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "floral_meadow": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "biome": "the_bumblezone:floral_meadow"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hive_pillar"
+    ],
+    [
+      "hive_wall"
+    ],
+    [
+      "pollinated_fields"
+    ],
+    [
+      "pollinated_pillar"
+    ],
+    [
+      "sugar_water_floor"
+    ],
+    [
+      "crystal_canyon"
+    ],
+    [
+      "floral_meadow"
+    ]
+  ]
+}

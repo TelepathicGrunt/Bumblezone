@@ -74,6 +74,7 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -511,10 +512,16 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                   blockState.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                }
 
+               int shrinkAmount = 1;
+               if (blockState.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
+                  shrinkAmount = Math.min(Math.max(1, itemstack.getCount()), 4);
+                  blockState = blockState.setValue(BlockStateProperties.FLOWER_AMOUNT, shrinkAmount);
+               }
+
                this.setFlowerBlock(blockState);
                player.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
                if (!instantBuild) {
-                  itemstack.shrink(1);
+                  itemstack.shrink(shrinkAmount);
                }
 
                if (player instanceof ServerPlayer serverPlayer) {

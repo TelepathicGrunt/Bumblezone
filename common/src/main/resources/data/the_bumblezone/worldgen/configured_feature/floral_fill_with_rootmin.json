@@ -1,0 +1,9 @@
+{
+  "type": "the_bumblezone:floral_fill_with_rootmin",
+  "config": {
+    "rootmin_chance": 0.0065,
+    "flower_chance": 0.7,
+    "flower_tag": "the_bumblezone:biomes/floral_meadow_flowers",
+    "disallowed_flower_tag": "the_bumblezone:biomes/disallowed_floral_meadow_flowers"
+  }
+}

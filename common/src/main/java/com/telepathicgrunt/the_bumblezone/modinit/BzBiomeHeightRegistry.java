@@ -19,6 +19,7 @@ public final class BzBiomeHeightRegistry {
     public static final RegistryEntry<BiomeTerrain> POLLINATED_PILLAR = BIOME_HEIGHT.register("pollinated_pillar", () -> new BiomeTerrain(22.5f, 0.05f));
     public static final RegistryEntry<BiomeTerrain> SUGAR_WATER_FLOOR = BIOME_HEIGHT.register("sugar_water_floor", () -> new BiomeTerrain(-3.7f, 0.75f));
     public static final RegistryEntry<BiomeTerrain> CRYSTAL_CANYON = BIOME_HEIGHT.register("crystal_canyon", () -> new BiomeTerrain(0f, 0.75f));
+    public static final RegistryEntry<BiomeTerrain> FLORAL_MEADOW = BIOME_HEIGHT.register("floral_meadow", () -> new BiomeTerrain(0.2f, 0.75f));
 
     public static class BiomeTerrain{
         public final float depth;

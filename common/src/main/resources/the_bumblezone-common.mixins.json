@@ -70,6 +70,7 @@
     "world.WorldGenRegionAccessor"
   ],
   "client": [
+    "client.BlockRenderDispatcherAccessor",
     "client.ClientEntityMixin",
     "client.ClientLevelAccessor",
     "client.ClientLevelMixin",

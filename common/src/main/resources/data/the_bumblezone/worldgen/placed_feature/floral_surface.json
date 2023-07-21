@@ -1,0 +1,10 @@
+{
+  "feature": "the_bumblezone:floral_fill_with_rootmin",
+  "placement": [
+    {
+      "type": "the_bumblezone:roofed_dimension_surface_placement",
+      "min_height": 40,
+      "max_water_depth": 0
+    }
+  ]
+}

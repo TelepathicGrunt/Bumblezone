@@ -5,11 +5,13 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
+import com.telepathicgrunt.the_bumblezone.mixin.client.BlockRenderDispatcherAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -19,6 +21,8 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -27,10 +31,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import org.joml.Quaternionf;
@@ -192,13 +200,32 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             bodyModel.translateAndRotate(poseStack);
             poseStack.translate(-0.5f, -15/16f, 0.5f);
             poseStack.scale(1,-1,-1);
-            this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+            renderSingleBlock(blockState, poseStack, multiBufferSource, packedLight, OverlayTexture.NO_OVERLAY, rootminEntity.level(), rootminEntity.blockPosition());
             if (blockState.getBlock() instanceof DoublePlantBlock) {
                 blockState = blockState.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
                 poseStack.translate(0f, 1f, 0f);
-                this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+                renderSingleBlock(blockState, poseStack, multiBufferSource, packedLight, OverlayTexture.NO_OVERLAY, rootminEntity.level(), rootminEntity.blockPosition());
             }
             poseStack.popPose();
+        }
+
+        public void renderSingleBlock(BlockState blockState, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int j, BlockAndTintGetter level, BlockPos blockPos) {
+            RenderShape renderShape = blockState.getRenderShape();
+            if (renderShape == RenderShape.INVISIBLE) {
+                return;
+            }
+            switch (renderShape) {
+                case MODEL -> {
+                    BakedModel bakedModel = this.blockRenderer.getBlockModel(blockState);
+                    int k = ((BlockRenderDispatcherAccessor) this.blockRenderer).getBlockColors().getColor(blockState, level, blockPos, 1);
+                    float f = (float) (k >> 16 & 0xFF) / 255.0f;
+                    float g = (float) (k >> 8 & 0xFF) / 255.0f;
+                    float h = (float) (k & 0xFF) / 255.0f;
+                    this.blockRenderer.getModelRenderer().renderModel(poseStack.last(), multiBufferSource.getBuffer(ItemBlockRenderTypes.getRenderType(blockState, false)), blockState, bakedModel, f, g, h, i, j);
+                }
+                case ENTITYBLOCK_ANIMATED ->
+                    ((BlockRenderDispatcherAccessor) this.blockRenderer).getBlockEntityRenderer().renderByItem(new ItemStack(blockState.getBlock()), ItemDisplayContext.NONE, poseStack, multiBufferSource, i, j);
+            }
         }
     }
 }

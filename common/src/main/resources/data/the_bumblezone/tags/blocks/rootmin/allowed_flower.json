@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#minecraft:small_flowers",
-    "#minecraft:tall_flowers"
+    "#minecraft:tall_flowers",
+    "minecraft:pink_petals"
   ]
 }

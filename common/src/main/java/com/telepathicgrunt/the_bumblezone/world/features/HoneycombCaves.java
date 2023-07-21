@@ -254,7 +254,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                                      int posResult,
                                      int abovePosResult)
     {
-        if (blockState.canOcclude()) {
+        if (blockState.canOcclude() && !blockState.canBeReplaced()) {
             ChunkAccess chunk = getChunkForSpot(world, null, blockPos);
             boolean isNextToAir = shouldCloseOff(world, chunk, blockPos, mutable);
             if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;

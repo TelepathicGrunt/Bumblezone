@@ -33,6 +33,9 @@ NOTE: Forge users must use 1.20.1 Forge up to v47.1.3 and nothing newer.
 
 #### *\*Additions*
 
+##### Biomes:
+Added Floral Meadow biome full of vanilla flowers and cherry trees! Rootmins can spawn naturally in this biome!
+
 ##### Structures:
 Added Subway structure that is a massive tunnel system with flowing air that bees uses to travel around quickly! 
  Lots of loots scattered throughout from all the travelers that has gone through this subway. 
