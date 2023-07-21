@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -111,6 +112,16 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                                 0.0F);
 
                         level.addFreshEntityWithPassengers(rootmin);
+
+                        mutable.move(Direction.UP);
+                        BlockState aboveState = cachedChunk.getBlockState(mutable);
+                        if (aboveState.is(BlockTags.REPLACEABLE)) {
+                            cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
+                            if (aboveState.getBlock() instanceof DoublePlantBlock){
+                                mutable.move(Direction.UP);
+                                cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
+                            }
+                        }
                     }
                 }
                 else {

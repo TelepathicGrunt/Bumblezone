@@ -31,16 +31,18 @@
             }
           }
         ],
-        "killing_blow": {
+        "damage": {
           "direct_entity": {
             "type": "the_bumblezone:dirt_pellet"
           },
-          "tags": [
-            {
-              "expected": true,
-              "id": "minecraft:is_projectile"
-            }
-          ]
+          "type": {
+            "tags": [
+              {
+                "expected": true,
+                "id": "minecraft:is_projectile"
+              }
+            ]
+          }
         }
       }
     }

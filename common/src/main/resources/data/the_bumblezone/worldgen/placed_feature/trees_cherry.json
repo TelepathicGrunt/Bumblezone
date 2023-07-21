@@ -1,5 +1,5 @@
 {
-  "feature": "minecraft:cherry_bees_005",
+  "feature": "the_bumblezone:tall_cherry_trees",
   "placement": [
     {
       "type": "minecraft:count",
@@ -8,10 +8,14 @@
         "distribution": [
           {
             "data": 1,
-            "weight": 9
+            "weight": 8
           },
           {
             "data": 2,
+            "weight": 3
+          },
+          {
+            "data": 3,
             "weight": 1
           }
         ]

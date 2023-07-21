@@ -1,0 +1,30 @@
+{
+  "type": "the_bumblezone:nbt_feature",
+  "config": {
+    "processors": "the_bumblezone:rocks",
+    "post_processors": "minecraft:empty",
+    "structure_y_offset": -2,
+    "nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:floral_meadow/rock_1",
+        "weight": 1
+      },
+      {
+        "resourcelocation": "the_bumblezone:floral_meadow/rock_2",
+        "weight": 1
+      },
+      {
+        "resourcelocation": "the_bumblezone:floral_meadow/rock_3",
+        "weight": 1
+      },
+      {
+        "resourcelocation": "the_bumblezone:floral_meadow/rock_4",
+        "weight": 1
+      },
+      {
+        "resourcelocation": "the_bumblezone:floral_meadow/rock_5",
+        "weight": 1
+      }
+    ]
+  }
+}

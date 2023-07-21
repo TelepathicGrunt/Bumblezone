@@ -1,0 +1,7 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:jigsaw_replacement"
+    }
+  ]
+}

@@ -176,7 +176,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
          state = blockList.isEmpty() ?
                  null :
-                 blockList.get(this.level().getRandom().nextInt(blockList.size())).defaultBlockState();
+                 blockList.get(this.getRandom().nextInt(blockList.size())).defaultBlockState();
 
          if (state != null && state.isAir()) {
             state = null;

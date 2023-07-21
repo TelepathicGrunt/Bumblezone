@@ -18,8 +18,8 @@
       "probability": 0.001
     },
     "sky_color": 16757248,
-    "foliage_color": 4297000,
-    "grass_color": 6270251,
+    "foliage_color": 2414649,
+    "grass_color": 2883417,
     "fog_color": 12638463,
     "water_color": 13429759,
     "water_fog_color": 12351267
@@ -37,13 +37,15 @@
       "the_bumblezone:spider_infested_bee_dungeon"
     ],
     [
+      "the_bumblezone:rocks",
       "the_bumblezone:trees_cherry"
     ],
     [
       "the_bumblezone:web_wall"
     ],
     [
-      "the_bumblezone:floral_surface"
+      "the_bumblezone:floral_surface",
+      "the_bumblezone:grass_fern_patch"
     ],
     [],
     [

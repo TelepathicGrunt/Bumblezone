@@ -16,7 +16,9 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -223,39 +225,36 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         for (int x = 0; x < 14; x++) {
             for (int z = 0; z < 11; z++) {
                 int posResult = hexagonArray[index][z][x];
-                int abovePosResult = z == 10 ? 0 : hexagonArray[index][z + 1][x];
-
                 if (posResult != 0) {
                     mutableBlockPos.set(position).move(x - 7, 0, z - 5);
                     chunk = getChunkForSpot(world, chunk, mutableBlockPos);
                     blockState = chunk.getBlockState(mutableBlockPos);
-                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
+                    carveAtBlock(world, chunk, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
 
                     mutableBlockPos.set(position).move(0, x - 7, z - 5);
                     chunk = getChunkForSpot(world, chunk, mutableBlockPos);
                     blockState = chunk.getBlockState(mutableBlockPos);
-                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
+                    carveAtBlock(world, chunk, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
 
                     mutableBlockPos.set(position).move(z - 5, x - 7, 0);
                     chunk = getChunkForSpot(world, chunk, mutableBlockPos);
                     blockState = chunk.getBlockState(mutableBlockPos);
-                    carveAtBlock(world, generator, random, mutableBlockPos, tempMutable, blockState, posResult, abovePosResult);
+                    carveAtBlock(world, chunk, generator, random, mutableBlockPos, tempMutable, blockState, posResult);
                 }
             }
         }
     }
 
     private static void carveAtBlock(WorldGenLevel world,
+                                     ChunkAccess chunk,
                                      ChunkGenerator generator,
                                      RandomSource random,
                                      BlockPos blockPos,
                                      BlockPos.MutableBlockPos mutable,
                                      BlockState blockState,
-                                     int posResult,
-                                     int abovePosResult)
+                                     int posResult)
     {
         if (blockState.canOcclude() && !blockState.canBeReplaced()) {
-            ChunkAccess chunk = getChunkForSpot(world, null, blockPos);
             boolean isNextToAir = shouldCloseOff(world, chunk, blockPos, mutable);
             if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
 
@@ -268,11 +267,14 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 }
                 else {
                     world.setBlock(blockPos, Blocks.CAVE_AIR.defaultBlockState(), 3);
-                    if(abovePosResult <= 1) {
-                        BlockPos abovePos = blockPos.above();
-                        BlockState aboveState = world.getBlockState(abovePos);
-                        if(!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
-                            world.setBlock(abovePos, Blocks.CAVE_AIR.defaultBlockState(), 3);
+
+                    BlockPos abovePos = blockPos.above();
+                    BlockState aboveState = chunk.getBlockState(abovePos);
+                    if(!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
+                        world.setBlock(abovePos, Blocks.CAVE_AIR.defaultBlockState(), 3);
+
+                        if (aboveState.getBlock() instanceof DoublePlantBlock && aboveState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER) {
+                            world.setBlock(abovePos.above(), Blocks.CAVE_AIR.defaultBlockState(), 3);
                         }
                     }
                 }
