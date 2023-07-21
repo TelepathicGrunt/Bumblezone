@@ -30,7 +30,9 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import org.joml.Quaternionf;
 
 import java.awt.*;
@@ -191,6 +193,11 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             poseStack.translate(-0.5f, -15/16f, 0.5f);
             poseStack.scale(1,-1,-1);
             this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+            if (blockState.getBlock() instanceof DoublePlantBlock) {
+                blockState = blockState.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
+                poseStack.translate(0f, 1f, 0f);
+                this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+            }
             poseStack.popPose();
         }
     }

@@ -70,8 +70,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.PitcherCropBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -502,6 +505,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                   for (ItemStack flowerDrop : flowerDrops) {
                      this.spawnAtLocation(flowerDrop, 1.0f);
                   }
+               }
+
+               if (blockState.getBlock() instanceof DoublePlantBlock) {
+                  blockState.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                }
 
                this.setFlowerBlock(blockState);
