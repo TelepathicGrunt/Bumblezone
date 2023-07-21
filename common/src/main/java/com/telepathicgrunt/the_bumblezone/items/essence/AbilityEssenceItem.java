@@ -35,6 +35,8 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         this.abilityUseAmount = abilityUseAmount;
     }
 
+    public abstract int getColor();
+
     public int getCooldownTickLength() {
         return cooldownTickLength.get();
     }

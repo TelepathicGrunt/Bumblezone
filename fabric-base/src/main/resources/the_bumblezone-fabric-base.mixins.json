@@ -10,6 +10,7 @@
     "client.BlockModelDeserializerMixin",
     "client.BlockModelMixin",
     "client.FogRendererMixin",
+    "client.GuiMixin",
     "client.KeyboardHandlerMixin",
     "client.KeyMappingAccessor",
     "client.ModelBakeryMixin",

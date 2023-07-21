@@ -46,6 +46,11 @@ public class LifeEssence extends AbilityEssenceItem {
     }
 
     @Override
+    public int getColor() {
+        return 0x4DE52B;
+    }
+
+    @Override
     void addDescriptionComponents(List<Component> components) {
         components.add(Component.translatable("item.the_bumblezone.essence_life_description_1").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
         components.add(Component.translatable("item.the_bumblezone.essence_life_description_2").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));

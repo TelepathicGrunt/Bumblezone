@@ -67,6 +67,11 @@ public class RagingEssence extends AbilityEssenceItem {
     }
 
     @Override
+    public int getColor() {
+        return 0xFF2B2B;
+    }
+
+    @Override
     void addDescriptionComponents(List<Component> components) {
         components.add(Component.translatable("item.the_bumblezone.essence_raging_description_1").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
         components.add(Component.translatable("item.the_bumblezone.essence_raging_description_2").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));

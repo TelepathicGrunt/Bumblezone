@@ -43,6 +43,11 @@ public class CalmingEssence extends AbilityEssenceItem {
     }
 
     @Override
+    public int getColor() {
+        return 0x00ADED;
+    }
+
+    @Override
     void addDescriptionComponents(List<Component> components) {
         components.add(Component.translatable("item.the_bumblezone.essence_calming_description_1").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));
         components.add(Component.translatable("item.the_bumblezone.essence_calming_description_2").withStyle(ChatFormatting.BLUE).withStyle(ChatFormatting.ITALIC));

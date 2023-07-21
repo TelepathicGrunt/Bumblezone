@@ -32,6 +32,11 @@ public class RadianceEssence extends AbilityEssenceItem {
     }
 
     @Override
+    public int getColor() {
+        return 0xF7D200;
+    }
+
+    @Override
     void addDescriptionComponents(List<Component> components) {
         components.add(Component.translatable("item.the_bumblezone.essence_radiance_description_1").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
         components.add(Component.translatable("item.the_bumblezone.essence_radiance_description_2").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));

@@ -38,6 +38,11 @@ public class KnowingEssence extends AbilityEssenceItem {
     }
 
     @Override
+    public int getColor() {
+        return 0xF021FF;
+    }
+
+    @Override
     void addDescriptionComponents(List<Component> components) {
         components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_1").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
         components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));

@@ -12,8 +12,6 @@
 
 #TODO: Add more sanctum rooms. Do sanctum variants
 
-#TODO: on screen and player character spike effects for essence items active.
-
 #TODO: Add new sempiternal sanctums to advancements
 
 #TODO: Sentry Watcher Survival Spawn Egg? Store owner and disable block breaking. Owner double right click with empty hand to go back to spawn egg. Message saying this

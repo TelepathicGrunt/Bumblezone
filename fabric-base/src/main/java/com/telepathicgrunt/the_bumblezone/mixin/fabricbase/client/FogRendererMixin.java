@@ -22,7 +22,7 @@ import java.util.Optional;
 public class FogRendererMixin {
 
     @WrapOperation(method = "setupColor", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;clearColor(FFFF)V", ordinal = 1))
-    private static void bumblzone$onModifyFogColor(float red, float green, float blue, float alpha, Operation<Void> original, Camera camera, float partialTicks, ClientLevel level, int renderDistance, float bossColorModifier) {
+    private static void bumblezone$onModifyFogColor(float red, float green, float blue, float alpha, Operation<Void> original, Camera camera, float partialTicks, ClientLevel level, int renderDistance, float bossColorModifier) {
         FluidState state = level.getFluidState(camera.getBlockPosition());
         if (camera.getPosition().y < (double)((float)camera.getBlockPosition().getY() + state.getHeight(level, camera.getBlockPosition()))) {
             if (state.getType() instanceof BzFlowingFluid bzFluid) {
@@ -41,7 +41,7 @@ public class FogRendererMixin {
     }
 
     @Inject(method = "setupFog", at = @At("TAIL"))
-    private static void bumblzone$onRenderFog(Camera camera, FogRenderer.FogMode fogMode, float renderDistance, boolean bl, float partialTicks, CallbackInfo ci) {
+    private static void bumblezone$onRenderFog(Camera camera, FogRenderer.FogMode fogMode, float renderDistance, boolean bl, float partialTicks, CallbackInfo ci) {
         FluidState state = camera.getEntity().level().getFluidState(camera.getBlockPosition());
         if (state.getType() instanceof BzFlowingFluid bzFluid) {
             ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties().id());

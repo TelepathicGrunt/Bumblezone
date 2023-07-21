@@ -40,6 +40,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -54,6 +55,7 @@ import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -180,11 +182,10 @@ public class BumblezoneForgeClient {
         }
     }
 
-    public static void onGuiRendering(RenderGuiOverlayEvent event) {
-        //TODO: can this even work?
-//        if (Minecraft.getInstance().player != null) {
-//            EssenceOverlay.nearEssenceOverlay(Minecraft.getInstance().player, event.getGuiGraphics());
-//        }
+    public static void onGuiRendering(RenderGuiOverlayEvent.Pre event) {
+        if (Minecraft.getInstance().player != null && event.getOverlay().id().equals(VanillaGuiOverlay.HOTBAR.id())) {
+            EssenceOverlay.nearEssenceOverlay(Minecraft.getInstance().player, event.getGuiGraphics());
+        }
     }
 
     public static void onBeforeBlockOutlineRendering(RenderLevelStageEvent event) {
