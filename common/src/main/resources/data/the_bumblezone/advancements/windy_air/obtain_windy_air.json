@@ -1,0 +1,38 @@
+{
+  "parent": "the_bumblezone:honey_bucket/royal_jelly_block_piston",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:windy_air"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_windy_air.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_windy_air.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "criteria": {
+    "obtain_windy_air": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:windy_air"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_windy_air"
+    ]
+  ]
+}

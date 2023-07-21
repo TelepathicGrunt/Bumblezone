@@ -295,8 +295,7 @@ public class BzCreativeTabs {
 
         if (event.type() == AddCreativeTabEntriesEvent.Type.OPERATOR && event.hasPermission()) {
             Stream.of(
-                    BzItems.HEAVY_AIR,
-                    BzItems.WINDY_AIR
+                    BzItems.HEAVY_AIR
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
     }

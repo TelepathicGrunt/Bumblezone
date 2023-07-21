@@ -5,10 +5,10 @@
       "item": "the_bumblezone:pile_of_pollen_suspicious"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.bush_pollen_pollen_suspicious.title"
+      "translate": "advancements.the_bumblezone.brush_pollen_pollen_suspicious.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.bush_pollen_pollen_suspicious.description"
+      "translate": "advancements.the_bumblezone.brush_pollen_pollen_suspicious.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,37 +19,37 @@
     "experience": 2
   },
   "criteria": {
-    "bush_pollen_pollen_suspicious_1": {
+    "brush_pollen_pollen_suspicious_1": {
       "trigger": "minecraft:player_generates_container_loot",
       "conditions": {
         "loot_table": "the_bumblezone:archaeology/ancient_shrine_suspicious"
       }
     },
-    "bush_pollen_pollen_suspicious_2": {
+    "brush_pollen_pollen_suspicious_2": {
       "trigger": "minecraft:player_generates_container_loot",
       "conditions": {
         "loot_table": "the_bumblezone:archaeology/battle_cubes_suspicious"
       }
     },
-    "bush_pollen_pollen_suspicious_3": {
+    "brush_pollen_pollen_suspicious_3": {
       "trigger": "minecraft:player_generates_container_loot",
       "conditions": {
         "loot_table": "the_bumblezone:archaeology/cell_maze_suspicious"
       }
     },
-    "bush_pollen_pollen_suspicious_4": {
+    "brush_pollen_pollen_suspicious_4": {
       "trigger": "minecraft:player_generates_container_loot",
       "conditions": {
         "loot_table": "the_bumblezone:archaeology/pollinated_field_suspicious"
       }
     },
-    "bush_pollen_pollen_suspicious_5": {
+    "brush_pollen_pollen_suspicious_5": {
       "trigger": "minecraft:player_generates_container_loot",
       "conditions": {
         "loot_table": "the_bumblezone:archaeology/pollinated_stream_suspicious"
       }
     },
-    "bush_pollen_pollen_suspicious_6": {
+    "brush_pollen_pollen_suspicious_6": {
       "trigger": "minecraft:player_generates_container_loot",
       "conditions": {
         "loot_table": "the_bumblezone:archaeology/subway_suspicious"
@@ -58,12 +58,12 @@
   },
   "requirements": [
     [
-      "bush_pollen_pollen_suspicious_1",
-      "bush_pollen_pollen_suspicious_2",
-      "bush_pollen_pollen_suspicious_3",
-      "bush_pollen_pollen_suspicious_4",
-      "bush_pollen_pollen_suspicious_5",
-      "bush_pollen_pollen_suspicious_6"
+      "brush_pollen_pollen_suspicious_1",
+      "brush_pollen_pollen_suspicious_2",
+      "brush_pollen_pollen_suspicious_3",
+      "brush_pollen_pollen_suspicious_4",
+      "brush_pollen_pollen_suspicious_5",
+      "brush_pollen_pollen_suspicious_6"
     ]
   ]
 }
