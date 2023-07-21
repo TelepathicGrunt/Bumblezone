@@ -13,6 +13,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.BooleanValue moddedBeeLootInjection;
     public static ForgeConfigSpec.BooleanValue glisteringHoneyBrewingRecipe;
     public static ForgeConfigSpec.BooleanValue beeStingerBrewingRecipe;
+    public static ForgeConfigSpec.BooleanValue beeSoupBrewingRecipe;
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
@@ -122,6 +123,12 @@ public class BzGeneralConfig {
                         " Whether Bee Stingers can be used to make Potions of Long Poison")
                 .translation("the_bumblezone.config.beestingerbrewingrecipe")
                 .define("beeStingerBrewingRecipe", true);
+
+        beeSoupBrewingRecipe = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Bee Soup can be used to make Potions of Neurotoxin")
+                .translation("the_bumblezone.config.beesoupbrewingrecipe")
+                .define("beeSoupBrewingRecipe", true);
 
         builder.pop();
 

@@ -132,6 +132,7 @@ public class Bumblezone{
         BzFluids.FLUIDS.init();
         BzPOI.POI_TYPES.init();
         BzRecipes.RECIPES.init();
+        BzPotions.POTIONS.init();
         BzEffects.EFFECTS.init();
         BzMenuTypes.MENUS.init();
         BzStats.CUSTOM_STAT.init();

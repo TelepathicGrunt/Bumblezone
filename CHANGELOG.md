@@ -168,6 +168,8 @@ Added Dirt Pellet item craftable from Coarse Dirt + Rooted Dirt. It can be throw
 
  `the_bumblezone:dirt_pellet/forced_no_extra_damage_dealt_to`
 
+Added Neurotoxin Potions you can brew from Bee Soup! Can be lengthened in time with Redstone ingredient.
+
 ##### Entities:
 Added a new entity called Variant Bee! It is exactly like the vanilla bee in behavior but has a different skin on. This replaces
  the old UUID system Bumblezone had to replace vanilla bee skins. Now that system is gone and the bee variants are now a dedicated

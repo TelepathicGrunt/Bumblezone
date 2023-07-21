@@ -1,0 +1,42 @@
+{
+  "parent": "the_bumblezone:effects/consume_bee_soup",
+  "display": {
+    "icon": {
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\":\"the_bumblezone:neurotoxin\"}"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.brew_bee_soup.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.brew_bee_soup.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "brew_bee_soup": {
+      "trigger": "minecraft:brewed_potion",
+      "conditions": {
+        "potion": "the_bumblezone:neurotoxin"
+      }
+    },
+    "brew_bee_soup_long": {
+      "trigger": "minecraft:brewed_potion",
+      "conditions": {
+        "potion": "the_bumblezone:long_neurotoxin"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "brew_bee_soup",
+      "brew_bee_soup_long"
+    ]
+  ]
+}

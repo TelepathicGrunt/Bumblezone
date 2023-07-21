@@ -186,6 +186,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean beeStingerBrewingRecipe = true;
 
+    @Entry
+    public static boolean beeSoupBrewingRecipe = true;
+
 
     @Comment
     public static Comment generalComment;

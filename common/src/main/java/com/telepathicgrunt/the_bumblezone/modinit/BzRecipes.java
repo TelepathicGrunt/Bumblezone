@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -27,6 +28,10 @@ public class BzRecipes {
         }
         if (BzGeneralConfigs.beeStingerBrewingRecipe) {
             PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
+        }
+        if (BzGeneralConfigs.beeSoupBrewingRecipe) {
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_SOUP.get(), BzPotions.NEUROTOXIN.get());
+            PotionBrewingAccessor.callAddMix(BzPotions.NEUROTOXIN.get(), Items.REDSTONE, BzPotions.LONG_NEUROTOXIN.get());
         }
     }
 }
