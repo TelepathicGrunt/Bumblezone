@@ -89,7 +89,14 @@ public class SentryWatcherSpawnEgg extends Item {
             BlockPos blockPos = useOnContext.getClickedPos();
             Direction direction = useOnContext.getClickedFace();
             BlockState blockState = level.getBlockState(blockPos);
-            if (blockState.is(Blocks.SPAWNER) && player.getAbilities().instabuild) {
+            if (blockState.is(Blocks.SPAWNER)) {
+                if (!player.getAbilities().instabuild) {
+                    if (player instanceof ServerPlayer) {
+                        player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_spawner_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
+                    }
+                    return InteractionResult.FAIL;
+                }
+
                 BlockEntity blockEntity = level.getBlockEntity(blockPos);
                 if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
                     EntityType<?> entityType = this.getType(itemStack.getTag());

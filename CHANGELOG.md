@@ -14,6 +14,8 @@
 
 #TODO: Add new sempiternal sanctums to advancements
 
+#TODO: config for repeatable essence events
+
 #TODO: New grass flower biome? Rootmin spawn here. Add all biome discovered advancement
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
