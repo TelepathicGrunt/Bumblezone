@@ -42,6 +42,7 @@ public class BzGeneralConfigs {
     public static int crystallineFlowerEnchantingPowerAllowedPerTier = 8;
     public static int crystallineFlowerExtraXpNeededForTiers = 0;
     public static int crystallineFlowerExtraTierCost = 0;
+    public static boolean repeatableEssenceEvents = true;
     public static int ragingEssenceAbilityUse = 28;
     public static int ragingEssenceCooldown = 36000;
     public static int knowingEssenceAbilityUse = 1200;

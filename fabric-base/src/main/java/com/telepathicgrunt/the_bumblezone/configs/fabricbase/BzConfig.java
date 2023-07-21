@@ -94,6 +94,9 @@ public class BzConfig extends MidnightConfig {
     public static boolean keepEssenceOfTheBeesOnRespawning = true;
 
     @Entry
+    public static boolean repeatableEssenceEvents = true;
+
+    @Entry
     public static int ragingEssenceAbilityUse = 28;
 
     @Entry
@@ -361,6 +364,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca;
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
+        BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse;
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown;
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse;

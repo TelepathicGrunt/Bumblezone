@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlock;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -51,6 +52,7 @@ public class EssenceBlockEntity extends BlockEntity {
     private static final String EVENT_ENTITIES_IN_ARENA_TAG = "eventEntitiesInArena";
     private static final String EXTRA_EVENT_TRACKING_PROGRESS_TAG = "extraEventTrackingProgress";
     private static final String ARENA_SIZE_TAG = "arenaSize";
+    private static final String BEATEN_TAG = "beaten";
 
     private UUID uuid = null;
     private int eventTimer = 0;
@@ -61,6 +63,7 @@ public class EssenceBlockEntity extends BlockEntity {
     private List<EventEntities> eventEntitiesInArena = Collections.synchronizedList(new ArrayList<>());
     private int extraEventTrackingProgress = 0;
     private BlockPos arenaSize = BlockPos.ZERO;
+    private boolean beaten = false;
 
     protected EssenceBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -131,10 +134,19 @@ public class EssenceBlockEntity extends BlockEntity {
         this.arenaSize = arenaSize;
     }
 
+    public boolean isBeaten() {
+        return beaten;
+    }
+
+    public void setBeaten(boolean beaten) {
+        this.beaten = beaten;
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
         if (compoundTag != null) {
+            this.beaten = compoundTag.getBoolean(BEATEN_TAG);
             this.eventBar.setProgress(compoundTag.getFloat(PROGRESS_TAG));
             this.extraEventTrackingProgress = compoundTag.getInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG);
             this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
@@ -196,6 +208,7 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     private void saveFieldsToTag(CompoundTag compoundTag) {
+        compoundTag.putBoolean(BEATEN_TAG, this.beaten);
         compoundTag.put(UUID_TAG, NbtUtils.createUUID(this.getUUID()));
         compoundTag.putInt(EVENT_TIMER_TAG, this.eventTimer);
         compoundTag.putInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG, this.extraEventTrackingProgress);
@@ -339,7 +352,12 @@ public class EssenceBlockEntity extends BlockEntity {
                                     BzCriterias.ESSENCE_EVENT_REWARD_TRIGGER.trigger(serverPlayer, reward);
                                     serverPlayer.drop(reward, false);
                                 }
-                                serverPlayer.giveExperiencePoints(essenceBlock.getEssenceXpReward());
+
+                                int xpReward = essenceBlock.getEssenceXpReward();
+                                if (essenceBlockEntity.isBeaten()) {
+                                    xpReward *= 0.1;
+                                }
+                                serverPlayer.giveExperiencePoints(xpReward);
                             }
                         }
                     }
@@ -372,7 +390,7 @@ public class EssenceBlockEntity extends BlockEntity {
                 }
             }
 
-            if (!essenceBlockEntity.getPlayerInArena().isEmpty() && won) {
+            if (!essenceBlockEntity.getPlayerInArena().isEmpty() && won && !BzGeneralConfigs.repeatableEssenceEvents) {
                 serverLevel.setBlock(blockPos, BzBlocks.HEAVY_AIR.get().defaultBlockState(), 3);
             }
         }, () -> Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to restore area from saved NBT - {} - {}", essenceBlockEntity, blockState));

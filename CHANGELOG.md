@@ -14,8 +14,6 @@
 
 #TODO: Add new sempiternal sanctums to advancements
 
-#TODO: config for repeatable essence events
-
 #TODO: New grass flower biome? Rootmin spawn here. Add all biome discovered advancement
 
 #TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
@@ -45,6 +43,10 @@ Added Ancient Hoops structure which are many old pillars of wax that are decayin
 
 Added Ancient Shrine structure that resembles a giant flower filled with pollen! Though the pollen looks suspicious...
  Maybe try some archaeology in this structure?
+
+Added 6 Sempiternal Sanctum structures! A giant structure with mazes and danger that is best done after consuming Essence of the Bees item.
+ In the heart is an Essence Block you touch to start an essence event. Beat the difficult events for new end game items!
+ By default, these events can be repeated after winning. Set repeatableEssenceEvents to false in config to disable being able to repeat the event after winning.
 
 ##### Blocks:
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 

@@ -32,6 +32,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue crystallineFlowerExtraXpNeededForTiers;
     public static ForgeConfigSpec.IntValue crystallineFlowerExtraTierCost;
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
+    public static ForgeConfigSpec.BooleanValue repeatableEssenceEvents;
     public static ForgeConfigSpec.IntValue ragingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
     public static ForgeConfigSpec.IntValue knowingEssenceAbilityUse;
@@ -259,6 +260,12 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.keepessenceofthebeesonrespawning")
                 .define("keepEssenceOfTheBeesOnRespawning", true);
 
+        repeatableEssenceEvents = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Essence events in Sempiternal Sanctums can be repeated after beating it once.\n")
+                .translation("the_bumblezone.config.repeatableessenceevents")
+                .define("repeatableEssenceEvents", true);
+
 
         ragingEssenceAbilityUse = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -357,6 +364,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.crystallineFlowerExtraXpNeededForTiers = crystallineFlowerExtraXpNeededForTiers.get();
         BzGeneralConfigs.crystallineFlowerExtraTierCost = crystallineFlowerExtraTierCost.get();
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning.get();
+        BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents.get();
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse.get();
