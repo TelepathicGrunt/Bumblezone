@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
-import com.telepathicgrunt.the_bumblezone.mixin.BiomeManagerAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.world.BiomeManagerAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;

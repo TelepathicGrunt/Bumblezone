@@ -2,7 +2,7 @@
   "textures": {
     "0": "the_bumblezone:block/infinity_barrier/primary",
     "1": "the_bumblezone:block/infinity_barrier/secondary",
-    "particle": "the_bumblezone:block/infinity_barrier/secondary"
+    "particle": "the_bumblezone:block/infinity_barrier/blank"
   },
   "elements": [
     {

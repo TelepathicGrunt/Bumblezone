@@ -17,7 +17,7 @@
     "client": [
         "client.BzArmorMixin",
         "client.BzEffectMixin",
-        "client.FluidRendererMixin"
+        "client.LiquidBlockRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1

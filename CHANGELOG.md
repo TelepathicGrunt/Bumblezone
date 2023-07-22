@@ -310,6 +310,8 @@ Honey Bee Leggings item texture will now show pollen if the item actually has po
 
 Sugar Water Fluid and vanilla Water both now are tinted more light blue when in Bumblezone rather than the yellowish color before.
 
+Fixed Sugar Water overlay still showing on Glistering Honey Crystal and other blocks that should not show fluid overlay.
+
 ##### Enchantments:
 Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
 

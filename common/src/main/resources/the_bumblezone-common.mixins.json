@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BiomeManagerAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -60,6 +59,7 @@
     "loot.LootContextAccessor",
     "loot.LootParamsMixin",
     "util.WeightedRandomListAccessor",
+    "world.BiomeManagerAccessor",
     "world.LevelMixin",
     "world.NoiseChunkAccessor",
     "world.ServerWorldMixin",
@@ -79,6 +79,7 @@
     "client.EntityRenderersAccessor",
     "client.FogRendererMixin",
     "client.LevelRendererAccessor",
+    "client.LiquidBlockRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.RenderStateShardAccessor",
