@@ -11,6 +11,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.ChunkPos;
@@ -100,7 +101,7 @@ public class PillarProcessor extends StructureProcessor {
 
             // Creates the pillars in the world that replaces air and liquids
             BlockState currentBlock = currentChunk.getBlockState(worldPos.below());
-            while((forcePlacement || !currentBlock.canOcclude()) &&
+            while((forcePlacement || !currentBlock.canOcclude() || currentBlock.is(BlockTags.REPLACEABLE)) &&
                 (forcePlacement || currentPos.getY() >= terrainY) &&
                 !levelReader.isOutsideBuildHeight(currentPos.getY()) &&
                 currentPos.closerThan(worldPos, pillarHeight)

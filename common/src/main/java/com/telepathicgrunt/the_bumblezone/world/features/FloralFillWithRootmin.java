@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,14 +103,20 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
                         rootmin.setPersistenceRequired();
                         rootmin.setFlowerBlock(chosenFlower);
-                        rootmin.setRootminPose(RootminPose.ENTITY_TO_BLOCK);
-
                         rootmin.moveTo(
                                 (double)mutable.getX() + 0.5D,
                                 mutable.getY(),
                                 (double)mutable.getZ() + 0.5D,
                                 0.0F,
                                 0.0F);
+                        rootmin.hideAsBlock(new Vec3(
+                                mutable.getX() + 0.5D,
+                                mutable.getY(),
+                                mutable.getZ() + 0.5D));
+                        rootmin.yHeadRot = 0;
+                        rootmin.yHeadRotO = 0;
+                        rootmin.yBodyRot = 0;
+                        rootmin.yBodyRotO = 0;
 
                         level.addFreshEntityWithPassengers(rootmin);
 

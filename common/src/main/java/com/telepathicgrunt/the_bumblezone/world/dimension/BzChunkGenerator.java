@@ -43,7 +43,6 @@ import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Aquifer;
 import net.minecraft.world.level.levelgen.Beardifier;
-import net.minecraft.world.level.levelgen.BelowZeroRetrogen;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.DensityFunctions;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -154,9 +153,14 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     private void doCreateBiomes(Blender blender, RandomState randomState, StructureManager structureManager, ChunkAccess chunkAccess) {
-        NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((p_224340_) -> this.createNoiseChunk(p_224340_, structureManager, blender, randomState));
-        BiomeResolver biomeresolver = BelowZeroRetrogen.getBiomeResolver(blender.getBiomeResolver(this.biomeSource), chunkAccess);
-        chunkAccess.fillBiomesFromNoise(biomeresolver, ((NoiseChunkAccessor)noisechunk).callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget()));
+        BiomeResolver biomeresolver = getBiomeResolver(this.biomeSource);
+        NoiseChunk noisechunk = chunkAccess.getOrCreateNoiseChunk((noiseChunk) -> this.createNoiseChunk(noiseChunk, structureManager, blender, randomState));
+        Climate.Sampler sampler = ((NoiseChunkAccessor)noisechunk).callCachedClimateSampler(randomState.router(), this.settings.value().spawnTarget());
+        chunkAccess.fillBiomesFromNoise(biomeresolver, sampler);
+    }
+
+    private BiomeResolver getBiomeResolver(BiomeResolver noiseBiome) {
+        return (x, y, z, biomeHolder) -> noiseBiome.getNoiseBiome(x, 0, z, biomeHolder);
     }
 
     private NoiseChunk createNoiseChunk(ChunkAccess chunkAccess, StructureManager structureManager, Blender blender, RandomState randomState) {
@@ -252,6 +256,8 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         else {
             biomeManager = worldGenRegion.getBiomeManager();
         }
+
+        biomeManager = new NoVerticalBlendBiomeManager(biomeManager);
         this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registryOrThrow(Registries.BIOME), Blender.of(worldGenRegion));
     }
 
