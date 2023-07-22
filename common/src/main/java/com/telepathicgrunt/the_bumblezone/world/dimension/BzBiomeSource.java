@@ -32,14 +32,14 @@ import java.util.function.LongFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBiomeSource {
+public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiomeSource {
 
-    public static final Codec<BzBiomeProvider> CODEC =
+    public static final Codec<BzBiomeSource> CODEC =
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
                 Biome.LIST_CODEC.fieldOf("blob_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.blobBiomes),
                 Biome.LIST_CODEC.fieldOf("main_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.mainBiomes))
-            .apply(instance, instance.stable(BzBiomeProvider::new)));
+            .apply(instance, instance.stable(BzBiomeSource::new)));
 
     public static ResourceLocation HIVE_WALL = new ResourceLocation(Bumblezone.MODID, "hive_wall");
     public static ResourceLocation HIVE_PILLAR = new ResourceLocation(Bumblezone.MODID, "hive_pillar");
@@ -54,7 +54,7 @@ public class BzBiomeProvider extends BiomeSource implements BiomeManager.NoiseBi
     public final HolderSet<Biome> mainBiomes;
     public final GeneralUtils.Lazy<Set<Holder<Biome>>> lazyPossibleBiomes = new GeneralUtils.Lazy<>();
 
-    public BzBiomeProvider(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> mainBiomes) {
+    public BzBiomeSource(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> mainBiomes) {
         super();
 
         this.seed = seed;

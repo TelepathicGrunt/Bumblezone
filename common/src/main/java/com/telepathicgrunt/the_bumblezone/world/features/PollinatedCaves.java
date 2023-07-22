@@ -106,7 +106,11 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
 
     private static void carve(WorldGenLevel world, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
         BlockState currentState = world.getBlockState(position);
-        if(!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN.get())) {
+        if(!currentState.isAir() &&
+            currentState.getFluidState().isEmpty() &&
+            !currentState.is(BzBlocks.PILE_OF_POLLEN.get()) &&
+            !currentState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE))
+        {
             // varies the surface of the cave surface
             if(finalNoise > 0.0105f) {
                 if((noise * 3) % 2 < 0.35D) {

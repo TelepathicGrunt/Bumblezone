@@ -109,7 +109,8 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
     public static InteractionResult onBlockInteractEvent(PlayerItemUseOnBlockEvent event) {
         Player player = event.user();
         InteractionHand interactionHand = event.hand();
-        if (player != null) {
+        BlockState blockState = event.level().getBlockState(event.hitResult().getBlockPos());
+        if (player != null && blockState.is(BzBlocks.INFINITY_BARRIER.get())) {
             ItemStack itemStack = player.getItemInHand(interactionHand);
             Item item = itemStack.getItem();
             if (item instanceof BlockItem) {

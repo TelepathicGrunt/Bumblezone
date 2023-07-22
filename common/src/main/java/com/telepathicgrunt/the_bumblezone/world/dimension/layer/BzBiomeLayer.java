@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.world.dimension.layer;
 
 import com.google.common.collect.ImmutableList;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzBiomeProvider;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzBiomeSource;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.AreaTransformer0;
 import com.telepathicgrunt.the_bumblezone.world.dimension.layer.vanilla.Context;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
@@ -31,14 +31,14 @@ public class BzBiomeLayer implements AreaTransformer0 {
 //		Bumblezone.LOGGER.log(Level.INFO, "Max: " + max +", Min: "+min + ", perlin: "+perlinNoise);
 
         if (Math.abs(perlinNoise) % 0.1D < 0.07D) {
-            return BiomeRegistryHolder.convertToID(BzBiomeProvider.HIVE_WALL);
+            return BiomeRegistryHolder.convertToID(BzBiomeSource.HIVE_WALL);
         }
         else {
             if (Math.abs(perlinNoise2) > 0.55D) {
-                return BiomeRegistryHolder.convertToID(BzBiomeProvider.CRYSTAL_CANYON);
+                return BiomeRegistryHolder.convertToID(BzBiomeSource.CRYSTAL_CANYON);
             }
             else {
-                return BiomeRegistryHolder.convertToID(BzBiomeProvider.SUGAR_WATER_FLOOR);
+                return BiomeRegistryHolder.convertToID(BzBiomeSource.SUGAR_WATER_FLOOR);
             }
         }
     }

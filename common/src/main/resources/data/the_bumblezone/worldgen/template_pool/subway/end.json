@@ -92,6 +92,15 @@
       }
     },
     {
+      "weight": 150,
+      "element": {
+        "location": "the_bumblezone:subway/end_endermites",
+        "processors": "the_bumblezone:subway",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
       "weight": 1,
       "element": {
         "location": "the_bumblezone:subway/end_cap",

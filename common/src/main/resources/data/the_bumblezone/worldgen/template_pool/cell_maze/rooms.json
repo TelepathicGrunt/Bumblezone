@@ -29,6 +29,15 @@
       }
     },
     {
+      "weight": 3,
+      "element": {
+        "location": "the_bumblezone:cell_maze/end_bleed_room",
+        "processors": "the_bumblezone:cell_maze_generic",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
       "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/beehemoth_room",

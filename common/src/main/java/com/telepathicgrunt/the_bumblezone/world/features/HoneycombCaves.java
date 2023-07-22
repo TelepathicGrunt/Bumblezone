@@ -254,7 +254,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                                      BlockState blockState,
                                      int posResult)
     {
-        if (blockState.canOcclude() && !blockState.canBeReplaced()) {
+        if (blockState.canOcclude() && !blockState.canBeReplaced() && !blockState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE)) {
             boolean isNextToAir = shouldCloseOff(world, chunk, blockPos, mutable);
             if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
 

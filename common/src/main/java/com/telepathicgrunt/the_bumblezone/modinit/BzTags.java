@@ -25,6 +25,7 @@ public class BzTags {
     public static final TagKey<Block> FORCED_ALLOWED_TELEPORTABLE_BLOCK = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/forced_allowed_teleportable_blocks"));
     public static final TagKey<Block> DISALLOWED_TELEPORTABLE_BEEHIVE = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/disallowed_teleportable_beehive_blocks"));
     public static final TagKey<Block> HONEYCOMBS_THAT_FEATURES_CAN_CARVE = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "worldgen_checks/honeycombs_that_features_can_carve"));
+    public static final TagKey<Block> FORCE_CAVE_TO_NOT_CARVE = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "worldgen_checks/force_cave_to_not_carve"));
     public static final TagKey<Block> WRATH_ACTIVATING_BLOCKS_WHEN_MINED = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "bee_aggression_in_dimension/wrath_activating_blocks_when_mined"));
     public static final TagKey<Block> FLOWERS_ALLOWED_BY_POLLEN_PUFF = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen_puff/multiplying_allowed_flowers"));
     public static final TagKey<Block> FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen_puff/multiplying_forced_disallowed_flowers"));

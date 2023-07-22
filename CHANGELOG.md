@@ -346,6 +346,8 @@ Honey Compasses to Mystery Structures now will try to point to different structu
 
 Lesser Mystery Honey Compasses are added to several structure's loot where these compasses point to smaller Bumblezone structures.
 
+Added Endermites to several existing structures.
+
 ##### Biomes:
 Added Bumblezone biomes to `minecraft:snow_golem_melts` biome tag to make Snow Golems melt in Bumblezone since beehives are roughly 95 degrees!
 
