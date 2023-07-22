@@ -1,18 +1,28 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBlockEntity;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.HangingEntityItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -23,6 +33,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -93,5 +104,24 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
     @Override
     public OptionalBoolean bz$shouldDisplayFluidOverlay() {
         return OptionalBoolean.TRUE;
+    }
+
+    public static InteractionResult onBlockInteractEvent(PlayerItemUseOnBlockEvent event) {
+        Player player = event.user();
+        InteractionHand interactionHand = event.hand();
+        if (player != null) {
+            ItemStack itemStack = player.getItemInHand(interactionHand);
+            Item item = itemStack.getItem();
+            if (item instanceof BlockItem) {
+                return InteractionResult.FAIL;
+            }
+            else if (item instanceof BucketItem) {
+                return InteractionResult.FAIL;
+            }
+            else if (item instanceof HangingEntityItem) {
+                return InteractionResult.FAIL;
+            }
+        }
+        return null;
     }
 }
