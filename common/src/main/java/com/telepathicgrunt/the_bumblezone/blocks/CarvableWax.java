@@ -38,7 +38,9 @@ public class CarvableWax extends ProperFacingBlock {
         CHISELED("chiseled"),
         DIAMOND("diamond"),
         BRICKS("bricks"),
-        CHAINS("chains");
+        CHAINS("chains"),
+        MUSIC("music"),
+        GRATE("grate");
 
         private final String name;
         private static final Carving[] values = values();
@@ -111,6 +113,10 @@ public class CarvableWax extends ProperFacingBlock {
                     return BzItems.CARVABLE_WAX_FLOWER.get().getDefaultInstance();
                 case WAVY:
                     return BzItems.CARVABLE_WAX_WAVY.get().getDefaultInstance();
+                case MUSIC:
+                    return BzItems.CARVABLE_WAX_MUSIC.get().getDefaultInstance();
+                case GRATE:
+                    return BzItems.CARVABLE_WAX_GRATE.get().getDefaultInstance();
                 default:
             }
         }

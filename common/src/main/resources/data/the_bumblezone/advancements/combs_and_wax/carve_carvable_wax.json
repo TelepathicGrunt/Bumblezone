@@ -95,6 +95,28 @@
           }
         }
       }
+    },
+    "carve_wax_8": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "music"
+          }
+        }
+      }
+    },
+    "carve_wax_9": {
+      "trigger": "the_bumblezone:carve_wax",
+      "conditions": {
+        "block":{
+          "blocks": [ "the_bumblezone:carvable_wax" ],
+          "state": {
+            "carving": "grate"
+          }
+        }
+      }
     }
   },
   "requirements": [
@@ -118,6 +140,12 @@
     ],
     [
       "carve_wax_7"
+    ],
+    [
+      "carve_wax_8"
+    ],
+    [
+      "carve_wax_9"
     ]
   ]
 }

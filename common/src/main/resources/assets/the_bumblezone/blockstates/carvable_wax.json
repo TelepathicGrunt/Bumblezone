@@ -114,6 +114,96 @@
         "y": 180
       }
     ],
+    "carving=music,facing=up": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_1"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_2"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_3"
+      }
+    ],
+    "carving=music,facing=down": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_1",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_2",
+        "x": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_3",
+        "x": 180
+      }
+    ],
+    "carving=music,facing=east": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_1",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_2",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_3",
+        "x": 90,
+        "y": 270
+      }
+    ],
+    "carving=music,facing=west": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_1",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_2",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_3",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "carving=music,facing=north": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_1",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_2",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_3",
+        "x": 90,
+        "y": 180
+      }
+    ],
+    "carving=music,facing=south": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_1",
+        "x": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_2",
+        "x": 90
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/music_3",
+        "x": 90
+      }
+    ],
     "carving=bricks,facing=up": [
       {
         "model": "the_bumblezone:block/carvable_wax/bricks_1"
@@ -224,6 +314,32 @@
     "carving=flower": [
       {
         "model": "the_bumblezone:block/carvable_wax/flower"
+      }
+    ],
+    "carving=grate": [
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_1"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_2"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_3"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_4"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_5"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_6"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_7"
+      },
+      {
+        "model": "the_bumblezone:block/carvable_wax/grate_8"
       }
     ],
     "carving=chains,facing=up": [

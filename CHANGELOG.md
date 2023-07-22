@@ -75,6 +75,7 @@ Suspicious Pile of Pollen is added now! You may find these scattered throughout 
  Also found in Creative Menu for builders, but you'll need to set the items or loot table for the block by command.
  They can also be found throughout the Pollinated Fields biomes with a decent amount of possible loot!
 
+Added 2 new patterns for Carvable Wax! The new patterns are called Music and Grate.
 
 ##### Items:
 Essence of Life - The reward for beating the Green Sempiternal Sanctum structure! Holding this item in offhand will grow 
