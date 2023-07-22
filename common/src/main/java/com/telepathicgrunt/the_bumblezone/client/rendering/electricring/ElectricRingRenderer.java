@@ -26,7 +26,9 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         extends EntityRenderer<ElectricRingEntity>
         implements RenderLayerParent<ElectricRingEntity, M>
 {
-    static final ResourceLocation SKIN_1 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/ring_1.png");
+    static final ResourceLocation SKIN_1 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_1.png");
+    static final ResourceLocation SKIN_2 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_2.png");
+    static final ResourceLocation SKIN_3 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_3.png");
     protected ElectricRingModel<ElectricRingEntity> model;
     protected final List<RenderLayer<ElectricRingEntity, M>> layers = Lists.newArrayList();
 
@@ -48,6 +50,15 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
     public void render(ElectricRingEntity ringEntity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
         packedLight = LightTexture.FULL_BRIGHT;
 
+        float angleExtra = -180f;
+        int interval = 3;
+        int state = ringEntity.tickCount / interval;
+
+        float spinSpeed = 15f;
+        float angle = (ringEntity.tickCount + partialTicks) * spinSpeed;
+
+        angle += (state * angleExtra);
+
         poseStack.pushPose();
         float rotationLerp = Mth.lerp(partialTicks, ringEntity.xRotO, ringEntity.getXRot());
         float scale;
@@ -62,7 +73,7 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         poseStack.translate(0.0f, -1.0f - (1.5f - (scale * 1.5f)), 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
-        poseStack.mulPose(Axis.ZN.rotationDegrees((ringEntity.tickCount + partialTicks) * 5f % 360));
+        poseStack.mulPose(Axis.ZN.rotationDegrees(angle % 360));
         ((EntityModel)this.model).prepareMobModel(ringEntity, 0, 0, partialTicks);
         ((EntityModel)this.model).setupAnim(ringEntity, 0, 0, 0, 0, rotationLerp);
         Minecraft minecraft = Minecraft.getInstance();
@@ -101,6 +112,17 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
 
     @Override
     public ResourceLocation getTextureLocation(ElectricRingEntity ringEntity) {
-        return SKIN_1;
+        int interval = 3;
+        int state = ringEntity.tickCount % (interval * 3);
+
+        if (state < interval) {
+            return SKIN_1;
+        }
+        else if (state < interval * 2) {
+            return SKIN_2;
+        }
+        else {
+            return SKIN_3;
+        }
     }
 }

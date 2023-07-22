@@ -61,31 +61,21 @@ public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition ring = partdefinition.addOrReplaceChild("ring", CubeListBuilder.create()
-                .texOffs(0, 0).addBox(-24.0F, -48.0F, 0.0F, 48.0F, 48.0F, 0.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition ring = partdefinition.addOrReplaceChild("ring", CubeListBuilder.create().texOffs(0, 0).addBox(-32.0F, -56.0F, 0.0F, 64.0F, 64.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition side = partdefinition.addOrReplaceChild("side", CubeListBuilder.create()
-                .texOffs(1, 52).addBox(-9.0F, -1.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(1, 52).addBox(-9.0F, -47.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition side = partdefinition.addOrReplaceChild("side", CubeListBuilder.create().texOffs(1, 52).addBox(-9.0F, -1.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(1, 52).addBox(-9.0F, -47.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition side_view_r1 = side.addOrReplaceChild("side_view_r1", CubeListBuilder.create()
-                .texOffs(1, 52).addBox(-26.0F, -39.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(1, 52).addBox(-25.0F, 5.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)),
-                PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.7854F));
+        PartDefinition side_view_r1 = side.addOrReplaceChild("side_view_r1", CubeListBuilder.create().texOffs(1, 52).addBox(-26.0F, -39.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(1, 52).addBox(-25.0F, 5.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.7854F));
 
-        PartDefinition side_view_r2 = side.addOrReplaceChild("side_view_r2", CubeListBuilder.create()
-                .texOffs(1, 52).addBox(8.0F, 5.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(1, 52).addBox(8.0F, -40.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)),
-                PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.7854F));
+        PartDefinition side_view_r2 = side.addOrReplaceChild("side_view_r2", CubeListBuilder.create().texOffs(1, 52).addBox(8.0F, 5.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(1, 52).addBox(8.0F, -40.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.7854F));
 
-        PartDefinition side_view_r3 = side.addOrReplaceChild("side_view_r3", CubeListBuilder.create()
-                .texOffs(1, 52).addBox(-33.0F, 23.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(1, 52).addBox(-33.0F, -22.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)),
-                PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.5708F));
+        PartDefinition side_view_r3 = side.addOrReplaceChild("side_view_r3", CubeListBuilder.create().texOffs(1, 52).addBox(-33.0F, 23.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(1, 52).addBox(-33.0F, -22.0F, -2.0F, 18.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.5708F));
 
-        return LayerDefinition.create(meshdefinition, 96, 64);
+        return LayerDefinition.create(meshdefinition, 128, 128);
     }
 
     @Override
