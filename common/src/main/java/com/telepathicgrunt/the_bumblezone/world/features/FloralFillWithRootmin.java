@@ -132,11 +132,20 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                     }
                 }
                 else {
-                    mutable.move(Direction.UP);
-                    cachedChunk.setBlockState(mutable, chosenFlower, false);
-
                     if (chosenFlower.getBlock() instanceof DoublePlantBlock) {
-                        chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
+                        mutable.move(Direction.UP, 2);
+                        BlockState aboveState = cachedChunk.getBlockState(mutable);
+
+                        if (aboveState.isAir() || aboveState.is(BlockTags.REPLACEABLE)) {
+                            mutable.move(Direction.DOWN);
+                            cachedChunk.setBlockState(mutable, chosenFlower, false);
+
+                            chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
+                            mutable.move(Direction.UP);
+                            cachedChunk.setBlockState(mutable, chosenFlower, false);
+                        }
+                    }
+                    else {
                         mutable.move(Direction.UP);
                         cachedChunk.setBlockState(mutable, chosenFlower, false);
                     }
