@@ -705,6 +705,22 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                     8);
          }
       }
+      else {
+         if (this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK &&
+              this.animationTimeBetweenHiding == 0 &&
+              this.yHeadRotO % 90 != 0 &&
+              this.yHeadRot % 90 != 0 &&
+              this.yBodyRotO % 90 != 0 &&
+              this.yBodyRot % 90 != 0)
+         {
+            Vec3 lookDirection = this.getLookAngle();
+            float closestDir = Direction.getNearest(lookDirection.x(), lookDirection.y(), lookDirection.z()).toYRot();
+            this.yHeadRotO = closestDir;
+            this.yHeadRot = closestDir;
+            this.yBodyRotO = closestDir;
+            this.yBodyRot = closestDir;
+         }
+      }
    }
 
    @Override
