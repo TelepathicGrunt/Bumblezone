@@ -57,15 +57,15 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     private static final ResourceLocation BEE_BABY_STINGER_ICON = new ResourceLocation(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_stinger.png");
     private static final ResourceLocation BEE_BABY_POLLEN_ICON = new ResourceLocation(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_pollen.png");
 
-    private static final Color NORMAL_PRIMARY_COLOR = new Color(15046912);
-    private static final Color NORMAL_SECONDARY_COLOR = new Color(2298112);
+    private static final Color NORMAL_PRIMARY_COLOR = new Color(0xE59900);
+    private static final Color NORMAL_SECONDARY_COLOR = new Color(0x231100);
     private static final Color[] IGNORE_COLORS = {
-            new Color(8178129),
-            new Color(1973800),
-            new Color(3156791),
-            new Color(16252413),
-            new Color(15856352),
-            new Color(6238757)
+            new Color(0x7CC9D1),
+            new Color(0x1E1E28),
+            new Color(0x302B37),
+            new Color(0xF7FDFD),
+            new Color(0xF1F2E0),
+            new Color(0x5F3225)
     };
     private static final float SCALE = 1.25f;
     private static final int MENU_HEIGHT = (int) (174 * SCALE);
