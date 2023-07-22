@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
@@ -24,6 +25,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -54,8 +56,8 @@ public class ProductiveBeesCompat implements ModCompat {
                 return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey()) &&
                         tag.getBoolean("createComb") &&
                         (colorsAreClose(new Color(106, 127, 0), new Color(primary), 150) ||
-                                colorsAreClose(new Color(129, 198, 0), new Color(primary), 150) ||
-                                colorsAreClose(new Color(34, 45, 0), new Color(primary), 150));
+                        colorsAreClose(new Color(129, 198, 0), new Color(primary), 150) ||
+                        colorsAreClose(new Color(34, 45, 0), new Color(primary), 150));
             }).map(Map.Entry::getKey).toList());
 
     private static final Lazy<List<String>> BEE_DUNGEON_HONEYCOMBS = Lazy.of(() ->
@@ -93,7 +95,7 @@ public class ProductiveBeesCompat implements ModCompat {
 
     @Override
     public EnumSet<Type> compatTypes() {
-        return EnumSet.of(Type.SPAWNS, Type.COMBS, Type.BLOCK_TELEPORT, Type.COMB_ORE, Type.EMPTY_BROOD);
+        return EnumSet.of(Type.SPAWNS, Type.COMBS, Type.BLOCK_TELEPORT, Type.COMB_ORE, Type.EMPTY_BROOD, Type.BEE_COLOR);
     }
 
     private static boolean colorsAreClose(Color a, Color z, int threshold) {
@@ -107,11 +109,13 @@ public class ProductiveBeesCompat implements ModCompat {
     public boolean isValidBeeHiveForTeleportation(BlockState state) {
         if (state.getBlock() instanceof ExpansionBox && state.getValue(AdvancedBeehive.EXPANDED) != VerticalHive.NONE) {
             return true; // expansion boxes only count as beenest when they expand a hive.
-        } else if (state.is(SOLITARY_OVERWORLD_NESTS_TAG)) {
+        }
+        else if (state.is(SOLITARY_OVERWORLD_NESTS_TAG)) {
             // Solitary nests are technically AdvancedBeehiveAbstract and will pass the next check.
             // But this is still done in case they do change that in the future to extend something else or something.
             return true;
-        } else {
+        }
+        else {
             return state.getBlock() instanceof AdvancedBeehiveAbstract; // all other nests/hives we somehow missed here so return true
         }
     }
@@ -261,5 +265,25 @@ public class ProductiveBeesCompat implements ModCompat {
         }
 
         return InteractionResult.FAIL;
+    }
+
+    @Override
+    public Pair<Integer, Integer> getModdedBeePrimaryAndSecondaryColors(Entity entity) {
+        if (entity instanceof ConfigurableBee configurableBee && !configurableBee.hasBeeTexture()) {
+            CompoundTag nbt = configurableBee.getNBTData();
+            int primary = 0xE59900;
+            int secondary = 0x231100;
+
+            if (nbt.contains("primaryColor")) {
+                primary = nbt.getInt("primaryColor");
+            }
+            if (nbt.contains("secondaryColor")) {
+                secondary = nbt.getInt("secondaryColor");
+            }
+
+            return Pair.of(primary, secondary);
+        }
+
+        return null;
     }
 }

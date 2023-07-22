@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.BlockPos;
@@ -91,6 +92,10 @@ public interface ModCompat {
         return false;
     }
 
+    default Pair<Integer, Integer> getModdedBeePrimaryAndSecondaryColors(Entity entity) {
+        return null;
+    }
+
     enum Type {
         SPAWNS,
         EMPTY_BROOD,
@@ -102,5 +107,6 @@ public interface ModCompat {
         PROJECTILE_IMPACT_HANDLED,
         CUSTOM_EQUIPMENT_SLOTS,
         BEE_WEARABLES_BOOSTING,
+        BEE_COLOR
     }
 }

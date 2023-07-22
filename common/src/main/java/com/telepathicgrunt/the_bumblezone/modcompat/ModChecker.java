@@ -21,6 +21,7 @@ public class ModChecker {
 	public static final List<ModCompat> PROJECTILE_IMPACT_HANDLED_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> CUSTOM_EQUIPMENT_SLOTS_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BEE_WEARABLES_BOOSTING_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> BEE_COLOR_COMPATS = new ArrayList<>();
 
 	public static boolean productiveBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
@@ -98,6 +99,7 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.PROJECTILE_IMPACT_HANDLED)) PROJECTILE_IMPACT_HANDLED_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.CUSTOM_EQUIPMENT_SLOTS)) CUSTOM_EQUIPMENT_SLOTS_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BEE_WEARABLES_BOOSTING)) BEE_WEARABLES_BOOSTING_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.BEE_COLOR)) BEE_COLOR_COMPATS.add(compat);
 			}
 		}
 		catch (Throwable e) {

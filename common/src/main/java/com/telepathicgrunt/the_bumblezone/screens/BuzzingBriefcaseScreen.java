@@ -1,11 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRenderersAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
@@ -167,6 +170,16 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         if (bee.getType() == EntityType.BEE) {
             BEE_INVENTORY.add(new BeeState(bee, primaryColor, secondaryColor));
             return;
+        }
+
+        if (ModChecker.productiveBeesPresent) {
+            for (ModCompat compat : ModChecker.BEE_COLOR_COMPATS) {
+                Pair<Integer, Integer> moddedBeeColors = compat.getModdedBeePrimaryAndSecondaryColors(bee);
+                if (moddedBeeColors != null) {
+                    BEE_INVENTORY.add(new BeeState(bee, new Color(moddedBeeColors.getFirst()), new Color(moddedBeeColors.getSecond())));
+                    return;
+                }
+            }
         }
 
         EntityRendererProvider<Bee> rendererProvider = (EntityRendererProvider<Bee>) EntityRenderersAccessor.getPROVIDERS().get(bee.getType());
