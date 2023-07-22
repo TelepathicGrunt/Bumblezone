@@ -2,8 +2,6 @@
 
 #TODO: create purple essence event
 
-#TODO: Electric Ring Textures/animations
-
 #TODO: Add music for essence events
 
 #TODO: Add music for sanctums
