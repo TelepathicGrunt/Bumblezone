@@ -312,9 +312,11 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
 
                 List<Component> toolTipComponents =  new ArrayList<>();
 
-                toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_name", beeNormalAndCustomName.getString()));
-
-                if (!isNameAndTypeEqual) {
+                if (isNameAndTypeEqual) {
+                    toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", beeNormalAndCustomName).withStyle(ChatFormatting.YELLOW));
+                }
+                else {
+                    toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_name", beeNormalAndCustomName));
                     toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", beeNoneCustomName).withStyle(ChatFormatting.YELLOW));
                 }
 
@@ -340,7 +342,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 guiGraphics.renderTooltip(
                     this.font,
                     List.of(
-                        Component.translatable("item.the_bumblezone.buzzing_briefcase_release", beeNormalAndCustomName.getString())
+                        Component.translatable("item.the_bumblezone.buzzing_briefcase_release", beeNormalAndCustomName)
                     ),
                     Optional.empty(),
                     mouseX,
