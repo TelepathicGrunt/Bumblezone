@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -19,4 +20,7 @@ public interface EntityAccessor {
 
     @Invoker("vibrationAndSoundEffectsFromBlock")
     boolean callVibrationAndSoundEffectsFromBlock(BlockPos blockPos, BlockState blockState, boolean bl, boolean bl2, Vec3 vec3);
+
+    @Invoker("getTypeName")
+    Component callGetTypeName();
 }

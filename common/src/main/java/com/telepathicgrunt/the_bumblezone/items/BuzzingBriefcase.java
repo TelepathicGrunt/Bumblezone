@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -171,9 +172,6 @@ public class BuzzingBriefcase extends Item {
                 });
 
                 level.playSound(null, player.blockPosition(), BzSounds.BUZZING_BRIEFCASE_RELEASES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
-//                if (player instanceof ServerPlayer serverPlayer) {
-//                    BzCriterias.BEE_CANNON_FULL_TRIGGER.trigger(serverPlayer);
-//                }
                 return new ArrayList<>(bees);
             }
         }
@@ -189,24 +187,49 @@ public class BuzzingBriefcase extends Item {
                 for (int i = beeList.size() - 1; i >= 0; i--) {
                     CompoundTag beeTag = beeList.getCompound(0);
                     beeList.remove(0);
-                    beesStored.add(EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx));
-                    if (beesStored.size() == MAX_NUMBER_OF_BEES) {
-                        break;
+                    Entity entity = EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+                    if (entity != null) {
+                        if (addBeeToList(beesStored, beeTag, entity)) {
+                            break;
+                        }
                     }
                 }
             }
             else {
                 for (int i = 0 ; i < beeList.size(); i++) {
                     CompoundTag beeTag = beeList.getCompound(i);
-                    beesStored.add(EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx));
-                    if (beesStored.size() == MAX_NUMBER_OF_BEES) {
-                        break;
+                    Entity entity = EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+                    if (entity != null) {
+                        if (addBeeToList(beesStored, beeTag, entity)) {
+                            break;
+                        }
+                    }
+                    else {
+                        beeList.remove(i);
+                        i--;
                     }
                 }
             }
             return beesStored;
         }
         return new ObjectArrayList<>();
+    }
+
+    private static boolean addBeeToList(List<Entity> beesStored, CompoundTag beeTag, Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
+            if (beeTag.contains("Attributes", 9)) {
+                livingEntity.getAttributes().load(beeTag.getList("Attributes", 10));
+            }
+            if (beeTag.contains("Health", 99)) {
+                livingEntity.setHealth(beeTag.getFloat("Health"));
+            }
+        }
+
+        beesStored.add(entity);
+        if (beesStored.size() == MAX_NUMBER_OF_BEES) {
+            return true;
+        }
+        return false;
     }
 
     public static Entity getSpecificBeesStored(Level level, ItemStack briefcaseItem, int beeIndex, boolean removeFromList) {

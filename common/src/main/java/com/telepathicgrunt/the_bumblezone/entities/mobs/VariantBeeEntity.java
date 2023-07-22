@@ -3,12 +3,14 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
@@ -82,5 +84,13 @@ public class VariantBeeEntity extends Bee {
          return true;
       }
       return super.isInvulnerableTo(damageSource);
+   }
+
+   @Override
+   protected Component getTypeName() {
+      if (getVariant() != null) {
+         return Component.translatable("buzzing_briefcase.the_bumblezone.bee_typing." + getVariant());
+      }
+      return this.getType().getDescription();
    }
 }

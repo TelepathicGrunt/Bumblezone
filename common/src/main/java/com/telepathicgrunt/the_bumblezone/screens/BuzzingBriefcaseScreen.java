@@ -2,10 +2,10 @@ package com.telepathicgrunt.the_bumblezone.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRenderersAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.resources.LegacyStuffWrapper;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,11 +36,8 @@ import net.minecraft.world.item.Items;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBriefcaseMenu> {
     private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(Bumblezone.MODID, "textures/gui/buzzing_briefcase/background.png");
@@ -79,6 +75,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     private record BeeState(Bee beeEntity, Color primaryColor, Color secondaryColor){}
     private final List<BeeState> BEE_INVENTORY = new ArrayList<>();
     private final Inventory inventory;
+    private CompoundTag cachedBriefcaseTag;
 
     public BuzzingBriefcaseScreen(BuzzingBriefcaseMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -98,9 +95,11 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        if (!BEE_INVENTORY.isEmpty() || !menu.getItems().get(0).isEmpty()) {
+        ItemStack briefcaseStack = menu.getItems().get(0);
+        if (!briefcaseStack.isEmpty() && !briefcaseStack.getOrCreateTag().equals(this.cachedBriefcaseTag)) {
+            this.cachedBriefcaseTag = briefcaseStack.getOrCreateTag();
 
-            List<Entity> beesStored = BuzzingBriefcase.getBeesStored(inventory.player.level(), menu.getItems().get(0), false);
+            List<Entity> beesStored = BuzzingBriefcase.getBeesStored(inventory.player.level(), briefcaseStack, false);
             if (isDiffFoundInBeeList(beesStored)) {
 
                 BEE_INVENTORY.clear();
@@ -300,67 +299,48 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - mainY >= 0.0D &&
                     mouseY - mainY < 22.0D)
             {
-                String type;
-                if (beeState.beeEntity().getType() == EntityType.BEE) {
-                    type = "normal";
-                }
-                else if (beeState.beeEntity() instanceof VariantBeeEntity variantBeeEntity) {
-                    type = variantBeeEntity.getVariant();
-                }
-                // TODO: add resourceful bees and productive bees check here
-                else {
-                    type = "unknown";
+                Entity beeEntity = beeState.beeEntity();
+                Component beeNormalAndCustomName = beeEntity.getName();
+                Component beeNoneCustomName = beeEntity.getName();
+                if (beeNoneCustomName != null && beeNoneCustomName.equals(beeEntity.getCustomName())) {
+                    beeNoneCustomName = ((EntityAccessor)beeEntity).callGetTypeName();
                 }
 
-                if (type.isEmpty()) {
-                    type = "unknown";
-                }
+                boolean isNameAndTypeEqual =
+                        beeNoneCustomName != null &&
+                        beeNoneCustomName.equals(beeNormalAndCustomName);
 
-                Language language = Language.getInstance();
-                if (language.has("buzzing_briefcase.the_bumblezone.bee_typing." + type)) {
-                    type = "buzzing_briefcase.the_bumblezone.bee_typing." + type;
-                }
-                else {
-                    type = type.length() > 2 ? Arrays.stream(type
-                            .split("_"))
-                            .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1).toLowerCase(Locale.ROOT))
-                            .collect(Collectors.joining(" "))
-                            : type;
+                List<Component> toolTipComponents =  new ArrayList<>();
+
+                toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_name", beeNormalAndCustomName.getString()));
+
+                if (!isNameAndTypeEqual) {
+                    toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", beeNoneCustomName).withStyle(ChatFormatting.YELLOW));
                 }
 
                 if (this.minecraft != null && this.minecraft.options.advancedItemTooltips) {
-                    guiGraphics.renderTooltip(
-                        this.font,
-                        List.of(
-                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_name", beeState.beeEntity().getName().getString()),
-                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", Component.translatable(type)).withStyle(ChatFormatting.YELLOW),
-                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_registry_name", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType())).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)
-                        ),
-                        Optional.empty(),
-                        mouseX,
-                        mouseY);
+                    toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_registry_name", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType())).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
                 }
-                else {
-                    guiGraphics.renderTooltip(
-                        this.font,
-                        List.of(
-                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_name", beeState.beeEntity().getName().getString()),
-                            Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", Component.translatable(type)).withStyle(ChatFormatting.YELLOW)
-                        ),
-                        Optional.empty(),
-                        mouseX,
-                        mouseY);
-                }
+
+                guiGraphics.renderTooltip(
+                    this.font,
+                    toolTipComponents,
+                    Optional.empty(),
+                    mouseX,
+                    mouseY);
             }
             else if (mouseX - (mainX + 22) >= 0.0D &&
                     mouseX - (mainX + 22) < 11.0D &&
                     mouseY - mainY >= 0.0D &&
                     mouseY - mainY < 11.0D)
             {
+                Entity beeEntity = beeState.beeEntity();
+                Component beeNormalAndCustomName = beeEntity.getName();
+
                 guiGraphics.renderTooltip(
                     this.font,
                     List.of(
-                        Component.translatable("item.the_bumblezone.buzzing_briefcase_release", beeState.beeEntity().getName().getString())
+                        Component.translatable("item.the_bumblezone.buzzing_briefcase_release", beeNormalAndCustomName.getString())
                     ),
                     Optional.empty(),
                     mouseX,
@@ -461,28 +441,30 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     mouseY - (mainY + 33) >= 0.0D &&
                     mouseY - (mainY + 33) < 11.0D)
             {
-                if (!beeState.beeEntity().hasNectar()) {
-                    boolean hasPollenPuffItem = inventory.contains(BzItems.POLLEN_PUFF.get().getDefaultInstance());
-                    if (hasPollenPuffItem) {
-                        guiGraphics.renderTooltip(
-                            this.font,
-                            List.of(
-                                Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_1"),
-                                Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_2")
-                            ),
-                            Optional.empty(),
-                            mouseX,
-                            mouseY);
-                    }
-                    else {
-                        guiGraphics.renderTooltip(
-                            this.font,
-                            List.of(
-                                Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_missing_item")
-                            ),
-                            Optional.empty(),
-                            mouseX,
-                            mouseY);
+                if (beeState.beeEntity().getType().is(BzTags.BUZZING_BRIEFCASE_CAN_POLLINATE)) {
+                    if (!beeState.beeEntity().hasNectar()) {
+                        boolean hasPollenPuffItem = inventory.contains(BzItems.POLLEN_PUFF.get().getDefaultInstance());
+                        if (hasPollenPuffItem) {
+                            guiGraphics.renderTooltip(
+                                this.font,
+                                List.of(
+                                    Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_1"),
+                                    Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_2")
+                                ),
+                                Optional.empty(),
+                                mouseX,
+                                mouseY);
+                        }
+                        else {
+                            guiGraphics.renderTooltip(
+                                this.font,
+                                List.of(
+                                    Component.translatable("item.the_bumblezone.buzzing_briefcase_pollen_missing_item")
+                                ),
+                                Optional.empty(),
+                                mouseX,
+                                mouseY);
+                        }
                     }
                 }
             }
