@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.phys.Vec3;
 
-public class BzSkyProperty extends DimensionSpecialEffects {
-    public BzSkyProperty() {
+public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
+    public BzDimensionSpecialEffects() {
         super(-1000000f, true, SkyType.NONE, false, false);
     }
 
@@ -36,13 +36,15 @@ public class BzSkyProperty extends DimensionSpecialEffects {
          */
         if (BzDimensionConfigs.fogBrightnessPercentage <= 50) {
             colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage / 50);
-        } else {
+        }
+        else {
             colorFactor *= (BzDimensionConfigs.fogBrightnessPercentage / 100);
         }
 
         if (WrathOfTheHiveEffect.ACTIVE_WRATH && REDDISH_FOG_TINT < 0.38f) {
             REDDISH_FOG_TINT += 0.00001f;
-        } else if (REDDISH_FOG_TINT > 0) {
+        }
+        else if (REDDISH_FOG_TINT > 0) {
             REDDISH_FOG_TINT -= 0.00001f;
         }
 

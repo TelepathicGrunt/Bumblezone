@@ -76,7 +76,7 @@ import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
-import com.telepathicgrunt.the_bumblezone.world.dimension.BzSkyProperty;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimensionSpecialEffects;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
@@ -385,6 +385,6 @@ public class BumblezoneClient {
     }
 
     public static void registerDimensionEffects(RegisterDimensionEffectsEvent event) {
-        event.register(new ResourceLocation(Bumblezone.MODID, "sky_property"), new BzSkyProperty());
+        event.register(new ResourceLocation(Bumblezone.MODID, "dimension_special_effects"), new BzDimensionSpecialEffects());
     }
 }
