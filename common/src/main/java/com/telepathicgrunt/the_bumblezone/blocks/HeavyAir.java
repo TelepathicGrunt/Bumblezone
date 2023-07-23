@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.MapMaker;
+import com.telepathicgrunt.the_bumblezone.entities.TemporaryPlayerData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -84,16 +85,25 @@ public class HeavyAir extends Block {
             }
         }
 
+        double extraGravity = -0.005d;
+
         if (entity instanceof Player player) {
             if ((player.isCreative() && player.getAbilities().flying) || player.isSpectator()) {
                 return;
             }
             else if (player.getAbilities().flying) {
                 player.getAbilities().flying = false;
+                player.getAbilities().mayfly = false;
+            }
+
+            if (entity instanceof TemporaryPlayerData temporaryPlayerData) {
+                double baseThresholds = 2;
+                int ticksOffGround = temporaryPlayerData.playTickOffGround();
+                extraGravity *= (ticksOffGround + baseThresholds) / baseThresholds;
             }
         }
 
-        entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.0175, 0));
+        entity.setDeltaMovement(entity.getDeltaMovement().add(0, extraGravity, 0));
         APPLIED_PUSH_FOR_ENTITY.put(entity.getStringUUID(), entity.tickCount);
     }
 

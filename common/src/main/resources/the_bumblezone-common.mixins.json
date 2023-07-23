@@ -48,6 +48,7 @@
     "entities.MobSpawnLocationMixin",
     "entities.PlayerAdvancementsAccessor",
     "entities.PlayerMixin",
+    "entities.PlayerTimeInAirMixin",
     "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
     "items.GlassBottleUseMixin",
