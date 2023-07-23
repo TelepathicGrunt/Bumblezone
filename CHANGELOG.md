@@ -12,7 +12,7 @@
 
 #TODO: Add new sempiternal sanctums to advancements
 
-#TODO: Check up on mod compat (resourceful bees and productive bees especially. See Buzzing Briefcase for those too)
+#TODO: Check up on mod compat (resourceful bees especially. See Buzzing Briefcase for those too)
 
 #TODO: profile performance of every event
 

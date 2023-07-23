@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
-import com.telepathicgrunt.the_bumblezone.utils.fabricbase.PlatformSharedData;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;

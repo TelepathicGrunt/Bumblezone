@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.packets.networking.forge;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

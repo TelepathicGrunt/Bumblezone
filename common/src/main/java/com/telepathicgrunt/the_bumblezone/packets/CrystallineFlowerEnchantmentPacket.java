@@ -9,7 +9,6 @@ import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.EnchantmentSkeleton;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
