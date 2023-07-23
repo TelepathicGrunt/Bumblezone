@@ -65,6 +65,7 @@ public class ClientFluidProperties {
         this.tintColor = (state, level, pos) -> tintColor;
         return this;
     }
+
     public ClientFluidProperties tintColor(TriFunction<@Nullable FluidState, @Nullable BlockAndTintGetter, @Nullable BlockPos, Integer> tintColor) {
         this.tintColor = tintColor;
         return this;
