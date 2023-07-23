@@ -16,6 +16,8 @@
 
 #TODO: profile performance of white essence event
 
+#TODO: adjust backup essence block textures
+
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
