@@ -27,6 +27,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -37,7 +39,6 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
                 .strength(0.1F, 3600000.8F)
                 .lightLevel((blockState) -> 15)
                 .noLootTable()
-                .noOcclusion()
                 .noParticlesOnBreak()
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
                 .pushReaction(PushReaction.BLOCK));

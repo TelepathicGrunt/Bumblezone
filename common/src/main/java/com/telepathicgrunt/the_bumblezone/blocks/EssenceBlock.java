@@ -89,13 +89,63 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
         super(properties
                 .strength(-1.0f, 3600000.8f)
                 .lightLevel((blockState) -> 15)
-                .noCollission()
                 .noLootTable()
-                .noOcclusion()
                 .forceSolidOn()
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
                 .isViewBlocking((blockState, blockGetter, blockPos) -> false)
                 .pushReaction(PushReaction.BLOCK));
+    }
+
+    @Override
+    public VoxelShape getOcclusionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return Shapes.block();
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState blockState) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
+        if (context instanceof EntityCollisionContext ctx) {
+            Entity entity = ctx.getEntity();
+            if (entity == null) {
+                return Shapes.empty();
+            }
+
+            if ((entity instanceof LivingEntity && !(entity instanceof ServerPlayer)) ||
+                    (entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)))
+            {
+                if (entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
+                    if (entity instanceof ServerPlayer serverPlayer) {
+                        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+                        if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
+                                essenceBlockEntity.getPlayerInArena().isEmpty())
+                        {
+                            serverPlayer.displayClientMessage(
+                                    Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
+                                    true);
+                        }
+                    }
+
+                    entity.hurt(entity.damageSources().magic(), 0.5f);
+
+                    Vec3 center = Vec3.atCenterOf(blockPos);
+                    entity.push(
+                            entity.getX() - center.x(),
+                            entity.getY() - center.y(),
+                            entity.getZ() - center.z());
+                }
+
+                return Shapes.block();
+            }
+
+            if (entity instanceof ServerPlayer serverPlayer) {
+                entityInside(blockState, serverPlayer.level(), blockPos, serverPlayer);
+            }
+        }
+        return Shapes.empty();
     }
 
     @Nullable
@@ -122,53 +172,6 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
     @Override
     public boolean propagatesSkylightDown(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
         return true;
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState blockState) {
-        return RenderShape.MODEL;
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
-        if (context instanceof EntityCollisionContext ctx) {
-            Entity entity = ctx.getEntity();
-            if (entity == null) {
-                return Shapes.empty();
-            }
-
-            if ((entity instanceof LivingEntity && !(entity instanceof ServerPlayer)) ||
-                (entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)))
-            {
-                if (entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
-                    if (entity instanceof ServerPlayer serverPlayer) {
-                        BlockEntity blockEntity = level.getBlockEntity(blockPos);
-                        if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
-                            essenceBlockEntity.getPlayerInArena().isEmpty())
-                        {
-                            serverPlayer.displayClientMessage(
-                                    Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
-                                    true);
-                        }
-                    }
-
-                    entity.hurt(entity.damageSources().magic(), 0.5f);
-
-                    Vec3 center = Vec3.atCenterOf(blockPos);
-                    entity.push(
-                            entity.getX() - center.x(),
-                            entity.getY() - center.y(),
-                            entity.getZ() - center.z());
-                }
-
-                return Shapes.block();
-            }
-
-            if (entity instanceof ServerPlayer serverPlayer) {
-                entityInside(blockState, serverPlayer.level(), blockPos, serverPlayer);
-            }
-        }
-        return Shapes.empty();
     }
 
     @Override
