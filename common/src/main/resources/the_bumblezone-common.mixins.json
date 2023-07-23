@@ -80,7 +80,6 @@
     "client.EntityRenderersAccessor",
     "client.FogRendererMixin",
     "client.LevelRendererAccessor",
-    "client.LiquidBlockRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.RenderStateShardAccessor",

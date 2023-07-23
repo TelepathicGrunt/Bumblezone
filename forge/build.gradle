@@ -52,6 +52,7 @@ dependencies {
     modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
     // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
+    // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
 
     //modCompileOnly("mekanism:Mekanism:${project.mekanism}:api")
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}")// core

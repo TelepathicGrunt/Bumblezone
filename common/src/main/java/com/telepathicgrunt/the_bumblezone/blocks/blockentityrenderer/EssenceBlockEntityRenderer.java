@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.utils.LazySupplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -35,7 +36,12 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/base_background.png");
 	public static final ResourceLocation BEE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
 
-	public static final VertexFormat POSITION_COLOR_NORMAL = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder().put("Position", DefaultVertexFormat.ELEMENT_POSITION).put("Color", DefaultVertexFormat.ELEMENT_COLOR).put("Normal", DefaultVertexFormat.ELEMENT_NORMAL).build());
+	public static final VertexFormat POSITION_COLOR_NORMAL = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder()
+			.put("Position", DefaultVertexFormat.ELEMENT_POSITION)
+			.put("Color", DefaultVertexFormat.ELEMENT_COLOR)
+			.put("Normal", DefaultVertexFormat.ELEMENT_NORMAL).build());
+	
+	public static ShaderInstance SAFE_SHADER_INSTANCE = null;
 	public RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
 			RenderType.create(
 					"bumblezone_essence_block",
@@ -45,15 +51,7 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 					false,
 					false,
 					RenderType.CompositeState.builder()
-							.setShaderState(new RenderStateShard.ShaderStateShard(() -> {
-								try {
-									return new ShaderInstance(Minecraft.getInstance().getResourceManager(), "rendertype_bumblezone_essence", POSITION_COLOR_NORMAL);
-								}
-								catch (IOException e) {
-									e.printStackTrace();
-								}
-								return null;
-							}))
+							.setShaderState(new RenderStateShard.ShaderStateShard(() -> SAFE_SHADER_INSTANCE))
 							.setTextureState(RenderStateShard.MultiTextureStateShard.builder()
 									.add(BASE_TEXTURE, false, false)
 									.add(BEE_TEXTURE, false, false)

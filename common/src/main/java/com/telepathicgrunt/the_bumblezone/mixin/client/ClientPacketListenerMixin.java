@@ -15,9 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(ClientPacketListener.class)
 public abstract class ClientPacketListenerMixin {
 
-    //TODO: look into why Quilt breaks this inject
     @Inject(method = "handleAddEntity(Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;)V",
-            at = @At(value = "TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT, require = 0)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;getId()I"),
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            require = 0
+    )
     private void bumblezone$syncHorseUUID1(
             ClientboundAddEntityPacket clientboundAddEntityPacket,
             CallbackInfo ci,

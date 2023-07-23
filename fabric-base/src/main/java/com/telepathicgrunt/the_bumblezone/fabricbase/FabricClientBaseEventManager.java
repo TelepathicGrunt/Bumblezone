@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEv
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.BiomeColorFluidRenderHandler;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.HoneyFluidRenderHandler;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -26,6 +27,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -36,8 +38,10 @@ import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import org.intellij.lang.annotations.Identifier;
 
 public class FabricClientBaseEventManager {
 
@@ -75,6 +79,11 @@ public class FabricClientBaseEventManager {
         RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(FabricClientBaseEventManager::registerScreen));
         RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
         RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(BlockRenderLayerMap.INSTANCE::putFluid, BlockRenderLayerMap.INSTANCE::putBlock));
+        RegisterShaderEvent.EVENT.invoke(new RegisterShaderEvent(
+                (name, vertexFormat, safeShaderConsumer) -> CoreShaderRegistrationCallback.EVENT.register(
+                        context -> context.register(name, vertexFormat, safeShaderConsumer))
+                )
+        );
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(manager -> new ConnectedModelVariantProvider());
 
         RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);

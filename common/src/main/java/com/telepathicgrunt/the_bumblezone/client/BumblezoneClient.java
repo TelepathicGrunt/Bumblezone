@@ -57,6 +57,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -96,6 +97,7 @@ public class BumblezoneClient {
         RegisterEntityLayersEvent.EVENT.addListener(BumblezoneClient::registerEntityLayers);
         RegisterKeyMappingEvent.EVENT.addListener(BumblezoneClient::registerKeyBinding);
         RegisterDimensionEffectsEvent.EVENT.addListener(BumblezoneClient::registerDimensionEffects);
+        RegisterShaderEvent.EVENT.addListener(BumblezoneClient::registerShaders);
         RegisterBlockColorEvent.EVENT.addListener(InfinityBarrierColoring::registerBlockColors);
         RegisterBlockColorEvent.EVENT.addListener(IncenseCandleColoring::registerBlockColors);
         RegisterItemColorEvent.EVENT.addListener(IncenseCandleColoring::registerItemColors);
@@ -386,5 +388,13 @@ public class BumblezoneClient {
 
     public static void registerDimensionEffects(RegisterDimensionEffectsEvent event) {
         event.register(new ResourceLocation(Bumblezone.MODID, "dimension_special_effects"), new BzDimensionSpecialEffects());
+    }
+
+    public static void registerShaders(RegisterShaderEvent event) {
+        event.register(
+            new ResourceLocation("rendertype_bumblezone_essence"),
+            EssenceBlockEntityRenderer.POSITION_COLOR_NORMAL,
+            (safeShader) -> EssenceBlockEntityRenderer.SAFE_SHADER_INSTANCE = safeShader
+        );
     }
 }

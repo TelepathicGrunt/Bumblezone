@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.forge;
 
+import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
@@ -23,6 +24,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -36,6 +38,7 @@ import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.particles.ParticleOptions;
@@ -49,6 +52,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
@@ -60,6 +64,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import java.io.IOException;
 import java.util.function.Function;
 
 public class BumblezoneForgeClient {
@@ -81,6 +86,7 @@ public class BumblezoneForgeClient {
         modBus.addListener(BumblezoneForgeClient::onRegisterModelLoaders);
         modBus.addListener(BumblezoneForgeClient::onRegisterParticles);
         modBus.addListener(ForgeConnectedBlockModel::onBakingCompleted);
+        modBus.addListener(BumblezoneForgeClient::onRegisterShaders);
         modBus.addListener(BumblezoneForgeClient::onRegisterKeys);
         modBus.addListener(BumblezoneForgeClient::onRegisterItemColors);
         modBus.addListener(BumblezoneForgeClient::onRegisterBlockColors);
@@ -133,6 +139,19 @@ public class BumblezoneForgeClient {
 
     private static void onRegisterDimensionEffects(RegisterDimensionSpecialEffectsEvent event) {
         RegisterDimensionEffectsEvent.EVENT.invoke(new RegisterDimensionEffectsEvent(event::register));
+    }
+
+    public static void onRegisterShaders(RegisterShadersEvent event) {
+        RegisterShaderEvent.EVENT.invoke(new RegisterShaderEvent((name, vertexFormat, safeShaderCallback) -> {
+            ShaderInstance shaderInstance;
+            try {
+                shaderInstance = new ShaderInstance(Minecraft.getInstance().getResourceManager(), name, vertexFormat);
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            event.registerShader(shaderInstance, safeShaderCallback);
+        }));
     }
 
     private static void onKeyInput(InputEvent.Key event) {
