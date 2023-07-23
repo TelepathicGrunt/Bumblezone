@@ -208,7 +208,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                 float maxHeart = Math.max(serverPlayer.getHealth(), serverPlayer.getMaxHealth());
                 float maxArmor = serverPlayer.getArmorValue();
                 float mobHealthBoost = (maxHeart / 10) + (maxArmor / 2);
-                float mobAttackBoost = (maxHeart / 10) + (maxArmor / 2);
+                float mobAttackBoost = (maxHeart / 15) + (maxArmor / 3);
 
                 boolean isEssenced = EssenceOfTheBees.hasEssence(serverPlayer);
                 if (!isEssenced) {

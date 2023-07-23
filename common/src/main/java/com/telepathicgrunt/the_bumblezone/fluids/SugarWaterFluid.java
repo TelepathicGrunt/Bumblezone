@@ -64,7 +64,10 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
 
         BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
 
-        for (Direction direction : Direction.Plane.HORIZONTAL.shuffledCopy(random)) {
+        int startIndex = random.nextInt(4);
+        for (int currentIndex = startIndex; currentIndex < startIndex + 4; currentIndex++) {
+            Direction direction = Direction.from2DDataValue(currentIndex);
+
             //check one of the spot next to sugar water for sugar cane to grow
             blockPos.set(position.above());
             blockPos.move(direction);

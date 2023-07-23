@@ -27,7 +27,7 @@ public interface BlockExtensionMixin extends IForgeBlock {
     OptionalBoolean bz$canStickTo(BlockState state, BlockState other);
 
     @Shadow
-    OptionalBoolean bz$shouldDisplayFluidOverlay();
+    OptionalBoolean bz$shouldNotDisplayFluidOverlay();
 
     @Override
     default @Nullable BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
@@ -47,7 +47,7 @@ public interface BlockExtensionMixin extends IForgeBlock {
 
     @Override
     default boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter level, BlockPos pos, FluidState fluidState) {
-        return this.bz$shouldDisplayFluidOverlay()
+        return this.bz$shouldNotDisplayFluidOverlay()
                 .orElseGet(() -> IForgeBlock.super.shouldDisplayFluidOverlay(state, level, pos, fluidState));
     }
 }

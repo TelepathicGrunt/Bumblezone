@@ -14,7 +14,7 @@
 
 #TODO: Check up on mod compat (resourceful bees especially. See Buzzing Briefcase for those too)
 
-#TODO: profile performance of every event
+#TODO: profile performance of white essence event
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**

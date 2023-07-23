@@ -85,22 +85,25 @@ public class PurpleSpikeEntity extends Entity {
 
     public void tick() {
         super.tick();
+        boolean hasSpikeCharge = this.hasSpikeCharge();
+        boolean hasSpike = this.hasSpike();
+
         if (this.level().isClientSide()) {
-            if (this.tickCount % 5 == 0 && this.hasSpikeCharge()) {
+            if (this.tickCount % 10 == 0 && hasSpikeCharge) {
                 this.makeParticle(1, false);
             }
-            else if (!this.hasSpikeCharge() && this.hasSpike()){
-                this.makeParticle(3, false);
+            else if (!hasSpikeCharge && hasSpike){
+                this.makeParticle(1, false);
             }
 
-            if (this.spikeChargeClientPhaseTracker != this.hasSpikeCharge()) {
-                if (!this.spikeChargeClientPhaseTracker && this.hasSpike()) {
+            if (this.spikeChargeClientPhaseTracker != hasSpikeCharge) {
+                if (!this.spikeChargeClientPhaseTracker && hasSpike) {
                     this.spikeChargeClientTimeTracker = 0;
                 }
-                this.spikeChargeClientPhaseTracker = this.hasSpikeCharge();
+                this.spikeChargeClientPhaseTracker = hasSpikeCharge;
             }
 
-            if (!this.hasSpikeCharge() && !this.hasSpike()) {
+            if (!hasSpikeCharge && !hasSpike) {
                 this.spikeChargeClientTimeTracker = 0;
             }
             else {
@@ -120,7 +123,7 @@ public class PurpleSpikeEntity extends Entity {
             }
         }
 
-        if (this.hasSpike() && !hasSpikeCharge()) {
+        if (hasSpike && !hasSpikeCharge && this.tickCount % 3 == 0) {
             List<Entity> list = this.level().getEntities(this, this.getBoundingBox());
             if (!list.isEmpty()) {
                 for (Entity entity : list) {
@@ -153,9 +156,7 @@ public class PurpleSpikeEntity extends Entity {
     }
 
     @Override
-    public void baseTick() {
-        super.baseTick();
-    }
+    public void baseTick() {}
 
     private void makeParticle(int particlesToSpawn, boolean hit) {
         if (particlesToSpawn > 0) {
@@ -202,7 +203,7 @@ public class PurpleSpikeEntity extends Entity {
 
     @Override
     public boolean shouldRender(double x, double y, double z) {
-        return true;//this.hasSpike() || this.hasSpikeCharge();
+        return this.hasSpike() || this.hasSpikeCharge();
     }
 
     @Override

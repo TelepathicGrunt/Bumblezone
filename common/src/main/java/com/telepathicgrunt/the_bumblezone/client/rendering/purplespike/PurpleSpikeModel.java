@@ -57,8 +57,10 @@ public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T
 
     @Override
     public void setupAnim(T spike, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        topSpike.visible = !spike.hasSpikeCharge() && spike.hasSpike();
-        bottomSpike.visible = spike.hasSpikeCharge() || spike.hasSpike();
+        boolean hasSpikeCharge = spike.hasSpikeCharge();
+        boolean hasSpike = spike.hasSpike();
+        topSpike.visible = !hasSpikeCharge && hasSpike;
+        bottomSpike.visible = hasSpikeCharge || hasSpike;
     }
 
     @Override

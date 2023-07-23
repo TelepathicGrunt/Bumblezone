@@ -95,7 +95,7 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
     }
 
     @Override
-    public OptionalBoolean bz$shouldDisplayFluidOverlay() {
+    public OptionalBoolean bz$shouldNotDisplayFluidOverlay() {
         return OptionalBoolean.TRUE;
     }
 

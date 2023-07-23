@@ -28,7 +28,7 @@ public interface BlockExtension {
         return OptionalBoolean.EMPTY;
     }
 
-    default OptionalBoolean bz$shouldDisplayFluidOverlay() {
+    default OptionalBoolean bz$shouldNotDisplayFluidOverlay() {
         return OptionalBoolean.EMPTY;
     }
 }

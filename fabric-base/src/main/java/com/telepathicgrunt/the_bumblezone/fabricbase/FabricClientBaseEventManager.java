@@ -46,7 +46,7 @@ public class FabricClientBaseEventManager {
         BuiltInRegistries.BLOCK.stream()
                 .forEach(block -> {
                     if (block instanceof BlockExtension extension) {
-                        OptionalBoolean result = extension.bz$shouldDisplayFluidOverlay();
+                        OptionalBoolean result = extension.bz$shouldNotDisplayFluidOverlay();
                         if (result.isPresent()) {
                             fluidHandler.setBlockTransparency(block, result.get());
                         }

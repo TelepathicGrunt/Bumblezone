@@ -45,7 +45,6 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
 
     @Override
     public void render(PurpleSpikeEntity ringEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
-        float n;
         poseStack.pushPose();
         float m = Mth.lerp(g, ringEntity.xRotO, ringEntity.getXRot());
 
@@ -55,10 +54,8 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         poseStack.translate(0.0f, offSet, 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
-        n = 0.0f;
-        float o = 0.0f;
-        ((EntityModel)this.model).prepareMobModel(ringEntity, o, n, g);
-        ((EntityModel)this.model).setupAnim(ringEntity, o, n, 0, 0, m);
+        ((EntityModel)this.model).prepareMobModel(ringEntity, 0, 0, g);
+        ((EntityModel)this.model).setupAnim(ringEntity, 0, 0, 0, 0, m);
         Minecraft minecraft = Minecraft.getInstance();
         boolean bl = this.isBodyVisible(ringEntity);
         boolean bl2 = !bl && !ringEntity.isInvisibleTo(minecraft.player);
@@ -70,11 +67,10 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         }
         if (!ringEntity.isSpectator()) {
             for (RenderLayer<PurpleSpikeEntity, M> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, i, ringEntity, o, n, g, 0, 0, m);
+                renderLayer.render(poseStack, multiBufferSource, i, ringEntity, 0, 0, g, 0, 0, m);
             }
         }
         poseStack.popPose();
-        super.render(ringEntity, f, g, poseStack, multiBufferSource, i);
     }
 
     @Nullable

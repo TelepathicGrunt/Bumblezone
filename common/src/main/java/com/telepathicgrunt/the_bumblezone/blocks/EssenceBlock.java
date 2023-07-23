@@ -6,8 +6,10 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
@@ -50,7 +52,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public abstract class EssenceBlock extends BaseEntityBlock {
+public abstract class EssenceBlock extends BaseEntityBlock implements BlockExtension {
     public static final GeneralUtils.Lazy<StructurePlaceSettings> PLACEMENT_SETTINGS = new GeneralUtils.Lazy<>(() ->
             new StructurePlaceSettings()
                 .setRotation(Rotation.NONE)
@@ -308,5 +310,10 @@ public abstract class EssenceBlock extends BaseEntityBlock {
     @Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createEssenceTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends EssenceBlockEntity> blockEntityType2) {
         return level.isClientSide ? null : EssenceBlock.createTickerHelper(blockEntityType, blockEntityType2, EssenceBlockEntity::serverTick);
+    }
+
+    @Override
+    public OptionalBoolean bz$shouldNotDisplayFluidOverlay() {
+        return OptionalBoolean.TRUE;
     }
 }
