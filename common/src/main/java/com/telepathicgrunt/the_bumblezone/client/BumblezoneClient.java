@@ -392,7 +392,7 @@ public class BumblezoneClient {
 
     public static void registerShaders(RegisterShaderEvent event) {
         event.register(
-            new ResourceLocation("rendertype_bumblezone_essence"),
+            new ResourceLocation(Bumblezone.MODID, "rendertype_bumblezone_essence"),
             EssenceBlockEntityRenderer.POSITION_COLOR_NORMAL,
             (safeShader) -> EssenceBlockEntityRenderer.SAFE_SHADER_INSTANCE = safeShader
         );

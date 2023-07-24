@@ -61,9 +61,9 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 
 	@Override
 	public void render(EssenceBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int brightness, int overlayType) {
-//		RANDOM.setSeed(RANDOM_SEED);
-//		Matrix4f matrix4f = poseStack.last().pose();
-//		this.renderSides(blockEntity, matrix4f, multiBufferSource.getBuffer(this.getType()));
+		RANDOM.setSeed(RANDOM_SEED);
+		Matrix4f matrix4f = poseStack.last().pose();
+		this.renderSides(blockEntity, matrix4f, multiBufferSource.getBuffer(this.getType()));
 	}
 
 	private void renderSides(EssenceBlockEntity blockEntity, Matrix4f matrix4f, VertexConsumer vertexConsumer) {
