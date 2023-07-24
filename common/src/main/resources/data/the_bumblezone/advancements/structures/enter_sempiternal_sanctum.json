@@ -19,26 +19,14 @@
     "experience": 100
   },
   "criteria": {
-    "sempiternal_sanctum_white": {
-      "trigger": "minecraft:location",
-      "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structure": "the_bumblezone:sempiternal_sanctum_white"
-              }
-            }
-          }
-        ]
-      }
+    "sempiternal_sanctum_enter_wth_bee_essence": {
+      "trigger": "the_bumblezone:sempiternal_sanctum_enter_wth_bee_essence",
+      "conditions": {}
     }
   },
   "requirements": [
     [
-      "sempiternal_sanctum_white"
+      "sempiternal_sanctum_enter_wth_bee_essence"
     ]
   ]
 }

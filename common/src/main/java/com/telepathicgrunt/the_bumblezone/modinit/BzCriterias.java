@@ -77,6 +77,7 @@ public class BzCriterias {
     public static final GenericTrigger QUEEN_BEEHEMOTH_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "created_queen_beehemoth"));
     public static final GenericTrigger ROOTMIN_FLOWER_SWAP_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "rootmin_flower_swap"));
     public static final GenericTrigger ROYAL_JELLY_BLOCK_PISTON_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "royal_jelly_block_piston"));
+    public static final GenericTrigger SEMPITERNAL_SANCTUM_ENTER_WTH_BEE_ESSENCE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "sempiternal_sanctum_enter_wth_bee_essence"));
     public static final GenericTrigger SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "sentry_watcher_spawn_egg_used"));
     public static final GenericTrigger STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_killed_with_wither"));
     public static final GenericTrigger STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "stinger_spear_long_range_kill"));
@@ -150,6 +151,7 @@ public class BzCriterias {
         register(QUEEN_BEEHEMOTH_TRIGGER);
         register(ROOTMIN_FLOWER_SWAP_TRIGGER);
         register(ROYAL_JELLY_BLOCK_PISTON_TRIGGER);
+        register(SEMPITERNAL_SANCTUM_ENTER_WTH_BEE_ESSENCE_TRIGGER);
         register(SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER);
         register(STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER);
         register(STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER);

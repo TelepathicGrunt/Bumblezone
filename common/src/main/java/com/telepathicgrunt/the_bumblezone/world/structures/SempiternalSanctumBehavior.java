@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.world.structures;
 
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.ChatFormatting;
@@ -24,10 +25,6 @@ public class SempiternalSanctumBehavior {
 
     //Apply mining fatigue when in sanctum
     public static void runStructureMessagesAndFatigue(ServerPlayer serverPlayer) {
-        if(serverPlayer.isCreative() || serverPlayer.isSpectator()) {
-            return;
-        }
-
         StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.SEMPITERNAL_SANCTUMS).isValid()) {
             if (EssenceOfTheBees.hasEssence(serverPlayer)) {
@@ -63,8 +60,10 @@ public class SempiternalSanctumBehavior {
                         serverPlayer.displayClientMessage(message, true);
                     }
                 }
+
+                BzCriterias.SEMPITERNAL_SANCTUM_ENTER_WTH_BEE_ESSENCE_TRIGGER.trigger(serverPlayer);
             }
-            else {
+            else if(!serverPlayer.isCreative() && !serverPlayer.isSpectator()) {
                 MobEffectInstance effect = serverPlayer.getEffect(MobEffects.DIG_SLOWDOWN);
                 if (effect == null || effect.getAmplifier() <= 2) {
                     Component message = Component.translatable("system.the_bumblezone.no_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
