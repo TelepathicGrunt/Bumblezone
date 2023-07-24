@@ -22,6 +22,8 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenMode
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beestinger.BeeStingerRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidClientProperties;
@@ -39,6 +41,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryW
 import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryWatcherRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
+import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
@@ -354,6 +357,7 @@ public class BumblezoneClient {
         event.register(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
         event.register(ElectricRingModel.LAYER_LOCATION, ElectricRingModel::createBodyLayer);
         event.register(PurpleSpikeModel.LAYER_LOCATION, PurpleSpikeModel::createBodyLayer);
+        event.register(BoundlessCrystalModel.LAYER_LOCATION, BoundlessCrystalModel::createBodyLayer);
     }
 
     public static void registerEntityRenderers(RegisterEntityRenderersEvent event) {
@@ -370,6 +374,7 @@ public class BumblezoneClient {
         event.register(BzEntities.HONEY_CRYSTAL_SHARD.get(), HoneyCrystalShardRenderer::new);
         event.register(BzEntities.ELECTRIC_RING_ENTITY.get(), ElectricRingRenderer::new);
         event.register(BzEntities.PURPLE_SPIKE_ENTITY.get(), PurpleSpikeRenderer::new);
+        event.register(BzEntities.BOUNDLESS_CRYSTAL_ENTITY.get(), BoundlessCrystalRenderer::new);
     }
 
     public static void onParticleSetup(RegisterParticleEvent event) {
