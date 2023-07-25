@@ -96,10 +96,11 @@ Essence of Radiance - The reward for beating the Yellow Sempiternal Sanctum stru
  Add or remove effects to give to player by editing `the_bumblezone:essence/radiance/sun_effects` mob effects tag.
 
 Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum structure! Holding this item in offhand will highlight mobs
- and outline certain block entities near you! Allowing you to see what monster is nearby or hidden chests or suspicious blocks! It has 
- 1200 use before it is depleted and needs 15 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
- This highlighting can be configured on client side by config. Server owners can use the block and entity tags to force things to be highlighted
- or not regardless of what the client config is set as. (The tags can be used to also correct highlighting issues on other mod's mobs with this item on)
+ and outline certain block entities near you! Allowing you to see what monster is nearby or hidden chests or suspicious blocks! It will
+ also tell you the name of any structure you are in! It has 1200 use before it is depleted and needs 15 minutes to recharge by being
+ in the inventory of a player that had consumed Essence of the Bees in the past. This highlighting can be configured on client side 
+ by config. Server owners can use the block and entity tags to force things to be highlighted or not regardless of what the client 
+ config is set as. (The tags can be used to also correct highlighting issues on other mod's mobs with this item on)
  The entity type tags you can edit are these. Disable tag overrides all:
 
  `the_bumblezone:essence/knowing/prevent_highlighting`

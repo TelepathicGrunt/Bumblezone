@@ -109,6 +109,9 @@ public class BzConfig extends MidnightConfig {
     public static int knowingEssenceCooldown = 18000;
 
     @Entry
+    public static boolean knowingEssenceStructureNameServer = true;
+
+    @Entry
     public static int calmingEssenceAbilityUse = 600;
 
     @Entry
@@ -294,6 +297,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean knowingEssenceHighlightEpicItems = true;
 
+    @Entry
+    public static boolean knowingEssenceStructureNameClient = true;
+
     @ApiStatus.Internal
     public static void setup() {
         MidnightConfig.init(Bumblezone.MODID, BzConfig.class);
@@ -372,6 +378,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown;
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse;
         BzGeneralConfigs.knowingEssenceCooldown = knowingEssenceCooldown;
+        BzGeneralConfigs.knowingEssenceStructureNameServer = knowingEssenceStructureNameServer;
         BzGeneralConfigs.calmingEssenceAbilityUse = calmingEssenceAbilityUse;
         BzGeneralConfigs.calmingEssenceCooldown = calmingEssenceCooldown;
         BzGeneralConfigs.radianceEssenceAbilityUse = radianceEssenceAbilityUse;
@@ -395,6 +402,7 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.knowingEssenceHighlightUncommonItems = knowingEssenceHighlightUncommonItems;
         BzClientConfigs.knowingEssenceHighlightRareItems = knowingEssenceHighlightRareItems;
         BzClientConfigs.knowingEssenceHighlightEpicItems = knowingEssenceHighlightEpicItems;
+        BzClientConfigs.knowingEssenceStructureNameClient = knowingEssenceStructureNameClient;
     }
 
 }

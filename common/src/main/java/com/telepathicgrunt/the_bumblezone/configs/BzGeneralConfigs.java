@@ -48,6 +48,7 @@ public class BzGeneralConfigs {
     public static int ragingEssenceCooldown = 36000;
     public static int knowingEssenceAbilityUse = 1200;
     public static int knowingEssenceCooldown = 18000;
+    public static boolean knowingEssenceStructureNameServer = true;
     public static int calmingEssenceAbilityUse = 600;
     public static int calmingEssenceCooldown = 12000;
     public static int lifeEssenceAbilityUse = 1000;

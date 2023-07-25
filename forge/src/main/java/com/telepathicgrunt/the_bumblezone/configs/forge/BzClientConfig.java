@@ -20,6 +20,7 @@ public class BzClientConfig {
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightUncommonItems;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightRareItems;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightEpicItems;
+    public static ForgeConfigSpec.BooleanValue knowingEssenceStructureNameClient;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -107,6 +108,12 @@ public class BzClientConfig {
                 .translation("the_bumblezone.config.knowingessencehighlightepicitems")
                 .define("knowingEssenceHighlightEpicItems", true);
 
+        knowingEssenceStructureNameClient = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Knowing Essence will tell you the name of structures you are in.\n")
+                .translation("the_bumblezone.config.knowingessencestructurenameclient")
+                .define("knowingEssenceStructureNameClient", true);
+
         builder.pop();
 
         playWrathOfHiveEffectMusic = builder
@@ -136,5 +143,6 @@ public class BzClientConfig {
         BzClientConfigs.knowingEssenceHighlightUncommonItems = knowingEssenceHighlightUncommonItems.get();
         BzClientConfigs.knowingEssenceHighlightRareItems = knowingEssenceHighlightRareItems.get();
         BzClientConfigs.knowingEssenceHighlightEpicItems = knowingEssenceHighlightEpicItems.get();
+        BzClientConfigs.knowingEssenceStructureNameClient = knowingEssenceStructureNameClient.get();
     }
 }

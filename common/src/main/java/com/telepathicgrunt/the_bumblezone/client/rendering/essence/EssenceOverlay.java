@@ -16,7 +16,7 @@ import java.awt.*;
 public class EssenceOverlay {
     private static final ResourceLocation TEXTURE_OVERLAY_1 = new ResourceLocation(Bumblezone.MODID, "textures/misc/active_essence_overlay.png");
 
-    public static void nearEssenceOverlay(Player player, GuiGraphics guiGraphics) {
+    public static void essenceItemOverlay(Player player, GuiGraphics guiGraphics) {
         ItemStack offhandItem = player.getOffhandItem();
 
         if (!(offhandItem.getItem() instanceof AbilityEssenceItem abilityEssenceItem)) {

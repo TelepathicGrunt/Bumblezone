@@ -1,12 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.forge;
 
-import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
@@ -201,7 +201,8 @@ public class BumblezoneForgeClient {
 
     public static void onGuiRendering(RenderGuiOverlayEvent.Pre event) {
         if (Minecraft.getInstance().player != null && event.getOverlay().id().equals(VanillaGuiOverlay.HOTBAR.id())) {
-            EssenceOverlay.nearEssenceOverlay(Minecraft.getInstance().player, event.getGuiGraphics());
+            EssenceOverlay.essenceItemOverlay(Minecraft.getInstance().player, event.getGuiGraphics());
+            KnowingEssenceStructureMessage.inStructureMessage(Minecraft.getInstance().player, event.getGuiGraphics());
         }
     }
 

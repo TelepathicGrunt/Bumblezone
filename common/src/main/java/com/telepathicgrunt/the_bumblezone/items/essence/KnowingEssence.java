@@ -6,8 +6,12 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.FoxAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,13 +27,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class KnowingEssence extends AbilityEssenceItem {
 
+    private static final String STRUCTURE_LIST = "inStructures";
     private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.knowingEssenceCooldown;
     private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.knowingEssenceAbilityUse;
 
@@ -89,8 +97,40 @@ public class KnowingEssence extends AbilityEssenceItem {
 
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
                 decrementAbilityUseRemaining(stack, serverPlayer);
+
+                if (BzGeneralConfigs.knowingEssenceStructureNameServer) {
+                    StructureManager structureManager = ((ServerLevel)level).structureManager();
+                    Map<Structure, LongSet> allStructuresAt = structureManager.getAllStructuresAt(serverPlayer.blockPosition());
+
+                    CompoundTag tag = stack.getOrCreateTag();
+                    if (!allStructuresAt.isEmpty()) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+                        int structureCount = 0;
+
+                        for (Structure structure : allStructuresAt.keySet()) {
+                            if (structureCount > 0) {
+                                stringBuilder.append(" ");
+                            }
+                            stringBuilder.append(structureRegistry.getKey(structure));
+                            structureCount++;
+                        }
+
+                        tag.putString(STRUCTURE_LIST, stringBuilder.toString());
+                    }
+                    else {
+                        tag.remove(STRUCTURE_LIST);
+                    }
+                }
+                else {
+                    stack.getOrCreateTag().remove(STRUCTURE_LIST);
+                }
             }
         }
+    }
+
+    public static String GetAllStructure(ItemStack stack) {
+        return stack.getOrCreateTag().getString(STRUCTURE_LIST);
     }
 
     public static boolean IsKnowingEssenceActive(Player player) {

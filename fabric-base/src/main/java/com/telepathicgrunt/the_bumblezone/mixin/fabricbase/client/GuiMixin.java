@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.client;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,7 +21,8 @@ public class GuiMixin {
             require = 0)
     private void bumblezone$renderEssenceOverlay(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         if (Minecraft.getInstance().player != null) {
-            EssenceOverlay.nearEssenceOverlay(Minecraft.getInstance().player, guiGraphics);
+            EssenceOverlay.essenceItemOverlay(Minecraft.getInstance().player, guiGraphics);
+            KnowingEssenceStructureMessage.inStructureMessage(Minecraft.getInstance().player, guiGraphics);
         }
     }
 }

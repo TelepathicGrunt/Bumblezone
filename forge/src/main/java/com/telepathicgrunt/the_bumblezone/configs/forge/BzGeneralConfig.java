@@ -38,6 +38,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
     public static ForgeConfigSpec.IntValue knowingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue knowingEssenceCooldown;
+    public static ForgeConfigSpec.BooleanValue knowingEssenceStructureNameServer;
     public static ForgeConfigSpec.IntValue calmingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue calmingEssenceCooldown;
     public static ForgeConfigSpec.IntValue lifeEssenceAbilityUse;
@@ -299,6 +300,12 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.knowingessencecooldown")
                 .defineInRange("knowingEssenceCooldown", 18000, 0, 1000000);
 
+        knowingEssenceStructureNameServer = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether clients should be allowed to see names of structures they are in with this item. \n")
+                .translation("the_bumblezone.config.knowingEssenceStructureNameServer")
+                .define("knowingEssenceStructureNameServer", true);
+
 
         calmingEssenceAbilityUse = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -376,6 +383,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse.get();
         BzGeneralConfigs.knowingEssenceCooldown = knowingEssenceCooldown.get();
+        BzGeneralConfigs.knowingEssenceStructureNameServer = knowingEssenceStructureNameServer.get();
         BzGeneralConfigs.calmingEssenceAbilityUse = calmingEssenceAbilityUse.get();
         BzGeneralConfigs.calmingEssenceCooldown = calmingEssenceCooldown.get();
         BzGeneralConfigs.lifeEssenceAbilityUse = lifeEssenceAbilityUse.get();
