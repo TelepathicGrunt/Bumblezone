@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "the_bumblezone:luminescent_wax_corner_red",
+  "pattern": ["w ", "ww"],
+  "key": {
+    "w": {
+      "item": "the_bumblezone:luminescent_wax_channel_red"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:luminescent_wax_corner_red",
+    "count": 3
+  }
+}

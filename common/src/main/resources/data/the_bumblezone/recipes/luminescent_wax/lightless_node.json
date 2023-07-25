@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "category": "building",
+  "group": "the_bumblezone:luminescent_wax_node",
   "ingredients": [
     {
       "tag": "the_bumblezone:luminescent_wax/light_nodes"

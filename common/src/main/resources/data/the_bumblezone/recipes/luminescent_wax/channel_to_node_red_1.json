@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "the_bumblezone:luminescent_wax_node_red",
+  "pattern": [" w ", "   ", "w w"],
+  "key": {
+    "w": {
+      "item": "the_bumblezone:luminescent_wax_channel_red"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:luminescent_wax_node_red",
+    "count": 3
+  }
+}

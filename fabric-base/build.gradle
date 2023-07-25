@@ -40,7 +40,7 @@ dependencies {
     //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
     modCompileOnly("dev.emi:trinkets:${trinkets}")
 
-    modCompileOnly "dev.emi:emi:${rootProject.emi}"
+    modCompileOnly "dev.emi:emi-fabric:${rootProject.emi}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
 
