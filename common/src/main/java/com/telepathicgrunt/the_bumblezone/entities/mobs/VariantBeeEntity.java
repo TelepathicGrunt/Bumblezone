@@ -66,7 +66,21 @@ public class VariantBeeEntity extends Bee {
 
    @Override
    public Bee getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-      return BzEntities.VARIANT_BEE.get().create(serverLevel);
+      if (ageableMob instanceof VariantBeeEntity variantBeeEntity) {
+         VariantBeeEntity babyBee = BzEntities.VARIANT_BEE.get().create(serverLevel);
+
+         if (babyBee != null) {
+            babyBee.setVariant(variantBeeEntity.getVariant());
+         }
+
+         return babyBee;
+      }
+      else if (ageableMob instanceof Bee) {
+         return EntityType.BEE.create(serverLevel);
+      }
+      else {
+         return BzEntities.VARIANT_BEE.get().create(serverLevel);
+      }
    }
 
    @Override

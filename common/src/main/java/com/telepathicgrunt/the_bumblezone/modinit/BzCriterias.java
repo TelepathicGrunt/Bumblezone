@@ -91,6 +91,7 @@ public class BzCriterias {
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_pearl"));
     public static final GenericTrigger TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "teleport_to_bumblezone_piston"));
     public static final GenericTrigger TRIGGER_REDSTONE_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "trigger_redstone_honey_web"));
+    public static final CounterTrigger VARIANT_BEE_BRIEFCASE_CAPTURE_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "variant_bee_briefcase_capture"));
 
     public static void registerCriteriaTriggers() {
         register(BEE_BREEDING_TRIGGER);
@@ -165,6 +166,7 @@ public class BzCriterias {
         register(TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER);
         register(TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER);
         register(TRIGGER_REDSTONE_HONEY_WEB_TRIGGER);
+        register(VARIANT_BEE_BRIEFCASE_CAPTURE_TRIGGER);
     }
 
     @ExpectPlatform

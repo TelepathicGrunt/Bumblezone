@@ -1,9 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
+import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseMenuProvider;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -36,6 +39,7 @@ import java.util.List;
 
 public class BuzzingBriefcase extends Item {
     public static final String TAG_BEES = "BeesStored";
+    public static final String TAG_VARANT_BEES = "VariantBeesStored";
     public static final int MAX_NUMBER_OF_BEES = 14;
 
     public BuzzingBriefcase(Properties properties) {
@@ -101,6 +105,11 @@ public class BuzzingBriefcase extends Item {
 
             if(player instanceof ServerPlayer && getBeesStored(player.level(), briefcaseItem, false).size() == MAX_NUMBER_OF_BEES) {
                 BzCriterias.BUZZING_BRIEFCASE_FULL_TRIGGER.trigger((ServerPlayer) player);
+            }
+
+            int variantBeesCaught = briefcaseItem.getOrCreateTag().getInt(TAG_VARANT_BEES);
+            if (player instanceof ServerPlayer serverPlayer && variantBeesCaught > 0) {
+                BzCriterias.VARIANT_BEE_BRIEFCASE_CAPTURE_TRIGGER.trigger(serverPlayer, variantBeesCaught);
             }
 
             return InteractionResult.SUCCESS;
@@ -187,7 +196,12 @@ public class BuzzingBriefcase extends Item {
                     CompoundTag beeTag = beeList.getCompound(0);
                     beeList.remove(0);
                     Entity entity = EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+
                     if (entity != null) {
+                        if (entity instanceof VariantBeeEntity) {
+                            briefcaseTag.putInt(TAG_VARANT_BEES, Math.max(0, briefcaseTag.getInt(TAG_VARANT_BEES) - 1));
+                        }
+
                         if (addBeeToList(beesStored, beeTag, entity)) {
                             break;
                         }
@@ -240,7 +254,12 @@ public class BuzzingBriefcase extends Item {
                 if (removeFromList) {
                     beeList.remove(beeIndex);
                 }
-                return EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+
+                Entity entity = EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx);
+                if (entity instanceof VariantBeeEntity && removeFromList) {
+                    briefcaseTag.putInt(TAG_VARANT_BEES, Math.max(0, briefcaseTag.getInt(TAG_VARANT_BEES) - 1));
+                }
+                return entity;
             }
             return null;
         }
@@ -250,6 +269,7 @@ public class BuzzingBriefcase extends Item {
     public static void overrwriteBees(ItemStack briefcaseItem, List<Entity> bees) {
         CompoundTag briefcaseTag = briefcaseItem.getOrCreateTag();
         briefcaseTag.remove(TAG_BEES);
+        briefcaseTag.remove(TAG_VARANT_BEES);
         bees.forEach(bee -> tryAddBee(briefcaseItem, bee));
     }
 
@@ -267,6 +287,10 @@ public class BuzzingBriefcase extends Item {
             beeList.add(beeTag);
 
             bee.discard();
+
+            if (bee instanceof VariantBeeEntity) {
+                briefcaseTag.putInt(TAG_VARANT_BEES, briefcaseTag.getInt(TAG_VARANT_BEES) + 1);
+            }
             return true;
         }
         return false;
