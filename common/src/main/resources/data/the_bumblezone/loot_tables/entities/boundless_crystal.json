@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:entity",
+  "random_sequence": "the_bumblezone:entities",
+  "pools": []
+}

@@ -14,19 +14,21 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Vector3f;
 
 public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends HierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "boundless_crystal"), "main");
 
-    private static final Vector3f ANIMATION_VECTOR_CACHE = new Vector3f();
     private final ModelPart bottom;
     private final ModelPart middle;
     private final ModelPart top;
     private final ModelPart root;
 
     public BoundlessCrystalModel(ModelPart root) {
+        super(RenderType::entityTranslucentEmissive);
+
         this.root = root;
         this.bottom = root.getChild("bottom");
         this.middle = root.getChild("middle");
@@ -75,11 +77,12 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
         this.bottom.getAllParts().forEach(ModelPart::resetPose);
         this.middle.getAllParts().forEach(ModelPart::resetPose);
         this.top.getAllParts().forEach(ModelPart::resetPose);
-        this.animate(entity.rotateAnimationState, RootminAnimations.IDLE, ageInTicks);
+        this.animate(entity.rotateAnimationState, BoundlessCrystalAnimation.MODEL_ROTATE, ageInTicks);
     }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        poseStack.translate(0, -0.25, 0);
         this.root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
