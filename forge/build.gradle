@@ -64,7 +64,7 @@ dependencies {
     //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
     //modCompileOnly("dev.emi:emi-forge:${emi}:api")
-    modLocalRuntime("dev.emi:emi-forge:${emi}")
+    //modLocalRuntime("dev.emi:emi-forge:${emi}")
 
     //modLocalRuntime("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
     //modLocalRuntime("dev.architectury:architectury-forge:${project.architectury}")
