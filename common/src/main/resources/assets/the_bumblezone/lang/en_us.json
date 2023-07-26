@@ -1055,11 +1055,11 @@
   "tag.item.the_bumblezone.super_candles": "Super Candles",
   "tag.item.the_bumblezone.turn_slime_to_honey_slime": "Converts Slime To Honey Slime Items",
   "tag.item.the_bumblezone.essence.calming_drowned_bonus_held_item": "Calming Essence Arena Drowned Held items",
-  "tag.item.the_bumblezone.essence.essence_items": "Essence Items",
+  "tag.item.the_bumblezone.essence_items": "Essence Items",
 
-  "tag.item.the_bumblezone.convertible_to_sugar_water": "Converts To Sugar Water Fluids",
-  "tag.item.the_bumblezone.honey": "Honey Fluids",
-  "tag.item.the_bumblezone.royal_jelly": "Royal Jelly Fluids",
-  "tag.item.the_bumblezone.special_honey_like": "Special Honey-like Fluids",
-  "tag.item.the_bumblezone.sugar_water": "Sugar Water Fluids"
+  "tag.fluid.the_bumblezone.convertible_to_sugar_water": "Converts To Sugar Water Fluids",
+  "tag.fluid.the_bumblezone.honey": "Honey Fluids",
+  "tag.fluid.the_bumblezone.royal_jelly": "Royal Jelly Fluids",
+  "tag.fluid.the_bumblezone.special_honey_like": "Special Honey-like Fluids",
+  "tag.fluid.the_bumblezone.sugar_water": "Sugar Water Fluids"
 }
