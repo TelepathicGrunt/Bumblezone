@@ -1025,9 +1025,11 @@
   "tag.item.the_bumblezone.dyes.green": "Green Dyes",
   "tag.item.the_bumblezone.dyes.red": "Red Dyes",
   "tag.item.the_bumblezone.dyes.black": "Black Dyes",
-  "tag.item.the_bumblezone.luminescent_wax.channels": "Luminescent Wax Channels",
   "tag.item.the_bumblezone.luminescent_wax.light_channels": "Luminescent Wax Light Channels",
+  "tag.item.the_bumblezone.luminescent_wax.light_corners": "Luminescent Wax Light Corners",
   "tag.item.the_bumblezone.luminescent_wax.light_nodes": "Luminescent Wax Light Nodes",
+  "tag.item.the_bumblezone.luminescent_wax.channels": "Luminescent Wax Channels",
+  "tag.item.the_bumblezone.luminescent_wax.corners": "Luminescent Wax Corners",
   "tag.item.the_bumblezone.luminescent_wax.nodes": "Luminescent Wax Nodes",
   "tag.item.the_bumblezone.mob_luring.beehemoth": "Beehemoth Luring",
   "tag.item.the_bumblezone.mob_luring.beehemoth_fast_luring": "Beehemoth Fast Luring",
@@ -1052,10 +1054,12 @@
   "tag.item.the_bumblezone.string_curtains": "String Curtains",
   "tag.item.the_bumblezone.super_candles": "Super Candles",
   "tag.item.the_bumblezone.turn_slime_to_honey_slime": "Converts Slime To Honey Slime Items",
+  "tag.item.the_bumblezone.essence.calming_drowned_bonus_held_item": "Calming Essence Arena Drowned Held items",
+  "tag.item.the_bumblezone.essence.essence_items": "Essence Items",
 
-  "tag.item.the_bumblezone.fluids.convertible_to_sugar_water": "Converts To Sugar Water Fluids",
-  "tag.item.the_bumblezone.fluids.honey": "Honey Fluids",
-  "tag.item.the_bumblezone.fluids.royal_jelly": "Royal Jelly Fluids",
-  "tag.item.the_bumblezone.fluids.special_honey_like": "Special Honey-like Fluids",
-  "tag.item.the_bumblezone.fluids.sugar_water": "Sugar Water Fluids"
+  "tag.item.the_bumblezone.convertible_to_sugar_water": "Converts To Sugar Water Fluids",
+  "tag.item.the_bumblezone.honey": "Honey Fluids",
+  "tag.item.the_bumblezone.royal_jelly": "Royal Jelly Fluids",
+  "tag.item.the_bumblezone.special_honey_like": "Special Honey-like Fluids",
+  "tag.item.the_bumblezone.sugar_water": "Sugar Water Fluids"
 }

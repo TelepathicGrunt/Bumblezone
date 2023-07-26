@@ -16,6 +16,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -333,7 +334,12 @@ public class RagingEssence extends AbilityEssenceItem {
         return GetTeamColor(entity, player) != -1;
     }
 
-    private static final int RED = 16711680;
+    private static final int RED_1 = 0x550000;
+    private static final int RED_2 = 0x770000;
+    private static final int RED_3 = 0x990000;
+    private static final int RED_4 = 0xBB0000;
+    private static final int RED_5 = 0xDD0000;
+    private static final int RED_6 = 0xFF0000;
     private static final int NO_HIGHLIGHT = -1;
 
     public static int GetTeamColor(Entity entity, Player player) {
@@ -345,7 +351,32 @@ public class RagingEssence extends AbilityEssenceItem {
         if ((rageState == RagingEssence.maxRageState && isTargetable(entity, player.getUUID())) ||
             currentTargetsToKill.contains(entity.getUUID()))
         {
-            return RED;
+            switch (rageState) {
+                case 0, 1 -> {
+                    return RED_1;
+                }
+                case 2 -> {
+                    return RED_2;
+                }
+                case 3 -> {
+                    return RED_3;
+                }
+                case 4 -> {
+                    return RED_4;
+                }
+                case 5 -> {
+                    return RED_5;
+                }
+                case 6 -> {
+                    return RED_6;
+                }
+                case 7 -> {
+                    float percentage = Math.abs(((player.tickCount % 40) - 20) / 20f);
+                    int red = 0xFF;
+                    int green = Mth.lerpInt(percentage, 0x00, 0x80);
+                    return ((red & 0xFF) << 16) | ((green & 0xFF) << 8);
+                }
+            }
         }
 
         return NO_HIGHLIGHT;
