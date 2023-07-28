@@ -20,6 +20,8 @@
   "death.attack.spikes.player": "%1$s was impaled during an Knowing Essence Event",
   "death.attack.sentry_watcher_crushing": "%1$s was crushed to death by a Sentry Watcher",
   "death.attack.sentry_watcher_crushing.player": "%1$s was crushed to death by a Sentry Watcher",
+  "death.attack.boundless_crystal": "%1$s was obliterated by the Boundless Crystal's power",
+  "death.attack.boundless_crystal.player": "%1$s was obliterated by the Boundless Crystal's power",
 
   "block.the_bumblezone.porous_honeycomb_block": "Porous Honeycomb Block",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Filled Porous Honeycomb Block",

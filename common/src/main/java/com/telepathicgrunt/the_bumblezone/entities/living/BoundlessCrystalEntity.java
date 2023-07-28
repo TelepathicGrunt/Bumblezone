@@ -5,7 +5,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalState;
 import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -30,6 +32,7 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AnimationState;
@@ -64,6 +67,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class BoundlessCrystalEntity extends LivingEntity {
@@ -104,17 +108,26 @@ public class BoundlessCrystalEntity extends LivingEntity {
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide() && this.tickCount % 5 == 0) {
+        if (this.level().isClientSide() && (this.tickCount % 5 == 0 || this.hurtTime > 0)) {
             Vec3 center = this.getBoundingBox().getCenter();
-            this.level().addParticle(
-                    ParticleTypes.END_ROD,
-                    center.x() + this.random.nextGaussian() / 5,
-                    center.y() + this.random.nextGaussian() / 2.5,
-                    center.z() + this.random.nextGaussian() / 5,
-                    (this.random.nextFloat() * this.random.nextGaussian() / 15),
-                    (this.random.nextFloat() * this.random.nextGaussian() / 15),
-                    (this.random.nextFloat() * this.random.nextGaussian() / 15));
+            spawnFancyParticle(center);
+            if (this.hurtTime == 8) {
+                for (int i = 0; i < 50; i++) {
+                    spawnFancyParticle(center);
+                }
+            }
         }
+    }
+
+    private void spawnFancyParticle(Vec3 center) {
+        this.level().addParticle(
+                ParticleTypes.END_ROD,
+                center.x() + this.random.nextGaussian() / 5,
+                center.y() + this.random.nextGaussian() / 2.5,
+                center.z() + this.random.nextGaussian() / 5,
+                (this.random.nextFloat() * this.random.nextGaussian() / 15),
+                (this.random.nextFloat() * this.random.nextGaussian() / 15),
+                (this.random.nextFloat() * this.random.nextGaussian() / 15));
     }
 
     @Override
@@ -203,20 +216,48 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
         List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
-            int j;
-            int i = this.level().getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
-            if (i > 0 && list.size() > i - 1 && this.random.nextInt(4) == 0) {
-                j = 0;
-                for (int k = 0; k < list.size(); ++k) {
-                    if (list.get(k).isPassenger()) continue;
-                    ++j;
+            int entityIndex;
+            int maxCrammingLimit = this.level().getGameRules().getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
+            if (maxCrammingLimit > 0 && list.size() > maxCrammingLimit - 1 && this.random.nextInt(4) == 0) {
+                entityIndex = 0;
+                for (Entity entity : list) {
+                    if (entity.isPassenger()) continue;
+                    ++entityIndex;
                 }
             }
 
-            for (j = 0; j < list.size(); ++j) {
-                Entity entity = list.get(j);
+            for (entityIndex = 0; entityIndex < list.size(); ++entityIndex) {
+                Entity entity = list.get(entityIndex);
                 this.doPush(entity);
-                // TODO: damage entities here
+
+                if (entity instanceof LivingEntity livingEntity && !(entity instanceof BoundlessCrystalEntity)) {
+                    float damageAmount;
+                    float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
+
+                    if (livingEntity instanceof ServerPlayer serverPlayer) {
+                        if (serverPlayer.isCreative()) {
+                            continue;
+                        }
+
+                        if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                            damageAmount = maxHealth / 8;
+                        }
+                        else {
+                            damageAmount = maxHealth / 4;
+                        }
+                    }
+                    else {
+                        damageAmount = maxHealth / 8;
+                    }
+
+                    livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE), damageAmount);
+
+                    for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+                        if (mobEffect.isBeneficial()) {
+                            livingEntity.removeEffect(mobEffect);
+                        }
+                    }
+                }
             }
         }
     }
