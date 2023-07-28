@@ -79,9 +79,11 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
             int p = LivingEntityRenderer.getOverlayCoords(boundlessCrystalEntity, this.getWhiteOverlayProgress(boundlessCrystalEntity, g));
 
-            float red = 1.0f;
-            float green = 1.0f;
-            float blue = 1.0f;
+            float currentHealthState = (Math.min(1, boundlessCrystalEntity.getHealth() / boundlessCrystalEntity.getMaxHealth()) * 0.33f) + 0.67f;
+
+            float red = currentHealthState;
+            float green = currentHealthState;
+            float blue = currentHealthState;
 
             if (boundlessCrystalEntity.getTicksFrozen() > 0) {
                 red *= 0.75f;
