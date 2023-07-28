@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.Boun
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -106,6 +107,15 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 center.x() + this.random.nextGaussian() / 5,
                 center.y() + this.random.nextGaussian() / 2.5,
                 center.z() + this.random.nextGaussian() / 5,
+                (this.random.nextFloat() * this.random.nextGaussian() / 15),
+                (this.random.nextFloat() * this.random.nextGaussian() / 15),
+                (this.random.nextFloat() * this.random.nextGaussian() / 15));
+
+        this.level().addParticle(
+                BzParticles.SPARKLE_PARTICLE.get(),
+                center.x() + this.random.nextGaussian() / 4,
+                center.y() + this.random.nextGaussian() / 2.5,
+                center.z() + this.random.nextGaussian() / 4,
                 (this.random.nextFloat() * this.random.nextGaussian() / 15),
                 (this.random.nextFloat() * this.random.nextGaussian() / 15),
                 (this.random.nextFloat() * this.random.nextGaussian() / 15));
