@@ -1,10 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.living;
 
-import com.google.common.base.Objects;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalState;
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
@@ -16,56 +12,39 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
+import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -99,10 +78,12 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
     }
 
     public void tick() {
@@ -141,8 +122,50 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.xRotO = this.getXRot();
         this.yRotO = this.getYRot();
 
-        this.clearFire();
-        this.extinguishFire();
+        if (this.level().isClientSide) {
+            this.clearFire();
+        }
+        else if (this.getRemainingFireTicks() > 0) {
+            if (this.getRemainingFireTicks() > 25) {
+                this.setRemainingFireTicks(25);
+            }
+
+            if (this.getRemainingFireTicks() == 1 && !this.isInLava()) {
+                this.hurt(this.damageSources().onFire(), 1.0f);
+            }
+            this.setRemainingFireTicks(this.getRemainingFireTicks() - 1);
+
+            if (this.getTicksFrozen() > 0) {
+                this.setTicksFrozen(0);
+                this.level().levelEvent(null, 1009, this.blockPosition(), 1);
+            }
+        }
+        else {
+            this.setRemainingFireTicks(-1);
+        }
+
+        if (!this.level().isClientSide && this.getTicksFrozen() > 0) {
+            if (this.wasInPowderSnow && !this.isInPowderSnow && this.canFreeze()) {
+                this.setTicksFrozen(39);
+            }
+            else if (this.isInPowderSnow && this.canFreeze()) {
+                if (this.getTicksFrozen() > 39 && this.getTicksFrozen() < 70) {
+                    if (this.getTicksFrozen() == 69) {
+                        this.hurt(this.damageSources().freeze(), 1.0f);
+                    }
+                }
+                else {
+                    this.setTicksFrozen(40);
+                }
+            }
+
+            if (this.getTicksFrozen() == 1 || this.getTicksFrozen() == 2) {
+                this.hurt(this.damageSources().freeze(), 1.0f);
+            }
+        }
+
+        this.wasInPowderSnow = this.isInPowderSnow;
+        this.isInPowderSnow = false;
 
         if (this.hurtTime > 0) {
             --this.hurtTime;
@@ -176,7 +199,56 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.yRotO = this.getYRot();
         this.xRotO = this.getXRot();
 
+        for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
+            MobEffect mobEffect = mobEffectInstance.getEffect();
+            int currentEffectTick = mobEffectInstance.isInfiniteDuration() ? Integer.MAX_VALUE : mobEffectInstance.getDuration();
+
+            if (mobEffect == MobEffects.POISON) {
+                if (currentEffectTick > 45) {
+                    this.forceAddEffect(new MobEffectInstance(
+                            mobEffect,
+                            45,
+                            mobEffectInstance.getAmplifier(),
+                            mobEffectInstance.isAmbient(),
+                            mobEffectInstance.isVisible(),
+                            mobEffectInstance.showIcon()
+                        ),
+                        this);
+                }
+            }
+            else if (mobEffect == MobEffects.WITHER) {
+                if (currentEffectTick > 80) {
+                    this.forceAddEffect(new MobEffectInstance(
+                            mobEffect,
+                            80,
+                            mobEffectInstance.getAmplifier(),
+                            mobEffectInstance.isAmbient(),
+                            mobEffectInstance.isVisible(),
+                            mobEffectInstance.showIcon()
+                        ),
+                        this);
+                }
+            }
+            else if (currentEffectTick > 30 && !mobEffectInstance.getEffect().isBeneficial()) {
+                this.forceAddEffect(new MobEffectInstance(
+                        mobEffect,
+                        30,
+                        mobEffectInstance.getAmplifier(),
+                        mobEffectInstance.isAmbient(),
+                        mobEffectInstance.isVisible(),
+                        mobEffectInstance.showIcon()
+                    ),
+                    this);
+            }
+        }
+
         this.tickEffects();
+
+        if (!this.level().isClientSide) {
+            this.setSharedFlagOnFire(this.getRemainingFireTicks() > 0);
+        }
+
+        this.firstTick = false;
     }
 
     @Override
@@ -273,6 +345,11 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     @Override
+    public boolean canBeAffected(MobEffectInstance mobEffectInstance) {
+        return true;
+    }
+
+    @Override
     protected void dropExperience() {}
 
     @Override
@@ -309,15 +386,16 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     @Override
+    public boolean fireImmune() {
+        return false;
+    }
+
+    @Override
     public void lavaHurt() {}
 
     @Override
-    public void setSecondsOnFire(int i) {
-        int j = i * 20;
-        j = ProtectionEnchantment.getFireAfterDampener(this, j);
-        if (j > 5) {
-            this.setRemainingFireTicks(Math.max(j, 20));
-        }
+    public boolean displayFireAnimation() {
+        return false;
     }
 
     @Override
@@ -356,6 +434,18 @@ public class BoundlessCrystalEntity extends LivingEntity {
                         {
                             this.level().destroyBlock(mutableBlockPos, true);
                         }
+                        else {
+                            try {
+                                blockState.entityInside(this.level(), mutableBlockPos, this);
+                                this.onInsideBlock(blockState);
+                            }
+                            catch (Throwable throwable) {
+                                CrashReport crashReport = CrashReport.forThrowable(throwable, "Colliding entity with block");
+                                CrashReportCategory crashReportCategory = crashReport.addCategory("Block being collided with");
+                                CrashReportCategory.populateBlockDetails(crashReportCategory, this.level(), mutableBlockPos, blockState);
+                                throw new ReportedException(crashReport);
+                            }
+                        }
                     }
                 }
             }
@@ -363,7 +453,28 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     @Override
-    public boolean hurt(DamageSource damageSource, float f) {
+    protected void onEffectAdded(MobEffectInstance mobEffectInstance, @Nullable Entity entity) {
+        super.onEffectAdded(mobEffectInstance, entity);
+
+        if (this.level() instanceof ServerLevel serverLevel) {
+            serverLevel.players().forEach(p -> p.connection.send(new ClientboundUpdateMobEffectPacket(this.getId(), mobEffectInstance)));
+        }
+    }
+
+    @Override
+    protected void onEffectRemoved(MobEffectInstance mobEffectInstance) {
+        super.onEffectRemoved(mobEffectInstance);
+        if (this.level() instanceof ServerLevel serverLevel) {
+            serverLevel.players().forEach(p -> p.connection.send(new ClientboundRemoveMobEffectPacket(this.getId(), mobEffectInstance.getEffect())));
+        }
+    }
+
+    @Override
+    public boolean hurt(DamageSource damageSource, float damageAmount) {
+        if (damageAmount > 1) {
+            damageAmount = 1;
+        }
+
         Entity entity2;
         if (this.isInvulnerableTo(damageSource)) {
             return false;
@@ -381,100 +492,80 @@ public class BoundlessCrystalEntity extends LivingEntity {
             this.stopSleeping();
         }
         this.noActionTime = 0;
-        float g = f;
+
         boolean bl = false;
-        float h = 0.0f;
-        if (f > 0.0f && this.isDamageSourceBlocked(damageSource)) {
-            Entity entity;
-            this.hurtCurrentlyUsedShield(f);
-            h = f;
-            f = 0.0f;
-            if (!damageSource.is(DamageTypeTags.IS_PROJECTILE) && (entity = damageSource.getDirectEntity()) instanceof LivingEntity) {
-                LivingEntity livingEntity = (LivingEntity)entity;
-                this.blockUsingShield(livingEntity);
-            }
-            bl = true;
-        }
-        if (damageSource.is(DamageTypeTags.IS_FREEZING) && this.getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)) {
-            f *= 5.0f;
-        }
-        this.walkAnimation.setSpeed(1.5f);
-        boolean bl2 = true;
-        if ((float)this.invulnerableTime > 10.0f && !damageSource.is(DamageTypeTags.BYPASSES_COOLDOWN)) {
-            if (f <= this.lastHurt) {
-                return false;
-            }
-            this.actuallyHurt(damageSource, f - this.lastHurt);
-            this.lastHurt = f;
-            bl2 = false;
+
+        if (this.invulnerableTime > 0) {
+            return false;
         }
         else {
-            this.lastHurt = f;
+            this.lastHurt = damageAmount;
             this.invulnerableTime = 20;
-            this.actuallyHurt(damageSource, f);
+            this.actuallyHurt(damageSource, damageAmount);
             this.hurtTime = this.hurtDuration = 10;
         }
+
         if (damageSource.is(DamageTypeTags.DAMAGES_HELMET) && !this.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-            this.hurtHelmet(damageSource, f);
-            f *= 0.75f;
+            this.hurtHelmet(damageSource, damageAmount);
+            damageAmount *= 0.75f;
         }
+
         if ((entity2 = damageSource.getEntity()) != null) {
-            Wolf wolf;
             if (entity2 instanceof LivingEntity livingEntity2) {
                 if (!damageSource.is(DamageTypeTags.NO_ANGER)) {
                     this.setLastHurtByMob(livingEntity2);
                 }
             }
+
             if (entity2 instanceof Player player) {
                 this.lastHurtByPlayerTime = 100;
                 this.lastHurtByPlayer = player;
             }
-            else if (entity2 instanceof Wolf && (wolf = (Wolf)entity2).isTame()) {
+            else if (entity2 instanceof TamableAnimal tamableAnimal && tamableAnimal.isTame()) {
                 this.lastHurtByPlayerTime = 100;
-                LivingEntity livingEntity = wolf.getOwner();
+                LivingEntity livingEntity = tamableAnimal.getOwner();
                 this.lastHurtByPlayer = livingEntity instanceof Player ? (Player)livingEntity : null;
             }
         }
-        if (bl2) {
-            if (bl) {
-                this.level().broadcastEntityEvent(this, (byte)29);
+
+        this.level().broadcastDamageEvent(this, damageSource);
+        if (!damageSource.is(DamageTypeTags.NO_IMPACT)) {
+            this.markHurt();
+        }
+
+        if (entity2 != null && !damageSource.is(DamageTypeTags.IS_EXPLOSION)) {
+            double xDiff = entity2.getX() - this.getX();
+            double zDiff = entity2.getZ() - this.getZ();
+            while (xDiff * xDiff + zDiff * zDiff < 1.0E-4) {
+                xDiff = (Math.random() - Math.random()) * 0.01;
+                zDiff = (Math.random() - Math.random()) * 0.01;
             }
-            else {
-                this.level().broadcastDamageEvent(this, damageSource);
-            }
-            if (!(damageSource.is(DamageTypeTags.NO_IMPACT) || bl && !(f > 0.0f))) {
-                this.markHurt();
-            }
-            if (entity2 != null && !damageSource.is(DamageTypeTags.IS_EXPLOSION)) {
-                double d = entity2.getX() - this.getX();
-                double e = entity2.getZ() - this.getZ();
-                while (d * d + e * e < 1.0E-4) {
-                    d = (Math.random() - Math.random()) * 0.01;
-                    e = (Math.random() - Math.random()) * 0.01;
-                }
-                if (!bl) {
-                    this.indicateDamage(d, e);
-                }
+            if (!bl) {
+                this.indicateDamage(xDiff, zDiff);
             }
         }
+
         if (this.isDeadOrDying()) {
             SoundEvent soundEvent = this.getDeathSound();
-            if (bl2 && soundEvent != null) {
+            if (soundEvent != null) {
                 this.playSound(soundEvent, this.getSoundVolume(), this.getVoicePitch());
             }
             this.die(damageSource);
         }
-        else if (bl2) {
+        else {
             this.playHurtSound(damageSource);
         }
-        boolean bl3 = !bl || f > 0.0f;
-        if (bl3) {
+
+        boolean dealtDamage = damageAmount > 0;
+        if (dealtDamage) {
             ((LivingEntityAccessor)this).setLastDamageSource(damageSource);
             ((LivingEntityAccessor)this).setLastDamageStamp(this.level().getGameTime());
         }
+
         if (entity2 instanceof ServerPlayer) {
-            CriteriaTriggers.PLAYER_HURT_ENTITY.trigger((ServerPlayer)entity2, this, damageSource, g, f, bl);
+            CriteriaTriggers.PLAYER_HURT_ENTITY.trigger((ServerPlayer)entity2, this, damageSource, damageAmount, damageAmount, bl);
         }
-        return bl3;
+
+        return damageAmount > 0;
     }
 }
