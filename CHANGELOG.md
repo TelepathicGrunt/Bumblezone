@@ -306,6 +306,8 @@ Adjusted texture for one Honey Bee Leggings to make it more distinct from the ot
 
 Honey Bee Leggings item texture will now show pollen if the item actually has pollen set in nbt.
 
+Many Bumblezone Music Discs now shows a link to where one can buy the song as part of the item's tooltip.
+
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
 
