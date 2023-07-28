@@ -30,6 +30,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -55,7 +56,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 5200;
+        return 5400;
     }
 
     @Override
@@ -97,18 +98,21 @@ public class EssenceBlockYellow extends EssenceBlock {
                 electricRingEntity.blockEntity = essenceBlockEntity;
                 ringsActive++;
             }
+            else if (entity instanceof Vex vex && vex.getTarget() != null && vex.tickCount % 20 == 0) {
+                Vec3 targetDirection = vex.getTarget().position().subtract(vex.position()).normalize();
+                if (vex.isCharging()) {
+                    vex.addDeltaMovement(targetDirection.scale(0.3));
+                }
+                if (vex.getRandom().nextInt(15) == 0) {
+                    vex.getMoveControl().setWantedPosition(vex.getX(), vex.getY(), vex.getZ(), 1);
+                }
+            }
         }
 
         if (ringsPassed != RINGS_TO_PASS && ringsActive == 0) {
             // spawn a ring this tick.
             spawnNewRing(serverLevel, blockPos, essenceBlockEntity, ringsPassed, eventEntitiesInArena);
             if (ringsPassed >= 2) {
-                spawnNewEnemy(serverLevel, blockPos, essenceBlockEntity, eventEntitiesInArena);
-            }
-            if (ringsPassed >= RINGS_TO_PASS / 4) {
-                spawnNewEnemy(serverLevel, blockPos, essenceBlockEntity, eventEntitiesInArena);
-            }
-            if (ringsPassed >= RINGS_TO_PASS / 2) {
                 spawnNewEnemy(serverLevel, blockPos, essenceBlockEntity, eventEntitiesInArena);
             }
         }

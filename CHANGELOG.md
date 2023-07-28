@@ -256,6 +256,8 @@ Several Bumblezone's full solid blocks has instruments set for Note Blocks to pl
 
 Crystalline Flower can be broken by pistons now and drop itself.
 
+Crystalline Flower now takes slightly more than 100 XP to get to tier 2 so consuming enchanted books cannot be infinitely recycled for infinite Honey Crystal Shards.
+
 Glistering Honey Crystal should not suffocate mobs inside itself, and it blocks Redstone power like how Glowstone blocks power.
 
 Any Super Candle can be crafted to another color with 2 dyes now!
