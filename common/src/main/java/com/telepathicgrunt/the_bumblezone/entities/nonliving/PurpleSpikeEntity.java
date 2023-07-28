@@ -147,7 +147,7 @@ public class PurpleSpikeEntity extends Entity {
                             damageAmount = maxHealth / 10;
                         }
 
-                        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE), damageAmount);
+                        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), damageAmount);
                         this.makeParticle(1, true);
                     }
                 }

@@ -27,7 +27,7 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
     private final ModelPart root;
 
     public BoundlessCrystalModel(ModelPart root) {
-        super(RenderType::entityTranslucentEmissive);
+        super(RenderType::entityTranslucent);
 
         this.root = root;
         this.bottom = root.getChild("bottom");

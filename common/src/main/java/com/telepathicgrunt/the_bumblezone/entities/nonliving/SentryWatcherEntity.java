@@ -526,7 +526,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
                for (Entity entity : list) {
                   if (!entity.getType().is(BzTags.SENTRY_WATCHER_CANNOT_DAMAGE)) {
-                     entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), 1);
+                     entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), 1);
                      if (entity instanceof LivingEntity livingEntity) {
                         float oldHealth = livingEntity.getHealth();
                         float maxhealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
@@ -536,7 +536,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                         livingEntity.setHealth((float) newHealth);
 
                         double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
-                        livingEntity.hurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) armorDamage);
+                        livingEntity.hurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), (float) armorDamage);
                      }
                   }
                }
@@ -840,7 +840,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                int beeArmorOn = BeeArmor.getBeeThemedWearablesCount(entity);
                damageMultiplier -= (beeArmorOn * 1.333333f);
 
-               entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) (speedDiff * damageMultiplier));
+               entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), (float) (speedDiff * damageMultiplier));
             }
          }
          else {

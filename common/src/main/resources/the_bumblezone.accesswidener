@@ -31,3 +31,5 @@ extendable method net/minecraft/world/level/material/FlowingFluid canHoldFluid (
 
 accessible method net/minecraft/world/level/block/entity/BrushableBlockEntity dropContent (Lnet/minecraft/world/entity/player/Player;)V
 extendable method net/minecraft/world/level/block/entity/BrushableBlockEntity brushingCompleted (Lnet/minecraft/world/entity/player/Player;)V
+
+accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;

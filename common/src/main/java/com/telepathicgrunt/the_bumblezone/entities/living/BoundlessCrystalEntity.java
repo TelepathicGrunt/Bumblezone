@@ -322,13 +322,25 @@ public class BoundlessCrystalEntity extends LivingEntity {
                         damageAmount = maxHealth / 8;
                     }
 
-                    livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE), damageAmount);
+                    livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
 
                     for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
                         if (mobEffect.isBeneficial()) {
                             livingEntity.removeEffect(mobEffect);
                         }
                     }
+
+                    Vec3 center = livingEntity.getBoundingBox().getCenter();
+                    ((ServerLevel)this.level()).sendParticles(
+                            ParticleTypes.END_ROD,
+                            center.x() + this.random.nextGaussian() / 5,
+                            center.y() + this.random.nextGaussian() / 2.5,
+                            center.z() + this.random.nextGaussian() / 5,
+                            15,
+                            (this.random.nextFloat() * this.random.nextGaussian() / 15),
+                            (this.random.nextFloat() * this.random.nextGaussian() / 15),
+                            (this.random.nextFloat() * this.random.nextGaussian() / 15),
+                            (this.random.nextFloat() * 0.035) + 0.085);
                 }
             }
         }

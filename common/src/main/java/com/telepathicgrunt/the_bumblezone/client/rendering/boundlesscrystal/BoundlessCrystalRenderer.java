@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -39,11 +40,12 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
                 Component.literal("Health: " + boundlessCrystalEntity.getHealth()),
                 stack,
                 buffer,
-                packedLight);
+                LightTexture.FULL_BRIGHT);
     }
 
-    public void renderLiving(BoundlessCrystalEntity boundlessCrystalEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
+    public void renderLiving(BoundlessCrystalEntity boundlessCrystalEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
         poseStack.pushPose();
+        packedLight = LightTexture.FULL_BRIGHT;
         this.model.attackTime = this.getAttackAnim(boundlessCrystalEntity, g);
         this.model.riding = boundlessCrystalEntity.isPassenger();
         this.model.young = boundlessCrystalEntity.isBaby();
@@ -77,7 +79,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         RenderType renderType = this.getRenderType(boundlessCrystalEntity, bl, bl2, bl3);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            int p = LivingEntityRenderer.getOverlayCoords(boundlessCrystalEntity, this.getWhiteOverlayProgress(boundlessCrystalEntity, g));
+            int overlayCoords = LivingEntityRenderer.getOverlayCoords(boundlessCrystalEntity, this.getWhiteOverlayProgress(boundlessCrystalEntity, g));
 
             float currentHealthState = (Math.min(1, boundlessCrystalEntity.getHealth() / boundlessCrystalEntity.getMaxHealth()) * 0.33f) + 0.67f;
 
@@ -114,12 +116,12 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
                 }
             }
 
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, p, red, green, blue, bl2 ? 0.15f : 1.0f);
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, packedLight, overlayCoords, red, green, blue, bl2 ? 0.15f : 1.0f);
         }
 
         if (!boundlessCrystalEntity.isSpectator()) {
             for (RenderLayer<BoundlessCrystalEntity, ?> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, i, boundlessCrystalEntity, o, n, g, l, k, m);
+                renderLayer.render(poseStack, multiBufferSource, packedLight, boundlessCrystalEntity, o, n, g, l, k, m);
             }
         }
 
