@@ -525,17 +525,19 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                List<Entity> list = this.level().getEntities(this, this.getBoundingBox(), EntitySelector.pushableBy(this));
 
                for (Entity entity : list) {
-                  entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), 1);
-                  if (entity instanceof LivingEntity livingEntity) {
-                     float oldHealth = livingEntity.getHealth();
-                     float maxhealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
-                     double healthToLose = Mth.clampedLerp(maxhealth / 3f, maxhealth - 1, pastSpeed - 0.2d);
-                     double possibleNewHealth = oldHealth - healthToLose;
-                     double newHealth = Math.max(possibleNewHealth, 1);
-                     livingEntity.setHealth((float) newHealth);
+                  if (!entity.getType().is(BzTags.SENTRY_WATCHER_CANNOT_DAMAGE)) {
+                     entity.hurt(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), 1);
+                     if (entity instanceof LivingEntity livingEntity) {
+                        float oldHealth = livingEntity.getHealth();
+                        float maxhealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
+                        double healthToLose = Mth.clampedLerp(maxhealth / 3f, maxhealth - 1, pastSpeed - 0.2d);
+                        double possibleNewHealth = oldHealth - healthToLose;
+                        double newHealth = Math.max(possibleNewHealth, 1);
+                        livingEntity.setHealth((float) newHealth);
 
-                     double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
-                     livingEntity.hurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) armorDamage);
+                        double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
+                        livingEntity.hurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE), (float) armorDamage);
+                     }
                   }
                }
             }
@@ -829,7 +831,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             }
             entity.setPos(pushToSpot);
 
-            if (!this.level().isClientSide()) {
+            if (!this.level().isClientSide() && !entity.getType().is(BzTags.SENTRY_WATCHER_CANNOT_DAMAGE)) {
                float damageMultiplier = 30;
                if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
                   damageMultiplier = 16;

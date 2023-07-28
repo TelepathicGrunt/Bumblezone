@@ -128,6 +128,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> ROOTMIN_FORCED_DO_NOT_TARGET = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "rootmin/forced_do_not_target"));
     public static final TagKey<EntityType<?>> SENTRY_WATCHER_ACTIVATES_WHEN_SEEN = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/activates_when_seen"));
     public static final TagKey<EntityType<?>> SENTRY_WATCHER_FORCED_NEVER_ACTIVATES_WHEN_SEEN = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/forced_never_activates_when_seen"));
+    public static final TagKey<EntityType<?>> SENTRY_WATCHER_CANNOT_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/cannot_damage"));
     public static final TagKey<EntityType<?>> BEE_LIKE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_like"));
     public static final TagKey<EntityType<?>> HEAVY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "heavy_air/immune_to_gravity_effect"));
     public static final TagKey<EntityType<?>> WINDY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "windy_air/immune_to_push_effect"));

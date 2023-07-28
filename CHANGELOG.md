@@ -201,6 +201,8 @@ Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sa
 
  `the_bumblezone:sentry_watcher/forced_never_activates_when_seen` (entity tag)
 
+ `the_bumblezone:sentry_watcher/cannot_damage` (entity tag)
+
  A survival craftable spawn egg is also available where these egg-spawned watchers cannot destroy blocks and can be removed by owner double right clicking on it,
  The watcher will not charge at their owner as well. If spawned from a Dispenser, anyone can double right click remove the entity. 
  These spawn eggs cannot be set into a Spawner unless the player is in Creative Mode.

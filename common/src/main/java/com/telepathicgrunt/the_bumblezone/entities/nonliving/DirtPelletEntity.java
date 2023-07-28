@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -16,16 +17,23 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
@@ -36,6 +44,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector2d;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -249,7 +258,81 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
                 -Mth.sin((float) yRotHitRadian),
                 -Mth.cos((float) yRotHitRadian)
             );
+
+            if (this.eventBased && this.level() instanceof ServerLevel serverLevel) {
+                for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+                    if (mobEffect.isBeneficial()) {
+                        livingEntity.removeEffect(mobEffect);
+                    }
+                }
+
+                if (this.random.nextBoolean()) {
+                    int slotStartIndex = this.random.nextInt(4);
+                    for (int i = 0; i < 4; i++) {
+                        int slotIndex = (slotStartIndex + i) % 4;
+
+                        EquipmentSlot equipmentSlot = switch (slotIndex) {
+                            case 1 -> EquipmentSlot.CHEST;
+                            case 2 -> EquipmentSlot.LEGS;
+                            case 3 -> EquipmentSlot.FEET;
+                            default -> EquipmentSlot.HEAD;
+                        };
+
+                        ItemStack armorItem = livingEntity.getItemBySlot(equipmentSlot);
+                        if (!armorItem.isEmpty()) {
+                            livingEntity.setItemSlot(equipmentSlot, ItemStack.EMPTY);
+                            dropItemFromEntity(livingEntity, armorItem, false, true);
+                            break;
+                        }
+                    }
+                }
+
+                serverLevel.sendParticles(
+                        BzParticles.DUST_PARTICLE.get(),
+                        livingEntity.getX(),
+                        livingEntity.getEyeY(),
+                        livingEntity.getZ(),
+                        15,
+                        random.nextGaussian() * 0.2D,
+                        (random.nextGaussian() * 0.25D) + 0.1,
+                        random.nextGaussian() * 0.2D,
+                        0);
+            }
         }
+    }
+
+    private ItemEntity dropItemFromEntity(LivingEntity livingEntity, ItemStack itemStack, boolean randomMovement, boolean setOwner) {
+        if (itemStack.isEmpty()) {
+            return null;
+        }
+        double d = livingEntity.getEyeY() - (double)0.3f;
+        ItemEntity itemEntity = new ItemEntity(livingEntity.level(), livingEntity.getX(), d, livingEntity.getZ(), itemStack);
+        itemEntity.setPickUpDelay(40);
+        if (setOwner) {
+            itemEntity.setThrower(livingEntity.getUUID());
+        }
+        if (randomMovement) {
+            float f = this.random.nextFloat() * 0.5f;
+            float g = this.random.nextFloat() * ((float)Math.PI * 2);
+            itemEntity.setDeltaMovement(-Mth.sin(g) * f, 0.2f, Mth.cos(g) * f);
+        }
+        else {
+            float g = Mth.sin(livingEntity.getXRot() * ((float)Math.PI / 180));
+            float h = Mth.cos(livingEntity.getXRot() * ((float)Math.PI / 180));
+            float i = Mth.sin(livingEntity.getYRot() * ((float)Math.PI / 180));
+            float j = Mth.cos(livingEntity.getYRot() * ((float)Math.PI / 180));
+            float k = this.random.nextFloat() * ((float)Math.PI * 2);
+            float l = 0.02f * this.random.nextFloat();
+            itemEntity.setDeltaMovement((double)(-i * h * 0.3f) + Math.cos(k) * (double)l, -g * 0.3f + 0.1f + (this.random.nextFloat() - this.random.nextFloat()) * 0.1f, (double)(j * h * 0.3f) + Math.sin(k) * (double)l);
+        }
+        livingEntity.level().addFreshEntity(itemEntity);
+
+        if (livingEntity instanceof ServerPlayer serverPlayer) {
+            serverPlayer.awardStat(Stats.ITEM_DROPPED.get(itemStack.getItem()), itemStack.getCount());
+            serverPlayer.awardStat(Stats.DROP);
+        }
+
+        return itemEntity;
     }
 
     @Override

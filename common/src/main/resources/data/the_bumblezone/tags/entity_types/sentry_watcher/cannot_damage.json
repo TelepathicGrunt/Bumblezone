@@ -1,10 +1,7 @@
 {
   "replace": false,
   "values": [
-    "minecraft:iron_golem",
-    "minecraft:shulker",
     "minecraft:vex",
-    "the_bumblezone:bee_queen",
     "the_bumblezone:boundless_crystal"
   ]
 }
