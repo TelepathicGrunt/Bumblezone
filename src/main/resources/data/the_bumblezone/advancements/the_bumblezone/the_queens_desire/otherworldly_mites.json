@@ -25,7 +25,7 @@
     "endermite_killed": {
       "trigger": "the_bumblezone:killed_counter",
       "conditions": {
-        "target_count": 16,
+        "target_count": 4,
         "target_entity": "minecraft:endermite"
       }
     }

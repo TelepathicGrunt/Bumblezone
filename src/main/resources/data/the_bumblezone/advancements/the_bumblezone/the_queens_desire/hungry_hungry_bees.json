@@ -25,7 +25,7 @@
     "bee_fed": {
       "trigger": "the_bumblezone:bee_fed",
       "conditions": {
-        "target_count": 64
+        "target_count": 48
       }
     }
   },

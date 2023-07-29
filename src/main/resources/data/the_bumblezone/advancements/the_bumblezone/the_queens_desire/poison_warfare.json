@@ -25,7 +25,7 @@
     "bee_stinger_shooter": {
       "trigger": "the_bumblezone:bee_stinger_shooter",
       "conditions": {
-        "target_count": 128
+        "target_count": 64
       }
     }
   },
