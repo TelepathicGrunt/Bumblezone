@@ -39,7 +39,7 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition bottom = partdefinition.addOrReplaceChild("bottom", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition bottom = partdefinition.addOrReplaceChild("bottom", CubeListBuilder.create(), PartPose.offset(0.0F, 23.0F, 0.0F));
 
         PartDefinition insideB = bottom.addOrReplaceChild("insideB", CubeListBuilder.create(), PartPose.offset(0.6207F, 1.4229F, 0.783F));
 
@@ -49,7 +49,7 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
 
         PartDefinition outsideBottom_r1 = outsideB.addOrReplaceChild("outsideBottom_r1", CubeListBuilder.create().texOffs(24, 8).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.1074F, -0.4245F, 0.6825F));
 
-        PartDefinition middle = partdefinition.addOrReplaceChild("middle", CubeListBuilder.create(), PartPose.offset(0.0F, 12.0F, 0.0F));
+        PartDefinition middle = partdefinition.addOrReplaceChild("middle", CubeListBuilder.create(), PartPose.offset(0.0F, 11.0F, 0.0F));
 
         PartDefinition insideM = middle.addOrReplaceChild("insideM", CubeListBuilder.create(), PartPose.offset(0.6207F, 1.4229F, 0.533F));
 
@@ -59,7 +59,7 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
 
         PartDefinition outsideMiddle_r1 = outsideM.addOrReplaceChild("outsideMiddle_r1", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(3.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.1074F, -0.4245F, 0.6825F));
 
-        PartDefinition top = partdefinition.addOrReplaceChild("top", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition top = partdefinition.addOrReplaceChild("top", CubeListBuilder.create(), PartPose.offset(0.0F, -1.0F, 0.0F));
 
         PartDefinition insideT = top.addOrReplaceChild("insideT", CubeListBuilder.create(), PartPose.offset(0.6207F, 1.4229F, 0.783F));
 
