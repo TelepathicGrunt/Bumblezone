@@ -1,9 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.locale.Language;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneralUtilsClient {
 
@@ -80,5 +85,29 @@ public class GeneralUtilsClient {
         hsv[1] = s * 360; // 0 to 360
         hsv[2] = v; // 0 to 360
         return hsv;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    public static List<MutableComponent> autoWrappedTooltip(String lengthText, String wrappingText) {
+        List<MutableComponent> list = new ArrayList<>();
+
+        String translatedLengthString = Language.getInstance().getOrDefault(lengthText);
+
+        if (translatedLengthString.length() > 10) {
+            String translatedWrapString = Language.getInstance().getOrDefault(wrappingText);
+            if (translatedWrapString.length() > translatedLengthString.length()) {
+                list.add(Component.literal(translatedWrapString.substring(0, translatedLengthString.length())));
+                list.add(Component.literal(translatedWrapString.substring(translatedLengthString.length())));
+            }
+            else {
+                list.add(Component.translatable(wrappingText));
+            }
+        }
+        else {
+            list.add(Component.translatable(wrappingText));
+        }
+
+        return list;
     }
 }

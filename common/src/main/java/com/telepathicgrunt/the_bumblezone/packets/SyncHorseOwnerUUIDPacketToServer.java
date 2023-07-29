@@ -47,7 +47,7 @@ public record SyncHorseOwnerUUIDPacketToServer(UUID horseUUID) implements Packet
         public PacketContext handle(SyncHorseOwnerUUIDPacketToServer message) {
             return (player, level) -> {
                 Entity entity = ((ServerLevel)level).getEntity(message.horseUUID());
-                if (entity instanceof AbstractHorse abstractHorse) {
+                if (entity instanceof AbstractHorse abstractHorse && abstractHorse.getOwnerUUID() != null) {
                     SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID());
                 }
             };

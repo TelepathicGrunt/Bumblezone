@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.utils.SuppliedMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +39,13 @@ public class BzMusicDiscs extends RecordItem {
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
         list.add(this.getDisplayName().withStyle(ChatFormatting.GRAY));
         if (this.hasDownload) {
-            list.add(Component.translatable(this.getDescriptionId() + ".download").withStyle(tooltipFlag.isAdvanced() ? ChatFormatting.DARK_PURPLE : ChatFormatting.DARK_GRAY));
+            List<MutableComponent> componentList = GeneralUtilsClient.autoWrappedTooltip(
+                    this.getDescriptionId() + ".desc",
+                    this.getDescriptionId() + ".download");
+
+            componentList.forEach(component -> list.add(
+                component.withStyle(tooltipFlag.isAdvanced() ? ChatFormatting.DARK_PURPLE : ChatFormatting.DARK_GRAY)
+            ));
         }
     }
 

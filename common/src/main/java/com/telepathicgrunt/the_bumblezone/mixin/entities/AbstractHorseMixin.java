@@ -16,7 +16,7 @@ public class AbstractHorseMixin {
             at = @At(value = "TAIL"))
     private void bumblezone$syncHorseUUID2(UUID uUID, CallbackInfo ci) {
         AbstractHorse abstractHorse = ((AbstractHorse)(Object)this);
-        if (!abstractHorse.level().isClientSide()) {
+        if (!abstractHorse.level().isClientSide() && abstractHorse.getOwnerUUID() != null) {
             SyncHorseOwnerUUIDPacketFromServer.sendToClient(abstractHorse, abstractHorse.getId(), abstractHorse.getOwnerUUID());
         }
     }
