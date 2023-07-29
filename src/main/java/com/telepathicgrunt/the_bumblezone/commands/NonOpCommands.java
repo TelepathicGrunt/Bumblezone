@@ -14,6 +14,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntitySummonArgument;
 import net.minecraft.commands.synchronization.SuggestionProviders;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +26,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class NonOpCommands {
     private static MinecraftServer currentMinecraftServer = null;
@@ -65,10 +68,10 @@ public class NonOpCommands {
         LiteralCommandNode<CommandSourceStack> source2 = commandDispatcher.register(Commands.literal(commandString)
                 .requires((permission) -> permission.hasPermission(0))
                 .then(Commands.literal(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
-                .then(Commands.argument(entityArg, EntitySummonArgument.id())
-                .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
+                .then(Commands.argument(entityArg, StringArgumentType.string())
+                .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(killedSuggestions(ctx), sb))
                 .executes(cs -> {
-                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), EntitySummonArgument.getSummonableEntity(cs, entityArg), cs);
+                    runMethod(DATA_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), cs.getArgument(entityArg, String.class), cs);
                     return 1;
                 })
         )));
@@ -89,7 +92,24 @@ public class NonOpCommands {
         return suggestedStrings;
     }
 
-    public static void runMethod(String dataString, ResourceLocation killedEntityRL, CommandContext<CommandSourceStack> cs) {
+    private static Set<String> killedSuggestions(CommandContext<CommandSourceStack> cs) {
+        if (!cs.getSource().isPlayer()) {
+            return new HashSet<>();
+        }
+
+        Player player = (Player) cs.getSource().getEntity();
+
+        AtomicReference<Set<String>> suggestedStrings = new AtomicReference<>(new HashSet<>());
+        suggestedStrings.set(
+                Bumblezone.MISC_COMPONENT.get(player).mobsKilledTracker.keySet()
+                        .stream()
+                        .map(killed -> "\"" + killed.toString() + "\"").
+                        collect(Collectors.toSet())
+        );
+        return suggestedStrings.get();
+    }
+
+    public static void runMethod(String dataString, String killedString, CommandContext<CommandSourceStack> cs) {
         Player player = cs.getSource().getEntity() instanceof Player player1 ? player1 : null;
         if (player instanceof ServerPlayer serverPlayer) {
             DATA_ARG dataArg;
@@ -161,25 +181,36 @@ public class NonOpCommands {
                             Component.translatable("command.the_bumblezone.queens_desired_queen_bee_trade", serverPlayer.getDisplayName(), Bumblezone.MISC_COMPONENT.get(serverPlayer).queenBeeTrade),
                             false);
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
-                    if (killedEntityRL != null) {
-                        int killed = Bumblezone.MISC_COMPONENT.get(serverPlayer).mobsKilledTracker.getOrDefault(killedEntityRL, 0);
+                    if (killedString != null) {
+                        ResourceLocation rl = new ResourceLocation(killedString);
+                        int killed = Bumblezone.MISC_COMPONENT.get(serverPlayer).mobsKilledTracker.getOrDefault(rl, 0);
                         String translationKey;
-                        if (killedEntityRL.equals(new ResourceLocation("minecraft", "ender_dragon"))) {
+                        if (rl.equals(new ResourceLocation("minecraft", "ender_dragon"))) {
                             translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon";
                         }
-                        else if (killedEntityRL.equals(new ResourceLocation("minecraft", "wither"))) {
+                        else if (rl.equals(new ResourceLocation("minecraft", "wither"))) {
                             translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_wither";
                         }
                         else {
                             translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter";
                         }
 
-                        player.displayClientMessage(
-                                Component.translatable(translationKey,
-                                        serverPlayer.getDisplayName(),
-                                        killed,
-                                        Component.translatable(Util.makeDescriptionId("entity", killedEntityRL))),
-                                false);
+                        if (Registry.ENTITY_TYPE.containsKey(rl)) {
+                            player.displayClientMessage(
+                                    Component.translatable(translationKey,
+                                            serverPlayer.getDisplayName(),
+                                            killed,
+                                            Component.translatable(Util.makeDescriptionId("entity", rl))),
+                                    false);
+                        }
+                        else {
+                            player.displayClientMessage(
+                                    Component.translatable(translationKey,
+                                            serverPlayer.getDisplayName(),
+                                            killed,
+                                            Component.translatable("tag.entity_type." + killedString.replaceAll("[\\\\:/-]", "."))),
+                                    false);
+                        }
                     }
                     else {
                         player.displayClientMessage(Component.translatable("command.the_bumblezone.invalid_entity_arg"), false);
