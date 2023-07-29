@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.advancements;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
@@ -39,8 +40,8 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
                 beeArmorJson != null && beeArmorJson.getAsBoolean());
     }
 
-    public void trigger(ServerPlayer serverPlayer, Entity currentEntity, int currentCount) {
-        super.trigger(serverPlayer, (trigger) -> trigger.matches(serverPlayer, currentEntity, currentCount));
+    public void trigger(ServerPlayer serverPlayer, Entity currentEntity, PlayerDataModule module) {
+        super.trigger(serverPlayer, (trigger) -> trigger.matches(serverPlayer, currentEntity, module));
     }
 
     public class Instance extends AbstractCriterionTriggerInstance {
@@ -57,13 +58,19 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
             this.beeArmorRequired = beeArmorRequired;
         }
 
-        public boolean matches(ServerPlayer serverPlayer, Entity currentEntity, int currentCount) {
+        public boolean matches(ServerPlayer serverPlayer, Entity currentEntity, PlayerDataModule module) {
             boolean entityMatch;
             if (this.isTargetTag) {
                 entityMatch = currentEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE, this.targetEntity));
             }
             else {
                 entityMatch = BuiltInRegistries.ENTITY_TYPE.getKey(currentEntity.getType()).equals(this.targetEntity);
+            }
+
+            int currentCount = 0;
+            if (entityMatch) {
+                module.mobsKilledTracker.merge(this.targetEntity, 1, Integer::sum);
+                currentCount = module.mobsKilledTracker.get(this.targetEntity);
             }
 
             return entityMatch &&

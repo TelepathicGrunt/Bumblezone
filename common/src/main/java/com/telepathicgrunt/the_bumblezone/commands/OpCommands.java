@@ -18,18 +18,23 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.ResourceArgument;
 import net.minecraft.commands.synchronization.SuggestionProviders;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class OpCommands {
     private static MinecraftServer currentMinecraftServer = null;
@@ -93,11 +98,11 @@ public class OpCommands {
         LiteralCommandNode<CommandSourceStack> source3 = commandDispatcher.register(Commands.literal(commandReadString)
                 .requires((permission) -> permission.hasPermission(2))
                 .then(Commands.literal(DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
-                .then(Commands.argument(entityArg, ResourceArgument.resource(buildContext, Registries.ENTITY_TYPE))
-                .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                 .then(Commands.argument("targets", EntityArgument.players())
+                .then(Commands.argument(entityArg, StringArgumentType.string())
+                .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(killedSuggestions(EntityArgument.getPlayers(ctx, "targets")), sb))
                 .executes(cs -> {
-                    runReadMethod(cs.getSource(), DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), ResourceArgument.getSummonableEntityType(cs, entityArg).key().location(), EntityArgument.getPlayers(cs, "targets"), cs);
+                    runReadMethod(cs.getSource(), DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), cs.getArgument(entityArg, String.class), EntityArgument.getPlayers(cs, "targets"), cs);
                     return 1;
                 })
         ))));
@@ -153,7 +158,26 @@ public class OpCommands {
         }
     }
 
-    public static void runReadMethod(CommandSourceStack commandSourceStack, String dataString, ResourceLocation killedEntityRL, Collection<ServerPlayer> targets, CommandContext<CommandSourceStack> cs) {
+    private static Set<String> killedSuggestions(Collection<ServerPlayer> targets) {
+        if (targets.isEmpty()) {
+            return new HashSet<>();
+        }
+
+        AtomicReference<Set<String>> suggestedStrings = new AtomicReference<>(new HashSet<>());
+        for (Player player : targets) {
+            ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module ->
+                    suggestedStrings.set(
+                            module.mobsKilledTracker.keySet()
+                                    .stream()
+                                    .map(killed -> "\"" + killed.toString() + "\"").
+                                    collect(Collectors.toSet())
+                    )
+            );
+        }
+        return suggestedStrings.get();
+    }
+
+    public static void runReadMethod(CommandSourceStack commandSourceStack, String dataString, String killedString, Collection<ServerPlayer> targets, CommandContext<CommandSourceStack> cs) {
         NonOpCommands.DATA_ARG dataArg;
         try {
             dataArg = NonOpCommands.DATA_ARG.valueOf(dataString.toUpperCase(Locale.ROOT));
@@ -214,26 +238,37 @@ public class OpCommands {
                         () -> Component.translatable("command.the_bumblezone.queens_desired_queen_bee_trade", targetPlayer.getDisplayName(), capability.queenBeeTrade),
                         false));
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
-                    if (killedEntityRL != null) {
+                    if (killedString != null) {
+                        ResourceLocation rl = new ResourceLocation(killedString);
                         ModuleHelper.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
-                            int killed = capability.mobsKilledTracker.getOrDefault(killedEntityRL, 0);
+                            int killed = capability.mobsKilledTracker.getOrDefault(rl, 0);
                             String translationKey;
-                            if (killedEntityRL.equals(new ResourceLocation("minecraft", "ender_dragon"))) {
+                            if (rl.equals(new ResourceLocation("minecraft", "ender_dragon"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon";
                             }
-                            else if (killedEntityRL.equals(new ResourceLocation("minecraft", "wither"))) {
+                            else if (rl.equals(new ResourceLocation("minecraft", "wither"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_wither";
                             }
                             else {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter";
                             }
 
-                            commandSourceStack.sendSuccess(
-                                    () -> Component.translatable(translationKey,
-                                            targetPlayer.getDisplayName(),
-                                            killed,
-                                            Component.translatable(Util.makeDescriptionId("entity", killedEntityRL))),
-                                    false);
+                            if (BuiltInRegistries.ENTITY_TYPE.containsKey(rl)) {
+                                commandSourceStack.sendSuccess(() ->
+                                        Component.translatable(translationKey,
+                                                targetPlayer.getDisplayName(),
+                                                killed,
+                                                Component.translatable(Util.makeDescriptionId("entity", rl))),
+                                        false);
+                            }
+                            else {
+                                commandSourceStack.sendSuccess(() ->
+                                        Component.translatable(translationKey,
+                                                targetPlayer.getDisplayName(),
+                                                killed,
+                                                Component.translatable("tag.entity_type." + killedString.replaceAll("[\\\\:/-]", "."))),
+                                        false);
+                            }
                         });
                     }
                     else {

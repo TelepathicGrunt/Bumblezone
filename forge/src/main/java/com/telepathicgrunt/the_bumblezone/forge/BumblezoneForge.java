@@ -158,6 +158,7 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onDatapackSync);
         eventBus.addListener(BumblezoneForge::onEntityAttacked);
         eventBus.addListener(BumblezoneForge::onEntityDeath);
+        eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityDeathLowest);
         eventBus.addListener(BumblezoneForge::onEntitySpawn);
         eventBus.addListener(BumblezoneForge::onEntityTick);
         eventBus.addListener(BumblezoneForge::onEntityDimensionTravel);
@@ -426,6 +427,14 @@ public class BumblezoneForge {
             event.setCanceled(true);
         }
     }
+
+    private static void onEntityDeathLowest(LivingDeathEvent event) {
+        boolean cancel = EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(event.getEntity(), event.getSource()), event.isCanceled());
+        if (cancel) {
+            event.setCanceled(true);
+        }
+    }
+
 
     private static void onEntityAttacked(LivingAttackEvent event) {
         boolean cancel = EntityAttackedEvent.EVENT.invoke(new EntityAttackedEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());

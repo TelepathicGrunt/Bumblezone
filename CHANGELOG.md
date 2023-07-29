@@ -237,7 +237,7 @@ Added emissive textures for some entities and blocks.
 Better Advancements is now a recommended optional mod to use with Bumblezone so Bumblezone's advancements are easier to read.
 
 
-#### *\*Changes*
+#### *\*Changes* (From 1.19.4 version)
 
 ##### Blocks:
 Walking through Pile of Pollen should not trigger Sculk Sensor now. Pile of Pollen will also block Sculk Sensor's detection if between it and the sound source.
@@ -377,6 +377,9 @@ Protection of the Hive will now always remove Wrath of the Hive effect if you ma
 Improved performance of is_near_beehive advancement.
 
 Renamed VIP Trader advancement to Crazy Trader to reduce confusion.
+
+Improved `/bumblezone_read_self_data queens_desired_killed_entity_counter` command to only show entries that has existing progress towards the Queen Desire advancement.
+ Also will now work with tag requirements advancements.
 
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
