@@ -26,7 +26,8 @@
       "trigger": "the_bumblezone:killed_counter",
       "conditions": {
         "target_count": 32,
-        "target_entity": "minecraft:cave_spider"
+        "target_entity": "the_bumblezone:queens_desire/terror_fangs_cave_spider",
+        "is_target_tag": true
       }
     }
   },

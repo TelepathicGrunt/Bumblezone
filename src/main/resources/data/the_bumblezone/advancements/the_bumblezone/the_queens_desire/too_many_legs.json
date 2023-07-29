@@ -26,7 +26,8 @@
       "trigger": "the_bumblezone:killed_counter",
       "conditions": {
         "target_count": 64,
-        "target_entity": "minecraft:spider"
+        "target_entity": "the_bumblezone:queens_desire/too_many_legs_spiders",
+        "is_target_tag": true
       }
     }
   },

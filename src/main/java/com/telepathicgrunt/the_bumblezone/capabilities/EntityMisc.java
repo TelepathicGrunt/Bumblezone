@@ -202,12 +202,10 @@ public class EntityMisc implements INBTSerializable<CompoundTag> {
 			rootAdvancementDone(serverPlayer))
 		{
 			serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
-				ResourceLocation killedEntity = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
-				int killedCount = capability.mobsKilledTracker.getOrDefault(killedEntity, 0);
-				killedCount += 1;
-
-				BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, killedEntity, killedCount);
-				capability.mobsKilledTracker.put(killedEntity, killedCount);
+				ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
+				if (id != null) {
+					BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, event.getEntity(), capability);
+				}
 			});
 		}
 	}
