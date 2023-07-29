@@ -34,7 +34,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
 
     @Override
     public void render(BoundlessCrystalEntity boundlessCrystalEntity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
-        renderLiving(boundlessCrystalEntity, entityYaw, partialTicks, stack, buffer, packedLight);
+        renderLiving(boundlessCrystalEntity, entityYaw, partialTicks, stack, buffer, LightTexture.FULL_BRIGHT);
         renderHealth(
                 boundlessCrystalEntity,
                 Component.literal("Health: " + boundlessCrystalEntity.getHealth()),
@@ -45,7 +45,6 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
 
     public void renderLiving(BoundlessCrystalEntity boundlessCrystalEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
         poseStack.pushPose();
-        packedLight = LightTexture.FULL_BRIGHT;
         this.model.attackTime = this.getAttackAnim(boundlessCrystalEntity, g);
         this.model.riding = boundlessCrystalEntity.isPassenger();
         this.model.young = boundlessCrystalEntity.isBaby();
@@ -70,7 +69,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         }
 
         this.model.prepareMobModel(boundlessCrystalEntity, o, n, g);
-        ((EntityModel)this.model).setupAnim(boundlessCrystalEntity, o, n, l, k, m);
+        this.model.setupAnim(boundlessCrystalEntity, o, n, l, k, m);
         Minecraft minecraft = Minecraft.getInstance();
         boolean bl = this.isBodyVisible(boundlessCrystalEntity);
         boolean bl2 = !bl && !boundlessCrystalEntity.isInvisibleTo(minecraft.player);
