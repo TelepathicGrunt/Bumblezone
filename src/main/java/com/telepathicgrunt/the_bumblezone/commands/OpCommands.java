@@ -5,7 +5,6 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
@@ -15,8 +14,6 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.arguments.EntitySummonArgument;
-import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -98,7 +95,7 @@ public class OpCommands {
                 .then(Commands.literal(DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name().toLowerCase(Locale.ROOT))
                 .then(Commands.argument("targets", EntityArgument.players())
                 .then(Commands.argument(entityArg, StringArgumentType.string())
-                .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(killedSuggestions(ctx, EntityArgument.getPlayers(ctx, "targets")), sb))
+                .suggests((ctx, sb) -> SharedSuggestionProvider.suggest(killedSuggestions(EntityArgument.getPlayers(ctx, "targets")), sb))
                 .executes(cs -> {
                     runReadMethod(cs.getSource(), DATA_READ_ARG.QUEENS_DESIRED_KILLED_ENTITY_COUNTER.name(), cs.getArgument(entityArg, String.class), EntityArgument.getPlayers(cs, "targets"), cs);
                     return 1;
@@ -134,7 +131,7 @@ public class OpCommands {
         return suggestedStrings;
     }
 
-    private static Set<String> killedSuggestions(CommandContext<CommandSourceStack> cs, Collection<ServerPlayer> targets) {
+    private static Set<String> killedSuggestions(Collection<ServerPlayer> targets) {
         if (targets.isEmpty()) {
             return new HashSet<>();
         }
