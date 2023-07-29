@@ -6,6 +6,9 @@ Improved the tooltip wrapping for Bumblezone Music Discs
 ##### Advancements:
 Nerfed the requirements of several Queen Desire advancements to make it less grindy.
 
+Improved `/bumblezone_read_self_data queens_desired_killed_entity_counter` command to only show entries that has existing progress towards the Queen Desire advancement.
+ Also will now work with tag requirements advancements.
+
 
 ### **(V.6.7.27 Changes) (1.19.2 Minecraft)**
 

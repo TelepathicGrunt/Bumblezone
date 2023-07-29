@@ -321,8 +321,8 @@
   "command.the_bumblezone.queens_desired_bees_fed": "%s fed bees %s times with honey-like items for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_queen_bee_trade": "%s traded %s times with Queen Bee for Queens Desire advancement",
   "command.the_bumblezone.queens_desired_killed_entity_counter": "%s killed %s %s for Queens Desire advancement",
-  "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon": "%s killed %s %s for Queens Desire advancement (Advancement requires killing this mob with all 4 Bee Armor equipped however)",
-  "command.the_bumblezone.queens_desired_killed_entity_counter_wither": "%s killed %s %s for Queens Desire advancement (Advancement requires killing this mob with Stinger Spear however)",
+  "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon": "%s killed %s %s while wearing 4 Bee Armor for Queens Desire advancement",
+  "command.the_bumblezone.queens_desired_killed_entity_counter_wither": "%s killed %s %s with Stinger Spear for Queens Desire advancement",
 
   "advancements.the_bumblezone.root.title": "The Bumblezone Mod",
   "advancements.the_bumblezone.root.description": "See rest of the advancements for what to do with this mod!",
@@ -773,5 +773,10 @@
   "tag.item.the_bumblezone.fluids.honey": "Honey Fluids",
   "tag.item.the_bumblezone.fluids.royal_jelly": "Royal Jelly Fluids",
   "tag.item.the_bumblezone.fluids.special_honey_like": "Special Honey-like Fluids",
-  "tag.item.the_bumblezone.fluids.sugar_water": "Sugar Water Fluids"
+  "tag.item.the_bumblezone.fluids.sugar_water": "Sugar Water Fluids",
+
+  "tag.entity_type.the_bumblezone.queens_desire.fighting_the_swarm_silverfish": "Silverfishes",
+  "tag.entity_type.the_bumblezone.queens_desire.otherworldly_mites_endermite": "Endermites",
+  "tag.entity_type.the_bumblezone.queens_desire.terror_fangs_cave_spider": "Cave Spiders",
+  "tag.entity_type.the_bumblezone.queens_desire.too_many_legs_spiders": "Various Non-cave Spiders"
 }

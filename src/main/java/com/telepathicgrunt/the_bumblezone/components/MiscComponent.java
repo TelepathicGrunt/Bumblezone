@@ -145,13 +145,11 @@ public class MiscComponent implements Component {
                 attacker instanceof ServerPlayer serverPlayer &&
                 rootAdvancementDone(serverPlayer))
             {
-                MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
-                ResourceLocation killedEntity = Registry.ENTITY_TYPE.getKey(victim.getType());
-                int killedCount = capability.mobsKilledTracker.getOrDefault(killedEntity, 0);
-                killedCount += 1;
-
-                BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, killedEntity, killedCount);
-                capability.mobsKilledTracker.put(killedEntity, killedCount);
+                ResourceLocation id = Registry.ENTITY_TYPE.getKey(victim.getType());
+                if (id != null) {
+                    MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+                    BzCriterias.KILLED_COUNTER_TRIGGER.trigger(serverPlayer, victim, capability);
+                }
             }
         });
     }

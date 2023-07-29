@@ -26,7 +26,8 @@
       "trigger": "the_bumblezone:killed_counter",
       "conditions": {
         "target_count": 4,
-        "target_entity": "minecraft:endermite"
+        "target_entity": "the_bumblezone:queens_desire/otherworldly_mites_endermite",
+        "is_target_tag": true
       }
     }
   },
