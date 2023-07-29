@@ -25,7 +25,7 @@
     "honey_bottle_drank": {
       "trigger": "the_bumblezone:honey_bottle_drank",
       "conditions": {
-        "target_count": 32
+        "target_count": 16
       }
     }
   },
