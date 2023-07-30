@@ -48,7 +48,9 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
@@ -58,6 +60,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -335,16 +338,42 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     private void laserBreakBlocks() {
-        if (!this.level().isClientSide() && this.isLaserFiring() && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 10 == 0) {
-            Vec3 startPos = this.getEyePosition();
-            Vec3 endPos = this.getLookAngle().scale(50).add(startPos);
-            HitResult hitResult = this.level().clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        if (!this.level().isClientSide() && this.isLaserFiring() && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 5 == 0) {
+            HitResult hitResult = ProjectileUtil.getHitResultOnViewVector(this, (entity) -> true, 50);
 
             if (hitResult instanceof BlockHitResult blockHitResult) {
                BlockState state = this.level().getBlockState(blockHitResult.getBlockPos());
                if (state.getBlock().getExplosionResistance() < 1500) {
                    this.level().destroyBlock(blockHitResult.getBlockPos(), true);
                }
+            }
+            else if (hitResult instanceof EntityHitResult entityHitResult) {
+                Entity entity = entityHitResult.getEntity();
+                if (entity instanceof ItemEntity itemEntity) {
+                    itemEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), 10);
+                }
+                else if (entity instanceof LivingEntity livingEntity && !(entity instanceof BoundlessCrystalEntity)) {
+                    float damageAmount;
+                    float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
+
+                    if (livingEntity instanceof ServerPlayer serverPlayer) {
+                        if (serverPlayer.isCreative()) {
+                            return;
+                        }
+
+                        if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                            damageAmount = maxHealth / 6;
+                        }
+                        else {
+                            damageAmount = maxHealth / 3;
+                        }
+                    }
+                    else {
+                        damageAmount = maxHealth / 6;
+                    }
+
+                    livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
+                }
             }
         }
     }
