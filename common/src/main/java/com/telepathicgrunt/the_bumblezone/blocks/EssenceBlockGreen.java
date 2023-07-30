@@ -6,12 +6,14 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
@@ -50,6 +52,11 @@ public class EssenceBlockGreen extends EssenceBlock {
     @Override
     public int getEventTimeFrame() {
         return 6000;
+    }
+
+    @Override
+    public void awardPlayerWinStat(ServerPlayer serverPlayer) {
+        serverPlayer.awardStat(BzStats.LIFE_EVENT_DEFEATED_RL.get());
     }
 
     @Override

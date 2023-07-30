@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.core.BlockPos;
@@ -76,6 +77,11 @@ public class EssenceBlockYellow extends EssenceBlock {
     @Override
     public int getEssenceXpReward() {
         return 3000;
+    }
+
+    @Override
+    public void awardPlayerWinStat(ServerPlayer serverPlayer) {
+        serverPlayer.awardStat(BzStats.RAGING_EVENT_DEFEATED_RL.get());
     }
 
     @Override

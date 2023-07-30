@@ -4,12 +4,14 @@ import com.google.common.collect.MapMaker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -141,6 +143,10 @@ public class WindyAir extends ProperFacingBlock {
 
         entity.setDeltaMovement(newVelocity);
         APPLIED_PUSH_FOR_ENTITY.get(entity.getStringUUID()).put(windDirection, entity.tickCount);
+
+        if (entity instanceof Player player) {
+            player.awardStat(BzStats.WINDY_AIR_TIME_RL.get());
+        }
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {

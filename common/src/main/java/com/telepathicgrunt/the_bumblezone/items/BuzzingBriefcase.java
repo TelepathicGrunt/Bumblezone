@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
@@ -53,6 +54,7 @@ public class BuzzingBriefcase extends Item {
         if (player.isShiftKeyDown()) {
             player.openMenu(new BuzzingBriefcaseMenuProvider(stack));
 
+            player.awardStat(BzStats.INTERACT_WITH_BUZZING_BRIEFCASE_RL.get());
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         }
 
@@ -64,6 +66,9 @@ public class BuzzingBriefcase extends Item {
 
         if(player instanceof ServerPlayer && !releasedBees.isEmpty()) {
             BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
+
+            ItemStack briefcaseItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+            player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
         }
 
         return releasedBees.isEmpty();
@@ -82,6 +87,7 @@ public class BuzzingBriefcase extends Item {
 
             if(player instanceof ServerPlayer && !releasedBees.isEmpty()) {
                 BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             }
         }
         return true;
@@ -100,6 +106,7 @@ public class BuzzingBriefcase extends Item {
         ItemStack briefcaseItem = player.getItemInHand(playerHand);
         boolean addedBee = tryAddBee(briefcaseItem, entity);
         if (addedBee) {
+            player.awardStat(BzStats.BUZZING_BRIEFCASE_BEE_CAPTURE_RL.get());
             player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
             player.swing(playerHand, true);
 

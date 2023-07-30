@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "the_bumblezone:sentry_watcher",
-    "the_bumblezone:purple_spike",
+    "the_bumblezone:purple_spike_entity",
     "the_bumblezone:boundless_crystal_entity",
     "minecraft:iron_golem",
     "minecraft:blaze",

@@ -165,6 +165,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     public abstract ItemStack getEssenceItemReward();
 
+    public abstract void awardPlayerWinStat(ServerPlayer serverPlayer);
+
     public abstract int getEssenceXpReward();
 
     public void onEventEnd(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity) {

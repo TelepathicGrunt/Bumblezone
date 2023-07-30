@@ -5,10 +5,12 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntit
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PurpleSpikeEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -52,6 +54,11 @@ public class EssenceBlockPurple extends EssenceBlock {
     @Override
     public int getEssenceXpReward() {
         return 3000;
+    }
+
+    @Override
+    public void awardPlayerWinStat(ServerPlayer serverPlayer) {
+        serverPlayer.awardStat(BzStats.KNOWING_EVENT_DEFEATED_RL.get());
     }
 
     @Override

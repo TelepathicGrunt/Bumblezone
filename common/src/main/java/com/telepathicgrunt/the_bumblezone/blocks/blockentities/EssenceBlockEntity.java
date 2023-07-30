@@ -356,6 +356,7 @@ public class EssenceBlockEntity extends BlockEntity {
                                     xpReward *= 0.1;
                                 }
                                 serverPlayer.giveExperiencePoints(xpReward);
+                                essenceBlock.awardPlayerWinStat(serverPlayer);
                             }
                         }
                     }
