@@ -12,8 +12,10 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.GuardianRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,12 +23,20 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import java.awt.*;
 
 public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrystalEntity, BoundlessCrystalModel<BoundlessCrystalEntity>> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/boundless_crystal.png");
+    private static final ResourceLocation GUARDIAN_BEAM_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/boundless_crystal_laser.png");
+    private static final RenderType BEAM_RENDER_TYPE = RenderType.entityCutoutNoCull(GUARDIAN_BEAM_LOCATION);
 
     public BoundlessCrystalRenderer(EntityRendererProvider.Context context) {
         super(context, new BoundlessCrystalModel<>(context.bakeLayer(BoundlessCrystalModel.LAYER_LOCATION)), 0.7F);
@@ -35,9 +45,18 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
     @Override
     public void render(BoundlessCrystalEntity boundlessCrystalEntity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         renderLiving(boundlessCrystalEntity, entityYaw, partialTicks, stack, buffer, LightTexture.FULL_BRIGHT);
+
         renderHealth(
                 boundlessCrystalEntity,
                 Component.literal("Health: " + boundlessCrystalEntity.getHealth()),
+                stack,
+                buffer,
+                LightTexture.FULL_BRIGHT);
+
+        renderLaser(
+                boundlessCrystalEntity,
+                entityYaw,
+                partialTicks,
                 stack,
                 buffer,
                 LightTexture.FULL_BRIGHT);
@@ -160,6 +179,110 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         poseStack.translate(0, 1, 0);
         poseStack.mulPose(Axis.XP.rotationDegrees(newXRot));
         poseStack.translate(0, -1, 0);
+    }
+
+
+    public void renderLaser(BoundlessCrystalEntity boundlessCrystalEntity, float f, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
+        if (boundlessCrystalEntity.isLaserFiring()) {
+            float totalTickTime = boundlessCrystalEntity.tickCount + partialTick;
+
+            float colorSpeed = 2;
+            float redSin = Mth.sin(((totalTickTime * colorSpeed) % 360) * Mth.DEG_TO_RAD);
+            float greenSin = Mth.sin(((totalTickTime * colorSpeed) % 360) * Mth.DEG_TO_RAD + 30);
+            float blueSin = Mth.sin(((totalTickTime * colorSpeed) % 360) * Mth.DEG_TO_RAD + 60);
+
+            int red = 200 + (int) (redSin * 56);
+            int green = 200 + (int) (greenSin * 56);
+            int blue = 200 + (int) (blueSin * 56);
+
+            float k = totalTickTime * 0.5f % 1.0f;
+            float eyeY = boundlessCrystalEntity.getEyeHeight();
+            poseStack.pushPose();
+            poseStack.translate(0.0f, eyeY, 0.0f);
+
+            Vec3 startPos = this.getPosition(boundlessCrystalEntity, eyeY, partialTick);
+            Vec3 endPos = boundlessCrystalEntity.getLookAngle().scale(50).add(startPos);
+
+            HitResult hitResult = boundlessCrystalEntity.level()
+                    .clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, boundlessCrystalEntity));
+
+            if (hitResult.getType() != HitResult.Type.MISS) {
+                endPos = hitResult.getLocation();
+            }
+
+            Vec3 vectToTarget = endPos.subtract(startPos);
+
+            float laserLength = (float) vectToTarget.length() - 0.01f;
+            vectToTarget = vectToTarget.normalize();
+            float n = (float)Math.acos(vectToTarget.y);
+            float o = (float)Math.atan2(vectToTarget.z, vectToTarget.x);
+            poseStack.mulPose(Axis.YP.rotationDegrees((1.5707964f - o) * 57.295776f));
+            poseStack.mulPose(Axis.XP.rotationDegrees(n * 57.295776f));
+            float q = totalTickTime * 0.05f * -1.5f;
+            float v = 0.2f;
+            float w2 = 0.5f;
+            float z5 = Mth.sin(q + 2.3561945f) * w2;
+            float x7 = Mth.cos(q + 2.3561945f) * w2;
+            float z9 = Mth.cos(q + 0.7853982f) * w2;
+            float z6 = Mth.sin(q + 0.7853982f) * w2;
+            float x6 = Mth.cos(q + 3.926991f) * w2;
+            float z8 = Mth.sin(q + 3.926991f) * w2;
+            float x5 = Mth.cos(q + 5.4977875f) * w2;
+            float z7 = Mth.sin(q + 5.4977875f) * w2;
+            float x1 = Mth.cos(q + (float)Math.PI) * v;
+            float z1 = Mth.sin(q + (float)Math.PI) * v;
+            float x2 = Mth.cos(q + 0.0f) * v;
+            float z2 = Mth.sin(q + 0.0f) * v;
+            float x3 = Mth.cos(q + 1.5707964f) * v;
+            float z3 = Mth.sin(q + 1.5707964f) * v;
+            float x4 = Mth.cos(q + 4.712389f) * v;
+            float z4 = Mth.sin(q + 4.712389f) * v;
+            float y1 = laserLength;
+            float y2 = 0.0f;
+            float ux1 = 0.4999f;
+            float ux2 = 0.0f;
+            float uv2 = -1.0f + k;
+            float uv1 = laserLength * 2.5f + uv2;
+            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(BEAM_RENDER_TYPE);
+            PoseStack.Pose pose = poseStack.last();
+            Matrix4f matrix4f = pose.pose();
+            Matrix3f matrix3f = pose.normal();
+            vertex(vertexConsumer, matrix4f, matrix3f, x1, y1, z1, red, green, blue, ux1, uv1);
+            vertex(vertexConsumer, matrix4f, matrix3f, x1, y2, z1, red, green, blue, ux1, uv2);
+            vertex(vertexConsumer, matrix4f, matrix3f, x2, y2, z2, red, green, blue, ux2, uv2);
+            vertex(vertexConsumer, matrix4f, matrix3f, x2, y1, z2, red, green, blue, ux2, uv1);
+            vertex(vertexConsumer, matrix4f, matrix3f, x3, y1, z3, red, green, blue, ux1, uv1);
+            vertex(vertexConsumer, matrix4f, matrix3f, x3, y2, z3, red, green, blue, ux1, uv2);
+            vertex(vertexConsumer, matrix4f, matrix3f, x4, y2, z4, red, green, blue, ux2, uv2);
+            vertex(vertexConsumer, matrix4f, matrix3f, x4, y1, z4, red, green, blue, ux2, uv1);
+            float as = 0.0f;
+            if (boundlessCrystalEntity.tickCount % 4 < 2) {
+                as = 0.5f;
+            }
+            vertex(vertexConsumer, matrix4f, matrix3f, x7, y1, z5, red, green, blue, 0.5f, as + 0.5f);
+            vertex(vertexConsumer, matrix4f, matrix3f, z9, y1, z6, red, green, blue, 1.0f, as + 0.5f);
+            vertex(vertexConsumer, matrix4f, matrix3f, x5, y1, z7, red, green, blue, 1.0f, as);
+            vertex(vertexConsumer, matrix4f, matrix3f, x6, y1, z8, red, green, blue, 0.5f, as);
+            poseStack.popPose();
+        }
+    }
+
+    private static void vertex(VertexConsumer vertexConsumer, Matrix4f matrix4f, Matrix3f matrix3f, float x, float y, float z, int red, int green, int blue, float ux, float uz) {
+        vertexConsumer
+                .vertex(matrix4f, x, y, z)
+                .color(red, green, blue, 255)
+                .uv(ux, uz)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(0xF000F0)
+                .normal(matrix3f, 0.0f, 1.0f, 0.0f)
+                .endVertex();
+    }
+
+    private Vec3 getPosition(LivingEntity livingEntity, double d, float f) {
+        double e = Mth.lerp(f, livingEntity.xOld, livingEntity.getX());
+        double g = Mth.lerp(f, livingEntity.yOld, livingEntity.getY()) + d;
+        double h = Mth.lerp(f, livingEntity.zOld, livingEntity.getZ());
+        return new Vec3(e, g, h);
     }
 
     @Override

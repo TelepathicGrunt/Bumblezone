@@ -94,7 +94,7 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
         this.body.getAllParts().forEach(ModelPart::resetPose);
 
         boolean isLaserState = BoundlessCrystalEntity.isLaserState(entity.getBoundlessCrystalState());
-        if (isLaserState && entity.tickCount > entity.getLaserStartTime() + 40) {
+        if (isLaserState && entity.isLaserFiring()) {
             this.spikes.visible = true;
             this.charging.visible = false;
             this.spikes.getAllParts().forEach(ModelPart::resetPose);

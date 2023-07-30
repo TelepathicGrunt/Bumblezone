@@ -50,11 +50,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -84,6 +88,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     public BoundlessCrystalEntity(EntityType<? extends BoundlessCrystalEntity> entityType, Level level) {
         super(entityType, level);
         this.idleAnimationState.start(tickCount);
+        this.noCulling = true;
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -138,7 +143,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             case LASER -> {
                 this.setAnimationEndTime(40);
                 this.setLaserStartTime(this.tickCount + 60);
-                this.setStateEndTime(this.tickCount + 200);
+                this.setStateEndTime(this.tickCount + 400);
             }
             case TRACKING_SMASHING_ATTACK -> this.setAnimationEndTime(200);
             case SPINNER_ATTACK -> this.setAnimationEndTime(200);
@@ -263,19 +268,38 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER;
     }
 
+    public boolean isLaserFiring() {
+        boolean isLaserState = BoundlessCrystalEntity.isLaserState(this.getBoundlessCrystalState());
+        return isLaserState && this.tickCount > this.getLaserStartTime() + 40;
+    }
+
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide() && (this.tickCount % 5 == 0 || this.hurtTime > 0)) {
-            Vec3 center = this.getBoundingBox().getCenter();
-            spawnFancyParticle(center);
-            if (this.hurtTime == 8) {
-                for (int i = 0; i < 50; i++) {
-                    spawnFancyParticle(center);
+        spawnFancyParticlesOnClient();
+        laserBreakBlocks();
+        incrementAnimationAndRotationTicks();
+    }
+
+    private void spawnFancyParticlesOnClient() {
+        if (this.level().isClientSide()) {
+            if (this.tickCount % 5 == 0 || this.hurtTime > 0) {
+                Vec3 center = this.getBoundingBox().getCenter();
+                spawnFancyParticle(center);
+                if (this.hurtTime == 8) {
+                    for (int i = 0; i < 50; i++) {
+                        spawnFancyParticle(center);
+                    }
                 }
             }
-        }
 
+            if (this.isLaserFiring()) {
+                spawnFancyParticle(this.getEyePosition().add(this.getLookAngle().scale(1.2f)));
+            }
+        }
+    }
+
+    private void incrementAnimationAndRotationTicks() {
         this.prevAnimationTick = this.animationTimeTick;
         if (this.animationTimeTick < getAnimationEndTime()) {
             this.animationTimeTick++;
@@ -308,6 +332,21 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
 
         this.visualXRot = xRot;
+    }
+
+    private void laserBreakBlocks() {
+        if (!this.level().isClientSide() && this.isLaserFiring() && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 10 == 0) {
+            Vec3 startPos = this.getEyePosition();
+            Vec3 endPos = this.getLookAngle().scale(50).add(startPos);
+            HitResult hitResult = this.level().clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+
+            if (hitResult instanceof BlockHitResult blockHitResult) {
+               BlockState state = this.level().getBlockState(blockHitResult.getBlockPos());
+               if (state.getBlock().getExplosionResistance() < 1500) {
+                   this.level().destroyBlock(blockHitResult.getBlockPos(), true);
+               }
+            }
+        }
     }
 
     public InteractionResult interact(Player player, InteractionHand hand) {
