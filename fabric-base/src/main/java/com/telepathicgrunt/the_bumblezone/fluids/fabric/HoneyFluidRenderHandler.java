@@ -285,10 +285,11 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
 
     private static boolean isFaceOccludedByState(BlockGetter blockGetter, Direction direction, float f, BlockPos blockPos, BlockState blockState) {
         if (blockState.canOcclude()) {
-            VoxelShape voxelShape = Shapes.box(0.0, 0.0, 0.0, 1.0, (double)f, 1.0);
+            VoxelShape voxelShape = Shapes.box(0.0, 0.0, 0.0, 1.0, f, 1.0);
             VoxelShape voxelShape2 = blockState.getOcclusionShape(blockGetter, blockPos);
             return Shapes.blockOccudes(voxelShape, voxelShape2, direction);
-        } else {
+        }
+        else {
             return false;
         }
     }

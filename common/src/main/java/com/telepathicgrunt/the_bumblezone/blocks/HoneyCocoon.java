@@ -59,6 +59,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -84,10 +85,10 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(IS_LOOT_CONTAINER, Boolean.FALSE));
 
-        VoxelShape voxelshape = Block.box(1.0D, 1.0D, 1.0D, 15.0D, 14.0D, 15.0D);
-        voxelshape = Shapes.or(voxelshape, Block.box(2.0D, 0.0D, 2.0D, 14.0D, 1.0D, 14.0D));
-        voxelshape = Shapes.or(voxelshape, Block.box(3.0D, 14.0D, 3.0D, 13.0D, 16.0D, 13.0D));
-        shape = voxelshape;
+        VoxelShape voxelshape = Block.box(1.0D, 3.0D, 1.0D, 15.0D, 13.0D, 15.0D);
+        voxelshape = Shapes.joinUnoptimized(voxelshape, Block.box(3.0D, 0.0D, 3.0D, 13.0D, 3.0D, 13.0D), BooleanOp.OR);
+        voxelshape = Shapes.joinUnoptimized(voxelshape, Block.box(3.0D, 13.0D, 3.0D, 13.0D, 16.0D, 13.0D), BooleanOp.OR);
+        shape = voxelshape.optimize();
     }
 
     @Override

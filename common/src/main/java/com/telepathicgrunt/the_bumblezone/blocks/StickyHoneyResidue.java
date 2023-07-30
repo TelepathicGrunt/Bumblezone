@@ -54,6 +54,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -143,10 +144,10 @@ public class StickyHoneyResidue extends Block {
                 VoxelShape shape = Shapes.empty();
                 for (Direction direction : Direction.values()) {
                     if (((bitFlag >> direction.ordinal()) & 1) != 0) {
-                        shape = Shapes.or(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()]);
+                        shape = Shapes.joinUnoptimized(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()], BooleanOp.OR);
                     }
                 }
-                return shape;
+                return shape.optimize();
             }
         );
     }
@@ -211,8 +212,9 @@ public class StickyHoneyResidue extends Block {
             return;
         }
 
-        AABB aabb = getAABBShape(blockState, level, blockPos, null).move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-        if (aabb.intersects(entity.getBoundingBox())) {
+        VoxelShape voxelShape = getShape(blockState, level, blockPos, null);
+        AABB entityBounds = entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ());
+        if (Shapes.joinIsNotEmpty(Shapes.create(entityBounds), voxelShape, BooleanOp.AND)) {
 
             entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
             if (entity instanceof LivingEntity livingEntity && !(entity instanceof Player player && player.isCreative())) {

@@ -108,7 +108,7 @@ public class HoneyWeb extends Block {
                 voxelshape3,
                 Shapes.or(voxelshape1, voxelshape3),
                 Shapes.or(voxelshape2, voxelshape3),
-                Shapes.or(Shapes.or(voxelshape1, voxelshape2), voxelshape3)
+                Shapes.joinUnoptimized(Shapes.joinUnoptimized(voxelshape1, voxelshape2, BooleanOp.OR), voxelshape3, BooleanOp.OR).optimize()
         };
     }
 
