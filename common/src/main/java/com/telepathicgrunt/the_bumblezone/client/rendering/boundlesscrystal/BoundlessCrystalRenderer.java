@@ -2,11 +2,11 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -43,33 +43,34 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
                 LightTexture.FULL_BRIGHT);
     }
 
-    public void renderLiving(BoundlessCrystalEntity boundlessCrystalEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
+    public void renderLiving(BoundlessCrystalEntity boundlessCrystalEntity, float f, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
         poseStack.pushPose();
-        this.model.attackTime = this.getAttackAnim(boundlessCrystalEntity, g);
+        this.model.attackTime = this.getAttackAnim(boundlessCrystalEntity, partialTick);
         this.model.riding = boundlessCrystalEntity.isPassenger();
         this.model.young = boundlessCrystalEntity.isBaby();
-        float h = Mth.rotLerp(g, boundlessCrystalEntity.yBodyRotO, boundlessCrystalEntity.yBodyRot);
-        float j = Mth.rotLerp(g, boundlessCrystalEntity.yHeadRotO, boundlessCrystalEntity.yHeadRot);
+        float h = Mth.rotLerp(partialTick, boundlessCrystalEntity.yBodyRotO, boundlessCrystalEntity.yBodyRot);
+        float j = Mth.rotLerp(partialTick, boundlessCrystalEntity.yHeadRotO, boundlessCrystalEntity.yHeadRot);
         float k = j - h;
 
-        float l = this.getBob(boundlessCrystalEntity, g);
-        float m = Mth.lerp(g, boundlessCrystalEntity.xRotO, boundlessCrystalEntity.getXRot());
-        this.setupRotations(boundlessCrystalEntity, poseStack, l, h, g);
+        float l = this.getBob(boundlessCrystalEntity, partialTick);
+        float xRot = Mth.lerp(partialTick, boundlessCrystalEntity.xRotO, boundlessCrystalEntity.getXRot());
+        this.setupRotations(boundlessCrystalEntity, poseStack, l, h, partialTick);
         poseStack.scale(-1.0f, -1.0f, 1.0f);
-        this.scale(boundlessCrystalEntity, poseStack, g);
+        this.scale(boundlessCrystalEntity, poseStack, partialTick);
         poseStack.translate(0.0f, -1.501f, 0.0f);
+
         float n = 0.0f;
         float o = 0.0f;
         if (!boundlessCrystalEntity.isPassenger() && boundlessCrystalEntity.isAlive()) {
-            n = boundlessCrystalEntity.walkAnimation.speed(g);
-            o = boundlessCrystalEntity.walkAnimation.position(g);
+            n = boundlessCrystalEntity.walkAnimation.speed(partialTick);
+            o = boundlessCrystalEntity.walkAnimation.position(partialTick);
             if (n > 1.0f) {
                 n = 1.0f;
             }
         }
 
-        this.model.prepareMobModel(boundlessCrystalEntity, o, n, g);
-        this.model.setupAnim(boundlessCrystalEntity, o, n, l, k, m);
+        this.model.prepareMobModel(boundlessCrystalEntity, o, n, partialTick);
+        this.model.setupAnim(boundlessCrystalEntity, o, n, l, k, xRot);
         Minecraft minecraft = Minecraft.getInstance();
         boolean bl = this.isBodyVisible(boundlessCrystalEntity);
         boolean bl2 = !bl && !boundlessCrystalEntity.isInvisibleTo(minecraft.player);
@@ -78,7 +79,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         RenderType renderType = this.getRenderType(boundlessCrystalEntity, bl, bl2, bl3);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            int overlayCoords = LivingEntityRenderer.getOverlayCoords(boundlessCrystalEntity, this.getWhiteOverlayProgress(boundlessCrystalEntity, g));
+            int overlayCoords = LivingEntityRenderer.getOverlayCoords(boundlessCrystalEntity, this.getWhiteOverlayProgress(boundlessCrystalEntity, partialTick));
 
             float currentHealthState = Math.min(1, (Math.min(1, boundlessCrystalEntity.getHealth() / boundlessCrystalEntity.getMaxHealth()) * 0.35f) + 0.7f);
 
@@ -120,7 +121,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
 
         if (!boundlessCrystalEntity.isSpectator()) {
             for (RenderLayer<BoundlessCrystalEntity, ?> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, packedLight, boundlessCrystalEntity, o, n, g, l, k, m);
+                renderLayer.render(poseStack, multiBufferSource, packedLight, boundlessCrystalEntity, o, n, partialTick, l, k, xRot);
             }
         }
 
@@ -144,6 +145,21 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         font.drawInBatch(component, h, 0, 0x20FFFFFF, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, k, packedLight);
         font.drawInBatch(component, h, 0, -1, false, matrix4f, multiBufferSource, Font.DisplayMode.NORMAL, 0, packedLight);
         poseStack.popPose();
+    }
+
+    @Override
+    protected void setupRotations(BoundlessCrystalEntity boundlessCrystalEntity, PoseStack poseStack, float f, float g, float partialTick) {
+        if (this.isShaking(boundlessCrystalEntity)) {
+            g += (float)(Math.cos((double)boundlessCrystalEntity.tickCount * 3.25) * Math.PI * 0.4000000059604645);
+        }
+
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - g));
+
+        float newXRot = Mth.lerp(partialTick, boundlessCrystalEntity.prevVisualXRot, boundlessCrystalEntity.visualXRot);
+
+        poseStack.translate(0, 1, 0);
+        poseStack.mulPose(Axis.XP.rotationDegrees(newXRot));
+        poseStack.translate(0, -1, 0);
     }
 
     @Override
