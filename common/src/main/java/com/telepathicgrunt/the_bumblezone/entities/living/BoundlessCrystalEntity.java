@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.entities.living;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalState;
+import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
@@ -12,16 +14,23 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -51,14 +60,21 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 public class BoundlessCrystalEntity extends LivingEntity {
     public static final EntityDataSerializer<BoundlessCrystalState> BOUNDLESS_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.simpleEnum(BoundlessCrystalState.class);
     private static final EntityDataAccessor<BoundlessCrystalState> BOUNDLESS_CRYSTAL_STATE = SynchedEntityData.defineId(BoundlessCrystalEntity.class, BOUNDLESS_CRYSTAL_STATE_SERIALIZER);
-
-    private final NonNullList<ItemStack> armorItems = NonNullList.withSize(0, ItemStack.EMPTY);
+    private static final EntityDataAccessor<Integer> ANIMATION_START_TIME = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ANIMATION_END_TIME = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
 
     public final AnimationState rotateAnimationState = new AnimationState();
+
+    private final NonNullList<ItemStack> armorItems = NonNullList.withSize(0, ItemStack.EMPTY);
+    private UUID essenceController = null;
+    private BlockPos essenceControllerBlockPos = null;
+    private ResourceKey<Level> essenceControllerDimension = null;
+    public int animationTimeTick = 0;
 
     public BoundlessCrystalEntity(EntityType<? extends BoundlessCrystalEntity> entityType, Level level) {
         super(entityType, level);
@@ -70,23 +86,106 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 .add(Attributes.MAX_HEALTH, 50.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.1D)
                 .add(Attributes.ATTACK_DAMAGE, 1.0D)
-                .add(Attributes.FOLLOW_RANGE, 40.0D);
+                .add(Attributes.FOLLOW_RANGE, 50.0D);
+    }
+    public UUID getEssenceController() {
+        return essenceController;
+    }
+
+    public void setEssenceController(UUID essenceController) {
+        this.essenceController = essenceController;
+    }
+
+    public BlockPos getEssenceControllerBlockPos() {
+        return essenceControllerBlockPos;
+    }
+
+    public void setEssenceControllerBlockPos(BlockPos essenceControllerBlockPos) {
+        this.essenceControllerBlockPos = essenceControllerBlockPos;
+    }
+
+    public ResourceKey<Level> getEssenceControllerDimension() {
+        return essenceControllerDimension;
+    }
+
+    public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
+        this.essenceControllerDimension = essenceControllerDimension;
+    }
+
+    public void setBoundlessCrystalState(BoundlessCrystalState boundlessCrystalState) {
+        this.entityData.set(BOUNDLESS_CRYSTAL_STATE, boundlessCrystalState);
+        this.animationTimeTick = this.getAnimationStartTime();
+    }
+
+    public BoundlessCrystalState getBoundlessCrystalState() {
+        return this.entityData.get(BOUNDLESS_CRYSTAL_STATE);
+    }
+
+    public void setAnimationStartTime(int animationStartTime) {
+        this.entityData.set(ANIMATION_START_TIME, animationStartTime);
+    }
+
+    public int getAnimationStartTime() {
+        return this.entityData.get(ANIMATION_START_TIME);
+    }
+
+    public void setAnimationEndTime(int animationEndTime) {
+        this.entityData.set(ANIMATION_END_TIME, animationEndTime);
+    }
+
+    public int getAnimationEndTime() {
+        return this.entityData.get(ANIMATION_END_TIME);
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(BOUNDLESS_CRYSTAL_STATE, BoundlessCrystalState.NORMAL);
+        this.entityData.define(ANIMATION_START_TIME, 0);
+        this.entityData.define(ANIMATION_END_TIME, 0);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
+        super.onSyncedDataUpdated(entityDataAccessor);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
+
+        if (compoundTag.contains("essenceController")) {
+            this.setEssenceController(compoundTag.getUUID("essenceController"));
+        }
+        if (compoundTag.contains("essenceControllerBlockPos")) {
+            this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
+        }
+        if (compoundTag.contains("essenceControllerDimension")) {
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
+        }
+
+        this.setAnimationStartTime(compoundTag.getInt("animationTimeStartTick"));
+        this.setAnimationEndTime(compoundTag.getInt("animationTimeEndTick"));
+        this.animationTimeTick = compoundTag.getInt("animationTimeTick");
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
+
+        if (this.getEssenceController() != null) {
+            compoundTag.putUUID("essenceController", this.getEssenceController());
+        }
+        if (this.getEssenceControllerBlockPos() != null) {
+            compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
+        }
+        if (this.getEssenceControllerDimension() != null) {
+            compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
+        }
+
+        compoundTag.putInt("animationTimeStartTick", this.getAnimationStartTime());
+        compoundTag.putInt("animationTimeEndTick", this.getAnimationEndTime());
+        compoundTag.putInt("animationTimeTick", this.animationTimeTick);
     }
 
     public void tick() {
@@ -101,6 +200,23 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 }
             }
         }
+
+        if (this.animationTimeTick < getAnimationStartTime()) {
+            this.animationTimeTick = getAnimationStartTime();
+        }
+        else if (this.animationTimeTick < getAnimationEndTime()) {
+            this.animationTimeTick++;
+        }
+    }
+
+    public InteractionResult interact(Player player, InteractionHand hand) {
+        if (hand != InteractionHand.MAIN_HAND) {
+            return InteractionResult.PASS;
+        }
+
+        this.setBoundlessCrystalState(BoundlessCrystalState.HORIZONTAL);
+
+        return InteractionResult.PASS;
     }
 
     private void spawnFancyParticle(Vec3 center) {
