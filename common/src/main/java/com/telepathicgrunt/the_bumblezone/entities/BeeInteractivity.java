@@ -176,14 +176,10 @@ public class BeeInteractivity {
     public static InteractionResult beeUnpollinating(Level world, Player playerEntity, InteractionHand hand, Bee beeEntity) {
         if (beeEntity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ItemStack itemstack = playerEntity.getItemInHand(hand);
-            Item item = itemstack.getItem();
 
             // right clicking on pollinated bee with watery items will drops pollen puff in world
             if(beeEntity.hasNectar()) {
-                if((itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water")) ||
-                        item == Items.WET_SPONGE ||
-                        item == BzItems.SUGAR_WATER_BOTTLE.get() ||
-                        (item instanceof BucketItem bucketItem && PlatformHooks.getBucketFluid(bucketItem).is(FluidTags.WATER))) {
+                if(itemstack.is(BzTags.WASHING_ITEMS)) {
 
                     if(world.isClientSide())
                         return InteractionResult.SUCCESS;

@@ -72,6 +72,10 @@
       "required": false
     },
     {
+      "id": "feywild:bee_knight",
+      "required": false
+    },
+    {
       "id": "fromspores:craver",
       "required": false
     },

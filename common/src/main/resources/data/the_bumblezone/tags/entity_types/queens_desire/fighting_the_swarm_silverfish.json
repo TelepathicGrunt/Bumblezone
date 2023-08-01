@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "minecraft:silverfish"
+    "minecraft:silverfish",
+    {
+      "id": "enemyexpansion:silverpet",
+      "required": false
+    },
+    {
+      "id": "enemyexpansion:silverking",
+      "required": false
+    }
   ]
 }

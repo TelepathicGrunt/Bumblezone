@@ -1,0 +1,102 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:water_bucket",
+    "minecraft:wet_sponge",
+    "minecraft:potion",
+    "the_bumblezone:sugar_water_bottle",
+    "the_bumblezone:sugar_water_bucket",
+    {
+      "id": "extrasponges:wet_iron_sponge",
+      "required": false
+    },
+    {
+      "id": "extrasponges:wet_gold_sponge",
+      "required": false
+    },
+    {
+      "id": "extrasponges:wet_diamond_sponge",
+      "required": false
+    },
+    {
+      "id": "extrasponges:wet_netherite_sponge",
+      "required": false
+    },
+    {
+      "id": "croptopia:water_bottle",
+      "required": false
+    },
+    {
+      "id": "kibe:water_wooden_bucket",
+      "required": false
+    },
+    {
+      "id": "techreborn:electrolyzed_water_bucket",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:heavy_water_bucket",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:high_pressure_heavy_water_bucket",
+      "required": false
+    },
+    {
+      "id": "modern_industrialization:high_pressure_water_bucket",
+      "required": false
+    },
+    {
+      "id": "supplementaries:soap",
+      "required": false
+    },
+    {
+      "id": "supplementaries:soap_block",
+      "required": false
+    },
+    {
+      "id": "reliquary:emperor_chalice",
+      "required": false
+    },
+    {
+      "id": "mekanism:heavy_water_bucket",
+      "required": false
+    },
+    {
+      "id": "miners_delight:water_cup",
+      "required": false
+    },
+    {
+      "id": "hexerei:wet_broom_brush",
+      "required": false
+    },
+    {
+      "id": "hexerei:wet_moon_dust_broom_brush",
+      "required": false
+    },
+    {
+      "id": "hexerei:wet_herb_enhanced_broom_brush",
+      "required": false
+    },
+    {
+      "id": "blue_skies:ventium_water_bucket",
+      "required": false
+    },
+    {
+      "id": "caupona:water",
+      "required": false
+    },
+    {
+      "id": "chemlib:water",
+      "required": false
+    },
+    {
+      "id": "compressedcreativity:mesh_splashing",
+      "required": false
+    },
+    {
+      "id": "mythicbontany:gjallar_horn_full",
+      "required": false
+    }
+  ]
+}

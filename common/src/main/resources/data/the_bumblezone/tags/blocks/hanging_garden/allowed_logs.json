@@ -52,6 +52,14 @@
       "required": false
     },
     {
+      "id": "mysticsbiomes:cherry_log",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:strawberry_log",
+      "required": false
+    },
+    {
       "id": "paradise_lost:mottled_aurel_log",
       "required": false
     },

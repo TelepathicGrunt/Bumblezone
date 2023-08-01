@@ -195,6 +195,10 @@
     {
       "id": "tofucraft:soymilk_strawberry",
       "required": false
+    },
+    {
+      "id": "feywild:magical_honey_cookie",
+      "required": false
     }
   ],
   "possible_rewards": [

@@ -211,6 +211,14 @@
     {
       "id": "ecotones:blueberries",
       "required": false
+    },
+    {
+      "id": "mysticsbiomes:strawberry",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:sweet_strawberry",
+      "required": false
     }
   ],
   "possible_rewards": [
@@ -237,6 +245,13 @@
     },
     {
       "id": "minecraft:pumpkin_pie",
+      "count": 1,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:cake",
       "count": 1,
       "xp_reward": 1,
       "weight": 1,

@@ -4,9 +4,8 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.Object2ShortMap;
 import it.unimi.dsi.fastutil.objects.Object2ShortOpenHashMap;
 import it.unimi.dsi.fastutil.shorts.Short2ObjectArrayMap;
@@ -20,7 +19,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +29,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -346,19 +343,16 @@ public class StickyHoneyResidue extends Block {
     public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if ((itemstack.getItem() instanceof BucketItem bucketItem &&
-                PlatformHooks.getBucketFluid(bucketItem).is(FluidTags.WATER)) ||
-                (itemstack.hasTag() && itemstack.getOrCreateTag().getString("Potion").contains("water")) ||
-                itemstack.getItem() == Items.WET_SPONGE ||
-                itemstack.getItem() == BzItems.SUGAR_WATER_BOTTLE.get()) {
+        if (itemstack.is(BzTags.WASHING_ITEMS) &&
+                (!itemstack.is(Items.POTION) ||
+                    (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water"))))
+        {
 
             if (!itemstack.isEmpty()) {
                 playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             }
 
-            if(itemstack.getItem() == Items.WET_SPONGE && playerEntity instanceof ServerPlayer) {
-                BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger((ServerPlayer) playerEntity);
-            }
+            BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger((ServerPlayer) playerEntity);
 
             world.destroyBlock(position, false);
 

@@ -8,6 +8,10 @@
     {
       "id": "dreamland:bumble_beast",
       "required": false
+    },
+    {
+      "id": "feywild:summer_tree_ent",
+      "required": false
     }
   ]
 }

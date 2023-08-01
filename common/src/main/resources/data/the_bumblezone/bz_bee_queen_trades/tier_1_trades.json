@@ -219,6 +219,10 @@
     {
       "id": "cyclic:wax_bucket",
       "required": false
+    },
+    {
+      "id": "feywild:honeycomb",
+      "required": false
     }
   ],
   "possible_rewards": [

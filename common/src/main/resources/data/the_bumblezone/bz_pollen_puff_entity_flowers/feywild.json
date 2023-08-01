@@ -1,0 +1,179 @@
+{
+  "feywild:autumn_pixie": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:mandragora": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:melon_stem" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:shroomling": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:spring_tree_ent": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "feywild:spring_tree_sapling" },
+            "weight": 6
+          },
+          {
+            "data": { "Name": "minecraft:spore_blossom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:poppy" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:orange_tulip" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:pink_tulip" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:allium" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:summer_tree_ent": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "feywild:summer_tree_sapling" },
+            "weight": 2
+          },
+          {
+            "data": { "Name": "minecraft:sunflower" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:winter_tree_ent": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "feywild:winter_tree_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:autumn_tree_ent": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "feywild:autumn_tree_sapling" },
+            "weight": 2
+          },
+          {
+            "data": { "Name": "minecraft:red_mushroom" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:blossom_tree_ent": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "feywild:blossom_tree_sapling" },
+            "weight": 3
+          },
+          {
+            "data": { "Name": "minecraft:cherry_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:pink_petals" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "feywild:hexen_tree_ent": [
+    {
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "feywild:hexen_tree_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ]
+}

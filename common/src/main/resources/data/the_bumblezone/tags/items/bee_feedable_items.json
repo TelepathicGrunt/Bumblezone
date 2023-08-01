@@ -62,6 +62,14 @@
     {
       "id": "cyclic:apple_honey",
       "required": false
+    },
+    {
+      "id": "feywild:honeycomb",
+      "required": false
+    },
+    {
+      "id": "feywild:magical_honey_cookie",
+      "required": false
     }
   ]
 }

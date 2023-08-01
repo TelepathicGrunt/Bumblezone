@@ -105,6 +105,34 @@
       "required": false
     },
     {
+      "id": "mysticsbiomes:jacaranda_leaves",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:jacaranda_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:strawberry_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:white_cherry_blossom_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:pink_cherry_blossom_blossoms",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:peony_leaves",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:budding_peony_leaves",
+      "required": false
+    },
+    {
       "id": "paradise_lost:lavender_wisteria_leaves",
       "required": false
     },

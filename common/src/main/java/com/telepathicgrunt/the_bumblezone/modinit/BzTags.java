@@ -99,6 +99,7 @@ public class BzTags {
     public static final TagKey<Item> BZ_ARMOR_ABILITY_ENHANCING_WEARABLES = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_armors/bz_armor_ability_enhancing_wearables"));
     public static final TagKey<Item> CALMING_DROWNED_BONUS_HELD_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/calming_drowned_bonus_held_item"));
     public static final TagKey<Item> ABILITY_ESSENCE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "ability_essence_items"));
+    public static final TagKey<Item> WASHING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "washing_items"));
 
     public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));

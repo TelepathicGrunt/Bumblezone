@@ -272,6 +272,9 @@ Honeycomb Brood Block feeding now can grant you Protection of the Hive even when
 
 Increased duration of Protection of the Hive obtained from Honeycomb Brood Block feeding.
 
+For the Honey Residue/Honey Web blocks, I converted the right click washing items into an item tag to support more washing items:
+ `the_bumblezone:washing_items`
+
 ##### Items:
 Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
 
@@ -383,6 +386,11 @@ Improved `/bumblezone_read_self_data queens_desired_killed_entity_counter` comma
 
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
+
+(Forge): Added compat with Feywild so their Ents spawn their saplings if hit with Pollen Puff, 
+ enderpearls at top half of Autumn Ent will teleport to Bumblezone,
+ String Curtains blocks their small Pixies,
+ and Feywild's Honeycomb and cookie can be fed to bees or given to Bee Queen.
 
 ##### Config:
 (Forge): Updated comment on warnPlayersOfWrongBlockUnderHive config option to be more clear on tag to edit.

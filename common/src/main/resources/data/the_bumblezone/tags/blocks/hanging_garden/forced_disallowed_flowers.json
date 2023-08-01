@@ -264,6 +264,10 @@
       "required": false
     },
     {
+      "id": "floral_flair:lunula",
+      "required": false
+    },
+    {
       "id": "floral_flair:chocolate_cosmos",
       "required": false
     },
