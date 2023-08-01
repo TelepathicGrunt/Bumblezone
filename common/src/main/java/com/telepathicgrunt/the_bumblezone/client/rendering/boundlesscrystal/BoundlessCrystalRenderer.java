@@ -214,7 +214,14 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             poseStack.translate(0.0f, eyeY, 0.0f);
 
             Vec3 startPos = this.getPosition(boundlessCrystalEntity, eyeY, partialTick);
-            Vec3 endPos = boundlessCrystalEntity.getLookAngle().scale(50).add(startPos);
+            Vec3 prevLookAngle = boundlessCrystalEntity.prevLookAngle;
+            Vec3 lookAngle = boundlessCrystalEntity.getLookAngle();
+            Vec3 lerpedLook = new Vec3(
+                Mth.lerp(partialTick, prevLookAngle.x(), lookAngle.x()),
+                Mth.lerp(partialTick, prevLookAngle.y(), lookAngle.y()),
+                Mth.lerp(partialTick, prevLookAngle.z(), lookAngle.z())
+            );
+            Vec3 endPos = lerpedLook.scale(50).add(startPos);
 
             HitResult hitResult = boundlessCrystalEntity.level()
                     .clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, boundlessCrystalEntity));

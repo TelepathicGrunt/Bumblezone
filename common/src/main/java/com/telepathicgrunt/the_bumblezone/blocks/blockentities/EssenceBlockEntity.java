@@ -270,9 +270,9 @@ public class EssenceBlockEntity extends BlockEntity {
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
                 if (serverPlayer != null) {
                     if (serverPlayer.isDeadOrDying() ||
-                        (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > ((essenceBlockEntity.getArenaSize().getX() + 1) / 2) ||
-                        Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > ((essenceBlockEntity.getArenaSize().getY() + 1) / 2) ||
-                        Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > ((essenceBlockEntity.getArenaSize().getZ() + 1) / 2)))
+                        (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > (essenceBlockEntity.getArenaSize().getX() / 2) ||
+                        Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > (essenceBlockEntity.getArenaSize().getY() / 2) ||
+                        Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > (essenceBlockEntity.getArenaSize().getZ() / 2)))
                     {
                         if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
                             essenceBlock.onEventEnd(serverLevel, essenceBlockEntity);

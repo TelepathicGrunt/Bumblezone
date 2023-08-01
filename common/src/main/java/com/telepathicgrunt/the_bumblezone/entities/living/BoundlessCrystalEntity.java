@@ -10,6 +10,7 @@ import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
@@ -84,10 +85,13 @@ public class BoundlessCrystalEntity extends LivingEntity {
     private UUID essenceController = null;
     private BlockPos essenceControllerBlockPos = null;
     private ResourceKey<Level> essenceControllerDimension = null;
+    private UUID targetEntityUUID = null;
+    private Entity targetEntity = null;
     public int animationTimeTick = 0;
     public int prevAnimationTick = 0;
     public float visualXRot = 0;
     public float prevVisualXRot = 0;
+    public Vec3 prevLookAngle = Vec3.ZERO;
 
     public BoundlessCrystalEntity(EntityType<? extends BoundlessCrystalEntity> entityType, Level level) {
         super(entityType, level);
@@ -140,25 +144,25 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 this.setAnimationEndTime(40);
                 this.setStateEndTime(Integer.MAX_VALUE);
             }
-            case HORIZONTAL -> {
-                this.setAnimationEndTime(40);
-                this.setStateEndTime(this.tickCount + 100);
-            }
-            case LASER -> {
+            case TRACKING_SMASHING_ATTACK -> this.setAnimationEndTime(200);
+            case SPINNER_ATTACK -> this.setAnimationEndTime(200);
+            case TRACKING_SPINNING_ATTACK -> this.setAnimationEndTime(200);
+            case VERTICAL_LASER -> {
                 this.setAnimationEndTime(40);
                 this.setLaserStartTime(this.tickCount + 60);
                 this.setStateEndTime(this.tickCount + 400);
             }
-            case TRACKING_SMASHING_ATTACK -> this.setAnimationEndTime(200);
-            case SPINNER_ATTACK -> this.setAnimationEndTime(200);
-            case TRACKING_SPINNING_ATTACK -> this.setAnimationEndTime(200);
-            case VERTICAL_LASER -> this.setAnimationEndTime(200);
             case HORIZONTAL_LASER -> {
                 this.setAnimationEndTime(40);
-                this.setStateEndTime(this.tickCount + 300);
+                this.setLaserStartTime(this.tickCount + 60);
+                this.setStateEndTime(this.tickCount + 400);
             }
             case SWEEP_LASER -> this.setAnimationEndTime(200);
-            case TRACKING_LASER -> this.setAnimationEndTime(200);
+            case TRACKING_LASER -> {
+                this.setAnimationEndTime(40);
+                this.setLaserStartTime(this.tickCount + 60);
+                this.setStateEndTime(this.tickCount + 400);
+            }
         }
     }
 
@@ -192,6 +196,14 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     public int getLaserStartTime() {
         return this.entityData.get(LASER_START_TIME);
+    }
+
+    public void setTargetEntityUUID(UUID targetEntityUUID) {
+        this.targetEntityUUID = targetEntityUUID;
+    }
+
+    public UUID getTargetEntityUUID() {
+        return this.targetEntityUUID;
     }
 
     @Override
@@ -232,6 +244,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.prevAnimationTick = compoundTag.getInt("prevAnimationTick");
         this.visualXRot = compoundTag.getFloat("visualXRot");
         this.prevVisualXRot = compoundTag.getFloat("prevVisualXRot");
+
+        if (compoundTag.contains("targetEntityUUID")) {
+            this.targetEntityUUID = compoundTag.getUUID("targetEntityUUID");
+        }
     }
 
     @Override
@@ -253,11 +269,13 @@ public class BoundlessCrystalEntity extends LivingEntity {
         compoundTag.putInt("prevAnimationTick", this.prevAnimationTick);
         compoundTag.putFloat("visualXRot", this.visualXRot);
         compoundTag.putFloat("prevVisualXRot", this.prevVisualXRot);
+        if (this.targetEntityUUID != null) {
+            compoundTag.putUUID("targetEntityUUID", this.targetEntityUUID);
+        }
     }
 
     public static boolean isOrFromHorizontalState(BoundlessCrystalState boundlessCrystalState) {
-        return boundlessCrystalState == BoundlessCrystalState.HORIZONTAL ||
-                boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER ||
+        return boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.TRACKING_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.SPINNER_ATTACK ||
@@ -265,7 +283,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     public static boolean isLaserState(BoundlessCrystalState boundlessCrystalState) {
-        return boundlessCrystalState == BoundlessCrystalState.LASER ||
+        return boundlessCrystalState == BoundlessCrystalState.VERTICAL_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.TRACKING_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER;
@@ -337,8 +355,26 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.visualXRot = xRot;
 
         xRot = this.getXRot();
-        if (this.getBoundlessCrystalState() == BoundlessCrystalState.LASER) {
+        if (this.getBoundlessCrystalState() == BoundlessCrystalState.VERTICAL_LASER) {
             xRot = 90 * progress;
+        }
+        else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_LASER) {
+            if (getTargetEntityUUID() == null || this.targetEntity == null || !this.targetEntity.getUUID().equals(getTargetEntityUUID())) {
+                if (getTargetEntityUUID() != null) {
+                    this.targetEntity = this.level().getPlayerByUUID(getTargetEntityUUID());
+                }
+                else {
+                    this.targetEntity = this.level().getNearestPlayer(this, 30);
+                    if (this.targetEntity != null) {
+                        this.setTargetEntityUUID(this.targetEntity.getUUID());
+                    }
+                }
+            }
+
+            if (this.targetEntity != null) {
+                this.prevLookAngle = this.getLookAngle();
+                this.lookAt(EntityAnchorArgument.Anchor.EYES, this.targetEntity.position().add(this.targetEntity.getDeltaMovement().scale(-4)));
+            }
         }
         else if (xRot < 0.001f) {
             xRot = 0;
@@ -398,7 +434,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             return InteractionResult.PASS;
         }
 
-        this.setBoundlessCrystalState(BoundlessCrystalState.LASER);
+        this.setBoundlessCrystalState(BoundlessCrystalState.TRACKING_LASER);
 
         return InteractionResult.PASS;
     }
