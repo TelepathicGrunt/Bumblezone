@@ -3,11 +3,19 @@
 ##### Items:
 Improved the tooltip wrapping for Bumblezone Music Discs
 
+Adjusted texture on one Trans Bumble Bee armor variant to make it more distinct.
+
+Adjusted texture for one Honey Bee Leggings to make it more distinct from the other variant.
+
+Honey Bee Leggings item texture will now show pollen if the item actually has pollen set in nbt.
+
 ##### Advancements:
 Nerfed the requirements of several Queen Desire advancements to make it less grindy.
 
 Improved `/bumblezone_read_self_data queens_desired_killed_entity_counter` command to only show entries that has existing progress towards the Queen Desire advancement.
  Also will now work with tag requirements advancements.
+
+Fixed color of potion icons in Bumblezone advancements
 
 
 ### **(V.6.7.27 Changes) (1.19.2 Minecraft)**

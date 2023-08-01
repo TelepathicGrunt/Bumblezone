@@ -25,6 +25,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerS
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
 import com.telepathicgrunt.the_bumblezone.items.BeeCannon;
 import com.telepathicgrunt.the_bumblezone.items.CrystalCannon;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -183,6 +184,23 @@ public class BumblezoneClient {
                 new ResourceLocation("is_creative_tab_icon"),
                 (itemStack, world, livingEntity, integer) ->
                         itemStack.hasTag() && itemStack.getTag().getBoolean("isCreativeTabIcon") ? 1.0F : 0.0F
+        );
+
+        // Correct model based on pollen on leggings
+        ItemProperties.register(
+                BzItems.HONEY_BEE_LEGGINGS_1.get(),
+                new ResourceLocation("pollen"),
+                (itemStack, world, livingEntity, int1) ->
+                        HoneyBeeLeggings.isPollinated(itemStack) ? 1f : 0f
+        );
+
+
+        // Correct model based on pollen on leggings
+        ItemProperties.register(
+                BzItems.HONEY_BEE_LEGGINGS_2.get(),
+                new ResourceLocation("pollen"),
+                (itemStack, world, livingEntity, int1) ->
+                        HoneyBeeLeggings.isPollinated(itemStack) ? 1f : 0f
         );
     }
 
