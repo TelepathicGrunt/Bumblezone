@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ElectricRingEntity;
 import net.minecraft.Util;
 import net.minecraft.client.model.EntityModel;
@@ -33,26 +34,8 @@ public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel
     private final ModelPart ring;
     private final ModelPart side;
 
-    private static final Function<ResourceLocation, RenderType> RING = Util.memoize((resourceLocation) -> {
-        RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
-                .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
-                .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
-                .setTransparencyState(NO_TRANSPARENCY)
-                .setCullState(NO_CULL)
-                .setOverlayState(NO_OVERLAY)
-                .createCompositeState(false);
-
-        return RenderType.create("the_bumblezone:ring",
-                DefaultVertexFormat.NEW_ENTITY,
-                VertexFormat.Mode.QUADS,
-                256,
-                false,
-                true,
-                compositeState);
-    });
-
     public ElectricRingModel(ModelPart root) {
-        super(RING);
+        super(BumblezoneClient.ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE);
         this.ring = root.getChild("ring");
         this.side = root.getChild("side");
     }

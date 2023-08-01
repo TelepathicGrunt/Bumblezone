@@ -89,10 +89,7 @@ public class PurpleSpikeEntity extends Entity {
         boolean hasSpike = this.hasSpike();
 
         if (this.level().isClientSide()) {
-            if (this.tickCount % 10 == 0 && hasSpikeCharge) {
-                this.makeParticle(1, false);
-            }
-            else if (!hasSpikeCharge && hasSpike){
+            if (this.tickCount % 2 == 0 && !hasSpikeCharge && hasSpike){
                 this.makeParticle(1, false);
             }
 

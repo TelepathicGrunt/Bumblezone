@@ -1,18 +1,22 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.GuardianRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -24,7 +28,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -32,11 +35,16 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import java.awt.*;
+import java.util.function.Function;
+
+import static net.minecraft.client.renderer.RenderStateShard.NO_CULL;
+import static net.minecraft.client.renderer.RenderStateShard.NO_OVERLAY;
+import static net.minecraft.client.renderer.RenderStateShard.NO_TRANSPARENCY;
+import static net.minecraft.client.renderer.RenderStateShard.RENDERTYPE_ENERGY_SWIRL_SHADER;
 
 public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrystalEntity, BoundlessCrystalModel<BoundlessCrystalEntity>> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/boundless_crystal.png");
-    private static final ResourceLocation GUARDIAN_BEAM_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/boundless_crystal_laser.png");
-    private static final RenderType BEAM_RENDER_TYPE = RenderType.entityCutoutNoCull(GUARDIAN_BEAM_LOCATION);
+    private static final ResourceLocation LASER_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/boundless_crystal_laser.png");
 
     public BoundlessCrystalRenderer(EntityRendererProvider.Context context) {
         super(context, new BoundlessCrystalModel<>(context.bakeLayer(BoundlessCrystalModel.LAYER_LOCATION)), 0.7F);
@@ -187,13 +195,18 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             float totalTickTime = boundlessCrystalEntity.tickCount + partialTick;
 
             float colorSpeed = 2;
-            float redSin = Mth.sin(((totalTickTime * colorSpeed) % 360) * Mth.DEG_TO_RAD);
-            float greenSin = Mth.sin(((totalTickTime * colorSpeed) % 360) * Mth.DEG_TO_RAD + 30);
-            float blueSin = Mth.sin(((totalTickTime * colorSpeed) % 360) * Mth.DEG_TO_RAD + 60);
+            float positionOffset = (float) (
+                    boundlessCrystalEntity.position().x() / 10f +
+                    boundlessCrystalEntity.position().y() / 10f +
+                    boundlessCrystalEntity.position().z() / 10f);
+            float radianColor = ((totalTickTime * colorSpeed + positionOffset) % 360) * Mth.DEG_TO_RAD;
+            float redSin = Mth.sin(radianColor);
+            float greenSin = Mth.sin(radianColor + 30);
+            float blueSin = Mth.sin(radianColor + 60);
 
-            int red = 200 + (int) (redSin * 56);
-            int green = 200 + (int) (greenSin * 56);
-            int blue = 200 + (int) (blueSin * 56);
+            int red = 220 + (int) (redSin * 36);
+            int green = 220 + (int) (greenSin * 36);
+            int blue = 220 + (int) (blueSin * 36);
 
             float k = totalTickTime * 0.5f % 1.0f;
             float eyeY = boundlessCrystalEntity.getEyeHeight();
@@ -243,7 +256,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             float ux2 = 0.0f;
             float uv2 = -1.0f + k;
             float uv1 = laserLength * 2.5f + uv2;
-            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(BEAM_RENDER_TYPE);
+            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(BumblezoneClient.ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE.apply(LASER_LOCATION));
             PoseStack.Pose pose = poseStack.last();
             Matrix4f matrix4f = pose.pose();
             Matrix3f matrix3f = pose.normal();

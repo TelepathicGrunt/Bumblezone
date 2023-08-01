@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
@@ -81,6 +83,8 @@ import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimensionSpecialEffects;
+import net.minecraft.Util;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
@@ -91,8 +95,50 @@ import net.minecraft.world.item.Item;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
+
+import static net.minecraft.client.renderer.RenderStateShard.NO_CULL;
+import static net.minecraft.client.renderer.RenderStateShard.NO_OVERLAY;
+import static net.minecraft.client.renderer.RenderStateShard.NO_TRANSPARENCY;
+import static net.minecraft.client.renderer.RenderStateShard.RENDERTYPE_ENERGY_SWIRL_SHADER;
+import static net.minecraft.client.renderer.RenderStateShard.TRANSLUCENT_TRANSPARENCY;
 
 public class BumblezoneClient {
+    public static final Function<ResourceLocation, RenderType> ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE = Util.memoize((resourceLocation) -> {
+        RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
+                .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
+                .setTransparencyState(NO_TRANSPARENCY)
+                .setCullState(NO_CULL)
+                .setOverlayState(NO_OVERLAY)
+                .createCompositeState(false);
+
+        return RenderType.create("the_bumblezone:entity_cutout_emissive",
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                256,
+                false,
+                true,
+                compositeState);
+    });
+
+    public static final Function<ResourceLocation, RenderType> ENTITY_TRANSPARENT_EMISSIVE_RENDER_TYPE = Util.memoize((resourceLocation) -> {
+        RenderType.CompositeState compositeState = RenderType.CompositeState.builder()
+                .setShaderState(RENDERTYPE_ENERGY_SWIRL_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
+                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                .setCullState(NO_CULL)
+                .setOverlayState(NO_OVERLAY)
+                .createCompositeState(false);
+
+        return RenderType.create("the_bumblezone:entity_transparent_emissive",
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                256,
+                false,
+                true,
+                compositeState);
+    });
 
     public static void init() {
         RegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);

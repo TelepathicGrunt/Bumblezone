@@ -50,6 +50,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -256,7 +257,6 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     public static boolean isOrFromHorizontalState(BoundlessCrystalState boundlessCrystalState) {
         return boundlessCrystalState == BoundlessCrystalState.HORIZONTAL ||
-                boundlessCrystalState == BoundlessCrystalState.LASER ||
                 boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.TRACKING_LASER ||
                 boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER ||
@@ -335,10 +335,22 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
 
         this.visualXRot = xRot;
+
+        xRot = this.getXRot();
+        if (this.getBoundlessCrystalState() == BoundlessCrystalState.LASER) {
+            xRot = 90 * progress;
+        }
+        else if (xRot < 0.001f) {
+            xRot = 0;
+        }
+        else {
+            xRot = xRot - (xRot * progress * 0.1f);
+        }
+        this.setXRot(xRot);
     }
 
     private void laserBreakBlocks() {
-        if (!this.level().isClientSide() && this.isLaserFiring() && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 5 == 0) {
+        if (!this.level().isClientSide() && this.isLaserFiring() && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 3 == 0) {
             HitResult hitResult = ProjectileUtil.getHitResultOnViewVector(this, (entity) -> true, 50);
 
             if (hitResult instanceof BlockHitResult blockHitResult) {
@@ -351,6 +363,9 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 Entity entity = entityHitResult.getEntity();
                 if (entity instanceof ItemEntity itemEntity) {
                     itemEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), 10);
+                }
+                else if (entity instanceof Projectile projectile) {
+                    projectile.remove(RemovalReason.KILLED);
                 }
                 else if (entity instanceof LivingEntity livingEntity && !(entity instanceof BoundlessCrystalEntity)) {
                     float damageAmount;

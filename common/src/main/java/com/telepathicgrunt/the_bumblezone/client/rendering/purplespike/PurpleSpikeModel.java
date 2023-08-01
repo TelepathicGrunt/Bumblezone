@@ -1,8 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.purplespike;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PurpleSpikeEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -23,7 +25,7 @@ public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T
     private final ModelPart bottomSpike;
 
     public PurpleSpikeModel(ModelPart root) {
-        super(RenderType::entityTranslucent);
+        super(BumblezoneClient.ENTITY_TRANSPARENT_EMISSIVE_RENDER_TYPE);
         this.topSpike = root.getChild("topSpike");
         this.bottomSpike = root.getChild("bottomSpike");
     }
