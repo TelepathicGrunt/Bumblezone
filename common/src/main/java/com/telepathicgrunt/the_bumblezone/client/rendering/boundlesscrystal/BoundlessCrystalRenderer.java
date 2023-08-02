@@ -177,7 +177,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
     @Override
     protected void setupRotations(BoundlessCrystalEntity boundlessCrystalEntity, PoseStack poseStack, float f, float g, float partialTick) {
         if (this.isShaking(boundlessCrystalEntity)) {
-            g += (float)(Math.cos((double)boundlessCrystalEntity.tickCount * 3.25) * Math.PI * 0.4000000059604645);
+            g += (float)(Math.cos((double)boundlessCrystalEntity.activeTick * 3.25) * Math.PI * 0.4000000059604645);
         }
 
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - g));
@@ -192,7 +192,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
 
     public void renderLaser(BoundlessCrystalEntity boundlessCrystalEntity, float f, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight) {
         if (boundlessCrystalEntity.isLaserFiring()) {
-            float totalTickTime = boundlessCrystalEntity.tickCount + partialTick;
+            float totalTickTime = boundlessCrystalEntity.activeTick + partialTick;
 
             float colorSpeed = 2;
             float positionOffset = (float) (
@@ -276,7 +276,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             vertex(vertexConsumer, matrix4f, matrix3f, x4, y2, z4, red, green, blue, ux2, uv2);
             vertex(vertexConsumer, matrix4f, matrix3f, x4, y1, z4, red, green, blue, ux2, uv1);
             float as = 0.0f;
-            if (boundlessCrystalEntity.tickCount % 4 < 2) {
+            if (boundlessCrystalEntity.activeTick % 4 < 2) {
                 as = 0.5f;
             }
             vertex(vertexConsumer, matrix4f, matrix3f, x7, y1, z5, red, green, blue, 0.5f, as + 0.5f);
