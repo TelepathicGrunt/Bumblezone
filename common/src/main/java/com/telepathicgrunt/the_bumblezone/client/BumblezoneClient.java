@@ -113,7 +113,7 @@ public class BumblezoneClient {
                 .setOverlayState(NO_OVERLAY)
                 .createCompositeState(false);
 
-        return RenderType.create("the_bumblezone:entity_cutout_emissive",
+        return RenderType.create(Bumblezone.MODID + ":entity_cutout_emissive",
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 256,
@@ -131,7 +131,7 @@ public class BumblezoneClient {
                 .setOverlayState(NO_OVERLAY)
                 .createCompositeState(false);
 
-        return RenderType.create("the_bumblezone:entity_transparent_emissive",
+        return RenderType.create(Bumblezone.MODID + ":entity_transparent_emissive",
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 256,
