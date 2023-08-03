@@ -1,7 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.effects.BzEffect;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -82,7 +84,10 @@ public class CalmingEssence extends AbilityEssenceItem {
                     }
                 }
 
-                if (serverPlayer.isSprinting()) {
+                if (serverPlayer.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+                    decrementAbilityUseRemaining(stack, serverPlayer, getAbilityUseRemaining(stack));
+                }
+                else if (serverPlayer.isSprinting()) {
                     decrementAbilityUseRemaining(stack, serverPlayer, 60);
                 }
                 else {
