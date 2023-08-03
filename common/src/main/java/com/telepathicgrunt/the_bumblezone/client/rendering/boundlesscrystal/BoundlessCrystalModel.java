@@ -94,21 +94,23 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
         this.body.getAllParts().forEach(ModelPart::resetPose);
 
         boolean isLaserState = BoundlessCrystalEntity.isLaserState(entity.getBoundlessCrystalState());
+
         if (isLaserState && entity.isLaserFiring()) {
             this.spikes.visible = true;
             this.charging.visible = false;
             this.spikes.getAllParts().forEach(ModelPart::resetPose);
 
-            float pulse = Math.abs(Mth.sin((entity.tickCount % 360) * 6 * Mth.DEG_TO_RAD)) + 1.5f;
+            float pulse = Math.abs(Mth.sin((entity.currentStateTimeTick % 360) * 6 * Mth.DEG_TO_RAD)) + 1.5f;
             this.spikes.xScale = pulse;
             this.spikes.zScale = pulse;
         }
-        else if (isLaserState && entity.tickCount > entity.getLaserStartTime()) {
+        else if (isLaserState && entity.currentStateTimeTick > entity.getLaserStartDelay()) {
             this.spikes.visible = false;
             this.charging.visible = true;
             this.charging.getAllParts().forEach(ModelPart::resetPose);
 
-            float chargeTime = (1 - ((entity.tickCount - entity.getLaserStartTime()) / 40f)) * 3f;
+            float durationToFiring = entity.getLaserFireStartTime() - entity.getLaserStartDelay();
+            float chargeTime = (1 - ((entity.currentStateTimeTick - entity.getLaserStartDelay()) / durationToFiring)) * 3f;
             this.charging.xScale = chargeTime;
             this.charging.zScale = chargeTime;
         }
