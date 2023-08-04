@@ -28,6 +28,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -86,6 +87,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     private ResourceKey<Level> essenceControllerDimension = null;
     private UUID targetEntityUUID = null;
     private Entity targetEntity = null;
+    private Vec3 prevTargetPosition = new Vec3(0, 0, 0);
 
     public int currentStateTimeTick = 0;
     public int animationTimeTick = 0;
@@ -322,6 +324,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     public void tick() {
+        this.prevLookAngle = this.getLookAngle();
+
         super.tick();
 
         spawnFancyParticlesOnClient();
@@ -351,6 +355,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     private void incrementAnimationAndRotationTicks() {
         this.prevAnimationTick = this.animationTimeTick;
+
         if (this.animationTimeTick < this.getInitialRotationAnimationTimespan()) {
             this.animationTimeTick++;
         }
@@ -369,14 +374,11 @@ public class BoundlessCrystalEntity extends LivingEntity {
             progress = (float)this.animationTimeTick / this.getInitialRotationAnimationTimespan();
         }
 
-        this.prevLookAngle = this.getLookAngle();
-        setActualRotations(progress);
+        setActualRotations((float) Math.pow(progress, 4));
     }
 
     private void setActualRotations(float progress) {
         Vec3 currentLookAngle = this.getLookAngle();
-        this.prevLookAngle = currentLookAngle;
-
         Vec3 desiredLookPosition = currentLookAngle;
         Vec3 currentLookPosition = this.getEyePosition().add(currentLookAngle);
 
@@ -385,7 +387,15 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
         else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_LASER) {
             if (this.targetEntity != null) {
-                desiredLookPosition = getTargetPosition();
+                Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
+                Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.8);
+                this.prevTargetPosition = diffFromNow.add(targetPos);
+
+                if (diffFromNow.length() > 3d) {
+                    diffFromNow.scale(3d / diffFromNow.length());
+                }
+
+                desiredLookPosition = diffFromNow.add(targetPos);
             }
         }
         else {
@@ -413,10 +423,6 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.setYHeadRot(this.getYRot());
     }
 
-    private Vec3 getTargetPosition() {
-        return this.targetEntity.position().add(this.targetEntity.getDeltaMovement().scale(-10).add(5, 0, 0));
-    }
-
     private void setupTargetForTrackingStates() {
         if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_LASER) {
             if (this.getTargetEntityUUID() == null || this.targetEntity == null || !this.targetEntity.getUUID().equals(this.getTargetEntityUUID())) {
@@ -427,6 +433,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     this.targetEntity = this.level().getNearestPlayer(this, 30);
                     if (this.targetEntity != null) {
                         this.setTargetEntityUUID(this.targetEntity.getUUID());
+                        this.prevTargetPosition = this.targetEntity.position();
                     }
                 }
             }
@@ -434,12 +441,12 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     private void laserBreakBlocks() {
-        if (!this.level().isClientSide() && this.isLaserFiring() && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 3 == 0) {
+        if (!this.level().isClientSide() && this.isLaserFiring() && (this.tickCount + this.getUUID().getLeastSignificantBits()) % 2 == 0) {
             HitResult hitResult = ProjectileUtil.getHitResultOnViewVector(this, (entity) -> true, 50);
 
             if (hitResult instanceof BlockHitResult blockHitResult) {
                BlockState state = this.level().getBlockState(blockHitResult.getBlockPos());
-               if (state.getBlock().getExplosionResistance() < 1500) {
+               if (state.getBlock().getExplosionResistance() < 1500 && !state.is(BlockTags.WITHER_IMMUNE)) {
                    this.level().destroyBlock(blockHitResult.getBlockPos(), true);
                }
             }

@@ -210,11 +210,10 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             float eyeY = boundlessCrystalEntity.getEyeHeight();
             poseStack.pushPose();
 
-            Vec3 startPos = this.getPosition(boundlessCrystalEntity, eyeY, partialTick);
+            Vec3 startPos = boundlessCrystalEntity.getEyePosition();
             Vec3 prevLookAngle = boundlessCrystalEntity.prevLookAngle;
             Vec3 lookAngle = boundlessCrystalEntity.getLookAngle();
 
-            poseStack.translate(lookAngle.x(), eyeY + lookAngle.y(), lookAngle.z());
 
             Vec3 lerpedLook = new Vec3(
                 Mth.lerp(partialTick, prevLookAngle.x(), lookAngle.x()),
@@ -227,7 +226,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
                     .clip(new ClipContext(startPos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, boundlessCrystalEntity));
 
             if (hitResult.getType() != HitResult.Type.MISS) {
-                endPos = hitResult.getLocation();
+                endPos = hitResult.getLocation().subtract(lookAngle);
             }
 
             Vec3 vectToTarget = endPos.subtract(startPos);
@@ -236,6 +235,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             vectToTarget = vectToTarget.normalize();
             float n = (float)Math.acos(vectToTarget.y);
             float o = (float)Math.atan2(vectToTarget.z, vectToTarget.x);
+            poseStack.translate(lookAngle.x(), eyeY + lookAngle.y(), lookAngle.z());
             poseStack.mulPose(Axis.YP.rotationDegrees((1.5707964f - o) * 57.295776f));
             poseStack.mulPose(Axis.XP.rotationDegrees(n * 57.295776f));
             float q = totalTickTime * 0.05f * -1.5f;
@@ -249,6 +249,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             float z8 = Mth.sin(q + 3.926991f) * w2;
             float x5 = Mth.cos(q + 5.4977875f) * w2;
             float z7 = Mth.sin(q + 5.4977875f) * w2;
+
             float x1 = Mth.cos(q + (float)Math.PI) * v;
             float z1 = Mth.sin(q + (float)Math.PI) * v;
             float x2 = Mth.cos(q + 0.0f) * v;
