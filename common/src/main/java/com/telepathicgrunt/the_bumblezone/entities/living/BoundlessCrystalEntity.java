@@ -156,12 +156,14 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 case HORIZONTAL_LASER -> {
                     this.setInitialRotationAnimationTimespan(40);
                     this.setLaserStartDelay(60);
+                    this.setLaserFireStartTime(80);
                     this.setStateTimespan(400);
                 }
                 case SWEEP_LASER -> this.setInitialRotationAnimationTimespan(200);
                 case TRACKING_LASER -> {
                     this.setInitialRotationAnimationTimespan(40);
                     this.setLaserStartDelay(60);
+                    this.setLaserFireStartTime(80);
                     this.setStateTimespan(400);
                 }
             }
@@ -368,7 +370,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
         float progress;
         if (this.getInitialRotationAnimationTimespan() == 0) {
-            progress = 0;
+            progress = 1;
         }
         else {
             progress = (float)this.animationTimeTick / this.getInitialRotationAnimationTimespan();
@@ -481,6 +483,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
                 }
             }
+
+            // TODO: laser sound here
         }
     }
 
@@ -489,7 +493,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             return InteractionResult.PASS;
         }
 
-        this.setBoundlessCrystalState(BoundlessCrystalState.TRACKING_LASER);
+        this.setBoundlessCrystalState(BoundlessCrystalState.VERTICAL_LASER);
 
         return InteractionResult.PASS;
     }

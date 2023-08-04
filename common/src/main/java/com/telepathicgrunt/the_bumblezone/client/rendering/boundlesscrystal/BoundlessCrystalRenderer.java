@@ -181,18 +181,26 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         if (boundlessCrystalEntity.isLaserFiring()) {
             float totalTickTime = boundlessCrystalEntity.tickCount + partialTick;
 
-            float colorSpeed = 2;
+            float colorSpeed = -5;
             long uniqueValue = boundlessCrystalEntity.getUUID().getLeastSignificantBits() % 1000000;
             float radianColor = ((totalTickTime * colorSpeed + uniqueValue) % 360) * Mth.DEG_TO_RAD;
+            int baseBrightness = 200;
+            int colorStrength = 55;
+
             float redSin = Mth.sin(radianColor);
             float greenSin = Mth.sin(radianColor + 30);
             float blueSin = Mth.sin(radianColor + 60);
+            int red = baseBrightness + (int) (redSin * colorStrength);
+            int green = baseBrightness + (int) (greenSin * colorStrength);
+            int blue = baseBrightness + (int) (blueSin * colorStrength);
 
-            int red = 220 + (int) (redSin * 36);
-            int green = 220 + (int) (greenSin * 36);
-            int blue = 220 + (int) (blueSin * 36);
+            float redSin2 = Mth.cos(radianColor);
+            float greenSin2 = Mth.cos(radianColor + 30);
+            float blueSin2 = Mth.cos(radianColor + 60);
+            int red2 = baseBrightness + (int) (redSin2 * colorStrength);
+            int green2 = baseBrightness + (int) (greenSin2 * colorStrength);
+            int blue2 = baseBrightness + (int) (blueSin2 * colorStrength);
 
-            float k = totalTickTime * 0.5f % 1.0f;
             float eyeY = boundlessCrystalEntity.getEyeHeight();
             poseStack.pushPose();
 
@@ -248,28 +256,29 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             float y2 = 0.0f;
             float ux1 = 0.4999f;
             float ux2 = 0.0f;
-            float uv2 = -1.0f + k;
+
+            float uv2 = -1.0f + (totalTickTime * -0.2f % 1.0f);
             float uv1 = laserLength * 2.5f + uv2;
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(BumblezoneClient.ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE.apply(LASER_LOCATION));
             PoseStack.Pose pose = poseStack.last();
             Matrix4f matrix4f = pose.pose();
             Matrix3f matrix3f = pose.normal();
-            vertex(vertexConsumer, matrix4f, matrix3f, x1, y1, z1, red, green, blue, ux1, uv1);
+            vertex(vertexConsumer, matrix4f, matrix3f, x1, y1, z1, red2, green2, blue2, ux1, uv1);
             vertex(vertexConsumer, matrix4f, matrix3f, x1, y2, z1, red, green, blue, ux1, uv2);
             vertex(vertexConsumer, matrix4f, matrix3f, x2, y2, z2, red, green, blue, ux2, uv2);
-            vertex(vertexConsumer, matrix4f, matrix3f, x2, y1, z2, red, green, blue, ux2, uv1);
-            vertex(vertexConsumer, matrix4f, matrix3f, x3, y1, z3, red, green, blue, ux1, uv1);
+            vertex(vertexConsumer, matrix4f, matrix3f, x2, y1, z2, red2, green2, blue2, ux2, uv1);
+            vertex(vertexConsumer, matrix4f, matrix3f, x3, y1, z3, red2, green2, blue2, ux1, uv1);
             vertex(vertexConsumer, matrix4f, matrix3f, x3, y2, z3, red, green, blue, ux1, uv2);
             vertex(vertexConsumer, matrix4f, matrix3f, x4, y2, z4, red, green, blue, ux2, uv2);
-            vertex(vertexConsumer, matrix4f, matrix3f, x4, y1, z4, red, green, blue, ux2, uv1);
+            vertex(vertexConsumer, matrix4f, matrix3f, x4, y1, z4, red2, green2, blue2, ux2, uv1);
             float as = 0.0f;
             if (boundlessCrystalEntity.tickCount % 4 < 2) {
                 as = 0.5f;
             }
-            vertex(vertexConsumer, matrix4f, matrix3f, x7, y1, z5, red, green, blue, 0.5f, as + 0.5f);
-            vertex(vertexConsumer, matrix4f, matrix3f, z9, y1, z6, red, green, blue, 1.0f, as + 0.5f);
-            vertex(vertexConsumer, matrix4f, matrix3f, x5, y1, z7, red, green, blue, 1.0f, as);
-            vertex(vertexConsumer, matrix4f, matrix3f, x6, y1, z8, red, green, blue, 0.5f, as);
+            vertex(vertexConsumer, matrix4f, matrix3f, x7, y1, z5, red2, green2, blue2, 0.5f, as + 0.5f);
+            vertex(vertexConsumer, matrix4f, matrix3f, z9, y1, z6, red2, green2, blue2, 1.0f, as + 0.5f);
+            vertex(vertexConsumer, matrix4f, matrix3f, x5, y1, z7, red2, green2, blue2, 1.0f, as);
+            vertex(vertexConsumer, matrix4f, matrix3f, x6, y1, z8, red2, green2, blue2, 0.5f, as);
             poseStack.popPose();
 
             laserScreenShake(boundlessCrystalEntity, endPos);
