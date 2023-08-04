@@ -1,20 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -27,7 +23,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -35,12 +30,6 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import java.awt.*;
-import java.util.function.Function;
-
-import static net.minecraft.client.renderer.RenderStateShard.NO_CULL;
-import static net.minecraft.client.renderer.RenderStateShard.NO_OVERLAY;
-import static net.minecraft.client.renderer.RenderStateShard.NO_TRANSPARENCY;
-import static net.minecraft.client.renderer.RenderStateShard.RENDERTYPE_ENERGY_SWIRL_SHADER;
 
 public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrystalEntity, BoundlessCrystalModel<BoundlessCrystalEntity>> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/boundless_crystal.png");
@@ -193,11 +182,8 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             float totalTickTime = boundlessCrystalEntity.tickCount + partialTick;
 
             float colorSpeed = 2;
-            float positionOffset = (float) (
-                    boundlessCrystalEntity.position().x() / 10f +
-                    boundlessCrystalEntity.position().y() / 10f +
-                    boundlessCrystalEntity.position().z() / 10f);
-            float radianColor = ((totalTickTime * colorSpeed + positionOffset) % 360) * Mth.DEG_TO_RAD;
+            long uniqueValue = boundlessCrystalEntity.getUUID().getLeastSignificantBits() % 1000000;
+            float radianColor = ((totalTickTime * colorSpeed + uniqueValue) % 360) * Mth.DEG_TO_RAD;
             float redSin = Mth.sin(radianColor);
             float greenSin = Mth.sin(radianColor + 30);
             float blueSin = Mth.sin(radianColor + 60);
@@ -285,6 +271,29 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             vertex(vertexConsumer, matrix4f, matrix3f, x5, y1, z7, red, green, blue, 1.0f, as);
             vertex(vertexConsumer, matrix4f, matrix3f, x6, y1, z8, red, green, blue, 0.5f, as);
             poseStack.popPose();
+
+            laserScreenShake(boundlessCrystalEntity, endPos);
+        }
+    }
+
+    private static void laserScreenShake(BoundlessCrystalEntity boundlessCrystalEntity, Vec3 endPos) {
+        Entity camera = Minecraft.getInstance().getCameraEntity();
+        if (camera != null) {
+            double distance1 = boundlessCrystalEntity.position().distanceTo(camera.position());
+            double distance2 = endPos.distanceTo(camera.position());
+            double minDistance = Math.min(distance1, distance2);
+            double threshold = 10;
+
+            if (minDistance <= threshold) {
+                double percentageToCenter = 1 - (minDistance / threshold);
+
+                double spinSlowdown = 0.15d + (0.3d * (1 - percentageToCenter * percentageToCenter));
+                float intensity = (float) (0.175d * percentageToCenter * percentageToCenter * percentageToCenter);
+                double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
+                double degrees = (currentMillisecond / spinSlowdown);
+                float angle = (float) (degrees * Mth.DEG_TO_RAD);
+                camera.setYRot(camera.getYRot() + (Mth.sin(angle) * intensity));
+            }
         }
     }
 
@@ -297,13 +306,6 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
                 .uv2(0xF000F0)
                 .normal(matrix3f, 0.0f, 1.0f, 0.0f)
                 .endVertex();
-    }
-
-    private Vec3 getPosition(LivingEntity livingEntity, double d, float f) {
-        double e = Mth.lerp(f, livingEntity.xOld, livingEntity.getX());
-        double g = Mth.lerp(f, livingEntity.yOld, livingEntity.getY()) + d;
-        double h = Mth.lerp(f, livingEntity.zOld, livingEntity.getZ());
-        return new Vec3(e, g, h);
     }
 
     @Override
