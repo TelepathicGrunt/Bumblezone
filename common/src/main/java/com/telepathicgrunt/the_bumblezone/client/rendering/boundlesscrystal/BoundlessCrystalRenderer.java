@@ -75,13 +75,12 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         this.model.attackTime = this.getAttackAnim(boundlessCrystalEntity, partialTick);
         this.model.riding = boundlessCrystalEntity.isPassenger();
         this.model.young = boundlessCrystalEntity.isBaby();
-        float h = Mth.rotLerp(partialTick, boundlessCrystalEntity.yBodyRotO, boundlessCrystalEntity.yBodyRot);
-        float j = Mth.rotLerp(partialTick, boundlessCrystalEntity.yHeadRotO, boundlessCrystalEntity.yHeadRot);
-        float k = j - h;
+        float lerpedXRot = Mth.rotLerp(partialTick, boundlessCrystalEntity.xRotO, boundlessCrystalEntity.getXRot());
+        float lerpedYRot = Mth.rotLerp(partialTick, boundlessCrystalEntity.yRotO, boundlessCrystalEntity.getYRot());
+        float rotAxisDiff = lerpedYRot - lerpedXRot;
 
-        float l = this.getBob(boundlessCrystalEntity, partialTick);
         float xRot = Mth.lerp(partialTick, boundlessCrystalEntity.xRotO, boundlessCrystalEntity.getXRot());
-        this.setupRotations(boundlessCrystalEntity, poseStack, l, h, partialTick);
+        this.setupRotations(boundlessCrystalEntity, poseStack, lerpedXRot, lerpedYRot, partialTick);
         poseStack.scale(-1.0f, -1.0f, 1.0f);
         this.scale(boundlessCrystalEntity, poseStack, partialTick);
         poseStack.translate(0.0f, -1.501f, 0.0f);
@@ -96,8 +95,11 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             }
         }
 
+        float tickTimeWithPartial = this.getBob(boundlessCrystalEntity, partialTick);
+
         this.model.prepareMobModel(boundlessCrystalEntity, o, n, partialTick);
-        this.model.setupAnim(boundlessCrystalEntity, o, n, l, k, xRot);
+        this.model.setupAnim(boundlessCrystalEntity, o, n, tickTimeWithPartial, rotAxisDiff, xRot);
+
         Minecraft minecraft = Minecraft.getInstance();
         boolean bl = this.isBodyVisible(boundlessCrystalEntity);
         boolean bl2 = !bl && !boundlessCrystalEntity.isInvisibleTo(minecraft.player);
@@ -148,7 +150,7 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
 
         if (!boundlessCrystalEntity.isSpectator()) {
             for (RenderLayer<BoundlessCrystalEntity, ?> renderLayer : this.layers) {
-                renderLayer.render(poseStack, multiBufferSource, packedLight, boundlessCrystalEntity, o, n, partialTick, l, k, xRot);
+                renderLayer.render(poseStack, multiBufferSource, packedLight, boundlessCrystalEntity, o, n, partialTick, tickTimeWithPartial, rotAxisDiff, xRot);
             }
         }
 
@@ -174,18 +176,14 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
         poseStack.popPose();
     }
 
-    @Override
-    protected void setupRotations(BoundlessCrystalEntity boundlessCrystalEntity, PoseStack poseStack, float f, float g, float partialTick) {
+    protected void setupRotations(BoundlessCrystalEntity boundlessCrystalEntity, PoseStack poseStack, float lerpedXRot, float lerpedYRot, float partialTick) {
         if (this.isShaking(boundlessCrystalEntity)) {
-            g += (float)(Math.cos((double)boundlessCrystalEntity.tickCount * 3.25) * Math.PI * 0.4000000059604645);
+            lerpedXRot += (float)(Math.cos((double)boundlessCrystalEntity.tickCount * 3.25) * Math.PI * 0.4000000059604645);
         }
 
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - g));
-
-        float newXRot = Mth.lerp(partialTick, boundlessCrystalEntity.prevVisualXRot, boundlessCrystalEntity.visualXRot);
-
         poseStack.translate(0, 1, 0);
-        poseStack.mulPose(Axis.XP.rotationDegrees(newXRot));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180 - lerpedYRot));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90 - lerpedXRot));
         poseStack.translate(0, -1, 0);
     }
 
@@ -211,11 +209,13 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
             float k = totalTickTime * 0.5f % 1.0f;
             float eyeY = boundlessCrystalEntity.getEyeHeight();
             poseStack.pushPose();
-            poseStack.translate(0.0f, eyeY, 0.0f);
 
             Vec3 startPos = this.getPosition(boundlessCrystalEntity, eyeY, partialTick);
             Vec3 prevLookAngle = boundlessCrystalEntity.prevLookAngle;
             Vec3 lookAngle = boundlessCrystalEntity.getLookAngle();
+
+            poseStack.translate(lookAngle.x(), eyeY + lookAngle.y(), lookAngle.z());
+
             Vec3 lerpedLook = new Vec3(
                 Mth.lerp(partialTick, prevLookAngle.x(), lookAngle.x()),
                 Mth.lerp(partialTick, prevLookAngle.y(), lookAngle.y()),
