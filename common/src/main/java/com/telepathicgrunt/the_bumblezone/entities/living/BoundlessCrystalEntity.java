@@ -273,6 +273,11 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if (compoundTag.contains("targetEntityUUID")) {
             this.targetEntityUUID = compoundTag.getUUID("targetEntityUUID");
         }
+
+        if (compoundTag.contains("prevLookAngle")) {
+            CompoundTag vectTag = compoundTag.getCompound("prevLookAngle");
+            this.prevLookAngle = new Vec3(vectTag.getDouble("x"), vectTag.getDouble("y"), vectTag.getDouble("z"));
+        }
     }
 
     @Override
@@ -303,6 +308,12 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if (this.targetEntityUUID != null) {
             compoundTag.putUUID("targetEntityUUID", this.targetEntityUUID);
         }
+
+        CompoundTag vectTag = new CompoundTag();
+        vectTag.putDouble("x", this.prevLookAngle.x());
+        vectTag.putDouble("y", this.prevLookAngle.y());
+        vectTag.putDouble("z", this.prevLookAngle.z());
+        compoundTag.put("prevLookAngle", vectTag);
     }
 
     public static boolean isOrFromHorizontalState(BoundlessCrystalState boundlessCrystalState) {
@@ -493,7 +504,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             return InteractionResult.PASS;
         }
 
-        this.setBoundlessCrystalState(BoundlessCrystalState.VERTICAL_LASER);
+        this.setBoundlessCrystalState(BoundlessCrystalState.TRACKING_SMASHING_ATTACK);
 
         return InteractionResult.PASS;
     }
