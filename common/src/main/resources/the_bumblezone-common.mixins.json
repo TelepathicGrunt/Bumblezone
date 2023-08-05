@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "entities.ItemEntityAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -43,6 +42,7 @@
     "entities.FlyNodeEvaluatorMixin",
     "entities.FoxAccessor",
     "entities.HangingEntityMixin",
+    "entities.ItemEntityAccessor",
     "entities.LightningBoltMixin",
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
