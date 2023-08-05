@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPla
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeAttackGoal;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.ItemEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -574,7 +575,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                         Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
                         if (reward.isPresent()) {
-                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), itemEntity.getOwner().getUUID());
+                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor)itemEntity).getThrower());
                             tradedItems++;
                         }
                     }
