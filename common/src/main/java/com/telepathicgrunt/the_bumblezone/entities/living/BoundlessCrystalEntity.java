@@ -29,7 +29,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
@@ -82,7 +81,9 @@ public class BoundlessCrystalEntity extends LivingEntity {
     private static final EntityDataAccessor<Integer> STATE_TIMESPAN = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LASER_START_DELAY = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LASER_FIRE_START_TIME = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> SYNCED_CURRENT_STATE_TIME_TICK = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> COLLIDIED = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> SMASHING_PHASE = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.BOOLEAN);
 
     public final AnimationState idleAnimationState = new AnimationState();
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(0, ItemStack.EMPTY);
@@ -98,7 +99,6 @@ public class BoundlessCrystalEntity extends LivingEntity {
     public int animationTimeTick = 0;
     public int prevAnimationTick = 0;
     public Vec3 prevLookAngle = new Vec3(1, 0, 0);
-    private boolean smashingPhase = false;
     private boolean laserChargeSoundPlayed = false;
 
     public BoundlessCrystalEntity(EntityType<? extends BoundlessCrystalEntity> entityType, Level level) {
@@ -140,7 +140,9 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     public void setBoundlessCrystalState(BoundlessCrystalState boundlessCrystalState) {
         if(!this.level().isClientSide() && boundlessCrystalState != this.getBoundlessCrystalState()) {
-            this.currentStateTimeTick = 0;
+            if (this.tickCount > 1) {
+                this.currentStateTimeTick = 0;
+            }
 
             this.entityData.set(PREVIOUS_BOUNDLESS_CRYSTAL_STATE, getBoundlessCrystalState());
             this.entityData.set(BOUNDLESS_CRYSTAL_STATE, boundlessCrystalState);
@@ -232,12 +234,28 @@ public class BoundlessCrystalEntity extends LivingEntity {
         return this.entityData.get(LASER_FIRE_START_TIME);
     }
 
+    public void setSyncedCurrentStateTimeTick(int syncedCurrentStateTimeTick) {
+        this.entityData.set(SYNCED_CURRENT_STATE_TIME_TICK, syncedCurrentStateTimeTick);
+    }
+
+    public int getSyncedCurrentStateTimeTick() {
+        return this.entityData.get(SYNCED_CURRENT_STATE_TIME_TICK);
+    }
+
     public void setCollidied(boolean collided) {
         this.entityData.set(COLLIDIED, collided);
     }
 
     public boolean getCollidied() {
         return this.entityData.get(COLLIDIED);
+    }
+
+    public void setSmashingPhase(boolean smashingPhase) {
+        this.entityData.set(SMASHING_PHASE, smashingPhase);
+    }
+
+    public boolean getSmashingPhase() {
+        return this.entityData.get(SMASHING_PHASE);
     }
 
     public void setTargetEntityUUID(UUID targetEntityUUID) {
@@ -257,16 +275,20 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.entityData.define(STATE_TIMESPAN, 0);
         this.entityData.define(LASER_START_DELAY, 0);
         this.entityData.define(LASER_FIRE_START_TIME, 0);
+        this.entityData.define(SYNCED_CURRENT_STATE_TIME_TICK, 0);
         this.entityData.define(COLLIDIED, false);
     }
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         super.onSyncedDataUpdated(entityDataAccessor);
-        if (BOUNDLESS_CRYSTAL_STATE.equals(entityDataAccessor)) {
+        if (BOUNDLESS_CRYSTAL_STATE.equals(entityDataAccessor) && this.tickCount > 1) {
             this.animationTimeTick = 0;
             this.prevAnimationTick = 0;
             this.currentStateTimeTick = 0;
+        }
+        else if (SYNCED_CURRENT_STATE_TIME_TICK.equals(entityDataAccessor)) {
+            this.currentStateTimeTick = this.getSyncedCurrentStateTimeTick();
         }
     }
 
@@ -294,11 +316,14 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.setStateTimespan(compoundTag.getInt("stateTimespan"));
         this.setLaserStartDelay(compoundTag.getInt("laserStartDelay"));
         this.setLaserFireStartTime(compoundTag.getInt("laserFireStartTime"));
+        this.setSmashingPhase(compoundTag.getBoolean("smashingPhase"));
+        this.setCollidied(compoundTag.getBoolean("collided"));
 
         this.currentStateTimeTick = compoundTag.getInt("currentStateTimeTick");
+        this.setSyncedCurrentStateTimeTick(this.currentStateTimeTick); // Only to sync data on load. No need to packet spam afterwards.
+
         this.animationTimeTick = compoundTag.getInt("animationTimeTick");
         this.prevAnimationTick = compoundTag.getInt("prevAnimationTick");
-        this.smashingPhase = compoundTag.getBoolean("smashingPhase");
 
         if (compoundTag.contains("targetEntityUUID")) {
             this.targetEntityUUID = compoundTag.getUUID("targetEntityUUID");
@@ -330,11 +355,12 @@ public class BoundlessCrystalEntity extends LivingEntity {
         compoundTag.putInt("stateTimespan", this.getStateTimespan());
         compoundTag.putInt("laserStartDelay", this.getLaserStartDelay());
         compoundTag.putInt("laserFireStartTime", this.getLaserFireStartTime());
+        compoundTag.putBoolean("smashingPhase", this.getSmashingPhase());
+        compoundTag.putBoolean("collided", this.getCollidied());
 
         compoundTag.putInt("currentStateTimeTick", this.currentStateTimeTick);
         compoundTag.putInt("animationTimeTick", this.animationTimeTick);
         compoundTag.putInt("prevAnimationTick", this.prevAnimationTick);
-        compoundTag.putBoolean("smashingPhase", this.smashingPhase);
 
         if (this.targetEntityUUID != null) {
             compoundTag.putUUID("targetEntityUUID", this.targetEntityUUID);
@@ -451,11 +477,14 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
         else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SMASHING_ATTACK) {
             int moveTime = this.getInitialRotationAnimationTimespan();
-            if ((this.currentStateTimeTick <= moveTime || this.smashingPhase) && this.targetEntity != null) {
+            if ((this.currentStateTimeTick <= moveTime || this.getSmashingPhase()) && this.targetEntity != null) {
                 Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
                 Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.9);
                 this.prevTargetPosition = diffFromNow.add(targetPos);
                 desiredLookPosition = diffFromNow.add(targetPos);
+            }
+            else {
+                desiredLookPosition = this.getEyePosition().add(0, -1, 0);
             }
         }
         else {
@@ -585,9 +614,9 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 this.addDeltaMovement(new Vec3(0, (1 - ((float)this.currentStateTimeTick / moveTime)) * 0.01d, 0));
             }
             else if (this.currentStateTimeTick == moveTime) {
-                this.smashingPhase = true;
+                this.setSmashingPhase(true);
             }
-            else if (!this.smashingPhase || this.currentStateTimeTick > 350) {
+            else if (!this.getSmashingPhase() || this.currentStateTimeTick > 350) {
                 this.setDeltaMovement(0, 0.025, 0);
             }
             else if (this.targetEntity != null) {
@@ -637,11 +666,11 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     }
 
                     this.setDeltaMovement(0, 0, 0);
-                    this.smashingPhase = false;
+                    this.setSmashingPhase(false);
                 }
             }
             else {
-                this.smashingPhase = false;
+                this.setSmashingPhase(false);
             }
         }
     }
