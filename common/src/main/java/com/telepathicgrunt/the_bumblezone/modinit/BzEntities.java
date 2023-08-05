@@ -45,7 +45,7 @@ public class BzEntities {
     public static final RegistryEntry<EntityType<HoneyCrystalShardEntity>> HONEY_CRYSTAL_SHARD = ENTITIES.register("honey_crystal_shard", () -> PlatformHooks.createEntityType(HoneyCrystalShardEntity::new, MobCategory.MISC, 0.5F, false, 4, 20, "honey_crystal_shard"));
     public static final RegistryEntry<EntityType<ElectricRingEntity>> ELECTRIC_RING_ENTITY = ENTITIES.register("electric_ring_entity", () -> PlatformHooks.createEntityType(ElectricRingEntity::new, MobCategory.MISC, 2F, true, 4, 20, "electric_ring_entity"));
     public static final RegistryEntry<EntityType<PurpleSpikeEntity>> PURPLE_SPIKE_ENTITY = ENTITIES.register("purple_spike_entity", () -> PlatformHooks.createEntityType(PurpleSpikeEntity::new, MobCategory.MISC, 1F, true, 4, 20, "purple_spike_entity"));
-    public static final RegistryEntry<EntityType<BoundlessCrystalEntity>> BOUNDLESS_CRYSTAL_ENTITY = ENTITIES.register("boundless_crystal_entity", () -> PlatformHooks.createEntityType(BoundlessCrystalEntity::new, MobCategory.MISC, 1F, 2f, true, 4, 20, "boundless_crystal_entity"));
+    public static final RegistryEntry<EntityType<BoundlessCrystalEntity>> BOUNDLESS_CRYSTAL_ENTITY = ENTITIES.register("boundless_crystal_entity", () -> PlatformHooks.createEntityType(BoundlessCrystalEntity::new, MobCategory.MISC, 1F, 2f, true, 8, 3, "boundless_crystal_entity"));
 
     public static void registerEntitySpawnRestrictions(RegisterSpawnPlacementsEvent event) {
         event.register(HONEY_SLIME.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);

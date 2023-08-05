@@ -325,7 +325,7 @@
       {
         "attenuation_distance": 6,
         "name": "mob/bee/loop5",
-        "volume": 0.6
+        "volume": 0.4
       }
     ],
     "subtitle": "subtitles.item.the_bumblezone.bumble_bee_chestplate.fly"
@@ -617,6 +617,41 @@
     ],
     "subtitle": "subtitles.entity.the_bumblezone.dirt_pellet.hit"
   },
+
+  "entity.the_bumblezone.boundless_crystal_entity.laser": {
+    "sounds": [
+      {
+        "attenuation_distance": 16,
+        "name": "block/beacon/power1",
+        "volume": 1,
+        "pitch": 0.1
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.boundless_crystal_entity.laser"
+  },
+  "entity.the_bumblezone.boundless_crystal_entity.laser_charge": {
+    "sounds": [
+      {
+        "attenuation_distance": 30,
+        "name": "block/beacon/deactivate",
+        "volume": 0.8,
+        "pitch": 0.3
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.boundless_crystal_entity.laser_charge"
+  },
+  "entity.the_bumblezone.boundless_crystal_entity.crash_charge": {
+    "sounds": [
+      {
+        "attenuation_distance": 30,
+        "name": "block/respawn_anchor/charge1",
+        "volume": 1,
+        "pitch": 0.1
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.boundless_crystal_entity.crash_charge"
+  },
+
   "item.the_bumblezone.sugar_water_bottle.drink": {
     "sounds": [
       {
