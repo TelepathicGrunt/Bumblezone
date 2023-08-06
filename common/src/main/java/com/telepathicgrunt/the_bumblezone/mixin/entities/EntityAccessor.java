@@ -27,4 +27,7 @@ public interface EntityAccessor {
 
     @Accessor("dimensions")
     EntityDimensions getDimensions();
+
+    @Invoker("collide")
+    Vec3 callCollide(Vec3 vec3);
 }

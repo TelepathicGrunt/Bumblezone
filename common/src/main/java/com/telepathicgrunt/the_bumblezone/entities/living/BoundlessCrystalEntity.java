@@ -166,7 +166,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
                             1);
                 }
                 case SPINNER_ATTACK -> this.setInitialRotationAnimationTimespan(200);
-                case TRACKING_SPINNING_ATTACK -> this.setInitialRotationAnimationTimespan(200);
+                case TRACKING_SPINNING_ATTACK -> {
+                    this.setInitialRotationAnimationTimespan(40);
+                    this.setStateTimespan(400);
+                }
                 case VERTICAL_LASER -> {
                     this.setInitialRotationAnimationTimespan(40);
                     this.setLaserStartDelay(60);
@@ -277,6 +280,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.entityData.define(LASER_FIRE_START_TIME, 0);
         this.entityData.define(SYNCED_CURRENT_STATE_TIME_TICK, 0);
         this.entityData.define(COLLIDIED, false);
+        this.entityData.define(SMASHING_PHASE, false);
     }
 
     @Override
@@ -408,6 +412,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         incrementAnimationAndRotationTicks();
         laserBreakBlocks();
         smashingBehaviour();
+        spinningTrackingBehaviour();
 
         this.currentStateTimeTick++;
     }
@@ -607,17 +612,23 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SMASHING_ATTACK) {
             int moveTime = this.getInitialRotationAnimationTimespan();
             if (this.currentStateTimeTick >= this.getStateTimespan() - 1) {
+                this.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
                 this.setDeltaMovement(0, 0, 0);
                 this.setCollidied(false);
-            }
-            else if (this.currentStateTimeTick < moveTime) {
-                this.addDeltaMovement(new Vec3(0, (1 - ((float)this.currentStateTimeTick / moveTime)) * 0.01d, 0));
             }
             else if (this.currentStateTimeTick == moveTime) {
                 this.setSmashingPhase(true);
             }
-            else if (!this.getSmashingPhase() || this.currentStateTimeTick > 350) {
-                this.setDeltaMovement(0, 0.025, 0);
+            else if (this.currentStateTimeTick < moveTime) {
+                this.addDeltaMovement(new Vec3(0, (1 - ((float)this.currentStateTimeTick / moveTime)) * 0.01d, 0));
+            }
+            else if (!this.getSmashingPhase() &&
+                this.currentStateTimeTick > moveTime &&
+                this.currentStateTimeTick < this.getStateTimespan())
+            {
+                this.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
+                this.setDeltaMovement(0, 0, 0);
+                this.setCollidied(false);
             }
             else if (this.targetEntity != null) {
                 this.addDeltaMovement(this.getLookAngle().scale(0.1d));
@@ -675,12 +686,80 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
     }
 
+    private void spinningTrackingBehaviour() {
+        if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK) {
+            int moveTime = this.getInitialRotationAnimationTimespan();
+            if (this.currentStateTimeTick >= this.getStateTimespan() - 1) {
+                this.setDeltaMovement(0, 0, 0);
+            }
+            else if (this.targetEntity != null) {
+
+                double progress;
+                if (this.getInitialRotationAnimationTimespan() == 0) {
+                    progress = 1;
+                }
+                else {
+                    progress = (float)this.animationTimeTick / this.getInitialRotationAnimationTimespan();
+                }
+                progress = Math.pow(progress, 4);
+
+                double speedAdj = Math.min(1, (float)this.currentStateTimeTick / moveTime) * progress;
+
+                Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
+                Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.98);
+                Vec3 desiredLookPosition = diffFromNow.add(targetPos);
+                Vec3 lerpedPosition = new Vec3(
+                        Mth.lerp(progress, this.prevTargetPosition.x(), desiredLookPosition.x()),
+                        Mth.lerp(progress, this.prevTargetPosition.y(), desiredLookPosition.y()),
+                        Mth.lerp(progress, this.prevTargetPosition.z(), desiredLookPosition.z())
+                );
+                this.prevTargetPosition = desiredLookPosition;
+                Vec3 vectorDirection = lerpedPosition.subtract(this.position());
+                double cappedSpeed = Math.min(vectorDirection.length(), 1) * speedAdj;
+
+                this.addDeltaMovement(vectorDirection.normalize().scale(cappedSpeed));
+
+
+                // collision checks
+
+                Vec3 originalVect = this.getDeltaMovement();
+                Vec3 collideVect = ((EntityAccessor)this).callCollide(originalVect);
+
+                int xDirection = getDirection(originalVect.x(), collideVect.x());
+                int yDirection = getDirection(originalVect.y(), collideVect.y());
+                int zDirection = getDirection(originalVect.z(), collideVect.z());
+
+                if (xDirection == -1 || yDirection == -1 || zDirection == -1) {
+                    this.setDeltaMovement(
+                        originalVect.x() * xDirection,
+                        originalVect.y() * yDirection,
+                        originalVect.z() * zDirection
+                    );
+                }
+            }
+        }
+    }
+
+    private static int getDirection(double originalCoordinate, double collideCoordinate) {
+        if (originalCoordinate > 0) {
+            if (originalCoordinate > collideCoordinate) {
+                return -1;
+            }
+        }
+        else if (originalCoordinate < 0) {
+            if (originalCoordinate < collideCoordinate) {
+                return -1;
+            }
+        }
+        return 1;
+    }
+
     public InteractionResult interact(Player player, InteractionHand hand) {
         if (hand != InteractionHand.MAIN_HAND) {
             return InteractionResult.PASS;
         }
 
-        this.setBoundlessCrystalState(BoundlessCrystalState.TRACKING_SMASHING_ATTACK);
+        this.setBoundlessCrystalState(BoundlessCrystalState.TRACKING_SPINNING_ATTACK);
 
         return InteractionResult.PASS;
     }
@@ -835,7 +914,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             }
             BlockPos blockPos = this.getBlockPosBelowThatAffectsMyMovement();
             float p = this.level().getBlockState(blockPos).getBlock().getFriction();
-            float f = this.onGround() ? p * 0.91f : 0.91f;
+            float f = this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK ? 0.99f : 0.91f;
             Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement(vec3, p);
 
             double q = vec37.y;
