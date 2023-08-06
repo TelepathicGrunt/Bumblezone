@@ -144,6 +144,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 this.currentStateTimeTick = 0;
             }
 
+            if (this.targetEntity != null) {
+                this.prevTargetPosition = this.targetEntity.position();
+            }
+
             this.entityData.set(PREVIOUS_BOUNDLESS_CRYSTAL_STATE, getBoundlessCrystalState());
             this.entityData.set(BOUNDLESS_CRYSTAL_STATE, boundlessCrystalState);
 
@@ -290,6 +294,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
             this.animationTimeTick = 0;
             this.prevAnimationTick = 0;
             this.currentStateTimeTick = 0;
+
+            if (this.targetEntity != null) {
+                this.prevTargetPosition = this.targetEntity.position();
+            }
         }
         else if (SYNCED_CURRENT_STATE_TIME_TICK.equals(entityDataAccessor)) {
             this.currentStateTimeTick = this.getSyncedCurrentStateTimeTick();
@@ -405,6 +413,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     public void tick() {
         this.prevLookAngle = this.getLookAngle();
+        spinningTrackingBehaviour();
 
         super.tick();
 
@@ -412,7 +421,6 @@ public class BoundlessCrystalEntity extends LivingEntity {
         incrementAnimationAndRotationTicks();
         laserBreakBlocks();
         smashingBehaviour();
-        spinningTrackingBehaviour();
 
         this.currentStateTimeTick++;
     }
@@ -461,7 +469,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     private void setActualRotations(float progress) {
         Vec3 currentLookAngle = this.getLookAngle();
-        Vec3 desiredLookPosition = currentLookAngle;
+        Vec3 desiredLookPosition = this.getEyePosition().add(0, -1, 0);
         Vec3 currentLookPosition = this.getEyePosition().add(currentLookAngle);
 
         if (this.getBoundlessCrystalState() == BoundlessCrystalState.HORIZONTAL_LASER) {
@@ -492,8 +500,27 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 desiredLookPosition = this.getEyePosition().add(0, -1, 0);
             }
         }
-        else {
-            desiredLookPosition = this.getEyePosition().add(0, -1, 0);
+        else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK) {
+//            float windDownDuration = 40f;
+//            int windDownPhase = (int) (this.getStateTimespan() - windDownDuration);
+//
+//            Vec3 targetPos;
+//            if (this.currentStateTimeTick > windDownPhase) {
+//                double antiProgress = Math.min((this.currentStateTimeTick - windDownPhase) / windDownDuration, 1);
+//                float spinStrength = (float) (1 - antiProgress);
+//                targetPos = new Vec3(
+//                        Mth.lerp(antiProgress, Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0),
+//                        Mth.lerp(antiProgress, 1, 0),
+//                        Mth.lerp(antiProgress, Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0));
+//            }
+//            else {
+//                targetPos = new Vec3(
+//                        Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD),
+//                        Mth.lerp(progress, 0, 1),
+//                        Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD));
+//            }
+//
+//            desiredLookPosition = this.position().add(targetPos);
         }
 
         if (!currentLookPosition.equals(desiredLookPosition)) {
@@ -553,26 +580,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     projectile.remove(RemovalReason.KILLED);
                 }
                 else if (entity instanceof LivingEntity livingEntity && !(entity instanceof BoundlessCrystalEntity)) {
-                    float damageAmount;
-                    float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
-
-                    if (livingEntity instanceof ServerPlayer serverPlayer) {
-                        if (serverPlayer.isCreative()) {
-                            return;
-                        }
-
-                        if (EssenceOfTheBees.hasEssence(serverPlayer)) {
-                            damageAmount = maxHealth / 6;
-                        }
-                        else {
-                            damageAmount = maxHealth / 3;
-                        }
-                    }
-                    else {
-                        damageAmount = maxHealth / 6;
-                    }
-
-                    livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
+                    if (laserHurtAttack(livingEntity)) return;
                 }
             }
 
@@ -687,7 +695,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     private void spinningTrackingBehaviour() {
-        if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK) {
+        if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK && !this.level().isClientSide()) {
             int moveTime = this.getInitialRotationAnimationTimespan();
             if (this.currentStateTimeTick >= this.getStateTimespan() - 1) {
                 this.setDeltaMovement(0, 0, 0);
@@ -706,7 +714,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 double speedAdj = Math.min(1, (float)this.currentStateTimeTick / moveTime) * progress;
 
                 Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
-                Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.98);
+                Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.95);
                 Vec3 desiredLookPosition = diffFromNow.add(targetPos);
                 Vec3 lerpedPosition = new Vec3(
                         Mth.lerp(progress, this.prevTargetPosition.x(), desiredLookPosition.x()),
@@ -715,10 +723,9 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 );
                 this.prevTargetPosition = desiredLookPosition;
                 Vec3 vectorDirection = lerpedPosition.subtract(this.position());
-                double cappedSpeed = Math.min(vectorDirection.length(), 1) * speedAdj;
+                double cappedSpeed = 0.8 * speedAdj;
 
-                this.addDeltaMovement(vectorDirection.normalize().scale(cappedSpeed));
-
+                this.setDeltaMovement(vectorDirection.normalize().scale(cappedSpeed));
 
                 // collision checks
 
@@ -914,7 +921,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             }
             BlockPos blockPos = this.getBlockPosBelowThatAffectsMyMovement();
             float p = this.level().getBlockState(blockPos).getBlock().getFriction();
-            float f = this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK ? 0.99f : 0.91f;
+            float f = this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK ? 0.93f : 0.91f;
             Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement(vec3, p);
 
             double q = vec37.y;
@@ -981,9 +988,11 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     for (int k = blockPos.getZ(); k <= blockPos2.getZ(); ++k) {
                         mutableBlockPos.set(i, j, k);
                         BlockState blockState = this.level().getBlockState(mutableBlockPos);
-                        if (!blockState.isAir() &&
+                        if (!this.level().isClientSide() &&
+                            !blockState.isAir() &&
                             !blockState.getCollisionShape(this.level(), mutableBlockPos).isEmpty() &&
-                            !this.level().isClientSide())
+                            blockState.getBlock().getExplosionResistance() < 1500 &&
+                            !blockState.is(BlockTags.WITHER_IMMUNE))
                         {
                             this.level().destroyBlock(mutableBlockPos, true);
                         }
@@ -1033,32 +1042,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 this.doPush(entity);
 
                 if (entity instanceof LivingEntity livingEntity && !(entity instanceof BoundlessCrystalEntity)) {
-                    float damageAmount;
-                    float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
-
-                    if (livingEntity instanceof ServerPlayer serverPlayer) {
-                        if (serverPlayer.isCreative()) {
-                            continue;
-                        }
-
-                        if (EssenceOfTheBees.hasEssence(serverPlayer)) {
-                            damageAmount = maxHealth / 8;
-                        }
-                        else {
-                            damageAmount = maxHealth / 4;
-                        }
-                    }
-                    else {
-                        damageAmount = maxHealth / 8;
-                    }
-
-                    livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
-
-                    for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
-                        if (mobEffect.isBeneficial()) {
-                            livingEntity.removeEffect(mobEffect);
-                        }
-                    }
+                    if (physicalHurtAttack(livingEntity)) continue;
 
                     Vec3 center = livingEntity.getBoundingBox().getCenter();
                     ((ServerLevel)this.level()).sendParticles(
@@ -1285,6 +1269,60 @@ public class BoundlessCrystalEntity extends LivingEntity {
     @Override
     public Entity changeDimension(ServerLevel serverLevel) {
         return this;
+    }
+
+    private boolean laserHurtAttack(LivingEntity livingEntity) {
+        float damageAmount;
+        float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
+
+        if (livingEntity instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer.isCreative()) {
+                return true;
+            }
+
+            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                damageAmount = maxHealth / 4;
+            }
+            else {
+                damageAmount = maxHealth / 3;
+            }
+        }
+        else {
+            damageAmount = maxHealth / 4;
+        }
+
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
+        return false;
+    }
+
+    private boolean physicalHurtAttack(LivingEntity livingEntity) {
+        float damageAmount;
+        float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
+
+        if (livingEntity instanceof ServerPlayer serverPlayer) {
+            if (serverPlayer.isCreative()) {
+                return true;
+            }
+
+            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                damageAmount = maxHealth / 6;
+            }
+            else {
+                damageAmount = maxHealth / 4;
+            }
+        }
+        else {
+            damageAmount = maxHealth / 6;
+        }
+
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
+
+        for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+            if (mobEffect.isBeneficial()) {
+                livingEntity.removeEffect(mobEffect);
+            }
+        }
+        return false;
     }
 
     private void spawnFancyParticle(Vec3 center) {
