@@ -100,6 +100,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     public int prevAnimationTick = 0;
     public Vec3 prevLookAngle = new Vec3(1, 0, 0);
     private boolean laserChargeSoundPlayed = false;
+    public int lastPhysicalHit = 0;
 
     public BoundlessCrystalEntity(EntityType<? extends BoundlessCrystalEntity> entityType, Level level) {
         super(entityType, level);
@@ -142,6 +143,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if(!this.level().isClientSide() && boundlessCrystalState != this.getBoundlessCrystalState()) {
             if (this.tickCount > 1) {
                 this.currentStateTimeTick = 0;
+                this.lastPhysicalHit = 0;
             }
 
             if (this.targetEntity != null) {
@@ -294,6 +296,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             this.animationTimeTick = 0;
             this.prevAnimationTick = 0;
             this.currentStateTimeTick = 0;
+            this.lastPhysicalHit = 0;
 
             if (this.targetEntity != null) {
                 this.prevTargetPosition = this.targetEntity.position();
@@ -501,26 +504,26 @@ public class BoundlessCrystalEntity extends LivingEntity {
             }
         }
         else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK) {
-//            float windDownDuration = 40f;
-//            int windDownPhase = (int) (this.getStateTimespan() - windDownDuration);
-//
-//            Vec3 targetPos;
-//            if (this.currentStateTimeTick > windDownPhase) {
-//                double antiProgress = Math.min((this.currentStateTimeTick - windDownPhase) / windDownDuration, 1);
-//                float spinStrength = (float) (1 - antiProgress);
-//                targetPos = new Vec3(
-//                        Mth.lerp(antiProgress, Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0),
-//                        Mth.lerp(antiProgress, 1, 0),
-//                        Mth.lerp(antiProgress, Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0));
-//            }
-//            else {
-//                targetPos = new Vec3(
-//                        Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD),
-//                        Mth.lerp(progress, 0, 1),
-//                        Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD));
-//            }
-//
-//            desiredLookPosition = this.position().add(targetPos);
+            float windDownDuration = 40f;
+            int windDownPhase = (int) (this.getStateTimespan() - windDownDuration);
+
+            Vec3 targetPos;
+            if (this.currentStateTimeTick > windDownPhase) {
+                double antiProgress = Math.min((this.currentStateTimeTick - windDownPhase) / windDownDuration, 1);
+                float spinStrength = (float) (1 - antiProgress);
+                targetPos = new Vec3(
+                        Mth.lerp(antiProgress, Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0),
+                        Mth.lerp(antiProgress, 1, 0),
+                        Mth.lerp(antiProgress, Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD) * spinStrength, 0));
+            }
+            else {
+                targetPos = new Vec3(
+                        Mth.sin(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD),
+                        Mth.lerp(progress, 0, 1),
+                        Mth.cos(this.currentStateTimeTick * 40 * Mth.DEG_TO_RAD));
+            }
+
+            desiredLookPosition = this.position().add(targetPos);
         }
 
         if (!currentLookPosition.equals(desiredLookPosition)) {
@@ -695,7 +698,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     private void spinningTrackingBehaviour() {
-        if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK && !this.level().isClientSide()) {
+        if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK) {
             int moveTime = this.getInitialRotationAnimationTimespan();
             if (this.currentStateTimeTick >= this.getStateTimespan() - 1) {
                 this.setDeltaMovement(0, 0, 0);
@@ -714,18 +717,21 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 double speedAdj = Math.min(1, (float)this.currentStateTimeTick / moveTime) * progress;
 
                 Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
-                Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.95);
-                Vec3 desiredLookPosition = diffFromNow.add(targetPos);
-                Vec3 lerpedPosition = new Vec3(
-                        Mth.lerp(progress, this.prevTargetPosition.x(), desiredLookPosition.x()),
-                        Mth.lerp(progress, this.prevTargetPosition.y(), desiredLookPosition.y()),
-                        Mth.lerp(progress, this.prevTargetPosition.z(), desiredLookPosition.z())
-                );
-                this.prevTargetPosition = desiredLookPosition;
-                Vec3 vectorDirection = lerpedPosition.subtract(this.position());
-                double cappedSpeed = 0.8 * speedAdj;
+                Vec3 diffFromNow = targetPos.subtract(this.position());
+                Vec3 diffFromPast = this.prevTargetPosition.subtract(this.position());
 
-                this.setDeltaMovement(vectorDirection.normalize().scale(cappedSpeed));
+                float turnStrength = 0.045f;
+                Vec3 lerpedLookVector = new Vec3(
+                        Mth.lerp(turnStrength, diffFromPast.x(), diffFromNow.x()),
+                        Mth.lerp(turnStrength, diffFromPast.y(), diffFromNow.y()),
+                        Mth.lerp(turnStrength, diffFromPast.z(), diffFromNow.z())
+                );
+                this.prevTargetPosition = lerpedLookVector.add(targetPos);
+
+                int hitDiff = this.currentStateTimeTick - this.lastPhysicalHit;
+                double cappedSpeed = Mth.lerp(Math.min(hitDiff / 40f, 1), 0, 0.65) * speedAdj;
+
+                this.setDeltaMovement(lerpedLookVector.normalize().scale(cappedSpeed));
 
                 // collision checks
 
@@ -1316,6 +1322,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
 
         livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
+        this.lastPhysicalHit = this.currentStateTimeTick;
 
         for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
             if (mobEffect.isBeneficial()) {
