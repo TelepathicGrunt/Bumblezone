@@ -67,7 +67,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     BzBlocks.ESSENCE_BLOCK_BLUE.get(),
                     BzBlocks.ESSENCE_BLOCK_GREEN.get(),
                     BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
-                    BzBlocks.ESSENCE_BLOCK_WHITE.get()
+                    BzBlocks.ESSENCE_BLOCK_WHITE.get(),
+                    BzBlocks.INFINITY_BARRIER.get()
                 ))));
 
     public static final GeneralUtils.Lazy<StructurePlaceSettings> PLACEMENT_SETTINGS_WITH_ENTITIES = new GeneralUtils.Lazy<>(() ->
@@ -83,7 +84,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     BzBlocks.ESSENCE_BLOCK_BLUE.get(),
                     BzBlocks.ESSENCE_BLOCK_GREEN.get(),
                     BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
-                    BzBlocks.ESSENCE_BLOCK_WHITE.get()
+                    BzBlocks.ESSENCE_BLOCK_WHITE.get(),
+                    BzBlocks.INFINITY_BARRIER.get()
                 ))));
 
     public EssenceBlock(Properties properties) {
