@@ -84,8 +84,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     BzBlocks.ESSENCE_BLOCK_BLUE.get(),
                     BzBlocks.ESSENCE_BLOCK_GREEN.get(),
                     BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
-                    BzBlocks.ESSENCE_BLOCK_WHITE.get(),
-                    BzBlocks.INFINITY_BARRIER.get()
+                    BzBlocks.ESSENCE_BLOCK_WHITE.get()
                 ))));
 
     public EssenceBlock(Properties properties) {

@@ -2,6 +2,9 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalState;
+import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
@@ -10,9 +13,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+
+import java.util.List;
+import java.util.UUID;
 
 
 public class EssenceBlockWhite extends EssenceBlock {
@@ -27,7 +38,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 200;
+        return 2000;
     }
 
     @Override
@@ -35,7 +46,7 @@ public class EssenceBlockWhite extends EssenceBlock {
         return (ServerEssenceEvent) new ServerEssenceEvent(
                 "essence.the_bumblezone.white_essence_event",
                 BossEvent.BossBarColor.WHITE,
-                BossEvent.BossBarOverlay.NOTCHED_10
+                BossEvent.BossBarOverlay.NOTCHED_6
         ).setDarkenScreen(true);
     }
 
@@ -56,6 +67,70 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
-        essenceBlockEntity.getEventBar().setProgress((float)essenceBlockEntity.getEventTimer() / getEventTimeFrame());
+        if (essenceBlockEntity.getPlayerInArena().size() == 0) {
+            return;
+        }
+
+        if (blockState.getBlock() instanceof EssenceBlock essenceBlock &&
+            essenceBlockEntity.getEventTimer() > essenceBlock.getEventTimeFrame() - 50)
+        {
+            return;
+        }
+
+        List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
+        int totalCrystals = eventEntitiesInArena.size();
+        int aliveCrystals = totalCrystals;
+
+        if (totalCrystals == 0) {
+            SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 0, 1, eventEntitiesInArena);
+            SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 60, 1, eventEntitiesInArena);
+            SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 120, 1, eventEntitiesInArena);
+            SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 180, 1, eventEntitiesInArena);
+            SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 240, 1, eventEntitiesInArena);
+            SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 300, 1, eventEntitiesInArena);
+            aliveCrystals = 6;
+            totalCrystals = 6;
+        }
+        else {
+            // update how many entities are alive
+            for (int i = eventEntitiesInArena.size() - 1; i >= 0; i--) {
+                UUID entityToCheck = eventEntitiesInArena.get(i).uuid();
+                Entity entity = serverLevel.getEntity(entityToCheck);
+                if (entity == null) {
+                    eventEntitiesInArena.remove(i);
+                    totalCrystals--;
+                }
+                else if (entity instanceof BoundlessCrystalEntity boundlessCrystalEntity) {
+                    if (boundlessCrystalEntity.isDeadOrDying()) {
+                        aliveCrystals--;
+                    }
+
+                    // Set commands here
+                    boundlessCrystalEntity.setBoundlessCrystalState(BoundlessCrystalState.SWEEP_LASER);
+
+                }
+            }
+        }
+
+        // Check if any crystal was removed too early
+
+
+        if (totalCrystals == 0) {
+            EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
+        }
+
+        essenceBlockEntity.getEventBar().setProgress(aliveCrystals / 6f);
+    }
+
+    private void SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
+        BoundlessCrystalEntity entity = BzEntities.BOUNDLESS_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, MobSpawnType.TRIGGERED);
+        if (entity != null) {
+            entity.setEssenceControllerDimension(serverLevel.dimension());
+            entity.setEssenceController(essenceBlockEntity.getUUID());
+            entity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
+            entity.setOrbitOffsetDegrees(orbitOffset);
+            entity.setDifficultyBoost(difficultyBoost);
+            eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
+        }
     }
 }

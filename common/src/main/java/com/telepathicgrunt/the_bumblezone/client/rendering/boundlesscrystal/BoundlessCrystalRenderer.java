@@ -43,12 +43,12 @@ public class BoundlessCrystalRenderer extends LivingEntityRenderer<BoundlessCrys
     public void render(BoundlessCrystalEntity boundlessCrystalEntity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource buffer, int packedLight) {
         renderLiving(boundlessCrystalEntity, entityYaw, partialTicks, stack, buffer, LightTexture.FULL_BRIGHT);
 
-        renderHealth(
-                boundlessCrystalEntity,
-                Component.literal("Health: " + boundlessCrystalEntity.getHealth()),
-                stack,
-                buffer,
-                LightTexture.FULL_BRIGHT);
+//        renderHealth(
+//                boundlessCrystalEntity,
+//                Component.literal("Health: " + boundlessCrystalEntity.getHealth()),
+//                stack,
+//                buffer,
+//                LightTexture.FULL_BRIGHT);
 
         renderLaser(
                 boundlessCrystalEntity,
