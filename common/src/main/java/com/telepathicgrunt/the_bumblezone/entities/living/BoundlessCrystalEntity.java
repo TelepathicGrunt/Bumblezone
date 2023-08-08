@@ -212,19 +212,24 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     this.setLaserFireStartTime(80);
                     this.setStateTimespan(600);
                 }
-                case HORIZONTAL_LASER, SWEEP_LASER -> {
+                case HORIZONTAL_LASER -> {
+                    this.setInitialRotationAnimationTimespan((int) (40 + (20 * this.getDifficultyBoost())));
+                    this.setLaserStartDelay(40);
+                    this.setLaserFireStartTime(80);
+                    this.setStateTimespan(350);
+                }
+                case SWEEP_LASER -> {
                     this.setInitialRotationAnimationTimespan((int) (40 + (20 * this.getDifficultyBoost())));
                     this.setLaserStartDelay(60);
                     this.setLaserFireStartTime(80);
                     this.setStateTimespan(400);
                 }
                 case TRACKING_LASER -> {
-                    float timeOffset = 20 * this.getDifficultyBoost();
-                    int timeOffset2 = getOrbitOffsetDegrees() / 3;
-                    this.setInitialRotationAnimationTimespan((int) (40 + timeOffset));
-                    this.setLaserStartDelay((int) (40 + (20 * this.getDifficultyBoost()) + timeOffset2));
-                    this.setLaserFireStartTime(80 + timeOffset2);
-                    this.setStateTimespan(180 + timeOffset2);
+                    int timeOffset = getOrbitOffsetDegrees() / 3;
+                    this.setInitialRotationAnimationTimespan((int) (40 + (20 * this.getDifficultyBoost())));
+                    this.setLaserStartDelay((int) (40 + (20 * this.getDifficultyBoost()) + timeOffset));
+                    this.setLaserFireStartTime(80 + timeOffset);
+                    this.setStateTimespan(180 + timeOffset);
                 }
             }
         }
@@ -592,8 +597,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
         else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_LASER) {
             if (this.targetEntity != null) {
                 Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
-                double difficultyMultipier = ((this.getDifficultyBoost() - 1) / 3);
-                double targetStrength = 0.94 - difficultyMultipier;
+                double difficultyMultiplier = ((this.getDifficultyBoost() - 1) / 3);
+                double targetStrength = 0.94 - difficultyMultiplier;
                 Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(targetStrength);
                 this.prevTargetPosition = diffFromNow.add(targetPos);
 
@@ -630,8 +635,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 ).normalize();
 
                 if (crossProduct.length() != 0) {
-                    double difficultyMultipier = ((this.getDifficultyBoost() - 1) * 1.5) + 1;
-                    float spinRadians = (float) (this.currentStateTimeTick * 3 * difficultyMultipier * Mth.DEG_TO_RAD);
+                    double difficultyMultiplier = ((this.getDifficultyBoost() - 1) * 1.5) + 1;
+                    float spinRadians = (float) (this.currentStateTimeTick * 3 * difficultyMultiplier * Mth.DEG_TO_RAD);
 
                     Vector3f vectorToRotate = directionToTarget.toVector3f();
                     Vector3f axisToRotateAround = crossProduct.toVector3f();
