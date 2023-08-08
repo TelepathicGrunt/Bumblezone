@@ -203,8 +203,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
                             1);
                 }
                 case TRACKING_SPINNING_ATTACK -> {
-                    this.setInitialRotationAnimationTimespan(40);
-                    this.setStateTimespan(400);
+                    this.setInitialRotationAnimationTimespan((int) (20 + (100 * this.getDifficultyBoost())));
+                    this.setStateTimespan((int) (120 + (100 * this.getDifficultyBoost())));
                 }
                 case VERTICAL_LASER -> {
                     this.setInitialRotationAnimationTimespan((int) (40 + (20 * this.getDifficultyBoost())));
@@ -869,7 +869,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 Vec3 diffFromNow = targetPos.subtract(this.position());
                 Vec3 diffFromPast = this.prevTargetPosition.subtract(this.position());
 
-                float turnStrength = 0.045f;
+                float turnStrength = 0.04f + ((this.getDifficultyBoost() - 1) / 20);
                 Vec3 lerpedLookVector = new Vec3(
                         Mth.lerp(turnStrength, diffFromPast.x(), diffFromNow.x()),
                         Mth.lerp(turnStrength, diffFromPast.y(), diffFromNow.y()),

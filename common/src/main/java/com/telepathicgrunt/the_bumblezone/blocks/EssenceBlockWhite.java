@@ -124,25 +124,11 @@ public class EssenceBlockWhite extends EssenceBlock {
             // Set commands here
             if (crystalsAreIdleLongEnough && !crystals.isEmpty()) {
                 BoundlessCrystalState chosenAttack;
-                while(true) {
-                    chosenAttack = BoundlessCrystalState.values()[serverLevel.getRandom().nextInt(BoundlessCrystalState.values().length)];
 
-                    if (crystals.size() > 1) {
-                        if (crystals.get(0).getPreviousBoundlessCrystalState() != chosenAttack &&
-                            chosenAttack != BoundlessCrystalState.NORMAL &&
-                            chosenAttack != BoundlessCrystalState.TRACKING_SPINNING_ATTACK)
-                        {
-                            break;
-                        }
-                    }
-                    else {
-                        if (crystals.get(0).getPreviousBoundlessCrystalState() != chosenAttack &&
-                            chosenAttack != BoundlessCrystalState.NORMAL)
-                        {
-                            break;
-                        }
-                    }
+                do {
+                    chosenAttack = BoundlessCrystalState.values()[serverLevel.getRandom().nextInt(BoundlessCrystalState.values().length)];
                 }
+                while (crystals.get(0).getPreviousBoundlessCrystalState() == chosenAttack || chosenAttack == BoundlessCrystalState.NORMAL);
 
                 BoundlessCrystalState finalChosenAttack = chosenAttack;
                 crystals.forEach(c -> c.setBoundlessCrystalState(finalChosenAttack));
