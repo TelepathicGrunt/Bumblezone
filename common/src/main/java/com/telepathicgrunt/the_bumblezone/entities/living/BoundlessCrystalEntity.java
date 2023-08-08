@@ -381,7 +381,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
 
         this.currentStateTimeTick = compoundTag.getInt("currentStateTimeTick");
-        this.setSyncedCurrentStateTimeTick(this.currentStateTimeTick); // Only to sync data on load. No need to packet spam afterwards.
+        this.setSyncedCurrentStateTimeTick(this.currentStateTimeTick);
 
         this.animationTimeTick = compoundTag.getInt("animationTimeTick");
         this.prevAnimationTick = compoundTag.getInt("prevAnimationTick");
@@ -479,14 +479,18 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if (this.getBoundlessCrystalState() == BoundlessCrystalState.NORMAL) {
             this.targetEntity = null;
         }
+        else if (!this.level().isClientSide() && this.tickCount % 5 == 0) {
+            this.setSyncedCurrentStateTimeTick(this.currentStateTimeTick);
+        }
 
         this.prevLookAngle = this.getLookAngle();
 
-        incrementAnimationAndRotationTicks();
-        spinningTrackingBehaviour();
         orbitMovement();
+        spinningTrackingBehaviour();
 
         super.tick();
+
+        incrementAnimationAndRotationTicks();
 
         spawnFancyParticlesOnClient();
         laserBreakBlocks();

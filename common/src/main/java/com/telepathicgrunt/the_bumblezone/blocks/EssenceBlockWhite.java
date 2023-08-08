@@ -132,6 +132,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
                 BoundlessCrystalState finalChosenAttack = chosenAttack;
                 crystals.forEach(c -> c.setBoundlessCrystalState(finalChosenAttack));
+                //crystals.forEach(c -> c.setBoundlessCrystalState(BoundlessCrystalState.SWEEP_LASER));
             }
 
             if (!crystals.isEmpty()) {
@@ -151,7 +152,12 @@ public class EssenceBlockWhite extends EssenceBlock {
                     for (int i = 0; i < crystals.size(); i++) {
                         BoundlessCrystalEntity crystalEntity = crystals.get(i);
                         crystalEntity.setOrbitOffsetDegrees(i * (360 / crystals.size()));
-                        crystalEntity.setDifficultyBoost(1 + (0.12f * (6 - totalCrystals)));
+                        if (totalCrystals == 1) {
+                            crystalEntity.setDifficultyBoost(1.8f);
+                        }
+                        else {
+                            crystalEntity.setDifficultyBoost(1 + (0.12f * (6 - totalCrystals)));
+                        }
                         crystalEntity.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
                     }
                 }
