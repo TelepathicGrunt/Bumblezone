@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +39,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 2000;
+        return 10000;
     }
 
     @Override
@@ -79,7 +80,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
         int totalCrystals = eventEntitiesInArena.size();
-        int aliveCrystals = totalCrystals;
+        int totalhealth = 0;
 
         if (totalCrystals == 0) {
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 0, 1, eventEntitiesInArena);
@@ -88,10 +89,12 @@ public class EssenceBlockWhite extends EssenceBlock {
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 180, 1, eventEntitiesInArena);
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 240, 1, eventEntitiesInArena);
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 300, 1, eventEntitiesInArena);
-            aliveCrystals = 6;
             totalCrystals = 6;
         }
         else {
+            List<BoundlessCrystalEntity> crystals = new ArrayList<>();
+            boolean crystalsAreIdleLongEnough = true;
+
             // update how many entities are alive
             for (int i = eventEntitiesInArena.size() - 1; i >= 0; i--) {
                 UUID entityToCheck = eventEntitiesInArena.get(i).uuid();
@@ -101,25 +104,82 @@ public class EssenceBlockWhite extends EssenceBlock {
                     totalCrystals--;
                 }
                 else if (entity instanceof BoundlessCrystalEntity boundlessCrystalEntity) {
-                    if (boundlessCrystalEntity.isDeadOrDying()) {
-                        aliveCrystals--;
+                    if (blockState.getBlock() instanceof EssenceBlock essenceBlock &&
+                        essenceBlockEntity.getEventTimer() > essenceBlock.getEventTimeFrame() - 70)
+                    {
+                        return;
+                    }
+                    totalhealth += boundlessCrystalEntity.getHealth();
+
+                    if (boundlessCrystalEntity.getBoundlessCrystalState() != BoundlessCrystalState.NORMAL ||
+                        boundlessCrystalEntity.currentStateTimeTick < 50)
+                    {
+                        crystalsAreIdleLongEnough = false;
                     }
 
-                    // Set commands here
-                    boundlessCrystalEntity.setBoundlessCrystalState(BoundlessCrystalState.SWEEP_LASER);
+                    crystals.add(boundlessCrystalEntity);
+                }
+            }
 
+            // Set commands here
+            if (crystalsAreIdleLongEnough && !crystals.isEmpty()) {
+                BoundlessCrystalState chosenAttack;
+                while(true) {
+                    chosenAttack = BoundlessCrystalState.values()[serverLevel.getRandom().nextInt(BoundlessCrystalState.values().length)];
+
+                    if (crystals.size() > 1) {
+                        if (crystals.get(0).getPreviousBoundlessCrystalState() != chosenAttack &&
+                            chosenAttack != BoundlessCrystalState.NORMAL &&
+                            chosenAttack != BoundlessCrystalState.TRACKING_SPINNING_ATTACK)
+                        {
+                            break;
+                        }
+                    }
+                    else {
+                        if (crystals.get(0).getPreviousBoundlessCrystalState() != chosenAttack &&
+                            chosenAttack != BoundlessCrystalState.NORMAL)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                BoundlessCrystalState finalChosenAttack = chosenAttack;
+                crystals.forEach(c -> c.setBoundlessCrystalState(finalChosenAttack));
+            }
+
+            if (!crystals.isEmpty()) {
+                boolean missingCrystal = false;
+
+                for (int i = 0; i < crystals.size(); i++) {
+                    BoundlessCrystalEntity crystalEntity = crystals.get(i);
+                    int orbitOffset = crystalEntity.getOrbitOffsetDegrees();
+
+                    if (orbitOffset % (360 / crystals.size()) != 0) {
+                        missingCrystal = true;
+                        break;
+                    }
+                }
+
+                if (missingCrystal) {
+                    for (int i = 0; i < crystals.size(); i++) {
+                        BoundlessCrystalEntity crystalEntity = crystals.get(i);
+                        crystalEntity.setOrbitOffsetDegrees(i * (360 / crystals.size()));
+                        crystalEntity.setDifficultyBoost(1 + (0.12f * (6 - totalCrystals)));
+                        crystalEntity.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
+                    }
                 }
             }
         }
 
         // Check if any crystal was removed too early
 
-
         if (totalCrystals == 0) {
             EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
         }
 
-        essenceBlockEntity.getEventBar().setProgress(aliveCrystals / 6f);
+        float totalMaxHealth = 6 * BoundlessCrystalEntity.MAX_HEALTH;
+        essenceBlockEntity.getEventBar().setProgress(totalhealth / totalMaxHealth);
     }
 
     private void SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
