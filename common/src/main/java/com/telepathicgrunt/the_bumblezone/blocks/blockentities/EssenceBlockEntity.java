@@ -197,8 +197,8 @@ public class EssenceBlockEntity extends BlockEntity {
                         Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > ((this.getArenaSize().getZ() + 1) / 2)))
                     {
                         this.getPlayerInArena().remove(playerUUID);
-                        this.setChanged();
                         this.getEventBar().removePlayer(serverPlayer);
+                        this.setChanged();
                     }
                 }
             }
@@ -278,8 +278,8 @@ public class EssenceBlockEntity extends BlockEntity {
                             essenceBlock.onEventEnd(serverLevel, essenceBlockEntity);
                         }
                         essenceBlockEntity.getPlayerInArena().remove(playerUUID);
-                        essenceBlockEntity.setChanged();
                         essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
+                        essenceBlockEntity.setChanged();
                     }
                     else {
                         essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
@@ -304,6 +304,7 @@ public class EssenceBlockEntity extends BlockEntity {
             if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
                 essenceBlock.performUniqueArenaTick(serverLevel, blockPos, blockState, essenceBlockEntity);
             }
+            essenceBlockEntity.setChanged();
         }
     }
 

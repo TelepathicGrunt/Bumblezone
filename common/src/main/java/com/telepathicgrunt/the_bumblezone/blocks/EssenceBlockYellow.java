@@ -321,7 +321,6 @@ public class EssenceBlockYellow extends EssenceBlock {
         float newProgress = ringsPassed / RINGS_TO_PASS;
         essenceBlockEntity.getEventBar().setProgress(1 - newProgress);
         essenceBlockEntity.setExtraEventTrackingProgress(ringsPassed);
-        essenceBlockEntity.setChanged();
     }
 
     private void removeEffectBonusesFromAllPlayers(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity) {
