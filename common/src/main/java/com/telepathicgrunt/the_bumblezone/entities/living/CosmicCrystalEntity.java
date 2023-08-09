@@ -186,7 +186,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             }
 
             this.pastStates.addFirst(this.getCosmicCrystalState());
-            if (pastStates.size() > 4) {
+            if (pastStates.size() > 8) {
                 pastStates.removeLast();
             }
             this.entityData.set(COSMIC_CRYSTAL_STATE, cosmicCrystalState);
