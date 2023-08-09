@@ -50,6 +50,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -94,6 +96,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
     private static final Vec3 UP_VECT = new Vec3(0, 1, 0);
     private static final Vec3 POSITIVE_X_VECT = new Vec3(1, 0, 0);
     public static final int MAX_HEALTH = 50;
+    public static final int MAX_RANGE = 30;
+    protected static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forCombat().range(MAX_RANGE).selector(livingEntity -> !(livingEntity instanceof BoundlessCrystalEntity) && livingEntity.attackable());
 
     public final AnimationState idleAnimationState = new AnimationState();
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(0, ItemStack.EMPTY);
@@ -122,7 +126,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 .add(Attributes.MAX_HEALTH, MAX_HEALTH)
                 .add(Attributes.MOVEMENT_SPEED, 0.1D)
                 .add(Attributes.ATTACK_DAMAGE, 1.0D)
-                .add(Attributes.FOLLOW_RANGE, 50.0D);
+                .add(Attributes.FOLLOW_RANGE, MAX_RANGE);
     }
 
     public UUID getEssenceController() {
@@ -478,7 +482,17 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
 
         if (this.getBoundlessCrystalState() == BoundlessCrystalState.NORMAL) {
+            this.setTargetEntityUUID(null);
             this.targetEntity = null;
+
+            if (this.getEssenceController() == null && this.currentStateTimeTick > 50) {
+                BoundlessCrystalState chosenAttack;
+                do {
+                    chosenAttack = BoundlessCrystalState.values()[this.getRandom().nextInt(BoundlessCrystalState.values().length)];
+                }
+                while (this.pastStates.contains(chosenAttack) || chosenAttack == BoundlessCrystalState.NORMAL);
+                this.setBoundlessCrystalState(chosenAttack);
+            }
         }
         else if (!this.level().isClientSide() && this.tickCount % 5 == 0) {
             this.setSyncedCurrentStateTimeTick(this.currentStateTimeTick);
@@ -720,7 +734,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     this.targetEntity = this.level().getPlayerByUUID(this.getTargetEntityUUID());
                 }
                 else {
-                    this.targetEntity = this.level().getNearestPlayer(this, 30);
+                    this.targetEntity = this.level().getNearestPlayer(this, MAX_RANGE);
                     if (this.targetEntity != null) {
                         this.setTargetEntityUUID(this.targetEntity.getUUID());
 
@@ -729,6 +743,19 @@ public class BoundlessCrystalEntity extends LivingEntity {
                         }
                         else if (this.getBoundlessCrystalState() != BoundlessCrystalState.SWEEP_LASER) {
                             this.prevTargetPosition = this.targetEntity.position();
+                        }
+                    }
+                    else {
+                        this.targetEntity = this.level().getNearestEntity(LivingEntity.class, TARGETING_CONDITIONS, this, this.getX(), this.getY(), this.getZ(), this.getBoundingBox().inflate(MAX_RANGE));
+                        if (this.targetEntity != null) {
+                            this.setTargetEntityUUID(this.targetEntity.getUUID());
+
+                            if (this.getBoundlessCrystalState() == BoundlessCrystalState.HORIZONTAL_LASER) {
+                                this.prevTargetPosition = this.position();
+                            }
+                            else if (this.getBoundlessCrystalState() != BoundlessCrystalState.SWEEP_LASER) {
+                                this.prevTargetPosition = this.targetEntity.position();
+                            }
                         }
                     }
                 }
