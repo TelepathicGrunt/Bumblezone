@@ -68,15 +68,17 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
+import java.util.ArrayDeque;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.UUID;
 
 public class BoundlessCrystalEntity extends LivingEntity {
     public static final EntityDataSerializer<BoundlessCrystalState> BOUNDLESS_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.simpleEnum(BoundlessCrystalState.class);
     private static final EntityDataAccessor<BoundlessCrystalState> BOUNDLESS_CRYSTAL_STATE = SynchedEntityData.defineId(BoundlessCrystalEntity.class, BOUNDLESS_CRYSTAL_STATE_SERIALIZER);
-    private static final EntityDataAccessor<BoundlessCrystalState> PREVIOUS_BOUNDLESS_CRYSTAL_STATE = SynchedEntityData.defineId(BoundlessCrystalEntity.class, BOUNDLESS_CRYSTAL_STATE_SERIALIZER);
     private static final EntityDataAccessor<Integer> INITIAL_ROTATION_ANIMATION_TIMESPAN = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STATE_TIMESPAN = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LASER_START_DELAY = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
@@ -107,6 +109,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     public Vec3 prevLookAngle = new Vec3(1, 0, 0);
     private boolean laserChargeSoundPlayed = false;
     public int lastPhysicalHit = 0;
+    public ArrayDeque<BoundlessCrystalState> pastStates = new ArrayDeque<>();
 
     public BoundlessCrystalEntity(EntityType<? extends BoundlessCrystalEntity> entityType, Level level) {
         super(entityType, level);
@@ -181,7 +184,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 this.prevTargetPosition = this.targetEntity.position();
             }
 
-            this.entityData.set(PREVIOUS_BOUNDLESS_CRYSTAL_STATE, getBoundlessCrystalState());
+            this.pastStates.addFirst(this.getBoundlessCrystalState());
+            if (pastStates.size() > 4) {
+                pastStates.removeLast();
+            }
             this.entityData.set(BOUNDLESS_CRYSTAL_STATE, boundlessCrystalState);
 
             // setup timing for each state
@@ -203,14 +209,15 @@ public class BoundlessCrystalEntity extends LivingEntity {
                             1);
                 }
                 case TRACKING_SPINNING_ATTACK -> {
-                    this.setInitialRotationAnimationTimespan((int) (20 + (100 * this.getDifficultyBoost())));
-                    this.setStateTimespan((int) (120 + (100 * this.getDifficultyBoost())));
+                    int timeOffset = (int) (this.getOrbitOffsetDegrees() * this.getDifficultyBoost() * this.getDifficultyBoost());
+                    this.setInitialRotationAnimationTimespan(20 + timeOffset);
+                    this.setStateTimespan((int) (timeOffset + (this.getDifficultyBoost() * this.getDifficultyBoost() * 80)));
                 }
                 case VERTICAL_LASER -> {
                     this.setInitialRotationAnimationTimespan((int) (40 + (20 * this.getDifficultyBoost())));
-                    this.setLaserStartDelay(60);
-                    this.setLaserFireStartTime(80);
-                    this.setStateTimespan(600);
+                    this.setLaserStartDelay(20);
+                    this.setLaserFireStartTime(60);
+                    this.setStateTimespan(400);
                 }
                 case HORIZONTAL_LASER -> {
                     this.setInitialRotationAnimationTimespan((int) (40 + (20 * this.getDifficultyBoost())));
@@ -237,10 +244,6 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
     public BoundlessCrystalState getBoundlessCrystalState() {
         return this.entityData.get(BOUNDLESS_CRYSTAL_STATE);
-    }
-
-    public BoundlessCrystalState getPreviousBoundlessCrystalState() {
-        return this.entityData.get(PREVIOUS_BOUNDLESS_CRYSTAL_STATE);
     }
 
     public void setInitialRotationAnimationTimespan(int initialRotationAnimationTimespan) {
@@ -315,7 +318,6 @@ public class BoundlessCrystalEntity extends LivingEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(BOUNDLESS_CRYSTAL_STATE, BoundlessCrystalState.NORMAL);
-        this.entityData.define(PREVIOUS_BOUNDLESS_CRYSTAL_STATE, BoundlessCrystalState.NORMAL);
         this.entityData.define(INITIAL_ROTATION_ANIMATION_TIMESPAN, 0);
         this.entityData.define(STATE_TIMESPAN, 0);
         this.entityData.define(LASER_START_DELAY, 0);
@@ -411,7 +413,6 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
 
         compoundTag.putString("boundlessCrystalState", this.getBoundlessCrystalState().name());
-        compoundTag.putString("prevBoundlessCrystalState", this.getPreviousBoundlessCrystalState().name());
         compoundTag.putInt("initialRotationAnimationTimespan", this.getInitialRotationAnimationTimespan());
         compoundTag.putInt("stateTimespan", this.getStateTimespan());
         compoundTag.putInt("laserStartDelay", this.getLaserStartDelay());
@@ -522,15 +523,15 @@ public class BoundlessCrystalEntity extends LivingEntity {
             float difficultyBoost = this.getDifficultyBoost();
             float radius = 4;
             if (this.getBoundlessCrystalState() == BoundlessCrystalState.VERTICAL_LASER) {
-                radius = (Mth.sin(this.currentTickCount * 3 * Mth.DEG_TO_RAD) + 1) * 8;
+                radius = (Math.max(-1, Math.min(1, Mth.sin(this.currentTickCount * 3 * Mth.DEG_TO_RAD) * 1.25f)) + 1f) * 13;
             }
 
             float spinRadians = (float) (((this.currentTickCount * Math.pow(difficultyBoost, 5)) % 360) * Mth.DEG_TO_RAD);
             Vector3f rotationOffset = POSITIVE_X_VECT.toVector3f().rotateY(orbitOffsetDegrees + spinRadians);
             Vec3 targetOrbitSpot = orbitPosition.add(new Vec3(rotationOffset).scale(radius));
             Vec3 diffToTargetOrbitSpot = targetOrbitSpot.subtract(this.position());
-            double xzScale = Math.abs(diffToTargetOrbitSpot.horizontalDistance()) * 0.05d;
-            double yScale = Math.abs(diffToTargetOrbitSpot.y()) * 0.1d;
+            double xzScale = Math.abs(diffToTargetOrbitSpot.horizontalDistance()) * 0.05d * difficultyBoost;
+            double yScale = Math.abs(diffToTargetOrbitSpot.y()) * 0.1d * difficultyBoost;
 
             this.setDeltaMovement(diffToTargetOrbitSpot.normalize().multiply(xzScale, yScale, xzScale));
         }
@@ -893,12 +894,14 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
                 // collision checks
 
+                float inflatedSpeed = 2f;
                 Vec3 originalVect = this.getDeltaMovement();
-                Vec3 collideVect = ((EntityAccessor)this).callCollide(originalVect);
+                Vec3 inflatedVect = originalVect.scale(inflatedSpeed);
+                Vec3 collideVect = ((EntityAccessor)this).callCollide(inflatedVect);
 
-                int xDirection = getDirection(originalVect.x(), collideVect.x());
-                int yDirection = getDirection(originalVect.y(), collideVect.y());
-                int zDirection = getDirection(originalVect.z(), collideVect.z());
+                int xDirection = getDirection(inflatedVect.x(), collideVect.x());
+                int yDirection = getDirection(inflatedVect.y(), collideVect.y());
+                int zDirection = getDirection(inflatedVect.z(), collideVect.z());
 
                 if (xDirection == -1 || yDirection == -1 || zDirection == -1) {
                     this.setDeltaMovement(
@@ -1104,7 +1107,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         float progress = 1 - Mth.abs(((90 - this.getXRot()) / 90) - 1);
 
         if (isOrFromHorizontalState(this.getBoundlessCrystalState()) ||
-            isOrFromHorizontalState(this.getPreviousBoundlessCrystalState()))
+            (this.pastStates != null && !this.pastStates.isEmpty() && isOrFromHorizontalState(this.pastStates.getFirst())))
         {
             float yRotRadian = this.getYRot() * Mth.DEG_TO_RAD;
             double yRotSin = Math.abs(Mth.sin(yRotRadian));
