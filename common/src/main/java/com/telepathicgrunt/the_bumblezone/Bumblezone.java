@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrig
 import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.InfinityBarrier;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
-import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalState;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
@@ -17,7 +16,7 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.ItemUseOnBlock;
 import com.telepathicgrunt.the_bumblezone.entities.ProjectileImpact;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
-import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
@@ -181,7 +180,7 @@ public class Bumblezone{
     private static void registerDataSerializers(RegisterDataSerializersEvent event) {
         event.register(new ResourceLocation(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
         event.register(new ResourceLocation(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
-        event.register(new ResourceLocation(Bumblezone.MODID, "boundless_crystal_state"), BoundlessCrystalEntity.BOUNDLESS_CRYSTAL_STATE_SERIALIZER);
+        event.register(new ResourceLocation(Bumblezone.MODID, "cosmic_crystal_state"), CosmicCrystalEntity.COSMIC_CRYSTAL_STATE_SERIALIZER);
     }
 
     private static void onFinalSetup(final FinalSetupEvent event) {

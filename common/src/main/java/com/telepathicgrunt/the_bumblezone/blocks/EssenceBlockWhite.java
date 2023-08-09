@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
-import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalState;
-import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
+import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
@@ -14,10 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -92,7 +89,7 @@ public class EssenceBlockWhite extends EssenceBlock {
             totalCrystals = 6;
         }
         else {
-            List<BoundlessCrystalEntity> crystals = new ArrayList<>();
+            List<CosmicCrystalEntity> crystals = new ArrayList<>();
             boolean crystalsAreIdleLongEnough = true;
 
             // update how many entities are alive
@@ -103,43 +100,43 @@ public class EssenceBlockWhite extends EssenceBlock {
                     eventEntitiesInArena.remove(i);
                     totalCrystals--;
                 }
-                else if (entity instanceof BoundlessCrystalEntity boundlessCrystalEntity) {
+                else if (entity instanceof CosmicCrystalEntity cosmicCrystalEntity) {
                     if (blockState.getBlock() instanceof EssenceBlock essenceBlock &&
                         essenceBlockEntity.getEventTimer() > essenceBlock.getEventTimeFrame() - 70)
                     {
                         return;
                     }
-                    totalhealth += boundlessCrystalEntity.getHealth();
+                    totalhealth += cosmicCrystalEntity.getHealth();
 
-                    if (boundlessCrystalEntity.getBoundlessCrystalState() != BoundlessCrystalState.NORMAL ||
-                        boundlessCrystalEntity.currentStateTimeTick < 50)
+                    if (cosmicCrystalEntity.getCosmicCrystalState() != CosmicCrystalState.NORMAL ||
+                        cosmicCrystalEntity.currentStateTimeTick < 50)
                     {
                         crystalsAreIdleLongEnough = false;
                     }
 
-                    crystals.add(boundlessCrystalEntity);
+                    crystals.add(cosmicCrystalEntity);
                 }
             }
 
             // Set commands here
             if (crystalsAreIdleLongEnough && !crystals.isEmpty()) {
-                BoundlessCrystalState chosenAttack;
+                CosmicCrystalState chosenAttack;
 
                 do {
-                    chosenAttack = BoundlessCrystalState.values()[serverLevel.getRandom().nextInt(BoundlessCrystalState.values().length)];
+                    chosenAttack = CosmicCrystalState.values()[serverLevel.getRandom().nextInt(CosmicCrystalState.values().length)];
                 }
-                while (crystals.get(0).pastStates.contains(chosenAttack) || chosenAttack == BoundlessCrystalState.NORMAL);
+                while (crystals.get(0).pastStates.contains(chosenAttack) || chosenAttack == CosmicCrystalState.NORMAL);
 
-                BoundlessCrystalState finalChosenAttack = chosenAttack;
-                crystals.forEach(c -> c.setBoundlessCrystalState(finalChosenAttack));
-                //crystals.forEach(c -> c.setBoundlessCrystalState(BoundlessCrystalState.TRACKING_SPINNING_ATTACK)); // for debugging
+                CosmicCrystalState finalChosenAttack = chosenAttack;
+                crystals.forEach(c -> c.setCosmicCrystalState(finalChosenAttack));
+                //crystals.forEach(c -> c.setCosmicCrystalState(CosmicCrystalState.TRACKING_SPINNING_ATTACK)); // for debugging
             }
 
             if (!crystals.isEmpty()) {
                 boolean missingCrystal = false;
 
                 for (int i = 0; i < crystals.size(); i++) {
-                    BoundlessCrystalEntity crystalEntity = crystals.get(i);
+                    CosmicCrystalEntity crystalEntity = crystals.get(i);
                     int orbitOffset = crystalEntity.getOrbitOffsetDegrees();
 
                     if (orbitOffset % (360 / crystals.size()) != 0) {
@@ -150,7 +147,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
                 if (missingCrystal) {
                     for (int i = 0; i < crystals.size(); i++) {
-                        BoundlessCrystalEntity crystalEntity = crystals.get(i);
+                        CosmicCrystalEntity crystalEntity = crystals.get(i);
                         crystalEntity.setOrbitOffsetDegrees(i * (360 / crystals.size()));
                         if (totalCrystals == 1) {
                             crystalEntity.setDifficultyBoost(1.8f);
@@ -158,7 +155,7 @@ public class EssenceBlockWhite extends EssenceBlock {
                         else {
                             crystalEntity.setDifficultyBoost(1 + (0.12f * (6 - totalCrystals)));
                         }
-                        crystalEntity.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
+                        crystalEntity.setCosmicCrystalState(CosmicCrystalState.NORMAL);
                     }
                 }
             }
@@ -170,12 +167,12 @@ public class EssenceBlockWhite extends EssenceBlock {
             EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
         }
 
-        float totalMaxHealth = 6 * BoundlessCrystalEntity.MAX_HEALTH;
+        float totalMaxHealth = 6 * CosmicCrystalEntity.MAX_HEALTH;
         essenceBlockEntity.getEventBar().setProgress(totalhealth / totalMaxHealth);
     }
 
     private void SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
-        BoundlessCrystalEntity entity = BzEntities.BOUNDLESS_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, MobSpawnType.TRIGGERED);
+        CosmicCrystalEntity entity = BzEntities.COSMIC_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, MobSpawnType.TRIGGERED);
         if (entity != null) {
             entity.setEssenceControllerDimension(serverLevel.dimension());
             entity.setEssenceController(essenceBlockEntity.getUUID());

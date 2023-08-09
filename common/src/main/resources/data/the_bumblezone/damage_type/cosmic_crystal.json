@@ -1,7 +1,7 @@
 {
   "effects": "hurt",
   "exhaustion": 1.0,
-  "message_id": "boundless_crystal",
+  "message_id": "cosmic_crystal",
   "scaling": "always",
   "death_message_type": "default"
 }

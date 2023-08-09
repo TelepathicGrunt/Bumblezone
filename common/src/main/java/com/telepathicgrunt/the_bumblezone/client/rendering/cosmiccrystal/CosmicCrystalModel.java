@@ -1,9 +1,9 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal;
+package com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -17,15 +17,15 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends HierarchicalModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "boundless_crystal"), "main");
+public class CosmicCrystalModel<T extends CosmicCrystalEntity> extends HierarchicalModel<T> {
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "cosmic_crystal"), "main");
 
     private final ModelPart root;
     private final ModelPart body;
     private final ModelPart spikes;
     private final ModelPart charging;
 
-    public BoundlessCrystalModel(ModelPart root) {
+    public CosmicCrystalModel(ModelPart root) {
         super(RenderType::entityTranslucent);
 
         this.root = root;
@@ -93,7 +93,7 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
         this.body.visible = true;
         this.body.getAllParts().forEach(ModelPart::resetPose);
 
-        boolean isLaserState = BoundlessCrystalEntity.isLaserState(entity.getBoundlessCrystalState());
+        boolean isLaserState = CosmicCrystalEntity.isLaserState(entity.getCosmicCrystalState());
 
         if (isLaserState && entity.isLaserFiring()) {
             this.spikes.visible = true;
@@ -119,7 +119,7 @@ public class BoundlessCrystalModel<T extends BoundlessCrystalEntity> extends Hie
             this.spikes.visible = false;
         }
 
-        this.animate(entity.idleAnimationState, BoundlessCrystalAnimation.MODEL_IDLE, ageInTicks);
+        this.animate(entity.idleAnimationState, CosmicCrystalAnimation.MODEL_IDLE, ageInTicks);
     }
 
     @Override

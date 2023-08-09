@@ -23,9 +23,9 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> SENTRY_WATCHER_CRASH = registerSoundEvent("entity.the_bumblezone.sentry_watcher.crash");
     public static final RegistryEntry<SoundEvent> SENTRY_WATCHER_ACTIVATING = registerSoundEvent("entity.the_bumblezone.sentry_watcher.activating");
     public static final RegistryEntry<SoundEvent> SENTRY_WATCHER_MOVING = registerSoundEvent("entity.the_bumblezone.sentry_watcher.moving");
-    public static final RegistryEntry<SoundEvent> BOUNDLESS_CRYSTAL_ENTITY_LASER = registerSoundEvent("entity.the_bumblezone.boundless_crystal_entity.laser");
-    public static final RegistryEntry<SoundEvent> BOUNDLESS_CRYSTAL_ENTITY_LASER_CHARGE = registerSoundEvent("entity.the_bumblezone.boundless_crystal_entity.laser_charge");
-    public static final RegistryEntry<SoundEvent> BOUNDLESS_CRYSTAL_ENTITY_CRASH_CHARGE = registerSoundEvent("entity.the_bumblezone.boundless_crystal_entity.crash_charge");
+    public static final RegistryEntry<SoundEvent> COSMIC_CRYSTAL_ENTITY_LASER = registerSoundEvent("entity.the_bumblezone.cosmic_crystal_entity.laser");
+    public static final RegistryEntry<SoundEvent> COSMIC_CRYSTAL_ENTITY_LASER_CHARGE = registerSoundEvent("entity.the_bumblezone.cosmic_crystal_entity.laser_charge");
+    public static final RegistryEntry<SoundEvent> COSMIC_CRYSTAL_ENTITY_CRASH_CHARGE = registerSoundEvent("entity.the_bumblezone.cosmic_crystal_entity.crash_charge");
     public static final RegistryEntry<SoundEvent> BEE_ESSENCE_CONSUMED = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consumed");
     public static final RegistryEntry<SoundEvent> BEE_ESSENCE_CONSUMING = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consuming");
     public static final RegistryEntry<SoundEvent> STINGER_SPEAR_HIT = registerSoundEvent("entity.the_bumblezone.stinger_spear.hit");

@@ -1,6 +1,6 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal;
+package com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal;
 
-public enum BoundlessCrystalState {
+public enum CosmicCrystalState {
     NORMAL,
     TRACKING_SMASHING_ATTACK,
     TRACKING_SPINNING_ATTACK,

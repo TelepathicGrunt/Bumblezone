@@ -18,9 +18,8 @@
 
 #TODO: make radiance show armor durability in corner
 
-#TODO: add woosh sound for smashing and tracking spinning attacks for boundless crystal
+#TODO: add woosh sound for smashing and tracking spinning attacks for cosmic crystal
 
-#TODO: new name for boundless crystal?
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**

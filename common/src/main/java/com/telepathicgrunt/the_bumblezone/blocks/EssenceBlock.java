@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
-import com.telepathicgrunt.the_bumblezone.entities.living.BoundlessCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -113,7 +113,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
     public VoxelShape getCollisionShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
         if (context instanceof EntityCollisionContext ctx) {
             Entity entity = ctx.getEntity();
-            if (entity == null || entity instanceof BoundlessCrystalEntity) {
+            if (entity == null || entity instanceof CosmicCrystalEntity) {
                 return Shapes.empty();
             }
 

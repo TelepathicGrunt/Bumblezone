@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.living;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal.BoundlessCrystalState;
+import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
@@ -51,7 +51,6 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -72,32 +71,30 @@ import org.joml.Vector3f;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.UUID;
 
-public class BoundlessCrystalEntity extends LivingEntity {
-    public static final EntityDataSerializer<BoundlessCrystalState> BOUNDLESS_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.simpleEnum(BoundlessCrystalState.class);
-    private static final EntityDataAccessor<BoundlessCrystalState> BOUNDLESS_CRYSTAL_STATE = SynchedEntityData.defineId(BoundlessCrystalEntity.class, BOUNDLESS_CRYSTAL_STATE_SERIALIZER);
-    private static final EntityDataAccessor<Integer> INITIAL_ROTATION_ANIMATION_TIMESPAN = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> STATE_TIMESPAN = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> LASER_START_DELAY = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> LASER_FIRE_START_TIME = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> SYNCED_CURRENT_STATE_TIME_TICK = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> ORBIT_OFFSET_DEGREES = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Float> DIFFICULTY_BOOST = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.FLOAT);
-    private static final EntityDataAccessor<Boolean> COLLIDED = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> SECOND_PHASE = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Optional<UUID>> ESSENCE_CONTROLLER_UUID = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-    private static final EntityDataAccessor<Optional<BlockPos>> ESSENCE_CONTROLLER_BLOCK_POS = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
-    private static final EntityDataAccessor<String> ESSENCE_CONTROLLER_DIMENSION = SynchedEntityData.defineId(BoundlessCrystalEntity.class, EntityDataSerializers.STRING);
+public class CosmicCrystalEntity extends LivingEntity {
+    public static final EntityDataSerializer<CosmicCrystalState> COSMIC_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.simpleEnum(CosmicCrystalState.class);
+    private static final EntityDataAccessor<CosmicCrystalState> COSMIC_CRYSTAL_STATE = SynchedEntityData.defineId(CosmicCrystalEntity.class, COSMIC_CRYSTAL_STATE_SERIALIZER);
+    private static final EntityDataAccessor<Integer> INITIAL_ROTATION_ANIMATION_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> STATE_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> LASER_START_DELAY = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> LASER_FIRE_START_TIME = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> SYNCED_CURRENT_STATE_TIME_TICK = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ORBIT_OFFSET_DEGREES = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Float> DIFFICULTY_BOOST = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> COLLIDED = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> SECOND_PHASE = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Optional<UUID>> ESSENCE_CONTROLLER_UUID = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<Optional<BlockPos>> ESSENCE_CONTROLLER_BLOCK_POS = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
+    private static final EntityDataAccessor<String> ESSENCE_CONTROLLER_DIMENSION = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.STRING);
     private static final Vec3 UP_VECT = new Vec3(0, 1, 0);
     private static final Vec3 POSITIVE_X_VECT = new Vec3(1, 0, 0);
     public static final int MAX_HEALTH = 50;
     public static final int MAX_RANGE = 30;
-    protected static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forCombat().range(MAX_RANGE).selector(livingEntity -> !(livingEntity instanceof BoundlessCrystalEntity) && livingEntity.attackable());
+    protected static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forCombat().range(MAX_RANGE).selector(livingEntity -> !(livingEntity instanceof CosmicCrystalEntity) && livingEntity.attackable());
 
     public final AnimationState idleAnimationState = new AnimationState();
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(0, ItemStack.EMPTY);
@@ -113,9 +110,9 @@ public class BoundlessCrystalEntity extends LivingEntity {
     public Vec3 prevLookAngle = new Vec3(1, 0, 0);
     private boolean laserChargeSoundPlayed = false;
     public int lastPhysicalHit = 0;
-    public ArrayDeque<BoundlessCrystalState> pastStates = new ArrayDeque<>();
+    public ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
 
-    public BoundlessCrystalEntity(EntityType<? extends BoundlessCrystalEntity> entityType, Level level) {
+    public CosmicCrystalEntity(EntityType<? extends CosmicCrystalEntity> entityType, Level level) {
         super(entityType, level);
         this.idleAnimationState.start(this.tickCount);
         this.noCulling = true;
@@ -176,8 +173,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
         this.entityData.set(DIFFICULTY_BOOST, difficultyBoost);
     }
 
-    public void setBoundlessCrystalState(BoundlessCrystalState boundlessCrystalState) {
-        if(!this.level().isClientSide() && boundlessCrystalState != this.getBoundlessCrystalState()) {
+    public void setCosmicCrystalState(CosmicCrystalState cosmicCrystalState) {
+        if(!this.level().isClientSide() && cosmicCrystalState != this.getCosmicCrystalState()) {
             if (this.tickCount > 1) {
                 this.currentStateTimeTick = 0;
                 this.lastPhysicalHit = 0;
@@ -188,14 +185,14 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 this.prevTargetPosition = this.targetEntity.position();
             }
 
-            this.pastStates.addFirst(this.getBoundlessCrystalState());
+            this.pastStates.addFirst(this.getCosmicCrystalState());
             if (pastStates.size() > 4) {
                 pastStates.removeLast();
             }
-            this.entityData.set(BOUNDLESS_CRYSTAL_STATE, boundlessCrystalState);
+            this.entityData.set(COSMIC_CRYSTAL_STATE, cosmicCrystalState);
 
             // setup timing for each state
-            switch (this.getBoundlessCrystalState()) {
+            switch (this.getCosmicCrystalState()) {
                 case NORMAL -> {
                     this.setInitialRotationAnimationTimespan(40);
                     this.setStateTimespan(Integer.MAX_VALUE);
@@ -207,7 +204,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     this.level().playSound(
                             this,
                             this.blockPosition(),
-                            BzSounds.BOUNDLESS_CRYSTAL_ENTITY_CRASH_CHARGE.get(),
+                            BzSounds.COSMIC_CRYSTAL_ENTITY_CRASH_CHARGE.get(),
                             SoundSource.HOSTILE,
                             1,
                             1);
@@ -246,8 +243,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
         }
     }
 
-    public BoundlessCrystalState getBoundlessCrystalState() {
-        return this.entityData.get(BOUNDLESS_CRYSTAL_STATE);
+    public CosmicCrystalState getCosmicCrystalState() {
+        return this.entityData.get(COSMIC_CRYSTAL_STATE);
     }
 
     public void setInitialRotationAnimationTimespan(int initialRotationAnimationTimespan) {
@@ -321,7 +318,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(BOUNDLESS_CRYSTAL_STATE, BoundlessCrystalState.NORMAL);
+        this.entityData.define(COSMIC_CRYSTAL_STATE, CosmicCrystalState.NORMAL);
         this.entityData.define(INITIAL_ROTATION_ANIMATION_TIMESPAN, 0);
         this.entityData.define(STATE_TIMESPAN, 0);
         this.entityData.define(LASER_START_DELAY, 0);
@@ -339,7 +336,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         super.onSyncedDataUpdated(entityDataAccessor);
-        if (BOUNDLESS_CRYSTAL_STATE.equals(entityDataAccessor) && this.tickCount > 1) {
+        if (COSMIC_CRYSTAL_STATE.equals(entityDataAccessor) && this.tickCount > 1) {
             this.animationTimeTick = 0;
             this.prevAnimationTick = 0;
             this.currentStateTimeTick = 0;
@@ -367,11 +364,11 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if (compoundTag.contains("essenceControllerDimension")) {
             this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
         }
-        if (compoundTag.contains("prevBoundlessCrystalState")) {
-            this.setBoundlessCrystalState(BoundlessCrystalState.valueOf(compoundTag.getString("prevBoundlessCrystalState")));
+        if (compoundTag.contains("prevCosmicCrystalState")) {
+            this.setCosmicCrystalState(CosmicCrystalState.valueOf(compoundTag.getString("prevCosmicCrystalState")));
         }
-        if (compoundTag.contains("boundlessCrystalState")) {
-            this.setBoundlessCrystalState(BoundlessCrystalState.valueOf(compoundTag.getString("boundlessCrystalState")));
+        if (compoundTag.contains("cosmicCrystalState")) {
+            this.setCosmicCrystalState(CosmicCrystalState.valueOf(compoundTag.getString("cosmicCrystalState")));
         }
 
         this.setInitialRotationAnimationTimespan(compoundTag.getInt("initialRotationAnimationTimespan"));
@@ -416,7 +413,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
         }
 
-        compoundTag.putString("boundlessCrystalState", this.getBoundlessCrystalState().name());
+        compoundTag.putString("cosmicCrystalState", this.getCosmicCrystalState().name());
         compoundTag.putInt("initialRotationAnimationTimespan", this.getInitialRotationAnimationTimespan());
         compoundTag.putInt("stateTimespan", this.getStateTimespan());
         compoundTag.putInt("laserStartDelay", this.getLaserStartDelay());
@@ -441,38 +438,38 @@ public class BoundlessCrystalEntity extends LivingEntity {
         compoundTag.put("prevLookAngle", vectTag);
     }
 
-    public static boolean isOrFromHorizontalState(BoundlessCrystalState boundlessCrystalState) {
-        return boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.TRACKING_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.TRACKING_SPINNING_ATTACK;
+    public static boolean isOrFromHorizontalState(CosmicCrystalState cosmicCrystalState) {
+        return cosmicCrystalState == CosmicCrystalState.HORIZONTAL_LASER ||
+                cosmicCrystalState == CosmicCrystalState.TRACKING_LASER ||
+                cosmicCrystalState == CosmicCrystalState.SWEEP_LASER ||
+                cosmicCrystalState == CosmicCrystalState.TRACKING_SPINNING_ATTACK;
     }
 
-    public static boolean isLaserState(BoundlessCrystalState boundlessCrystalState) {
-        return boundlessCrystalState == BoundlessCrystalState.VERTICAL_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.TRACKING_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER;
+    public static boolean isLaserState(CosmicCrystalState cosmicCrystalState) {
+        return cosmicCrystalState == CosmicCrystalState.VERTICAL_LASER ||
+                cosmicCrystalState == CosmicCrystalState.HORIZONTAL_LASER ||
+                cosmicCrystalState == CosmicCrystalState.TRACKING_LASER ||
+                cosmicCrystalState == CosmicCrystalState.SWEEP_LASER;
     }
 
-    public static boolean isTrackingState(BoundlessCrystalState boundlessCrystalState) {
-        return boundlessCrystalState == BoundlessCrystalState.TRACKING_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.TRACKING_SMASHING_ATTACK ||
-                boundlessCrystalState == BoundlessCrystalState.TRACKING_SPINNING_ATTACK ||
-                boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER;
+    public static boolean isTrackingState(CosmicCrystalState cosmicCrystalState) {
+        return cosmicCrystalState == CosmicCrystalState.TRACKING_LASER ||
+                cosmicCrystalState == CosmicCrystalState.TRACKING_SMASHING_ATTACK ||
+                cosmicCrystalState == CosmicCrystalState.TRACKING_SPINNING_ATTACK ||
+                cosmicCrystalState == CosmicCrystalState.SWEEP_LASER ||
+                cosmicCrystalState == CosmicCrystalState.HORIZONTAL_LASER;
     }
 
-    public static boolean isOrbitState(BoundlessCrystalState boundlessCrystalState) {
-        return boundlessCrystalState == BoundlessCrystalState.NORMAL ||
-                boundlessCrystalState == BoundlessCrystalState.HORIZONTAL_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.VERTICAL_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.TRACKING_LASER ||
-                boundlessCrystalState == BoundlessCrystalState.SWEEP_LASER;
+    public static boolean isOrbitState(CosmicCrystalState cosmicCrystalState) {
+        return cosmicCrystalState == CosmicCrystalState.NORMAL ||
+                cosmicCrystalState == CosmicCrystalState.HORIZONTAL_LASER ||
+                cosmicCrystalState == CosmicCrystalState.VERTICAL_LASER ||
+                cosmicCrystalState == CosmicCrystalState.TRACKING_LASER ||
+                cosmicCrystalState == CosmicCrystalState.SWEEP_LASER;
     }
 
     public boolean isLaserFiring() {
-        boolean isLaserState = BoundlessCrystalEntity.isLaserState(this.getBoundlessCrystalState());
+        boolean isLaserState = CosmicCrystalEntity.isLaserState(this.getCosmicCrystalState());
         return isLaserState && this.currentStateTimeTick > this.getLaserFireStartTime();
     }
 
@@ -481,17 +478,17 @@ public class BoundlessCrystalEntity extends LivingEntity {
             spawnLargeParticleCloud(3);
         }
 
-        if (this.getBoundlessCrystalState() == BoundlessCrystalState.NORMAL) {
+        if (this.getCosmicCrystalState() == CosmicCrystalState.NORMAL) {
             this.setTargetEntityUUID(null);
             this.targetEntity = null;
 
             if (this.getEssenceController() == null && this.currentStateTimeTick > 50) {
-                BoundlessCrystalState chosenAttack;
+                CosmicCrystalState chosenAttack;
                 do {
-                    chosenAttack = BoundlessCrystalState.values()[this.getRandom().nextInt(BoundlessCrystalState.values().length)];
+                    chosenAttack = CosmicCrystalState.values()[this.getRandom().nextInt(CosmicCrystalState.values().length)];
                 }
-                while (this.pastStates.contains(chosenAttack) || chosenAttack == BoundlessCrystalState.NORMAL);
-                this.setBoundlessCrystalState(chosenAttack);
+                while (this.pastStates.contains(chosenAttack) || chosenAttack == CosmicCrystalState.NORMAL);
+                this.setCosmicCrystalState(chosenAttack);
             }
         }
         else if (!this.level().isClientSide() && this.tickCount % 5 == 0) {
@@ -519,10 +516,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
     private void orbitMovement() {
         if (this.getEssenceControllerBlockPos() != null) {
             Vec3 orbitPosition;
-            if (isOrbitState(this.getBoundlessCrystalState())) {
+            if (isOrbitState(this.getCosmicCrystalState())) {
                 orbitPosition = this.getEssenceControllerBlockPos().getCenter().add(0, -1, 0);
 
-                if (this.getBoundlessCrystalState() == BoundlessCrystalState.HORIZONTAL_LASER && this.targetEntity != null) {
+                if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER && this.targetEntity != null) {
                     Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
                     Vec3 diffFromNow = this.prevTargetPosition.subtract(targetPos).scale(0.97);
                     this.prevTargetPosition = diffFromNow.add(targetPos);
@@ -537,7 +534,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             float orbitOffsetDegrees = this.getOrbitOffsetDegrees() * Mth.DEG_TO_RAD;
             float difficultyBoost = this.getDifficultyBoost();
             float radius = 4;
-            if (this.getBoundlessCrystalState() == BoundlessCrystalState.VERTICAL_LASER) {
+            if (this.getCosmicCrystalState() == CosmicCrystalState.VERTICAL_LASER) {
                 radius = (Math.max(-1, Math.min(1, Mth.sin(this.currentTickCount * 3 * Mth.DEG_TO_RAD) * 1.25f)) + 1f) * 13;
             }
 
@@ -576,8 +573,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if (this.animationTimeTick < this.getInitialRotationAnimationTimespan()) {
             this.animationTimeTick++;
         }
-        else if(this.getBoundlessCrystalState() != BoundlessCrystalState.NORMAL && this.currentStateTimeTick >= this.getStateTimespan()) {
-            this.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
+        else if(this.getCosmicCrystalState() != CosmicCrystalState.NORMAL && this.currentStateTimeTick >= this.getStateTimespan()) {
+            this.setCosmicCrystalState(CosmicCrystalState.NORMAL);
         }
 
         this.refreshDimensions();
@@ -599,7 +596,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         Vec3 desiredLookPosition = this.getEyePosition().add(0, -1, 0);
         Vec3 currentLookPosition = this.getEyePosition().add(currentLookAngle);
 
-        if (this.getBoundlessCrystalState() == BoundlessCrystalState.HORIZONTAL_LASER) {
+        if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER) {
             if (this.getEssenceControllerBlockPos() != null) {
                 Vec3 anchorPoint = new Vec3(
                         this.getEssenceControllerBlockPos().getX() + 0.5,
@@ -614,7 +611,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 desiredLookPosition = this.getEyePosition().add(this.calculateViewVector(0, this.getYRot()));
             }
         }
-        else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_LASER) {
+        else if (this.getCosmicCrystalState() == CosmicCrystalState.TRACKING_LASER) {
             if (this.targetEntity != null) {
                 Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
                 double difficultyMultiplier = ((this.getDifficultyBoost() - 1) / 3);
@@ -629,7 +626,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 desiredLookPosition = diffFromNow.add(targetPos);
             }
         }
-        else if (this.getBoundlessCrystalState() == BoundlessCrystalState.SWEEP_LASER) {
+        else if (this.getCosmicCrystalState() == CosmicCrystalState.SWEEP_LASER) {
             Vec3 targetPos = null;
             Vec3 directionToTarget = null;
 
@@ -671,7 +668,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 }
             }
         }
-        else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SMASHING_ATTACK) {
+        else if (this.getCosmicCrystalState() == CosmicCrystalState.TRACKING_SMASHING_ATTACK) {
             int moveTime = this.getInitialRotationAnimationTimespan();
             if ((this.currentStateTimeTick <= moveTime || this.getSecondPhase()) && this.targetEntity != null) {
                 Vec3 targetPos = this.targetEntity.position().add(0, 0.25, 0);
@@ -683,7 +680,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 desiredLookPosition = this.getEyePosition().add(0, -1, 0);
             }
         }
-        else if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK) {
+        else if (this.getCosmicCrystalState() == CosmicCrystalState.TRACKING_SPINNING_ATTACK) {
             float windDownDuration = 40f;
             int windDownPhase = (int) (this.getStateTimespan() - windDownDuration);
 
@@ -728,7 +725,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     private void setupTargetForTrackingStates() {
-        if (isTrackingState(this.getBoundlessCrystalState())) {
+        if (isTrackingState(this.getCosmicCrystalState())) {
             if (this.getTargetEntityUUID() == null || this.targetEntity == null || !this.targetEntity.getUUID().equals(this.getTargetEntityUUID())) {
                 if (this.getTargetEntityUUID() != null) {
                     this.targetEntity = this.level().getPlayerByUUID(this.getTargetEntityUUID());
@@ -738,10 +735,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
                     if (this.targetEntity != null) {
                         this.setTargetEntityUUID(this.targetEntity.getUUID());
 
-                        if (this.getBoundlessCrystalState() == BoundlessCrystalState.HORIZONTAL_LASER) {
+                        if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER) {
                             this.prevTargetPosition = this.position();
                         }
-                        else if (this.getBoundlessCrystalState() != BoundlessCrystalState.SWEEP_LASER) {
+                        else if (this.getCosmicCrystalState() != CosmicCrystalState.SWEEP_LASER) {
                             this.prevTargetPosition = this.targetEntity.position();
                         }
                     }
@@ -750,10 +747,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
                         if (this.targetEntity != null) {
                             this.setTargetEntityUUID(this.targetEntity.getUUID());
 
-                            if (this.getBoundlessCrystalState() == BoundlessCrystalState.HORIZONTAL_LASER) {
+                            if (this.getCosmicCrystalState() == CosmicCrystalState.HORIZONTAL_LASER) {
                                 this.prevTargetPosition = this.position();
                             }
-                            else if (this.getBoundlessCrystalState() != BoundlessCrystalState.SWEEP_LASER) {
+                            else if (this.getCosmicCrystalState() != CosmicCrystalState.SWEEP_LASER) {
                                 this.prevTargetPosition = this.targetEntity.position();
                             }
                         }
@@ -776,12 +773,12 @@ public class BoundlessCrystalEntity extends LivingEntity {
             else if (hitResult instanceof EntityHitResult entityHitResult) {
                 Entity entity = entityHitResult.getEntity();
                 if (entity instanceof ItemEntity itemEntity) {
-                    itemEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), 10);
+                    itemEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), 10);
                 }
                 else if (entity instanceof Projectile projectile) {
                     projectile.remove(RemovalReason.KILLED);
                 }
-                else if (entity instanceof LivingEntity livingEntity && !(entity instanceof BoundlessCrystalEntity)) {
+                else if (entity instanceof LivingEntity livingEntity && !(entity instanceof CosmicCrystalEntity)) {
                     if (laserHurtAttack(livingEntity)) return;
                 }
             }
@@ -789,7 +786,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             this.level().playSound(
                     this,
                     this.blockPosition(),
-                    BzSounds.BOUNDLESS_CRYSTAL_ENTITY_LASER.get(),
+                    BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
                     SoundSource.HOSTILE,
                     1.2f,
                     1);
@@ -797,19 +794,19 @@ public class BoundlessCrystalEntity extends LivingEntity {
             this.level().playSound(
                     this,
                     BlockPos.containing(hitResult.getLocation()),
-                    BzSounds.BOUNDLESS_CRYSTAL_ENTITY_LASER.get(),
+                    BzSounds.COSMIC_CRYSTAL_ENTITY_LASER.get(),
                     SoundSource.HOSTILE,
                     1.2f,
                     1);
         }
         else if (!this.laserChargeSoundPlayed &&
-                BoundlessCrystalEntity.isLaserState(this.getBoundlessCrystalState()) &&
+                CosmicCrystalEntity.isLaserState(this.getCosmicCrystalState()) &&
                 this.currentStateTimeTick > this.getLaserStartDelay() - 10)
         {
             this.level().playSound(
                     this,
                     this.blockPosition(),
-                    BzSounds.BOUNDLESS_CRYSTAL_ENTITY_LASER_CHARGE.get(),
+                    BzSounds.COSMIC_CRYSTAL_ENTITY_LASER_CHARGE.get(),
                     SoundSource.HOSTILE,
                     1.2f,
                     1);
@@ -819,10 +816,10 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     private void smashingBehaviour() {
-        if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SMASHING_ATTACK) {
+        if (this.getCosmicCrystalState() == CosmicCrystalState.TRACKING_SMASHING_ATTACK) {
             int moveTime = this.getInitialRotationAnimationTimespan();
             if (this.currentStateTimeTick >= this.getStateTimespan() - 1) {
-                this.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
+                this.setCosmicCrystalState(CosmicCrystalState.NORMAL);
                 this.setDeltaMovement(0, 0, 0);
                 this.setCollided(false);
             }
@@ -836,7 +833,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 this.currentStateTimeTick > moveTime &&
                 this.currentStateTimeTick < this.getStateTimespan())
             {
-                this.setBoundlessCrystalState(BoundlessCrystalState.NORMAL);
+                this.setCosmicCrystalState(CosmicCrystalState.NORMAL);
                 this.setDeltaMovement(0, 0, 0);
                 this.setCollided(false);
             }
@@ -885,7 +882,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
     }
 
     private void spinningTrackingBehaviour() {
-        if (this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK) {
+        if (this.getCosmicCrystalState() == CosmicCrystalState.TRACKING_SPINNING_ATTACK) {
             int moveTime = this.getInitialRotationAnimationTimespan();
             if (this.currentStateTimeTick >= this.getStateTimespan() - 1) {
                 this.setDeltaMovement(0, 0, 0);
@@ -1106,7 +1103,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             }
             BlockPos blockPos = this.getBlockPosBelowThatAffectsMyMovement();
             float p = this.level().getBlockState(blockPos).getBlock().getFriction();
-            float f = this.getBoundlessCrystalState() == BoundlessCrystalState.TRACKING_SPINNING_ATTACK ? 0.93f : 0.91f;
+            float f = this.getCosmicCrystalState() == CosmicCrystalState.TRACKING_SPINNING_ATTACK ? 0.93f : 0.91f;
             Vec3 vec37 = this.handleRelativeFrictionAndCalculateMovement(vec3, p);
 
             double q = vec37.y;
@@ -1134,7 +1131,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
 
         float progress = 1 - Mth.abs(((90 - this.getXRot()) / 90) - 1);
 
-        if (isOrFromHorizontalState(this.getBoundlessCrystalState()) ||
+        if (isOrFromHorizontalState(this.getCosmicCrystalState()) ||
             (this.pastStates != null && !this.pastStates.isEmpty() && isOrFromHorizontalState(this.pastStates.getFirst())))
         {
             float yRotRadian = this.getYRot() * Mth.DEG_TO_RAD;
@@ -1254,7 +1251,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
                 Entity entity = list.get(entityIndex);
                 this.doPush(entity);
 
-                if (entity instanceof LivingEntity livingEntity && !(entity instanceof BoundlessCrystalEntity)) {
+                if (entity instanceof LivingEntity livingEntity && !(entity instanceof CosmicCrystalEntity)) {
                     if (physicalHurtAttack(livingEntity)) continue;
 
                     Vec3 center = livingEntity.getBoundingBox().getCenter();
@@ -1309,8 +1306,8 @@ public class BoundlessCrystalEntity extends LivingEntity {
         if (this.level().isClientSide) {
             return false;
         }
-        if (damageSource.getEntity() instanceof BoundlessCrystalEntity ||
-            damageSource.getDirectEntity() instanceof BoundlessCrystalEntity)
+        if (damageSource.getEntity() instanceof CosmicCrystalEntity ||
+            damageSource.getDirectEntity() instanceof CosmicCrystalEntity)
         {
             return false;
         }
@@ -1504,7 +1501,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             damageAmount = maxHealth / 4;
         }
 
-        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), damageAmount);
         return false;
     }
 
@@ -1528,7 +1525,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
             damageAmount = maxHealth / 6;
         }
 
-        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.BOUNDLESS_CRYSTAL_TYPE, this), damageAmount);
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), damageAmount);
         this.lastPhysicalHit = this.currentStateTimeTick;
 
         for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {

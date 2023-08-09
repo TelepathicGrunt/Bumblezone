@@ -1,11 +1,11 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering.boundlesscrystal;
+package com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 
-public class BoundlessCrystalAnimation {
+public class CosmicCrystalAnimation {
     public static final AnimationDefinition MODEL_IDLE = AnimationDefinition.Builder.withLength(4f).looping()
             .addAnimation("insideB",
                     new AnimationChannel(AnimationChannel.Targets.ROTATION,
