@@ -496,6 +496,7 @@ public class BoundlessCrystalEntity extends LivingEntity {
         spawnFancyParticlesOnClient();
         laserBreakBlocks();
         smashingBehaviour();
+        destroyTouchingBlocks();
 
         this.currentStateTimeTick++;
         this.currentTickCount++;
@@ -1164,6 +1165,34 @@ public class BoundlessCrystalEntity extends LivingEntity {
                                 CrashReportCategory.populateBlockDetails(crashReportCategory, this.level(), mutableBlockPos, blockState);
                                 throw new ReportedException(crashReport);
                             }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void destroyTouchingBlocks() {
+        if (this.level().isClientSide()) {
+            return;
+        }
+
+        AABB aABB = this.getBoundingBox();
+        BlockPos blockPos = BlockPos.containing(aABB.minX - 1.0E-7, aABB.minY - 1.0E-7, aABB.minZ - 1.0E-7);
+        BlockPos blockPos2 = BlockPos.containing(aABB.maxX + 1.0E-7, aABB.maxY + 1.0E-7, aABB.maxZ + 1.0E-7);
+        if (this.level().hasChunksAt(blockPos, blockPos2)) {
+            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+            for (int i = blockPos.getX(); i <= blockPos2.getX(); ++i) {
+                for (int j = blockPos.getY(); j <= blockPos2.getY(); ++j) {
+                    for (int k = blockPos.getZ(); k <= blockPos2.getZ(); ++k) {
+                        mutableBlockPos.set(i, j, k);
+                        BlockState blockState = this.level().getBlockState(mutableBlockPos);
+                        if (!blockState.isAir() &&
+                            !blockState.getCollisionShape(this.level(), mutableBlockPos).isEmpty() &&
+                            blockState.getBlock().getExplosionResistance() < 1500 &&
+                            !blockState.is(BlockTags.WITHER_IMMUNE))
+                        {
+                            this.level().destroyBlock(mutableBlockPos, true);
                         }
                     }
                 }

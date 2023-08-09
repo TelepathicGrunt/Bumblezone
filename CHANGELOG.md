@@ -1,5 +1,3 @@
-#TODO: create white essence event
-
 #TODO: create purple essence event
 
 #TODO: Add music for essence events
@@ -19,6 +17,10 @@
 #TODO: adjust backup essence block textures
 
 #TODO: make radiance show armor durability in corner
+
+#TODO: add woosh sound for smashing and tracking spinning attacks for boundless crystal
+
+#TODO: new name for boundless crystal?
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**

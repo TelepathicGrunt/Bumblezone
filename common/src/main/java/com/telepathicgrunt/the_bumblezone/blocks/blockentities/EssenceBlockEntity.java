@@ -22,6 +22,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.NeutralMob;
@@ -275,7 +277,7 @@ public class EssenceBlockEntity extends BlockEntity {
                         Math.abs(serverPlayer.blockPosition().getZ() - blockPos.getZ()) > (essenceBlockEntity.getArenaSize().getZ() / 2)))
                     {
                         if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
-                            essenceBlock.onEventEnd(serverLevel, essenceBlockEntity);
+                            essenceBlock.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
                         }
                         essenceBlockEntity.getPlayerInArena().remove(playerUUID);
                         essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
@@ -283,6 +285,13 @@ public class EssenceBlockEntity extends BlockEntity {
                     }
                     else {
                         essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
+
+                        serverPlayer.addEffect(new MobEffectInstance(
+                                MobEffects.DIG_SLOWDOWN,
+                                essenceBlockEntity.getEventTimer(),
+                                3,
+                                false,
+                                false));
                     }
                 }
             }
@@ -327,6 +336,10 @@ public class EssenceBlockEntity extends BlockEntity {
             for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
                 if (serverPlayer != null) {
+                    if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                        essenceBlock.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
+                    }
+
                     if ((blockPos.getX() + size.getX()) > serverPlayer.blockPosition().getX() &&
                         (blockPos.getY() + size.getY()) > serverPlayer.blockPosition().getY() &&
                         (blockPos.getZ() + size.getZ()) > serverPlayer.blockPosition().getZ() &&

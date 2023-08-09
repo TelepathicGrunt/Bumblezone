@@ -128,8 +128,6 @@ public class EssenceBlockYellow extends EssenceBlock {
         essenceBlockEntity.setExtraEventTrackingProgress(ringsPassed);
         if (ringsPassed == RINGS_TO_PASS) {
             EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
-
-            removeEffectBonusesFromAllPlayers(serverLevel, essenceBlockEntity);
         }
     }
 
@@ -290,8 +288,9 @@ public class EssenceBlockYellow extends EssenceBlock {
     }
 
     @Override
-    public void onEventEnd(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity) {
-        removeEffectBonusesFromAllPlayers(serverLevel, essenceBlockEntity);
+    public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
+        removeBonusEffectsFromPlayer(serverPlayer);
+        super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     public void ringActivated(ElectricRingEntity electricRingEntity, EssenceBlockEntity essenceBlockEntity, ServerPlayer serverPlayer) {
@@ -321,15 +320,6 @@ public class EssenceBlockYellow extends EssenceBlock {
         float newProgress = ringsPassed / RINGS_TO_PASS;
         essenceBlockEntity.getEventBar().setProgress(1 - newProgress);
         essenceBlockEntity.setExtraEventTrackingProgress(ringsPassed);
-    }
-
-    private void removeEffectBonusesFromAllPlayers(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity) {
-        for (UUID playerUUID : essenceBlockEntity.getPlayerInArena()) {
-            ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
-            if (serverPlayer != null) {
-                removeBonusEffectsFromPlayer(serverPlayer);
-            }
-        }
     }
 
     private static void removeBonusEffectsFromPlayer(ServerPlayer serverPlayer) {

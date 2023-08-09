@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -170,7 +171,10 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     public abstract int getEssenceXpReward();
 
-    public void onEventEnd(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity) {
+    public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
+        if (serverPlayer.hasEffect(MobEffects.DIG_SLOWDOWN)) {
+            serverPlayer.removeEffect(MobEffects.DIG_SLOWDOWN);
+        }
     }
 
     @Override
