@@ -12,7 +12,8 @@ import net.minecraft.sounds.SoundEvent;
 public class BzSounds {
     public static final ResourcefulRegistry<SoundEvent> SOUND_EVENTS = ResourcefulRegistries.create(BuiltInRegistries.SOUND_EVENT, Bumblezone.MODID);
 
-    public static final RegistryEntry<SoundEvent> ANGERED_BEES = registerSoundEvent("angered_bees");
+    public static final RegistryEntry<SoundEvent> ANGERED_BEES = registerSoundEvent("music.angered_bees");
+    public static final RegistryEntry<SoundEvent> SEMPITERNAL_SANCTUM = registerSoundEvent("music.sempiternal_sanctum");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = registerSoundEvent("music_disc.honey_bee_rat_faced_boy");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = registerSoundEvent("music_disc.flight_of_the_bumblebee_rimsky_korsakov");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_LA_BEE_DA_LOCA = registerSoundEvent("music_disc.la_bee_da_loca");
@@ -79,7 +80,6 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> HONEY_CRYSTAL_BLOCK_CHIME = registerSoundEvent("block.the_bumblezone.honey_crystal_block.chime");
     public static final RegistryEntry<SoundEvent> HONEY_CRYSTAL_BLOCK_BREAK = registerSoundEvent("block.the_bumblezone.honey_crystal_block.break");
     public static final RegistryEntry<SoundEvent> WINDY_AIR_BLOWS = registerSoundEvent("block.the_bumblezone.windy_air.blows");
-    public static final RegistryEntry<SoundEvent> SEMPITERNAL_SANCTUM = registerSoundEvent("block.the_bumblezone.sempiternal_sanctum");
 
     public static final PlatformSoundType HONEY_CRYSTALS_TYPE = new PlatformSoundType(
             1.0F,

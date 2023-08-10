@@ -2,7 +2,10 @@ package com.telepathicgrunt.the_bumblezone.world.structures;
 
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
+import com.telepathicgrunt.the_bumblezone.packets.SyncHorseOwnerUUIDPacketFromServer;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
@@ -35,7 +38,10 @@ public class SempiternalSanctumBehavior {
                     for (Structure structure : allStructuresAt.keySet()) {
                         ResourceLocation resourceLocation = serverPlayer.level().registryAccess().registryOrThrow(Registries.STRUCTURE).getKey(structure);
                         ChatFormatting color;
-                        if (resourceLocation.getPath().contains("_red")) {
+                        if (resourceLocation == null) {
+                            return;
+                        }
+                        else if (resourceLocation.getPath().contains("_red")) {
                             color = ChatFormatting.RED;
                         }
                         else if (resourceLocation.getPath().contains("_yellow")) {
@@ -77,9 +83,18 @@ public class SempiternalSanctumBehavior {
                             true));
                 }
             }
+
+            if (serverPlayer.tickCount % 100 == 0) {
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), true);
+            }
+
         }
         else {
             PLAYERS_IN_SANCTUMS.remove(serverPlayer.getUUID());
+
+            if (serverPlayer.tickCount % 100 == 0) {
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), false);
+            }
         }
     }
 }

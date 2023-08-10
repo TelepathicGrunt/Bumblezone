@@ -2,8 +2,6 @@
 
 #TODO: Add music for essence events
 
-#TODO: Add music for sanctums
-
 #TODO: Hire someone for sounds for Rootmin 
 
 #TODO: Add more sanctum rooms. Do sanctum variants

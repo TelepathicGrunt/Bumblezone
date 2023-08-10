@@ -6,29 +6,53 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 
 public class MusicHandler {
 
     private static SoundInstance ANGRY_BEE_MUSIC = null;
+    private static SoundInstance SEMPITERNAL_SANCTUM_MUSIC = null;
     private static final ResourceLocation BIOME_MUSIC = new ResourceLocation(Bumblezone.MODID, "biome_music");
 
     // CLIENT-SIDED
-    public static void playAngryBeeMusic(Player entity) {
+    public static void playStopAngryBeeMusic(Player entity, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
-            ANGRY_BEE_MUSIC = SimpleSoundInstance.forMusic(BzSounds.ANGERED_BEES.get());
-            minecraftClient.getSoundManager().play(ANGRY_BEE_MUSIC);
+        if (play) {
+            if (!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
+                ANGRY_BEE_MUSIC = SimpleSoundInstance.forMusic(BzSounds.ANGERED_BEES.get());
+                minecraftClient.getSoundManager().play(ANGRY_BEE_MUSIC);
+            }
+            minecraftClient.getSoundManager().stop(BIOME_MUSIC, SoundSource.MUSIC);
+            minecraftClient.getSoundManager().stop(SoundEvents.MUSIC_CREATIVE.key().location(), SoundSource.MUSIC);
+            minecraftClient.getSoundManager().stop(BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), SoundSource.MUSIC);
         }
-        minecraftClient.getSoundManager().stop(BIOME_MUSIC, SoundSource.MUSIC);
+        else {
+            if(entity == minecraftClient.player && ANGRY_BEE_MUSIC != null) {
+                minecraftClient.getSoundManager().stop(ANGRY_BEE_MUSIC);
+            }
+        }
     }
 
     // CLIENT-SIDED
-    public static void stopAngryBeeMusic(Player entity) {
+    public static void playStopSempiternalSanctumMusic(Player entity, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        if(entity == minecraftClient.player && ANGRY_BEE_MUSIC != null) {
-            minecraftClient.getSoundManager().stop(ANGRY_BEE_MUSIC);
+        if (play) {
+            if (ANGRY_BEE_MUSIC != null && minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
+                return;
+            }
+            if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(SEMPITERNAL_SANCTUM_MUSIC)) {
+                SEMPITERNAL_SANCTUM_MUSIC = SimpleSoundInstance.forMusic(BzSounds.SEMPITERNAL_SANCTUM.get());
+                minecraftClient.getSoundManager().play(SEMPITERNAL_SANCTUM_MUSIC);
+            }
+            minecraftClient.getSoundManager().stop(BIOME_MUSIC, SoundSource.MUSIC);
+            minecraftClient.getSoundManager().stop(SoundEvents.MUSIC_CREATIVE.key().location(), SoundSource.MUSIC);
+        }
+        else {
+            if(entity == minecraftClient.player && SEMPITERNAL_SANCTUM_MUSIC != null) {
+                minecraftClient.getSoundManager().stop(SEMPITERNAL_SANCTUM_MUSIC);
+            }
         }
     }
 }

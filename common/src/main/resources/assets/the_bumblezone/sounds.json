@@ -27,7 +27,7 @@
       }
     ]
   },
-  "sempiternal_sanctum": {
+  "music.sempiternal_sanctum": {
     "sounds": [
       {
         "name": "the_bumblezone:music/bee_ware_of_the_temple",
@@ -36,7 +36,7 @@
       }
     ]
   },
-  "angered_bees": {
+  "music.angered_bees": {
     "sounds": [
       {
         "name": "the_bumblezone:music/flight_of_the_bumblebee_rimsky_korsakov",

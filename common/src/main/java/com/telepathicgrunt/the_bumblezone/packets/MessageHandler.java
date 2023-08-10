@@ -25,5 +25,6 @@ public class MessageHandler {
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, QueenMainTradesSyncPacket.ID, QueenMainTradesSyncPacket.HANDLER, QueenMainTradesSyncPacket.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, QueenRandomizerTradesSyncPacket.ID, QueenRandomizerTradesSyncPacket.HANDLER, QueenRandomizerTradesSyncPacket.class);
         DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, SyncHorseOwnerUUIDPacketFromServer.ID, SyncHorseOwnerUUIDPacketFromServer.HANDLER, SyncHorseOwnerUUIDPacketFromServer.class);
+        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, MusicPacketFromServer.ID, MusicPacketFromServer.HANDLER, MusicPacketFromServer.class);
     }
 }

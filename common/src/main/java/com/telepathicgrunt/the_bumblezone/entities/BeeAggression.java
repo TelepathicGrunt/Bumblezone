@@ -249,10 +249,10 @@ public class BeeAggression {
             boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
             if(wrathEffect) {
                 if(BzClientConfigs.playWrathOfHiveEffectMusic) {
-                    MusicHandler.playAngryBeeMusic(playerEntity);
+                    MusicHandler.playStopAngryBeeMusic(playerEntity, true);
                 }
                 else {
-                    MusicHandler.stopAngryBeeMusic(playerEntity);
+                    MusicHandler.playStopAngryBeeMusic(playerEntity, false);
                 }
             }
 
@@ -260,7 +260,7 @@ public class BeeAggression {
                 WrathOfTheHiveEffect.ACTIVE_WRATH = true;
             }
             else if(WrathOfTheHiveEffect.ACTIVE_WRATH && !wrathEffect) {
-                MusicHandler.stopAngryBeeMusic(playerEntity);
+                MusicHandler.playStopAngryBeeMusic(playerEntity, false);
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
                 WrathOfTheHiveEffect.ACTIVE_WRATH = false;
             }
