@@ -107,7 +107,7 @@ public class EssenceBlockYellow extends EssenceBlock {
             else if (entity instanceof Vex vex && vex.getTarget() != null && vex.tickCount % 20 == 0) {
                 Vec3 targetDirection = vex.getTarget().position().subtract(vex.position()).normalize();
                 if (vex.isCharging()) {
-                    vex.addDeltaMovement(targetDirection.scale(0.3));
+                    vex.addDeltaMovement(targetDirection.scale(0.6));
                 }
                 if (vex.getRandom().nextInt(15) == 0) {
                     vex.getMoveControl().setWantedPosition(vex.getX(), vex.getY(), vex.getZ(), 1);
@@ -216,7 +216,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                 float maxHeart = Math.max(serverPlayer.getHealth(), serverPlayer.getMaxHealth());
                 float maxArmor = serverPlayer.getArmorValue();
                 float mobHealthBoost = (maxHeart / 10) + (maxArmor / 2);
-                float mobAttackBoost = (maxHeart / 15) + (maxArmor / 3);
+                float mobAttackBoost = (maxHeart / 15) + (maxArmor / 2.5f);
 
                 boolean isEssenced = EssenceOfTheBees.hasEssence(serverPlayer);
                 if (!isEssenced) {
@@ -241,6 +241,15 @@ public class EssenceBlockYellow extends EssenceBlock {
                                 UUID.fromString("355141f8-09eb-11ee-be56-0242ac120002"),
                                 "Essence Arena Damage Boost",
                                 mobAttackBoost,
+                                AttributeModifier.Operation.ADDITION));
+                    }
+
+                    AttributeInstance livingEntityAttributeKnockback = livingEntity.getAttribute(Attributes.ATTACK_KNOCKBACK);
+                    if (livingEntityAttributeKnockback != null) {
+                        livingEntityAttributeKnockback.addPermanentModifier(new AttributeModifier(
+                                UUID.fromString("29143bb6-37d6-11ee-be56-0242ac120002"),
+                                "Essence Arena Knockback Boost",
+                                isEssenced ? 0.3 : 0.6,
                                 AttributeModifier.Operation.ADDITION));
                     }
 
