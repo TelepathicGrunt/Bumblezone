@@ -25,6 +25,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthLaBeeDaLoca;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeWareOfTheTemple;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
@@ -208,6 +209,13 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.musicdisctimelengthlabeedaloca")
                 .defineInRange("musicDiscTimeLengthLaBeeDaLoca", 176, 0 , 1000000);
 
+        musicDiscTimeLengthBeeWareOfTheTemple = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                .translation("the_bumblezone.config.musicdisctimelengthbeewareofthetemple")
+                .defineInRange("musicDiscTimeLengthBeeWareOfTheTemple", 371, 0 , 1000000);
+
         crystallineFlowerConsumeItemEntities = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Whether the Crystalline Flower block will eat any item entity that touches the block's collision box in the world\n")
@@ -370,6 +378,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees.get();
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca.get();
+        BzGeneralConfigs.musicDiscTimeLengthBeeWareOfTheTemple = musicDiscTimeLengthBeeWareOfTheTemple.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemEntities = crystallineFlowerConsumeItemEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities = crystallineFlowerConsumeExperienceOrbEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemUI = crystallineFlowerConsumeItemUI.get();

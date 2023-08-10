@@ -250,6 +250,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;
 
+    @Entry
+    public static int musicDiscTimeLengthBeeWareOfTheTemple = 371;
+
 
     @Comment
     public static Comment modCompatComment;

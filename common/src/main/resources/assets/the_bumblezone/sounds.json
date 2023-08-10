@@ -27,6 +27,15 @@
       }
     ]
   },
+  "sempiternal_sanctum": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/bee_ware_of_the_temple",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
   "angered_bees": {
     "sounds": [
       {
@@ -64,6 +73,14 @@
     "sounds": [
       {
         "name": "the_bumblezone:music/bee_laxing_with_the_hom_bees",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.bee_ware_of_the_temple": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/bee_ware_of_the_temple",
         "stream": true
       }
     ]

@@ -140,6 +140,7 @@ public class BzCreativeTabs {
             BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY,
             BzItems.MUSIC_DISC_LA_BEE_DA_LOCA,
             BzItems.MUSIC_DISC_BEE_LAXING_WITH_THE_HOM_BEES,
+            BzItems.MUSIC_DISC_BEE_WARE_OF_THE_TEMPLE,
             BzItems.HONEY_SLIME_SPAWN_EGG,
             BzItems.VARIANT_BEE_SPAWN_EGG,
             BzItems.BEEHEMOTH_SPAWN_EGG,
