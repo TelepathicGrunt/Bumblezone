@@ -84,7 +84,7 @@ public class SempiternalSanctumBehavior {
                 }
             }
 
-            if (serverPlayer.tickCount % 100 == 0) {
+            if (serverPlayer.tickCount % 60 == 0) {
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), true);
             }
 
@@ -92,7 +92,7 @@ public class SempiternalSanctumBehavior {
         else {
             PLAYERS_IN_SANCTUMS.remove(serverPlayer.getUUID());
 
-            if (serverPlayer.tickCount % 100 == 0) {
+            if (serverPlayer.tickCount % 60 == 0) {
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), false);
             }
         }

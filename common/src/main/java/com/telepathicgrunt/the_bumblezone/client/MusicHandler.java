@@ -19,7 +19,7 @@ public class MusicHandler {
     // CLIENT-SIDED
     public static void playStopAngryBeeMusic(Player entity, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        if (play) {
+        if (play && (ANGRY_BEE_MUSIC == null || !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC))) {
             if (!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
                 ANGRY_BEE_MUSIC = SimpleSoundInstance.forMusic(BzSounds.ANGERED_BEES.get());
                 minecraftClient.getSoundManager().play(ANGRY_BEE_MUSIC);
@@ -38,7 +38,7 @@ public class MusicHandler {
     // CLIENT-SIDED
     public static void playStopSempiternalSanctumMusic(Player entity, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        if (play) {
+        if (play && (SEMPITERNAL_SANCTUM_MUSIC == null || !minecraftClient.getSoundManager().isActive(SEMPITERNAL_SANCTUM_MUSIC))) {
             if (ANGRY_BEE_MUSIC != null && minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
                 return;
             }
