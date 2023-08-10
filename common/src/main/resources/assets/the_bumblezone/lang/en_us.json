@@ -393,6 +393,8 @@
   "subtitles.entity.the_bumblezone.cosmic_crystal_entity.laser": "Cosmic Crystal Fires",
   "subtitles.entity.the_bumblezone.cosmic_crystal_entity.laser_charge": "Cosmic Crystal Charges",
   "subtitles.entity.the_bumblezone.cosmic_crystal_entity.crash_charge": "Cosmic Crystal Tracks",
+  "subtitles.entity.the_bumblezone.cosmic_crystal_entity.spin": "Cosmic Crystal Spins",
+  "subtitles.entity.the_bumblezone.cosmic_crystal_entity.spawn_explosion": "Cosmic Crystal Spawns",
   "subtitles.entity.the_bumblezone.stinger_spear.hit": "Stinger Spear stabs",
   "subtitles.entity.the_bumblezone.stinger_spear.hit_ground": "Stinger Spear vibrates",
   "subtitles.entity.the_bumblezone.stinger_spear.return": "Stinger Spear returns",

@@ -29,6 +29,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
@@ -474,8 +475,18 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     public void tick() {
-        if(this.tickCount == 1 && this.level().isClientSide()) {
-            spawnLargeParticleCloud(3);
+        if(this.tickCount == 1) {
+            if (this.level().isClientSide()) {
+                spawnLargeParticleCloud(3);
+            }
+
+            this.level().playSound(
+                    this,
+                    this.blockPosition(),
+                    BzSounds.COSMIC_CRYSTAL_ENTITY_SPAWN_EXPLOSION.get(),
+                    SoundSource.HOSTILE,
+                    1,
+                    1f);
         }
 
         if (this.getCosmicCrystalState() == CosmicCrystalState.NORMAL) {
@@ -934,6 +945,16 @@ public class CosmicCrystalEntity extends LivingEntity {
                         originalVect.y() * yDirection,
                         originalVect.z() * zDirection
                     );
+                }
+
+                if (this.tickCount % 10 == 0){
+                    this.level().playSound(
+                            this,
+                            this.blockPosition(),
+                            BzSounds.COSMIC_CRYSTAL_ENTITY_SPIN.get(),
+                            SoundSource.HOSTILE,
+                            (float)progress,
+                            1f);
                 }
             }
         }

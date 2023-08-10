@@ -651,6 +651,46 @@
     ],
     "subtitle": "subtitles.entity.the_bumblezone.cosmic_crystal_entity.crash_charge"
   },
+  "entity.the_bumblezone.cosmic_crystal_entity.spin": {
+    "sounds": [
+      {
+        "attenuation_distance": 15,
+        "name": "mob/ghast/fireball4",
+        "volume": 0.9,
+        "pitch": 0.1
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.cosmic_crystal_entity.spin"
+  },
+  "entity.the_bumblezone.cosmic_crystal_entity.spawn_explosion": {
+    "sounds": [
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode1",
+        "volume": 1,
+        "pitch": 100.0
+      },
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode2",
+        "volume": 1,
+        "pitch": 100.0
+      },
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode3",
+        "volume": 1,
+        "pitch": 100.0
+      },
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode4",
+        "volume": 1,
+        "pitch": 100.0
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.cosmic_crystal_entity.spawn_explosion"
+  },
 
   "item.the_bumblezone.sugar_water_bottle.drink": {
     "sounds": [
