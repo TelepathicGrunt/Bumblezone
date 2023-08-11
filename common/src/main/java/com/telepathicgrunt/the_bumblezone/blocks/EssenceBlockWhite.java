@@ -7,7 +7,9 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
+import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -182,5 +184,17 @@ public class EssenceBlockWhite extends EssenceBlock {
             entity.setDifficultyBoost(difficultyBoost);
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
         }
+    }
+
+    @Override
+    public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), true);
+        super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
+    }
+
+    @Override
+    public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
+        super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 }
