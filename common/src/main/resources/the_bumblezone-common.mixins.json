@@ -84,6 +84,8 @@
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
     "client.RenderStateShardAccessor",
+    "client.SoundEngineAccessor",
+    "client.SoundManagerAccessor",
     "client.TextureStateShardAccessor"
   ],
   "injectors": {
