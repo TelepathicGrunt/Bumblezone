@@ -348,4 +348,16 @@ public class EssenceBlockYellow extends EssenceBlock {
             serverPlayer.removeEffect(MobEffects.MOVEMENT_SPEED);
         }
     }
+
+    @Override
+    public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), true);
+        super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
+    }
+
+    @Override
+    public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
+        super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
+    }
 }
