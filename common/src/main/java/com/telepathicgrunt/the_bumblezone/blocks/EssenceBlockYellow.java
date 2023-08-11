@@ -107,7 +107,7 @@ public class EssenceBlockYellow extends EssenceBlock {
             else if (entity instanceof Vex vex && vex.getTarget() != null && vex.tickCount % 20 == 0) {
                 Vec3 targetDirection = vex.getTarget().position().subtract(vex.position()).normalize();
                 if (vex.isCharging()) {
-                    vex.addDeltaMovement(targetDirection.scale(0.6));
+                    vex.addDeltaMovement(targetDirection.scale(0.5));
                 }
                 if (vex.getRandom().nextInt(15) == 0) {
                     vex.getMoveControl().setWantedPosition(vex.getX(), vex.getY(), vex.getZ(), 1);
