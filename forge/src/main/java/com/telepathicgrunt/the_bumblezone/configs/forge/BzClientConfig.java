@@ -22,6 +22,7 @@ public class BzClientConfig {
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightRareItems;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightEpicItems;
     public static ForgeConfigSpec.BooleanValue knowingEssenceStructureNameClient;
+    public static ForgeConfigSpec.BooleanValue radianceEssenceArmorDurability;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -58,7 +59,7 @@ public class BzClientConfig {
 
         builder.pop();
 
-        builder.push("Knowing Essense Highlighting Configs (see block and entity tags for even more options)");
+        builder.push("Knowing Essence Highlighting Configs (see block and entity tags for even more options)");
 
         knowingEssenceHighlightBosses = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -117,6 +118,16 @@ public class BzClientConfig {
 
         builder.pop();
 
+        builder.push("Radiance Essence configs");
+
+        radianceEssenceArmorDurability = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Radiance Essence will show the durability of your armor.\n")
+                .translation("the_bumblezone.config.radianceessencearmordurability")
+                .define("radianceEssenceArmorDurability", true);
+
+        builder.pop();
+
         playWrathOfHiveEffectMusic = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
@@ -153,5 +164,6 @@ public class BzClientConfig {
         BzClientConfigs.knowingEssenceHighlightRareItems = knowingEssenceHighlightRareItems.get();
         BzClientConfigs.knowingEssenceHighlightEpicItems = knowingEssenceHighlightEpicItems.get();
         BzClientConfigs.knowingEssenceStructureNameClient = knowingEssenceStructureNameClient.get();
+        BzClientConfigs.radianceEssenceArmorDurability = radianceEssenceArmorDurability.get();
     }
 }

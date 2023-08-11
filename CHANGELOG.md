@@ -14,8 +14,6 @@
 
 #TODO: adjust backup essence block textures
 
-#TODO: make radiance show armor durability in corner
-
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**

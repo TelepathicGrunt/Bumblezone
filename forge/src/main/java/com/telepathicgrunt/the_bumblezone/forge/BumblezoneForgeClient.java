@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
@@ -203,6 +204,7 @@ public class BumblezoneForgeClient {
         if (Minecraft.getInstance().player != null && event.getOverlay().id().equals(VanillaGuiOverlay.HOTBAR.id())) {
             EssenceOverlay.essenceItemOverlay(Minecraft.getInstance().player, event.getGuiGraphics());
             KnowingEssenceStructureMessage.inStructureMessage(Minecraft.getInstance().player, event.getGuiGraphics());
+            RadianceEssenceArmorMessage.armorDurabilityMessage(Minecraft.getInstance().player, event.getGuiGraphics());
         }
     }
 

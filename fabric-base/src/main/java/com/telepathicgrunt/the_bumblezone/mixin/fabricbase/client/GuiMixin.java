@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.client;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
+import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,6 +24,7 @@ public class GuiMixin {
         if (Minecraft.getInstance().player != null) {
             EssenceOverlay.essenceItemOverlay(Minecraft.getInstance().player, guiGraphics);
             KnowingEssenceStructureMessage.inStructureMessage(Minecraft.getInstance().player, guiGraphics);
+            RadianceEssenceArmorMessage.armorDurabilityMessage(Minecraft.getInstance().player, guiGraphics);
         }
     }
 }

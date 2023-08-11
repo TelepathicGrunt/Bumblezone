@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -14,6 +15,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
@@ -168,5 +170,13 @@ public class RadianceEssence extends AbilityEssenceItem {
                 (random.nextGaussian() * 0.2D) + 0.1,
                 random.nextGaussian() * 0.15D,
                 0.0D);
+    }
+
+    public static boolean IsRadianceEssenceActive(Player player) {
+        if (player != null) {
+            ItemStack offHandItem = player.getOffhandItem();
+            return offHandItem.is(BzItems.ESSENCE_RADIANCE.get()) && getIsActive(offHandItem);
+        }
+        return false;
     }
 }
