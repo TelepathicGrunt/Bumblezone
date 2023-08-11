@@ -284,7 +284,7 @@
   "item.the_bumblezone.essence_knowing_separator": "%s, %s",
   "item.the_bumblezone.essence_knowing_within_text": "Within structure:",
   "item.the_bumblezone.essence_knowing_within_text_plural": "Within structures:",
-  "item.the_bumblezone.essence_radiance_durability_text": "   %s/%s",
+  "item.the_bumblezone.essence_radiance_durability_text": "  %s/%s",
   "item.the_bumblezone.essence_radiance_durability_low_text": "⚠%s/%s⚠",
   "item.the_bumblezone.essence_radiance_advanced_text": " durability",
   "item.the_bumblezone.essence_radiance_helmet_text": "  %s%s",

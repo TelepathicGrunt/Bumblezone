@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.ChatFormatting;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
@@ -93,7 +94,7 @@ public class RadianceEssenceArmorMessage {
             return;
         }
 
-        renderScrollingString(
+        GeneralUtilsClient.renderScrollingString(
                 guiGraphics,
                 minecraft.font,
                 component,
@@ -104,69 +105,11 @@ public class RadianceEssenceArmorMessage {
                 0xFFE090
         );
 
-        renderItem(guiGraphics, armorItem, 8, guiGraphics.guiHeight() - 8 - yOffset2);
-    }
-
-    public static void renderScrollingString(
-            GuiGraphics guiGraphics,
-            Font font,
-            Component component,
-            int minX,
-            int minY,
-            int maxX,
-            int maxY,
-            int color)
-    {
-        int n = font.width(component);
-        int o = (minY + maxY - font.lineHeight) / 2 + 1;
-        int p = maxX - minX;
-        if (n > p) {
-            int q = n - p;
-            double d = (double) Util.getMillis() / 1000.0;
-            double e = Math.max((double)q * 0.5, 3.0);
-            double f = Math.sin(1.5707963267948966 * Math.cos(Math.PI * 2 * d / e)) / 2.0 + 0.5;
-            double g = Mth.lerp(f, 0.0, q);
-            guiGraphics.enableScissor(minX, minY, maxX, maxY);
-            guiGraphics.drawString(font, component, minX - (int)g, o, color, true);
-            guiGraphics.disableScissor();
-        }
-        else {
-            guiGraphics.drawString(font, component, minX, o, color);
-        }
-    }
-
-    private static void renderItem(GuiGraphics guiGraphics, ItemStack itemStack, int i, int j) {
-        if (itemStack.isEmpty()) {
-            return;
-        }
-        Minecraft minecraft = Minecraft.getInstance();
-        Player player = minecraft.player;
-        BakedModel bakedModel = minecraft.getItemRenderer().getModel(itemStack, minecraft.level, player, 0);
         PoseStack pose = guiGraphics.pose();
         pose.pushPose();
-        pose.translate(i, j, 150);
-        try {
-            pose.mulPoseMatrix(new Matrix4f().scaling(1.0f, -1.0f, 1.0f));
-            pose.scale(10.0f, 10.0f, 10.0f);
-            boolean bl = !bakedModel.usesBlockLight();
-            if (bl) {
-                Lighting.setupForFlatItems();
-            }
-            minecraft.getItemRenderer().render(itemStack, ItemDisplayContext.GUI, false, pose, guiGraphics.bufferSource(), 0xF000F0, OverlayTexture.NO_OVERLAY, bakedModel);
-            guiGraphics.flush();
-            if (bl) {
-                Lighting.setupFor3DItems();
-            }
-        }
-        catch (Throwable throwable) {
-            CrashReport crashReport = CrashReport.forThrowable(throwable, "Rendering item");
-            CrashReportCategory crashReportCategory = crashReport.addCategory("Item being rendered");
-            crashReportCategory.setDetail("Item Type", () -> String.valueOf(itemStack.getItem()));
-            crashReportCategory.setDetail("Item Damage", () -> String.valueOf(itemStack.getDamageValue()));
-            crashReportCategory.setDetail("Item NBT", () -> String.valueOf(itemStack.getTag()));
-            crashReportCategory.setDetail("Item Foil", () -> String.valueOf(itemStack.hasFoil()));
-            throw new ReportedException(crashReport);
-        }
+        pose.translate(2, guiGraphics.guiHeight() - 14 - yOffset2, 0);
+        pose.scale(0.7f, 0.7f, 1);
+        guiGraphics.renderItem(armorItem, 0, 0);
         pose.popPose();
     }
 }
