@@ -35,6 +35,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue crystallineFlowerExtraTierCost;
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.BooleanValue repeatableEssenceEvents;
+    public static ForgeConfigSpec.IntValue cosmicCrystalHealth;
     public static ForgeConfigSpec.IntValue ragingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
     public static ForgeConfigSpec.IntValue knowingEssenceAbilityUse;
@@ -283,6 +284,13 @@ public class BzGeneralConfig {
                 .define("repeatableEssenceEvents", true);
 
 
+        cosmicCrystalHealth = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much max health Cosmic Crystal entity has. (For Continuity Essence event)\n")
+                .translation("the_bumblezone.config.cosmiccrystalhealth")
+                .defineInRange("cosmicCrystalHealth", 60, 1, 1000000);
+
+
         ragingEssenceAbilityUse = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How much ability use this item has before depleted.\n")
@@ -388,6 +396,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.crystallineFlowerExtraTierCost = crystallineFlowerExtraTierCost.get();
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning.get();
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents.get();
+        BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth.get();
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse.get();

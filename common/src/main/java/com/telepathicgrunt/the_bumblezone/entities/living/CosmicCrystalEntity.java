@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.living;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
@@ -94,7 +95,6 @@ public class CosmicCrystalEntity extends LivingEntity {
     private static final EntityDataAccessor<String> ESSENCE_CONTROLLER_DIMENSION = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.STRING);
     private static final Vec3 UP_VECT = new Vec3(0, 1, 0);
     private static final Vec3 POSITIVE_X_VECT = new Vec3(1, 0, 0);
-    public static final int MAX_HEALTH = 60;
     public static final int MAX_RANGE = 30;
     protected static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forCombat().range(MAX_RANGE).selector(livingEntity -> !(livingEntity instanceof CosmicCrystalEntity) && livingEntity.attackable());
 
@@ -122,7 +122,7 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, MAX_HEALTH)
+                .add(Attributes.MAX_HEALTH, BzGeneralConfigs.cosmicCrystalHealth)
                 .add(Attributes.MOVEMENT_SPEED, 0.1D)
                 .add(Attributes.ATTACK_DAMAGE, 1.0D)
                 .add(Attributes.FOLLOW_RANGE, MAX_RANGE);

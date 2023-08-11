@@ -97,6 +97,9 @@ public class BzConfig extends MidnightConfig {
     public static boolean repeatableEssenceEvents = true;
 
     @Entry
+    public static int cosmicCrystalHealth = 60;
+
+    @Entry
     public static int ragingEssenceAbilityUse = 28;
 
     @Entry
@@ -271,6 +274,9 @@ public class BzConfig extends MidnightConfig {
     public static boolean playWrathOfHiveEffectMusic = true;
 
     @Entry
+    public static boolean playSempiternalSanctumMusic = true;
+
+    @Entry
     public static boolean renderBeeQueenBonusTradeItem = true;
 
     @Comment
@@ -370,13 +376,16 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection;
         BzGeneralConfigs.glisteringHoneyBrewingRecipe = glisteringHoneyBrewingRecipe;
         BzGeneralConfigs.beeStingerBrewingRecipe = beeStingerBrewingRecipe;
+        BzGeneralConfigs.beeSoupBrewingRecipe = beeSoupBrewingRecipe;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee;
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee;
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca;
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees;
+        BzGeneralConfigs.musicDiscTimeLengthBeeWareOfTheTemple = musicDiscTimeLengthBeeWareOfTheTemple;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
+        BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse;
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown;
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse;
@@ -396,6 +405,7 @@ public class BzConfig extends MidnightConfig {
 
         //Client
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
+        BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic;
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem;
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses;
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters;

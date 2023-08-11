@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.packets;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
@@ -46,7 +47,7 @@ public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) impl
         public PacketContext handle(MusicPacketFromServer message) {
             return (player, level) -> {
                 if (message.musicRL().equals(BzSounds.SEMPITERNAL_SANCTUM.get().getLocation())) {
-                    MusicHandler.playStopSempiternalSanctumMusic(player, message.play());
+                    MusicHandler.playStopSempiternalSanctumMusic(player, message.play() && BzClientConfigs.playSempiternalSanctumMusic);
                 }
             };
         }

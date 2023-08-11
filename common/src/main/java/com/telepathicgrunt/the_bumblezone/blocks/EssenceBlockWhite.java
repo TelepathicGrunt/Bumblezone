@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -167,7 +168,7 @@ public class EssenceBlockWhite extends EssenceBlock {
             EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
         }
 
-        float totalMaxHealth = 6 * CosmicCrystalEntity.MAX_HEALTH;
+        float totalMaxHealth = 6 * BzGeneralConfigs.cosmicCrystalHealth;
         essenceBlockEntity.getEventBar().setProgress(totalhealth / totalMaxHealth);
     }
 

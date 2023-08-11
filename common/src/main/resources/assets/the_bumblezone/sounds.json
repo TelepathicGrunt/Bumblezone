@@ -80,7 +80,7 @@
   "music_disc.bee_ware_of_the_temple": {
     "sounds": [
       {
-        "name": "the_bumblezone:music/bee_ware_of_the_temple",
+        "name": "the_bumblezone:music/bee_ware_of_the_temple_mono",
         "stream": true
       }
     ]
