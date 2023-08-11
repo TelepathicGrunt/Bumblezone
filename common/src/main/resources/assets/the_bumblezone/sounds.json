@@ -36,6 +36,15 @@
       }
     ]
   },
+  "music.radiance_event": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/minigame_comm1",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
   "music.angered_bees": {
     "sounds": [
       {
@@ -707,6 +716,16 @@
       }
     ],
     "subtitle": "subtitles.entity.the_bumblezone.cosmic_crystal_entity.spawn_explosion"
+  },
+  "entity.the_bumblezone.electric_ring.passed": {
+    "sounds": [
+      {
+        "attenuation_distance": 6,
+        "name": "note/iron_xylophone",
+        "volume": 1,
+        "pitch": 5
+      }
+    ]
   },
 
   "item.the_bumblezone.sugar_water_bottle.drink": {

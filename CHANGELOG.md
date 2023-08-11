@@ -10,8 +10,6 @@
 
 #TODO: Check up on mod compat (resourceful bees especially. See Buzzing Briefcase for those too)
 
-#TODO: profile performance of white essence event
-
 #TODO: adjust backup essence block textures
 
 

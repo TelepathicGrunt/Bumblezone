@@ -14,6 +14,7 @@ public class BzSounds {
 
     public static final RegistryEntry<SoundEvent> ANGERED_BEES = registerSoundEvent("music.angered_bees");
     public static final RegistryEntry<SoundEvent> SEMPITERNAL_SANCTUM = registerSoundEvent("music.sempiternal_sanctum");
+    public static final RegistryEntry<SoundEvent> RADIANCE_EVENT = registerSoundEvent("music.radiance_event");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = registerSoundEvent("music_disc.honey_bee_rat_faced_boy");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = registerSoundEvent("music_disc.flight_of_the_bumblebee_rimsky_korsakov");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_LA_BEE_DA_LOCA = registerSoundEvent("music_disc.la_bee_da_loca");
@@ -30,6 +31,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> COSMIC_CRYSTAL_ENTITY_CRASH_CHARGE = registerSoundEvent("entity.the_bumblezone.cosmic_crystal_entity.crash_charge");
     public static final RegistryEntry<SoundEvent> COSMIC_CRYSTAL_ENTITY_SPIN = registerSoundEvent("entity.the_bumblezone.cosmic_crystal_entity.spin");
     public static final RegistryEntry<SoundEvent> COSMIC_CRYSTAL_ENTITY_SPAWN_EXPLOSION = registerSoundEvent("entity.the_bumblezone.cosmic_crystal_entity.spawn_explosion");
+    public static final RegistryEntry<SoundEvent> ELECTRIC_RING_PASSED = registerSoundEvent("entity.the_bumblezone.electric_ring.passed");
     public static final RegistryEntry<SoundEvent> BEE_ESSENCE_CONSUMED = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consumed");
     public static final RegistryEntry<SoundEvent> BEE_ESSENCE_CONSUMING = registerSoundEvent("item.the_bumblezone.essence_of_the_bees.consuming");
     public static final RegistryEntry<SoundEvent> STINGER_SPEAR_HIT = registerSoundEvent("entity.the_bumblezone.stinger_spear.hit");

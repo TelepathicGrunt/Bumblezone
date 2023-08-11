@@ -7,6 +7,8 @@ import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.packets.MusicPacketFromServer;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.screens.ServerEssenceEvent;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -171,6 +173,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     public abstract int getEssenceXpReward();
 
+    public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {}
+
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
         if (serverPlayer.hasEffect(MobEffects.DIG_SLOWDOWN)) {
             serverPlayer.removeEffect(MobEffects.DIG_SLOWDOWN);
@@ -241,6 +245,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
                     essenceBlockEntity.getPlayerInArena().clear();
                     for (ServerPlayer serverPlayer : players) {
+                        essenceBlock.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
                         essenceBlockEntity.getPlayerInArena().add(serverPlayer.getUUID());
 
                         // Teleport everyone to trigger player.

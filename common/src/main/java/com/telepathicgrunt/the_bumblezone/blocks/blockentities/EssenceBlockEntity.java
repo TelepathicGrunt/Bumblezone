@@ -284,7 +284,12 @@ public class EssenceBlockEntity extends BlockEntity {
                         essenceBlockEntity.setChanged();
                     }
                     else {
-                        essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
+                        if (!essenceBlockEntity.getEventBar().getPlayers().contains(serverPlayer)) {
+                            essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
+                            if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                                essenceBlock.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
+                            }
+                        }
 
                         serverPlayer.addEffect(new MobEffectInstance(
                                 MobEffects.DIG_SLOWDOWN,

@@ -46,9 +46,8 @@ public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) impl
         @Override
         public PacketContext handle(MusicPacketFromServer message) {
             return (player, level) -> {
-                if (message.musicRL().equals(BzSounds.SEMPITERNAL_SANCTUM.get().getLocation())) {
-                    MusicHandler.playStopSempiternalSanctumMusic(player, message.play() && BzClientConfigs.playSempiternalSanctumMusic);
-                }
+                MusicHandler.playStopSempiternalSanctumMusic(player, message.musicRL(), message.play() && BzClientConfigs.playSempiternalSanctumMusic);
+                MusicHandler.playStopEssenceEventMusic(player, message.musicRL(), message.play() && BzClientConfigs.playSempiternalSanctumMusic);
             };
         }
     }

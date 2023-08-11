@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -183,6 +184,8 @@ public class BzTags {
     public static final TagKey<Enchantment> ENCHANT_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/enchant_special_dedicated_compat"));
 
     public static final TagKey<DamageType> COSMIC_CRYSTAL_RESISTANT_TO = TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "cosmic_crystal_resistant_to"));
+
+    public static final TagKey<SoundEvent> ESSENCE_EVENT_MUSIC = TagKey.create(Registries.SOUND_EVENT, new ResourceLocation(Bumblezone.MODID, "essence_event_music"));
 
     public static final TagKey<Biome> THE_BUMBLEZONE = TagKey.create(Registries.BIOME, new ResourceLocation(Bumblezone.MODID, "the_bumblezone"));
 
