@@ -3,13 +3,10 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.KnowingEssence;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -163,13 +160,14 @@ public class KnowingEssenceStructureMessage {
     }
 
     public static void renderScrollingString(Minecraft minecraft, GuiGraphics guiGraphics, Component component, int yOffset) {
+        int startOfHotbar = (guiGraphics.guiWidth() - 250) / 2;
         GeneralUtilsClient.renderScrollingString(
                 guiGraphics,
                 minecraft.font,
                 component,
-                4,
-                guiGraphics.guiHeight() - 16 - yOffset,
-                118,
+                BzClientConfigs.knowingEssenceStructureNameXCoord,
+                guiGraphics.guiHeight() - BzClientConfigs.knowingEssenceStructureNameYCoord - yOffset,
+                BzClientConfigs.knowingEssenceStructureNameXCoord + startOfHotbar,
                 guiGraphics.guiHeight(),
                 0xFFE090
         );

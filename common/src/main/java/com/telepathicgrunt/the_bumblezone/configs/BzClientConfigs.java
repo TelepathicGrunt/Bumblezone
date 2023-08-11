@@ -13,5 +13,9 @@ public class BzClientConfigs {
     public static boolean knowingEssenceHighlightRareItems = true;
     public static boolean knowingEssenceHighlightEpicItems = true;
     public static boolean knowingEssenceStructureNameClient = true;
+    public static int knowingEssenceStructureNameXCoord = 4;
+    public static int knowingEssenceStructureNameYCoord = 16;
     public static boolean radianceEssenceArmorDurability = true;
+    public static int radianceEssenceArmorDurabilityXCoord = 4;
+    public static int radianceEssenceArmorDurabilityYCoord = 16;
 }

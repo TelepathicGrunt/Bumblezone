@@ -22,7 +22,11 @@ public class BzClientConfig {
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightRareItems;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightEpicItems;
     public static ForgeConfigSpec.BooleanValue knowingEssenceStructureNameClient;
+    public static ForgeConfigSpec.IntValue knowingEssenceStructureNameXCoord;
+    public static ForgeConfigSpec.IntValue knowingEssenceStructureNameYCoord;
     public static ForgeConfigSpec.BooleanValue radianceEssenceArmorDurability;
+    public static ForgeConfigSpec.IntValue radianceEssenceArmorDurabilityXCoord;
+    public static ForgeConfigSpec.IntValue radianceEssenceArmorDurabilityYCoord;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -116,6 +120,18 @@ public class BzClientConfig {
                 .translation("the_bumblezone.config.knowingessencestructurenameclient")
                 .define("knowingEssenceStructureNameClient", true);
 
+        knowingEssenceStructureNameXCoord = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " X coordinate for where to render the structure name on screen. (Based on bottom left corner)\n")
+                .translation("the_bumblezone.config.knowingessencestructurenamexcoord")
+                .defineInRange("knowingEssenceStructureNameXCoord", 4, 0, 10000);
+
+        knowingEssenceStructureNameYCoord = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Y coordinate for where to render the structure name on screen. (Based on bottom left corner)\n")
+                .translation("the_bumblezone.config.knowingessencestructurenameycoord")
+                .defineInRange("knowingEssenceStructureNameYCoord", 16, 0, 10000);
+
         builder.pop();
 
         builder.push("Radiance Essence configs");
@@ -125,6 +141,18 @@ public class BzClientConfig {
                         " Whether Radiance Essence will show the durability of your armor.\n")
                 .translation("the_bumblezone.config.radianceessencearmordurability")
                 .define("radianceEssenceArmorDurability", true);
+
+        radianceEssenceArmorDurabilityXCoord = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " X coordinate for where to render the armor durability on screen. (Based on bottom left corner)\n")
+                .translation("the_bumblezone.config.radianceessencearmordurabilityxcoord")
+                .defineInRange("radianceEssenceArmorDurabilityXCoord", 4, 0, 10000);
+
+        radianceEssenceArmorDurabilityYCoord = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Y coordinate for where to render the armor durability on screen. (Based on bottom left corner)\n")
+                .translation("the_bumblezone.config.radianceessencearmordurabilityycoord")
+                .defineInRange("radianceEssenceArmorDurabilityYCoord", 16, 0, 10000);
 
         builder.pop();
 
@@ -164,6 +192,10 @@ public class BzClientConfig {
         BzClientConfigs.knowingEssenceHighlightRareItems = knowingEssenceHighlightRareItems.get();
         BzClientConfigs.knowingEssenceHighlightEpicItems = knowingEssenceHighlightEpicItems.get();
         BzClientConfigs.knowingEssenceStructureNameClient = knowingEssenceStructureNameClient.get();
+        BzClientConfigs.knowingEssenceStructureNameXCoord = knowingEssenceStructureNameXCoord.get();
+        BzClientConfigs.knowingEssenceStructureNameYCoord = knowingEssenceStructureNameYCoord.get();
         BzClientConfigs.radianceEssenceArmorDurability = radianceEssenceArmorDurability.get();
+        BzClientConfigs.radianceEssenceArmorDurabilityXCoord = radianceEssenceArmorDurabilityXCoord.get();
+        BzClientConfigs.radianceEssenceArmorDurabilityYCoord = radianceEssenceArmorDurabilityYCoord.get();
     }
 }

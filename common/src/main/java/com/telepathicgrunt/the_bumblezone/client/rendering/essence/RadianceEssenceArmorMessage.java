@@ -94,20 +94,26 @@ public class RadianceEssenceArmorMessage {
             return;
         }
 
+        int startOfHotbar = (guiGraphics.guiWidth() - 250) / 2;
         GeneralUtilsClient.renderScrollingString(
                 guiGraphics,
                 minecraft.font,
                 component,
-                4,
-                guiGraphics.guiHeight() - 16 - yOffset,
-                118,
+                BzClientConfigs.radianceEssenceArmorDurabilityXCoord,
+                guiGraphics.guiHeight() - BzClientConfigs.radianceEssenceArmorDurabilityYCoord - yOffset,
+                BzClientConfigs.radianceEssenceArmorDurabilityXCoord + startOfHotbar,
                 guiGraphics.guiHeight(),
                 0xFFE090
         );
 
         PoseStack pose = guiGraphics.pose();
         pose.pushPose();
-        pose.translate(2, guiGraphics.guiHeight() - 14 - yOffset2, 0);
+
+        pose.translate(
+                BzClientConfigs.radianceEssenceArmorDurabilityXCoord - 2,
+                guiGraphics.guiHeight() - (BzClientConfigs.radianceEssenceArmorDurabilityYCoord - 2) - yOffset2,
+                0);
+
         pose.scale(0.7f, 0.7f, 1);
         guiGraphics.renderItem(armorItem, 0, 0);
         pose.popPose();

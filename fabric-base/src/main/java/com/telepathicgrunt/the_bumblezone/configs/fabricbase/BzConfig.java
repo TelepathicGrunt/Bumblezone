@@ -310,7 +310,22 @@ public class BzConfig extends MidnightConfig {
     public static boolean knowingEssenceStructureNameClient = true;
 
     @Entry
+    public static int knowingEssenceStructureNameXCoord = 4;
+
+    @Entry
+    public static int knowingEssenceStructureNameYCoord = 16;
+
+    @Comment
+    public static Comment radianceEssenceComment;
+
+    @Entry
     public static boolean radianceEssenceArmorDurability = true;
+
+    @Entry
+    public static int radianceEssenceArmorDurabilityXCoord = 4;
+
+    @Entry
+    public static int radianceEssenceArmorDurabilityYCoord = 16;
 
     @ApiStatus.Internal
     public static void setup() {
@@ -419,7 +434,11 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.knowingEssenceHighlightRareItems = knowingEssenceHighlightRareItems;
         BzClientConfigs.knowingEssenceHighlightEpicItems = knowingEssenceHighlightEpicItems;
         BzClientConfigs.knowingEssenceStructureNameClient = knowingEssenceStructureNameClient;
+        BzClientConfigs.knowingEssenceStructureNameXCoord = knowingEssenceStructureNameXCoord;
+        BzClientConfigs.knowingEssenceStructureNameYCoord = knowingEssenceStructureNameYCoord;
         BzClientConfigs.radianceEssenceArmorDurability = radianceEssenceArmorDurability;
+        BzClientConfigs.radianceEssenceArmorDurabilityXCoord = radianceEssenceArmorDurabilityXCoord;
+        BzClientConfigs.radianceEssenceArmorDurabilityYCoord = radianceEssenceArmorDurabilityYCoord;
     }
 
 }
