@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -860,7 +861,7 @@ public class CosmicCrystalEntity extends LivingEntity {
                                 this.getX(),
                                 this.getY(),
                                 this.getZ(),
-                                5,
+                                3,
                                 Level.ExplosionInteraction.MOB);
 
                         for (BlockPos pos : BlockPos.betweenClosed(
@@ -1316,7 +1317,13 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     @Override
     public boolean hurt(DamageSource damageSource, float damageAmount) {
-        if (damageAmount > 1) {
+        if (damageAmount >= 30) {
+            damageAmount = 2;
+        }
+        else if (damageAmount >= 10 && !damageSource.isIndirect() && !damageSource.is(BzTags.COSMIC_CRYSTAL_RESISTANT_TO)) {
+            damageAmount = 2;
+        }
+        else if (damageAmount > 1) {
             damageAmount = 1;
         }
 

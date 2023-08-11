@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:magic",
+    "minecraft:indirect_magic",
+    "minecraft:sonic_boom",
+    "minecraft:thorns",
+    "#minecraft:is_explosion",
+    "#minecraft:is_lightning",
+    "#minecraft:is_freezing",
+    "#minecraft:is_fire",
+    "#minecraft:no_impact",
+    "#minecraft:is_projectile"
+  ]
+}

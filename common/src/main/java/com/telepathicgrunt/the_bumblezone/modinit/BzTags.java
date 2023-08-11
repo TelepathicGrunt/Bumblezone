@@ -5,6 +5,7 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
@@ -180,6 +181,8 @@ public class BzTags {
     public static final TagKey<Enchantment> ITEM_WITH_TELEPORT_ENCHANT = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/any_item_right_clicked_beehive_with_enchant"));
     public static final TagKey<Enchantment> ITEM_WITH_TELEPORT_ENCHANT_CROUCHING = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/any_item_right_clicked_beehive_with_enchant_crouching"));
     public static final TagKey<Enchantment> ENCHANT_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/enchant_special_dedicated_compat"));
+
+    public static final TagKey<DamageType> COSMIC_CRYSTAL_RESISTANT_TO = TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "cosmic_crystal_resistant_to"));
 
     public static final TagKey<Biome> THE_BUMBLEZONE = TagKey.create(Registries.BIOME, new ResourceLocation(Bumblezone.MODID, "the_bumblezone"));
 
