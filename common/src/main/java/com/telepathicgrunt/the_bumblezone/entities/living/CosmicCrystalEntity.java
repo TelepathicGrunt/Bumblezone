@@ -94,7 +94,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     private static final EntityDataAccessor<String> ESSENCE_CONTROLLER_DIMENSION = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.STRING);
     private static final Vec3 UP_VECT = new Vec3(0, 1, 0);
     private static final Vec3 POSITIVE_X_VECT = new Vec3(1, 0, 0);
-    public static final int MAX_HEALTH = 50;
+    public static final int MAX_HEALTH = 60;
     public static final int MAX_RANGE = 30;
     protected static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forCombat().range(MAX_RANGE).selector(livingEntity -> !(livingEntity instanceof CosmicCrystalEntity) && livingEntity.attackable());
 
