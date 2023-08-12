@@ -37,11 +37,11 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
         if (blockState.getBlock() instanceof LuminescentWaxChannel && (itemstack.getItem() instanceof ShearsItem || itemstack.getItem() instanceof SwordItem)) {
 
             Direction.Axis newAxisProp = blockState.getValue(AXIS);
-            int newRotateProperty = blockState.getValue(ROTATION) + 2;
+            int newRotateProperty = blockState.getValue(ROTATION) + 1;
 
             boolean isLuminescent = blockState.is(BzTags.LUMINESCENT_WAX_LIGHT_CHANNELS);
 
-            if (newRotateProperty > (isLuminescent ? 3 : 2)) {
+            if (newRotateProperty > 1) {
                 newAxisProp = Direction.Axis.values()[(newAxisProp.ordinal() + 1) % 3];
                 newRotateProperty = 0;
             }
