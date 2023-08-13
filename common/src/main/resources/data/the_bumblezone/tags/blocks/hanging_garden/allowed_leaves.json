@@ -189,6 +189,14 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:mauve_leaves",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:red_maple_leaves",
+      "required": false
+    },
+    {
       "id": "sakurabiome:sakura_white_oak_leave",
       "required": false
     },

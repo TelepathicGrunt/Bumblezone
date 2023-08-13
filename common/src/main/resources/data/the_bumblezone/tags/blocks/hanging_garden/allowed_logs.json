@@ -76,6 +76,18 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:mauve_logs",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:cherry_logs",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:maple_logs",
+      "required": false
+    },
+    {
       "id": "terrestria:rainbow_eucalyptus_log",
       "required": false
     },
