@@ -59,6 +59,22 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:tall_red_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tall_pink_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tall_white_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tall_flowering_sapling",
+      "required": false
+    },
+    {
       "id": "#paradise_lost:tall_flowers",
       "required": false
     },

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#flowers",
+    "#minecraft:flowers",
     "minecraft:cherry_sapling",
     {
       "id": "biomesoplenty:pink_cherry_sapling",
@@ -241,6 +241,22 @@
     },
     {
       "id": "oaks_nature:white_dandelion",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tall_red_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tall_pink_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tall_white_cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:tall_flowering_sapling",
       "required": false
     },
     {
