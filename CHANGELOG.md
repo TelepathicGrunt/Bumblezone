@@ -265,6 +265,8 @@ Honeycomb Brood Block feeding now can grant you Protection of the Hive even when
 
 Increased duration of Protection of the Hive obtained from Honeycomb Brood Block feeding.
 
+Honeycomb Brood Blocks will always have 100% of giving Protection of the Hive effect if a bee is spawned from the feeding.
+
 For the Honey Residue/Honey Web blocks, I converted the right click washing items into an item tag to support more washing items:
  `the_bumblezone:washing_items`
 

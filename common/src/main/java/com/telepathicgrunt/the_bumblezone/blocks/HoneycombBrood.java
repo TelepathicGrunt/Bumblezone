@@ -138,7 +138,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                     world.setBlockAndUpdate(position, thisBlockState.setValue(STAGE, Math.min(3, stage + stageIncrease)));
                 }
 
-                if (random.nextFloat() < 0.30F) {
+                if (random.nextFloat() < 0.30F || stage == 3) {
                     applyProtection(playerEntity, itemstack);
                 }
             }
@@ -163,6 +163,7 @@ public class HoneycombBrood extends ProperFacingBlock {
          */
         else if (itemstack.is(BzTags.BEE_FEEDING_ITEMS)) {
             if (!world.isClientSide()) {
+                int stage = thisBlockState.getValue(STAGE);
                 boolean successfulGrowth = false;
 
                 //chance of growing the larva
@@ -174,14 +175,13 @@ public class HoneycombBrood extends ProperFacingBlock {
                     successfulGrowth = true;
                 }
 
-                if (successfulGrowth && random.nextFloat() < 0.30F) {
+                if (successfulGrowth && (stage == 3 || random.nextFloat() < 0.30F)) {
                     applyProtection(playerEntity, itemstack);
                 }
 
                 //grows larva
                 if (successfulGrowth) {
                     //spawn bee if at final stage and front isn't blocked off
-                    int stage = thisBlockState.getValue(STAGE);
                     if (stage == 3) {
                         spawnBroodMob(world, random, thisBlockState, position, stage);
                     }
