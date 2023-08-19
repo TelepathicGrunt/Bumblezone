@@ -113,6 +113,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     private boolean laserChargeSoundPlayed = false;
     public int lastPhysicalHit = 0;
     public ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
+    private boolean noAI = false;
 
     public CosmicCrystalEntity(EntityType<? extends CosmicCrystalEntity> entityType, Level level) {
         super(entityType, level);
@@ -399,6 +400,8 @@ public class CosmicCrystalEntity extends LivingEntity {
             CompoundTag vectTag = compoundTag.getCompound("prevLookAngle");
             this.prevLookAngle = new Vec3(vectTag.getDouble("x"), vectTag.getDouble("y"), vectTag.getDouble("z"));
         }
+
+        this.noAI = compoundTag.getBoolean("noAI");
     }
 
     @Override
@@ -438,6 +441,13 @@ public class CosmicCrystalEntity extends LivingEntity {
         vectTag.putDouble("y", this.prevLookAngle.y());
         vectTag.putDouble("z", this.prevLookAngle.z());
         compoundTag.put("prevLookAngle", vectTag);
+
+        if (compoundTag.contains("noAi")) {
+            compoundTag.putBoolean("noAI", this.noAI);
+        }
+        else {
+            compoundTag.putBoolean("NoAI", this.noAI);
+        }
     }
 
     public static boolean isOrFromHorizontalState(CosmicCrystalState cosmicCrystalState) {
@@ -488,6 +498,10 @@ public class CosmicCrystalEntity extends LivingEntity {
                     SoundSource.HOSTILE,
                     1,
                     1f);
+        }
+
+        if (this.noAI) {
+            return;
         }
 
         if (this.getCosmicCrystalState() == CosmicCrystalState.NORMAL) {
