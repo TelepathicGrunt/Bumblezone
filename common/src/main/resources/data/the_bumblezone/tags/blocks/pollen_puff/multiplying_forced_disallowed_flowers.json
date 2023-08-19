@@ -3,6 +3,7 @@
   "values": [
     "minecraft:wither_rose",
     "minecraft:pitcher_plant",
+    "minecraft:chorus_flower",
     "#minecraft:leaves",
     {
       "id": "blue_skies:muckweed",
