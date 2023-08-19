@@ -50,9 +50,7 @@ configurations.all {
 
 dependencies {
     modImplementation "org.quiltmc:quilt-loader:${rootProject.quilt_loader_version}"
-    modApi("org.quiltmc.quilted-fabric-api:quilted-fabric-api:${rootProject.quilt_fabric_api_version}-${rootProject.minecraft_version}") {
-        force = true
-    }
+    modApi "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${rootProject.quilt_fabric_api_version}-${rootProject.minecraft_version}"
 
     modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
     //modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
@@ -104,18 +102,18 @@ processResources {
 
 shadowJar {
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier.set("dev-shadow")
 }
 
 remapJar {
     injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier.set(null)
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier.set("dev")
 }
 
 sourcesJar {
