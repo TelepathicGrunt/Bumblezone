@@ -41,7 +41,7 @@ public class WindyAir extends ProperFacingBlock {
 
     public WindyAir() {
         super(Properties.of()
-                .strength(0.01f, 3600000.8f)
+                .strength(0.01f, 0)
                 .noCollission()
                 .replaceable()
                 .noLootTable()

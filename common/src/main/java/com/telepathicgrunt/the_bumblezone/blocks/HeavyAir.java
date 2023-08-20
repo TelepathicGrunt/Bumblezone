@@ -30,7 +30,7 @@ public class HeavyAir extends Block {
 
     public HeavyAir() {
         super(Properties.of()
-                .strength(-1.0f, 3600000.8f)
+                .strength(-1.0f, 0)
                 .noCollission()
                 .replaceable()
                 .noLootTable()
