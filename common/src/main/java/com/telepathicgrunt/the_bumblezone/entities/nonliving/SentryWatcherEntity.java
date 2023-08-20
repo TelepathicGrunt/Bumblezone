@@ -309,6 +309,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    public float getFluidSpeed() {
       return ACCELERATION_FLUID;
    }
+
    @Override
    public boolean updateFluidHeightAndDoFluidPushing(TagKey<Fluid> tagKey, double d) {
       if (this.touchingUnloadedChunk()) {
