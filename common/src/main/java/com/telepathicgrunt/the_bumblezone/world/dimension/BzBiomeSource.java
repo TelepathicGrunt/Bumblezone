@@ -38,6 +38,7 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
             RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
                 Biome.LIST_CODEC.fieldOf("blob_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.blobBiomes),
+                Biome.LIST_CODEC.fieldOf("rare_blob_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.rareBlobBiomes),
                 Biome.LIST_CODEC.fieldOf("main_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.mainBiomes))
             .apply(instance, instance.stable(BzBiomeSource::new)));
 
@@ -51,16 +52,18 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
     private final long seed;
     private final Layer biomeSampler;
     public final HolderSet<Biome> blobBiomes;
+    public final HolderSet<Biome> rareBlobBiomes;
     public final HolderSet<Biome> mainBiomes;
     public final GeneralUtils.Lazy<Set<Holder<Biome>>> lazyPossibleBiomes = new GeneralUtils.Lazy<>();
 
-    public BzBiomeSource(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> mainBiomes) {
+    public BzBiomeSource(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> rareBlobBiomes, HolderSet<Biome> mainBiomes) {
         super();
 
         this.seed = seed;
         this.blobBiomes = blobBiomes;
+        this.rareBlobBiomes = rareBlobBiomes;
         this.mainBiomes = mainBiomes;
-        this.biomeSampler = buildWorldProcedure(seed, this.blobBiomes);
+        this.biomeSampler = buildWorldProcedure(seed, this.blobBiomes, this.rareBlobBiomes);
     }
 
     @Override
@@ -88,19 +91,19 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
         return LayerFactory;
     }
 
-    public static Layer buildWorldProcedure(long seed, HolderSet<Biome> blobBiomes) {
-        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, blobBiomes);
+    public static Layer buildWorldProcedure(long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> rareBlobBiomes) {
+        AreaFactory<LazyArea> layerFactory = build((salt) -> new LazyAreaContext(25, seed, salt), seed, blobBiomes, rareBlobBiomes);
         return new Layer(layerFactory);
     }
 
-    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, HolderSet<Biome> blobBiomes) {
+    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> build(LongFunction<C> contextFactory, long seed, HolderSet<Biome> blobBiomes, HolderSet<Biome> rareBlobBiomes) {
         AreaFactory<T> layer = new BzBiomeLayer(seed).run(contextFactory.apply(200L));
         layer = new BzBiomePillarLayer().run(contextFactory.apply(1008L), layer);
         layer = new BzBiomeScaleLayer(Set.of(HIVE_PILLAR)).run(contextFactory.apply(1055L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2003L), layer);
         layer = ZoomLayer.FUZZY.run(contextFactory.apply(2523L), layer);
         layer = new BzBiomeScaleLayer(Set.of(CRYSTAL_CANYON, SUGAR_WATER_FLOOR)).run(contextFactory.apply(54088L), layer);
-        AreaFactory<T> layerOverlay = new BzBiomeBlobLayer(blobBiomes).run(contextFactory.apply(204L));
+        AreaFactory<T> layerOverlay = new BzBiomeBlobLayer(blobBiomes, rareBlobBiomes).run(contextFactory.apply(204L));
         layerOverlay = ZoomLayer.NORMAL.run(contextFactory.apply(2423L), layerOverlay);
         layerOverlay = new BzBiomePollinatedPillarLayer().run(contextFactory.apply(3008L), layerOverlay);
         layerOverlay = new BzBiomeScaleLayer(Set.of(POLLINATED_PILLAR)).run(contextFactory.apply(4455L), layerOverlay);

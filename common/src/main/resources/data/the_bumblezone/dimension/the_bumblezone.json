@@ -6,7 +6,8 @@
     "biome_source": {
       "type": "the_bumblezone:biome_source",
       "main_biomes": "#the_bumblezone:the_bumblezone",
-      "blob_biomes": "#the_bumblezone:blob_biomes"
+      "blob_biomes": "#the_bumblezone:blob_biomes",
+      "rare_blob_biomes": "#the_bumblezone:rare_blob_biomes"
     }
   }
 }
