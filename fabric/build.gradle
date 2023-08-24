@@ -37,8 +37,8 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
-    //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
-    //modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
+    //modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
+    //modLocalRuntime("maven.modrinth:sodium:${rootProject.sodium}")
 
     //include("me.luligabi:NoIndium:${rootProject.noindium}")
     //modLocalRuntime("curse.maven:indium-459496:${rootProject.indium_file_id}")

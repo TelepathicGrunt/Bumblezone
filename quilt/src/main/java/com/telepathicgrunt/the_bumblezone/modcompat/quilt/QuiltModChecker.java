@@ -28,9 +28,6 @@ public class QuiltModChecker {
             modid = "requiem";
             loadupModCompat(modid, () -> new RequiemCompat());
 
-            modid = "sodium";
-            loadupModCompat(modid, () -> new SodiumCompatImpl());
-
             modid = "trinkets";
             loadupModCompat(modid, () -> new TrinketsCompat());
         }

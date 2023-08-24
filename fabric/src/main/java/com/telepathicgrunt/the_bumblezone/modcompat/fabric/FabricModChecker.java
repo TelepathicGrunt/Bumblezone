@@ -25,9 +25,6 @@ public class FabricModChecker {
         String modid = "";
         try {
 
-            modid = "sodium";
-            loadupModCompat(modid, () -> new SodiumCompatImpl());
-
             modid = "trinkets";
             loadupModCompat(modid, () -> new TrinketsCompat());
         }
