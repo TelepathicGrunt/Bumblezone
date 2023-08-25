@@ -38,7 +38,7 @@
     "entities.EntityTypeMixin",
     "entities.ExperienceOrbAccessor",
     "entities.ExperienceOrbMixin",
-    "entities.FishingBobberEntityMixin",
+    "entities.FishingHookMixin",
     "entities.FlyNodeEvaluatorMixin",
     "entities.FoxAccessor",
     "entities.HangingEntityMixin",

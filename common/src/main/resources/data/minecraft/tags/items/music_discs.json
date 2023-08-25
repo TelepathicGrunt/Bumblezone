@@ -1,10 +1,6 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:music_disc_honey_bee_rat_faced_boy",
-    "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov",
-    "the_bumblezone:music_disc_la_bee_da_loca",
-    "the_bumblezone:music_disc_bee_laxing_with_the_hom_bees",
-    "the_bumblezone:music_disc_bee_ware_of_the_temple"
+    "#the_bumblezone:music_discs"
   ]
 }

@@ -1,0 +1,36 @@
+{
+  "random_sequence": "the_bumblezone:gameplay/fishing",
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "the_bumblezone:gameplay/fishing/junk",
+          "type": "minecraft:loot_table",
+          "quality": -2,
+          "weight": 30
+        },
+        {
+          "name": "the_bumblezone:gameplay/fishing/treasure",
+          "type": "minecraft:loot_table",
+          "quality": 2,
+          "weight": 5,
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "entity": "this",
+              "predicate": {
+                "type_specific": {
+                  "type": "fishing_hook",
+                  "in_open_water": true
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

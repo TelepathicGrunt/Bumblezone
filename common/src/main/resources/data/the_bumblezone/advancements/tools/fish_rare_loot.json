@@ -1,0 +1,58 @@
+{
+  "parent": "the_bumblezone:combs_and_wax/honey_cocoon_silk_touch",
+  "display": {
+    "icon": {
+      "item": "minecraft:fishing_rod",
+      "nbt": "{\"Enchantments\":[{\"id\":\"luck_of_the_sea\",\"lvl\":3}]}"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.fish_rare_loot.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.fish_rare_loot.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "fished_rare_loot_1": {
+      "trigger": "minecraft:fishing_rod_hooked",
+      "conditions": {
+        "item": {
+          "items": [
+            "minecraft:book",
+            "minecraft:saddle",
+            "minecraft:name_tag",
+            "the_bumblezone:bee_cannon",
+            "the_bumblezone:honey_compass",
+            "the_bumblezone:crystal_cannon",
+            "the_bumblezone:buzzing_briefcase",
+            "the_bumblezone:crystalline_flower",
+            "the_bumblezone:sentry_watcher_spawn_egg"
+          ],
+          "count": 1
+        }
+      }
+    },
+    "fished_rare_loot_2": {
+      "trigger": "minecraft:fishing_rod_hooked",
+      "conditions": {
+        "item": {
+          "tag": "the_bumblezone:music_discs",
+          "count": 1
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "fished_rare_loot_1",
+      "fished_rare_loot_2"
+    ]
+  ]
+}

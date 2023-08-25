@@ -14,8 +14,6 @@
 
 #TODO: make Shepherd villager house with honey slime farm.
 
-#TODO: custom fishing loot for dimension?
-
 #TODO: make loot for sempiternal sanctum.
 
 
@@ -33,6 +31,9 @@ NOTE: Forge users must use 1.20.1 Forge up to v47.1.3 and nothing newer.
 
 ##### Biomes:
 Added Floral Meadow biome full of vanilla flowers and cherry trees! Rootmins can spawn naturally in this biome!
+
+##### Dimension:
+Fishing in Bumblezone dimension now has custom loot!
 
 ##### Structures:
 Added Subway structure that is a massive tunnel system with flowing air that bees uses to travel around quickly! 

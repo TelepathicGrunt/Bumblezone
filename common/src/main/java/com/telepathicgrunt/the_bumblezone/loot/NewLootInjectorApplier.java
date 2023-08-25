@@ -17,6 +17,7 @@ import java.util.List;
 public final class NewLootInjectorApplier {
     private NewLootInjectorApplier() {}
 
+    public static final ResourceLocation BZ_DIMENSION_FISHING_LOOT_TABLE_RL = new ResourceLocation(Bumblezone.MODID, "gameplay/fishing");
     public static final ResourceLocation STINGER_DROP_LOOT_TABLE_RL = new ResourceLocation(Bumblezone.MODID, "entities/bee_stinger_drops");
 
     public static boolean checkIfInjectLoot(LootContext context) {

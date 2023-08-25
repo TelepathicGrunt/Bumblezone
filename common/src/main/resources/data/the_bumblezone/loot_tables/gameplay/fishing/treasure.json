@@ -1,0 +1,254 @@
+{
+  "random_sequence": "the_bumblezone:gameplay/fishing",
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "name": "minecraft:name_tag",
+          "type": "minecraft:item",
+          "weight": 12
+        },
+        {
+          "name": "minecraft:saddle",
+          "type": "minecraft:item",
+          "weight": 12
+        },
+        {
+          "name": "minecraft:fishing_rod",
+          "type": "minecraft:item",
+          "weight": 12,
+          "functions": [
+            {
+              "add": false,
+              "damage": {
+                "type": "minecraft:uniform",
+                "max": 0.75,
+                "min": 0.25
+              },
+              "function": "minecraft:set_damage"
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30.0,
+              "treasure": true
+            },
+            {
+              "function": "minecraft:set_lore",
+              "replace": false,
+              "lore": [
+                {
+                  "translate": "item.the_bumblezone.fishing_rod_lore"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "minecraft:book",
+          "type": "minecraft:item",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30.0,
+              "treasure": true
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
+          "type": "minecraft:item",
+          "weight": 12
+        },
+        {
+          "name": "the_bumblezone:bee_cannon",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_damage",
+              "add": false,
+              "damage": {
+                "type": "minecraft:uniform",
+                "max": 0.25,
+                "min": 0.0
+              }
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30.0,
+              "treasure": true
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:crystal_cannon",
+          "type": "minecraft:item",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_damage",
+              "add": false,
+              "damage": {
+                "type": "minecraft:uniform",
+                "max": 0.25,
+                "min": 0.0
+              }
+            },
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30.0,
+              "treasure": true
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:music_discs",
+          "type": "minecraft:tag",
+          "expand": true,
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:sentry_watcher_spawn_egg",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 2,
+          "quality": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 2,
+          "quality": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_lesser_mystery_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/lesser_misc_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "the_bumblezone:honey_compass",
+          "weight": 1,
+          "quality": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_throne_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_throne_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/throne_locating",
+              "skip_existing_chunks": false,
+              "search_radius": 40
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 1,
+          "quality": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_sanctum_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_sanctum_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums",
+              "skip_existing_chunks": false,
+              "search_radius": 50,
+              "conditions": [
+                {
+                  "condition": "the_bumblezone:essence_only_spawn"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:crystalline_flower",
+          "type": "minecraft:item",
+          "weight": 6,
+          "conditions": [
+            {
+              "condition": "minecraft:any_of",
+              "terms": [
+                {
+                  "condition": "minecraft:location_check",
+                  "predicate": {
+                    "biome": "the_bumblezone:crystal_canyon"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

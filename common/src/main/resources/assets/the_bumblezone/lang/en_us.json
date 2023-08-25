@@ -299,6 +299,8 @@
   "item.minecraft.lingering_potion.effect.neurotoxin": "Lingering Potion of Neurotoxin",
   "item.minecraft.lingering_potion.effect.long_neurotoxin": "Lingering Potion of Long Neurotoxin",
 
+  "item.the_bumblezone.fishing_rod_lore": "A rod from an unusual dimension",
+
   "entity.the_bumblezone.variant_bee": "Bee Variant",
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",
@@ -536,7 +538,7 @@
   "advancements.the_bumblezone.pollen_puff_panda.description": "Make a Panda suffer seasonal allergies!",
   "advancements.the_bumblezone.pollen_puff_fireball.title": "Unbeelievably Ineffective!",
   "advancements.the_bumblezone.pollen_puff_fireball.description": "Fight a Ghast's Fireball with a ball of pollen!",
-  "advancements.the_bumblezone.pollen_puff_mooshroom.title": "Mushrooms, Flowers, What's the Difference?",
+  "advancements.the_bumblezone.pollen_puff_mooshroom.title": "Mushrooms, flowers, same thing",
   "advancements.the_bumblezone.pollen_puff_mooshroom.description": "Pollinate a Mooshroom and spawn a mushroom!",
   "advancements.the_bumblezone.teleport_to_bumblezone_pearl.title": "Beenderman Intrusion!",
   "advancements.the_bumblezone.teleport_to_bumblezone_pearl.description": "Enter Bumblezone dimension by throwing Enderpearl at Beehive/Bee Nests",
@@ -622,6 +624,8 @@
   "advancements.the_bumblezone.enter_throne_pillar.description": "Find and enter a Throne Pillar structure! (Use throne-locating compasses from other structures)",
   "advancements.the_bumblezone.honey_cocoon_silk_touch.title": "A Delicate Touch",
   "advancements.the_bumblezone.honey_cocoon_silk_touch.description": "Find a way to gently mine a Honey Cocoon without spilling items everywhere!",
+  "advancements.the_bumblezone.fish_rare_loot.title": "Beesistent Fishing",
+  "advancements.the_bumblezone.fish_rare_loot.description": "Fish out rare loot while in Bumblezone dimension!",
   "advancements.the_bumblezone.consume_bee_soup.title": "A Stingy Delicacy",
   "advancements.the_bumblezone.consume_bee_soup.description": "Slurp up some Bee Soup for wild status effects!",
   "advancements.the_bumblezone.dirt_pellet_return_to_sender.title": "A Dirty Return",
