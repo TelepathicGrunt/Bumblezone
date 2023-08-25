@@ -104,6 +104,10 @@
       "required": false
     },
     {
+      "id": "good_nights_sleep:lollipop_bush",
+      "required": false
+    },
+    {
       "id": "goodending:pink_flowering_lily_pad",
       "required": false
     },
@@ -341,6 +345,18 @@
     },
     {
       "id": "twigs:azalea_flowers",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:flora_yarrow",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:flora_canola",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:flora_hemlock",
       "required": false
     }
   ]

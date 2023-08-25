@@ -126,6 +126,10 @@
       "required": false
     },
     {
+      "id": "good_nights_sleep:dead_flower",
+      "required": false
+    },
+    {
       "id": "hibernalherbs:tarragon",
       "required": false
     },

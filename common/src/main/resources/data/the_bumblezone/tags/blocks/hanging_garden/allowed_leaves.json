@@ -101,6 +101,14 @@
       "required": false
     },
     {
+      "id": "good_nights_sleep:diamond_leaves",
+      "required": false
+    },
+    {
+      "id": "good_nights_sleep:candy_leaves",
+      "required": false
+    },
+    {
       "id": "minestuck:frost_leaves",
       "required": false
     },
@@ -142,6 +150,10 @@
     },
     {
       "id": "premium_wood:silverbell_leaves",
+      "required": false
+    },
+    {
+      "id": "pearfection:flowering_callery_leaves",
       "required": false
     },
     {

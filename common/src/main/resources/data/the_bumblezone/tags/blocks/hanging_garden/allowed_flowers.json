@@ -113,6 +113,14 @@
       "required": false
     },
     {
+      "id": "good_nights_sleep:lollipop_bush",
+      "required": false
+    },
+    {
+      "id": "good_nights_sleep:candy_sapling",
+      "required": false
+    },
+    {
       "id": "habitat:rafflesia",
       "required": false
     },
@@ -397,7 +405,15 @@
       "required": false
     },
     {
-      "id": "woodworks:flowering_azalea_leaf_pile",
+      "id": "untamedwilds:flora_yarrow",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:flora_canola",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:flora_hemlock",
       "required": false
     },
     {
@@ -406,6 +422,10 @@
     },
     {
       "id": "various_update:cherry_sapling",
+      "required": false
+    },
+    {
+      "id": "woodworks:flowering_azalea_leaf_pile",
       "required": false
     }
   ]

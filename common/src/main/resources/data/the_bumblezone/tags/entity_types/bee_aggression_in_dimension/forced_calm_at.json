@@ -93,6 +93,10 @@
       "required": false
     },
     {
+      "id": "mysticsbiomes:butterfly",
+      "required": false
+    },
+    {
       "id": "moonbits:cave_snail",
       "required": false
     },
@@ -114,6 +118,10 @@
     },
     {
       "id": "twilightforest:helmet_crab",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:butterfly",
       "required": false
     },
     {

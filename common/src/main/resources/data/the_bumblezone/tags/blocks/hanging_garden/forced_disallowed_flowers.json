@@ -152,6 +152,10 @@
       "required": false
     },
     {
+      "id": "bushierflowers:grown_torchflower",
+      "required": false
+    },
+    {
       "id": "byg:black_rose",
       "required": false
     },
@@ -281,6 +285,10 @@
     },
     {
       "id": "gaiadimension:missingno_plant",
+      "required": false
+    },
+    {
+      "id": "good_nights_sleep:dead_flower",
       "required": false
     },
     {

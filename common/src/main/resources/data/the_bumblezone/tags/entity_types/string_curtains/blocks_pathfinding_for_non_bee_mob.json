@@ -95,6 +95,10 @@
       "required": false
     },
     {
+      "id": "galosphere:spectre",
+      "required": false
+    },
+    {
       "id": "goodending:firefly_swarm",
       "required": false
     },
@@ -156,6 +160,10 @@
     },
     {
       "id": "moonbits:stunbug",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:butterfly",
       "required": false
     },
     {
@@ -319,6 +327,22 @@
       "required": false
     },
     {
+      "id": "twilightforest:mosquito_swarm",
+      "required": false
+    },
+    {
+      "id": "ulterlands:flyvern",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:butterfly",
+      "required": false
+    },
+    {
+      "id": "unusualend:ender_firefly",
+      "required": false
+    },
+    {
       "id": "whisperwoods:moth",
       "required": false
     },
@@ -356,18 +380,6 @@
     },
     {
       "id": "wonderouswilds:firefly",
-      "required": false
-    },
-    {
-      "id": "ulterlands:flyvern",
-      "required": false
-    },
-    {
-      "id": "unusualend:ender_firefly",
-      "required": false
-    },
-    {
-      "id": "twilightforest:mosquito_swarm",
       "required": false
     }
   ]

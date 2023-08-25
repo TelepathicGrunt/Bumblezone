@@ -113,10 +113,6 @@
       "required": false
     },
     {
-      "id": "galosphere:amethyst_lamp",
-      "required": false
-    },
-    {
       "id": "galosphere:allurite_block",
       "required": false
     },
@@ -318,6 +314,22 @@
     },
     {
       "id": "hexcasting:amethyst_tiles",
+      "required": false
+    },
+    {
+      "id": "nature_arise:topaz_block",
+      "required": false
+    },
+    {
+      "id": "nature_arise:budding_topaz",
+      "required": false
+    },
+    {
+      "id": "nature_arise:sapphire_block",
+      "required": false
+    },
+    {
+      "id": "nature_arise:budding_sapphire",
       "required": false
     },
     {

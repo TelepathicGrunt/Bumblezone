@@ -500,6 +500,10 @@
       "required": false
     },
     {
+      "id": "mysticsbiomes:lavender",
+      "required": false
+    },
+    {
       "id": "nature_expansion:purple_orchid",
       "required": false
     },

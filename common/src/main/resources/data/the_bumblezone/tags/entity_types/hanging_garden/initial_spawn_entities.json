@@ -74,6 +74,14 @@
       "required": false
     },
     {
+      "id": "galosphere:spectre",
+      "required": false
+    },
+    {
+      "id": "galosphere:specterpillar",
+      "required": false
+    },
+    {
       "id": "goodall:ant",
       "required": false
     },
@@ -158,6 +166,10 @@
       "required": false
     },
     {
+      "id": "mysticsbiomes:butterfly",
+      "required": false
+    },
+    {
       "id": "naturalist:caterpillar",
       "required": false
     },
@@ -215,6 +227,46 @@
     },
     {
       "id": "silverbirch:firefly",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:newt",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:giant_salamander",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:butterfly",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:tortoise",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:snake",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:monitor",
+      "required": false
+    },
+    {
+      "id": "valleycraft:snail",
+      "required": false
+    },
+    {
+      "id": "valleycraft:sculk_snail",
+      "required": false
+    },
+    {
+      "id": "valleycraft:cave_snail",
+      "required": false
+    },
+    {
+      "id": "valleycraft:glowfly",
       "required": false
     },
     {
@@ -279,22 +331,6 @@
     },
     {
       "id": "wonderouswilds:firefly",
-      "required": false
-    },
-    {
-      "id": "valleycraft:snail",
-      "required": false
-    },
-    {
-      "id": "valleycraft:sculk_snail",
-      "required": false
-    },
-    {
-      "id": "valleycraft:cave_snail",
-      "required": false
-    },
-    {
-      "id": "valleycraft:glowfly",
       "required": false
     }
   ]

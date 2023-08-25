@@ -221,6 +221,10 @@
       "required": false
     },
     {
+      "id": "untamedwilds:flora_elephant_ear",
+      "required": false
+    },
+    {
       "id": "unusualprehistory:horsetail",
       "required": false
     },

@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -100,37 +101,61 @@ public class TagReplaceProcessor extends StructureProcessor {
                         }
                     }
 
-                    if (doubleTallFlower) {
-                        returnInfo = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
-                    }
-                    else {
-                        if (newBlockState.getBlock() instanceof MultifaceBlock) {
-                            for(Direction direction : Direction.values()) {
-                                BooleanProperty faceProperty = MultifaceBlock.getFaceProperty(direction);
-                                if (newBlockState.hasProperty(faceProperty)) {
-                                    newBlockState = newBlockState.setValue(faceProperty, direction == Direction.DOWN);
-                                }
+                    if (newBlockState.getBlock() instanceof MultifaceBlock) {
+                        for(Direction direction : Direction.values()) {
+                            BooleanProperty faceProperty = MultifaceBlock.getFaceProperty(direction);
+                            if (newBlockState.hasProperty(faceProperty)) {
+                                newBlockState = newBlockState.setValue(faceProperty, direction == Direction.DOWN);
                             }
                         }
-
-                        if (newBlockState.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
-                            newBlockState = newBlockState.setValue(BlockStateProperties.FLOWER_AMOUNT, 4);
-                        }
-
-                        ChunkAccess chunk = worldReader.getChunk(structureBlockInfoWorld.pos());
-                        BlockState oldBlockstate = chunk.getBlockState(structureBlockInfoWorld.pos());
-                        BlockState belowOldBlockstate = chunk.getBlockState(structureBlockInfoWorld.pos().below());
-
-                        chunk.setBlockState(structureBlockInfoWorld.pos(), Blocks.AIR.defaultBlockState(), false);
-                        chunk.setBlockState(structureBlockInfoWorld.pos().below(), Blocks.GRASS_BLOCK.defaultBlockState(), false);
-
-                        if (newBlockState.canSurvive(worldReader, structureBlockInfoWorld.pos())) {
-                            returnInfo = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
-                        }
-
-                        chunk.setBlockState(structureBlockInfoWorld.pos(), oldBlockstate, false);
-                        chunk.setBlockState(structureBlockInfoWorld.pos().below(), belowOldBlockstate, false);
                     }
+
+                    if (newBlockState.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
+                        newBlockState = newBlockState.setValue(BlockStateProperties.FLOWER_AMOUNT, 4);
+                    }
+
+                    if (newBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                        newBlockState = newBlockState.setValue(BlockStateProperties.WATERLOGGED, !structureBlockInfoWorld.state().getFluidState().isEmpty());
+                    }
+
+                    ChunkAccess chunk = worldReader.getChunk(structureBlockInfoWorld.pos());
+
+                    BlockPos mainPos = structureBlockInfoWorld.pos();
+                    BlockPos groundPos = mainPos.below();
+                    BlockState checkingState = newBlockState;
+
+                    BlockState oldTopBlock = null;
+                    BlockPos oldTopPos = null;
+                    if (doubleTallFlower) {
+                        if (newBlockState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
+                            oldTopPos = mainPos;
+                            mainPos = mainPos.below(); // Bottom of double plant
+                            groundPos = mainPos.below(); // Below bottom of double plant
+                            checkingState = checkingState.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
+                        }
+                        else {
+                            oldTopPos = structureBlockInfoWorld.pos().above();
+                        }
+
+                        oldTopBlock = chunk.getBlockState(oldTopPos);
+                        chunk.setBlockState(oldTopPos, Blocks.AIR.defaultBlockState(), false);
+                    }
+
+                    BlockState oldBlockstate = chunk.getBlockState(mainPos);
+                    BlockState belowGroundBlockstate = chunk.getBlockState(groundPos);
+
+                    chunk.setBlockState(mainPos, Blocks.AIR.defaultBlockState(), false);
+                    chunk.setBlockState(groundPos, Blocks.GRASS_BLOCK.defaultBlockState(), false);
+
+                    if (checkingState.canSurvive(worldReader, mainPos)) {
+                        returnInfo = new StructureTemplate.StructureBlockInfo(structureBlockInfoWorld.pos(), newBlockState, structureBlockInfoWorld.nbt());
+                    }
+
+                    if (oldTopBlock != null) {
+                        chunk.setBlockState(oldTopPos, oldTopBlock, false);
+                    }
+                    chunk.setBlockState(mainPos, oldBlockstate, false);
+                    chunk.setBlockState(groundPos, belowGroundBlockstate, false);
                 }
             }
         }

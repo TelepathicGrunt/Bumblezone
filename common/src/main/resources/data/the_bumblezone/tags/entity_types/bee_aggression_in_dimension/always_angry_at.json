@@ -202,6 +202,14 @@
       "required": false
     },
     {
+      "id": "untamedwilds:tarantula",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:king_crab",
+      "required": false
+    },
+    {
       "id": "unusualend:ender_blob",
       "required": false
     },

@@ -436,6 +436,10 @@
       "required": false
     },
     {
+      "id": "good_nights_sleep:cyan_flower",
+      "required": false
+    },
+    {
       "id": "hexerei:mandrake_flower",
       "required": false
     },

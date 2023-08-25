@@ -242,6 +242,14 @@
       "required": false
     },
     {
+      "id": "untamedwilds:flora_yarrow",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:flora_hemlock",
+      "required": false
+    },
+    {
       "id": "upgrade_aquatic:white_searocket",
       "required": false
     },
