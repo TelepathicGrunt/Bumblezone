@@ -222,13 +222,13 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
 
         if (this.menu.tooManyEnchantmentsOnInput.get() == 1) {
-            MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
+            MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
             guiGraphics.drawCenteredString(font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
         }
         else if (this.menu.selectedEnchantmentIndex.get() != -1) {
             EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantmentIndex.get());
             int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
-            MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost_arrow", tierCost).withStyle(ChatFormatting.BOLD);
+            MutableComponent mutableComponent = Component.translatable("container.the_bumblezone.crystalline_flower.tier_cost_arrow", tierCost).withStyle(ChatFormatting.BOLD);
             guiGraphics.drawCenteredString(font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
         }
 
@@ -391,9 +391,9 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 88);
 
         MutableComponent mutableComponent = Component.literal(translatedEnchantmentName);
-        MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantmentEntry.level);
+        MutableComponent mutableComponent2 = Component.translatable("container.the_bumblezone.crystalline_flower.level", enchantmentEntry.level);
         if (enchantmentEntry.isMaxLevel) {
-            mutableComponent2.append(Component.translatable("the_bumblezone.container.crystalline_flower.level_star"));
+            mutableComponent2.append(Component.translatable("container.the_bumblezone.crystalline_flower.level_star"));
         }
 
         guiGraphics.drawString(this.font, mutableComponent, rowStartX, currentRowStartY, enchantmentNameColor, shadow);
@@ -548,14 +548,14 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 MutableComponent mutableComponent = Component.literal(translatedEnchantmentName)
                         .withStyle(ChatFormatting.GOLD);
 
-                MutableComponent mutableComponent2 = Component.translatable("the_bumblezone.container.crystalline_flower.level", enchantment.level)
+                MutableComponent mutableComponent2 = Component.translatable("container.the_bumblezone.crystalline_flower.level", enchantment.level)
                         .withStyle(ChatFormatting.GREEN);
 
                 if (enchantment.isMaxLevel) {
-                    mutableComponent2.append(Component.translatable("the_bumblezone.container.crystalline_flower.level_star"));
+                    mutableComponent2.append(Component.translatable("container.the_bumblezone.crystalline_flower.level_star"));
                 }
 
-                MutableComponent mutableComponent3 = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost", tierCost)
+                MutableComponent mutableComponent3 = Component.translatable("container.the_bumblezone.crystalline_flower.tier_cost", tierCost)
                         .withStyle(ChatFormatting.RED);
 
                 MutableComponent mutableComponent4;

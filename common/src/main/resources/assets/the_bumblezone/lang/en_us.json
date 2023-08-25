@@ -4,14 +4,6 @@
   "itemGroup.the_bumblezone": "The Bumblezone",
   "itemGroup.the_bumblezone.main_tab": "The Bumblezone",
 
-  "the_bumblezone.container.honey_cocoon": "Honey Cocoon",
-  "the_bumblezone.container.crystalline_flower": "Consume and Enchant",
-  "the_bumblezone.container.crystalline_flower.level": "Level: %s",
-  "the_bumblezone.container.crystalline_flower.level_star": "★",
-  "the_bumblezone.container.crystalline_flower.tier_cost": "Tier cost: %s",
-  "the_bumblezone.container.crystalline_flower.tier_cost_arrow": "↓%s",
-  "the_bumblezone.container.crystalline_flower.too_many_enchants": "Enchant Limit 3",
-
   "death.attack.crystalline_flower": "%1$s was poked to death by a crystalline flower",
   "death.attack.crystalline_flower.player": "%1$s was poked to death by a crystalline flower whilst trying to escape %2$s",
   "death.attack.architects": "%1$s was killed for trying to escape an Essence Event",
@@ -299,8 +291,6 @@
   "item.minecraft.lingering_potion.effect.neurotoxin": "Lingering Potion of Neurotoxin",
   "item.minecraft.lingering_potion.effect.long_neurotoxin": "Lingering Potion of Long Neurotoxin",
 
-  "item.the_bumblezone.fishing_rod_lore": "A rod from an unusual dimension",
-
   "entity.the_bumblezone.variant_bee": "Bee Variant",
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",
@@ -477,6 +467,14 @@
   "essence.the_bumblezone.green_essence_event": "§aEssence of Life§f - §cLose§f in %s",
   "essence.the_bumblezone.yellow_essence_event": "§eEssence of Radiance§f - §cLose§f in %s",
   "essence.the_bumblezone.white_essence_event": "Essence of Continuity - §cLose§f in %s",
+
+  "container.the_bumblezone.honey_cocoon": "Honey Cocoon",
+  "container.the_bumblezone.crystalline_flower": "Consume and Enchant",
+  "container.the_bumblezone.crystalline_flower.level": "Level: %s",
+  "container.the_bumblezone.crystalline_flower.level_star": "★",
+  "container.the_bumblezone.crystalline_flower.tier_cost": "Tier cost: %s",
+  "container.the_bumblezone.crystalline_flower.tier_cost_arrow": "↓%s",
+  "container.the_bumblezone.crystalline_flower.too_many_enchants": "Enchant Limit 3",
 
   "buzzing_briefcase.the_bumblezone.bee_typing.normal": "Normal",
   "buzzing_briefcase.the_bumblezone.bee_typing.unknown": "Unknown",

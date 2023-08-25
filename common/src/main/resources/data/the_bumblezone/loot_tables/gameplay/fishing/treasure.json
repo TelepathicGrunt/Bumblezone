@@ -41,15 +41,6 @@
               "function": "minecraft:enchant_with_levels",
               "levels": 30.0,
               "treasure": true
-            },
-            {
-              "function": "minecraft:set_lore",
-              "replace": false,
-              "lore": [
-                {
-                  "translate": "item.the_bumblezone.fishing_rod_lore"
-                }
-              ]
             }
           ]
         },
