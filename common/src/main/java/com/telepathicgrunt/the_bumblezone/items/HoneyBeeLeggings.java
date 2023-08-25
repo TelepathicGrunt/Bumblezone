@@ -52,7 +52,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                     itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
                 }
             }
-            else if(!player.isShiftKeyDown() && !isPollinated && isSprinting) {
+            else if(!player.isShiftKeyDown() && !isPollinated) {
                 BlockState withinBlock = world.getBlockState(player.blockPosition());
                 if(withinBlock.is(BzBlocks.PILE_OF_POLLEN.get())) {
                     setPollinated(itemstack);
@@ -64,7 +64,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                         world.setBlock(player.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
-                else if(random.nextFloat() < (((beeWearablesCount - 1) * 0.015f) + 0.01f) && withinBlock.is(BlockTags.FLOWERS)) {
+                else if(random.nextFloat() < (((beeWearablesCount - 1) * 0.015f) + (isSprinting ? 0.015f : 0.00333f)) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
                     if(player instanceof ServerPlayer serverPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);

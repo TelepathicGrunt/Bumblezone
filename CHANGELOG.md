@@ -10,6 +10,13 @@
 
 #TODO: adjust backup essence block textures
 
+#TODO: make Spider Spire and Cherry Veteran Tree (low chance of large beehive at base and is on flower mound).
+
+#TODO: make Shepherd villager house with honey slime farm.
+
+#TODO: custom fishing loot for dimension?
+
+#TODO: make loot for sempiternal sanctum.
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
@@ -305,6 +312,8 @@ Adjusted texture for one Honey Bee Leggings to make it more distinct from the ot
 Honey Bee Leggings item texture will now show pollen if the item actually has pollen set in nbt.
 
 Many Bumblezone Music Discs now shows a link to where one can buy the song as part of the item's tooltip.
+
+Honey Bee Leggings now can collect pollen from Pile of Pollen and Flowers by walking now. Not just running.
 
 ##### Fluids:
 (Fabric/Quilt): Fixed Honey Fluid and Royal Jelly Fluid not rendering the fluid texture on the far side when looking through the fluid.
