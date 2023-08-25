@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
@@ -44,6 +45,7 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
@@ -166,12 +168,20 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             PlayerDataHandler.onPollenHit(serverPlayer);
         }
 
-        WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
-        if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), BlockPos.containing(entityRayTraceResult.getLocation()), true)) {
-            boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
+        if (entity instanceof RootminEntity rootminEntity) {
+            BlockState blockstate = rootminEntity.getFlowerBlock();
+            if(blockstate != null && blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
+                spawnPlants(rootminEntity.blockPosition(), (r, b) -> blockstate);
+            }
+        }
+        else {
+            WeightedStateProvider possiblePlants = PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER.getPossiblePlants(entity);
+            if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), BlockPos.containing(entityRayTraceResult.getLocation()), true)) {
+                boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 
-            if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
-                BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
+                if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
+                    BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
+                }
             }
         }
 
@@ -223,6 +233,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                     this.random.nextInt(5) - 2);
 
             BlockState blockstate = blockStateGetter.apply(random, newPos);
+
             if (blockstate == null || blockstate.is(Blocks.AIR)) {
                 return false;
             }
@@ -258,8 +269,17 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 }
             }
 
+            boolean isFlowerAmount = false;
+            if (blockstate.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
+                BlockState targetBlock = this.level().getBlockState(newPos);
+                if (targetBlock.is(blockstate.getBlock()) && targetBlock.getValue(BlockStateProperties.FLOWER_AMOUNT) < 4) {
+                    blockstate = blockstate.setValue(BlockStateProperties.FLOWER_AMOUNT, targetBlock.getValue(BlockStateProperties.FLOWER_AMOUNT) + 1);
+                    isFlowerAmount = true;
+                }
+            }
+
             boolean isWaterBased = blockstate.getFluidState().is(FluidTags.WATER);
-            if((isWaterBased ? this.level().getBlockState(newPos).is(Blocks.WATER) : this.level().isEmptyBlock(newPos)) && blockstate.canSurvive(this.level(), newPos)) {
+            if((isWaterBased ? this.level().getBlockState(newPos).is(Blocks.WATER) : (isFlowerAmount || this.level().isEmptyBlock(newPos)) && blockstate.canSurvive(this.level(), newPos))) {
                 if (blockstate.is(Blocks.MOSS_CARPET)) {
                     BlockState belowState = this.level().getBlockState(newPos.below());
                     if (BuiltInRegistries.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level(), newPos.below(), Direction.DOWN, SupportType.FULL)) {

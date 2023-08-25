@@ -99,6 +99,10 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:dusktrap",
+      "required": false
+    },
+    {
       "id": "#paradise_lost:tall_flowers",
       "required": false
     },

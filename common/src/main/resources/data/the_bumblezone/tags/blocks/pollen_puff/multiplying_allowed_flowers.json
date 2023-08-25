@@ -260,6 +260,42 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:cherry_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_magnolia_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_magnolia_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_magnolia_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:flowering_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:mauve_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_magnolia_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_magnolia_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_magnolia_sapling",
+      "required": false
+    },
+    {
       "id": "sakurarosea:sakura_sapling",
       "required": false
     },
