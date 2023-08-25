@@ -61,6 +61,10 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:magnolia_log",
+      "required": false
+    },
+    {
       "id": "terrestria:rainbow_eucalyptus_log",
       "required": false
     },

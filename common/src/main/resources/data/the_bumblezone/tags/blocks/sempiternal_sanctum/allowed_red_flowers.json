@@ -296,6 +296,30 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:bleeding_heart",
+      "required": false
+    },
+    {
+      "id": "regions_unexplorered:tsubaki",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_magnolia_flowers",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:red_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:brown_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_magnolia_sapling",
+      "required": false
+    },
+    {
       "id": "srias_flowers:columbine",
       "required": false
     },

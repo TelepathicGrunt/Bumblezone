@@ -59,6 +59,10 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:meadow_sage",
+      "required": false
+    },
+    {
       "id": "regions_unexplored:tall_red_cherry_sapling",
       "required": false
     },
@@ -72,6 +76,26 @@
     },
     {
       "id": "regions_unexplored:tall_flowering_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:flowering_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:cherry_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:white_magnolia_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_magnolia_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_magnolia_shrub",
       "required": false
     },
     {

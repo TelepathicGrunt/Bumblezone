@@ -484,6 +484,26 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:blue_magnolia_flowers",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:hyacinth_flowers",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:light_blue_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:blue_magnolia_sapling",
+      "required": false
+    },
+    {
       "id": "srias_flowers:blue_hydrangea",
       "required": false
     },

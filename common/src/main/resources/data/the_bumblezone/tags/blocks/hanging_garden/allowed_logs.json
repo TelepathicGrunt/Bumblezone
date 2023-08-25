@@ -72,19 +72,27 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:cherry_log",
+      "required": false
+    },
+    {
       "id": "regions_unexplored:eucalyptus_log",
       "required": false
     },
     {
-      "id": "regions_unexplored:mauve_logs",
+      "id": "regions_unexplored:mauve_log",
       "required": false
     },
     {
-      "id": "regions_unexplored:cherry_logs",
+      "id": "regions_unexplored:maple_log",
       "required": false
     },
     {
-      "id": "regions_unexplored:maple_logs",
+      "id": "regions_unexplored:magnolia_log",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:silver_birch_log",
       "required": false
     },
     {

@@ -252,6 +252,14 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:mallow",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:hibiscus",
+      "required": false
+    },
+    {
       "id": "regions_unexplored:yellow_lupine",
       "required": false
     },

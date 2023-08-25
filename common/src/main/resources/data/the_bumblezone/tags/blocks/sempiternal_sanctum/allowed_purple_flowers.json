@@ -524,6 +524,26 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:purple_coneflower",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:purple_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:magenta_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:pink_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:mauve_sapling",
+      "required": false
+    },
+    {
       "id": "srias_flowers:purple_hydrangea",
       "required": false
     },

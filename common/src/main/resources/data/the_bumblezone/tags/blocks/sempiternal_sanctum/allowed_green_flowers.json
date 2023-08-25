@@ -173,6 +173,26 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:cyan_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:lime_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:green_snowbelle",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:steppe_shrub",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:clover",
+      "required": false
+    },
+    {
       "id": "snifferplus:fiddlefern",
       "required": false
     },
