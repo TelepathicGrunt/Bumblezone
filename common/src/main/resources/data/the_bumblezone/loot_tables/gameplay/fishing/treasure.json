@@ -12,14 +12,21 @@
           "weight": 12
         },
         {
-          "name": "minecraft:saddle",
+          "name": "minecraft:book",
           "type": "minecraft:item",
-          "weight": 12
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30.0,
+              "treasure": true
+            }
+          ]
         },
         {
           "name": "minecraft:fishing_rod",
           "type": "minecraft:item",
-          "weight": 12,
+          "weight": 10,
           "functions": [
             {
               "add": false,
@@ -47,26 +54,19 @@
           ]
         },
         {
-          "name": "minecraft:book",
+          "name": "minecraft:saddle",
           "type": "minecraft:item",
-          "weight": 12,
-          "functions": [
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": 30.0,
-              "treasure": true
-            }
-          ]
+          "weight": 10
         },
         {
           "name": "the_bumblezone:buzzing_briefcase",
           "type": "minecraft:item",
-          "weight": 12
+          "weight": 10
         },
         {
           "name": "the_bumblezone:bee_cannon",
           "type": "minecraft:item",
-          "weight": 6,
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:set_damage",
@@ -74,7 +74,7 @@
               "damage": {
                 "type": "minecraft:uniform",
                 "max": 0.25,
-                "min": 0.0
+                "min": 0.02
               }
             },
             {
@@ -95,7 +95,7 @@
               "damage": {
                 "type": "minecraft:uniform",
                 "max": 0.25,
-                "min": 0.0
+                "min": 0.02
               }
             },
             {

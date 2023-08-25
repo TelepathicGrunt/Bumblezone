@@ -12,22 +12,6 @@
           "weight": 17
         },
         {
-          "name": "minecraft:leather_boots",
-          "type": "minecraft:item",
-          "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_damage",
-              "add": false,
-              "damage": {
-                "type": "minecraft:uniform",
-                "max": 0.9,
-                "min": 0.0
-              }
-            }
-          ]
-        },
-        {
           "name": "the_bumblezone:dirt_pellet",
           "type": "minecraft:item",
           "weight": 10
@@ -55,17 +39,33 @@
         {
           "name": "minecraft:tripwire_hook",
           "type": "minecraft:item",
-          "weight": 10
+          "weight": 8
         },
         {
           "name": "minecraft:stick",
           "type": "minecraft:item",
-          "weight": 10
+          "weight": 8
+        },
+        {
+          "name": "minecraft:leather_boots",
+          "type": "minecraft:item",
+          "weight": 8,
+          "functions": [
+            {
+              "function": "minecraft:set_damage",
+              "add": false,
+              "damage": {
+                "type": "minecraft:uniform",
+                "max": 0.9,
+                "min": 0.02
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:honeycomb",
-          "weight": 2
+          "weight": 8
         },
         {
           "name": "minecraft:fishing_rod",
