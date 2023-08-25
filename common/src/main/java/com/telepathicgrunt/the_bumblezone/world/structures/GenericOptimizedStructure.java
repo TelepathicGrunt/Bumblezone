@@ -32,7 +32,8 @@ public class GenericOptimizedStructure extends Structure {
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
                     Codec.intRange(1, 100).optionalFieldOf("valid_biome_radius_check").forGetter(structure -> structure.biomeRadius),
-                    Codec.intRange(1, 100).optionalFieldOf("min_y_limit").forGetter(structure -> structure.minYLimit)
+                    Codec.intRange(1, 100).optionalFieldOf("min_y_limit").forGetter(structure -> structure.minYLimit),
+                    Codec.BOOL.fieldOf("disable_bound_checks").orElse(false).forGetter(structure -> structure.disableBoundChecks)
             ).apply(instance, GenericOptimizedStructure::new)).codec();
 
     private final Holder<StructureTemplatePool> startPool;
@@ -43,6 +44,7 @@ public class GenericOptimizedStructure extends Structure {
     private final int maxDistanceFromCenter;
     public final Optional<Integer> biomeRadius;
     public final Optional<Integer> minYLimit;
+    public final boolean disableBoundChecks;
 
     public GenericOptimizedStructure(StructureSettings config,
                                      Holder<StructureTemplatePool> startPool,
@@ -52,7 +54,8 @@ public class GenericOptimizedStructure extends Structure {
                                      Optional<Heightmap.Types> projectStartToHeightmap,
                                      int maxDistanceFromCenter,
                                      Optional<Integer> biomeRadius,
-                                     Optional<Integer> minYLimit)
+                                     Optional<Integer> minYLimit,
+                                     boolean disableBoundChecks)
     {
         super(config);
         this.startPool = startPool;
@@ -63,6 +66,7 @@ public class GenericOptimizedStructure extends Structure {
         this.maxDistanceFromCenter = maxDistanceFromCenter;
         this.biomeRadius = biomeRadius;
         this.minYLimit = minYLimit;
+        this.disableBoundChecks = disableBoundChecks;
     }
 
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
@@ -105,7 +109,8 @@ public class GenericOptimizedStructure extends Structure {
                 this.projectStartToHeightmap,
                 this.maxDistanceFromCenter,
                 minYLimit,
-                (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces));
+                (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces),
+                this.disableBoundChecks);
     }
 
     @Override

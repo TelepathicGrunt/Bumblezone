@@ -96,7 +96,8 @@ public class HoneyCaveRoomStructure extends Structure {
                 false,
                 this.projectStartToHeightmap,
                 this.maxDistanceFromCenter,
-                (structurePiecesBuilder, pieces) -> {});
+                (structurePiecesBuilder, pieces) -> {},
+                false);
     }
 
     @Override

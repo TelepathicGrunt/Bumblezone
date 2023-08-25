@@ -66,7 +66,8 @@ public class OptimizedJigsawManager {
             boolean doBoundaryAdjustments,
             Optional<Heightmap.Types> heightmapType,
             int maxDistanceFromCenter,
-            BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster
+            BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster,
+            boolean ignoreBounds
     ) {
         return assembleJigsawStructure(
                 context,
@@ -78,7 +79,8 @@ public class OptimizedJigsawManager {
                 heightmapType,
                 maxDistanceFromCenter,
                 Optional.empty(),
-                structureBoundsAdjuster
+                structureBoundsAdjuster,
+                ignoreBounds
         );
     }
 
@@ -92,7 +94,8 @@ public class OptimizedJigsawManager {
             Optional<Heightmap.Types> heightmapType,
             int maxDistanceFromCenter,
             Optional<Integer> minYLimit,
-            BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster
+            BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster,
+            boolean ignoreBounds
     ) {
         // Get a random orientation for the starting piece
         WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
@@ -172,7 +175,7 @@ public class OptimizedJigsawManager {
                 boxOctree.addBox(AABB.of(pieceBoundingBox));
                 Entry startPieceEntry = new Entry(startPiece, new MutableObject<>(boxOctree), finalPieceCenterY + 80, 0);
 
-                Assembler assembler = new Assembler(jigsawPoolRegistry, size, context, components, random, minYLimit);
+                Assembler assembler = new Assembler(jigsawPoolRegistry, size, context, components, random, minYLimit, ignoreBounds);
                 assembler.availablePieces.addLast(startPieceEntry);
 
                 while (!assembler.availablePieces.isEmpty()) {
@@ -213,6 +216,7 @@ public class OptimizedJigsawManager {
         private final List<? super PoolElementStructurePiece> structurePieces;
         private final RandomSource random;
         private final Optional<Integer> minYLimit;
+        private final boolean ignoreBounds;
         public final Deque<Entry> availablePieces = Queues.newArrayDeque();
 
         public Assembler(Registry<StructureTemplatePool> poolRegistry,
@@ -220,7 +224,8 @@ public class OptimizedJigsawManager {
                          Structure.GenerationContext context,
                          List<? super PoolElementStructurePiece> structurePieces,
                          RandomSource random,
-                         Optional<Integer> minYLimit
+                         Optional<Integer> minYLimit,
+                         boolean ignoreBounds
         ) {
             this.poolRegistry = poolRegistry;
             this.maxDepth = maxDepth;
@@ -230,6 +235,7 @@ public class OptimizedJigsawManager {
             this.structurePieces = structurePieces;
             this.random = random;
             this.minYLimit = minYLimit;
+            this.ignoreBounds = ignoreBounds;
         }
 
         public void generatePiece(PoolElementStructurePiece piece, 
@@ -419,12 +425,12 @@ public class OptimizedJigsawManager {
                             boolean validBounds = false;
 
                             // Make sure new piece fits within the chosen octree without intersecting any other piece.
-                            if (boxOctreeMutableObject.getValue().boundaryContains(axisAlignedBBDeflated) && !boxOctreeMutableObject.getValue().intersectsAnyBox(axisAlignedBBDeflated)) {
+                            if (!ignoreBounds && boxOctreeMutableObject.getValue().boundaryContains(axisAlignedBBDeflated) && !boxOctreeMutableObject.getValue().intersectsAnyBox(axisAlignedBBDeflated)) {
                                 boxOctreeMutableObject.getValue().addBox(axisAlignedBB);
                                 validBounds = true;
                             }
 
-                            if (validBounds) {
+                            if (ignoreBounds || validBounds) {
 
                                 // Determine ground level delta for this new piece
                                 int newPieceGroundLevelDelta = piece.getGroundLevelDelta();
