@@ -12,8 +12,6 @@
 
 #TODO: make Spider Spire and Cherry Veteran Tree (low chance of large beehive at base and is on flower mound).
 
-#TODO: make Shepherd villager house with honey slime farm.
-
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
@@ -47,6 +45,8 @@ Added Ancient Shrine structure that resembles a giant flower filled with pollen!
 Added 6 Sempiternal Sanctum structures! A giant structure with mazes and danger that is best done after consuming Essence of the Bees item.
  In the heart is an Essence Block you touch to start an essence event. Beat the difficult events for new end game items!
  By default, these events can be repeated after winning. Set repeatableEssenceEvents to false in config to disable being able to repeat the event after winning.
+
+Added Honey Slime Ranch. A small Shepherd Villager trapped in Bumblezone that is surviving off of Honey Slimes.
 
 ##### Blocks:
 Added Ancient Wax blocks! Very high blast resistance, uncraftable, and will give Slowness, Weakness, and Mining Fatigue to 
