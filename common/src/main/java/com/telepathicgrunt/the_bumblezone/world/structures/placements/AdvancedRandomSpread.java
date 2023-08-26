@@ -18,8 +18,12 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStruct
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
+import oshi.util.tuples.Triplet;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AdvancedRandomSpread extends RandomSpreadStructurePlacement {
     public static final Codec<AdvancedRandomSpread> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
@@ -29,10 +33,10 @@ public class AdvancedRandomSpread extends RandomSpreadStructurePlacement {
             ExtraCodecs.NON_NEGATIVE_INT.fieldOf("salt").forGetter(AdvancedRandomSpread::salt),
             StructurePlacement.ExclusionZone.CODEC.optionalFieldOf("exclusion_zone").forGetter(AdvancedRandomSpread::exclusionZone),
             SuperExclusionZone.CODEC.optionalFieldOf("super_exclusion_zone").forGetter(AdvancedRandomSpread::superExclusionZone),
-            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("spacing").forGetter(AdvancedRandomSpread::spacing),
-            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("separation").forGetter(AdvancedRandomSpread::separation),
+            ExtraCodecs.NON_NEGATIVE_INT.fieldOf("spacing").forGetter(AdvancedRandomSpread::spacing),
+            ExtraCodecs.NON_NEGATIVE_INT.fieldOf("separation").forGetter(AdvancedRandomSpread::separation),
             RandomSpreadType.CODEC.optionalFieldOf("spread_type", RandomSpreadType.LINEAR).forGetter(AdvancedRandomSpread::spreadType),
-            Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("min_distance_from_world_origin").forGetter(AdvancedRandomSpread::minDistanceFromWorldOrigin)
+            ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("min_distance_from_world_origin").forGetter(AdvancedRandomSpread::minDistanceFromWorldOrigin)
     ).apply(instance, instance.stable(AdvancedRandomSpread::new)));
 
     private final int spacing;
@@ -135,33 +139,42 @@ public class AdvancedRandomSpread extends RandomSpreadStructurePlacement {
         return BzStructurePlacementType.ADVANCED_RANDOM_SPREAD.get();
     }
 
-    public record SuperExclusionZone(HolderSet<StructureSet> otherSet, int chunkCount, Optional<Integer> allowedChunkCount) {
+    public record SuperExclusionZone(List<AvoidData> avoidStructureData) {
         public static final Codec<AdvancedRandomSpread.SuperExclusionZone> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-                RegistryCodecs.homogeneousList(Registries.STRUCTURE_SET, StructureSet.DIRECT_CODEC).fieldOf("other_set").forGetter(AdvancedRandomSpread.SuperExclusionZone::otherSet),
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("chunk_count").forGetter(AdvancedRandomSpread.SuperExclusionZone::chunkCount),
-                Codec.intRange(1, Integer.MAX_VALUE).optionalFieldOf("allowed_chunk_count").forGetter(AdvancedRandomSpread.SuperExclusionZone::allowedChunkCount)
+                Codec.list(AvoidData.CODEC).fieldOf("list_of_avoids").forGetter(AdvancedRandomSpread.SuperExclusionZone::avoidStructureData)
         ).apply(builder, AdvancedRandomSpread.SuperExclusionZone::new));
 
-        boolean isPlacementForbidden(ChunkGeneratorStructureState chunkGeneratorStructureState, int l, int j) {
-            for (Holder<StructureSet> holder : this.otherSet) {
-                if (chunkGeneratorStructureState.hasStructureChunkInRange(holder, l, j, this.chunkCount)) {
-                    return true;
-                }
-            }
 
-            if (this.allowedChunkCount.isPresent() && this.allowedChunkCount.get() > this.chunkCount) {
-                boolean isAnyInRange = false;
-                for (Holder<StructureSet> holder : this.otherSet) {
-                    if (chunkGeneratorStructureState.hasStructureChunkInRange(holder, l, j, this.allowedChunkCount.get())) {
-                        isAnyInRange = true;
+        boolean isPlacementForbidden(ChunkGeneratorStructureState chunkGeneratorStructureState, int l, int j) {
+            for (AvoidData avoidData : this.avoidStructureData) {
+                for (Holder<StructureSet> holder : avoidData.otherSet()) {
+                    if (chunkGeneratorStructureState.hasStructureChunkInRange(holder, l, j, avoidData.chunkCount())) {
+                        return true;
                     }
                 }
-                if (!isAnyInRange) {
-                    return false;
+
+                if (avoidData.allowedChunkCount().isPresent() && avoidData.allowedChunkCount().get() > avoidData.chunkCount()) {
+                    boolean isAnyInRange = false;
+                    for (Holder<StructureSet> holder : avoidData.otherSet()) {
+                        if (chunkGeneratorStructureState.hasStructureChunkInRange(holder, l, j, avoidData.allowedChunkCount().get())) {
+                            isAnyInRange = true;
+                        }
+                    }
+                    if (!isAnyInRange) {
+                        return false;
+                    }
                 }
             }
 
             return false;
+        }
+
+        private record AvoidData(HolderSet<StructureSet> otherSet, int chunkCount, Optional<Integer> allowedChunkCount) {
+            public static final Codec<AvoidData> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+                    RegistryCodecs.homogeneousList(Registries.STRUCTURE_SET, StructureSet.DIRECT_CODEC).fieldOf("other_set").forGetter(AvoidData::otherSet),
+                    ExtraCodecs.POSITIVE_INT.fieldOf("chunk_count").forGetter(AvoidData::chunkCount),
+                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("allowed_chunk_count").forGetter(AvoidData::allowedChunkCount)
+            ).apply(builder, AvoidData::new));
         }
     }
 }

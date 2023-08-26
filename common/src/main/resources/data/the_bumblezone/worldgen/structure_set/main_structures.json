@@ -71,8 +71,16 @@
     "spacing": 19,
     "separation": 4,
     "super_exclusion_zone": {
-      "other_set": "#the_bumblezone:avoiding/for_main_structures",
-      "chunk_count": 5
+      "list_of_avoids": [
+        {
+          "other_set": ["the_bumblezone:cell_maze", "the_bumblezone:pollinated_stream"],
+          "chunk_count": 5
+        },
+        {
+          "other_set": ["the_bumblezone:sanctums"],
+          "chunk_count": 4
+        }
+      ]
     }
   }
 }

@@ -6,6 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.item.Item;
@@ -19,9 +20,9 @@ public class WeightedTradeResult implements WeightedEntry {
             TagKey.codec(Registries.ITEM).optionalFieldOf("t").forGetter(e -> e.tagKey),
             BuiltInRegistries.ITEM.byNameCodec().listOf().optionalFieldOf("w").forGetter(e -> e.items),
             Codec.intRange(1, 64).fieldOf("c").forGetter(e -> e.count),
-            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("xp").forGetter(e -> e.xpReward),
-            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("w8").forGetter(e -> e.weight),
-            Codec.intRange(1, Integer.MAX_VALUE).fieldOf("tgw").forGetter(e -> e.totalGroupWeight)
+            ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp").forGetter(e -> e.xpReward),
+            ExtraCodecs.POSITIVE_INT.fieldOf("w8").forGetter(e -> e.weight),
+            ExtraCodecs.POSITIVE_INT.fieldOf("tgw").forGetter(e -> e.totalGroupWeight)
     ).apply(instance, instance.stable(WeightedTradeResult::new)));
 
     public final Optional<TagKey<Item>> tagKey;

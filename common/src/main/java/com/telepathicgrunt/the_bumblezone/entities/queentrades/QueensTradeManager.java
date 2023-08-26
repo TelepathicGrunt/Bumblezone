@@ -25,6 +25,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
@@ -75,8 +76,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 Codec.STRING.fieldOf("id").forGetter(e -> e.entry),
                 Codec.BOOL.fieldOf("required").forGetter(e -> e.required),
                 Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
-                Codec.intRange(0, Integer.MAX_VALUE).fieldOf("xp_reward").forGetter(e -> e.xpReward),
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight").forGetter(e -> e.weight)
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
+                ExtraCodecs.POSITIVE_INT.fieldOf("weight").forGetter(e -> e.weight)
         ).apply(instance, instance.stable(RawTradeOutputEntry::new)));
     }
 
@@ -92,8 +93,8 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
                 RegistryCodecs.homogeneousList(Registries.ITEM, BuiltInRegistries.ITEM.byNameCodec()).fieldOf("wantItems").forGetter(e -> e.resultItems),
                 Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
-                Codec.intRange(0, Integer.MAX_VALUE).fieldOf("xp_reward").forGetter(e -> e.xpReward),
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight").forGetter(e -> e.weight)
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("xp_reward").forGetter(e -> e.xpReward),
+                ExtraCodecs.POSITIVE_INT.fieldOf("weight").forGetter(e -> e.weight)
         ).apply(instance, instance.stable(TradeResultEntry::new)));
     }
 

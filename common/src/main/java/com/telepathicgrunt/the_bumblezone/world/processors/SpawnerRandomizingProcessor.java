@@ -13,6 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LevelReader;
@@ -28,7 +29,7 @@ import java.util.Optional;
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 
     public static final Codec<SpawnerRandomizingProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.mapPair(BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), Codec.intRange(1, Integer.MAX_VALUE).fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.mainSpawnerData),
+            Codec.mapPair(BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), ExtraCodecs.POSITIVE_INT.fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.mainSpawnerData),
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE, BuiltInRegistries.ENTITY_TYPE.byNameCodec()).optionalFieldOf("override_mobs_to_pick_from").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.overrideMobsToPickFrom),
             Codec.floatRange(0, 1).fieldOf("chance_to_override_with_tagged_mobs").orElse(0F).forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.chanceToOverrideWithTaggedMobs)
     ).apply(instance, instance.stable(SpawnerRandomizingProcessor::new)));

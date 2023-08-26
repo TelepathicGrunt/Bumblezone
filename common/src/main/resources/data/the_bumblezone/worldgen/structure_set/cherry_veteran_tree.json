@@ -11,8 +11,16 @@
     "spacing": 4,
     "separation": 1,
     "super_exclusion_zone": {
-      "other_set": "#the_bumblezone:avoiding/for_cherry_veteran_tree",
-      "chunk_count": 4
+      "list_of_avoids": [
+        {
+          "other_set": ["the_bumblezone:cell_maze", "the_bumblezone:pollinated_stream"],
+          "chunk_count": 4
+        },
+        {
+          "other_set": ["the_bumblezone:main_structures"],
+          "chunk_count": 2
+        }
+      ]
     }
   }
 }

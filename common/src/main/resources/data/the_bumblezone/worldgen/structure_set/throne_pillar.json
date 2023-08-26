@@ -12,8 +12,12 @@
     "separation": 55,
     "min_distance_from_world_origin": 500,
     "super_exclusion_zone": {
-      "other_set": "#the_bumblezone:avoiding/for_throne_pillar",
-      "chunk_count": 5
+      "list_of_avoids": [
+        {
+          "other_set": ["the_bumblezone:sanctums"],
+          "chunk_count": 5
+        }
+      ]
     }
   }
 }
