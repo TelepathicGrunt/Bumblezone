@@ -276,6 +276,8 @@ Honeycomb Brood Blocks will always have 100% of giving Protection of the Hive ef
 For the Honey Residue/Honey Web blocks, I converted the right click washing items into an item tag to support more washing items:
  `the_bumblezone:washing_items`
 
+Fixed Panes, Fences, and Iron Bars being able to connect to back of String Curtains. Not anymore.
+
 ##### Items:
 Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
 

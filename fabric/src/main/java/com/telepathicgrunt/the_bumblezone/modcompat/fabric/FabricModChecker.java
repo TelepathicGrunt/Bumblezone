@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.SodiumCompatImpl;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.TrinketsCompat;
 
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
