@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#the_bumblezone:armors/helmets",
+    "#the_bumblezone:armors/chestplates",
+    "#the_bumblezone:armors/leggings",
+    "#the_bumblezone:armors/boots"
+  ]
+}

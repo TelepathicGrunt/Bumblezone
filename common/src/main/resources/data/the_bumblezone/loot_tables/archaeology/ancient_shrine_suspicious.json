@@ -231,103 +231,15 @@
           "weight": 1
         },
         {
-          "name": "minecraft:angler_pottery_sherd",
-          "type": "minecraft:item",
+          "name": "minecraft:decorated_pot_sherds",
+          "type": "minecraft:tag",
+          "expand": true,
           "weight": 1
         },
         {
-          "name": "minecraft:archer_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:arms_up_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:blade_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:brewer_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:burn_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:danger_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:explorer_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:friend_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:heart_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:heartbreak_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:howl_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:miner_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:mourner_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:plenty_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:prize_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:sheaf_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:shelter_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:skull_pottery_sherd",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:snort_pottery_sherd",
-          "type": "minecraft:item",
+          "name": "minecraft:trim_templates",
+          "type": "minecraft:tag",
+          "expand": true,
           "weight": 1
         },
         {
@@ -357,91 +269,6 @@
         },
         {
           "name": "minecraft:piglin_banner_pattern",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:netherite_upgrade_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:coast_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:dune_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:dune_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:host_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:raiser_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:rib_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:sentry_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:shaper_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:silence_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:snout_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:spire_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:tide_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:vex_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:ward_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:wayfinder_armor_trim_smithing_template",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "minecraft:wild_armor_trim_smithing_template",
           "type": "minecraft:item",
           "weight": 1
         }

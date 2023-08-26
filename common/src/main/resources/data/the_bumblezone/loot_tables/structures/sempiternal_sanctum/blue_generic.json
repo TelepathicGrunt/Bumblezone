@@ -439,7 +439,7 @@
           ]
         },
         {
-          "name": "minecraft:white_dye",
+          "name": "minecraft:blue_dye",
           "type": "minecraft:item",
           "weight": 3,
           "quality": 1,
@@ -516,7 +516,7 @@
           "weight": 2
         },
         {
-          "name": "minecraft:white_candle",
+          "name": "minecraft:blue_candle",
           "type": "minecraft:item",
           "weight": 2,
           "quality": 1

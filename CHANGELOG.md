@@ -14,8 +14,6 @@
 
 #TODO: make Shepherd villager house with honey slime farm.
 
-#TODO: make loot for sempiternal sanctum.
-
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
