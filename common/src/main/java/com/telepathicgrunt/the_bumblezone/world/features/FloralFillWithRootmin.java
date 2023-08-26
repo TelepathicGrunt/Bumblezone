@@ -77,6 +77,10 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                     continue;
                 }
 
+                if (!level.isEmptyBlock(mutable.above())) {
+                    continue;
+                }
+
                 BlockState chosenFlower = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
                 if (chosenFlower.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
                     chosenFlower = chosenFlower.setValue(BlockStateProperties.FLOWER_AMOUNT, 4);
