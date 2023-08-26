@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:cell_maze",
+    "the_bumblezone:main_structures",
+    "the_bumblezone:sanctums"
+  ]
+}

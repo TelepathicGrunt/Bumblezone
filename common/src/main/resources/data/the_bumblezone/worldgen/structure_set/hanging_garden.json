@@ -12,7 +12,7 @@
     "separation": 23,
     "exclusion_zone": {
       "other_set": "#the_bumblezone:avoiding/for_hanging_garden",
-      "chunk_count": 5
+      "chunk_count": 6
     }
   }
 }

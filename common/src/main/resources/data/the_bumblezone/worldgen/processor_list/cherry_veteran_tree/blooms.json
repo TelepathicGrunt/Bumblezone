@@ -1,0 +1,157 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:cherry_wood",
+            "Properties": {
+              "axis": "y"
+            }
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "location_predicate": {
+            "block_state": {
+              "Name": "minecraft:cherry_wood"
+            },
+            "predicate_type": "minecraft:blockstate_match"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cherry_wood",
+            "Properties": {
+              "axis": "y"
+            }
+          },
+          "input_predicate": {
+            "block_state": {
+              "Name": "minecraft:cherry_wood"
+            },
+            "predicate_type": "minecraft:blockstate_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cherry_leaves",
+            "Properties": {
+              "distance": "1",
+              "persistent": "false",
+              "axis": "y"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:cherry_leaves",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "minecraft:magenta_stained_glass",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.45
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cherry_leaves",
+            "Properties": {
+              "distance": "1",
+              "persistent": "false",
+              "axis": "y"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:magenta_stained_glass",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 4,
+          "min_inclusive": 2
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:pink_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:cherry_leaves",
+            "Properties": {
+              "distance": "1",
+              "persistent": "false",
+              "axis": "y"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 6,
+          "min_inclusive": 3
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:purple_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:cherry_leaves",
+            "Properties": {
+              "distance": "1",
+              "persistent": "false",
+              "axis": "y"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        },
+        {
+          "Name": "minecraft:air"
+        }
+      ]
+    }
+  ]
+}

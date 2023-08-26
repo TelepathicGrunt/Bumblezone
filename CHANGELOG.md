@@ -10,7 +10,7 @@
 
 #TODO: adjust backup essence block textures
 
-#TODO: make Spider Spire and Cherry Veteran Tree (low chance of large beehive at base and is on flower mound).
+#TODO: make Spider Spire 
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
@@ -27,6 +27,7 @@ NOTE: Forge users must use 1.20.1 Forge up to v47.1.3 and nothing newer.
 
 ##### Biomes:
 Added Floral Meadow biome full of vanilla flowers and cherry trees! Rootmins can spawn naturally in this biome!
+ Giant Cherry Trees spawn in this biome as well.
 
 ##### Dimension:
 Fishing in Bumblezone dimension now has custom loot!

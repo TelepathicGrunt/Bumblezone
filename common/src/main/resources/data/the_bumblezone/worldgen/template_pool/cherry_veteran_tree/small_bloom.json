@@ -1,0 +1,41 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cherry_veteran_tree/small_bloom_1",
+        "processors": "the_bumblezone:cherry_veteran_tree/blooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cherry_veteran_tree/small_bloom_2",
+        "processors": "the_bumblezone:cherry_veteran_tree/blooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cherry_veteran_tree/small_bloom_3",
+        "processors": "the_bumblezone:cherry_veteran_tree/blooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:cherry_veteran_tree/small_bloom_4",
+        "processors": "the_bumblezone:cherry_veteran_tree/blooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
