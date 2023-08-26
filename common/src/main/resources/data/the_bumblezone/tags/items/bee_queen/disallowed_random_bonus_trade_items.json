@@ -261,11 +261,23 @@
       "required": false
     },
     {
+      "id": "bushierflowers:grown_torchflower",
+      "required": false
+    },
+    {
       "id": "flowerpatch:wither_rose_patch",
       "required": false
     },
     {
+      "id": "flowerpatch:torchflower_patch",
+      "required": false
+    },
+    {
       "id": "windswept:wither_rose_bush",
+      "required": false
+    },
+    {
+      "id": "windswept:torchflower_bush",
       "required": false
     },
     {

@@ -17,6 +17,10 @@
       "required": false
     },
     {
+      "id": "bushierflowers:grown_torchflower",
+      "required": false
+    },
+    {
       "id": "byg:prairie_grass",
       "required": false
     },
@@ -89,6 +93,10 @@
       "required": false
     },
     {
+      "id": "flowerpatch:torchflower_patch",
+      "required": false
+    },
+    {
       "id": "gaiadimension:missingno_plant",
       "required": false
     },
@@ -118,6 +126,10 @@
     },
     {
       "id": "windswept:wither_rose_bush",
+      "required": false
+    },
+    {
+      "id": "windswept:torchflower_bush",
       "required": false
     },
     {

@@ -148,11 +148,11 @@
       "required": false
     },
     {
-      "id": "bushierflowers:grown_azure_bluet",
+      "id": "bushierflowers:grown_torchflower",
       "required": false
     },
     {
-      "id": "bushierflowers:grown_torchflower",
+      "id": "bushierflowers:grown_azure_bluet",
       "required": false
     },
     {
@@ -277,6 +277,10 @@
     },
     {
       "id": "flowerpatch:wither_rose_patch",
+      "required": false
+    },
+    {
+      "id": "flowerpatch:torchflower_patch",
       "required": false
     },
     {
@@ -457,6 +461,10 @@
     },
     {
       "id": "naturaldecormod:wither_rose_bundle",
+      "required": false
+    },
+    {
+      "id": "naturaldecormod:torchflower_bundle",
       "required": false
     },
     {

@@ -104,6 +104,10 @@
     {
       "id": "windswept:wither_rose_bush",
       "required": false
+    },
+    {
+      "id": "windswept:torchflower_bush",
+      "required": false
     }
   ]
 }
