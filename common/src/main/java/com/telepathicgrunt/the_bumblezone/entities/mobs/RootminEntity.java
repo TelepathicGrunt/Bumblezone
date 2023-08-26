@@ -885,6 +885,19 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       }
    }
 
+   private static void jumpFix(Path path, RootminEntity mob) {
+      if (!mob.jumping && path != null && !path.isDone() && path.getNodeCount() > 0 && path.getNodeCount() > path.getNextNodeIndex()) {
+         BlockPos targetPos = path.getNodePos(path.getNextNodeIndex());
+         if (targetPos.getY() > mob.blockPosition().getY()) {
+            BlockPos frontPos = mob.blockPosition().relative(mob.getDirection());
+            BlockState frontState = mob.level().getBlockState(frontPos);
+            if (frontState.isCollisionShapeFullBlock(mob.level(), frontPos)) {
+               mob.jumpFromGround();
+            }
+         }
+      }
+   }
+
    ///////////////////////////////////////////////////////
    //GOALS
 
@@ -1254,6 +1267,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.mob.getNavigation().setSpeedModifier(isFleeing ? 2.0 : 1.0);
 
          considerHiddenRootminsInPath(this.path, this.mob);
+         jumpFix(this.path, this.mob);
       }
    }
 
@@ -1388,7 +1402,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          if (this.toAvoid == null) {
             return false;
          }
-         Vec3 vec3 = DefaultRandomPos.getPosAway(this.mob, 26, 8, this.toAvoid.position());
+         Vec3 vec3 = null;
+         for (int i = 0; i < 10; i++) {
+            vec3 = DefaultRandomPos.getPosAway(this.mob, 26, 8, this.toAvoid.position());
+            if (vec3 != null) {
+               break;
+            }
+         }
          if (vec3 == null) {
             return false;
          }
@@ -1442,6 +1462,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          }
 
          considerHiddenRootminsInPath(this.path, this.mob);
+         jumpFix(this.path, this.mob);
       }
    }
 
