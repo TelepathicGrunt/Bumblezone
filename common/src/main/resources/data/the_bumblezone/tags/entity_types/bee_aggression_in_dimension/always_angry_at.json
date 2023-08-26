@@ -66,6 +66,22 @@
       "required": false
     },
     {
+      "id": "buddies_for_baby:hermet_crab",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:porcelain_crab",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:blue_crab",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:spider_crab",
+      "required": false
+    },
+    {
       "id": "bunchobugs:weevil",
       "required": false
     },

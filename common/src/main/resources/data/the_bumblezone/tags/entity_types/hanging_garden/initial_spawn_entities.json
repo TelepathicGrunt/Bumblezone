@@ -50,6 +50,50 @@
       "required": false
     },
     {
+      "id": "buddies_for_baby:haku",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:bearded_dragon",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:green_anole",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:crested_gecko_fire_morph",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:crested_gecko_white_lily_morph",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:crested_gecko_axanthic_morph",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:cane_toad",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:tree_frog",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:redfooted_tortoise",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:corn_snake",
+      "required": false
+    },
+    {
+      "id": "buddies_for_baby:ball_python",
+      "required": false
+    },
+    {
       "id": "bunchobugs:ladybug",
       "required": false
     },
