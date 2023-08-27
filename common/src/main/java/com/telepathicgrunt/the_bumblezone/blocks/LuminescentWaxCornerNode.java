@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -68,7 +69,7 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
 
     @Override
     public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
-        this.applyEntityEffects(entity);
+        this.applyEntityEffects(state, entity);
         super.stepOn(level, blockPos, state, entity);
     }
 }

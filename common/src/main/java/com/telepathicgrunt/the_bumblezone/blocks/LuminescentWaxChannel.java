@@ -39,8 +39,6 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
             Direction.Axis newAxisProp = blockState.getValue(AXIS);
             int newRotateProperty = blockState.getValue(ROTATION) + 1;
 
-            boolean isLuminescent = blockState.is(BzTags.LUMINESCENT_WAX_LIGHT_CHANNELS);
-
             if (newRotateProperty > 1) {
                 newAxisProp = Direction.Axis.values()[(newAxisProp.ordinal() + 1) % 3];
                 newRotateProperty = 0;
@@ -71,7 +69,7 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
 
     @Override
     public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
-        this.applyEntityEffects(entity);
+        this.applyEntityEffects(state, entity);
         super.stepOn(level, blockPos, state, entity);
     }
 }
