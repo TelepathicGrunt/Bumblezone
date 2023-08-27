@@ -4,7 +4,7 @@
   "size": 7,
   "max_distance_from_center": 80,
   "biomes": "#the_bumblezone:has_structure/cherry_veteran_tree",
-  "step": "surface_structures",
+  "step": "local_modifications",
   "terrain_adaptation": "beard_box",
   "start_height": {
     "absolute": 41
