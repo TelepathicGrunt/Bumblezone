@@ -154,6 +154,7 @@ public class BzBlocks {
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_white"), STRING_CURTAIN_WHITE);
         Registry.register(Registry.BLOCK, new ResourceLocation(Bumblezone.MODID, "string_curtain_yellow"), STRING_CURTAIN_YELLOW);
 
-        StringCurtain.setupStringCurtainbehaviors();
+        StringCurtain.setupStringCurtainBehaviors();
+        HoneyCocoon.setupHoneyCocoonFlammable();
     }
 }

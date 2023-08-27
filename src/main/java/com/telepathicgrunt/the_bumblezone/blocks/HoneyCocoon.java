@@ -1,14 +1,18 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,6 +21,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -374,6 +379,10 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
         return false;
+    }
+
+    public static void setupHoneyCocoonFlammable() {
+        FlammableBlockRegistry.getDefaultInstance().add(BzBlocks.HONEY_COCOON, 400, 40);
     }
 
     /**
