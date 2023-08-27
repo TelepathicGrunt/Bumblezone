@@ -331,6 +331,8 @@ Fixed Sugar Water overlay still showing on Glistering Honey Crystal and other bl
 ##### Enchantments:
 Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
 
+Allow Neurotoxin enchant to go up to level 3.
+
 ##### Entities:
 Honey Slime is now immune to fall damage like Magma Cubes. The honey protects the Slime!
 
