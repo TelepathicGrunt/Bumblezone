@@ -477,8 +477,8 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
-          "weight": 1,
-          "quality": 1,
+          "weight": 2,
+          "quality": 2,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -503,8 +503,8 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
-          "weight": 2,
-          "quality": 1,
+          "weight": 3,
+          "quality": 2,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -529,8 +529,8 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_compass",
-          "weight": 2,
-          "quality": 1,
+          "weight": 3,
+          "quality": 2,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -554,7 +554,7 @@
         },
         {
           "type": "minecraft:empty",
-          "weight": 60
+          "weight": 100
         }
       ]
     }

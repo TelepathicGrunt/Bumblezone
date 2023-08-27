@@ -1,5 +1,6 @@
 {
   "type": "minecraft:block",
+  "random_sequence": "the_bumblezone:blocks",
   "pools": [
     {
       "rolls": 1,
@@ -21,11 +22,7 @@
               "functions": [
                 {
                   "function": "minecraft:set_count",
-                  "count": {
-                    "min": 0.0,
-                    "max": 1.0,
-                    "type": "minecraft:uniform"
-                  }
+                  "count": 0.0
                 },
                 {
                   "function": "minecraft:apply_bonus",
@@ -61,7 +58,7 @@
                   "function": "minecraft:set_count",
                   "count": {
                     "min": 0.0,
-                    "max": 2.0,
+                    "max": 1.0,
                     "type": "minecraft:uniform"
                   }
                 },
@@ -99,7 +96,7 @@
                   "function": "minecraft:set_count",
                   "count": {
                     "min": 0.0,
-                    "max": 2.0,
+                    "max": 1.0,
                     "type": "minecraft:uniform"
                   }
                 },
@@ -146,7 +143,7 @@
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:uniform_bonus_count",
                   "parameters": {
-                    "bonusMultiplier": 1
+                    "bonusMultiplier": 2
                   }
                 },
                 {
@@ -174,7 +171,7 @@
                 {
                   "function": "minecraft:set_count",
                   "count": {
-                    "min": 1.0,
+                    "min": 0.0,
                     "max": 2.0,
                     "type": "minecraft:uniform"
                   }
@@ -184,7 +181,7 @@
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:uniform_bonus_count",
                   "parameters": {
-                    "bonusMultiplier": 1
+                    "bonusMultiplier": 2
                   }
                 },
                 {
@@ -212,7 +209,7 @@
                 {
                   "function": "minecraft:set_count",
                   "count": {
-                    "min": 2.0,
+                    "min": 1.0,
                     "max": 3.0,
                     "type": "minecraft:uniform"
                   }
@@ -222,14 +219,14 @@
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:uniform_bonus_count",
                   "parameters": {
-                    "bonusMultiplier": 1
+                    "bonusMultiplier": 2
                   }
                 },
                 {
                   "function": "minecraft:limit_count",
                   "limit": {
                     "max": 6,
-                    "min": 2
+                    "min": 1
                   }
                 }
               ],
@@ -250,8 +247,8 @@
                 {
                   "function": "minecraft:set_count",
                   "count": {
-                    "min": 3.0,
-                    "max": 4.0,
+                    "min": 1.0,
+                    "max": 3.0,
                     "type": "minecraft:uniform"
                   }
                 },
@@ -260,14 +257,14 @@
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:uniform_bonus_count",
                   "parameters": {
-                    "bonusMultiplier": 1
+                    "bonusMultiplier": 2
                   }
                 },
                 {
                   "function": "minecraft:limit_count",
                   "limit": {
                     "max": 7,
-                    "min": 3
+                    "min": 1
                   }
                 }
               ],
@@ -282,14 +279,27 @@
                   "properties": {
                     "layers": "8"
                   }
+                },
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "condition": "minecraft:match_tool",
+                    "predicate": {
+                      "enchantments": [
+                        {
+                          "enchantment": "minecraft:silk_touch"
+                        }
+                      ]
+                    }
+                  }
                 }
               ],
               "functions": [
                 {
                   "function": "minecraft:set_count",
                   "count": {
-                    "min": 4.0,
-                    "max": 5.0,
+                    "min": 1.0,
+                    "max": 3.0,
                     "type": "minecraft:uniform"
                   }
                 },
@@ -298,14 +308,14 @@
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:uniform_bonus_count",
                   "parameters": {
-                    "bonusMultiplier": 1
+                    "bonusMultiplier": 3
                   }
                 },
                 {
                   "function": "minecraft:limit_count",
                   "limit": {
                     "max": 8,
-                    "min": 4
+                    "min": 1
                   }
                 }
               ],
