@@ -10,7 +10,7 @@
 
 #TODO: adjust backup essence block textures
 
-#TODO: make Spider Spire 
+#TODO: Add spikes to howling constructs
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
@@ -277,19 +277,7 @@ For the Honey Residue/Honey Web blocks, I converted the right click washing item
 
 Fixed Panes, Fences, and Iron Bars being able to connect to back of String Curtains. Not anymore.
 
-Pile of Pollen now gives much less Pollen Puff when mined without Fortune.
-
-Honey Cocoon is now flammable and will break and drop loot when broken by fire. The Honey Cocoon itself will be lost.
-
-Pile of Pollen is now flammable but only weakly. Set pileOfPollenHyperFireSpread to true in config to make fire spread crazy fast for this block.
-
 ##### Items:
-Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
-
-Renamed the Bumble Bee Chestplate optional nbt from `requiredGearCountForForcedFlyingTime` to `requiredWearablesCountForForcedFlyingTime`
-
-Cleaned up how Bumblezone items are grouped in vanilla Recipe Book
-
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
 
 Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not want it to be too easy to multiply (Pitcher Plant cannot be bonemealed)
@@ -298,26 +286,7 @@ Essence of the Bees takes less time to consume now.
 
 All color Essence items added plus Essence of the Bees is now fire-resistant and won't be destroyed by lava/fire.
 
-Removed Carvable Wax from forge:wax/c:wax item tag to prevent recipe conflict with other mod's candle recipes.
-
-Added configs to turn off Brewing Recipes
-
-Added two new nbt that modpack makers can set for Bumble Bee Chestplate to change the flight time. 
- Add "forcedMaxFlyingTickTime" int to the item's nbt to set the new maximum flight time for that item.
- Add "requiredWearablesCountForForcedFlyingTime" to make the above nbt only apply if player has the correct number of bee wearables equipped.
- "forcedMaxFlyingTickTime", if present, will always apply if "requiredWearablesCountForForcedFlyingTime" is not present
-
-Fixed one Bumble Bee Chestplate's wings being off when viewed from above and is flying.
-
-Fixed recipe for Trans Bumble Bee Chestplate nuking the NBT of the original chestplate
-
-Adjusted texture on one Trans Bumble Bee armor variant to make it more distinct.
-
-Adjusted texture for one Honey Bee Leggings to make it more distinct from the other variant.
-
 Honey Bee Leggings item texture will now show pollen if the item actually has pollen set in nbt.
-
-Many Bumblezone Music Discs now shows a link to where one can buy the song as part of the item's tooltip.
 
 Honey Bee Leggings now can collect pollen from Pile of Pollen and Flowers by walking now. Not just running.
 
@@ -328,13 +297,9 @@ Honey Bee Leggings now can collect pollen from Pile of Pollen and Flowers by wal
 
 (Forge): Fixed Night Vision not applying to Sugar Water Fluid when inside it.
 
-Sugar Water Fluid and vanilla Water both now are tinted more light blue when in Bumblezone rather than the yellowish color before.
-
 Fixed Sugar Water overlay still showing on Glistering Honey Crystal and other blocks that should not show fluid overlay.
 
 ##### Enchantments:
-Fixed Comb Cutter bypassing Mining Fatigue effect like it didn't exist.
-
 Allow Neurotoxin enchant to go up to level 3.
 
 ##### Entities:
@@ -346,17 +311,7 @@ Fixed z-fighting on bottom of Honey Slime and ground.
 
 Fixed Bee Queen able to be leashed when it shouldn't.
 
-Beehemoth now starts with 40 health points and will get more health as friendship increases! Maxes out at 60 health points.
-
-Tamed Beehemoths will show friendship amount above when owner is looking at it.
-
 Added beehemothFriendlyFire config option, so you can disable accidentally hurting your flying friend! Set to true by default to allow owners to kill their Beehemoth by attacking.
-
-Fixed bug where Beehemoths always fly straight up if below sealevel.
-
-Fixed Leash rendering for Beehemoth.
-
-Beehemoth will not lose friendship if it suffers in-wall suffocation damage
 
 ##### Structures:
 Hanging Gardens now can spawn Torch Flower, Pitcher Plant, Pink Petal, Cherry Leaves, Cherry Logs, and Cherry Saplings!.
@@ -378,8 +333,6 @@ Added Bumblezone biomes to `minecraft:snow_golem_melts` biome tag to make Snow G
 Added Bumblezone biomes to `minecraft:without_wandering_trader_spawns` biome tag to make extra sure Wandering Traders do not spawn in Bumblezone.
 
 ##### Dimension:
-Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
-
 Fixed Water, Lava, and Powder Snow fog effect not working when in Bumblezone dimension
 
 Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaining issues.
@@ -387,16 +340,10 @@ Set Portal Cooldown when entering or exiting Bumblezone to prevent portal chaini
 ##### Effects:
 (Forge): Removed Milk as a curative item for Wrath of the Hive. Now many other mod's methods of removing the effect should no longer work.
 
-Protection of the Hive will now always remove Wrath of the Hive effect if you managed to get both on together.
+Protection of the Hive will always remove Wrath of the Hive effect if you managed to get both on together.
 
 ##### Advancements:
-
-Improved performance of is_near_beehive advancement.
-
 Renamed VIP Trader advancement to Crazy Trader to reduce confusion.
-
-Improved `/bumblezone_read_self_data queens_desired_killed_entity_counter` command to only show entries that has existing progress towards the Queen Desire advancement.
- Also will now work with tag requirements advancements.
 
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
@@ -405,7 +352,4 @@ Added tag translations for Bumblezone item tags so that EMI mod can display them
  enderpearls at top half of Autumn Ent will teleport to Bumblezone,
  String Curtains blocks their small Pixies,
  and Feywild's Honeycomb and cookie can be fed to bees or given to Bee Queen.
-
-##### Config:
-(Forge): Updated comment on warnPlayersOfWrongBlockUnderHive config option to be more clear on tag to edit.
 
