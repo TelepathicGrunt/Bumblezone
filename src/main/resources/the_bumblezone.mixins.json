@@ -13,6 +13,7 @@
     "blocks.DetectorRailBlockMixin",
     "blocks.DispenserBlockInvoker",
     "blocks.FallingBlockEntityAccessor",
+    "blocks.FireBlockMixin",
     "blocks.FlowingFluidAccessor",
     "blocks.FrogspawnBlockMixin",
     "blocks.PistonBaseBlockMixin",

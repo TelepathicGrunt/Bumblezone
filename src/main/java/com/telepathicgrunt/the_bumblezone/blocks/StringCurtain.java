@@ -68,7 +68,7 @@ public class StringCurtain extends Block {
                 .strength(0.3F));
     }
 
-    public static void setupStringCurtainbehaviors() {
+    public static void setupStringCurtainBehaviors() {
         BlockContentRegistries.FLAMMABLE_BLOCK.put(BzTags.STRING_CURTAINS, new FlammableBlockEntry(60, 20));
 
         UseBlockCallback.EVENT.register(new ResourceLocation(Bumblezone.MODID, "string_below_string_curtain"),
