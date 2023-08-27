@@ -56,7 +56,7 @@
         {
           "name": "the_bumblezone:pollen_puff",
           "type": "minecraft:item",
-          "weight": 15,
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:set_count",
