@@ -246,7 +246,7 @@ public abstract class RoyalJellyFluid extends ForgeFlowingFluid {
 
         return newFluidLevel <= 0 ?
                 Fluids.EMPTY.defaultFluidState() :
-                this.getFlowing(newFluidLevel, isFalling)
+                this.getFlowing(Math.min(newFluidLevel, 8), isFalling)
                         .setValue(BOTTOM_LEVEL, newBottomFluidLevel)
                         .setValue(ABOVE_FLUID, aboveFluidIsThisFluid && (aboveFluidState.isSource() || aboveFluidState.getValue(BOTTOM_LEVEL) == 0));
     }
