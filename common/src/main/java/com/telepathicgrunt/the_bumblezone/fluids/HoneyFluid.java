@@ -199,7 +199,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
     protected FluidState getNewLiquid(Level worldReader, BlockPos blockPos, BlockState blockState) {
         boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LiquidBlock.LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
-        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LiquidBlock.LEVEL) : 0;
+        int currentFluidLevel = isBzFluidBlock ? blockState.getFluidState().isSource() ? 8 : blockState.getFluidState().getValue(LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
         boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
@@ -247,7 +247,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
 
         return newFluidLevel <= 0 ?
                 Fluids.EMPTY.defaultFluidState() :
-                this.getFlowing(newFluidLevel, isFalling)
+                this.getFlowing(Math.min(newFluidLevel, 8), isFalling)
                         .setValue(BOTTOM_LEVEL, newBottomFluidLevel)
                         .setValue(ABOVE_FLUID, aboveFluidIsThisFluid && (aboveFluidState.isSource() || (aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) && aboveFluidState.getValue(BOTTOM_LEVEL) == 0)));
     }
