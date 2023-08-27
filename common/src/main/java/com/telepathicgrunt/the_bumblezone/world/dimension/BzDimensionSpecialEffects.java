@@ -29,7 +29,7 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
      * Returns fog color based on if player has wrath effect or not
      */
     public Vec3 getFogColor() {
-        float colorFactor = 1;
+        float colorFactor = 0.75f;
         /*
          * The sky will be turned to midnight when brightness is below 50. This lets us get the
          * full range of brightness by utilizing the default brightness that the current celestial time gives.
