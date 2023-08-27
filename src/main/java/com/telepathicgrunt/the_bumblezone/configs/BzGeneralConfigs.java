@@ -14,10 +14,11 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
     public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
     public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
+    public static ForgeConfigSpec.BooleanValue pileOfPollenHyperFireSpread;
+    public static ForgeConfigSpec.BooleanValue superCandlesBurnsMobs;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
-    public static ForgeConfigSpec.BooleanValue superCandlesBurnsMobs;
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
@@ -126,6 +127,18 @@ public class BzGeneralConfigs {
                 .translation("the_bumblezone.config.broodblocksbeespawncapacity")
                 .defineInRange("broodBlocksBeeSpawnCapacity", 40, 0, 1000);
 
+        pileOfPollenHyperFireSpread = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Pile of Pollen should spread fire super quickly to burn away huge swathes of pollen.\n")
+                .translation("the_bumblezone.config.pileofpollenhyperfirespread")
+                .define("pileOfPollenHyperFireSpread", false);
+
+        superCandlesBurnsMobs = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Allows lit Super Candles/Incense Candle to burn mobs in its flame.\n")
+                .translation("the_bumblezone.config.supercandlesburnsmobs")
+                .define("superCandlesBurnsMobs", true);
+
         beeQueenBonusTradeRewardMultiplier = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Multiplies the trade reward by this much for bonus Trades! 0 or 1 set here disables bonus Trades.\n")
@@ -145,12 +158,6 @@ public class BzGeneralConfigs {
                         " Setting this to 0 disables bonus Trades.\n")
                 .translation("the_bumblezone.config.beequeenbonusTradeamounttillsatified")
                 .defineInRange("beeQueenBonusTradeAmountTillSatified", 24, 0, 1000000);
-
-        superCandlesBurnsMobs = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Allows lit Super Candles/Incense Candle to burn mobs in its flame.\n")
-                .translation("the_bumblezone.config.supercandlesburnsmobs")
-                .define("superCandlesBurnsMobs", true);
 
         keepEssenceOfTheBeesOnRespawning = builder
                 .comment(" \n-----------------------------------------------------\n",
