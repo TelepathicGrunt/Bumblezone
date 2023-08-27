@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -53,6 +54,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
+import org.quiltmc.qsl.block.content.registry.api.FlammableBlockEntry;
 
 public class PileOfPollen extends FallingBlock {
     public static final IntegerProperty LAYERS = BlockStateProperties.LAYERS;
@@ -108,6 +111,10 @@ public class PileOfPollen extends FallingBlock {
         }
 
         return this.item;
+    }
+
+    public static void setupPileOfPollenFlammable() {
+        BlockContentRegistries.FLAMMABLE_BLOCK.put(BzBlocks.PILE_OF_POLLEN, new FlammableBlockEntry(BzConfig.pileOfPollenHyperFireSpread ? 400 : 10, 40));
     }
 
     @Override
