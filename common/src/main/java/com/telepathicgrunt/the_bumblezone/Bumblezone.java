@@ -166,6 +166,7 @@ public class Bumblezone{
 
     public static void onRegisterFlammablity(RegisterFlammabilityEvent event) {
         BzBlocks.CURTAINS.stream().map(RegistryEntry::get).forEach(block -> event.register(block, 60, 20));
+        event.register(BzBlocks.HONEY_COCOON.get(), 400, 40);
     }
 
     private static void setup(final SetupEvent event) {

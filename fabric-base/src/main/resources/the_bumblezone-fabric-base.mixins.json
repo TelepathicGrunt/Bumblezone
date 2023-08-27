@@ -21,6 +21,7 @@
     "mods.MidnightConfigScreenMixin"
   ],
   "mixins": [
+    "block.FireBlockMixin",
     "block.PistonStructureResolverMixin",
     "block.ShulkerBoxBlockEntityMixin",
     "entity.AbstractArrowMixin",

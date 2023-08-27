@@ -279,6 +279,8 @@ Fixed Panes, Fences, and Iron Bars being able to connect to back of String Curta
 
 Pile of Pollen now gives much less Pollen Puff when mined without Fortune.
 
+Honey Cocoon is now flammable and will break and drop loot when broken by fire. The Honey Cocoon itself will be lost.
+
 ##### Items:
 Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
 
