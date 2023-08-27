@@ -36,7 +36,7 @@ public class TagReplaceProcessor extends StructureProcessor {
     public static final Codec<TagReplaceProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.inputBlock),
             TagKey.codec(Registries.BLOCK).fieldOf("output_block_tag").forGetter(config -> config.outputBlockTag),
-            TagKey.codec(Registries.BLOCK).fieldOf("blacklisted_output_block_tag").forGetter(config -> config.blacklistedOutputBlockTag),
+            TagKey.codec(Registries.BLOCK).optionalFieldOf("blacklisted_output_block_tag").forGetter(config -> config.blacklistedOutputBlockTag),
             Codec.BOOL.fieldOf("double_tall_flower").orElse(false).forGetter(config -> config.doubleTallFlower),
             Codec.BOOL.fieldOf("same_throughout_piece").orElse(false).forGetter(config -> config.sameThroughoutPiece),
             Codec.INT.fieldOf("seed_random_addition").orElse(0).forGetter(config -> config.seedRandomAddition)
@@ -44,14 +44,14 @@ public class TagReplaceProcessor extends StructureProcessor {
 
     private final Block inputBlock;
     private final TagKey<Block> outputBlockTag;
-    private final TagKey<Block> blacklistedOutputBlockTag;
+    private final Optional<TagKey<Block>> blacklistedOutputBlockTag;
     private final boolean doubleTallFlower;
     private final boolean sameThroughoutPiece;
     private final int seedRandomAddition;
 
     public TagReplaceProcessor(Block inputBlock,
                                TagKey<Block> outputBlockTag,
-                               TagKey<Block> blacklistedOutputBlockTag,
+                               Optional<TagKey<Block>> blacklistedOutputBlockTag,
                                boolean doubleTallFlower,
                                boolean sameThroughoutPiece,
                                int seedRandomAddition)
@@ -68,8 +68,8 @@ public class TagReplaceProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldReader, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings settings) {
         StructureTemplate.StructureBlockInfo returnInfo = structureBlockInfoWorld;
         if(structureBlockInfoWorld.state().getBlock() == inputBlock &&
-            settings.getBoundingBox() != null &&
-            settings.getBoundingBox().isInside(structureBlockInfoWorld.pos()))
+            (settings.getBoundingBox() == null ||
+            settings.getBoundingBox().isInside(structureBlockInfoWorld.pos())))
         {
             Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(outputBlockTag);
 
@@ -84,7 +84,9 @@ public class TagReplaceProcessor extends StructureProcessor {
 
                 List<Block> blockList = GeneralUtils.getListOfNonDummyBlocks(optionalBlocks)
                         .stream()
-                        .filter(block -> !block.defaultBlockState().is(blacklistedOutputBlockTag))
+                        .filter(block -> blacklistedOutputBlockTag
+                                .map(blockTagKey -> !block.defaultBlockState().is(blockTagKey))
+                                .orElse(true))
                         .toList();
 
                 if (doubleTallFlower) {

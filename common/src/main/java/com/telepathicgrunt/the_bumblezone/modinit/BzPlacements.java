@@ -6,10 +6,12 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.ConditionBasedPlacement;
+import com.telepathicgrunt.the_bumblezone.world.features.decorators.FixedOffset;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.HoneycombHolePlacer;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DClusterPlacement;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.Random3DUndergroundChunkPlacement;
 import com.telepathicgrunt.the_bumblezone.world.features.decorators.RoofedDimensionSurfacePlacement;
+import com.telepathicgrunt.the_bumblezone.world.features.decorators.StructureDisallowByTag;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
@@ -21,4 +23,6 @@ public class BzPlacements {
     public static final RegistryEntry<PlacementModifierType<Random3DClusterPlacement>> RANDOM_3D_CLUSTER_PLACEMENT = PLACEMENT_MODIFIER.register("random_3d_cluster_placement", () -> () -> Random3DClusterPlacement.CODEC);
     public static final RegistryEntry<PlacementModifierType<ConditionBasedPlacement>> CONDITION_BASED_PLACEMENT = PLACEMENT_MODIFIER.register("condition_based_placement", () -> () -> ConditionBasedPlacement.CODEC);
     public static final RegistryEntry<PlacementModifierType<RoofedDimensionSurfacePlacement>> ROOFED_DIMENSION_SURFACE_PLACEMENT = PLACEMENT_MODIFIER.register("roofed_dimension_surface_placement", () -> () -> RoofedDimensionSurfacePlacement.CODEC);
+    public static final RegistryEntry<PlacementModifierType<FixedOffset>> FIXED_OFFSET = PLACEMENT_MODIFIER.register("fixed_offset", () -> () -> FixedOffset.CODEC);
+    public static final RegistryEntry<PlacementModifierType<StructureDisallowByTag>> STRUCTURE_DISALLOW_BY_TAG = PLACEMENT_MODIFIER.register("structure_disallow_by_tag", () -> () -> StructureDisallowByTag.CODEC);
 }

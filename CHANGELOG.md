@@ -18,16 +18,14 @@
 ##### Major:
 Updated to 1.20.1!
 
-NOTE: Forge users must use 1.20.1 Forge up to v47.1.3 and nothing newer. 
- Forge starting merging in low-quality, breaking code changes that helps no one. 
- v47.1.3 Forge is most stable and is what I will build against until neoForged is publicly available.
-
-
 #### *\*Additions*
 
 ##### Biomes:
 Added Floral Meadow biome full of vanilla flowers and cherry trees! Rootmins can spawn naturally in this biome!
  Giant Cherry Trees spawn in this biome as well.
+
+Added Howling Constructs biome filled with tons of mysteriously floating discs.
+ A good biome to practice parkouring and has some small loot!
 
 ##### Dimension:
 Fishing in Bumblezone dimension now has custom loot!
@@ -278,6 +276,8 @@ For the Honey Residue/Honey Web blocks, I converted the right click washing item
  `the_bumblezone:washing_items`
 
 Fixed Panes, Fences, and Iron Bars being able to connect to back of String Curtains. Not anymore.
+
+Pile of Pollen now gives much less Pollen Puff when mined without Fortune.
 
 ##### Items:
 Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`

@@ -23,14 +23,20 @@
     {
       "type": "the_bumblezone:roofed_dimension_surface_placement",
       "min_height": 39,
-      "max_water_depth": 0
+      "max_water_depth": 1
     },
     {
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:matching_blocks",
         "offset": [0, -1, 0],
-        "blocks": "minecraft:grass_block"
+        "blocks": [
+          "minecraft:grass_block",
+          "the_bumblezone:filled_porous_honeycomb_block",
+          "the_bumblezone:porous_honeycomb_block",
+          "the_bumblezone:sugar_infused_stone",
+          "the_bumblezone:sugar_infused_cobblestone"
+        ]
       }
     },
     {

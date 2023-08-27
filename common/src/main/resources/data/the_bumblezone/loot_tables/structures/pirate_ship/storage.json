@@ -40,21 +40,6 @@
           ]
         },
         {
-          "name": "the_bumblezone:pollen_puff",
-          "type": "minecraft:item",
-          "weight": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 3.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
           "name": "the_bumblezone:bee_stinger",
           "type": "minecraft:item",
           "weight": 6,
@@ -64,6 +49,21 @@
               "count": {
                 "min": 3.0,
                 "max": 7.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ]
+        },
+        {
+          "name": "the_bumblezone:pollen_puff",
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 6.0,
                 "type": "minecraft:uniform"
               }
             }
@@ -229,7 +229,7 @@
         },
         {
           "type": "minecraft:empty",
-          "weight": 49
+          "weight": 29
         }
       ],
       "conditions": [

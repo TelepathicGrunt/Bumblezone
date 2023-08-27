@@ -44,14 +44,16 @@ public class WindParticle extends TextureSheetParticle {
 
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprites;
+        private final boolean isMoving;
 
-        public Factory(SpriteSet sprite) {
+        public Factory(SpriteSet sprite, boolean isMoving) {
             this.sprites = sprite;
+            this.isMoving = isMoving;
         }
 
         @Override
         public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed) {
-            return new WindParticle(clientWorld, xPos, yPos, zPos, xSpeed, ySpeed, zSpeed, sprites);
+            return new WindParticle(clientWorld, xPos, yPos, zPos, isMoving ? 0.1f : xSpeed, ySpeed, zSpeed, sprites);
         }
     }
 }

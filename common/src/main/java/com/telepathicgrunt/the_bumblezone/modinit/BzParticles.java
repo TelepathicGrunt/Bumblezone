@@ -17,6 +17,7 @@ public class BzParticles {
     public static final RegistryEntry<SimpleParticleType> ROYAL_JELLY_PARTICLE = PARTICLE_TYPES.register("royal_jelly_particle", () -> new SimpleParticleType(false){});
     public static final RegistryEntry<SimpleParticleType> DUST_PARTICLE = PARTICLE_TYPES.register("dust_particle", () -> new SimpleParticleType(false){});
     public static final RegistryEntry<SimpleParticleType> WIND_PARTICLE = PARTICLE_TYPES.register("wind_particle", () -> new SimpleParticleType(false){});
+    public static final RegistryEntry<SimpleParticleType> MOVING_WIND_PARTICLE = PARTICLE_TYPES.register("moving_wind_particle", () -> new SimpleParticleType(false){});
     public static final RegistryEntry<SimpleParticleType> ANGRY_PARTICLE = PARTICLE_TYPES.register("angry_particle", () -> new SimpleParticleType(false){});
     public static final RegistryEntry<SimpleParticleType> CURIOUS_PARTICLE = PARTICLE_TYPES.register("curious_particle", () -> new SimpleParticleType(false){});
     public static final RegistryEntry<SimpleParticleType> CURSING_PARTICLE = PARTICLE_TYPES.register("cursing_particle", () -> new SimpleParticleType(false){});

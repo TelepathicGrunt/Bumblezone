@@ -431,7 +431,8 @@ public class BumblezoneClient {
         event.register(BzParticles.HONEY_PARTICLE.get(), HoneyParticle.Factory::new);
         event.register(BzParticles.ROYAL_JELLY_PARTICLE.get(), RoyalJellyParticle.Factory::new);
         event.register(BzParticles.DUST_PARTICLE.get(), DustParticle.Factory::new);
-        event.register(BzParticles.WIND_PARTICLE.get(), WindParticle.Factory::new);
+        event.register(BzParticles.WIND_PARTICLE.get(), (spriteSet) -> new WindParticle.Factory(spriteSet, false));
+        event.register(BzParticles.MOVING_WIND_PARTICLE.get(), (spriteSet) -> new WindParticle.Factory(spriteSet, true));
         event.register(BzParticles.ANGRY_PARTICLE.get(), VoiceParticle.Factory::new);
         event.register(BzParticles.CURIOUS_PARTICLE.get(), VoiceParticle.Factory::new);
         event.register(BzParticles.CURSING_PARTICLE.get(), VoiceParticle.Factory::new);

@@ -145,6 +145,7 @@ public class Bumblezone{
         BzEntities.ENTITIES.init();
         BzFluids.FLUID_TYPES.init();
         BzSounds.SOUND_EVENTS.init();
+        BzPredicates.RULE_TEST.init();
         BzStructures.STRUCTURES.init();
         BzDimension.BIOME_SOURCE.init();
         BzParticles.PARTICLE_TYPES.init();
