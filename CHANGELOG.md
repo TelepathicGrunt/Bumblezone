@@ -5,6 +5,8 @@ Pile of Pollen now gives much less Pollen Puff when mined without Fortune
 
 Fixed block outline for Honey Cocoon
 
+Honey Cocoon is now flammable and will break and drop loot when broken by fire. The Honey Cocoon itself will be lost.
+
 ##### Structures:
 Increased chances of Throne-locating Honey Compass in Cell Maze structure
 

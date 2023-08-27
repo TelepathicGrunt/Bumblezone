@@ -372,6 +372,21 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         return false;
     }
 
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return 80;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return 120;
+    }
+
+    @Override
+    public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return true;
+    }
+
     /**
      * Called periodically clientside on blocks near the player to show honey particles.
      */
