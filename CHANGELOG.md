@@ -1,3 +1,9 @@
+### **(V.6.7.29 Changes) (1.19.2 Minecraft)**
+
+##### Fluids:
+Fixed crash when Create tries to pull Honey Fluid in-world
+
+
 ### **(V.6.7.28 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
