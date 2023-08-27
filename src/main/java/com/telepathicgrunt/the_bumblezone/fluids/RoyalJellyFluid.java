@@ -198,7 +198,7 @@ public abstract class RoyalJellyFluid extends ForgeFlowingFluid {
     protected FluidState getNewLiquid(LevelReader worldReader, BlockPos blockPos, BlockState blockState) {
         boolean isBzFluidBlock = blockState.hasProperty(BOTTOM_LEVEL) && blockState.hasProperty(LiquidBlock.LEVEL);
         int lowestNeighboringFluidLevel = isBzFluidBlock ? blockState.getValue(BOTTOM_LEVEL) : HoneyFluidBlock.maxBottomLayer;
-        int currentFluidLevel = isBzFluidBlock ? blockState.getValue(LiquidBlock.LEVEL) : 0;
+        int currentFluidLevel = isBzFluidBlock ? blockState.getFluidState().isSource() ? 8 : blockState.getFluidState().getValue(LEVEL) : 0;
         int highestNeighboringFluidLevel = currentFluidLevel;
         int neighboringFluidSource = 0;
         boolean hasAboveFluid = isBzFluidBlock ? blockState.getValue(ABOVE_FLUID) : false;
