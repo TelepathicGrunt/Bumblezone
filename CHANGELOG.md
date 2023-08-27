@@ -12,6 +12,9 @@ Pile of Pollen is now flammable but only weakly. Set pileOfPollenHyperFireSpread
 ##### Structures:
 Increased chances of Throne-locating Honey Compass in Cell Maze structure
 
+##### Dimension:
+Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
+
 ##### Advancements:
 Adjusted wording on some advancements
 
