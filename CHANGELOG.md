@@ -7,6 +7,8 @@ Fixed block outline for Honey Cocoon
 
 Honey Cocoon is now flammable and will break and drop loot when broken by fire. The Honey Cocoon itself will be lost.
 
+Pile of Pollen is now flammable but only weakly. Set pileOfPollenHyperFireSpread to true in config to make fire spread crazy fast for this block.
+
 ##### Structures:
 Increased chances of Throne-locating Honey Compass in Cell Maze structure
 

@@ -48,6 +48,9 @@ public class BzConfig extends MidnightConfig {
     public static int broodBlocksBeeSpawnCapacity = 40;
 
     @Entry
+    public static boolean pileOfPollenHyperFireSpread = false;
+
+    @Entry
     public static boolean superCandlesBurnsMobs = true;
 
     @Comment

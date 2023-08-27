@@ -382,7 +382,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     public static void setupHoneyCocoonFlammable() {
-        FlammableBlockRegistry.getDefaultInstance().add(BzBlocks.HONEY_COCOON, 400, 40);
+        FlammableBlockRegistry.getDefaultInstance().add(BzBlocks.HONEY_COCOON, 200, 20);
     }
 
     /**

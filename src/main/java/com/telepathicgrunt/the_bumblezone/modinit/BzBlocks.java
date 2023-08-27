@@ -156,5 +156,6 @@ public class BzBlocks {
 
         StringCurtain.setupStringCurtainBehaviors();
         HoneyCocoon.setupHoneyCocoonFlammable();
+        PileOfPollen.setupPileOfPollenFlammable();
     }
 }
