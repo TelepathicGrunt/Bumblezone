@@ -25,8 +25,9 @@ public class BzGeneralConfigs {
     public static boolean beeStingerBrewingRecipe = true;
     public static boolean beeSoupBrewingRecipe = true;
     public static int nearbyBeesPerPlayerInBz = 3;
-    public static boolean dispensersDropGlassBottles = true;
+    public static boolean dispensersDropGlassBottles = false;
     public static int broodBlocksBeeSpawnCapacity = 40;
+    public static boolean pileOfPollenHyperFireSpread = false;
     public static int beeQueenBonusTradeRewardMultiplier = 2;
     public static int beeQueenBonusTradeDurationInTicks = 6000;
     public static int beeQueenBonusTradeAmountTillSatified = 3;

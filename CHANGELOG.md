@@ -281,6 +281,8 @@ Pile of Pollen now gives much less Pollen Puff when mined without Fortune.
 
 Honey Cocoon is now flammable and will break and drop loot when broken by fire. The Honey Cocoon itself will be lost.
 
+Pile of Pollen is now flammable but only weakly. Set pileOfPollenHyperFireSpread to true in config to make fire spread crazy fast for this block.
+
 ##### Items:
 Renamed `the_bumblezone:bee_armors/bz_armor_ability_enhancing_gear` to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables`
 

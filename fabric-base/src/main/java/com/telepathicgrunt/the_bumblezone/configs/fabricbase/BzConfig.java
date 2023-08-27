@@ -59,6 +59,9 @@ public class BzConfig extends MidnightConfig {
     public static int broodBlocksBeeSpawnCapacity = 40;
 
     @Entry
+    public static boolean pileOfPollenHyperFireSpread = false;
+
+    @Entry
     public static boolean superCandlesBurnsMobs = true;
 
 
@@ -354,6 +357,7 @@ public class BzConfig extends MidnightConfig {
         //Block Mechanics
         BzGeneralConfigs.dispensersDropGlassBottles = dispensersDropGlassBottles;
         BzGeneralConfigs.broodBlocksBeeSpawnCapacity = broodBlocksBeeSpawnCapacity;
+        BzGeneralConfigs.pileOfPollenHyperFireSpread = pileOfPollenHyperFireSpread;
         BzGeneralConfigs.superCandlesBurnsMobs = superCandlesBurnsMobs;
 
         //Crystalline Flower
