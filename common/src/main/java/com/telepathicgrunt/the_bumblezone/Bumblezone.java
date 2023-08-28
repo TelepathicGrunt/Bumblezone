@@ -169,6 +169,7 @@ public class Bumblezone{
         BzBlocks.CURTAINS.stream().map(RegistryEntry::get).forEach(block -> event.register(block, 60, 20));
         event.register(BzBlocks.HONEY_COCOON.get(), 200, 20);
         event.register(BzBlocks.PILE_OF_POLLEN.get(), BzGeneralConfigs.pileOfPollenHyperFireSpread ? 400 : 10, 40);
+        event.register(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get(), BzGeneralConfigs.pileOfPollenHyperFireSpread ? 400 : 10, 40);
     }
 
     private static void setup(final SetupEvent event) {

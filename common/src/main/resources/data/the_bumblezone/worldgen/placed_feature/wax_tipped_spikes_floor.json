@@ -7,16 +7,16 @@
         "type": "minecraft:weighted_list",
         "distribution": [
           {
-            "data": 2,
-            "weight": 1
-          },
-          {
-            "data": 3,
+            "data": 7,
             "weight": 2
           },
           {
-            "data": 4,
-            "weight": 2
+            "data": 8,
+            "weight": 3
+          },
+          {
+            "data": 9,
+            "weight": 4
           }
         ]
       }
@@ -28,6 +28,14 @@
       "type": "the_bumblezone:roofed_dimension_surface_placement",
       "min_height": 30,
       "max_water_depth": 10
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_block_tag",
+        "offset": [ 0, -1, 0 ],
+        "tag": "the_bumblezone:two_tone_spikes/wax_tipped_allowed_base"
+      }
     },
     {
       "type": "minecraft:biome"

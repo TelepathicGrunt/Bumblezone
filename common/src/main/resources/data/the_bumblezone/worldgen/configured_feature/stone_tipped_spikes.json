@@ -10,7 +10,7 @@
       "type": "minecraft:uniform",
       "value": {
         "max_inclusive": 38,
-        "min_inclusive": 16
+        "min_inclusive": 28
       }
     }
   }
