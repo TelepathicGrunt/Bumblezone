@@ -2,10 +2,12 @@ package com.telepathicgrunt.the_bumblezone.world.features;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.blocks.GlisteringHoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.TwoToneSpikeFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -20,22 +22,28 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.Optional;
 
-public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> {
+public class TwoToneSpikeFeature extends Feature<TwoToneSpikeFeatureConfig> {
+    protected long seed;
+    protected static OpenSimplex2F noiseGen;
 
-    public GiantHoneyCrystalFeature(Codec<NoneFeatureConfiguration> configFactory) {
+    public TwoToneSpikeFeature(Codec<TwoToneSpikeFeatureConfig> configFactory) {
         super(configFactory);
     }
 
-    /**
-     * Place crystal block attached to a block if it is buried underground or underwater
-     */
+    public void setSeed(long seed) {
+        if (this.seed != seed || noiseGen == null) {
+            noiseGen = new OpenSimplex2F(seed);
+            this.seed = seed;
+        }
+    }
+
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(FeaturePlaceContext<TwoToneSpikeFeatureConfig> context) {
+        setSeed(context.level().getSeed());
 
         BlockPos.MutableBlockPos blockpos$Mutable = new BlockPos.MutableBlockPos();
         WorldGenLevel level = context.level();
@@ -70,11 +78,13 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
         boolean validSpot = false;
         boolean superSlant = false;
         Direction wallDirection = null;
+        BlockState attachedState = null;
         for (Direction direction : Direction.Plane.VERTICAL) {
             blockpos$Mutable.set(origin).move(direction, 5);
             BlockState state = level.getBlockState(blockpos$Mutable);
             if (state.canOcclude()) {
                 validSpot = true;
+                attachedState = state;
                 break;
             }
         }
@@ -83,9 +93,8 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             blockpos$Mutable.set(origin).move(direction, 1);
             BlockState state = level.getBlockState(blockpos$Mutable);
             if (state.canOcclude()) {
-                superSlant = true;
-                wallDirection = direction;
                 validSpot = true;
+                attachedState = state;
             }
         }
 
@@ -93,13 +102,17 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             return false;
         }
 
+        if (!attachedState.is(context.config().allowedBaseBlockCopies)) {
+            return false;
+        }
+
         blockpos$Mutable.set(origin).move(Direction.UP, 5);
         int directionSign = level.getBlockState(blockpos$Mutable).canOcclude() ? -1 : 1;
         int currentY = origin.getY() - (directionSign * 5);
         int thickness = random.nextInt(3) + 4;
-        int height = random.nextInt(5) + 12;
-        int slantAmountX = random.nextInt(10) * (random.nextBoolean() ? -1 : 1);
-        int slantAmountZ = random.nextInt(10) * (random.nextBoolean() ? -1 : 1);
+        int height = context.config().heightRange.sample(context.random());
+        int slantAmountX = (random.nextInt(6) + 5) * (random.nextBoolean() ? -1 : 1);
+        int slantAmountZ = (random.nextInt(6) + 5) * (random.nextBoolean() ? -1 : 1);
         if (random.nextInt(4) == 0) {
             slantAmountX = 0;
         }
@@ -107,11 +120,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             slantAmountZ = 0;
         }
 
-        if (superSlant) {
-            slantAmountX = -wallDirection.getStepX() * (random.nextInt(2) + 1);
-            slantAmountZ = -wallDirection.getStepZ() * (random.nextInt(2) + 1);
-        }
-
+        BlockState tipBlock = context.config().tipBlocks.get(context.random().nextInt(context.config().tipBlocks.size())).defaultBlockState();
         for (int layer = 0; layer < height; layer++) {
             float currentThickness = thickness;
             int currentXSlant = slantAmountX == 0 ? 0 : layer / slantAmountX;
@@ -142,14 +151,19 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
 
                         BlockState state = level.getBlockState(blockpos$Mutable);
                         if (!state.canOcclude() && !state.is(BzBlocks.CRYSTALLINE_FLOWER.get())) {
-                            BlockState newState = BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState();
-                            if (random.nextFloat() < 0.5f) {
-                                newState = newState.setValue(GlisteringHoneyCrystal.FACING, Direction.getRandom(random));
+                            BlockState newState;
+                            if (layer > ((height * 2) / 3f) +
+                                    noiseGen.noise3_Classic(
+                                            blockpos$Mutable.getX(),
+                                            blockpos$Mutable.getY(),
+                                            blockpos$Mutable.getZ()) * 2)
+                            {
+                                newState = tipBlock;
                             }
-                            level.setBlock(
-                                    blockpos$Mutable,
-                                    newState,
-                                    3);
+                            else {
+                                newState = attachedState;
+                            }
+                            level.setBlock(blockpos$Mutable, newState, 3);
                         }
                     }
                 }

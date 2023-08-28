@@ -473,7 +473,7 @@
                       "type": "minecraft:noise_threshold",
                       "noise": "minecraft:spaghetti_roughness",
                       "min_threshold": 0.0,
-                      "max_threshold": 0.03
+                      "max_threshold": 0.1
                     },
                     "then_run": {
                       "type": "minecraft:block",
@@ -487,8 +487,8 @@
                     "if_true": {
                       "type": "minecraft:noise_threshold",
                       "noise": "minecraft:spaghetti_roughness",
-                      "min_threshold": 0.03,
-                      "max_threshold": 0.1
+                      "min_threshold": 0.1,
+                      "max_threshold": 0.3
                     },
                     "then_run": {
                       "type": "minecraft:block",
@@ -502,8 +502,8 @@
                     "if_true": {
                       "type": "minecraft:noise_threshold",
                       "noise": "minecraft:spaghetti_roughness",
-                      "min_threshold": 0.1,
-                      "max_threshold": 0.13
+                      "min_threshold": 0.3,
+                      "max_threshold": 0.4
                     },
                     "then_run": {
                       "type": "minecraft:block",

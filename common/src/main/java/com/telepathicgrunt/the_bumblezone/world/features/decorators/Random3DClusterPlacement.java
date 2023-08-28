@@ -13,20 +13,24 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.placement.RepeatingPlacement;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class Random3DClusterPlacement extends RepeatingPlacement {
 
     private final IntProvider count;
+    private final Optional<IntProvider> range;
     private final boolean allowUnderwater;
 
     public static final Codec<Random3DClusterPlacement> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
             IntProvider.codec(0, 100000).fieldOf("count").forGetter(nbtFeatureConfig -> nbtFeatureConfig.count),
+            IntProvider.codec(0, 256).optionalFieldOf("height_range").forGetter(nbtFeatureConfig -> nbtFeatureConfig.range),
             Codec.BOOL.fieldOf("allow_underwater").forGetter(nbtFeatureConfig -> nbtFeatureConfig.allowUnderwater)
     ).apply(configInstance, Random3DClusterPlacement::new));
 
-    private Random3DClusterPlacement(IntProvider intProvider, boolean allowUnderwater) {
-        this.count = intProvider;
+    private Random3DClusterPlacement(IntProvider count, Optional<IntProvider> range, boolean allowUnderwater) {
+        this.count = count;
+        this.range = range;
         this.allowUnderwater = allowUnderwater;
     }
 
@@ -56,7 +60,7 @@ public class Random3DClusterPlacement extends RepeatingPlacement {
             for(; attempts < 8; attempts++) {
                 mutableBlockPos.set(blockPos.getX(), 0, blockPos.getZ())
                         .move(random.nextInt(4) + 8,
-                                random.nextInt(253) + 1,
+                                this.range.map(intProvider -> intProvider.sample(random)).orElseGet(() -> random.nextInt(253) + 1),
                                 random.nextInt(4) + 8);
 
                 BlockState state = placementContext.getBlockState(mutableBlockPos);

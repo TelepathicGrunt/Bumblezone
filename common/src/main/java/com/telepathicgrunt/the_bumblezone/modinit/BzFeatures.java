@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.NbtFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.PollinatedCaves;
 import com.telepathicgrunt.the_bumblezone.world.features.SpiderInfestedBeeDungeon;
 import com.telepathicgrunt.the_bumblezone.world.features.StickyHoneyResidueFeature;
+import com.telepathicgrunt.the_bumblezone.world.features.TwoToneSpikeFeature;
 import com.telepathicgrunt.the_bumblezone.world.features.WebWall;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.BiomeBasedLayerConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.FloralFillWithRootminConfig;
@@ -26,6 +27,7 @@ import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFea
 import com.telepathicgrunt.the_bumblezone.world.features.configs.ItemFrameConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtFeatureConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.NbtOreConfiguration;
+import com.telepathicgrunt.the_bumblezone.world.features.configs.TwoToneSpikeFeatureConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -48,6 +50,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> HANGING_GARDEN_MOB = FEATURES.register("hanging_garden_mob", () -> new HangingGardenMob(NoneFeatureConfiguration.CODEC));
     public static final RegistryEntry<Feature<ItemFrameConfig>> ITEM_FRAME_WITH_RANDOM_ITEM = FEATURES.register("item_frame_with_random_item", () -> new ItemFrameWithRandomItem(ItemFrameConfig.CODEC));
     public static final RegistryEntry<Feature<FloralFillWithRootminConfig>> FLORAL_FILL_WITH_ROOTMIN = FEATURES.register("floral_fill_with_rootmin", () -> new FloralFillWithRootmin(FloralFillWithRootminConfig.CODEC));
+    public static final RegistryEntry<Feature<TwoToneSpikeFeatureConfig>> TWO_TONE_SPIKE_FEATURE = FEATURES.register("two_tone_spike_feature", () -> new TwoToneSpikeFeature(TwoToneSpikeFeatureConfig.CODEC));
 
     public static final RegistryEntry<Feature<NbtOreConfiguration>> BLOCKENTITY_COMBS_FEATURE = FEATURES.register("blockentity_combs", () -> new BlockEntityCombOre(NbtOreConfiguration.CODEC));
 }

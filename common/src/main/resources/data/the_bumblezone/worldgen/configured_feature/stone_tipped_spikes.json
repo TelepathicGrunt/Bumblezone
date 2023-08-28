@@ -1,0 +1,17 @@
+{
+  "type": "the_bumblezone:two_tone_spike_feature",
+  "config": {
+    "allowed_base_block_copies": "the_bumblezone:two_tone_spikes/stone_tipped_allowed_base",
+    "tip_blocks": [
+      "the_bumblezone:sugar_infused_cobblestone",
+      "the_bumblezone:sugar_infused_stone"
+    ],
+    "height_range": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 38,
+        "min_inclusive": 16
+      }
+    }
+  }
+}
