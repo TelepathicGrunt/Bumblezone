@@ -30,32 +30,33 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import org.joml.Vector4f;
+import org.joml.Vector4d;
 
 import java.util.Map;
 
 public class KnowingEssenceLootBlockOutlining {
+    private static final double DRAW_RADIUS = 0.45D;
+    private static final double MIN_CORNER = 0.5D - DRAW_RADIUS;
+    private static final double MAX_CORNER = 0.5D + DRAW_RADIUS;
+    private static final Vector4d VECTOR_4D_MIN = new Vector4d(MIN_CORNER, MIN_CORNER, MIN_CORNER, 1.0D);
+    private static final Vector4d VECTOR_4D_MAX = new Vector4d(MAX_CORNER, MAX_CORNER, MAX_CORNER, 1.0D);
+
     public static void outlineLootBlocks(PoseStack poseStack, Camera camera, LevelRenderer levelRenderer) {
         Player player = GeneralUtilsClient.getClientPlayer();
         if (KnowingEssence.IsKnowingEssenceActive(player)) {
             Level level = player.level();
 
-            float drawRadius = 0.45f;
-            float minCorner = 0.5f - drawRadius;
-            float maxCorner = 0.5f + drawRadius;
-            Vector4f vector4fMin = new Vector4f(minCorner, minCorner, minCorner, 1.0F);
-            Vector4f vector4fMax = new Vector4f(maxCorner, maxCorner, maxCorner, 1.0F);
 
             Vec3 cameraPos = camera.getPosition();
             BlockPos worldSpot = BlockPos.containing(cameraPos);
 
             poseStack.pushPose();
-            poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
 
             Tesselator tesselator = Tesselator.getInstance();
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
             BufferBuilder bufferbuilder = tesselator.getBuilder();
             bufferbuilder.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+
             int chunkRadius = 4;
             ChunkPos centerChunkPos = new ChunkPos(worldSpot);
             for (int x = -chunkRadius; x <= chunkRadius; x++) {
@@ -75,12 +76,12 @@ public class KnowingEssenceLootBlockOutlining {
                              BlockPos lootBlockPos = blockEntityEntry.getKey();
 
                             if (!((LevelRendererAccessor)levelRenderer).getCullingFrustum().isVisible(new AABB(
-                                    lootBlockPos.getX() + minCorner,
-                                    lootBlockPos.getY() + minCorner,
-                                    lootBlockPos.getZ() + minCorner,
-                                    lootBlockPos.getX() + maxCorner,
-                                    lootBlockPos.getY() + maxCorner,
-                                    lootBlockPos.getZ() + maxCorner)))
+                                    lootBlockPos.getX() + MIN_CORNER,
+                                    lootBlockPos.getY() + MIN_CORNER,
+                                    lootBlockPos.getZ() + MIN_CORNER,
+                                    lootBlockPos.getX() + MAX_CORNER,
+                                    lootBlockPos.getY() + MAX_CORNER,
+                                    lootBlockPos.getZ() + MAX_CORNER)))
                             {
                                 continue;
                             }
@@ -93,12 +94,12 @@ public class KnowingEssenceLootBlockOutlining {
                             renderLineBox(
                                     bufferbuilder,
                                     poseStack.last().pose(),
-                                    vector4fMin.x() + lootBlockPos.getX(),
-                                    vector4fMin.y() + lootBlockPos.getY(),
-                                    vector4fMin.z() + lootBlockPos.getZ(),
-                                    vector4fMax.x() + lootBlockPos.getX(),
-                                    vector4fMax.y() + lootBlockPos.getY(),
-                                    vector4fMax.z() + lootBlockPos.getZ(),
+                                    (float) (VECTOR_4D_MIN.x() + lootBlockPos.getX() - cameraPos.x()),
+                                    (float) (VECTOR_4D_MIN.y() + lootBlockPos.getY() - cameraPos.y()),
+                                    (float) (VECTOR_4D_MIN.z() + lootBlockPos.getZ() - cameraPos.z()),
+                                    (float) (VECTOR_4D_MAX.x() + lootBlockPos.getX() - cameraPos.x()),
+                                    (float) (VECTOR_4D_MAX.y() + lootBlockPos.getY() - cameraPos.y()),
+                                    (float) (VECTOR_4D_MAX.z() + lootBlockPos.getZ() - cameraPos.z()),
                                     red,
                                     green,
                                     blue,

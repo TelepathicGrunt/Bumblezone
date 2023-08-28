@@ -10,7 +10,7 @@
 
 #TODO: adjust backup essence block textures
 
-#TODO: Add spikes to howling constructs
+#TODO: Add remants to howling constructs
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
