@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceAirOnlyProcess
 import com.telepathicgrunt.the_bumblezone.world.processors.ReplaceNotAirProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpawnerRandomizingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.SpiderInfestedBeeDungeonProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.StrongerWaterloggingProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.TagIgnoreProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.TagReplaceProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.WaterloggingFixProcessor;
@@ -45,5 +46,6 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<TagReplaceProcessor>> TAG_REPLACE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_replace_processor", () -> () -> TagReplaceProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<TagIgnoreProcessor>> TAG_IGNORE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_ignore_processor", () -> () -> TagIgnoreProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<BlockMergeOverridesProcessor>> BLOCK_MERGE_OVERRIDES_PROCESSOR = STRUCTURE_PROCESSOR.register("block_merge_overrides_processor", () -> () -> BlockMergeOverridesProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<StrongerWaterloggingProcessor>> STRONGER_WATERLOGGING_PROCESSOR = STRUCTURE_PROCESSOR.register("stronger_waterlogging_processor", () -> () -> StrongerWaterloggingProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
 }

@@ -26,8 +26,7 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos().set(structureBlockInfoWorld.pos());
-        ChunkAccess cachedChunk = worldView.getChunk(mutable);
+        ChunkAccess cachedChunk = worldView.getChunk(structureBlockInfoWorld.pos());
         BlockPos worldPos = structureBlockInfoWorld.pos();
 
         if(structureBlockInfoWorld.state().isAir()) {
@@ -36,11 +35,11 @@ public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
                 if(Direction.DOWN == direction) continue;
 
                 sidePos.set(worldPos).move(direction);
-                BlockState neighborState = worldView.getBlockState(sidePos);
-                if(neighborState.getFluidState().isSource()) {
+                if(cachedChunk.getPos().x != sidePos.getX() >> 4 || cachedChunk.getPos().z != sidePos.getZ() >> 4)
+                    cachedChunk = worldView.getChunk(sidePos);
 
-                    if(cachedChunk.getPos().x != sidePos.getX() >> 4 || cachedChunk.getPos().z != sidePos.getZ() >> 4)
-                        cachedChunk = worldView.getChunk(sidePos);
+                BlockState neighborState = cachedChunk.getBlockState(sidePos);
+                if(neighborState.getFluidState().isSource()) {
 
                     if(!worldView.getBlockState(sidePos.below()).getFluidState().isEmpty()) {
 

@@ -133,6 +133,9 @@
           "Name": "minecraft:structure_void"
         }
       ]
+    },
+    {
+      "processor_type": "the_bumblezone:stronger_waterlogging_processor"
     }
   ]
 }
