@@ -83,6 +83,7 @@
     "client.LevelRendererAccessor",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",
+    "client.MusicManagerMixin",
     "client.RenderStateShardAccessor",
     "client.SoundEngineAccessor",
     "client.SoundManagerAccessor",
