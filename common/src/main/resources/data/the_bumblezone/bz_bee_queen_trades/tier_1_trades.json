@@ -25,6 +25,10 @@
       "required": true
     },
     {
+      "id": "minecraft:pink_petals",
+      "required": true
+    },
+    {
       "id": "#minecraft:logs_that_burn",
       "required": true
     },

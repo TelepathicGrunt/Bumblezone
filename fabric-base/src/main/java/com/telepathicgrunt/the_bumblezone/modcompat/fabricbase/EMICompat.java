@@ -45,14 +45,14 @@ public class EMICompat implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(registry, item.get()));
-        addInfo(registry, BzItems.PILE_OF_POLLEN.get());
         addInfo(registry, BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(registry, BzFluids.ROYAL_JELLY_FLUID.get());
         addInfo(registry, BzFluids.HONEY_FLUID.get());
 
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_string_and_carvable_wax"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
 
         registry.addCategory(QUEEN_TRADES);

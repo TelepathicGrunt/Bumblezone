@@ -13,7 +13,7 @@
       "required": true
     },
     {
-      "id": "#the_bumblezone:armors/boots",
+      "id": "#the_bumblezone:armors/helmets",
       "required": true
     },
     {
@@ -21,19 +21,19 @@
       "required": true
     },
     {
-      "id": "#the_bumblezone:armors/helmets",
-      "required": true
-    },
-    {
       "id": "#the_bumblezone:armors/leggings",
       "required": true
     },
     {
-      "id": "#the_bumblezone:armors/helmets",
+      "id": "#the_bumblezone:armors/boots",
       "required": true
     },
     {
       "id": "the_bumblezone:honey_compass",
+      "required": true
+    },
+    {
+      "id": "the_bumblezone:buzzing_briefcase",
       "required": true
     }
   ],

@@ -53,7 +53,6 @@ public class JEIIntegration implements IModPlugin {
     @Override
     public void registerRecipes(@NotNull IRecipeRegistration registration) {
 	  BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(registration, item.get()));
-      addInfo(registration, BzItems.PILE_OF_POLLEN.get());
       addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());
       addInfo(registration, BzFluids.ROYAL_JELLY_FLUID.get());
       addInfo(registration, BzFluids.HONEY_FLUID.get());
@@ -61,9 +60,11 @@ public class JEIIntegration implements IModPlugin {
       ClientLevel level = Minecraft.getInstance().level;
 		if (level == null)
 			return;
-		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
+
+		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_super_candles"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
-		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+
+		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_string_and_carvable_wax"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
 
 		List<JEIQueenTradesInfo> trades = new LinkedList<>();

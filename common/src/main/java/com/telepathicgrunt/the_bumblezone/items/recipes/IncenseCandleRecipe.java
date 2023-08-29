@@ -28,6 +28,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -36,13 +37,15 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IncenseCandleRecipe implements CraftingRecipe {
+public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private final ResourceLocation id;
     private final String group;
+    private final CraftingBookCategory category;
     private final int outputCount;
     private final int maxAllowedPotions;
     private final NonNullList<Ingredient> shapedRecipeItems;
@@ -55,9 +58,11 @@ public class IncenseCandleRecipe implements CraftingRecipe {
     private final boolean allowLingeringPotions;
     private final int maxLevelCap;
 
-    public IncenseCandleRecipe(ResourceLocation id, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height, boolean allowNormalPotions, boolean allowSplashPotions, boolean allowLingeringPotions, int maxLevelCap) {
+    public IncenseCandleRecipe(ResourceLocation id, CraftingBookCategory category, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height, boolean allowNormalPotions, boolean allowSplashPotions, boolean allowLingeringPotions, int maxLevelCap) {
+        super(id, category);
         this.id = id;
         this.group = group;
+        this.category = category;
         this.outputCount = outputCount;
         this.maxAllowedPotions = maxAllowedPotions;
         this.shapedRecipeItems = shapedRecipeItems;
@@ -329,7 +334,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
 
     @Override
     public CraftingBookCategory category() {
-        return CraftingBookCategory.MISC;
+        return category;
     }
 
     public static class Serializer implements RecipeSerializer<IncenseCandleRecipe>, BzRecipeSerializer<IncenseCandleRecipe> {
@@ -349,6 +354,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
         @Override
         public IncenseCandleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
+            String category = GsonHelper.getAsString(json, "category", "");
 
             //shaped
             Map<String, Ingredient> map = ShapedRecipeAccessor.callKeyFromJson(GsonHelper.getAsJsonObject(json, "key"));
@@ -370,7 +376,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             int maxLevelRead = json.get("maxLevelCap").getAsInt();
             int resultCount = json.get("resultCount").getAsInt();
 
-            return new IncenseCandleRecipe(recipeId, group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+            return new IncenseCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
         public JsonObject toJson(IncenseCandleRecipe recipe) {
@@ -378,6 +384,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
 
             json.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZER.getKey(BzRecipes.INCENSE_CANDLE_RECIPE.get()).toString());
             json.addProperty("group", recipe.group);
+            json.addProperty("category", recipe.category.getSerializedName());
 
             NonNullList<Ingredient> recipeIngredients = recipe.shapedRecipeItems;
             var ingredients = new Object2CharOpenHashMap<Ingredient>();
@@ -434,6 +441,7 @@ public class IncenseCandleRecipe implements CraftingRecipe {
         @Override
         public IncenseCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
+            String category = buffer.readUtf(32767);
 
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
@@ -450,12 +458,13 @@ public class IncenseCandleRecipe implements CraftingRecipe {
             boolean allowLingeringPotionsRead = buffer.readBoolean();
             int maxLevelRead = buffer.readVarInt();
             int resultCountRead = buffer.readVarInt();
-            return new IncenseCandleRecipe(recipeId, group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+            return new IncenseCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, IncenseCandleRecipe recipe) {
             buffer.writeUtf(recipe.group);
+            buffer.writeUtf(recipe.category.getSerializedName());
 
             buffer.writeVarInt(recipe.width);
             buffer.writeVarInt(recipe.height);

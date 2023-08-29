@@ -21,6 +21,10 @@
       "required": true
     },
     {
+      "id": "minecraft:cherry_leaves",
+      "required": true
+    },
+    {
       "id": "minecraft:amethyst_shard",
       "required": true
     },

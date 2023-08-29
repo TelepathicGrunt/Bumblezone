@@ -46,15 +46,14 @@ public class REICompat implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
-        addInfo(BzItems.PILE_OF_POLLEN.get());
         addInfo(BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(BzFluids.ROYAL_JELLY_FLUID.get());
         addInfo(BzFluids.HONEY_FLUID.get());
 
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle_from_super_candles"))
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
 
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle"))
+        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_string_and_carvable_wax"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
