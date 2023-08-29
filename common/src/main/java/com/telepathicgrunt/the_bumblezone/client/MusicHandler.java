@@ -47,7 +47,7 @@ public class MusicHandler {
     private static SoundInstance ESSENCE_EVENT_MUSIC = null;
     private static final ResourceLocation BIOME_MUSIC = new ResourceLocation(Bumblezone.MODID, "biome_music");
 
-    public static void tickMusicFader() {
+    public static void tickMusicFader(PlayerTickEvent event) {
         Minecraft minecraftClient = Minecraft.getInstance();
 
         Iterator<Map.Entry<ResourceLocation, MusicFader>> iterator = MUSIC_FADERS.entrySet().iterator();
