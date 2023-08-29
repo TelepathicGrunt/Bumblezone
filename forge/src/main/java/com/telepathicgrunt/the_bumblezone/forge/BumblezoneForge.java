@@ -229,7 +229,7 @@ public class BumblezoneForge {
 
                 final Pack.Info packInfo = createInfoForLatest(displayName, mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED);
                 final Pack pack = Pack.create(
-                    "builtin/add_pack_finders_test", displayName,
+                    Bumblezone.MODID + ":add_pack/" + id.getPath(), displayName,
                     mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
                     (path) -> new PathPackResources(path, true, resourcePath),
                     packInfo, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, false, createSource(mode)
