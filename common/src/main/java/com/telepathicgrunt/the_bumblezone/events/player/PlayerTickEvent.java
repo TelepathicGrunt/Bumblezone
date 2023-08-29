@@ -6,4 +6,6 @@ import net.minecraft.world.entity.player.Player;
 public record PlayerTickEvent(Player player, boolean end) {
 
     public static final EventHandler<PlayerTickEvent> EVENT = new EventHandler<>();
+
+    public static final EventHandler<PlayerTickEvent> CLIENT_EVENT = new EventHandler<>();
 }

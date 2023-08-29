@@ -95,6 +95,7 @@ import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidInteractionRegistry;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -317,7 +318,12 @@ public class BumblezoneForge {
     }
 
     private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerTickEvent.EVENT.invoke(new PlayerTickEvent(event.player, event.phase == TickEvent.Phase.END));
+        PlayerTickEvent eventObject = new PlayerTickEvent(event.player, event.phase == TickEvent.Phase.END);
+
+        PlayerTickEvent.EVENT.invoke(eventObject);
+        if (event.side == LogicalSide.CLIENT) {
+            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+        }
     }
 
     private static void onPickupItem(PlayerEvent.ItemPickupEvent event) {

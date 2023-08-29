@@ -73,7 +73,12 @@ public abstract class PlayerMixin extends Entity {
             at = @At("HEAD")
     )
     private void bumblezone$onTickPre(CallbackInfo ci) {
-        PlayerTickEvent.EVENT.invoke(new PlayerTickEvent((Player) ((Object)this), false));
+        PlayerTickEvent eventObject = new PlayerTickEvent((Player) ((Object)this), false);
+
+        PlayerTickEvent.EVENT.invoke(eventObject);
+        if (this.level().isClientSide()) {
+            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+        }
     }
 
     @Inject(
@@ -81,7 +86,12 @@ public abstract class PlayerMixin extends Entity {
             at = @At("TAIL")
     )
     private void bumblezone$onTickPost(CallbackInfo ci) {
-        PlayerTickEvent.EVENT.invoke(new PlayerTickEvent((Player) ((Object)this), true));
+        PlayerTickEvent eventObject = new PlayerTickEvent((Player) ((Object)this), true);
+
+        PlayerTickEvent.EVENT.invoke(eventObject);
+        if (this.level().isClientSide()) {
+            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+        }
     }
 
     @Inject(method = "updateIsUnderwater()Z",

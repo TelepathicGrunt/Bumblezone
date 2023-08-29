@@ -141,7 +141,7 @@ public class BumblezoneClient {
     });
 
     public static void init() {
-        PlayerTickEvent.EVENT.addListener(MusicHandler::tickMusicFader);
+        PlayerTickEvent.CLIENT_EVENT.addListener(MusicHandler::tickMusicFader);
 
         RegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);
         RegisterEntityRenderersEvent.EVENT.addListener(BumblezoneClient::registerEntityRenderers);
