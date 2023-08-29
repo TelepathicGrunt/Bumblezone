@@ -9,8 +9,8 @@
         {
           "name": "the_bumblezone:gameplay/fishing/junk",
           "type": "minecraft:loot_table",
-          "quality": -2,
-          "weight": 30
+          "quality": -4,
+          "weight": 75
         },
         {
           "name": "the_bumblezone:gameplay/fishing/treasure",
