@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.world.processors.BeeDungeonProcessor;
+import com.telepathicgrunt.the_bumblezone.world.processors.BlockMergeOverridesProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.CloseOffOutsideFluidsProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.FluidTickProcessor;
 import com.telepathicgrunt.the_bumblezone.world.processors.HoneycombBroodRandomizeProcessor;
@@ -43,5 +44,6 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<PillarProcessor>> PILLAR_PROCESSOR = STRUCTURE_PROCESSOR.register("pillar_processor", () -> () -> PillarProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<TagReplaceProcessor>> TAG_REPLACE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_replace_processor", () -> () -> TagReplaceProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<TagIgnoreProcessor>> TAG_IGNORE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_ignore_processor", () -> () -> TagIgnoreProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<BlockMergeOverridesProcessor>> BLOCK_MERGE_OVERRIDES_PROCESSOR = STRUCTURE_PROCESSOR.register("block_merge_overrides_processor", () -> () -> BlockMergeOverridesProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
 }

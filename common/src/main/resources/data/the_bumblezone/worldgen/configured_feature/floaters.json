@@ -6,7 +6,15 @@
     "structure_y_offset": 0,
     "nbt_entries": [
       {
+        "resourcelocation": "the_bumblezone:floaters/small",
+        "weight": 2
+      },
+      {
         "resourcelocation": "the_bumblezone:floaters/normal",
+        "weight": 4
+      },
+      {
+        "resourcelocation": "the_bumblezone:floaters/large",
         "weight": 1
       }
     ]

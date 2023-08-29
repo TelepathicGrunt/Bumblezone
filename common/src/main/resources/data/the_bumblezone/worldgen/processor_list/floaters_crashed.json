@@ -1,0 +1,138 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:ancient_wax_bricks_stairs",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:ancient_wax_diamond_stairs",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:ancient_wax_compound_eyes_stairs",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:honey_crystal",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
+            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:ancient_wax_bricks",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:ancient_wax_diamond",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:ancient_wax_compound_eyes",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:luminescent_wax_channel",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:luminescent_wax_corner",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.05
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    }
+  ]
+}

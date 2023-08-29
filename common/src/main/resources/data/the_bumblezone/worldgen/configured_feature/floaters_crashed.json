@@ -1,0 +1,14 @@
+{
+  "type": "the_bumblezone:nbt_feature",
+  "config": {
+    "processors": "the_bumblezone:floaters_crashed",
+    "post_processors": "minecraft:empty",
+    "structure_y_offset": 0,
+    "nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:floaters/crashed",
+        "weight": 1
+      }
+    ]
+  }
+}

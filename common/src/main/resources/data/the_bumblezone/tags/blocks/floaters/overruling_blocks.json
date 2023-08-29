@@ -1,0 +1,34 @@
+{
+  "replace": false,
+  "values": [
+    "#the_bumblezone:ancient_wax/full_blocks",
+    "#the_bumblezone:luminescent_wax/channels",
+    "#the_bumblezone:luminescent_wax/corners",
+
+    "the_bumblezone:glistering_honey_crystal",
+    "the_bumblezone:sugar_infused_stone",
+    "the_bumblezone:sugar_infused_cobblestone",
+
+    "minecraft:honeycomb_block",
+    "the_bumblezone:porous_honeycomb_block",
+    "the_bumblezone:filled_porous_honeycomb_block",
+    "the_bumblezone:empty_honeycomb_brood_block",
+    "the_bumblezone:honeycomb_brood_block",
+    {
+      "id": "#forge:storage_blocks/honeycombs",
+      "required": false
+    },
+    {
+      "id": "productivebees:configurable_comb",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:crystallized_honey_block",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:honeycomb_tiles",
+      "required": false
+    }
+  ]
+}

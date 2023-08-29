@@ -1,0 +1,44 @@
+{
+  "feature": "the_bumblezone:floaters_crashed",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:weighted_list",
+        "distribution": [
+          {
+            "data": 0,
+            "weight": 129
+          },
+          {
+            "data": 1,
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "the_bumblezone:fixed_offset",
+      "offset": [8, 0, 8]
+    },
+    {
+      "type": "the_bumblezone:roofed_dimension_surface_placement",
+      "min_height": 20,
+      "max_water_depth": 22
+    },
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": 0,
+      "y_spread": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": -7,
+          "max_inclusive": -2
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

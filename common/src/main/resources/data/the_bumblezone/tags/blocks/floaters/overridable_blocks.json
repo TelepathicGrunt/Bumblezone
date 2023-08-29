@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#the_bumblezone:ancient_wax/slabs",
+    "#the_bumblezone:ancient_wax/stairs",
+    "the_bumblezone:honey_crystal",
+    "the_bumblezone:honey_cocoon"
+  ]
+}
