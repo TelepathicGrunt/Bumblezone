@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
+    "the_bumblezone:sempiternal_sanctum_red",
+    "the_bumblezone:sempiternal_sanctum_purple",
+    "the_bumblezone:sempiternal_sanctum_blue",
+    "the_bumblezone:sempiternal_sanctum_green",
+    "the_bumblezone:sempiternal_sanctum_yellow",
     "the_bumblezone:sempiternal_sanctum_white"
   ]
 }

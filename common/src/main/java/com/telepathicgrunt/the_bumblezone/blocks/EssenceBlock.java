@@ -115,7 +115,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
     public VoxelShape getCollisionShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
         if (context instanceof EntityCollisionContext ctx) {
             Entity entity = ctx.getEntity();
-            if (entity == null || entity instanceof CosmicCrystalEntity) {
+            if (entity == null || entity instanceof CosmicCrystalEntity || entity.isSpectator()) {
                 return Shapes.empty();
             }
 

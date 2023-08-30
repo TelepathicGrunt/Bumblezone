@@ -6,8 +6,6 @@
 
 #TODO: Add new sempiternal sanctums to advancements
 
-#TODO: Check up on mod compat (resourceful bees especially. See Buzzing Briefcase for those too)
-
 #TODO: adjust backup essence block textures
 
 

@@ -132,19 +132,19 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
 
         // makes brood blocks grow faster near wrath of the hive entities.
         if(!world.isClientSide() && entity instanceof Player) {
-            PoiManager pointofinterestmanager = ((ServerLevel)world).getPoiManager();
-            List<PoiRecord> poiInRange = pointofinterestmanager.getInSquare(
+            PoiManager poiManager = ((ServerLevel)world).getPoiManager();
+            List<PoiRecord> poiInRange = poiManager.getInSquare(
                     (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI.get(),
                     entity.blockPosition(),
                     NEARBY_WRATH_EFFECT_RADIUS,
                     PoiManager.Occupancy.ANY)
                     .collect(Collectors.toList());
 
-            float chanceofGrowth = 0.001f;
+            float chanceOfGrowth = 0.001f;
             if(poiInRange.size() != 0) {
                 for(int index = poiInRange.size() - 1; index >= 0; index--) {
                     PoiRecord poi = poiInRange.remove(index);
-                    if(entity.getRandom().nextFloat() < chanceofGrowth) {
+                    if(entity.getRandom().nextFloat() < chanceOfGrowth) {
                         BlockState state = world.getBlockState(poi.getPos());
                         if(state.getBlock() instanceof HoneycombBrood) {
                             state.tick((ServerLevel) world, poi.getPos(), entity.getRandom());

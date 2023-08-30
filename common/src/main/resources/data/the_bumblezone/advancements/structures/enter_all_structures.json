@@ -19,22 +19,6 @@
     "experience": 2500
   },
   "criteria": {
-    "in_cell_maze": {
-      "trigger": "minecraft:location",
-      "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structure": "the_bumblezone:cell_maze"
-              }
-            }
-          }
-        ]
-      }
-    },
     "in_ancient_hoops": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -131,6 +115,38 @@
         ]
       }
     },
+    "in_cell_maze": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:cell_maze"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_cherry_veteran_tree": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:cherry_veteran_tree"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_dance_floor": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -205,6 +221,22 @@
             "predicate": {
               "location": {
                 "structure": "the_bumblezone:honey_fountain"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_honey_slime_ranch": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:honey_slime_ranch"
               }
             }
           }
@@ -291,6 +323,86 @@
         ]
       }
     },
+    "in_sempiternal_sanctum_red": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:sempiternal_sanctum_red"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_sempiternal_sanctum_purple": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:sempiternal_sanctum_purple"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_sempiternal_sanctum_blue": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:sempiternal_sanctum_blue"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_sempiternal_sanctum_green": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:sempiternal_sanctum_green"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "in_sempiternal_sanctum_yellow": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "the_bumblezone:sempiternal_sanctum_yellow"
+              }
+            }
+          }
+        ]
+      }
+    },
     "in_sempiternal_sanctum_white": {
       "trigger": "minecraft:location",
       "conditions": {
@@ -358,9 +470,6 @@
   },
   "requirements": [
     [
-      "in_cell_maze"
-    ],
-    [
       "in_ancient_hoops"
     ],
     [
@@ -379,6 +488,12 @@
       "in_cannon_range"
     ],
     [
+      "in_cell_maze"
+    ],
+    [
+      "in_cherry_veteran_tree"
+    ],
+    [
       "in_dance_floor"
     ],
     [
@@ -394,6 +509,9 @@
       "in_honey_fountain"
     ],
     [
+      "in_honey_slime_ranch"
+    ],
+    [
       "in_honitel"
     ],
     [
@@ -407,6 +525,21 @@
     ],
     [
       "in_pollinated_stream"
+    ],
+    [
+      "in_sempiternal_sanctum_red"
+    ],
+    [
+      "in_sempiternal_sanctum_purple"
+    ],
+    [
+      "in_sempiternal_sanctum_blue"
+    ],
+    [
+      "in_sempiternal_sanctum_green"
+    ],
+    [
+      "in_sempiternal_sanctum_yellow"
     ],
     [
       "in_sempiternal_sanctum_white"
