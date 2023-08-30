@@ -1,0 +1,34 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:allium",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_purple_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_purple_flowers",
+      "double_tall_flower": false,
+      "same_throughout_piece": false,
+      "seed_random_addition": 929
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:potted_pink_tulip"
+          },
+          "input_predicate": {
+            "block": "minecraft:potted_allium",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.35
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:waterlogging_fix_processor"
+    }
+  ]
+}

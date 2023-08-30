@@ -1,0 +1,265 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:tag_ignore_processor",
+      "ignore_blocks_tag": "the_bumblezone:structures/dont_replace_blocks"
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:structure_void"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "location_predicate": {
+            "block_state": {
+              "Name": "the_bumblezone:carvable_wax",
+              "Properties": {
+                "carving": "chains"
+              }
+            },
+            "predicate_type": "minecraft:blockstate_match"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:air"
+          },
+          "input_predicate": {
+            "block": "minecraft:lily_of_the_valley",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.55
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:tag_replace_processor",
+      "input_block": "minecraft:lily_of_the_valley",
+      "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_yellow_flowers",
+      "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_yellow_flowers",
+      "double_tall_flower": false,
+      "same_throughout_piece": false,
+      "seed_random_addition": 929
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:black_stained_glass"
+          },
+          "replacement" : {
+            "Name": "minecraft:chain",
+            "Properties": {
+              "axis": "y"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 43,
+          "min_inclusive": 40
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:orange_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 33,
+          "min_inclusive": 30
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:yellow_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 23,
+          "min_inclusive": 20
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:lime_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 14,
+          "min_inclusive": 12
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:cyan_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 8,
+          "min_inclusive": 7
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:blue_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 5,
+          "min_inclusive": 4
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:purple_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "up",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 3,
+          "min_inclusive": 2
+        }
+      },
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:pink_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "chains"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "minecraft:block_ignore",
+      "blocks": [
+        {
+          "Name": "minecraft:structure_void"
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:waterlogging_fix_processor"
+    }
+  ]
+}

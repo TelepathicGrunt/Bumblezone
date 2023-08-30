@@ -4,8 +4,26 @@
     {
       "weight": 1,
       "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/painting_tnt",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/rootmin_statue",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/windy",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
