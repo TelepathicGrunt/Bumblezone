@@ -27,7 +27,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class IncenseCandleBlockEntity extends BlockEntity {
+public class PotionCandleBlockEntity extends BlockEntity {
     public static final int DEFAULT_COLOR = 16777215;
     public static final int DEFAULT_MAX_DURATION = 12000;
     public static final int DEFAULT_RANGE = 3;
@@ -52,12 +52,12 @@ public class IncenseCandleBlockEntity extends BlockEntity {
     private int range = DEFAULT_RANGE;
     private int lingerTime = DEFAULT_LINGER_TIME;
 
-    protected IncenseCandleBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
+    protected PotionCandleBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
 
-    public IncenseCandleBlockEntity(BlockPos blockPos, BlockState blockState) {
-        this(BzBlockEntities.INCENSE_CANDLE.get(), blockPos, blockState);
+    public PotionCandleBlockEntity(BlockPos blockPos, BlockState blockState) {
+        this(BzBlockEntities.POTION_CANDLE.get(), blockPos, blockState);
     }
 
     public int getColor() {
@@ -183,20 +183,20 @@ public class IncenseCandleBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity) {
-        if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
-            boolean isInstant = incenseCandleBlockEntity.getMobEffect() != null && incenseCandleBlockEntity.getMobEffect().isInstantenous();
-            boolean instantPotionTime = isInstantEffectApplyTime(level, incenseCandleBlockEntity);
+        if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
+            boolean isInstant = potionCandleBlockEntity.getMobEffect() != null && potionCandleBlockEntity.getMobEffect().isInstantenous();
+            boolean instantPotionTime = isInstantEffectApplyTime(level, potionCandleBlockEntity);
 
             if (blockState.hasProperty(SuperCandleBase.LIT) && blockState.getValue(SuperCandleBase.LIT)) {
                 if ((isInstant && instantPotionTime) || level.getGameTime() % 10 == 0) {
-                    if (!incenseCandleBlockEntity.isInfinite() && incenseCandleBlockEntity.getCurrentDuration() >= incenseCandleBlockEntity.getMaxDuration()) {
+                    if (!potionCandleBlockEntity.isInfinite() && potionCandleBlockEntity.getCurrentDuration() >= potionCandleBlockEntity.getMaxDuration()) {
                         SuperCandleWick.extinguish(null, level.getBlockState(blockPos.above()), level, blockPos.above());
-                        incenseCandleBlockEntity.resetCurrentDuration();
-                        incenseCandleBlockEntity.resetInstantStartTime();
+                        potionCandleBlockEntity.resetCurrentDuration();
+                        potionCandleBlockEntity.resetInstantStartTime();
                     }
-                    else if (incenseCandleBlockEntity.getMobEffect() != null) {
+                    else if (potionCandleBlockEntity.getMobEffect() != null) {
                         if (!isInstant || instantPotionTime) {
-                            int diameter = (incenseCandleBlockEntity.getRange() * 2) + 1;
+                            int diameter = (potionCandleBlockEntity.getRange() * 2) + 1;
 
                             List<LivingEntity> livingEntities = level.getEntitiesOfClass(
                                     LivingEntity.class,
@@ -210,33 +210,33 @@ public class IncenseCandleBlockEntity extends BlockEntity {
                                     ),
                                     (e) -> true);
 
-                            int lingeringTime = isInstant ? 1 : incenseCandleBlockEntity.getLingerTime();
+                            int lingeringTime = isInstant ? 1 : potionCandleBlockEntity.getLingerTime();
                             for (LivingEntity livingEntity : livingEntities) {
                                 MobEffectInstance mobEffectInstance = new MobEffectInstance(
-                                        incenseCandleBlockEntity.getMobEffect(),
+                                        potionCandleBlockEntity.getMobEffect(),
                                         lingeringTime,
-                                        incenseCandleBlockEntity.getAmplifier(),
+                                        potionCandleBlockEntity.getAmplifier(),
                                         true,
                                         true,
-                                        !incenseCandleBlockEntity.getMobEffect().isInstantenous());
+                                        !potionCandleBlockEntity.getMobEffect().isInstantenous());
 
                                 livingEntity.addEffect(mobEffectInstance);
                             }
 
                             if (isInstant && level instanceof ServerLevel serverLevel) {
-                                spawnEffectParticles(serverLevel, blockPos, incenseCandleBlockEntity.getMobEffect().isBeneficial(), incenseCandleBlockEntity.getRange());
+                                spawnEffectParticles(serverLevel, blockPos, potionCandleBlockEntity.getMobEffect().isBeneficial(), potionCandleBlockEntity.getRange());
                             }
                         }
                     }
                 }
-                incenseCandleBlockEntity.increaseCurrentDuration();
+                potionCandleBlockEntity.increaseCurrentDuration();
             }
         }
     }
 
-    public static boolean isInstantEffectApplyTime(Level world, IncenseCandleBlockEntity incenseCandleBlockEntity) {
-        long trueTimePassed = world.getGameTime() - incenseCandleBlockEntity.getInstantStartTime();
-        long thresholdTime = getInstantEffectThresholdTime(incenseCandleBlockEntity.getAmplifier());
+    public static boolean isInstantEffectApplyTime(Level world, PotionCandleBlockEntity potionCandleBlockEntity) {
+        long trueTimePassed = world.getGameTime() - potionCandleBlockEntity.getInstantStartTime();
+        long thresholdTime = getInstantEffectThresholdTime(potionCandleBlockEntity.getAmplifier());
         return trueTimePassed % thresholdTime == 0;
     }
 

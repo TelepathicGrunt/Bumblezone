@@ -41,7 +41,7 @@ public class BzCriterias {
     public static final GenericTrigger CLEANUP_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_honey_web"));
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
-    public static final GenericTrigger CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "craft_multi_potion_incense_candle"));
+    public static final GenericTrigger CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "craft_multi_potion_potion_candle"));
     public static final GenericTrigger CRYSTAL_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "crystal_cannon_full"));
     public static final GenericTrigger ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "enchant_crystalline_flower"));
     public static final ItemSpecificTrigger ESSENCE_EVENT_REWARD_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "essence_event_reward"));
@@ -64,7 +64,7 @@ public class BzCriterias {
     public static final GenericTrigger HONEY_SLIME_HARVEST_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_harvest"));
     public static final GenericTrigger IS_NEAR_BEEHIVE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "is_near_beehive"));
     public static final KilledCounterTrigger KILLED_COUNTER_TRIGGER = new KilledCounterTrigger(new ResourceLocation(Bumblezone.MODID, "killed_counter"));
-    public static final GenericTrigger LIGHT_SOUL_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "light_soul_incense_candle"));
+    public static final GenericTrigger LIGHT_SOUL_SUPER_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "light_soul_potion_candle"));
     public static final GenericTrigger POLLEN_PUFF_FIREBALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_fireball"));
     public static final CounterTrigger POLLEN_PUFF_HIT_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_hit"));
     public static final GenericTrigger POLLEN_PUFF_MOOSHROOM_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_mooshroom"));
@@ -72,7 +72,7 @@ public class BzCriterias {
     public static final GenericTrigger POLLEN_PUFF_PANDA_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_panda"));
     public static final GenericTrigger POLLEN_PUFF_POLLINATED_BEE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_pollinate_bee"));
     public static final GenericTrigger POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_pollinate_tall_flower"));
-    public static final GenericTrigger PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "projectile_light_instant_incense_candle"));
+    public static final GenericTrigger PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "projectile_light_instant_potion_candle"));
     public static final EntitySpecificTrigger PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "protection_of_the_hive_defense"));
     public static final GenericTrigger QUEEN_BEEHEMOTH_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "created_queen_beehemoth"));
     public static final GenericTrigger ROOTMIN_FLOWER_SWAP_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "rootmin_flower_swap"));
@@ -114,7 +114,7 @@ public class BzCriterias {
         register(CLEANUP_HONEY_WEB_TRIGGER);
         register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
-        register(CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER);
+        register(CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER);
         register(CRYSTAL_CANNON_FULL_TRIGGER);
         register(BEE_HIT_WRATH_OF_THE_HIVE_TRIGGER);
         register(ENCHANT_CRYSTALLINE_FLOWER_TRIGGER);
@@ -138,7 +138,7 @@ public class BzCriterias {
         register(HONEY_SLIME_HARVEST_TRIGGER);
         register(IS_NEAR_BEEHIVE_TRIGGER);
         register(KILLED_COUNTER_TRIGGER);
-        register(LIGHT_SOUL_INCENSE_CANDLE_TRIGGER);
+        register(LIGHT_SOUL_SUPER_CANDLE_TRIGGER);
         register(POLLEN_PUFF_MOOSHROOM_TRIGGER);
         register(POLLEN_PUFF_FIREBALL_TRIGGER);
         register(POLLEN_PUFF_HIT_TRIGGER);
@@ -146,7 +146,7 @@ public class BzCriterias {
         register(POLLEN_PUFF_POLLINATED_BEE_TRIGGER);
         register(POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER);
         register(POLLEN_PUFF_SPAWN_FLOWERS_TRIGGER);
-        register(PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER);
+        register(PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER);
         register(PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER);
         register(BEE_QUEEN_TRADING_TRIGGER);
         register(QUEEN_BEEHEMOTH_TRIGGER);

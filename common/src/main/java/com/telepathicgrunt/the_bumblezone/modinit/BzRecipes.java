@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
-import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.NbtKeepingShapelessRecipe;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.PotionBrewingAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
@@ -19,7 +19,7 @@ public class BzRecipes {
 
     //Recipe
     public static final RegistryEntry<RecipeSerializer<ContainerCraftingRecipe>> CONTAINER_CRAFTING_RECIPE = RECIPES.register("container_shapeless_recipe_bz", ContainerCraftingRecipe.Serializer::new);
-    public static final RegistryEntry<RecipeSerializer<IncenseCandleRecipe>> INCENSE_CANDLE_RECIPE = RECIPES.register("incense_candle_recipe", IncenseCandleRecipe.Serializer::new);
+    public static final RegistryEntry<RecipeSerializer<PotionCandleRecipe>> POTION_CANDLE_RECIPE = RECIPES.register("potion_candle_recipe", PotionCandleRecipe.Serializer::new);
     public static final RegistryEntry<RecipeSerializer<NbtKeepingShapelessRecipe>> NBT_KEEPING_SHAPELESS_RECIPE = RECIPES.register("nbt_keeping_shapeless_recipe", NbtKeepingShapelessRecipe.Serializer::new);
 
     public static void registerBrewingStandRecipes() {

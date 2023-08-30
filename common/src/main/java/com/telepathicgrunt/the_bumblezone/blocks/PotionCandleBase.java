@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -56,12 +57,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterloggedBlock, SuperCandle, BlockExtension {
+public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterloggedBlock, SuperCandle, BlockExtension {
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
-    public IncenseCandleBase() {
+    public PotionCandleBase() {
         super(Properties.of()
                 .mapColor(MapColor.SAND)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0)
@@ -149,12 +150,12 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
         super.onPlace(state, level, pos, oldState, isMoving);
-        if (!level.isClientSide() && oldState.is(BzBlocks.INCENSE_BASE_CANDLE.get()) && state.is(BzBlocks.INCENSE_BASE_CANDLE.get())) {
+        if (!level.isClientSide() && oldState.is(BzBlocks.POTION_BASE_CANDLE.get()) && state.is(BzBlocks.POTION_BASE_CANDLE.get())) {
             if (oldState.getValue(LIT) && !state.getValue(LIT)) {
                 BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
-                    incenseCandleBlockEntity.resetCurrentDuration();
-                    incenseCandleBlockEntity.resetInstantStartTime();
+                if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
+                    potionCandleBlockEntity.resetCurrentDuration();
+                    potionCandleBlockEntity.resetInstantStartTime();
                 }
             }
             else if (!oldState.getValue(LIT) && state.getValue(LIT)) {
@@ -171,47 +172,11 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getAbilities().mayBuild) {
-            ItemStack handItem = player.getItemInHand(interactionHand);
-            if (handItem.isEmpty() && blockState.getValue(LIT)) {
-                SuperCandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
+            if (CandleLightBehaviors(blockState, level, blockPos, player, interactionHand)) {
                 return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            else if (!blockState.getValue(LIT)) {
-                if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
-                    lightCandle(level, blockPos, player);
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
-                    boolean successfulLit = lightCandle(level, blockPos, player);
-                    if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
-                        handItem.hurt(1, level.getRandom(), serverPlayer);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
-                    boolean successfulLit = lightCandle(level, blockPos, player);
-                    if (successfulLit && !player.getAbilities().instabuild) {
-                        handItem.shrink(1);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
             }
         }
         return InteractionResult.PASS;
-    }
-
-    private boolean lightCandle(Level level, BlockPos blockPos, Player player) {
-        boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
-
-        if (litWick &&
-            player instanceof ServerPlayer serverPlayer &&
-            level.getBlockState(blockPos.above()).getBlock() instanceof SuperCandleWick candleWick &&
-            candleWick.isSoul())
-        {
-            BzCriterias.LIGHT_SOUL_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
-        }
-
-        return litWick;
     }
 
     @Override
@@ -220,12 +185,12 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
             boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(hit.getBlockPos().above()), hit.getBlockPos().above(), true);
             if (litWick && projectile.getOwner() instanceof ServerPlayer serverPlayer) {
                 BlockEntity blockEntity = level.getBlockEntity(hit.getBlockPos());
-                if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity &&
-                    incenseCandleBlockEntity.getMobEffect() != null &&
-                    incenseCandleBlockEntity.getMobEffect().isInstantenous() &&
-                    !incenseCandleBlockEntity.getMobEffect().isBeneficial())
+                if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity &&
+                    potionCandleBlockEntity.getMobEffect() != null &&
+                    potionCandleBlockEntity.getMobEffect().isInstantenous() &&
+                    !potionCandleBlockEntity.getMobEffect().isBeneficial())
                 {
-                    BzCriterias.PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.trigger(serverPlayer);
                 }
             }
         }
@@ -239,9 +204,9 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
         }
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
-            ItemStack itemStack = BzItems.INCENSE_CANDLE.get().getDefaultInstance();
-            incenseCandleBlockEntity.saveToItem(itemStack);
+        if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
+            ItemStack itemStack = BzItems.POTION_CANDLE.get().getDefaultInstance();
+            potionCandleBlockEntity.saveToItem(itemStack);
             ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
@@ -250,12 +215,12 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return BzBlockEntities.INCENSE_CANDLE.get().create(pos, state);
+        return BzBlockEntities.POTION_CANDLE.get().create(pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTickerHelper(blockEntityType, BzBlockEntities.INCENSE_CANDLE.get(), level.isClientSide ? (a, b, c, d) -> {} : IncenseCandleBlockEntity::serverTick);
+        return createTickerHelper(blockEntityType, BzBlockEntities.POTION_CANDLE.get(), level.isClientSide ? (a, b, c, d) -> {} : PotionCandleBlockEntity::serverTick);
     }
 
     @Override
@@ -270,9 +235,9 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
 
     private void resetTimingFields(Level level, BlockPos blockPos) {
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
-        if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
-            incenseCandleBlockEntity.resetCurrentDuration();
-            incenseCandleBlockEntity.setInstantStartTime(Math.max(level.getGameTime() - 1L, 0L));
+        if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
+            potionCandleBlockEntity.resetCurrentDuration();
+            potionCandleBlockEntity.setInstantStartTime(Math.max(level.getGameTime() - 1L, 0L));
         }
     }
 
@@ -281,19 +246,19 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
             CompoundTag tag = itemStack.getTag();
             if (tag != null && tag.contains("BlockEntityTag")) {
                 CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
-                if (blockEntityTag.contains(IncenseCandleBlockEntity.COLOR_TAG)) {
-                    return blockEntityTag.getInt(IncenseCandleBlockEntity.COLOR_TAG);
+                if (blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG)) {
+                    return blockEntityTag.getInt(PotionCandleBlockEntity.COLOR_TAG);
                 }
             }
         }
-        return IncenseCandleBlockEntity.DEFAULT_COLOR;
+        return PotionCandleBlockEntity.DEFAULT_COLOR;
     }
 
     public static int getBlockColor(BlockAndTintGetter world, BlockPos pos, int tintIndex) {
         if (world != null) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity) {
-                int currentColor = incenseCandleBlockEntity.getColor();
+            if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
+                int currentColor = potionCandleBlockEntity.getColor();
 
                 if (tintIndex == 1) {
                     // Change tint of lit top
@@ -312,9 +277,9 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
         if (blockState.hasProperty(LIT) && blockState.getValue(LIT)) {
             BlockEntity blockEntity = world.getBlockEntity(position);
-            if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity && incenseCandleBlockEntity.getMobEffect() != null) {
-                int color = incenseCandleBlockEntity.getColor();
-                Vec3 colorRGB = IncenseCandleBlockEntity.convertIntegerColorToRGB(color);
+            if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity && potionCandleBlockEntity.getMobEffect() != null) {
+                int color = potionCandleBlockEntity.getColor();
+                Vec3 colorRGB = PotionCandleBlockEntity.convertIntegerColorToRGB(color);
 
                 //number of particles in this tick
                 for (int i = 0; i < random.nextInt(3); ++i) {
@@ -350,7 +315,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     }
 
     public static void multiPotionCandleCrafted(PlayerCraftedItemEvent event) {
-        if (event.player() instanceof ServerPlayer serverPlayer && event.item().is(BzItems.INCENSE_CANDLE.get())) {
+        if (event.player() instanceof ServerPlayer serverPlayer && event.item().is(BzItems.POTION_CANDLE.get())) {
             int containerSize = event.table().getContainerSize();
             int potionsUsed = 0;
             for (int i = 0; i < containerSize; i++) {
@@ -360,7 +325,7 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
             }
 
             if (potionsUsed >= 2) {
-                BzCriterias.CRAFT_MULTI_POTION_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
+                BzCriterias.CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER.trigger(serverPlayer);
             }
         }
     }

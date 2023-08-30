@@ -165,7 +165,7 @@ public class BzGeneralConfig {
 
         superCandlesBurnsMobs = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " Allows lit Super Candles/Incense Candle to burn mobs in its flame.\n")
+                        " Allows lit Super Candles/Potion Candle to burn mobs in its flame.\n")
                 .translation("the_bumblezone.config.supercandlesburnsmobs")
                 .define("superCandlesBurnsMobs", true);
 

@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
-import com.telepathicgrunt.the_bumblezone.client.items.IncenseCandleColoring;
+import com.telepathicgrunt.the_bumblezone.client.items.PotionCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.items.InfinityBarrierColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.DustParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
@@ -150,8 +150,8 @@ public class BumblezoneClient {
         RegisterDimensionEffectsEvent.EVENT.addListener(BumblezoneClient::registerDimensionEffects);
         RegisterShaderEvent.EVENT.addListener(BumblezoneClient::registerShaders);
         RegisterBlockColorEvent.EVENT.addListener(InfinityBarrierColoring::registerBlockColors);
-        RegisterBlockColorEvent.EVENT.addListener(IncenseCandleColoring::registerBlockColors);
-        RegisterItemColorEvent.EVENT.addListener(IncenseCandleColoring::registerItemColors);
+        RegisterBlockColorEvent.EVENT.addListener(PotionCandleColoring::registerBlockColors);
+        RegisterItemColorEvent.EVENT.addListener(PotionCandleColoring::registerItemColors);
         ClientTickEvent.EVENT.addListener(event -> {
             if (event.end()) {
                 StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
@@ -371,7 +371,7 @@ public class BumblezoneClient {
                 BzBlocks.REDSTONE_HONEY_WEB.get(),
                 BzBlocks.SUPER_CANDLE_WICK.get(),
                 BzBlocks.SUPER_CANDLE_WICK_SOUL.get(),
-                BzBlocks.INCENSE_BASE_CANDLE.get(),
+                BzBlocks.POTION_BASE_CANDLE.get(),
                 BzBlocks.CRYSTALLINE_FLOWER.get(),
                 BzBlocks.POROUS_HONEYCOMB.get(),
                 BzBlocks.EMPTY_HONEYCOMB_BROOD.get(),

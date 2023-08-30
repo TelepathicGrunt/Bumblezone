@@ -12,7 +12,7 @@
     "effect.EffectExtensionMixin",
     "enchantment.BzEnchantmentMixin",
     "item.BzBucketItemMixin",
-    "item.IncenseCandleRecipeMixin",
+    "item.PotionCandleRecipeMixin",
     "item.ItemExtensionMixin"
   ],
   "client": [

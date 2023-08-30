@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.NonNullList;
@@ -28,9 +28,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FakeIncenseCandleRecipeCreator {
+public class FakePotionCandleRecipeCreator {
 
-    public static List<CraftingRecipe> constructFakeRecipes(IncenseCandleRecipe incenseCandleRecipe, boolean oneRecipeOnly) {
+    public static List<CraftingRecipe> constructFakeRecipes(PotionCandleRecipe potionCandleRecipe, boolean oneRecipeOnly) {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         int currentRecipe = 0;
         Set<MobEffect> effects = new HashSet<>();
@@ -40,7 +40,7 @@ public class FakeIncenseCandleRecipeCreator {
                 break;
             }
 
-            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS))) {
+            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS))) {
                 continue;
             }
 
@@ -49,15 +49,15 @@ public class FakeIncenseCandleRecipeCreator {
         }
         potions.sort(Comparator.comparingInt(a -> a.getEffects().size()));
         for (Potion potion : potions) {
-            if (potion.getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS, e.getEffect()))) {
+            if (potion.getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect()))) {
                 continue;
             }
 
-            addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
+            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
             currentRecipe++;
-            addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
+            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
             currentRecipe++;
-            addRecipeIfValid(extraRecipes, FakeIncenseCandleRecipeCreator.getFakeShapedRecipe(incenseCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
+            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
             currentRecipe++;
         }
         return extraRecipes;
@@ -69,7 +69,7 @@ public class FakeIncenseCandleRecipeCreator {
         }
     }
 
-    private static ShapedRecipe getFakeShapedRecipe(IncenseCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
+    private static ShapedRecipe getFakeShapedRecipe(PotionCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
         ItemStack potionStack = PotionUtils.setPotion(potionItem, potion);
 
         List<Ingredient> fakedShapedIngredientsMutable = new ArrayList<>();
@@ -120,7 +120,7 @@ public class FakeIncenseCandleRecipeCreator {
         );
     }
 
-    private static ItemStack createResultStack(IncenseCandleRecipe recipe, ItemStack potionStack) {
+    private static ItemStack createResultStack(PotionCandleRecipe recipe, ItemStack potionStack) {
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
         AtomicInteger amplifier = new AtomicInteger();
@@ -143,10 +143,10 @@ public class FakeIncenseCandleRecipeCreator {
             return ItemStack.EMPTY;
         }
 
-        IncenseCandleRecipe.balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
+        PotionCandleRecipe.balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
         amplifier.set(Math.min(amplifier.get(), recipe.getMaxLevelCap()));
 
-        return IncenseCandleRecipe.createTaggedIncenseCandle(
+        return PotionCandleRecipe.createTaggedPotionCandle(
                 chosenEffect,
                 maxDuration,
                 amplifier,

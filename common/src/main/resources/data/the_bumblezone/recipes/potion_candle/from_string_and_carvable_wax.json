@@ -1,13 +1,18 @@
 {
-  "type": "the_bumblezone:incense_candle_recipe",
+  "type": "the_bumblezone:potion_candle_recipe",
   "category": "misc",
   "group": "the_bumblezone:string_curtain",
   "pattern": [
-    "c"
+    "s",
+    "h",
+    "h"
   ],
   "key": {
-    "c": {
-      "tag": "the_bumblezone:super_candles"
+    "h": {
+      "tag": "the_bumblezone:carvable_wax"
+    },
+    "s": {
+      "item": "minecraft:string"
     }
   },
   "shapelessExtraIngredients": [

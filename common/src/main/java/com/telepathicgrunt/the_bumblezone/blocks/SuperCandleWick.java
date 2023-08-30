@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -155,12 +155,12 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                 boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(pos), pos, true);
                 if (litWick && projectile.getOwner() instanceof ServerPlayer serverPlayer) {
                     BlockEntity blockEntity = level.getBlockEntity(pos.below());
-                    if (blockEntity instanceof IncenseCandleBlockEntity incenseCandleBlockEntity &&
-                            incenseCandleBlockEntity.getMobEffect() != null &&
-                            incenseCandleBlockEntity.getMobEffect().isInstantenous() &&
-                            !incenseCandleBlockEntity.getMobEffect().isBeneficial())
+                    if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity &&
+                            potionCandleBlockEntity.getMobEffect() != null &&
+                            potionCandleBlockEntity.getMobEffect().isInstantenous() &&
+                            !potionCandleBlockEntity.getMobEffect().isBeneficial())
                     {
-                        BzCriterias.PROJECTILE_LIGHT_INSTANT_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.trigger(serverPlayer);
                     }
                 }
             }

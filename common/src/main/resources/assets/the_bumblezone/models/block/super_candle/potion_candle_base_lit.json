@@ -1,9 +1,9 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "the_bumblezone:block/super_candle/incense_candle_lit",
-    "1": "the_bumblezone:block/super_candle/incense_candle_lit_top",
-    "particle": "the_bumblezone:block/super_candle/incense_candle_lit"
+    "0": "the_bumblezone:block/super_candle/potion_candle_lit",
+    "1": "the_bumblezone:block/super_candle/potion_candle_lit_top",
+    "particle": "the_bumblezone:block/super_candle/potion_candle_lit"
   },
   "render_type": "minecraft:cutout",
   "elements": [

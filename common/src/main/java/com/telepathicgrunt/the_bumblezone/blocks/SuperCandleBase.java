@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import net.minecraft.core.BlockPos;
@@ -133,40 +134,8 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getAbilities().mayBuild) {
-            ItemStack handItem = player.getItemInHand(interactionHand);
-            if (handItem.isEmpty() && blockState.getValue(LIT)) {
-                SuperCandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
+            if (CandleLightBehaviors(blockState, level, blockPos, player, interactionHand)) {
                 return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            else if (!blockState.getValue(LIT)) {
-                if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
-                    if (SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true)) {
-                        if (!handItem.isEmpty()) {
-                            player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
-                        }
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
-                    boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
-                    if (!handItem.isEmpty() && successfulLit) {
-                        player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
-                    }
-                    if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
-                        handItem.hurt(1, level.getRandom(), serverPlayer);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
-                    boolean successfulLit = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
-                    if (!handItem.isEmpty() && successfulLit) {
-                        player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
-                    }
-                    if (successfulLit && !player.getAbilities().instabuild) {
-                        handItem.shrink(1);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
             }
         }
         return InteractionResult.PASS;

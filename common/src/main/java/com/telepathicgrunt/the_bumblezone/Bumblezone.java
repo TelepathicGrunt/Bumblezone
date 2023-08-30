@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone;
 
 import com.mojang.logging.LogUtils;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
-import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
+import com.telepathicgrunt.the_bumblezone.blocks.PotionCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.InfinityBarrier;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -113,7 +113,7 @@ public class Bumblezone{
         EntityAttackedEvent.EVENT.addListener(HoneyCrystalShield::handledPlayerHurtBehavior);
         PlayerBreakSpeedEvent.EVENT.addListener(CombCutterEnchantment::attemptFasterMining);
         PlayerDataHandler.initEvents();
-        PlayerCraftedItemEvent.EVENT.addListener(IncenseCandleBase::multiPotionCandleCrafted);
+        PlayerCraftedItemEvent.EVENT.addListener(PotionCandleBase::multiPotionCandleCrafted);
         PlayerGrantAdvancementEvent.EVENT.addListener(TargetAdvancementDoneTrigger::OnAdvancementGiven);
         RegisterWanderingTradesEvent.EVENT.addListener(WanderingTrades::addWanderingTrades);
         TagsUpdatedEvent.EVENT.addListener(QueensTradeManager.QUEENS_TRADE_MANAGER::resolveQueenTrades);

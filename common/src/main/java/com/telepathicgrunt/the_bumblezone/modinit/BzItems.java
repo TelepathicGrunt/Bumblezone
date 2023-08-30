@@ -89,7 +89,7 @@ public class BzItems {
     public static final RegistryEntry<Item> PILE_OF_POLLEN_SUSPICIOUS = ITEMS.register("pile_of_pollen_suspicious", () -> new BlockItem(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get(), new Item.Properties()));
     public static final RegistryEntry<Item> SUGAR_INFUSED_STONE = ITEMS.register("sugar_infused_stone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_STONE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> SUGAR_INFUSED_COBBLESTONE = ITEMS.register("sugar_infused_cobblestone", () -> new BlockItem(BzBlocks.SUGAR_INFUSED_COBBLESTONE.get(), new Item.Properties()));
-    public static final RegistryEntry<Item> INCENSE_CANDLE = ITEMS.register("incense_candle", () -> new IncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE.get(), new Item.Properties()));
+    public static final RegistryEntry<Item> POTION_CANDLE = ITEMS.register("potion_candle", () -> new PotionCandleBlockItem(BzBlocks.POTION_BASE_CANDLE.get(), new Item.Properties()));
     public static final RegistryEntry<Item> SUPER_CANDLE = ITEMS.register("super_candle", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE.get(), new Item.Properties(), true, false));
     public static final RegistryEntry<Item> SUPER_CANDLE_WHITE = ITEMS.register("super_candle_white", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE.get(), new Item.Properties(), true, false));
     public static final RegistryEntry<Item> SUPER_CANDLE_LIGHT_GRAY = ITEMS.register("super_candle_light_gray", () -> new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_LIGHT_GRAY.get(), new Item.Properties(), true, false));

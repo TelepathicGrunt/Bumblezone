@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:incense_candle_base",
+    "the_bumblezone:potion_candle_base",
     "#the_bumblezone:super_candle_bases"
   ]
 }

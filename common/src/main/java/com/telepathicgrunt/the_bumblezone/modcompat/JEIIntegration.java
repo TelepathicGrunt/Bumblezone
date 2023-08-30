@@ -4,7 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
-import com.telepathicgrunt.the_bumblezone.items.recipes.IncenseCandleRecipe;
+import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.jei.JEIQueenRandomizerTradesInfo;
@@ -61,10 +61,10 @@ public class JEIIntegration implements IModPlugin {
 		if (level == null)
 			return;
 
-		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_super_candles"))
+		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "potion_candle/from_super_candles"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, true));
 
-		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "incense_candle/from_string_and_carvable_wax"))
+		level.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
 				.ifPresent(recipe -> registerExtraRecipes(recipe, registration, false));
 
 		List<JEIQueenTradesInfo> trades = new LinkedList<>();
@@ -108,8 +108,8 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration, boolean oneRecipeOnly) {
-		if (baseRecipe instanceof IncenseCandleRecipe incenseCandleRecipe) {
-			List<CraftingRecipe> extraRecipes = FakeIncenseCandleRecipeCreator.constructFakeRecipes(incenseCandleRecipe, oneRecipeOnly);
+		if (baseRecipe instanceof PotionCandleRecipe potionCandleRecipe) {
+			List<CraftingRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
 			registration.addRecipes(RecipeTypes.CRAFTING, extraRecipes);
 		}
 	}

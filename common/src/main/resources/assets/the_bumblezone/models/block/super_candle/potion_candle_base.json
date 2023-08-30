@@ -1,8 +1,8 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "the_bumblezone:block/super_candle/incense_candle",
-    "particle": "the_bumblezone:block/super_candle/incense_candle"
+    "0": "the_bumblezone:block/super_candle/potion_candle",
+    "particle": "the_bumblezone:block/super_candle/potion_candle"
   },
   "elements": [
     {

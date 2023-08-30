@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.IncenseCandleBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe {
+public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private final ResourceLocation id;
     private final String group;
     private final CraftingBookCategory category;
@@ -58,7 +58,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
     private final boolean allowLingeringPotions;
     private final int maxLevelCap;
 
-    public IncenseCandleRecipe(ResourceLocation id, CraftingBookCategory category, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height, boolean allowNormalPotions, boolean allowSplashPotions, boolean allowLingeringPotions, int maxLevelCap) {
+    public PotionCandleRecipe(ResourceLocation id, CraftingBookCategory category, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height, boolean allowNormalPotions, boolean allowSplashPotions, boolean allowLingeringPotions, int maxLevelCap) {
         super(id, category);
         this.id = id;
         this.group = group;
@@ -105,7 +105,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
     }
 
     private static ItemStack getResultStack(int outputCountIn) {
-        ItemStack stack = BzItems.INCENSE_CANDLE.get().getDefaultInstance();
+        ItemStack stack = BzItems.POTION_CANDLE.get().getDefaultInstance();
         stack.setCount(outputCountIn);
         return stack;
     }
@@ -145,7 +145,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
-        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS, e)).toList();
+        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e)).toList();
         chosenEffect = filteredMobEffects.get(new Random().nextInt(filteredMobEffects.size()));
         if (chosenEffect == null) {
             return getResultStack(this.outputCount);
@@ -154,7 +154,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
         balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
         amplifier.set(Math.min(amplifier.get(), this.maxLevelCap));
 
-        return createTaggedIncenseCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
+        return createTaggedPotionCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
     }
 
     public static void balanceStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
@@ -164,38 +164,38 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
         float durationAdjustment = (potionEffectsFound.get() * durationBaseMultiplier);
         maxDuration.set((int)(maxDuration.get() / durationAdjustment));
         if (chosenEffect.isInstantenous()) {
-            long thresholdTime = IncenseCandleBlockEntity.getInstantEffectThresholdTime(amplifier.intValue());
+            long thresholdTime = PotionCandleBlockEntity.getInstantEffectThresholdTime(amplifier.intValue());
             int activationAmounts = (int)Math.ceil((double) maxDuration.intValue() / thresholdTime);
             maxDuration.set((int) (activationAmounts * thresholdTime));
         }
     }
 
-    public static ItemStack createTaggedIncenseCandle(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, int splashCount, int lingerCount, int outputCount) {
+    public static ItemStack createTaggedPotionCandle(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, int splashCount, int lingerCount, int outputCount) {
         ItemStack resultStack = getResultStack(outputCount);
 
         CompoundTag tag = resultStack.getOrCreateTag();
         CompoundTag blockEntityTag = new CompoundTag();
         tag.put("BlockEntityTag", blockEntityTag);
-        blockEntityTag.putInt(IncenseCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
-        blockEntityTag.putInt(IncenseCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
-        blockEntityTag.putInt(IncenseCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
-        blockEntityTag.putString(IncenseCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
-        blockEntityTag.putBoolean(IncenseCandleBlockEntity.INFINITE_TAG, false);
-        blockEntityTag.putInt(IncenseCandleBlockEntity.RANGE_TAG, 3 + (splashCount * 2));
+        blockEntityTag.putInt(PotionCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
+        blockEntityTag.putInt(PotionCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
+        blockEntityTag.putInt(PotionCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
+        blockEntityTag.putString(PotionCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
+        blockEntityTag.putBoolean(PotionCandleBlockEntity.INFINITE_TAG, false);
+        blockEntityTag.putInt(PotionCandleBlockEntity.RANGE_TAG, 3 + (splashCount * 2));
         if (chosenEffect.isInstantenous()) {
-            blockEntityTag.putInt(IncenseCandleBlockEntity.LINGER_TIME_TAG, 1);
+            blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, 1);
         }
         else if (chosenEffect == MobEffects.NIGHT_VISION) {
-            setLingerTime(lingerCount, blockEntityTag, IncenseCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
+            setLingerTime(lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
         }
         else {
-            setLingerTime(lingerCount, blockEntityTag, IncenseCandleBlockEntity.DEFAULT_LINGER_TIME);
+            setLingerTime(lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
         }
         return resultStack;
     }
 
     private static void setLingerTime(int lingerCount, CompoundTag blockEntityTag, int baseLingerTime) {
-        blockEntityTag.putInt(IncenseCandleBlockEntity.LINGER_TIME_TAG, baseLingerTime + (lingerCount * baseLingerTime * 2));
+        blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, baseLingerTime + (lingerCount * baseLingerTime * 2));
     }
 
     @Override
@@ -297,7 +297,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
             }
         }
 
-        if (mobEffects.stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS, e.getEffect()))) {
+        if (mobEffects.stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect()))) {
             return false;
         }
 
@@ -306,7 +306,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BzRecipes.INCENSE_CANDLE_RECIPE.get();
+        return BzRecipes.POTION_CANDLE_RECIPE.get();
     }
 
     @Override
@@ -337,7 +337,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
         return category;
     }
 
-    public static class Serializer implements RecipeSerializer<IncenseCandleRecipe>, BzRecipeSerializer<IncenseCandleRecipe> {
+    public static class Serializer implements RecipeSerializer<PotionCandleRecipe>, BzRecipeSerializer<PotionCandleRecipe> {
         private static NonNullList<Ingredient> getIngredients(JsonArray jsonElements) {
             NonNullList<Ingredient> defaultedList = NonNullList.create();
 
@@ -352,7 +352,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
         }
 
         @Override
-        public IncenseCandleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+        public PotionCandleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
             String category = GsonHelper.getAsString(json, "category", "");
 
@@ -366,7 +366,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
             //shapeless
             NonNullList<Ingredient> shapelessRecipeItems = getIngredients(GsonHelper.getAsJsonArray(json, "shapelessExtraIngredients"));
             if (shapelessRecipeItems.isEmpty()) {
-                throw new JsonParseException("No shapeless ingredients for Super Incense Candle recipe");
+                throw new JsonParseException("No shapeless ingredients for Super Potion Candle recipe");
             }
 
             int maxPotions = json.get("maxAllowedPotions").getAsInt();
@@ -376,13 +376,13 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
             int maxLevelRead = json.get("maxLevelCap").getAsInt();
             int resultCount = json.get("resultCount").getAsInt();
 
-            return new IncenseCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+            return new PotionCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
-        public JsonObject toJson(IncenseCandleRecipe recipe) {
+        public JsonObject toJson(PotionCandleRecipe recipe) {
             JsonObject json = new JsonObject();
 
-            json.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZER.getKey(BzRecipes.INCENSE_CANDLE_RECIPE.get()).toString());
+            json.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZER.getKey(BzRecipes.POTION_CANDLE_RECIPE.get()).toString());
             json.addProperty("group", recipe.group);
             json.addProperty("category", recipe.category.getSerializedName());
 
@@ -439,7 +439,7 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
         }
 
         @Override
-        public IncenseCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public PotionCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             String category = buffer.readUtf(32767);
 
@@ -458,11 +458,11 @@ public class IncenseCandleRecipe extends CustomRecipe implements CraftingRecipe 
             boolean allowLingeringPotionsRead = buffer.readBoolean();
             int maxLevelRead = buffer.readVarInt();
             int resultCountRead = buffer.readVarInt();
-            return new IncenseCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+            return new PotionCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, IncenseCandleRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, PotionCandleRecipe recipe) {
             buffer.writeUtf(recipe.group);
             buffer.writeUtf(recipe.category.getSerializedName());
 

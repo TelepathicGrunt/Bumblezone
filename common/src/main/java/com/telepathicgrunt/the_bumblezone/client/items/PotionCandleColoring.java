@@ -1,17 +1,17 @@
 package com.telepathicgrunt.the_bumblezone.client.items;
 
-import com.telepathicgrunt.the_bumblezone.blocks.IncenseCandleBase;
+import com.telepathicgrunt.the_bumblezone.blocks.PotionCandleBase;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemColorEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.world.item.BlockItem;
 
-public class IncenseCandleColoring {
+public class PotionCandleColoring {
 
     public static void registerBlockColors(RegisterBlockColorEvent event) {
         event.register(
-            (state, reader, pos, color) -> IncenseCandleBase.getBlockColor(reader, pos, color),
-            BzBlocks.INCENSE_BASE_CANDLE.get()
+            (state, reader, pos, color) -> PotionCandleBase.getBlockColor(reader, pos, color),
+            BzBlocks.POTION_BASE_CANDLE.get()
         );
     }
 
@@ -21,9 +21,9 @@ public class IncenseCandleColoring {
                 ((BlockItem) stack.getItem()).getBlock().defaultBlockState(),
                 null,
                 null,
-                IncenseCandleBase.getItemColor(stack)
+                PotionCandleBase.getItemColor(stack)
             ),
-            BzBlocks.INCENSE_BASE_CANDLE.get()
+            BzBlocks.POTION_BASE_CANDLE.get()
         );
     }
 }
