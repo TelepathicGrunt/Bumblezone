@@ -319,7 +319,11 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
             int containerSize = event.table().getContainerSize();
             int potionsUsed = 0;
             for (int i = 0; i < containerSize; i++) {
-                if (event.table().getItem(i).is(Items.POTION)) {
+                ItemStack consumedItems = event.table().getItem(i);
+                if (consumedItems.is(Items.POTION) ||
+                    consumedItems.is(Items.SPLASH_POTION) ||
+                    consumedItems.is(Items.LINGERING_POTION))
+                {
                     potionsUsed++;
                 }
             }

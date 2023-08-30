@@ -10,8 +10,6 @@
 
 #TODO: adjust backup essence block textures
 
-#TODO: Add remants to howling constructs
-
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
@@ -346,6 +344,8 @@ Protection of the Hive will always remove Wrath of the Hive effect if you manage
 
 ##### Advancements:
 Renamed VIP Trader advancement to Crazy Trader to reduce confusion.
+
+Fixed Magic The Candling advancement to work with Splash and Lingering Potions as well.
 
 ##### Mod Compat:
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
