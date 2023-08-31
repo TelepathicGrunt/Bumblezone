@@ -600,7 +600,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          return true;
       }
       else {
-         finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
+         finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(SIGHT_RANGE)));
          boundsForChecking = this.getBoundingBox().inflate(SIGHT_RANGE);
 
          EntityHitResult entityHitResult2 = ProjectileUtil.getEntityHitResult(
