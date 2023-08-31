@@ -82,6 +82,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> HONEY_CRYSTAL_BLOCK_CHIME = registerSoundEvent("block.the_bumblezone.honey_crystal_block.chime");
     public static final RegistryEntry<SoundEvent> HONEY_CRYSTAL_BLOCK_BREAK = registerSoundEvent("block.the_bumblezone.honey_crystal_block.break");
     public static final RegistryEntry<SoundEvent> WINDY_AIR_BLOWS = registerSoundEvent("block.the_bumblezone.windy_air.blows");
+    public static final RegistryEntry<SoundEvent> HONEY_COCOON_OPEN = registerSoundEvent("block.the_bumblezone.honey_cocoon.open");
 
     public static final PlatformSoundType HONEY_CRYSTALS_TYPE = new PlatformSoundType(
             1.0F,

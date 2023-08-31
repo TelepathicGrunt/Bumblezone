@@ -1348,5 +1348,34 @@
       }
     ],
     "subtitle": "subtitles.block.the_bumblezone.windy_air.blows"
+  },
+  "block.the_bumblezone.honey_cocoon.open": {
+    "sounds": [
+      {
+        "name": "block/honeyblock/break1",
+        "volume": 0.15,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/honeyblock/break2",
+        "volume": 0.15,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/honeyblock/break3",
+        "volume": 0.15,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/honeyblock/break4",
+        "volume": 0.15,
+        "pitch": 0.5
+      },
+      {
+        "name": "block/honeyblock/break5",
+        "volume": 0.15,
+        "pitch": 0.5
+      }
+    ]
   }
 }

@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -276,6 +277,9 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
             return InteractionResult.SUCCESS;
         }
         else if (world.isClientSide) {
+            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
+                    BzSounds.HONEY_COCOON_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+
             return InteractionResult.SUCCESS;
         }
         else {

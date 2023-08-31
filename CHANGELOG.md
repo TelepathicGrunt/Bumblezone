@@ -275,6 +275,8 @@ For the Honey Residue/Honey Web blocks, I converted the right click washing item
 
 Fixed Panes, Fences, and Iron Bars being able to connect to back of String Curtains. Not anymore.
 
+Added sound when opening Honey Cocoon
+
 ##### Items:
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
 
