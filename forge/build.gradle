@@ -53,6 +53,7 @@ dependencies {
 
     // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
     // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
+    // modRuntimeOnly("curse.maven:atlasviewer-633577:4597419")
 
     //modCompileOnly("mekanism:Mekanism:${project.mekanism}:api")
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}")// core
