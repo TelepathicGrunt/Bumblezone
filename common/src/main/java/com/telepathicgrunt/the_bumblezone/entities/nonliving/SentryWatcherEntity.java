@@ -91,6 +91,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private int lastRightClicked = -100;
 
    private static final int MAX_CHARGING_DISTANCE = 80;
+   private static final int SIGHT_RANGE = 36;
    private static final int UNABLE_TO_DESTROY_TOTAL_BLOCK_HARDNESS = 20;
    private static final float MAX_STEP_UP = 0.75f;
    private static final float ROTATION_SPEED = 1.5f;
@@ -578,10 +579,9 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    private boolean scanAndBeginActivationIfEnemyFound(Vec3 offset) {
-      int sightRange = 36;
       Vec3 eyePosition = this.getEyePosition().add(offset);
-      Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
-      AABB boundsForChecking = this.getBoundingBox().inflate(sightRange);
+      Vec3 finalPos = eyePosition.add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(SIGHT_RANGE)));
+      AABB boundsForChecking = this.getBoundingBox().inflate(SIGHT_RANGE);
 
       EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
               this.level(),
@@ -601,7 +601,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       }
       else {
          finalPos = this.position().add(0, 0.1d, 0).add(Vec3.atLowerCornerOf(this.getTargetFacing().getNormal().multiply(sightRange)));
-         boundsForChecking = this.getBoundingBox().inflate(sightRange);
+         boundsForChecking = this.getBoundingBox().inflate(SIGHT_RANGE);
 
          EntityHitResult entityHitResult2 = ProjectileUtil.getEntityHitResult(
                  this.level(),
