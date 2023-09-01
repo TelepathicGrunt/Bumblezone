@@ -77,43 +77,9 @@
           "weight": 1
         },
         {
-          "name": "the_bumblezone:banner_pattern_bee",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:banner_pattern_honeycombs",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:banner_pattern_swords",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:banner_pattern_sun",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:banner_pattern_pluses",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:banner_pattern_eyes",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:banner_pattern_peace",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:banner_pattern_arrows",
-          "type": "minecraft:item",
+          "name": "the_bumblezone:banner_patterns",
+          "type": "minecraft:tag",
+          "expand": true,
           "weight": 1
         }
       ]
