@@ -1,3 +1,9 @@
+### **(V.6.7.31 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Allow Restricted Portals mod to block teleporting to Bumblezone.
+
+
 ### **(V.6.7.30 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

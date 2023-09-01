@@ -164,6 +164,9 @@ dependencies {
 
 	//modCompileOnly "curse.maven:llamarama-449083:3938753"
 	//modRuntimeOnly "curse.maven:llamarama-449083:3938753"
+	
+	//modRuntimeOnly "curse.maven:restricted-portals-228266:4507847"
+	modCompileOnly "curse.maven:restricted-portals-228266:4507847"
 
 	//modCompileOnly "curse.maven:friends_and_foes-551364:3725313"
 	//modCompileOnly "curse.maven:bee_better-351600:3726160"

@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
@@ -230,19 +232,32 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.stopSleepInBed(true, true);
 			}
 
-			serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true, serverPlayer.getLastDeathLocation()));
-			serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
-			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
-			serverPlayer.connection.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
-			serverPlayer.connection.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));
-			serverPlayer.addEffect(new MobEffectInstance(
-					MobEffects.SLOW_FALLING,
-					20,
-					100,
-					false,
-					false,
-					false));
-			teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
+			boolean allowedTeleporting = true;
+
+			if (ModChecker.restrictedPortals) {
+				if (RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, destination.dimension())) {
+					allowedTeleporting = false;
+				}
+			}
+
+			if (allowedTeleporting) {
+				serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), true, serverPlayer.getLastDeathLocation()));
+				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
+				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+				serverPlayer.connection.send(new ClientboundPlayerAbilitiesPacket(serverPlayer.getAbilities()));
+				serverPlayer.connection.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));
+				serverPlayer.addEffect(new MobEffectInstance(
+						MobEffects.SLOW_FALLING,
+						20,
+						100,
+						false,
+						false,
+						false));
+				teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
+			}
+			else {
+				teleportedEntity = null;
+			}
 		}
 		else {
 			Entity newEntity = entity;
@@ -257,10 +272,9 @@ public class BzWorldSavedData extends SavedData {
 			entity.remove(Entity.RemovalReason.CHANGED_DIMENSION);
 		}
 
+		teleportedEntities.add(entity);
 		if(teleportedEntity != null) {
 			// update set to keep track of entities teleported
-			teleportedEntities.add(entity);
-
 			ChunkPos chunkpos = new ChunkPos(new BlockPos(destinationPosition.x, destinationPosition.y, destinationPosition.z));
 			destination.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 1, entity.getId());
 
@@ -280,6 +294,10 @@ public class BzWorldSavedData extends SavedData {
 			}
 
 			passengers.forEach(passenger -> teleportEntityAndAssignToVehicle(passenger, teleportedEntity, destination, destinationPosition, teleportedEntities));
+		}
+		else {
+			// Teleporting was denied by another mod
+			teleportedEntities.addAll(passengers);
 		}
 	}
 
