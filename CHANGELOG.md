@@ -1,3 +1,9 @@
+### **(V.6.7.31 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+Prevent being stuck on dimension load screen if trying to enter Bumblezone if the dimension is blocked by Restricted Portals mod.
+
+
 ### **(V.6.7.30 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

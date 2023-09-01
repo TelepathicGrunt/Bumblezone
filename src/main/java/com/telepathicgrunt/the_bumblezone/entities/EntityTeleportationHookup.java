@@ -470,6 +470,7 @@ public class EntityTeleportationHookup {
                 if(EntityTeleportationBackend.isValidBeeHive(world.getBlockState(pos))) {
                     isPushedIntoBeehive = true;
                     belowHiveBlocks.add(world.getBlockState(pos.below()));
+                    break;
                 }
             }
 
@@ -482,6 +483,7 @@ public class EntityTeleportationHookup {
                     for(BlockState belowBlock : belowHiveBlocks) {
                         if(belowBlock.is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                             validBelowBlock = true;
+                            break;
                         }
                     }
 
