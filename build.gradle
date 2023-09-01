@@ -149,6 +149,9 @@ dependencies {
 	//modRuntimeOnly "dev.emi:trinkets:${trinkets_version}"
 	modCompileOnly "dev.emi:trinkets:${trinkets_version}"
 
+	//modRuntimeOnly "curse.maven:restricted-portals-228266:4507847"
+	modCompileOnly "curse.maven:restricted-portals-228266:4507847"
+
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc_version}-common-api:${jei_version}"
 	//modCompileOnlyApi "mezz.jei:jei-${jei_mc_version}-fabric-api:${jei_version}"
 	//modRuntimeOnly "mezz.jei:jei-${jei_mc_version}-common:${jei_version}"

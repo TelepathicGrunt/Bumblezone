@@ -15,6 +15,7 @@ public class ModChecker {
 	public static boolean goodallPresent = false;
 	public static boolean backpackedPresent = false;
 	public static boolean projectileDamageAttributePresent = false;
+	public static boolean restrictedPortals = false;
 
     /*
      * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -47,6 +48,9 @@ public class ModChecker {
 
 			currentModID = "projectile_damage";
 			loadupModCompat(currentModID, () -> ProjectileDamageAttributeCompat.setupCompat());
+
+			currentModID = "restrictedportals";
+			loadupModCompat(currentModID, () -> RestrictedPortalsCompat.setupCompat());
         }
         catch (Exception e) {
             printErrorToLogs("classloading " + currentModID + " and so, mod compat done afterwards broke");
