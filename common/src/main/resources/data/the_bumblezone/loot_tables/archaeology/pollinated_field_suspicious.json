@@ -97,11 +97,6 @@
           "weight": 50
         },
         {
-          "name": "minecraft:flower_banner_pattern",
-          "type": "minecraft:item",
-          "weight": 50
-        },
-        {
           "name": "minecraft:dune_armor_trim_smithing_template",
           "type": "minecraft:item",
           "weight": 50
@@ -366,6 +361,51 @@
               "function": "minecraft:enchant_randomly"
             }
           ]
+        },
+        {
+          "name": "minecraft:flower_banner_pattern",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_bee",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_swords",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_sun",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_pluses",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_eyes",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_peace",
+          "type": "minecraft:item",
+          "weight": 6
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_arrows",
+          "type": "minecraft:item",
+          "weight": 6
         }
       ]
     }

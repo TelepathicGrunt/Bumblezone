@@ -9,32 +9,32 @@
         {
           "name": "minecraft:brewer_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:explorer_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:shelter_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:angler_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:amethyst_shard",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:tipped_arrow",
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 3,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -45,20 +45,30 @@
         {
           "name": "minecraft:fishing_rod",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:spider_eye",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:bone",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 3
         },
         {
           "name": "minecraft:skeleton_skull",
+          "type": "minecraft:item",
+          "weight": 3
+        },
+        {
+          "name": "minecraft:wayfinder_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
           "type": "minecraft:item",
           "weight": 2
         },
@@ -68,12 +78,42 @@
           "weight": 1
         },
         {
-          "name": "minecraft:wayfinder_armor_trim_smithing_template",
+          "name": "the_bumblezone:banner_pattern_bee",
           "type": "minecraft:item",
           "weight": 1
         },
         {
-          "name": "the_bumblezone:buzzing_briefcase",
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_swords",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_sun",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_pluses",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_eyes",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_peace",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_arrows",
           "type": "minecraft:item",
           "weight": 1
         }

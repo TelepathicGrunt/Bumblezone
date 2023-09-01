@@ -5,6 +5,7 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BannerPatternTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
@@ -191,6 +193,15 @@ public class BzTags {
 
     public static final TagKey<PlacedFeature> RESOURCEFUL_BEES_COMBS = TagKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Bumblezone.MODID, "resourceful_bees_combs"));
     public static final TagKey<PlacedFeature> PRODUCTIVE_BEES_COMBS = TagKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Bumblezone.MODID, "productive_bees_combs"));
+
+    public static final TagKey<BannerPattern> PATTERN_ITEM_BEE = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/bee"));
+    public static final TagKey<BannerPattern> PATTERN_ITEM_HONEYCOMBS = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/honeycombs"));
+    public static final TagKey<BannerPattern> PATTERN_ITEM_SWORDS = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/swords"));
+    public static final TagKey<BannerPattern> PATTERN_ITEM_SUN = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/sun"));
+    public static final TagKey<BannerPattern> PATTERN_ITEM_PLUSES = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/pluses"));
+    public static final TagKey<BannerPattern> PATTERN_ITEM_EYES = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/eyes"));
+    public static final TagKey<BannerPattern> PATTERN_ITEM_PEACE = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/peace"));
+    public static final TagKey<BannerPattern> PATTERN_ITEM_ARROWS = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/arrows"));
 
     @ExpectPlatform
     public static String getPlatformTagNamespace() {

@@ -1,0 +1,129 @@
+{
+  "parent": "the_bumblezone:music_discs/obtain_all_music_discs",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:banner_pattern_bee"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.obtain_all_banner_patterns.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.obtain_all_banner_patterns.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "banner_pattern_bee": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_bee"]
+          }
+        ]
+      }
+    },
+    "banner_pattern_honeycombs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_honeycombs"]
+          }
+        ]
+      }
+    },
+    "banner_pattern_swords": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_swords"]
+          }
+        ]
+      }
+    },
+    "banner_pattern_sun": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_sun"]
+          }
+        ]
+      }
+    },
+    "banner_pattern_pluses": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_pluses"]
+          }
+        ]
+      }
+    },
+    "banner_pattern_eyes": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_eyes"]
+          }
+        ]
+      }
+    },
+    "banner_pattern_peace": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_peace"]
+          }
+        ]
+      }
+    },
+    "banner_pattern_arrows": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:banner_pattern_arrows"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "banner_pattern_bee"
+    ],
+    [
+      "banner_pattern_honeycombs"
+    ],
+    [
+      "banner_pattern_swords"
+    ],
+    [
+      "banner_pattern_sun"
+    ],
+    [
+      "banner_pattern_pluses"
+    ],
+    [
+      "banner_pattern_eyes"
+    ],
+    [
+      "banner_pattern_peace"
+    ],
+    [
+      "banner_pattern_arrows"
+    ]
+  ]
+}

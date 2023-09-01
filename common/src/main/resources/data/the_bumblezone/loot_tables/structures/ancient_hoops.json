@@ -212,12 +212,12 @@
         {
           "name": "the_bumblezone:bee_soup",
           "type": "minecraft:item",
-          "weight": 5
+          "weight": 20
         },
         {
           "name": "minecraft:potion",
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -228,7 +228,7 @@
         {
           "name": "minecraft:potion",
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -239,27 +239,27 @@
         {
           "name": "minecraft:shears",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 16
         },
         {
           "name": "minecraft:flint_and_steel",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 16
         },
         {
           "name": "minecraft:saddle",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 16
         },
         {
           "name": "minecraft:name_tag",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:firework_star",
-          "weight": 4,
+          "weight": 16,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -278,7 +278,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:firework_star",
-          "weight": 4,
+          "weight": 16,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -297,20 +297,60 @@
         {
           "name": "minecraft:brush",
           "type": "minecraft:item",
-          "weight": 3
+          "weight": 12
         },
         {
           "name": "minecraft:music_disc_11",
           "type": "minecraft:item",
-          "weight": 3
+          "weight": 12
         },
         {
           "name": "the_bumblezone:bumble_bee_chestplate_1",
           "type": "minecraft:item",
-          "weight": 1
+          "weight": 12
         },
         {
           "name": "the_bumblezone:bumble_bee_chestplate_2",
+          "type": "minecraft:item",
+          "weight": 12
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_bee",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_swords",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_sun",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_pluses",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_eyes",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_peace",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_arrows",
           "type": "minecraft:item",
           "weight": 1
         }

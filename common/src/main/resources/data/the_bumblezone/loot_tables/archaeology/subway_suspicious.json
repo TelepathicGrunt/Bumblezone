@@ -9,57 +9,67 @@
         {
           "name": "minecraft:miner_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 4
         },
         {
           "name": "minecraft:explorer_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 4
         },
         {
           "name": "minecraft:howl_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 4
         },
         {
           "name": "minecraft:mourner_pottery_sherd",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 4
         },
         {
           "name": "minecraft:echo_shard",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 4
         },
         {
           "name": "minecraft:minecart",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 4
         },
         {
           "name": "minecraft:lantern",
           "type": "minecraft:item",
-          "weight": 2
+          "weight": 4
         },
         {
           "name": "minecraft:rail",
           "type": "minecraft:item",
-          "weight": 1
+          "weight": 2
         },
         {
           "name": "minecraft:powered_rail",
           "type": "minecraft:item",
-          "weight": 1
+          "weight": 2
         },
         {
           "name": "minecraft:activator_rail",
           "type": "minecraft:item",
-          "weight": 1
+          "weight": 2
         },
         {
           "name": "minecraft:detector_rail",
           "type": "minecraft:item",
-          "weight": 1
+          "weight": 2
+        },
+        {
+          "name": "minecraft:raiser_armor_trim_smithing_template",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "the_bumblezone:buzzing_briefcase",
+          "type": "minecraft:item",
+          "weight": 2
         },
         {
           "name": "minecraft:flower_banner_pattern",
@@ -67,12 +77,42 @@
           "weight": 1
         },
         {
-          "name": "minecraft:raiser_armor_trim_smithing_template",
+          "name": "the_bumblezone:banner_pattern_bee",
           "type": "minecraft:item",
           "weight": 1
         },
         {
-          "name": "the_bumblezone:buzzing_briefcase",
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_swords",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_sun",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_pluses",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_eyes",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_peace",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_arrows",
           "type": "minecraft:item",
           "weight": 1
         }

@@ -136,6 +136,14 @@ public class BzCreativeTabs {
             BzItems.HONEY_BEE_LEGGINGS_2,
             BzItems.CARPENTER_BEE_BOOTS_1,
             BzItems.CARPENTER_BEE_BOOTS_2,
+            BzItems.BANNER_PATTERN_BEE,
+            BzItems.BANNER_PATTERN_HONEYCOMBS,
+            BzItems.BANNER_PATTERN_SWORDS,
+            BzItems.BANNER_PATTERN_EYES,
+            BzItems.BANNER_PATTERN_PEACE,
+            BzItems.BANNER_PATTERN_PLUSES,
+            BzItems.BANNER_PATTERN_SUN,
+            BzItems.BANNER_PATTERN_ARROWS,
             BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV,
             BzItems.MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY,
             BzItems.MUSIC_DISC_LA_BEE_DA_LOCA,
@@ -273,6 +281,19 @@ public class BzCreativeTabs {
         if (event.type() == AddCreativeTabEntriesEvent.Type.TOOLS) {
             Stream.of(
                     BzItems.BUZZING_BRIEFCASE
+            ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
+        }
+
+        if (event.type() == AddCreativeTabEntriesEvent.Type.INGREDIENTS) {
+            Stream.of(
+                    BzItems.BANNER_PATTERN_BEE,
+                    BzItems.BANNER_PATTERN_HONEYCOMBS,
+                    BzItems.BANNER_PATTERN_SWORDS,
+                    BzItems.BANNER_PATTERN_EYES,
+                    BzItems.BANNER_PATTERN_PEACE,
+                    BzItems.BANNER_PATTERN_PLUSES,
+                    BzItems.BANNER_PATTERN_SUN,
+                    BzItems.BANNER_PATTERN_ARROWS
             ).map(item -> item.get().getDefaultInstance()).forEach(event::add);
         }
 

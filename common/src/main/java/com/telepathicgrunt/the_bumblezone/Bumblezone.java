@@ -149,6 +149,7 @@ public class Bumblezone{
         BzPredicates.RULE_TEST.init();
         BzStructures.STRUCTURES.init();
         BzDimension.BIOME_SOURCE.init();
+        BzPatterns.BANNER_PATTERNS.init();
         BzParticles.PARTICLE_TYPES.init();
         BzPredicates.POS_RULE_TEST.init();
         BzDimension.CHUNK_GENERATOR.init();

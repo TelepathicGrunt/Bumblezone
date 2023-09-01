@@ -390,6 +390,12 @@
           ]
         },
         {
+          "name": "the_bumblezone:banner_pattern_peace",
+          "type": "minecraft:item",
+          "weight": 3,
+          "quality": 1
+        },
+        {
           "name": "minecraft:decorated_pot_sherds",
           "type": "minecraft:tag",
           "expand": true,

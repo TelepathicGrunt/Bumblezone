@@ -292,26 +292,26 @@
         {
           "name": "the_bumblezone:honey_crystal_shield",
           "type": "minecraft:item",
-          "weight": 8
+          "weight": 32
         },
         {
           "name": "the_bumblezone:stinger_spear",
           "type": "minecraft:item",
-          "weight": 8
+          "weight": 32
         },
         {
           "type": "minecraft:empty",
-          "weight": 6
+          "weight": 24
         },
         {
           "name": "the_bumblezone:honeycomb_brood_block",
           "type": "minecraft:item",
-          "weight": 5
+          "weight": 20
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_boots",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -322,7 +322,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_boots",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -336,7 +336,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_leggings",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -347,7 +347,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_leggings",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -361,7 +361,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_chestplate",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -372,7 +372,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_chestplate",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -386,7 +386,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_helmet",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -397,7 +397,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_helmet",
-          "weight": 3,
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -411,7 +411,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_bee_leggings_1",
-          "weight": 2,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -421,7 +421,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:honey_bee_leggings_2",
-          "weight": 2,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -431,7 +431,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:stingless_bee_helmet_1",
-          "weight": 2,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -441,7 +441,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:stingless_bee_helmet_2",
-          "weight": 2,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -451,7 +451,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:carpenter_bee_boots_1",
-          "weight": 2,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -461,7 +461,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:carpenter_bee_boots_2",
-          "weight": 2,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -471,7 +471,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:bumble_bee_chestplate_1",
-          "weight": 1,
+          "weight": 4,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -481,7 +481,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:bumble_bee_chestplate_2",
-          "weight": 1,
+          "weight": 4,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -491,7 +491,7 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:bumble_bee_chestplate_trans_1",
-          "weight": 1,
+          "weight": 4,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
@@ -501,12 +501,52 @@
         {
           "type": "minecraft:item",
           "name": "the_bumblezone:bumble_bee_chestplate_trans_2",
-          "weight": 1,
+          "weight": 4,
           "functions": [
             {
               "function": "minecraft:enchant_randomly"
             }
           ]
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_bee",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_swords",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_sun",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_pluses",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_eyes",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_peace",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_arrows",
+          "type": "minecraft:item",
+          "weight": 1
         }
       ]
     },

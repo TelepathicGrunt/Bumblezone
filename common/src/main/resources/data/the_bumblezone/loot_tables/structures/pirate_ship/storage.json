@@ -111,7 +111,7 @@
         {
           "name": "minecraft:honey_block",
           "type": "minecraft:item",
-          "weight": 9,
+          "weight": 18,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -126,12 +126,12 @@
         {
           "name": "minecraft:stone_sword",
           "type": "minecraft:item",
-          "weight": 4
+          "weight": 8
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_boots",
-          "weight": 4,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -142,7 +142,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_leggings",
-          "weight": 4,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -153,7 +153,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_chestplate",
-          "weight": 4,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -164,7 +164,7 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather_helmet",
-          "weight": 4,
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -175,12 +175,12 @@
         {
           "name": "minecraft:iron_sword",
           "type": "minecraft:item",
-          "weight": 3
+          "weight": 6
         },
         {
           "name": "the_bumblezone:bee_soup",
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 4,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -194,6 +194,46 @@
         },
         {
           "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 2
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_bee",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_honeycombs",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_swords",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_sun",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_pluses",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_eyes",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_peace",
+          "type": "minecraft:item",
+          "weight": 1
+        },
+        {
+          "name": "the_bumblezone:banner_pattern_arrows",
           "type": "minecraft:item",
           "weight": 1
         }
