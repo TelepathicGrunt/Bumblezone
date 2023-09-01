@@ -97,8 +97,8 @@ public class EntityTeleportationHookup {
         //Makes it so player does not get killed for falling into the void
         if (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
-                if(BzDimensionConfigs.enableExitTeleportation) {
-                    if(livingEntity instanceof ServerPlayer) {
+                if (BzDimensionConfigs.enableExitTeleportation) {
+                    if (livingEntity instanceof ServerPlayer) {
                         BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
                     }
 
@@ -124,8 +124,8 @@ public class EntityTeleportationHookup {
                 }
             }
             else if (livingEntity.getY() > 255) {
-                if(BzDimensionConfigs.enableExitTeleportation) {
-                    if(livingEntity instanceof ServerPlayer) {
+                if (BzDimensionConfigs.enableExitTeleportation) {
+                    if (livingEntity instanceof ServerPlayer) {
                         BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
                     }
 
@@ -166,7 +166,7 @@ public class EntityTeleportationHookup {
             }
 
             ServerLevel serverWorld = worldKey == null ? null : minecraftServer.getLevel(worldKey);
-            if(serverWorld == null) {
+            if (serverWorld == null) {
                 serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)));
             }
             BzWorldSavedData.queueEntityToTeleport(livingEntity, serverWorld.dimension());
@@ -189,22 +189,22 @@ public class EntityTeleportationHookup {
             BlockPos hivePos = null;
             if (hitResult instanceof BlockHitResult blockHitResult) {
                 BlockState block = level.getBlockState(blockHitResult.getBlockPos());
-                if(EntityTeleportationBackend.isValidBeeHive(block)) {
+                if (EntityTeleportationBackend.isValidBeeHive(block)) {
                     hivePos = blockHitResult.getBlockPos();
                 }
             }
 
-            if(hivePos == null) {
+            if (hivePos == null) {
                 hivePos = getNearbyHivePos(hitResult.getLocation(), level);
             }
 
             // if fail, move the hit pos one step based on pearl velocity and try again
-            if(hivePos == null && projectile != null) {
+            if (hivePos == null && projectile != null) {
                 hivePos = getNearbyHivePos(hitResult.getLocation().add(projectile.getDeltaMovement()), level);
             }
 
             // no hive hit, exit early
-            if(hivePos == null) {
+            if (hivePos == null) {
                 return false;
             }
 
@@ -304,7 +304,7 @@ public class EntityTeleportationHookup {
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (isTeleportAllowedInDimension(level)) {
 
-            if(!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(clickedPos))) {
+            if (!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(clickedPos))) {
                 return false;
             }
 
@@ -350,7 +350,7 @@ public class EntityTeleportationHookup {
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
         if (isTeleportAllowedInDimension(level)) {
 
-            if(!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(targetPosition))) {
+            if (!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(targetPosition))) {
                 return false;
             }
 
@@ -396,11 +396,11 @@ public class EntityTeleportationHookup {
 
     private static boolean isValidBelowBlock(Level world, Entity entity, BlockPos hivePos) {
         Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-        if(blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
-            if(world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
+        if (blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
+            if (world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                 return true;
             }
-            else if(BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive && entity instanceof ServerPlayer serverPlayer) {
+            else if (BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive && entity instanceof ServerPlayer serverPlayer) {
                 //failed. Block below isn't the required block
                 Bumblezone.LOGGER.error("Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                 Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
@@ -417,12 +417,12 @@ public class EntityTeleportationHookup {
         double checkRadius = 0.5D;
         //check with offset in all direction as the position of exact hit point could barely be outside the hive block
         //even through the pearl hit the block directly.
-        for(double offset = -checkRadius; offset <= checkRadius; offset += checkRadius) {
-            for(double offset2 = -checkRadius; offset2 <= checkRadius; offset2 += checkRadius) {
+        for (double offset = -checkRadius; offset <= checkRadius; offset += checkRadius) {
+            for (double offset2 = -checkRadius; offset2 <= checkRadius; offset2 += checkRadius) {
                 for (double offset3 = -checkRadius; offset3 <= checkRadius; offset3 += checkRadius) {
                     BlockPos offsettedHitPos = BlockPos.containing(hitBlockPos.add(offset, offset2, offset3));
                     BlockState block = world.getBlockState(offsettedHitPos);
-                    if(EntityTeleportationBackend.isValidBeeHive(block)) {
+                    if (EntityTeleportationBackend.isValidBeeHive(block)) {
                         return offsettedHitPos;
                     }
                 }
@@ -440,7 +440,9 @@ public class EntityTeleportationHookup {
             !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
         {
-            if(BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) return; // Skip checks if entity is teleporting already to Bz.
+            if (BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) {
+                return; // Skip checks if entity is teleporting already to Bz.
+            }
 
             BlockPos.MutableBlockPos entityPos = new BlockPos.MutableBlockPos().set(pushedEntity.blockPosition());
             BlockPos[] blockPositions = new BlockPos[]{
@@ -453,10 +455,11 @@ public class EntityTeleportationHookup {
 
             // Checks if entity is pushed into hive block
             boolean isPushedIntoBeehive = false;
-            for(BlockPos pos : blockPositions) {
-                if(EntityTeleportationBackend.isValidBeeHive(world.getBlockState(pos))) {
+            for (BlockPos pos : blockPositions) {
+                if (EntityTeleportationBackend.isValidBeeHive(world.getBlockState(pos))) {
                     isPushedIntoBeehive = true;
                     belowHiveBlocks.add(world.getBlockState(pos.below()));
+                    break;
                 }
             }
 
@@ -464,16 +467,17 @@ public class EntityTeleportationHookup {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
                 Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-                if(blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
+                if (blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
 
-                    for(BlockState belowBlock : belowHiveBlocks) {
-                        if(belowBlock.is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
+                    for (BlockState belowBlock : belowHiveBlocks) {
+                        if (belowBlock.is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                             validBelowBlock = true;
+                            break;
                         }
                     }
 
-                    if(!validBelowBlock && BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive) {
-                        if(pushedEntity instanceof Player playerEntity) {
+                    if (!validBelowBlock && BzDimensionConfigs.warnPlayersOfWrongBlockUnderHive) {
+                        if (pushedEntity instanceof Player playerEntity) {
                             //failed. Block below isn't the required block
                             Bumblezone.LOGGER.info("Bumblezone: The attempt to teleport to Bumblezone failed due to not having a block from the following block tag below the hive: the_bumblezone:required_blocks_under_hive_to_teleport");
                             Component message = Component.translatable("system.the_bumblezone.require_hive_blocks_failed");
@@ -488,7 +492,7 @@ public class EntityTeleportationHookup {
 
                 //if the entity was pushed into a beehive, begin the teleportation.
                 if (validBelowBlock) {
-                    if(pushedEntity instanceof ServerPlayer) {
+                    if (pushedEntity instanceof ServerPlayer) {
                         BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.trigger((ServerPlayer) pushedEntity);
                     }
                     BzWorldSavedData.queueEntityToTeleport(pushedEntity, BzDimension.BZ_WORLD_KEY);
