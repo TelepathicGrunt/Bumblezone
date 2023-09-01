@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
+import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -13,6 +14,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -45,6 +47,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
@@ -212,6 +215,14 @@ public class PlatformHooksImpl {
         else if (entity instanceof Player player) {
             return player.mayInteract(level, pos) && PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(level, player, pos, level.getBlockState(pos), null);
         }
+        return true;
+    }
+
+    public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
+        if (RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, dimension)) {
+            return false;
+        }
+
         return true;
     }
 }

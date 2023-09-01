@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -131,5 +132,10 @@ public class PlatformHooks {
     @ExpectPlatform
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         throw new NotImplementedException("PlatformHooks isPermissionAllowedAtSpot is not implemented!");
+    }
+
+    @ExpectPlatform
+    public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
+        throw new NotImplementedException("PlatformHooks isDimensionAllowed is not implemented!");
     }
 }

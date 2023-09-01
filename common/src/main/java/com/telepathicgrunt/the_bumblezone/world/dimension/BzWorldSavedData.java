@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -268,20 +269,25 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.stopSleepInBed(true, true);
 			}
 
-			serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()));
-			serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
-			serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
-			serverPlayer.setPortalCooldown();
-			serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
-			serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
-			serverPlayer.addEffect(new MobEffectInstance(
-					MobEffects.SLOW_FALLING,
-					20,
-					100,
-					false,
-					false,
-					false));
-			teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
+			if (PlatformHooks.isDimensionAllowed(serverPlayer, destination.dimension())) {
+				serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()));
+				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
+				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+				serverPlayer.setPortalCooldown();
+				serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
+				serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
+				serverPlayer.addEffect(new MobEffectInstance(
+						MobEffects.SLOW_FALLING,
+						20,
+						100,
+						false,
+						false,
+						false));
+				teleportedEntity = destination.getPlayerByUUID(serverPlayer.getUUID());
+			}
+			else {
+				teleportedEntity = null;
+			}
 		}
 		else {
 			Entity newEntity = entity;

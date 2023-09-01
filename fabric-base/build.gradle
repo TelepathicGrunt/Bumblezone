@@ -40,6 +40,8 @@ dependencies {
 
     modCompileOnly "dev.emi:emi-fabric:${rootProject.emi}"
 
+    modCompileOnly "curse.maven:restricted-portals-228266:${rootProject.restricted_portals_file_id}"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
