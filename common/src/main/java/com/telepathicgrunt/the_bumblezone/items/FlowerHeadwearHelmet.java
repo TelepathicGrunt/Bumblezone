@@ -27,14 +27,19 @@ public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeath
 
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
+        int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
+
         MobEffectInstance wrath = player.getEffect(BzEffects.WRATH_OF_THE_HIVE.get());
         if (wrath != null) {
             if (wrath.getDuration() > 0) {
                 ((MobEffectInstanceAccessor) wrath).callTickDownDuration();
+                if (beeWearablesCount > 3) {
+                    ((MobEffectInstanceAccessor) wrath).callTickDownDuration();
+                }
             }
 
             if (!world.isClientSide() &&
-                player.getRandom().nextFloat() < 0.004f &&
+                player.getRandom().nextFloat() < 0.002f &&
                 itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {
                 itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
