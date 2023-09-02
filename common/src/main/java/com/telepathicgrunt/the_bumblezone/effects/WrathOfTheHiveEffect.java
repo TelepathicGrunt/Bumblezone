@@ -126,7 +126,7 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
             }
         }
         //Anything lower than 2 is medium aggression
-        else if ((entity.level().getGameTime() + entity.getUUID().getLeastSignificantBits()) % 20 == 0) {
+        else if ((entity.level().getGameTime() + entity.getUUID().getLeastSignificantBits()) % 10 == 0) {
             mediumAggression(world, entity);
         }
 
@@ -200,16 +200,21 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
                 continue;
             }
 
-            if(bee instanceof NeutralMob) {
-                ((NeutralMob)bee).setRemainingPersistentAngerTime(20);
-                ((NeutralMob)bee).setPersistentAngerTarget(livingEntity.getUUID());
-            }
-
             if(isHiding) {
                 bee.setTarget(null);
             }
             else {
-                bee.setTarget(livingEntity);
+                if(bee instanceof NeutralMob) {
+                    ((NeutralMob)bee).setRemainingPersistentAngerTime(40);
+
+                    if (bee.getTarget() == null || bee.getTarget().isDeadOrDying()) {
+                        ((NeutralMob)bee).setPersistentAngerTarget(livingEntity.getUUID());
+                    }
+                }
+
+                if (bee.getTarget() == null || bee.getTarget().isDeadOrDying()) {
+                    bee.setTarget(livingEntity);
+                }
 
                 MobEffectInstance effect = livingEntity.getEffect(BzEffects.WRATH_OF_THE_HIVE.get());
                 if (effect != null) {

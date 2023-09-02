@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPla
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeAttackGoal;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
+import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ItemEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -325,7 +326,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     public static void applyMiningFatigueInStructures(ServerPlayer serverPlayer) {
-        if(serverPlayer.isCreative() || serverPlayer.isSpectator()) {
+        if(serverPlayer.isCreative() || serverPlayer.isSpectator() || EssenceOfTheBees.hasEssence(serverPlayer)) {
             return;
         }
 

@@ -265,20 +265,21 @@ public class BeeAggression {
 
     // Makes bees angry if in Cell Maze or other tagged structures.
     public static void applyAngerIfInTaggedStructures(ServerPlayer serverPlayer) {
-        if(serverPlayer.isCreative() ||
-            serverPlayer.isSpectator() ||
-            !BzBeeAggressionConfigs.aggressiveBees ||
-            serverPlayer.level().getDifficulty() == Difficulty.PEACEFUL)
-        {
-            return;
-        }
-
-        if (!FlowerHeadwearHelmet.getFlowerHeadware(serverPlayer).isEmpty()) {
-            return;
-        }
-
         StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
+            if (!FlowerHeadwearHelmet.getFlowerHeadware(serverPlayer).isEmpty()) {
+                BzCriterias.FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER.trigger(serverPlayer);
+                return;
+            }
+
+            if(serverPlayer.isCreative() ||
+                    serverPlayer.isSpectator() ||
+                    !BzBeeAggressionConfigs.aggressiveBees ||
+                    serverPlayer.level().getDifficulty() == Difficulty.PEACEFUL)
+            {
+                return;
+            }
+
             if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                 if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);

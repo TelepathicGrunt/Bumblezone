@@ -1,0 +1,41 @@
+{
+  "parent": "the_bumblezone:armor/craft_flower_headwear",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:flower_headwear",
+      "nbt": "{\"display\":{\"color\":1604059}}"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.dye_flower_headwear.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.dye_flower_headwear.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "dye_flower_headwear": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:armor_dye",
+        "ingredients": [
+          {
+            "items": [ "the_bumblezone:flower_headwear" ],
+            "count": 1
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dye_flower_headwear"
+    ]
+  ]
+}

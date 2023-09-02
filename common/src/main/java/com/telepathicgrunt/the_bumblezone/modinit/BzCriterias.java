@@ -47,6 +47,7 @@ public class BzCriterias {
     public static final ItemSpecificTrigger ESSENCE_EVENT_REWARD_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "essence_event_reward"));
     public static final GenericTrigger EXTEND_STRING_CURTAIN_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "extend_string_curtain"));
     public static final GenericTrigger FALLING_ON_POLLEN_BLOCK_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "fall_onto_pollen_pile"));
+    public static final GenericTrigger FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "flower_headwear_wrath_structure"));
     public static final ItemSpecificTrigger FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "food_removed_wrath_of_the_hive"));
     public static final GenericTrigger GETTING_PROTECTION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "getting_protection"));
     public static final GenericTrigger GROW_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "grow_crystalline_flower"));
@@ -121,6 +122,7 @@ public class BzCriterias {
         register(ESSENCE_EVENT_REWARD_TRIGGER);
         register(EXTEND_STRING_CURTAIN_TRIGGER);
         register(FALLING_ON_POLLEN_BLOCK_TRIGGER);
+        register(FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER);
         register(FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER);
         register(GETTING_PROTECTION_TRIGGER);
         register(GROW_CRYSTALLINE_FLOWER_TRIGGER);

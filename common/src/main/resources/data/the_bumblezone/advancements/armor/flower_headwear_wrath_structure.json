@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:armor/dye_flower_headwear",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:flower_headwear",
+      "nbt": "{\"display\":{\"color\":16751872}}"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.flower_headwear_wrath_structure.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.flower_headwear_wrath_structure.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "criteria": {
+    "flower_headwear_wrath_structure": {
+      "trigger": "the_bumblezone:flower_headwear_wrath_structure"
+    }
+  },
+  "requirements": [
+    [
+      "flower_headwear_wrath_structure"
+    ]
+  ]
+}

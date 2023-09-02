@@ -1,14 +1,14 @@
 {
-  "parent": "the_bumblezone:teleportation/teleport_out_of_bumblezone",
+  "parent": "the_bumblezone:effects/beenergized_maxed",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_compass"
+      "item": "the_bumblezone:flower_headwear"
     },
     "title": {
-      "translate": "advancements.the_bumblezone.craft_honey_compass.title"
+      "translate": "advancements.the_bumblezone.craft_flower_headwear.title"
     },
     "description": {
-      "translate": "advancements.the_bumblezone.craft_honey_compass.description"
+      "translate": "advancements.the_bumblezone.craft_flower_headwear.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -19,18 +19,18 @@
     "experience": 5
   },
   "criteria": {
-    "craft_honey_compass": {
+    "craft_flower_headwear": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "the_bumblezone:honey_compass"
+        "recipe_id": "the_bumblezone:flower_headwear"
       }
     },
-    "obtain_honey_compass": {
+    "obtain_flower_headwear": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:honey_compass"]
+            "items": ["the_bumblezone:flower_headwear"]
           }
         ]
       }
@@ -38,8 +38,8 @@
   },
   "requirements": [
     [
-      "craft_honey_compass",
-      "obtain_honey_compass"
+      "craft_flower_headwear",
+      "obtain_flower_headwear"
     ]
   ]
 }

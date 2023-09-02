@@ -17,10 +17,8 @@ public abstract class ServerPlayerMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/critereon/PlayerTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;)V"))
     private void bumblezone$checkIfInSpecialStructures(CallbackInfo ci) {
         ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
-        if (!EssenceOfTheBees.hasEssence(serverPlayer)) {
-            BeeAggression.applyAngerIfInTaggedStructures(serverPlayer);
-            BeeQueenEntity.applyMiningFatigueInStructures(serverPlayer);
-        }
+        BeeAggression.applyAngerIfInTaggedStructures(serverPlayer);
+        BeeQueenEntity.applyMiningFatigueInStructures(serverPlayer);
         SempiternalSanctumBehavior.runStructureMessagesAndFatigue(serverPlayer);
     }
 }

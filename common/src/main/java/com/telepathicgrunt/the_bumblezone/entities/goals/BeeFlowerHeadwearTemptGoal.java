@@ -5,6 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,12 +14,12 @@ import java.util.EnumSet;
 public class BeeFlowerHeadwearTemptGoal extends Goal {
     private static final TargetingConditions TEMP_TARGETING = TargetingConditions.forNonCombat().range(20.0).ignoreLineOfSight();
     private final TargetingConditions targetingConditions;
-    protected final PathfinderMob mob;
+    protected final Bee mob;
     private final double speedModifier;
     @Nullable
     protected Player player;
 
-    public BeeFlowerHeadwearTemptGoal(PathfinderMob pathfinderMob, double speedModifier) {
+    public BeeFlowerHeadwearTemptGoal(Bee pathfinderMob, double speedModifier) {
         this.mob = pathfinderMob;
         this.speedModifier = speedModifier;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
@@ -27,6 +28,9 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (this.mob.getPersistentAngerTarget() != null) {
+            return false;
+        }
         this.player = this.mob.level().getNearestPlayer(this.targetingConditions, this.mob);
         return this.player != null;
     }
@@ -37,6 +41,9 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (this.mob.getPersistentAngerTarget() != null) {
+            return false;
+        }
         return this.canUse();
     }
 
