@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
-import com.mojang.blaze3d.audio.Listener;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.ChannelAccess;
 import net.minecraft.client.sounds.SoundEngine;

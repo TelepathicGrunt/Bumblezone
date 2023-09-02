@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
-import com.telepathicgrunt.the_bumblezone.world.features.configs.HoneyCrystalFeatureConfig;
 import com.telepathicgrunt.the_bumblezone.world.features.configs.TwoToneSpikeFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
