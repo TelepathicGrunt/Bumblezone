@@ -1,10 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -71,5 +77,58 @@ public interface SuperCandle {
                 }
             }
         }
+    }
+
+    default boolean CandleLightBehaviors(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand) {
+        ItemStack handItem = player.getItemInHand(interactionHand);
+        if (handItem.isEmpty() && blockState.getValue(BlockStateProperties.LIT)) {
+            SuperCandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
+            return true;
+        }
+        else if (!blockState.getValue(BlockStateProperties.LIT)) {
+            if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
+                if (lightCandle(level, blockPos, player)) {
+                    if (!handItem.isEmpty()) {
+                        player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                    }
+                }
+                return true;
+            }
+            else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
+                boolean successfulLit = lightCandle(level, blockPos, player);
+                if (!handItem.isEmpty() && successfulLit) {
+                    player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                }
+                if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
+                    handItem.hurt(1, level.getRandom(), serverPlayer);
+                }
+                return true;
+            }
+            else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
+                boolean successfulLit = lightCandle(level, blockPos, player);
+                if (!handItem.isEmpty() && successfulLit) {
+                    player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                }
+                if (successfulLit && !player.getAbilities().instabuild) {
+                    handItem.shrink(1);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    default boolean lightCandle(Level level, BlockPos blockPos, Player player) {
+        boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
+
+        if (litWick &&
+                player instanceof ServerPlayer serverPlayer &&
+                level.getBlockState(blockPos.above()).getBlock() instanceof SuperCandleWick candleWick &&
+                candleWick.isSoul())
+        {
+            BzCriterias.LIGHT_SOUL_SUPER_CANDLE_TRIGGER.trigger(serverPlayer);
+        }
+
+        return litWick;
     }
 }

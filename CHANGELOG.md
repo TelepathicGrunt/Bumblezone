@@ -1,31 +1,17 @@
-### **(V.6.7.31 Changes) (1.19.2 Minecraft)**
-
-##### Mod Compat:
-Allow Restricted Portals mod to block teleporting to Bumblezone.
-
-
-### **(V.6.7.30 Changes) (1.19.2 Minecraft)**
+### **(V.6.7.32 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
-Pile of Pollen now gives much less Pollen Puff when mined without Fortune
-
-Fixed block outline for Honey Cocoon
-
-Honey Cocoon is now flammable and will break and drop loot when broken by fire. The Honey Cocoon itself will be lost.
-
-Pile of Pollen is now flammable but only weakly. Set pileOfPollenHyperFireSpread to true in config to make fire spread crazy fast for this block.
-
-##### Structures:
-Increased chances of Throne-locating Honey Compass in Cell Maze structure
-
-##### Dimension:
-Bumblezone dimension is slightly darker now to make lighting pop better from light giving blocks.
+Changed the display name of Incense Candle to Potion Candle as that's a better name. 
+ Registry name is unaffected so it is still `the_bumblezone:incense_candle`. 
+ That way you won't lose this item/block on updating to this version of Bumblezone. (1.20.1 will update registry name)
 
 ##### Advancements:
-Adjusted wording on some advancements
+Changed honey_compass_recipe advancement to trigger if one obtains a Honey Compass item. Doesn't need to only be crafted now.
 
+Added obtain_throne_honey_compass advancement to get people to explore Cell maze structure a bit more for the Throne Honey Compass.
 
-### **(V.6.7.29 Changes) (1.19.2 Minecraft)**
+Moved Queen's Desire advancement-line to start after obtain_throne_honey_compass advancement. Progress you made towards Queen's Desire is not lost.
 
-##### Fluids:
-Fixed crash when Create tries to pull Honey Fluid in-world
+Applied glint effect to some advancement's icons.
+
+Changed order of Super/Potion Candle advancements and now allow the light_soul_incense_candle advancement to be triggered by Super Candles as well.
