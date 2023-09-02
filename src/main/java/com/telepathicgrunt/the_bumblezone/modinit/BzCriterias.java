@@ -62,7 +62,7 @@ public class BzCriterias {
     public static final GenericTrigger HONEY_SLIME_HARVEST_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_slime_harvest"));
     public static final GenericTrigger IS_NEAR_BEEHIVE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "is_near_beehive"));
     public static final KilledCounterTrigger KILLED_COUNTER_TRIGGER = new KilledCounterTrigger(new ResourceLocation(Bumblezone.MODID, "killed_counter"));
-    public static final GenericTrigger LIGHT_SOUL_INCENSE_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "light_soul_incense_candle"));
+    public static final GenericTrigger LIGHT_SOUL_SUPER_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "light_soul_incense_candle"));
     public static final GenericTrigger POLLEN_PUFF_FIREBALL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_fireball"));
     public static final CounterTrigger POLLEN_PUFF_HIT_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_hit"));
     public static final GenericTrigger POLLEN_PUFF_MOOSHROOM_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "pollen_puff_mooshroom"));
@@ -132,7 +132,7 @@ public class BzCriterias {
         CriteriaTriggers.register(HONEY_SLIME_HARVEST_TRIGGER);
         CriteriaTriggers.register(IS_NEAR_BEEHIVE_TRIGGER);
         CriteriaTriggers.register(KILLED_COUNTER_TRIGGER);
-        CriteriaTriggers.register(LIGHT_SOUL_INCENSE_CANDLE_TRIGGER);
+        CriteriaTriggers.register(LIGHT_SOUL_SUPER_CANDLE_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_MOOSHROOM_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_FIREBALL_TRIGGER);
         CriteriaTriggers.register(POLLEN_PUFF_HIT_TRIGGER);
