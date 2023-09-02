@@ -2,7 +2,8 @@
   "parent": "the_bumblezone:teleportation/teleport_out_of_bumblezone",
   "display": {
     "icon": {
-      "item": "minecraft:shears"
+      "item": "minecraft:shears",
+      "nbt": "{\"Enchantments\":[{\"id\":\"the_bumblezone:comb_cutter\",\"lvl\":1}]}"
     },
     "title": {
       "translate": "advancements.the_bumblezone.comb_cutter_tool.title"

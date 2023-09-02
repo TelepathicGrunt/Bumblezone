@@ -241,7 +241,8 @@ Better Advancements is now a recommended optional mod to use with Bumblezone so 
 #### *\*Changes* (From 1.19.4 version)
 
 ##### Blocks:
-Renamed Incense Candle to Potion Candle to be more clear on how to make it and rolls off tongue better.
+Renamed Incense Candle to Potion Candle to be more clear on how to make it and rolls off tongue better. 
+ This impacts registry name as well so it is now `the_bumblezone:potion_candle`
 
 Walking through Pile of Pollen should not trigger Sculk Sensor now. Pile of Pollen will also block Sculk Sensor's detection if between it and the sound source.
 
