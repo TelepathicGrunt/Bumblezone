@@ -213,6 +213,22 @@
       "required": false
     },
     {
+      "id": "natures_spirit:purple_wisteria_sapling",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:white_wisteria_sapling",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:blue_wisteria_sapling",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:pink_wisteria_sapling",
+      "required": false
+    },
+    {
       "id": "oaks_nature:bundle_of_poppy",
       "required": false
     },

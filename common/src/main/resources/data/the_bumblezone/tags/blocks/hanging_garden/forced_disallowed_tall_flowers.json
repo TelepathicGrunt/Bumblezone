@@ -90,6 +90,10 @@
       "required": false
     },
     {
+      "id": "natures_spirit:cattail",
+      "required": false
+    },
+    {
       "id": "undergarden:tall_shimmerweed",
       "required": false
     },

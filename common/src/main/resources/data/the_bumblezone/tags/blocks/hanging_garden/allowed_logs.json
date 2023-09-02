@@ -60,6 +60,18 @@
       "required": false
     },
     {
+      "id": "natures_spirit:aspen_log",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:wisteria_log",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:maple_log",
+      "required": false
+    },
+    {
       "id": "paradise_lost:mottled_aurel_log",
       "required": false
     },

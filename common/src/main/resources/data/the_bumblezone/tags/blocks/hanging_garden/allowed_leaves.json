@@ -141,6 +141,34 @@
       "required": false
     },
     {
+      "id": "natures_spirit:purple_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:white_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:blue_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:pink_wisteria_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:yellow_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:orange_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:red_maple_leaves",
+      "required": false
+    },
+    {
       "id": "paradise_lost:lavender_wisteria_leaves",
       "required": false
     },

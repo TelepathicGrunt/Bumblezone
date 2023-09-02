@@ -476,6 +476,10 @@
       "required": false
     },
     {
+      "id": "natures_spirit:bluebell",
+      "required": false
+    },
+    {
       "id": "supplementaries:wild_flax",
       "required": false
     },

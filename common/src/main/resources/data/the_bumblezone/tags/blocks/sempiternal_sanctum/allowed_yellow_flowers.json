@@ -248,6 +248,10 @@
       "required": false
     },
     {
+      "id": "natures_spirit:yellow_wildflower",
+      "required": false
+    },
+    {
       "id": "paradise_lost:luminar",
       "required": false
     },

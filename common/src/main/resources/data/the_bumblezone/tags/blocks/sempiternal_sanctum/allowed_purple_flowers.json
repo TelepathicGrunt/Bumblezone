@@ -508,6 +508,14 @@
       "required": false
     },
     {
+      "id": "natures_spirit:purple_wildflower",
+      "required": false
+    },
+    {
+      "id": "natures_spirit:anemone",
+      "required": false
+    },
+    {
       "id": "paradise_lost:ataraxia",
       "required": false
     },

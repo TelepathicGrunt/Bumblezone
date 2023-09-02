@@ -276,6 +276,10 @@
       "required": false
     },
     {
+      "id": "natures_spirit:hibiscus",
+      "required": false
+    },
+    {
       "id": "paradise_lost:drigean",
       "required": false
     },
