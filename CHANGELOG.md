@@ -8,8 +8,6 @@
 
 #TODO: adjust backup essence block textures
 
-#TODO: add flower helmet
-
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
@@ -145,8 +143,10 @@ Essence of Continuity - The reward for beating the White Sempiternal Sanctum str
  Essence of Continuity that player has as well due to how powerful this item is. It even works in hardcore worlds!
  It will also give you a Written Book with details of where you were and how you almost died.
 
-Pile of Pollen item form is now available in Creative Menu and can be crafted from 9 Pollen Puff in Crafting Table.
- Silk Touch mining a Pile of Pollen that is layer 8 will drop the Pile of Pollen item instead of the Pollen Puff items.
+Added Flower Headwear crafted from 8 flower items surrounding a Leather Helmet! This can be dyed with dyes and washed in Cauldron just like Leather armor.
+ Wearing this makes bees follow you around thinking you're a giant flower! If you have Wrath of the Hive, this headwear will
+ make the timer on that effect decrease much faster and will decrease even faster if wearing 4 or more bee-themed wearables (including this item).
+ You will also be able to enter Cell Maze structure without getting Wrath of the Hive when wearing this item!
 
 Added Buzzing Briefcase item! Rare drop from Bee House and Honitel structure's loot. Also, a rare drop from tier 4 
  Bee Queen trades (Honey Block/Honey Buckets mainly as want items). Right click (or hold right click) on a bee to stuff
@@ -168,6 +168,9 @@ Added Dirt Pellet item craftable from Coarse Dirt + Rooted Dirt. It can be throw
  `the_bumblezone:dirt_pellet/forced_no_extra_damage_dealt_to`
 
 Added Neurotoxin Potions you can brew from Bee Soup! Can be lengthened in time with Redstone ingredient.
+
+Pile of Pollen item form is now available in Creative Menu and can be crafted from 9 Pollen Puff in Crafting Table.
+ Silk Touch mining a Pile of Pollen that is layer 8 will drop the Pile of Pollen item instead of the Pollen Puff items.
 
 Added 8 new Banner Patterns to find throughout Bumblezone in certain structures and Suspicious Pile of Pollen!
 
