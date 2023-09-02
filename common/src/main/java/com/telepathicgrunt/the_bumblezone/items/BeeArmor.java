@@ -4,15 +4,12 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BackpackedCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
-public abstract class BeeArmor extends BzArmor implements ItemExtension {
+public abstract class BeeArmor extends BzArmor {
     private final int variant;
     private final boolean transTexture;
 
@@ -29,8 +26,6 @@ public abstract class BeeArmor extends BzArmor implements ItemExtension {
     public int getVariant() {
         return variant;
     }
-
-    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) { }
 
     public static int getBeeThemedWearablesCount(Entity entity) {
         int beeWearablesCount = 0;

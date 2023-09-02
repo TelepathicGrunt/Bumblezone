@@ -40,7 +40,6 @@ public class SempiternalSanctumBehavior {
         if (detectedStructure.isValid()) {
             if (EssenceOfTheBees.hasEssence(serverPlayer)) {
                 if (!PLAYERS_IN_SANCTUMS.contains(serverPlayer.getUUID())) {
-
                     BlockPos structureCenter = detectedStructure.getBoundingBox().getCenter().below(20);
                     PoiManager poiManager = serverPlayer.serverLevel().getPoiManager();
                     List<PoiRecord> poiInRange = poiManager.getInSquare(
@@ -55,38 +54,42 @@ public class SempiternalSanctumBehavior {
                     }
 
                     PLAYERS_IN_SANCTUMS.add(serverPlayer.getUUID());
-                    ResourceLocation resourceLocation = serverPlayer.level().registryAccess()
-                            .registryOrThrow(Registries.STRUCTURE)
-                            .getKey(detectedStructure.getStructure());
 
-                    ChatFormatting color;
-                    if (resourceLocation == null) {
-                        return;
-                    }
-                    else if (resourceLocation.getPath().contains("_red")) {
-                        color = ChatFormatting.RED;
-                    }
-                    else if (resourceLocation.getPath().contains("_yellow")) {
-                        color = ChatFormatting.YELLOW;
-                    }
-                    else if (resourceLocation.getPath().contains("_green")) {
-                        color = ChatFormatting.GREEN;
-                    }
-                    else if (resourceLocation.getPath().contains("_blue")) {
-                        color = ChatFormatting.BLUE;
-                    }
-                    else if (resourceLocation.getPath().contains("_purple")) {
-                        color = ChatFormatting.LIGHT_PURPLE;
-                    }
-                    else {
-                        color = ChatFormatting.WHITE;
-                    }
+                    // Don't send message if player logs in while in structure.
+                    if (serverPlayer.tickCount > 40) {
+                        ResourceLocation resourceLocation = serverPlayer.level().registryAccess()
+                                .registryOrThrow(Registries.STRUCTURE)
+                                .getKey(detectedStructure.getStructure());
 
-                    Component message = Component.translatable("system.the_bumblezone." + resourceLocation.getPath())
-                            .withStyle(ChatFormatting.BOLD)
-                            .withStyle(color);
+                        ChatFormatting color;
+                        if (resourceLocation == null) {
+                            return;
+                        }
+                        else if (resourceLocation.getPath().contains("_red")) {
+                            color = ChatFormatting.RED;
+                        }
+                        else if (resourceLocation.getPath().contains("_yellow")) {
+                            color = ChatFormatting.YELLOW;
+                        }
+                        else if (resourceLocation.getPath().contains("_green")) {
+                            color = ChatFormatting.GREEN;
+                        }
+                        else if (resourceLocation.getPath().contains("_blue")) {
+                            color = ChatFormatting.BLUE;
+                        }
+                        else if (resourceLocation.getPath().contains("_purple")) {
+                            color = ChatFormatting.LIGHT_PURPLE;
+                        }
+                        else {
+                            color = ChatFormatting.WHITE;
+                        }
 
-                    serverPlayer.displayClientMessage(message, true);
+                        Component message = Component.translatable("system.the_bumblezone." + resourceLocation.getPath())
+                                .withStyle(ChatFormatting.BOLD)
+                                .withStyle(color);
+
+                        serverPlayer.displayClientMessage(message, true);
+                    }
                 }
 
                 BzCriterias.SEMPITERNAL_SANCTUM_ENTER_WTH_BEE_ESSENCE_TRIGGER.trigger(serverPlayer);

@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.client.armor;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;

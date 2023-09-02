@@ -1,9 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.entities.goals.BeeFlowerHeadwearTemptGoal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,8 +22,21 @@ public abstract class BeeEntityMixin extends Entity {
     @Shadow
     private int underWaterTicks;
 
+    @Shadow public abstract GoalSelector getGoalSelector();
+
     public BeeEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
+    }
+
+    /**
+     * @author TelepathicGrunt
+     * @reason make bees follow entities wearing flower headwear
+     */
+    @Inject(method = "registerGoals()V",
+            at = @At(value = "TAIL"),
+            require = 0)
+    private void bumblezone$followFlowerHeadwearerGoal(CallbackInfo ci) {
+        this.getGoalSelector().addGoal(3, new BeeFlowerHeadwearTemptGoal(((Bee)(Object)this), 1));
     }
 
     /**

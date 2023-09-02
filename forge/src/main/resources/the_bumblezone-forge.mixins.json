@@ -12,11 +12,12 @@
     "effect.EffectExtensionMixin",
     "enchantment.BzEnchantmentMixin",
     "item.BzBucketItemMixin",
-    "item.PotionCandleRecipeMixin",
-    "item.ItemExtensionMixin"
+    "item.ItemExtensionMixin",
+    "item.PotionCandleRecipeMixin"
   ],
   "client": [
     "client.BzArmorMixin",
+    "client.BzDyeableArmorMixin",
     "client.BzEffectMixin",
     "client.LiquidBlockRendererMixin"
   ],

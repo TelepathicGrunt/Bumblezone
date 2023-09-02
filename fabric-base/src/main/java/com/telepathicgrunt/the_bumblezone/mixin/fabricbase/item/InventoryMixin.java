@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item;
 
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
+import com.telepathicgrunt.the_bumblezone.items.BzArmor;
+import com.telepathicgrunt.the_bumblezone.items.BzDyeableArmor;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +29,10 @@ public class InventoryMixin {
             at = @At(value = "TAIL"))
     private void bumblezone$armorTick(CallbackInfo ci) {
         armor.forEach(itemStack -> {
-            if (itemStack.getItem() instanceof BeeArmor beeArmor) {
+            if (itemStack.getItem() instanceof BzArmor beeArmor) {
+                beeArmor.bz$onArmorTick(itemStack, player.level(), player);
+            }
+            if (itemStack.getItem() instanceof BzDyeableArmor beeArmor) {
                 beeArmor.bz$onArmorTick(itemStack, player.level(), player);
             }
         });

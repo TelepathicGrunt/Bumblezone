@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "the_bumblezone:flower_headwear",
+  "pattern": [
+    "fff",
+    "fhf",
+    "fff"
+  ],
+  "key": {
+    "f": {
+      "tag": "minecraft:flowers"
+    },
+    "h": {
+      "item": "minecraft:leather_helmet"
+    }
+  },
+  "result": {
+    "item": "the_bumblezone:flower_headwear"
+  }
+}

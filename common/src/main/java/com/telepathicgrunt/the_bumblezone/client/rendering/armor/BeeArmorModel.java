@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering.beearmor;
+package com.telepathicgrunt.the_bumblezone.client.rendering.armor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -130,7 +131,7 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
     }
 
     public static LayerDefinition createVariant1() {
-        var meshdefinition = HumanoidModel.createMesh(new CubeDeformation(1.0F), 0F);
+        MeshDefinition meshdefinition = HumanoidModel.createMesh(new CubeDeformation(1.0F), 0F);
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition armorHead = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -9.0F, -6.0F, 10.0F, 9.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.25F, 0.0F));

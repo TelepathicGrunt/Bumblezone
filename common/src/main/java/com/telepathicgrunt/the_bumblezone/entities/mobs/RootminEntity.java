@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
+import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -489,7 +490,11 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       ItemStack itemstack = player.getItemInHand(hand);
       boolean instantBuild = player.getAbilities().instabuild;
 
-      if (itemstack.getItem() instanceof BlockItem blockItem && (instantBuild || BeeArmor.getBeeThemedWearablesCount(player) > 0)) {
+      if (itemstack.getItem() instanceof BlockItem blockItem &&
+           (instantBuild ||
+           BeeArmor.getBeeThemedWearablesCount(player) > 0 ||
+           !FlowerHeadwearHelmet.getFlowerHeadware(player).isEmpty()))
+      {
          BlockState blockState = blockItem.getBlock().defaultBlockState();
 
          if (blockState.is(BzTags.ROOTMIN_ALLOWED_FLOWER) && !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWER)) {
@@ -855,7 +860,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             return true;
          }
 
-         if (BeeArmor.getBeeThemedWearablesCount(player) > 0) {
+         if (BeeArmor.getBeeThemedWearablesCount(player) > 0 || !FlowerHeadwearHelmet.getFlowerHeadware(player).isEmpty()) {
             return false;
          }
       }
@@ -1041,7 +1046,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.inspect = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
                          LivingEntity.class,
                          this.getTargetSearchArea(seeRange),
-                         livingEntity -> BeeArmor.getBeeThemedWearablesCount(livingEntity) > 0),
+                         livingEntity -> BeeArmor.getBeeThemedWearablesCount(livingEntity) > 0 || !FlowerHeadwearHelmet.getFlowerHeadware(livingEntity).isEmpty()),
                  this.targetConditions,
                  this.mob,
                  this.mob.getX(),
@@ -1061,7 +1066,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                  this.inspect != null &&
                  !this.inspect.isDeadOrDying() &&
                  (!this.isCuriousNow || this.curiosityWaiting > 0 || this.mob.getRootminPose() == RootminPose.CURIOUS) &&
-                 BeeArmor.getBeeThemedWearablesCount(this.inspect) > 0 &&
+                 (BeeArmor.getBeeThemedWearablesCount(this.inspect) > 0 || !FlowerHeadwearHelmet.getFlowerHeadware(this.inspect).isEmpty()) &&
                  this.mob.blockPosition().distManhattan(this.inspect.blockPosition()) < 32;
       }
 

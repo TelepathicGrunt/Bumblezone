@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone;
 
 import com.mojang.logging.LogUtils;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
-import com.telepathicgrunt.the_bumblezone.blocks.PotionCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.InfinityBarrier;
+import com.telepathicgrunt.the_bumblezone.blocks.PotionCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
@@ -179,6 +179,7 @@ public class Bumblezone{
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
             BzRecipes.registerBrewingStandRecipes();
+            BzItems.SetupCauldronCompat();
 		});
         MessageHandler.init();
     }

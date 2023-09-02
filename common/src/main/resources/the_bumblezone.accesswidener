@@ -33,3 +33,4 @@ accessible method net/minecraft/world/level/block/entity/BrushableBlockEntity dr
 extendable method net/minecraft/world/level/block/entity/BrushableBlockEntity brushingCompleted (Lnet/minecraft/world/entity/player/Player;)V
 
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;
+accessible field net/minecraft/core/cauldron/CauldronInteraction WATER Ljava/util/Map;

@@ -5,9 +5,11 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
+import com.telepathicgrunt.the_bumblezone.client.armor.FlowerHeadwearModelProvider;
+import com.telepathicgrunt.the_bumblezone.client.items.FlowerHeadwearColoring;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
-import com.telepathicgrunt.the_bumblezone.client.items.PotionCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.items.InfinityBarrierColoring;
+import com.telepathicgrunt.the_bumblezone.client.items.PotionCandleColoring;
 import com.telepathicgrunt.the_bumblezone.client.particles.DustParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.HoneyParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.PollenPuffParticle;
@@ -17,7 +19,8 @@ import com.telepathicgrunt.the_bumblezone.client.particles.VoiceParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.VariantBeeRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.beearmor.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
+import com.telepathicgrunt.the_bumblezone.client.rendering.armor.FlowerHeadwearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenModel;
@@ -152,6 +155,7 @@ public class BumblezoneClient {
         RegisterBlockColorEvent.EVENT.addListener(InfinityBarrierColoring::registerBlockColors);
         RegisterBlockColorEvent.EVENT.addListener(PotionCandleColoring::registerBlockColors);
         RegisterItemColorEvent.EVENT.addListener(PotionCandleColoring::registerItemColors);
+        RegisterItemColorEvent.EVENT.addListener(FlowerHeadwearColoring::registerItemColors);
         ClientTickEvent.EVENT.addListener(event -> {
             if (event.end()) {
                 StinglessBeeHelmet.decrementHighlightingCounter(GeneralUtilsClient.getClientPlayer());
@@ -186,6 +190,7 @@ public class BumblezoneClient {
     }
 
     public static void registerArmorProviders(RegisterArmorProviderEvent event) {
+        event.register(BzItems.FLOWER_HEADWEAR.get(), FlowerHeadwearModelProvider::new);
         event.register(BzItems.STINGLESS_BEE_HELMET_1.get(), BeeArmorModelProvider::new);
         event.register(BzItems.STINGLESS_BEE_HELMET_2.get(), BeeArmorModelProvider::new);
         event.register(BzItems.BUMBLE_BEE_CHESTPLATE_1.get(), BeeArmorModelProvider::new);
@@ -403,6 +408,7 @@ public class BumblezoneClient {
         event.register(HoneyCrystalShardModel.LAYER_LOCATION, HoneyCrystalShardModel::createLayer);
         event.register(BeeArmorModel.VARIANT_1_LAYER_LOCATION, BeeArmorModel::createVariant1);
         event.register(BeeArmorModel.VARIANT_2_LAYER_LOCATION, BeeArmorModel::createVariant2);
+        event.register(FlowerHeadwearModel.FLOWER_HEADWEAR_LAYER_LOCATION, FlowerHeadwearModel::createBodyLayer);
         event.register(ElectricRingModel.LAYER_LOCATION, ElectricRingModel::createBodyLayer);
         event.register(PurpleSpikeModel.LAYER_LOCATION, PurpleSpikeModel::createBodyLayer);
         event.register(CosmicCrystalModel.LAYER_LOCATION, CosmicCrystalModel::createBodyLayer);

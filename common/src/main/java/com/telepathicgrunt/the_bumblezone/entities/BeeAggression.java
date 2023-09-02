@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
@@ -269,6 +270,10 @@ public class BeeAggression {
             !BzBeeAggressionConfigs.aggressiveBees ||
             serverPlayer.level().getDifficulty() == Difficulty.PEACEFUL)
         {
+            return;
+        }
+
+        if (!FlowerHeadwearHelmet.getFlowerHeadware(serverPlayer).isEmpty()) {
             return;
         }
 

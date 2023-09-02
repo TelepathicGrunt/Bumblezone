@@ -126,6 +126,7 @@ public class BzCreativeTabs {
             BzItems.BEE_CANNON,
             BzItems.CRYSTAL_CANNON,
             BzItems.HONEY_CRYSTAL_SHIELD,
+            BzItems.FLOWER_HEADWEAR,
             BzItems.STINGLESS_BEE_HELMET_1,
             BzItems.STINGLESS_BEE_HELMET_2,
             BzItems.BUMBLE_BEE_CHESTPLATE_1,
