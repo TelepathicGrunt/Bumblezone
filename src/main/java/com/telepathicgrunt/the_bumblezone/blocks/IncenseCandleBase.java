@@ -162,47 +162,11 @@ public class IncenseCandleBase extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getAbilities().mayBuild) {
-            ItemStack handItem = player.getItemInHand(interactionHand);
-            if (handItem.isEmpty() && blockState.getValue(LIT)) {
-                SuperCandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
+            if (CandleLightBehaviors(blockState, level, blockPos, player, interactionHand)) {
                 return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            else if (!blockState.getValue(LIT)) {
-                if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
-                    lightCandle(level, blockPos, player);
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
-                    boolean successfulLit = lightCandle(level, blockPos, player);
-                    if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
-                        handItem.hurt(1, level.getRandom(), serverPlayer);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
-                    boolean successfulLit = lightCandle(level, blockPos, player);
-                    if (successfulLit && !player.getAbilities().instabuild) {
-                        handItem.shrink(1);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
             }
         }
         return InteractionResult.PASS;
-    }
-
-    private boolean lightCandle(Level level, BlockPos blockPos, Player player) {
-        boolean litWick = SuperCandleWick.setLit(level, level.getBlockState(blockPos.above()), blockPos.above(), true);
-
-        if (litWick &&
-            player instanceof ServerPlayer serverPlayer &&
-            level.getBlockState(blockPos.above()).getBlock() instanceof SuperCandleWick candleWick &&
-            candleWick.isSoul())
-        {
-            BzCriterias.LIGHT_SOUL_INCENSE_CANDLE_TRIGGER.trigger(serverPlayer);
-        }
-
-        return litWick;
     }
 
     @Override

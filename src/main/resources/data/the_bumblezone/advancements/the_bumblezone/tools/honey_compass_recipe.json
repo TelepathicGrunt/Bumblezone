@@ -24,11 +24,22 @@
       "conditions": {
         "recipes": [ "the_bumblezone:honey_compass" ]
       }
+    },
+    "obtain_honey_compass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["the_bumblezone:honey_compass"]
+          }
+        ]
+      }
     }
   },
   "requirements": [
     [
-      "honey_compass"
+      "honey_compass",
+      "obtain_honey_compass"
     ]
   ]
 }
