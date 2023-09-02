@@ -1,29 +1,32 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Bee;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
 public class BeeFlowerHeadwearTemptGoal extends Goal {
-    private static final TargetingConditions TEMP_TARGETING = TargetingConditions.forNonCombat().range(20.0).ignoreLineOfSight();
-    private final TargetingConditions targetingConditions;
+    private static final int RANGE = 20;
+    private static final TargetingConditions TEMP_TARGETING = TargetingConditions
+            .forNonCombat()
+            .range(RANGE)
+            .ignoreLineOfSight()
+            .selector(BeeFlowerHeadwearTemptGoal::shouldFollow);
+
+    @Nullable
+    protected LivingEntity followEntity;
     protected final Bee mob;
     private final double speedModifier;
-    @Nullable
-    protected Player player;
 
     public BeeFlowerHeadwearTemptGoal(Bee pathfinderMob, double speedModifier) {
         this.mob = pathfinderMob;
         this.speedModifier = speedModifier;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
-        this.targetingConditions = TEMP_TARGETING.copy().selector(this::shouldFollow);
     }
 
     @Override
@@ -31,11 +34,25 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
         if (this.mob.getPersistentAngerTarget() != null) {
             return false;
         }
-        this.player = this.mob.level().getNearestPlayer(this.targetingConditions, this.mob);
-        return this.player != null;
+
+        this.followEntity = this.mob.level().getNearestEntity(
+            LivingEntity.class,
+            TEMP_TARGETING,
+            this.mob,
+            this.mob.getX(),
+            this.mob.getY(),
+            this.mob.getZ(),
+            this.mob.getBoundingBox().inflate(RANGE)
+        );
+
+        return this.followEntity != null;
     }
 
-    private boolean shouldFollow(LivingEntity livingEntity) {
+    private static boolean shouldFollow(LivingEntity livingEntity) {
+        if (livingEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+            return false;
+        }
+
         return !FlowerHeadwearHelmet.getFlowerHeadware(livingEntity).isEmpty();
     }
 
@@ -44,23 +61,31 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
         if (this.mob.getPersistentAngerTarget() != null) {
             return false;
         }
+
+        if (this.followEntity == null ||
+            this.followEntity.isDeadOrDying() ||
+            this.followEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()))
+        {
+            return false;
+        }
+
         return this.canUse();
     }
 
     @Override
     public void stop() {
-        this.player = null;
+        this.followEntity = null;
         this.mob.getNavigation().stop();
     }
 
     @Override
     public void tick() {
-        this.mob.getLookControl().setLookAt(this.player, this.mob.getMaxHeadYRot() + 20, this.mob.getMaxHeadXRot());
-        if (this.mob.distanceToSqr(this.player) < 6.25) {
+        this.mob.getLookControl().setLookAt(this.followEntity, this.mob.getMaxHeadYRot() + 20, this.mob.getMaxHeadXRot());
+        if (this.mob.distanceToSqr(this.followEntity) < 7) {
             this.mob.getNavigation().stop();
         }
         else {
-            this.mob.getNavigation().moveTo(this.player, this.speedModifier);
+            this.mob.getNavigation().moveTo(this.followEntity, this.speedModifier);
         }
     }
 }
