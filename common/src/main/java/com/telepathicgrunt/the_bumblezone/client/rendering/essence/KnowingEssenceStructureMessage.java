@@ -17,7 +17,7 @@ public class KnowingEssenceStructureMessage {
     private static final String WITHIN_TEXT = "item.the_bumblezone.essence_knowing_within_text";
     private static final String WITHIN_TEXT_PLURAL = "item.the_bumblezone.essence_knowing_within_text_plural";
     private static final String FIRST_LETTER_REGEX = "\\b(.)(.*?)\\b";
-    private static final Pattern FIREST_LETTER_PATTERN = Pattern.compile(FIRST_LETTER_REGEX);
+    private static final Pattern FIRST_LETTER_PATTERN = Pattern.compile(FIRST_LETTER_REGEX);
 
     public static void inStructureMessage(Player player, GuiGraphics guiGraphics) {
         if (KnowingEssence.IsKnowingEssenceActive(player) && BzClientConfigs.knowingEssenceStructureNameClient) {
@@ -84,7 +84,7 @@ public class KnowingEssenceStructureMessage {
                                     .split(":")[1]
                                     .replace("_", " ");
 
-                            langKey = FIREST_LETTER_PATTERN
+                            langKey = FIRST_LETTER_PATTERN
                                     .matcher(langKey)
                                     .replaceAll(matchResult -> matchResult.group(1).toUpperCase() + matchResult.group(2));
                         }

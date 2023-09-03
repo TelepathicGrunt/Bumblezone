@@ -1,6 +1,6 @@
 #TODO: create purple essence event
 
-#TODO: Add music for essence events (1 done. 5 to go) (Add music discs for them too)
+#TODO: Add music for essence events (2 done. 5 to go) (Add music discs for them too)
 
 #TODO: Add more sanctum rooms. Do sanctum variants
 
