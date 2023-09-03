@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.mixins.forge.client;
 
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeArmorProviders;
-import com.telepathicgrunt.the_bumblezone.items.BzArmor;
 import com.telepathicgrunt.the_bumblezone.items.BzDyeableArmor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;

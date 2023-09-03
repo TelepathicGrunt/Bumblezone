@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item;
 
-import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.BzArmor;
 import com.telepathicgrunt.the_bumblezone.items.BzDyeableArmor;
 import net.minecraft.core.NonNullList;

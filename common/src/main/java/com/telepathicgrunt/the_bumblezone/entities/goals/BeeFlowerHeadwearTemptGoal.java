@@ -53,7 +53,7 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
             return false;
         }
 
-        return !FlowerHeadwearHelmet.getFlowerHeadware(livingEntity).isEmpty();
+        return !FlowerHeadwearHelmet.getFlowerHeadwear(livingEntity).isEmpty();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
     @Override
     public void tick() {
         this.mob.getLookControl().setLookAt(this.followEntity, this.mob.getMaxHeadYRot() + 20, this.mob.getMaxHeadXRot());
-        if (this.mob.distanceToSqr(this.followEntity) < 7) {
+        if (this.mob.distanceToSqr(this.followEntity) < 6) {
             this.mob.getNavigation().stop();
         }
         else {

@@ -47,7 +47,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {

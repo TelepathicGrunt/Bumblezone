@@ -267,7 +267,7 @@ public class BeeAggression {
     public static void applyAngerIfInTaggedStructures(ServerPlayer serverPlayer) {
         StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
-            if (!FlowerHeadwearHelmet.getFlowerHeadware(serverPlayer).isEmpty()) {
+            if (!FlowerHeadwearHelmet.getFlowerHeadwear(serverPlayer).isEmpty()) {
                 BzCriterias.FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER.trigger(serverPlayer);
                 return;
             }

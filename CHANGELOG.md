@@ -147,6 +147,7 @@ Added Flower Headwear crafted from 8 flower items surrounding a Leather Helmet! 
  Wearing this makes bees follow you around thinking you're a giant flower! If you have Wrath of the Hive, this headwear will
  make the timer on that effect decrease much faster and will decrease even faster if wearing 4 or more bee-themed wearables (including this item).
  You will also be able to enter Cell Maze structure without getting Wrath of the Hive when wearing this item!
+ Can also be worn in a Curios head slot or Trinkets head/hat slot. Its effects does not stack with existing Flower Headwear in helmet slot.
 
 Added Buzzing Briefcase item! Rare drop from Bee House and Honitel structure's loot. Also, a rare drop from tier 4 
  Bee Queen trades (Honey Block/Honey Buckets mainly as want items). Right click (or hold right click) on a bee to stuff

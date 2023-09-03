@@ -74,7 +74,7 @@ public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
                 .texOffs(0, 0).addBox(3.0F, -9.25F, -3F, 5.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 0).addBox(3.0F, -3.75F, -3F, 5.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 0).addBox(-2.5F, -1.75F, -3F, 5.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-8.0F, -9.75F, -3F, 5.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 0).addBox(-8.0F, -9.25F, -3F, 5.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 0).addBox(-8.0F, -3.75F, -3F, 5.0F, 5.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.5F, 0.0F));
 
         PartDefinition armorBody = partdefinition.addOrReplaceChild("armorBody", CubeListBuilder.create(), PartPose.offset(0.0F, 0.25F, 0.0F));

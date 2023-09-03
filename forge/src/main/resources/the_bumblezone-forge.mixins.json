@@ -12,6 +12,7 @@
     "effect.EffectExtensionMixin",
     "enchantment.BzEnchantmentMixin",
     "item.BzBucketItemMixin",
+    "item.FlowerHeadwearHelmetMixin",
     "item.ItemExtensionMixin",
     "item.PotionCandleRecipeMixin"
   ],

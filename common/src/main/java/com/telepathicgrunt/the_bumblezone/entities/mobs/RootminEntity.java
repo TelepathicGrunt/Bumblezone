@@ -493,7 +493,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       if (itemstack.getItem() instanceof BlockItem blockItem &&
            (instantBuild ||
            BeeArmor.getBeeThemedWearablesCount(player) > 0 ||
-           !FlowerHeadwearHelmet.getFlowerHeadware(player).isEmpty()))
+           !FlowerHeadwearHelmet.getFlowerHeadwear(player).isEmpty()))
       {
          BlockState blockState = blockItem.getBlock().defaultBlockState();
 
@@ -860,7 +860,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             return true;
          }
 
-         if (BeeArmor.getBeeThemedWearablesCount(player) > 0 || !FlowerHeadwearHelmet.getFlowerHeadware(player).isEmpty()) {
+         if (BeeArmor.getBeeThemedWearablesCount(player) > 0 || !FlowerHeadwearHelmet.getFlowerHeadwear(player).isEmpty()) {
             return false;
          }
       }
@@ -1046,7 +1046,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.inspect = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(
                          LivingEntity.class,
                          this.getTargetSearchArea(seeRange),
-                         livingEntity -> BeeArmor.getBeeThemedWearablesCount(livingEntity) > 0 || !FlowerHeadwearHelmet.getFlowerHeadware(livingEntity).isEmpty()),
+                         livingEntity -> BeeArmor.getBeeThemedWearablesCount(livingEntity) > 0 || !FlowerHeadwearHelmet.getFlowerHeadwear(livingEntity).isEmpty()),
                  this.targetConditions,
                  this.mob,
                  this.mob.getX(),
@@ -1066,7 +1066,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                  this.inspect != null &&
                  !this.inspect.isDeadOrDying() &&
                  (!this.isCuriousNow || this.curiosityWaiting > 0 || this.mob.getRootminPose() == RootminPose.CURIOUS) &&
-                 (BeeArmor.getBeeThemedWearablesCount(this.inspect) > 0 || !FlowerHeadwearHelmet.getFlowerHeadware(this.inspect).isEmpty()) &&
+                 (BeeArmor.getBeeThemedWearablesCount(this.inspect) > 0 || !FlowerHeadwearHelmet.getFlowerHeadwear(this.inspect).isEmpty()) &&
                  this.mob.blockPosition().distManhattan(this.inspect.blockPosition()) < 32;
       }
 
