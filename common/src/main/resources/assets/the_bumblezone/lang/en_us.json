@@ -397,6 +397,7 @@
   "item.the_bumblezone.potion_candle.lingering_time": "Lingering Time: %s",
   "item.the_bumblezone.crystalline_flower_info_1": "Tier: %s",
   "item.the_bumblezone.crystalline_flower_info_2": "XP: %s",
+  "item.the_bumblezone.crystalline_flower_cannot_place": "Not enough room for flower!",
   "item.the_bumblezone.essence_raging": "Essence of Raging",
   "item.the_bumblezone.essence_raging_description_1": "Kill highlighted mobs for great Strength!",
   "item.the_bumblezone.essence_raging_description_2": "Maxes out at 7 killed mobs before reset",
