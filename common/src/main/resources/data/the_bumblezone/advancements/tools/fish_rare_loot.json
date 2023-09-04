@@ -25,9 +25,9 @@
       "conditions": {
         "item": {
           "items": [
-            "minecraft:book",
             "minecraft:saddle",
             "minecraft:name_tag",
+            "minecraft:enchanted_book",
             "the_bumblezone:bee_cannon",
             "the_bumblezone:honey_compass",
             "the_bumblezone:crystal_cannon",

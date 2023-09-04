@@ -1,14 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.telepathicgrunt.the_bumblezone.loot.NewLootInjectorApplier;
-import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -41,18 +37,6 @@ public abstract class FishingHookMixin extends Entity {
             this.setDeltaMovement(vector3d.x * 0.5D, 0, vector3d.z * 0.5D);
         }
         return original.call(fluidstate, tagKey);
-    }
-
-    @ModifyExpressionValue(method = "retrieve(Lnet/minecraft/world/item/ItemStack;)I",
-            at = @At(value = "FIELD",
-                    target = "net/minecraft/world/level/storage/loot/BuiltInLootTables.FISHING:Lnet/minecraft/resources/ResourceLocation;",
-                    ordinal = 0),
-            require = 0)
-    private ResourceLocation bumblezone$dimensionFishingLoot(ResourceLocation resourceLocation) {
-        if(this.level() != null && this.level().dimension().equals(BzDimension.BZ_WORLD_KEY)) {
-            return NewLootInjectorApplier.BZ_DIMENSION_FISHING_LOOT_TABLE_RL;
-        }
-        return resourceLocation;
     }
 
     @ModifyReceiver(method = "catchingFish(Lnet/minecraft/core/BlockPos;)V",

@@ -1,0 +1,14 @@
+{
+  "type": "the_bumblezone:dimension_fishing",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:gameplay/fishing"
+        }
+      ]
+    }
+  ]
+}

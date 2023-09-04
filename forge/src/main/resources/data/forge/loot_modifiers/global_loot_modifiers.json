@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "the_bumblezone:inject_drops_to_non_bz_mobs"
+    "the_bumblezone:inject_drops_to_non_bz_mobs",
+    "the_bumblezone:dimension_fishing"
   ]
 }

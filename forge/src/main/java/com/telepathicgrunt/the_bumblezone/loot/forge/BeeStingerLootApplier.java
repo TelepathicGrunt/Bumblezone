@@ -13,19 +13,19 @@ import net.minecraftforge.common.loot.LootModifier;
 
 import java.util.function.Supplier;
 
-public class GlobalLootApplier extends LootModifier {
+public class BeeStingerLootApplier extends LootModifier {
 
-    public static final Supplier<Codec<GlobalLootApplier>> CODEC = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, GlobalLootApplier::new)));
+    public static final Supplier<Codec<BeeStingerLootApplier>> CODEC = Suppliers.memoize(() ->
+            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, BeeStingerLootApplier::new)));
 
-    public GlobalLootApplier(final LootItemCondition[] conditionsIn) {
+    public BeeStingerLootApplier(final LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext lootContext) {
-        if (NewLootInjectorApplier.checkIfInjectLoot(lootContext)) {
-            NewLootInjectorApplier.injectLoot(lootContext, generatedLoot);
+        if (NewLootInjectorApplier.checkIfInjectBeeStingerLoot(lootContext)) {
+            NewLootInjectorApplier.injectLoot(lootContext, generatedLoot, NewLootInjectorApplier.STINGER_DROP_LOOT_TABLE_RL);
         }
         return generatedLoot;
     }
