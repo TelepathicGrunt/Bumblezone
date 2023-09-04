@@ -259,8 +259,8 @@
   "fluid.the_bumblezone.royal_jelly_fluid_flowing": "Royal Jelly Fluid",
 
   "fluid_type.the_bumblezone.sugar_water": "Sugar Water",
-  "fluid_type.the_bumblezone.honey_fluid": "Honey Fluid",
-  "fluid_type.the_bumblezone.royal_jelly_fluid": "Royal Jelly Fluid",
+  "fluid_type.the_bumblezone.honey": "Honey Fluid",
+  "fluid_type.the_bumblezone.royal_jelly": "Royal Jelly Fluid",
 
   "item.the_bumblezone.sugar_water_bucket": "Sugar Water Bucket",
   "item.the_bumblezone.sugar_water_bottle": "Sugar Water Bottle",
@@ -445,6 +445,7 @@
   "item.minecraft.lingering_potion.effect.neurotoxin": "Lingering Potion of Neurotoxin",
   "item.minecraft.lingering_potion.effect.long_neurotoxin": "Lingering Potion of Long Neurotoxin",
 
+  "entity.the_bumblezone.rootmin": "Rootmin",
   "entity.the_bumblezone.variant_bee": "Bee Variant",
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",
