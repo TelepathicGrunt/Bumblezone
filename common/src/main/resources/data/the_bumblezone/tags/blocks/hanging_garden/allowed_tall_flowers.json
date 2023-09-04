@@ -7,6 +7,10 @@
       "required": false
     },
     {
+      "id": "caupona:silphium_block",
+      "required": false
+    },
+    {
       "id": "ferdinandsflowers:staked_morning_glory",
       "required": false
     },

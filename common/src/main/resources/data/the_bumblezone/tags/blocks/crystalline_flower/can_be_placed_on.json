@@ -397,6 +397,18 @@
       "required": false
     },
     {
+      "id": "silentgear:raw_azure_silver_block",
+      "required": false
+    },
+    {
+      "id": "silentgear:azure_silver_block",
+      "required": false
+    },
+    {
+      "id": "silentgear:azure_electrum_block",
+      "required": false
+    },
+    {
       "id": "skulked:echo_block",
       "required": false
     },

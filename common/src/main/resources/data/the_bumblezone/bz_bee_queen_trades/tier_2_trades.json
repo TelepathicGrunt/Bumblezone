@@ -85,6 +85,10 @@
       "required": false
     },
     {
+      "id": "oceandelight:honey_fried_kelp",
+      "required": false
+    },
+    {
       "id": "collectorsreap:strawberry_jam_bun",
       "required": false
     },
@@ -122,6 +126,10 @@
     },
     {
       "id": "create:honeyed_apple",
+      "required": false
+    },
+    {
+      "id": "create:honey_candy",
       "required": false
     },
     {

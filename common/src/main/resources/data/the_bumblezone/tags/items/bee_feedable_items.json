@@ -8,11 +8,7 @@
     "#the_bumblezone:buckets/honey",
     "#the_bumblezone:buckets/royal_jelly",
     {
-      "id": "productivebees:honey_treat",
-      "required": false
-    },
-    {
-      "id": "productivebees:sugarbag_honeycomb",
+      "id": "bk:royal_jelly",
       "required": false
     },
     {
@@ -28,6 +24,42 @@
       "required": false
     },
     {
+      "id": "collectorsreap:honey_lime_chicken",
+      "required": false
+    },
+    {
+      "id": "create:honeyed_apple",
+      "required": false
+    },
+    {
+      "id": "create:honey_candy",
+      "required": false
+    },
+    {
+      "id": "createaddition:honey_cake",
+      "required": false
+    },
+    {
+      "id": "cyclic:apple_honey",
+      "required": false
+    },
+    {
+      "id": "delightful:honey_glazed_walnut",
+      "required": false
+    },
+    {
+      "id": "delightful:ender_nectar",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_honey_soup",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:peanut_butter_honey_sandwich",
+      "required": false
+    },
+    {
       "id": "farmersdelight:honey_cookie",
       "required": false
     },
@@ -40,35 +72,43 @@
       "required": false
     },
     {
-      "id": "expandeddelight:peanut_honey_soup",
-      "required": false
-    },
-    {
-      "id": "expandeddelight:peanut_butter_honey_sandwich",
-      "required": false
-    },
-    {
-      "id": "delightful:honey_glazed_walnut",
-      "required": false
-    },
-    {
-      "id": "create:honeyed_apple",
-      "required": false
-    },
-    {
-      "id": "createaddition:honey_cake",
-      "required": false
-    },
-    {
-      "id": "cyclic:apple_honey",
-      "required": false
-    },
-    {
       "id": "feywild:honeycomb",
       "required": false
     },
     {
       "id": "feywild:magical_honey_cookie",
+      "required": false
+    },
+    {
+      "id": "oceandelight:honey_fried_kelp",
+      "required": false
+    },
+    {
+      "id": "productivebees:honey_treat",
+      "required": false
+    },
+    {
+      "id": "productivebees:sugarbag_honeycomb",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:honey_113",
+      "required": false
+    },
+    {
+      "id": "valleycraft:crystallized_honeydrop",
+      "required": false
+    },
+    {
+      "id": "valleycraft:honeyed_apple",
+      "required": false
+    },
+    {
+      "id": "valleycraft:honey_glazed_crepe",
+      "required": false
+    },
+    {
+      "id": "valleycraft:syrupy_honeycomb",
       "required": false
     }
   ]

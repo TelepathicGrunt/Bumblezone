@@ -5,11 +5,15 @@
     "the_bumblezone:music_disc_la_bee_da_loca",
     "the_bumblezone:music_disc_bee_laxing_with_the_hom_bees",
     {
-      "id": "windswept:music_disc_bumblebee",
+      "id": "biomemakeover:red_rose_music_disk",
       "required": false
     },
     {
-      "id": "biomemakeover:red_rose_music_disk",
+      "id": "llamarama:flight_of_the_bumble_llama",
+      "required": false
+    },
+    {
+      "id": "windswept:music_disc_bumblebee",
       "required": false
     }
   ]

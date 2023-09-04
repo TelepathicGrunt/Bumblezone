@@ -32,6 +32,10 @@
       "required": false
     },
     {
+      "id": "caupona:silphium_block",
+      "required": false
+    },
+    {
       "id": "cherryblossomgrotto:cherry_blossom_sapling",
       "required": false
     },
