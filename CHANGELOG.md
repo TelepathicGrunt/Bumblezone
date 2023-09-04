@@ -8,6 +8,8 @@
 
 #TODO: adjust backup essence block textures
 
+#TODO: apply proper per-modloader fishing redirect code.
+
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 

@@ -4,6 +4,8 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
@@ -34,7 +36,12 @@ public class DropContainerItems extends LootItemConditionalFunction {
         Vec3 spawnPos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
         BlockEntity be = lootContext.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if(spawnPos != null && be instanceof Container container) {
-            Containers.dropContents(level, BlockPos.containing(spawnPos), container);
+            if (!(ModChecker.lootrPresent &&
+                container instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity &&
+                honeyCocoonBlockEntity.getLootTable() != null))
+            {
+                Containers.dropContents(level, BlockPos.containing(spawnPos), container);
+            }
         }
         else if (spawnPos != null && be instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
             BlockPos itemDropPos = BlockPos.containing(spawnPos);
