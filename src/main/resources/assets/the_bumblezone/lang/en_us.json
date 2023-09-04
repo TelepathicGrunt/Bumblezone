@@ -176,6 +176,7 @@
   "item.the_bumblezone.incense_candle.lingering_time": "Lingering Time: %s",
   "item.the_bumblezone.crystalline_flower_info_1": "Tier: %s",
   "item.the_bumblezone.crystalline_flower_info_2": "XP: %s",
+  "item.the_bumblezone.crystalline_flower_cannot_place": "Not enough room for flower!",
 
   "entity.the_bumblezone.honey_slime": "Honey Slime",
   "entity.the_bumblezone.beehemoth": "Beehemoth",

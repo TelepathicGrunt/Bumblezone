@@ -1,3 +1,9 @@
+### **(V.6.7.33 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed Crystalline Flower able to break above blocks. Now you cannot place flower down if there are obstructions.
+
+
 ### **(V.6.7.32 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
