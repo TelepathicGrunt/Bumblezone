@@ -142,11 +142,8 @@ public class RadianceEssence extends AbilityEssenceItem {
                     }
                 }
 
-
-
-
                 for (ItemStack armorItem : serverPlayer.getArmorSlots()) {
-                    if (armorItem.isDamageableItem() && armorItem.isDamaged()) {
+                    if (armorItem.isDamageableItem() && armorItem.isDamaged() && !armorItem.is(BzTags.RADIANCE_CANNOT_REPAIR)) {
                         armorItem.setDamageValue(armorItem.getDamageValue() - 1);
                         decrementAbilityUseRemaining(stack, serverPlayer, 10);
 

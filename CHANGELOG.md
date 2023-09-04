@@ -88,6 +88,7 @@ Essence of Radiance - The reward for beating the Yellow Sempiternal Sanctum stru
  Haste 2, and Damage Resistance 2. It will also slowly heal your armor durability as well over time! It has 4800 use before it is 
  depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
  Add or remove effects to give to player by editing `the_bumblezone:essence/radiance/sun_effects` mob effects tag.
+ Add armor items to `the_bumblezone:essence/radiance_cannot_repair` item tag if you have armor that should not be repaired.
 
 Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum structure! Holding this item in offhand will highlight mobs
  and outline certain block entities near you! Allowing you to see what monster is nearby or hidden chests or suspicious blocks! It will
