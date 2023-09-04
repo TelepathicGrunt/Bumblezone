@@ -1,3 +1,10 @@
+### **(V.6.7.34 Changes) (1.19.2 Minecraft)**
+
+##### Effects:
+Reduced amount of effect applying Wrath of the Hive does to bees. This will give a significant performance improvement for modpacks
+ that have mods that are doing expensive checks on effect applying.
+
+
 ### **(V.6.7.33 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:

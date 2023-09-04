@@ -220,9 +220,20 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 if(effect != null) {
                     int leftoverDuration = effect.getDuration();
 
-                    bee.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, leftoverDuration, speed, false, false));
-                    bee.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, leftoverDuration, absorption, false, false));
-                    bee.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, leftoverDuration, strength, false, true));
+                    MobEffectInstance currentEffect = bee.getEffect(MobEffects.MOVEMENT_SPEED);
+                    if (currentEffect == null || currentEffect.getDuration() < leftoverDuration) {
+                        bee.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, leftoverDuration, speed, false, false));
+                    }
+
+                    currentEffect = bee.getEffect(MobEffects.ABSORPTION);
+                    if (currentEffect == null || currentEffect.getDuration() < leftoverDuration) {
+                        bee.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, leftoverDuration, absorption, false, false));
+                    }
+
+                    currentEffect = bee.getEffect(MobEffects.DAMAGE_BOOST);
+                    if (currentEffect == null || currentEffect.getDuration() < leftoverDuration) {
+                        bee.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, leftoverDuration, strength, false, true));
+                    }
                 }
             }
         }
