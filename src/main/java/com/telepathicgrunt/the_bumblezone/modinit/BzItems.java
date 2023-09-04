@@ -80,7 +80,7 @@ public class BzItems {
     public static final Item SUPER_CANDLE_WHITE = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_WHITE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
     public static final Item SUPER_CANDLE_YELLOW = new BzBlockItem(BzBlocks.SUPER_CANDLE_BASE_YELLOW, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB), true, false);
     public static final Item INCENSE_CANDLE = new IncenseCandleBlockItem(BzBlocks.INCENSE_BASE_CANDLE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
-    public static final Item CRYSTALLINE_FLOWER = new BzBlockItem(BzBlocks.CRYSTALLINE_FLOWER, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(1).rarity(Rarity.UNCOMMON), true, true);
+    public static final Item CRYSTALLINE_FLOWER = new CrystallineFlowerBlockItem(BzBlocks.CRYSTALLINE_FLOWER, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).stacksTo(1).rarity(Rarity.UNCOMMON), true, true);
     public static final Item STRING_CURTAIN_BLACK = new BlockItem(BzBlocks.STRING_CURTAIN_BLACK, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item STRING_CURTAIN_BLUE = new BlockItem(BzBlocks.STRING_CURTAIN_BLUE, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item STRING_CURTAIN_BROWN = new BlockItem(BzBlocks.STRING_CURTAIN_BROWN, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
