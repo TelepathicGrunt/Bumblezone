@@ -82,7 +82,8 @@ public class KnowingEssenceStructureMessage {
                         if (!language.has(langKey)) {
                             langKey = structEntry
                                     .split(":")[1]
-                                    .replace("_", " ");
+                                    .replace("_", " ")
+                                    .replace("/", " ");
 
                             langKey = FIRST_LETTER_PATTERN
                                     .matcher(langKey)

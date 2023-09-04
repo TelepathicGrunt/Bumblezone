@@ -26,11 +26,14 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -100,15 +103,23 @@ public class KnowingEssence extends AbilityEssenceItem {
 
                 if (BzGeneralConfigs.knowingEssenceStructureNameServer) {
                     StructureManager structureManager = ((ServerLevel)level).structureManager();
-                    Map<Structure, LongSet> allStructuresAt = structureManager.getAllStructuresAt(serverPlayer.blockPosition());
+
+                    List<StructureStart> structureStarts = structureManager.startsForStructure(new ChunkPos(serverPlayer.blockPosition()), s -> true);
+                    List<Structure> structures = new ArrayList<>();
+
+                    for(StructureStart structureStart : structureStarts) {
+                        if (structureStart.getBoundingBox().isInside(serverPlayer.blockPosition())) {
+                            structures.add(structureStart.getStructure());
+                        }
+                    }
 
                     CompoundTag tag = stack.getOrCreateTag();
-                    if (!allStructuresAt.isEmpty()) {
+                    if (!structures.isEmpty()) {
                         StringBuilder stringBuilder = new StringBuilder();
                         Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
                         int structureCount = 0;
 
-                        for (Structure structure : allStructuresAt.keySet()) {
+                        for (Structure structure : structures) {
                             if (structureCount > 0) {
                                 stringBuilder.append(" ");
                             }
