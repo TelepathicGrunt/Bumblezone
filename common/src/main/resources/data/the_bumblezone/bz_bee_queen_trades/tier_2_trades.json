@@ -121,6 +121,10 @@
       "required": false
     },
     {
+      "id": "beachparty:honey_cocktail",
+      "required": false
+    },
+    {
       "id": "expandeddelight:peanut_honey_soup",
       "required": false
     },
