@@ -61,23 +61,23 @@ dependencies {
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:generators")// Mekanism: Generators
 //    modRuntimeOnly("mekanism:Mekanism:${project.mekanism}:tools")// Mekanism: Tools
 
-    //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
-    //modLocalRuntime("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
+    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-forge:${project.jei}")
+    //modRuntimeOnly("mezz.jei:jei-${project.jei_mc}-common:${project.jei}")
 
     //modCompileOnly("dev.emi:emi-forge:${emi}:api")
-    //modLocalRuntime("dev.emi:emi-forge:${emi}")
+    //modRuntimeOnly("dev.emi:emi-forge:${emi}")
 
-    //modLocalRuntime("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
-    //modLocalRuntime("dev.architectury:architectury-forge:${project.architectury}")
-    //modLocalRuntime("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
-    //modLocalRuntime("top.theillusivec4.curios:curios-forge:${project.curios}")
-    modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
+    //modRuntimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
+    //modRuntimeOnly("dev.architectury:architectury-forge:${project.architectury}")
+    //modRuntimeOnly("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
+    //modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
+    modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
-     modLocalRuntime("curse.maven:huge-structure-blocks-474114:4555169")
-    // modLocalRuntime("curse.maven:worldedit-225608:4586218")
-     modLocalRuntime("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
-     modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
+    // modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4555169")
+    // modRuntimeOnly("curse.maven:worldedit-225608:4586218")
+    modRuntimeOnly("com.telepathicgrunt:CommandStructures-Forge:${project.commandstructures_forge}")
+    modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Forge:${project.structurevoidtoggle_forge}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

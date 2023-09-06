@@ -9,17 +9,16 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
-import top.theillusivec4.curios.common.capability.CurioItemCapability;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
 public class CuriosCompat implements ModCompat {
 	public CuriosCompat() {
+		CuriosApi.registerCurio(BzItems.FLOWER_HEADWEAR.get(), new FlowerHeadwearCurio());
 		ModChecker.curiosPresent = true;
 	}
 
@@ -36,22 +35,14 @@ public class CuriosCompat implements ModCompat {
 		return 0;
 	}
 
-	public static ICapabilityProvider getCurioCapForFlowerHeadwear(ItemStack stack) {
-		return CurioItemCapability.createProvider(new ICurio() {
-			@Override
-			public ItemStack getStack() {
-				return stack;
+	private static class FlowerHeadwearCurio implements ICurioItem {
+		public void curioTick(SlotContext slotContext, ItemStack stack) {
+			if (slotContext.entity() instanceof Player player &&
+				stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet &&
+				!player.getItemBySlot(EquipmentSlot.HEAD).is(BzItems.FLOWER_HEADWEAR.get()))
+			{
+				flowerHeadwearHelmet.bz$onArmorTick(stack, player.level(), player);
 			}
-
-			@Override
-			public void curioTick(SlotContext slotContext) {
-				if (slotContext.entity() instanceof Player player &&
-					stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet &&
-					!player.getItemBySlot(EquipmentSlot.HEAD).is(BzItems.FLOWER_HEADWEAR.get()))
-				{
-					flowerHeadwearHelmet.bz$onArmorTick(stack, player.level(), player);
-				}
-			}
-		});
+		}
 	}
 }

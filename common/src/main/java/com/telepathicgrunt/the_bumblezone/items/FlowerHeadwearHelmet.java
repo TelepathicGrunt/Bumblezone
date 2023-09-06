@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeatherItem, FlowerHeadwearHelmetMixinTarget {
+public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeatherItem {
     public FlowerHeadwearHelmet(ArmorMaterial material, Type armorType, Properties properties) {
         super(material, armorType, properties);
     }
