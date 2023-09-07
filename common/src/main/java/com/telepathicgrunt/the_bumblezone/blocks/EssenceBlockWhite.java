@@ -81,6 +81,7 @@ public class EssenceBlockWhite extends EssenceBlock {
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
         int totalCrystals = eventEntitiesInArena.size();
         int totalhealth = 0;
+        float totalMaxHealth = 6 * BzGeneralConfigs.cosmicCrystalHealth;
 
         if (totalCrystals == 0) {
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 0, 1, eventEntitiesInArena);
@@ -146,18 +147,33 @@ public class EssenceBlockWhite extends EssenceBlock {
                         missingCrystal = true;
                         break;
                     }
+
+                    float healthPercent = Math.round((totalhealth / totalMaxHealth) * 10f) / 10f;
+                    float threshold;
+                    if (healthPercent > 0.75f) {
+                        threshold = 0;
+                    }
+                    else if (healthPercent > 0.5f) {
+                        threshold = 0.333f;
+                    }
+                    else if (healthPercent > 0.25f) {
+                        threshold = 0.666f;
+                    }
+                    else {
+                        threshold = 1;
+                    }
+                    float difficultyBuff = (float) (1 + (Math.pow(threshold, 2) * 0.35f));
+                    float newDifficulty = (1 + (0.025f * (6 - totalCrystals))) * difficultyBuff;
+                    if (newDifficulty != crystalEntity.getDifficultyBoost()) {
+                        crystalEntity.setDifficultyBoost(newDifficulty);
+                        crystalEntity.setCosmicCrystalState(CosmicCrystalState.NORMAL);
+                    }
                 }
 
                 if (missingCrystal) {
                     for (int i = 0; i < crystals.size(); i++) {
                         CosmicCrystalEntity crystalEntity = crystals.get(i);
                         crystalEntity.setOrbitOffsetDegrees(i * (360 / crystals.size()));
-                        if (totalCrystals == 1) {
-                            crystalEntity.setDifficultyBoost(1.8f);
-                        }
-                        else {
-                            crystalEntity.setDifficultyBoost(1 + (0.12f * (6 - totalCrystals)));
-                        }
                         crystalEntity.setCosmicCrystalState(CosmicCrystalState.NORMAL);
                     }
                 }
@@ -170,7 +186,6 @@ public class EssenceBlockWhite extends EssenceBlock {
             EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
         }
 
-        float totalMaxHealth = 6 * BzGeneralConfigs.cosmicCrystalHealth;
         essenceBlockEntity.getEventBar().setProgress(totalhealth / totalMaxHealth);
     }
 
