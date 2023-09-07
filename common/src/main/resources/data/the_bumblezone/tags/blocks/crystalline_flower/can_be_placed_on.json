@@ -517,7 +517,35 @@
       "required": false
     },
     {
-      "id": "wwizardry:crystalline_sculk_block",
+      "id": "wizardry:crystalline_sculk_block",
+      "required": false
+    },
+    {
+      "id": "wilderwilds:blue_pearlescent_mesoglea",
+      "required": false
+    },
+    {
+      "id": "wilderwilds:purple_pearlescent_mesoglea",
+      "required": false
+    },
+    {
+      "id": "wilderwilds:blue_mesoglea",
+      "required": false
+    },
+    {
+      "id": "wilderwilds:pink_mesoglea",
+      "required": false
+    },
+    {
+      "id": "wilderwilds:red_pearlescent_mesoglea",
+      "required": false
+    },
+    {
+      "id": "wilderwilds:yellow_pearlescent_mesoglea",
+      "required": false
+    },
+    {
+      "id": "wilderwilds:lime_pearlescent_mesoglea",
       "required": false
     }
   ]

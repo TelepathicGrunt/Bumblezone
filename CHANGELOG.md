@@ -250,6 +250,8 @@ Added tag translations for Bumblezone item tags so that EMI mod can display them
 
 (Forge): Added compat with Forbidden Arcanus so their Bee Bucket can be used to revive Empty Honeycomb Brood Blocks.
 
+(Fabric): Added compat with Lost Features so that Pollen Puff hitting their Moobloom can spawn Dandelions.
+
 
 #### *\*Changes* (From 1.19.4 version)
 
