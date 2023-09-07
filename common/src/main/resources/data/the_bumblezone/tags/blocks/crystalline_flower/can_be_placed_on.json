@@ -489,6 +489,14 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:celestine_block",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:budding_celestine",
+      "required": false
+    },
+    {
       "id": "twigs:polished_amethyst",
       "required": false
     },

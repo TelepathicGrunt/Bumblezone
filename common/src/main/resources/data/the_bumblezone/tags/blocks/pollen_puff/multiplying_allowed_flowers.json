@@ -348,6 +348,10 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:white_cherry_sapling",
+      "required": false
+    },
+    {
       "id": "twigs:azalea_flowers",
       "required": false
     },

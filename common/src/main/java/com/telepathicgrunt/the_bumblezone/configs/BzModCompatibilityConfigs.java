@@ -84,8 +84,8 @@ public class BzModCompatibilityConfigs {
 	public static boolean injectBzItemsIntoQuarkEnchantmentTooltipsCompat = true;
 
 	public static boolean allowBeeBottleRevivingEmptyBroodBlock = true;
-	public static boolean spawnCrystallizedHoneyInDimension = true;
-	public static boolean spawnHoneyTilesInDimension = true;
+
+	public static boolean allowBeeBucketRevivingEmptyBroodBlock = true;
 
 	public static boolean allowPotionOfBeesRevivingEmptyBroodBlock = true;
 

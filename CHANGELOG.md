@@ -239,6 +239,17 @@ Added emissive textures for some entities and blocks.
 
 Better Advancements is now a recommended optional mod to use with Bumblezone so Bumblezone's advancements are easier to read.
 
+Added tag translations for Bumblezone item tags so that EMI mod can display them.
+
+(Forge): Added compat with Feywild so their Ents spawn their saplings if hit with Pollen Puff,
+ enderpearls at top half of Autumn Ent will teleport to Bumblezone,
+ String Curtains blocks their small Pixies,
+ and Feywild's Honeycomb and cookie can be fed to bees or given to Bee Queen.
+
+(Forge): Added compat with Trails and Tails Plus mod so Pollen Puff hitting their Skeleton Sniffer spawns Moss Carpet!
+
+(Forge): Added compat with Forbidden Arcanus so their Bee Bucket can be used to revive Empty Honeycomb Brood Blocks.
+
 
 #### *\*Changes* (From 1.19.4 version)
 
@@ -291,6 +302,8 @@ Added sound when opening Honey Cocoon
 Added Stinger Spear, Bee Cannon, and Crystal Cannon to the `minecraft:tools` tag.
 
 Pollen Puff will not multiply Pitcher Plant when thrown at it as Mojang did not want it to be too easy to multiply (Pitcher Plant cannot be bonemealed)
+
+Pollen Puff will spawn Moss Carpet when it hits a Sniffer!
 
 Essence of the Bees takes less time to consume now.
 
@@ -356,12 +369,3 @@ Protection of the Hive will always remove Wrath of the Hive effect if you manage
 Renamed VIP Trader advancement to Crazy Trader to reduce confusion.
 
 Fixed Magic The Candling advancement to work with Splash and Lingering Potions as well.
-
-##### Mod Compat:
-Added tag translations for Bumblezone item tags so that EMI mod can display them.
-
-(Forge): Added compat with Feywild so their Ents spawn their saplings if hit with Pollen Puff, 
- enderpearls at top half of Autumn Ent will teleport to Bumblezone,
- String Curtains blocks their small Pixies,
- and Feywild's Honeycomb and cookie can be fed to bees or given to Bee Queen.
-

@@ -413,6 +413,50 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:white_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:red_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:orange_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:yellow_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:lime_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:green_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:cyan_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:blue_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:light_blue_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:purple_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:magenta_petals",
+      "required": false
+    },
+    {
       "id": "twigs:azalea_flowers",
       "required": false
     },

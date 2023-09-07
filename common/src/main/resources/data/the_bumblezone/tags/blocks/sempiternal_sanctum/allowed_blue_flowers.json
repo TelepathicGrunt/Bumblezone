@@ -520,6 +520,18 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:cyan_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:blue_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:light_blue_petals",
+      "required": false
+    },
+    {
       "id": "undergarden:miserabell",
       "required": false
     },

@@ -242,6 +242,10 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:white_petals",
+      "required": false
+    },
+    {
       "id": "untamedwilds:flora_yarrow",
       "required": false
     },

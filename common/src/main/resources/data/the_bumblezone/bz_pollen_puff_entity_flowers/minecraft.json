@@ -46,5 +46,16 @@
         }
       ]
     }
+  }],
+  "minecraft:sniffer": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:moss_carpet" },
+          "weight": 1
+        }
+      ]
+    }
   }]
 }

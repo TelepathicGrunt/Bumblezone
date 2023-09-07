@@ -564,6 +564,14 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:purple_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:magenta_petals",
+      "required": false
+    },
+    {
       "id": "valleycraft:purple_tulip",
       "required": false
     },

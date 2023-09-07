@@ -26,6 +26,7 @@ public class ModChecker {
 	public static boolean productiveBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
 	public static boolean buzzierBeesPresent = false;
+	public static boolean forbiddenArcanusPresent = false;
 	public static boolean pokecubePresent = false;
 	public static boolean friendsAndFoesPresent = false;
 	public static boolean beekeeperPresent = false;

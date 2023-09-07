@@ -204,6 +204,10 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:red_petals",
+      "required": false
+    },
+    {
       "id": "twilightforest:thorn_rose",
       "required": false
     },

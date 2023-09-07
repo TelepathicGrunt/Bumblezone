@@ -332,6 +332,14 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:red_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:protea",
+      "required": false
+    },
+    {
       "id": "terrestria:indian_paintbrush",
       "required": false
     },

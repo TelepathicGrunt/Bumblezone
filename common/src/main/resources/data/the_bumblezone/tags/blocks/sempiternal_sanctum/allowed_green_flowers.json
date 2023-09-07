@@ -217,6 +217,14 @@
       "required": false
     },
     {
+      "id": "trailsandtalesplus:lime_petals",
+      "required": false
+    },
+    {
+      "id": "trailsandtalesplus:green_petals",
+      "required": false
+    },
+    {
       "id": "twilightforest:mayapple",
       "required": false
     },
