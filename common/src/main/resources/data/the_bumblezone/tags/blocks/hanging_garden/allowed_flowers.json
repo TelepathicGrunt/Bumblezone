@@ -333,7 +333,11 @@
       "required": false
     },
     {
-      "id": "regions_unexplored:glistering_sprout",
+      "id": "regions_unexplored:glistering_bloom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:glistering_fern",
       "required": false
     },
     {

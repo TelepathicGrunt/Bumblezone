@@ -556,6 +556,14 @@
       "required": false
     },
     {
+      "id": "regions_unexplored:glistering_bloom",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:glistering_fern",
+      "required": false
+    },
+    {
       "id": "srias_flowers:purple_hydrangea",
       "required": false
     },
