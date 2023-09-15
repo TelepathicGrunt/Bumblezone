@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -151,6 +152,9 @@ public class StinglessBeeHelmet extends BeeArmor {
                 entity.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
             {
                 entity.startRiding(playerEntity);
+                if(playerEntity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetPassengersPacket(serverPlayer));
+                }
 
                 if(!world.isClientSide()) {
                     CompoundTag tag = beeHelmet.getOrCreateTag();
