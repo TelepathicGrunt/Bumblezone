@@ -29,9 +29,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.EntityBlock;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     final Slot bookSlot;
     private final Slot enchantedSlot;
 
-    final DataSlot selectedEnchantmentIndex = DataSlot.standalone();
+    public final DataSlot selectedEnchantmentIndex = DataSlot.standalone();
     final DataSlot xpBarPercent = DataSlot.standalone();
     final DataSlot xpTier = DataSlot.standalone();
     final DataSlot tierCostUpper = DataSlot.standalone();
@@ -149,30 +151,35 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             }
 
             public void onTake(Player player, ItemStack itemStack) {
-                selectedEnchantmentIndex.set(-1);
-                bookSlot.remove(1);
-
                 access.execute((soundLevel, pos) -> {
                     long gameTime = soundLevel.getGameTime();
                     if (lastSoundTime != gameTime) {
                         soundLevel.playSound(null, pos, BzSounds.CRYSTALLINE_FLOWER_USE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
                         lastSoundTime = gameTime;
                     }
-
                 });
 
+                // get enchantments previously available
+                ItemStack oldConsumeStack = bookSlot.getItem().copy();
+                List<EnchantmentInstance> oldAvailableEnchantments = getAvaliableEnchantments(oldConsumeStack);
+
+                // drain book and xp
+                bookSlot.remove(1);
                 drainFlowerXPLevel(GeneralUtils.merge(tierCostUpper.get(), tierCostLower.get()));
 
-                ItemStack bookSlotItem = bookSlot.getItem();
-                if (bookSlotItem.isEmpty()) {
-                    selectedEnchantmentIndex.set(-1);
-                }
-
                 if (!player.level().isClientSide()) {
-                    setupResultSlot();
+
+                    // try to keep same enchantment selected
+                    EnchantmentInstance oldEnchantSelected = oldAvailableEnchantments.get(selectedEnchantmentIndex.get());
+                    selectedEnchantmentIndex.set(-1);
+
+                    setupResultSlot(oldEnchantSelected.enchantment);
                     broadcastChanges();
                     crystallineFlowerBlockEntity.setBookSlotItems(bookSlot.getItem());
                     crystallineFlowerBlockEntity.syncPillar();
+                }
+                else {
+                    selectedEnchantmentIndex.set(-1);
                 }
 
                 super.onTake(player, itemStack);
@@ -520,6 +527,10 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     }
 
     private void setupResultSlot() {
+        setupResultSlot(null);
+    }
+
+    private void setupResultSlot(Enchantment oldEnchantment) {
         ItemStack bookSlotItem = bookSlot.getItem();
         int existingEnchantments;
         if (!bookSlotItem.isEmpty() && xpTier.get() > 1) {
@@ -551,8 +562,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             ItemStack tempCopy = toEnchant.copy();
             tempCopy.setCount(1);
 
-            int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier;
-            List<EnchantmentInstance> availableEnchantments = EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
+            List<EnchantmentInstance> availableEnchantments = getAvaliableEnchantments(tempCopy);
 
             if (availableEnchantments.size() == 0) {
                 if (enchantedSlot.hasItem()) {
@@ -607,9 +617,24 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                                     e.enchantment.isTreasureOnly()
                             );
                         }).toList();
-                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, availableEnchantmentsSkeletons);
+
+                int selectedIndex = -1;
+                for (int i = 0; i < availableEnchantments.size(); i++) {
+                    if (availableEnchantments.get(i).enchantment == oldEnchantment) {
+                        selectedIndex = i;
+                        break;
+                    }
+                }
+
+                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, availableEnchantmentsSkeletons, selectedIndex);
             }
         }
+    }
+
+    @NotNull
+    private List<EnchantmentInstance> getAvaliableEnchantments(ItemStack tempCopy) {
+        int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier;
+        return EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
     }
 
     /**

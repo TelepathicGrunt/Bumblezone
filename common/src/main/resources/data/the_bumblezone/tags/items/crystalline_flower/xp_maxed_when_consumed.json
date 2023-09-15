@@ -12,6 +12,10 @@
     {
       "id": "the_bumblezone:royal_jelly_block",
       "required": false
+    },
+    {
+      "id": "#the_bumblezone:essence_items",
+      "required": false
     }
   ]
 }

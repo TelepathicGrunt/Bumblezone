@@ -8,6 +8,8 @@
 
 #TODO: adjust backup essence block textures
 
+#TODO: crystalline flower keep same enchant selected?
+
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
@@ -276,6 +278,8 @@ Several Bumblezone's full solid blocks has instruments set for Note Blocks to pl
 Crystalline Flower can be broken by pistons now and drop itself.
 
 Crystalline Flower now takes slightly more than 100 XP to get to tier 2 so consuming enchanted books cannot be infinitely recycled for infinite Honey Crystal Shards.
+
+Crystalline Flower now tries to keep the last used enchantment still selected when possible while UI is open.
 
 Glistering Honey Crystal should not suffocate mobs inside itself, and it blocks Redstone power like how Glowstone blocks power.
 

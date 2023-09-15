@@ -69,7 +69,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     protected final VoxelShape shapeFlower = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
     protected final VoxelShape shapeBody = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
-    private static final Component CONTAINER_TITLE = Component.translatable(Bumblezone.MODID + ".container.crystalline_flower");
+    private static final Component CONTAINER_TITLE = Component.translatable("container." + Bumblezone.MODID + ".crystalline_flower");
     private static final Component OCCUPIED_CRYSTALLINE_FLOWER_TEXT = Component.translatable("system.the_bumblezone.occupied_crystalline_flower");
 
     public CrystallineFlower() {
