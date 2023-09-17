@@ -223,13 +223,13 @@ public class EssenceBlockPurple extends EssenceBlock {
 
     @Override
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), true);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().getLocation(), true);
         super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     @Override
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().getLocation(), false);
         super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 }

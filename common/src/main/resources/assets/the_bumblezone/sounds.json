@@ -30,7 +30,16 @@
   "music.sempiternal_sanctum": {
     "sounds": [
       {
-        "name": "the_bumblezone:music/bee_ware_of_the_temple",
+        "name": "the_bumblezone:music/bee_ware_of_the_temple_stereo",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
+  "music.knowing_event": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/knowing_renren_stereo",
         "stream": true,
         "volume": 1
       }
@@ -39,7 +48,16 @@
   "music.radiance_event": {
     "sounds": [
       {
-        "name": "the_bumblezone:music/minigame_comm1",
+        "name": "the_bumblezone:music/radiance_renren_stereo",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
+  "music.life_event": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/life_renren_stereo",
         "stream": true,
         "volume": 1
       }
@@ -90,6 +108,30 @@
     "sounds": [
       {
         "name": "the_bumblezone:music/bee_ware_of_the_temple_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.knowing_renren": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/knowing_renren_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.radiance_renren": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/radiance_renren_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.life_renren": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/life_renren_mono",
         "stream": true
       }
     ]
@@ -351,7 +393,7 @@
       {
         "attenuation_distance": 6,
         "name": "mob/bee/loop5",
-        "volume": 0.4
+        "volume": 0.3
       }
     ],
     "subtitle": "subtitles.item.the_bumblezone.bumble_bee_chestplate.fly"
@@ -676,6 +718,35 @@
       }
     ],
     "subtitle": "subtitles.entity.the_bumblezone.cosmic_crystal_entity.crash_charge"
+  },
+  "entity.the_bumblezone.cosmic_crystal_entity.crashes": {
+    "sounds": [
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode1",
+        "volume": 1,
+        "pitch": 0.5
+      },
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode2",
+        "volume": 1,
+        "pitch": 0.5
+      },
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode3",
+        "volume": 1,
+        "pitch": 0.5
+      },
+      {
+        "attenuation_distance": 30,
+        "name": "random/explode4",
+        "volume": 1,
+        "pitch": 0.5
+      }
+    ],
+    "subtitle": "subtitles.entity.the_bumblezone.cosmic_crystal_entity.crashes"
   },
   "entity.the_bumblezone.cosmic_crystal_entity.spin": {
     "sounds": [

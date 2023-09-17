@@ -114,6 +114,15 @@ public class EssenceBlockRed extends EssenceBlock {
 
                         mob.setTarget(player);
                     }
+
+                    if (Math.abs(entity.blockPosition().getX() - blockPos.getX()) > (essenceBlockEntity.getArenaSize().getX() / 2) ||
+                        Math.abs(entity.blockPosition().getY() - blockPos.getY()) > (essenceBlockEntity.getArenaSize().getY() / 2) ||
+                        Math.abs(entity.blockPosition().getZ() - blockPos.getZ()) > (essenceBlockEntity.getArenaSize().getZ() / 2))
+                    {
+                        int yOffset = (-(essenceBlockEntity.getArenaSize().getY()) / 2) + 2;
+                        BlockPos center = blockPos.offset(0, yOffset, 0);
+                        entity.moveTo(center.getX(), center.getY(), center.getZ());
+                    }
                 }
             }
         }

@@ -24,6 +24,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -87,36 +88,42 @@ public class EssenceBlockGreen extends EssenceBlock {
         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena = essenceBlockEntity.getEventEntitiesInArena();
 
         if (eventEntitiesInArena.isEmpty()) {
-            Entity entity = BzEntities.ROOTMIN.get().spawn(serverLevel, rootminPos, MobSpawnType.TRIGGERED);
-            if (entity instanceof RootminEntity rootminEntity) {
-                rootminEntity.setEssenceController(essenceBlockEntity.getUUID());
-                rootminEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
-                rootminEntity.setEssenceControllerDimension(serverLevel.dimension());
+            spawnRootmin(serverLevel, essenceBlockEntity, rootminPos, eventEntitiesInArena);
 
-                AttributeInstance livingEntityAttributeHealth = rootminEntity.getAttribute(Attributes.MAX_HEALTH);
-                if (livingEntityAttributeHealth != null) {
-                    float extraHealth = ROOTMIN_HEALTH - rootminEntity.getMaxHealth();
-                    livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
-                            UUID.fromString("03c85bd0-09eb-11ee-be56-0242ac120002"),
-                            "Essence Arena Health Boost",
-                            extraHealth,
-                            AttributeModifier.Operation.ADDITION));
-                    rootminEntity.heal(extraHealth + rootminEntity.getMaxHealth());
-                }
-
-                entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atLowerCornerOf(Direction.SOUTH.getNormal()));
-                eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
+            if (eventEntitiesInArena.size() == 1) {
+                List<HangingEntity> frames = serverLevel.getEntitiesOfClass(HangingEntity.class, new AABB(
+                        blockPos.getX() - (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                        blockPos.getY() - (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                        blockPos.getZ() - (essenceBlockEntity.getArenaSize().getZ() * 0.5f),
+                        blockPos.getX() + (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                        blockPos.getY() + (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                        blockPos.getZ() + (essenceBlockEntity.getArenaSize().getZ() * 0.5f)
+                ));
+                frames.forEach(frame -> eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(frame.getUUID())));
             }
         }
 
         if (!eventEntitiesInArena.isEmpty()) {
-            EssenceBlockEntity.EventEntities eventEntity = eventEntitiesInArena.get(0);
-            Entity entity = serverLevel.getEntity(eventEntity.uuid());
+            Entity entity = null;
+
+            for (EssenceBlockEntity.EventEntities eventEntity : eventEntitiesInArena) {
+                entity = serverLevel.getEntity(eventEntity.uuid());
+                if (entity instanceof RootminEntity) {
+                    break;
+                }
+                else {
+                    entity = null;
+                }
+            }
 
             float progress = essenceBlockEntity.getEventBar().getProgress();
             if (progress == 0 && entity == null) {
                 EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
                 return;
+            }
+
+            if (!(entity instanceof RootminEntity)) {
+                entity = spawnRootmin(serverLevel, essenceBlockEntity, rootminPos, eventEntitiesInArena);
             }
 
             if (entity == null ||
@@ -136,15 +143,16 @@ public class EssenceBlockGreen extends EssenceBlock {
             if (rootminPose == RootminPose.SHOCK || rootminPose == RootminPose.ANGRY || rootminPose == RootminPose.CURSE) {
                 if (rootminEntity.getLastHurtByMob() != null) {
                     if (rootminPose == RootminPose.SHOCK) {
-                        if (rootminHealthPercent > STAGE_3_THRESHOLD) {
-                            if (rootminEntity.getHealth() % 3 == 2) {
-                                rootminEntity.runAngry();
-                            }
+                        if (rootminHealthPercent > STAGE_2_THRESHOLD && rootminHealthPercent < STAGE_2_THRESHOLD + 0.05f) {
+                            rootminEntity.runAngry();
                         }
-                        else if (rootminHealthPercent > STAGE_4_THRESHOLD) {
+                        else if (rootminHealthPercent > STAGE_3_THRESHOLD && rootminHealthPercent < STAGE_3_THRESHOLD + 0.05f) {
+                            rootminEntity.runAngry();
+                        }
+                        else if (rootminHealthPercent > STAGE_4_THRESHOLD && rootminHealthPercent < STAGE_4_THRESHOLD + 0.05f) {
                             rootminEntity.runCurse();
                         }
-                        else {
+                        else if (rootminHealthPercent <= STAGE_4_THRESHOLD) {
                             rootminEntity.setRootminPose(RootminPose.NONE);
                         }
                         hitsLeft--;
@@ -236,15 +244,48 @@ public class EssenceBlockGreen extends EssenceBlock {
         }
     }
 
+    private static Entity spawnRootmin(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity, BlockPos rootminPos, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
+        Entity entity = BzEntities.ROOTMIN.get().spawn(serverLevel, rootminPos, MobSpawnType.TRIGGERED);
+        if (entity instanceof RootminEntity rootminEntity) {
+            rootminEntity.setEssenceController(essenceBlockEntity.getUUID());
+            rootminEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
+            rootminEntity.setEssenceControllerDimension(serverLevel.dimension());
+
+            AttributeInstance livingEntityAttributeHealth = rootminEntity.getAttribute(Attributes.MAX_HEALTH);
+            if (livingEntityAttributeHealth != null) {
+                float extraHealth = ROOTMIN_HEALTH - rootminEntity.getMaxHealth();
+                livingEntityAttributeHealth.addPermanentModifier(new AttributeModifier(
+                        UUID.fromString("03c85bd0-09eb-11ee-be56-0242ac120002"),
+                        "Essence Arena Health Boost",
+                        extraHealth,
+                        AttributeModifier.Operation.ADDITION));
+                rootminEntity.heal(extraHealth + rootminEntity.getMaxHealth());
+            }
+
+            AttributeInstance knockbackResistanceAttribute = rootminEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+            if (knockbackResistanceAttribute != null) {
+                knockbackResistanceAttribute.addPermanentModifier(new AttributeModifier(
+                        UUID.fromString("0ebdc338-5575-11ee-8c99-0242ac120002"),
+                        "Essence Arena Knockback Resistance Boost",
+                        0.25d,
+                        AttributeModifier.Operation.ADDITION));
+            }
+
+            entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atLowerCornerOf(Direction.SOUTH.getNormal()));
+            eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
+        }
+        return entity;
+    }
+
     @Override
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), true);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().getLocation(), true);
         super.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
     }
 
     @Override
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {
-        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
+        MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().getLocation(), false);
         super.onPlayerLeave(serverLevel, serverPlayer, essenceBlockEntity);
     }
 }

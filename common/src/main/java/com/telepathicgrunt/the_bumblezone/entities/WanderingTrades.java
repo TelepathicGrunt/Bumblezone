@@ -57,5 +57,35 @@ public class WanderingTrades {
                 10,
                 0.5F
         ));
+
+        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_KNOWING_RENREN.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
+
+        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_RADIANCE_RENREN.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
+
+        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_LIFE_RENREN.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
     }
 }

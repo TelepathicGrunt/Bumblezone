@@ -259,6 +259,15 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static int musicDiscTimeLengthBeeWareOfTheTemple = 371;
 
+    @Entry
+    public static int musicDiscTimeLengthKnowing = 251;
+
+    @Entry
+    public static int musicDiscTimeLengthRadiance = 106;
+
+    @Entry
+    public static int musicDiscTimeLengthLife = 86;
+
 
     @Comment
     public static Comment modCompatComment;
@@ -405,6 +414,9 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca;
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees;
         BzGeneralConfigs.musicDiscTimeLengthBeeWareOfTheTemple = musicDiscTimeLengthBeeWareOfTheTemple;
+        BzGeneralConfigs.musicDiscTimeLengthKnowing = musicDiscTimeLengthKnowing;
+        BzGeneralConfigs.musicDiscTimeLengthRadiance = musicDiscTimeLengthRadiance;
+        BzGeneralConfigs.musicDiscTimeLengthLife = musicDiscTimeLengthLife;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;

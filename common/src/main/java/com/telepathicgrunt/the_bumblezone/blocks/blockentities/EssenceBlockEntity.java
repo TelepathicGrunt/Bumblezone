@@ -198,6 +198,9 @@ public class EssenceBlockEntity extends BlockEntity {
                         Math.abs(serverPlayer.blockPosition().getY() - this.getBlockPos().getY()) > ((this.getArenaSize().getY() + 1) / 2) ||
                         Math.abs(serverPlayer.blockPosition().getZ() - this.getBlockPos().getZ()) > ((this.getArenaSize().getZ() + 1) / 2)))
                     {
+                        if (this.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                            essenceBlock.onPlayerLeave(serverPlayer.serverLevel(), serverPlayer, this);
+                        }
                         this.getPlayerInArena().remove(playerUUID);
                         this.getEventBar().removePlayer(serverPlayer);
                         this.setChanged();

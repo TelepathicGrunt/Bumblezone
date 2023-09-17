@@ -27,6 +27,9 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthLaBeeDaLoca;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeWareOfTheTemple;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthKnowing;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthRadiance;
+    public static ForgeConfigSpec.IntValue musicDiscTimeLengthLife;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
     public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
@@ -192,37 +195,58 @@ public class BzGeneralConfig {
         musicDiscTimeLengthFlightOfTheBumblebee = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
-                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthflightofthebumblebee")
                 .defineInRange("musicDiscTimeLengthFlightOfTheBumblebee", 84, 0 , 1000000);
 
         musicDiscTimeLengthHoneyBee = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
-                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthhoneybee")
                 .defineInRange("musicDiscTimeLengthHoneyBee", 216, 0 , 1000000);
 
         musicDiscTimeLengthBeeLaxingWithTheHomBees = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
-                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthbeelaxingwiththehombees")
                 .defineInRange("musicDiscTimeLengthBeeLaxingWithTheHomBees", 300, 0 , 1000000);
 
         musicDiscTimeLengthLaBeeDaLoca = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
-                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthlabeedaloca")
                 .defineInRange("musicDiscTimeLengthLaBeeDaLoca", 176, 0 , 1000000);
 
         musicDiscTimeLengthBeeWareOfTheTemple = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
-                        " This is used for the server to know when to make Allays stop dancing when Jukebox plays this music disc.\n")
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthbeewareofthetemple")
                 .defineInRange("musicDiscTimeLengthBeeWareOfTheTemple", 371, 0 , 1000000);
+
+        musicDiscTimeLengthKnowing = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
+                .translation("the_bumblezone.config.musicdisctimelengthknowing")
+                .defineInRange("musicDiscTimeLengthKnowing", 251, 0 , 1000000);
+
+        musicDiscTimeLengthRadiance = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
+                .translation("the_bumblezone.config.musicdisctimelengthradiance")
+                .defineInRange("musicDiscTimeLengthRadiance", 106, 0 , 1000000);
+
+        musicDiscTimeLengthLife = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
+                .translation("the_bumblezone.config.musicdisctimelengthlife")
+                .defineInRange("musicDiscTimeLengthLife", 86, 0 , 1000000);
 
         crystallineFlowerConsumeItemEntities = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -399,6 +423,9 @@ public class BzGeneralConfig {
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees.get();
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeWareOfTheTemple = musicDiscTimeLengthBeeWareOfTheTemple.get();
+        BzGeneralConfigs.musicDiscTimeLengthKnowing = musicDiscTimeLengthKnowing.get();
+        BzGeneralConfigs.musicDiscTimeLengthRadiance = musicDiscTimeLengthRadiance.get();
+        BzGeneralConfigs.musicDiscTimeLengthLife = musicDiscTimeLengthLife.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemEntities = crystallineFlowerConsumeItemEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities = crystallineFlowerConsumeExperienceOrbEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemUI = crystallineFlowerConsumeItemUI.get();

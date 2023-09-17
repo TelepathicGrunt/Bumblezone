@@ -877,6 +877,14 @@ public class CosmicCrystalEntity extends LivingEntity {
                                 3,
                                 Level.ExplosionInteraction.MOB);
 
+                        this.level().playSound(
+                                this,
+                                this.blockPosition(),
+                                BzSounds.COSMIC_CRYSTAL_ENTITY_CRASHES.get(),
+                                SoundSource.HOSTILE,
+                                1,
+                                1f);
+
                         for (BlockPos pos : BlockPos.betweenClosed(
                                 this.blockPosition().offset(-2, -2, -2),
                                 this.blockPosition().offset(2, 2, 2)))

@@ -70,8 +70,8 @@ public class MusicHandler {
             }
             else {
                 if (musicFader.counter == 0) {
-                    iterator.remove();
                     minecraftClient.getSoundManager().stop(musicFader.music);
+                    iterator.remove();
                     continue;
                 }
 
