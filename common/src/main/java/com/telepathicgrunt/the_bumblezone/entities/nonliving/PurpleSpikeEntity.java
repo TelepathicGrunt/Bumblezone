@@ -8,6 +8,9 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -16,6 +19,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class PurpleSpikeEntity extends Entity {
@@ -146,6 +150,20 @@ public class PurpleSpikeEntity extends Entity {
 
                         livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), damageAmount);
                         this.makeParticle(1, true);
+
+                        for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+                            if (mobEffect.isBeneficial()) {
+                                livingEntity.removeEffect(mobEffect);
+                            }
+                        }
+
+                        livingEntity.addEffect(new MobEffectInstance(
+                                MobEffects.POISON,
+                                200,
+                                1,
+                                true,
+                                true,
+                                true));
                     }
                 }
             }
@@ -205,13 +223,13 @@ public class PurpleSpikeEntity extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
-        compoundTag.putInt("spike_timer", this.getSpikeTimer());
-        compoundTag.putInt("spike_charge_timer", this.getSpikeChargeTimer());
+        this.setSpikeTimer(compoundTag.getInt("spike_timer"));
+        this.setSpikeChargeTimer(compoundTag.getInt("spike_charge_timer"));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
-        this.setSpikeTimer(compoundTag.getInt("spike_timer"));
-        this.setSpikeChargeTimer(compoundTag.getInt("spike_charge_timer"));
+        compoundTag.putInt("spike_timer", this.getSpikeTimer());
+        compoundTag.putInt("spike_charge_timer", this.getSpikeChargeTimer());
     }
 }

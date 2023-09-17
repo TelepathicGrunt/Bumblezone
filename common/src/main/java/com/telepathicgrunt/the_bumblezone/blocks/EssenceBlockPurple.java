@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -25,6 +26,8 @@ import java.util.function.BiPredicate;
 
 
 public class EssenceBlockPurple extends EssenceBlock {
+    public static int INTERVALS = 36;
+
     public EssenceBlockPurple() {
         super(Properties.of().mapColor(MapColor.COLOR_PURPLE));
     }
@@ -36,7 +39,7 @@ public class EssenceBlockPurple extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 4000;
+        return 5020;
     }
 
     @Override
@@ -79,7 +82,6 @@ public class EssenceBlockPurple extends EssenceBlock {
 
                 // Someone removed a spike somehow. Clear grid of spikes and reset. Also set all spikes to on to punish.
                 if (entity == null) {
-                    eventEntitiesInArena.remove(i);
                     for (int k = eventEntitiesInArena.size() - 1; k >= 0; k--) {
                         UUID entityUUIDToRemove = eventEntitiesInArena.remove(i).uuid();
                         Entity entityEntityToRemove = serverLevel.getEntity(entityUUIDToRemove);
@@ -96,6 +98,10 @@ public class EssenceBlockPurple extends EssenceBlock {
 
             // Perform the rave!
             ravingTime(serverLevel, timeRemaining, getEventTimeFrame(), essenceBlockEntity, eventEntitiesInArena);
+        }
+
+        if (timeRemaining == 0) {
+            EssenceBlockEntity.EndEvent(serverLevel, blockPos, blockState, essenceBlockEntity, true);
         }
 
         essenceBlockEntity.getEventBar().setProgress((float) essenceBlockEntity.getEventTimer() / getEventTimeFrame());
@@ -137,38 +143,321 @@ public class EssenceBlockPurple extends EssenceBlock {
                                    EssenceBlockEntity essenceBlockEntity,
                                    List<EssenceBlockEntity.EventEntities> eventEntitiesInArena
     ) {
-        int currentTime = eventTimeFrame - timeRemaining - 1;
+        int currentTime = (eventTimeFrame - timeRemaining) + 5;
 
-        if (currentTime % 100 == 0) {
+        if (currentTime % INTERVALS == 0) {
             BlockPos arenaSize = essenceBlockEntity.getArenaSize();
             int rowLength = arenaSize.getX() - 2;
             int columnLength = arenaSize.getZ() - 2;
             int xRadius = (rowLength/2);
             int zRadius = (columnLength/2);
 
-            if (currentTime % 600 == 0) {
-                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) -> x % 2 == 0);
+            int interval = currentTime / INTERVALS;
+
+            if (interval < 8 && interval >= 0) {
+                int intervalOffset = interval - 2;
+                int arenaRadiusSq = xRadius * xRadius + zRadius * zRadius;
+
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, 0, false);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -3, false);
             }
-            else if (currentTime % 600 == 100) {
-                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) -> z % 2 == 0);
+            if (interval < 19 && interval >= 8) {
+                bars(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaSize.getX() / 2, interval - 8, 2, 6, 0);
+                bars(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaSize.getX() / 2, interval - 8, 2, 6, -3);
+                bars(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaSize.getX() / 2, interval - 8, 2, 6, -6);
+                bars(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaSize.getX() / 2, interval - 8, 2, 6, -9);
+                bars(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaSize.getX() / 2, interval - 8, 2, 6, -12);
+                bars(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaSize.getX() / 2, interval - 8, 2, 6, -15);
             }
-            else if (currentTime % 600 == 200) {
-                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) -> Math.abs((x + z) % 2) == 0);
+            if (interval < 28 && interval >= 20 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            int miniX = x / 2;
+                            int miniZ = z / 2;
+                            if (interval % 4 == 0) {
+                                return miniX % 2 == 0;
+                            }
+                            else {
+                                return miniZ % 2 == 0;
+                            }
+                        });
             }
-            else if (currentTime % 600 == 300) {
-                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) ->Math.abs((x + z) % 2) == 1);
+            if (interval < 32 && interval >= 28 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            if (interval % 4 == 0) {
+                                return Math.abs((x + z) % 6) < 2;
+                            }
+                            else {
+                                return Math.abs((x + z) % 6) >= 2;
+                            }
+                        });
             }
-            else if (currentTime % 600 == 400) {
-                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) -> x * x + z * z < (xRadius * xRadius + zRadius * zRadius) / 6);
+            if (interval < 36 && interval >= 32 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            if (interval % 4 == 0) {
+                                return Math.abs((x - z) % 6) < 2;
+                            }
+                            else {
+                                return Math.abs((x - z) % 6) >= 2;
+                            }
+                        });
             }
-            else if (currentTime % 600 == 500) {
-                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius,
-                        (x, z) -> x * x + z * z > (xRadius * xRadius + zRadius * zRadius) / 6);
+            if (interval < 41 && interval >= 36 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            boolean crossLinked = Math.abs((x - z) % 6) < 2 || Math.abs((x + z) % 6) < 2;
+                            if (interval % 4 == 0) {
+                                return crossLinked;
+                            }
+                            else {
+                                return !crossLinked;
+                            }
+                        });
+            }
+            if (interval < 63 && interval >= 42) {
+                int intervalOffset = interval - 42;
+                int arenaRadiusSq = xRadius * xRadius + zRadius * zRadius;
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, 0, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -3, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -6, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -9, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -12, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -15, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -18, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -21, true);
+                ring(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, arenaRadiusSq, intervalOffset, -24, true);
+
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, true,
+                        (x, z) -> {
+                            int outerRadius = arenaRadiusSq / 20;
+                            int currentRadiusSq = x * x + z * z;
+                            return currentRadiusSq < outerRadius + (intervalOffset * 4);
+                        });
+            }
+            if (interval < 81 && interval >= 64) {
+                int intervalOffset = interval - 64;
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, true,
+                        (x, z) -> {
+                            float newX = x * Mth.cos(intervalOffset * 5) - z * Mth.sin(intervalOffset * 5);
+                            float newZ = x * Mth.sin(intervalOffset * 5) + z * Mth.cos(intervalOffset * 5);
+                            float sinResult = Mth.sin((newX * newZ) * Mth.DEG_TO_RAD);
+                            sinResult = Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult);
+                            return sinResult < 0.1f;
+                        });
+
+                if (interval > 71 && interval % 5 == 0) {
+                    patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, true,
+                            (x, z) -> {
+                                int miniX = x / 2;
+                                int miniZ = z / 2;
+                                if (interval % 4 == 0) {
+                                    return miniX % 2 == 0;
+                                }
+                                else {
+                                    return miniZ % 2 == 0;
+                                }
+                            });
+                }
+            }
+            if (interval < 90 && interval >= 82 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            int miniX = x / 6;
+                            int miniZ = z / 6;
+                            if (interval % 4 == 0) {
+                                return Math.abs((miniX + miniZ) % 2) == 0;
+                            }
+                            else {
+                                return Math.abs((miniX + miniZ) % 2) == 1;
+                            }
+                        });
+            }
+            if (interval < 94 && interval >= 90 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            int miniX = x / 8;
+                            int miniZ = z / 8;
+                            if (interval % 4 == 0) {
+                                return Math.abs((miniX + miniZ) % 2) == 0;
+                            }
+                            else {
+                                return Math.abs((miniX + miniZ) % 2) == 1;
+                            }
+                        });
+            }
+            if (interval == 95) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, INTERVALS * 2, INTERVALS, true,
+                        (x, z) -> {
+                            float newX = x * Mth.cos(0) - z * Mth.sin(0);
+                            float newZ = x * Mth.sin(0) + z * Mth.cos(0);
+                            float sinResult = Mth.sin(-(newX * newZ) * Mth.DEG_TO_RAD);
+                            sinResult = Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult);
+                            return sinResult < 0.5f;
+                        });
+            }
+            if (interval < 105 && interval >= 97) {
+                int intervalOffset = interval - 95;
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, true,
+                        (x, z) -> {
+                            float newX = x * Mth.cos(intervalOffset * 5) - z * Mth.sin(intervalOffset * 5);
+                            float newZ = x * Mth.sin(intervalOffset * 5) + z * Mth.cos(intervalOffset * 5);
+                            float sinResult = Mth.sin(-(newX * newZ) * Mth.DEG_TO_RAD);
+                            sinResult = Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult) * Math.abs(sinResult);
+                            return sinResult < 0.5f;
+                        });
+            }
+            if (interval < 110 && interval >= 106 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            int miniX = x / 2;
+                            int miniZ = z / 2;
+                            if (interval % 4 == 0) {
+                                return miniX % 2 == 0;
+                            }
+                            else {
+                                return miniZ % 2 == 0;
+                            }
+                        });
+            }
+            if (interval < 114 && interval >= 110 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            if (interval % 4 == 0) {
+                                return Math.abs((x + z) % 6) < 4;
+                            }
+                            else {
+                                return Math.abs((x + z) % 6) >= 4;
+                            }
+                        });
+            }
+            if (interval < 118 && interval >= 114 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            if (interval % 4 == 0) {
+                                return Math.abs((x - z) % 6) < 4;
+                            }
+                            else {
+                                return Math.abs((x - z) % 6) >= 4;
+                            }
+                        });
+            }
+            if (interval < 122 && interval >= 118 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            int miniX = x / 3;
+                            int miniZ = z / 3;
+                            if (interval % 4 == 0) {
+                                return Math.abs((miniX + miniZ) % 2) == 0;
+                            }
+                            else {
+                                return Math.abs((miniX + miniZ) % 2) == 1;
+                            }
+                        });
+            }
+            if (interval < 128 && interval >= 122 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            int miniX = x / 2;
+                            int miniZ = z / 2;
+                            if (interval % 4 == 0) {
+                                return Math.abs((miniX + miniZ) % 2) == 0;
+                            }
+                            else {
+                                return Math.abs((miniX + miniZ) % 2) == 1;
+                            }
+                        });
+            }
+            if (interval < 132 && interval >= 128 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            if (interval % 4 == 0) {
+                                return x % 2 == 0;
+                            }
+                            else {
+                                return z % 2 == 0;
+                            }
+                        });
+            }
+            if (interval >= 132 && interval % 2 == 0) {
+                patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                        (x, z) -> {
+                            if (interval % 4 == 0) {
+                                return Math.abs((x + z) % 2) == 0;
+                            }
+                            else {
+                                return Math.abs((x + z) % 2) == 1;
+                            }
+                        });
+            }
+        }
+    }
+
+    private static void bars(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena, int xRadius, int zRadius, int arenaRadius, int interval, int height, int width, int offset) {
+        patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, false,
+                (x, z) -> {
+                    int barTop = arenaRadius - ((interval + offset) * height);
+                    int barBottom = (arenaRadius - height) - ((interval + offset) * height);
+
+                    if (Math.abs(x) <= barTop && Math.abs(x) > barBottom) {
+                        if (interval % 2 == 0) {
+                            if (z < 0) {
+                                return z % (width * 2) >= -width;
+                            }
+                            else {
+                                return z % (width * 2) >= width;
+                            }
+                        }
+                        else {
+                            if (z < 0) {
+                                return z % (width * 2) < -width;
+                            }
+                            else {
+                                return z % (width * 2) < width;
+                            }
+                        }
+                    }
+                    return false;
+                });
+    }
+
+    private static void ring(ServerLevel serverLevel, EssenceBlockEntity essenceBlockEntity, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena, int xRadius, int zRadius, int arenaRadiusSq, int intervalOffset, int delay, boolean addToExistingSpike) {
+        patternFunction(serverLevel, essenceBlockEntity, eventEntitiesInArena, xRadius, zRadius, addToExistingSpike,
+                (x, z) -> {
+                    int innerRadius = (arenaRadiusSq / 20) * (intervalOffset + delay) * (intervalOffset + delay);
+                    int outerRadius = (arenaRadiusSq / 20) * (intervalOffset + delay + 1) * (intervalOffset + delay + 1);
+
+                    if (intervalOffset % 2 == 0) {
+                        if (Math.abs(x) <= Math.sqrt(outerRadius) / 3) {
+                            return false;
+                        }
+                    }
+                    else {
+                        if (Math.abs(z) <= Math.sqrt(outerRadius) / 3) {
+                            return false;
+                        }
+                    }
+
+                    int currentRadiusSq = x * x + z * z;
+                    return currentRadiusSq >= innerRadius &&
+                            currentRadiusSq < outerRadius;
+                });
+    }
+
+    private static void patternFunction(ServerLevel serverLevel,
+                                        EssenceBlockEntity essenceBlockEntity,
+                                        List<EssenceBlockEntity.EventEntities> eventEntitiesInArena,
+                                        int xRadius,
+                                        int zRadius,
+                                        boolean addToExistingSpike,
+                                        BiPredicate<Integer, Integer> patternCondition
+    ) {
+        for (int x = -xRadius; x <= xRadius; x++) {
+            for (int z = -zRadius; z <= zRadius; z++) {
+                if (patternCondition.test(x, z)) {
+                    activateSpike(serverLevel, x, z, INTERVALS, INTERVALS, essenceBlockEntity, eventEntitiesInArena, addToExistingSpike);
+                }
             }
         }
     }
@@ -178,12 +467,15 @@ public class EssenceBlockPurple extends EssenceBlock {
                                         List<EssenceBlockEntity.EventEntities> eventEntitiesInArena,
                                         int xRadius,
                                         int zRadius,
+                                        int chargeTime,
+                                        int spikeTime,
+                                        boolean addToExistingSpike,
                                         BiPredicate<Integer, Integer> patternCondition
     ) {
         for (int x = -xRadius; x <= xRadius; x++) {
             for (int z = -zRadius; z <= zRadius; z++) {
                 if (patternCondition.test(x, z)) {
-                    activateSpike(serverLevel, x, z, 55, 45, essenceBlockEntity, eventEntitiesInArena);
+                    activateSpike(serverLevel, x, z, chargeTime, spikeTime, essenceBlockEntity, eventEntitiesInArena, addToExistingSpike);
                 }
             }
         }
@@ -195,7 +487,8 @@ public class EssenceBlockPurple extends EssenceBlock {
                                       int chargeTime,
                                       int spikeTime,
                                       EssenceBlockEntity essenceBlockEntity,
-                                      List<EssenceBlockEntity.EventEntities> eventEntitiesInArena
+                                      List<EssenceBlockEntity.EventEntities> eventEntitiesInArena,
+                                      boolean addToExistingSpike
     ) {
         BlockPos arenaSize = essenceBlockEntity.getArenaSize();
         int rowLength = arenaSize.getX() - 2;
@@ -210,13 +503,14 @@ public class EssenceBlockPurple extends EssenceBlock {
             EssenceBlockEntity.EventEntities eventEntities = eventEntitiesInArena.get(newX + (newZ * columnLength));
             Entity entity = serverLevel.getEntity(eventEntities.uuid());
             if (entity instanceof PurpleSpikeEntity purpleSpikeEntity) {
-                //if (!purpleSpikeEntity.hasSpike()) {
+                if (addToExistingSpike && !purpleSpikeEntity.hasSpikeCharge() && purpleSpikeEntity.hasSpike()) {
+                    purpleSpikeEntity.setSpikeChargeTimer(0);
+                    purpleSpikeEntity.setSpikeTimer(spikeTime + chargeTime);
+                }
+                else {
                     purpleSpikeEntity.setSpikeChargeTimer(chargeTime);
-                    purpleSpikeEntity.addSpikeTimer(spikeTime);
-//                }
-//                else {
-//                    purpleSpikeEntity.addSpikeTimer(spikeTime + chargeTime);
-//                }
+                    purpleSpikeEntity.setSpikeTimer(spikeTime);
+                }
             }
         }
     }

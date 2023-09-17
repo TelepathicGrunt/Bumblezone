@@ -33,7 +33,7 @@ public interface LuminescentWaxBase {
                             MobEffects.MOVEMENT_SPEED,
                             110,
                             0,
-                            false,
+                            true,
                             false,
                             true));
 
@@ -41,7 +41,7 @@ public interface LuminescentWaxBase {
                             MobEffects.DAMAGE_RESISTANCE,
                             110,
                             0,
-                            false,
+                            true,
                             false,
                             true));
 
@@ -49,7 +49,7 @@ public interface LuminescentWaxBase {
                             BzEffects.BEENERGIZED.get(),
                             110,
                             0,
-                            false,
+                            true,
                             false,
                             true));
                 }

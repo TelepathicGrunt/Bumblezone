@@ -1,14 +1,8 @@
-#TODO: create purple essence event
-
-#TODO: Add music for essence events (2 done. 5 to go) (Add music discs for them too)
-
 #TODO: Add more sanctum rooms. Do sanctum variants
 
 #TODO: Add new sempiternal sanctums to advancements
 
 #TODO: adjust backup essence block textures
-
-#TODO: crystalline flower keep same enchant selected?
 
 
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**

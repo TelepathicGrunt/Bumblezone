@@ -39,7 +39,7 @@ public interface AncientWaxBase {
                         MobEffects.MOVEMENT_SLOWDOWN,
                         95,
                         0,
-                        false,
+                        true,
                         false,
                         true));
 
@@ -47,7 +47,7 @@ public interface AncientWaxBase {
                         MobEffects.DIG_SLOWDOWN,
                         100,
                         2,
-                        false,
+                        true,
                         false,
                         true));
 
@@ -55,7 +55,7 @@ public interface AncientWaxBase {
                         MobEffects.WEAKNESS,
                         100,
                         2,
-                        false,
+                        true,
                         false,
                         true));
             }
