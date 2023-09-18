@@ -180,24 +180,30 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           }
-        },
-        {
-          "output_state": {
-            "Name": "the_bumblezone:filled_porous_honeycomb_block"
-          },
-          "input_predicate": {
-            "block": "the_bumblezone:porous_honeycomb_block",
-            "predicate_type": "minecraft:random_block_match",
-            "probability": 0.65
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          }
         }
       ]
     },
     {
       "processor_type": "the_bumblezone:waterlogging_fix_processor"
+    },
+    {
+      "processor_type": "minecraft:capped",
+      "limit": 5,
+      "delegate": {
+        "processor_type": "the_bumblezone:random_replace_with_properties_processor",
+        "probability": 1,
+        "input_block": "the_bumblezone:empty_honeycomb_brood_block",
+        "output_blocks": [
+          "the_bumblezone:honeycomb_brood_block"
+        ]
+      }
+    },
+    {
+      "processor_type": "minecraft:capped",
+      "limit": 5,
+      "delegate": {
+        "processor_type": "the_bumblezone:honeycomb_brood_randomize_processor"
+      }
     }
   ]
 }

@@ -182,16 +182,90 @@
           }
         },
         {
-          "output_state": {
-            "Name": "the_bumblezone:filled_porous_honeycomb_block"
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
+            "loot_table": "the_bumblezone:archaeology/sempiternal_sanctum_white_suspicious"
           },
           "input_predicate": {
-            "block": "the_bumblezone:porous_honeycomb_block",
+            "block": "minecraft:yellow_concrete",
             "predicate_type": "minecraft:random_block_match",
-            "probability": 0.65
+            "probability": 0.1
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "the_bumblezone:pile_of_pollen_suspicious",
+            "Properties": {
+              "dusted": "0"
+            }
+          }
+        },
+        {
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
+            "loot_table": "the_bumblezone:archaeology/sempiternal_sanctum_white_suspicious"
+          },
+          "input_predicate": {
+            "block": "the_bumblezone:pile_of_pollen",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.15
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "the_bumblezone:pile_of_pollen_suspicious",
+            "Properties": {
+              "dusted": "0"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:yellow_concrete",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.25
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "the_bumblezone:pile_of_pollen",
+            "Properties": {
+              "layers": "6"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:yellow_concrete",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.5
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "the_bumblezone:pile_of_pollen",
+            "Properties": {
+              "layers": "7"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "minecraft:yellow_concrete",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "the_bumblezone:pile_of_pollen",
+            "Properties": {
+              "layers": "8"
+            }
           }
         }
       ]

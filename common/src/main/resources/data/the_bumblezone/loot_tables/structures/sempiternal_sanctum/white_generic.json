@@ -101,7 +101,7 @@
         {
           "name": "minecraft:amethyst_shard",
           "type": "minecraft:item",
-          "weight": 75,
+          "weight": 90,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -115,7 +115,7 @@
         {
           "name": "minecraft:emerald",
           "type": "minecraft:item",
-          "weight": 70,
+          "weight": 65,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -130,7 +130,7 @@
         {
           "name": "minecraft:diamond",
           "type": "minecraft:item",
-          "weight": 60,
+          "weight": 55,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -140,16 +140,6 @@
               }
             }
           ],
-          "conditions": [
-            {
-              "condition": "the_bumblezone:essence_only_spawn"
-            }
-          ]
-        },
-        {
-          "name": "minecraft:netherite_scrap",
-          "type": "minecraft:item",
-          "weight": 35,
           "conditions": [
             {
               "condition": "the_bumblezone:essence_only_spawn"
@@ -170,6 +160,16 @@
               "function": "minecraft:enchant_with_levels",
               "levels": 30.0,
               "treasure": true
+            }
+          ]
+        },
+        {
+          "name": "minecraft:netherite_scrap",
+          "type": "minecraft:item",
+          "weight": 15,
+          "conditions": [
+            {
+              "condition": "the_bumblezone:essence_only_spawn"
             }
           ]
         },
