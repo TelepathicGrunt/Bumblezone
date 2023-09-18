@@ -219,6 +219,14 @@
     {
       "id": "mysticsbiomes:sweet_strawberry",
       "required": false
+    },
+    {
+      "id": "aether:blue_berry",
+      "required": false
+    },
+    {
+      "id": "deep_aether:goldenleaf_berries",
+      "required": false
     }
   ],
   "possible_rewards": [

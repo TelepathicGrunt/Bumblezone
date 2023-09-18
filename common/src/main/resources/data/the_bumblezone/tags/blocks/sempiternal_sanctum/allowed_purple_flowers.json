@@ -4,6 +4,10 @@
     "minecraft:allium",
     "minecraft:flowering_azalea",
     {
+      "id": "aether:purple_flower",
+      "required": false
+    },
+    {
       "id": "andycats_flowers:purple_iris",
       "required": false
     },

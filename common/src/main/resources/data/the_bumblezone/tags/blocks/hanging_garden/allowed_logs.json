@@ -40,6 +40,10 @@
       "required": false
     },
     {
+      "id": "deep_aether:roseroot_log",
+      "required": false
+    },
+    {
       "id": "ecologics:flowering_azalea_log",
       "required": false
     },

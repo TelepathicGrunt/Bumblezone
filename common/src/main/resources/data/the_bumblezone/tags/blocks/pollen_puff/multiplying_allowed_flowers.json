@@ -40,6 +40,26 @@
       "required": false
     },
     {
+      "id": "deep_aether:radiant_orchid",
+      "required": false
+    },
+    {
+      "id": "deep_aether:aerlavender",
+      "required": false
+    },
+    {
+      "id": "deep_aether:tall_aerlavender",
+      "required": false
+    },
+    {
+      "id": "deep_aether:enchanted_blossom",
+      "required": false
+    },
+    {
+      "id": "deep_aether:golden_blossom",
+      "required": false
+    },
+    {
       "id": "ecologics:azalea_flower",
       "required": false
     },

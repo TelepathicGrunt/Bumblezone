@@ -6,6 +6,10 @@
     "minecraft:oxeye_daisy",
     "minecraft:lily_of_the_valley",
     {
+      "id": "aether:white_flower",
+      "required": false
+    },
+    {
       "id": "andycats_flowers:white_cosmos",
       "required": false
     },
@@ -119,6 +123,10 @@
     },
     {
       "id": "colorfulazaleas:white_azalea_sapling",
+      "required": false
+    },
+    {
+      "id": "deep_aether:radiant_orchid",
       "required": false
     },
     {

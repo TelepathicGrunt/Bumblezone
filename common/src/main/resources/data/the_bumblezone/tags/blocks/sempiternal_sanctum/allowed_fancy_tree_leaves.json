@@ -56,6 +56,18 @@
       "required": false
     },
     {
+      "id": "deep_aether:flowering_roseroot_leaves",
+      "required": false
+    },
+    {
+      "id": "deep_aether:flowering_blue_roseroot_leaves",
+      "required": false
+    },
+    {
+      "id": "deep_aether:yagroot_leaves",
+      "required": false
+    },
+    {
       "id": "duneons:towerleavesflowers",
       "required": false
     },

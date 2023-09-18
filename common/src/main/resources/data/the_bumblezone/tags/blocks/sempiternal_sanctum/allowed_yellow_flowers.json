@@ -108,6 +108,14 @@
       "required": false
     },
     {
+      "id": "deep_aether:enchanted_blossom",
+      "required": false
+    },
+    {
+      "id": "deep_aether:golden_blossom",
+      "required": false
+    },
+    {
       "id": "earthmobsmod:buttercup",
       "required": false
     },
