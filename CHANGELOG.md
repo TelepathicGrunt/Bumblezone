@@ -369,3 +369,8 @@ Protection of the Hive will always remove Wrath of the Hive effect if you manage
 Renamed VIP Trader advancement to Crazy Trader to reduce confusion.
 
 Fixed Magic The Candling advancement to work with Splash and Lingering Potions as well.
+
+
+----------
+
+Special thanks to RenRen, CrispyTwig, and Tera for their work to help with this update!
