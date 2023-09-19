@@ -5,6 +5,8 @@
     "minecraft:shulker",
     "minecraft:vex",
     "the_bumblezone:bee_queen",
+    "the_bumblezone:sentry_watcher",
+    "the_bumblezone:purple_spike_entity",
     "the_bumblezone:cosmic_crystal_entity"
   ]
 }

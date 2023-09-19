@@ -73,6 +73,7 @@ public class LifeEssence extends AbilityEssenceItem {
             int radius = 16;
             healFriendlyNearby(stack, serverLevel, serverPlayer, radius);
             growNearbyPlants(stack, serverLevel, serverPlayer, radius);
+            cureEntityOfEffects(stack, serverPlayer, serverPlayer);
         }
     }
 
@@ -97,24 +98,29 @@ public class LifeEssence extends AbilityEssenceItem {
 
     private void healFriendlyEntity(ItemStack stack, ServerPlayer serverPlayer, Entity entity) {
         if (entity instanceof TamableAnimal tamableAnimal && tamableAnimal.isOwnedBy(serverPlayer)) {
+            healHealth(stack, serverPlayer, tamableAnimal);
             cureEntityOfEffects(stack, serverPlayer, tamableAnimal);
         }
         else if (entity instanceof LivingEntity livingEntity && entity.getTeam() != null && entity.getTeam().isAlliedTo(serverPlayer.getTeam())) {
+            healHealth(stack, serverPlayer, livingEntity);
             cureEntityOfEffects(stack, serverPlayer, livingEntity);
         }
     }
 
     private void cureEntityOfEffects(ItemStack stack, ServerPlayer serverPlayer, LivingEntity livingEntity) {
-        if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
-            livingEntity.heal(1);
-            spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
-            decrementAbilityUseRemaining(stack, serverPlayer, 1);
-        }
         for (MobEffectInstance effect : new ArrayList<>(livingEntity.getActiveEffects())) {
             if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.LIFE_CURE_EFFECTS, effect.getEffect())) {
                 livingEntity.removeEffect(effect.getEffect());
                 decrementAbilityUseRemaining(stack, serverPlayer, 1);
             }
+        }
+    }
+
+    private void healHealth(ItemStack stack, ServerPlayer serverPlayer, LivingEntity livingEntity) {
+        if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
+            livingEntity.heal(1);
+            spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
+            decrementAbilityUseRemaining(stack, serverPlayer, 1);
         }
     }
 

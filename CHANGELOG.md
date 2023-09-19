@@ -70,7 +70,7 @@ Added 2 new patterns for Carvable Wax! The new patterns are called Music and Gra
 ##### Items:
 Essence of Life - The reward for beating the Green Sempiternal Sanctum structure! Holding this item in offhand will grow 
  crops and saplings nearby, heal mobs tamed by you, and heal other mobs or players on the same team as you! Also, will cure 
- Poison and Wither effect from the healed mobs. It has 1000 use before it is depleted and needs 10 minutes to recharge by 
+ Poison and Wither effect from the healed mobs and yourself. It has 1000 use before it is depleted and needs 10 minutes to recharge by 
  being in the inventory of a player that had consumed Essence of the Bees in the past. Add more effects to 
  `the_bumblezone:essence/life/cure_effects` mob effects tag for this item to be able to remove said tagged effects from allies/pets!
  Use the following two tags to control what plants can be grown or not with this item. Let me know if a modded plant is not able to be grown:
@@ -118,7 +118,7 @@ Essence of Knowing - The reward for beating the Purple Sempiternal Sanctum struc
 
 Essence of Calming - The reward for beating the Blue Sempiternal Sanctum structure! Holding this item in offhand will make mobs
  nearby no longer get angry at you! (Let me know if a modded mob still attacks you while this essence is active) The effect is lost
- early  gets hurt by any mob or attacks any mob. If the player sprints while it is active, the item loses power crazy quickly! No rushing! 
+ early if player gets hurt by any mob or attacks any mob. If the player sprints while it is active, the item loses power crazy quickly! No rushing! 
  It has 600 use (seconds) before it is depleted and needs 10 minutes to recharge by being in the inventory of a player that had consumed Essence of the Bees in the past.
  The entity type tag `the_bumblezone:essence/calming/allow_anger_through` can be used to mark entities that should keep staying angry 
  at players with this calming effect active. Note, due to implementation, this tag may not always work but let me know if it fails so
@@ -126,7 +126,7 @@ Essence of Calming - The reward for beating the Blue Sempiternal Sanctum structu
 
 Essence of Raging - The reward for beating the Red Sempiternal Sanctum structure! Holding this item in offhand will highlight
  4 nearby hostile mobs in red. Killing them will grant you Strength status effect and it will highlight more hostile mobs nearby 
- (never more than 4 at a time) Each highlighted kill makes Strength effect stronger and maxes out at strength 16 after killing 7 highlighted mobs!
+ (never more than 4 at a time) Each highlighted kill makes Strength effect stronger and maxes out at Strength 16 after killing 7 highlighted mobs!
  Making this a powerful boss destroyer weapon! The Strength only lasts 15 seconds between kills. If time runs out or you kill a non-highlighted mob,
  the item goes into 10 second cooldown. Making any kill after maxed Strength will also set the item onto 10 second cooldown. 
  It has 28 use (highlighted kills) before it is depleted and needs 30 minutes to recharge by being in the inventory of a player 
@@ -206,6 +206,25 @@ Added a new non-living entity called Sentry Watcher that lives in Sempiternal Sa
  The watcher will not charge at their owner as well. If spawned from a Dispenser, anyone can double right click remove the entity. 
  These spawn eggs cannot be set into a Spawner unless the player is in Creative Mode.
 
+Rootmins are now added! A mob that disguises itself as a Grass Block with a flower on top that is often found in Floral Meadow biome or in certain structures. 
+ It will come out of hiding to shoot a Dirt Pellet at any player or spiders nearby. If player has at least 1 bee armor or trinket/curios on, 
+ the Rootmin will not attack and instead, might walk up to the player while being curious. Players can right-click this mob with another flower 
+ to swap the flower on its head or give it a name tag! Flowers that Rootmins naturally spawn with and what flower they can receive are controlled by these block tags:
+
+ `the_bumblezone:rootmin/default_flowers`
+
+ `the_bumblezone:rootmin/allowed_flower`
+
+ `the_bumblezone:rootmin/forced_disallowed_flower`
+
+ Rootmins are fearful of Iron Golems, Blazes, Wither, and Warden to the point they will try to run away if too close! Rootmin targeting can be controlled by these entity tags:
+
+ `the_bumblezone:rootmin/forced_do_not_target`
+
+ `the_bumblezone:rootmin/panic_avoid`
+
+ `the_bumblezone:rootmin/targets`
+
 Added Snow Block to Clay Block and its opposite to Bee Queen Trades. 
 
 ##### Advancements:
@@ -237,11 +256,6 @@ Better Advancements is now a recommended optional mod to use with Bumblezone so 
 
 Added tag translations for Bumblezone item tags so that EMI mod can display them.
 
-(Forge): Added compat with Feywild so their Ents spawn their saplings if hit with Pollen Puff,
- enderpearls at top half of Autumn Ent will teleport to Bumblezone,
- String Curtains blocks their small Pixies,
- and Feywild's Honeycomb and cookie can be fed to bees or given to Bee Queen.
-
 (Forge): Added compat with Trails and Tails Plus mod so Pollen Puff hitting their Skeleton Sniffer spawns Moss Carpet!
 
 (Forge): Added compat with Forbidden Arcanus so their Bee Bucket can be used to revive Empty Honeycomb Brood Blocks.
@@ -269,9 +283,13 @@ Axes are now the efficient tools for breaking Beehive Beeswax blocks.
 
 Several Bumblezone's full solid blocks has instruments set for Note Blocks to play when under Note Blocks.
 
+Fixed bug where Crystalline Flower drop loses their xp progress when in item form.
+
 Crystalline Flower can be broken by pistons now and drop itself.
 
 Crystalline Flower now takes slightly more than 100 XP to get to tier 2 so consuming enchanted books cannot be infinitely recycled for infinite Honey Crystal Shards.
+
+Crystalline Flower now will hold items in its consume slot and to-enchant slot even when exiting the UI. These items will drop when flower breaks.
 
 Crystalline Flower now tries to keep the last used enchantment still selected when possible while UI is open.
 
@@ -280,10 +298,6 @@ Glistering Honey Crystal should not suffocate mobs inside itself, and it blocks 
 Any Super Candle can be crafted to another color with 2 dyes now!
 
 Any String Curtain can be crafted to another color with 1 dye now!
-
-Crystalline Flower now will hold items in its consume slot and to-enchant slot even when exiting the UI. These items will drop when flower breaks.
-
-Fixed bug where Crystalline Flower drop loses their xp progress when in item form.
 
 Honeycomb Brood Block feeding now can grant you Protection of the Hive even when you have Wrath of the Hive.
 

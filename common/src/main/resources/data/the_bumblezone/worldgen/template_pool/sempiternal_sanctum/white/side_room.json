@@ -128,16 +128,7 @@
       }
     },
     {
-      "weight": 1,
-      "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_16",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_16",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 15,
+      "weight": 14,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/fountain",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
@@ -146,7 +137,7 @@
       }
     },
     {
-      "weight": 15,
+      "weight": 14,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/observer",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
@@ -155,7 +146,7 @@
       }
     },
     {
-      "weight": 15,
+      "weight": 14,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/painting_tnt",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
@@ -164,7 +155,7 @@
       }
     },
     {
-      "weight": 15,
+      "weight": 14,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/pollen",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_pollen",
@@ -173,7 +164,7 @@
       }
     },
     {
-      "weight": 15,
+      "weight": 14,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/rootmin_statue",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
@@ -182,7 +173,7 @@
       }
     },
     {
-      "weight": 15,
+      "weight": 14,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/wind_trap",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
@@ -191,7 +182,7 @@
       }
     },
     {
-      "weight": 15,
+      "weight": 14,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/windy",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
