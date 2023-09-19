@@ -32,7 +32,7 @@
           "weight": 5
         },
         {
-          "name": "the_bumblezone:banner_pattern_arrows",
+          "name": "the_bumblezone:banner_pattern_sun",
           "type": "minecraft:item",
           "weight": 5
         },
@@ -67,12 +67,12 @@
           "weight": 3
         },
         {
-          "name": "the_bumblezone:super_candle_white",
+          "name": "the_bumblezone:super_candle_yellow",
           "type": "minecraft:item",
           "weight": 3
         },
         {
-          "name": "minecraft:white_candle",
+          "name": "minecraft:yellow_candle",
           "type": "minecraft:item",
           "weight": 3
         },

@@ -70,7 +70,7 @@
         {
           "block_entity_modifier": {
             "type": "minecraft:append_loot",
-            "loot_table": "the_bumblezone:structures/sempiternal_sanctum/white_generic"
+            "loot_table": "the_bumblezone:structures/sempiternal_sanctum/blue_generic"
           },
           "output_state": {
             "Name": "the_bumblezone:honey_cocoon"

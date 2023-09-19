@@ -6,7 +6,7 @@
         {
           "block_entity_modifier": {
             "type": "minecraft:append_loot",
-            "loot_table": "the_bumblezone:archaeology/sempiternal_sanctum_white_suspicious"
+            "loot_table": "the_bumblezone:archaeology/sempiternal_sanctum_green_suspicious"
           },
           "input_predicate": {
             "block": "minecraft:yellow_concrete",
@@ -26,7 +26,7 @@
         {
           "block_entity_modifier": {
             "type": "minecraft:append_loot",
-            "loot_table": "the_bumblezone:archaeology/sempiternal_sanctum_white_suspicious"
+            "loot_table": "the_bumblezone:archaeology/sempiternal_sanctum_green_suspicious"
           },
           "input_predicate": {
             "block": "the_bumblezone:pile_of_pollen",
