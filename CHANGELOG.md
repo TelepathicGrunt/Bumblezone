@@ -10,6 +10,9 @@ Fixed NoAI Bee Queen still holding wanted item.
 ##### Blocks:
 Added new backup textures for Essence Blocks! Textures by CrispyTwig. These textures show up when using shaders because shaders disables the normal renderer the blocks have.
 
+##### Mod Compat:
+Removed bad text shadow in Bumblezone screens in recipe viewers.
+
 
 ### **(V.7.0.0 Changes) (1.20.1 Minecraft)**
 

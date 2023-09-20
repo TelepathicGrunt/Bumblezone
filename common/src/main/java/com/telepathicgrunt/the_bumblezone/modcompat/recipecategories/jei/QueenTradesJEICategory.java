@@ -64,7 +64,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
 
     @Override
     public void draw(JEIQueenTradesInfo recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward.xpReward), 100, 11, 0xFF808080);
+        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", recipe.reward.xpReward), 100, 11, 0xFF808080, false);
 
         double percentValue = ((double)(recipe.reward.weight) / recipe.reward.getTotalWeight()) * 100D;
         if (recipe.reward.tagKey.isPresent() && recipe.outputFocused) {
@@ -72,7 +72,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
         }
 
         String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
-        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
+        guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080, false);
 
         if (recipe.input.tagKey().isPresent()) {
             tagIcon.draw(guiGraphics, 11, 11);
