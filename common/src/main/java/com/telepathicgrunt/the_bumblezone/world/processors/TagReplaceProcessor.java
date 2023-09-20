@@ -81,6 +81,7 @@ public class TagReplaceProcessor extends StructureProcessor {
                 else {
                     randomSource = settings.getRandom(structureBlockInfoWorld.pos());
                 }
+                randomSource.nextBoolean(); // In curtain situations, we need to run randomsource once to get truly random values afterwards.
 
                 List<Block> blockList = GeneralUtils.getListOfNonDummyBlocks(optionalBlocks)
                         .stream()

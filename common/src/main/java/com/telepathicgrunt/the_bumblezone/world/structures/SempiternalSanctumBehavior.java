@@ -87,7 +87,7 @@ public class SempiternalSanctumBehavior {
                     }
                 }
 
-                BzCriterias.SEMPITERNAL_SANCTUM_ENTER_WTH_BEE_ESSENCE_TRIGGER.trigger(serverPlayer);
+                BzCriterias.SEMPITERNAL_SANCTUM_ENTER_WITH_BEE_ESSENCE_TRIGGER.trigger(serverPlayer);
             }
             else if(!serverPlayer.isCreative() && !serverPlayer.isSpectator()) {
                 MobEffectInstance effect = serverPlayer.getEffect(MobEffects.DIG_SLOWDOWN);

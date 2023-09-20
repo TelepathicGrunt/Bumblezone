@@ -19,14 +19,14 @@
     "experience": 100
   },
   "criteria": {
-    "sempiternal_sanctum_enter_wth_bee_essence": {
-      "trigger": "the_bumblezone:sempiternal_sanctum_enter_wth_bee_essence",
+    "sempiternal_sanctum_enter_with_bee_essence": {
+      "trigger": "the_bumblezone:sempiternal_sanctum_enter_with_bee_essence",
       "conditions": {}
     }
   },
   "requirements": [
     [
-      "sempiternal_sanctum_enter_wth_bee_essence"
+      "sempiternal_sanctum_enter_with_bee_essence"
     ]
   ]
 }

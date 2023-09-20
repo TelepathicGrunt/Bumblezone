@@ -29,7 +29,7 @@
             "Name": "minecraft:air"
           },
           "input_predicate": {
-            "block": "minecraft:lily_of_the_valley",
+            "block": "minecraft:dandelion",
             "predicate_type": "minecraft:random_block_match",
             "probability": 0.55
           },
@@ -41,7 +41,7 @@
     },
     {
       "processor_type": "the_bumblezone:tag_replace_processor",
-      "input_block": "minecraft:lily_of_the_valley",
+      "input_block": "minecraft:dandelion",
       "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_yellow_flowers",
       "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_yellow_flowers",
       "double_tall_flower": false,
