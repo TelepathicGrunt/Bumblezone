@@ -1,0 +1,23 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/tiny_vent",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/tiny_vent_blocked",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

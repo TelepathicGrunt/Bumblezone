@@ -1,0 +1,50 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/mob/grass_none",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/body",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_azure_bluet",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_lily_of_the_valley",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_oxeye_daisy",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_white_tulip",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
