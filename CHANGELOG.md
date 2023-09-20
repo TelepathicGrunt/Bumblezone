@@ -1,3 +1,13 @@
+### **(V.7.0.1 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Added NoAI argument to Sentry Watcher so its behavior can be turned off when map building.
+
+Added missing lang for Sentry Watcher name.
+
+Fixed NoAI Bee Queen still holding wanted item.
+
+
 ### **(V.7.0.0 Changes) (1.20.1 Minecraft)**
 
 ##### Major:

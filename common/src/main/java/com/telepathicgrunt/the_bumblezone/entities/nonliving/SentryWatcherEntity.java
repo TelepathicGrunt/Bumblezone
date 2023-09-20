@@ -70,6 +70,7 @@ import java.util.UUID;
 public class SentryWatcherEntity extends Entity implements Enemy {
    private static final EntityDataAccessor<Boolean> DATA_ID_ACTIVATED = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
    private static final EntityDataAccessor<Boolean> DATA_ID_SHAKING = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
+   private static final EntityDataAccessor<Boolean> DATA_ID_NO_AI = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.BOOLEAN);
    private static final EntityDataAccessor<Direction> DATA_ID_TARGET_FACING = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.DIRECTION);
    private static final EntityDataAccessor<Optional<UUID>> DATA_ID_OWNER = SynchedEntityData.defineId(SentryWatcherEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
@@ -133,6 +134,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    protected void defineSynchedData() {
       this.entityData.define(DATA_ID_ACTIVATED, false);
       this.entityData.define(DATA_ID_SHAKING, false);
+      this.entityData.define(DATA_ID_NO_AI, false);
       this.entityData.define(DATA_ID_TARGET_FACING, this.getTargetFacing());
       this.entityData.define(DATA_ID_OWNER, Optional.empty());
    }
@@ -151,6 +153,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    protected void setHasShaking(boolean isShaking) {
       this.entityData.set(DATA_ID_SHAKING, isShaking);
+   }
+
+   public boolean hasNoAI() {
+      return this.entityData.get(DATA_ID_NO_AI);
+   }
+
+   protected void setNoAI(boolean noAI) {
+      this.entityData.set(DATA_ID_NO_AI, noAI);
    }
 
    public Direction getTargetFacingFromSync() {
@@ -179,32 +189,44 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    @Override
-   public void addAdditionalSaveData(CompoundTag compound) {
-      compound.putBoolean("explosionPrimed", explosionPrimed);
+   public void addAdditionalSaveData(CompoundTag compoundTag) {
+      compoundTag.putBoolean("explosionPrimed", explosionPrimed);
       if (this.activatedStart != null) {
-         compound.putDouble("activatedStartX", this.activatedStart.x());
-         compound.putDouble("activatedStartZ", this.activatedStart.z());
+         compoundTag.putDouble("activatedStartX", this.activatedStart.x());
+         compoundTag.putDouble("activatedStartZ", this.activatedStart.z());
       }
-      compound.putBoolean("activated", this.hasActivated());
-      compound.putBoolean("shaking", this.hasShaking());
-      compound.putInt("shakingTime", this.getShakingTime());
+      compoundTag.putBoolean("activated", this.hasActivated());
+      compoundTag.putBoolean("shaking", this.hasShaking());
+      compoundTag.putInt("shakingTime", this.getShakingTime());
 
       String targetFacingName = this.getTargetFacing().getName();
-      compound.putString("targetFacing", targetFacingName);
+      compoundTag.putString("targetFacing", targetFacingName);
+
+      if (compoundTag.contains("noAi")) {
+         compoundTag.putBoolean("noAi", this.hasNoAI());
+      }
+      else if (compoundTag.contains("noAI")) {
+         compoundTag.putBoolean("noAI", this.hasNoAI());
+      }
+      else {
+         compoundTag.putBoolean("NoAI", this.hasNoAI());
+      }
    }
 
    @Override
-   public void readAdditionalSaveData(CompoundTag compound) {
-      this.explosionPrimed = compound.getBoolean("explosionPrimed");
-      this.activatedStart = new Vec3(compound.getDouble("activatedStartX"), 0, compound.getDouble("activatedStartZ"));
-      this.setHasActivated(compound.getBoolean("activated"));
-      this.setHasShaking(compound.getBoolean("shaking"));
-      this.setShakingTime(compound.getInt("shakingTime"));
+   public void readAdditionalSaveData(CompoundTag compoundTag) {
+      this.explosionPrimed = compoundTag.getBoolean("explosionPrimed");
+      this.activatedStart = new Vec3(compoundTag.getDouble("activatedStartX"), 0, compoundTag.getDouble("activatedStartZ"));
+      this.setHasActivated(compoundTag.getBoolean("activated"));
+      this.setHasShaking(compoundTag.getBoolean("shaking"));
+      this.setShakingTime(compoundTag.getInt("shakingTime"));
       this.setHasShaking(this.getShakingTime() > 0);
 
-      String targetFacingName = compound.getString("targetFacing");
+      String targetFacingName = compoundTag.getString("targetFacing");
       Direction targetDirection = Direction.byName(targetFacingName);
       this.setTargetFacing(targetDirection);
+
+      this.setNoAI(compoundTag.getBoolean("NoAI") || compoundTag.getBoolean("noAI") || compoundTag.getBoolean("noAi"));
    }
 
    @Override
@@ -544,7 +566,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                }
             }
          }
-         else if (this.getShakingTime() <= 0) {
+         else if (!this.hasNoAI() && this.getShakingTime() <= 0) {
             Vec3 currentVelocity = this.getDeltaMovement();
             double newX = currentVelocity.x();
             double newY = currentVelocity.y();
@@ -563,14 +585,14 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.setDeltaMovement(newX, newY, newZ);
          }
       }
-      else if (this.tickCount % 10 == 0 && this.getYRot() == this.getTargetFacing().toYRot()) {
+      else if (!this.hasNoAI() && this.tickCount % 10 == 0 && this.getYRot() == this.getTargetFacing().toYRot()) {
          Vec3 offset = Vec3.atLowerCornerOf(Rotation.CLOCKWISE_90.rotate(this.getTargetFacing()).getNormal()).scale(0.5D);
          if (!scanAndBeginActivationIfEnemyFound(offset)) {
             scanAndBeginActivationIfEnemyFound(offset.scale(-1));
          }
       }
 
-      if (this.explosionPrimed && this.tickCount % 20 == 0 && this.level() instanceof ServerLevel serverLevel) {
+      if (!this.hasNoAI() && this.explosionPrimed && this.tickCount % 20 == 0 && this.level() instanceof ServerLevel serverLevel) {
          StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(this.blockPosition(), BzTags.SEMPITERNAL_SANCTUMS);
          if (structureStart == null || !structureStart.isValid()) {
             this.kill();
@@ -683,6 +705,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    public void aiStep() {
+      if (this.hasNoAI()) {
+         return;
+      }
+
       if (this.isControlledByLocalInstance()) {
          this.lerpSteps = 0;
          this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
@@ -751,7 +777,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    private void turnToTargetFacing() {
-      if (!this.hasActivated() && this.getYRot() != this.getTargetFacingFromSync().toYRot()) {
+      if (!this.hasNoAI() && !this.hasActivated() && this.getYRot() != this.getTargetFacingFromSync().toYRot()) {
          double targetY = this.getTargetFacing().toYRot();
          double currentY = this.getYRot();
          double diff = targetY - currentY;

@@ -400,7 +400,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             this.prevLookAngle = new Vec3(vectTag.getDouble("x"), vectTag.getDouble("y"), vectTag.getDouble("z"));
         }
 
-        this.noAI = compoundTag.getBoolean("noAI");
+        this.noAI = compoundTag.getBoolean("NoAI") || compoundTag.getBoolean("noAI") || compoundTag.getBoolean("noAi");
     }
 
     @Override
@@ -442,6 +442,9 @@ public class CosmicCrystalEntity extends LivingEntity {
         compoundTag.put("prevLookAngle", vectTag);
 
         if (compoundTag.contains("noAi")) {
+            compoundTag.putBoolean("noAi", this.noAI);
+        }
+        else if (compoundTag.contains("noAI")) {
             compoundTag.putBoolean("noAI", this.noAI);
         }
         else {

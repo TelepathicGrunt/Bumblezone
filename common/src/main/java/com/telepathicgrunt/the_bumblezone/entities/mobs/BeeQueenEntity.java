@@ -385,9 +385,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     performGroundTrades();
                 }
             }
-        }
 
-        performBonusTradeTick();
+            performBonusTradeTick();
+        }
     }
 
     private void performBonusTradeTick() {
