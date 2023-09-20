@@ -4,8 +4,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/stairwell",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/stairwell",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

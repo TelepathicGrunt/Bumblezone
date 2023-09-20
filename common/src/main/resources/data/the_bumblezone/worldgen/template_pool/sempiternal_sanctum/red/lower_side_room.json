@@ -4,8 +4,8 @@
     {
       "weight": 3,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/beehive",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_beehive",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/beehive",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms_beehive",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -13,8 +13,8 @@
     {
       "weight": 3,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/deepslate",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/deepslate",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -22,8 +22,8 @@
     {
       "weight": 3,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/emerald_pond",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/emerald_pond",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -31,8 +31,8 @@
     {
       "weight": 3,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/lava_catwalks",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/lava_catwalks",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -40,8 +40,8 @@
     {
       "weight": 3,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/petals",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/petals",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -49,8 +49,8 @@
     {
       "weight": 3,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/planets",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/planets",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -58,8 +58,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/wires_1",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/wires_1",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -67,8 +67,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/wires_2",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/wires_2",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -76,8 +76,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/lower_side_room/wires_3",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/red/lower_side_room/wires_3",
+        "processors": "the_bumblezone:sempiternal_sanctum/red/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

@@ -4,8 +4,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_2",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_2",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_2",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_2",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -13,8 +13,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_3",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_3",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_3",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_3",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -22,8 +22,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_4",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_4",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_4",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_4",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -31,8 +31,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_5",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_5",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_5",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_5",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -40,8 +40,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_6",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_6",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_6",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_6",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -49,8 +49,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_7",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_7",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_7",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_7",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -58,8 +58,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_8",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_8",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_8",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_8",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -67,8 +67,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_9",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_9",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_9",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_9",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -76,8 +76,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_10",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_10",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_10",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_10",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -85,8 +85,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_11",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_11",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_11",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_11",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -94,8 +94,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_12",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_12",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_12",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_12",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -103,8 +103,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_13",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_13",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_13",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_13",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -112,8 +112,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_14",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_14",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_14",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_14",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -121,8 +121,8 @@
     {
       "weight": 1,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/book_15",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_book_15",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/book_15",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms_book_15",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -130,8 +130,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/fans",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/fans",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -139,8 +139,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/fountain",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/fountain",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -148,8 +148,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/maze",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/maze",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -157,8 +157,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/observer",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/observer",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -166,8 +166,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/painting_tnt",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/painting_tnt",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -175,8 +175,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/pipes",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/pipes",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -184,8 +184,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/pollen",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/pollen",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -193,8 +193,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/rootmin_statue",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/rootmin_statue",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -202,8 +202,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/wind_trap",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/wind_trap",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
@@ -211,8 +211,8 @@
     {
       "weight": 14,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/windy",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "location": "the_bumblezone:sempiternal_sanctum/yellow/side_room/windy",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

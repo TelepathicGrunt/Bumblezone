@@ -4,43 +4,25 @@
     {
       "weight": 2,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/mob/grass_none",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/body",
+        "location": "the_bumblezone:sempiternal_sanctum/green/mob/grass_none",
+        "processors": "the_bumblezone:sempiternal_sanctum/green/body",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_azure_bluet",
+        "location": "the_bumblezone:sempiternal_sanctum/green/mob/rootmin_fern",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_lily_of_the_valley",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_oxeye_daisy",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "the_bumblezone:sempiternal_sanctum/white/mob/rootmin_white_tulip",
+        "location": "the_bumblezone:sempiternal_sanctum/green/mob/rootmin_grass",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
