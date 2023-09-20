@@ -1,10 +1,3 @@
-#TODO: Add more sanctum rooms. Do sanctum variants
-
-#TODO: Add new sempiternal sanctums to advancements
-
-#TODO: adjust backup essence block textures
-
-
 ### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
 
 ##### Major:
