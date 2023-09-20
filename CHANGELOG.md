@@ -1,4 +1,4 @@
-### **(V.7.0.0 Changes) (1.12.1 Minecraft)**
+### **(V.7.0.0 Changes) (1.20.1 Minecraft)**
 
 ##### Major:
 Updated to 1.20.1!
