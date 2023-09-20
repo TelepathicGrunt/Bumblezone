@@ -7,6 +7,9 @@ Added missing lang for Sentry Watcher name.
 
 Fixed NoAI Bee Queen still holding wanted item.
 
+##### Blocks:
+Added new backup textures for Essence Blocks! Textures by CrispyTwig. These textures show up when using shaders because shaders disables the normal renderer the blocks have.
+
 
 ### **(V.7.0.0 Changes) (1.20.1 Minecraft)**
 
@@ -390,4 +393,4 @@ Fixed Magic The Candling advancement to work with Splash and Lingering Potions a
 
 ----------
 
-Special thanks to RenRen, CrispyTwig, Tera, and joshieman for their work to help with this update!
+Special thanks to RenRen, Nary, CrispyTwig, Tera, and joshieman for their work to help with this update!
