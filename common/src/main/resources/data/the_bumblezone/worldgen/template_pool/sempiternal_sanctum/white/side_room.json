@@ -130,7 +130,25 @@
     {
       "weight": 14,
       "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/fans",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 14,
+      "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/fountain",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 14,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/maze",
         "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -157,8 +175,17 @@
     {
       "weight": 14,
       "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/white/side_room/pipes",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 14,
+      "element": {
         "location": "the_bumblezone:sempiternal_sanctum/white/side_room/pollen",
-        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms_pollen",
+        "processors": "the_bumblezone:sempiternal_sanctum/white/inside_side_rooms",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }

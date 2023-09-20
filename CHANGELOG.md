@@ -387,4 +387,4 @@ Fixed Magic The Candling advancement to work with Splash and Lingering Potions a
 
 ----------
 
-Special thanks to RenRen, CrispyTwig, and Tera for their work to help with this update!
+Special thanks to RenRen, CrispyTwig, Tera, and joshieman for their work to help with this update!
