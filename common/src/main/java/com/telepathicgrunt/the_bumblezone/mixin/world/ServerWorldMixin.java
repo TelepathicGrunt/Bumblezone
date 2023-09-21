@@ -9,6 +9,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
@@ -41,9 +42,10 @@ public abstract class ServerWorldMixin extends Level {
 			bumblezone$counter++;
 			if(bumblezone$counter % bumblezone$updateInterval == 0){
 				bumblezone$counter = 0;
-				GeneralUtils.updateEntityCount(((ServerLevel) (Object) this));
-				if(BzGeneralConfigs.specialBeeSpawning) {
-					BeeDedicatedSpawning.specialSpawnBees((ServerLevel) (Object) this);
+				ServerLevel serverLevel = (ServerLevel) (Object) this;
+				GeneralUtils.updateEntityCount(serverLevel);
+				if(BzGeneralConfigs.specialBeeSpawning && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
+					BeeDedicatedSpawning.specialSpawnBees(serverLevel);
 				}
 			}
 		}

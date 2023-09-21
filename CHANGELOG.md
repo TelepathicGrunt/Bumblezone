@@ -1,3 +1,15 @@
+### **(V.7.0.3 Changes) (1.20.1 Minecraft)**
+
+##### Dimension:
+Made bee spawning system in Bumblezone now respect the DoMobSpawning gamerule.
+
+##### Blocks:
+Made Honeycomb Brood Blocks now respect the DoMobSpawning gamerule.
+
+##### Entities:
+Made angry Bee Queen now respect the DoMobSpawning gamerule.
+
+
 ### **(V.7.0.2 Changes) (1.20.1 Minecraft)**
 
 ##### Mod Compat:

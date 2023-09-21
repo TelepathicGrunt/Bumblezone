@@ -39,6 +39,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -321,12 +322,15 @@ public class HoneycombBrood extends ProperFacingBlock {
         blockpos.move(state.getValue(FACING).getOpposite());
 
         BlockState frontState = world.getBlockState(blockpos);
-        if (stage == 3 && frontState.getFluidState().isEmpty() && !frontState.isCollisionShapeFullBlock(world, position)) {
+        if (stage == 3 && frontState.getFluidState().isEmpty() &&
+            !frontState.isCollisionShapeFullBlock(world, position) &&
+            world.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
+        {
             Mob beeMob = EntityType.BEE.create(world);
             beeMob.setBaby(true);
             spawnMob(world, blockpos, beeMob, beeMob);
 
-            if(random.nextFloat() < 0.1f) {
+            if (random.nextFloat() < 0.1f) {
                 Mob honeySlimeMob = BzEntities.HONEY_SLIME.get().create(world);
                 honeySlimeMob.setBaby(true);
                 spawnMob(world, blockpos, beeMob, honeySlimeMob);
@@ -337,7 +341,7 @@ public class HoneycombBrood extends ProperFacingBlock {
     }
 
     private static void spawnMob(Level world, BlockPos.MutableBlockPos blockpos, Mob beeMob, Mob entity) {
-        if(entity == null || world.isClientSide()) return;
+        if (entity == null || world.isClientSide()) return;
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), MobSpawnType.TRIGGERED, null, null);
 
