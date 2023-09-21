@@ -196,7 +196,7 @@ public class EssenceBlockYellow extends EssenceBlock {
     }
 
     private static void spawnNewEnemy(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
-        TagKey<EntityType<?>> enemyTagToUse = BzTags.ESSENCE_LIFE_ARENA_NORMAL_ENEMY;
+        TagKey<EntityType<?>> enemyTagToUse = BzTags.ESSENCE_RADIANCE_ARENA_NORMAL_ENEMY;
 
         List<? extends EntityType<?>> entityTypeList = BuiltInRegistries.ENTITY_TYPE
                 .getTag(enemyTagToUse)

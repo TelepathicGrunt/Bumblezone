@@ -101,8 +101,8 @@ public class BzTags {
     public static final TagKey<Item> ITEM_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/item_special_dedicated_compat"));
     public static final TagKey<Item> HONEY_DRUNK_TRIGGER_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "queens_desire/honey_drunk_trigger_items"));
     public static final TagKey<Item> BZ_ARMOR_ABILITY_ENHANCING_WEARABLES = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_armors/bz_armor_ability_enhancing_wearables"));
-    public static final TagKey<Item> CALMING_DROWNED_BONUS_HELD_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/calming_drowned_bonus_held_item"));
-    public static final TagKey<Item> RADIANCE_CANNOT_REPAIR = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/radiance_cannot_repair"));
+    public static final TagKey<Item> CALMING_ARENA_DROWNED_BONUS_HELD_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/drowned_bonus_held_item"));
+    public static final TagKey<Item> RADIANCE_CANNOT_REPAIR = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/radiance/cannot_repair"));
     public static final TagKey<Item> ABILITY_ESSENCE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "ability_essence_items"));
     public static final TagKey<Item> WASHING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "washing_items"));
 
@@ -160,7 +160,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_LATE_NORMAL_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/late_normal_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_STRONG_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/strong_enemy"));
     public static final TagKey<EntityType<?>> ESSENCE_CALMING_ARENA_BOSS_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/boss_enemy"));
-    public static final TagKey<EntityType<?>> ESSENCE_LIFE_ARENA_NORMAL_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/life_arena/normal_enemy"));
+    public static final TagKey<EntityType<?>> ESSENCE_RADIANCE_ARENA_NORMAL_ENEMY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "essence/radiance_arena/normal_enemy"));
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
     public static final TagKey<Structure> NO_CAVES = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "no_caves"));

@@ -9,6 +9,13 @@ Made Honeycomb Brood Blocks now respect the DoMobSpawning gamerule.
 ##### Entities:
 Made angry Bee Queen now respect the DoMobSpawning gamerule.
 
+##### Arenas:
+Renamed `the_bumblezone:essence/life_arena/normal_enemy` to `the_bumblezone:essence/radiance_arena/normal_enemy` as that was a typo.
+
+Renamed `the_bumblezone:essence/radiance_cannot_repair` to `the_bumblezone:essence/radiance/cannot_repair` for consistency.
+
+Renamed `the_bumblezone:essence/calming_drowned_bonus_held_item` to `the_bumblezone:essence/calming_arena/drowned_bonus_held_item` for consistency.
+
 
 ### **(V.7.0.2 Changes) (1.20.1 Minecraft)**
 

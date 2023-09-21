@@ -255,7 +255,7 @@ public class EssenceBlockBlue extends EssenceBlock {
             }
             else if (entity instanceof Mob mob) {
                 List<Item> itemList = BuiltInRegistries.ITEM
-                        .getTag(BzTags.CALMING_DROWNED_BONUS_HELD_ITEM)
+                        .getTag(BzTags.CALMING_ARENA_DROWNED_BONUS_HELD_ITEM)
                         .map(holders -> holders
                                 .stream()
                                 .map(Holder::value)
