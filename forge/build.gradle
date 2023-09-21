@@ -71,7 +71,7 @@ dependencies {
     //modRuntimeOnly("dev.architectury:architectury-forge:${project.architectury}")
     //modRuntimeOnly("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
     //modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
-    modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
+    // modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
     // modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4555169")
