@@ -38,6 +38,11 @@ public class HoneyBeeLeggings extends BeeArmor {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
+    // Runs on Forge
+    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
+        this.bz$onArmorTick(itemstack, world, player);
+    }
+
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         if (player.isSpectator()) {

@@ -152,4 +152,10 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
 
         return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
     }
+
+    // Runs on Forge
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return this.bz$canApplyAtEnchantingTable(stack, enchantment)
+                .orElseGet(() -> enchantment.category.canEnchant(stack.getItem()));
+    }
 }

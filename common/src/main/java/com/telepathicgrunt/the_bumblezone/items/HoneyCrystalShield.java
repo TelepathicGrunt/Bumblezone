@@ -26,6 +26,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -49,6 +50,12 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
     @Override
     public EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
         return EquipmentSlot.OFFHAND;
+    }
+
+    // Called on Forge
+    @Nullable
+    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
+        return this.bz$getEquipmentSlot(stack);
     }
 
     /**
@@ -77,6 +84,11 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
             }
         }
         return stack.getItem().getMaxDamage();
+    }
+
+    // Runs on Forge
+    public int getMaxDamage(ItemStack stack) {
+        return this.bz$getMaxDamage(stack);
     }
 
     private void upgradeLegacyShield(ItemStack stack) {
@@ -117,6 +129,11 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         stack.getOrCreateTag().putInt("Damage", Math.max(0, newDamage));
     }
 
+    // Runs on Forge
+    public void setDamage(ItemStack stack, int damage) {
+        this.bz$setDamage(stack, damage);
+    }
+
     /**
      * blacklisted mending enchantment
      */
@@ -127,6 +144,12 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         }
 
         return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
+    }
+
+    // Runs on Forge
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return this.bz$canApplyAtEnchantingTable(stack, enchantment)
+                .orElseGet(() -> enchantment.category.canEnchant(stack.getItem()));
     }
 
     @Override

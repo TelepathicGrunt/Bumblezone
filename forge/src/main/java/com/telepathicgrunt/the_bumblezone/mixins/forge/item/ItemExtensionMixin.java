@@ -17,50 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
 public interface ItemExtensionMixin extends IForgeItem {
 
     @Shadow
-    int bz$getMaxDamage(ItemStack stack);
-
-    @Shadow
-    void bz$setDamage(ItemStack stack, int damage);
-
-    @Shadow
-    OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment);
-
-    @Shadow
-    EquipmentSlot bz$getEquipmentSlot(ItemStack stack);
-
-    @Shadow
     boolean bz$canPerformAction(ItemStack stack, String toolAction);
-
-
-    @Shadow
-    void bz$onArmorTick(ItemStack itemstack, Level world, Player player);
-
-    @Override
-    default int getMaxDamage(ItemStack stack) {
-        return this.bz$getMaxDamage(stack);
-    }
-
-    @Override
-    default void setDamage(ItemStack stack, int damage) {
-        this.bz$setDamage(stack, damage);
-    }
-
-    @Override
-    default boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return this.bz$canApplyAtEnchantingTable(stack, enchantment)
-                .orElseGet(() -> IForgeItem.super.canApplyAtEnchantingTable(stack, enchantment));
-    }
-
-    @Override
-    @Nullable
-    default EquipmentSlot getEquipmentSlot(ItemStack stack) {
-        return this.bz$getEquipmentSlot(stack);
-    }
-
-    @Override
-    default void onArmorTick(ItemStack itemstack, Level world, Player player) {
-        this.bz$onArmorTick(itemstack, world, player);
-    }
 
     @Override
     default boolean canPerformAction(ItemStack stack, ToolAction toolAction) {

@@ -46,6 +46,11 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
     }
 
+    // Runs on Forge
+    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
+        this.bz$onArmorTick(itemstack, world, player);
+    }
+
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         RandomSource random = player.getRandom();
@@ -294,5 +299,11 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         }
 
         return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
+    }
+
+    // Runs on Forge
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return this.bz$canApplyAtEnchantingTable(stack, enchantment)
+                .orElseGet(() -> enchantment.category.canEnchant(stack.getItem()));
     }
 }

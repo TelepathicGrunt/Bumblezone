@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -221,6 +222,12 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
     @Override
     public EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {
         return EquipmentSlot.OFFHAND;
+    }
+
+    // Called on Forge
+    @Nullable
+    public EquipmentSlot getEquipmentSlot(ItemStack stack) {
+        return this.bz$getEquipmentSlot(stack);
     }
 
     @Override
