@@ -1,3 +1,9 @@
+### **(V.7.0.2 Changes) (1.20.1 Minecraft)**
+
+##### Mod Compat:
+(Fabric/Quilt): Fixed crash when Restricted Portals is not on. Forgot to check if mod is present before trying to use their code.
+
+
 ### **(V.7.0.1 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:

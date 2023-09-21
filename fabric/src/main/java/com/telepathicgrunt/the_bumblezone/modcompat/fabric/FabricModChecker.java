@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.TrinketsCompat;
 
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
@@ -23,9 +24,11 @@ public class FabricModChecker {
     public static void setupModCompat() {
         String modid = "";
         try {
-
             modid = "trinkets";
             loadupModCompat(modid, () -> new TrinketsCompat());
+
+            modid = "restrictedportals";
+            loadupModCompat(modid, () -> new RestrictedPortalsCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

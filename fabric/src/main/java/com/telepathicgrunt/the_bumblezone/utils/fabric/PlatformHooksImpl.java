@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.fabricmc.fabric.api.entity.FakePlayer;
@@ -218,8 +219,8 @@ public class PlatformHooksImpl {
     }
 
     public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
-        if (RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, dimension)) {
-            return false;
+        if (ModChecker.restrictedPortalsPresent) {
+            return !RestrictedPortalsCompat.isDimensionDisallowed(serverPlayer, dimension);
         }
 
         return true;
