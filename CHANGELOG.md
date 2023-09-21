@@ -1,3 +1,9 @@
+### **(V.7.0.4 Changes) (1.20.1 Minecraft)**
+
+##### Dimension:
+Made bee spawning system in Bumblezone now not remove noAi set bees.
+
+
 ### **(V.7.0.3 Changes) (1.20.1 Minecraft)**
 
 ##### Dimension:

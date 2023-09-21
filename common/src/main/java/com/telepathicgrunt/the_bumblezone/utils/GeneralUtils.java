@@ -98,7 +98,8 @@ public class GeneralUtils {
                 || bee.hasHive()
                 || bee.hasCustomName()
                 || bee.isLeashed()
-                || bee.isVehicle());
+                || bee.isVehicle()
+                || bee.isNoAi());
     }
 
     public static int getNearbyActiveEntitiesInDimension(ServerLevel level, BlockPos position) {
