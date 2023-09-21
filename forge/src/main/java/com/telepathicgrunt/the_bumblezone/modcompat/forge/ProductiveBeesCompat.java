@@ -41,7 +41,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.common.util.Lazy;
 
-import java.awt.*;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +54,9 @@ public class ProductiveBeesCompat implements ModCompat {
                 int primary = tag.getInt("primaryColor");
                 return BzModCompatibilityConfigs.allowedCombsForDungeons.contains(e.getKey()) &&
                         tag.getBoolean("createComb") &&
-                        (colorsAreClose(new Color(106, 127, 0), new Color(primary), 150) ||
-                        colorsAreClose(new Color(129, 198, 0), new Color(primary), 150) ||
-                        colorsAreClose(new Color(34, 45, 0), new Color(primary), 150));
+                        (colorsAreClose(GeneralUtils.colorToInt(106, 127, 0), primary, 150) ||
+                        colorsAreClose(GeneralUtils.colorToInt(129, 198, 0), primary, 150) ||
+                        colorsAreClose(GeneralUtils.colorToInt(34, 45, 0), primary, 150));
             }).map(Map.Entry::getKey).toList());
 
     private static final Lazy<List<String>> BEE_DUNGEON_HONEYCOMBS = Lazy.of(() ->
@@ -98,10 +97,10 @@ public class ProductiveBeesCompat implements ModCompat {
         return EnumSet.of(Type.SPAWNS, Type.COMBS, Type.BLOCK_TELEPORT, Type.COMB_ORE, Type.EMPTY_BROOD, Type.BEE_COLOR);
     }
 
-    private static boolean colorsAreClose(Color a, Color z, int threshold) {
-        int r = a.getRed() - z.getRed();
-        int g = a.getGreen() - z.getGreen();
-        int b = a.getBlue() - z.getBlue();
+    private static boolean colorsAreClose(int a, int z, int threshold) {
+        int r = GeneralUtils.getRed(a) - GeneralUtils.getRed(z);
+        int g = GeneralUtils.getGreen(a) - GeneralUtils.getGreen(z);
+        int b = GeneralUtils.getBlue(a) - GeneralUtils.getBlue(z);
         return (r * r + g * g + b * b) <= threshold * threshold;
     }
 

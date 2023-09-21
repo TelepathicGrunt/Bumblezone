@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.Model;
@@ -28,8 +29,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
-
-import java.awt.*;
 
 public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEntity, CosmicCrystalModel<CosmicCrystalEntity>> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
@@ -126,10 +125,9 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 else if (!mobEffect.isInstantenous() && !mobEffect.isBeneficial()) {
                     String namespace = BuiltInRegistries.MOB_EFFECT.getKey(mobEffect).getNamespace();
                     if (!namespace.equals("minecraft") && !namespace.equals(Bumblezone.MODID)) {
-                        Color color = new Color(mobEffect.getColor());
-                        red = (red + (color.getRed() / 255f)) / 2f;
-                        green = (green + (color.getGreen() / 255f)) / 2f;
-                        blue = (blue + (color.getBlue() / 255f)) / 2f;
+                        red = (red + (GeneralUtils.getRed(mobEffect.getColor()) / 255f)) / 2f;
+                        green = (green + (GeneralUtils.getGreen(mobEffect.getColor()) / 255f)) / 2f;
+                        blue = (blue + (GeneralUtils.getBlue(mobEffect.getColor()) / 255f)) / 2f;
                     }
                 }
             }

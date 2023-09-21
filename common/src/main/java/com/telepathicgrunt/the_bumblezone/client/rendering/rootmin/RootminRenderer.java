@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.client.BlockRenderDispatcherAccessor;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
@@ -33,8 +34,6 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-
-import java.awt.*;
 
 public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/rootmin.png");
@@ -131,8 +130,16 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             }
             else {
                 int biomeColor = rootminEntity.level().getBlockTint(rootminEntity.blockPosition(), BiomeColors.GRASS_COLOR_RESOLVER);
-                Color color = new Color(biomeColor);
-                ((Model) this.model).renderToBuffer(stack, vertexConsumer, packedLight, p, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, bl2 ? 0.15f : 1.0f);
+
+                ((Model) this.model).renderToBuffer(
+                        stack,
+                        vertexConsumer,
+                        packedLight,
+                        p,
+                        GeneralUtils.getRed(biomeColor) / 255f,
+                        GeneralUtils.getGreen(biomeColor) / 255f,
+                        GeneralUtils.getBlue(biomeColor) / 255f,
+                        bl2 ? 0.15f : 1.0f);
             }
         }
     }

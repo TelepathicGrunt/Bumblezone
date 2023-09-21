@@ -11,7 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -36,7 +36,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,22 +59,22 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     private static final ResourceLocation BEE_BABY_STINGER_ICON = new ResourceLocation(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_stinger.png");
     private static final ResourceLocation BEE_BABY_POLLEN_ICON = new ResourceLocation(Bumblezone.MODID, "textures/gui/buzzing_briefcase/bee_icon_baby_pollen.png");
 
-    private static final Color NORMAL_PRIMARY_COLOR = new Color(0xE59900);
-    private static final Color NORMAL_SECONDARY_COLOR = new Color(0x231100);
-    private static final Color[] IGNORE_COLORS = {
-            new Color(0x7CC9D1),
-            new Color(0x1E1E28),
-            new Color(0x302B37),
-            new Color(0xF7FDFD),
-            new Color(0xF1F2E0),
-            new Color(0x5F3225)
+    private static final int NORMAL_PRIMARY_COLOR = 0xE59900;
+    private static final int NORMAL_SECONDARY_COLOR = 0x231100;
+    private static final int[] IGNORE_COLORS = {
+            0x7CC9D1,
+            0x1E1E28,
+            0x302B37,
+            0xF7FDFD,
+            0xF1F2E0,
+            0x5F3225
     };
     private static final float SCALE = 1.25f;
     private static final int MENU_HEIGHT = (int) (174 * SCALE);
     private static final int MENU_WIDTH = (int) (306 * SCALE);
     private static final int MAX_ROW_LENGTH = 7;
 
-    private record BeeState(Bee beeEntity, Color primaryColor, Color secondaryColor){}
+    private record BeeState(Bee beeEntity, int primaryColor, int secondaryColor){}
     private final List<BeeState> BEE_INVENTORY = new ArrayList<>();
     private final Inventory inventory;
     private CompoundTag cachedBriefcaseTag;
@@ -164,8 +163,8 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     }
 
     private void addBeeWithColor(Bee bee) throws IOException {
-        Color primaryColor = NORMAL_PRIMARY_COLOR;
-        Color secondaryColor = NORMAL_SECONDARY_COLOR;
+        int primaryColor = NORMAL_PRIMARY_COLOR;
+        int secondaryColor = NORMAL_SECONDARY_COLOR;
 
         if (bee.getType() == EntityType.BEE) {
             BEE_INVENTORY.add(new BeeState(bee, primaryColor, secondaryColor));
@@ -176,7 +175,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             for (ModCompat compat : ModChecker.BEE_COLOR_COMPATS) {
                 Pair<Integer, Integer> moddedBeeColors = compat.getModdedBeePrimaryAndSecondaryColors(bee);
                 if (moddedBeeColors != null) {
-                    BEE_INVENTORY.add(new BeeState(bee, new Color(moddedBeeColors.getFirst()), new Color(moddedBeeColors.getSecond())));
+                    BEE_INVENTORY.add(new BeeState(bee, moddedBeeColors.getFirst(), moddedBeeColors.getSecond()));
                     return;
                 }
             }
@@ -194,30 +193,29 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     this.font));
             ResourceLocation textureLocation = entityRenderer.getTextureLocation(bee);
             int[] pixels = LegacyStuffWrapper.getPixels(minecraft.getResourceManager(), textureLocation);
-            List<Color> colors = new ObjectArrayList<>();
+            List<Integer> colors = new ObjectArrayList<>();
             for (int pixel : pixels) {
-                Color color = new Color(pixel, true);
-                if (color.getAlpha() > 0.15) {
+                if (GeneralUtils.getAlpha(pixel) > 0.15) {
                     boolean isColorSimilarToDisallowedColors = false;
-                    for (Color disallowedColor : IGNORE_COLORS) {
-                        if (GeneralUtilsClient.isSimilarInColor(color, disallowedColor, 1)) {
+                    for (int disallowedColor : IGNORE_COLORS) {
+                        if (GeneralUtils.isSimilarInColor(pixel, disallowedColor, 1)) {
                             isColorSimilarToDisallowedColors = true;
                             break;
                         }
                     }
 
                     if (!isColorSimilarToDisallowedColors) {
-                        colors.add(color);
+                        colors.add(pixel);
                     }
                 }
             }
 
-            List<Color> originalColors = new ObjectArrayList<>();
-            List<Color> averagedColors = new ObjectArrayList<>();
+            List<Integer> originalColors = new ObjectArrayList<>();
+            List<Integer> averagedColors = new ObjectArrayList<>();
             List<Integer> combinedColorCount = new ObjectArrayList<>();
 
             for (int i = colors.size() - 1; i >= 0; i--) {
-                Color color = colors.remove(i);
+                int color = colors.remove(i);
                 if (averagedColors.isEmpty()) {
                     originalColors.add(color);
                     averagedColors.add(color);
@@ -226,13 +224,13 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 else {
                     boolean combined = false;
                     for (int k = averagedColors.size() - 1; k >= 0; k--) {
-                        Color originalColor = originalColors.get(k);
-                        Color averagedColor = averagedColors.get(k);
-                        if (GeneralUtilsClient.isSimilarInVisualColor(color, originalColor, 35, 80)) {
-                            averagedColors.set(k, new Color(
-                                ((color.getRed() + averagedColor.getRed()) / 2),
-                                ((color.getGreen() + averagedColor.getGreen()) / 2),
-                                ((color.getBlue() + averagedColor.getBlue()) / 2)
+                        int originalColor = originalColors.get(k);
+                        int averagedColor = averagedColors.get(k);
+                        if (GeneralUtils.isSimilarInVisualColor(color, originalColor, 35, 80)) {
+                            averagedColors.set(k, GeneralUtils.colorToInt(
+                                ((GeneralUtils.getRed(color) + GeneralUtils.getRed(averagedColor)) / 2),
+                                ((GeneralUtils.getGreen(color) + GeneralUtils.getGreen(averagedColor)) / 2),
+                                ((GeneralUtils.getBlue(color) + GeneralUtils.getBlue(averagedColor)) / 2)
                             ));
                             combinedColorCount.set(k, combinedColorCount.get(k) + 1);
                             combined = true;
@@ -557,9 +555,9 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
         }
         else {
             guiGraphics.blit(isBaby ? BEE_BABY_BASE_ICON : BEE_BASE_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
-            guiGraphics.setColor(beeState.primaryColor().getRed() / 255f, beeState.primaryColor().getGreen() / 255f, beeState.primaryColor().getBlue() / 255f, 1F);
+            guiGraphics.setColor(GeneralUtils.getRed(beeState.primaryColor()) / 255f, GeneralUtils.getGreen(beeState.primaryColor()) / 255f, GeneralUtils.getBlue(beeState.primaryColor()) / 255f, 1F);
             guiGraphics.blit(isBaby ? BEE_BABY_PRIMARY_ICON : BEE_PRIMARY_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
-            guiGraphics.setColor(beeState.secondaryColor().getRed() / 255f, beeState.secondaryColor().getGreen() / 255f, beeState.secondaryColor().getBlue() / 255f, 1F);
+            guiGraphics.setColor(GeneralUtils.getRed(beeState.secondaryColor()) / 255f, GeneralUtils.getGreen(beeState.secondaryColor()) / 255f, GeneralUtils.getBlue(beeState.secondaryColor()) / 255f, 1F);
             guiGraphics.blit(isBaby ? BEE_BABY_SECONDARY_ICON : BEE_SECONDARY_ICON, mainX + 3, mainY + 3, 0, 0, 16, 16, 16, 16);
             guiGraphics.setColor(1F, 1F, 1F, 1F);
             if (!beeState.beeEntity().hasStung()) {

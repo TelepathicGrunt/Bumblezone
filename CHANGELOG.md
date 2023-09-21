@@ -1,5 +1,10 @@
 ### **(V.7.0.4 Changes) (1.20.1 Minecraft)**
 
+##### Misc:
+Fixed crash on Macs (java.awt bad)
+
+(Forge):Fixed crash with Sinytra
+
 ##### Dimension:
 Made bee spawning system in Bumblezone now not remove noAi set bees.
 

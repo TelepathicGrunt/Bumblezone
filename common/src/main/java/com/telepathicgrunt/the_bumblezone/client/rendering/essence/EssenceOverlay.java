@@ -4,14 +4,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
-
-import java.awt.*;
 
 public class EssenceOverlay {
     private static final ResourceLocation TEXTURE_OVERLAY_1 = new ResourceLocation(Bumblezone.MODID, "textures/misc/active_essence_overlay.png");
@@ -31,10 +30,9 @@ public class EssenceOverlay {
         RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
 
-        Color color = new Color(abilityEssenceItem.getColor());
-        float red = color.getRed() / 256f;
-        float green = color.getGreen() / 256f;
-        float blue = color.getBlue() / 256f;
+        float red = GeneralUtils.getRed(abilityEssenceItem.getColor()) / 256f;
+        float green = GeneralUtils.getGreen(abilityEssenceItem.getColor()) / 256f;
+        float blue = GeneralUtils.getBlue(abilityEssenceItem.getColor()) / 256f;
 
         int remainingUse = abilityEssenceItem.getAbilityUseRemaining(offhandItem);
         float percentageLeft = (float)remainingUse / abilityEssenceItem.getMaxAbilityUseAmount();

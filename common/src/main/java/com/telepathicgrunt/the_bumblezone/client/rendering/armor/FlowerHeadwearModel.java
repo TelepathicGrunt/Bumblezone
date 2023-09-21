@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.items.FlowerHeadwearColoring;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -18,8 +19,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-
-import java.awt.*;
 
 public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
 
@@ -49,16 +48,15 @@ public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
             if (stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet &&
                 flowerHeadwearHelmet.hasCustomColor(stack))
             {
-                Color customColor = new Color(flowerHeadwearHelmet.getColor(stack));
-                red = customColor.getRed() / 255f;
-                green = customColor.getGreen() / 255f;
-                blue = customColor.getBlue() / 255f;
+                int color = flowerHeadwearHelmet.getColor(stack);
+                red = GeneralUtils.getRed(color) / 255f;
+                green = GeneralUtils.getGreen(color) / 255f;
+                blue = GeneralUtils.getBlue(color) / 255f;
             }
             else {
-                Color defaultColor = new Color(FlowerHeadwearColoring.DEFAULT_COLOR);
-                red = defaultColor.getRed() / 255f;
-                green = defaultColor.getGreen() / 255f;
-                blue = defaultColor.getBlue() / 255f;
+                red = GeneralUtils.getRed(FlowerHeadwearColoring.DEFAULT_COLOR) / 255f;
+                green = GeneralUtils.getGreen(FlowerHeadwearColoring.DEFAULT_COLOR) / 255f;
+                blue = GeneralUtils.getBlue(FlowerHeadwearColoring.DEFAULT_COLOR) / 255f;
             }
 
             head.render(poseStack, buffer, light, overlay, red, green, blue, 1);

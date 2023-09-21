@@ -638,4 +638,99 @@ public class GeneralUtils {
             return Optional.empty();
         }
     }
+
+    /////////////////////////////////////////////////
+
+
+    public static boolean isSimilarInColor(int color1, int color2, int threshold) {
+        return (Math.abs(getRed(color1) - getRed(color2)) +
+                Math.abs(getGreen(color1) - getGreen(color2)) +
+                Math.abs(getBlue(color1) - getBlue(color2))) < threshold;
+    }
+
+    public static boolean isSimilarInVisualColor(int color1, int color2, int hueThreshold, int valueThreshold) {
+        double[] hue1 = ColorToHsv(color1);
+        double[] hue2 = ColorToHsv(color2);
+
+        double hueDiff = hue1[0] - hue2[0];
+        if (hueDiff > 180) {
+            hueDiff -= 360;
+        }
+        else if (hueDiff < -180) {
+            hueDiff += 360;
+        }
+        double hueDistance = Math.sqrt(hueDiff * hueDiff);
+
+        double valueDiff = Math.abs(hue1[2] - hue2[2]);
+
+        return hueDistance < hueThreshold && valueDiff < valueThreshold;
+    }
+
+    // Source: http://www.java2s.com/example/csharp/system.drawing/calculate-the-difference-in-hue-between-two-s.html
+    public static double[] ColorToHsv(int color) {
+        int r = getRed(color);
+        int g = getGreen(color);
+        int b = getBlue(color);
+
+        double h = 0, s, v;
+        double min = Math.min(Math.min(r, g), b);
+        v = Math.max(Math.max(r, g), b);
+        double delta = v - min;
+
+        if (v == 0.0) {
+            s = 0;
+        }
+        else {
+            s = delta / v;
+        }
+
+        if (s == 0) {
+            h = 0.0;
+        }
+        else {
+            if (r == v) {
+                h = (g - b) / delta;
+            }
+            else if (g == v) {
+                h = 2 + (b - r) / delta;
+            }
+            else if (b == v) {
+                h = 4 + (r - g) / delta;
+            }
+
+            h *= 60;
+            if (h < 0.0) {
+                h = h + 360;
+            }
+        }
+
+        var hsv = new double[3];
+        hsv[0] = h; // 0 to 360
+        hsv[1] = s * 360; // 0 to 360
+        hsv[2] = v; // 0 to 360
+        return hsv;
+    }
+
+    public static int getAlpha(int color) {
+        return (color >> 24) & 0xFF;
+    }
+
+    public static int getRed(int color) {
+        return (color >> 16) & 0xFF;
+    }
+
+    public static int getGreen(int color) {
+        return (color >> 8) & 0xFF;
+    }
+
+    public static int getBlue(int color) {
+        return color & 0xFF;
+    }
+
+    public static int colorToInt(int red, int green, int blue) {
+        return (red << 16) + (green << 8) + blue;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
 }
