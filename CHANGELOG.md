@@ -3,7 +3,7 @@
 ##### Misc:
 Fixed crash on Macs (java.awt bad)
 
-(Forge):Fixed crash with Sinytra
+(Forge): Fixed crash with Sinytra
 
 ##### Dimension:
 Made bee spawning system in Bumblezone now not remove noAi set bees.
