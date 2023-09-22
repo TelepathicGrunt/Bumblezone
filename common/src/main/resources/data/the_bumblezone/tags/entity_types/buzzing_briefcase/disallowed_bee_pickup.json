@@ -1,4 +1,13 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    {
+      "id": "#common:capturing_not_supported",
+      "required": false
+    },
+    {
+      "id": "#c:capturing_not_supported",
+      "required": false
+    }
+  ]
 }
