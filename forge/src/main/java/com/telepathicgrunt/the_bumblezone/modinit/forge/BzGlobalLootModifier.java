@@ -2,8 +2,8 @@ package com.telepathicgrunt.the_bumblezone.modinit.forge;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.loot.forge.DimensionFishingLootApplier;
 import com.telepathicgrunt.the_bumblezone.loot.forge.BeeStingerLootApplier;
+import com.telepathicgrunt.the_bumblezone.loot.forge.DimensionFishingLootApplier;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
