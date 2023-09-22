@@ -16,6 +16,9 @@ Fixed Life Essence item able to heal dying entities.
 ##### Blocks:
 Fixed Filled Porous Honeycomb Block, All Bumblezone Fluids, and honey item feed trying to heal bees that are already dead.
 
+##### Effects:
+Fixed Paralyzed effect causing player head to not turn in 3rd person view
+
 
 ### **(V.7.0.4 Changes) (1.20.1 Minecraft)**
 
