@@ -38,7 +38,9 @@ import net.minecraft.world.item.Items;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBriefcaseMenu> {
@@ -61,6 +63,8 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
 
     private static final int NORMAL_PRIMARY_COLOR = 0xE59900;
     private static final int NORMAL_SECONDARY_COLOR = 0x231100;
+    private static final int MISSING_PRIMARY_COLOR = 0x000000;
+    private static final int MISSING_SECONDARY_COLOR = 0xF200FF;
     private static final int[] IGNORE_COLORS = {
             0x7CC9D1,
             0x1E1E28,
@@ -114,8 +118,8 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                         try {
                             addBeeWithColor(bee);
                         }
-                        catch (IOException e) {
-                            BEE_INVENTORY.add(new BeeState(bee, NORMAL_PRIMARY_COLOR, NORMAL_SECONDARY_COLOR));
+                        catch (Exception e) {
+                            BEE_INVENTORY.add(new BeeState(bee, MISSING_PRIMARY_COLOR, MISSING_SECONDARY_COLOR));
                             Bumblezone.LOGGER.warn("Bumblezone Buzzing Briefcase Clientside: Error trying to dynamically get color for following bee -");
                             CompoundTag tag = new CompoundTag();
                             bee.saveWithoutId(tag);
@@ -192,8 +196,14 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     minecraft.getEntityModels(),
                     this.font));
             ResourceLocation textureLocation = entityRenderer.getTextureLocation(bee);
+
             int[] pixels = LegacyStuffWrapper.getPixels(minecraft.getResourceManager(), textureLocation);
+            if (pixels == null || pixels.length == 0) {
+                throw new RuntimeException("No pixels found for bee texture.");
+            }
+
             List<Integer> colors = new ObjectArrayList<>();
+            Map<Integer, Integer> deniedColors = new HashMap<>();
             for (int pixel : pixels) {
                 if (GeneralUtils.getAlpha(pixel) > 0.15) {
                     boolean isColorSimilarToDisallowedColors = false;
@@ -207,8 +217,20 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     if (!isColorSimilarToDisallowedColors) {
                         colors.add(pixel);
                     }
+                    else {
+                        deniedColors.put(pixel, deniedColors.getOrDefault(pixel, 0) + 1);
+                    }
                 }
             }
+
+            for (Map.Entry<Integer, Integer> entry : deniedColors.entrySet()) {
+                if (entry.getValue() >= 200) {
+                    for (int i = 0; i < entry.getValue(); i++) {
+                        colors.add(entry.getKey());
+                    }
+                }
+            }
+            deniedColors.clear();
 
             List<Integer> originalColors = new ObjectArrayList<>();
             List<Integer> averagedColors = new ObjectArrayList<>();

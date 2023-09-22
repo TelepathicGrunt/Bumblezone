@@ -85,7 +85,10 @@ public class BzGeneralConfig {
                         "aroace_bee",
                         "aromantic_bee",
                         "bisexual_bee",
-                        "pan_bee"), entry -> true);
+                        "pan_bee",
+                        "enby_bee",
+                        "reverse_bee",
+                        "neapolitan_bee"), entry -> true);
 
         builder.pop();
 
