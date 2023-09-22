@@ -1,3 +1,11 @@
+### **(V.7.0.5 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+(Forge): Added the missing variantBeeTypes config option so people can add or remove bee variants to spawn.
+
+Added `pan_bee` skin for Variant Bees! (If on Fabric/Quilt and already launched game with 1.20.1 Bumblezone, add `pan_bee` to variantBeeTypes config option to spawn this bee)
+
+
 ### **(V.7.0.4 Changes) (1.20.1 Minecraft)**
 
 ##### Misc:

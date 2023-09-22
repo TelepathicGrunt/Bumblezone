@@ -659,6 +659,7 @@
   "buzzing_briefcase.the_bumblezone.bee_typing.aroace_bee": "Aroace Bee",
   "buzzing_briefcase.the_bumblezone.bee_typing.aromantic_bee": "Aromantic Bee",
   "buzzing_briefcase.the_bumblezone.bee_typing.bisexual_bee": "Bisexual Bee",
+  "buzzing_briefcase.the_bumblezone.bee_typing.pan_bee": "Pan Bee",
 
   "command.the_bumblezone.invalid_data_arg": "The data argument is invalid. Please pick one of the suggestion's entries.",
   "command.the_bumblezone.invalid_entity_arg": "The entity argument is missing for this data request. Please pick an entity from the suggestion's entries.",

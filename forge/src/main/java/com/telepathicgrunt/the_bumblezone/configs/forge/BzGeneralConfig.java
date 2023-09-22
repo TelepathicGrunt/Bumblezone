@@ -3,9 +3,15 @@ package com.telepathicgrunt.the_bumblezone.configs.forge;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BzGeneralConfig {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
+    public static ForgeConfigSpec.ConfigValue<List<? extends String>> variantBeeTypes;
     public static ForgeConfigSpec.DoubleValue beehemothSpeed;
     public static ForgeConfigSpec.BooleanValue beehemothFriendlyFire;
     public static ForgeConfigSpec.BooleanValue specialBeeSpawning;
@@ -60,6 +66,29 @@ public class BzGeneralConfig {
     }
 
     private static void setupConfig(ForgeConfigSpec.Builder builder) {
+        builder.push("Variant Bee Options");
+
+        variantBeeTypes = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " What skin variations of Variant Bees can spawn! Add more bee textures to this folder" +
+                        " assets\\the_bumblezone\\textures\\entity\\bee_variants and define the bee in this config!\n")
+                .translation("the_bumblezone.config.variantbeetypes")
+                .defineList("variantBeeTypes", Arrays.asList(
+                        "redtail_bee",
+                        "green_bee",
+                        "blue_bee",
+                        "white_bee",
+                        "ukraine_bee",
+                        "trans_bee",
+                        "asexual_bee",
+                        "agender_bee",
+                        "aroace_bee",
+                        "aromantic_bee",
+                        "bisexual_bee",
+                        "pan_bee"), entry -> true);
+
+        builder.pop();
+
         builder.push("Beehemoth Options");
 
         beehemothSpeed = builder
@@ -403,6 +432,7 @@ public class BzGeneralConfig {
     }
 
     public static void copyToCommon() {
+        BzGeneralConfigs.variantBeeTypes = new ArrayList<>(variantBeeTypes.get());
         BzGeneralConfigs.beehemothSpeed = beehemothSpeed.get();
         BzGeneralConfigs.beehemothFriendlyFire = beehemothFriendlyFire.get();
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning.get();
