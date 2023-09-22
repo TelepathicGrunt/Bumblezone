@@ -67,7 +67,7 @@ public class BeeInteractivity {
 
     // heal bees with sugar water bottle or honey bottle
     public static InteractionResult beeFeeding(Level world, Player playerEntity, InteractionHand hand, Entity target) {
-        if (target instanceof Bee beeEntity) {
+        if (target instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
 
             ItemStack itemstack = playerEntity.getItemInHand(hand);
             ResourceLocation itemRL = BuiltInRegistries.ITEM.getKey(itemstack.getItem());

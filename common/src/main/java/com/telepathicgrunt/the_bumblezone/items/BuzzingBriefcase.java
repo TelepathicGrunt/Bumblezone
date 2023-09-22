@@ -93,7 +93,7 @@ public class BuzzingBriefcase extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack beeCannon, Player player, LivingEntity entity, InteractionHand playerHand) {
-        if (!(entity instanceof Bee bee) || bee.getType().is(BzTags.BUZZING_BRIEFCASE_DISALLOWED_BEE)) {
+        if (!(entity instanceof Bee bee) || bee.getType().is(BzTags.BUZZING_BRIEFCASE_DISALLOWED_BEE) || entity.isDeadOrDying()) {
             return InteractionResult.PASS;
         }
 

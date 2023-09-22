@@ -106,6 +106,7 @@ public class FilledPorousHoneycomb extends Block {
 
     public static void beeHoneyTake(BlockState state, Level level, BlockPos blockPos, Entity entity) {
         if(entity instanceof Bee beeEntity &&
+            !beeEntity.isDeadOrDying() &&
             beeEntity.getHealth() < beeEntity.getMaxHealth() &&
             state.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get()))
         {

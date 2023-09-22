@@ -148,7 +148,7 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
     @Override
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
-        if (entity instanceof Bee beeEntity) {
+        if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (PlatformHooks.isEyesInNoFluid(entity)) {
                 if (beeEntity.getHealth() < beeEntity.getMaxHealth()) {
                     float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();

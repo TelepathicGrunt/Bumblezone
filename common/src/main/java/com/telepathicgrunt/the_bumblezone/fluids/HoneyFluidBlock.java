@@ -150,7 +150,7 @@ public class HoneyFluidBlock extends BzLiquidBlock {
     @Override
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
         double verticalSpeedDeltaLimit = 0.01D;
-        if (entity instanceof Bee beeEntity) {
+        if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
             if (beeEntity.getHealth() < beeEntity.getMaxHealth() && PlatformHooks.isEyesInNoFluid(entity)) {
                 float diff = beeEntity.getMaxHealth() - beeEntity.getHealth();
                 beeEntity.heal(diff);

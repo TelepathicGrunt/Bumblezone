@@ -9,6 +9,13 @@ Added `pan_bee`, `enby_bee`, `reverse_bee`, `neapolitan_bee` skin for Variant Be
 ##### Items:
 Adjusted Buzzing Briefcase to use missing texture colors if crashed when trying to get a bee's color.
 
+Fixed Buzzing Briefcase able to pick up dying bees.
+
+Fixed Life Essence item able to heal dying entities.
+
+##### Blocks:
+Fixed Filled Porous Honeycomb Block, All Bumblezone Fluids, and honey item feed trying to heal bees that are already dead.
+
 
 ### **(V.7.0.4 Changes) (1.20.1 Minecraft)**
 
