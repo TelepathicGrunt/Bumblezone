@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentityrenderer.EssenceBlockEntityRenderer;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.armor.FlowerHeadwearModelProvider;
+import com.telepathicgrunt.the_bumblezone.client.blocks.ConnectedBlockModel;
 import com.telepathicgrunt.the_bumblezone.client.items.FlowerHeadwearColoring;
 import com.telepathicgrunt.the_bumblezone.client.items.HoneyCompassItemProperty;
 import com.telepathicgrunt.the_bumblezone.client.items.InfinityBarrierColoring;
@@ -86,6 +87,7 @@ import com.telepathicgrunt.the_bumblezone.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimensionSpecialEffects;
+import earth.terrarium.athena.api.client.models.FactoryManager;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
@@ -144,6 +146,7 @@ public class BumblezoneClient {
     });
 
     public static void init() {
+        FactoryManager.register(new ResourceLocation(Bumblezone.MODID, "connected"), ConnectedBlockModel.FACTORY);
         PlayerTickEvent.CLIENT_EVENT.addListener(MusicHandler::tickMusicFader);
 
         RegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);

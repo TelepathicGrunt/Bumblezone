@@ -12,6 +12,9 @@ dependencies {
 
     modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
 
+    modImplementation "earth.terrarium.athena:athena-common-${rootProject.athena}"
+    include "earth.terrarium.athena:athena-common-${rootProject.athena}"
+
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
 }
 
