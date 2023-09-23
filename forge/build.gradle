@@ -51,8 +51,7 @@ dependencies {
     modCompileOnly("curse.maven:quark-243121:${project.quark_file_id}")
     modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
 
-    modImplementation "earth.terrarium.athena:athena-forge-${rootProject.athena}"
-    include "earth.terrarium.athena:athena-forge-${rootProject.athena}"
+    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-forge-${rootProject.athena}")))
 
     // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
     // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
