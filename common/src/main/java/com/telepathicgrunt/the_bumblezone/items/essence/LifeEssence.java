@@ -117,7 +117,7 @@ public class LifeEssence extends AbilityEssenceItem {
     }
 
     private void healHealth(ItemStack stack, ServerPlayer serverPlayer, LivingEntity livingEntity) {
-        if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
+        if (livingEntity.getHealth() < livingEntity.getMaxHealth() && !livingEntity.isDeadOrDying()) {
             livingEntity.heal(1);
             spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
             decrementAbilityUseRemaining(stack, serverPlayer, 1);

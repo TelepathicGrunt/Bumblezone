@@ -3,7 +3,21 @@
 ##### Entities:
 (Forge): Added the missing variantBeeTypes config option so people can add or remove bee variants to spawn.
 
-Added `pan_bee` skin for Variant Bees! (If on Fabric/Quilt and already launched game with 1.20.1 Bumblezone, add `pan_bee` to variantBeeTypes config option to spawn this bee)
+Added `pan_bee`, `enby_bee`, `reverse_bee`, `neapolitan_bee` skin for Variant Bees!
+  (If on Fabric/Quilt and already launched game with 1.20.1 Bumblezone, add these bee types to variantBeeTypes config option to spawn these bee)
+
+##### Items:
+Adjusted Buzzing Briefcase to use missing texture colors if internally crashed when trying to get a bee's color.
+
+Fixed Buzzing Briefcase able to pick up dying bees.
+
+Fixed Life Essence item able to heal dying entities.
+
+##### Blocks:
+Fixed honey item feeding, Filled Porous Honeycomb Block, and all Bumblezone Fluids trying to heal bees that are already dead.
+
+##### Effects:
+Fixed Paralyzed effect causing player head to not turn in 3rd person view
 
 
 ### **(V.7.0.4 Changes) (1.20.1 Minecraft)**

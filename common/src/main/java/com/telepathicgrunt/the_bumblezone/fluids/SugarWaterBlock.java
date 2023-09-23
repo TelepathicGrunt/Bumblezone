@@ -93,8 +93,10 @@ public class SugarWaterBlock extends BzLiquidBlock {
     @Deprecated
     @Override
     public void entityInside(BlockState state, Level world, BlockPos position, Entity entity) {
-        if (entity instanceof Bee beeEntity) {
-            if (beeEntity.hurtMarked) beeEntity.heal(1);
+        if (entity instanceof Bee beeEntity && !beeEntity.isDeadOrDying()) {
+            if (beeEntity.hurtMarked) {
+                beeEntity.heal(1);
+            }
         }
 
         super.entityInside(state, world, position, entity);

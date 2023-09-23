@@ -16,7 +16,10 @@ public class BzGeneralConfigs {
             "aroace_bee",
             "aromantic_bee",
             "bisexual_bee",
-            "pan_bee");
+            "pan_bee",
+            "enby_bee",
+            "reverse_bee",
+            "neapolitan_bee");
     public static double beehemothSpeed = 0.35D;
     public static boolean beehemothFriendlyFire = true;
     public static boolean specialBeeSpawning = true;

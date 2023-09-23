@@ -215,7 +215,10 @@ public class BzConfig extends MidnightConfig {
             "aroace_bee",
             "aromantic_bee",
             "bisexual_bee",
-            "pan_bee");
+            "pan_bee",
+            "enby_bee",
+            "reverse_bee",
+            "neapolitan_bee");
 
 
     @Entry(min=0, max=100)

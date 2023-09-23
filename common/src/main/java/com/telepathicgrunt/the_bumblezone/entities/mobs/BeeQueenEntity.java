@@ -374,7 +374,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         if (!this.isNoAi()) {
-            if (!this.level().isClientSide() && this.level().getGameTime() % 200 == 0) {
+            if (!this.level().isClientSide() && this.level().getGameTime() % 200 == 0 && !this.isDeadOrDying()) {
                 this.heal(1);
             }
 
