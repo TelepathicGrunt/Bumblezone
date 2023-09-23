@@ -187,6 +187,7 @@ allprojects {
             url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
             content {
                 includeGroup 'com.telepathicgrunt'
+                includeGroup 'earth.terrarium.athena'
             }
         }
         maven {

@@ -1,22 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.fabricbase;
 
-import com.telepathicgrunt.the_bumblezone.client.bakemodel.ConnectedModelVariantProvider;
 import com.telepathicgrunt.the_bumblezone.client.fabric.FabricArmorRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.*;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.BiomeColorFluidRenderHandler;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.HoneyFluidRenderHandler;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -24,14 +10,8 @@ import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.DimensionRenderingRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
@@ -82,7 +62,6 @@ public class FabricClientBaseEventManager {
                         context -> context.register(name, vertexFormat, safeShaderConsumer))
                 )
         );
-        ModelLoadingRegistry.INSTANCE.registerVariantProvider(manager -> new ConnectedModelVariantProvider());
 
         RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
         ClientSetupEnqueuedEvent.EVENT.invoke(new ClientSetupEnqueuedEvent(Runnable::run));

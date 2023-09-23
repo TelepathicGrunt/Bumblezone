@@ -2,30 +2,11 @@ package com.telepathicgrunt.the_bumblezone.forge;
 
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
-import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedBlockModel;
-import com.telepathicgrunt.the_bumblezone.client.forge.ForgeConnectedModelLoader;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.RadianceEssenceArmorMessage;
-import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityRenderersEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemColorEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterItemPropertiesEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterParticleEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
+import com.telepathicgrunt.the_bumblezone.events.client.*;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -46,18 +27,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.client.event.RegisterShadersEvent;
-import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -84,9 +54,7 @@ public class BumblezoneForgeClient {
         forgeBus.addListener(BumblezoneForgeClient::onGuiRendering);
 
         modBus.addListener(BumblezoneForgeClient::onClientSetup);
-        modBus.addListener(BumblezoneForgeClient::onRegisterModelLoaders);
         modBus.addListener(BumblezoneForgeClient::onRegisterParticles);
-        modBus.addListener(ForgeConnectedBlockModel::onBakingCompleted);
         modBus.addListener(BumblezoneForgeClient::onRegisterShaders);
         modBus.addListener(BumblezoneForgeClient::onRegisterKeys);
         modBus.addListener(BumblezoneForgeClient::onRegisterItemColors);
@@ -171,10 +139,6 @@ public class BumblezoneForgeClient {
         };
         event.setCanceled(BlockRenderedOnScreenEvent.EVENT.invoke(new BlockRenderedOnScreenEvent(
                 event.getPlayer(), event.getPoseStack(), type, event.getBlockState(), event.getBlockPos())));
-    }
-
-    public static void onRegisterModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
-        event.register("connected_block", new ForgeConnectedModelLoader());
     }
 
     public static void onRegisterParticles(RegisterParticleProvidersEvent event) {
