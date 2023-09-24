@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -47,7 +46,7 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
-        if (this.level instanceof ClientLevel) {
+        if (this.level != null && this.level.isClientSide()) {
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
         }
 

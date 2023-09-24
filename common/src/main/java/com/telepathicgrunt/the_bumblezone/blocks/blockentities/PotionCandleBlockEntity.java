@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -138,7 +137,7 @@ public class PotionCandleBlockEntity extends BlockEntity {
         this.range = compoundTag.contains(RANGE_TAG) ? compoundTag.getInt(RANGE_TAG) : DEFAULT_RANGE;
         this.lingerTime = compoundTag.contains(LINGER_TIME_TAG) ? compoundTag.getInt(LINGER_TIME_TAG) : DEFAULT_LINGER_TIME;
 
-        if (this.level instanceof ClientLevel) {
+        if (this.level != null && this.level.isClientSide()) {
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
         }
     }

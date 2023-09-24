@@ -1,3 +1,9 @@
+### **(V.7.0.6 Changes) (1.20.1 Minecraft)**
+
+##### Blocks:
+Fixed server crash when placing Potion Candles, Essence Block Entity spawns, or Infinity Barrier Spawns
+
+
 ### **(V.7.0.5 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:
