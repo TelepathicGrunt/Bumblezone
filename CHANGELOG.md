@@ -16,6 +16,10 @@ Fixed Life Essence item able to heal dying entities.
 ##### Blocks:
 Fixed honey item feeding, Filled Porous Honeycomb Block, and all Bumblezone Fluids trying to heal bees that are already dead.
 
+(Fabric/Quilt): Fixed Empty Honeycomb Brood Block and Porous Honeycomb Block not rendering when ModernFix is on.
+ Bumblezone now ships Athena internally to have better connected texture support and implementation. 
+ Special thanks to TheGravyBoat for this!
+
 ##### Effects:
 Fixed Paralyzed effect causing player head to not turn in 3rd person view
 
