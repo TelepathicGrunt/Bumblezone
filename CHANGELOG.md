@@ -1,3 +1,9 @@
+### **(V.7.0.7 Changes) (1.20.1 Minecraft)**
+
+##### Effects:
+Fixed crash when a modded non-flying mob gets Beenergized effect that doesn't have the flying speed attribute.
+
+
 ### **(V.7.0.6 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:
