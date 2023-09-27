@@ -1,3 +1,11 @@
+### **(V.7.0.8 Changes) (1.20.1 Minecraft)**
+
+##### Misc:
+Adjusted shader code to fix a crash my shader had with Macs because of a Mac bug. 
+ See https://github.com/IrisShaders/Iris/issues/1082
+ The workaround I did was https://github.com/IrisShaders/Iris/issues/1889
+
+
 ### **(V.7.0.7 Changes) (1.20.1 Minecraft)**
 
 ##### Effects:
