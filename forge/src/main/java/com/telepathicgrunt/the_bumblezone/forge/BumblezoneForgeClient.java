@@ -32,6 +32,7 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -53,7 +54,7 @@ public class BumblezoneForgeClient {
         forgeBus.addListener(BumblezoneForgeClient::onScreenRendering);
         forgeBus.addListener(BumblezoneForgeClient::onBeforeBlockOutlineRendering);
         forgeBus.addListener(BumblezoneForgeClient::onGuiRendering);
-        forgeBus.addListener(DimensionFog::fogThicknessAdjustments);
+        forgeBus.addListener(EventPriority.LOWEST, true, DimensionFog::fogThicknessAdjustments);
 
         modBus.addListener(BumblezoneForgeClient::onClientSetup);
         modBus.addListener(BumblezoneForgeClient::onRegisterParticles);
