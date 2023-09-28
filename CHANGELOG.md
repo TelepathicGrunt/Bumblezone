@@ -1,3 +1,11 @@
+### **(V.7.0.9 Changes) (1.20.1 Minecraft)**
+
+##### Client:
+(Forge): Switched fog mixin into Forge event setup in a way to increase compat and fixed some issues with other mods.
+
+(Fabric/Quilt): Adjusted fog code internally that could've been causing issues under very rare circumstances.
+
+
 ### **(V.7.0.8 Changes) (1.20.1 Minecraft)**
 
 ##### Misc:

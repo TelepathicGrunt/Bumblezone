@@ -79,7 +79,6 @@
     "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
     "client.EntityRenderersAccessor",
-    "client.FogRendererMixin",
     "client.LevelRendererAccessor",
     "client.LivingEntityRendererMixin",
     "client.MinecraftMixin",

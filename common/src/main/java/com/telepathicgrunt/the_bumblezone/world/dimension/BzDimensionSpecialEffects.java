@@ -53,17 +53,17 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
                         ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
     }
 
-    public static void fogThicknessAdjustments(float fogEnd, FogRenderer.FogData fogData) {
+    public static void fogThicknessAdjustments(float renderDistance, FogRenderer.FogData fogData) {
         float distanceRationAdjuster = 1;
-        if (fogEnd > 352) {
-            distanceRationAdjuster = Math.min(fogEnd / 352, 1.25F);
+        if (renderDistance > 352) {
+            distanceRationAdjuster = Math.min(renderDistance / 352, 1.25F);
         }
-        else if (fogEnd < 126) {
-            distanceRationAdjuster = Math.max(fogEnd / 126, 0.75F);
+        else if (renderDistance < 126) {
+            distanceRationAdjuster = Math.max(renderDistance / 126, 0.75F);
         }
-        float fogStart = (float) (fogEnd / ((BzDimensionConfigs.fogThickness * distanceRationAdjuster * 0.3f) + 0.00001D));
-        fogData.start = fogEnd;
-        fogData.end = fogStart;
+        float fogStart = (float) (renderDistance / ((BzDimensionConfigs.fogThickness * distanceRationAdjuster * 0.3f) + 0.00001D));
+        fogData.start = Math.min(renderDistance, fogStart);
+        fogData.end = Math.max(renderDistance, fogStart);
         fogData.shape = FogShape.CYLINDER;
     }
 }

@@ -4,17 +4,23 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.world.dimension.BzDimensionSpecialEffects;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.FogType;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Optional;
 
@@ -52,6 +58,28 @@ public class FogRendererMixin {
                 properties.modifyFog(camera, fogMode, renderDistance, partialTicks, start, end, shape);
             }
         }
+    }
 
+    @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZF)V",
+            at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogStart(F)V", ordinal = 0),
+            require = 0, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private static void bumblezone$reduceFogThickness(Camera camera,
+                                                      FogRenderer.FogMode mode,
+                                                      float fogEnd,
+                                                      boolean thickFog,
+                                                      float p_,
+                                                      CallbackInfo ci,
+                                                      FogType fogType,
+                                                      Entity entity,
+                                                      FogRenderer.FogData fogData)
+    {
+        if (mode == FogRenderer.FogMode.FOG_TERRAIN &&
+                fogType == FogType.NONE &&
+                thickFog &&
+                GeneralUtilsClient.getClientPlayer() != null &&
+                GeneralUtilsClient.getClientPlayer().level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+        {
+            BzDimensionSpecialEffects.fogThicknessAdjustments(fogEnd, fogData);
+        }
     }
 }

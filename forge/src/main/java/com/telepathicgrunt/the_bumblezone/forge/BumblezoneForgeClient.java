@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.forge;
 
 import com.telepathicgrunt.the_bumblezone.client.BumblezoneClient;
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
+import com.telepathicgrunt.the_bumblezone.client.forge.DimensionFog;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.EssenceOverlay;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceLootBlockOutlining;
 import com.telepathicgrunt.the_bumblezone.client.rendering.essence.KnowingEssenceStructureMessage;
@@ -52,6 +53,7 @@ public class BumblezoneForgeClient {
         forgeBus.addListener(BumblezoneForgeClient::onScreenRendering);
         forgeBus.addListener(BumblezoneForgeClient::onBeforeBlockOutlineRendering);
         forgeBus.addListener(BumblezoneForgeClient::onGuiRendering);
+        forgeBus.addListener(DimensionFog::fogThicknessAdjustments);
 
         modBus.addListener(BumblezoneForgeClient::onClientSetup);
         modBus.addListener(BumblezoneForgeClient::onRegisterParticles);
