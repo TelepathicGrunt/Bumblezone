@@ -78,7 +78,7 @@ public class FogRendererMixin {
             require = 0, locals = LocalCapture.CAPTURE_FAILSOFT)
     private static void thebumblezone_reduceFogThickness(Camera camera,
                                                          FogRenderer.FogMode mode,
-                                                         float fogEnd,
+                                                         float renderDistance,
                                                          boolean thickFog,
                                                          float p_,
                                                          CallbackInfo ci,
@@ -92,7 +92,7 @@ public class FogRendererMixin {
             thickFog &&
             Minecraft.getInstance().player.getLevel().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
         {
-            BzSkyProperty.fogThicknessAdjustments(fogEnd, fogData);
+            BzSkyProperty.fogThicknessAdjustments(renderDistance, fogData);
         }
     }
 }

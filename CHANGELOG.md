@@ -1,3 +1,9 @@
+### **(V.6.7.35 Changes) (1.19.2 Minecraft)**
+
+##### Client:
+Adjusted fog code internally that could've been causing issues under very rare circumstances.
+
+
 ### **(V.6.7.34 Changes) (1.19.2 Minecraft)**
 
 ##### Effects:
