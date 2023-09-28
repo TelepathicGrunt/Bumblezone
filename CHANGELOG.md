@@ -1,5 +1,8 @@
 ### **(V.7.0.9 Changes) (1.20.1 Minecraft)**
 
+##### Entities:
+(Fabric/Quilt): Fixed check that prevented Bumblezone from spawning enough bees over time.
+
 ##### Client:
 (Forge): Switched fog mixin into Forge event setup in a way to increase compat and fixed some issues with other mods.
 

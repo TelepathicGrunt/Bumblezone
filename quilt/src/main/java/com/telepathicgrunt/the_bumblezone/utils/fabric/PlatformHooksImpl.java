@@ -110,7 +110,7 @@ public class PlatformHooksImpl {
     @Contract(pure = true)
     public static boolean isFakePlayer(ServerPlayer player) {
         //Crude way of doing it but it should work for almost all cases.
-        return player != null && player.getClass() == ServerPlayer.class;
+        return player != null && player.getClass() != ServerPlayer.class;
     }
 
     @Contract(pure = true)
