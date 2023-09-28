@@ -50,8 +50,10 @@ import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -81,6 +83,11 @@ public class BumblezoneClient {
         forgeBus.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         forgeBus.addListener(BeehemothControls::keyInput);
         forgeBus.addListener(BumblezoneClient::onScreenRendering);
+        forgeBus.addListener(EventPriority.LOWEST, true, BumblezoneClient::renderFog);
+    }
+
+    public static void renderFog(ViewportEvent.RenderFog event) {
+        BzSkyProperty.fogThicknessAdjustments(event);
     }
 
     public static void registerKeyBinding(RegisterKeyMappingsEvent event) {

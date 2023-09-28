@@ -1,11 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.world.dimension;
 
 import com.mojang.blaze3d.shaders.FogShape;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.ViewportEvent;
 
 public class BzSkyProperty extends DimensionSpecialEffects {
     public BzSkyProperty() {
@@ -51,17 +56,28 @@ public class BzSkyProperty extends DimensionSpecialEffects {
                         ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
     }
 
-    public static void fogThicknessAdjustments(float fogEnd, FogRenderer.FogData fogData) {
-        float distanceRationAdjuster = 1;
-        if (fogEnd > 352) {
-            distanceRationAdjuster = Math.min(fogEnd / 352, 1.25F);
+    public static void fogThicknessAdjustments(ViewportEvent.RenderFog event) {
+        if (event.getMode() == FogRenderer.FogMode.FOG_TERRAIN && event.getType() == FogType.NONE) {
+                Player player = Minecraft.getInstance().player;
+                if (player != null &&
+                    DimensionSpecialEffects.forType(player.getLevel().dimensionType()).isFoggyAt(player.getBlockX(), player.getBlockZ()) &&
+                    player.getLevel().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+                {
+                    float fogEnd = Minecraft.getInstance().gameRenderer.getRenderDistance();
+                    float distanceRationAdjuster = 1;
+                    if (event.getFarPlaneDistance() > 352) {
+                        distanceRationAdjuster = Math.min(fogEnd / 352, 1.25F);
+                    }
+                    else if (event.getFarPlaneDistance() < 126) {
+                        distanceRationAdjuster = Math.max(fogEnd / 126, 0.75F);
+                    }
+                    double modifier = ((BzDimensionConfigs.fogThickness.get() * distanceRationAdjuster * 0.3f) + 0.00001D);
+                    float fogStart = (float) (fogEnd / modifier);
+                    event.setNearPlaneDistance(fogStart/10);
+                    event.setFarPlaneDistance(fogEnd);
+                    event.setFogShape(FogShape.CYLINDER);
+                    event.setCanceled(true);
+                }
         }
-        else if (fogEnd < 126) {
-            distanceRationAdjuster = Math.max(fogEnd / 126, 0.75F);
-        }
-        float fogStart = (float) (fogEnd / ((BzDimensionConfigs.fogThickness.get() * distanceRationAdjuster * 0.3f) + 0.00001D));
-        fogData.start = fogEnd;
-        fogData.end = fogStart;
-        fogData.shape = FogShape.CYLINDER;
     }
 }

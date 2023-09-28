@@ -1,3 +1,9 @@
+### **(V.6.7.35 Changes) (1.19.2 Minecraft)**
+
+##### Client:
+Switched fog mixin into Forge event setup in a way to increase compat and fixed some issues with other mods.
+
+
 ### **(V.6.7.34 Changes) (1.19.2 Minecraft)**
 
 ##### Effects:
