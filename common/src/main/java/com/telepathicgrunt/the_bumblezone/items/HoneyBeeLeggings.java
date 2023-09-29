@@ -49,6 +49,10 @@ public class HoneyBeeLeggings extends BeeArmor {
             return;
         }
 
+        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+            return;
+        }
+
         RandomSource random = player.getRandom();
         boolean isPollinated = isPollinated(itemstack);
         boolean isSprinting = player.isSprinting();
@@ -98,6 +102,10 @@ public class HoneyBeeLeggings extends BeeArmor {
             }
         }
 
+        spawnParticles(world, player, random, isPollinated, isSprinting, beeWearablesCount);
+    }
+
+    private static void spawnParticles(Level world, Player player, RandomSource random, boolean isPollinated, boolean isSprinting, int beeWearablesCount) {
         if(world.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < (beeWearablesCount >= 3 ? 0.03f : 0.025f))) {
             int particles = beeWearablesCount >= 3 ? 2 : 1;
             for(int i = 0; i < particles; i++){

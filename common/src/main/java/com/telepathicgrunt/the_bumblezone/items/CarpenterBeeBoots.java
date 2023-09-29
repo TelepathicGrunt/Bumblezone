@@ -53,6 +53,14 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
 
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
+        if (player.isSpectator()) {
+            return;
+        }
+
+        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+            return;
+        }
+
         RandomSource random = player.getRandom();
         int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
         CompoundTag tag = itemstack.getOrCreateTag();

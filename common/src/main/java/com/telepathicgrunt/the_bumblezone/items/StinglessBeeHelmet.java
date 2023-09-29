@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.StinglessBeeHelmetSightPacket;
@@ -52,6 +53,16 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
+        CompoundTag tag = itemstack.getOrCreateTag();
+        boolean hasBeeRider = tag.getBoolean("hasBeeRider");
+
+        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+            if(hasBeeRider) {
+                ejectAllBeeRiders(world, player, tag);
+            }
+            return;
+        }
+
         int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
 
         MobEffectInstance nausea = player.getEffect(MobEffects.CONFUSION);
@@ -96,15 +107,9 @@ public class StinglessBeeHelmet extends BeeArmor {
 
             if (player.isShiftKeyDown() && player.onGround()) {
                 HELMET_EFFECT_COUNTER_CLIENTSIDE = ((beeWearablesCount - 1) * 65) + 6;
-
-                if(!world.isClientSide() && player.getRandom().nextFloat() < 0.001f) {
-                    itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
-                }
             }
         }
 
-        CompoundTag tag = itemstack.getOrCreateTag();
-        boolean hasBeeRider = tag.getBoolean("hasBeeRider");
         int beeRidingTimer = tag.getInt("beeRidingTimer");
         boolean hasWrath = player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
         if(hasBeeRider || hasWrath) {
@@ -114,20 +119,7 @@ public class StinglessBeeHelmet extends BeeArmor {
                 player.isShiftKeyDown() ||
                 (beeWearablesCount < 4 && beeRidingTimer > beeWearablesCount * 600))
             {
-                for (Entity passenger : player.getPassengers()) {
-                    if ((passenger instanceof Bee && !passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
-                        passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
-                    {
-                        passenger.stopRiding();
-                        if (passenger instanceof Mob mob) {
-                            mob.setNoAi(false);
-                        }
-                    }
-                }
-                if(!world.isClientSide()) {
-                    tag.putBoolean("hasBeeRider", false);
-                    tag.putInt("beeRidingTimer", 0);
-                }
+                ejectAllBeeRiders(world, player, tag);
             }
             else if(!world.isClientSide()) {
                 tag.putInt("beeRidingTimer", beeRidingTimer + 1);
@@ -139,8 +131,32 @@ public class StinglessBeeHelmet extends BeeArmor {
         }
     }
 
+    private void ejectAllBeeRiders(Level world, Player player, CompoundTag tag) {
+        for (Entity passenger : player.getPassengers()) {
+            if ((passenger instanceof Bee && !passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
+                    passenger.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))
+            {
+                passenger.stopRiding();
+                if (passenger instanceof Mob mob) {
+                    mob.setNoAi(false);
+                }
+            }
+        }
+
+        if(!world.isClientSide()) {
+            tag.putBoolean("hasBeeRider", false);
+            tag.putInt("beeRidingTimer", 0);
+        }
+    }
+
     public static boolean shouldEntityGlow(Player player, Entity entity) {
         if(entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof BeeQueenEntity) {
+            if (player.getCooldowns().isOnCooldown(BzItems.STINGLESS_BEE_HELMET_1.get()) ||
+                player.getCooldowns().isOnCooldown(BzItems.STINGLESS_BEE_HELMET_2.get()))
+            {
+                return false;
+            }
+
             return entity.blockPosition().closerThan(player.blockPosition(), (BEE_WEARABLES_COUNT * 16.5d) + 14);
         }
         return false;
@@ -151,7 +167,8 @@ public class StinglessBeeHelmet extends BeeArmor {
         if (!beeHelmet.isEmpty() &&
             !playerEntity.isShiftKeyDown() &&
             playerEntity.getItemInHand(playerEntity.getUsedItemHand()).isEmpty() &&
-            playerEntity.getPassengers().isEmpty())
+            playerEntity.getPassengers().isEmpty() &&
+            !playerEntity.getCooldowns().isOnCooldown(beeHelmet.getItem()))
         {
             if ((entity instanceof Bee && !entity.getType().is(BzTags.STINGLESS_BEE_HELMET_DISALLOWED_PASSENGERS)) ||
                 entity.getType().is(BzTags.STINGLESS_BEE_HELMET_FORCED_ALLOWED_PASSENGERS))

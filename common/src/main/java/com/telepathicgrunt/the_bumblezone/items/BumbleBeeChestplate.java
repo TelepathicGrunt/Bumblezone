@@ -43,6 +43,14 @@ public class BumbleBeeChestplate extends BeeArmor {
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
         CompoundTag tag = itemstack.getOrCreateTag();
         boolean isFlying = tag.getBoolean("isFlying");
+
+        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+            if(isFlying) {
+                tag.putBoolean("isFlying", false);
+            }
+            return;
+        }
+
         int flyCounter = tag.getInt("flyCounter");
         if(world.isClientSide()) {
             if (flyCounter > 0 && !player.onGround() && !player.isInWater() && ((LivingEntityAccessor)player).isJumping() && !player.getAbilities().flying && !player.isPassenger() && !player.onClimbable()) {

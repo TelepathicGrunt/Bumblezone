@@ -9,6 +9,10 @@ Heavy Air now uses this mob effect tag to know what effect to remove from entiti
 
 The pull down effect gets stronger faster in Heavy Air now.
 
+##### Items:
+Made a bunch of Bumblezone items now respect cooldown if they are given a cooldown. 
+ Will suppress their abilities or behavior.
+
 ##### Client:
 (Forge): Switched fog mixin into Forge event setup in a way to increase compat and fixed some issues with other mods.
 

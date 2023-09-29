@@ -48,6 +48,9 @@ public class BuzzingBriefcase extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+            return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+        }
 
         if (player.isShiftKeyDown()) {
             player.openMenu(new BuzzingBriefcaseMenuProvider(stack));
@@ -60,12 +63,16 @@ public class BuzzingBriefcase extends Item {
     }
 
     public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos, Player player) {
+        ItemStack briefcaseItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (player.getCooldowns().isOnCooldown(briefcaseItem.getItem())) {
+            return false;
+        }
+
         List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
 
         if(player instanceof ServerPlayer && !releasedBees.isEmpty()) {
             BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
 
-            ItemStack briefcaseItem = player.getItemInHand(InteractionHand.MAIN_HAND);
             player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
         }
 
@@ -74,6 +81,10 @@ public class BuzzingBriefcase extends Item {
 
     public boolean hurtEnemy(ItemStack stack, LivingEntity victim, LivingEntity attacker) {
         if (attacker instanceof Player player) {
+            if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+                return false;
+            }
+
             List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
             for (Entity entity : releasedBees) {
                 if (entity instanceof NeutralMob neutralMob && !BeeAggression.isBeelikeEntity(victim)) {
@@ -102,6 +113,10 @@ public class BuzzingBriefcase extends Item {
         }
 
         ItemStack briefcaseItem = player.getItemInHand(playerHand);
+        if (player.getCooldowns().isOnCooldown(briefcaseItem.getItem())) {
+            return InteractionResult.PASS;
+        }
+
         boolean addedBee = tryAddBee(briefcaseItem, entity);
         if (addedBee) {
             player.awardStat(BzStats.BUZZING_BRIEFCASE_BEE_CAPTURE_RL.get());
