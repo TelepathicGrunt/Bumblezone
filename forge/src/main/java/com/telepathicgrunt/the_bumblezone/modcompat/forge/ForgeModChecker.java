@@ -57,6 +57,9 @@ public class ForgeModChecker {
             modid = "trophymanager";
             loadupModCompat(modid, () -> new JonnTrophiesCompat());
 
+            modid = "ironjetpacks";
+            loadupModCompat(modid, () -> new IronJetpacksCompat());
+
 //            modid = "mekanism";
 //            loadupModCompat(modid, () -> new MekanismCompat());
         }

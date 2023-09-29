@@ -96,6 +96,9 @@ public interface ModCompat {
         return null;
     }
 
+    default void restrictFlight(Entity entity) {
+    }
+
     enum Type {
         SPAWNS,
         EMPTY_BROOD,
@@ -107,6 +110,7 @@ public interface ModCompat {
         PROJECTILE_IMPACT_HANDLED,
         CUSTOM_EQUIPMENT_SLOTS,
         BEE_WEARABLES_BOOSTING,
-        BEE_COLOR
+        BEE_COLOR,
+        HEAVY_AIR_RESTRICTED
     }
 }

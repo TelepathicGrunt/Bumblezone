@@ -3,10 +3,17 @@
 ##### Entities:
 (Fabric/Quilt): Fixed check that prevented Bumblezone from spawning enough bees over time.
 
+##### Blocks:
+Heavy Air now uses this mob effect tag to know what effect to remove from entities inside the block: 
+ `the_bumblezone:heavy_air/remove_effects`
+
 ##### Client:
 (Forge): Switched fog mixin into Forge event setup in a way to increase compat and fixed some issues with other mods.
 
 (Fabric/Quilt): Adjusted fog code internally that could've been causing issues under very rare circumstances.
+
+##### Compat:
+Iron Jetpacks are now disabled when in Heavy Air block.
 
 
 ### **(V.7.0.8 Changes) (1.20.1 Minecraft)**

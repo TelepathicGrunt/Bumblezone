@@ -22,6 +22,7 @@ public class ModChecker {
 	public static final List<ModCompat> CUSTOM_EQUIPMENT_SLOTS_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BEE_WEARABLES_BOOSTING_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BEE_COLOR_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> HEAVY_AIR_RESTRICTED_COMPATS = new ArrayList<>();
 
 	public static boolean productiveBeesPresent = false;
 	public static boolean resourcefulBeesPresent = false;
@@ -46,6 +47,7 @@ public class ModChecker {
 	public static boolean curiosPresent = false;
 	public static boolean trinketsPresent = false;
 	public static boolean restrictedPortalsPresent = false;
+	public static boolean ironjetpacksPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -104,6 +106,7 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.CUSTOM_EQUIPMENT_SLOTS)) CUSTOM_EQUIPMENT_SLOTS_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BEE_WEARABLES_BOOSTING)) BEE_WEARABLES_BOOSTING_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BEE_COLOR)) BEE_COLOR_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.HEAVY_AIR_RESTRICTED)) HEAVY_AIR_RESTRICTED_COMPATS.add(compat);
 			}
 		}
 		catch (Throwable e) {

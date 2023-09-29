@@ -1,12 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.MapMaker;
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.entities.TemporaryPlayerData;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseScreen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,6 +30,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 
@@ -74,14 +83,16 @@ public class HeavyAir extends Block {
         }
 
         if (entity instanceof LivingEntity livingEntity && livingEntity.tickCount % 10 == 0) {
-            if (livingEntity.hasEffect(MobEffects.LEVITATION)) {
-                livingEntity.removeEffect(MobEffects.LEVITATION);
-            }
-            if (livingEntity.hasEffect(MobEffects.SLOW_FALLING)) {
-                livingEntity.removeEffect(MobEffects.SLOW_FALLING);
-            }
-            if (livingEntity.hasEffect(MobEffects.JUMP)) {
-                livingEntity.removeEffect(MobEffects.JUMP);
+            List<Holder<MobEffect>> effectsToRemove = BuiltInRegistries.MOB_EFFECT.getTag(BzTags.HEAVY_AIR_REMOVE_EFFECTS)
+                    .stream()
+                    .flatMap(HolderSet.ListBacked::stream)
+                    .filter(Holder::isBound)
+                    .toList();
+
+            for (Holder<MobEffect> effectToRemove : effectsToRemove) {
+                if (livingEntity.hasEffect(effectToRemove.value())) {
+                    livingEntity.removeEffect(effectToRemove.value());
+                }
             }
         }
 
@@ -97,9 +108,12 @@ public class HeavyAir extends Block {
             }
 
             if (entity instanceof TemporaryPlayerData temporaryPlayerData) {
-                double baseThresholds = 2;
                 int ticksOffGround = temporaryPlayerData.playTickOffGround();
-                extraGravity *= (ticksOffGround + baseThresholds) / baseThresholds;
+                extraGravity *= ((ticksOffGround * 3) + 1);
+            }
+
+            for (ModCompat compat : ModChecker.HEAVY_AIR_RESTRICTED_COMPATS) {
+                compat.restrictFlight(entity);
             }
         }
 

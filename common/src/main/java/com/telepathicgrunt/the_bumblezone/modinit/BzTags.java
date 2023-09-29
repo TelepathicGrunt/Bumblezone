@@ -173,6 +173,7 @@ public class BzTags {
     public static final TagKey<Structure> BEE_QUEEN_MINING_FATIGUE = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "bee_queen_mining_fatigue"));
     public static final TagKey<Structure> SEMPITERNAL_SANCTUMS = TagKey.create(Registries.STRUCTURE, new ResourceLocation(Bumblezone.MODID, "sempiternal_sanctums"));
 
+    public static final TagKey<MobEffect> HEAVY_AIR_REMOVE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "heavy_air/remove_effects"));
     public static final TagKey<MobEffect> DISALLOWED_POTION_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "potion_candle/disallowed_effects"));
     public static final TagKey<MobEffect> LIFE_CURE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/life/cure_effects"));
     public static final TagKey<MobEffect> RADIANCE_SUN_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/radiance/sun_effects"));

@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:levitation",
+    "minecraft:slow_falling",
+    "minecraft:jump_boost",
+    {
+      "id": "ars_nouveau:flight",
+      "required": false
+    },
+    {
+      "id": "occultism:double_jump",
+      "required": false
+    }
+  ]
+}

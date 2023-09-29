@@ -175,13 +175,11 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             return;
         }
 
-        if (ModChecker.productiveBeesPresent) {
-            for (ModCompat compat : ModChecker.BEE_COLOR_COMPATS) {
-                Pair<Integer, Integer> moddedBeeColors = compat.getModdedBeePrimaryAndSecondaryColors(bee);
-                if (moddedBeeColors != null) {
-                    BEE_INVENTORY.add(new BeeState(bee, moddedBeeColors.getFirst(), moddedBeeColors.getSecond()));
-                    return;
-                }
+        for (ModCompat compat : ModChecker.BEE_COLOR_COMPATS) {
+            Pair<Integer, Integer> moddedBeeColors = compat.getModdedBeePrimaryAndSecondaryColors(bee);
+            if (moddedBeeColors != null) {
+                BEE_INVENTORY.add(new BeeState(bee, moddedBeeColors.getFirst(), moddedBeeColors.getSecond()));
+                return;
             }
         }
 

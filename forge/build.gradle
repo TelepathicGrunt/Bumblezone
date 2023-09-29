@@ -36,6 +36,8 @@ configurations {
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
 
+    modCompileOnly("curse.maven:iron_jetpack-284497:${project.iron_jetpack_file_id}")
+
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
     modCompileOnly("curse.maven:productive_bees-377897:${project.productivebees_file_id}")
