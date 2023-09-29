@@ -106,6 +106,7 @@ public class HeavyAir extends Block {
             if (player.getAbilities().flying) {
                 player.getAbilities().flying = false;
                 player.getAbilities().mayfly = false;
+                player.onUpdateAbilities();
             }
 
             if (entity instanceof TemporaryPlayerData temporaryPlayerData) {

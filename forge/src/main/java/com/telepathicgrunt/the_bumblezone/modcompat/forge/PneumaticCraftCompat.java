@@ -21,7 +21,18 @@ public class PneumaticCraftCompat implements ModCompat {
 
 	public void restrictFlight(Entity entity, double extraGravity) {
 		if (entity instanceof Player player) {
-
+			// TODO: Wait for PneumaticCraft API to be made instead for proper server -> client sync
+//			IArmorUpgradeHandler<?> upgrade = ArmorUpgradeRegistry.getInstance().getUpgradeEntry(new ResourceLocation("pneumaticcraft:jet_boots"));
+//			setUpgradeEnabled(player, upgrade, false);
 		}
 	}
+
+//	public void setUpgradeEnabled(Player player, IArmorUpgradeHandler<?> upgrade, boolean enabled) {
+//		CommonArmorHandler handler = (CommonArmorHandler) PneumaticRegistry.getInstance().getCommonArmorRegistry().getCommonArmorHandler(player);
+//		EquipmentSlot equipmentSlot = upgrade.getEquipmentSlot();
+//		byte slotIndex = (byte) upgrade.getIndex();
+//		if (handler.isUpgradeInserted(equipmentSlot, slotIndex) && handler.isUpgradeEnabled(equipmentSlot, slotIndex)) {
+//			handler.setUpgradeEnabled(equipmentSlot, slotIndex, enabled);
+//		}
+//	}
 }
