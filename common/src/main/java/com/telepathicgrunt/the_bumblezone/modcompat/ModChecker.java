@@ -51,6 +51,7 @@ public class ModChecker {
 	public static boolean pneumaticCraftPresent = false;
 	public static boolean evilCraftPresent = false;
 	public static boolean FTBEssentialsPresent = false;
+	public static boolean AdAstraPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -87,6 +88,9 @@ public class ModChecker {
 			// TODO: Wait for 2001.1.3 FTB Essentials release
 //			modid = "ftbessentials";
 //			loadupModCompat(modid, () -> new FTBEssentialsCompat());
+
+			modid = "ad_astra";
+			loadupModCompat(modid, () -> new AdAstraCompat());
 
 			modid = "lootr";
 			loadupModCompat(modid, () -> new LootrCompat());
