@@ -2,5 +2,5 @@ package com.telepathicgrunt.the_bumblezone.entities;
 
 public interface TemporaryPlayerData {
 
-    default int playTickOffGround() { return 0; }
+    default int playTickOffGroundInHeavyAir() { return 0; }
 }

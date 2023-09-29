@@ -1,21 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.MapMaker;
-import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.entities.TemporaryPlayerData;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.screens.BuzzingBriefcaseScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +25,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -102,14 +102,16 @@ public class HeavyAir extends Block {
             if ((player.isCreative() && player.getAbilities().flying) || player.isSpectator()) {
                 return;
             }
-            else if (player.getAbilities().flying) {
+
+            if (player.getAbilities().flying) {
                 player.getAbilities().flying = false;
                 player.getAbilities().mayfly = false;
             }
 
             if (entity instanceof TemporaryPlayerData temporaryPlayerData) {
-                int ticksOffGround = temporaryPlayerData.playTickOffGround();
-                extraGravity *= ((ticksOffGround * 3) + 1);
+                int ticksOffGround = temporaryPlayerData.playTickOffGroundInHeavyAir();
+                int offsetTicks = Math.max(0, ticksOffGround - 5);
+                extraGravity *= ((offsetTicks * 4) + 1);
             }
 
             for (ModCompat compat : ModChecker.HEAVY_AIR_RESTRICTED_COMPATS) {
@@ -119,6 +121,22 @@ public class HeavyAir extends Block {
 
         entity.setDeltaMovement(entity.getDeltaMovement().add(0, extraGravity, 0));
         APPLIED_PUSH_FOR_ENTITY.put(entity.getStringUUID(), entity.tickCount);
+    }
+
+    public static boolean isInHeavyAir(Level level, AABB boundingBox) {
+        for (BlockPos pos : BlockPos.betweenClosed(
+                Mth.floor(boundingBox.minX),
+                Mth.floor(boundingBox.minY),
+                Mth.floor(boundingBox.minZ),
+                Mth.floor(boundingBox.maxX),
+                Mth.floor(boundingBox.maxY),
+                Mth.floor(boundingBox.maxZ)))
+        {
+            if (level.getBlockState(pos).is(BzBlocks.HEAVY_AIR.get())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
