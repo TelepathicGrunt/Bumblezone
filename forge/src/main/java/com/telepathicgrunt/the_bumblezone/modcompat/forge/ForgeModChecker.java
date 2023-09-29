@@ -60,6 +60,12 @@ public class ForgeModChecker {
             modid = "ironjetpacks";
             loadupModCompat(modid, () -> new IronJetpacksCompat());
 
+            modid = "pneumaticcraft";
+            loadupModCompat(modid, () -> new PneumaticCraftCompat());
+
+            modid = "evilcraft";
+            loadupModCompat(modid, () -> new EvilCraftCompat());
+
 //            modid = "mekanism";
 //            loadupModCompat(modid, () -> new MekanismCompat());
         }

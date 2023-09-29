@@ -1,18 +1,18 @@
 
 package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
-import com.blakebr0.ironjetpacks.util.JetpackUtils;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import org.cyclops.evilcraft.entity.item.EntityBroom;
 
 import java.util.EnumSet;
 
-public class IronJetpacksCompat implements ModCompat {
-	public IronJetpacksCompat() {
+public class EvilCraftCompat implements ModCompat {
+	public EvilCraftCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
-		ModChecker.ironJetpacksPresent = true;
+		ModChecker.evilCraftPresent = true;
 	}
 
 	@Override
@@ -21,11 +21,12 @@ public class IronJetpacksCompat implements ModCompat {
 	}
 
 	public void restrictFlight(Entity entity, double extraGravity) {
-		if (entity instanceof Player player) {
-			var jetpack = JetpackUtils.getEquippedJetpack(player);
-			if (!jetpack.isEmpty() && JetpackUtils.isEngineOn(jetpack)) {
-				JetpackUtils.toggleEngine(jetpack);
-			}
+		if (entity.getControlledVehicle() instanceof EntityBroom entityBroom) {
+			entityBroom.setDeltaMovement(
+				entityBroom.getDeltaMovement().x,
+				entityBroom.getDeltaMovement().y + extraGravity,
+				entityBroom.getDeltaMovement().z
+			);
 		}
 	}
 }

@@ -110,12 +110,12 @@ public class HeavyAir extends Block {
 
             if (entity instanceof TemporaryPlayerData temporaryPlayerData) {
                 int ticksOffGround = temporaryPlayerData.playTickOffGroundInHeavyAir();
-                int offsetTicks = Math.max(0, ticksOffGround - 5);
+                int offsetTicks = Math.max(0, ticksOffGround - 10);
                 extraGravity *= ((offsetTicks * 4) + 1);
             }
 
             for (ModCompat compat : ModChecker.HEAVY_AIR_RESTRICTED_COMPATS) {
-                compat.restrictFlight(entity);
+                compat.restrictFlight(entity, extraGravity);
             }
         }
 

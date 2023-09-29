@@ -96,7 +96,7 @@ public interface ModCompat {
         return null;
     }
 
-    default void restrictFlight(Entity entity) {
+    default void restrictFlight(Entity entity, double extraGravity) {
     }
 
     enum Type {

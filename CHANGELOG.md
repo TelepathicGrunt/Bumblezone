@@ -17,6 +17,8 @@ The pull down effect gets stronger faster in Heavy Air now.
 ##### Compat:
 Iron Jetpacks are now disabled when in Heavy Air block.
 
+EvilCraft Brooms will sink in Heavy Air when ridden.
+
 
 ### **(V.7.0.8 Changes) (1.20.1 Minecraft)**
 
