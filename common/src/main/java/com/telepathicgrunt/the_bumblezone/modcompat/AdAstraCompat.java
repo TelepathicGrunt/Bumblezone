@@ -38,7 +38,7 @@ public class AdAstraCompat implements ModCompat {
 				hasItemEquipped(player, EquipmentSlot.LEGS, JET_LEGS) &&
 				hasItemEquipped(player, EquipmentSlot.FEET, JET_FEET))
 			{
-				player.getCooldowns().addCooldown(player.getItemBySlot(EquipmentSlot.CHEST).getItem(), 20);
+				player.getCooldowns().addCooldown(player.getItemBySlot(EquipmentSlot.CHEST).getItem(), 40);
 			}
 		}
 	}

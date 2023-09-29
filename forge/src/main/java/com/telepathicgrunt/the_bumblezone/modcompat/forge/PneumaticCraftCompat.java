@@ -37,7 +37,7 @@ public class PneumaticCraftCompat implements ModCompat {
 		EquipmentSlot equipmentSlot = upgrade.getEquipmentSlot();
 		byte slotIndex = (byte) upgrade.getIndex();
 		if (handler.isUpgradeInserted(equipmentSlot, slotIndex) && handler.isUpgradeEnabled(equipmentSlot, slotIndex)) {
-			player.getCooldowns().addCooldown(player.getItemBySlot(equipmentSlot).getItem(), 20);
+			player.getCooldowns().addCooldown(player.getItemBySlot(equipmentSlot).getItem(), 40);
 		}
 	}
 }
