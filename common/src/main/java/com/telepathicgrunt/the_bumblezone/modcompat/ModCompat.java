@@ -104,7 +104,7 @@ public interface ModCompat {
         EMPTY_BROOD,
         COMBS,
         DIMENSION_SPAWN,
-        BLOCK_TELEPORT,
+        HIVE_TELEPORT,
         COMB_ORE,
         HAS_HOST_BEES,
         PROJECTILE_IMPACT_HANDLED,

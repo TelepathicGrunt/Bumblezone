@@ -94,7 +94,7 @@ public class ProductiveBeesCompat implements ModCompat {
 
     @Override
     public EnumSet<Type> compatTypes() {
-        return EnumSet.of(Type.SPAWNS, Type.COMBS, Type.BLOCK_TELEPORT, Type.COMB_ORE, Type.EMPTY_BROOD, Type.BEE_COLOR);
+        return EnumSet.of(Type.SPAWNS, Type.COMBS, Type.HIVE_TELEPORT, Type.COMB_ORE, Type.EMPTY_BROOD, Type.BEE_COLOR);
     }
 
     private static boolean colorsAreClose(int a, int z, int threshold) {

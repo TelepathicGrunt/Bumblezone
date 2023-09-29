@@ -12,6 +12,8 @@ dependencies {
 
     modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
 
+    //modCompileOnly("dev.ftb.mods:ftb-essentials-forge:${rootProject.ftb_essentials}")
+
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-common-${rootProject.athena}")))
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))

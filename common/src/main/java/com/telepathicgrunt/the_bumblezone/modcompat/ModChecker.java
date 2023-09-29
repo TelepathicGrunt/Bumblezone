@@ -15,7 +15,7 @@ public class ModChecker {
 	public static final List<ModCompat> BROOD_EMPTY_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> DUNGEON_COMB_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> DIM_SPAWN_COMPATS = new ArrayList<>();
-	public static final List<ModCompat> BLOCK_TELEPORT_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> HIVE_TELEPORT_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> COMB_ORE_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> HOST_BEE_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> PROJECTILE_IMPACT_HANDLED_COMPATS = new ArrayList<>();
@@ -50,6 +50,7 @@ public class ModChecker {
 	public static boolean ironJetpacksPresent = false;
 	public static boolean pneumaticCraftPresent = false;
 	public static boolean evilCraftPresent = false;
+	public static boolean FTBEssentialsPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -83,6 +84,10 @@ public class ModChecker {
 			modid = "projectile_damage";
 			loadupModCompat(modid, () -> new ProjectileDamageAttributeCompat());
 
+			// TODO: Wait for 2001.1.3 FTB Essentials release
+//			modid = "ftbessentials";
+//			loadupModCompat(modid, () -> new FTBEssentialsCompat());
+
 			modid = "lootr";
 			loadupModCompat(modid, () -> new LootrCompat());
 		}
@@ -101,7 +106,7 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.EMPTY_BROOD)) BROOD_EMPTY_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.COMBS)) DUNGEON_COMB_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.DIMENSION_SPAWN)) DIM_SPAWN_COMPATS.add(compat);
-				if (compat.compatTypes().contains(ModCompat.Type.BLOCK_TELEPORT)) BLOCK_TELEPORT_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.HIVE_TELEPORT)) HIVE_TELEPORT_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.COMB_ORE)) COMB_ORE_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.HAS_HOST_BEES)) HOST_BEE_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.PROJECTILE_IMPACT_HANDLED)) PROJECTILE_IMPACT_HANDLED_COMPATS.add(compat);

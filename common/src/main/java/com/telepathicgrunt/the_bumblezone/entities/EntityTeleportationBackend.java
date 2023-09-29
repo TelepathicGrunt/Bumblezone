@@ -226,7 +226,7 @@ public class EntityTeleportationBackend {
         }
 
         if(BzDimensionConfigs.allowTeleportationWithModdedBeehives) {
-            for (ModCompat compat : ModChecker.BLOCK_TELEPORT_COMPATS) {
+            for (ModCompat compat : ModChecker.HIVE_TELEPORT_COMPATS) {
                 if (compat.isValidBeeHiveForTeleportation(blockState)) {
                     return true;
                 }
