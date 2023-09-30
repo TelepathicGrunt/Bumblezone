@@ -26,8 +26,10 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,6 +38,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -62,7 +65,10 @@ public class ArsNouveauCompat implements ModCompat {
 		EffectGlide.INSTANCE,
 		EffectSlowfall.INSTANCE,
 		EffectLaunch.INSTANCE,
-		EffectLeap.INSTANCE,
+		EffectLeap.INSTANCE
+	);
+
+	protected static final Set<AbstractEffect> DISALLOWED_INFINITY_AND_ESSENCE_EFFECTS = Sets.newHashSet(
 		EffectExchange.INSTANCE,
 		EffectAnimate.INSTANCE,
 		EffectGravity.INSTANCE,
@@ -78,6 +84,9 @@ public class ArsNouveauCompat implements ModCompat {
 		Consumer<EffectResolveEvent.Pre> heavyAirHandler = ArsNouveauCompat::handleArsSpellHeavyAir;
 		forgeBus.addListener(heavyAirHandler);
 
+		Consumer<EffectResolveEvent.Pre> essenceAndInfinityHandler = ArsNouveauCompat::handleArsSpellEssenceAndInfinity;
+		forgeBus.addListener(essenceAndInfinityHandler);
+
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.arsNouveauPresent = true;
 	}
@@ -87,15 +96,31 @@ public class ArsNouveauCompat implements ModCompat {
 		return EnumSet.of(Type.PROJECTILE_IMPACT_HANDLED, Type.RIGHT_CLICKED_HIVE_HANDLED);
 	}
 
-	private static void handleArsSpellHeavyAir(EffectResolveEvent.Pre event) {
-		if (DISALLOWED_HEAVY_AIR_EFFECTS.contains(event.resolveEffect)) {
-			if (event.shooter instanceof Player player && HeavyAir.isInHeavyAir(player.level(), player.getBoundingBox())) {
-				if (player instanceof ServerPlayer serverPlayer) {
-					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.heavy_air.denied_magic")
+	private static void handleArsSpellEssenceAndInfinity(EffectResolveEvent.Pre event) {
+		if (DISALLOWED_INFINITY_AND_ESSENCE_EFFECTS.contains(event.resolveEffect) && event.rayTraceResult instanceof BlockHitResult blockHitResult) {
+			BlockState hitState = event.world.getBlockState(blockHitResult.getBlockPos());
+			if (hitState.is(BzTags.ESSENCE_BLOCKS) || hitState.is(BzBlocks.INFINITY_BARRIER.get())) {
+				if (event.shooter instanceof ServerPlayer serverPlayer) {
+					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_magic")
 							.withStyle(ChatFormatting.ITALIC)
 							.withStyle(ChatFormatting.RED), true);
 				}
 				event.setCanceled(true);
+			}
+		}
+	}
+
+	private static void handleArsSpellHeavyAir(EffectResolveEvent.Pre event) {
+		if (DISALLOWED_HEAVY_AIR_EFFECTS.contains(event.resolveEffect)) {
+			if (event.rayTraceResult instanceof EntityHitResult entityHitResult) {
+				if (event.shooter instanceof Player player && HeavyAir.isInHeavyAir(entityHitResult.getEntity().level(), entityHitResult.getEntity().getBoundingBox())) {
+					if (player instanceof ServerPlayer serverPlayer) {
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_magic")
+								.withStyle(ChatFormatting.ITALIC)
+								.withStyle(ChatFormatting.RED), true);
+					}
+					event.setCanceled(true);
+				}
 			}
 		}
 	}

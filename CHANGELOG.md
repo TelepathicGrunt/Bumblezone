@@ -10,7 +10,7 @@ Set Infinity Air breaking speed to -1.0 to better state it is unbreakable to oth
 Removed emissive texture files for Bee Queen and Beehemoth as some emissive texture mods aren't applying them correctly and the emissive was not needed anyway.
 
 ##### Compat:
-Added back missing Ars Nouveau compat. (Teleport spells)
+(Forge): Added back missing Ars Nouveau compat. (Teleport spells)
 
 
 ### **(V.7.0.9 Changes) (1.20.1 Minecraft)**

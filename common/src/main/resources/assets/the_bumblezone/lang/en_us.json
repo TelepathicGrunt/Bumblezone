@@ -629,7 +629,7 @@
   "system.the_bumblezone.sempiternal_sanctum_blue": "Turmoil in your mind begins to fade...",
   "system.the_bumblezone.sempiternal_sanctum_purple": "A whisper of knowledge lures you in...",
   "system.the_bumblezone.sempiternal_sanctum_white": "A strong sense of déjà vu troubles you...",
-  "system.the_bumblezone.heavy_air.denied_magic": "Counter Magic Activated - Your Spell Was Denied",
+  "system.the_bumblezone.denied_magic": "Counter Magic Activated - Your Spell Was Denied",
 
   "essence.the_bumblezone.missing_essence_effect": "You need to consume Essence of the Bees first...",
   "essence.the_bumblezone.red_essence_event": "§cEssence of Raging§f - §cLose§f in %s",
