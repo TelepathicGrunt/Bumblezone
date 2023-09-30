@@ -53,8 +53,6 @@ dependencies {
     modCompileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
 
     modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
-    modRuntimeOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
-    modRuntimeOnly("curse.maven:geckolib-388172:4756691")
 
     modCompileOnly("curse.maven:quark-243121:${project.quark_file_id}")
     modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
@@ -80,7 +78,7 @@ dependencies {
     //modRuntimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
     //modRuntimeOnly("dev.architectury:architectury-forge:${project.architectury}")
     //modRuntimeOnly("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
-    modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
+    //modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
     // modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4555169")

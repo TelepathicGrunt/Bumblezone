@@ -3,21 +3,34 @@ package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 import com.google.common.collect.Sets;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
+import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.hollingsworth.arsnouveau.common.entity.AnimBlockSummon;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectAnimate;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectBlink;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectBreak;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectExchange;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectGlide;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectGravity;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectIntangible;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectLeap;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectPlaceBlock;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectSlowfall;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodUnderfoot;
+import com.telepathicgrunt.the_bumblezone.blocks.HeavyAir;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationBackend;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -45,10 +58,25 @@ public class ArsNouveauCompat implements ModCompat {
 		MethodUnderfoot.INSTANCE
 	);
 
+	protected static final Set<AbstractEffect> DISALLOWED_HEAVY_AIR_EFFECTS = Sets.newHashSet(
+		EffectGlide.INSTANCE,
+		EffectSlowfall.INSTANCE,
+		EffectLaunch.INSTANCE,
+		EffectLeap.INSTANCE,
+		EffectExchange.INSTANCE,
+		EffectAnimate.INSTANCE,
+		EffectGravity.INSTANCE,
+		EffectBreak.INSTANCE,
+		EffectIntangible.INSTANCE
+	);
+
 	public ArsNouveauCompat() {
 		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-		Consumer<EffectResolveEvent.Post> handler = ArsNouveauCompat::isArsSpellProjectile;
-		forgeBus.addListener(handler);
+		Consumer<EffectResolveEvent.Post> projectHandler = ArsNouveauCompat::handleArsSpellProjectile;
+		forgeBus.addListener(projectHandler);
+
+		Consumer<EffectResolveEvent.Pre> heavyAirHandler = ArsNouveauCompat::handleArsSpellHeavyAir;
+		forgeBus.addListener(heavyAirHandler);
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.arsNouveauPresent = true;
@@ -59,7 +87,20 @@ public class ArsNouveauCompat implements ModCompat {
 		return EnumSet.of(Type.PROJECTILE_IMPACT_HANDLED, Type.RIGHT_CLICKED_HIVE_HANDLED);
 	}
 
-	private static void isArsSpellProjectile(EffectResolveEvent.Post event) {
+	private static void handleArsSpellHeavyAir(EffectResolveEvent.Pre event) {
+		if (DISALLOWED_HEAVY_AIR_EFFECTS.contains(event.resolveEffect)) {
+			if (event.shooter instanceof Player player && HeavyAir.isInHeavyAir(player.level(), player.getBoundingBox())) {
+				if (player instanceof ServerPlayer serverPlayer) {
+					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.heavy_air.denied_magic")
+							.withStyle(ChatFormatting.ITALIC)
+							.withStyle(ChatFormatting.RED), true);
+				}
+				event.setCanceled(true);
+			}
+		}
+	}
+
+	private static void handleArsSpellProjectile(EffectResolveEvent.Post event) {
 		if (event.shooter instanceof Player player &&
 			event.resolveEffect == EffectBlink.INSTANCE &&
 			ALLOWED_CAST_METHODS.contains(event.spell.getCastMethod()))

@@ -3,6 +3,9 @@
 ##### Items:
 Fixed crash in Buzzing Briefcase screen when clicking on an item button when you don't have said item in inventory.
 
+##### Blocks:
+Set Infinity Air breaking speed to -1.0 to better state it is unbreakable to other mods.
+
 ##### Compat:
 Added back missing Ars Nouveau compat. (Teleport spells)
 

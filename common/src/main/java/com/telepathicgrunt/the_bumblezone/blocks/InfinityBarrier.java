@@ -34,7 +34,7 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
     public InfinityBarrier() {
         super(Properties.of()
                 .mapColor(MapColor.NONE)
-                .strength(0.1F, 3600000.8F)
+                .strength(-1.0F, 3600000.8F)
                 .lightLevel((blockState) -> 15)
                 .noLootTable()
                 .noParticlesOnBreak()
