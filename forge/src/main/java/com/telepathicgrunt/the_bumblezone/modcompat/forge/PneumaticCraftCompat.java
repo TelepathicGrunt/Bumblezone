@@ -7,10 +7,14 @@ import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
 import me.desht.pneumaticcraft.common.pneumatic_armor.ArmorUpgradeRegistry;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.EnumSet;
 
@@ -37,7 +41,16 @@ public class PneumaticCraftCompat implements ModCompat {
 		EquipmentSlot equipmentSlot = upgrade.getEquipmentSlot();
 		byte slotIndex = (byte) upgrade.getIndex();
 		if (handler.isUpgradeInserted(equipmentSlot, slotIndex) && handler.isUpgradeEnabled(equipmentSlot, slotIndex)) {
-			player.getCooldowns().addCooldown(player.getItemBySlot(equipmentSlot).getItem(), 40);
+			ItemStack jetpackBoots = player.getItemBySlot(equipmentSlot);
+			if (!player.getCooldowns().isOnCooldown(jetpackBoots.getItem())) {
+				if (player instanceof ServerPlayer serverPlayer) {
+					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jet_boots")
+							.withStyle(ChatFormatting.ITALIC)
+							.withStyle(ChatFormatting.RED), true);
+				}
+			}
+
+			player.getCooldowns().addCooldown(jetpackBoots.getItem(), 40);
 		}
 	}
 }

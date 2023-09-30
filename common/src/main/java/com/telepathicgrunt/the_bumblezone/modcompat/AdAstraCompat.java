@@ -1,12 +1,16 @@
 
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.EnumSet;
 
@@ -38,7 +42,16 @@ public class AdAstraCompat implements ModCompat {
 				hasItemEquipped(player, EquipmentSlot.LEGS, JET_LEGS) &&
 				hasItemEquipped(player, EquipmentSlot.FEET, JET_FEET))
 			{
-				player.getCooldowns().addCooldown(player.getItemBySlot(EquipmentSlot.CHEST).getItem(), 40);
+				ItemStack jetpackSuit = player.getItemBySlot(EquipmentSlot.CHEST);
+				if (!player.getCooldowns().isOnCooldown(jetpackSuit.getItem())) {
+					if (player instanceof ServerPlayer serverPlayer) {
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+								.withStyle(ChatFormatting.ITALIC)
+								.withStyle(ChatFormatting.RED), true);
+					}
+				}
+
+				player.getCooldowns().addCooldown(jetpackSuit.getItem(), 40);
 			}
 		}
 	}

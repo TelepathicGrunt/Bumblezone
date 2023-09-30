@@ -1,3 +1,9 @@
+### **(V.7.0.11 Changes) (1.20.1 Minecraft)**
+
+##### Compat:
+Added user messages for when Jetpacks and Jet Boots are disabled in Heavy Air.
+
+
 ### **(V.7.0.10 Changes) (1.20.1 Minecraft)**
 
 ##### Items:
