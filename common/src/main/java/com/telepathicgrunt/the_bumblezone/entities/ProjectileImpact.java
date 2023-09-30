@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -17,8 +18,9 @@ public class ProjectileImpact {
 
         if (!ModChecker.PROJECTILE_IMPACT_HANDLED_COMPATS.isEmpty()) {
             for (ModCompat compat : ModChecker.PROJECTILE_IMPACT_HANDLED_COMPATS) {
-                if (compat.isTeleportHandled(event.hitResult(), projectile.getOwner(), projectile)) {
-                    return true;
+                InteractionResult result = compat.isProjectileTeleportHandled(event.hitResult(), projectile.getOwner(), projectile);
+                if (result != InteractionResult.PASS) {
+                    return result == InteractionResult.SUCCESS;
                 }
             }
         }

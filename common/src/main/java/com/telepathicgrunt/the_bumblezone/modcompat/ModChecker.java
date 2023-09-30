@@ -19,6 +19,7 @@ public class ModChecker {
 	public static final List<ModCompat> COMB_ORE_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> HOST_BEE_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> PROJECTILE_IMPACT_HANDLED_COMPATS = new ArrayList<>();
+	public static final List<ModCompat> RIGHT_CLICKED_HIVE_HANDLED_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> CUSTOM_EQUIPMENT_SLOTS_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BEE_WEARABLES_BOOSTING_COMPATS = new ArrayList<>();
 	public static final List<ModCompat> BEE_COLOR_COMPATS = new ArrayList<>();
@@ -51,7 +52,8 @@ public class ModChecker {
 	public static boolean pneumaticCraftPresent = false;
 	public static boolean evilCraftPresent = false;
 	public static boolean FTBEssentialsPresent = false;
-	public static boolean AdAstraPresent = false;
+	public static boolean adAstraPresent = false;
+	public static boolean arsNouveauPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -114,6 +116,7 @@ public class ModChecker {
 				if (compat.compatTypes().contains(ModCompat.Type.COMB_ORE)) COMB_ORE_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.HAS_HOST_BEES)) HOST_BEE_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.PROJECTILE_IMPACT_HANDLED)) PROJECTILE_IMPACT_HANDLED_COMPATS.add(compat);
+				if (compat.compatTypes().contains(ModCompat.Type.RIGHT_CLICKED_HIVE_HANDLED)) RIGHT_CLICKED_HIVE_HANDLED_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.CUSTOM_EQUIPMENT_SLOTS)) CUSTOM_EQUIPMENT_SLOTS_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BEE_WEARABLES_BOOSTING)) BEE_WEARABLES_BOOSTING_COMPATS.add(compat);
 				if (compat.compatTypes().contains(ModCompat.Type.BEE_COLOR)) BEE_COLOR_COMPATS.add(compat);

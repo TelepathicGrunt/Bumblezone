@@ -202,6 +202,13 @@ allprojects {
                 includeGroup "com.jamieswhiteshirt"
             }
         }
+        maven {
+            name = "ModMaven"
+            url = "https://modmaven.dev"
+            content {
+                includeGroup 'com.hollingsworth.ars_nouveau'
+            }
+        }
 //        maven {
 //            url "https://maven.saps.dev/snapshots"
 //            content {

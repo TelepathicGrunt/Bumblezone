@@ -23,7 +23,7 @@ public class AdAstraCompat implements ModCompat {
 		JET_FEET = BuiltInRegistries.ITEM.get(new ResourceLocation("ad_astra", "jet_suit_boots"));
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
-		ModChecker.AdAstraPresent = true;
+		ModChecker.adAstraPresent = true;
 	}
 
 	@Override

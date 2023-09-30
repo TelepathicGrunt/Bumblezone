@@ -80,7 +80,11 @@ public interface ModCompat {
         return false;
     }
 
-    default boolean isTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
+    default InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
+        return InteractionResult.PASS;
+    }
+
+    default boolean isRightClickTeleportHandled(Entity owner, ItemStack itemStack) {
         return false;
     }
 
@@ -108,6 +112,7 @@ public interface ModCompat {
         COMB_ORE,
         HAS_HOST_BEES,
         PROJECTILE_IMPACT_HANDLED,
+        RIGHT_CLICKED_HIVE_HANDLED,
         CUSTOM_EQUIPMENT_SLOTS,
         BEE_WEARABLES_BOOSTING,
         BEE_COLOR,
