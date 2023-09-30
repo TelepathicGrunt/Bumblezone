@@ -85,16 +85,17 @@ public class BuzzingBriefcase extends Item {
                 return false;
             }
 
+            boolean isVictimBeelike = BeeAggression.isBeelikeEntity(victim);
             List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
             for (Entity entity : releasedBees) {
-                if (entity instanceof NeutralMob neutralMob && !BeeAggression.isBeelikeEntity(victim)) {
+                if (entity instanceof NeutralMob neutralMob && !isVictimBeelike) {
                     neutralMob.setTarget(victim);
                     neutralMob.setRemainingPersistentAngerTime(400); // 20 seconds
                     neutralMob.setPersistentAngerTarget(victim.getUUID());
                 }
             }
 
-            if(player instanceof ServerPlayer && !releasedBees.isEmpty()) {
+            if(!isVictimBeelike && player instanceof ServerPlayer && !releasedBees.isEmpty()) {
                 BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
                 player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             }

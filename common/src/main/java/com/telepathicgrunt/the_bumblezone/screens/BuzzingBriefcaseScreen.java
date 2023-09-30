@@ -743,15 +743,16 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.HEALTH_ID);
 
                     int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
-                    ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
-                    if (!playerHoneyBottleStack.isEmpty()) {
-                        if (!menu.player.getAbilities().instabuild) {
-                            playerHoneyBottleStack.shrink(1);
-                            if (playerHoneyBottleStack.isEmpty()) {
-                                inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
-                            }
-                            else {
-                                inventory.add(Items.GLASS_BOTTLE.getDefaultInstance());
+                    if (honeyBottleSlotIndex != -1) {
+                        ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
+                        if (!playerHoneyBottleStack.isEmpty()) {
+                            if (!menu.player.getAbilities().instabuild) {
+                                playerHoneyBottleStack.shrink(1);
+                                if (playerHoneyBottleStack.isEmpty()) {
+                                    inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
+                                } else {
+                                    inventory.add(Items.GLASS_BOTTLE.getDefaultInstance());
+                                }
                             }
                         }
                     }
@@ -766,12 +767,14 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.STINGER_ID);
 
                     int stingerSlotIndex = inventory.findSlotMatchingItem(BzItems.BEE_STINGER.get().getDefaultInstance());
-                    ItemStack playerStingerStack = inventory.getItem(stingerSlotIndex);
-                    if (!playerStingerStack.isEmpty()) {
-                        ((BeeEntityInvoker) bee).callSetHasStung(false);
+                    if (stingerSlotIndex != -1) {
+                        ItemStack playerStingerStack = inventory.getItem(stingerSlotIndex);
+                        if (!playerStingerStack.isEmpty()) {
+                            ((BeeEntityInvoker) bee).callSetHasStung(false);
 
-                        if (!menu.player.getAbilities().instabuild) {
-                            playerStingerStack.shrink(1);
+                            if (!menu.player.getAbilities().instabuild) {
+                                playerStingerStack.shrink(1);
+                            }
                         }
                     }
                 }
@@ -785,14 +788,16 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.GROW_UP_ID);
 
                     int honeyBottleSlotIndex = inventory.findSlotMatchingItem(Items.HONEY_BOTTLE.getDefaultInstance());
-                    ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
-                    if (!playerHoneyBottleStack.isEmpty()) {
-                        if (!menu.player.getAbilities().instabuild) {
-                            playerHoneyBottleStack.shrink(1);
-                            if (playerHoneyBottleStack.isEmpty()) {
-                                inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
-                            } else {
-                                inventory.add(Items.GLASS_BOTTLE.getDefaultInstance());
+                    if (honeyBottleSlotIndex != -1) {
+                        ItemStack playerHoneyBottleStack = inventory.getItem(honeyBottleSlotIndex);
+                        if (!playerHoneyBottleStack.isEmpty()) {
+                            if (!menu.player.getAbilities().instabuild) {
+                                playerHoneyBottleStack.shrink(1);
+                                if (playerHoneyBottleStack.isEmpty()) {
+                                    inventory.add(honeyBottleSlotIndex, Items.GLASS_BOTTLE.getDefaultInstance());
+                                } else {
+                                    inventory.add(Items.GLASS_BOTTLE.getDefaultInstance());
+                                }
                             }
                         }
                     }
@@ -807,10 +812,12 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     sendButtonPressToMenu((beeIndex * BuzzingBriefcaseMenu.NUMBER_OF_BUTTONS) + BuzzingBriefcaseMenu.POLLEN_ID);
 
                     int pollenSlotIndex = inventory.findSlotMatchingItem(BzItems.POLLEN_PUFF.get().getDefaultInstance());
-                    ItemStack playerPollenStack = inventory.getItem(pollenSlotIndex);
-                    if (!playerPollenStack.isEmpty()) {
-                        if (!menu.player.getAbilities().instabuild) {
-                            playerPollenStack.shrink(1);
+                    if (pollenSlotIndex != -1) {
+                        ItemStack playerPollenStack = inventory.getItem(pollenSlotIndex);
+                        if (!playerPollenStack.isEmpty()) {
+                            if (!menu.player.getAbilities().instabuild) {
+                                playerPollenStack.shrink(1);
+                            }
                         }
                     }
                 }

@@ -1,3 +1,9 @@
+### **(V.7.0.10 Changes) (1.20.1 Minecraft)**
+
+##### Items:
+Fixed crash in Buzzing Briefcase screen when clicking on an item button when you don't have said item in inventory.
+
+
 ### **(V.7.0.9 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:
