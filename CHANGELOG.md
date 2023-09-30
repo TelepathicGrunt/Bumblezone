@@ -6,6 +6,9 @@ Fixed crash in Buzzing Briefcase screen when clicking on an item button when you
 ##### Blocks:
 Set Infinity Air breaking speed to -1.0 to better state it is unbreakable to other mods.
 
+##### Entities:
+Removed emissive texture files for Bee Queen and Beehemoth as some emissive texture mods aren't applying them correctly and the emissive was not needed anyway.
+
 ##### Compat:
 Added back missing Ars Nouveau compat. (Teleport spells)
 
