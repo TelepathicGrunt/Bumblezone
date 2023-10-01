@@ -10,6 +10,8 @@ Added user messages for when Jetpacks and Jet Boots are disabled in Heavy Air.
 (Forge): Disabled Mekanism's Gravitation and Jetpack modules when in Heavy Air.
  (The Jetpack items will be disabled properly by future Mekanism update to respect item cooldown)
 
+(Fabric/Quilt): Added NoIndium mod into jar so Sodium users gets warned to add Indium for better compat.
+
 
 ### **(V.7.0.10 Changes) (1.20.1 Minecraft)**
 

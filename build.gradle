@@ -228,6 +228,12 @@ allprojects {
                 includeGroup 'mekanism'
             }
         }
+        maven {
+            url = 'https://maven.cafeteria.dev/releases/'
+            content {
+                includeGroup 'me.luligabi'
+            }
+        }
     }
 
     tasks.withType(JavaCompile) {

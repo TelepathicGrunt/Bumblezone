@@ -38,6 +38,8 @@ dependencies {
 
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
 
+    include("me.luligabi:NoIndium:${rootProject.noindium}")
+
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
     //modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
     //modLocalRuntime("maven.modrinth:sodium:${rootProject.sodium}")

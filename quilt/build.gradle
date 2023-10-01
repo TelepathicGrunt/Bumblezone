@@ -77,6 +77,8 @@ dependencies {
 
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
 
+    include("me.luligabi:NoIndium:${rootProject.noindium}")
+
     //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
     //modLocalRuntime("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
 
