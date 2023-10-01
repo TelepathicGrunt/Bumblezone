@@ -3,9 +3,12 @@
 ##### Compat:
 Added user messages for when Jetpacks and Jet Boots are disabled in Heavy Air.
 
-Block Blood Magic's Air Sigil and Reliquary's Rending Gale use when in Heavy Air block.
+(Forge): Block Blood Magic's Air Sigil and Reliquary's Rending Gale use when in Heavy Air block.
 
 (Forge): Fixed bug where PneumaticCraft compat would put cooldown on any boots equipped.
+
+(Forge): Disabled Mekanism's Gravitation and Jetpack modules when in Heavy Air.
+ (The Jetpack items will be disabled properly by future Mekanism update to respect item cooldown)
 
 
 ### **(V.7.0.10 Changes) (1.20.1 Minecraft)**

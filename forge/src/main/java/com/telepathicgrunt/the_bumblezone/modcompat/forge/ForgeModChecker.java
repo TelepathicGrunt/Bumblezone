@@ -76,8 +76,8 @@ public class ForgeModChecker {
             modid = "reliquary";
             loadupModCompat(modid, () -> new ReliquaryCompat());
 
-//            modid = "mekanism";
-//            loadupModCompat(modid, () -> new MekanismCompat());
+            modid = "mekanism";
+            loadupModCompat(modid, () -> new MekanismCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");
