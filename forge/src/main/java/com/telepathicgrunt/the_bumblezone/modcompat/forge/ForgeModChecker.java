@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
+import com.telepathicgrunt.the_bumblezone.modcompat.AdAstraCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.BeekeeperCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 
@@ -68,6 +69,12 @@ public class ForgeModChecker {
 
             modid = "ars_nouveau";
             loadupModCompat(modid, () -> new ArsNouveauCompat());
+
+            modid = "bloodmagic";
+            loadupModCompat(modid, () -> new BloodMagicCompat());
+
+            modid = "reliquary";
+            loadupModCompat(modid, () -> new ReliquaryCompat());
 
 //            modid = "mekanism";
 //            loadupModCompat(modid, () -> new MekanismCompat());

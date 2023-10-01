@@ -35,6 +35,7 @@ public class AdAstraCompat implements ModCompat {
 		return EnumSet.of(Type.HEAVY_AIR_RESTRICTED);
 	}
 
+	@Override
 	public void restrictFlight(Entity entity, double extraGravity) {
 		if (entity instanceof Player player) {
 			if (hasItemEquipped(player, EquipmentSlot.HEAD, JET_HELMET) &&

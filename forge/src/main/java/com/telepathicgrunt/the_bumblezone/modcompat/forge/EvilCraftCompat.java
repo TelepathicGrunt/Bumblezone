@@ -20,6 +20,7 @@ public class EvilCraftCompat implements ModCompat {
 		return EnumSet.of(Type.HEAVY_AIR_RESTRICTED);
 	}
 
+	@Override
 	public void restrictFlight(Entity entity, double extraGravity) {
 		if (entity.getControlledVehicle() instanceof EntityBroom entityBroom) {
 			entityBroom.setDeltaMovement(

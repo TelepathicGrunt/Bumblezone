@@ -37,7 +37,6 @@ public class ModChecker {
 	public static boolean requiemPresent = false;
 	public static boolean twilightForestPresent = false;
 	public static boolean dragonEnchantsPresent = false;
-	public static boolean sodiumPresent = false;
 	public static boolean rubidiumPresent = false;
 	public static boolean goodallPresent = false;
 	public static boolean backpackedPresent = false;
@@ -54,6 +53,8 @@ public class ModChecker {
 	public static boolean FTBEssentialsPresent = false;
 	public static boolean adAstraPresent = false;
 	public static boolean arsNouveauPresent = false;
+	public static boolean bloodMagicPresent = false;
+	public static boolean reliquaryPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --

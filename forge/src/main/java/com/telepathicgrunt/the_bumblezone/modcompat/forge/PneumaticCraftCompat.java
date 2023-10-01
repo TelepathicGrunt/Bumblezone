@@ -8,18 +8,24 @@ import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
 import me.desht.pneumaticcraft.common.pneumatic_armor.ArmorUpgradeRegistry;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.EnumSet;
 
 public class PneumaticCraftCompat implements ModCompat {
+	public static Item PNEUMATIC_BOOTS;
+
 	public PneumaticCraftCompat() {
+		PNEUMATIC_BOOTS = BuiltInRegistries.ITEM.get(new ResourceLocation("pneumaticcraft", "pneumatic_boots"));
+
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.pneumaticCraftPresent = true;
 	}
@@ -29,8 +35,9 @@ public class PneumaticCraftCompat implements ModCompat {
 		return EnumSet.of(Type.HEAVY_AIR_RESTRICTED);
 	}
 
+	@Override
 	public void restrictFlight(Entity entity, double extraGravity) {
-		if (entity instanceof Player player) {
+		if (entity instanceof Player player && player.getItemBySlot(EquipmentSlot.FEET).is(PNEUMATIC_BOOTS)) {
 			IArmorUpgradeHandler<?> upgrade = ArmorUpgradeRegistry.getInstance().getUpgradeEntry(new ResourceLocation("pneumaticcraft:jet_boots"));
 			disableFlyBoots(player, upgrade);
 		}
@@ -41,6 +48,7 @@ public class PneumaticCraftCompat implements ModCompat {
 		EquipmentSlot equipmentSlot = upgrade.getEquipmentSlot();
 		byte slotIndex = (byte) upgrade.getIndex();
 		if (handler.isUpgradeInserted(equipmentSlot, slotIndex) && handler.isUpgradeEnabled(equipmentSlot, slotIndex)) {
+
 			ItemStack jetpackBoots = player.getItemBySlot(equipmentSlot);
 			if (!player.getCooldowns().isOnCooldown(jetpackBoots.getItem())) {
 				if (player instanceof ServerPlayer serverPlayer) {

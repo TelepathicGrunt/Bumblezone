@@ -25,17 +25,30 @@ public class IronJetpacksCompat implements ModCompat {
 		return EnumSet.of(Type.HEAVY_AIR_RESTRICTED);
 	}
 
+	@Override
 	public void restrictFlight(Entity entity, double extraGravity) {
 		if (entity instanceof Player player) {
 			ItemStack jetpack = JetpackUtils.getEquippedJetpack(player);
-			if (!jetpack.isEmpty() && JetpackUtils.isEngineOn(jetpack)) {
-				JetpackUtils.toggleEngine(jetpack);
+			if (!jetpack.isEmpty()) {
+				if (JetpackUtils.isEngineOn(jetpack)) {
+					JetpackUtils.toggleEngine(jetpack);
 
-				if (player instanceof ServerPlayer serverPlayer) {
-					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
-							.withStyle(ChatFormatting.ITALIC)
-							.withStyle(ChatFormatting.RED), true);
+					if (player instanceof ServerPlayer serverPlayer) {
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+								.withStyle(ChatFormatting.ITALIC)
+								.withStyle(ChatFormatting.RED), true);
+					}
 				}
+
+				if (!player.getCooldowns().isOnCooldown(jetpack.getItem())) {
+					if (player instanceof ServerPlayer serverPlayer) {
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+								.withStyle(ChatFormatting.ITALIC)
+								.withStyle(ChatFormatting.RED), true);
+					}
+				}
+
+				player.getCooldowns().addCooldown(jetpack.getItem(), 40);
 			}
 		}
 	}

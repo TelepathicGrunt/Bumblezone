@@ -101,7 +101,7 @@ public class ArsNouveauCompat implements ModCompat {
 			BlockState hitState = event.world.getBlockState(blockHitResult.getBlockPos());
 			if (hitState.is(BzTags.ESSENCE_BLOCKS) || hitState.is(BzBlocks.INFINITY_BARRIER.get())) {
 				if (event.shooter instanceof ServerPlayer serverPlayer) {
-					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_magic")
+					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_spell")
 							.withStyle(ChatFormatting.ITALIC)
 							.withStyle(ChatFormatting.RED), true);
 				}
@@ -115,7 +115,7 @@ public class ArsNouveauCompat implements ModCompat {
 			if (event.rayTraceResult instanceof EntityHitResult entityHitResult) {
 				if (event.shooter instanceof Player player && HeavyAir.isInHeavyAir(entityHitResult.getEntity().level(), entityHitResult.getEntity().getBoundingBox())) {
 					if (player instanceof ServerPlayer serverPlayer) {
-						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_magic")
+						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_spell")
 								.withStyle(ChatFormatting.ITALIC)
 								.withStyle(ChatFormatting.RED), true);
 					}
