@@ -29,7 +29,7 @@ public class BloodMagicCompat implements ModCompat {
 	}
 
 	public static void onAirSigilItemUse(PlayerInteractEvent.RightClickItem event) {
-		if (event.getItemStack().is(AIR_SIGIL)) {
+		if (AIR_SIGIL != null && event.getItemStack().is(AIR_SIGIL)) {
 			Entity entity = event.getEntity();
 			if (entity != null && HeavyAir.isInHeavyAir(entity.level(), entity.getBoundingBox())) {
 				if (entity instanceof ServerPlayer serverPlayer) {

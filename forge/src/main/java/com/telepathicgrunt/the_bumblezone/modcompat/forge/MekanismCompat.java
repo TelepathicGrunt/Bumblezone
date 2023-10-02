@@ -52,7 +52,9 @@ public class MekanismCompat implements ModCompat {
 		if (entity instanceof Player player) {
 			ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
 
-			if (chestplate.is(JETPACK_ARMORED) || chestplate.is(JETPACK)) {
+			if ((JETPACK_ARMORED != null && chestplate.is(JETPACK_ARMORED)) ||
+				(JETPACK != null && chestplate.is(JETPACK)))
+			{
 				if (!player.getCooldowns().isOnCooldown(chestplate.getItem())) {
 					if (player instanceof ServerPlayer serverPlayer) {
 						serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")

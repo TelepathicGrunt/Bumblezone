@@ -37,7 +37,10 @@ public class PneumaticCraftCompat implements ModCompat {
 
 	@Override
 	public void restrictFlight(Entity entity, double extraGravity) {
-		if (entity instanceof Player player && player.getItemBySlot(EquipmentSlot.FEET).is(PNEUMATIC_BOOTS)) {
+		if (entity instanceof Player player &&
+			PNEUMATIC_BOOTS != null &&
+			player.getItemBySlot(EquipmentSlot.FEET).is(PNEUMATIC_BOOTS))
+		{
 			IArmorUpgradeHandler<?> upgrade = ArmorUpgradeRegistry.getInstance().getUpgradeEntry(new ResourceLocation("pneumaticcraft:jet_boots"));
 			disableFlyBoots(player, upgrade);
 		}

@@ -1,3 +1,9 @@
+### **(V.7.0.12 Changes) (1.20.1 Minecraft)**
+
+##### Compat:
+(Forge): Disabled Create Jetpack mod's Jetpack when in Heavy Air.
+
+
 ### **(V.7.0.11 Changes) (1.20.1 Minecraft)**
 
 ##### Compat:

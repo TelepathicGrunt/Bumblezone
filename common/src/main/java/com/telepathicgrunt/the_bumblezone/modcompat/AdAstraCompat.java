@@ -58,6 +58,6 @@ public class AdAstraCompat implements ModCompat {
 	}
 
 	private static boolean hasItemEquipped(Player player, EquipmentSlot slot, Item itemToMatch) {
-		return player.getItemBySlot(slot).is(itemToMatch);
+		return itemToMatch != null && player.getItemBySlot(slot).is(itemToMatch);
 	}
 }

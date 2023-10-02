@@ -30,7 +30,7 @@ public class ReliquaryCompat implements ModCompat {
 	}
 
 	public static void onRendingGaleItemUse(PlayerInteractEvent.RightClickItem event) {
-		if (event.getItemStack().is(RENDING_GALE)) {
+		if (RENDING_GALE != null && event.getItemStack().is(RENDING_GALE)) {
 			Entity entity = event.getEntity();
 			if (entity != null && HeavyAir.isInHeavyAir(entity.level(), entity.getBoundingBox())) {
 				if (entity instanceof ServerPlayer serverPlayer) {

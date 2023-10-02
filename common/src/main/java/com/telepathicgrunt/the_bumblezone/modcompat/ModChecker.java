@@ -55,6 +55,7 @@ public class ModChecker {
 	public static boolean arsNouveauPresent = false;
 	public static boolean bloodMagicPresent = false;
 	public static boolean reliquaryPresent = false;
+	public static boolean createJetpackPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -94,6 +95,9 @@ public class ModChecker {
 
 			modid = "ad_astra";
 			loadupModCompat(modid, () -> new AdAstraCompat());
+
+			modid = "create_jetpack";
+			loadupModCompat(modid, () -> new CreateJetpackCompat());
 
 			modid = "lootr";
 			loadupModCompat(modid, () -> new LootrCompat());
