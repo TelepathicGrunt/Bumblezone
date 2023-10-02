@@ -1,5 +1,8 @@
 ### **(V.7.0.12 Changes) (1.20.1 Minecraft)**
 
+##### Advancements:
+Fixed Queen Desire's Journey's End advancement not being completable due to still referencing an old removed advancement.
+
 ##### Compat:
 (Forge): Disabled Create Jetpack mod's Jetpack when in Heavy Air.
 
