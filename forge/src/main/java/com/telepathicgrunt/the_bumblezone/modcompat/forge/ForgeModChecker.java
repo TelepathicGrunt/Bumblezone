@@ -64,9 +64,6 @@ public class ForgeModChecker {
             modid = "pneumaticcraft";
             loadupModCompat(modid, () -> new PneumaticCraftCompat());
 
-            modid = "evilcraft";
-            loadupModCompat(modid, () -> new EvilCraftCompat());
-
             modid = "ars_nouveau";
             loadupModCompat(modid, () -> new ArsNouveauCompat());
 

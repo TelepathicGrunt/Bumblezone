@@ -49,7 +49,6 @@ public class ModChecker {
 	public static boolean restrictedPortalsPresent = false;
 	public static boolean ironJetpacksPresent = false;
 	public static boolean pneumaticCraftPresent = false;
-	public static boolean evilCraftPresent = false;
 	public static boolean FTBEssentialsPresent = false;
 	public static boolean adAstraPresent = false;
 	public static boolean arsNouveauPresent = false;

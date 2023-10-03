@@ -1,0 +1,42 @@
+{
+  "replace": false,
+  "values": [
+    "the_bumblezone:beehemoth",
+    {
+      "id": "evilcraft:broom",
+      "required": false
+    },
+    {
+      "id": "hexerei:broom",
+      "required": false
+    },
+    {
+      "id": "mythicmounts:griffon",
+      "required": false
+    },
+    {
+      "id": "mythicmounts:moth",
+      "required": false
+    },
+    {
+      "id": "mythicmounts:colelytra",
+      "required": false
+    },
+    {
+      "id": "mythicmounts:dragon",
+      "required": false
+    },
+    {
+      "id": "mythicmounts:firebird",
+      "required": false
+    },
+    {
+      "id": "mythicmounts:netherbat",
+      "required": false
+    },
+    {
+      "id": "dragonmounts:dragon",
+      "required": false
+    }
+  ]
+}

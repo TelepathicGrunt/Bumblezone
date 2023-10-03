@@ -138,6 +138,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> SENTRY_WATCHER_CANNOT_DAMAGE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/cannot_damage"));
     public static final TagKey<EntityType<?>> BEE_LIKE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_like"));
     public static final TagKey<EntityType<?>> HEAVY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "heavy_air/immune_to_gravity_effect"));
+    public static final TagKey<EntityType<?>> HEAVY_AIR_AFFECT_VEHICLES = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "heavy_air/vehicles_to_apply_gravity_to"));
     public static final TagKey<EntityType<?>> WINDY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "windy_air/immune_to_push_effect"));
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_ANYWHERE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_anywhere"));
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_high"));

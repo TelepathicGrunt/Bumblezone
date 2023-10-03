@@ -118,6 +118,15 @@ public class HeavyAir extends Block {
             for (ModCompat compat : ModChecker.HEAVY_AIR_RESTRICTED_COMPATS) {
                 compat.restrictFlight(entity, extraGravity);
             }
+
+            Entity vehicle = entity.getControlledVehicle();
+            if (vehicle != null && vehicle.getType().is(BzTags.HEAVY_AIR_AFFECT_VEHICLES)) {
+                vehicle.setDeltaMovement(
+                        vehicle.getDeltaMovement().x,
+                        vehicle.getDeltaMovement().y + extraGravity,
+                        vehicle.getDeltaMovement().z
+                );
+            }
         }
 
         entity.setDeltaMovement(entity.getDeltaMovement().add(0, extraGravity, 0));
