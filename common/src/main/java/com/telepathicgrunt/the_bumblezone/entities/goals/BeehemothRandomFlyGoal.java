@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -82,9 +83,17 @@ public class BeehemothRandomFlyGoal extends Goal {
     }
 
     private BlockPos getGroundPosition(Level level, BlockPos radialPos) {
-        while (level.isEmptyBlock(radialPos)) {
-            radialPos = radialPos.below();
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        mutableBlockPos.set(radialPos);
+
+        while (level.isInWorldBounds(mutableBlockPos) && level.isEmptyBlock(mutableBlockPos)) {
+            mutableBlockPos.move(Direction.DOWN);
         }
-        return radialPos;
+
+        if (!level.isInWorldBounds(mutableBlockPos)) {
+            return radialPos;
+        }
+
+        return mutableBlockPos;
     }
 }
