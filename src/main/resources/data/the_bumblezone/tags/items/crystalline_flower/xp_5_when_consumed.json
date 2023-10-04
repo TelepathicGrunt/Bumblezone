@@ -33,6 +33,10 @@
     {
       "id": "bk:royal_jelly",
       "required": false
+    },
+    {
+      "id": "ars_nouveau:greater_experience_gem",
+      "required": false
     }
   ]
 }
