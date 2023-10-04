@@ -197,7 +197,7 @@ public class BzBucketItem extends BucketItem {
                             });
                             pLevel.gameEvent(pPlayer, GameEvent.FLUID_PICKUP, blockpos);
                             ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, pPlayer, itemstack1);
-                            if (!pLevel.isClientSide) {
+                            if (pPlayer instanceof ServerPlayer) {
                                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)pPlayer, itemstack1);
                             }
 
