@@ -1,3 +1,13 @@
+### **(V.7.0.14 Changes) (1.20.1 Minecraft)**
+
+##### Blocks:
+Removed `the_bumblezone:heavy_air/vehicles_to_apply_gravity_to` entity type tag because I found a better solution to have
+ Heavy Air apply gravity correctly to all vehicles the player can be riding.
+
+##### Misc:
+(Forge): Removed version restriction to allow 47.2.x Forge versions.
+
+
 ### **(V.7.0.13 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:

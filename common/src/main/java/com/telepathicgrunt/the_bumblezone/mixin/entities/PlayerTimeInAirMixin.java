@@ -33,7 +33,7 @@ public abstract class PlayerTimeInAirMixin extends LivingEntity implements Tempo
 
     @Inject(method = "tick()V", at = @At(value = "HEAD"))
     private void bumblezone$recordTicksOffGround(CallbackInfo ci) {
-        if (this.onGround()) {
+        if (this.onGround() || (this.getControlledVehicle() != null && this.getControlledVehicle().onGround())) {
             this.bumblezone$ticksOffGroundInHeavyAir = 0;
         }
         else if (!this.isCreative() && !this.isSpectator()) {

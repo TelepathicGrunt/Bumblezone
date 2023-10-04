@@ -120,7 +120,7 @@ public class HeavyAir extends Block {
             }
 
             Entity vehicle = entity.getControlledVehicle();
-            if (vehicle != null && vehicle.getType().is(BzTags.HEAVY_AIR_AFFECT_VEHICLES)) {
+            if (vehicle != null) {
                 vehicle.setDeltaMovement(
                         vehicle.getDeltaMovement().x,
                         vehicle.getDeltaMovement().y + extraGravity,
