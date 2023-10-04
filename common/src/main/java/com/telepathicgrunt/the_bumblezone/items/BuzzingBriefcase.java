@@ -70,8 +70,8 @@ public class BuzzingBriefcase extends Item {
 
         List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
 
-        if(player instanceof ServerPlayer && !releasedBees.isEmpty()) {
-            BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
+        if(player instanceof ServerPlayer serverPlayer && !releasedBees.isEmpty()) {
+            BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger(serverPlayer);
 
             player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
         }
@@ -95,9 +95,9 @@ public class BuzzingBriefcase extends Item {
                 }
             }
 
-            if(!isVictimBeelike && player instanceof ServerPlayer && !releasedBees.isEmpty()) {
-                BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger((ServerPlayer) player);
-                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            if(!isVictimBeelike && player instanceof ServerPlayer serverPlayer && !releasedBees.isEmpty()) {
+                BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger(serverPlayer);
+                serverPlayer.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             }
         }
         return true;
@@ -124,8 +124,8 @@ public class BuzzingBriefcase extends Item {
             player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
             player.swing(playerHand, true);
 
-            if(player instanceof ServerPlayer && getBeesStored(player.level(), briefcaseItem, false).size() == MAX_NUMBER_OF_BEES) {
-                BzCriterias.BUZZING_BRIEFCASE_FULL_TRIGGER.trigger((ServerPlayer) player);
+            if(player instanceof ServerPlayer serverPlayer && getBeesStored(serverPlayer.level(), briefcaseItem, false).size() == MAX_NUMBER_OF_BEES) {
+                BzCriterias.BUZZING_BRIEFCASE_FULL_TRIGGER.trigger(serverPlayer);
             }
 
             int variantBeesCaught = briefcaseItem.getOrCreateTag().getInt(TAG_VARANT_BEES);

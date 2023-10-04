@@ -4,6 +4,8 @@
 Heavy Air now uses a `the_bumblezone:heavy_air/vehicles_to_apply_gravity_to` entity type tag for player ridden vehicles 
  to be pulled down as well when in Heavy Air. Prevent flying mounts from working in Heavy Air.
 
+Fixed client side crash when client connected to server tries to wash away Honey Web or Sticky Honey Residue.
+
 ##### Entities:
 Fixed deadlock/crash if Beehemoth tries to pathfind ground in a spot that has no floor in the dimension
 

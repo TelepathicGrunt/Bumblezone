@@ -59,9 +59,9 @@ public class BzCustomBucketItem extends BzBucketItem {
 
         InteractionResultHolder<ItemStack> actionResult = super.use(world, playerEntity, hand);
 
-        if(getFluid() == BzFluids.SUGAR_WATER_FLUID.get() && actionResult.getResult() == InteractionResult.CONSUME && playerEntity instanceof ServerPlayer) {
+        if (getFluid() == BzFluids.SUGAR_WATER_FLUID.get() && actionResult.getResult() == InteractionResult.CONSUME && playerEntity instanceof ServerPlayer) {
             BlockHitResult raytraceresult = getPlayerPOVHitResult(world, playerEntity, ClipContext.Fluid.NONE);
-            if(raytraceresult.getType() == HitResult.Type.BLOCK) {
+            if (raytraceresult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockpos = raytraceresult.getBlockPos();
                 Direction direction = raytraceresult.getDirection();
                 BlockPos blockpos1 = blockpos.relative(direction);
@@ -70,17 +70,17 @@ public class BzCustomBucketItem extends BzBucketItem {
 
                 boolean isNextToSugarCane = false;
                 BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-                for(Direction directionOffset : Direction.Plane.HORIZONTAL) {
+                for (Direction directionOffset : Direction.Plane.HORIZONTAL) {
                     mutable.set(blockpos2).move(directionOffset).move(Direction.UP);
                     BlockState state = world.getBlockState(mutable);
-                    if(state.is(Blocks.SUGAR_CANE)) {
+                    if (state.is(Blocks.SUGAR_CANE)) {
                         isNextToSugarCane = true;
                         break;
                     }
                 }
 
-                if(isNextToSugarCane) {
-                    BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.trigger((ServerPlayer) playerEntity);
+                if (isNextToSugarCane && playerEntity instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.trigger(serverPlayer);
                 }
             }
         }

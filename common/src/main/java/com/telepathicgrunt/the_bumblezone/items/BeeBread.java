@@ -21,14 +21,15 @@ public class BeeBread extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerEntity, LivingEntity entity, InteractionHand playerHand) {
-        if(!(entity instanceof Bee) && entity.getType() != BzEntities.BEEHEMOTH.get())
+        if (!(entity instanceof Bee) && entity.getType() != BzEntities.BEEHEMOTH.get()) {
             return InteractionResult.PASS;
+        }
 
         int currentEffectAmplifier = 0;
-        if(entity.hasEffect(BzEffects.BEENERGIZED.get())) {
+        if (entity.hasEffect(BzEffects.BEENERGIZED.get())) {
             currentEffectAmplifier = Math.min(entity.getEffect(BzEffects.BEENERGIZED.get()).getAmplifier() + 1, 2);
-            if(currentEffectAmplifier == 2 && playerEntity instanceof ServerPlayer) {
-                BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
+            if (currentEffectAmplifier == 2 && playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger(serverPlayer);
             }
         }
         entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, currentEffectAmplifier, true, true, true));

@@ -227,15 +227,17 @@ public class HoneyWeb extends Block {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
         if (itemstack.is(BzTags.WASHING_ITEMS) &&
-                (!itemstack.is(Items.POTION) ||
-                    (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water"))))
+            (!itemstack.is(Items.POTION) ||
+            (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water"))))
         {
 
             if (!itemstack.isEmpty()) {
                 playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             }
 
-            BzCriterias.CLEANUP_HONEY_WEB_TRIGGER.trigger((ServerPlayer) playerEntity);
+            if (playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.CLEANUP_HONEY_WEB_TRIGGER.trigger(serverPlayer);
+            }
 
             world.destroyBlock(position, false);
 

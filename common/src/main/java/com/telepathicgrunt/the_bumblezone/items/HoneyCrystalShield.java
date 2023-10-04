@@ -186,8 +186,8 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         // checks for explosion and player
         if (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)) {
             if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
-                if(player instanceof ServerPlayer) {
-                    BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.trigger((ServerPlayer) player);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.trigger(serverPlayer);
                 }
 
                 if (source.is(DamageTypeTags.IS_EXPLOSION) && player.isBlocking()) {

@@ -352,7 +352,9 @@ public class StickyHoneyResidue extends Block {
                 playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             }
 
-            BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger((ServerPlayer) playerEntity);
+            if (playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger(serverPlayer);
+            }
 
             world.destroyBlock(position, false);
 

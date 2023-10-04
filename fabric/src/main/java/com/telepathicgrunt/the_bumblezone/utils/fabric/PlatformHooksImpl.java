@@ -174,8 +174,8 @@ public class PlatformHooksImpl {
                             fluidDrainable.getPickupSound().ifPresent((sound) -> user.playSound(sound, 1.0F, 1.0F));
                             world.gameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
                             ItemStack itemStack3 = ItemUtils.createFilledResult(itemStack, user, itemStack2);
-                            if (!world.isClientSide()) {
-                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) user, itemStack2);
+                            if (user instanceof ServerPlayer serverPlayer) {
+                                CriteriaTriggers.FILLED_BUCKET.trigger(serverPlayer, itemStack2);
                             }
 
                             return InteractionResultHolder.sidedSuccess(itemStack3, world.isClientSide());
@@ -189,8 +189,8 @@ public class PlatformHooksImpl {
                     BlockPos blockPos3 = blockState.getBlock() instanceof LiquidBlockContainer && fluid.is(FluidTags.WATER) ? blockPos : blockPos2;
                     if (bzCustomBucketItem.emptyContents(user, world, blockPos3, blockHitResult)) {
                         bzCustomBucketItem.checkExtraContent(user, world, itemStack, blockPos3);
-                        if (user instanceof ServerPlayer) {
-                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) user, blockPos3, itemStack);
+                        if (user instanceof ServerPlayer serverPlayer) {
+                            CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, blockPos3, itemStack);
                         }
 
                         user.awardStat(Stats.ITEM_USED.get(bzCustomBucketItem));

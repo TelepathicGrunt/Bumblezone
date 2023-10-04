@@ -287,8 +287,8 @@ public class StringCurtain extends Block {
                         itemstack.shrink(1);
                     }
 
-                    if(playerEntity instanceof ServerPlayer) {
-                        BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.trigger((ServerPlayer) playerEntity);
+                    if(playerEntity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.trigger(serverPlayer);
                     }
                 }
                 return InteractionResult.SUCCESS;

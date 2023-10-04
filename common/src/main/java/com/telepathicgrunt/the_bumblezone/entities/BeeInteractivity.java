@@ -97,8 +97,8 @@ public class BeeInteractivity {
             if (itemstackOriginal.getItem() == BzItems.BEE_BREAD.get() || (BzModCompatibilityConfigs.allowHoneyTreatCompat && itemRL.equals(PRODUCTIVE_BEES_HONEY_TREAT))) {
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
-                if(removedWrath && playerEntity instanceof ServerPlayer) {
-                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger((ServerPlayer) playerEntity, itemstackOriginal);
+                if(removedWrath && playerEntity instanceof ServerPlayer serverPlayer) {
+                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger(serverPlayer, itemstackOriginal);
                 }
 
                 playerEntity.swing(hand, true);
@@ -188,8 +188,8 @@ public class BeeInteractivity {
                     playerEntity.swing(hand, true);
                     ((BeeEntityInvoker)beeEntity).callSetHasNectar(false);
 
-                    if(playerEntity instanceof ServerPlayer) {
-                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger((ServerPlayer) playerEntity, itemstack);
+                    if(playerEntity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger(serverPlayer, itemstack);
                     }
                     return InteractionResult.SUCCESS;
                 }

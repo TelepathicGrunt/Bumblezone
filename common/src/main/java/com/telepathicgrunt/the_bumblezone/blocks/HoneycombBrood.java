@@ -210,8 +210,8 @@ public class HoneycombBrood extends ProperFacingBlock {
                                         random.nextFloat() * 0.4 + 0.2f);
                             }
 
-                            if(playerEntity instanceof ServerPlayer) {
-                                BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.trigger((ServerPlayer) playerEntity);
+                            if(playerEntity instanceof ServerPlayer serverPlayer) {
+                                BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.trigger(serverPlayer);
                             }
                         }
 

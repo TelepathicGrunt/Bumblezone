@@ -96,8 +96,8 @@ public class RoyalJellyBottle extends Item {
             return InteractionResult.PASS;
 
         entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 24000, 3, true, true, true));
-        if (playerEntity instanceof ServerPlayer) {
-            BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
+        if (playerEntity instanceof ServerPlayer serverPlayer) {
+            BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger(serverPlayer);
         }
 
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);

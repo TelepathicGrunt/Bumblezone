@@ -98,8 +98,8 @@ public class EntityTeleportationHookup {
         if (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             if (livingEntity.getY() < -2) {
                 if (BzDimensionConfigs.enableExitTeleportation) {
-                    if (livingEntity instanceof ServerPlayer) {
-                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
+                    if (livingEntity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger(serverPlayer);
                     }
 
                     if (livingEntity.getY() < -4) {
@@ -492,8 +492,8 @@ public class EntityTeleportationHookup {
 
                 //if the entity was pushed into a beehive, begin the teleportation.
                 if (validBelowBlock) {
-                    if (pushedEntity instanceof ServerPlayer) {
-                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.trigger((ServerPlayer) pushedEntity);
+                    if (pushedEntity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.trigger(serverPlayer);
                     }
                     BzWorldSavedData.queueEntityToTeleport(pushedEntity, BzDimension.BZ_WORLD_KEY);
                 }

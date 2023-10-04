@@ -214,8 +214,8 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
             Vec3 deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
 
-            if(entity instanceof ServerPlayer && entity.fallDistance > 18 && newYDelta < -0.9D) {
-                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger((ServerPlayer) entity);
+            if(entity instanceof ServerPlayer serverPlayer && entity.fallDistance > 18 && newYDelta < -0.9D) {
+                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger(serverPlayer);
             }
 
             if (!entity.getType().is(BzTags.PILE_OF_POLLEN_CANNOT_SLOW)) {

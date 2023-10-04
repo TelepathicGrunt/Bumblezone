@@ -283,8 +283,12 @@ public class PileOfPollen extends FallingBlock {
             Vec3 deltaMovement = entity.getDeltaMovement();
             double newYDelta = deltaMovement.y;
 
-            if (entity instanceof ServerPlayer && entity.fallDistance > 18 && newYDelta < -0.9D && blockState.getValue(LAYERS) >= 7) {
-                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger((ServerPlayer) entity);
+            if (entity instanceof ServerPlayer serverPlayer &&
+                serverPlayer.fallDistance > 18 &&
+                newYDelta < -0.9D &&
+                blockState.getValue(LAYERS) >= 7)
+            {
+                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger(serverPlayer);
             }
 
             if (deltaMovement.y > 0) {

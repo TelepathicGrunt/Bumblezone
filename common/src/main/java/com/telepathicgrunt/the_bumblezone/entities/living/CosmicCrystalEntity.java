@@ -1443,8 +1443,8 @@ public class CosmicCrystalEntity extends LivingEntity {
             ((LivingEntityAccessor)this).setLastDamageStamp(this.level().getGameTime());
         }
 
-        if (entity2 instanceof ServerPlayer) {
-            CriteriaTriggers.PLAYER_HURT_ENTITY.trigger((ServerPlayer)entity2, this, damageSource, damageAmount, damageAmount, bl);
+        if (entity2 instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggers.PLAYER_HURT_ENTITY.trigger(serverPlayer, this, damageSource, damageAmount, damageAmount, bl);
         }
 
         return damageAmount > 0;
