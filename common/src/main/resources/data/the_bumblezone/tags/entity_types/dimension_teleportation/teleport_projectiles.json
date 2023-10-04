@@ -11,11 +11,11 @@
       "required": false
     },
     {
-      "id": "ars_elemental:homing_projectile",
+      "id": "ars_nouveau:homing_spell_proj",
       "required": false
     },
     {
-      "id": "ars_elemental:curved_projectile",
+      "id": "ars_nouveau:arcing_spell_proj",
       "required": false
     },
     {

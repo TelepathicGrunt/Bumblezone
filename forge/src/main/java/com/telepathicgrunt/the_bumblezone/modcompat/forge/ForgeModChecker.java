@@ -65,7 +65,12 @@ public class ForgeModChecker {
             loadupModCompat(modid, () -> new PneumaticCraftCompat());
 
             modid = "ars_nouveau";
-            loadupModCompat(modid, () -> new ArsNouveauCompat());
+            if (ModChecker.isNotOutdated(modid, "4.5.0", false)) {
+                loadupModCompat(modid, () -> new ArsNouveauCompat());
+            }
+
+            modid = "ars_elemental";
+            loadupModCompat(modid, () -> new ArsElementalCompat());
 
             modid = "bloodmagic";
             loadupModCompat(modid, () -> new BloodMagicCompat());

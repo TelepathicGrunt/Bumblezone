@@ -52,6 +52,7 @@ public class ModChecker {
 	public static boolean FTBEssentialsPresent = false;
 	public static boolean adAstraPresent = false;
 	public static boolean arsNouveauPresent = false;
+	public static boolean arsElementalPresent = false;
 	public static boolean bloodMagicPresent = false;
 	public static boolean reliquaryPresent = false;
 	public static boolean createJetpackPresent = false;
@@ -144,7 +145,8 @@ public class ModChecker {
 		""".formatted(currentModID));
 	}
 
-    private static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
+	@ApiStatus.Internal
+	public static boolean isNotOutdated(String currentModID, String minVersion, boolean checkQualifierInstead) {
 		if(!PlatformHooks.isModLoaded(currentModID)) return true;
 
 		ModInfo info = PlatformHooks.getModInfo(currentModID, checkQualifierInstead);

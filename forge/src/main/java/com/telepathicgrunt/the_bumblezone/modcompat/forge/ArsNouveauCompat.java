@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
+import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
+import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.google.common.collect.Sets;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
@@ -9,14 +11,17 @@ import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectAnimate;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectBlink;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectBreak;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectConjureWater;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectExchange;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectGlide;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectGravity;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectIntangible;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLaunch;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLeap;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectPhantomBlock;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectPlaceBlock;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectSlowfall;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectWall;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
@@ -29,7 +34,6 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -53,6 +57,8 @@ import java.util.function.Consumer;
 public class ArsNouveauCompat implements ModCompat {
 	private static final ResourceLocation SPELL_PROJ_RL = new ResourceLocation("ars_nouveau", "spell_proj");
 	private static final ResourceLocation SPELL_FOLLOW_PROJ_RL = new ResourceLocation("ars_nouveau", "follow_proj");
+	private static final ResourceLocation SPELL_HOMING_PROJ_RL = new ResourceLocation("ars_nouveau", "homing_spell_proj");
+	private static final ResourceLocation SPELL_CURVED_PROJ_RL = new ResourceLocation("ars_nouveau", "arcing_spell_proj");
 
 	protected static final Set<AbstractCastMethod> ALLOWED_CAST_METHODS = Sets.newHashSet(
 		MethodProjectile.INSTANCE,
@@ -73,7 +79,11 @@ public class ArsNouveauCompat implements ModCompat {
 		EffectAnimate.INSTANCE,
 		EffectGravity.INSTANCE,
 		EffectBreak.INSTANCE,
-		EffectIntangible.INSTANCE
+		EffectIntangible.INSTANCE,
+		EffectConjureWater.INSTANCE,
+		EffectPlaceBlock.INSTANCE,
+		EffectPhantomBlock.INSTANCE,
+		EffectWall.INSTANCE
 	);
 
 	public ArsNouveauCompat() {
@@ -97,7 +107,9 @@ public class ArsNouveauCompat implements ModCompat {
 	}
 
 	private static void handleArsSpellEssenceAndInfinity(EffectResolveEvent.Pre event) {
-		if (DISALLOWED_INFINITY_AND_ESSENCE_EFFECTS.contains(event.resolveEffect) && event.rayTraceResult instanceof BlockHitResult blockHitResult) {
+		boolean isDisallowedEffect = DISALLOWED_INFINITY_AND_ESSENCE_EFFECTS.contains(event.resolveEffect);
+
+		if (isDisallowedEffect && event.rayTraceResult instanceof BlockHitResult blockHitResult) {
 			BlockState hitState = event.world.getBlockState(blockHitResult.getBlockPos());
 			if (hitState.is(BzTags.ESSENCE_BLOCKS) || hitState.is(BzBlocks.INFINITY_BARRIER.get())) {
 				if (event.shooter instanceof ServerPlayer serverPlayer) {
@@ -149,11 +161,12 @@ public class ArsNouveauCompat implements ModCompat {
 			else if (event.spell.getCastMethod() == MethodOrbit.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_FOLLOW_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 				return;
 			}
-//			else if (ModChecker.arsElementalPresent) {
-//				if (ArsElementalCompat.isArsElementalSpellDisallowed(event)) {
-//					return;
-//				}
-//			}
+			else if (event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_HOMING_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+				return;
+			}
+			else if (event.spell.getCastMethod() == MethodArcProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_CURVED_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+				return;
+			}
 
 
 			if(event.rayTraceResult instanceof BlockHitResult) {
@@ -173,14 +186,7 @@ public class ArsNouveauCompat implements ModCompat {
 
 	public InteractionResult isProjectileTeleportHandled(HitResult hitResult, Entity owner, Projectile projectile) {
 		ResourceLocation projectileRL = ForgeRegistries.ENTITY_TYPES.getKey(projectile.getType());
-		boolean isArsProjectile = projectileRL.equals(SPELL_PROJ_RL) || projectileRL.equals(SPELL_FOLLOW_PROJ_RL);
-//		if (ModChecker.arsElementalPresent) {
-//			if (ArsElementalCompat.isArsElementalSpellProjectile(projectileRL)) {
-//				return true;
-//			}
-//		}
-
-		if (isArsProjectile) {
+		if (projectileRL != null && (projectileRL.equals(SPELL_PROJ_RL) || projectileRL.equals(SPELL_FOLLOW_PROJ_RL))) {
 			return InteractionResult.FAIL;
 		}
 

@@ -62,6 +62,10 @@
     {
       "id": "bk:bee_pollen",
       "required": false
+    },
+    {
+      "id": "ars_nouveau:experience_gem",
+      "required": false
     }
   ]
 }

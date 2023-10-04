@@ -7,6 +7,13 @@ Removed `the_bumblezone:heavy_air/vehicles_to_apply_gravity_to` entity type tag 
 ##### Misc:
 (Forge): Removed version restriction to allow 47.2.x Forge versions.
 
+##### Compat:
+(Forge): Added Ars Elemental compat back.
+
+(Forge): Disallow more kinds of Ars Nouveau spells from being placed on Essence Blocks/Infinity Barriers.
+
+(Forge): Ars Nouveau's Experience Gems gives more xp to Crystalline Flower but at a loss compared to what the Experience Gems holds.
+
 
 ### **(V.7.0.13 Changes) (1.20.1 Minecraft)**
 
