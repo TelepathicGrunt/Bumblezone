@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.utils.SuppliedMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

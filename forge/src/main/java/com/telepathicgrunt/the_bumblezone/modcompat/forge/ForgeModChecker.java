@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
-import com.telepathicgrunt.the_bumblezone.modcompat.AdAstraCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.BeekeeperCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 

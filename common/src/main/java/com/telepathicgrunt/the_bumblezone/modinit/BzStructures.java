@@ -4,9 +4,9 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
-import com.telepathicgrunt.the_bumblezone.world.structures.GenericOptimizedStructure;
-import com.telepathicgrunt.the_bumblezone.world.structures.HoneyCaveRoomStructure;
-import com.telepathicgrunt.the_bumblezone.world.structures.PollinatedStreamStructure;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.GenericOptimizedStructure;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.HoneyCaveRoomStructure;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.PollinatedStreamStructure;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 

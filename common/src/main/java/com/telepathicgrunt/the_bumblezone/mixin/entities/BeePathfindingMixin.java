@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
-import com.telepathicgrunt.the_bumblezone.entities.BeeAI;
+import com.telepathicgrunt.the_bumblezone.entities.goals.BeeAI;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import net.minecraft.world.entity.animal.Bee;
 import org.spongepowered.asm.mixin.Final;

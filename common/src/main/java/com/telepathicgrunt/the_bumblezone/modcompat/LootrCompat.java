@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
+import com.telepathicgrunt.the_bumblezone.menus.StrictChestMenu;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
-import com.telepathicgrunt.the_bumblezone.screens.StrictChestMenu;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;

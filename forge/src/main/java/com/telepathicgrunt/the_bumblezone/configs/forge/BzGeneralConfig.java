@@ -6,7 +6,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BzGeneralConfig {
     public static final ForgeConfigSpec GENERAL_SPEC;

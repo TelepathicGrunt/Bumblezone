@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modinit.forge;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.world.forge.BzModCompatBiomeModifier;
+import com.telepathicgrunt.the_bumblezone.worldgen.forge.BzModCompatBiomeModifier;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

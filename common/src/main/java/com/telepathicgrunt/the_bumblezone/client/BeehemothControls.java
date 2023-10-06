@@ -2,10 +2,10 @@ package com.telepathicgrunt.the_bumblezone.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.packets.BeehemothControlsPacket;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.KeyMapping;
 import org.apache.commons.lang3.NotImplementedException;

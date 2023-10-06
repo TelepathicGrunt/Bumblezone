@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.RadianceEssence;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

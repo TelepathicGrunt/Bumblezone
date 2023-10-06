@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.client;
 
 import com.telepathicgrunt.the_bumblezone.client.DimensionTeleportingScreen;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtilsClient;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
