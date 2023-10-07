@@ -131,11 +131,9 @@ public class SentryWatcherSpawnEgg extends Item {
                         BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.trigger(serverPlayer);
                     }
 
-                    if (!player.getAbilities().instabuild) {
-                        sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
-                        if (player instanceof ServerPlayer) {
-                            player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
-                        }
+                    sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
+                    if (player instanceof ServerPlayer) {
+                        player.displayClientMessage(Component.translatable("system.the_bumblezone.sentry_watcher_egg_removal_hint").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), true);
                     }
                 }
 

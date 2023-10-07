@@ -98,6 +98,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private static final float ROTATION_SPEED = 1.5f;
    private static final float ACCELERATION_FLUID = 0.95f;
    private static final float ACCELERATION_GRAVITY = 0.9800000190734863F;
+   private static final float MAX_SPEED_CAP = 2f;
 
    public SentryWatcherEntity(Level worldIn) {
       super(BzEntities.SENTRY_WATCHER.get(), worldIn);
@@ -211,6 +212,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       else {
          compoundTag.putBoolean("NoAI", this.hasNoAI());
       }
+
+      if (this.getOwner().isPresent()) {
+         compoundTag.putUUID("owner", this.getOwner().get());
+      }
    }
 
    @Override
@@ -227,6 +232,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.setTargetFacing(targetDirection);
 
       this.setNoAI(compoundTag.getBoolean("NoAI") || compoundTag.getBoolean("noAI") || compoundTag.getBoolean("noAi"));
+
+      if (compoundTag.contains("owner")) {
+         this.setOwner(Optional.of(compoundTag.getUUID("owner")));
+      }
    }
 
    @Override
@@ -527,6 +536,13 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          }
          this.prevShaking = this.hasShaking();
       }
+
+      double xSpeed = this.getDeltaMovement().x();
+      double zSpeed = this.getDeltaMovement().z();
+      this.setDeltaMovement(
+              GeneralUtils.capBetween(xSpeed, -MAX_SPEED_CAP, MAX_SPEED_CAP),
+              this.getDeltaMovement().y(),
+              GeneralUtils.capBetween(zSpeed, -MAX_SPEED_CAP, MAX_SPEED_CAP));
 
       this.pushEntities();
    }
