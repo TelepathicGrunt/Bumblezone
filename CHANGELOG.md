@@ -1,7 +1,7 @@
 ### **(V.7.0.16 Changes) (1.20.1 Minecraft)**
 
 ##### Items:
-Attempted to improve Honey Compass's ability to remain linked to the async structure searching even when compass it 
+Attempted to improve Honey Compass's ability to remain linked to the async structure searching even when compass is 
  put into inventory while it is still searching.
 
 Fixed eating a stack of Bee Soup consuming the entire stack instead of just 1.
