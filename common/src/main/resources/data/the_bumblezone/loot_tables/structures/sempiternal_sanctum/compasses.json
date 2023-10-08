@@ -163,7 +163,7 @@
         },
         {
           "type": "minecraft:empty",
-          "weight": 74
+          "weight": 64
         }
       ],
       "conditions": [
