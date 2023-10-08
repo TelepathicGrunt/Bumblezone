@@ -11,6 +11,8 @@ Made Honey Compass that points to Sempiternal Sanctums have different descriptio
 
 Players who consumed Essence of the Bees should not get Wrath effect anymore in Cell Maze. Not sure how I missed that bug...
 
+Updated structure nbts. Might save a little bit of memory in regard to DFU.
+
 #### Biomes:
 Fixed music and beehive ambience not playing in bumblezone biomes.
 
