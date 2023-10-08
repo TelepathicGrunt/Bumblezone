@@ -6,7 +6,7 @@
   "effects": {
     "ambient_sound": "minecraft:ambient.soul_sand_valley.loop",
     "music": {
-      "sound": "the_bumblezone:biome_music",
+      "sound": "the_bumblezone:biomes.general_music",
       "min_delay": 6000,
       "max_delay": 12000,
       "replace_current_music": false

@@ -1,5 +1,5 @@
 {
-  "beehive_ambience": {
+  "biomes.beehive_ambience": {
     "sounds": [
       {
         "name": "the_bumblezone:ambience/beehive_sounds_compressed",
@@ -8,7 +8,7 @@
       }
     ]
   },
-  "biome_music": {
+  "biomes.general_music": {
     "sounds": [
       {
         "name": "the_bumblezone:music/honey_bee_rat_faced_boy",

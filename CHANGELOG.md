@@ -5,6 +5,11 @@ Made Honey Compass that points to Sempiternal Sanctums have different descriptio
  Sempiternal Sanctums Honey Compasses are a bit more common now after user consumed Essence of the Bees.
  Luck attribute/status effect makes Sempiternal Sanctum honey Compasses have higher chance of showing up.
 
+Players who consumed Essence of the Bees should not get Wrath effect anymore in Cell Maze.Not sure how I missed that bug...
+
+#### Biomes:
+Fixed music and beehive ambience not playing in bumblezone biomes.
+
 
 ### **(V.7.0.15 Changes) (1.20.1 Minecraft)**
 

@@ -4,9 +4,9 @@
   "temperature": 1.85,
   "downfall": 0.5,
   "effects": {
-    "ambient_sound": "the_bumblezone:beehive_ambience",
+    "ambient_sound": "the_bumblezone:biomes.beehive_ambience",
     "music": {
-      "sound": "the_bumblezone:biome_music",
+      "sound": "the_bumblezone:biomes.general_music",
       "min_delay": 6000,
       "max_delay": 12000,
       "replace_current_music": false

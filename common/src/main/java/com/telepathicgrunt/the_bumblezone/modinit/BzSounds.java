@@ -12,6 +12,8 @@ import net.minecraft.sounds.SoundEvent;
 public class BzSounds {
     public static final ResourcefulRegistry<SoundEvent> SOUND_EVENTS = ResourcefulRegistries.create(BuiltInRegistries.SOUND_EVENT, Bumblezone.MODID);
 
+    public static final RegistryEntry<SoundEvent> BEEHIVE_AMBIENCE = registerSoundEvent("biomes.beehive_ambience");
+    public static final RegistryEntry<SoundEvent> GENERAL_MUSIC = registerSoundEvent("biomes.general_music");
     public static final RegistryEntry<SoundEvent> ANGERED_BEES = registerSoundEvent("music.angered_bees");
     public static final RegistryEntry<SoundEvent> SEMPITERNAL_SANCTUM = registerSoundEvent("music.sempiternal_sanctum");
     public static final RegistryEntry<SoundEvent> KNOWING_EVENT = registerSoundEvent("music.knowing_event");
