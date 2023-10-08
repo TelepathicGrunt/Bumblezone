@@ -265,18 +265,18 @@ public class BeeAggression {
 
     // Makes bees angry if in Cell Maze or other tagged structures.
     public static void applyAngerIfInTaggedStructures(ServerPlayer serverPlayer) {
+        if (serverPlayer.isCreative() || serverPlayer.isSpectator() || EssenceOfTheBees.hasEssence(serverPlayer)) {
+            return;
+        }
+
+        if(!BzBeeAggressionConfigs.aggressiveBees || serverPlayer.level().getDifficulty() == Difficulty.PEACEFUL) {
+            return;
+        }
+
         StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
             if (!FlowerHeadwearHelmet.getFlowerHeadwear(serverPlayer).isEmpty()) {
                 BzCriterias.FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER.trigger(serverPlayer);
-                return;
-            }
-
-            if(serverPlayer.isCreative() ||
-                    serverPlayer.isSpectator() ||
-                    !BzBeeAggressionConfigs.aggressiveBees ||
-                    serverPlayer.level().getDifficulty() == Difficulty.PEACEFUL)
-            {
                 return;
             }
 
