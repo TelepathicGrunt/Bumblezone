@@ -19,6 +19,8 @@ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -37,7 +39,12 @@ public class ThreadExecutor {
     private static ExecutorService LOCATING_EXECUTOR_SERVICE = null;
     private static final AtomicInteger runningSearches = new AtomicInteger(0);
     private static final AtomicInteger queuedSearches = new AtomicInteger(0);
-    private static final ConcurrentMap<UUID, Optional<BlockPos>> SEARCH_RESULTS = new ConcurrentHashMap<>();
+    private static final LinkedHashMap<UUID, Optional<BlockPos>> SEARCH_RESULTS = new LinkedHashMap<>() {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<UUID, Optional<BlockPos>> eldest) {
+            return size() >= 50;
+        }
+    };
 
     public static void setupExecutorService() {
         shutdownExecutorService();
@@ -80,15 +87,19 @@ public class ThreadExecutor {
     }
 
     public static Optional<BlockPos> getSearchResult(UUID searchId) {
-        if (!SEARCH_RESULTS.containsKey(searchId)) {
-            return null;
-        }
+        synchronized (SEARCH_RESULTS) {
+            if (!SEARCH_RESULTS.containsKey(searchId)) {
+                return null;
+            }
 
-        return SEARCH_RESULTS.get(searchId);
+            return SEARCH_RESULTS.get(searchId);
+        }
     }
 
     public static void removeSearchResult(UUID searchId) {
-        SEARCH_RESULTS.remove(searchId);
+        synchronized (SEARCH_RESULTS) {
+            SEARCH_RESULTS.remove(searchId);
+        }
     }
 
     public static LocateTask<BlockPos> locate(
@@ -124,7 +135,9 @@ public class ThreadExecutor {
             boolean skipKnownStructures)
     {
         queuedSearches.getAndIncrement();
-        SEARCH_RESULTS.put(searchId, Optional.empty());
+        synchronized (SEARCH_RESULTS) {
+            SEARCH_RESULTS.put(searchId, Optional.empty());
+        }
         CompletableFuture<BlockPos> completableFuture = new CompletableFuture<>();
         Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
                 () ->  {
@@ -193,11 +206,13 @@ public class ThreadExecutor {
 
         completableFuture.complete(foundPos != null ? foundPos.getFirst() : null);
         runningSearches.getAndDecrement();
-        if (foundPos == null) {
-            SEARCH_RESULTS.remove(searchId);
-        }
-        else {
-            SEARCH_RESULTS.put(searchId, Optional.of(foundPos.getFirst()));
+        synchronized (SEARCH_RESULTS) {
+            if (foundPos == null) {
+                SEARCH_RESULTS.remove(searchId);
+            }
+            else {
+                SEARCH_RESULTS.put(searchId, Optional.of(foundPos.getFirst()));
+            }
         }
     }
 

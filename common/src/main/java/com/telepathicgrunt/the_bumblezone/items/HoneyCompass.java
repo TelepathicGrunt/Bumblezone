@@ -414,11 +414,6 @@ public class HoneyCompass extends Item implements Vanishable {
         compoundTag.remove(HoneyCompass.TAG_LOADING);
         compoundTag.remove(HoneyCompass.TAG_FAILED);
         compoundTag.remove(HoneyCompass.TAG_STRUCTURE_TAG);
-
-        UUID searchId = getSearchId(compoundTag);
-        if (searchId != null) {
-            removeSearchIdMode(compoundTag, searchId);
-        }
     }
 
     public static void addBlockTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag, Block block) {
