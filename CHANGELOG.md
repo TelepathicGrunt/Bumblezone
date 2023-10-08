@@ -13,6 +13,10 @@ Players who consumed Essence of the Bees should not get Wrath effect anymore in 
 
 Updated structure nbts. Might save a little bit of memory in regard to DFU.
 
+Added carpets as welcome mats in Honey Slime Ranch structure to prevent Villager from leaving the house.
+
+Slightly reduced Rabbit Foot loot in Ancient Hoops structure.
+
 #### Biomes:
 Fixed music and beehive ambience not playing in bumblezone biomes.
 
