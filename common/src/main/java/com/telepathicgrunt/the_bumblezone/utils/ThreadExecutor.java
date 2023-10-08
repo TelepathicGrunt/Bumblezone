@@ -20,7 +20,10 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -34,6 +37,7 @@ public class ThreadExecutor {
     private static ExecutorService LOCATING_EXECUTOR_SERVICE = null;
     private static final AtomicInteger runningSearches = new AtomicInteger(0);
     private static final AtomicInteger queuedSearches = new AtomicInteger(0);
+    private static final ConcurrentMap<UUID, Optional<BlockPos>> SEARCH_RESULTS = new ConcurrentHashMap<>();
 
     public static void setupExecutorService() {
         shutdownExecutorService();
@@ -75,6 +79,18 @@ public class ThreadExecutor {
         return queuedSearches.get() > 0;
     }
 
+    public static Optional<BlockPos> getSearchResult(UUID searchId) {
+        if (!SEARCH_RESULTS.containsKey(searchId)) {
+            return null;
+        }
+
+        return SEARCH_RESULTS.get(searchId);
+    }
+
+    public static void removeSearchResult(UUID searchId) {
+        SEARCH_RESULTS.remove(searchId);
+    }
+
     public static LocateTask<BlockPos> locate(
             ServerLevel level,
             TagKey<Structure> structureTag,
@@ -101,19 +117,21 @@ public class ThreadExecutor {
 
     public static LocateTask<BlockPos> locate(
             ServerLevel level,
+            UUID searchId,
             ResourceKey<Structure> structureKey,
             BlockPos pos,
             int searchRadius,
             boolean skipKnownStructures)
     {
         queuedSearches.getAndIncrement();
+        SEARCH_RESULTS.put(searchId, Optional.empty());
         CompletableFuture<BlockPos> completableFuture = new CompletableFuture<>();
         Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
                 () ->  {
                     try {
                         runningSearches.getAndIncrement();
                         queuedSearches.getAndDecrement();
-                        doLocateLevel(completableFuture, level, structureKey, pos, searchRadius, skipKnownStructures);
+                        doLocateLevel(completableFuture, level, searchId, structureKey, pos, searchRadius, skipKnownStructures);
                     }
                     catch (Exception e) {
                         Bumblezone.LOGGER.error("Off thread structure locating crashed. Exception is: ", e);
@@ -159,6 +177,7 @@ public class ThreadExecutor {
     private static void doLocateLevel(
             CompletableFuture<BlockPos> completableFuture,
             ServerLevel level,
+            UUID searchId,
             ResourceKey<Structure> structureKey,
             BlockPos pos,
             int searchRadius,
@@ -174,6 +193,12 @@ public class ThreadExecutor {
 
         completableFuture.complete(foundPos != null ? foundPos.getFirst() : null);
         runningSearches.getAndDecrement();
+        if (foundPos == null) {
+            SEARCH_RESULTS.remove(searchId);
+        }
+        else {
+            SEARCH_RESULTS.put(searchId, Optional.of(foundPos.getFirst()));
+        }
     }
 
     public static void mapFilling(

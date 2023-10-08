@@ -43,6 +43,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_TARGET_POS = "TargetPos";
@@ -55,6 +56,7 @@ public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_CUSTOM_NAME_TYPE = "CustomName";
     public static final String TAG_CUSTOM_DESCRIPTION_TYPE = "CustomDescription";
     public static final String TAG_LOCKED = "Locked";
+    public static final String TAG_COMPASS_SEARCH_ID = "searchId";
 
     public HoneyCompass(Item.Properties properties) {
         super(properties);
@@ -155,48 +157,72 @@ public class HoneyCompass extends Item implements Vanishable {
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
         if (!level.isClientSide) {
-            if (!getBooleanTag(itemStack.getTag(), TAG_FAILED) &&
-                !getBooleanTag(itemStack.getTag(), TAG_LOADING) &&
-                hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG) &&
-                !hasTagSafe(itemStack.getTag(), TAG_TARGET_POS))
+            CompoundTag tag = itemStack.getOrCreateTag();
+
+            if (level.getGameTime() % 20 == 0) {
+                UUID searchId = getSearchId(tag);
+                if (searchId != null) {
+                    // Location was found and already saved.
+                    if (tag.contains(TAG_TARGET_POS)) {
+                        tag.remove(HoneyCompass.TAG_COMPASS_SEARCH_ID);
+                        ThreadExecutor.removeSearchResult(searchId);
+                    }
+                    else {
+                        Optional<BlockPos> searchResult = ThreadExecutor.getSearchResult(searchId);
+                        // null return mean no search queued up for this compass
+                        if (searchResult == null) {
+                            itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
+                        }
+                        else {
+                            searchResult.ifPresent(blockPos ->
+                                    HoneyCompass.addFoundStructureLocation(level.dimension(), blockPos, tag)
+                            );
+                        }
+                    }
+                }
+            }
+
+            if (!getBooleanTag(tag, TAG_FAILED) &&
+                !getBooleanTag(tag, TAG_LOADING) &&
+                hasTagSafe(tag, TAG_STRUCTURE_TAG) &&
+                !hasTagSafe(tag, TAG_TARGET_POS))
             {
                 itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
             }
 
-            if (getBooleanTag(itemStack.getTag(), TAG_LOADING) && !ThreadExecutor.isRunningASearch() && !ThreadExecutor.hasQueuedSearch()) {
-                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, false);
-                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
+            if (getBooleanTag(tag, TAG_LOADING) && !ThreadExecutor.isRunningASearch() && !ThreadExecutor.hasQueuedSearch()) {
+                tag.putBoolean(TAG_LOADING, false);
+                tag.putBoolean(TAG_FAILED, true);
             }
 
             if (isBlockCompass(itemStack)) {
-                CompoundTag compoundTag = itemStack.getOrCreateTag();
-                if (compoundTag.contains(TAG_TARGET_POS) && compoundTag.contains(TAG_TARGET_BLOCK) && compoundTag.contains(TAG_TARGET_DIMENSION)) {
+                if (tag.contains(TAG_TARGET_POS) && tag.contains(TAG_TARGET_BLOCK) && tag.contains(TAG_TARGET_DIMENSION)) {
 
-                    Optional<ResourceKey<Level>> optional = Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, compoundTag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
+                    Optional<ResourceKey<Level>> optional = Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, tag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
                     if (optional.isPresent() && optional.get().equals(level.dimension())) {
-                        BlockPos blockPos = NbtUtils.readBlockPos(compoundTag.getCompound(TAG_TARGET_POS));
+                        BlockPos blockPos = NbtUtils.readBlockPos(tag.getCompound(TAG_TARGET_POS));
                         if (!level.isInWorldBounds(blockPos)) {
-                            compoundTag.remove(TAG_TARGET_POS);
-                            compoundTag.remove(TAG_TARGET_DIMENSION);
-                            compoundTag.remove(TAG_TARGET_BLOCK);
-                            compoundTag.remove(TAG_TYPE);
+                            tag.remove(TAG_TARGET_POS);
+                            tag.remove(TAG_TARGET_DIMENSION);
+                            tag.remove(TAG_TARGET_BLOCK);
+                            tag.remove(TAG_TYPE);
                             return;
                         }
 
                         ChunkAccess chunk = level.getChunk(blockPos.getX() >> 4, blockPos.getZ() >> 4, ChunkStatus.FULL, false);
-                        if(chunk != null && !(BuiltInRegistries.BLOCK.getKey(chunk.getBlockState(blockPos).getBlock()).toString().equals(compoundTag.getString(TAG_TARGET_BLOCK)))) {
-                            compoundTag.remove(TAG_TARGET_POS);
-                            compoundTag.remove(TAG_TARGET_DIMENSION);
-                            compoundTag.remove(TAG_TARGET_BLOCK);
-                            compoundTag.remove(TAG_TYPE);
+                        if(chunk != null && !(BuiltInRegistries.BLOCK.getKey(chunk.getBlockState(blockPos).getBlock()).toString().equals(tag.getString(TAG_TARGET_BLOCK)))) {
+                            tag.remove(TAG_TARGET_POS);
+                            tag.remove(TAG_TARGET_DIMENSION);
+                            tag.remove(TAG_TARGET_BLOCK);
+                            tag.remove(TAG_TYPE);
                         }
                     }
                 }
                 else {
-                    compoundTag.remove(TAG_TARGET_POS);
-                    compoundTag.remove(TAG_TARGET_DIMENSION);
-                    compoundTag.remove(TAG_TARGET_BLOCK);
-                    compoundTag.remove(TAG_TYPE);
+                    tag.remove(TAG_TARGET_POS);
+                    tag.remove(TAG_TARGET_DIMENSION);
+                    tag.remove(TAG_TARGET_BLOCK);
+                    tag.remove(TAG_TYPE);
                 }
             }
         }
@@ -272,7 +298,7 @@ public class HoneyCompass extends Item implements Vanishable {
         BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
         boolean singleCompass = !serverPlayer.getAbilities().instabuild && itemStack.getCount() == 1;
         if (singleCompass) {
-            addStructureTags(serverLevel.dimension(), structurePos, itemStack.getOrCreateTag());
+            addFoundStructureLocation(serverLevel.dimension(), structurePos, itemStack.getOrCreateTag());
         }
         else {
             ItemStack newCompass = new ItemStack(BzItems.HONEY_COMPASS.get(), 1);
@@ -282,7 +308,7 @@ public class HoneyCompass extends Item implements Vanishable {
                 itemStack.shrink(1);
             }
 
-            addStructureTags(serverLevel.dimension(), structurePos, newCompoundTag);
+            addFoundStructureLocation(serverLevel.dimension(), structurePos, newCompoundTag);
             if (!serverPlayer.getInventory().add(newCompass)) {
                 serverPlayer.drop(newCompass, false);
             }
@@ -365,11 +391,23 @@ public class HoneyCompass extends Item implements Vanishable {
         return compoundTag != null && compoundTag.contains(tagName);
     }
 
+    public static void setSearchId(CompoundTag compoundTag, UUID uuid) {
+        compoundTag.putUUID(TAG_COMPASS_SEARCH_ID, uuid);
+    }
+
+    public static UUID getSearchId(CompoundTag compoundTag) {
+        if (compoundTag.contains(TAG_COMPASS_SEARCH_ID)) {
+            return compoundTag.getUUID(TAG_COMPASS_SEARCH_ID);
+        }
+
+        return null;
+    }
+
     public static void setStructureTags(CompoundTag compoundTag, TagKey<Structure> structureTagKey) {
         compoundTag.putString(TAG_STRUCTURE_TAG, structureTagKey.location().toString());
     }
 
-    public static void addStructureTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag) {
+    public static void addFoundStructureLocation(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag) {
         compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
         Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
         compoundTag.putString(TAG_TYPE, "structure");

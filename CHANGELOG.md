@@ -1,11 +1,15 @@
 ### **(V.7.0.16 Changes) (1.20.1 Minecraft)**
 
+##### Items:
+Attempted to improve Honey Compass's ability to remain linked to the async structure searching even when compass it 
+ put into inventory while it is still searching.
+
 ##### Structures:
 Made Honey Compass that points to Sempiternal Sanctums have different descriptions based on the sanctum it is locating.
  Sempiternal Sanctums Honey Compasses are a bit more common now after user consumed Essence of the Bees.
  Luck attribute/status effect makes Sempiternal Sanctum honey Compasses have higher chance of showing up.
 
-Players who consumed Essence of the Bees should not get Wrath effect anymore in Cell Maze.Not sure how I missed that bug...
+Players who consumed Essence of the Bees should not get Wrath effect anymore in Cell Maze. Not sure how I missed that bug...
 
 #### Biomes:
 Fixed music and beehive ambience not playing in bumblezone biomes.
