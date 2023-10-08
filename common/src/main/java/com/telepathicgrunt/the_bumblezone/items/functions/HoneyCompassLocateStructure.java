@@ -29,6 +29,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -84,9 +85,10 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
                     structure = structureRegistry.getResourceKey(structuresList.get(lootContext.getRandom().nextInt(structuresList.size()))).get();
                 }
 
+                WeakReference<ItemStack> weakRefItemStack = new WeakReference<>(itemStack);
                 if (structure != null) {
                     ThreadExecutor.locate(lootContext.getLevel(), searchId, structure, blockPos, 100, false)
-                            .thenOnServerThread(foundPos -> setCompassFoundLocationData(itemStack, lootContext, foundPos));
+                            .thenOnServerThread(foundPos -> setCompassFoundLocationData(weakRefItemStack, lootContext, foundPos));
                 }
             }
             else if (itemStack.hasTag()) {
@@ -96,8 +98,9 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
         return itemStack;
     }
 
-    private void setCompassFoundLocationData(ItemStack itemStack, LootContext lootContext, BlockPos blockPos) {
-        if (blockPos != null) {
+    private void setCompassFoundLocationData(WeakReference<ItemStack> itemStackWeakReference, LootContext lootContext, BlockPos blockPos) {
+        ItemStack itemStack = itemStackWeakReference.get();
+        if (itemStack != null && blockPos != null) {
             HoneyCompass.addFoundStructureLocation(lootContext.getLevel().dimension(), blockPos, itemStack.getOrCreateTag());
         }
     }

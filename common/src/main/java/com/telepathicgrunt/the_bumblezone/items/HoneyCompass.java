@@ -164,8 +164,7 @@ public class HoneyCompass extends Item implements Vanishable {
                 if (searchId != null) {
                     // Location was found and already saved.
                     if (tag.contains(TAG_TARGET_POS)) {
-                        tag.remove(HoneyCompass.TAG_COMPASS_SEARCH_ID);
-                        ThreadExecutor.removeSearchResult(searchId);
+                        removeSearchIdMode(tag, searchId);
                     }
                     else {
                         Optional<BlockPos> searchResult = ThreadExecutor.getSearchResult(searchId);
@@ -415,6 +414,11 @@ public class HoneyCompass extends Item implements Vanishable {
         compoundTag.remove(HoneyCompass.TAG_LOADING);
         compoundTag.remove(HoneyCompass.TAG_FAILED);
         compoundTag.remove(HoneyCompass.TAG_STRUCTURE_TAG);
+
+        UUID searchId = getSearchId(compoundTag);
+        if (searchId != null) {
+            removeSearchIdMode(compoundTag, searchId);
+        }
     }
 
     public static void addBlockTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag, Block block) {
@@ -451,5 +455,10 @@ public class HoneyCompass extends Item implements Vanishable {
             return tag != null && tag.contains(TAG_TYPE) && tag.getString(TAG_TYPE).equals("structure");
         }
         return false;
+    }
+
+    private static void removeSearchIdMode(CompoundTag tag, UUID searchId) {
+        tag.remove(HoneyCompass.TAG_COMPASS_SEARCH_ID);
+        ThreadExecutor.removeSearchResult(searchId);
     }
 }
