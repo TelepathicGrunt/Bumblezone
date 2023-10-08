@@ -1,3 +1,11 @@
+### **(V.7.0.16 Changes) (1.20.1 Minecraft)**
+
+##### Structures:
+Made Honey Compass that points to Sempiternal Sanctums have different descriptions based on the sanctum it is locating.
+ Sempiternal Sanctums Honey Compasses are a bit more common now after user consumed Essence of the Bees.
+ Luck attribute/status effect makes Sempiternal Sanctum honey Compasses have higher chance of showing up.
+
+
 ### **(V.7.0.15 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:

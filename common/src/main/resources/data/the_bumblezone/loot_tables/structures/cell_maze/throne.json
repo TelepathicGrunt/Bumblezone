@@ -540,7 +540,7 @@
             },
             {
               "function": "minecraft:set_nbt",
-              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_sanctum_structure_description\"}"
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_red_sanctum_structure_description\"}"
             },
             {
               "function": "minecraft:set_nbt",
@@ -548,7 +548,132 @@
             },
             {
               "function": "the_bumblezone:honey_compass_locate_structure",
-              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums",
+              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums/red",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+		{
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_sanctum_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_purple_sanctum_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums/purple",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+		{
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_sanctum_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_blue_sanctum_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums/blue",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+		{
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_sanctum_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_green_sanctum_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums/green",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+		{
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_sanctum_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_yellow_sanctum_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums/yellow",
+              "skip_existing_chunks": false,
+              "search_radius": 50
+            }
+          ]
+        },
+		{
+          "name": "the_bumblezone:honey_compass",
+          "type": "minecraft:item",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_sanctum_structure\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_white_sanctum_structure_description\"}"
+            },
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"Locked\": 1b}"
+            },
+            {
+              "function": "the_bumblezone:honey_compass_locate_structure",
+              "destination": "the_bumblezone:honey_compass/sempiternal_sanctums/white",
               "skip_existing_chunks": false,
               "search_radius": 50
             }

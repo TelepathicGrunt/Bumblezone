@@ -3,216 +3,13 @@
   "random_sequence": "the_bumblezone:structures",
   "pools": [
     {
-      "rolls": {
-        "min": 4.0,
-        "max": 6.0,
-        "type": "minecraft:uniform"
-      },
-      "entries": [
-        {
-          "name": "minecraft:honeycomb",
-          "type": "minecraft:item",
-          "weight": 6,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "the_bumblezone:carvable_wax",
-          "type": "minecraft:item",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:rabbit_foot",
-          "type": "minecraft:item",
-          "weight": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 2.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:red_dye",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:orange_dye",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:yellow_dye",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:lime_dye",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:cyan_dye",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:blue_dye",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        },
-        {
-          "name": "minecraft:purple_dye",
-          "type": "minecraft:item",
-          "weight": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "weight": 1,
-          "name": "the_bumblezone:honey_compass",
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"CustomName\": \"item.the_bumblezone.honey_compass_mystery_structure\"}"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"CustomDescription\": \"item.the_bumblezone.honey_compass_mystery_structure_description\"}"
-            },
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"Locked\": 1b}"
-            },
-            {
-              "function": "the_bumblezone:honey_compass_locate_structure",
-              "destination": "the_bumblezone:honey_compass/misc_locating",
-              "skip_existing_chunks": false,
-              "search_radius": 50
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "name": "the_bumblezone:bumble_bee_chestplate_1",
-          "type": "minecraft:item",
-          "weight": 1
-        },
-        {
-          "name": "the_bumblezone:bumble_bee_chestplate_2",
-          "type": "minecraft:item",
-          "weight": 1
-        }
-      ]
-    },
-    {
       "rolls": 1,
       "entries": [
         {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
           "weight": 1,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -234,10 +31,11 @@
             }
           ]
         },
-		{
+        {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
           "weight": 1,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -259,10 +57,11 @@
             }
           ]
         },
-		{
+        {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
           "weight": 1,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -284,10 +83,11 @@
             }
           ]
         },
-		{
+        {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
           "weight": 1,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -309,10 +109,11 @@
             }
           ]
         },
-		{
+        {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
           "weight": 1,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -334,10 +135,11 @@
             }
           ]
         },
-		{
+        {
           "name": "the_bumblezone:honey_compass",
           "type": "minecraft:item",
           "weight": 1,
+          "quality": 1,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -361,7 +163,7 @@
         },
         {
           "type": "minecraft:empty",
-          "weight": 19
+          "weight": 74
         }
       ],
       "conditions": [
