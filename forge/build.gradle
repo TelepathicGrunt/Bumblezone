@@ -21,6 +21,12 @@ loom {
                 property 'mixin.env.remapRefMap', 'true'
                 property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             }
+            data {
+                data()
+                programArgs("--all", "--mod", "the_bumblezone")
+                programArgs("--existing", project(":common").file("src/main/resources").absolutePath)
+                programArgs("--output", project(":common").file("src/main/generated/resources").absolutePath)
+            }
         }
     }
 }

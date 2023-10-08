@@ -22,7 +22,7 @@ eclipse
 run
 .gitattributes
 /deps
-/src/generated/
+/common/src/main/generated/
 /flatdir
 
 # Files from Forge MDK
