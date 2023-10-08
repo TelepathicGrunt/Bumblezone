@@ -4,6 +4,8 @@
 Attempted to improve Honey Compass's ability to remain linked to the async structure searching even when compass it 
  put into inventory while it is still searching.
 
+Fixed eating a stack of Bee Soup consuming the entire stack instead of just 1.
+
 ##### Structures:
 Made Honey Compass that points to Sempiternal Sanctums have different descriptions based on the sanctum it is locating.
  Sempiternal Sanctums Honey Compasses are a bit more common now after user consumed Essence of the Bees.
@@ -16,6 +18,9 @@ Updated structure nbts. Might save a little bit of memory in regard to DFU.
 Added carpets as welcome mats in Honey Slime Ranch structure to prevent Villager from leaving the house.
 
 Slightly reduced Rabbit Foot loot in Ancient Hoops structure.
+
+#### Entities:
+Fixed feeding a tamed Beehemoth Royal Jelly Bottle/Bucket or Bee Bread does not consume the food.
 
 #### Biomes:
 Fixed music and beehive ambience not playing in bumblezone biomes.
