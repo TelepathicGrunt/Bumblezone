@@ -20,6 +20,10 @@
     {
       "id": "fruittrees:apple_leaves",
       "required": false
+    },
+    {
+      "id": "mineria:spruce_yew_leaves",
+      "required": false
     }
   ]
 }

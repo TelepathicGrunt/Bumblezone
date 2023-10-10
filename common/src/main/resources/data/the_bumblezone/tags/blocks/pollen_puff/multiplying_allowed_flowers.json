@@ -4,6 +4,10 @@
     "#minecraft:flowers",
     "minecraft:cherry_sapling",
     {
+      "id": "ars_elemental:spore_blossom_up",
+      "required": false
+    },
+    {
       "id": "biomesoplenty:pink_cherry_sapling",
       "required": false
     },
@@ -81,6 +85,10 @@
     },
     {
       "id": "ecologics:azalea_flower",
+      "required": false
+    },
+    {
+      "id": "fancysporeblossom:fancy_spore_blossom",
       "required": false
     },
     {
@@ -257,6 +265,10 @@
     },
     {
       "id": "meadow:eriophorum_tall",
+      "required": false
+    },
+    {
+      "id": "mineria:sakura_sapling",
       "required": false
     },
     {

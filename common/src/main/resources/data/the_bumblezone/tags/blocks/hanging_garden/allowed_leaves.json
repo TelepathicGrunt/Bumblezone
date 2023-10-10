@@ -125,6 +125,10 @@
       "required": false
     },
     {
+      "id": "mineria:sakura_leaves",
+      "required": false
+    },
+    {
       "id": "mysticsbiomes:jacaranda_leaves",
       "required": false
     },

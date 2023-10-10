@@ -10,6 +10,14 @@
     {
       "id": "byg:aspen_log",
       "required": false
+    },
+    {
+      "id": "densetrees:dense_oak_log",
+      "required": false
+    },
+    {
+      "id": "densetrees:dense_spruce_log",
+      "required": false
     }
   ]
 }

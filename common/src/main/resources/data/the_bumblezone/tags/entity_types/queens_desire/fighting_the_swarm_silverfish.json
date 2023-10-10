@@ -9,6 +9,10 @@
     {
       "id": "enemyexpansion:silverking",
       "required": false
+    },
+    {
+      "id": "mineria:golden_silverfish",
+      "required": false
     }
   ]
 }

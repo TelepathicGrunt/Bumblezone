@@ -37,6 +37,14 @@
       "required": false
     },
     {
+      "id": "densetrees:dense_birch_log",
+      "required": false
+    },
+    {
+      "id": "densetrees:dense_cherry_log",
+      "required": false
+    },
+    {
       "id": "ecologics:flowering_azalea_log",
       "required": false
     },
