@@ -1,3 +1,10 @@
+### **(V.7.0.17 Changes) (1.20.1 Minecraft)**
+
+##### Misc:
+(Forge): Setup my networking protocol so that clients with Bumblezone must be using same Bumblezone version as server.
+ This is because mismatched Bumblezone versions tends to cause many problems. Stay in sync with the server's version.
+
+
 ### **(V.7.0.16 Changes) (1.20.1 Minecraft)**
 
 ##### Items:

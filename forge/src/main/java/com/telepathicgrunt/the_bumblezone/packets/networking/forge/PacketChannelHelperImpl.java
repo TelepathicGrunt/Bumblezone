@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.packets.networking.forge;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
+import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -17,9 +20,10 @@ import java.util.Map;
 public class PacketChannelHelperImpl {
     public static final Map<ResourceLocation, Channel> CHANNELS = new HashMap<>();
 
-    public static void registerChannel(ResourceLocation name, int protocolVersion) {
-        String version = Integer.toString(protocolVersion);
-        Channel channel = new Channel(0, NetworkRegistry.newSimpleChannel(name, () -> version, version::equals, version::equals));
+    public static void registerChannel(ResourceLocation name) {
+        ModInfo info = PlatformHooks.getModInfo(Bumblezone.MODID, true);
+        String protocolVersion = info.version();
+        Channel channel = new Channel(0, NetworkRegistry.newSimpleChannel(name, () -> protocolVersion, protocolVersion::equals, protocolVersion::equals));
         CHANNELS.put(name, channel);
     }
 

@@ -7,7 +7,7 @@ import com.telepathicgrunt.the_bumblezone.packets.networking.base.NetworkDirecti
 public class MessageHandler {
 
     //setup channel to send packages through
-    public static final NetworkChannel DEFAULT_CHANNEL = new NetworkChannel(Bumblezone.MODID, 1, "networking");
+    public static final NetworkChannel DEFAULT_CHANNEL = new NetworkChannel(Bumblezone.MODID, "networking");
 
     /*
      * Register the channel so it exists

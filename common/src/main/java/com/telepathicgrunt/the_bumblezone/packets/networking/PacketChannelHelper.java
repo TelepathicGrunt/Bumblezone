@@ -15,7 +15,7 @@ import org.jetbrains.annotations.ApiStatus;
 public class PacketChannelHelper {
 
     @ExpectPlatform
-    public static void registerChannel(ResourceLocation channel, int protocolVersion) {
+    public static void registerChannel(ResourceLocation channel) {
         throw new NotImplementedException();
     }
 

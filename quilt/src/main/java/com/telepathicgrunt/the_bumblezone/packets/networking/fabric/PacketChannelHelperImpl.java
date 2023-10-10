@@ -12,7 +12,7 @@ import org.quiltmc.loader.api.minecraft.MinecraftQuiltLoader;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class PacketChannelHelperImpl {
-    public static void registerChannel(ResourceLocation channel, int protocolVersion) {
+    public static void registerChannel(ResourceLocation channel) {
         //Do Nothing
     }
 

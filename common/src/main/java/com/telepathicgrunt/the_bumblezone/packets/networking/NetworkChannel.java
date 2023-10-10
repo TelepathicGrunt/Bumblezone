@@ -17,10 +17,10 @@ public class NetworkChannel {
 
     private final ResourceLocation channel;
 
-    public NetworkChannel(String modid, int protocolVersion, String channel) {
+    public NetworkChannel(String modid, String channel) {
         this.channel = new ResourceLocation(modid, channel);
 
-        PacketChannelHelper.registerChannel(this.channel, protocolVersion);
+        PacketChannelHelper.registerChannel(this.channel);
     }
 
     public final <T extends Packet<T>> void registerPacket(NetworkDirection direction, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {

@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public class PacketChannelHelperImpl {
-    public static void registerChannel(ResourceLocation channel, int protocolVersion) {
+    public static void registerChannel(ResourceLocation channel) {
         //Do Nothing
     }
 
