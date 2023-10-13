@@ -4,7 +4,9 @@ package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.pneumatic_armor.BuiltinArmorUpgrades;
 import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
+import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorRegistry;
 import me.desht.pneumaticcraft.common.pneumatic_armor.ArmorUpgradeRegistry;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
 import net.minecraft.ChatFormatting;
@@ -37,31 +39,14 @@ public class PneumaticCraftCompat implements ModCompat {
 
 	@Override
 	public void restrictFlight(Entity entity, double extraGravity) {
-		if (entity instanceof Player player &&
+		if (entity instanceof ServerPlayer player &&
 			PNEUMATIC_BOOTS != null &&
 			player.getItemBySlot(EquipmentSlot.FEET).is(PNEUMATIC_BOOTS))
 		{
-			IArmorUpgradeHandler<?> upgrade = ArmorUpgradeRegistry.getInstance().getUpgradeEntry(new ResourceLocation("pneumaticcraft:jet_boots"));
-			disableFlyBoots(player, upgrade);
-		}
-	}
-
-	public void disableFlyBoots(Player player, IArmorUpgradeHandler<?> upgrade) {
-		CommonArmorHandler handler = (CommonArmorHandler) PneumaticRegistry.getInstance().getCommonArmorRegistry().getCommonArmorHandler(player);
-		EquipmentSlot equipmentSlot = upgrade.getEquipmentSlot();
-		byte slotIndex = (byte) upgrade.getIndex();
-		if (handler.isUpgradeInserted(equipmentSlot, slotIndex) && handler.isUpgradeEnabled(equipmentSlot, slotIndex)) {
-
-			ItemStack jetpackBoots = player.getItemBySlot(equipmentSlot);
-			if (!player.getCooldowns().isOnCooldown(jetpackBoots.getItem())) {
-				if (player instanceof ServerPlayer serverPlayer) {
-					serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jet_boots")
-							.withStyle(ChatFormatting.ITALIC)
-							.withStyle(ChatFormatting.RED), true);
-				}
-			}
-
-			player.getCooldowns().addCooldown(jetpackBoots.getItem(), 40);
+			ICommonArmorRegistry reg = PneumaticRegistry.getInstance().getCommonArmorRegistry();
+			reg.getArmorUpgradeHandler(BuiltinArmorUpgrades.JET_BOOTS)
+					.ifPresent(jetBoots -> reg.getCommonArmorHandler(player)
+							.setUpgradeEnabled(jetBoots, false));
 		}
 	}
 }

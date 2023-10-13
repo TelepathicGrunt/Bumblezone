@@ -61,7 +61,9 @@ public class ForgeModChecker {
             loadupModCompat(modid, () -> new IronJetpacksCompat());
 
             modid = "pneumaticcraft";
-            loadupModCompat(modid, () -> new PneumaticCraftCompat());
+            if (ModChecker.isNotOutdated(modid, "6.0.9", false)) {
+                loadupModCompat(modid, () -> new PneumaticCraftCompat());
+            }
 
             modid = "ars_nouveau";
             if (ModChecker.isNotOutdated(modid, "4.5.0", false)) {
