@@ -1,4 +1,4 @@
-### **(V.7.0.19 Changes) (1.20.1 Minecraft)**
+### **(V.7.0.17 Changes) (1.20.1 Minecraft)**
 
 ##### Mod Compat:
 (Forge): Improved PneumaticCraft boot jetpack disabling by using their API. Requires PneumaticCraft v6.0.9 or newer
