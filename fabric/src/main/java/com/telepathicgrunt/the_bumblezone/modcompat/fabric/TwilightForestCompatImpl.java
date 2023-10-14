@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.fabricbase;
+package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
