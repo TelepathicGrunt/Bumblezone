@@ -136,15 +136,7 @@
       "required": false
     },
     {
-      "id": "paradise_lost:drigean",
-      "required": false
-    },
-    {
-      "id": "promenade:red_tulip_pile",
-      "required": false
-    },
-    {
-      "id": "promenade:poppy_pile",
+      "id": "many_flowers:daisies",
       "required": false
     },
     {
@@ -169,6 +161,18 @@
     },
     {
       "id": "naturalized:rose",
+      "required": false
+    },
+    {
+      "id": "paradise_lost:drigean",
+      "required": false
+    },
+    {
+      "id": "promenade:red_tulip_pile",
+      "required": false
+    },
+    {
+      "id": "promenade:poppy_pile",
       "required": false
     },
     {

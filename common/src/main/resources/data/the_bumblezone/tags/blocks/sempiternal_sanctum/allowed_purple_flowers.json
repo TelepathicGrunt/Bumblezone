@@ -488,6 +488,10 @@
       "required": false
     },
     {
+      "id": "many_flowers:chrysanthemum",
+      "required": false
+    },
+    {
       "id": "many_flowers:hydrangea_flower",
       "required": false
     },
