@@ -105,7 +105,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
-public class Bumblezone{
+public class Bumblezone {
 
     // Note to self, use -XX:+AllowEnchancedClassRedefinition arg with JetBrainsRuntime SDK (JBRSDK) + Single HotSwap Plugin to enable hotswapping goodness.
 
