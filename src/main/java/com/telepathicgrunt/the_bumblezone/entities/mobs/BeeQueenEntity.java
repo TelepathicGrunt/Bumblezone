@@ -610,7 +610,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         if (finalbeeQueenAdvancementDone(serverPlayer)) {
                             serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
                                 if (!capability.receivedEssencePrize) {
-                                    spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, null);
+                                    spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
                                     capability.receivedEssencePrize = true;
                                     serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                                 }
@@ -641,7 +641,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     if (!capability.receivedEssencePrize) {
                         Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                         Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                        spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, null);
+                        spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
                         capability.receivedEssencePrize = true;
                         serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                     }
@@ -698,7 +698,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             if (!capability.receivedEssencePrize) {
                                 Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
                                 Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-                                spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, null);
+                                spawnReward(forwardVect, sideVect, ESSENCE_DROP, ItemStack.EMPTY, serverPlayer.getUUID());
                                 capability.receivedEssencePrize = true;
                                 serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                             }
@@ -753,15 +753,16 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 setBonusTradeItem(ItemStack.EMPTY);
             }
 
-            Player player = level.getPlayerByUUID(playerUUID);
-            if (player != null) {
-                if (!getBonusTradeItem().isEmpty()) {
-                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_performed", BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier.get()).withStyle(ChatFormatting.WHITE), true);
-                }
-                else  {
-                    this.acknowledgedPlayers.clear();
-                    player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
-                    this.acknowledgedPlayers.add(playerUUID);
+            if (playerUUID != null) {
+                Player player = level.getPlayerByUUID(playerUUID);
+                if (player != null) {
+                    if (!getBonusTradeItem().isEmpty()) {
+                        player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_performed", BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier.get()).withStyle(ChatFormatting.WHITE), true);
+                    } else {
+                        this.acknowledgedPlayers.clear();
+                        player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_satisfied").withStyle(ChatFormatting.WHITE), true);
+                        this.acknowledgedPlayers.add(playerUUID);
+                    }
                 }
             }
         }
