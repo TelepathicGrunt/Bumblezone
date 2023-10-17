@@ -61,13 +61,29 @@ public class HoneyCaveRoomStructure extends Structure {
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView, RandomState randomState) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+
+        //center check
+        mutable.set(centerPos);
+        NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
+        BlockState state = columnOfBlocks.getBlock(mutable.getY() + 2);
+        BlockState aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
+        if(state.isAir() || !state.getFluidState().isEmpty() ||
+            aboveState.isAir() || !aboveState.getFluidState().isEmpty())
+        {
+            return false;
+        }
+
+        //corner check
         int radius = 20;
-        for (int x = -radius; x <= radius; x += radius) {
-            for (int z = -radius; z <= radius; z += radius) {
+        for (int x = -radius; x <= radius; x += radius * 2) {
+            for (int z = -radius; z <= radius; z += radius * 2) {
                 mutable.set(centerPos).move(x, 0, z);
-                NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
-                BlockState state = columnOfBlocks.getBlock(mutable.getY() + 9);
-                if (state.isAir() || !state.getFluidState().isEmpty()) {
+                columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
+                state = columnOfBlocks.getBlock(mutable.getY() + 2);
+                aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
+                if(state.isAir() || !state.getFluidState().isEmpty() ||
+                    aboveState.isAir() || !aboveState.getFluidState().isEmpty())
+                {
                     return false;
                 }
             }
