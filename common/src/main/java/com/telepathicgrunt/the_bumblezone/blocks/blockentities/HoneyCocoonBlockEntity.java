@@ -96,7 +96,13 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         if (isLootWithLootrOn()) {
             return;
         }
-        this.itemStacks = itemStacks;
+
+        this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        for (int i = 0; i < this.itemStacks.size(); i++) {
+            if (i < itemStacks.size()) {
+                this.itemStacks.set(0, itemStacks.get(i));
+            }
+        }
     }
 
     private boolean isLootWithLootrOn() {
