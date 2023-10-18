@@ -17,6 +17,13 @@ Removed "Long" from name of Neurotoxin potions that have extended time.
 ##### Structures:
 Stop Honey Cave Room structure spawning too out in the open at times.
 
+##### Mod Compat:
+Enderman Overhaul's Icy, Warped, and Crimson Pearls can teleport player to Bumblezone when hitting Beehives/Bee Nests.
+
+Made Enderman Overhaul's Pearls unable to teleport Bumblezone's Sentry Watcher, Cosmic Crystal, Electric Ring, and Purple Spikes.
+
+Several Enderman Overhaul's mobs will now spawn flowers or mushrooms if Pollen Puff is thrown at them.
+
 
 ### **(V.7.0.18 Changes) (1.20.1 Minecraft)**
 
