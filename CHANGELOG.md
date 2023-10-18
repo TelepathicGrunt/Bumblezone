@@ -6,6 +6,11 @@ Fixed crash when Sentry Watcher hurts a player outside my dev environment.
 ##### Blocks:
 Slight optimization to Heavy Air checks to not run on client as it is entirely server sided anyway.
 
+##### Items:
+Added translations for Arrow of Neurotoxins.
+
+Removed "Long" from name of Neurotoxin potions that have extended time.
+
 ##### Structures:
 Stop Honey Cave Room structure spawning too out in the open at times.
 

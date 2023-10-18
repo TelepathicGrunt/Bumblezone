@@ -450,11 +450,13 @@
   "item.the_bumblezone.essence_radiance_boots_text": "  %s%s",
 
   "item.minecraft.potion.effect.neurotoxin": "Potion of Neurotoxin",
-  "item.minecraft.potion.effect.long_neurotoxin": "Potion of Long Neurotoxin",
+  "item.minecraft.potion.effect.long_neurotoxin": "Potion of Neurotoxin",
   "item.minecraft.splash_potion.effect.neurotoxin": "Splash Potion of Neurotoxin",
-  "item.minecraft.splash_potion.effect.long_neurotoxin": "Splash Potion of Long Neurotoxin",
+  "item.minecraft.splash_potion.effect.long_neurotoxin": "Splash Potion of Neurotoxin",
   "item.minecraft.lingering_potion.effect.neurotoxin": "Lingering Potion of Neurotoxin",
-  "item.minecraft.lingering_potion.effect.long_neurotoxin": "Lingering Potion of Long Neurotoxin",
+  "item.minecraft.lingering_potion.effect.long_neurotoxin": "Lingering Potion of Neurotoxin",
+  "item.minecraft.tipped_arrow.effect.neurotoxin": "Arrow of Neurotoxin",
+  "item.minecraft.tipped_arrow.effect.long_neurotoxin": "Arrow of Neurotoxin",
 
   "entity.the_bumblezone.rootmin": "Rootmin",
   "entity.the_bumblezone.variant_bee": "Bee Variant",
