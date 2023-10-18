@@ -1,8 +1,15 @@
 dependencies {
+    // REQUIRED
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation("net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}")
 
+    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-common-${rootProject.athena}")))
+
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
+
+
+    // COMPAT
     modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-forge-api:${rootProject.jei}")
     modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
@@ -13,10 +20,6 @@ dependencies {
     modCompileOnly("maven.modrinth:projectile-damage-attribute:${rootProject.projectile_damage_attribute}-forge")
 
     //modCompileOnly("dev.ftb.mods:ftb-essentials-forge:${rootProject.ftb_essentials}")
-
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-common-${rootProject.athena}")))
-
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
 }
 
 architectury {

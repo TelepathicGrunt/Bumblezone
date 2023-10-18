@@ -20,34 +20,20 @@ configurations {
 }
 
 dependencies {
+    // REQUIRED
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
-    //modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
-
     modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
-
-    modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
-    modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
 
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
-
     include("me.luligabi:NoIndium:${rootProject.noindium}")
 
-    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
-    //modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
-    //modLocalRuntime("maven.modrinth:sodium:${rootProject.sodium}")
-
-    //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
-
-    modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
-    modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
+    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
@@ -55,6 +41,21 @@ dependencies {
     shadowCommon(project(path: ":fabric-base", configuration: "transformProductionFabric")) { transitive false }
 
     include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}")))
+
+
+    // COMPAT
+    modCompileOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
+    //modRuntimeOnly("curse.maven:lootr_fabric-615106:${project.lootr_fabric_file_id}")
+
+    modCompileOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
+    modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
+
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
+
+    //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
+
+    //modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")
+    //modLocalRuntime("com.telepathicgrunt:StructureVoidToggle-Fabric:${project.structurevoidtoggle_fabric}")
 }
 
 processResources {
