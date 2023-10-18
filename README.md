@@ -23,9 +23,14 @@ Don't forget to change \<modversion> with the actual latest version of this mod 
 ```
 dependencies {
    ...
-   FORGE: compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-forge")
-   FABRIC: modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-fabric"
-   QUILT: modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-quilt"
+   FORGE: 
+     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-forge")
+     
+   FABRIC: 
+     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-fabric"
+     
+   QUILT: 
+     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-quilt"
 }
 ```
 
