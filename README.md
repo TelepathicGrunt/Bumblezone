@@ -66,6 +66,14 @@ repositories {
             includeGroup 'com.github.llamalad7.mixinextras'
         }
     }
+    
+    // Fabric/Quilt only
+    maven {
+        url = 'https://api.modrinth.com/maven/'
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
 }
 ```
 
@@ -83,10 +91,12 @@ dependencies {
    FABRIC: 
      modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-fabric"
      modImplementation "earth.terrarium.athena:athena-fabric-1.20.1:3.1.1"
+     modImplementation("maven.modrinth:midnightlib:1.4.1-fabric")
    
    QUILT: 
      modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-quilt"
      modImplementation "earth.terrarium.athena:athena-fabric-1.20.1:3.1.1"
+     modImplementation("maven.modrinth:midnightlib:1.4.1-fabric")
 }
 ```
 
