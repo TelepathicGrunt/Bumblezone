@@ -11,6 +11,7 @@
     "block.FireBlockMixin",
     "effect.EffectExtensionMixin",
     "enchantment.BzEnchantmentMixin",
+    "entity.EntityMixin",
     "item.BzBucketItemMixin",
     "item.ItemExtensionMixin",
     "item.PotionCandleRecipeMixin"

@@ -11,6 +11,9 @@ Added translations for Arrow of Neurotoxins.
 
 Removed "Long" from name of Neurotoxin potions that have extended time.
 
+##### Fluids:
+(Forge): Fixed unable to swim in Sugar Water.
+
 ##### Structures:
 Stop Honey Cave Room structure spawning too out in the open at times.
 
