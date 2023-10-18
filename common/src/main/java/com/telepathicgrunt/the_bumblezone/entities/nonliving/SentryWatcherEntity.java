@@ -37,6 +37,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
@@ -575,8 +576,13 @@ public class SentryWatcherEntity extends Entity implements Enemy {
                         double newHealth = Math.max(possibleNewHealth, 1);
                         livingEntity.setHealth((float) newHealth);
 
-                        double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
-                        livingEntity.hurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), (float) armorDamage);
+                        if (livingEntity instanceof Player player) {
+                           double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
+                           player.getInventory().hurtArmor(
+                                   this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this),
+                                   (float) armorDamage,
+                                   Inventory.ALL_ARMOR_SLOTS);
+                        }
                      }
                   }
                }
