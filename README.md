@@ -18,7 +18,7 @@ repositories {
 
 &nbsp;
 
-(This format is now standardized for Bumblezone from 6.6.3 forward. See older branches's README.md for what the old format was) Don't forget to change \<modversion> with the actual latest version of this mod like `6.6.3` for example. Replace forge with your modloader and the mc version with the target mc version.
+Don't forget to change \<modversion> with the actual latest version of this mod like `7.0.18` for example. (See older branches's README.md for their stuff)
 
 ```
 dependencies {
@@ -79,7 +79,7 @@ repositories {
 
 &nbsp;
 
-(This format is now standardized for Bumblezone from 6.6.3 forward. See older branches's README.md for what the old format was) Don't forget to change \<modversion> with the actual latest version of this mod like `6.6.3` for example. Replace forge with your modloader and the mc version with the target mc version.
+Don't forget to change \<modversion> with the actual latest version of this mod like `7.0.18` for example. (See older branches's README.md for their stuff)
 
 ```
 dependencies {
