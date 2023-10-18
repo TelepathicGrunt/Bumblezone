@@ -1,5 +1,8 @@
 ### **(V.7.0.19 Changes) (1.20.1 Minecraft)**
 
+##### Entities:
+Fixed crash when Sentry Watcher hurts a player outside my dev environment.
+
 ##### Blocks:
 Slight optimization to Heavy Air checks to not run on client as it is entirely server sided anyway.
 
