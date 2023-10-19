@@ -4,6 +4,10 @@
     "#minecraft:flowers",
     "minecraft:cherry_sapling",
     {
+      "id": "alexscaves:flytrap",
+      "required": false
+    },
+    {
       "id": "ars_elemental:spore_blossom_up",
       "required": false
     },

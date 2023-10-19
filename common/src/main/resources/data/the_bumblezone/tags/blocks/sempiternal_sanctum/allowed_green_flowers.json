@@ -5,6 +5,22 @@
     "minecraft:grass",
     "minecraft:azalea",
     {
+      "id": "alexscaves:tree_star",
+      "required": false
+    },
+    {
+      "id": "alexscaves:fiddlehead",
+      "required": false
+    },
+    {
+      "id": "alexscaves:pewen_pines",
+      "required": false
+    },
+    {
+      "id": "alexscaves:flytrap",
+      "required": false
+    },
+    {
       "id": "andycats_flowers:big_leaf",
       "required": false
     },
@@ -90,6 +106,10 @@
     },
     {
       "id": "byg:green_tulip",
+      "required": false
+    },
+    {
+      "id": "cavesanddepths:cave_bush",
       "required": false
     },
     {

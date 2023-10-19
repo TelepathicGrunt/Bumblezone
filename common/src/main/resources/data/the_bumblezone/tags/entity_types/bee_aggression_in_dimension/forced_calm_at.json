@@ -5,6 +5,18 @@
     "the_bumblezone:purple_spike_entity",
     "the_bumblezone:cosmic_crystal_entity",
     {
+      "id": "alexscaves:gloomoth",
+      "required": false
+    },
+    {
+      "id": "alexscaves:trilocaris",
+      "required": false
+    },
+    {
+      "id": "alexscaves:gammaroach",
+      "required": false
+    },
+    {
       "id": "alexsmobs:lobster",
       "required": false
     },

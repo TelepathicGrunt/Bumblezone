@@ -25,6 +25,42 @@
       "required": false
     },
     {
+      "id": "alexscaves:block_of_pearl",
+      "required": false
+    },
+    {
+      "id": "alexscaves:ambersol",
+      "required": false
+    },
+    {
+      "id": "alexscaves:amber",
+      "required": false
+    },
+    {
+      "id": "alexscaves:amber_monolith",
+      "required": false
+    },
+    {
+      "id": "alexscaves:sulfur",
+      "required": false
+    },
+    {
+      "id": "alexscaves:scarlet_neodynium_pillar",
+      "required": false
+    },
+    {
+      "id": "alexscaves:azure_neodynium_pillar",
+      "required": false
+    },
+    {
+      "id": "alexscaves:block_of_scarlet_neodynium",
+      "required": false
+    },
+    {
+      "id": "alexscaves:block_of_azure_neodynium",
+      "required": false
+    },
+    {
       "id": "biomemakeover:illunite_block",
       "required": false
     },
@@ -70,6 +106,26 @@
     },
     {
       "id": "byg:ametrine_block",
+      "required": false
+    },
+    {
+      "id": "cavesanddepths:chiseled_amethyst_block",
+      "required": false
+    },
+    {
+      "id": "cavesanddepths:amethyst_trim",
+      "required": false
+    },
+    {
+      "id": "cavesanddepths:cut_amethyst_block",
+      "required": false
+    },
+    {
+      "id": "cavesanddepths:glittering_dust_block",
+      "required": false
+    },
+    {
+      "id": "cavesanddepths:glitteringchalkblock",
       "required": false
     },
     {

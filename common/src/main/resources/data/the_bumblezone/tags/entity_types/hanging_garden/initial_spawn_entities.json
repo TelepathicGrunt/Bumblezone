@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     {
+      "id": "alexscaves:gloomoth",
+      "required": false
+    },
+    {
       "id": "alexsmobs:flutter",
       "required": false
     },

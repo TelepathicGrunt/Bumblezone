@@ -3,6 +3,10 @@
   "values": [
     "the_bumblezone:beehemoth",
     {
+      "id": "alexscaves:gloomoth",
+      "required": false
+    },
+    {
       "id": "alexsmobs:tarantula_hawk",
       "required": false
     },

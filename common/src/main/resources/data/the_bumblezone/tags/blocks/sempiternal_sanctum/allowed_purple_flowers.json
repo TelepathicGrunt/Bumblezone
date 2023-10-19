@@ -288,6 +288,10 @@
       "required": false
     },
     {
+      "id": "cavesanddepths:azaleaflower",
+      "required": false
+    },
+    {
       "id": "colorfulazaleas:purple_azalea_sapling",
       "required": false
     },

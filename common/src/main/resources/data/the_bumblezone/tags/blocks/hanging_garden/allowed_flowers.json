@@ -5,6 +5,10 @@
     "minecraft:cherry_sapling",
     "#minecraft:small_flowers",
     {
+      "id": "alexscaves:flytrap",
+      "required": false
+    },
+    {
       "id": "atmospheric:flowering_morado_leaf_carpet",
       "required": false
     },
