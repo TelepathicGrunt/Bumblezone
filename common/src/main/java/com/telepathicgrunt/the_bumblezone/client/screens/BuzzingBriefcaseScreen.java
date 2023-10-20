@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.menus.BuzzingBriefcaseMenu;
 import com.telepathicgrunt.the_bumblezone.mixin.client.EntityRenderersAccessor;
@@ -352,7 +353,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                     toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_type", beeNoneCustomName).withStyle(ChatFormatting.YELLOW));
                 }
 
-                if (this.minecraft != null && this.minecraft.options.advancedItemTooltips) {
+                if (GeneralUtilsClient.isAdvancedToolTipActive()) {
                     toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_registry_name", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType())).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
                 }
 

@@ -347,6 +347,7 @@
   "item.the_bumblezone.honey_compass_description2": "to locate a Cell Maze structure!",
   "item.the_bumblezone.honey_compass_description3": "Or right click a Beehive/Bee Nest",
   "item.the_bumblezone.honey_compass_description4": "to lock compass on its position!",
+  "item.the_bumblezone.honey_compass_distance": "Distance to target: %s",
   "item.the_bumblezone.honey_compass_structure_description1": "Right click a Beehive/Bee Nest to",
   "item.the_bumblezone.honey_compass_structure_description2": "switch to block position mode!",
   "item.the_bumblezone.honey_compass_structure_description3": "Compass will point to block's position.",

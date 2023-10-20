@@ -1,11 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -132,6 +134,7 @@ public class HoneyCompass extends Item implements Vanishable {
 
         if (hasTagSafe(itemStack.getTag(), TAG_CUSTOM_DESCRIPTION_TYPE)) {
             components.add(Component.translatable(itemStack.getTag().getString(TAG_CUSTOM_DESCRIPTION_TYPE)));
+            appendAdvancedTooltipInfo(itemStack, level, components, tooltipFlag);
             return;
         }
 
@@ -151,6 +154,22 @@ public class HoneyCompass extends Item implements Vanishable {
             components.add(Component.translatable("item.the_bumblezone.honey_compass_description2"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_description3"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_description4"));
+        }
+
+        appendAdvancedTooltipInfo(itemStack, level, components, tooltipFlag);
+    }
+
+    private static void appendAdvancedTooltipInfo(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        if (level != null && level.isClientSide()) {
+            Player player = GeneralUtilsClient.getClientPlayer();
+            if (player != null && tooltipFlag.isAdvanced() && (isBlockCompass(itemStack) || isStructureCompass(itemStack))) {
+                BlockPos pos = getStoredPosition(itemStack);
+                Optional<ResourceKey<Level>> storedDimension = getStoredDimension(itemStack);
+                if (pos != null && storedDimension.isPresent() && level.dimension().equals(storedDimension.get())) {
+                    components.add(Component.translatable("item.the_bumblezone.honey_compass_distance", player.blockPosition().distManhattan(pos))
+                            .withStyle(ChatFormatting.DARK_GRAY));
+                }
+            }
         }
     }
 
@@ -442,6 +461,26 @@ public class HoneyCompass extends Item implements Vanishable {
             }
         }
         return null;
+    }
+
+    public static BlockPos getStoredPosition(ItemStack compassItem) {
+        if(compassItem.hasTag()) {
+            CompoundTag tag = compassItem.getTag();
+            if (tag != null && tag.contains(TAG_TARGET_POS)) {
+                return NbtUtils.readBlockPos(tag.getCompound(TAG_TARGET_POS));
+            }
+        }
+        return null;
+    }
+
+    public static Optional<ResourceKey<Level>> getStoredDimension(ItemStack compassItem) {
+        if(compassItem.hasTag()) {
+            CompoundTag tag = compassItem.getTag();
+            if (tag != null && tag.contains(TAG_TARGET_DIMENSION)) {
+                return Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, tag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
+            }
+        }
+        return Optional.empty();
     }
 
     public static boolean isStructureCompass(ItemStack compassItem) {

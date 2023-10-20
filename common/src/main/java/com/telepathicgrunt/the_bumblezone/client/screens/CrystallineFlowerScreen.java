@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
+import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
 import com.telepathicgrunt.the_bumblezone.menus.EnchantmentSkeleton;
@@ -562,7 +563,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
                 MutableComponent mutableComponent4;
 
-                if (this.minecraft != null && this.minecraft.options.advancedItemTooltips) {
+                if (GeneralUtilsClient.isAdvancedToolTipActive()) {
                     mutableComponent4 = Component.literal(enchantment.namespace + ":" + enchantment.path)
                             .withStyle(ChatFormatting.DARK_GRAY);
                 }

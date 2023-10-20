@@ -1,5 +1,8 @@
 ### **(V.7.0.20 Changes) (1.20.1 Minecraft)**
 
+##### Items:
+Honey Compass now shows distance to target if Advanced Tooltips option is turned on (F3 + G)
+
 ##### Mod Compat:
 (Forge): Better compat with Alex's Caves
 

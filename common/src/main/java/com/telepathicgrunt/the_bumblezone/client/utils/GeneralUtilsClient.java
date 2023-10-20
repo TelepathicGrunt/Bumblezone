@@ -72,4 +72,11 @@ public class GeneralUtilsClient {
             guiGraphics.drawString(font, component, minX, o, color);
         }
     }
+
+    ///////////////////////////////////////
+
+    public static boolean isAdvancedToolTipActive() {
+        Minecraft minecraft = Minecraft.getInstance();
+        return minecraft != null && minecraft.options.advancedItemTooltips;
+    }
 }

@@ -70,7 +70,7 @@ public class RadianceEssenceArmorMessage {
         MutableComponent line = Component.translatable(
                 helmetText,
                 bodyText,
-                minecraft.options.advancedItemTooltips ? Component.translatable(ADVANCED_TEXT) : Component.empty());
+                GeneralUtilsClient.isAdvancedToolTipActive() ? Component.translatable(ADVANCED_TEXT) : Component.empty());
 
         if (isLowDurability) {
             line = line.withStyle(ChatFormatting.RED);

@@ -25,7 +25,7 @@ public class KnowingEssenceStructureMessage {
             String structureResourceLocationStrings = KnowingEssence.GetAllStructure(offHandItem);
             if (structureResourceLocationStrings != null && !structureResourceLocationStrings.isEmpty()) {
                 Minecraft minecraft = Minecraft.getInstance();
-                if (minecraft.options.advancedItemTooltips) {
+                if (GeneralUtilsClient.isAdvancedToolTipActive()) {
 
                     String[] structEntries = structureResourceLocationStrings.split(" ");
 
