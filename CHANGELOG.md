@@ -3,6 +3,9 @@
 ##### Items:
 Honey Compass now shows distance to target if Advanced Tooltips option is turned on (F3 + G)
 
+##### Advancement:
+Made first Queen Desire advancement now mention that Royal Jelly Bottles are the rewards
+
 ##### Mod Compat:
 (Forge): Better compat with Alex's Caves
 
