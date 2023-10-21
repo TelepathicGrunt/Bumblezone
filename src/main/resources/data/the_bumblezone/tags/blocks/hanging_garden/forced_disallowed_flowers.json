@@ -332,6 +332,14 @@
       "required": false
     },
     {
+      "id": "many_flowers:jack_flower",
+      "required": false
+    },
+    {
+      "id": "many_flowers:zinnia",
+      "required": false
+    },
+    {
       "id": "naturaldecormod:seafig_ice_plant",
       "required": false
     },
@@ -517,6 +525,10 @@
     },
     {
       "id": "spectrum:resonant_lily",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:obama_plant",
       "required": false
     },
     {

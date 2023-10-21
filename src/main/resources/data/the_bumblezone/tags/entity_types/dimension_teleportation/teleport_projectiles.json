@@ -19,6 +19,18 @@
       "required": false
     },
     {
+      "id": "endermanoverhaul:icy_pearl",
+      "required": false
+    },
+    {
+      "id": "endermanoverhaul:crimson_pearl",
+      "required": false
+    },
+    {
+      "id": "endermanoverhaul:warped_pearl",
+      "required": false
+    },
+    {
       "id": "evilcraft:blood_pearl",
       "required": false
     },

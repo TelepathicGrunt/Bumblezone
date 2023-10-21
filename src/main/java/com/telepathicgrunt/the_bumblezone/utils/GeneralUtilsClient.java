@@ -1,13 +1,21 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralUtilsClient {
+
+    public static Player getClientPlayer() {
+        return Minecraft.getInstance().player;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
 
     public static List<MutableComponent> autoWrappedTooltip(String lengthText, String wrappingText) {
         List<MutableComponent> list = new ArrayList<>();

@@ -1,4 +1,18 @@
-### **(V.6.7.38 Changes) (1.19.2 Minecraft)**
+### **(V.6.7.39 Changes) (1.19.2 Minecraft)**
 
-### Entities:
-Fixed cases where Bee Queen would not give Essence of the Bees reward due to not receiving the player UUID properly.
+##### Items:
+Honey Compass now shows distance to target if Advanced Tooltips option is turned on (F3 + G)
+
+##### Structures:
+Stop Honey Cave Room structure spawning too out in the open at times.
+
+#### Entities:
+Fixed feeding a tamed Beehemoth Royal Jelly Bottle/Bucket or Bee Bread does not consume the food.
+
+##### Advancement:
+Made first Queen Desire advancement now mention that Royal Jelly Bottles are the rewards
+
+##### Mod Compat:
+Enderman Overhaul's Icy, Warped, and Crimson Pearls can teleport player to Bumblezone when hitting Beehives/Bee Nests.
+
+Several Enderman Overhaul's mobs will now spawn flowers or mushrooms if Pollen Puff is thrown at them.
