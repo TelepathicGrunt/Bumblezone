@@ -197,9 +197,19 @@ public class ThreadExecutor {
             boolean skipExistingChunks)
     {
         Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Optional<Holder.Reference<Structure>> structureRegistryHolder = structureRegistry.getHolder(structureKey);
+        if (structureRegistryHolder.isEmpty()) {
+            completableFuture.complete(null);
+            runningSearches.getAndDecrement();
+            synchronized (SEARCH_RESULTS) {
+                SEARCH_RESULTS.remove(searchId);
+            }
+            return;
+        }
+
         Pair<BlockPos, Holder<Structure>> foundPos = level.getChunkSource().getGenerator().findNearestMapStructure(
                 level,
-                HolderSet.direct(structureRegistry.getHolder(structureKey).get()),
+                HolderSet.direct(structureRegistryHolder.get()),
                 pos,
                 searchRadius,
                 skipExistingChunks);

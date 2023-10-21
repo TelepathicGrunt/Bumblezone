@@ -96,7 +96,6 @@ public class HoneyCompass extends Item implements Vanishable {
 
     public Component getName(ItemStack itemStack) {
         if(isBlockCompass(itemStack)) {
-            correctOldNbt(itemStack);
             String blockString = getStoredBlock(itemStack);
             if (blockString != null) {
                 Block block = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockString));
@@ -107,22 +106,6 @@ public class HoneyCompass extends Item implements Vanishable {
             return Component.translatable(this.getDescriptionId(itemStack), Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
         }
         return Component.translatable(this.getDescriptionId(itemStack));
-    }
-
-    public void correctOldNbt(ItemStack itemStack) {
-        if (itemStack.hasTag()) {
-            CompoundTag tag = itemStack.getTag();
-            if (tag.contains("IsThrone")) {
-                boolean isThrone = tag.getBoolean("IsThrone");
-                if (isThrone) {
-                    tag.putBoolean(TAG_LOCKED, true);
-                    tag.putString(TAG_TYPE, "structure");
-                    tag.putString(TAG_CUSTOM_NAME_TYPE, "item.the_bumblezone.honey_compass_throne_structure");
-                    tag.putString(TAG_CUSTOM_DESCRIPTION_TYPE, "item.the_bumblezone.honey_compass_throne_description");
-                }
-                tag.remove("IsThrone");
-            }
-        }
     }
 
     @Override
