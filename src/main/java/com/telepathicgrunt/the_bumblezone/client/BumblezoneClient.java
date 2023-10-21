@@ -46,6 +46,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -107,6 +108,8 @@ public class BumblezoneClient implements ClientModInitializer {
         FluidRender.setupFluidRendering(BzFluids.SUGAR_WATER_FLUID, BzFluids.SUGAR_WATER_FLUID_FLOWING, SUGAR_WATER_FLUID_STILL, SUGAR_WATER_FLUID_FLOWING, true);
         FluidRender.setupFluidRendering(BzFluids.HONEY_FLUID, BzFluids.HONEY_FLUID_FLOWING, HONEY_FLUID_STILL, HONEY_FLUID_FLOWING, false);
         FluidRender.setupFluidRendering(BzFluids.ROYAL_JELLY_FLUID, BzFluids.ROYAL_JELLY_FLUID_FLOWING, ROYAL_JELLY_FLUID_STILL, ROYAL_JELLY_FLOWING, false);
+
+        FluidRenderHandlerRegistry.INSTANCE.setBlockTransparency(BzBlocks.GLISTERING_HONEY_CRYSTAL, true);
     }
 
     private void registerModelLayers() {
