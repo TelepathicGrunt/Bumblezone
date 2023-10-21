@@ -6,6 +6,9 @@ Honey Compass now shows distance to target if Advanced Tooltips option is turned
 Attempted to improve Honey Compass's ability to remain linked to the async structure searching even 
  when compass is put into inventory while it is still searching.
 
+##### Blocks:
+Made Sugar Water overlay not show on Glistering Honey Crystal when underwater.
+
 ##### Structures:
 Stop Honey Cave Room structure spawning too out in the open at times.
 
