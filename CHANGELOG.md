@@ -1,7 +1,10 @@
 ### **(V.6.7.39 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
-Honey Compass now shows distance to target if Advanced Tooltips option is turned on (F3 + G)
+Honey Compass now shows distance to target if Advanced Tooltips option is turned on (F3 + H)
+
+Attempted to improve Honey Compass's ability to remain linked to the async structure searching even 
+ when compass is put into inventory while it is still searching.
 
 ##### Structures:
 Stop Honey Cave Room structure spawning too out in the open at times.
