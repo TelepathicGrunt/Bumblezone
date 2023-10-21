@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.world.structures;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -60,16 +61,27 @@ public class HoneyCaveRoomStructure extends Structure {
 
     private static boolean validSpot(ChunkGenerator chunkGenerator, BlockPos centerPos, LevelHeightAccessor heightLimitView, RandomState randomState) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+
+        //center check
+        mutable.set(centerPos);
+        NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
+        BlockState state = columnOfBlocks.getBlock(mutable.getY() + 2);
+        BlockState aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
+        if(state.isAir() || !state.getFluidState().isEmpty() ||
+            aboveState.isAir() || !aboveState.getFluidState().isEmpty())
+        {
+            return false;
+        }
+
         int radius = 20;
-        for(int x = -radius; x <= radius; x += radius*2) {
-            for(int z = -radius; z <= radius; z += radius*2) {
+        for (int x = -radius; x <= radius; x += radius * 2) {
+            for (int z = -radius; z <= radius; z += radius * 2) {
                 mutable.set(centerPos).move(x, 0, z);
-                NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
-                BlockState state = columnOfBlocks.getBlock(mutable.getY() + 2);
-                BlockState aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
-                if(state.isAir() || !state.getFluidState().isEmpty() ||
-                    aboveState.isAir() || !aboveState.getFluidState().isEmpty())
-                {
+                columnOfBlocks = chunkGenerator.getBaseColumn(mutable.getX(), mutable.getZ(), heightLimitView, randomState);
+                state = columnOfBlocks.getBlock(mutable.getY() + 2);
+                aboveState = columnOfBlocks.getBlock(mutable.getY() + 17);
+                if (state.isAir() || !state.getFluidState().isEmpty() ||
+                        aboveState.isAir() || !aboveState.getFluidState().isEmpty()) {
                     return false;
                 }
             }
@@ -96,7 +108,7 @@ public class HoneyCaveRoomStructure extends Structure {
                 false,
                 this.projectStartToHeightmap,
                 this.maxDistanceFromCenter,
-                (structurePiecesBuilder, pieces) -> {});
+                (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces));
     }
 
     @Override
