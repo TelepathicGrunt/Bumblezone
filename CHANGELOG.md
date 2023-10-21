@@ -1,3 +1,9 @@
+### **(V.7.0.21 Changes) (1.20.1 Minecraft)**
+
+##### Biomes:
+Add missing translations for Howling Constructs and Floral Meadows
+
+
 ### **(V.7.0.20 Changes) (1.20.1 Minecraft)**
 
 ##### Items:
