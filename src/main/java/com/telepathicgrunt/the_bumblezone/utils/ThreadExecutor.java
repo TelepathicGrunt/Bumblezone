@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
+import dev.architectury.registry.registries.Registries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -17,7 +18,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,6 +36,12 @@ public class ThreadExecutor {
     private static ExecutorService LOCATING_EXECUTOR_SERVICE = null;
     private static final AtomicInteger runningSearches = new AtomicInteger(0);
     private static final AtomicInteger queuedSearches = new AtomicInteger(0);
+    private static final LinkedHashMap<UUID, Optional<BlockPos>> SEARCH_RESULTS = new LinkedHashMap<>() {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<UUID, Optional<BlockPos>> eldest) {
+            return size() >= 50;
+        }
+    };
 
     public static void setupExecutorService() {
         shutdownExecutorService();
@@ -68,6 +78,22 @@ public class ThreadExecutor {
         return queuedSearches.get() > 0;
     }
 
+    public static Optional<BlockPos> getSearchResult(UUID searchId) {
+        synchronized (SEARCH_RESULTS) {
+            if (!SEARCH_RESULTS.containsKey(searchId)) {
+                return null;
+            }
+
+            return SEARCH_RESULTS.get(searchId);
+        }
+    }
+
+    public static void removeSearchResult(UUID searchId) {
+        synchronized (SEARCH_RESULTS) {
+            SEARCH_RESULTS.remove(searchId);
+        }
+    }
+
     public static LocateTask<BlockPos> locate(
             ServerLevel level,
             TagKey<Structure> structureTag,
@@ -94,19 +120,23 @@ public class ThreadExecutor {
 
     public static LocateTask<BlockPos> locate(
             ServerLevel level,
+            UUID searchId,
             ResourceKey<Structure> structureKey,
             BlockPos pos,
             int searchRadius,
             boolean skipKnownStructures)
     {
         queuedSearches.getAndIncrement();
+        synchronized (SEARCH_RESULTS) {
+            SEARCH_RESULTS.put(searchId, Optional.empty());
+        }
         CompletableFuture<BlockPos> completableFuture = new CompletableFuture<>();
         Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
                 () ->  {
                     try {
                         runningSearches.getAndIncrement();
                         queuedSearches.getAndDecrement();
-                        doLocateLevel(completableFuture, level, structureKey, pos, searchRadius, skipKnownStructures);
+                        doLocateLevel(completableFuture, level, searchId, structureKey, pos, searchRadius, skipKnownStructures);
                     }
                     catch (Exception e) {
                         Bumblezone.LOGGER.error("Off thread structure locating crashed. Exception is: ", e);
@@ -147,21 +177,40 @@ public class ThreadExecutor {
     private static void doLocateLevel(
             CompletableFuture<BlockPos> completableFuture,
             ServerLevel level,
+            UUID searchId,
             ResourceKey<Structure> structureKey,
             BlockPos pos,
             int searchRadius,
             boolean skipExistingChunks)
     {
         Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+        Optional<Holder<Structure>> structureRegistryHolder = structureRegistry.getHolder(structureKey);
+        if (structureRegistryHolder.isEmpty()) {
+            completableFuture.complete(null);
+            runningSearches.getAndDecrement();
+            synchronized (SEARCH_RESULTS) {
+                SEARCH_RESULTS.remove(searchId);
+            }
+            return;
+        }
+
         Pair<BlockPos, Holder<Structure>> foundPos = level.getChunkSource().getGenerator().findNearestMapStructure(
                 level,
-                HolderSet.direct(structureRegistry.getHolder(structureKey).get()),
+                HolderSet.direct(structureRegistryHolder.get()),
                 pos,
                 searchRadius,
                 skipExistingChunks);
 
         completableFuture.complete(foundPos != null ? foundPos.getFirst() : null);
         runningSearches.getAndDecrement();
+        synchronized (SEARCH_RESULTS) {
+            if (foundPos == null) {
+                SEARCH_RESULTS.remove(searchId);
+            }
+            else {
+                SEARCH_RESULTS.put(searchId, Optional.of(foundPos.getFirst()));
+            }
+        }
     }
 
     public static void mapFilling(
@@ -182,7 +231,6 @@ public class ThreadExecutor {
         );
         new LocateTask<>(level.getServer(), completableFuture, future);
     }
-
 
     public record LocateTask<T>(MinecraftServer server, CompletableFuture<T> completableFuture, Future<?> taskFuture) {
         /**
