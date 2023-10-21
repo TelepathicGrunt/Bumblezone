@@ -18,6 +18,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.BiomeColorFluidRenderHandler;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.HoneyFluidRenderHandler;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
@@ -43,12 +44,12 @@ public class FabricClientBaseEventManager {
 
     public static void init() {
         FluidRenderHandlerRegistry fluidHandler = FluidRenderHandlerRegistry.INSTANCE;
-        BuiltInRegistries.BLOCK.stream()
-                .forEach(block -> {
-                    if (block instanceof BlockExtension extension) {
+        BzBlocks.BLOCKS.getEntries()
+                .forEach(blockRegistryEntry -> {
+                    if (blockRegistryEntry.get() instanceof BlockExtension extension) {
                         OptionalBoolean result = extension.bz$shouldNotDisplayFluidOverlay();
                         if (result.isPresent()) {
-                            fluidHandler.setBlockTransparency(block, result.get());
+                            fluidHandler.setBlockTransparency(blockRegistryEntry.get(), result.get());
                         }
                     }
                 });
