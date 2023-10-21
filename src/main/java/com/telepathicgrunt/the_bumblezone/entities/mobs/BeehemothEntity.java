@@ -319,7 +319,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             for (int i = 0; i < 75; i++) {
                                 spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }
-                            return InteractionResult.PASS;
                         }
                         else if(item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
                             heal(10);
@@ -329,13 +328,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             for (int i = 0; i < 30; i++) {
                                 spawnParticles(this.level, this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }
-                            return InteractionResult.PASS;
                         }
                         else if(item == BzItems.BEE_BREAD.get()) {
                             heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level, player, this, 0.8f, 5);
                             addFriendship(5);
-                            return InteractionResult.PASS;
                         }
                         else if (stack.is(BzTags.HONEY_BUCKETS)) {
                             heal(getMaxHealth() - getHealth());

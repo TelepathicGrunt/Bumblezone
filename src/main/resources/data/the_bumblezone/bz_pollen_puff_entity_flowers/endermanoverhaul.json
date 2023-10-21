@@ -1,0 +1,80 @@
+{
+  "endermanoverhaul:mushroom_fields_enderman": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "endermanoverhaul:swamp_enderman": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:red_mushroom" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:brown_mushroom" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "endermanoverhaul:crimson_forest_enderman": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:crimson_fungus" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "endermanoverhaul:warped_forest_enderman": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:warped_fungus" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "endermanoverhaul:dark_oak_enderman": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:dark_oak_sapling" },
+          "weight": 1
+        }
+      ]
+    }
+  }],
+  "endermanoverhaul:flower_fields_enderman": [{
+    "plants_to_spawn": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": { "Name": "minecraft:poppy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:oxeye_daisy" },
+          "weight": 1
+        },
+        {
+          "data": { "Name": "minecraft:sunflower" },
+          "weight": 1
+        }
+      ]
+    }
+  }]
+}
