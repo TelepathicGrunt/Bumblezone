@@ -157,7 +157,7 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         WING_RIGHT.xRot = 0.0f;
         ROOT.xRot = 0.0f;
         ROOT.y = 19.0f;
-        boolean onGround = entity.isOnGround();
+        boolean onGround = entity.isOnGround() || entity.isPassenger();
         boolean isSitting = entity.isInSittingPose();
         double xzSpeed = Math.abs(entity.getDeltaMovement().x()) + Math.abs(entity.getDeltaMovement().z());
         if (onGround) {
@@ -258,8 +258,16 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         }
 
         THORAX.xRot = 0;
-        FACE.xRot = (float) (netHeadYaw / Math.PI / 180) + 0.3f;
-        ABDOMEN.xRot = (float) (netHeadYaw / Math.PI / 180) - 0.3f;
+
+        float swayingMotion2 = Mth.sin(ageInTicks * 0.18F);
+        if(isSitting) {
+            FACE.xRot = (swayingMotion2 + 20) * (float) Math.PI * 0.001F;
+            ABDOMEN.xRot = (swayingMotion2 - 20) * (float) Math.PI * 0.001F;
+        }
+        else {
+            FACE.xRot = (swayingMotion2 + 40) * (float) Math.PI * 0.0025F;
+            ABDOMEN.xRot = (swayingMotion2 - 40) * (float) Math.PI * 0.0025F;
+        }
     }
 
 
