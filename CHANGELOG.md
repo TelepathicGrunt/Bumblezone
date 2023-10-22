@@ -14,7 +14,7 @@ Changed description for Carpenter Bee Boots to say how many blocks are needed to
 Reduced launching upward issue with Apotheosis by lowing the Slow Falling level applied when teleporting to or from Bumblezone
 
 
-### **(V.6.7.39 Changes) (1.19.2 Minecraft)**
+### **(V.6.7.38 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
 Honey Compass now shows distance to target if Advanced Tooltips option is turned on (F3 + H)
