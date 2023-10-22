@@ -3,6 +3,12 @@
 ##### Biomes:
 Add missing translations for Howling Constructs and Floral Meadows
 
+##### Structures:
+Fixed Potion Candles not spawning in one of the Subway's end pieces.
+
+##### Mod Compat:
+Reduced launching upward issue with Apotheosis by lowing the Slow Falling level applied when teleporting to or from Bumblezone
+
 
 ### **(V.7.0.20 Changes) (1.20.1 Minecraft)**
 

@@ -109,7 +109,7 @@ public class EntityTeleportationHookup {
                             livingEntity.addEffect(new MobEffectInstance(
                                     MobEffects.SLOW_FALLING,
                                     12,
-                                    100,
+                                    1,
                                     false,
                                     false,
                                     true));
