@@ -87,6 +87,32 @@
               ]
             },
             {
+              "name": "the_bumblezone:carvable_wax_music",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "music"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:carvable_wax_grate",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "the_bumblezone:carvable_wax",
+                  "properties": {
+                    "carving": "grate"
+                  }
+                }
+              ]
+            },
+            {
               "name": "the_bumblezone:carvable_wax",
               "type": "minecraft:item"
             }

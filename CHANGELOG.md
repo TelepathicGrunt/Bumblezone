@@ -13,6 +13,15 @@ Try and improve stopping music when teleporting away from Sanctum event into ano
 ##### Blocks:
 Darken shadow a bit for Suspicious Pollen block.
 
+Fixed Luminescent Wax Corner blocks not dropping themselves when mined.
+
+Fixed Music/Grate Carvable Wax not dropping that pattern when mined.
+
+##### Items:
+Fixed Dirt Pellet thrown entity not having translation.
+
+Fixed description in REI/JEI/EMI for Life Essence and Radiance Essence being swapped.
+
 ##### Mod Compat:
 Reduced launching upward issue with Apotheosis by lowing the Slow Falling level applied when teleporting to or from Bumblezone
 
