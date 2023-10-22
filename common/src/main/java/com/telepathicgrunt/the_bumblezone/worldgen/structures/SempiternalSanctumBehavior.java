@@ -110,10 +110,13 @@ public class SempiternalSanctumBehavior {
 
         }
         else {
-            PLAYERS_IN_SANCTUMS.remove(serverPlayer.getUUID());
-
-            if (serverPlayer.tickCount % 60 == 0) {
+            if (serverPlayer.tickCount % 60 == 0 && PLAYERS_IN_SANCTUMS.contains(serverPlayer.getUUID())) {
                 MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.RADIANCE_EVENT.get().getLocation(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.LIFE_EVENT.get().getLocation(), false);
+                MusicPacketFromServer.sendToClient(serverPlayer, BzSounds.KNOWING_EVENT.get().getLocation(), false);
+
+                PLAYERS_IN_SANCTUMS.remove(serverPlayer.getUUID());
             }
         }
     }
