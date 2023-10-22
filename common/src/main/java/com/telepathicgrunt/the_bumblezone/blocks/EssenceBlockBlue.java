@@ -111,7 +111,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                 else {
                     if (entity instanceof NeutralMob neutralMob && !(neutralMob.getTarget() instanceof Player)) {
                         UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
-                        Player player = serverLevel.getPlayerByUUID(playerUUID);
+                        Player player = serverLevel.getServer().getPlayerList().getPlayer(playerUUID);
 
                         neutralMob.setRemainingPersistentAngerTime(Integer.MAX_VALUE);
                         neutralMob.setPersistentAngerTarget(playerUUID);
@@ -119,7 +119,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                     }
                     else if (entity instanceof Mob mob && !(mob.getTarget() instanceof Player)) {
                         UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
-                        Player player = serverLevel.getPlayerByUUID(playerUUID);
+                        Player player = serverLevel.getServer().getPlayerList().getPlayer(playerUUID);
 
                         mob.setTarget(player);
                     }
@@ -187,7 +187,7 @@ public class EssenceBlockBlue extends EssenceBlock {
         eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
 
         UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
-        Player player = serverLevel.getPlayerByUUID(playerUUID);
+        Player player = serverLevel.getServer().getPlayerList().getPlayer(playerUUID);
         if (player instanceof ServerPlayer serverPlayer) {
             float maxHeart = Math.max(serverPlayer.getHealth(), serverPlayer.getMaxHealth());
             float maxArmor = serverPlayer.getArmorValue();

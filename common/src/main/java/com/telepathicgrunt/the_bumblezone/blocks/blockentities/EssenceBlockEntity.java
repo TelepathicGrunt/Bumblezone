@@ -190,7 +190,7 @@ public class EssenceBlockEntity extends BlockEntity {
         if (this.getLevel() != null) {
             for (int i = this.getPlayerInArena().size() - 1; i >= 0; i--) {
                 UUID playerUUID = this.getPlayerInArena().get(i);
-                ServerPlayer serverPlayer = (ServerPlayer) this.getLevel().getPlayerByUUID(playerUUID);
+                ServerPlayer serverPlayer = this.getLevel().getServer().getPlayerList().getPlayer(playerUUID);
                 if (serverPlayer != null) {
                     if (serverPlayer.isDeadOrDying() ||
                         (Math.abs(serverPlayer.blockPosition().getX() - this.getBlockPos().getX()) > ((this.getArenaSize().getX() + 1) / 2) ||

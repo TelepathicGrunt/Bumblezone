@@ -8,7 +8,7 @@ Fixed Potion Candles not spawning in one of the Subway's end pieces.
 
 Fixed Sempiternal Sanctum's Honey Cocoons sharing their container with each other when Lootr is on.
 
-Try and improve stopping music when teleporting away from Sanctum event.
+Try and improve stopping music when teleporting away from Sanctum event into another dimension.
 
 ##### Blocks:
 Darken shadow a bit for Suspicious Pollen block.

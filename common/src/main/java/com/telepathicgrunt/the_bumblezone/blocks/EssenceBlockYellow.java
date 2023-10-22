@@ -213,7 +213,7 @@ public class EssenceBlockYellow extends EssenceBlock {
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
 
             UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(serverLevel.getRandom().nextInt(essenceBlockEntity.getPlayerInArena().size()));
-            Player player = serverLevel.getPlayerByUUID(playerUUID);
+            Player player = serverLevel.getServer().getPlayerList().getPlayer(playerUUID);
             if (player instanceof ServerPlayer serverPlayer) {
                 float maxHeart = Math.max(serverPlayer.getHealth(), serverPlayer.getMaxHealth());
                 float maxArmor = serverPlayer.getArmorValue();
