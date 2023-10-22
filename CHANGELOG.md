@@ -6,6 +6,9 @@ Add missing translations for Howling Constructs and Floral Meadows
 ##### Structures:
 Fixed Potion Candles not spawning in one of the Subway's end pieces.
 
+##### Blocks:
+Darken shadow a bit for Suspicious Pollen block.
+
 ##### Mod Compat:
 Reduced launching upward issue with Apotheosis by lowing the Slow Falling level applied when teleporting to or from Bumblezone
 
