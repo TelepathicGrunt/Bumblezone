@@ -22,6 +22,9 @@ Fixed Dirt Pellet thrown entity not having translation.
 
 Fixed description in REI/JEI/EMI for Life Essence and Radiance Essence being swapped.
 
+##### Entities:
+Made Cosmic Crystal's spinning tracking attack easier to avoid.
+
 ##### Mod Compat:
 Reduced launching upward issue with Apotheosis by lowing the Slow Falling level applied when teleporting to or from Bumblezone
 

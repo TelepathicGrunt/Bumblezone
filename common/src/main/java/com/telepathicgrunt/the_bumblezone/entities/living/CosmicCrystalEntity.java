@@ -940,7 +940,7 @@ public class CosmicCrystalEntity extends LivingEntity {
                 Vec3 diffFromNow = targetPos.subtract(this.position());
                 Vec3 diffFromPast = this.prevTargetPosition.subtract(this.position());
 
-                float turnStrength = 0.04f + ((this.getDifficultyBoost() - 1) / 20);
+                float turnStrength = 0.0375f + ((this.getDifficultyBoost() - 1) / 30);
                 Vec3 lerpedLookVector = new Vec3(
                         Mth.lerp(turnStrength, diffFromPast.x(), diffFromNow.x()),
                         Mth.lerp(turnStrength, diffFromPast.y(), diffFromNow.y()),
