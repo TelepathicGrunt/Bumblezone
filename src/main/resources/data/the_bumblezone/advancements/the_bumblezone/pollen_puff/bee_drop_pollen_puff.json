@@ -21,13 +21,7 @@
   "criteria": {
     "bee_drop_pollen_puff": {
       "trigger": "the_bumblezone:bee_drop_pollen_puff",
-      "conditions": {
-        "item": {
-          "items": [
-            "minecraft:wet_sponge"
-          ]
-        }
-      }
+      "conditions": {}
     }
   },
   "requirements": [

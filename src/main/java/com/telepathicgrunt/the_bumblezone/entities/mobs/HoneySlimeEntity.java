@@ -131,8 +131,10 @@ public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
    @Override
    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
       this.refreshDimensions();
-      this.setYRot(this.yHeadRot);
-      this.setYBodyRot(this.yHeadRot);
+      if (!this.isPassenger()) {
+         this.setYRot(this.yHeadRot);
+         this.setYBodyRot(this.yHeadRot);
+      }
       if (this.isInWater() && this.random.nextInt(20) == 0) {
          this.doWaterSplashEffect();
       }

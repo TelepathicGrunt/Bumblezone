@@ -19,6 +19,9 @@ public class HoneySlimeRevengeGoal extends HurtByTargetGoal {
     }
 
     public void tick() {
+        if (this.slime.isPassenger()) {
+            return;
+        }
         if(this.slime.getTarget() != null) {
             this.slime.lookAt(this.slime.getTarget(), 10.0F, 10.0F);
         }
