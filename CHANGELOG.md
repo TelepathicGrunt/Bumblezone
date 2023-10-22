@@ -6,6 +6,8 @@ Add missing translations for Howling Constructs and Floral Meadows
 ##### Structures:
 Fixed Potion Candles not spawning in one of the Subway's end pieces.
 
+Fixed Sempiternal Sanctum's Honey Cocoons sharing their container with each other when Lootr is on.
+
 ##### Blocks:
 Darken shadow a bit for Suspicious Pollen block.
 
