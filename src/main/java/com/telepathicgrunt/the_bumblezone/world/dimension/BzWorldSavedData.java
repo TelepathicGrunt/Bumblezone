@@ -249,7 +249,7 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.addEffect(new MobEffectInstance(
 						MobEffects.SLOW_FALLING,
 						20,
-						100,
+						1,
 						false,
 						false,
 						false));

@@ -1,3 +1,19 @@
+### **(V.6.7.40 Changes) (1.19.2 Minecraft)**
+
+##### Entities:
+Fixed Honey Slime spinning in boat when angry at something
+
+Fixed Beehemoth body going all wack in Boats.
+
+##### Advancements:
+Fixed Bee Unpollinating advancement to work with other washing items besides Wet Sponge.
+
+Changed description for Carpenter Bee Boots to say how many blocks are needed to be mined. Also lowered requirement from 200 to 64 blocks mined.
+
+##### Mod Compat:
+Reduced launching upward issue with Apotheosis by lowing the Slow Falling level applied when teleporting to or from Bumblezone
+
+
 ### **(V.6.7.39 Changes) (1.19.2 Minecraft)**
 
 ##### Items:

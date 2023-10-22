@@ -118,7 +118,7 @@ public class CarpenterBeeBoots extends BeeArmor {
                             if(player instanceof ServerPlayer serverPlayer) {
                                 serverPlayer.awardStat(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL);
 
-                                if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL, StatFormatter.DEFAULT)) >= 200) {
+                                if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL, StatFormatter.DEFAULT)) >= 64) {
                                     BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
                                 }
                             }
