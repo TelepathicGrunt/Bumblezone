@@ -27,5 +27,9 @@ Made Cosmic Crystal's spinning tracking attack easier to avoid.
 
 Added internal expiry time for Cosmic Crystal, Electric Ring, and Purple Spike to rid themselves if they somehow persist past the end of the event timer.
 
+Fixed Rootmins spinning like mad when put into Boats.
+
+Fixed Beehemoth body going all wack in Boats.
+
 ##### Mod Compat:
 Reduced launching upward issue with Apotheosis by lowing the Slow Falling level applied when teleporting to or from Bumblezone

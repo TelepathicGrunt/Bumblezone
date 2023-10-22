@@ -426,8 +426,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       }
 
       this.refreshDimensions();
-      this.setYRot(this.yHeadRot);
-      this.setYBodyRot(this.yHeadRot);
+      if (!this.isPassenger()) {
+         this.setYRot(this.yHeadRot);
+         this.setYBodyRot(this.yHeadRot);
+      }
       if (this.isInWater() && this.random.nextInt(20) == 0) {
          this.doWaterSplashEffect();
       }
@@ -714,12 +716,14 @@ public class RootminEntity extends PathfinderMob implements Enemy {
               this.yBodyRotO % 90 != 0 &&
               this.yBodyRot % 90 != 0)
          {
-            Vec3 lookDirection = this.getLookAngle();
-            float closestDir = Direction.getNearest(lookDirection.x(), lookDirection.y(), lookDirection.z()).toYRot();
-            this.yHeadRotO = closestDir;
-            this.yHeadRot = closestDir;
-            this.yBodyRotO = closestDir;
-            this.yBodyRot = closestDir;
+            if (!this.isPassenger()) {
+               Vec3 lookDirection = this.getLookAngle();
+               float closestDir = Direction.getNearest(lookDirection.x(), lookDirection.y(), lookDirection.z()).toYRot();
+               this.yHeadRotO = closestDir;
+               this.yHeadRot = closestDir;
+               this.yBodyRotO = closestDir;
+               this.yBodyRot = closestDir;
+            }
          }
       }
    }
@@ -1307,11 +1311,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void tick() {
-         float lookAngle = this.mob.getYRot();
-         Direction direction = Direction.fromYRot(lookAngle);
-         Vec3 lookVec = Vec3.atLowerCornerOf(direction.getNormal()).add(this.mob.position());
-         this.mob.getLookControl().setLookAt(lookVec.x(), lookVec.y(), lookVec.z(), 60, 0);
-         this.mob.setYRot(direction.toYRot());
+         if (!this.mob.isPassenger()) {
+            float lookAngle = this.mob.getYRot();
+            Direction direction = Direction.fromYRot(lookAngle);
+            Vec3 lookVec = Vec3.atLowerCornerOf(direction.getNormal()).add(this.mob.position());
+            this.mob.getLookControl().setLookAt(lookVec.x(), lookVec.y(), lookVec.z(), 60, 0);
+            this.mob.setYRot(direction.toYRot());
+         }
 
          if (this.mob.stayHidingTimer == 0) {
             if (this.unhidingTimer > 0) {
