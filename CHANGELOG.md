@@ -1,3 +1,9 @@
+### **(V.7.0.22 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Fixed Honey Slime spinning in boat when angry at something
+
+
 ### **(V.7.0.21 Changes) (1.20.1 Minecraft)**
 
 ##### Biomes:
