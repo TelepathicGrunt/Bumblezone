@@ -39,7 +39,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 10000;
+        return 1200;
     }
 
     @Override
@@ -198,6 +198,7 @@ public class EssenceBlockWhite extends EssenceBlock {
             entity.setOrbitOffsetDegrees(orbitOffset);
             entity.setDifficultyBoost(difficultyBoost);
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
+            entity.expiryTime = serverLevel.getGameTime() + essenceBlockEntity.getEventTimer() + 5;
         }
     }
 

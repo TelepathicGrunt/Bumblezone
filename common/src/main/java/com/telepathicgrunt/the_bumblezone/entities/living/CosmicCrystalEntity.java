@@ -113,6 +113,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     public int lastPhysicalHit = 0;
     public ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
     private boolean noAI = false;
+    public long expiryTime = -1;
 
     public CosmicCrystalEntity(EntityType<? extends CosmicCrystalEntity> entityType, Level level) {
         super(entityType, level);
@@ -390,6 +391,7 @@ public class CosmicCrystalEntity extends LivingEntity {
 
         this.animationTimeTick = compoundTag.getInt("animationTimeTick");
         this.prevAnimationTick = compoundTag.getInt("prevAnimationTick");
+        this.expiryTime = compoundTag.getLong("expiryTime");
 
         if (compoundTag.contains("targetEntityUUID")) {
             this.targetEntityUUID = compoundTag.getUUID("targetEntityUUID");
@@ -430,6 +432,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         compoundTag.putInt("currentStateTimeTick", this.currentStateTimeTick);
         compoundTag.putInt("animationTimeTick", this.animationTimeTick);
         compoundTag.putInt("prevAnimationTick", this.prevAnimationTick);
+        compoundTag.putLong("expiryTime", this.expiryTime);
 
         if (this.targetEntityUUID != null) {
             compoundTag.putUUID("targetEntityUUID", this.targetEntityUUID);
@@ -504,6 +507,10 @@ public class CosmicCrystalEntity extends LivingEntity {
 
         if (this.noAI) {
             return;
+        }
+
+        if (!this.level().isClientSide() && this.expiryTime != -1 && this.level().getGameTime() > this.expiryTime) {
+            this.remove(RemovalReason.DISCARDED);
         }
 
         if (this.getCosmicCrystalState() == CosmicCrystalState.NORMAL) {

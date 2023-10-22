@@ -27,6 +27,7 @@ public class ElectricRingEntity extends Entity {
 
     public BlockEntity blockEntity = null;
     public int disappearingTime = -1;
+    public long expiryTime = -1;
 
     public ElectricRingEntity(EntityType<? extends ElectricRingEntity> entityType, Level level) {
         super(entityType, level);
@@ -53,6 +54,10 @@ public class ElectricRingEntity extends Entity {
     public void tick() {
         super.tick();
         this.setRot(this.getYRot(), this.getXRot());
+
+        if (!this.level().isClientSide() && this.expiryTime != -1 && this.level().getGameTime() > this.expiryTime) {
+            this.remove(RemovalReason.DISCARDED);
+        }
 
         if (this.level().isClientSide()) {
             if (this.tickCount % 2 == 0) {
@@ -213,12 +218,14 @@ public class ElectricRingEntity extends Entity {
             this.disappearingTime = compoundTag.getInt("disappearingTime");
         }
         this.setDisappearingMarker(compoundTag.getBoolean("disappearingMarker"));
+        this.expiryTime = compoundTag.getLong("expiryTime");
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
         compoundTag.putInt("disappearingTime", this.disappearingTime);
         compoundTag.putBoolean("disappearingMarker", this.getDisappearingMarker());
+        compoundTag.putLong("expiryTime", this.expiryTime);
     }
 
     @Override

@@ -191,6 +191,7 @@ public class EssenceBlockYellow extends EssenceBlock {
             ringEntity.blockEntity = essenceBlockEntity;
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(ringEntity.getUUID()));
 
+            ringEntity.expiryTime = serverLevel.getGameTime() + essenceBlockEntity.getEventTimer() + 5;
             serverLevel.addFreshEntityWithPassengers(ringEntity);
         }
     }

@@ -30,6 +30,7 @@ public class PurpleSpikeEntity extends Entity {
     public int spikeTimer = 0;
     public boolean spikeChargeClientPhaseTracker = false;
     public int spikeChargeClientTimeTracker = 0;
+    public long expiryTime = -1;
 
     public PurpleSpikeEntity(EntityType<? extends PurpleSpikeEntity> entityType, Level level) {
         super(entityType, level);
@@ -91,6 +92,10 @@ public class PurpleSpikeEntity extends Entity {
         super.tick();
         boolean hasSpikeCharge = this.hasSpikeCharge();
         boolean hasSpike = this.hasSpike();
+
+        if (!this.level().isClientSide() && this.expiryTime != -1 && this.level().getGameTime() > this.expiryTime) {
+            this.remove(RemovalReason.DISCARDED);
+        }
 
         if (this.level().isClientSide()) {
             if (this.tickCount % 2 == 0 && !hasSpikeCharge && hasSpike){
@@ -225,11 +230,13 @@ public class PurpleSpikeEntity extends Entity {
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
         this.setSpikeTimer(compoundTag.getInt("spike_timer"));
         this.setSpikeChargeTimer(compoundTag.getInt("spike_charge_timer"));
+        this.expiryTime = compoundTag.getLong("expiryTime");
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
         compoundTag.putInt("spike_timer", this.getSpikeTimer());
         compoundTag.putInt("spike_charge_timer", this.getSpikeChargeTimer());
+        compoundTag.putLong("expiryTime", this.expiryTime);
     }
 }

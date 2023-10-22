@@ -131,6 +131,7 @@ public class EssenceBlockPurple extends EssenceBlock {
                     if (punish) {
                         spikeEntity.setSpikeTimer(50);
                     }
+                    spikeEntity.expiryTime = serverLevel.getGameTime() + essenceBlockEntity.getEventTimer() + 5;
                     serverLevel.addFreshEntityWithPassengers(spikeEntity);
                 }
             }
