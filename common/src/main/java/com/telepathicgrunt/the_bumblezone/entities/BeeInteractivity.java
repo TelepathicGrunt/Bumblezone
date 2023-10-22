@@ -189,7 +189,7 @@ public class BeeInteractivity {
                     ((BeeEntityInvoker)beeEntity).callSetHasNectar(false);
 
                     if(playerEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger(serverPlayer, itemstack);
+                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger(serverPlayer);
                     }
                     return InteractionResult.SUCCESS;
                 }

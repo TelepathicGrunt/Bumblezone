@@ -22,7 +22,7 @@ public class BzCriterias {
     public static final CounterTrigger BEE_BREEDING_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_breeding"));
     public static final GenericTrigger BEENERGIZED_MAXED_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "beenergized_maxed"));
     public static final GenericTrigger BEE_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_cannon_full"));
-    public static final ItemSpecificTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "bee_drop_pollen_puff"));
+    public static final GenericTrigger BEE_DROP_POLLEN_PUFF_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "bee_drop_pollen_puff"));
     public static final CounterTrigger BEE_FED_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_fed"));
     public static final EntitySpecificTrigger BEE_HIT_WRATH_OF_THE_HIVE_TRIGGER = new EntitySpecificTrigger(new ResourceLocation(Bumblezone.MODID, "bee_hit_wrath_of_the_hive"));
     public static final CounterTrigger BEE_SAVED_BY_STINGER_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "bee_saved_by_stinger"));

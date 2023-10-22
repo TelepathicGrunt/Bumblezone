@@ -3,6 +3,9 @@
 ##### Entities:
 Fixed Honey Slime spinning in boat when angry at something
 
+##### Advancements:
+Fixed Bee Unpollinating advancement to work with other washing items besides Wet Sponge.
+
 
 ### **(V.7.0.21 Changes) (1.20.1 Minecraft)**
 
