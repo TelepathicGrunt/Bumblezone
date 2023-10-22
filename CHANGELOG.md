@@ -6,6 +6,10 @@ Fixed Honey Slime spinning in boat when angry at something
 ##### Advancements:
 Fixed Bee Unpollinating advancement to work with other washing items besides Wet Sponge.
 
+Fixed Flower Headwear advancement not completing if in Peaceful, turned off wrath, creative mode, or consumed Essence of the Bees.
+
+Changed description for Carpenter Bee Boots to say how many blocks are needed to be mined. Also lowered requirement from 200 to 64 blocks mined.
+
 
 ### **(V.7.0.21 Changes) (1.20.1 Minecraft)**
 
