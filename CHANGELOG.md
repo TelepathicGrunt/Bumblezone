@@ -10,6 +10,9 @@ Fixed Essence of Continuity causing invincibility for players with no save respa
 
 Fixed respawning by Essence of Continuity keeping the velocity.
 
+##### Structures:
+Slightly increased Sempiternal Sanctum's Radiance Event timer and nerfed damage output of Vexes so weaker armor players have better chance.
+
 ##### Advancements:
 Fixed Bee Unpollinating advancement to work with other washing items besides Wet Sponge.
 

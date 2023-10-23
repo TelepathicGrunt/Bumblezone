@@ -59,7 +59,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public int getEventTimeFrame() {
-        return 5400;
+        return 5600;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class EssenceBlockYellow extends EssenceBlock {
             else if (entity instanceof Vex vex && vex.getTarget() != null && vex.tickCount % 20 == 0) {
                 Vec3 targetDirection = vex.getTarget().position().subtract(vex.position()).normalize();
                 if (vex.isCharging()) {
-                    vex.addDeltaMovement(targetDirection.scale(0.5));
+                    vex.addDeltaMovement(targetDirection.scale(0.3));
                 }
                 if (vex.getRandom().nextInt(15) == 0) {
                     vex.getMoveControl().setWantedPosition(vex.getX(), vex.getY(), vex.getZ(), 1);
@@ -219,7 +219,7 @@ public class EssenceBlockYellow extends EssenceBlock {
                 float maxHeart = Math.max(serverPlayer.getHealth(), serverPlayer.getMaxHealth());
                 float maxArmor = serverPlayer.getArmorValue();
                 float mobHealthBoost = (maxHeart / 10) + (maxArmor / 2);
-                float mobAttackBoost = (maxHeart / 20) + (maxArmor / 2.5f);
+                float mobAttackBoost = Math.max((maxHeart / 40) + (maxArmor / 3f) - 3.5f, 0);
 
                 boolean isEssenced = EssenceOfTheBees.hasEssence(serverPlayer);
                 if (!isEssenced) {
