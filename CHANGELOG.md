@@ -6,6 +6,10 @@ Fixed Honey Slime spinning in boat when angry at something
 ##### Items:
 Fixed JEI/REI/EMI description for Essence of Continuity to say it recharges after 40 minutes.
 
+Fixed Essence of Continuity causing invincibility for players with no save respawn point.
+
+Fixed respawning by Essence of Continuity keeping the velocity.
+
 ##### Advancements:
 Fixed Bee Unpollinating advancement to work with other washing items besides Wet Sponge.
 

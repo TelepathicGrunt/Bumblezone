@@ -49,7 +49,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
     private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.continuityEssenceCooldown;
     private static final Supplier<Integer> abilityUseAmount = () -> 1;
-    private static final ConcurrentLinkedQueue<TickCapsule> NEXT_TICK_PARTICLES = new ConcurrentLinkedQueue<>();
+    private static final ConcurrentLinkedQueue<TickCapsule> NEXT_TICK_BEHAVIORS = new ConcurrentLinkedQueue<>();
     private static final Style INTENTIONAL_GAME_DESIGN_STYLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://bugs.mojang.com/browse/MCPE-28723")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("MCPE-28723")));
 
     private record TickCapsule(Runnable runnable, long tickTarget) {}
@@ -79,13 +79,13 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean bl) {
-        TickCapsule tickCapsule = NEXT_TICK_PARTICLES.poll();
+        TickCapsule tickCapsule = NEXT_TICK_BEHAVIORS.poll();
         if (tickCapsule != null) {
             if (level.getGameTime() > tickCapsule.tickTarget) {
                 tickCapsule.runnable().run();
             }
             else {
-                NEXT_TICK_PARTICLES.add(tickCapsule);
+                NEXT_TICK_BEHAVIORS.add(tickCapsule);
             }
         }
 
@@ -109,20 +109,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
                 getIsActive(stack) &&
                 !player.getCooldowns().isOnCooldown(stack.getItem()))
             {
-                player.setHealth(player.getMaxHealth());
-                player.getFoodData().setExhaustion(0);
-                player.getFoodData().eat(100, 100);
-                player.clearFire();
-                player.setAirSupply(player.getMaxAirSupply());
-                player.invulnerableTime = 40;
-                player.deathTime = 0;
-                player.fallDistance = 0;
-                player.stopSleeping();
-                player.removeVehicle();
-                player.ejectPassengers();
-                player.setPortalCooldown();
-                player.setDeltaMovement(new Vec3(0, 0, 0));
-                player.setOldPosAndRot();
+                playerReset(player);
 
                 List<MobEffectInstance> mobEffectInstances = new ArrayList<>(player.getActiveEffects());
                 for (MobEffectInstance mobEffectInstance : mobEffectInstances) {
@@ -142,6 +129,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
         return false;
     }
 
+
     private static void respawn(ItemStack stack, ContinuityEssence continuityEssence, ServerPlayer serverPlayer, MinecraftServer server, DamageSource damageSource) {
         ResourceKey<Level> oldDimension = serverPlayer.level().dimension();
         BlockPos oldPosition = serverPlayer.blockPosition();
@@ -154,64 +142,83 @@ public class ContinuityEssence extends AbilityEssenceItem {
         Optional<Vec3> optionalRespawnPoint = desiredDestination != null && respawningLinkedPosition != null ? Player.findRespawnPositionAndUseSpawnBlock(desiredDestination, respawningLinkedPosition, respawnAngle, forcedRespawn, true) : Optional.empty();
         ServerLevel finalDestination = desiredDestination != null && optionalRespawnPoint.isPresent() ? desiredDestination : server.overworld();
 
-        if (optionalRespawnPoint.isPresent()) {
-            Vec3 playerRespawnPosition = optionalRespawnPoint.get();
-            BlockPos playerRespawnBlockPos = BlockPos.containing(playerRespawnPosition);
-
-            BlockState blockState = finalDestination.getBlockState(respawningLinkedPosition);
-            boolean isRespawnAnchor = blockState.is(Blocks.RESPAWN_ANCHOR);
-
-            BzWorldSavedData.queueEntityToGenericTeleport(serverPlayer, finalDestination.dimension(), playerRespawnBlockPos, () -> {
-                continuityEssence.decrementAbilityUseRemaining(stack, serverPlayer, 1);
-
-                if (isRespawnAnchor) {
-                    serverPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, respawningLinkedPosition.getX(), respawningLinkedPosition.getY(), respawningLinkedPosition.getZ(), 1.0f, 1.0f, finalDestination.getRandom().nextLong()));
-                }
-
-                NEXT_TICK_PARTICLES.add(new TickCapsule(() -> spawnParticles(finalDestination, playerRespawnPosition, finalDestination.getRandom()), serverPlayer.serverLevel().getGameTime() + 5));
-            });
-
-            ItemStack newBook = Items.WRITTEN_BOOK.getDefaultInstance();
-            CompoundTag compoundTag = newBook.getOrCreateTag();
-            compoundTag.putString(WrittenBookItem.TAG_TITLE, "Essence of Continuity Record");
-            compoundTag.putString(WrittenBookItem.TAG_AUTHOR, serverPlayer.getName().getString());
-
-            ListTag listTag = new ListTag();
-            Entity causer = damageSource.getEntity();
-            if (causer == null) {
-                listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
-                        "item.the_bumblezone.essence_continuity_written_book_body_no_causer",
-                        java.time.LocalDate.now(),
-                        oldPosition.getX(),
-                        oldPosition.getY(),
-                        oldPosition.getZ(),
-                        oldDimension.location(),
-                        getDeathMessage(finalDestination, damageSource, serverPlayer)))));
-            }
-            else {
-                listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
-                        "item.the_bumblezone.essence_continuity_written_book_body",
-                        java.time.LocalDate.now(),
-                        oldPosition.getX(),
-                        oldPosition.getY(),
-                        oldPosition.getZ(),
-                        oldDimension.location(),
-                        causer.getName(),
-                        getDeathMessage(finalDestination, damageSource, serverPlayer)))));
-            }
-            compoundTag.put(WrittenBookItem.TAG_PAGES, listTag);
-
-            ItemEntity itementity = new ItemEntity(finalDestination,
-                    playerRespawnPosition.x(),
-                    playerRespawnPosition.y(),
-                    playerRespawnPosition.z(),
-                    newBook);
-            itementity.setDefaultPickUpDelay();
-            finalDestination.addFreshEntity(itementity);
-        }
-        else if (respawningLinkedPosition != null) {
+        if (optionalRespawnPoint.isEmpty() && respawningLinkedPosition != null) {
             serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.NO_RESPAWN_BLOCK_AVAILABLE, 0.0f));
         }
+
+        Vec3 playerRespawnPosition;
+        BlockPos playerRespawnBlockPos;
+        boolean isRespawnAnchor;
+        if (optionalRespawnPoint.isPresent()) {
+            playerRespawnPosition = optionalRespawnPoint.get();
+            playerRespawnBlockPos = BlockPos.containing(playerRespawnPosition);
+
+            BlockState blockState = finalDestination.getBlockState(respawningLinkedPosition);
+            isRespawnAnchor = blockState.is(Blocks.RESPAWN_ANCHOR);
+        }
+        else {
+            playerRespawnPosition = finalDestination.getSharedSpawnPos().getCenter();
+            playerRespawnBlockPos = finalDestination.getSharedSpawnPos();
+
+            isRespawnAnchor = false;
+        }
+
+        BzWorldSavedData.queueEntityToGenericTeleport(serverPlayer, finalDestination.dimension(), playerRespawnBlockPos, () -> {
+            if (isRespawnAnchor) {
+                serverPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, respawningLinkedPosition.getX(), respawningLinkedPosition.getY(), respawningLinkedPosition.getZ(), 1.0f, 1.0f, finalDestination.getRandom().nextLong()));
+            }
+
+            playerReset(serverPlayer);
+
+            continuityEssence.decrementAbilityUseRemaining(stack, serverPlayer, 1);
+
+            NEXT_TICK_BEHAVIORS.add(new TickCapsule(() -> {
+                spawnParticles(finalDestination, playerRespawnPosition, finalDestination.getRandom());
+                serverPlayer.getCooldowns().addCooldown(continuityEssence, continuityEssence.getCooldownTickLength());
+            }, serverPlayer.serverLevel().getGameTime() + 5));
+        });
+
+        spawnBook(serverPlayer, damageSource, oldDimension, oldPosition, finalDestination, playerRespawnPosition);
+    }
+
+    private static void spawnBook(ServerPlayer serverPlayer, DamageSource damageSource, ResourceKey<Level> oldDimension, BlockPos oldPosition, ServerLevel finalDestination, Vec3 playerRespawnPosition) {
+        ItemStack newBook = Items.WRITTEN_BOOK.getDefaultInstance();
+        CompoundTag compoundTag = newBook.getOrCreateTag();
+        compoundTag.putString(WrittenBookItem.TAG_TITLE, "Essence of Continuity Record");
+        compoundTag.putString(WrittenBookItem.TAG_AUTHOR, serverPlayer.getName().getString());
+
+        ListTag listTag = new ListTag();
+        Entity causer = damageSource.getEntity();
+        if (causer == null) {
+            listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
+                    "item.the_bumblezone.essence_continuity_written_book_body_no_causer",
+                    java.time.LocalDate.now(),
+                    oldPosition.getX(),
+                    oldPosition.getY(),
+                    oldPosition.getZ(),
+                    oldDimension.location(),
+                    getDeathMessage(finalDestination, damageSource, serverPlayer)))));
+        }
+        else {
+            listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
+                    "item.the_bumblezone.essence_continuity_written_book_body",
+                    java.time.LocalDate.now(),
+                    oldPosition.getX(),
+                    oldPosition.getY(),
+                    oldPosition.getZ(),
+                    oldDimension.location(),
+                    causer.getName(),
+                    getDeathMessage(finalDestination, damageSource, serverPlayer)))));
+        }
+        compoundTag.put(WrittenBookItem.TAG_PAGES, listTag);
+
+        ItemEntity itementity = new ItemEntity(finalDestination,
+                playerRespawnPosition.x(),
+                playerRespawnPosition.y(),
+                playerRespawnPosition.z(),
+                newBook);
+        itementity.setDefaultPickUpDelay();
+        finalDestination.addFreshEntity(itementity);
     }
 
     public static Component getDeathMessage(ServerLevel serverLevel, DamageSource damageSource, ServerPlayer serverPlayer) {
@@ -277,5 +284,22 @@ public class ContinuityEssence extends AbilityEssenceItem {
                 1,
                 1,
                 random.nextFloat() * 0.5 + 1.2f);
+    }
+
+    private static void playerReset(ServerPlayer player) {
+        player.setHealth(player.getMaxHealth());
+        player.getFoodData().setExhaustion(0);
+        player.getFoodData().eat(100, 100);
+        player.clearFire();
+        player.setAirSupply(player.getMaxAirSupply());
+        player.invulnerableTime = 40;
+        player.deathTime = 0;
+        player.fallDistance = 0;
+        player.stopSleeping();
+        player.removeVehicle();
+        player.ejectPassengers();
+        player.setPortalCooldown();
+        player.setDeltaMovement(new Vec3(0, 0, 0));
+        player.setOldPosAndRot();
     }
 }
