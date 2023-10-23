@@ -18,7 +18,7 @@ public class EssenceOverlay {
     public static void essenceItemOverlay(Player player, GuiGraphics guiGraphics) {
         ItemStack offhandItem = player.getOffhandItem();
 
-        if (!(offhandItem.getItem() instanceof AbilityEssenceItem abilityEssenceItem)) {
+        if (!(offhandItem.getItem() instanceof AbilityEssenceItem abilityEssenceItem) || player.getCooldowns().isOnCooldown(abilityEssenceItem)) {
             return;
         }
 

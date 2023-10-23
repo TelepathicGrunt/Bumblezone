@@ -170,7 +170,10 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
             playerReset(serverPlayer);
 
-            continuityEssence.decrementAbilityUseRemaining(stack, serverPlayer, 1);
+            ItemStack respawnedPlayerStack = serverPlayer.getOffhandItem();
+            if (respawnedPlayerStack.getItem() instanceof ContinuityEssence continuityEssenceRespawnedPlayer) {
+                continuityEssenceRespawnedPlayer.decrementAbilityUseRemaining(respawnedPlayerStack, serverPlayer, 1);
+            }
 
             NEXT_TICK_BEHAVIORS.add(new TickCapsule(() -> {
                 spawnParticles(finalDestination, playerRespawnPosition, finalDestination.getRandom());
