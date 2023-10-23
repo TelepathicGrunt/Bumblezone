@@ -3,6 +3,9 @@
 ##### Entities:
 Fixed Honey Slime spinning in boat when angry at something
 
+##### Items:
+Fixed JEI/REI/EMI description for Essence of Continuity to say it recharges after 40 minutes.
+
 ##### Advancements:
 Fixed Bee Unpollinating advancement to work with other washing items besides Wet Sponge.
 
