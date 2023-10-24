@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "c:brushes",
+      "required": false
+    },
+    {
+      "id": "forge:tools/brushes",
+      "required": false
+    }
+  ]
+}

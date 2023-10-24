@@ -1,3 +1,9 @@
+### **(V.7.0.23 Changes) (1.20.1 Minecraft)**
+
+##### Blocks:
+Attempting something experimental to try and make Suspicious Pile of Pollen able to be brushed by modded brushes that extends vanilla's BrushItem.
+ Also added `the_bumblezone:suspicious_pile_of_pollen/additional_allowed_brushes` to manually add modded brushes that my current system does not catch.
+
 ### **(V.7.0.22 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:

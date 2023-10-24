@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.StateFocusedBrushableBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityCollisionContextAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.BrushItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -114,11 +116,17 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
         if (context instanceof EntityCollisionContext ctx) {
             Entity entity = ctx.getEntity();
             if (entity != null && entity.getType() != BzEntities.POLLEN_PUFF_ENTITY.get()) {
-                if (entity instanceof Player player && ctx.isHoldingItem(Items.BRUSH) && player.isUsingItem()) {
+                ItemStack heldItem = ((EntityCollisionContextAccessor)ctx).getHeldItem();
+                if (entity instanceof Player player &&
+                    player.isUsingItem() &&
+                    !heldItem.isEmpty() &&
+                        (heldItem.getItem() instanceof BrushItem ||
+                        (heldItem.is(BzTags.SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES))))
+                {
                     StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
                     boolean found = Arrays.stream(stackTrace)
                             .map(StackTraceElement::getClassName)
-                            .anyMatch((c) -> c.equals("net.minecraft.world.item.BrushItem") || c.equals("net.minecraft.class_8162"));
+                            .anyMatch((c) -> c.equals(Items.BRUSH.getClass().getName()) || c.equals(heldItem.getItem().getClass().getName()));
 
                     if (found) {
                         return getShape(state, worldIn, pos, context);
