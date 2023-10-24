@@ -1,8 +1,13 @@
 ### **(V.7.0.23 Changes) (1.20.1 Minecraft)**
 
+##### Structures:
+Fixed timer for Essence of Continuity event being 1200 ticks instead of 10000 ticks. I was debugging some stuff and forgot to change the value back.
+ Sorry about this. Event should be beatable again.
+
 ##### Blocks:
 Attempting something experimental to try and make Suspicious Pile of Pollen able to be brushed by modded brushes that extends vanilla's BrushItem.
  Also added `the_bumblezone:suspicious_pile_of_pollen/additional_allowed_brushes` to manually add modded brushes that my current system does not catch.
+
 
 ### **(V.7.0.22 Changes) (1.20.1 Minecraft)**
 
