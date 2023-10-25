@@ -1,3 +1,9 @@
+### **(V.7.0.24 Changes) (1.20.1 Minecraft)**
+
+##### Items:
+Fixed typo in banner pattern item descriptions for EMI/JEI/REI.
+
+
 ### **(V.7.0.23 Changes) (1.20.1 Minecraft)**
 
 ##### Structures:
