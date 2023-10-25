@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.forge;
 
-import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
-import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import com.google.common.collect.Sets;
 import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
@@ -57,8 +55,6 @@ import java.util.function.Consumer;
 public class ArsNouveauCompat implements ModCompat {
 	private static final ResourceLocation SPELL_PROJ_RL = new ResourceLocation("ars_nouveau", "spell_proj");
 	private static final ResourceLocation SPELL_FOLLOW_PROJ_RL = new ResourceLocation("ars_nouveau", "follow_proj");
-	private static final ResourceLocation SPELL_HOMING_PROJ_RL = new ResourceLocation("ars_nouveau", "homing_spell_proj");
-	private static final ResourceLocation SPELL_CURVED_PROJ_RL = new ResourceLocation("ars_nouveau", "arcing_spell_proj");
 
 	protected static final Set<AbstractCastMethod> ALLOWED_CAST_METHODS = Sets.newHashSet(
 		MethodProjectile.INSTANCE,
@@ -161,11 +157,10 @@ public class ArsNouveauCompat implements ModCompat {
 			else if (event.spell.getCastMethod() == MethodOrbit.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_FOLLOW_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 				return;
 			}
-			else if (event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_HOMING_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
-				return;
-			}
-			else if (event.spell.getCastMethod() == MethodArcProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_CURVED_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
-				return;
+			else if (ModChecker.arsElementalPresent) {
+				if (ArsElementalCompat.isArsElementalCasting(event)) {
+					return;
+				}
 			}
 
 
