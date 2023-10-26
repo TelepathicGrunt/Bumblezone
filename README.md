@@ -79,6 +79,10 @@ repositories {
             includeGroup 'maven.modrinth'
         }
     }
+    maven {
+        name = "Ladysnake Mods"
+        url = 'https://maven.ladysnake.org/releases'
+    }
 }
 ```
 
