@@ -4,7 +4,8 @@
 Fixed typo in banner pattern item descriptions for EMI/JEI/REI.
 
 ##### Blocks:
-Adjusted Crystalline Flower to always give level 1 enchantments when at the first available enchanting tier. Rest of tiers are unchanged.
+Adjusted Crystalline Flower to force all enchantments to be level 1 when at the first available enchanting tier.
+ Rest of tiers are unchanged.
 
 ##### Entities:
 Made Sentry Watcher not charge at Vexes
