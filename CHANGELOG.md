@@ -10,7 +10,7 @@ Adjusted Crystalline Flower to force all enchantments to be level 1 when at the 
 ##### Entities:
 Made Sentry Watcher not charge at Vexes
 
-(Forge): Fixed client crash when spawning certain entities from Sempiternal Sanctum events.
+Fixed client crash when spawning certain entities from Sempiternal Sanctum events.
 
 ##### Mod Compat: 
 (Forge): Fixed crash if Ars Nouveau mod is on and Ars Elemental is not and player tries to do an Ars Nouveau cast.
