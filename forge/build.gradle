@@ -114,6 +114,7 @@ processResources {
 
 shadowJar {
     exclude "fabric.mod.json"
+    exclude "path"
 
     configurations = [project.configurations.shadowCommon]
     archiveClassifier.set("dev-shadow")
