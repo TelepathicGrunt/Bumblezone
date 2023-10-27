@@ -264,6 +264,14 @@ public class ElectricRingEntity extends Entity {
     }
 
     @Override
+    public boolean displayFireAnimation() {
+        return false;
+    }
+
+    @Override
+    protected void handleNetherPortal() { }
+
+    @Override
     public boolean canChangeDimensions() {
         return false;
     }

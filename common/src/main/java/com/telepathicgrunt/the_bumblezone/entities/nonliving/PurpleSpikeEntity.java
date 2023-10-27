@@ -280,6 +280,14 @@ public class PurpleSpikeEntity extends Entity {
     }
 
     @Override
+    public boolean displayFireAnimation() {
+        return false;
+    }
+
+    @Override
+    protected void handleNetherPortal() { }
+
+    @Override
     public boolean canChangeDimensions() {
         return false;
     }
