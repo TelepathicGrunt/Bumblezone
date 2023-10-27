@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -39,7 +40,9 @@ public class AncientWaxStairs extends StairBlock implements AncientWaxBase {
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-        if (itemstack.getItem() instanceof ShearsItem || itemstack.getItem() instanceof SwordItem) {
+        if (PlatformHooks.isToolAction(itemstack, ShearsItem.class, "shears_carve") ||
+            PlatformHooks.isToolAction(itemstack, SwordItem.class, "sword_dig"))
+        {
 
             InteractionResult result = swapBlocks(world, blockState, position, BzTags.ANCIENT_WAX_STAIRS);
             if (result == InteractionResult.SUCCESS) {

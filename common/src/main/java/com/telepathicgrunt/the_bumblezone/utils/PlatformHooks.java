@@ -138,4 +138,10 @@ public class PlatformHooks {
     public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
         throw new NotImplementedException("PlatformHooks isDimensionAllowed is not implemented!");
     }
+
+    @ExpectPlatform
+    @Contract(pure = true)
+    public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+        throw new NotImplementedException("PlatformHooks isToolAction is not implemented!");
+    }
 }

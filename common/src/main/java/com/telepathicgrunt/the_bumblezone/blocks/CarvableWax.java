@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -138,7 +139,10 @@ public class CarvableWax extends ProperFacingBlock {
     public InteractionResult use(BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
 
-        if (blockState.hasProperty(CARVING) && (itemstack.getItem() instanceof ShearsItem || itemstack.getItem() instanceof SwordItem)) {
+        if (blockState.hasProperty(CARVING) &&
+            (PlatformHooks.isToolAction(itemstack, ShearsItem.class, "shears_carve") ||
+            PlatformHooks.isToolAction(itemstack, SwordItem.class, "sword_dig")))
+        {
             world.setBlock(position, BzBlocks.CARVABLE_WAX.get().defaultBlockState().setValue(CARVING, blockState.getValue(CARVING).next()), 3);
             this.spawnDestroyParticles(world, playerEntity, position,blockState);
 

@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -29,6 +30,8 @@ import net.minecraft.world.item.BrushItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -120,8 +123,8 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
                 if (entity instanceof Player player &&
                     player.isUsingItem() &&
                     !heldItem.isEmpty() &&
-                        (heldItem.getItem() instanceof BrushItem ||
-                        (heldItem.is(BzTags.SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES))))
+                    (PlatformHooks.isToolAction(heldItem, BrushItem.class, "brush_brush") ||
+                    (heldItem.is(BzTags.SUSPICIOUS_PILE_OF_POLLEN_ADDITIONAL_BRUSHES))))
                 {
                     StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
                     boolean found = Arrays.stream(stackTrace)

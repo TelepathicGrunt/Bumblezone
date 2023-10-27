@@ -2,10 +2,13 @@ package com.telepathicgrunt.the_bumblezone.mixin.items;
 
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.SwordItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +20,11 @@ public class HoneyShieldMobMixin {
     @Inject(method = "maybeDisableShield",
             at = @At(value = "TAIL"))
     private void bumblezone$axeDisablesHoneyCrystalShield(Player playerEntity, ItemStack itemStack, ItemStack itemStack2, CallbackInfo ci) {
-        if(!itemStack.isEmpty() && !itemStack2.isEmpty() && itemStack2.getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get() && itemStack.getItem() instanceof AxeItem) {
+        if(!itemStack.isEmpty() &&
+            !itemStack2.isEmpty() &&
+            itemStack2.getItem() == BzItems.HONEY_CRYSTAL_SHIELD.get() &&
+            PlatformHooks.isToolAction(itemStack, AxeItem.class, "axe_dig"))
+        {
             HoneyCrystalShield.setShieldCooldown(playerEntity, ((Mob)(Object)this));
             playerEntity.level().broadcastEntityEvent(playerEntity, (byte)30);
         }

@@ -225,4 +225,8 @@ public class PlatformHooksImpl {
 
         return true;
     }
+
+    public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+        return targetBackupClass.isInstance(stack.getItem());
+    }
 }

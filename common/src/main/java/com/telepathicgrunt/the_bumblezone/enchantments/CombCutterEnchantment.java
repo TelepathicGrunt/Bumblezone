@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -113,7 +114,9 @@ public class CombCutterEnchantment extends BzEnchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof ShearsItem || stack.getItem() instanceof SwordItem || stack.is(Items.BOOK);
+        return PlatformHooks.isToolAction(stack, ShearsItem.class, "shears_carve") ||
+                PlatformHooks.isToolAction(stack, SwordItem.class, "sword_dig") ||
+                stack.is(Items.BOOK);
     }
 
     @Override

@@ -37,7 +37,6 @@
     "entity.PlayerAdvancementsMixin",
     "entity.PlayerMixin",
     "entity.ServerPlayerMixin",
-    "entity.ShieldMobMixin",
     "entity.ShulkerBulletMixin",
     "entity.ThrowableProjectileMixin",
     "entity.WalkNodeEvaluatorMixin",

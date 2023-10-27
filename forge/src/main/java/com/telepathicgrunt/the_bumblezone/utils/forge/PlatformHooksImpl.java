@@ -29,6 +29,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -36,6 +38,8 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Contract;
+
+import java.util.Arrays;
 
 public class PlatformHooksImpl {
 
@@ -147,5 +151,10 @@ public class PlatformHooksImpl {
 
     public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
         return ForgeHooks.onTravelToDimension(serverPlayer, dimension);
+    }
+
+    public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
+        return Arrays.stream(targetToolAction).anyMatch(actionString -> stack.canPerformAction(ToolAction.get(actionString)))
+                || targetBackupClass.isInstance(stack.getItem());
     }
 }
