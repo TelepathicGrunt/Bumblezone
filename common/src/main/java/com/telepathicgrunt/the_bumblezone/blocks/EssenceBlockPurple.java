@@ -19,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 import java.util.UUID;
@@ -79,11 +80,30 @@ public class EssenceBlockPurple extends EssenceBlock {
             for (int i = eventEntitiesInArena.size() - 1; i >= 0; i--) {
                 UUID entityToCheck = eventEntitiesInArena.get(i).uuid();
                 Entity entity = serverLevel.getEntity(entityToCheck);
+                if (entity == null) {
+                    List<PurpleSpikeEntity> nearbyRings = serverLevel.getEntitiesOfClass(
+                            PurpleSpikeEntity.class,
+                            new AABB(
+                                    blockPos.getX() - (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                                    blockPos.getY() - (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                                    blockPos.getZ() - (essenceBlockEntity.getArenaSize().getZ() * 0.5f),
+                                    blockPos.getX() + (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                                    blockPos.getY() + (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                                    blockPos.getZ() + (essenceBlockEntity.getArenaSize().getZ() * 0.5f)
+                            ));
 
-                // Someone removed a spike somehow. Clear grid of spikes and reset. Also set all spikes to on to punish.
+                    for (PurpleSpikeEntity nearbySpike : nearbyRings) {
+                        if (nearbySpike.getUUID().equals(entityToCheck) && nearbySpike.getEssenceController().equals(essenceBlockEntity.getUUID())) {
+                            entity = nearbySpike;
+                            break;
+                        }
+                    }
+                }
+
+                // Someone removed a spike somehow. Clear grid of spikes and reset. Also set all spikes to on mode to punish.
                 if (entity == null) {
                     for (int k = eventEntitiesInArena.size() - 1; k >= 0; k--) {
-                        UUID entityUUIDToRemove = eventEntitiesInArena.remove(i).uuid();
+                        UUID entityUUIDToRemove = eventEntitiesInArena.remove(k).uuid();
                         Entity entityEntityToRemove = serverLevel.getEntity(entityUUIDToRemove);
                         if (entityEntityToRemove != null) {
                             entityEntityToRemove.remove(Entity.RemovalReason.DISCARDED);
@@ -122,6 +142,10 @@ public class EssenceBlockPurple extends EssenceBlock {
                 PurpleSpikeEntity spikeEntity = BzEntities.PURPLE_SPIKE_ENTITY.get().create(serverLevel);
 
                 if (spikeEntity != null) {
+                    spikeEntity.setEssenceController(essenceBlockEntity.getUUID());
+                    spikeEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
+                    spikeEntity.setEssenceControllerDimension(serverLevel.dimension());
+
                     spikeEntity.setPos(
                         blockPos.getX() - Math.floor(arenaSize.getX() / 2d) + 1 + x + 0.5d,
                         blockPos.getY() - Math.floor(arenaSize.getY() / 2d) + 1,
@@ -131,7 +155,6 @@ public class EssenceBlockPurple extends EssenceBlock {
                     if (punish) {
                         spikeEntity.setSpikeTimer(50);
                     }
-                    spikeEntity.expiryTime = serverLevel.getGameTime() + essenceBlockEntity.getEventTimer() + 5;
                     serverLevel.addFreshEntityWithPassengers(spikeEntity);
                 }
             }

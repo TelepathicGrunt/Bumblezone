@@ -122,7 +122,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                 return;
             }
 
-            if (!(entity instanceof RootminEntity)) {
+            if (entity == null) {
                 entity = spawnRootmin(serverLevel, essenceBlockEntity, rootminPos, eventEntitiesInArena);
             }
 

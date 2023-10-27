@@ -12,5 +12,13 @@ Made Sentry Watcher not charge at Vexes
 
 Fixed client crash when spawning certain entities from Sempiternal Sanctum events.
 
+##### Structures:
+Improved tracking of Cosmic Crystal, Purple Spike, Electric Ring, and Rootmin in Sempiternal Sanctum events so they are less likely to lose connection to event.
+ As well as now removing these entity from existence if teleported out of the event arena.
+
+White arena event now will respawn a new Cosmic Crystal if you teleport it out of arena.
+
+Fixed possible rare crash with Purple Sempiternal Sanctum event.
+
 ##### Mod Compat: 
 (Forge): Fixed crash if Ars Nouveau mod is on and Ars Elemental is not and player tries to do an Ars Nouveau cast.

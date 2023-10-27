@@ -69,7 +69,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -326,36 +325,36 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
-   public void addAdditionalSaveData(CompoundTag compound) {
-      super.addAdditionalSaveData(compound);
+   public void addAdditionalSaveData(CompoundTag compoundTag) {
+      super.addAdditionalSaveData(compoundTag);
       BlockState blockState = this.getFlowerBlock();
       if (blockState != null) {
-         compound.put("flowerBlock", NbtUtils.writeBlockState(blockState));
+         compoundTag.put("flowerBlock", NbtUtils.writeBlockState(blockState));
       }
-      compound.putBoolean("hidden", this.isHidden);
-      compound.putInt("delayTillIdle", this.delayTillIdle);
-      compound.putString("animationState", this.getRootminPose().name());
+      compoundTag.putBoolean("hidden", this.isHidden);
+      compoundTag.putInt("delayTillIdle", this.delayTillIdle);
+      compoundTag.putString("animationState", this.getRootminPose().name());
       if (this.superHatedPlayer != null) {
-         compound.putUUID("superHatedPlayer", this.superHatedPlayer);
+         compoundTag.putUUID("superHatedPlayer", this.superHatedPlayer);
       }
       if (this.getEssenceController() != null) {
-         compound.putUUID("essenceController", this.getEssenceController());
+         compoundTag.putUUID("essenceController", this.getEssenceController());
       }
       if (this.getEssenceControllerBlockPos() != null) {
-         compound.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
+         compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
       }
       if (this.getEssenceControllerDimension() != null) {
-         compound.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
+         compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
       }
    }
 
    @Override
-   public void readAdditionalSaveData(CompoundTag compound) {
-      super.readAdditionalSaveData(compound);
+   public void readAdditionalSaveData(CompoundTag compoundTag) {
+      super.readAdditionalSaveData(compoundTag);
       BlockState blockState = null;
-      if (compound.contains("flowerBlock", 10) &&
+      if (compoundTag.contains("flowerBlock", 10) &&
               (blockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK),
-                      compound.getCompound("flowerBlock"))).isAir()) {
+                      compoundTag.getCompound("flowerBlock"))).isAir()) {
          blockState = null;
       }
 
@@ -366,28 +365,28 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.setFlowerBlock(blockState);
       }
 
-      this.isHidden = compound.getBoolean("hidden");
-      this.delayTillIdle = compound.getInt("delayTillIdle");
-      if (compound.contains("superHatedPlayer")) {
-         this.superHatedPlayer = compound.getUUID("superHatedPlayer");
+      this.isHidden = compoundTag.getBoolean("hidden");
+      this.delayTillIdle = compoundTag.getInt("delayTillIdle");
+      if (compoundTag.contains("superHatedPlayer")) {
+         this.superHatedPlayer = compoundTag.getUUID("superHatedPlayer");
       }
       if (this.isHidden) {
          this.setRootminPose(RootminPose.ENTITY_TO_BLOCK);
       }
       else {
-         if (compound.contains("animationState")) {
-            this.setRootminPose(RootminPose.valueOf(compound.getString("animationState")));
+         if (compoundTag.contains("animationState")) {
+            this.setRootminPose(RootminPose.valueOf(compoundTag.getString("animationState")));
          }
       }
 
-      if (compound.contains("essenceController")) {
-         this.setEssenceController(compound.getUUID("essenceController"));
+      if (compoundTag.contains("essenceController")) {
+         this.setEssenceController(compoundTag.getUUID("essenceController"));
       }
-      if (compound.contains("essenceControllerBlockPos")) {
-         this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compound.getCompound("essenceControllerBlockPos")));
+      if (compoundTag.contains("essenceControllerBlockPos")) {
+         this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
       }
-      if (compound.contains("essenceControllerDimension")) {
-         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("essenceControllerDimension"))));
+      if (compoundTag.contains("essenceControllerDimension")) {
+         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
       }
    }
 
@@ -807,6 +806,30 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
+   public boolean canChangeDimensions() {
+      return super.canChangeDimensions() && this.getEssenceController() == null;
+   }
+
+   @Override
+   public Entity changeDimension(ServerLevel serverLevel) {
+      if (this.getEssenceController() != null) {
+         return this;
+      }
+      return super.changeDimension(serverLevel);
+   }
+
+   @Override
+   public int getPortalCooldown() {
+      return this.getEssenceController() == null ? super.getPortalCooldown() : Integer.MAX_VALUE;
+   }
+
+   @Override
+   protected boolean shouldDropLoot() {
+      return this.getEssenceController() == null ||
+              (this.getLastDamageSource() != null && this.getLastDamageSource().getDirectEntity() instanceof DirtPelletEntity);
+   }
+
+   @Override
    public boolean canBeLeashed(Player player) {
       return false;
    }
@@ -939,9 +962,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       @Override
       public void stop() {
-         this.mob.setEssenceController(null);
-         this.mob.setEssenceControllerDimension(null);
-         this.mob.setEssenceControllerBlockPos(null);
+         this.mob.remove(RemovalReason.DISCARDED);
       }
 
       @Override
@@ -950,30 +971,23 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          ResourceKey<Level> essenceDimension = this.mob.getEssenceControllerDimension();
          BlockPos essenceBlockPos = this.mob.getEssenceControllerBlockPos();
 
-         Level level = this.mob.level();
          BlockPos rootminBlockPos = this.mob.blockPosition();
+         EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.mob.level(), essenceDimension, essenceBlockPos, essenceUuid);
 
-         if (essenceUuid != null && essenceDimension != null && essenceBlockPos != null) {
-            if (level.dimension().equals(essenceDimension)) {
-               BlockEntity blockEntity = level.getBlockEntity(essenceBlockPos);
+         if (essenceBlockEntity != null) {
+            BlockPos arenaSize = essenceBlockEntity.getArenaSize();
 
-               if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity) {
-                  if (essenceBlockEntity.getUUID().equals(essenceUuid)) {
-                     BlockPos arenaSize = essenceBlockEntity.getArenaSize();
-
-                     if (Math.abs(rootminBlockPos.getX() - essenceBlockPos.getX()) <= (arenaSize.getX() / 2) &&
-                          Math.abs(rootminBlockPos.getY() - essenceBlockPos.getY()) <= (arenaSize.getY() / 2) &&
-                          Math.abs(rootminBlockPos.getZ() - essenceBlockPos.getZ()) <= (arenaSize.getZ() / 2))
-                     {
-                        // Passed checks. Keep goal alive.
-                        return;
-                     }
-                  }
-               }
+            if (Math.abs(rootminBlockPos.getX() - essenceBlockPos.getX()) > (arenaSize.getX() / 2) ||
+                 Math.abs(rootminBlockPos.getY() - essenceBlockPos.getY()) > (arenaSize.getY() / 2) ||
+                 Math.abs(rootminBlockPos.getZ() - essenceBlockPos.getZ()) > (arenaSize.getZ() / 2))
+            {
+               //Failed check. Kill mob.
+               this.mob.remove(RemovalReason.DISCARDED);
             }
-
-            //Failed check. Kill goal.
-            this.mob.setEssenceController(null);
+         }
+         else {
+            //Failed check. Kill mob.
+            this.mob.remove(RemovalReason.DISCARDED);
          }
       }
    }

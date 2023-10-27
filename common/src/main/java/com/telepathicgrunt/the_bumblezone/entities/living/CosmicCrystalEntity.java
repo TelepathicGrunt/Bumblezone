@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.living;
 
+import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlockWhite;
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
@@ -113,7 +115,6 @@ public class CosmicCrystalEntity extends LivingEntity {
     public int lastPhysicalHit = 0;
     public ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
     private boolean noAI = false;
-    public long expiryTime = -1;
 
     public CosmicCrystalEntity(EntityType<? extends CosmicCrystalEntity> entityType, Level level) {
         super(entityType, level);
@@ -391,7 +392,6 @@ public class CosmicCrystalEntity extends LivingEntity {
 
         this.animationTimeTick = compoundTag.getInt("animationTimeTick");
         this.prevAnimationTick = compoundTag.getInt("prevAnimationTick");
-        this.expiryTime = compoundTag.getLong("expiryTime");
 
         if (compoundTag.contains("targetEntityUUID")) {
             this.targetEntityUUID = compoundTag.getUUID("targetEntityUUID");
@@ -432,7 +432,6 @@ public class CosmicCrystalEntity extends LivingEntity {
         compoundTag.putInt("currentStateTimeTick", this.currentStateTimeTick);
         compoundTag.putInt("animationTimeTick", this.animationTimeTick);
         compoundTag.putInt("prevAnimationTick", this.prevAnimationTick);
-        compoundTag.putLong("expiryTime", this.expiryTime);
 
         if (this.targetEntityUUID != null) {
             compoundTag.putUUID("targetEntityUUID", this.targetEntityUUID);
@@ -509,8 +508,8 @@ public class CosmicCrystalEntity extends LivingEntity {
             return;
         }
 
-        if (!this.level().isClientSide() && this.expiryTime != -1 && this.level().getGameTime() > this.expiryTime) {
-            this.remove(RemovalReason.DISCARDED);
+        if (!this.level().isClientSide() && !checkIfStillInEvent()) {
+            return;
         }
 
         if (this.getCosmicCrystalState() == CosmicCrystalState.NORMAL) {
@@ -546,6 +545,38 @@ public class CosmicCrystalEntity extends LivingEntity {
 
         this.currentStateTimeTick++;
         this.currentTickCount++;
+    }
+
+    private boolean checkIfStillInEvent() {
+        BlockPos essenceBlockPos = this.getEssenceControllerBlockPos();
+
+        if (this.tickCount % 20 != 0 && this.blockPosition().distManhattan(essenceBlockPos) < 16) {
+            return true;
+        }
+
+        UUID essenceUuid = this.getEssenceController();
+        ResourceKey<Level> essenceDimension = this.getEssenceControllerDimension();
+
+        BlockPos blockPos = this.blockPosition();
+        EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), essenceDimension, essenceBlockPos, essenceUuid);
+
+        if (essenceBlockEntity != null) {
+            BlockPos arenaSize = essenceBlockEntity.getArenaSize();
+            if (Math.abs(blockPos.getX() - essenceBlockPos.getX()) > (arenaSize.getX() / 2) ||
+                Math.abs(blockPos.getY() - essenceBlockPos.getY()) > (arenaSize.getY() / 2) ||
+                Math.abs(blockPos.getZ() - essenceBlockPos.getZ()) > (arenaSize.getZ() / 2))
+            {
+                //Failed check. Kill mob.
+                this.remove(RemovalReason.DISCARDED);
+                return false;
+            }
+        }
+        else {
+            //Failed check. Kill mob.
+            this.remove(RemovalReason.DISCARDED);
+            return false;
+        }
+        return true;
     }
 
     private void orbitMovement() {
@@ -1439,6 +1470,10 @@ public class CosmicCrystalEntity extends LivingEntity {
                 this.playSound(soundEvent, this.getSoundVolume(), this.getVoicePitch());
             }
             this.die(damageSource);
+            EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), this.getEssenceControllerDimension(), this.getEssenceControllerBlockPos(), this.getEssenceController());
+            if (essenceBlockEntity != null && essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlockWhite essenceBlockWhite) {
+                essenceBlockWhite.crystalKilled(this, essenceBlockEntity);
+            }
         }
         else {
             this.playHurtSound(damageSource);
@@ -1533,6 +1568,16 @@ public class CosmicCrystalEntity extends LivingEntity {
     @Override
     public boolean isCurrentlyGlowing() {
         return true;
+    }
+
+    @Override
+    public boolean canChangeDimensions() {
+        return super.canChangeDimensions() && this.getEssenceController() == null;
+    }
+
+    @Override
+    public int getPortalCooldown() {
+        return this.getEssenceController() == null ? super.getPortalCooldown() : Integer.MAX_VALUE;
     }
 
     @Override

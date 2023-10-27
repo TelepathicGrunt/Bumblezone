@@ -18,6 +18,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -427,5 +428,19 @@ public class EssenceBlockEntity extends BlockEntity {
     public void setRemoved() {
         super.setRemoved();
         this.getEventBar().removeAllPlayers();
+    }
+
+    public static EssenceBlockEntity getEssenceBlockAtLocation(Level level, ResourceKey<Level> targetLevel, BlockPos targetBlockPos, UUID targetEssenceUUID) {
+        if (targetEssenceUUID != null && level != null && targetBlockPos != null) {
+            if (level.dimension().equals(targetLevel)) {
+                BlockEntity blockEntity = level.getBlockEntity(targetBlockPos);
+                if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getEventTimer() > 0) {
+                    if (essenceBlockEntity.getUUID().equals(targetEssenceUUID)) {
+                        return essenceBlockEntity;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

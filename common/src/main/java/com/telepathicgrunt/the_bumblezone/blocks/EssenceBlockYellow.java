@@ -38,6 +38,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -99,11 +100,33 @@ public class EssenceBlockYellow extends EssenceBlock {
             UUID entityToCheck = eventEntitiesInArena.get(i).uuid();
             Entity entity = serverLevel.getEntity(entityToCheck);
             if (entity == null) {
+                List<ElectricRingEntity> nearbyRings = serverLevel.getEntitiesOfClass(
+                        ElectricRingEntity.class,
+                        new AABB(
+                                blockPos.getX() - (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                                blockPos.getY() - (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                                blockPos.getZ() - (essenceBlockEntity.getArenaSize().getZ() * 0.5f),
+                                blockPos.getX() + (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                                blockPos.getY() + (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                                blockPos.getZ() + (essenceBlockEntity.getArenaSize().getZ() * 0.5f)
+                        ));
+
+                for (ElectricRingEntity nearbyRing : nearbyRings) {
+                    if (nearbyRing.getUUID().equals(entityToCheck) && nearbyRing.getEssenceController().equals(essenceBlockEntity.getUUID())) {
+                        entity = nearbyRing;
+                        break;
+                    }
+                }
+            }
+
+            if (entity == null) {
                 // Ring will be the one to notify us if it was passed through
                 eventEntitiesInArena.remove(i);
             }
             else if (entity instanceof ElectricRingEntity electricRingEntity) {
-                electricRingEntity.blockEntity = essenceBlockEntity;
+                electricRingEntity.setEssenceController(essenceBlockEntity.getUUID());
+                electricRingEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
+                electricRingEntity.setEssenceControllerDimension(serverLevel.dimension());
                 ringsActive++;
             }
             else if (entity instanceof Vex vex && vex.getTarget() != null && vex.tickCount % 20 == 0) {
@@ -188,10 +211,11 @@ public class EssenceBlockYellow extends EssenceBlock {
             ringEntity.setPos(centerOfRing.x, centerOfRing.y, centerOfRing.z);
             ringEntity.setOldPosAndRot();
 
-            ringEntity.blockEntity = essenceBlockEntity;
+            ringEntity.setEssenceController(essenceBlockEntity.getUUID());
+            ringEntity.setEssenceControllerBlockPos(essenceBlockEntity.getBlockPos());
+            ringEntity.setEssenceControllerDimension(serverLevel.dimension());
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(ringEntity.getUUID()));
 
-            ringEntity.expiryTime = serverLevel.getGameTime() + essenceBlockEntity.getEventTimer() + 5;
             serverLevel.addFreshEntityWithPassengers(ringEntity);
         }
     }

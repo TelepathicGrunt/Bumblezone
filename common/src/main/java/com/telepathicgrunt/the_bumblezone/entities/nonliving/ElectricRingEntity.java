@@ -3,12 +3,17 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlockYellow;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -17,17 +22,19 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.UUID;
 
 public class ElectricRingEntity extends Entity {
     private static final EntityDataAccessor<Boolean> DATA_ID_DISAPPEARING_SET = SynchedEntityData.defineId(ElectricRingEntity.class, EntityDataSerializers.BOOLEAN);
     public static final int DISAPPERING_TIMESPAN = 20;
     public static final int APPEARING_TIMESPAN = 20;
 
-    public BlockEntity blockEntity = null;
     public int disappearingTime = -1;
-    public long expiryTime = -1;
+    private UUID essenceController = null;
+    private BlockPos essenceControllerBlockPos = null;
+    private ResourceKey<Level> essenceControllerDimension = null;
 
     public ElectricRingEntity(EntityType<? extends ElectricRingEntity> entityType, Level level) {
         super(entityType, level);
@@ -36,6 +43,30 @@ public class ElectricRingEntity extends Entity {
     @Override
     protected void defineSynchedData() {
         this.entityData.define(DATA_ID_DISAPPEARING_SET, this.disappearingTime > 0);
+    }
+
+    public UUID getEssenceController() {
+        return essenceController;
+    }
+
+    public void setEssenceController(UUID essenceController) {
+        this.essenceController = essenceController;
+    }
+
+    public BlockPos getEssenceControllerBlockPos() {
+        return essenceControllerBlockPos;
+    }
+
+    public void setEssenceControllerBlockPos(BlockPos essenceControllerBlockPos) {
+        this.essenceControllerBlockPos = essenceControllerBlockPos;
+    }
+
+    public ResourceKey<Level> getEssenceControllerDimension() {
+        return essenceControllerDimension;
+    }
+
+    public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
+        this.essenceControllerDimension = essenceControllerDimension;
     }
 
     public boolean getDisappearingMarker() {
@@ -54,10 +85,6 @@ public class ElectricRingEntity extends Entity {
     public void tick() {
         super.tick();
         this.setRot(this.getYRot(), this.getXRot());
-
-        if (!this.level().isClientSide() && this.expiryTime != -1 && this.level().getGameTime() > this.expiryTime) {
-            this.remove(RemovalReason.DISCARDED);
-        }
 
         if (this.level().isClientSide()) {
             if (this.tickCount % 2 == 0) {
@@ -78,6 +105,34 @@ public class ElectricRingEntity extends Entity {
 
         if (disappearingTime == 0) {
             this.discard();
+        }
+
+        if (!this.level().isClientSide() && this.tickCount % 20 == 0) {
+            checkIfStillInEvent();
+        }
+    }
+
+    private void checkIfStillInEvent() {
+        UUID essenceUuid = this.getEssenceController();
+        ResourceKey<Level> essenceDimension = this.getEssenceControllerDimension();
+        BlockPos essenceBlockPos = this.getEssenceControllerBlockPos();
+
+        BlockPos blockPos = this.blockPosition();
+        EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), essenceDimension, essenceBlockPos, essenceUuid);
+
+        if (essenceBlockEntity != null) {
+            BlockPos arenaSize = essenceBlockEntity.getArenaSize();
+            if (Math.abs(blockPos.getX() - essenceBlockPos.getX()) > (arenaSize.getX() / 2) ||
+                Math.abs(blockPos.getY() - essenceBlockPos.getY()) > (arenaSize.getY() / 2) ||
+                Math.abs(blockPos.getZ() - essenceBlockPos.getZ()) > (arenaSize.getZ() / 2))
+            {
+                //Failed check. Kill mob.
+                this.remove(RemovalReason.DISCARDED);
+            }
+        }
+        else {
+            //Failed check. Kill mob.
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 
@@ -194,7 +249,8 @@ public class ElectricRingEntity extends Entity {
             double rangeCheck = Math.max(0.2f, playerSpeed);
             if (distanceBetweenPlayerAndPlane < rangeCheck) {
                 // Notify Essence Block
-                if (this.blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlockYellow essenceBlockYellow) {
+                EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), this.getEssenceControllerDimension(), this.getEssenceControllerBlockPos(), this.getEssenceController());
+                if (essenceBlockEntity != null && essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlockYellow essenceBlockYellow) {
                     essenceBlockYellow.ringActivated(this, essenceBlockEntity, (ServerPlayer) player);
                 }
                 this.makeServerParticle(50, (ServerLevel) this.level());
@@ -208,6 +264,21 @@ public class ElectricRingEntity extends Entity {
     }
 
     @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
+    public Entity changeDimension(ServerLevel serverLevel) {
+        return this;
+    }
+
+    @Override
+    public int getPortalCooldown() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
     public boolean shouldRender(double x, double y, double z) {
         return true;
     }
@@ -218,14 +289,32 @@ public class ElectricRingEntity extends Entity {
             this.disappearingTime = compoundTag.getInt("disappearingTime");
         }
         this.setDisappearingMarker(compoundTag.getBoolean("disappearingMarker"));
-        this.expiryTime = compoundTag.getLong("expiryTime");
+
+        if (compoundTag.contains("essenceController")) {
+            this.setEssenceController(compoundTag.getUUID("essenceController"));
+        }
+        if (compoundTag.contains("essenceControllerBlockPos")) {
+            this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
+        }
+        if (compoundTag.contains("essenceControllerDimension")) {
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
+        }
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
         compoundTag.putInt("disappearingTime", this.disappearingTime);
         compoundTag.putBoolean("disappearingMarker", this.getDisappearingMarker());
-        compoundTag.putLong("expiryTime", this.expiryTime);
+
+        if (this.getEssenceController() != null) {
+            compoundTag.putUUID("essenceController", this.getEssenceController());
+        }
+        if (this.getEssenceControllerBlockPos() != null) {
+            compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
+        }
+        if (this.getEssenceControllerDimension() != null) {
+            compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
+        }
     }
 
     @Override

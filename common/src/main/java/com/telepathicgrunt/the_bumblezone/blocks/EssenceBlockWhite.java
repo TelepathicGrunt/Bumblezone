@@ -21,6 +21,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +73,7 @@ public class EssenceBlockWhite extends EssenceBlock {
             return;
         }
 
-        if (blockState.getBlock() instanceof EssenceBlock essenceBlock &&
-            essenceBlockEntity.getEventTimer() > essenceBlock.getEventTimeFrame() - 50)
-        {
+        if (essenceBlockEntity.getEventTimer() > this.getEventTimeFrame() - 50) {
             return;
         }
 
@@ -82,8 +81,9 @@ public class EssenceBlockWhite extends EssenceBlock {
         int totalCrystals = eventEntitiesInArena.size();
         int totalhealth = 0;
         float totalMaxHealth = 6 * BzGeneralConfigs.cosmicCrystalHealth;
+        boolean respawnedACrystal = false;
 
-        if (totalCrystals == 0) {
+        if (totalCrystals == 0 && essenceBlockEntity.getEventTimer() > this.getEventTimeFrame() - 100) {
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 0, 1, eventEntitiesInArena);
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 60, 1, eventEntitiesInArena);
             SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 120, 1, eventEntitiesInArena);
@@ -100,11 +100,34 @@ public class EssenceBlockWhite extends EssenceBlock {
             for (int i = eventEntitiesInArena.size() - 1; i >= 0; i--) {
                 UUID entityToCheck = eventEntitiesInArena.get(i).uuid();
                 Entity entity = serverLevel.getEntity(entityToCheck);
+
+                if (entity == null) {
+                    List<CosmicCrystalEntity> nearbyCosmicCrystalEntities = serverLevel.getEntitiesOfClass(
+                            CosmicCrystalEntity.class,
+                            new AABB(
+                                blockPos.getX() - (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                                blockPos.getY() - (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                                blockPos.getZ() - (essenceBlockEntity.getArenaSize().getZ() * 0.5f),
+                                blockPos.getX() + (essenceBlockEntity.getArenaSize().getX() * 0.5f),
+                                blockPos.getY() + (essenceBlockEntity.getArenaSize().getY() * 0.5f),
+                                blockPos.getZ() + (essenceBlockEntity.getArenaSize().getZ() * 0.5f)
+                        ));
+
+                    for (CosmicCrystalEntity nearbyCrystal : nearbyCosmicCrystalEntities) {
+                        if (nearbyCrystal.getUUID().equals(entityToCheck) && nearbyCrystal.getEssenceController().equals(essenceBlockEntity.getUUID())) {
+                            entity = nearbyCrystal;
+                            break;
+                        }
+                    }
+                }
+
                 if (entity == null) {
                     eventEntitiesInArena.remove(i);
-                    totalCrystals--;
+                    SpawnNewCrystal(serverLevel, blockPos, essenceBlockEntity, 60 * i, 1, eventEntitiesInArena);
+                    respawnedACrystal = true;
                 }
-                else if (entity instanceof CosmicCrystalEntity cosmicCrystalEntity) {
+
+                if (entity instanceof CosmicCrystalEntity cosmicCrystalEntity) {
                     if (blockState.getBlock() instanceof EssenceBlock essenceBlock &&
                         essenceBlockEntity.getEventTimer() > essenceBlock.getEventTimeFrame() - 70)
                     {
@@ -137,7 +160,7 @@ public class EssenceBlockWhite extends EssenceBlock {
             }
 
             if (!crystals.isEmpty()) {
-                boolean missingCrystal = false;
+                boolean missingCrystal = respawnedACrystal;
 
                 for (int i = 0; i < crystals.size(); i++) {
                     CosmicCrystalEntity crystalEntity = crystals.get(i);
@@ -175,6 +198,7 @@ public class EssenceBlockWhite extends EssenceBlock {
                         CosmicCrystalEntity crystalEntity = crystals.get(i);
                         crystalEntity.setOrbitOffsetDegrees(i * (360 / crystals.size()));
                         crystalEntity.setCosmicCrystalState(CosmicCrystalState.NORMAL);
+                        crystalEntity.currentTickCount = 0;
                     }
                 }
             }
@@ -189,7 +213,7 @@ public class EssenceBlockWhite extends EssenceBlock {
         essenceBlockEntity.getEventBar().setProgress(totalhealth / totalMaxHealth);
     }
 
-    private void SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
+    private Entity SpawnNewCrystal(ServerLevel serverLevel, BlockPos blockPos, EssenceBlockEntity essenceBlockEntity, int orbitOffset, float difficultyBoost, List<EssenceBlockEntity.EventEntities> eventEntitiesInArena) {
         CosmicCrystalEntity entity = BzEntities.COSMIC_CRYSTAL_ENTITY.get().spawn(serverLevel, blockPos, MobSpawnType.TRIGGERED);
         if (entity != null) {
             entity.setEssenceControllerDimension(serverLevel.dimension());
@@ -198,8 +222,12 @@ public class EssenceBlockWhite extends EssenceBlock {
             entity.setOrbitOffsetDegrees(orbitOffset);
             entity.setDifficultyBoost(difficultyBoost);
             eventEntitiesInArena.add(new EssenceBlockEntity.EventEntities(entity.getUUID()));
-            entity.expiryTime = serverLevel.getGameTime() + essenceBlockEntity.getEventTimer() + 5;
         }
+        return entity;
+    }
+
+    public void crystalKilled(CosmicCrystalEntity cosmicCrystalEntity, EssenceBlockEntity essenceBlockEntity) {
+        essenceBlockEntity.getEventEntitiesInArena().removeIf(e -> e.uuid().equals(cosmicCrystalEntity.getUUID()));
     }
 
     @Override

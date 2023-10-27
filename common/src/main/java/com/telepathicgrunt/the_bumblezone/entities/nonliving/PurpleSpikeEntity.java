@@ -1,12 +1,19 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
+import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,6 +28,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 public class PurpleSpikeEntity extends Entity {
     private static final EntityDataAccessor<Boolean> DATA_ID_SPIKE_CHARGE = SynchedEntityData.defineId(PurpleSpikeEntity.class, EntityDataSerializers.BOOLEAN);
@@ -30,7 +38,9 @@ public class PurpleSpikeEntity extends Entity {
     public int spikeTimer = 0;
     public boolean spikeChargeClientPhaseTracker = false;
     public int spikeChargeClientTimeTracker = 0;
-    public long expiryTime = -1;
+    private UUID essenceController = null;
+    private BlockPos essenceControllerBlockPos = null;
+    private ResourceKey<Level> essenceControllerDimension = null;
 
     public PurpleSpikeEntity(EntityType<? extends PurpleSpikeEntity> entityType, Level level) {
         super(entityType, level);
@@ -40,6 +50,30 @@ public class PurpleSpikeEntity extends Entity {
     protected void defineSynchedData() {
         this.entityData.define(DATA_ID_SPIKE_CHARGE, spikeChargeTimer > 0);
         this.entityData.define(DATA_ID_SPIKE_ACTIVE, spikeTimer > 0);
+    }
+
+    public UUID getEssenceController() {
+        return essenceController;
+    }
+
+    public void setEssenceController(UUID essenceController) {
+        this.essenceController = essenceController;
+    }
+
+    public BlockPos getEssenceControllerBlockPos() {
+        return essenceControllerBlockPos;
+    }
+
+    public void setEssenceControllerBlockPos(BlockPos essenceControllerBlockPos) {
+        this.essenceControllerBlockPos = essenceControllerBlockPos;
+    }
+
+    public ResourceKey<Level> getEssenceControllerDimension() {
+        return essenceControllerDimension;
+    }
+
+    public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
+        this.essenceControllerDimension = essenceControllerDimension;
     }
 
     public boolean hasSpikeCharge() {
@@ -92,10 +126,6 @@ public class PurpleSpikeEntity extends Entity {
         super.tick();
         boolean hasSpikeCharge = this.hasSpikeCharge();
         boolean hasSpike = this.hasSpike();
-
-        if (!this.level().isClientSide() && this.expiryTime != -1 && this.level().getGameTime() > this.expiryTime) {
-            this.remove(RemovalReason.DISCARDED);
-        }
 
         if (this.level().isClientSide()) {
             if (this.tickCount % 2 == 0 && !hasSpikeCharge && hasSpike){
@@ -173,6 +203,34 @@ public class PurpleSpikeEntity extends Entity {
                 }
             }
         }
+
+        if (!this.level().isClientSide() && this.tickCount % 20 == 0) {
+            checkIfStillInEvent();
+        }
+    }
+
+    private void checkIfStillInEvent() {
+        UUID essenceUuid = this.getEssenceController();
+        ResourceKey<Level> essenceDimension = this.getEssenceControllerDimension();
+        BlockPos essenceBlockPos = this.getEssenceControllerBlockPos();
+
+        BlockPos blockPos = this.blockPosition();
+        EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), essenceDimension, essenceBlockPos, essenceUuid);
+
+        if (essenceBlockEntity != null) {
+            BlockPos arenaSize = essenceBlockEntity.getArenaSize();
+            if (Math.abs(blockPos.getX() - essenceBlockPos.getX()) > (arenaSize.getX() / 2) ||
+                Math.abs(blockPos.getY() - essenceBlockPos.getY()) > (arenaSize.getY() / 2) ||
+                Math.abs(blockPos.getZ() - essenceBlockPos.getZ()) > (arenaSize.getZ() / 2))
+            {
+                //Failed check. Kill mob.
+                this.remove(RemovalReason.DISCARDED);
+            }
+        }
+        else {
+            //Failed check. Kill mob.
+            this.remove(RemovalReason.DISCARDED);
+        }
     }
 
     @Override
@@ -222,6 +280,21 @@ public class PurpleSpikeEntity extends Entity {
     }
 
     @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
+    public Entity changeDimension(ServerLevel serverLevel) {
+        return this;
+    }
+
+    @Override
+    public int getPortalCooldown() {
+        return Integer.MAX_VALUE;
+    }
+
+    @Override
     public boolean shouldRender(double x, double y, double z) {
         return this.hasSpike() || this.hasSpikeCharge();
     }
@@ -230,13 +303,31 @@ public class PurpleSpikeEntity extends Entity {
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
         this.setSpikeTimer(compoundTag.getInt("spike_timer"));
         this.setSpikeChargeTimer(compoundTag.getInt("spike_charge_timer"));
-        this.expiryTime = compoundTag.getLong("expiryTime");
+
+        if (compoundTag.contains("essenceController")) {
+            this.setEssenceController(compoundTag.getUUID("essenceController"));
+        }
+        if (compoundTag.contains("essenceControllerBlockPos")) {
+            this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
+        }
+        if (compoundTag.contains("essenceControllerDimension")) {
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
+        }
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compoundTag) {
         compoundTag.putInt("spike_timer", this.getSpikeTimer());
         compoundTag.putInt("spike_charge_timer", this.getSpikeChargeTimer());
-        compoundTag.putLong("expiryTime", this.expiryTime);
+
+        if (this.getEssenceController() != null) {
+            compoundTag.putUUID("essenceController", this.getEssenceController());
+        }
+        if (this.getEssenceControllerBlockPos() != null) {
+            compoundTag.put("essenceControllerBlockPos", NbtUtils.writeBlockPos(this.getEssenceControllerBlockPos()));
+        }
+        if (this.getEssenceControllerDimension() != null) {
+            compoundTag.putString("essenceControllerDimension", this.getEssenceControllerDimension().location().toString());
+        }
     }
 }
