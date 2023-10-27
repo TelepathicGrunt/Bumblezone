@@ -4,7 +4,7 @@ dependencies {
     // Do NOT use other classes from fabric loader
     modImplementation("net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}")
 
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-common-${rootProject.athena}")))
+    modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-common-${rootProject.athena}"))
 
     implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
 
@@ -30,6 +30,14 @@ loom {
     accessWidenerPath = file("src/main/resources/the_bumblezone.accesswidener")
 }
 
+jar {
+    exclude("architectury.common.json")
+
+    manifest {
+        attributes 'Fabric-Loom-Remap': true
+    }
+}
+
 def ENV = System.getenv()
 
 publishing {
@@ -40,7 +48,7 @@ publishing {
                 builtBy remapSourcesJar
             }
 
-            artifactId = "$rootProject.name-Common"
+            artifactId = "$rootProject.name"
 
             pom {
                 name = 'TheBumblezone'
@@ -80,3 +88,7 @@ publishing {
         }
     }
 }
+
+task buildAndRelease{}
+tasks.publish.mustRunAfter tasks.build
+tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish)
