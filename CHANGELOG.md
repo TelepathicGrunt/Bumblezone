@@ -3,9 +3,14 @@
 ##### Items:
 Fixed typo in banner pattern item descriptions for EMI/JEI/REI.
 
+Fixed Pollen Puff unable to grow stack of Pile of Pollen if Windy Air or Heady Air is above it.
+
 ##### Blocks:
 Adjusted Crystalline Flower to force all enchantments to be level 1 when at the first available enchanting tier.
  Rest of tiers are unchanged.
+
+##### Effects:
+Fixed Hidden effect lingering randomly after being in Pile of Pollen
 
 ##### Entities:
 Made Sentry Watcher not charge at Vexes

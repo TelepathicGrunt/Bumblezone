@@ -360,7 +360,10 @@ public class PileOfPollen extends FallingBlock {
             }
 
             // make entity invisible if hidden inside
-            if(entity instanceof LivingEntity livingEntity && !livingEntity.hasEffect(BzEffects.HIDDEN.get())) {
+            if(!entity.level().isClientSide() &&
+                entity instanceof LivingEntity livingEntity &&
+                !livingEntity.hasEffect(BzEffects.HIDDEN.get()))
+            {
                 applyHiddenEffectIfBuried(livingEntity, blockState, blockPos);
             }
         }
@@ -371,7 +374,7 @@ public class PileOfPollen extends FallingBlock {
         BlockPos minCorner = BlockPos.containing(aabb.minX + 0.001D, aabb.minY + 0.001D, aabb.minZ + 0.001D);
         BlockPos maxCorner = BlockPos.containing(aabb.maxX - 0.001D, aabb.maxY - 0.001D, aabb.maxZ - 0.001D);
         Level level = livingEntity.level();
-        if (level.hasChunksAt(minCorner, maxCorner)) {
+        if (!level.isClientSide() && level.hasChunksAt(minCorner, maxCorner)) {
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
 
             for (int x = minCorner.getX(); x <= maxCorner.getX(); ++x) {
@@ -430,7 +433,7 @@ public class PileOfPollen extends FallingBlock {
         }
         else {
             // Stack on top of this pile
-            if(layersToAdd > 0 && aboveState.isAir()) {
+            if(layersToAdd > 0 && (aboveState.isAir() || aboveState.is(BzTags.AIR_LIKE))) {
                 lastSetState = blockState.setValue(LAYERS, layersToAdd);
                 world.setBlock(blockPos.above(), blockState.setValue(LAYERS, layersToAdd), 3);
             }

@@ -37,7 +37,6 @@ public class HiddenEffect extends BzEffect implements EffectExtension {
         return duration >= 1;
     }
 
-
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
         super.applyEffectTick(livingEntity, amplifier);
