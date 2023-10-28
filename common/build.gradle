@@ -31,11 +31,15 @@ loom {
 }
 
 jar {
-    exclude("architectury.common.json")
+    exclude "architectury.common.json"
 
     manifest {
         attributes 'Fabric-Loom-Remap': true
     }
+}
+
+sourcesJar {
+    exclude "architectury.common.json"
 }
 
 def ENV = System.getenv()
