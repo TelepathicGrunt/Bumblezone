@@ -108,7 +108,7 @@ public class EnchantmentUtils {
 			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (enchantment.canEnchant(stack) || bookFlag)) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
 					if (forceAllowed || level >= enchantment.getMinCost(i)) {
-						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, i);
+						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, xpTier <= 2 ? 1 : i);
 						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
 							list.add(enchantmentInstance);
 							break;
