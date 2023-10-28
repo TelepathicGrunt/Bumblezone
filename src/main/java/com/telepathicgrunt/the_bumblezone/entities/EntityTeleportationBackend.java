@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
@@ -40,11 +41,12 @@ public class EntityTeleportationBackend {
         {
             destination.getChunk(BlockPos.ZERO);
             int heightMapY = destination.getHeight(Heightmap.Types.MOTION_BLOCKING, 0, 0);
-            if (heightMapY > destination.getMinBuildHeight() && heightMapY < destination.getMaxBuildHeight()) {
-                return new Vec3(0, heightMapY + 0.5d, 0);
+            ChunkGenerator chunkGenerator = destination.getChunkSource().getGenerator();
+            if (heightMapY > destination.getMinBuildHeight() && heightMapY < chunkGenerator.getMinY() + chunkGenerator.getGenDepth()) {
+                return new Vec3(0.5d, heightMapY + 0.5d, 0.5d);
             }
             else {
-                return new Vec3(0, (destination.getMinBuildHeight() + destination.getMaxBuildHeight()) / 2f, 0);
+                return new Vec3(0.5d, (chunkGenerator.getMinY() + chunkGenerator.getGenDepth()) / 2d, 0.5d);
             }
         }
 

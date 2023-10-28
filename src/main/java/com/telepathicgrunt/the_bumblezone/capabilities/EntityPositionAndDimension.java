@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Level;
 
 
 public class EntityPositionAndDimension implements INBTSerializable<CompoundTag> {
-	private ResourceLocation nonBZDimension = new ResourceLocation("minecraft", "overworld");
+	private ResourceLocation nonBZDimension = new ResourceLocation(BzDimensionConfigs.defaultDimension.get());
 	private Vec3 nonBZPosition = null;
 
 	public void setNonBZDim(ResourceLocation incomingDim) {
@@ -64,7 +64,7 @@ public class EntityPositionAndDimension implements INBTSerializable<CompoundTag>
 		String path = nbtTag.getString("PreviousDimensionPath");
 		ResourceLocation storedDimension;
 		if(path.trim().isEmpty()) {
-			storedDimension = new ResourceLocation("minecraft", "overworld");
+			storedDimension = new ResourceLocation(BzDimensionConfigs.defaultDimension.get());
 		}
 		else {
 			storedDimension = new ResourceLocation(namespace, path);
@@ -76,7 +76,7 @@ public class EntityPositionAndDimension implements INBTSerializable<CompoundTag>
 		    storedPositionNonBZ = new Vec3(nbtTag.getFloat("NonBZ_X"), nbtTag.getFloat("NonBZ_Y"), nbtTag.getFloat("NonBZ_Z"));
 		}
 
-		this.setNonBZDim(storedDimension.getPath().isEmpty() ? new ResourceLocation("minecraft", "overworld") : storedDimension);
+		this.setNonBZDim(storedDimension.getPath().isEmpty() ? new ResourceLocation(BzDimensionConfigs.defaultDimension.get()) : storedDimension);
 		this.setNonBZPos(storedPositionNonBZ);
 	}
 
