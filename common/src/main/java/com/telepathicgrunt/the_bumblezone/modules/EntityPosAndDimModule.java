@@ -13,7 +13,7 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
 
     public static final ModuleSerializer<EntityPosAndDimModule> SERIALIZER = new Serializer();
 
-    private ResourceLocation nonBZDimension = new ResourceLocation("overworld");
+    private ResourceLocation nonBZDimension = new ResourceLocation(BzDimensionConfigs.defaultDimension);
     private Vec3 nonBZPosition = null;
 
     public void setNonBZDim(ResourceLocation incomingDim) {
