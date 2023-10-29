@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = MapItem.class, priority = 1010)
+@Mixin(value = MapItem.class, priority = 1200)
 public class MapItemMixin {
     @ModifyExpressionValue(method = "update(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/dimension/DimensionType;hasCeiling()Z", ordinal = 1),

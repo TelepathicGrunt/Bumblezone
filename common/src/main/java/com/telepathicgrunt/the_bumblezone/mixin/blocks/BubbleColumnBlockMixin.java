@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = BubbleColumnBlock.class, priority = 1010)
+@Mixin(value = BubbleColumnBlock.class, priority = 1200)
 public class BubbleColumnBlockMixin {
 
     // allow intermixing of my and vanilla's bubble columns

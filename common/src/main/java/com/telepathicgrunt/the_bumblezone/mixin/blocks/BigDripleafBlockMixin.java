@@ -15,7 +15,7 @@ import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = BigDripleafBlock.class, priority = 1010)
+@Mixin(value = BigDripleafBlock.class, priority = 1200)
 public class BigDripleafBlockMixin {
 
     @ModifyReturnValue(method = "canReplace(Lnet/minecraft/world/level/block/state/BlockState;)Z",

@@ -22,13 +22,13 @@ public class AnimalMixin {
         locals = LocalCapture.CAPTURE_FAILHARD,
         cancellable = true
     )
-    public void bumblezone$onSpawnChildFromBreeding(ServerLevel serverLevel, Animal animal, CallbackInfo ci, AgeableMob baby) {
-        Animal us = (Animal)(Object)this;
-        if (BabySpawnEvent.EVENT.invoke(new BabySpawnEvent(us, animal, us.getLoveCause(), baby))) {
-            us.setAge(6000);
-            animal.setAge(6000);
-            us.resetLove();
-            animal.resetLove();
+    public void bumblezone$onSpawnChildFromBreeding(ServerLevel serverLevel, Animal otherParent, CallbackInfo ci, AgeableMob baby) {
+        Animal parent = (Animal)(Object)this;
+        if (BabySpawnEvent.EVENT.invoke(new BabySpawnEvent(parent, otherParent, parent.getLoveCause(), baby))) {
+            parent.setAge(6000);
+            otherParent.setAge(6000);
+            parent.resetLove();
+            otherParent.resetLove();
             ci.cancel();
         }
     }

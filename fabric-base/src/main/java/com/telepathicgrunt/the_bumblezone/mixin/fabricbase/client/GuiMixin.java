@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = Gui.class, priority = 1010)
+@Mixin(value = Gui.class, priority = 1200)
 public class GuiMixin {
 
     @Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;F)V",

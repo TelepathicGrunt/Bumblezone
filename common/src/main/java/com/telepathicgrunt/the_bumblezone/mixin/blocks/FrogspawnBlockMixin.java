@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = FrogspawnBlock.class, priority = 1010)
+@Mixin(value = FrogspawnBlock.class, priority = 1200)
 public class FrogspawnBlockMixin {
 
     @Inject(method = "mayPlaceOn(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",

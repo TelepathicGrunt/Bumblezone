@@ -21,7 +21,14 @@ public class EnchantmentHelperMixin {
             method = "getAvailableEnchantmentResults",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentCategory;canEnchant(Lnet/minecraft/world/item/Item;)Z")
     )
-    private static boolean bumblezone$canEnchant(EnchantmentCategory instance, Item item, Operation<Boolean> operation, int i, ItemStack itemStack, boolean bl, @Local(ordinal = 0, name = "enchantment") Enchantment enchantment) {
+    private static boolean bumblezone$canEnchant(EnchantmentCategory instance,
+                                                 Item item,
+                                                 Operation<Boolean> operation,
+                                                 int i,
+                                                 ItemStack itemStack,
+                                                 boolean bl,
+                                                 @Local(ordinal = 0) Enchantment enchantment)
+    {
         if (enchantment instanceof BzEnchantment bzEnchantment) {
             OptionalBoolean result = bzEnchantment.bz$canApplyAtEnchantingTable(itemStack);
             if (result.isPresent()) {

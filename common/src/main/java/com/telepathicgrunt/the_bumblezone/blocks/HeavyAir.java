@@ -110,7 +110,7 @@ public class HeavyAir extends Block {
             }
 
             if (entity instanceof TemporaryPlayerData temporaryPlayerData) {
-                int ticksOffGround = temporaryPlayerData.playTickOffGroundInHeavyAir();
+                int ticksOffGround = temporaryPlayerData.bumblezonePlayerTickOffGroundInHeavyAir();
                 int offsetTicks = Math.max(0, ticksOffGround - 10);
                 extraGravity *= ((offsetTicks * 4) + 1);
             }

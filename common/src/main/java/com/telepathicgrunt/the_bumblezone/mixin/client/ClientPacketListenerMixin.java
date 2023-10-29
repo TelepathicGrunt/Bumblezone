@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(value = ClientPacketListener.class, priority = 1010)
+@Mixin(value = ClientPacketListener.class, priority = 1200)
 public abstract class ClientPacketListenerMixin {
 
     @Inject(method = "handleAddEntity(Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;)V",

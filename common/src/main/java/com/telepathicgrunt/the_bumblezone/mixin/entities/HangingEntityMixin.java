@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = HangingEntity.class, priority = 1010)
+@Mixin(value = HangingEntity.class, priority = 1200)
 public class HangingEntityMixin {
 
     // Silence logspam that isn't an issue by lowering it from error to debug: https://bugs.mojang.com/browse/MC-252934

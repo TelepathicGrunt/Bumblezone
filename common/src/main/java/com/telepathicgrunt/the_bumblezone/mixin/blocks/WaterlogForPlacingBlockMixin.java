@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(targets = {
     "net.minecraft.world.item.BlockItem",
     "net.minecraft.world.item.StandingAndWallBlockItem"
-}, priority = 1010)
+}, priority = 1200)
 public class WaterlogForPlacingBlockMixin {
 
     @ModifyReturnValue(method = "getPlacementState(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;",

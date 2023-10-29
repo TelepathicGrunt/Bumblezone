@@ -40,5 +40,5 @@ public abstract class ServerPlayerTimeInAirMixin extends LivingEntity implements
     }
 
     @Override
-    public int playTickOffGroundInHeavyAir() { return bumblezone$ticksOffGroundInHeavyAir; }
+    public int bumblezonePlayerTickOffGroundInHeavyAir() { return bumblezone$ticksOffGroundInHeavyAir; }
 }

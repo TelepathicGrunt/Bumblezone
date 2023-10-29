@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
 
-@Mixin(value = Bee.class, priority = 1010)
+@Mixin(value = Bee.class, priority = 1200)
 public abstract class BeeEntityMixin extends Entity {
 
     @Shadow

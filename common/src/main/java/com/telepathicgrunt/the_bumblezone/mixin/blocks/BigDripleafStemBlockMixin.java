@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = BigDripleafStemBlock.class, priority = 1010)
+@Mixin(value = BigDripleafStemBlock.class, priority = 1200)
 public class BigDripleafStemBlockMixin {
 
     @ModifyExpressionValue(method = "place(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/core/Direction;)Z",
