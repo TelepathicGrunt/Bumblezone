@@ -233,8 +233,9 @@ modrinth {
 }
 
 task buildAndRelease{}
+tasks.build.mustRunAfter tasks.clean
 tasks.publish.mustRunAfter tasks.build
 tasks.publishCurseForge.mustRunAfter tasks.publish
 tasks.modrinth.mustRunAfter tasks.publish
 tasks.publishCurseForge.dependsOn("remapJar")
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)
+tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)
