@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.enchantments;
+package com.telepathicgrunt.the_bumblezone.mixin.fabricbase.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Enchantment.class)
+@Mixin(value = Enchantment.class, priority = 1200)
 public class EnchantmentMixin {
 
     @Inject(

@@ -20,6 +20,8 @@
     "block.FireBlockMixin",
     "block.PistonStructureResolverMixin",
     "block.ShulkerBoxBlockEntityMixin",
+    "enchantments.EnchantmentHelperMixin",
+    "enchantments.EnchantmentMixin",
     "entity.AbstractArrowMixin",
     "entity.AbstractHurtingProjectileMixin",
     "entity.AnimalMixin",
