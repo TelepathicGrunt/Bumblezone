@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(FishingHook.class)
+@Mixin(value = FishingHook.class, priority = 1010)
 public abstract class FishingHookMixin extends Entity {
 
     public FishingHookMixin(EntityType<?> entityType, Level world) {

@@ -12,11 +12,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(FrogspawnBlock.class)
+@Mixin(value = FrogspawnBlock.class, priority = 1010)
 public class FrogspawnBlockMixin {
 
     @Inject(method = "mayPlaceOn(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
-            at = @At(value = "RETURN"), cancellable = true, require = 0)
+            at = @At(value = "RETURN"),
+            cancellable = true,
+            require = 0)
     private static void bumblezone$allowPlacingOnSugarWater(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
             FluidState fluidState = blockGetter.getFluidState(blockPos);

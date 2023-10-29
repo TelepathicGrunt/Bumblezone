@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@Mixin(ExperienceOrb.class)
+@Mixin(value = ExperienceOrb.class, priority = 1010)
 public abstract class ExperienceOrbMixin extends Entity {
 
     public ExperienceOrbMixin(EntityType<?> entityType, Level level) {

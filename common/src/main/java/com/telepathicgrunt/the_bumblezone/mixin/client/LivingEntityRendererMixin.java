@@ -7,7 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(LivingEntityRenderer.class)
+@Mixin(value = LivingEntityRenderer.class, priority = 1010)
 public class LivingEntityRendererMixin<T extends LivingEntity> {
 
     @ModifyReturnValue(method = "isShaking(Lnet/minecraft/world/entity/LivingEntity;)Z",

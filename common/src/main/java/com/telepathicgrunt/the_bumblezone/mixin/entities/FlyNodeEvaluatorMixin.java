@@ -11,7 +11,7 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(FlyNodeEvaluator.class)
+@Mixin(value = FlyNodeEvaluator.class, priority = 1010)
 public class FlyNodeEvaluatorMixin extends WalkNodeEvaluator {
 
     @WrapOperation(method = "getBlockPathType(Lnet/minecraft/world/level/BlockGetter;III)Lnet/minecraft/world/level/pathfinder/BlockPathTypes;",

@@ -11,7 +11,7 @@ import net.minecraft.world.level.material.Fluids;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(SmallDripleafBlock.class)
+@Mixin(value = SmallDripleafBlock.class, priority = 1010)
 public class SmallDripleafBlockMixin {
 
     @ModifyExpressionValue(method = "mayPlaceOn(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",

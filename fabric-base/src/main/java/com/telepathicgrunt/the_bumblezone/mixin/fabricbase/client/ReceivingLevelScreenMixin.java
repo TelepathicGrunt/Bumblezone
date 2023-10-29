@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ReceivingLevelScreen.class)
+@Mixin(value = ReceivingLevelScreen.class, priority = 1010)
 public class ReceivingLevelScreenMixin extends Screen {
     protected ReceivingLevelScreenMixin(Component title) {
         super(title);
