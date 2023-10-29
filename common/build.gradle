@@ -94,5 +94,6 @@ publishing {
 }
 
 task buildAndRelease{}
+tasks.build.mustRunAfter tasks.clean
 tasks.publish.mustRunAfter tasks.build
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish)
+tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish)
