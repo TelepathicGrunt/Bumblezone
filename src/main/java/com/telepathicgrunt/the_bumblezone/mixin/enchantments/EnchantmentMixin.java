@@ -11,7 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(Enchantment.class)
+@Mixin(value = Enchantment.class, priority = 1020)
 public class EnchantmentMixin {
 
     @ModifyReturnValue(method = "canEnchant",

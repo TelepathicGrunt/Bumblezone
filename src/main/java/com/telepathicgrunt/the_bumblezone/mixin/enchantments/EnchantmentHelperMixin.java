@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Iterator;
 import java.util.List;
 
-@Mixin(EnchantmentHelper.class)
+@Mixin(value = EnchantmentHelper.class, priority = 1020)
 public class EnchantmentHelperMixin {
 
     //most compat way to make enchantment table not apply our enchantment

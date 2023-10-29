@@ -227,6 +227,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addOptional("unofficial-sodium-biome-blending-fix")
 	mainFile.addOptional("indium")
 	mainFile.addIncompatibility("lanterns-bow")
+	mainFile.addIncompatibility("simple-planes-fabric")
 }
 
 modrinth {
