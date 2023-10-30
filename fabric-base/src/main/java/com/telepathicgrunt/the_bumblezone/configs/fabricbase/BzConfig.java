@@ -237,6 +237,9 @@ public class BzConfig extends MidnightConfig {
     public static int beeQueenBonusTradeAmountTillSatified = 24;
 
     @Entry
+    public static boolean beeQueenSpecialDayTrades = true;
+
+    @Entry
     public static boolean specialBeeSpawning = true;
 
     @Entry
@@ -406,6 +409,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier;
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks;
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified;
+        BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades;
         BzGeneralConfigs.specialBeeSpawning = specialBeeSpawning;
         BzGeneralConfigs.beeLootInjection = beeLootInjection;
         BzGeneralConfigs.moddedBeeLootInjection = moddedBeeLootInjection;

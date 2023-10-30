@@ -15,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRo
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
@@ -24,12 +25,18 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -45,23 +52,35 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
     private final List<TradeCollection> rawTrades = new ArrayList<>();
     public Object2ObjectOpenHashMap<Item, WeightedRandomList<WeightedTradeResult>> queenTrades = new Object2ObjectOpenHashMap<>();
+    public Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayQueenTrades = new Object2ObjectOpenHashMap<>();
     public List<RandomizeTradeRowInput> recipeViewerRandomizerTrades = new ArrayList<>();
     public List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> recipeViewerMainTrades = new ArrayList<>();
 
     public record TradeCollection(
+        Optional<SpecialDaysEntry> specialDaysEntry,
         Optional<List<RawTradeInputEntry>> randomizerItems,
         Optional<List<RawTradeInputEntry>> wantItems,
         Optional<List<RawTradeOutputEntry>> resultItems,
         boolean randomizerTrade)
     {
         public static final Codec<TradeCollection> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                SpecialDaysEntry.CODEC.optionalFieldOf("special_days").forGetter(e -> e.specialDaysEntry),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("randomizes").forGetter(e -> e.randomizerItems),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("wants").forGetter(e -> e.wantItems),
                 RawTradeOutputEntry.CODEC.listOf().optionalFieldOf("possible_rewards").forGetter(e -> e.resultItems),
                 Codec.BOOL.fieldOf("is_color_randomizer_trade").orElse(false).forGetter(e -> e.randomizerTrade)
         ).apply(instance, instance.stable(TradeCollection::new)));
-        //Error validate if want is added without reward and vice versa
-        // No want or possible rewards fields if randomizer is on
+    }
+
+    public record SpecialDaysEntry(Optional<String> dateAlgorithm, Optional<Integer> month, Optional<Integer> day, int daysLong, String specialMessage, ChatFormatting textColor) {
+        public static final Codec<SpecialDaysEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                Codec.STRING.optionalFieldOf("date_algorithm").forGetter(e -> e.dateAlgorithm),
+                Codec.intRange(1, 12).optionalFieldOf("start_month").forGetter(e -> e.month),
+                Codec.intRange(1, 31).optionalFieldOf("start_day").forGetter(e -> e.day),
+                Codec.intRange(1, 364).fieldOf("lasts_days_long").forGetter(e -> e.daysLong),
+                Codec.STRING.fieldOf("special_message").forGetter(e -> e.specialMessage),
+                ChatFormatting.CODEC.fieldOf("text_color").forGetter(e -> e.textColor)
+        ).apply(instance, instance.stable(SpecialDaysEntry::new)));
     }
 
     public record RawTradeInputEntry(String entry, boolean required) {
@@ -129,8 +148,30 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         // TagKey is to store if the key item was from a Tag or not.
         Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTradesFirstPass = new Object2ObjectOpenHashMap<>();
         Object2ObjectOpenHashMap<Item, WeightedRandomList<WeightedTradeResult>> tempQueenTrades = new Object2ObjectOpenHashMap<>();
+        Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> tempSpecialDaysQueenTrades = new Object2ObjectOpenHashMap<>();
 
         for (TradeCollection entry : rawTrades) {
+            if (entry.specialDaysEntry().isPresent()) {
+                if (entry.wantItems().isEmpty()) continue;
+                if (entry.resultItems().isEmpty()) continue;
+                for (RawTradeInputEntry rawTradeWantEntry : entry.wantItems().get()) {
+                    TradeWantEntry tradeWantEntry = getInputTradeEntry(rawTradeWantEntry);
+
+                    if (tradeWantEntry == null || tradeWantEntry.wantItems().size() == 0) {
+                        continue;
+                    }
+
+                    List<TradeResultEntry> tradeResultEntry = getOutputTradeEntry(entry.resultItems().get());
+
+                    if (tradeResultEntry.size() == 0) {
+                        continue;
+                    }
+
+                    populateSpecialDaysQueenTrades(tempSpecialDaysQueenTrades, entry.specialDaysEntry().get(), tradeResultEntry, tradeWantEntry);
+                }
+                continue;
+            }
+
 
             // Populate actual trades.
             if (entry.randomizerTrade()) {
@@ -215,6 +256,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         }
 
         this.queenTrades = tempQueenTrades;
+        this.specialDayQueenTrades = tempSpecialDaysQueenTrades;
         this.recipeViewerRandomizerTrades = tempRecipeViewerRandomizerTrades;
         this.recipeViewerMainTrades = tempRecipeViewerMainTrades;
         this.rawTrades.clear();
@@ -269,6 +311,17 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         return tradeResultEntries;
     }
 
+    private static void populateSpecialDaysQueenTrades(Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> tempSpecialDaysQueenTrades, SpecialDaysEntry specialDaysEntry, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
+        List<Item> wantItems = new ArrayList<>(tradeWantEntry.wantItems().stream().map(Holder::value).toList());
+        for (Item item : wantItems) {
+            tradeResultEntries.forEach(tradeResultEntry -> {
+                Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> temp = new Object2ObjectOpenHashMap<>();
+                List<Item> resultItems = tradeResultEntry.resultItems().stream().map(Holder::value).toList();
+                temp.put(specialDaysEntry, WeightedRandomList.create(new WeightedTradeResult(tradeResultEntry.tagKey(), Optional.of(resultItems), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight())));
+                tempSpecialDaysQueenTrades.put(item, temp);
+            });
+        }
+    }
 
     private static void populateMainQueenTrades(Object2ObjectOpenHashMap<Item, Pair<WeightedRandomList<WeightedTradeResult>, TagKey<Item>>> tempQueenTrades, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
         List<Item> wantItems = tradeWantEntry.wantItems().stream().map(Holder::value).toList();
@@ -306,6 +359,118 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
             }
             else {
                 tempQueenTrades.put(item, Pair.of(WeightedRandomList.create(new WeightedTradeResult(tradeRandomizeEntry.tagKey(), Optional.of(items), 1, 0 , 1)), tradeRandomizeEntry.tagKey.orElse(null)));
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////
+    // Special day trades
+
+    public Optional<Pair<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> getSpecialDayItems(Item item) {
+        Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> specialDayData = specialDayQueenTrades.get(item);
+        if (specialDayData != null) {
+            for (Map.Entry<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> specialDaysEntry : specialDayData.entrySet()) {
+                LocalDate dateNow = LocalDate.now();
+                LocalDate specialDayThisYear = getDateForYear(dateNow.getYear(), specialDaysEntry.getKey()).minusDays(1);
+                if (specialDayThisYear.isBefore(dateNow) && specialDayThisYear.plusDays(specialDaysEntry.getKey().daysLong() + 1).isAfter(dateNow)) {
+                    return Optional.of(Pair.of(specialDaysEntry.getKey(), specialDaysEntry.getValue()));
+                }
+
+                LocalDate specialDayLastYear = getDateForYear(dateNow.getYear() - 1, specialDaysEntry.getKey()).minusDays(1);
+                if (specialDayLastYear.isBefore(dateNow) && specialDayLastYear.plusDays(specialDaysEntry.getKey().daysLong() + 1).isAfter(dateNow)) {
+                    return Optional.of(Pair.of(specialDaysEntry.getKey(), specialDaysEntry.getValue()));
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<List<Item>> getSpecialDayItem() {
+        List<Item> specialDayItems = new ArrayList<>();
+        for (Map.Entry<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> entry : specialDayQueenTrades.entrySet()) {
+            for (Map.Entry<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> specialDaysEntry : entry.getValue().entrySet()) {
+                LocalDate dateNow = LocalDate.now();
+                LocalDate specialDayThisYear = getDateForYear(dateNow.getYear(), specialDaysEntry.getKey()).minusDays(1);
+                if (specialDayThisYear.isBefore(dateNow) && specialDayThisYear.plusDays(specialDaysEntry.getKey().daysLong() + 1).isAfter(dateNow)) {
+                    specialDayItems.add(entry.getKey());
+                    break;
+                }
+
+                LocalDate specialDayLastYear = getDateForYear(dateNow.getYear() - 1, specialDaysEntry.getKey()).minusDays(1);
+                if (specialDayLastYear.isBefore(dateNow) && specialDayLastYear.plusDays(specialDaysEntry.getKey().daysLong() + 1).isAfter(dateNow)) {
+                    specialDayItems.add(entry.getKey());
+                    break;
+                }
+            }
+        }
+
+        if (specialDayItems.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(specialDayItems);
+    }
+
+    private static LocalDate getDateForYear(int year, SpecialDaysEntry specialDaysEntry) {
+        if (specialDaysEntry.month().isPresent() && specialDaysEntry.day().isPresent()) {
+            return LocalDate.of(year, specialDaysEntry.month().get(), specialDaysEntry.day().get());
+        }
+        else if (specialDaysEntry.dateAlgorithm().isPresent()) {
+            switch (specialDaysEntry.dateAlgorithm().get()){
+                case "thanksgiving":
+                    return thanksgivingEveAlgo(year);
+                case "easter":
+                    return gaussEaster(year);
+            }
+        }
+
+        return LocalDate.EPOCH.plusYears(1);
+    }
+
+    //Source: http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_thanks_giving_date_for_any_year.htm
+    private static LocalDate thanksgivingEveAlgo(int year) {
+        return Year.of(year).atMonth(Month.NOVEMBER).atDay(1).with(TemporalAdjusters.lastInMonth(DayOfWeek.WEDNESDAY));
+    }
+
+    //Source: https://www.geeksforgeeks.org/how-to-calculate-the-easter-date-for-a-given-year-using-gauss-algorithm/#
+    private static LocalDate gaussEaster(int year) {
+        float A, B, C, P, Q, M, N, D, E;
+
+        // All calculations done
+        // on the basis of
+        // Gauss Easter Algorithm
+        A = year % 19;
+        B = year % 4;
+        C = year % 7;
+        P = (float)Math.floor(year / 100);
+        Q = (float)Math.floor((13 + 8 * P) / 25);
+        M = (int)(15 - Q + P - Math.floor(P / 4)) % 30;
+        N = (int)(4 + P - Math.floor(P / 4)) % 7;
+        D = (19 * A + M) % 30;
+        E = (2 * B + 4 * C + 6 * D + N) % 7;
+        int days = (int)(22 + D + E);
+
+        // A corner case,
+        // when D is 29
+        if ((D == 29) && (E == 6)) {
+            return LocalDate.of(year, 4, 19);
+        }
+        // Another corner case,
+        // when D is 28
+        else if ((D == 28) && (E == 6)) {
+            return LocalDate.of(year, 4, 18);
+        }
+        else {
+
+            // If days > 31, move to April
+            // April = 4th Month
+            if (days > 31) {
+                return LocalDate.of(year, 4, 31);
+            }
+            // Otherwise, stay on March
+            // March = 3rd Month
+            else {
+                return LocalDate.of(year, 3, days);
             }
         }
     }

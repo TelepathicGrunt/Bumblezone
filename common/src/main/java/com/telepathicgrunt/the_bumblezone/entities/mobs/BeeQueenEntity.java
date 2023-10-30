@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
+import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
@@ -40,6 +41,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
+import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Container;
 import net.minecraft.world.Difficulty;
@@ -83,6 +85,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -105,6 +108,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private static final EntityDataAccessor<BeeQueenPose> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, QUEEN_POSE_SERIALIZER);
     private static final EntityDataAccessor<Integer> REMAINING_BONUS_TRADE_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<ItemStack> BONUS_TRADE_ITEM = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Boolean> ISSPECIALDAY = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.BOOLEAN);
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(60, 120);
     private final Set<UUID> acknowledgedPlayers = new HashSet<>();
     private final HashMap<UUID, Item> acknowledgedPlayerHeldItem = new HashMap<>();
@@ -127,6 +131,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         this.entityData.define(QUEEN_POSE, BeeQueenPose.NONE);
         this.entityData.define(REMAINING_BONUS_TRADE_TIME, 0);
         this.entityData.define(BONUS_TRADE_ITEM, ItemStack.EMPTY);
+        this.entityData.define(ISSPECIALDAY, false);
     }
 
     @Override
@@ -144,8 +149,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private void setAnimationState(BeeQueenPose pose, BeeQueenPose poseToCheckFor, AnimationState animationState) {
         if (pose == poseToCheckFor) {
             animationState.start(this.tickCount);
-        }
-        else {
+        } else {
             animationState.stop();
         }
     }
@@ -171,6 +175,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         tag.putInt("beespawncooldown", getBeeSpawnCooldown());
         tag.putInt("bonusTradetime", getRemainingBonusTradeTime());
         tag.put("bonusTradeitem", getBonusTradeItem().save(new CompoundTag()));
+        tag.putBoolean("isSpecialDay", getIsSpecialDay());
         this.addPersistentAngerSaveData(tag);
     }
 
@@ -181,15 +186,23 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
         setRemainingBonusTradeTime(tag.getInt("bonusTradetime"));
         setBonusTradeItem(ItemStack.of(tag.getCompound("bonusTradeitem")));
+        setIsSpecialDay(tag.getBoolean("isSpecialDay"));
 
         if (getBonusTradeItem().is(BzTags.DISALLOWED_RANDOM_BONUS_TRADE_ITEMS) &&
-            !getBonusTradeItem().is(BzTags.FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS))
-        {
+                !getBonusTradeItem().is(BzTags.FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS)) {
             setBonusTradeItem(ItemStack.EMPTY);
             setRemainingBonusTradeTime(0);
         }
 
         this.readPersistentAngerSaveData(this.level(), tag);
+    }
+
+    public void setIsSpecialDay(boolean isSpecialDay) {
+        this.entityData.set(ISSPECIALDAY, isSpecialDay);
+    }
+
+    public boolean getIsSpecialDay() {
+        return this.entityData.get(ISSPECIALDAY);
     }
 
     public void setQueenPose(BeeQueenPose beeQueenPose) {
@@ -270,13 +283,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     public boolean hurt(DamageSource source, float amount) {
         if (isInvulnerableTo(source)) {
             return false;
-        }
-        else if(isOnPortalCooldown() && source == level().damageSources().inWall()) {
+        } else if (isOnPortalCooldown() && source == level().damageSources().inWall()) {
             spawnAngryParticles(6);
             playHurtSound(source);
             return false;
-        }
-        else {
+        } else {
             if (!this.isNoAi()) {
                 Entity entity = source.getEntity();
                 if (entity instanceof LivingEntity livingEntity && !livingEntity.isSpectator()) {
@@ -286,13 +297,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     }
 
                     if ((livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
-                        BzBeeAggressionConfigs.aggressiveBees)
-                    {
-                        if(livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+                            BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
+                            BzBeeAggressionConfigs.aggressiveBees) {
+                        if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                             livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                        }
-                        else {
+                        } else {
                             //Now all bees nearby in Bumblezone will get VERY angry!!!
                             livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 3, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                         }
@@ -312,8 +321,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     protected void customServerAiStep() {
         if (this.isUnderWater()) {
             ++this.underWaterTicks;
-        }
-        else {
+        } else {
             this.underWaterTicks = 0;
         }
 
@@ -322,19 +330,18 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         if (!this.level().isClientSide) {
-            this.updatePersistentAnger((ServerLevel)this.level(), false);
+            this.updatePersistentAnger((ServerLevel) this.level(), false);
         }
     }
 
     public static void applyMiningFatigueInStructures(ServerPlayer serverPlayer) {
-        if(serverPlayer.isCreative() || serverPlayer.isSpectator() || EssenceOfTheBees.hasEssence(serverPlayer)) {
+        if (serverPlayer.isCreative() || serverPlayer.isSpectator() || EssenceOfTheBees.hasEssence(serverPlayer)) {
             return;
         }
 
-        StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
+        StructureManager structureManager = ((ServerLevel) serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE).isValid() &&
-            !serverPlayer.level().getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty())
-        {
+                !serverPlayer.level().getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty()) {
             serverPlayer.addEffect(new MobEffectInstance(
                     MobEffects.DIG_SLOWDOWN,
                     100,
@@ -350,8 +357,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         super.tick();
         if (this.isAlive()) {
             this.idleAnimationState.startIfStopped(this.tickCount);
-        }
-        else {
+        } else {
             this.idleAnimationState.stop();
         }
 
@@ -381,8 +387,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             if (!this.level().isClientSide()) {
                 if (this.isAngry()) {
                     performAngryActions();
-                }
-                else {
+                } else {
                     performGroundTrades();
                 }
             }
@@ -409,7 +414,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             int minNotifyTime = 1200;
 
             if (getRemainingBonusTradeTime() > 0) {
-                setRemainingBonusTradeTime(getRemainingBonusTradeTime() - 1);
+                if (getIsSpecialDay()) {
+                    setRemainingBonusTradeTime(getRemainingBonusTradeTime() - 1);
+                }
+                else {
+                    setRemainingBonusTradeTime(Math.min(getRemainingBonusTradeTime() - 1, BzGeneralConfigs.beeQueenBonusTradeDurationInTicks));
+                }
             }
             else if (!getBonusTradeItem().isEmpty()) {
                 setBonusTradeItem(ItemStack.EMPTY);
@@ -421,21 +431,40 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                 if (getRemainingBonusTradeTime() == 0) {
                     if (nearbyPlayers.size() > 0) {
-                        setRemainingBonusTradeTime(BzGeneralConfigs.beeQueenBonusTradeDurationInTicks);
+                        boolean isDoingSpecialDay = false;
+                        if (BzGeneralConfigs.beeQueenSpecialDayTrades) {
+                            Optional<List<Item>> specialDayItem = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItem();
 
-                        List<Item> allowedBonusTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet().stream()
-                                .filter(i -> ((i.isEnabled(level().enabledFeatures()) &&
-                                        !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_BONUS_TRADE_ITEMS)) ||
-                                        i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS)))
-                                .toList();
+                            List<Item> allowedBonusTradeItems = specialDayItem.orElse(new ArrayList<>()).stream()
+                                    .filter(i -> i.isEnabled(level().enabledFeatures()))
+                                    .toList();
 
-                        if (allowedBonusTradeItems.size() > 0) {
-                            setBonusTradeItem(allowedBonusTradeItems.get(getRandom().nextInt(allowedBonusTradeItems.size())).getDefaultInstance());
-                            getBonusTradeItem().grow(BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified);
+                            if (!allowedBonusTradeItems.isEmpty()) {
+                                isDoingSpecialDay = true;
+
+                                setRemainingBonusTradeTime(72000);
+                                setBonusTradeItem(allowedBonusTradeItems.get(getRandom().nextInt(allowedBonusTradeItems.size())).getDefaultInstance());
+                                getBonusTradeItem().grow(1);
+                                setIsSpecialDay(true);
+                            }
                         }
-                        else {
-                            hasTrades = false;
-                            setRemainingBonusTradeTime(0);
+
+                        if (!isDoingSpecialDay) {
+                            setRemainingBonusTradeTime(BzGeneralConfigs.beeQueenBonusTradeDurationInTicks);
+
+                            List<Item> allowedBonusTradeItems = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.keySet().stream()
+                                    .filter(i -> ((i.isEnabled(level().enabledFeatures()) &&
+                                            !i.builtInRegistryHolder().is(BzTags.DISALLOWED_RANDOM_BONUS_TRADE_ITEMS)) ||
+                                            i.builtInRegistryHolder().is(BzTags.FORCED_ALLOWED_RANDOM_BONUS_TRADE_ITEMS)))
+                                    .toList();
+
+                            if (allowedBonusTradeItems.size() > 0) {
+                                setBonusTradeItem(allowedBonusTradeItems.get(getRandom().nextInt(allowedBonusTradeItems.size())).getDefaultInstance());
+                                getBonusTradeItem().grow(BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified);
+                            } else {
+                                hasTrades = false;
+                                setRemainingBonusTradeTime(0);
+                            }
                         }
                     }
                 }
@@ -444,8 +473,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     Item heldItem = player.getMainHandItem().getItem();
                     if (!this.acknowledgedPlayerHeldItem.containsKey(player.getUUID()) || !this.acknowledgedPlayerHeldItem.get(player.getUUID()).equals(heldItem)) {
                         if ((this.getBonusTradeItem().isEmpty() || !this.getBonusTradeItem().is(heldItem)) &&
-                            QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(heldItem))
-                        {
+                                QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(heldItem)) {
                             player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_regular_trade_held").withStyle(ChatFormatting.WHITE), true);
                         }
                         this.acknowledgedPlayerHeldItem.put(player.getUUID(), heldItem);
@@ -477,6 +505,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             if (player.inventoryMenu.slots.stream().anyMatch(s -> s.getItem().is(getBonusTradeItem().getItem()))) {
                                 player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade_inventory", itemName).withStyle(ChatFormatting.WHITE), true);
                             }
+                            else if (getIsSpecialDay()) {
+                                player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_special_day_trade", itemName).withStyle(ChatFormatting.WHITE), true);
+                            }
                             else {
                                 player.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_bonus_trade", itemName, (getRemainingBonusTradeTime() / minNotifyTime)).withStyle(ChatFormatting.WHITE), true);
                             }
@@ -501,21 +532,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         int beeCooldown = this.getBeeSpawnCooldown();
         if (beeCooldown <= 0 &&
-            !this.isImmobile() &&
-            this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
-        {
+                !this.isImmobile() &&
+                this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING)) {
             this.setBeeSpawnCooldown(this.random.nextInt(50) + 75);
 
             // Grab a nearby air materialposition a bit away
             BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(this, 5, 0);
-            if(!this.level().getBlockState(spawnBlockPos).isAir()) {
+            if (!this.level().getBlockState(spawnBlockPos).isAir()) {
                 return;
             }
 
             Bee bee = EntityType.BEE.create(this.level());
-            if(bee == null) return;
-            ((NeutralMob)bee).setRemainingPersistentAngerTime(this.getRemainingPersistentAngerTime());
-            ((NeutralMob)bee).setPersistentAngerTarget(this.getPersistentAngerTarget());
+            if (bee == null) return;
+            ((NeutralMob) bee).setRemainingPersistentAngerTime(this.getRemainingPersistentAngerTime());
+            ((NeutralMob) bee).setPersistentAngerTarget(this.getPersistentAngerTarget());
             bee.setTarget(this.getTarget());
 
             bee.absMoveTo(
@@ -543,8 +573,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             this.level().addFreshEntity(bee);
             this.spawnAngryParticles(6);
             setQueenPose(BeeQueenPose.ATTACKING);
-        }
-        else {
+        } else {
             this.setBeeSpawnCooldown(beeCooldown - 1);
         }
     }
@@ -563,11 +592,29 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
                 int tradedItems = 0;
                 Item item = itemEntity.getItem().getItem();
-                if (QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
+
+                boolean didSpecialDayTrade = false;
+                if (getIsSpecialDay() && QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
+                    Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
+                    if (specialDayItems.isPresent()) {
+                        Optional<WeightedTradeResult> reward = specialDayItems.get().getSecond().getRandom(this.random);
+                        if (reward.isPresent()) {
+                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).getThrower(), specialDayItems.get().getFirst());
+                            tradedItems++;
+                        }
+                    }
+                    else {
+                        setIsSpecialDay(false);
+                        setBonusTradeItem(ItemStack.EMPTY);
+                        setRemainingBonusTradeTime(0);
+                    }
+                }
+
+                if (!didSpecialDayTrade && QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
                     for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
                         Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
                         if (reward.isPresent()) {
-                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor)itemEntity).getThrower());
+                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), ((ItemEntityAccessor) itemEntity).getThrower());
                             tradedItems++;
                         }
                     }
@@ -644,8 +691,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                             resetAdvancementTree(serverPlayer, BzCriterias.QUEENS_DESIRE_ROOT_ADVANCEMENT);
                             capability.resetAllTrackerStats();
                             serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.reset_advancements").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
-                        }
-                        else {
+                        } else {
                             capability.tradeResetPrimedTime = this.level().getGameTime();
                             serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.advancements_warning").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
                         }
@@ -657,7 +703,31 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
 
         boolean traded = false;
-        if (QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
+
+        if (getIsSpecialDay() && QueensTradeManager.QUEENS_TRADE_MANAGER.specialDayQueenTrades.containsKey(item)) {
+            Optional<Pair<QueensTradeManager.SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> specialDayItems = QueensTradeManager.QUEENS_TRADE_MANAGER.getSpecialDayItems(item);
+            if (specialDayItems.isPresent()) {
+                if (this.level().isClientSide()) {
+                    return InteractionResult.SUCCESS;
+                }
+
+                Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+                Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+
+                Optional<WeightedTradeResult> reward = specialDayItems.get().getSecond().getRandom(this.random);
+                if (reward.isPresent()) {
+                    spawnReward(forwardVect, sideVect, reward.get(), stack, player.getUUID(), specialDayItems.get().getFirst());
+                    traded = true;
+                }
+            }
+            else {
+                setIsSpecialDay(false);
+                setBonusTradeItem(ItemStack.EMPTY);
+                setRemainingBonusTradeTime(0);
+            }
+        }
+
+        if (!traded && QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
             if (this.level().isClientSide()) {
                 return InteractionResult.SUCCESS;
             }
@@ -708,6 +778,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
 
     private static final ResourceLocation BEE_ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "essence/bee_essence_infusion");
+
     private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
         Iterable<Advancement> advancements = serverPlayer.server.getAdvancements().getAdvancement(advancementRL).getChildren();
         for (Advancement advancement : advancements) {
@@ -716,7 +787,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             }
 
             AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
-            for(String criteria : advancementprogress.getCompletedCriteria()) {
+            for (String criteria : advancementprogress.getCompletedCriteria()) {
                 serverPlayer.getAdvancements().revoke(advancement, criteria);
             }
             resetAdvancementTree(serverPlayer, advancement.getId());
@@ -725,7 +796,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
         Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
-        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor) serverPlayer.getAdvancements()).getProgress();
         return advancement != null &&
                 advancementsProgressMap.containsKey(advancement) &&
                 advancementsProgressMap.get(advancement).isDone();
@@ -738,8 +809,21 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private void spawnReward(Vec3 forwardVect, Vec3 sideVect, WeightedTradeResult reward, ItemStack originalItem, UUID playerUUID) {
+        spawnReward(forwardVect, sideVect, reward, originalItem, playerUUID, null);
+    }
+
+    private void spawnReward(Vec3 forwardVect, Vec3 sideVect, WeightedTradeResult reward, ItemStack originalItem, UUID playerUUID, QueensTradeManager.SpecialDaysEntry specialDaysEntry) {
         int rewardMultiplier = 1;
-        if (getBonusTradeItem().is(originalItem.getItem()) && BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier > 1) {
+
+        if (specialDaysEntry != null && getBonusTradeItem().is(originalItem.getItem())) {
+            if (playerUUID != null) {
+                Player player = level().getPlayerByUUID(playerUUID);
+                if (player != null) {
+                    player.displayClientMessage(Component.translatable(specialDaysEntry.specialMessage()).withStyle(specialDaysEntry.textColor()), true);
+                }
+            }
+        }
+        else if (getBonusTradeItem().is(originalItem.getItem()) && BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier > 1) {
             rewardMultiplier = BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier;
             getBonusTradeItem().shrink(1);
             if (getBonusTradeItem().isEmpty()) {

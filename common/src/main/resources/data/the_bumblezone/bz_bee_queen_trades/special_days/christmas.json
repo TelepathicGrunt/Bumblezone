@@ -1,0 +1,178 @@
+{
+  "special_days" : {
+    "start_month": 12,
+    "start_day": 24,
+    "lasts_days_long": 2,
+    "special_message": "entity.the_bumblezone.bee_queen.christmas_trade_performed",
+    "text_color": "aqua"
+  },
+  "wants" : [
+    {
+      "id": "minecraft:cookie",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:snowball",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "minecraft:sweet_berries",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 20,
+      "required": true
+    },
+    {
+      "id": "minecraft:milk_bucket",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 5,
+      "required": true
+    },
+    {
+      "id": "aether:candy_cane",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "endermanoverhaul:snowy_hood",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "minecolonies:santa_hat",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "rats:santa_hat",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "snowyspirit:candy_cane",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "snowyspirit:snow_globe",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "snowyspirit:sled_oak",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "snowyspirit:wreath",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "manyideas_christmas:wreath",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "aether:present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "expandedstorage:present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "expandedstorage:red_mini_present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "expandedstorage:white_mini_present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "expandedstorage:candy_cane_mini_present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "expandedstorage:green_mini_present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "expandedstorage:lavender_mini_present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "expandedstorage:pink_amethyst_mini_present",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "fantasyfurniture:decorations/presents_stack_1",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "fantasyfurniture:decorations/presents_stack_2",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "#supplementaries:presents",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

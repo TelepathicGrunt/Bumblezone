@@ -27,6 +27,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
+    public static ForgeConfigSpec.BooleanValue beeQueenSpecialDayTrades;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
@@ -222,6 +223,12 @@ public class BzGeneralConfig {
                         " Setting this to 0 disables bonus Trades.\n")
                 .translation("the_bumblezone.config.beequeenbonusTradeamounttillsatified")
                 .defineInRange("beeQueenBonusTradeAmountTillSatified", 24, 0, 1000000);
+
+        beeQueenSpecialDayTrades = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether to allow special trades to activate during certain days of the year.\n")
+                .translation("the_bumblezone.config.beequeenspecialdaytrades")
+                .define("beeQueenSpecialDayTrades", true);
 
         musicDiscTimeLengthFlightOfTheBumblebee = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -450,6 +457,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier.get();
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks.get();
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified.get();
+        BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades.get();
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee.get();
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees.get();

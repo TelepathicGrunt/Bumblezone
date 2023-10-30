@@ -1,0 +1,163 @@
+{
+  "special_days" : {
+    "date_algorithm": "easter",
+    "lasts_days_long": 2,
+    "special_message": "entity.the_bumblezone.bee_queen.easter_trade_performed",
+    "text_color": "green"
+  },
+  "wants" : [
+    {
+      "id": "minecraft:egg",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "#the_bumblezone:dyes/black",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/blue",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/brown",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/cyan",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/gray",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/green",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/light_blue",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/light_gray",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/lime",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/magenta",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/orange",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/pink",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/purple",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/red",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/white",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "#the_bumblezone:dyes/yellow",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:turtle_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "naturalist:duck_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "duckling:duck_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:duck_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "earthmobsmod:fancy_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

@@ -32,9 +32,10 @@ public class BzGeneralConfigs {
     public static boolean dispensersDropGlassBottles = false;
     public static int broodBlocksBeeSpawnCapacity = 40;
     public static boolean pileOfPollenHyperFireSpread = false;
-    public static int beeQueenBonusTradeRewardMultiplier = 2;
-    public static int beeQueenBonusTradeDurationInTicks = 6000;
-    public static int beeQueenBonusTradeAmountTillSatified = 3;
+    public static int beeQueenBonusTradeRewardMultiplier = 3;
+    public static int beeQueenBonusTradeDurationInTicks = 24000;
+    public static int beeQueenBonusTradeAmountTillSatified = 24;
+    public static boolean beeQueenSpecialDayTrades = true;
     public static boolean superCandlesBurnsMobs = true;
     public static boolean keepEssenceOfTheBeesOnRespawning = true;
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 216;

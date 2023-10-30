@@ -1,0 +1,269 @@
+{
+  "special_days" : {
+    "start_month": 10,
+    "start_day": 31,
+    "lasts_days_long": 2,
+    "special_message": "entity.the_bumblezone.bee_queen.halloween_trade_performed",
+    "text_color": "yellow"
+  },
+  "wants" : [
+    {
+      "id": "minecraft:pumpkin",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "many_flowers:jack_flower",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "blockus:soul_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 3,
+      "required": false
+    },
+    {
+      "id": "blockus:redstone_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 3,
+      "required": false
+    },
+    {
+      "id": "hauntedharvest:carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 3,
+      "required": false
+    },
+    {
+      "id": "hauntedharvest:candy_corn",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "croptopia:candy_corn",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "supplementaries:candy",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "hauntedharvest:jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:anguished_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:bad_time_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:creepy_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:devious_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:horrified_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:overjoyed_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:silly_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:horrified_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:smiling_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:horrified_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:spooky_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:traditional_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:upside_down_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:anguished_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:bad_time_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:creepy_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:devious_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:horrified_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:overjoyed_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:silly_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:horrified_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:smiling_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:horrified_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:spooky_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:traditional_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chipped:upside_down_carved_jack_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

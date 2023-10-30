@@ -1,0 +1,58 @@
+{
+  "special_days" : {
+    "date_algorithm": "thanksgiving",
+    "lasts_days_long": 2,
+    "special_message": "entity.the_bumblezone.bee_queen.thanksgiving_trade_performed",
+    "text_color": "gold"
+  },
+  "wants" : [
+    {
+      "id": "minecraft:chicken",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:cooked_chicken",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 10,
+      "required": true
+    },
+    {
+      "id": "minecraft:baked_potato",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 3,
+      "required": true
+    },
+    {
+      "id": "minecraft:rabbit_stew",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "farmersdelight:roast_chicken",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "croptopia:baked_sweet_potato",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "croptopia:mashed_potatoes",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    }
+  ]
+}

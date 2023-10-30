@@ -1,0 +1,31 @@
+{
+  "special_days" : {
+    "start_month": 1,
+    "start_day": 1,
+    "lasts_days_long": 1,
+    "special_message": "entity.the_bumblezone.bee_queen.new_year_trade_performed",
+    "text_color": "light_purple"
+  },
+  "wants" : [
+    {
+      "id": "minecraft:gunpowder",
+      "required": true
+    }
+  ],
+  "possible_rewards": [
+    {
+      "id": "minecraft:firework_rocket",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": true
+    },
+    {
+      "id": "minecraft:firework_star",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": true
+    }
+  ]
+}
