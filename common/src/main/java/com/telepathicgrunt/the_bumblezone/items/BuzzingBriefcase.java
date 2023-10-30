@@ -2,13 +2,15 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
 import com.telepathicgrunt.the_bumblezone.menus.BuzzingBriefcaseMenuProvider;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,7 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -62,10 +64,20 @@ public class BuzzingBriefcase extends Item {
         return new InteractionResultHolder<>(InteractionResult.PASS, stack);
     }
 
-    public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos, Player player) {
-        ItemStack briefcaseItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-        if (player.getCooldowns().isOnCooldown(briefcaseItem.getItem())) {
-            return false;
+    public static InteractionResult onLeftClickBlock(PlayerItemAttackBlockEvent event) {
+        Player player = event.user();
+        ItemStack briefcaseItem = player.getItemInHand(event.hand());
+
+        if (event.hand() != InteractionHand.MAIN_HAND ||
+            !briefcaseItem.is(BzItems.BUZZING_BRIEFCASE.get()) ||
+            player.getCooldowns().isOnCooldown(briefcaseItem.getItem()))
+        {
+            return null;
+        }
+
+        if (player.level().isClientSide()) {
+            int numberOfBees = getNumberOfBees(briefcaseItem);
+            return numberOfBees > 0 ? InteractionResult.SUCCESS : null;
         }
 
         List<Entity> releasedBees = dumpBees(player, player.isCrouching() ? -1 : 0, false);
@@ -74,11 +86,15 @@ public class BuzzingBriefcase extends Item {
             BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger(serverPlayer);
 
             player.awardStat(Stats.ITEM_USED.get(briefcaseItem.getItem()));
+
+            serverPlayer.getCooldowns().addCooldown(briefcaseItem.getItem(), 10);
+            return InteractionResult.SUCCESS;
         }
 
-        return releasedBees.isEmpty();
+        return null ;
     }
 
+    @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity victim, LivingEntity attacker) {
         if (attacker instanceof Player player) {
             if (player.getCooldowns().isOnCooldown(stack.getItem())) {
@@ -98,6 +114,7 @@ public class BuzzingBriefcase extends Item {
             if(!isVictimBeelike && player instanceof ServerPlayer serverPlayer && !releasedBees.isEmpty()) {
                 BzCriterias.BUZZING_BRIEFCASE_RELEASE_TRIGGER.trigger(serverPlayer);
                 serverPlayer.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                serverPlayer.getCooldowns().addCooldown(stack.getItem(), 10);
             }
         }
         return true;
@@ -184,8 +201,16 @@ public class BuzzingBriefcase extends Item {
                                 ClipContext.Fluid.NONE,
                                 player));
 
-                        if (hitResult.getType() != HitResult.Type.MISS) {
-                            finalPos = hitResult.getLocation();
+                        if (hitResult instanceof BlockHitResult blockHitResult) {
+                            Vec3 locationClicked = hitResult.getLocation();
+                            Vec3 offset = Vec3.atLowerCornerOf(blockHitResult.getDirection().getNormal());
+                            if (blockHitResult.getDirection() == Direction.UP) {
+                                offset = offset.scale(0.35d);
+                            }
+                            else if (blockHitResult.getDirection() != Direction.DOWN) {
+                                offset = offset.scale(0.5d);
+                            }
+                            finalPos = locationClicked.add(offset);
                         }
                     }
                 }

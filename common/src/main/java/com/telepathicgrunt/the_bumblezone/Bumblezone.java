@@ -52,10 +52,12 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
@@ -132,6 +134,7 @@ public class Bumblezone {
         PlayerTickEvent.EVENT.addListener(EntityTeleportationHookup::playerTick);
         EntityTickEvent.EVENT.addListener(EntityTeleportationHookup::entityTick);
         EntityTravelingToDimensionEvent.EVENT.addListener(EntityTeleportationBackend::entityChangingDimension);
+        PlayerItemAttackBlockEvent.EVENT_HIGH.addListener(BuzzingBriefcase::onLeftClickBlock);
         PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(StringCurtain::onBlockInteractEvent);
         PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(InfinityBarrier::onBlockInteractEvent);
         PlayerItemUseOnBlockEvent.EVENT_HIGH.addListener(ItemUseOnBlock::onItemUseOnBlock); // High because we want to cancel other mod's stuff if it uses on a hive.

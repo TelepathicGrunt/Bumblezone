@@ -16,6 +16,7 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStartEve
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.fabricbase.FabricBaseEventManager;
@@ -32,6 +33,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -40,6 +42,8 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -114,6 +118,7 @@ public class FabricEventManager {
             DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player));
         });
 
+        AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
         UseItemCallback.EVENT.register(FabricEventManager::onItemUse);
     }
@@ -192,6 +197,12 @@ public class FabricEventManager {
         RegistryAccess registryAccess = ((BiomeModificationContextImplMixin)context).getRegistries();
         Registry<PlacedFeature> placedFeatureRegistry = registryAccess.registryOrThrow(Registries.PLACED_FEATURE);
         return placedFeatureRegistry.getTagOrEmpty(placedFeatureTagKey);
+    }
+
+    public static InteractionResult onItemAttackBlock(Player player, Level world, InteractionHand hand, BlockPos pos, Direction direction) {
+        PlayerItemAttackBlockEvent event = new PlayerItemAttackBlockEvent(player, world, hand, player.getItemInHand(hand));
+        InteractionResult result = PlayerItemAttackBlockEvent.EVENT_HIGH.invoke(event);
+        return result != null ? result : InteractionResult.PASS;
     }
 
     public static InteractionResult onItemUseOnBlock(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {

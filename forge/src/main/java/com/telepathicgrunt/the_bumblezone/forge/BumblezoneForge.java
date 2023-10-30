@@ -35,6 +35,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
+import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
@@ -143,6 +144,7 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onWanderingTrades);
         eventBus.addListener(BumblezoneForge::onRegisterCommand);
         eventBus.addListener(BumblezoneForge::onProjectileHit);
+        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemAttackBlock);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUseOnBlock);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUse);
         eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onProjectileHitHighPriority);
@@ -446,6 +448,15 @@ public class BumblezoneForge {
         boolean cancel = EntityAttackedEvent.EVENT.invoke(new EntityAttackedEvent(event.getEntity(), event.getSource(), event.getAmount()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
+        }
+    }
+
+    public static void onItemAttackBlock(PlayerInteractEvent.LeftClickBlock event) {
+        PlayerItemAttackBlockEvent eventBz = new PlayerItemAttackBlockEvent(event.getEntity(), event.getLevel(), event.getHand(), event.getItemStack());
+        InteractionResult result = PlayerItemAttackBlockEvent.EVENT_HIGH.invoke(eventBz);
+        if (result != null) {
+            event.setCanceled(true);
+            event.setCancellationResult(result);
         }
     }
 
