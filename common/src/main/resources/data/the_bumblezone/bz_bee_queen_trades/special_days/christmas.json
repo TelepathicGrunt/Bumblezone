@@ -63,6 +63,13 @@
       "required": false
     },
     {
+      "id": "create_confectionery:candy_cane",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "snowyspirit:candy_cane",
       "count": 4,
       "xp_reward": 0,
