@@ -84,6 +84,20 @@
       "required": false
     },
     {
+      "id": "undergarden:carved_gloomgourd",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "undergarden:gloom_o_lantern",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "chipped:anguished_carved_pumpkin",
       "count": 1,
       "xp_reward": 0,

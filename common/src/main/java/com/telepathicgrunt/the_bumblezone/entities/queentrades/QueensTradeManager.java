@@ -314,12 +314,19 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     private static void populateSpecialDaysQueenTrades(Object2ObjectOpenHashMap<Item, Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>>> tempSpecialDaysQueenTrades, SpecialDaysEntry specialDaysEntry, List<TradeResultEntry> tradeResultEntries, TradeWantEntry tradeWantEntry) {
         List<Item> wantItems = new ArrayList<>(tradeWantEntry.wantItems().stream().map(Holder::value).toList());
         for (Item item : wantItems) {
-            tradeResultEntries.forEach(tradeResultEntry -> {
-                Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> temp = new Object2ObjectOpenHashMap<>();
-                List<Item> resultItems = tradeResultEntry.resultItems().stream().map(Holder::value).toList();
-                temp.put(specialDaysEntry, WeightedRandomList.create(new WeightedTradeResult(tradeResultEntry.tagKey(), Optional.of(resultItems), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight())));
-                tempSpecialDaysQueenTrades.put(item, temp);
-            });
+            List<WeightedTradeResult> resultItems = new ArrayList<>();
+            for (TradeResultEntry tradeResultEntry : tradeResultEntries) {
+                resultItems.add(new WeightedTradeResult(tradeResultEntry.tagKey(), Optional.of(tradeResultEntry.resultItems().stream().map(Holder::value).toList()), tradeResultEntry.count(), tradeResultEntry.xpReward(), tradeResultEntry.weight()));
+            }
+
+            Object2ObjectOpenHashMap<SpecialDaysEntry, WeightedRandomList<WeightedTradeResult>> temp = new Object2ObjectOpenHashMap<>();
+            if (tempSpecialDaysQueenTrades.containsKey(item) && tempSpecialDaysQueenTrades.get(item).containsKey(specialDaysEntry)) {
+                WeightedRandomList<WeightedTradeResult> existingTrades = tempSpecialDaysQueenTrades.get(item).get(specialDaysEntry);
+                resultItems.addAll(existingTrades.unwrap());
+            }
+
+            temp.put(specialDaysEntry, WeightedRandomList.create(resultItems));
+            tempSpecialDaysQueenTrades.put(item, temp);
         }
     }
 
@@ -420,7 +427,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
                 case "thanksgiving":
                     return thanksgivingEveAlgo(year);
                 case "easter":
-                    return gaussEaster(year);
+                    return gaussEaster(year).minusDays(1);
             }
         }
 
@@ -450,28 +457,33 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         E = (2 * B + 4 * C + 6 * D + N) % 7;
         int days = (int)(22 + D + E);
 
-        // A corner case,
-        // when D is 29
-        if ((D == 29) && (E == 6)) {
-            return LocalDate.of(year, 4, 19);
-        }
-        // Another corner case,
-        // when D is 28
-        else if ((D == 28) && (E == 6)) {
-            return LocalDate.of(year, 4, 18);
-        }
-        else {
-
-            // If days > 31, move to April
-            // April = 4th Month
-            if (days > 31) {
-                return LocalDate.of(year, 4, 31);
+        try {
+            // A corner case,
+            // when D is 29
+            if ((D == 29) && (E == 6)) {
+                return LocalDate.of(year, 4, 19);
             }
-            // Otherwise, stay on March
-            // March = 3rd Month
+            // Another corner case,
+            // when D is 28
+            else if ((D == 28) && (E == 6)) {
+                return LocalDate.of(year, 4, 18);
+            }
             else {
-                return LocalDate.of(year, 3, days);
+
+                // If days > 31, move to April
+                // April = 4th Month
+                if (days > 31) {
+                    return LocalDate.of(year, 4, days - 31);
+                }
+                // Otherwise, stay on March
+                // March = 3rd Month
+                else {
+                    return LocalDate.of(year, 3, days);
+                }
             }
         }
+        catch (Exception ignored) {}
+
+        return LocalDate.EPOCH.plusYears(1);
     }
 }
