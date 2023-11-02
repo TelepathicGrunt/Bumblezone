@@ -23,6 +23,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 public class NeurotoxinsEnchantment extends Enchantment {
+    private static final int MAX_LEVEL = 2;
 
     public NeurotoxinsEnchantment() {
         super(Rarity.RARE, EnchantmentCategory.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
@@ -30,17 +31,25 @@ public class NeurotoxinsEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
+        if (level > MAX_LEVEL) {
+            return Integer.MAX_VALUE - 2;
+        }
+
         return 14 * level;
     }
 
     @Override
     public int getMaxCost(int level) {
+        if (level > MAX_LEVEL) {
+            return Integer.MAX_VALUE - 1;
+        }
+
         return super.getMinCost(level) + 50;
     }
 
     @Override
     public int getMaxLevel() {
-        return 2;
+        return MAX_LEVEL;
     }
 
     @Override
