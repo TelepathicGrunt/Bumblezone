@@ -7,6 +7,7 @@ public class BzDimensionConfigs{
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     // dimension
+    public static ForgeConfigSpec.BooleanValue enableInitialWelcomeMessage;
     public static ForgeConfigSpec.DoubleValue fogBrightnessPercentage;
     public static ForgeConfigSpec.DoubleValue fogThickness;
     public static ForgeConfigSpec.BooleanValue enableDimensionFog;
@@ -26,6 +27,16 @@ public class BzDimensionConfigs{
     }
 
     private static void setupConfig(ForgeConfigSpec.Builder builder) {
+        builder.push("The Bumblezone Welcome Options");
+
+        enableInitialWelcomeMessage = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether to show message saying to check out Bumblezone's advancements when you get enar beehive for first time.\n")
+                .translation("the_bumblezone.config.enableinitialwelcomemessage")
+                .define("enableInitialWelcomeMessage", true);
+
+        builder.pop();
+
         builder.push("The Bumblezone Dimension Options");
 
             fogBrightnessPercentage = builder

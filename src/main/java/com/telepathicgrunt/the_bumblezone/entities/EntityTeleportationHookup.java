@@ -65,11 +65,12 @@ public class EntityTeleportationHookup {
             Level level = serverPlayer.level;
 
             Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
+            if (advancement == null) {
+                return;
+            }
+
             Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getAdvancements();
-            if (advancement != null &&
-                advancementsProgressMap.containsKey(advancement) &&
-                advancementsProgressMap.get(advancement).isDone())
-            {
+            if (advancementsProgressMap.containsKey(advancement) && advancementsProgressMap.get(advancement).isDone()) {
                 return;
             }
 
@@ -87,7 +88,15 @@ public class EntityTeleportationHookup {
 
                 if (poiInRange.size() > 0) {
                     BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
-                    serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+
+                    if (BzDimensionConfigs.enableInitialWelcomeMessage.get()) {
+                        serverPlayer.getCapability(BzCapabilities.ENTITY_MISC).ifPresent(capability -> {
+                            if (!capability.gottenWelcomed) {
+                                capability.gottenWelcomed = true;
+                                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+                            }
+                        });
+                    }
                 }
             }
         }
