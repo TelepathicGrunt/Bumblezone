@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
+import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -61,11 +62,12 @@ public class EntityTeleportationHookup {
             Level level = serverPlayer.level();
 
             Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
+            if (advancement == null) {
+                return;
+            }
+
             Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
-            if (advancement != null &&
-                advancementsProgressMap.containsKey(advancement) &&
-                advancementsProgressMap.get(advancement).isDone())
-            {
+            if (advancementsProgressMap.containsKey(advancement) && advancementsProgressMap.get(advancement).isDone()) {
                 return;
             }
 
@@ -83,7 +85,13 @@ public class EntityTeleportationHookup {
 
                 if (poiInRange.size() > 0) {
                     BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
-                    serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+
+                    ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+                        if (!playerData.gottenWelcomed) {
+                            playerData.gottenWelcomed = true;
+                            serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+                        }
+                    });
                 }
             }
         }

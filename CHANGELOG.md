@@ -1,5 +1,8 @@
 ### **(V.7.0.27 Changes) (1.20.1 Minecraft)**
 
+##### Advancements:
+Fixed initial Bumblezone message spam if another mod completely disables advancements for Bumblezone.
+
 ##### Items:
 Fixed Buzzing Briefcase not releasing bees on block left click.
 

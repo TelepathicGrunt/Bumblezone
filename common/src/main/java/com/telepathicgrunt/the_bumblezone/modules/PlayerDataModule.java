@@ -20,6 +20,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     public static final ModuleSerializer<PlayerDataModule> SERIALIZER = new Serializer();
 
     public boolean isBeeEssenced = false;
+    public boolean gottenWelcomed = false;
     public boolean receivedEssencePrize = false;
     public long tradeResetPrimedTime = -1000;
     public int craftedBeehives = 0;
@@ -71,6 +72,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
         public void read(PlayerDataModule module, CompoundTag tag) {
             module.mobsKilledTracker.clear();
             module.isBeeEssenced = tag.getBoolean("is_bee_essenced");
+            module.gottenWelcomed = tag.getBoolean("gotten_welcomed");
             module.receivedEssencePrize = tag.getBoolean("received_essence_prize");
             module.tradeResetPrimedTime = tag.getLong("trade_reset_primed_time");
             module.craftedBeehives = tag.getInt("crafted_beehives");
@@ -97,6 +99,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
         @Override
         public void write(CompoundTag tag, PlayerDataModule module) {
             tag.putBoolean("is_bee_essenced", module.isBeeEssenced);
+            tag.putBoolean("gotten_welcomed", module.gottenWelcomed);
             tag.putBoolean("received_essence_prize", module.receivedEssencePrize);
             tag.putLong("trade_reset_primed_time", module.tradeResetPrimedTime);
             tag.putInt("crafted_beehives", module.craftedBeehives);
@@ -133,6 +136,8 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
                 Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                 player.displayClientMessage(message, true);
             }
+
+            thisModule.gottenWelcomed = oldModule.gottenWelcomed;
         }
     }
 }
