@@ -584,6 +584,30 @@
       "required": false
     },
     {
+      "id": "tropicraft:pathos",
+      "required": false
+    },
+    {
+      "id": "tropicraft:foliage",
+      "required": false
+    },
+    {
+      "id": "tropicraft:dracaena",
+      "required": false
+    },
+    {
+      "id": "tropicraft:tropical_fern",
+      "required": false
+    },
+    {
+      "id": "tropicraft:croton",
+      "required": false
+    },
+    {
+      "id": "tropicraft:magic_mushroom",
+      "required": false
+    },
+    {
       "id": "undergarden:shimmerweed",
       "required": false
     },

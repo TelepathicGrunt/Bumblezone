@@ -77,12 +77,10 @@ public class PokecubeCompat implements ModCompat {
         pokemon.setHealth(pokemon.getMaxHealth());
         pokemon.setBaby(isBaby);
 
-        BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos().set(entity.blockPosition());
-
         pokemon.moveTo(
-                blockpos.getX() + 0.5f,
-                blockpos.getY() + 0.5f,
-                blockpos.getZ() + 0.5f,
+                entity.getX(),
+                entity.getY(),
+                entity.getZ(),
                 world.getRandom().nextFloat() * 360.0F,
                 0.0F);
 

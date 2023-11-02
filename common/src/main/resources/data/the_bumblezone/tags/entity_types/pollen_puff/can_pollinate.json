@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "minecraft:bee",
-    "the_bumblezone:variant_bee"
+    "the_bumblezone:variant_bee",
+    {
+      "id": "tropicraft:tropibee",
+      "required": false
+    }
   ]
 }

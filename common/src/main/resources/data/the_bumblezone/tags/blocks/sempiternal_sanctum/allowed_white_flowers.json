@@ -254,6 +254,10 @@
       "required": false
     },
     {
+      "id": "tropicraft:anemone",
+      "required": false
+    },
+    {
       "id": "untamedwilds:flora_yarrow",
       "required": false
     },

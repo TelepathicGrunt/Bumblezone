@@ -113,6 +113,10 @@
     {
       "id": "srias_flowers:tall_hydrangea",
       "required": false
+    },
+    {
+      "id": "tropicraft:iris",
+      "required": false
     }
   ]
 }

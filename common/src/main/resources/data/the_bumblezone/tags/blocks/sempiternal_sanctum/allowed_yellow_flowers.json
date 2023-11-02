@@ -284,6 +284,10 @@
       "required": false
     },
     {
+      "id": "tropicraft:canna",
+      "required": false
+    },
+    {
       "id": "untamedwilds:flora_canola",
       "required": false
     },

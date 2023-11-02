@@ -10,6 +10,10 @@ public class BzModCompatibilityConfigs {
 	public static boolean beePokemonGetsProtectionEffect = true;
 	public static double spawnrateOfPokecubeBeePokemon = 0.1D;
 
+	public static boolean spawnTropicraftBeesMob = true;
+	public static double spawnrateOfTropicraftBeesMobs = 0.05D;
+	public static boolean allowTropicraftSpawnFromDispenserFedBroodBlock = true;
+
 	public static boolean spawnResourcefulBeesBeesMob = true;
 	public static double spawnrateOfResourcefulBeesMobsBrood = 0.1D;
 	public static double spawnrateOfResourcefulBeesMobsOther = 0.1D;

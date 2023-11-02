@@ -245,6 +245,14 @@
       "required": false
     },
     {
+      "id": "tropicraft:tropical_fern",
+      "required": false
+    },
+    {
+      "id": "tropicraft:pathos",
+      "required": false
+    },
+    {
       "id": "twilightforest:mayapple",
       "required": false
     },

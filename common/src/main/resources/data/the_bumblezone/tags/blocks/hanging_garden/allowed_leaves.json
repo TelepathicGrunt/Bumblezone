@@ -297,6 +297,26 @@
       "required": false
     },
     {
+      "id": "tropicraft:purple_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:yellow_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:blue_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:red_flowering_leaves",
+      "required": false
+    },
+    {
+      "id": "tropicraft:white_flowering_leaves",
+      "required": false
+    },
+    {
       "id": "various_update:cherry_leaves",
       "required": false
     }

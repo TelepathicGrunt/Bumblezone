@@ -301,14 +301,14 @@ public class BumblezoneForge {
     private static void onProjectileHit(ProjectileImpactEvent event) {
         boolean cancel = ProjectileHitEvent.EVENT.invoke(new ProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
         if (cancel) {
-            event.setCanceled(true);
+            event.setImpactResult(ProjectileImpactEvent.ImpactResult.STOP_AT_CURRENT_NO_DAMAGE);
         }
     }
 
     private static void onProjectileHitHighPriority(ProjectileImpactEvent event) {
         boolean cancel = ProjectileHitEvent.EVENT_HIGH.invoke(new ProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
         if (cancel) {
-            event.setCanceled(true);
+            event.setImpactResult(ProjectileImpactEvent.ImpactResult.STOP_AT_CURRENT_NO_DAMAGE);
         }
     }
 
@@ -419,6 +419,7 @@ public class BumblezoneForge {
         boolean cancel = EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getSpawnType()), event.isCanceled());
         if (cancel) {
             event.setCanceled(true);
+            event.setSpawnCancelled(true);
         }
     }
 

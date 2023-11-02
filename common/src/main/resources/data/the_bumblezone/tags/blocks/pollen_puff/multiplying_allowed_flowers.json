@@ -396,6 +396,10 @@
       "required": false
     },
     {
+      "id": "tropicraft:iris",
+      "required": false
+    },
+    {
       "id": "twigs:azalea_flowers",
       "required": false
     },

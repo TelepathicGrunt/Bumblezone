@@ -14,6 +14,10 @@
       "required": false
     },
     {
+      "id": "aquamirae:golden_moth",
+      "required": false
+    },
+    {
       "id": "autumnity:snail",
       "required": false
     },
@@ -270,11 +274,23 @@
       "required": false
     },
     {
-      "id": "aquamirae:golden_moth",
+      "id": "silverbirch:firefly",
       "required": false
     },
     {
-      "id": "silverbirch:firefly",
+      "id": "tropicraft:tropibee",
+      "required": false
+    },
+    {
+      "id": "tropicraft:brown_basilisk_lizard",
+      "required": false
+    },
+    {
+      "id": "tropicraft:green_basilisk_lizard",
+      "required": false
+    },
+    {
+      "id": "tropicraft:iguana",
       "required": false
     },
     {
