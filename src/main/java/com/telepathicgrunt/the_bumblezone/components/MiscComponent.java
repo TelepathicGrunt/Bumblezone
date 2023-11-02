@@ -28,6 +28,7 @@ import java.util.Map;
 
 public class MiscComponent implements Component {
 
+    public boolean gottenWelcomed = false;
     public boolean receivedEssencePrize = false;
     public long tradeResetPrimedTime = -1000;
     public int craftedBeehives = 0;
@@ -60,6 +61,7 @@ public class MiscComponent implements Component {
 
     @Override
     public void writeToNbt(CompoundTag nbt) {
+        nbt.putBoolean("gotten_welcomed", this.gottenWelcomed);
         nbt.putBoolean("received_essence_prize", this.receivedEssencePrize);
         nbt.putLong("trade_reset_primed_time", this.tradeResetPrimedTime);
         nbt.putInt("crafted_beehives", this.craftedBeehives);
@@ -85,6 +87,7 @@ public class MiscComponent implements Component {
 
     @Override
     public void readFromNbt(CompoundTag nbtTag) {
+        this.gottenWelcomed = nbtTag.getBoolean("gotten_welcomed");
         this.receivedEssencePrize = nbtTag.getBoolean("received_essence_prize");
         this.tradeResetPrimedTime = nbtTag.getLong("trade_reset_primed_time");
         this.craftedBeehives = nbtTag.getInt("crafted_beehives");
