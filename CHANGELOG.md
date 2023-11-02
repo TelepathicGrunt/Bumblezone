@@ -7,3 +7,6 @@ Added enableInitialWelcomeMessage config option to turn off the in-chat welcome 
 
 ##### Items:
 Adjusted texture for 1 variant of Stingless Bee Helmet, Bumblebee Chestplate, and Honeybee Leggings.
+
+##### Enchantments:
+Adjusted costs for Neurotoxin to prevent some mods from allowing Neurotoxin levels above 3 from being obtainable.
