@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.configs;
 public class BzDimensionConfigs{
 
     // dimension
+    public static boolean enableInitialWelcomeMessage = true;
     public static double fogBrightnessPercentage = 100D;
     public static double fogThickness = 4D;
     public static boolean enableDimensionFog = true;

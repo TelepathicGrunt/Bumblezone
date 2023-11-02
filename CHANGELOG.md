@@ -1,7 +1,9 @@
 ### **(V.7.0.27 Changes) (1.20.1 Minecraft)**
 
 ##### Advancements:
-Fixed initial Bumblezone message spam if another mod completely disables advancements for Bumblezone.
+Fixed initial Bumblezone welcome message spam if another mod completely disables advancements for Bumblezone.
+
+Added enableInitialWelcomeMessage config option to turn off the in-chat welcome message that shows when near beehive for first time.
 
 ##### Items:
 Fixed Buzzing Briefcase not releasing bees on block left click.

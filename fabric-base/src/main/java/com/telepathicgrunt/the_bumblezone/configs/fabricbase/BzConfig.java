@@ -142,6 +142,9 @@ public class BzConfig extends MidnightConfig {
     @Comment
     public static Comment dimensionComment;
 
+    @Entry
+    public static boolean enableInitialWelcomeMessage = true;
+
     @Entry(min=0, max=100000)
     public static double fogBrightnessPercentage = 110;
 
@@ -386,6 +389,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.crystallineFlowerExtraXpNeededForTiers = crystallineFlowerExtraXpNeededForTiers;
 
         //Dimension
+        BzDimensionConfigs.enableInitialWelcomeMessage = enableInitialWelcomeMessage;
         BzDimensionConfigs.fogBrightnessPercentage = fogBrightnessPercentage;
         BzDimensionConfigs.fogThickness = fogThickness;
         BzDimensionConfigs.enableDimensionFog = enableDimensionFog;

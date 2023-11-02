@@ -8,6 +8,7 @@ public class BzDimensionConfig {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     // dimension
+    public static ForgeConfigSpec.BooleanValue enableInitialWelcomeMessage;
     public static ForgeConfigSpec.BooleanValue forceExitToOverworld;
     public static ForgeConfigSpec.BooleanValue onlyOverworldHivesTeleports;
     public static ForgeConfigSpec.BooleanValue warnPlayersOfWrongBlockUnderHive;
@@ -24,6 +25,16 @@ public class BzDimensionConfig {
     }
 
     private static void setupConfig(ForgeConfigSpec.Builder builder) {
+        builder.push("The Bumblezone Welcome Options");
+
+        enableInitialWelcomeMessage = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether to show message saying to check out Bumblezone's advancements when you get enar beehive for first time.\n")
+                .translation("the_bumblezone.config.enableinitialwelcomemessage")
+                .define("enableInitialWelcomeMessage", true);
+
+        builder.pop();
+
         builder.push("The Bumblezone Teleportation Options");
 
             enableEntranceTeleportation = builder
@@ -94,6 +105,7 @@ public class BzDimensionConfig {
     }
 
     public static void copyToCommon() {
+        BzDimensionConfigs.enableInitialWelcomeMessage = enableInitialWelcomeMessage.get();
         BzDimensionConfigs.enableEntranceTeleportation = enableEntranceTeleportation.get();
         BzDimensionConfigs.enableExitTeleportation = enableExitTeleportation.get();
         BzDimensionConfigs.forceBumblezoneOriginMobToOverworldCenter = forceBumblezoneOriginMobToOverworldCenter.get();

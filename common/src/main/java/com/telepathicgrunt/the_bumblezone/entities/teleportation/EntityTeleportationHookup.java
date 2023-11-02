@@ -86,12 +86,14 @@ public class EntityTeleportationHookup {
                 if (poiInRange.size() > 0) {
                     BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
 
-                    ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
-                        if (!playerData.gottenWelcomed) {
-                            playerData.gottenWelcomed = true;
-                            serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
-                        }
-                    });
+                    if (BzDimensionConfigs.enableInitialWelcomeMessage) {
+                        ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+                            if (!playerData.gottenWelcomed) {
+                                playerData.gottenWelcomed = true;
+                                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+                            }
+                        });
+                    }
                 }
             }
         }
