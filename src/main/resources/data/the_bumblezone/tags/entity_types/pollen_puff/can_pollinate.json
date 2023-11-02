@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "minecraft:bee"
+    "minecraft:bee",
+    {
+      "id": "tropicraft:tropibee",
+      "required": false
+    }
   ]
 }

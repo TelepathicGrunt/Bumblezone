@@ -214,6 +214,22 @@
       "required": false
     },
     {
+      "id": "tropicraft:tropibee",
+      "required": false
+    },
+    {
+      "id": "tropicraft:brown_basilisk_lizard",
+      "required": false
+    },
+    {
+      "id": "tropicraft:green_basilisk_lizard",
+      "required": false
+    },
+    {
+      "id": "tropicraft:iguana",
+      "required": false
+    },
+    {
       "id": "whisperwoods:moth",
       "required": false
     },

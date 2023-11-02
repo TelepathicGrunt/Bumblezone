@@ -26,6 +26,10 @@
       "required": false
     },
     {
+      "id": "tropicraft:tropi_spider",
+      "required": false
+    },
+    {
       "id": "twilightforest:hedge_spider",
       "required": false
     },
