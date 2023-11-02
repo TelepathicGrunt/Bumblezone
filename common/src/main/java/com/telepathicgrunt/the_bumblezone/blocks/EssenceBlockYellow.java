@@ -84,7 +84,7 @@ public class EssenceBlockYellow extends EssenceBlock {
 
     @Override
     public void awardPlayerWinStat(ServerPlayer serverPlayer) {
-        serverPlayer.awardStat(BzStats.RAGING_EVENT_DEFEATED_RL.get());
+        serverPlayer.awardStat(BzStats.RADIANCE_EVENT_DEFEATED_RL.get());
     }
 
     @Override
