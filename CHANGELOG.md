@@ -13,3 +13,6 @@ Buzzing Briefcase now has a half-second cooldown when left clicking item to rele
 Bees released from Buzzing Briefcase by left clicking blocks will be less likely stuck in the blocks.
 
 Adjusted texture for 1 variant of Stingless Bee Helmet, Bumblebee Chestplate, and Honeybee Leggings.
+
+##### Enchantments:
+Adjusted costs for Neurotoxin to prevent some mods from allowing Neurotoxin levels above 3 from being obtainable.

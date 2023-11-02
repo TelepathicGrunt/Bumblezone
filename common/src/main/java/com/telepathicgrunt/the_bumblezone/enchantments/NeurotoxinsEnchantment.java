@@ -28,6 +28,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.util.Optional;
 
 public class NeurotoxinsEnchantment extends BzEnchantment {
+    private static final int MAX_LEVEL = 3;
 
     public NeurotoxinsEnchantment() {
         super(Rarity.RARE, EnchantmentCategory.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
@@ -35,17 +36,25 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
 
     @Override
     public int getMinCost(int level) {
+        if (level > MAX_LEVEL) {
+            return Integer.MAX_VALUE - 2;
+        }
+
         return 14 * level;
     }
 
     @Override
     public int getMaxCost(int level) {
+        if (level > MAX_LEVEL) {
+            return Integer.MAX_VALUE - 1;
+        }
+
         return super.getMinCost(level) + 50;
     }
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return MAX_LEVEL;
     }
 
     @Override
