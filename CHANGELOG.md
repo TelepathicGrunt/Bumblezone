@@ -10,3 +10,11 @@ Adjusted texture for 1 variant of Stingless Bee Helmet, Bumblebee Chestplate, an
 
 ##### Enchantments:
 Adjusted costs for Neurotoxin to prevent some mods from allowing Neurotoxin levels above 3 from being obtainable.
+
+
+##### Mod Compat:
+Added compat with Tropicraft!
+  Tropibee can spawn in Bumblezone and from Brood Blocks.
+  Pollen Puff spawns Iris when thrown at Cowktails.
+  Tropi Spider spawners can be found in some places in Bumblezone.
+  And more!

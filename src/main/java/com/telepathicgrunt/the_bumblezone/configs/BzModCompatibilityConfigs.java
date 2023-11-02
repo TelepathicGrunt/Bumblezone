@@ -13,6 +13,10 @@ public class BzModCompatibilityConfigs {
 	public static ForgeConfigSpec.BooleanValue beePokemonGetsProtectionEffect;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfPokecubeBeePokemon;
 
+	public static ForgeConfigSpec.BooleanValue spawnTropicraftBeesMob;
+	public static ForgeConfigSpec.DoubleValue spawnrateOfTropicraftBeesMobs;
+	public static ForgeConfigSpec.BooleanValue allowTropicraftSpawnFromDispenserFedBroodBlock;
+
 	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesBeesMob;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsBrood;
 	public static ForgeConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsOther;
@@ -90,6 +94,30 @@ public class BzModCompatibilityConfigs {
 							" 0 is no PC's mobs and 1 is max PC's mobs.\n")
 					.translation("the_bumblezone.config.spawnrateofpokecubebeepokemon")
 					.defineInRange("spawnrateOfPokecubeBeePokemon", 0.05D, 0D, 1D);
+
+			builder.pop();
+
+			builder.push("Tropicraft Options");
+
+			spawnTropicraftBeesMob = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Spawn Tropicraft's Tropibee in The Bumblezone and from Honey Brood Blocks alongside",
+							" regular bees at a spawnrateOfTropicraftBeesMobs chance when spawning regular bees.\n")
+					.translation("the_bumblezone.config.spawntropicraftbeesmob")
+					.define("spawnTropicraftBeesMob", true);
+
+			spawnrateOfTropicraftBeesMobs = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Chance of a Bee spawning from Honeycomb Brood Blocks in Bumblezone dimension being replaced by Tropicraft's Tropibee.",
+							" 0 is no Tropicraft's mobs and 1 is max Tropicraft's mobs.\n")
+					.translation("the_bumblezone.config.spawnrateoftropicraftbeesmobs")
+					.defineInRange("spawnrateOfTropicraftBeesMobs", 0.05D, 0D, 1D);
+
+			allowTropicraftSpawnFromDispenserFedBroodBlock = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Allow Honeycomb Brood blocks fed by Dispenser to be able to have chance of spawning Tropicraft's Tropibee.\n")
+					.translation("the_bumblezone.config.allowtropicraftspawnfromdispenserfedbroodblock")
+					.define("allowTropicraftSpawnFromDispenserFedBroodBlock", true);
 
 			builder.pop();
 

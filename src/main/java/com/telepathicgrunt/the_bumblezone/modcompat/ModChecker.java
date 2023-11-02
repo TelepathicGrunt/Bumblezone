@@ -27,6 +27,7 @@ public class ModChecker {
 	public static boolean backpackedPresent = false;
 	public static boolean jonnTrophiesPresent = false;
 	public static boolean projectileDamageAttributePresent = false;
+	public static boolean tropicraftPresent = false;
 
 	/*
 	 * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -92,6 +93,9 @@ public class ModChecker {
 
 			modid = "projectile_damage";
 			loadupModCompat(modid, () -> ProjectileDamageAttributeCompat.setupCompat());
+
+			modid = "tropicraft";
+			loadupModCompat(modid, () -> TropicraftCompat.setupCompat());
 
 			modid = "mekanism";
 			loadupModCompatWithVersionCheck(modid, "10.3.9", false, () -> MekanismCompat.setupCompat());

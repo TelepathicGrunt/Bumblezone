@@ -58,6 +58,16 @@ public class ModdedBeesBeesSpawning {
 						return;
 					}
 				}
+
+				if (ModChecker.tropicraftPresent &&
+					BzModCompatibilityConfigs.spawnTropicraftBeesMob.get() &&
+					entity.getRandom().nextFloat() < BzModCompatibilityConfigs.spawnrateOfTropicraftBeesMobs.get())
+				{
+					if(TropicraftCompat.TropicMobSpawnEvent(event, entity.isBaby(), event.getSpawnReason())) {
+						event.setResult(Event.Result.DENY);
+						return;
+					}
+				}
 			}
 		}
 	}
