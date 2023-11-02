@@ -81,6 +81,9 @@ public class BzConfig extends MidnightConfig {
     @Comment
     public static Comment dimensionComment;
 
+    @Entry
+    public static boolean enableInitialWelcomeMessage = true;
+
     @Entry(min=0, max=100000)
     public static double fogBrightnessPercentage = 110;
 
