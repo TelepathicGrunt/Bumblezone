@@ -7,8 +7,8 @@
     "ambient_sound": "the_bumblezone:biomes.beehive_ambience",
     "music": {
       "sound": "the_bumblezone:biomes.general_music",
-      "min_delay": 3000,
-      "max_delay": 6000,
+      "min_delay": 6000,
+      "max_delay": 8000,
       "replace_current_music": false
     },
     "particle": {

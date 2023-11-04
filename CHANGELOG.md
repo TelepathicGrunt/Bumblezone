@@ -20,6 +20,9 @@ Adjusted costs for Neurotoxin to prevent some mods from allowing Neurotoxin leve
 ##### Structures:
 Fixed beating the Radiance event incrementing the Raging event's stat count.
 
+##### Biomes:
+Increased time between biome music playing to around 6 minutes
+
 ##### Mod Compat:
 (Forge): Added compat with Tropicraft! 
   Tropibee can spawn in Bumblezone and from Brood Blocks. 
