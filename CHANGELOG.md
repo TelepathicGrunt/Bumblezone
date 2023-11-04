@@ -20,6 +20,8 @@ Adjusted costs for Neurotoxin to prevent some mods from allowing Neurotoxin leve
 ##### Structures:
 Fixed beating the Radiance event incrementing the Raging event's stat count.
 
+Made Sempiternal Sanctum events now ignore FakePlayers.
+
 ##### Biomes:
 Increased time between biome music playing to around 6 minutes
 

@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -273,7 +274,7 @@ public class EssenceBlockEntity extends BlockEntity {
             for (int i = essenceBlockEntity.getPlayerInArena().size() - 1; i >= 0; i--) {
                 UUID playerUUID = essenceBlockEntity.getPlayerInArena().get(i);
                 ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
-                if (serverPlayer != null) {
+                if (serverPlayer != null && !PlatformHooks.isFakePlayer(serverPlayer)) {
                     if (serverPlayer.isDeadOrDying() ||
                         (Math.abs(serverPlayer.blockPosition().getX() - blockPos.getX()) > (essenceBlockEntity.getArenaSize().getX() / 2) ||
                         Math.abs(serverPlayer.blockPosition().getY() - blockPos.getY()) > (essenceBlockEntity.getArenaSize().getY() / 2) ||
