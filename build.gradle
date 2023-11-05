@@ -325,9 +325,14 @@ task checkForRefmap() {
     }
 }
 
+task deleteOldBuilds(type: Delete) {
+    delete "./build/libs"
+}
+
 task buildAndRelease{}
+tasks.build.mustRunAfter tasks.deleteOldBuilds
 tasks.checkForRefmap.mustRunAfter tasks.build
 tasks.publish.mustRunAfter tasks.checkForRefmap
 tasks.publishCurseForge.mustRunAfter tasks.publish
 tasks.modrinth.mustRunAfter tasks.publish
-tasks.buildAndRelease.dependsOn(tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)
+tasks.buildAndRelease.dependsOn(tasks.deleteOldBuilds, tasks.build, tasks.publish, tasks.publishCurseForge, tasks.modrinth)
