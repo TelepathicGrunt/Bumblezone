@@ -24,6 +24,10 @@ Fixed beating the Radiance event incrementing the Raging event's stat count.
 
 Made Sempiternal Sanctum events now ignore FakePlayers.
 
+Fixed cases where Sempiternal Sanctums events do not end properly if all players leave arena.
+
+Fixed potential case where touching Essence Block does not start arena event and added some more logging to help figure out issues with it.
+
 ##### Biomes:
 Increased time between biome music playing to around 6 minutes
 

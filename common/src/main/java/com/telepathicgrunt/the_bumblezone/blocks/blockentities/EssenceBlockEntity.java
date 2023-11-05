@@ -303,6 +303,11 @@ public class EssenceBlockEntity extends BlockEntity {
                                 false));
                     }
                 }
+                else {
+                    essenceBlockEntity.getPlayerInArena().remove(playerUUID);
+                    essenceBlockEntity.getEventBar().removePlayer(serverPlayer);
+                    essenceBlockEntity.setChanged();
+                }
             }
             if (essenceBlockEntity.getPlayerInArena().isEmpty()) {
                 endEvent = true;

@@ -24,6 +24,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ChunkPos;
@@ -117,15 +118,15 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                 return Shapes.empty();
             }
 
-            if ((entity instanceof LivingEntity && !(entity instanceof ServerPlayer)) ||
-                (entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)))
-            {
-                if (entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
+            boolean isClientside = entity.level().isClientSide();
+            boolean isNonPlayer = entity instanceof LivingEntity && !(entity instanceof Player);
+            boolean isNonEssencedServerPlayer = entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer);
+
+            if (isClientside || isNonPlayer || isNonEssencedServerPlayer) {
+                if (!isClientside && entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
                     if (entity instanceof ServerPlayer serverPlayer) {
                         BlockEntity blockEntity = level.getBlockEntity(blockPos);
-                        if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
-                                essenceBlockEntity.getPlayerInArena().isEmpty())
-                        {
+                        if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getPlayerInArena().isEmpty()) {
                             serverPlayer.displayClientMessage(
                                     Component.translatable("essence.the_bumblezone.missing_essence_effect").withStyle(ChatFormatting.RED),
                                     true);
@@ -133,19 +134,27 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     }
 
                     entity.hurt(entity.damageSources().magic(), 0.5f);
-
-                    Vec3 center = Vec3.atCenterOf(blockPos);
-                    entity.push(
-                            entity.getX() - center.x(),
-                            entity.getY() - center.y(),
-                            entity.getZ() - center.z());
                 }
+
+                Vec3 center = Vec3.atCenterOf(blockPos);
+                entity.push(
+                        entity.getX() - center.x(),
+                        entity.getY() - center.y(),
+                        entity.getZ() - center.z());
 
                 return Shapes.block();
             }
 
             if (entity instanceof ServerPlayer serverPlayer) {
                 entityInside(blockState, serverPlayer.level(), blockPos, serverPlayer);
+            }
+
+            if (entity instanceof Player) {
+                Vec3 center = Vec3.atCenterOf(blockPos);
+                entity.push(
+                        entity.getX() - center.x(),
+                        entity.getY() - center.y(),
+                        entity.getZ() - center.z());
             }
         }
         return Shapes.empty();
@@ -198,7 +207,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
                 StructureTemplateManager structureTemplateManager = serverLevel.getStructureManager();
                 Optional<StructureTemplate> optionalStructureTemplate = structureTemplateManager.get(getArenaNbt());
-                optionalStructureTemplate.ifPresent(loadingStructureTemplate -> {
+                optionalStructureTemplate.ifPresentOrElse(loadingStructureTemplate -> {
                     Vec3i size = loadingStructureTemplate.getSize();
                     BlockPos negativeHalfLengths = new BlockPos(-size.getX() / 2, -size.getY() / 2, -size.getZ() / 2);
                     essenceBlockEntity.setArenaSize(new BlockPos(size));
@@ -209,7 +218,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                         savingStructureTemplate = structureTemplateManager.getOrCreate(essenceBlockEntity.getSavedNbt());
                     }
                     catch (ResourceLocationException resourceLocationException) {
-                        Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to create the NBT file to save area - {} - {}", essenceBlockEntity, blockState);
+                        Bumblezone.LOGGER.error("Bumblezone Essence Block failed to create the NBT file to save area - {} - {} - {}", essenceBlockEntity, blockState, getArenaNbt());
                         return;
                     }
                     savingStructureTemplate.fillFromWorld(serverLevel, blockPos.offset(negativeHalfLengths), size, !PLACEMENT_SETTINGS.getOrFillFromInternal().isIgnoreEntities(), essenceBlock);
@@ -217,7 +226,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                         structureTemplateManager.save(essenceBlockEntity.getSavedNbt());
                     }
                     catch (ResourceLocationException resourceLocationException) {
-                        Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to save area into NBT file - {} - {}", essenceBlockEntity, blockState);
+                        Bumblezone.LOGGER.error("Bumblezone Essence Block failed to save area into NBT file - {} - {} - {}", essenceBlockEntity, blockState, getArenaNbt());
                         return;
                     }
 
@@ -269,6 +278,9 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                             }
                         }
                     }
+                },
+                () -> {
+                    Bumblezone.LOGGER.error("Bumblezone Essence Block failed to even detect the nbt file at all {} - {} - {}", essenceBlockEntity, blockState, getArenaNbt());
                 });
 
                 essenceBlockEntity.getEventBar().setProgress(1f);
