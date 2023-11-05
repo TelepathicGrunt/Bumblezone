@@ -1,5 +1,8 @@
 ### **(V.7.0.27 Changes) (1.20.1 Minecraft)**
 
+##### Dimensions:
+Made Bumblezone now Piglin safe so they and Hoglins do not transform in the dimension. (Needed for Red Essence Event to work properly)
+
 ##### Advancements:
 Fixed initial Bumblezone welcome message spam if another mod completely disables advancements for Bumblezone.
 

@@ -13,7 +13,7 @@
   "respawn_anchor_works": false,
   "bed_works" : true,
   "fixed_time" : 6000,
-  "piglin_safe" : false,
+  "piglin_safe" : true,
   "coordinate_scale": 4.0,
   "monster_spawn_block_light_limit": 12,
   "monster_spawn_light_level": 11
