@@ -15,6 +15,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -56,6 +57,12 @@ public class EssenceOfTheBees extends Item {
                     SoundSource.PLAYERS,
                     2F,
                     (serverPlayer.getRandom().nextFloat() * 0.2F) + 0.6F);
+
+            for (MobEffectInstance effectToRemove : serverPlayer.getActiveEffects()) {
+                if (!effectToRemove.getEffect().isBeneficial() && serverPlayer.hasEffect(effectToRemove.getEffect())) {
+                    serverPlayer.removeEffect(effectToRemove.getEffect());
+                }
+            }
         }
         return itemStack;
     }
