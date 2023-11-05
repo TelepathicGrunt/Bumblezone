@@ -145,17 +145,13 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                 return Shapes.block();
             }
 
-            if (entity instanceof ServerPlayer serverPlayer) {
-                entityInside(blockState, serverPlayer.level(), blockPos, serverPlayer);
-            }
+            entityInside(blockState, entity.level(), blockPos, entity);
 
-            if (entity instanceof Player) {
-                Vec3 center = Vec3.atCenterOf(blockPos);
-                entity.push(
-                        entity.getX() - center.x(),
-                        entity.getY() - center.y(),
-                        entity.getZ() - center.z());
-            }
+            Vec3 center = Vec3.atCenterOf(blockPos);
+            entity.push(
+                    entity.getX() - center.x(),
+                    entity.getY() - center.y(),
+                    entity.getZ() - center.z());
         }
         return Shapes.empty();
     }
