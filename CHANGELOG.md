@@ -1,3 +1,9 @@
+### **(V.7.0.28 Changes) (1.20.1 Minecraft)**
+
+##### Mod Compat:
+(Forge): Fixed incompat with Productive Bees
+
+
 ### **(V.7.0.27 Changes) (1.20.1 Minecraft)**
 
 ##### Dimensions:

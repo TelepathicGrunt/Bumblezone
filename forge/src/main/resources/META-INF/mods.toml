@@ -34,8 +34,10 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
     modId="productivebees"
     mandatory=false
     ordering="AFTER"
+    versionRange="[0,)"
 
 [[dependencies.the_bumblezone]]
     modId="resourcefulbees"
     mandatory=false
     ordering="AFTER"
+    versionRange="[0,)"
