@@ -1,3 +1,9 @@
+### **(V.6.7.43 Changes) (1.19.2 Minecraft)**
+
+##### Mod Compat:
+(Forge): Fixed incompat with Productive Bees and Resourceful Bees
+
+
 ### **(V.6.7.42 Changes) (1.19.2 Minecraft)**
 
 ##### Advancements:
