@@ -68,7 +68,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HoneySlimeEntity extends Animal implements NeutralMob, Enemy {
+public class HoneySlimeEntity extends Animal implements NeutralMob {
    /**
     * Special thanks to Bagel for the Honey Slime code and texture!
     */

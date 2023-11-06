@@ -195,7 +195,7 @@ public class KnowingEssence extends AbilityEssenceItem {
                 return PURPLE;
             }
         }
-        else if (entity instanceof Enemy && !(entity instanceof HoneySlimeEntity)) {
+        else if (entity instanceof Enemy) {
             if (BzClientConfigs.knowingEssenceHighlightMonsters) {
                 return RED;
             }

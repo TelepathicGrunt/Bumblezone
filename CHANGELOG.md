@@ -1,3 +1,9 @@
+### **(V.7.0.29 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Honey Slime is no longer marked as Enemy. Golems won't attack them now.
+
+
 ### **(V.7.0.28 Changes) (1.20.1 Minecraft)**
 
 ##### Mod Compat:
