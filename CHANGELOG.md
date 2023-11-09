@@ -12,3 +12,6 @@ Replaced carpet in Honey Slime Ranch with rails to keep villager from trying to 
 Stop crash when brushing Suspicious Pile of Pollen when a mod sets the player held item to null which is wrong and dangerous. 
  Please find the mod that is setting hand item to null instead of using Itemstack.EMPTY like they should be doing. 
  You're going to have other issues too until you find the causer.
+
+##### Misc: 
+(Forge): Hard require v47.1.43 or newer Forge due to using the projectile result added in v47.1.4 Forge and v47.1.43 is past all the problematic Forge versions.
