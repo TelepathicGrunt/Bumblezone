@@ -19,6 +19,7 @@
   "mixins": [
     "block.FireBlockMixin",
     "block.PistonStructureResolverMixin",
+    "block.PoiTypesAccessor",
     "block.ShulkerBoxBlockEntityMixin",
     "enchantments.EnchantmentHelperMixin",
     "enchantments.EnchantmentMixin",
