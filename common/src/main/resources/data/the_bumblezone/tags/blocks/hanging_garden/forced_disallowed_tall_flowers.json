@@ -90,6 +90,10 @@
       "required": false
     },
     {
+      "id": "naturalist:cattail",
+      "required": false
+    },
+    {
       "id": "natures_spirit:cattail",
       "required": false
     },

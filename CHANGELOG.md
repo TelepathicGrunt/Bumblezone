@@ -13,6 +13,8 @@ Stop crash when brushing Suspicious Pile of Pollen when a mod sets the player he
  Please find the mod that is setting hand item to null instead of using Itemstack.EMPTY like they should be doing. 
  You're going to have other issues too until you find the causer.
 
+Made Bees and Rootmins immune to Ancient Wax/Luminescent Wax negative effects.
+
 ##### Misc: 
 Fixed possible concurrent modification crash when iterating over effects in a few places.
 

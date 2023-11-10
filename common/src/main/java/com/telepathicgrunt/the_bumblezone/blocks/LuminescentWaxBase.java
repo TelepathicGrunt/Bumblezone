@@ -22,6 +22,10 @@ public interface LuminescentWaxBase {
                 return;
             }
 
+            if (livingEntity.getType().is(BzTags.LUMINESCENT_WAX_IMMUNE_TO_EFFECTS)) {
+                return;
+            }
+
             if (livingEntity instanceof ServerPlayer player && EssenceOfTheBees.hasEssence(player)) {
 
                 boolean isLuminescent = currentState.is(BzTags.LUMINESCENT_WAX_LIGHT_CHANNELS) ||
