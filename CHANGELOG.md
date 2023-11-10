@@ -14,4 +14,6 @@ Stop crash when brushing Suspicious Pile of Pollen when a mod sets the player he
  You're going to have other issues too until you find the causer.
 
 ##### Misc: 
+Fixed possible concurrent modification crash when iterating over effects in a few places.
+
 (Forge): Hard require v47.1.43 or newer Forge due to using the projectile result added in v47.1.4 Forge and v47.1.43 is past all the problematic Forge versions.
