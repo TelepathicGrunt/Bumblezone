@@ -22,4 +22,4 @@ Made Bees and Rootmins immune to Ancient Wax/Luminescent Wax negative effects.
 ##### Misc: 
 Fixed possible concurrent modification crash when iterating over effects in a few places.
 
-(Forge): Hard require v47.1.43 or newer Forge due to using the projectile result added in v47.1.4 Forge and v47.1.43 is past all the problematic Forge versions.
+(Forge): Undid Projectile Impact event result change to allow 47.1.3 Forge to run with Bumblezone again.

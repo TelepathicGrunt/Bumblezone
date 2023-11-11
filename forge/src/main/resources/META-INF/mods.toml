@@ -23,7 +23,7 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
 [[dependencies.the_bumblezone]]
     modId="forge"
     mandatory=true
-    versionRange="[47.1.43,)"
+    versionRange="[47.1.0,47.1.4],[47.1.43,)"
 
 [[dependencies.the_bumblezone]]
     modId="curios"

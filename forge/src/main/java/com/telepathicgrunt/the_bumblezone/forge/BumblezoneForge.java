@@ -301,14 +301,14 @@ public class BumblezoneForge {
     private static void onProjectileHit(ProjectileImpactEvent event) {
         boolean cancel = ProjectileHitEvent.EVENT.invoke(new ProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
         if (cancel) {
-            event.setImpactResult(ProjectileImpactEvent.ImpactResult.STOP_AT_CURRENT_NO_DAMAGE);
+            event.setCanceled(true);
         }
     }
 
     private static void onProjectileHitHighPriority(ProjectileImpactEvent event) {
         boolean cancel = ProjectileHitEvent.EVENT_HIGH.invoke(new ProjectileHitEvent(event.getProjectile(), event.getRayTraceResult()), event.isCanceled());
         if (cancel) {
-            event.setImpactResult(ProjectileImpactEvent.ImpactResult.STOP_AT_CURRENT_NO_DAMAGE);
+            event.setCanceled(true);
         }
     }
 
