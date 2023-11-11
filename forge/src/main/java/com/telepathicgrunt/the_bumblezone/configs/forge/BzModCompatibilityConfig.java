@@ -112,7 +112,7 @@ public class BzModCompatibilityConfig {
 							" Chance of a Bee spawning from Honeycomb Brood Blocks in Bumblezone dimension being replaced by Tropicraft's Tropibee.",
 							" 0 is no Tropicraft's mobs and 1 is max Tropicraft's mobs.\n")
 					.translation("the_bumblezone.config.spawnrateoftropicraftbeesmobs")
-					.defineInRange("spawnrateOfTropicraftBeesMobs", 0.05D, 0D, 1D);
+					.defineInRange("spawnrateOfTropicraftBeesMobs", 0.025D, 0D, 1D);
 
 			allowTropicraftSpawnFromDispenserFedBroodBlock = builder
 					.comment(" \n-----------------------------------------------------\n",
