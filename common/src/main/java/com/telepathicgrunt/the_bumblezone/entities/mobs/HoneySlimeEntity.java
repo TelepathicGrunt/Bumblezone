@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeAngerAttackingGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFaceRandomGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
@@ -48,7 +48,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -93,7 +92,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
 
    public HoneySlimeEntity(EntityType<? extends HoneySlimeEntity> type, Level worldIn) {
       super(type, worldIn);
-      this.moveControl = new HoneySlimeMoveHelperController(this);
+      this.moveControl = new HoneySlimeMoveController(this);
    }
 
    @Override

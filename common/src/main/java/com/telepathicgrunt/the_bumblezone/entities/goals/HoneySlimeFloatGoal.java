@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -19,7 +19,7 @@ public class HoneySlimeFloatGoal extends Goal {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean canUse() {
-        return (this.slime.isInWater() || this.slime.isInLava()) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+        return (this.slime.isInWater() || this.slime.isInLava()) && this.slime.getMoveControl() instanceof HoneySlimeMoveController;
     }
 
     /**
@@ -30,6 +30,6 @@ public class HoneySlimeFloatGoal extends Goal {
             this.slime.getJumpControl().jump();
         }
 
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.2D);
+        ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.2D);
     }
 }

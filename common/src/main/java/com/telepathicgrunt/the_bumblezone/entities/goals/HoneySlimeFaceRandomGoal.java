@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -21,7 +21,7 @@ public class HoneySlimeFaceRandomGoal extends Goal {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean canUse() {
-        return this.slime.getTarget() == null && (this.slime.onGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+        return this.slime.getTarget() == null && (this.slime.onGround() || this.slime.isInWater() || this.slime.isInLava() || this.slime.hasEffect(MobEffects.LEVITATION)) && this.slime.getMoveControl() instanceof HoneySlimeMoveController;
     }
 
     /**
@@ -33,6 +33,6 @@ public class HoneySlimeFaceRandomGoal extends Goal {
             this.chosenDegrees = (float) this.slime.getRandom().nextInt(360);
         }
 
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.chosenDegrees, false);
+        ((HoneySlimeMoveController) this.slime.getMoveControl()).setDirection(this.chosenDegrees, false);
     }
 }

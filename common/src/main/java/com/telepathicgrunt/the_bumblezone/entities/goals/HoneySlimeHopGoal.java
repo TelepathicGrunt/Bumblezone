@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -18,13 +18,13 @@ public class HoneySlimeHopGoal extends Goal {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean canUse() {
-        return !this.slime.isPassenger() && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+        return !this.slime.isPassenger() && this.slime.getMoveControl() instanceof HoneySlimeMoveController;
     }
 
     /**
      * Keep ticking a continuous task that has already been started
      */
     public void tick() {
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
+        ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.0D);
     }
 }

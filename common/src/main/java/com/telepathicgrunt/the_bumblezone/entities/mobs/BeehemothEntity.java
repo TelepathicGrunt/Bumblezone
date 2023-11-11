@@ -5,9 +5,11 @@ import com.telepathicgrunt.the_bumblezone.client.LivingEntityFlyingSoundInstance
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeInteractivity;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.BeehemothMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothFlyingStillGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothRandomFlyGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothTemptGoal;
+import com.telepathicgrunt.the_bumblezone.entities.navigation.DirectPathNavigator;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -51,11 +53,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -96,7 +96,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     public BeehemothEntity(EntityType<? extends BeehemothEntity> type, Level world) {
         super(type, world);
-        this.moveControl = new MoveHelperController(this);
+        this.moveControl = new BeehemothMoveController(this);
         this.offset1 = (this.random.nextFloat() - 0.5f);
         this.offset2 = (this.random.nextFloat() - 0.5f);
         this.offset3 = (this.random.nextFloat() - 0.5f);
@@ -783,95 +783,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         }
     }
 
-    static class MoveHelperController extends MoveControl {
-        private final BeehemothEntity beehemothEntity;
-
-        public MoveHelperController(BeehemothEntity beehemothEntity) {
-            super(beehemothEntity);
-            this.beehemothEntity = beehemothEntity;
-        }
-
-        @Override
-        public void tick() {
-
-            if (this.operation == Operation.STRAFE) {
-                Vec3 vec3 = new Vec3(this.wantedX - beehemothEntity.getX(), this.wantedY - beehemothEntity.getY(), this.wantedZ - beehemothEntity.getZ());
-                double d0 = vec3.length();
-                beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().add(0, vec3.scale(this.speedModifier * 0.05D / d0).y(), 0));
-                float f = (float) this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED);
-                float f1 = (float) this.speedModifier * f;
-                this.strafeForwards = 1.0F;
-                this.strafeRight = 0.0F;
-
-                this.mob.setSpeed(f1);
-                this.mob.setZza(this.strafeForwards);
-                this.mob.setXxa(this.strafeRight);
-                this.operation = MoveControl.Operation.WAIT;
-            }
-            if (this.operation == MoveControl.Operation.MOVE_TO) {
-                Vec3 vec3 = new Vec3(
-                        this.wantedX - beehemothEntity.getX(),
-                        this.wantedY - beehemothEntity.getY(),
-                        this.wantedZ - beehemothEntity.getZ());
-
-                double length = vec3.length() / 1.25D;
-
-                if (length < beehemothEntity.getBoundingBox().getSize()) {
-                    this.operation = MoveControl.Operation.WAIT;
-                    beehemothEntity.setDeltaMovement(beehemothEntity.getDeltaMovement().scale(0.5D));
-                }
-                else {
-                    double localSpeed = this.speedModifier;
-                    if (beehemothEntity.isVehicle()) {
-                        localSpeed *= 1.5D;
-                    }
-                    Vec3 newVelocity = beehemothEntity.getDeltaMovement().add(vec3.scale(localSpeed / length));
-
-                    double newYSpeed;
-                    if (beehemothEntity.onGround()) {
-                        newYSpeed = (newVelocity.y() + 0.009D);
-                    }
-                    else {
-                        newYSpeed = newVelocity.y();
-                    }
-                    beehemothEntity.setDeltaMovement(newVelocity.x(), newYSpeed, newVelocity.z());
-
-                    float lookAngle = (float)(Mth.atan2(vec3.x(), vec3.z()) * -(double)(180F / (float)Math.PI));
-                    beehemothEntity.setYRot(this.rotlerp(beehemothEntity.getYRot(), lookAngle, 90.0F));
-                }
-            }
-        }
-    }
-
     public boolean isTargetBlocked(Vec3 target) {
         Vec3 vec3 = new Vec3(getX(), getEyeY(), getZ());
         return this.level().clip(new ClipContext(vec3, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() != HitResult.Type.MISS;
-    }
-
-    public static class DirectPathNavigator extends GroundPathNavigation {
-
-        private final Mob mob;
-
-        public DirectPathNavigator(Mob mob, Level world) {
-            super(mob, world);
-            this.mob = mob;
-        }
-
-        @Override
-        public void tick() {
-            ++this.tick;
-        }
-
-        @Override
-        public boolean moveTo(double x, double y, double z, double speedIn) {
-            mob.getMoveControl().setWantedPosition(x, y, z, speedIn);
-            return true;
-        }
-
-        @Override
-        public boolean moveTo(Entity entityIn, double speedIn) {
-            mob.getMoveControl().setWantedPosition(entityIn.getX(), entityIn.getY(), entityIn.getZ(), speedIn);
-            return true;
-        }
     }
 }

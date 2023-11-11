@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 
-public class HoneySlimeMoveHelperController extends MoveControl {
+public class HoneySlimeMoveController extends MoveControl {
     /**
      * Special thanks to Bagel for the Honey Slime code and texture!
      */
@@ -14,7 +14,7 @@ public class HoneySlimeMoveHelperController extends MoveControl {
     private final HoneySlimeEntity slime;
     private boolean isAggressive;
 
-    public HoneySlimeMoveHelperController(HoneySlimeEntity slimeIn) {
+    public HoneySlimeMoveController(HoneySlimeEntity slimeIn) {
         super(slimeIn);
         this.slime = slimeIn;
         this.targetYaw = 180.0F * slimeIn.getYRot() / (float) Math.PI;

@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -110,8 +110,8 @@ public class HoneySlimeTemptGoal extends Goal {
         }
         else {
             this.slime.lookAt(this.closestPlayer, 10.0F, 10.0F);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
-            ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
+            ((HoneySlimeMoveController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
+            ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.0D);
         }
 
     }

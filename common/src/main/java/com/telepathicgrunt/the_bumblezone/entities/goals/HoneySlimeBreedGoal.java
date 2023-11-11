@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveHelperController;
+import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -47,7 +47,7 @@ public class HoneySlimeBreedGoal extends Goal {
             return false;
         } else {
             this.nearbyMate = this.getNearbyMate();
-            return this.nearbyMate != null && this.slime.getMoveControl() instanceof HoneySlimeMoveHelperController;
+            return this.nearbyMate != null && this.slime.getMoveControl() instanceof HoneySlimeMoveController;
         }
     }
 
@@ -73,8 +73,8 @@ public class HoneySlimeBreedGoal extends Goal {
         this.slime.getLookControl().setLookAt(this.nearbyMate, 10.0F, (float)this.slime.getMaxHeadXRot());
 
         this.slime.lookAt(this.nearbyMate, 10.0F, 10.0F);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
-        ((HoneySlimeMoveHelperController) this.slime.getMoveControl()).setSpeed(1.0D);
+        ((HoneySlimeMoveController) this.slime.getMoveControl()).setDirection(this.slime.getYRot(), true);
+        ((HoneySlimeMoveController) this.slime.getMoveControl()).setSpeed(1.0D);
 
         ++this.spawnBabyDelay;
         if (this.spawnBabyDelay >= 60 && this.slime.distanceToSqr(this.nearbyMate) < 9.0D) {
