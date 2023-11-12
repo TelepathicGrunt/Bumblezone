@@ -1,11 +1,19 @@
 {
   "wants" : [
     {
+      "id": "minecraft:beetroot_soup",
+      "required": true
+    },
+    {
       "id": "minecraft:mushroom_stew",
       "required": true
     },
     {
-      "id": "minecraft:beetroot_soup",
+      "id": "minecraft:rabbit_stew",
+      "required": true
+    },
+    {
+      "id": "minecraft:suspicious_stew",
       "required": true
     }
   ],

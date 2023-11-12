@@ -1,5 +1,8 @@
 ### **(V.7.0.30 Changes) (1.20.1 Minecraft)**
 
+##### Entities:
+Bee Queen will trade for Rabbit Stew and Suspicious Stew now.
+
 ##### Mod Compat:
 Pollen Puff hitting Sickened Mushroom Cown from Wither Storm Mod will spawn Tainted Mushrooms nearby.
 
