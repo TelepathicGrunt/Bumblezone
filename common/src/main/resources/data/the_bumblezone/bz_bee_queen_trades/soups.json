@@ -44,17 +44,17 @@
       "required": true
     },
     {
-      "id": "minecraft:apple",
-      "count": 4,
-      "xp_reward": 1,
-      "weight": 2,
-      "required": true
-    },
-    {
       "id": "minecraft:paper",
       "count": 4,
       "xp_reward": 1,
-      "weight": 3,
+      "weight": 1,
+      "required": true
+    },
+    {
+      "id": "minecraft:apple",
+      "count": 4,
+      "xp_reward": 1,
+      "weight": 4,
       "required": true
     }
   ]
