@@ -36,6 +36,10 @@
     {
       "id": "twilightforest:swarm_spider",
       "required": false
+    },
+    {
+      "id": "witherstormmod:sickened_spider",
+      "required": false
     }
   ]
 }
