@@ -45,9 +45,9 @@
     },
     {
       "id": "minecraft:apple",
-      "count": 3,
+      "count": 4,
       "xp_reward": 1,
-      "weight": 1,
+      "weight": 2,
       "required": true
     },
     {
