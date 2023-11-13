@@ -4,7 +4,9 @@
 Bee Queen will trade for Rabbit Stew and Suspicious Stew now.
 
 ##### Mod Compat:
-Pollen Puff hitting Sickened Mushroom Cown from Wither Storm Mod will spawn Tainted Mushrooms nearby.
+Workaround Lithium and Canary that caused my Suspicious Pile of Pollen block to not be brushable.
+
+Pollen Puff hitting Sickened Mushroom Cow from Wither Storm Mod will spawn Tainted Mushrooms nearby.
 
 Wither Storm Mod's Sickened Spider will count towards Bumblezone's Too Many Legs advancement.
 

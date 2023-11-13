@@ -117,6 +117,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
         if (context instanceof EntityCollisionContext ctx) {
             Entity entity = ctx.getEntity();
             if (entity != null && entity.getType() != BzEntities.POLLEN_PUFF_ENTITY.get()) {
+                context.isHoldingItem(Items.AIR);
                 ItemStack heldItem = ((EntityCollisionContextAccessor)ctx).getHeldItem();
                 if (entity instanceof Player player &&
                     player.isUsingItem() &&
