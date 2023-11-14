@@ -70,7 +70,28 @@
       "required": false
     },
     {
+      "id": "spectrum:star_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:purple_star_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "snowyspirit:candy_cane",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "snowyspirit:gingerbread_cookie",
       "count": 4,
       "xp_reward": 0,
       "weight": 1,

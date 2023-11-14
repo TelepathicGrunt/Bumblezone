@@ -227,6 +227,38 @@
     {
       "id": "deep_aether:goldenleaf_berries",
       "required": false
+    },
+    {
+      "id": "bodacious_berries:goji_berries",
+      "required": false
+    },
+    {
+      "id": "bodacious_berries:grapes",
+      "required": false
+    },
+    {
+      "id": "bodacious_berries:lingonberries",
+      "required": false
+    },
+    {
+      "id": "bodacious_berries:saskatoon_berries",
+      "required": false
+    },
+    {
+      "id": "bodacious_berries:strawberries",
+      "required": false
+    },
+    {
+      "id": "bodacious_berries:raspberries",
+      "required": false
+    },
+    {
+      "id": "bodacious_berries:blackberries",
+      "required": false
+    },
+    {
+      "id": "bodacious_berries:gooseberries",
+      "required": false
     }
   ],
   "possible_rewards": [

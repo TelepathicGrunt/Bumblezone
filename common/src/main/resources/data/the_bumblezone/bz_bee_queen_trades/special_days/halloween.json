@@ -63,6 +63,83 @@
       "required": false
     },
     {
+      "id": "spectrum:rock_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:topaz_rock_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:amethyst_rock_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:citrine_rock_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:onyx_rock_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:moonstone_rock_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:star_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "spectrum:purple_star_candy",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "neapolitan:chocolate_bar",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "neapolitan:mint_chocolate",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "neapolitan:mint_candies",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "croptopia:candy_corn",
       "count": 1,
       "xp_reward": 0,
@@ -72,6 +149,41 @@
     {
       "id": "supplementaries:candy",
       "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:holiday_candy",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:mint_candy",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:evil_carved_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:infernal_evil_pumpkin",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "born_in_chaos_v1:flaming_evil_pumpkin",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
