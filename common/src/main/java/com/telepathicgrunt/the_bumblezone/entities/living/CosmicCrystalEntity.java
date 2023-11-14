@@ -550,12 +550,20 @@ public class CosmicCrystalEntity extends LivingEntity {
     private boolean checkIfStillInEvent() {
         BlockPos essenceBlockPos = this.getEssenceControllerBlockPos();
 
+        if (essenceBlockPos == null) {
+            return false;
+        }
+
         if (this.tickCount % 20 != 0 && this.blockPosition().distManhattan(essenceBlockPos) < 16) {
             return true;
         }
 
         UUID essenceUuid = this.getEssenceController();
         ResourceKey<Level> essenceDimension = this.getEssenceControllerDimension();
+
+        if (essenceUuid == null || essenceDimension == null) {
+            return false;
+        }
 
         BlockPos blockPos = this.blockPosition();
         EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), essenceDimension, essenceBlockPos, essenceUuid);

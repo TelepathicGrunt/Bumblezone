@@ -117,6 +117,10 @@ public class ElectricRingEntity extends Entity {
         ResourceKey<Level> essenceDimension = this.getEssenceControllerDimension();
         BlockPos essenceBlockPos = this.getEssenceControllerBlockPos();
 
+        if (essenceBlockPos == null || essenceUuid == null || essenceDimension == null) {
+            return;
+        }
+
         BlockPos blockPos = this.blockPosition();
         EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), essenceDimension, essenceBlockPos, essenceUuid);
 

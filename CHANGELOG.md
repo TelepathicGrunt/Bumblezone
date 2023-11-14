@@ -3,6 +3,8 @@
 ##### Entities:
 Bee Queen will trade for Rabbit Stew and Suspicious Stew now.
 
+Fixed crash if spawning Cosmic Crystal, Electric Ring, or Purple Spike outside of Essence events by summon command.
+
 ##### Mod Compat:
 Workaround Lithium and Canary that caused my Suspicious Pile of Pollen block to not be brushable.
 
