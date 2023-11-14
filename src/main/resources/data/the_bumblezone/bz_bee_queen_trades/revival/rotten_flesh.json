@@ -3,6 +3,10 @@
     {
       "id": "minecraft:rotten_flesh",
       "required": true
+    },
+    {
+      "id": "windswept:frozen_flesh",
+      "required": false
     }
   ],
   "possible_rewards": [
