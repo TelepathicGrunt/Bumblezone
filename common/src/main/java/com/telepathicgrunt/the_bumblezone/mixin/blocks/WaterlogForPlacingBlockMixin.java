@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -15,10 +17,7 @@ import net.minecraft.world.level.material.FluidState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(targets = {
-    "net.minecraft.world.item.BlockItem",
-    "net.minecraft.world.item.StandingAndWallBlockItem"
-}, priority = 1200)
+@Mixin(value = { BlockItem.class, StandingAndWallBlockItem.class }, priority = 1200)
 public class WaterlogForPlacingBlockMixin {
 
     @ModifyReturnValue(method = "getPlacementState(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/level/block/state/BlockState;",
