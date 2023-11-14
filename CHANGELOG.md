@@ -3,6 +3,8 @@
 ##### Entities:
 Bee Queen will trade for Rabbit Stew and Suspicious Stew now.
 
+Made sure Bee Queen will not become angry at other Bees or Rootmins or a few other mobs.
+
 Fixed crash if spawning Cosmic Crystal, Electric Ring, or Purple Spike outside of Essence events by summon command.
 
 ##### Mod Compat:

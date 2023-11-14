@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAlwaysLookAtPlayerGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeAttackGoal;
 import com.telepathicgrunt.the_bumblezone.entities.navigation.DirectPathNavigator;
@@ -293,15 +294,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         else {
             if (!this.isNoAi()) {
                 Entity entity = source.getEntity();
-                if (entity instanceof LivingEntity livingEntity && !livingEntity.isSpectator()) {
+                if (entity instanceof LivingEntity livingEntity &&
+                    !livingEntity.isSpectator() &&
+                    !livingEntity.getType().is(BzTags.FORCED_BEE_CALM_AT) &&
+                    !BeeAggression.isBeelikeEntity(livingEntity))
+                {
                     if (livingEntity instanceof Player player && (level().getDifficulty() == Difficulty.PEACEFUL || player.isCreative())) {
                         spawnAngryParticles(6);
                         return super.hurt(source, amount);
                     }
 
                     if ((livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                            BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
-                            BzBeeAggressionConfigs.aggressiveBees) {
+                        BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
+                        BzBeeAggressionConfigs.aggressiveBees)
+                    {
                         if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
                             livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
                         }
