@@ -175,8 +175,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource randomSource) {
         BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-        if (blockEntity instanceof BrushableBlockEntity) {
-            BrushableBlockEntity brushableBlockEntity = (BrushableBlockEntity)blockEntity;
+        if (blockEntity instanceof BrushableBlockEntity brushableBlockEntity) {
             brushableBlockEntity.checkReset();
         }
         BlockState belowState = serverLevel.getBlockState(blockPos.below());

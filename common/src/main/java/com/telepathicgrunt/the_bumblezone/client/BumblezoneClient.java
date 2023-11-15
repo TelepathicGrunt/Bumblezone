@@ -228,6 +228,7 @@ public class BumblezoneClient {
         event.register(BzMenuTypes.BUZZING_BRIEFCASE.get(), BuzzingBriefcaseScreen::new);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private static void registerItemProperties(RegisterItemPropertiesEvent event) {
         // Allows shield to use the blocking json file for offset
         event.register(
@@ -417,6 +418,7 @@ public class BumblezoneClient {
         event.register(CosmicCrystalModel.LAYER_LOCATION, CosmicCrystalModel::createBodyLayer);
     }
 
+    @SuppressWarnings("rawtypes")
     public static void registerEntityRenderers(RegisterEntityRenderersEvent event) {
         event.register((EntityType) BzEntities.VARIANT_BEE.get(), VariantBeeRenderer::new);
         event.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);

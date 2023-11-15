@@ -186,6 +186,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
         return false;
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static int getNumberOfBees(ItemStack beeCannonItem) {
         if (beeCannonItem.hasTag()) {
             CompoundTag tag = beeCannonItem.getTag();

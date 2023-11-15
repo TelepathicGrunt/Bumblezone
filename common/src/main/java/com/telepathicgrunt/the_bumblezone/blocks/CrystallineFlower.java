@@ -494,7 +494,7 @@ public class CrystallineFlower extends BaseEntityBlock {
             boolean xB = random.nextBoolean();
             boolean zB = random.nextBoolean();
             x = random.nextDouble() + (xB ? min : max) * (chosenFace != 0 ? random.nextDouble() * (1 - minRatio) : 1) + (chosenFace != 0 ? min : 0);
-            y = random.nextDouble() * (flower ? 9 : 16);
+            y = random.nextDouble() * 16;
             z = random.nextDouble() + (zB ? min : max) * (chosenFace != 1 ? random.nextDouble() * (1 - minRatio) : 1) + (chosenFace != 1 ? min : 0);
         }
 

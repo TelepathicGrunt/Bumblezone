@@ -419,7 +419,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             json.add("pattern", jsonArray);
 
             JsonObject jsonObject = new JsonObject();
-            for(Map.Entry<Character, Ingredient> entry : inputs.entrySet()) {
+            for(Map.Entry<Character, Ingredient> entry : inputs.char2ObjectEntrySet()) {
                 jsonObject.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
             }
             json.add("key", jsonObject);

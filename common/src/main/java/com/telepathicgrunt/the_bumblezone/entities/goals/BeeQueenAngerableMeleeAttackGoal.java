@@ -42,7 +42,7 @@ public class BeeQueenAngerableMeleeAttackGoal extends Goal {
     }
 
     protected void checkAndPerformAttack(LivingEntity target, double distance) {
-        double attackReachSqr1 = this.getAttackReachSqr(target);
+        double attackReachSqr1 = this.getAttackReachSqr();
         if (distance <= attackReachSqr1 && this.ticksUntilNextAttack <= 0) {
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
@@ -52,7 +52,7 @@ public class BeeQueenAngerableMeleeAttackGoal extends Goal {
         }
     }
 
-    protected double getAttackReachSqr(LivingEntity livingEntity) {
+    protected double getAttackReachSqr() {
         return this.mob.getBbWidth() * 1.2f;
     }
 }

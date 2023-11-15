@@ -40,6 +40,10 @@ public class HoneyCompassItemProperty {
                         clientLevel = (ClientLevel)entity.level();
                     }
 
+                    if (clientLevel == null) {
+                        return 0;
+                    }
+
                     BlockPos blockPos = this.getStructurePosition(clientLevel, itemStack.getOrCreateTag());
                     long gameTime = clientLevel.getGameTime();
                     if (blockPos != null && !(entity.position().distanceToSqr((double)blockPos.getX() + 0.5, entity.position().y(), (double)blockPos.getZ() + 0.5) < 1.0E-5F)) {

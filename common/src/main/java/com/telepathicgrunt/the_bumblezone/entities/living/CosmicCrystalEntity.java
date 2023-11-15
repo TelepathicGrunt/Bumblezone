@@ -113,7 +113,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     public Vec3 prevLookAngle = new Vec3(1, 0, 0);
     private boolean laserChargeSoundPlayed = false;
     public int lastPhysicalHit = 0;
-    public ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
+    public final ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
     private boolean noAI = false;
 
     public CosmicCrystalEntity(EntityType<? extends CosmicCrystalEntity> entityType, Level level) {

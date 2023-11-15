@@ -5,8 +5,8 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.util.StringUtil;
 
 public class ServerEssenceEvent extends ServerBossEvent {
+    protected final String translation;
     protected int endEventTimer;
-    protected String translation;
 
     public ServerEssenceEvent(String translation, BossBarColor bossBarColor, BossBarOverlay bossBarOverlay) {
         super(Component.translatable(translation, "???"), bossBarColor, bossBarOverlay);

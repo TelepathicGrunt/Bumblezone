@@ -16,7 +16,7 @@ public class FTBEssentialsCompat implements ModCompat {
 //		// registering during mod construction...
 //		TeleportEvent.TELEPORT.register(this::onTeleportAttempt);
 
-		// Keep at end so it is only set to true if no exceptions was thrown during setup
+		// Keep at end, so it is only set to true if no exceptions was thrown during setup
 		ModChecker.FTBEssentialsPresent = true;
 	}
 

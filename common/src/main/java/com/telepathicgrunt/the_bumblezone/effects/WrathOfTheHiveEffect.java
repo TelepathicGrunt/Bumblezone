@@ -39,10 +39,10 @@ import java.util.stream.Collectors;
 
 
 public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
+    public static final int NEARBY_WRATH_EFFECT_RADIUS = 8;
     private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight();
     private final static TargetingConditions LINE_OF_SIGHT = (TargetingConditions.forCombat());
     public static boolean ACTIVE_WRATH = false;
-    public static int NEARBY_WRATH_EFFECT_RADIUS = 8;
 
     public WrathOfTheHiveEffect(MobEffectCategory type, int potionColor) {
         super(type, potionColor);

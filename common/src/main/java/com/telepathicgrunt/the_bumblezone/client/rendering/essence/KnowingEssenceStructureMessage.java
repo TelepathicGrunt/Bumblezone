@@ -25,15 +25,13 @@ public class KnowingEssenceStructureMessage {
             String structureResourceLocationStrings = KnowingEssence.GetAllStructure(offHandItem);
             if (structureResourceLocationStrings != null && !structureResourceLocationStrings.isEmpty()) {
                 Minecraft minecraft = Minecraft.getInstance();
+                String[] structEntries = structureResourceLocationStrings.split(" ");
+                Component line1 = null;
+                Component line2 = null;
+                Component line3 = null;
+                int currentEntryIndex = 0;
+
                 if (GeneralUtilsClient.isAdvancedToolTipActive()) {
-
-                    String[] structEntries = structureResourceLocationStrings.split(" ");
-
-                    Component line1 = null;
-                    Component line2 = null;
-                    Component line3 = null;
-
-                    int currentEntryIndex = 0;
                     for (String structEntry : structEntries) {
                         int currentLine = currentEntryIndex % 3;
                         if (currentLine == 0) {
@@ -64,16 +62,9 @@ public class KnowingEssenceStructureMessage {
                         currentEntryIndex++;
                     }
 
-                    renderScrollingString(minecraft, guiGraphics, line1, line2, line3);
                 }
                 else {
-                    String[] structEntries = structureResourceLocationStrings.split(" ");
 
-                    Component line1 = null;
-                    Component line2 = null;
-                    Component line3 = null;
-
-                    int currentEntryIndex = 0;
                     for (String structEntry : structEntries) {
                         int currentLine = currentEntryIndex % 3;
 
@@ -118,8 +109,8 @@ public class KnowingEssenceStructureMessage {
                         currentEntryIndex++;
                     }
 
-                    renderScrollingString(minecraft, guiGraphics, line1, line2, line3);
                 }
+                renderScrollingString(minecraft, guiGraphics, line1, line2, line3);
             }
         }
     }

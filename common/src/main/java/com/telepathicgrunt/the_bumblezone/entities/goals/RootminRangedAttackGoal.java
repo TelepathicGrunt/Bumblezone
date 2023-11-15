@@ -24,10 +24,6 @@ public class RootminRangedAttackGoal extends Goal {
     private final float attackRadius;
     private final float attackRadiusSqr;
 
-    public RootminRangedAttackGoal(RootminEntity rootminEntity, double speedModifier, int attackInterval, float attackRadius) {
-        this(rootminEntity, speedModifier, attackInterval, attackInterval, attackRadius);
-    }
-
     public RootminRangedAttackGoal(RootminEntity rootminEntity, double speedModifier, int attackIntervalMax, int attackIntervalMin, float attackRadius) {
         this.rootminEntity = rootminEntity;
         this.mob = rootminEntity;
@@ -42,14 +38,11 @@ public class RootminRangedAttackGoal extends Goal {
     @Override
     public boolean canUse() {
         LivingEntity livingEntity = this.mob.getTarget();
-        if (livingEntity == null ||
-            !livingEntity.isAlive() ||
-            (this.mob instanceof RootminEntity rootminEntity && rootminEntity.disableAttackGoals))
-        {
+        if (livingEntity == null || !livingEntity.isAlive() || rootminEntity.disableAttackGoals) {
             return false;
         }
 
-        if (this.mob instanceof RootminEntity rootminEntity && !rootminEntity.canTarget(livingEntity)) {
+        if (!rootminEntity.canTarget(livingEntity)) {
             rootminEntity.setTarget(null);
             rootminEntity.setAggressive(false);
             return false;
@@ -61,7 +54,7 @@ public class RootminRangedAttackGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return this.canUse() || this.target.isAlive() && !this.mob.getNavigation().isDone();
+        return this.canUse() || (this.target != null && this.target.isAlive()) && !this.mob.getNavigation().isDone();
     }
 
     @Override
@@ -78,6 +71,10 @@ public class RootminRangedAttackGoal extends Goal {
 
     @Override
     public void tick() {
+        if (this.target == null) {
+            return;
+        }
+
         double d = this.mob.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
         boolean bl = this.mob.getSensing().hasLineOfSight(this.target);
 

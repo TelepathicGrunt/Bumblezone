@@ -50,7 +50,9 @@ import java.util.function.BiConsumer;
 /**
  * Special thanks to YUNGNICKYOUNG for allowing me to use his piece count limiting jigsaw manager!
  * Some changes were done to make it more usable by multiple structures.
- * Source: https://github.com/yungnickyoung/YUNGs-Better-Strongholds/blob/fabric-1.16/src/main/java/com/yungnickyoung/minecraft/betterstrongholds/world/jigsaw/JigsawManager.java
+ * Source: <a href="https://github.com/yungnickyoung/YUNGs-Better-Strongholds/blob/fabric-1.16/src/main/java/com/yungnickyoung/minecraft/betterstrongholds/world/jigsaw/JigsawManager.java">
+ *     https://github.com/yungnickyoung/YUNGs-Better-Strongholds/blob/fabric-1.16/src/main/java/com/yungnickyoung/minecraft/betterstrongholds/world/jigsaw/JigsawManager.java
+ *     </a>
  */
 public class OptimizedJigsawManager {
 

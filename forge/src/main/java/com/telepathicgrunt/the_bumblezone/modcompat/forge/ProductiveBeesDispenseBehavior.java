@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ProductiveBeesDispenseBehavior extends DefaultDispenseItemBehavior {
     public static DispenseItemBehavior DEFAULT_BEE_CAGED_DISPENSE_BEHAVIOR;
     public static DispenseItemBehavior DEFAULT_STURDY_BEE_CAGED_DISPENSE_BEHAVIOR;
-    public static DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
+    public static final DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
 
     /**
      * Dispense the specified stack, play the dispenser sound and spawn particles.

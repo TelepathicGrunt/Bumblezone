@@ -114,9 +114,8 @@ public class FabricEventManager {
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
                 RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(dispatcher, environment, context)));
 
-        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
-            DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player));
-        });
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) ->
+                DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player)));
 
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);

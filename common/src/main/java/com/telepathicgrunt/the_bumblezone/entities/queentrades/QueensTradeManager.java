@@ -141,7 +141,6 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         }
 
         List<RandomizeTradeRowInput> tempRecipeViewerRandomizerTrades = new ArrayList<>();
-        List<TradeWantEntry> tempRecipeViewerMainTagTrades = new ArrayList<>();
         List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> tempRecipeViewerMainTrades = new ArrayList<>();
 
         // TagKey is to store if the key item was from a Tag or not.
@@ -200,10 +199,6 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
                     if (tradeResultEntry.size() == 0) {
                         continue;
-                    }
-
-                    if (tradeWantEntry.tagKey.isPresent()) {
-                        tempRecipeViewerMainTagTrades.add(tradeWantEntry);
                     }
 
                     populateMainQueenTrades(tempQueenTradesFirstPass, tradeResultEntry, tradeWantEntry);
@@ -448,7 +443,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         A = year % 19;
         B = year % 4;
         C = year % 7;
-        P = (float)Math.floor(year / 100);
+        P = (float)Math.floor(year / 100f);
         Q = (float)Math.floor((13 + 8 * P) / 25);
         M = (int)(15 - Q + P - Math.floor(P / 4)) % 30;
         N = (int)(4 + P - Math.floor(P / 4)) % 7;

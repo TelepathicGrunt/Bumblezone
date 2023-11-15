@@ -37,7 +37,6 @@ public class AncientWaxStairs extends StairBlock implements AncientWaxBase {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         if (PlatformHooks.isToolAction(itemstack, ShearsItem.class, "shears_carve") ||

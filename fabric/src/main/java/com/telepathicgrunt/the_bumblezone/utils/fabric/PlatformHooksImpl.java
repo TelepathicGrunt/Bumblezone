@@ -152,7 +152,7 @@ public class PlatformHooksImpl {
 
     public static  InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
         ItemStack itemStack = user.getItemInHand(hand);
-        BlockHitResult blockHitResult = bzCustomBucketItem.getPlayerPOVHitResult(world, user, fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
+        BlockHitResult blockHitResult = Item.getPlayerPOVHitResult(world, user, fluid == Fluids.EMPTY ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (blockHitResult.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(itemStack);
         }

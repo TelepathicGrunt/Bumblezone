@@ -1,13 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 /**
  * K.jpg's OpenSimplex 2, faster variant
- *
+ * <p>
  * - 2D is standard simplex implemented using a lookup table.
  * - 3D is "Re-oriented 4-point BCC noise" which constructs a
  *   congruent BCC lattice in a much different way than usual.
  * - 4D constructs the lattice as a union of five copies of its
  *   reciprocal. It successively finds the closest point on each.
- *
+ * <p>
  * Multiple versions of each function are provided. See the
  * documentation above each, for more info.
  */
@@ -443,8 +443,8 @@ public class OpenSimplex2F {
 	}
 
 	private static class LatticePoint2D {
-		int xsv, ysv;
-		double dx, dy;
+		final int xsv, ysv;
+		final double dx, dy;
 		public LatticePoint2D(int xsv, int ysv) {
 			this.xsv = xsv; this.ysv = ysv;
 			double ssv = (xsv + ysv) * -0.211324865405187;
@@ -454,8 +454,8 @@ public class OpenSimplex2F {
 	}
 
 	private static class LatticePoint3D {
-		public double dxr, dyr, dzr;
-		public int xrv, yrv, zrv;
+		public final double dxr, dyr, dzr;
+		public final int xrv, yrv, zrv;
 		LatticePoint3D nextOnFailure, nextOnSuccess;
 		public LatticePoint3D(int xrv, int yrv, int zrv, int lattice) {
 			this.dxr = -xrv + lattice * 0.5; this.dyr = -yrv + lattice * 0.5; this.dzr = -zrv + lattice * 0.5;
@@ -464,10 +464,10 @@ public class OpenSimplex2F {
 	}
 
 	private static class LatticePoint4D {
-		int xsv, ysv, zsv, wsv;
-		double dx, dy, dz, dw;
-		double xsi, ysi, zsi, wsi;
-		double ssiDelta;
+		final int xsv, ysv, zsv, wsv;
+		final double dx, dy, dz, dw;
+		final double xsi, ysi, zsi, wsi;
+		final double ssiDelta;
 		public LatticePoint4D(int xsv, int ysv, int zsv, int wsv) {
 			this.xsv = xsv + 409; this.ysv = ysv + 409; this.zsv = zsv + 409; this.wsv = wsv + 409;
 			double ssv = (xsv + ysv + zsv + wsv) * 0.309016994374947;

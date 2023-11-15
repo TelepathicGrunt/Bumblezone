@@ -14,10 +14,10 @@ import java.util.function.Predicate;
 
 public class RootminNearestAttackableTargetGoal  extends TargetGoal {
     private static final int DEFAULT_RANDOM_INTERVAL = 10;
+    protected final TargetingConditions targetConditions;
     protected final int randomInterval;
     @Nullable
     protected LivingEntity target;
-    protected TargetingConditions targetConditions;
 
     public RootminNearestAttackableTargetGoal(Mob mob, boolean mustSee) {
         this(mob, DEFAULT_RANDOM_INTERVAL, mustSee, null);

@@ -29,9 +29,9 @@ import net.minecraft.world.level.Level;
 import java.util.Set;
 
 public class StinglessBeeHelmet extends BeeArmor {
+    public static final Set<Entity> BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE = new ObjectArraySet<>();
     public static int HELMET_EFFECT_COUNTER_CLIENTSIDE = 0;
     public static int BEE_WEARABLES_COUNT = 0;
-    public static Set<Entity> BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE = new ObjectArraySet<>();
     public static int PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;
 
     public StinglessBeeHelmet(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, int variant) {

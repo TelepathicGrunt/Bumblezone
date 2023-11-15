@@ -27,8 +27,8 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.EnumSet;
 
 public class MekanismCompat implements ModCompat {
-	RegistryObject<ModuleData<?>> JETPACK_UNIT = RegistryObject.create(new ResourceLocation("mekanism", "jetpack_unit"), MekanismAPI.MODULE_REGISTRY_NAME, Bumblezone.MODID);
-	RegistryObject<ModuleData<?>> GRAV_UNIT = RegistryObject.create(new ResourceLocation("mekanism", "gravitational_modulating_unit"), MekanismAPI.MODULE_REGISTRY_NAME, Bumblezone.MODID);
+	final RegistryObject<ModuleData<?>> JETPACK_UNIT = RegistryObject.create(new ResourceLocation("mekanism", "jetpack_unit"), MekanismAPI.MODULE_REGISTRY_NAME, Bumblezone.MODID);
+	final RegistryObject<ModuleData<?>> GRAV_UNIT = RegistryObject.create(new ResourceLocation("mekanism", "gravitational_modulating_unit"), MekanismAPI.MODULE_REGISTRY_NAME, Bumblezone.MODID);
 	public static Item JETPACK;
 	public static Item JETPACK_ARMORED;
 

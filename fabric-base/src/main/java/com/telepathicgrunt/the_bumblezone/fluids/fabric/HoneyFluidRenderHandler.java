@@ -27,11 +27,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
 
-    private final ClientFluidProperties properties;
-
     public HoneyFluidRenderHandler(ClientFluidProperties properties) {
         super(properties.still(), properties.flowing(), properties.overlay());
-        this.properties = properties;
     }
 
     @Override

@@ -49,7 +49,7 @@ public class RagingEssence extends AbilityEssenceItem {
     private static final int maxEmpoweredTimeFramePer5Ticks = 75;
     private static final int maxCurrentTargets = 4;
 
-    Map<Integer, Integer> RAGE_TO_STRENGTH = Map.of(
+    final Map<Integer, Integer> RAGE_TO_STRENGTH = Map.of(
             1, 0,
             2, 1,
             3, 2,

@@ -117,7 +117,7 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
             }
 
             if (!honeyCompassLocateStructure.skipKnownStructures) {
-                jsonObject.addProperty("skip_existing_chunks", honeyCompassLocateStructure.skipKnownStructures);
+                jsonObject.addProperty("skip_existing_chunks", false);
             }
         }
 

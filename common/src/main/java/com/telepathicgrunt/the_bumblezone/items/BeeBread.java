@@ -19,6 +19,7 @@ public class BeeBread extends Item {
         super(properties);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerEntity, LivingEntity entity, InteractionHand playerHand) {
         if (!(entity instanceof Bee) && entity.getType() != BzEntities.BEEHEMOTH.get()) {

@@ -26,7 +26,7 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         implements RenderLayerParent<PurpleSpikeEntity, M>
 {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/purple_spike.png");
-    protected PurpleSpikeModel<PurpleSpikeEntity> model;
+    protected final PurpleSpikeModel<PurpleSpikeEntity> model;
     protected final List<RenderLayer<PurpleSpikeEntity, M>> layers = Lists.newArrayList();
 
     public PurpleSpikeRenderer(EntityRendererProvider.Context context) {
@@ -43,6 +43,7 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         return (M) this.model;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public void render(PurpleSpikeEntity ringEntity, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i) {
         poseStack.pushPose();
@@ -54,7 +55,7 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         poseStack.translate(0.0f, offSet, 0.0f);
         poseStack.mulPose(Axis.YN.rotationDegrees(180.0f - ringEntity.getYRot()));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - ringEntity.getXRot()));
-        ((EntityModel)this.model).prepareMobModel(ringEntity, 0, 0, g);
+        this.model.prepareMobModel(ringEntity, 0, 0, g);
         ((EntityModel)this.model).setupAnim(ringEntity, 0, 0, 0, 0, m);
         Minecraft minecraft = Minecraft.getInstance();
         boolean bl = this.isBodyVisible(ringEntity);

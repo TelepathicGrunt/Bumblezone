@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public class InfinityBarrierBlockEntity extends BlockEntity {
     public static final int DEFAULT_COLOR_1 = 16777215;
     public static final int DEFAULT_COLOR_2 = 16770000;
-    public static String PRIMARY_COLOR_TAG = "primaryColor";
-    public static String SECONDARY_COLOR_TAG = "secondaryColor";
+    public static final String PRIMARY_COLOR_TAG = "primaryColor";
+    public static final String SECONDARY_COLOR_TAG = "secondaryColor";
     private int primaryColor = 0;
     private int secondaryColor = 0;
 
