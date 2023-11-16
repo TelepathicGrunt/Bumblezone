@@ -13,6 +13,9 @@ Fixed crash if spawning Cosmic Crystal, Electric Ring, or Purple Spike outside o
 ##### Effects:
 Fixed Wrath of the Hive growing Brood Blocks that are too far above or below mob.
 
+##### Lang:
+uk_ua.json updated by unroman! Special thanks to them for the huge amount of translations done!
+
 ##### Mod Compat:
 Workaround Lithium and Canary that caused my Suspicious Pile of Pollen block to not be brushable.
 
