@@ -1,5 +1,8 @@
 ### **(V.7.0.30 Changes) (1.20.1 Minecraft)**
 
+##### Blocks:
+Fixed the rotation of Ancient Wax Stairs when they are in item form.
+
 ##### Entities:
 Bee Queen will trade for Rabbit Stew and Suspicious Stew now.
 
