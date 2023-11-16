@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
@@ -131,7 +133,7 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
         }
 
         // makes brood blocks grow faster near wrath of the hive entities.
-        if(!world.isClientSide() && entity instanceof Player) {
+        if (!world.isClientSide() && entity instanceof Player) {
             PoiManager poiManager = ((ServerLevel)world).getPoiManager();
             List<PoiRecord> poiInRange = poiManager.getInSquare(
                     (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI.get(),
@@ -141,13 +143,17 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
                     .collect(Collectors.toList());
 
             float chanceOfGrowth = 0.001f;
-            if(poiInRange.size() != 0) {
-                for(int index = poiInRange.size() - 1; index >= 0; index--) {
-                    PoiRecord poi = poiInRange.remove(index);
-                    if(entity.getRandom().nextFloat() < chanceOfGrowth) {
-                        BlockState state = world.getBlockState(poi.getPos());
-                        if(state.getBlock() instanceof HoneycombBrood) {
-                            state.tick((ServerLevel) world, poi.getPos(), entity.getRandom());
+            if (poiInRange.size() != 0) {
+                for (int index = poiInRange.size() - 1; index >= 0; index--) {
+                    if (entity.getRandom().nextFloat() < chanceOfGrowth) {
+                        PoiRecord poi = poiInRange.remove(index);
+
+                        int yDiff = Math.abs(entity.blockPosition().getY() - poi.getPos().getY());
+                        if (yDiff <= NEARBY_WRATH_EFFECT_RADIUS) {
+                            BlockState state = world.getBlockState(poi.getPos());
+                            if (state.getBlock() instanceof HoneycombBrood) {
+                                state.tick((ServerLevel) world, poi.getPos(), entity.getRandom());
+                            }
                         }
                     }
                 }

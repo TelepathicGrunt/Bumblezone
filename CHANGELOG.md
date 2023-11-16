@@ -7,6 +7,9 @@ Made sure Bee Queen will not become angry at other Bees or Rootmins or a few oth
 
 Fixed crash if spawning Cosmic Crystal, Electric Ring, or Purple Spike outside of Essence events by summon command.
 
+##### Effects:
+Fixed Wrath of the Hive growing Brood Blocks that are too far above or below mob.
+
 ##### Mod Compat:
 Workaround Lithium and Canary that caused my Suspicious Pile of Pollen block to not be brushable.
 

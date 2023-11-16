@@ -8,12 +8,14 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.mixin.world.StructureTemplateAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
@@ -36,6 +38,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -53,6 +56,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
@@ -736,6 +740,111 @@ public class GeneralUtils {
     public static double capBetween(double value, double min, double max) {
         return Math.min(Math.max(value, min), max);
     }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    public static List<BlockPos> matchingBlocksOfKindInRange(Level level, BlockPos centerPos, int radius, Predicate<BlockState> predicate) {
+        List<BlockPos> validPos = new ObjectArrayList<>();
+
+        // Figure out how many chunk radius we need to search outward to encompass the radius properly
+        ChunkPos maxChunkPos = new ChunkPos(
+                SectionPos.blockToSectionCoord(centerPos.getX() + radius),
+                SectionPos.blockToSectionCoord(centerPos.getZ() + radius)
+        );
+        ChunkPos minChunkPos = new ChunkPos(
+                SectionPos.blockToSectionCoord(centerPos.getX() - radius),
+                SectionPos.blockToSectionCoord(centerPos.getZ() - radius)
+        );
+
+        // Get all the chunks in range
+        for (int xOffset = minChunkPos.x; xOffset <= maxChunkPos.x; xOffset++) {
+            for (int zOffset = minChunkPos.z; zOffset <= maxChunkPos.z; zOffset++) {
+                ChunkAccess chunk = level.getChunk(xOffset, zOffset);
+
+                // Find and store all matches
+                scanChunkForMatchInRange(predicate, validPos, chunk, centerPos, radius);
+            }
+        }
+
+        return validPos;
+    }
+
+    private static void scanChunkForMatchInRange(Predicate<BlockState> predicate, List<BlockPos> validPos, ChunkAccess chunk, BlockPos originalPos, int radius) {
+        BlockPos.MutableBlockPos mutableSectionWorldOrigin = new BlockPos.MutableBlockPos();
+        BlockPos.MutableBlockPos mutableSectionWorldBlockPos = new BlockPos.MutableBlockPos();
+        int radiusSq = radius * radius;
+
+        // Iterate over all sections in chunk. Note, sections can be negative if world extends to negative.
+        for (int i = chunk.getMinSection(); i < chunk.getMaxSection(); ++i) {
+            int sectionWorldY = SectionPos.sectionToBlockCoord(i);
+
+            // Make sure this section is in range of the radius we want to check.
+            if (sectionWorldY + 15 < originalPos.getY() - radius || sectionWorldY > originalPos.getY() + radius) {
+                continue;
+            }
+
+            LevelChunkSection levelChunkSection = chunk.getSection(chunk.getSectionIndexFromSectionY(i));
+
+            // Check if chunk section has match
+            if (levelChunkSection.maybeHas(predicate)) {
+
+                // Set to origin corner of chunk section
+                mutableSectionWorldOrigin.set(
+                        SectionPos.sectionToBlockCoord(chunk.getPos().x),
+                        sectionWorldY,
+                        SectionPos.sectionToBlockCoord(chunk.getPos().z));
+
+                for (int yOffset = 0; yOffset < 16; yOffset++) {
+                    for (int zOffset = 0; zOffset < 16; zOffset++) {
+                        for (int xOffset = 0; xOffset < 16; xOffset++) {
+                            // Go to spot in section in terms of world position.
+                            mutableSectionWorldBlockPos.set(mutableSectionWorldOrigin).move(xOffset, yOffset, zOffset);
+
+                            // Make sure spot is in radius
+                            int xDiff = originalPos.getX() - mutableSectionWorldBlockPos.getX();
+                            int yDiff = originalPos.getY() - mutableSectionWorldBlockPos.getY();
+                            int zDiff = originalPos.getZ() - mutableSectionWorldBlockPos.getZ();
+                            if ((xDiff * xDiff + yDiff * yDiff + zDiff * zDiff) <= radiusSq) {
+
+                                // Test block and add position found.
+                                BlockState blockState = levelChunkSection.getBlockState(xOffset, yOffset, zOffset);
+                                if (predicate.test(blockState)) {
+                                    validPos.add(mutableSectionWorldBlockPos.immutable());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // For comparison with POI
+//            PoiManager poiManager = ((ServerLevel)world).getPoiManager();
+//            for (int i = 0; i < 1000; i++) {
+//                long time31 = System.nanoTime();
+//                List<PoiRecord> poiInRange2 = poiManager.getInSquare(
+//                                (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI.get(),
+//                                entity.blockPosition(),
+//                                NEARBY_WRATH_EFFECT_RADIUS,
+//                                PoiManager.Occupancy.ANY)
+//                        .collect(Collectors.toList());
+//                long time32 = System.nanoTime();
+//
+//                long time41 = System.nanoTime();
+//                List<BlockPos> blockPosList2 = GeneralUtils.matchingBlocksOfKindInRange(
+//                        world,
+//                        entity.blockPosition(),
+//                        NEARBY_WRATH_EFFECT_RADIUS,
+//                        (b) -> b.is(BzBlocks.HONEYCOMB_BROOD.get()));
+//                long time42 = System.nanoTime();
+//
+//                if (i == 999) {
+//                    Bumblezone.LOGGER.warn("------------------------------");
+//                    Bumblezone.LOGGER.warn("A: {}", time32 - time31);
+//                    Bumblezone.LOGGER.warn("B: {}", time42 - time41);
+//                }
+//            }
 
     /////////////////////////////////////////////////////////////////////////////////
 }
