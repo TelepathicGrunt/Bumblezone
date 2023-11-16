@@ -19,7 +19,7 @@ Adjusted Wrath of the Hive effect to not run every tick. Might see a tiny bit of
 uk_ua.json updated by unroman! Special thanks to them for the huge amount of translations done!
 
 ##### Mod Compat:
-Workaround Lithium and Canary that caused my Suspicious Pile of Pollen block to not be brushable.
+Workaround Lithium, Canary, Rubidium that caused my Suspicious Pile of Pollen block to not be brushable.
 
 Pollen Puff hitting Sickened Mushroom Cow from Wither Storm Mod will spawn Tainted Mushrooms nearby.
 
