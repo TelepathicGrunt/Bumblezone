@@ -41,6 +41,3 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
     mandatory=false
     ordering="AFTER"
     versionRange="[0,)"
-
-[mods."lithium:options"]
-"mixin.shapes.lazy_shape_context"=false
