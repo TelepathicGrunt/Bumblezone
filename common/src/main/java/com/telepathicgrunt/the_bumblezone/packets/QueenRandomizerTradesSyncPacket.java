@@ -49,9 +49,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
     public static class Handler implements PacketHandler<QueenRandomizerTradesSyncPacket> {
         //this is what gets run on the client
         public PacketContext handle(final QueenRandomizerTradesSyncPacket pkt) {
-            return (player, level) -> {
-                QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades = pkt.recipeViewerRandomizerTrades();
-            };
+            return (player, level) -> QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerRandomizerTrades = pkt.recipeViewerRandomizerTrades();
         }
 
         /*

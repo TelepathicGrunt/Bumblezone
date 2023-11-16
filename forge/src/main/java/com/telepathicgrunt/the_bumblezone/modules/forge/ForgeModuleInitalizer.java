@@ -89,11 +89,9 @@ public class ForgeModuleInitalizer {
     }
 
     private static <T extends Module<T>> void copyData(Capability<T> capability, ServerPlayer oldPlayer, ServerPlayer newPlayer, boolean loseless) {
-        oldPlayer.getCapability(capability).ifPresent(oldModule -> {
-            newPlayer.getCapability(capability).ifPresent(newModule -> {
-                newModule.serializer().onPlayerCopy(oldModule, newModule, newPlayer, loseless);
-            });
-        });
+        oldPlayer.getCapability(capability).ifPresent(oldModule ->
+                newPlayer.getCapability(capability).ifPresent(newModule ->
+                        newModule.serializer().onPlayerCopy(oldModule, newModule, newPlayer, loseless)));
     }
 
     private static <T extends Module<T>, I> void attachHolderOnEntity(final AttachCapabilitiesEvent<Entity> event, I input, ModuleRegistryValue<T, I> value) {

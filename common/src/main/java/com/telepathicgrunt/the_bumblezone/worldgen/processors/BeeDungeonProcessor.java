@@ -44,7 +44,11 @@ public class BeeDungeonProcessor extends StructureProcessor {
 
         // placing altar blocks
         if (blockState.is(Blocks.STRUCTURE_BLOCK)) {
-            String metadata = structureBlockInfoWorld.nbt().getString("metadata");
+            CompoundTag compoundTag = structureBlockInfoWorld.nbt();
+            if (compoundTag == null) {
+                return structureBlockInfoWorld;
+            }
+            String metadata = compoundTag.getString("metadata");
             BlockState belowBlock = worldView.getChunk(worldPos).getBlockState(worldPos);
 
             //altar blocks cannot be placed on air

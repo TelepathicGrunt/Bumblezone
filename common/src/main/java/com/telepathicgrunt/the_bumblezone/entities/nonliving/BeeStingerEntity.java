@@ -33,11 +33,6 @@ public class BeeStingerEntity extends AbstractArrow {
         }
     }
 
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-    }
-
     public void tick() {
         super.tick();
         if (this.level().isClientSide) {

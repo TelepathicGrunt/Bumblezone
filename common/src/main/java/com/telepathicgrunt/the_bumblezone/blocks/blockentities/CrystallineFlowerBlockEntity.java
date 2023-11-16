@@ -20,15 +20,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class CrystallineFlowerBlockEntity extends BlockEntity {
-    public static String TIER_TAG = "tier";
-    public static String XP_TAG = "xp";
-    public static String GUID_TAG = "guid";
+    public static final String TIER_TAG = "tier";
+    public static final String XP_TAG = "xp";
+    public static final String GUID_TAG = "guid";
     private int xpTier = 1;
     private int currentXp = 0;
     private String guid = java.util.UUID.randomUUID().toString();
 
-    public static String BOOK_SLOT_ITEMS = "bookItems";
-    public static String CONSUME_SLOT_ITEMS = "consumeItems";
+    public static final String BOOK_SLOT_ITEMS = "bookItems";
+    public static final String CONSUME_SLOT_ITEMS = "consumeItems";
     private ItemStack bookSlotItems = ItemStack.EMPTY;
     private ItemStack consumeSlotItems = ItemStack.EMPTY;
 

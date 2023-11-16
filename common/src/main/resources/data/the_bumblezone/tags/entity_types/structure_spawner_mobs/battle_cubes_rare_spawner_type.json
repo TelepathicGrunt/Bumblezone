@@ -36,6 +36,10 @@
     {
       "id": "minecraft_earth_mod:bone_spider",
       "required": false
+    },
+    {
+      "id": "witherstormmod:sickened_spider",
+      "required": false
     }
   ]
 }

@@ -13,6 +13,7 @@ import org.jetbrains.annotations.ApiStatus;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("CanBeFinal")
 public class BzConfig extends MidnightConfig {
 
     @Comment

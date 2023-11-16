@@ -27,7 +27,7 @@ public class MusicHandler {
     public static class MusicFader {
         public final SoundInstance music;
         public final Consumer<Minecraft> stopOtherMusic;
-        public int counterStart;
+        public final int counterStart;
         public boolean fadeIn;
         public int counter;
 

@@ -27,7 +27,7 @@ import java.util.function.BiPredicate;
 
 
 public class EssenceBlockPurple extends EssenceBlock {
-    public static int INTERVALS = 36;
+    public static final int INTERVALS = 36;
 
     public EssenceBlockPurple() {
         super(Properties.of().mapColor(MapColor.COLOR_PURPLE));

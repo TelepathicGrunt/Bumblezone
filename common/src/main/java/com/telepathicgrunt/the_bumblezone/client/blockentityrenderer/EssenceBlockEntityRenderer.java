@@ -39,7 +39,7 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 			.put("Normal", DefaultVertexFormat.ELEMENT_NORMAL).build());
 	
 	public static ShaderInstance SAFE_SHADER_INSTANCE = null;
-	public RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
+	public final RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
 			RenderType.create(
 					"bumblezone_essence_block",
 					POSITION_COLOR_NORMAL,

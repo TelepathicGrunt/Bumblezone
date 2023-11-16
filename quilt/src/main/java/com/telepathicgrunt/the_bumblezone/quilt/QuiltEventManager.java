@@ -83,9 +83,8 @@ public class QuiltEventManager {
 
         ServerWorldLoadEvents.LOAD.register((server, level) -> registerTrades());
 
-        RegisterFlammabilityEvent.EVENT.invoke(new RegisterFlammabilityEvent((block, igniteOdds, burnOdds) -> {
-            BlockContentRegistries.FLAMMABLE.put(block, new FlammableBlockEntry(igniteOdds, burnOdds));
-        }));
+        RegisterFlammabilityEvent.EVENT.invoke(new RegisterFlammabilityEvent((block, igniteOdds, burnOdds) ->
+                BlockContentRegistries.FLAMMABLE.put(block, new FlammableBlockEntry(igniteOdds, burnOdds))));
         RegisterReloadListenerEvent.EVENT.invoke(new RegisterReloadListenerEvent((id, listener) ->
                 ResourceLoader.get(PackType.SERVER_DATA).registerReloader(new QuiltReloadListener(id, listener))));
         RegisterSpawnPlacementsEvent.EVENT.invoke(new RegisterSpawnPlacementsEvent(QuiltEventManager::registerPlacement));
@@ -94,9 +93,8 @@ public class QuiltEventManager {
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockentity) ->
                 !BlockBreakEvent.EVENT_LOWEST.invoke(new BlockBreakEvent(player, state)));
 
-        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
-            DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player));
-        });
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) ->
+                DatapackSyncEvent.EVENT.invoke(new DatapackSyncEvent(player)));
 
         AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);

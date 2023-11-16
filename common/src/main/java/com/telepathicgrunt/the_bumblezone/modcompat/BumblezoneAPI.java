@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * For mods that want to use Bumblezone methods but would like to make sure it doesn't get changed over time and break the dependent mods.
  * Idk what methods to put here lol. Just contact me if there are methods you want exposed to go here.
- *
+ * <p>
  * Basically these methods and class path will not change making this class and its methods safer to use in other mods.
  */
 public class BumblezoneAPI {

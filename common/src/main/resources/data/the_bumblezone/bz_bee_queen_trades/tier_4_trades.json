@@ -14,7 +14,7 @@
     },
     {
       "id": "the_bumblezone:bee_soup",
-      "required": false
+      "required": true
     },
     {
       "id": "#the_bumblezone:buckets/honey",

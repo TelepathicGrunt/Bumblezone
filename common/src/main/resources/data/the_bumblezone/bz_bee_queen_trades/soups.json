@@ -1,15 +1,34 @@
 {
   "wants" : [
     {
-      "id": "minecraft:mushroom_stew",
+      "id": "the_bumblezone:bee_soup",
       "required": true
     },
     {
       "id": "minecraft:beetroot_soup",
       "required": true
+    },
+    {
+      "id": "minecraft:mushroom_stew",
+      "required": true
+    },
+    {
+      "id": "minecraft:rabbit_stew",
+      "required": true
+    },
+    {
+      "id": "minecraft:suspicious_stew",
+      "required": true
     }
   ],
   "possible_rewards": [
+    {
+      "id": "minecraft:glistering_melon_slice",
+      "count": 2,
+      "xp_reward": 1,
+      "weight": 1,
+      "required": true
+    },
     {
       "id": "minecraft:bread",
       "count": 2,
@@ -25,17 +44,17 @@
       "required": true
     },
     {
-      "id": "minecraft:apple",
-      "count": 3,
+      "id": "minecraft:paper",
+      "count": 4,
       "xp_reward": 1,
       "weight": 1,
       "required": true
     },
     {
-      "id": "minecraft:paper",
+      "id": "minecraft:apple",
       "count": 4,
       "xp_reward": 1,
-      "weight": 3,
+      "weight": 4,
       "required": true
     }
   ]

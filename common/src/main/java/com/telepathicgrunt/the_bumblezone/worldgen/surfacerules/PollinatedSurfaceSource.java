@@ -23,12 +23,12 @@ public record PollinatedSurfaceSource (BlockState resultState, RandomLayerStateR
     }
 
     public static class RandomLayerStateRule implements SurfaceRules.SurfaceRule {
-        protected BlockState blockState;
+        protected final BlockState blockState;
         protected static long seed;
         private static OpenSimplex2F noiseGenerator = null;
+        private static final float xzScale = 0.035f;
+        private static final float yScale = 0.015f;
         private final boolean haslayer;
-        private final float xzScale = 0.035f;
-        private final float yScale = 0.015f;
 
         public RandomLayerStateRule(BlockState blockState) {
             this.blockState = blockState;

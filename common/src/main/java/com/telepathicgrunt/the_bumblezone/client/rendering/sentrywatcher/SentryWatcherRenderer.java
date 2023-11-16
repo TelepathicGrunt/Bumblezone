@@ -29,7 +29,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         implements RenderLayerParent<SentryWatcherEntity, M>
 {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/sentry_watcher.png");
-    protected SentryWatcherModel model;
+    protected final SentryWatcherModel model;
     protected final List<RenderLayer<SentryWatcherEntity, M>> layers = Lists.newArrayList();
 
     public SentryWatcherRenderer(EntityRendererProvider.Context context) {
@@ -61,7 +61,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
 
         poseStack.mulPose(Axis.YN.rotationDegrees(sentryWatcherEntity.getYRot() + shakeEffect));
         poseStack.mulPose(Axis.XN.rotationDegrees(180.0f - sentryWatcherEntity.getXRot()));
-        ((EntityModel)this.model).prepareMobModel(sentryWatcherEntity, 0, 0, g);
+        this.model.prepareMobModel(sentryWatcherEntity, 0, 0, g);
         ((EntityModel)this.model).setupAnim(sentryWatcherEntity, 0, 0, 0, 0, rotationLerp);
         Minecraft minecraft = Minecraft.getInstance();
         boolean glowing = minecraft.shouldEntityAppearGlowing(sentryWatcherEntity);

@@ -23,7 +23,7 @@ public class PotionOfBeesBeePotionDispenseBehavior extends DefaultDispenseItemBe
     public static DispenseItemBehavior DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR;
     public static DispenseItemBehavior DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR;
     public static DispenseItemBehavior DEFAULT_LINGERING_POTION_BEE_DISPENSE_BEHAVIOR;
-    public static DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
+    public static final DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
 
     /**
      * Dispense the specified stack, play the dispenser sound and spawn particles.

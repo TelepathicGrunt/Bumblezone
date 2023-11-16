@@ -285,10 +285,7 @@ public class BuzzingBriefcase extends Item {
         }
 
         beesStored.add(entity);
-        if (beesStored.size() == MAX_NUMBER_OF_BEES) {
-            return true;
-        }
-        return false;
+        return beesStored.size() == MAX_NUMBER_OF_BEES;
     }
 
     public static Entity getSpecificBeesStored(Level level, ItemStack briefcaseItem, int beeIndex, boolean removeFromList) {

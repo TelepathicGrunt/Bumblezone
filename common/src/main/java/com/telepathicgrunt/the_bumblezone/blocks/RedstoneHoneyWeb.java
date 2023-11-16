@@ -122,7 +122,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
     @Override
     public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean pushed) {
         if (!pushed && !blockState.is(blockState1.getBlock())) {
-            super.onRemove(blockState, level, blockPos, blockState1, pushed);
+            super.onRemove(blockState, level, blockPos, blockState1, false);
             if (!level.isClientSide) {
                 for (Direction direction : Direction.values()) {
                     level.updateNeighborsAt(blockPos.relative(direction), this);

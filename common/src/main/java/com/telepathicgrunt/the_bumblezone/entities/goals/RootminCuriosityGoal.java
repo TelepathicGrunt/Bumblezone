@@ -14,9 +14,9 @@ import java.util.EnumSet;
 
 public class RootminCuriosityGoal extends Goal {
     protected final RootminEntity mob;
+    protected final TargetingConditions targetConditions;
     protected boolean isCuriousNow = false;
     protected LivingEntity inspect = null;
-    protected TargetingConditions targetConditions;
     protected int exposingTiming = 0;
     protected int curiosityWaiting = 0;
 

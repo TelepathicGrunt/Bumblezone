@@ -113,7 +113,7 @@ public class CosmicCrystalEntity extends LivingEntity {
     public Vec3 prevLookAngle = new Vec3(1, 0, 0);
     private boolean laserChargeSoundPlayed = false;
     public int lastPhysicalHit = 0;
-    public ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
+    public final ArrayDeque<CosmicCrystalState> pastStates = new ArrayDeque<>();
     private boolean noAI = false;
 
     public CosmicCrystalEntity(EntityType<? extends CosmicCrystalEntity> entityType, Level level) {
@@ -550,12 +550,20 @@ public class CosmicCrystalEntity extends LivingEntity {
     private boolean checkIfStillInEvent() {
         BlockPos essenceBlockPos = this.getEssenceControllerBlockPos();
 
+        if (essenceBlockPos == null) {
+            return false;
+        }
+
         if (this.tickCount % 20 != 0 && this.blockPosition().distManhattan(essenceBlockPos) < 16) {
             return true;
         }
 
         UUID essenceUuid = this.getEssenceController();
         ResourceKey<Level> essenceDimension = this.getEssenceControllerDimension();
+
+        if (essenceUuid == null || essenceDimension == null) {
+            return false;
+        }
 
         BlockPos blockPos = this.blockPosition();
         EssenceBlockEntity essenceBlockEntity = EssenceBlockEntity.getEssenceBlockAtLocation(this.level(), essenceDimension, essenceBlockPos, essenceUuid);

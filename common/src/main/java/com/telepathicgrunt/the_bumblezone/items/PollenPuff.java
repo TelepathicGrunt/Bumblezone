@@ -41,25 +41,6 @@ public class PollenPuff extends Item {
     }
 
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player playerEntity, LivingEntity entity, InteractionHand hand) {
-        // No clientside exit early because if we return early, the use method runs on server and thus, throws pollen puff and depollinates bee at same time.
-        if (!(entity instanceof Bee beeEntity)) return InteractionResult.PASS;
-
-        ItemStack itemstack = playerEntity.getItemInHand(hand);
-
-        // right clicking on pollinated bee with pollen puff with room, gets pollen puff into hand.
-        // else, if done with pollen puff without room, drops pollen puff in world
-        if(beeEntity.hasNectar() && itemstack.getItem().equals(BzItems.POLLEN_PUFF)) {
-            PollenPuff.spawnItemstackEntity(entity.level(), playerEntity.getRandom(), beeEntity.blockPosition(), new ItemStack(BzItems.POLLEN_PUFF.get(), 1));
-            playerEntity.swing(hand, true);
-            beeEntity.dropOffNectar();
-            return InteractionResult.SUCCESS;
-        }
-
-        return InteractionResult.PASS;
-    }
-
-    @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
         ItemStack itemstack = playerEntity.getItemInHand(hand);
 

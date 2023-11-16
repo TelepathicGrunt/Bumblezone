@@ -17,15 +17,22 @@
       "id": "minecraft:firework_rocket",
       "count": 3,
       "xp_reward": 0,
-      "weight": 2,
+      "weight": 10,
       "required": true
     },
     {
       "id": "minecraft:firework_star",
       "count": 2,
       "xp_reward": 0,
-      "weight": 1,
+      "weight": 6,
       "required": true
+    },
+    {
+      "id": "simplehats:fireworks",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
     }
   ]
 }

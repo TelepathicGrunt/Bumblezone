@@ -3,13 +3,13 @@ package com.telepathicgrunt.the_bumblezone.menus;
 import java.io.Serializable;
 
 public class EnchantmentSkeleton implements Serializable {
-    public String path;
-    public String namespace;
-    public int level;
-    public int minCost;
-    public boolean isMaxLevel;
-    public boolean isCurse;
-    public boolean isTreasure;
+    public final String path;
+    public final String namespace;
+    public final int level;
+    public final int minCost;
+    public final boolean isMaxLevel;
+    public final boolean isCurse;
+    public final boolean isTreasure;
 
     public EnchantmentSkeleton(String path,
                                String namespace,

@@ -34,11 +34,6 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
         this.setCritArrow(true);
     }
 
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-    }
-
     public void tick() {
         super.tick();
         if (this.level().isClientSide) {

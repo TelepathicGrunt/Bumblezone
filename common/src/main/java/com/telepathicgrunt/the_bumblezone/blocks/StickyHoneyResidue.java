@@ -368,29 +368,29 @@ public class StickyHoneyResidue extends Block {
                     1.0F,
                     1.0F);
 
-            if (world instanceof ServerLevel) {
+            if (playerEntity instanceof ServerPlayer serverPlayer) {
                 if (blockstate.getValue(UP)) {
-                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.95D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.95D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
 
                 if (blockstate.getValue(NORTH)) {
-                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
+                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
                 if (blockstate.getValue(EAST)) {
-                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.95D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.95D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
                 if (blockstate.getValue(SOUTH)) {
-                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
+                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
                 if (blockstate.getValue(WEST)) {
-                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.05D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.05D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
                 if (blockstate.getValue(DOWN)) {
-                    ((ServerLevel) world).sendParticles((ServerPlayer) playerEntity, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.05D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.05D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
             }
 

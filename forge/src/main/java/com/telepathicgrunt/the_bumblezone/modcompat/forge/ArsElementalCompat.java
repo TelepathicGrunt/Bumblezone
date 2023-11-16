@@ -36,6 +36,7 @@ public class ArsElementalCompat implements ModCompat {
 		ModChecker.arsElementalPresent = true;
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	public static boolean isArsElementalCasting(EffectResolveEvent.Post event) {
 		if (event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_HOMING_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 			return true;

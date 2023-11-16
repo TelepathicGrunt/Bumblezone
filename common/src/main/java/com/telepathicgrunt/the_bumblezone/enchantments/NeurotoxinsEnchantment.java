@@ -78,6 +78,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
             attacker = livingEntity;
             attackingItem = attacker.getMainHandItem();
         }
+
         if(event.source().is(DamageTypeTags.IS_PROJECTILE)) {
            Entity projectile = event.source().getDirectEntity();
            if(projectile instanceof ThrownTrident thrownTrident) {
@@ -93,6 +94,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static void applyNeurotoxins(Entity attacker, Entity victim, ItemStack itemStack) {
         int level = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
 
@@ -122,7 +124,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
                         true,
                         true));
 
-                if (itemStack.getItem() == BzItems.STINGER_SPEAR.get() && attacker instanceof ServerPlayer serverPlayer) {
+                if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {
                     BzCriterias.STINGER_SPEAR_PARALYZING_TRIGGER.trigger(serverPlayer);
 
                     if (livingEntity.getHealth() > 70) {

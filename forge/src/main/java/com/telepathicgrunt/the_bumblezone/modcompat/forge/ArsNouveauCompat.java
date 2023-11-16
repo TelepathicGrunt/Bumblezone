@@ -133,6 +133,7 @@ public class ArsNouveauCompat implements ModCompat {
 		}
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	private static void handleArsSpellProjectile(EffectResolveEvent.Post event) {
 		if (event.shooter instanceof Player player &&
 			event.resolveEffect == EffectBlink.INSTANCE &&

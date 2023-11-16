@@ -90,7 +90,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
             if (recipe.reward.tagKey.isPresent() && recipe.outputFocused) {
                 percent *= ((double)(recipe.reward.weight) / BuiltInRegistries.ITEM.getTag(recipe.reward.tagKey.get()).get().size());
             }
-            String percentString =  String.valueOf(percent);;
+            String percentString =  String.valueOf(percent);
             return List.of(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percentString.substring(0, Math.min(percentString.length(), 5))));
         }
         return IRecipeCategory.super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);

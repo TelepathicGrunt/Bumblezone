@@ -5,7 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.world.item.DyeableLeatherItem;
 
 public class FlowerHeadwearColoring {
-    public static int DEFAULT_COLOR = 0xE65439;
+    public static final int DEFAULT_COLOR = 0xE65439;
 
     public static void registerItemColors(RegisterItemColorEvent event) {
         event.register(

@@ -50,7 +50,7 @@ public class PollenPuffEntityPollinateManager extends SimpleJsonResourceReloadLi
                 }
             }, BuiltInRegistries.ENTITY_TYPE::getKey), Codec.list(EntryObject.ENTRY_CODEC));
 
-    public Map<EntityType<?>, List<EntryObject>> mobToPlants = new Object2ObjectArrayMap<>();
+    public final Map<EntityType<?>, List<EntryObject>> mobToPlants = new Object2ObjectArrayMap<>();
 
     public PollenPuffEntityPollinateManager() {
         super(GSON, "bz_pollen_puff_entity_flowers");

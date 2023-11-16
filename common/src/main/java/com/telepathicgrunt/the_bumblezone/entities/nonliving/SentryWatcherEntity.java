@@ -1226,11 +1226,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       return this.getYRot();
    }
 
-   @Override
-   public float maxUpStep() {
-      return super.maxUpStep();
-   }
-
    protected boolean isImmobile() {
       return false;
    }

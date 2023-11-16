@@ -39,7 +39,8 @@ public abstract class EntityMixin implements BzEntityHooks {
 
     @Shadow public abstract double getZ();
 
-    @Shadow public Level level;
+    @Shadow
+    private Level level;
 
     @Shadow @Final private Set<TagKey<Fluid>> fluidOnEyes;
 

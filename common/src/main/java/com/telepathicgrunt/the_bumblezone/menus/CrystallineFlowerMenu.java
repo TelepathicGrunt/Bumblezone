@@ -460,9 +460,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        access.execute((level, blockPos) -> {
-            clearContainer(player, inputContainer);
-        });
+        access.execute((level, blockPos) -> clearContainer(player, inputContainer));
     }
 
     /**
