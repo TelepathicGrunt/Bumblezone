@@ -132,8 +132,8 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
         // makes brood blocks grow faster near wrath of the hive entities.
         if(!world.isClientSide() && entity instanceof Player) {
-            PoiManager pointofinterestmanager = ((ServerLevel)world).getPoiManager();
-            List<PoiRecord> poiInRange = pointofinterestmanager.getInSquare(
+            PoiManager pointOfInterestManager = ((ServerLevel)world).getPoiManager();
+            List<PoiRecord> poiInRange = pointOfInterestManager.getInSquare(
                     (pointOfInterestType) -> pointOfInterestType.value() == BzPOI.BROOD_BLOCK_POI,
                     entity.blockPosition(),
                     NEARBY_WRATH_EFFECT_RADIUS,
@@ -142,12 +142,18 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
             float chanceofGrowth = 0.001f;
             if(poiInRange.size() != 0) {
-                for(int index = poiInRange.size() - 1; index >= 0; index--) {
-                    PoiRecord poi = poiInRange.remove(index);
-                    if(entity.getRandom().nextFloat() < chanceofGrowth) {
-                        BlockState state = world.getBlockState(poi.getPos());
-                        if(state.getBlock() instanceof HoneycombBrood) {
-                            state.tick((ServerLevel) world, poi.getPos(), entity.getRandom());
+                int radiusSq = NEARBY_WRATH_EFFECT_RADIUS * NEARBY_WRATH_EFFECT_RADIUS;
+                if(entity.getRandom().nextFloat() < chanceofGrowth) {
+                    for(int index = poiInRange.size() - 1; index >= 0; index--) {
+                        PoiRecord poi = poiInRange.remove(index);
+                        int xDiff = entity.blockPosition().getX() - poi.getPos().getX();
+                        int yDiff = entity.blockPosition().getY() - poi.getPos().getY();
+                        int zDiff = entity.blockPosition().getZ() - poi.getPos().getZ();
+                        if (xDiff * xDiff + yDiff * yDiff + zDiff * zDiff < radiusSq) {
+                            BlockState state = world.getBlockState(poi.getPos());
+                            if (state.getBlock() instanceof HoneycombBrood) {
+                                state.tick((ServerLevel) world, poi.getPos(), entity.getRandom());
+                            }
                         }
                     }
                 }
