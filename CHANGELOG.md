@@ -15,3 +15,5 @@ Pollen Puff hitting Sickened Mushroom Cow from Wither Storm Mod will spawn Taint
 Wither Storm Mod's Sickened Spider will count towards Bumblezone's Too Many Legs advancement.
 
 Wither Storm Mod's Sickened Spider spawners can spawn in Battle Cube and Spider Infested Bee Dungeons now.
+
+Journeymap and Xaero's Minimap will show icons for more of Bumblezone's entities! Special thanks to CrispyTwig for textures!
