@@ -79,6 +79,10 @@ public class WrathOfTheHiveEffect extends MobEffect {
             return;
         }
 
+        if ((entity.level.getGameTime() + entity.getUUID().getLeastSignificantBits()) % 20 != 0) {
+            return;
+        }
+
         //Maximum aggression
         if (amplifier >= 2) {
             unBEElievablyHighAggression(world, entity);
@@ -89,7 +93,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 // Spawn bees when high wrath effect.
                 // Must be very low as this method is fired every tick for status effects.
                 // We don't want to spawn millions of bees
-                if(entity.getRandom().nextFloat() <= 0.0045f) {
+                if(entity.getRandom().nextFloat() <= 0.09f) {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
                     if(!world.getBlockState(spawnBlockPos).isAir()) {
@@ -126,7 +130,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
             }
         }
         //Anything lower than 2 is medium aggression
-        else if ((entity.getLevel().getGameTime() + entity.getUUID().getLeastSignificantBits()) % 20 == 0) {
+        else {
             mediumAggression(world, entity);
         }
 
@@ -140,9 +144,9 @@ public class WrathOfTheHiveEffect extends MobEffect {
                     PoiManager.Occupancy.ANY)
                     .collect(Collectors.toList());
 
-            float chanceofGrowth = 0.001f;
+            float chanceOfGrowth = 0.15f;
             if (poiInRange.size() != 0) {
-                if (entity.getRandom().nextFloat() < chanceofGrowth) {
+                if (entity.getRandom().nextFloat() < chanceOfGrowth) {
                     for (int index = poiInRange.size() - 1; index >= 0; index--) {
                         PoiRecord poi = poiInRange.remove(index);
 
