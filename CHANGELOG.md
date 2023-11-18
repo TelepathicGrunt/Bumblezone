@@ -23,6 +23,8 @@ uk_ua.json updated by unroman! Special thanks to them for the huge amount of tra
 ##### Mod Compat:
 Workaround Lithium, Canary, Rubidium that caused my Suspicious Pile of Pollen block to not be brushable.
 
+Fixed Iris causing Essence of Knowing to not highlight blocks behind walls.
+
 Pollen Puff hitting Sickened Mushroom Cow from Wither Storm Mod will spawn Tainted Mushrooms nearby.
 
 Wither Storm Mod's Sickened Spider will count towards Bumblezone's Too Many Legs advancement.

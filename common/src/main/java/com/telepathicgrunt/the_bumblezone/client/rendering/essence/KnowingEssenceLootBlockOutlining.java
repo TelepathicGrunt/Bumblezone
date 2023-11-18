@@ -54,6 +54,7 @@ public class KnowingEssenceLootBlockOutlining {
 
             Tesselator tesselator = Tesselator.getInstance();
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
+            RenderSystem.disableDepthTest();
             BufferBuilder bufferbuilder = tesselator.getBuilder();
             bufferbuilder.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
 
@@ -110,6 +111,7 @@ public class KnowingEssenceLootBlockOutlining {
             }
             tesselator.end();
             poseStack.popPose();
+            RenderSystem.enableDepthTest();
             RenderType.cutout().clearRenderState();
         }
     }
