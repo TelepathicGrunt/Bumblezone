@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/sugar_water/honey_crystal_in_water",
+  "parent": "the_bumblezone:the_bumblezone/honey_crystal/obtain_honey_crystal_block",
   "display": {
     "icon": {
       "item": "the_bumblezone:glistering_honey_crystal"
