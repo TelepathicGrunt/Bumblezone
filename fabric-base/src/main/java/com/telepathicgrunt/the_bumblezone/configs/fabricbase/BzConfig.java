@@ -302,6 +302,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean renderBeeQueenBonusTradeItem = true;
 
+    @Entry
+    public static boolean disableEssenceBlockShaders = false;
+
     @Comment
     public static Comment knowingEssenceComment;
 
@@ -454,6 +457,7 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic;
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem;
+        BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders;
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses;
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters;
         BzClientConfigs.knowingEssenceHighlightTamed = knowingEssenceHighlightTamed;

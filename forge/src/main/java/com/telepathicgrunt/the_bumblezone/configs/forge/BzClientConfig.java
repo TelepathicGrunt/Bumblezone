@@ -13,6 +13,7 @@ public class BzClientConfig {
     public static ForgeConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
     public static ForgeConfigSpec.BooleanValue playSempiternalSanctumMusic;
     public static ForgeConfigSpec.BooleanValue renderBeeQueenBonusTradeItem;
+    public static ForgeConfigSpec.BooleanValue disableEssenceBlockShaders;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightBosses;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightMonsters;
     public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightTamed;
@@ -174,6 +175,15 @@ public class BzClientConfig {
                         " Whether to show the item on the Bee Queen that the Queen wants for Bonus Trades.\n")
                 .translation("the_bumblezone.config.renderbeequeenbonusTradeitem")
                 .define("renderBeeQueenBonusTradeItem", true);
+
+        disableEssenceBlockShaders = builder
+                .comment("""
+                         \n-----------------------------------------------------
+                          Whether to not render the shader for Essence Blocks.
+                          Will default to normal block textures instead.
+                        """)
+                .translation("the_bumblezone.config.disableessenceblockshaders")
+                .define("disableEssenceBlockShaders", false);
     }
 
     public static void copyToCommon() {
@@ -183,6 +193,7 @@ public class BzClientConfig {
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic.get();
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic.get();
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem.get();
+        BzClientConfigs.disableEssenceBlockShaders = disableEssenceBlockShaders.get();
         BzClientConfigs.knowingEssenceHighlightBosses = knowingEssenceHighlightBosses.get();
         BzClientConfigs.knowingEssenceHighlightMonsters = knowingEssenceHighlightMonsters.get();
         BzClientConfigs.knowingEssenceHighlightTamed = knowingEssenceHighlightTamed.get();

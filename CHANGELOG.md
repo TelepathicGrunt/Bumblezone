@@ -3,6 +3,8 @@
 ##### Blocks:
 Fixed the rotation of Ancient Wax Stairs when they are in item form.
 
+Added disableEssenceBlockShaders config option to let people disable the default shaders for Essence Blocks and use normal block textures instead.
+
 ##### Entities:
 Bee Queen will trade for Rabbit Stew and Suspicious Stew now.
 

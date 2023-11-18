@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
@@ -58,6 +59,9 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 
 	@Override
 	public void render(EssenceBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource multiBufferSource, int brightness, int overlayType) {
+		if (BzClientConfigs.disableEssenceBlockShaders) {
+			return;
+		}
 		RANDOM.setSeed(RANDOM_SEED);
 		Matrix4f matrix4f = poseStack.last().pose();
 		this.renderSides(blockEntity, matrix4f, multiBufferSource.getBuffer(this.getType()));
