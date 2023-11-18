@@ -281,6 +281,10 @@
       "required": false
     },
     {
+      "id": "spectrum:nephrite_blossom_leaves",
+      "required": false
+    },
+    {
       "id": "spoornpink:dark_pink_blossom_leaves",
       "required": false
     },

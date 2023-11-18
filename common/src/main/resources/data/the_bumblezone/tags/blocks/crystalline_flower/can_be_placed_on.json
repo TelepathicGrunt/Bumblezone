@@ -473,7 +473,15 @@
       "required": false
     },
     {
+      "id": "spectrum:azurite_block",
+      "required": false
+    },
+    {
       "id": "spectrum:spectral_shard_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:spectral_shard_storage_block",
       "required": false
     },
     {
@@ -522,6 +530,30 @@
     },
     {
       "id": "spectrum:amethyst_storage_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:frostbite_crystal",
+      "required": false
+    },
+    {
+      "id": "spectrum:blazing_crystal",
+      "required": false
+    },
+    {
+      "id": "spectrum:pure_diamond_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:pure_emerald_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:pure_redstone_block",
+      "required": false
+    },
+    {
+      "id": "spectrum:pure_lapis_block",
       "required": false
     },
     {
