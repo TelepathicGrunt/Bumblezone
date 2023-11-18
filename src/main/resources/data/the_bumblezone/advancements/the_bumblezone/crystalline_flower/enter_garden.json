@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/teleportation/teleport_out_of_bumblezone",
+  "parent": "the_bumblezone:the_bumblezone/structures/enter_cell_maze",
   "display": {
     "icon": {
       "item": "the_bumblezone:crystalline_flower"

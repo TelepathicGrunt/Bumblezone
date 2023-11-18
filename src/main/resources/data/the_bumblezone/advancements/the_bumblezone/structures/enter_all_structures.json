@@ -1,8 +1,8 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/tools/honey_compass_use",
+  "parent": "the_bumblezone:the_bumblezone/music_discs/obtain_all_music_discs",
   "display": {
     "icon": {
-      "item": "minecraft:honeycomb"
+      "item": "minecraft:filled_map"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enter_all_structures.title"
