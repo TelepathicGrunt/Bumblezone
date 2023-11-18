@@ -28,7 +28,42 @@
       "required": true
     },
     {
+      "id": "galosphere:glow_flare",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
+      "id": "alexscaves:glow_ink_bomb",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
       "id": "simplehats:fireworks",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "galosphere:spectre_flare",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "additionaladditions:glow_stick",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "chalk:glow_chalk",
       "count": 1,
       "xp_reward": 0,
       "weight": 1,
