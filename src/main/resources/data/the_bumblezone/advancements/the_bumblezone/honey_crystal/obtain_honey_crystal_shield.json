@@ -1,5 +1,5 @@
 {
-  "parent": "the_bumblezone:the_bumblezone/honey_crystal/consume_honey_crystal_shards",
+  "parent": "the_bumblezone:the_bumblezone/armor/warrior_bee",
   "display": {
     "icon": {
       "item": "the_bumblezone:honey_crystal_shield"
