@@ -291,6 +291,18 @@
       "required": false
     },
     {
+      "id": "spectrum:nephrite_blossom_bulb",
+      "required": false
+    },
+    {
+      "id": "spectrum:jadeite_lotus_flower",
+      "required": false
+    },
+    {
+      "id": "spectrum:snapping_ivy",
+      "required": false
+    },
+    {
       "id": "spoornpink:pink_blossom_sapling",
       "required": false
     },
