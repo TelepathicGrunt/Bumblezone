@@ -22,6 +22,9 @@ Fixed Wrath of the Hive growing Brood Blocks that are too far above or below mob
 
 Adjusted Wrath of the Hive effect to not run every tick. Might see a tiny bit of performance boost.
 
+##### Advancements:
+Darken background for Bumblezone advancement tab.
+
 ##### Lang:
 uk_ua.json updated by unroman! Special thanks to them for the huge amount of translations done!
 
