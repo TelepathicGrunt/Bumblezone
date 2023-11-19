@@ -1,6 +1,14 @@
 {
   "processors": [
     {
+      "processor_type": "the_bumblezone:replace_not_air_processor",
+      "blocks_to_always_replace": [
+        "the_bumblezone:carvable_wax",
+        "the_bumblezone:filled_porous_honeycomb_block",
+        "minecraft:honeycomb_block"
+      ]
+    },
+    {
       "rules": [
         {
           "output_state": {
@@ -24,7 +32,22 @@
       "pillar_trigger_and_replacements": [
         {
           "trigger" : {
-            "Name": "minecraft:rooted_dirt"
+            "Name": "minecraft:red_stained_glass"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:porous_honeycomb_block"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_processor_list": "the_bumblezone:tree_dungeon_processors",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "minecraft:orange_stained_glass"
           },
           "replacement" : {
             "Name": "minecraft:dirt"
@@ -35,17 +58,13 @@
     {
       "rules": [
         {
-          "block_entity_modifier": {
-            "type": "minecraft:append_loot",
-            "loot_table": "the_bumblezone:structures/tree_dungeon"
-          },
           "output_state": {
-            "Name": "the_bumblezone:honey_cocoon"
+            "Name": "minecraft:pink_petals"
           },
           "input_predicate": {
             "block": "minecraft:poppy",
             "predicate_type": "minecraft:random_block_match",
-            "probability": 0.04
+            "probability": 0.1
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
@@ -66,13 +85,6 @@
         }
       ],
       "processor_type": "minecraft:rule"
-    },
-    {
-      "processor_type": "the_bumblezone:replace_not_air_processor",
-      "blocks_to_always_replace": [
-        "the_bumblezone:carvable_wax",
-        "the_bumblezone:filled_porous_honeycomb_block"
-      ]
     },
     {
       "rules": [
@@ -428,6 +440,37 @@
       "input_block": "minecraft:poppy",
       "output_block_tag": "the_bumblezone:tree_dungeon/allowed_flowers",
       "blacklisted_output_block_tag": "the_bumblezone:tree_dungeon/forced_disallowed_flowers"
+    },
+    {
+      "processor_type": "minecraft:capped",
+      "limit": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 1,
+          "max_inclusive": 3
+        }
+      },
+      "delegate": {
+        "processor_type": "minecraft:rule",
+        "rules": [
+          {
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "the_bumblezone:structures/tree_dungeon"
+            },
+            "output_state": {
+              "Name": "the_bumblezone:honey_cocoon"
+            },
+            "input_predicate": {
+              "block": "minecraft:pink_petals",
+              "predicate_type": "minecraft:block_match"
+            },
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            }
+          }
+        ]
+      }
     }
   ]
 }
