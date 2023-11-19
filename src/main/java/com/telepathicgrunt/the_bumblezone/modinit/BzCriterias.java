@@ -47,6 +47,7 @@ public class BzCriterias {
     public static final GenericTrigger GETTING_PROTECTION_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "getting_protection"));
     public static final GenericTrigger GROW_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "grow_crystalline_flower"));
     public static final GenericTrigger HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_flower_pollen"));
+    public static final GenericTrigger HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings_pollen_removal"));
     public static final CounterTrigger HONEY_BOTTLE_DRANK_TRIGGER = new CounterTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bottle_drank"));
     public static final GenericTrigger HONEY_BUCKET_BEE_GROW_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_bee_grow"));
     public static final GenericTrigger HONEY_BUCKET_BEE_LOVE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "honey_bucket_bee_love"));
@@ -116,6 +117,7 @@ public class BzCriterias {
         CriteriaTriggers.register(GETTING_PROTECTION_TRIGGER);
         CriteriaTriggers.register(GROW_CRYSTALLINE_FLOWER_TRIGGER);
         CriteriaTriggers.register(HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER);
+        CriteriaTriggers.register(HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER);
         CriteriaTriggers.register(HONEY_BOTTLE_DRANK_TRIGGER);
         CriteriaTriggers.register(HONEY_BUCKET_BEE_GROW_TRIGGER);
         CriteriaTriggers.register(HONEY_BUCKET_BEE_LOVE_TRIGGER);
