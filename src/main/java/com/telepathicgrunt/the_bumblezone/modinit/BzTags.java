@@ -26,6 +26,7 @@ public class BzTags {
     public static final TagKey<Block> FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollen_puff/multiplying_forced_disallowed_flowers"));
     public static final TagKey<Block> CARPENTER_BEE_BOOTS_MINEABLES = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots/mineables"));
     public static final TagKey<Block> CARPENTER_BEE_BOOTS_CLIMBABLES = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "carpenter_bee_boots/climbables"));
+    public static final TagKey<Block> HONEY_BEE_BOOTS_REMOVES_POLLEN_BLOCKS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings/removes_pollen"));
     public static final TagKey<Block> DISALLOWED_POSITION_TRACKING_BLOCKS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass/beehives_disallowed_from_position_tracking"));
     public static final TagKey<Block> FORCED_ALLOWED_POSITION_TRACKING_BLOCKS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_compass/forced_allowed_position_tracking"));
     public static final TagKey<Block> CANDLES = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(Bumblezone.MODID, "candles"));
@@ -86,6 +87,7 @@ public class BzTags {
     public static final TagKey<Fluid> VISUAL_WATER_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation("forge", "visual/water"));
     public static final TagKey<Fluid> SUGAR_WATER_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Bumblezone.MODID, "sugar_water"));
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Bumblezone.MODID, "convertible_to_sugar_water"));
+    public static final TagKey<Fluid> HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings/removes_pollen"));
 
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollen_puff/can_pollinate"));
     public static final TagKey<EntityType<?>> DISALLOWED_BEE_CANNON_BEES = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_cannon/disallowed_bee_pickup"));

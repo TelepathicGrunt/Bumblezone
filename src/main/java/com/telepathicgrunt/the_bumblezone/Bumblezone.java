@@ -26,6 +26,7 @@ import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompatRegs;
@@ -86,6 +87,7 @@ public class Bumblezone{
         forgeBus.addListener(ModdedBeesBeesSpawning::MobSpawnEvent);
         forgeBus.addListener(BeeAggression::playerTick);
         forgeBus.addListener(BeeAggression::pickupItemAnger);
+        forgeBus.addListener(HoneyBeeLeggings::armorStandTick);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::onLivingEntityHurt);
         forgeBus.addListener(EventPriority.LOWEST, BeeAggression::minedBlockAnger); // We want to make sure the block will be broken for angering bees
         forgeBus.addListener(StringCurtain::onBlockInteractEvent);

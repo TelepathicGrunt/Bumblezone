@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wet_sponge",
+    {
+      "id": "extrasponges:wet_iron_sponge",
+      "required": false
+    },
+    {
+      "id": "extrasponges:wet_gold_sponge",
+      "required": false
+    },
+    {
+      "id": "extrasponges:wet_diamond_sponge",
+      "required": false
+    },
+    {
+      "id": "extrasponges:wet_netherite_sponge",
+      "required": false
+    },
+    {
+      "id": "supplementaries:soap_block",
+      "required": false
+    }
+  ]
+}
