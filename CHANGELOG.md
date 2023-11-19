@@ -1,5 +1,9 @@
 ### **(V.6.8.0 Changes) (1.19.2 Minecraft)**
 
+##### Items:
+Honey Bee Leggings now will eject pollen if standing on Wet Sponge or when in Water!
+ Also, now works with Armor Stands so you can automate Pollen Puff generation! See if you can figure out a contraption to do this!
+
 ##### Entities:
 Honey Slime is no longer marked as Enemy. Golems won't attack them now.
 
