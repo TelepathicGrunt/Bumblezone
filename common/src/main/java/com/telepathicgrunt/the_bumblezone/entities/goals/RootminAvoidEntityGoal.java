@@ -31,6 +31,7 @@ public class RootminAvoidEntityGoal extends Goal {
     protected final Predicate<LivingEntity> avoidPredicate;
     protected final Predicate<LivingEntity> predicateOnAvoidEntity;
     private final TargetingConditions avoidEntityTargeting;
+    protected float fleeTime = 0;
 
     public RootminAvoidEntityGoal(RootminEntity pathfinderMob, TagKey<EntityType<?>> typeTagKey, float range, double walkSpeedModifier, double runSpeedModifier) {
         this(pathfinderMob, typeTagKey, livingEntity -> true, range, walkSpeedModifier, runSpeedModifier, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test);
@@ -100,7 +101,7 @@ public class RootminAvoidEntityGoal extends Goal {
             return false;
         }
         this.path = this.pathNav.createPath(vec3.x, vec3.y, vec3.z, 0);
-        return this.path != null;
+        return this.path != null && this.path.getNodeCount() > 1;
     }
 
     @Override
@@ -111,6 +112,9 @@ public class RootminAvoidEntityGoal extends Goal {
         else if (this.mob.animationTimeBetweenHiding > 0 || this.mob.isHidden) {
             return false;
         }
+        else if (this.fleeTime > 200) {
+            return false;
+        }
         else {
             this.mob.rootminToLookAt = null;
             return true;
@@ -119,11 +123,13 @@ public class RootminAvoidEntityGoal extends Goal {
 
     @Override
     public void start() {
+        this.fleeTime = 0;
         this.pathNav.moveTo(this.path, this.mob.distanceToSqr(this.toAvoid) < (14 * 14) ? this.sprintSpeedModifier : this.walkSpeedModifier);
     }
 
     @Override
     public void stop() {
+        this.fleeTime = 0;
         this.pathNav.stop();
         this.toAvoid = null;
     }
@@ -147,5 +153,10 @@ public class RootminAvoidEntityGoal extends Goal {
 
         RootminEntity.considerHiddenRootminsInPath(this.path, this.mob);
         RootminEntity.jumpFix(this.path, this.mob);
+
+        if (this.mob.hurtTime > 0) {
+            this.fleeTime = 0;
+        }
+        this.fleeTime++;
     }
 }

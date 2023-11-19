@@ -143,6 +143,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       super(type, worldIn);
       getFlowerBlock();
       setAnimationState(this.getRootminPose(), RootminPose.NONE, this.idleAnimationState);
+      setMaxUpStep(1);
    }
 
    public void setFlowerBlock(@Nullable BlockState blockState) {
