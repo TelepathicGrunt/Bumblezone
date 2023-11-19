@@ -6,7 +6,8 @@
       "count": 3
     },
     {
-      "type": "minecraft:in_square"
+      "type": "the_bumblezone:fixed_offset",
+      "offset": [8, 0, 8]
     },
     {
       "type": "minecraft:height_range",

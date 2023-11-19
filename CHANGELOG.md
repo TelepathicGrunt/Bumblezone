@@ -12,7 +12,7 @@ Made sure Bee Queen will not become angry at other Bees or Rootmins or a few oth
 
 Fixed crash if spawning Cosmic Crystal, Electric Ring, or Purple Spike outside of Essence events by summon command.
 
-Improved Rootmin AI so hopefully it does nto get stuck in the ground as much anymore.
+Improved Rootmin AI, so hopefully it does nto get stuck in the ground as much anymore.
 
 ##### Structures:
 Added small Tree Dungeons to Hive Wall, Hive Pillar, and Pollinated Pillar biomes to help decorate caves a bit more.
