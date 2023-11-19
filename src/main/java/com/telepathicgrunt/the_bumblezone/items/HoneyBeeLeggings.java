@@ -70,12 +70,18 @@ public class HoneyBeeLeggings extends BeeArmor {
             if (!ejectPollen && isPollinated && level.getGameTime() % 3 == 0) {
                 if (livingEntity.getBlockStateOn().is(BzTags.HONEY_BEE_BOOTS_REMOVES_POLLEN_BLOCKS)) {
                     ejectPollen = true;
+                    if(livingEntity instanceof ServerPlayer serverPlayer) {
+                        BzCriterias.HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER.trigger(serverPlayer);
+                    }
                 }
 
                 if (!ejectPollen) {
                     BlockState state = level.getBlockState(livingEntity.blockPosition());
                     if (state.getFluidState().is(BzTags.HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS)) {
                         ejectPollen = true;
+                        if(livingEntity instanceof ServerPlayer serverPlayer) {
+                            BzCriterias.HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER.trigger(serverPlayer);
+                        }
                     }
                 }
             }
