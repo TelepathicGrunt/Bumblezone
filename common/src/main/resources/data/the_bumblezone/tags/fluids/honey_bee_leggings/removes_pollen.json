@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:water",
+    {
+      "id": "#c:water",
+      "required": false
+    }
+  ]
+}

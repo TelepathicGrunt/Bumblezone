@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -15,6 +16,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -39,12 +42,12 @@ public class HoneyBeeLeggings extends BeeArmor {
     }
 
     // Runs on Forge
-    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
-        this.bz$onArmorTick(itemstack, world, player);
+    public void onArmorTick(ItemStack itemstack, Level level, Player player) {
+        this.bz$onArmorTick(itemstack, level, player);
     }
 
     @Override
-    public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
+    public void bz$onArmorTick(ItemStack itemstack, Level level, Player player) {
         if (player.isSpectator()) {
             return;
         }
@@ -58,54 +61,76 @@ public class HoneyBeeLeggings extends BeeArmor {
         boolean isSprinting = player.isSprinting();
         int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
 
-        if(!world.isClientSide()) {
-            if(player.isShiftKeyDown() && isPollinated) {
-                removeAndSpawnPollen(world, player.position(), itemstack);
-                if(!world.isClientSide() && random.nextFloat() < 0.1f) {
-                    itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
+        pollenBehavior(itemstack, level, player, random, isPollinated, isSprinting, beeWearablesCount);
+
+        effectBehavior(itemstack, level, player, random, beeWearablesCount);
+
+        spawnParticles(level, player, random, isPollinated, isSprinting, beeWearablesCount);
+    }
+
+    private static void pollenBehavior(ItemStack itemstack, Level level, LivingEntity livingEntity, RandomSource random, boolean isPollinated, boolean isSprinting, int beeWearablesCount) {
+        if(!level.isClientSide()) {
+            boolean ejectPollen = livingEntity.isShiftKeyDown() && isPollinated;
+            if (!ejectPollen && isPollinated && level.getGameTime() % 3 == 0) {
+                if (livingEntity.getBlockStateOn().is(BzTags.HONEY_BEE_BOOTS_REMOVES_POLLEN_BLOCKS)) {
+                    ejectPollen = true;
+                }
+
+                if (!ejectPollen) {
+                    BlockState state = level.getBlockState(livingEntity.blockPosition());
+                    if (state.getFluidState().is(BzTags.HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS)) {
+                        ejectPollen = true;
+                    }
                 }
             }
-            else if(!player.isShiftKeyDown() && !isPollinated) {
-                BlockState withinBlock = world.getBlockState(player.blockPosition());
+
+            if (ejectPollen) {
+                removeAndSpawnPollen(level, livingEntity.position(), itemstack);
+                if(!level.isClientSide() && random.nextFloat() < 0.1f) {
+                    itemstack.hurtAndBreak(1, livingEntity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
+                }
+            }
+            else if(!livingEntity.isShiftKeyDown() && !isPollinated) {
+                BlockState withinBlock = level.getBlockState(livingEntity.blockPosition());
                 if(withinBlock.is(BzBlocks.PILE_OF_POLLEN.get())) {
                     setPollinated(itemstack);
                     int newLevel = withinBlock.getValue(PileOfPollen.LAYERS) - 1;
                     if(newLevel == 0) {
-                        world.setBlock(player.blockPosition(), Blocks.AIR.defaultBlockState(), 3);
+                        level.setBlock(livingEntity.blockPosition(), Blocks.AIR.defaultBlockState(), 3);
                     }
                     else {
-                        world.setBlock(player.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
+                        level.setBlock(livingEntity.blockPosition(), withinBlock.setValue(PileOfPollen.LAYERS, newLevel), 3);
                     }
                 }
                 else if(random.nextFloat() < (((beeWearablesCount - 1) * 0.015f) + (isSprinting ? 0.015f : 0.00333f)) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
-                    if(player instanceof ServerPlayer serverPlayer) {
+                    if(livingEntity instanceof ServerPlayer serverPlayer) {
                         BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
                         serverPlayer.awardStat(BzStats.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL.get());
                     }
                 }
             }
         }
+    }
 
-        MobEffectInstance slowness = player.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
-        if (slowness != null && (beeWearablesCount >= 3 || world.getGameTime() % 2 == 0)) {
+    private static void effectBehavior(ItemStack itemstack, Level level, LivingEntity livingEntity, RandomSource random, int beeWearablesCount) {
+        MobEffectInstance slowness = livingEntity.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+        if (slowness != null && (beeWearablesCount >= 3 || level.getGameTime() % 2 == 0)) {
             for (int i = 0; i <= Math.max(beeWearablesCount - 2, 1); i++) {
                 if (slowness.getDuration() > 0) {
                     ((MobEffectInstanceAccessor) slowness).callTickDownDuration();
                 }
             }
-            if(!world.isClientSide() &&
-                random.nextFloat() < 0.004f &&
-                itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
+            if(!level.isClientSide() &&
+                    random.nextFloat() < 0.004f &&
+                    itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {
-                itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
+                itemstack.hurtAndBreak(1, livingEntity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
             }
         }
-
-        spawnParticles(world, player, random, isPollinated, isSprinting, beeWearablesCount);
     }
 
-    private static void spawnParticles(Level world, Player player, RandomSource random, boolean isPollinated, boolean isSprinting, int beeWearablesCount) {
+    private static void spawnParticles(Level world, LivingEntity livingEntity, RandomSource random, boolean isPollinated, boolean isSprinting, int beeWearablesCount) {
         if(world.isClientSide() && isPollinated && (isSprinting || random.nextFloat() < (beeWearablesCount >= 3 ? 0.03f : 0.025f))) {
             int particles = beeWearablesCount >= 3 ? 2 : 1;
             for(int i = 0; i < particles; i++){
@@ -114,7 +139,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                 double xOffset = (random.nextFloat() * 0.1) - 0.05;
                 double yOffset = (random.nextFloat() * 0.1) + 0.25;
                 double zOffset = (random.nextFloat() * 0.1) - 0.05;
-                Vec3 pos = player.position();
+                Vec3 pos = livingEntity.position();
 
                 world.addParticle(
                         BzParticles.POLLEN_PARTICLE.get(),
@@ -125,6 +150,23 @@ public class HoneyBeeLeggings extends BeeArmor {
                         random.nextGaussian() * speedXZModifier,
                         ((random.nextGaussian() + 0.25D) * speedYModifier),
                         random.nextGaussian() * speedXZModifier);
+            }
+        }
+    }
+
+    public static void armorStandTick(EntityTickEvent event) {
+        LivingEntity livingEntity = event.entity();
+        if (livingEntity instanceof ArmorStand armorStand) {
+            ItemStack leggings = armorStand.getItemBySlot(EquipmentSlot.LEGS);
+
+            if (leggings.getItem() instanceof HoneyBeeLeggings) {
+                Level level = armorStand.level();
+                RandomSource random = armorStand.getRandom();
+                boolean isPollinated = isPollinated(leggings);
+                boolean isSprinting = armorStand.isSprinting();
+                int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(armorStand);
+
+                pollenBehavior(leggings, level, armorStand, random, isPollinated, isSprinting, beeWearablesCount);
             }
         }
     }

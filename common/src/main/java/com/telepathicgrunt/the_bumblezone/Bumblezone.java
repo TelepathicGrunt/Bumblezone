@@ -59,6 +59,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.items.BuzzingBriefcase;
 import com.telepathicgrunt.the_bumblezone.items.DispenserAddedSpawnEgg;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCrystalShield;
 import com.telepathicgrunt.the_bumblezone.items.dispenserbehavior.DispenserItemSetup;
 import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
@@ -122,6 +123,7 @@ public class Bumblezone {
         RegisterCommandsEvent.EVENT.addListener(BzCommands::registerCommand);
         EntitySpawnEvent.EVENT.addListener(ModdedBeesBeesSpawning::onEntitySpawn);
         PlayerTickEvent.EVENT.addListener(BeeAggression::playerTick);
+        EntityTickEvent.EVENT.addListener(HoneyBeeLeggings::armorStandTick);
         PlayerPickupItemEvent.EVENT.addListener(BeeAggression::pickupItemAnger);
         EntityHurtEvent.EVENT_LOWEST.addListener(CalmingEssence::OnAttack);
         EntityHurtEvent.EVENT_LOWEST.addListener(BeeAggression::onLivingEntityHurt);
