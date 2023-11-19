@@ -17,6 +17,8 @@ Re-organized advancement layout to be very similar to 1.20.1 Bumblezone's advanc
 
 Removed Honey Crystal Placed In Water advancement as it was pointless.
 
+Removed Walk Into Pile of Pollen advancement as it was pointless.
+
 Fixed Beehive Beeswax to Bee Nests advancement not triggering when Visual Workstation is on.
 
 Darken background for Bumblezone advancement tab.
