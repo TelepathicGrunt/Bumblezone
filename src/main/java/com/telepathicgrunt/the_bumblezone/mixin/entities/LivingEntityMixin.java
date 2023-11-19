@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.enchantments.NeurotoxinsEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
+import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
@@ -66,11 +67,12 @@ public abstract class LivingEntityMixin extends Entity {
         WrathOfTheHiveEffect.calmTheBees(this.level, (LivingEntity)(Object)this);
     }
 
-    // Handles teleportation
+    // Handles teleportation and armor stand ticking
     @Inject(method = "tick",
             at = @At(value = "TAIL"))
     private void thebumblezone_onLivingEntityTick(CallbackInfo ci) {
         EntityTeleportationHookup.entityTick((LivingEntity) (Object) this);
+        HoneyBeeLeggings.armorStandTick((LivingEntity) (Object) this);
     }
 
     //hides entities with hidden effect

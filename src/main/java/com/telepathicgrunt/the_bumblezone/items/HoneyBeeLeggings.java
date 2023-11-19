@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -8,6 +9,10 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -24,7 +29,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingEvent;
 
 
 public class HoneyBeeLeggings extends BeeArmor {
@@ -61,8 +65,6 @@ public class HoneyBeeLeggings extends BeeArmor {
         effectBehavior(itemstack, world, player, random, beeWearablesCount);
 
         spawnParticles(world, player, random, isPollinated, isSprinting, beeWearablesCount);
-
-        super.onArmorTick(itemstack, world, player);
     }
 
     private static void pollenBehavior(ItemStack itemstack, Level level, LivingEntity livingEntity, RandomSource random, boolean isPollinated, boolean isSprinting, int beeWearablesCount) {
@@ -151,8 +153,7 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
     }
 
-    public static void armorStandTick(LivingEvent.LivingTickEvent event) {
-        LivingEntity livingEntity = event.getEntity();
+    public static void armorStandTick(LivingEntity livingEntity) {
         if (livingEntity instanceof ArmorStand armorStand) {
             ItemStack leggings = armorStand.getItemBySlot(EquipmentSlot.LEGS);
 
