@@ -1,0 +1,52 @@
+{
+  "processors": [
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "grate"
+            }
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:carvable_wax",
+            "Properties": {
+              "carving": "grate"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "the_bumblezone:beehive_beeswax"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:beehive_beeswax"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type": "the_bumblezone:pillar_processor",
+      "direction": "down",
+      "pillar_trigger_and_replacements": [
+        {
+          "trigger" : {
+            "Name": "the_bumblezone:sugar_infused_cobblestone"
+          },
+          "replacement" : {
+            "Name": "the_bumblezone:sugar_infused_cobblestone"
+          }
+        }
+      ]
+    }
+  ]
+}

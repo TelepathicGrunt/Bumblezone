@@ -1,0 +1,58 @@
+{
+  "feature": "the_bumblezone:gear_column_flower_headwear",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:weighted_list",
+        "distribution": [
+          {
+            "data": 0,
+            "weight": 29
+          },
+          {
+            "data": 1,
+            "weight": 1
+          }
+        ]
+      }
+    },
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": -3,
+          "max_inclusive": 3
+        }
+      },
+      "y_spread": 0
+    },
+    {
+      "type": "the_bumblezone:fixed_offset",
+      "offset": [8, 0, 8]
+    },
+    {
+      "type": "the_bumblezone:roofed_dimension_surface_placement",
+      "min_height": 39,
+      "max_water_depth": 0
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "offset": [0, -1, 0],
+        "blocks": [
+          "minecraft:grass_block",
+          "the_bumblezone:filled_porous_honeycomb_block",
+          "the_bumblezone:porous_honeycomb_block",
+          "the_bumblezone:sugar_infused_stone",
+          "the_bumblezone:sugar_infused_cobblestone"
+        ]
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

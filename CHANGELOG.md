@@ -17,6 +17,9 @@ Improved Rootmin AI, so hopefully it does nto get stuck in the ground as much an
 ##### Structures:
 Added small Tree Dungeons to Hive Wall, Hive Pillar, and Pollinated Pillar biomes to help decorate caves a bit more.
 
+Added small Gear Columns to Floral Meadow and Crystal Canyon.
+ The small feature holds Flower Headwear, Crystal Cannon, and Bee Cannon can be obtained here.
+
 ##### Effects:
 Fixed Wrath of the Hive growing Brood Blocks that are too far above or below mob.
 

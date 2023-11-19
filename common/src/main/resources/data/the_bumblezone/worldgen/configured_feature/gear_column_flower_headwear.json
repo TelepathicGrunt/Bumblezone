@@ -1,0 +1,14 @@
+{
+  "type": "the_bumblezone:nbt_feature",
+  "config": {
+    "processors": "the_bumblezone:gear_column",
+    "post_processors": "minecraft:empty",
+    "structure_y_offset": 1,
+    "nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:gear_column/flower_headwear",
+        "weight": 1
+      }
+    ]
+  }
+}
