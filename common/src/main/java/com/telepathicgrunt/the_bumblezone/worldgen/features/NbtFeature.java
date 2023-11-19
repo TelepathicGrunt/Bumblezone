@@ -21,16 +21,16 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import java.util.List;
 import java.util.Optional;
 
-public class NbtFeature extends Feature<NbtFeatureConfig> {
+public class NbtFeature <T extends NbtFeatureConfig> extends Feature<T> {
 
     private static final ResourceLocation EMPTY = new ResourceLocation("minecraft", "empty");
 
-    public NbtFeature(Codec<NbtFeatureConfig> configFactory) {
+    public NbtFeature(Codec<T> configFactory) {
         super(configFactory);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NbtFeatureConfig> context) {
+    public boolean place(FeaturePlaceContext<T> context) {
         ResourceLocation nbtRL = GeneralUtils.getRandomEntry(context.config().nbtResourcelocationsAndWeights, context.random());
 
         StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();

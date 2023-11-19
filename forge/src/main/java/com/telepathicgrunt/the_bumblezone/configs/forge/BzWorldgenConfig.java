@@ -7,6 +7,7 @@ public class BzWorldgenConfig {
     public static final ForgeConfigSpec GENERAL_SPEC;
 
     public static ForgeConfigSpec.IntValue beeDungeonRarity;
+    public static ForgeConfigSpec.IntValue treeDungeonRarity;
     public static ForgeConfigSpec.IntValue spiderInfestedBeeDungeonRarity;
     public static ForgeConfigSpec.DoubleValue spawnerRateSpiderBeeDungeon;
 
@@ -25,6 +26,13 @@ public class BzWorldgenConfig {
                        " Default rate is 1. Setting to 1001 will disable Bee Dungeons.\n")
                 .translation("the_bumblezone.config.beedungeonrarity")
                 .defineInRange("beeDungeonRarity", 1, 1, 1001);
+
+            treeDungeonRarity = builder
+                .comment(" \n-----------------------------------------------------\n",
+                       " How rare Tree Dungeons are. Higher numbers means more rare.",
+                       " Default rate is 1. Setting to 1001 will disable Tree Dungeons.\n")
+                .translation("the_bumblezone.config.treedungeonrarity")
+                .defineInRange("treeDungeonRarity", 2, 1, 1001);
 
             spiderInfestedBeeDungeonRarity = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -46,6 +54,7 @@ public class BzWorldgenConfig {
 
     public static void copyToCommon() {
         BzWorldgenConfigs.beeDungeonRarity = beeDungeonRarity.get();
+        BzWorldgenConfigs.treeDungeonRarity = treeDungeonRarity.get();
         BzWorldgenConfigs.spiderInfestedBeeDungeonRarity = spiderInfestedBeeDungeonRarity.get();
         BzWorldgenConfigs.spawnerRateSpiderBeeDungeon = spawnerRateSpiderBeeDungeon.get();
     }

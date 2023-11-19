@@ -180,10 +180,13 @@ public class BzConfig extends MidnightConfig {
     @Comment
     public static Comment dungeonsComment;
 
-    @Entry(min=0, max=1000)
+    @Entry(min=0, max=1001)
     public static int beeDungeonRarity = 1;
 
-    @Entry(min=0, max=1000)
+    @Entry(min=0, max=1001)
+    public static int treeDungeonRarity = 2;
+
+    @Entry(min=0, max=1001)
     public static int spiderInfestedBeeDungeonRarity = 8;
 
     @Entry(min=0, max=1)
@@ -407,6 +410,7 @@ public class BzConfig extends MidnightConfig {
 
         //Dungeon Config
         BzWorldgenConfigs.beeDungeonRarity = beeDungeonRarity;
+        BzWorldgenConfigs.treeDungeonRarity = treeDungeonRarity;
         BzWorldgenConfigs.spiderInfestedBeeDungeonRarity = spiderInfestedBeeDungeonRarity;
         BzWorldgenConfigs.spawnerRateSpiderBeeDungeon = spawnerRateSpiderBeeDungeon;
 

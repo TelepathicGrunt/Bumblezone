@@ -29,7 +29,7 @@
       "state": {
         "Name": "minecraft:cherry_leaves",
         "Properties": {
-          "distance": "7",
+          "distance": "1",
           "persistent": "false",
           "waterlogged": "false"
         }

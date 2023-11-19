@@ -1,0 +1,15 @@
+{
+  "config": {
+    "tree_configured_feature": "the_bumblezone:short_cherry_trees",
+    "processors": "the_bumblezone:tree_dungeon_processors",
+    "post_processors": "the_bumblezone:tree_dungeon_post_processors",
+    "structure_y_offset": -4,
+    "nbt_entries": [
+      {
+        "resourcelocation": "the_bumblezone:tree_dungeon",
+        "weight": 1
+      }
+    ]
+  },
+  "type": "the_bumblezone:tree_dungeon"
+}

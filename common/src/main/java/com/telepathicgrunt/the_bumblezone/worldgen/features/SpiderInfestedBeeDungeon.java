@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 
-public class SpiderInfestedBeeDungeon extends NbtFeature {
+public class SpiderInfestedBeeDungeon extends NbtFeature<NbtFeatureConfig> {
 
     public SpiderInfestedBeeDungeon(Codec<NbtFeatureConfig> configFactory) {
         super(configFactory);

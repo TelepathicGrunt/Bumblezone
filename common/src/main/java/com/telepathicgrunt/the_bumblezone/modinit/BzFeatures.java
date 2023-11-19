@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.NbtFeature;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.PollinatedCaves;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.SpiderInfestedBeeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.StickyHoneyResidueFeature;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.TreeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.TwoToneSpikeFeature;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.WebWall;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLayerConfig;
@@ -27,6 +28,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.HoneyCrystal
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.ItemFrameConfig;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.NbtFeatureConfig;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.NbtOreConfiguration;
+import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.TreeDungeonFeatureConfig;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.TwoToneSpikeFeatureConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -45,6 +47,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<NbtFeatureConfig>> NBT_FEATURE = FEATURES.register("nbt_feature", () -> new NbtFeature(NbtFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<NbtFeatureConfig>> BEE_DUNGEON = FEATURES.register("bee_dungeon", () -> new BeeDungeon(NbtFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<NbtFeatureConfig>> SPIDER_INFESTED_BEE_DUNGEON = FEATURES.register("spider_infested_bee_dungeon", () -> new SpiderInfestedBeeDungeon(NbtFeatureConfig.CODEC));
+    public static final RegistryEntry<Feature<TreeDungeonFeatureConfig>> TREE_DUNGEON = FEATURES.register("tree_dungeon", () -> new TreeDungeon(TreeDungeonFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<BiomeBasedLayerConfig>> LAYERED_BLOCK_SURFACE = FEATURES.register("layered_block_surface", () -> new LayeredBlockSurface(BiomeBasedLayerConfig.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> WEB_WALL = FEATURES.register("web_wall", () -> new WebWall(NoneFeatureConfiguration.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> HANGING_GARDEN_MOB = FEATURES.register("hanging_garden_mob", () -> new HangingGardenMob(NoneFeatureConfiguration.CODEC));

@@ -1,4 +1,4 @@
-### **(V.7.0.30 Changes) (1.20.1 Minecraft)**
+### **(V.7.1.0 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:
 Fixed the rotation of Ancient Wax Stairs when they are in item form.
@@ -11,6 +11,9 @@ Bee Queen will trade for Rabbit Stew and Suspicious Stew now.
 Made sure Bee Queen will not become angry at other Bees or Rootmins or a few other mobs.
 
 Fixed crash if spawning Cosmic Crystal, Electric Ring, or Purple Spike outside of Essence events by summon command.
+
+##### Structures:
+Added small Tree Dungeons to Hive Wall, Hive Pillar, and Pollinated Pillar biomes to help decorate caves a bit more.
 
 ##### Effects:
 Fixed Wrath of the Hive growing Brood Blocks that are too far above or below mob.
