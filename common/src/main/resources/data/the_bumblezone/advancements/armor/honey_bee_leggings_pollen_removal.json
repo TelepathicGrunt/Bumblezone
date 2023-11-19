@@ -1,0 +1,32 @@
+{
+  "parent": "the_bumblezone:armor/honey_bee_leggings_flower_pollen",
+  "display": {
+    "icon": {
+      "item": "the_bumblezone:honey_bee_leggings_2",
+      "nbt": "{\"pollinated\":0b}"
+    },
+    "title": {
+      "translate": "advancements.the_bumblezone.honey_bee_leggings_pollen_removal.title"
+    },
+    "description": {
+      "translate": "advancements.the_bumblezone.honey_bee_leggings_pollen_removal.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "criteria": {
+    "honey_bee_leggings_pollen_removal": {
+      "trigger": "the_bumblezone:honey_bee_leggings_pollen_removal"
+    }
+  },
+  "requirements": [
+    [
+      "honey_bee_leggings_pollen_removal"
+    ]
+  ]
+}

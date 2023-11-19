@@ -6,7 +6,7 @@ Fixed the rotation of Ancient Wax Stairs when they are in item form.
 Added disableEssenceBlockShaders config option to let people disable the default shaders for Essence Blocks and use normal block textures instead.
 
 ##### Items:
-Honey Bee Leggings now will eject pollen if standing on Wet Sponge or when in Water! 
+Honey Bee Leggings now will eject pollen if standing on Wet Sponge or when in Water! New advancement added for this.
  Also, now works with Armor Stands so you can automate Pollen Puff generation! See if you can figure out a contraption to do this!
 
 ##### Entities:
