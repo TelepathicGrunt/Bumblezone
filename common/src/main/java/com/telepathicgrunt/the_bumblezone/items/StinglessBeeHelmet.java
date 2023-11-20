@@ -98,7 +98,7 @@ public class StinglessBeeHelmet extends BeeArmor {
             PACKET_SEND_COOLDOWN_CLIENTSIDE--;
             if(PACKET_SEND_COOLDOWN_CLIENTSIDE == 0) {
                 PACKET_SEND_COOLDOWN_CLIENTSIDE = 20;
-                if(BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.size() >= 60) {
+                if(BEE_HIGHLIGHTED_COUNTER_CLIENTSIDE.size() >= 50) {
                     StinglessBeeHelmetSightPacket.sendToServer(true);
                 }
             }

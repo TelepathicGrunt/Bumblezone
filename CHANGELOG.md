@@ -34,6 +34,8 @@ Adjusted Wrath of the Hive effect to not run every tick. Might see a tiny bit of
 ##### Advancements:
 Darken background for Bumblezone advancement tab.
 
+Lower requirement for Stingless Bee Helmet advancement from 60 bees to 50 bees.
+
 ##### Lang:
 uk_ua.json updated by unroman! Special thanks to them for the huge amount of translations done!
 
