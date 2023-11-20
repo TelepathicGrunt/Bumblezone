@@ -49,7 +49,6 @@ public class ModChecker {
 	public static boolean restrictedPortalsPresent = false;
 	public static boolean ironJetpacksPresent = false;
 	public static boolean pneumaticCraftPresent = false;
-	public static boolean FTBEssentialsPresent = false;
 	public static boolean adAstraPresent = false;
 	public static boolean arsNouveauPresent = false;
 	public static boolean arsElementalPresent = false;
@@ -89,10 +88,6 @@ public class ModChecker {
 
 			modid = "projectile_damage";
 			loadupModCompat(modid, () -> new ProjectileDamageAttributeCompat());
-
-			// TODO: Wait for 2001.1.3 FTB Essentials release
-//			modid = "ftbessentials";
-//			loadupModCompat(modid, () -> new FTBEssentialsCompat());
 
 			modid = "ad_astra";
 			loadupModCompat(modid, () -> new AdAstraCompat());
