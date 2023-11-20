@@ -21,4 +21,6 @@ Removed Walk Into Pile of Pollen advancement as it was pointless.
 
 Fixed Beehive Beeswax to Bee Nests advancement not triggering when Visual Workstation is on.
 
+Lower requirement for Stingless Bee Helmet advancement from 60 bees to 50 bees.
+
 Darken background for Bumblezone advancement tab.
