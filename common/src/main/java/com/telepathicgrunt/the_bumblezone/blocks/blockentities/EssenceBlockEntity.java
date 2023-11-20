@@ -432,8 +432,11 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     public void setRemoved() {
-        super.setRemoved();
+        if (this.level instanceof ServerLevel serverLevel) {
+            EndEvent(serverLevel, this.getBlockPos(), this.getBlockState(), this, false);
+        }
         this.getEventBar().removeAllPlayers();
+        super.setRemoved();
     }
 
     public static EssenceBlockEntity getEssenceBlockAtLocation(Level level, ResourceKey<Level> targetLevel, BlockPos targetBlockPos, UUID targetEssenceUUID) {
