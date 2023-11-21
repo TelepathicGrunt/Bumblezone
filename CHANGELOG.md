@@ -40,6 +40,8 @@ Lower requirement for Stingless Bee Helmet advancement from 60 bees to 50 bees.
 uk_ua.json updated by unroman! Special thanks to them for the huge amount of translations done!
 
 ##### Mod Compat:
+Marked Sentry Watcher as noCulling so Entity Culling mod won't cause desync with the entity's movements.
+
 Workaround Lithium, Canary, Rubidium that caused my Suspicious Pile of Pollen block to not be brushable.
 
 Fixed Iris causing Essence of Knowing to not highlight blocks behind walls.

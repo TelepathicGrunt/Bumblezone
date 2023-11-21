@@ -104,6 +104,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    public SentryWatcherEntity(Level worldIn) {
       super(BzEntities.SENTRY_WATCHER.get(), worldIn);
       this.setMaxUpStep(MAX_STEP_UP);
+      this.noCulling = true;
    }
 
    public SentryWatcherEntity(EntityType<? extends SentryWatcherEntity> type, Level worldIn) {
