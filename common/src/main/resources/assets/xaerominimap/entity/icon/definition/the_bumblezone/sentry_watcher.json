@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "the_bumblezone:textures/entity/sentry_watcher.png": "outlined_sprite:the_bumblezone/sentry_watcher.png",
-    "default": "outlined_sprite:the_bumblezone/sentry_watcher.png"
-  }
-}

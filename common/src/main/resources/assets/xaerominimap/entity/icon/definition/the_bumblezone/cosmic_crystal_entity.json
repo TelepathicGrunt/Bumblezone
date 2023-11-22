@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "the_bumblezone:textures/entity/cosmic_crystal_entity.png": "outlined_sprite:the_bumblezone/cosmic_crystal_entity.png",
-    "default": "outlined_sprite:the_bumblezone/cosmic_crystal_entity.png"
-  }
-}

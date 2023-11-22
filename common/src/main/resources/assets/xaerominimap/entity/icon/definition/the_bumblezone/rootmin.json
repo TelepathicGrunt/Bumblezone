@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "the_bumblezone:textures/entity/rootmin.png": "outlined_sprite:the_bumblezone/rootmin.png",
-    "default": "outlined_sprite:the_bumblezone/rootmin.png"
-  }
-}
