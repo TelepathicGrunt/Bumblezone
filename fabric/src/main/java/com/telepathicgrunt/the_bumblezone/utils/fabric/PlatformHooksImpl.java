@@ -2,10 +2,10 @@ package com.telepathicgrunt.the_bumblezone.utils.fabric;
 
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
-import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.item.BucketItemAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.fabric.entity.EntityAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.fabric.item.BucketItemAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.RestrictedPortalsCompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.fabric.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;

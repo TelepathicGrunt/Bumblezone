@@ -20,6 +20,7 @@ build
 # other
 eclipse
 run
+/runs
 .gitattributes
 /deps
 /common/src/main/generated/

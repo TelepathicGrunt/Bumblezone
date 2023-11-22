@@ -8,14 +8,13 @@ pluginManagement {
                 includeGroup 'net.fabricmc'
             }
         }
+        maven { url "https://maven.neoforged.net/" }
         gradlePluginPortal()
     }
 }
 
 include("common")
 include("fabric")
-include("fabric-base")
-include("quilt")
-include("forge")
+include("neoforge")
 
 rootProject.name = "Bumblezone"

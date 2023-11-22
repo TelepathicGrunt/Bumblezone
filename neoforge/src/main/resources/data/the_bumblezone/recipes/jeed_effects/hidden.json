@@ -1,0 +1,15 @@
+{
+  "type": "jeed:effect_provider",
+  "effect": "the_bumblezone:hidden",
+  "providers": [
+    {
+      "item": "the_bumblezone:pile_of_pollen"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "jeed"
+    }
+  ]
+}

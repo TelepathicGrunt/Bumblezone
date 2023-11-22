@@ -18,38 +18,19 @@ repositories {
 
 &nbsp;
 
-Don't forget to change \<modversion> with the actual latest version of this mod like `7.0.18` for example. (See older branches's README.md for their stuff)
+Don't forget to change \<modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
 
 ```
 dependencies {
    ...
-   FORGE: 
-     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-forge")
+   NEOFORGE: 
+     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.2-neoforge")
      
-   FABRIC: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-fabric"
-     
-   QUILT: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-quilt"
+   FABRIC/QUILT: 
+     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.2-fabric"
      
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-common"
-}
-```
-
-&nbsp;
-
-**FORGE ONLY: Add the mixingradle to your buildscript's dependencies block. These will allow Bumblezone's mixins to work. After you add the properties lines, refresh Gradle and run `genEclipseRuns` or `genIntellijRuns` or `genVSCodeRuns` based on what IDE you are using.**
-
-https://github.com/SpongePowered/Mixin/wiki/Mixins-on-Minecraft-Forge#step-1---adding-the-mixingradle-plugin
-
-```
-buildscript {
-   ...
-   dependencies {
-      // MixinGradle:
-      classpath 'org.spongepowered:mixingradle:0.7.+'
-   }
+     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.2-common"
 }
 ```
 
@@ -91,42 +72,21 @@ repositories {
 
 &nbsp;
 
-Don't forget to change \<modversion> with the actual latest version of this mod like `7.0.18` for example. (See older branches's README.md for their stuff)
+Don't forget to change \<modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
 
 ```
 dependencies {
    ...
-   FORGE: 
-     implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-forge")
+   NEOFORGE: 
+     implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.2-neoforge")
      implementation fg.deobf("earth.terrarium.athena:athena-forge-1.20.1:3.1.1")
      
-   FABRIC: 
-     modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-fabric"
+   FABRIC/QUILT: 
+     modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.2-fabric"
      modImplementation "earth.terrarium.athena:athena-fabric-1.20.1:3.1.1"
      modImplementation "maven.modrinth:midnightlib:1.4.1-fabric" 
    
-   QUILT: 
-     modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-quilt"
-     modImplementation "earth.terrarium.athena:athena-fabric-1.20.1:3.1.1"
-     modImplementation "maven.modrinth:midnightlib:1.4.1-fabric" 
-     
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-common"
-}
-```
-
-&nbsp;
-
-**FORGE ONLY: Add the mixingradle to your buildscript's dependencies block. These will allow Bumblezone's mixins to work. After you add the properties lines, refresh Gradle and run `genEclipseRuns` or `genIntellijRuns` or `genVSCodeRuns` based on what IDE you are using.**
-
-https://github.com/SpongePowered/Mixin/wiki/Mixins-on-Minecraft-Forge#step-1---adding-the-mixingradle-plugin
-
-```
-buildscript {
-   ...
-   dependencies {
-      // MixinGradle:
-      classpath 'org.spongepowered:mixingradle:0.7.+'
-   }
+     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.2-common"
 }
 ```

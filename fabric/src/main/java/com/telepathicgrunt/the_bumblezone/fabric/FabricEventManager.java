@@ -2,24 +2,27 @@ package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterDataSerializersEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterFlammabilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterReloadListenerEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterSpawnPlacementsEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStartEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
-import com.telepathicgrunt.the_bumblezone.fabricbase.FabricBaseEventManager;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificationContextImplMixin;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -37,11 +40,14 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -50,6 +56,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
@@ -61,6 +68,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -71,10 +80,26 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FabricEventManager {
+
+    private static final Map<ResourceKey<CreativeModeTab>, AddCreativeTabEntriesEvent.Type> TYPES = Util.make(new IdentityHashMap<>(), map -> {
+        map.put(CreativeModeTabs.BUILDING_BLOCKS, AddCreativeTabEntriesEvent.Type.BUILDING);
+        map.put(CreativeModeTabs.COLORED_BLOCKS, AddCreativeTabEntriesEvent.Type.COLORED);
+        map.put(CreativeModeTabs.NATURAL_BLOCKS, AddCreativeTabEntriesEvent.Type.NATURAL);
+        map.put(CreativeModeTabs.FUNCTIONAL_BLOCKS, AddCreativeTabEntriesEvent.Type.FUNCTIONAL);
+        map.put(CreativeModeTabs.REDSTONE_BLOCKS, AddCreativeTabEntriesEvent.Type.REDSTONE);
+        map.put(CreativeModeTabs.TOOLS_AND_UTILITIES, AddCreativeTabEntriesEvent.Type.TOOLS);
+        map.put(CreativeModeTabs.COMBAT, AddCreativeTabEntriesEvent.Type.COMBAT);
+        map.put(CreativeModeTabs.FOOD_AND_DRINKS, AddCreativeTabEntriesEvent.Type.FOOD);
+        map.put(CreativeModeTabs.INGREDIENTS, AddCreativeTabEntriesEvent.Type.INGREDIENTS);
+        map.put(CreativeModeTabs.SPAWN_EGGS, AddCreativeTabEntriesEvent.Type.SPAWN_EGGS);
+        map.put(CreativeModeTabs.OP_BLOCKS, AddCreativeTabEntriesEvent.Type.OPERATOR);
+    });
 
     public static void init() {
         AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
@@ -87,7 +112,16 @@ public class FabricEventManager {
             );
         }));
 
-        FabricBaseEventManager.init();
+        ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) ->
+                AddCreativeTabEntriesEvent.EVENT.invoke(new AddCreativeTabEntriesEvent(
+                        TYPES.getOrDefault(BuiltInRegistries.CREATIVE_MODE_TAB.getResourceKey(tab).orElse(null), AddCreativeTabEntriesEvent.Type.CUSTOM),
+                        tab,
+                        entries.shouldShowOpRestrictedItems(),
+                        entries::accept)));
+
+        RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
+        SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
+        FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
 
         RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent((id, serializer) -> EntityDataSerializers.registerSerializer(serializer)));
 

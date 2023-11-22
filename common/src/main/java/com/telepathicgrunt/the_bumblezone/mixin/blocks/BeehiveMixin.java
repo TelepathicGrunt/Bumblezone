@@ -39,7 +39,7 @@ public class BeehiveMixin {
         BeeAggression.preventAngerOnEssencedPlayers(beeList, playerList);
     }
 
-    @PlatformOnly({"quilt", "fabric"})
+    @PlatformOnly("fabric")
     @Inject(method = "angerNearbyBees(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
             at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", ordinal = 0, remap = false),
             locals = LocalCapture.CAPTURE_FAILHARD,

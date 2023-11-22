@@ -1,0 +1,24 @@
+{
+  "type": "jeed:effect_provider",
+  "effect": "the_bumblezone:wrath_of_the_hive",
+  "providers": [
+    {
+      "item": "minecraft:honey_block"
+    },
+    {
+      "item": "the_bumblezone:filled_porous_honeycomb_block"
+    },
+    {
+      "item": "the_bumblezone:honeycomb_brood_block"
+    },
+    {
+      "item": "the_bumblezone:bee_queen_spawn_egg"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "jeed"
+    }
+  ]
+}

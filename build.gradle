@@ -1,6 +1,6 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.3-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.4-SNAPSHOT" apply false
     id 'io.github.juuxel.loom-vineflower' version '1.11.0' apply false
     id "com.modrinth.minotaur" version "2.+"
     id "com.matthewprenger.cursegradle" version "1.4.0"
@@ -12,7 +12,6 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.juuxel.loom-vineflower"
     apply plugin: "com.modrinth.minotaur"
     apply plugin: "com.matthewprenger.cursegradle"
 
@@ -32,11 +31,7 @@ subprojects {
                     "curse-id": "363949",
                     "modrinth-id": "eA8SXqWL"
             ],
-            "quilt": [
-                    "curse-id": "363949",
-                    "modrinth-id": "eA8SXqWL"
-            ],
-            "forge": [
+            "neoforge": [
                     "curse-id": "362479",
                     "modrinth-id": "38tpSycf"
             ]
@@ -48,13 +43,8 @@ subprojects {
                     "midnightlib": true,
                     "better-advancements": false
             ],
-            "quilt": [
-                    "qsl": true,
-                    "midnightlib": true,
-                    "better-advancements": false
-            ],
-            "forge": [
-                    "better-advancements": false
+            "neoforge": [
+                    //"better-advancements": false
             ]
     ]
 
@@ -87,7 +77,8 @@ subprojects {
                     uploadDependencies.each { dep, required ->
                         if (required) {
                             requiredContainer.project(dep)
-                        } else {
+                        }
+                        else {
                             optionalContainer.project(dep)
                         }
                     }
@@ -105,7 +96,12 @@ subprojects {
                     releaseType = "release"
 
                     addGameVersion("${rootProject.minecraft_version}")
-                    addGameVersion(name.capitalize())
+                    if (name == "neoforge") {
+                        addGameVersion("NeoForge")
+                    }
+                    else {
+                        addGameVersion(name.capitalize())
+                    }
 
                     mainArtifact(tasks.remapJar) {
                         displayName = "The Bumblezone v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
@@ -134,16 +130,13 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    archivesBaseName = rootProject.archives_base_name
+    archivesBaseName = rootProject.mod_id
     version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
     group = rootProject.maven_group
 
     repositories {
         maven {
-            url = 'https://maven.quiltmc.org/repository/release'
-            content {
-                includeGroupByRegex 'org\\.quiltmc.*'
-            }
+            url "https://maven.neoforged.net/releases/"
         }
         maven {
             url = 'https://maven.shedaniel.me'
@@ -273,5 +266,5 @@ void minimizePNGFile(File file) {
 }
 
 task buildAndReleaseAll{
-    dependsOn(':common:buildAndRelease', ':forge:buildAndRelease', ':fabric:buildAndRelease', ':quilt:buildAndRelease')
+    dependsOn(':common:buildAndRelease', ':neoforge:buildAndRelease', ':fabric:buildAndRelease')
 }

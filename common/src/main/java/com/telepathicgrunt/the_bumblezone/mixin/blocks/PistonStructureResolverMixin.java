@@ -39,7 +39,7 @@ public class PistonStructureResolverMixin {
         }
     }
 
-    @PlatformOnly({"fabric", "quilt"})
+    @PlatformOnly("fabric")
     @Inject(method = "addBlockLine(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z", ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILSOFT

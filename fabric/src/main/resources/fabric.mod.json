@@ -26,13 +26,13 @@
             "com.telepathicgrunt.the_bumblezone.fabric.BumblezoneFabricClient"
         ],
         "modmenu": [
-            "com.telepathicgrunt.the_bumblezone.configs.fabricbase.ModMenuCompat"
+          "com.telepathicgrunt.the_bumblezone.configs.fabric.ModMenuCompat"
         ],
         "cardinal-components-entity": [
             "com.telepathicgrunt.the_bumblezone.modules.fabric.ComponentInitializer"
         ],
         "emi": [
-            "com.telepathicgrunt.the_bumblezone.modcompat.fabricbase.EMICompat"
+            "com.telepathicgrunt.the_bumblezone.modcompat.fabric.EMICompat"
         ],
         "rei_client": [
             "com.telepathicgrunt.the_bumblezone.modcompat.REICompat"
@@ -43,7 +43,6 @@
     },
     "mixins": [
         "the_bumblezone-fabric.mixins.json",
-        "the_bumblezone-fabric-base.mixins.json",
         "the_bumblezone-common.mixins.json"
     ],
     "depends": {

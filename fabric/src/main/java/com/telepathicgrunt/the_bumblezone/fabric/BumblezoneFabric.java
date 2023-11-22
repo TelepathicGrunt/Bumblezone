@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fabric;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.configs.fabricbase.BzConfig;
+import com.telepathicgrunt.the_bumblezone.configs.fabric.BzConfig;
 import com.telepathicgrunt.the_bumblezone.modcompat.fabric.FabricModChecker;
 import net.fabricmc.api.ModInitializer;
 
