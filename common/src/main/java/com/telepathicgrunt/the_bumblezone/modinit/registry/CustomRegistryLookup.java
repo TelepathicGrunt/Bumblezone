@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
-public interface CustomRegistryLookup<T> extends Iterable<T> {
+public interface CustomRegistryLookup<T, K extends T> extends Iterable<T> {
 
     boolean containsKey(ResourceLocation id);
 

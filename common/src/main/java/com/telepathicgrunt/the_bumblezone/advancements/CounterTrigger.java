@@ -4,37 +4,29 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Optional;
+
 public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Instance> {
-    private final ResourceLocation id;
 
-    public CounterTrigger(ResourceLocation id) {
-        this.id = id;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
-    public CounterTrigger.Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
-        return new CounterTrigger.Instance(predicate, jsonObject.get("target_count").getAsInt());
-    }
+    public CounterTrigger() {}
 
     public void trigger(ServerPlayer serverPlayer, int currentCount) {
         super.trigger(serverPlayer, (trigger) -> trigger.matches(currentCount));
     }
 
-    public class Instance extends AbstractCriterionTriggerInstance {
+    @Override
+    protected Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
+        return new Instance(predicate, jsonObject.get("target_count").getAsInt());
+    }
+
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private final int targetCount;
 
-        public Instance(ContextAwarePredicate predicate, int targetCount) {
-            super(id, predicate);
+        public Instance(Optional<ContextAwarePredicate> predicate, int targetCount) {
+            super(predicate);
             this.targetCount = targetCount;
         }
 
@@ -43,8 +35,8 @@ public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Instan
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext serializationContext) {
-            JsonObject jsonobject = super.serializeToJson(serializationContext);
+        public JsonObject serializeToJson() {
+            JsonObject jsonobject = super.serializeToJson();
             jsonobject.addProperty("target_count", this.targetCount);
             return jsonobject;
         }

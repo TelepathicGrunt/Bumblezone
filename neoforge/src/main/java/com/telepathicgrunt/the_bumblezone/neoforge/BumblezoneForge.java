@@ -41,7 +41,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEven
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixins.neoforge.block.FireBlockInvoker;
-import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.ForgeModChecker;
+import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzBiomeModifiers;
@@ -56,8 +56,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackCompatibility;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.server.packs.repository.ServerPacksSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -66,62 +69,61 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddPackFindersEvent;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.OnDatapackSyncEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
-import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.event.village.WandererTradesEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidInteractionRegistry;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.FMLLoader;
-import net.minecraftforge.forgespi.language.IModFileInfo;
-import net.minecraftforge.forgespi.language.IModInfo;
-import net.minecraftforge.resource.PathPackResources;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.LogicalSide;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
+import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
+import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
+import net.neoforged.neoforgespi.language.IModFileInfo;
+import net.neoforged.neoforgespi.language.IModInfo;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 @Mod(Bumblezone.MODID)
 public class BumblezoneForge {
 
-    public BumblezoneForge() {
+    public BumblezoneForge(IEventBus modEventBus) {
         BzConfigHandler.setup();
         ForgeModuleInitalizer.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.NORMAL, ResourcefulRegistriesImpl::onRegisterForgeRegistries);
 
         Bumblezone.init();
 
-        IEventBus eventBus = MinecraftForge.EVENT_BUS;
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus eventBus = NeoForge.EVENT_BUS;
 
         BzBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
         BzGlobalLootModifier.GLM.register(modEventBus);
@@ -192,12 +194,12 @@ public class BumblezoneForge {
     private static void onSetup(FMLCommonSetupEvent event) {
         SetupEvent.EVENT.invoke(new SetupEvent(event::enqueueWork));
 
-        FluidInteractionRegistry.addInteraction(ForgeMod.LAVA_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+        FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                 BzFluids.SUGAR_WATER_FLUID_TYPE.get().flowing().getFluidType(),
                 fluidState -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState()
         ));
 
-        FluidInteractionRegistry.addInteraction(ForgeMod.LAVA_TYPE.get(), new FluidInteractionRegistry.InteractionInformation(
+        FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
                 BzFluids.SUGAR_WATER_FLUID_TYPE.get().source().getFluidType(),
                 fluidState -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState()
         ));
@@ -210,7 +212,7 @@ public class BumblezoneForge {
 
     private static void onFinalSetup(FMLCommonSetupEvent event) {
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(event::enqueueWork));
-        event.enqueueWork(ForgeModChecker::setupModCompat);
+        event.enqueueWork(NeoForgeModChecker::setupModCompat);
         event.enqueueWork(() ->
                 RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
                         (id, serializer) -> EntityDataSerializers.registerSerializer(serializer))));
@@ -234,8 +236,11 @@ public class BumblezoneForge {
                 final Pack pack = Pack.create(
                     Bumblezone.MODID + ":add_pack/" + id.getPath(), displayName,
                     mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
-                    (path) -> new PathPackResources(path, true, resourcePath),
-                    packInfo, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, false, createSource(mode)
+                    ServerPacksSource.fixedResources(new PathPackResources(packInfo.description().getString(), resourcePath, true)),
+                    packInfo,
+                    Pack.Position.BOTTOM,
+                    false,
+                    createSource(mode)
                 );
                 event.addRepositorySource((packConsumer) -> packConsumer.accept(pack));
             }));
@@ -262,7 +267,9 @@ public class BumblezoneForge {
                 description,
                 SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA),
                 SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES),
+                PackCompatibility.COMPATIBLE,
                 FeatureFlagSet.of(),
+                new ArrayList<>(),
                 hidden
         );
     }
@@ -294,7 +301,7 @@ public class BumblezoneForge {
         RegisterWanderingTradesEvent.EVENT.invoke(new RegisterWanderingTradesEvent(event.getGenericTrades()::add, event.getRareTrades()::add));
     }
 
-    private static void onRegisterCommand(net.minecraftforge.event.RegisterCommandsEvent event) {
+    private static void onRegisterCommand(net.neoforged.neoforge.event.RegisterCommandsEvent event) {
         RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(event.getDispatcher(), event.getCommandSelection(), event.getBuildContext()));
     }
 
@@ -333,7 +340,7 @@ public class BumblezoneForge {
     }
 
     private static void onGrantAdvancement(AdvancementEvent event) {
-        PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(event.getAdvancement(), event.getEntity()));
+        PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(event.getAdvancement().value(), event.getEntity()));
     }
 
     private static void onInteractEntity(PlayerInteractEvent.EntityInteract event) {
@@ -354,8 +361,8 @@ public class BumblezoneForge {
         event.setNewSpeed(speed.floatValue());
     }
 
-    private static void onTagsUpdate(net.minecraftforge.event.TagsUpdatedEvent event) {
-        TagsUpdatedEvent.EVENT.invoke(new TagsUpdatedEvent(event.getRegistryAccess(), event.getUpdateCause() == net.minecraftforge.event.TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED));
+    private static void onTagsUpdate(net.neoforged.neoforge.event.TagsUpdatedEvent event) {
+        TagsUpdatedEvent.EVENT.invoke(new TagsUpdatedEvent(event.getRegistryAccess(), event.getUpdateCause() == net.neoforged.neoforge.event.TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED));
     }
 
     private static void onSpawnPlacements(SpawnPlacementRegisterEvent event) {

@@ -1,44 +1,37 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Optional;
+
 
 public class BlockStateSpecificTrigger extends SimpleCriterionTrigger<BlockStateSpecificTrigger.Instance> {
-    private final ResourceLocation id;
 
-    public BlockStateSpecificTrigger(ResourceLocation id) {
-        this.id = id;
-    }
+    public BlockStateSpecificTrigger() {}
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
-    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
-        return new Instance(predicate, BlockPredicate.fromJson(jsonObject.get("block")));
+    public Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
+        return new Instance(predicate, BlockPredicate.CODEC.decode(JsonOps.INSTANCE, jsonObject.get("block")).result().get().getFirst());
     }
 
     public void trigger(ServerPlayer serverPlayer, BlockPos pos) {
         super.trigger(serverPlayer, (instance) -> instance.matches((ServerLevel) serverPlayer.level(), pos));
     }
 
-    public class Instance extends AbstractCriterionTriggerInstance {
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private final BlockPredicate blockPredicate;
 
-        public Instance(ContextAwarePredicate predicate, BlockPredicate blockPredicate) {
-            super(id, predicate);
+        public Instance(Optional<ContextAwarePredicate> predicate, BlockPredicate blockPredicate) {
+            super(predicate);
             this.blockPredicate = blockPredicate;
         }
 
@@ -47,9 +40,9 @@ public class BlockStateSpecificTrigger extends SimpleCriterionTrigger<BlockState
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext serializationContext) {
-            JsonObject jsonobject = super.serializeToJson(serializationContext);
-            jsonobject.add("blockstate", this.blockPredicate.serializeToJson());
+        public JsonObject serializeToJson() {
+            JsonObject jsonobject = super.serializeToJson();
+            jsonobject.add("blockstate", BlockPredicate.CODEC.encodeStart(JsonOps.INSTANCE, this.blockPredicate).result().get());
             return jsonobject;
         }
     }

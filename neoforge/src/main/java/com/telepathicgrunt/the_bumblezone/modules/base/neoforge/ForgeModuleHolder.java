@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
 import com.telepathicgrunt.the_bumblezone.modules.neoforge.HackyCapabilityManager;
-import net.minecraftforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.capabilities.Capability;
 
 public record ForgeModuleHolder<T extends Module<T>>(ModuleSerializer<T> serializer, Capability<T> capability) implements ModuleHolder<T> {
 

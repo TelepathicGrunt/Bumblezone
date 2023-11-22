@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class CustomRegistry<T> implements CustomRegistryLookup<T> {
+public class CustomRegistry<T> implements CustomRegistryLookup<T, T> {
 
     private final Registry<T> registry;
 

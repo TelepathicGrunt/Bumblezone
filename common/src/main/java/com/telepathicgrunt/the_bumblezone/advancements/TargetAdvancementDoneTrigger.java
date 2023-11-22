@@ -5,31 +5,24 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEv
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetAdvancementDoneTrigger.Instance> {
-    private final ResourceLocation id;
 
-    public TargetAdvancementDoneTrigger(ResourceLocation id) {
-        this.id = id;
-    }
+    public TargetAdvancementDoneTrigger() {}
 
     @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
-    public TargetAdvancementDoneTrigger.Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
+    public TargetAdvancementDoneTrigger.Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
         return new TargetAdvancementDoneTrigger.Instance(predicate, new ResourceLocation(jsonObject.get("target_advancement").getAsString()));
     }
 
@@ -40,22 +33,22 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
     public class Instance extends AbstractCriterionTriggerInstance {
         private final ResourceLocation targetAdvancement;
 
-        public Instance(ContextAwarePredicate predicate, ResourceLocation targetAdvancement) {
-            super(id, predicate);
+        public Instance(Optional<ContextAwarePredicate> predicate, ResourceLocation targetAdvancement) {
+            super(predicate);
             this.targetAdvancement = targetAdvancement;
         }
 
         public boolean matches(ServerPlayer serverPlayer) {
-            Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(targetAdvancement);
+            AdvancementHolder advancement = serverPlayer.server.getAdvancements().get(targetAdvancement);
             Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
             return advancement != null &&
-                    advancementsProgressMap.containsKey(advancement) &&
-                    advancementsProgressMap.get(advancement).isDone();
+                    advancementsProgressMap.containsKey(advancement.value()) &&
+                    advancementsProgressMap.get(advancement.value()).isDone();
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext serializationContext) {
-            JsonObject jsonobject = super.serializeToJson(serializationContext);
+        public JsonObject serializeToJson() {
+            JsonObject jsonobject = super.serializeToJson();
             jsonobject.addProperty("target_advancement", this.targetAdvancement.toString());
             return jsonobject;
         }

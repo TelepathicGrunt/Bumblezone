@@ -10,8 +10,8 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Set;
 
@@ -38,10 +38,10 @@ public class ArsElementalCompat implements ModCompat {
 
 	@SuppressWarnings("ConstantConditions")
 	public static boolean isArsElementalCasting(EffectResolveEvent.Post event) {
-		if (event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_HOMING_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+		if (event.spell.getCastMethod() == MethodHomingProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_HOMING_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 			return true;
 		}
-		else if (event.spell.getCastMethod() == MethodArcProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_CURVED_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
+		else if (event.spell.getCastMethod() == MethodArcProjectile.INSTANCE && !BuiltInRegistries.ENTITY_TYPE.get(SPELL_CURVED_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 			return true;
 		}
 		return false;

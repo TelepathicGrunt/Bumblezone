@@ -1,64 +1,64 @@
 package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BzModCompatibilityConfig {
-	public static final ForgeConfigSpec GENERAL_SPEC;
+	public static final ModConfigSpec GENERAL_SPEC;
 
-	public static ForgeConfigSpec.BooleanValue allowHoneyFluidTanksFeedingCompat;
+	public static ModConfigSpec.BooleanValue allowHoneyFluidTanksFeedingCompat;
 
-	public static ForgeConfigSpec.BooleanValue spawnPokecubeBeePokemon;
-	public static ForgeConfigSpec.BooleanValue beePokemonGetsProtectionEffect;
-	public static ForgeConfigSpec.DoubleValue spawnrateOfPokecubeBeePokemon;
+	public static ModConfigSpec.BooleanValue spawnPokecubeBeePokemon;
+	public static ModConfigSpec.BooleanValue beePokemonGetsProtectionEffect;
+	public static ModConfigSpec.DoubleValue spawnrateOfPokecubeBeePokemon;
 
-	public static ForgeConfigSpec.BooleanValue spawnTropicraftBeesMob;
-	public static ForgeConfigSpec.DoubleValue spawnrateOfTropicraftBeesMobs;
-	public static ForgeConfigSpec.BooleanValue allowTropicraftSpawnFromDispenserFedBroodBlock;
+	public static ModConfigSpec.BooleanValue spawnTropicraftBeesMob;
+	public static ModConfigSpec.DoubleValue spawnrateOfTropicraftBeesMobs;
+	public static ModConfigSpec.BooleanValue allowTropicraftSpawnFromDispenserFedBroodBlock;
 
-	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesBeesMob;
-	public static ForgeConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsBrood;
-	public static ForgeConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsOther;
-	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateBeeDungeon;
-	public static ForgeConfigSpec.DoubleValue RBOreHoneycombSpawnRateSpiderBeeDungeon;
-	public static ForgeConfigSpec.BooleanValue spawnResourcefulBeesHoneycombVeins;
-	public static ForgeConfigSpec.BooleanValue allowResourcefulBeesBeeJarRevivingEmptyBroodBlock;
-	public static ForgeConfigSpec.BooleanValue allowResourcefulBeesSpawnFromDispenserFedBroodBlock;
+	public static ModConfigSpec.BooleanValue spawnResourcefulBeesBeesMob;
+	public static ModConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsBrood;
+	public static ModConfigSpec.DoubleValue spawnrateOfResourcefulBeesMobsOther;
+	public static ModConfigSpec.DoubleValue RBOreHoneycombSpawnRateBeeDungeon;
+	public static ModConfigSpec.DoubleValue RBOreHoneycombSpawnRateSpiderBeeDungeon;
+	public static ModConfigSpec.BooleanValue spawnResourcefulBeesHoneycombVeins;
+	public static ModConfigSpec.BooleanValue allowResourcefulBeesBeeJarRevivingEmptyBroodBlock;
+	public static ModConfigSpec.BooleanValue allowResourcefulBeesSpawnFromDispenserFedBroodBlock;
 
-	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
-	public static ForgeConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
-	public static ForgeConfigSpec.BooleanValue allowHoneyTreatCompat;
-	public static ForgeConfigSpec.BooleanValue allowProductiveBeesBeeCageRevivingEmptyBroodBlock;
-	public static ForgeConfigSpec.BooleanValue allowProductiveBeesSpawnFromDispenserFedBroodBlock;
-	public static ForgeConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
-	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateBeeDungeon;
-	public static ForgeConfigSpec.DoubleValue PBOreHoneycombSpawnRateSpiderBeeDungeon;
-	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedCombsForDungeons;
-	public static ForgeConfigSpec.ConfigValue<List<? extends String>> allowedBees;
+	public static ModConfigSpec.BooleanValue spawnProductiveBeesBeesMob;
+	public static ModConfigSpec.DoubleValue spawnrateOfProductiveBeesMobs;
+	public static ModConfigSpec.BooleanValue allowHoneyTreatCompat;
+	public static ModConfigSpec.BooleanValue allowProductiveBeesBeeCageRevivingEmptyBroodBlock;
+	public static ModConfigSpec.BooleanValue allowProductiveBeesSpawnFromDispenserFedBroodBlock;
+	public static ModConfigSpec.BooleanValue spawnProductiveBeesHoneycombVariants;
+	public static ModConfigSpec.DoubleValue PBOreHoneycombSpawnRateBeeDungeon;
+	public static ModConfigSpec.DoubleValue PBOreHoneycombSpawnRateSpiderBeeDungeon;
+	public static ModConfigSpec.ConfigValue<List<? extends String>> allowedCombsForDungeons;
+	public static ModConfigSpec.ConfigValue<List<? extends String>> allowedBees;
 
-	public static ForgeConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
-	public static ForgeConfigSpec.BooleanValue injectBzItemsIntoQuarkEnchantmentTooltipsCompat;
+	public static ModConfigSpec.BooleanValue allowFriendsAndFoesBeekeeperTradesCompat;
+	public static ModConfigSpec.BooleanValue injectBzItemsIntoQuarkEnchantmentTooltipsCompat;
 
-	public static ForgeConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
+	public static ModConfigSpec.BooleanValue allowBeeBottleRevivingEmptyBroodBlock;
 
-	public static ForgeConfigSpec.BooleanValue allowBeeBucketRevivingEmptyBroodBlock;
+	public static ModConfigSpec.BooleanValue allowBeeBucketRevivingEmptyBroodBlock;
 
-	public static ForgeConfigSpec.BooleanValue allowPotionOfBeesRevivingEmptyBroodBlock;
+	public static ModConfigSpec.BooleanValue allowPotionOfBeesRevivingEmptyBroodBlock;
 
-	public static ForgeConfigSpec.BooleanValue allowGoodallBottledBeesRevivingEmptyBroodBlock;
+	public static ModConfigSpec.BooleanValue allowGoodallBottledBeesRevivingEmptyBroodBlock;
 
-	public static ForgeConfigSpec.BooleanValue allowBeekeeperTradesCompat;
+	public static ModConfigSpec.BooleanValue allowBeekeeperTradesCompat;
 
 	static {
-		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+		ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
 		setupConfig(configBuilder);
 		GENERAL_SPEC = configBuilder.build();
 	}
 
-	private static void setupConfig(ForgeConfigSpec.Builder builder) {
+	private static void setupConfig(ModConfigSpec.Builder builder) {
 		builder.push("Mod Compatibility Options");
 			builder.push("General Compat Options");
 

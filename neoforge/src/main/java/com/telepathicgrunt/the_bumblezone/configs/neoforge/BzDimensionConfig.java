@@ -1,30 +1,30 @@
 package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BzDimensionConfig {
         // teleportation
-    public static final ForgeConfigSpec GENERAL_SPEC;
+    public static final ModConfigSpec GENERAL_SPEC;
 
     // dimension
-    public static ForgeConfigSpec.BooleanValue enableInitialWelcomeMessage;
-    public static ForgeConfigSpec.BooleanValue forceExitToOverworld;
-    public static ForgeConfigSpec.BooleanValue onlyOverworldHivesTeleports;
-    public static ForgeConfigSpec.BooleanValue warnPlayersOfWrongBlockUnderHive;
-    public static ForgeConfigSpec.BooleanValue allowTeleportationWithModdedBeehives;
-    public static ForgeConfigSpec.BooleanValue enableExitTeleportation;
-    public static ForgeConfigSpec.BooleanValue enableEntranceTeleportation;
-    public static ForgeConfigSpec.BooleanValue forceBumblezoneOriginMobToOverworldCenter;
-    public static ForgeConfigSpec.ConfigValue<String> defaultDimension;
+    public static ModConfigSpec.BooleanValue enableInitialWelcomeMessage;
+    public static ModConfigSpec.BooleanValue forceExitToOverworld;
+    public static ModConfigSpec.BooleanValue onlyOverworldHivesTeleports;
+    public static ModConfigSpec.BooleanValue warnPlayersOfWrongBlockUnderHive;
+    public static ModConfigSpec.BooleanValue allowTeleportationWithModdedBeehives;
+    public static ModConfigSpec.BooleanValue enableExitTeleportation;
+    public static ModConfigSpec.BooleanValue enableEntranceTeleportation;
+    public static ModConfigSpec.BooleanValue forceBumblezoneOriginMobToOverworldCenter;
+    public static ModConfigSpec.ConfigValue<String> defaultDimension;
 
     static {
-        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
         setupConfig(configBuilder);
         GENERAL_SPEC = configBuilder.build();
     }
 
-    private static void setupConfig(ForgeConfigSpec.Builder builder) {
+    private static void setupConfig(ModConfigSpec.Builder builder) {
         builder.push("The Bumblezone Welcome Options");
 
         enableInitialWelcomeMessage = builder

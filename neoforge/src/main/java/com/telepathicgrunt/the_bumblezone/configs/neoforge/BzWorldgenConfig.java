@@ -1,23 +1,23 @@
 package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BzWorldgenConfig {
-    public static final ForgeConfigSpec GENERAL_SPEC;
+    public static final ModConfigSpec GENERAL_SPEC;
 
-    public static ForgeConfigSpec.IntValue beeDungeonRarity;
-    public static ForgeConfigSpec.IntValue treeDungeonRarity;
-    public static ForgeConfigSpec.IntValue spiderInfestedBeeDungeonRarity;
-    public static ForgeConfigSpec.DoubleValue spawnerRateSpiderBeeDungeon;
+    public static ModConfigSpec.IntValue beeDungeonRarity;
+    public static ModConfigSpec.IntValue treeDungeonRarity;
+    public static ModConfigSpec.IntValue spiderInfestedBeeDungeonRarity;
+    public static ModConfigSpec.DoubleValue spawnerRateSpiderBeeDungeon;
 
     static {
-        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
         setupConfig(configBuilder);
         GENERAL_SPEC = configBuilder.build();
     }
 
-    private static void setupConfig(ForgeConfigSpec.Builder builder) {
+    private static void setupConfig(ModConfigSpec.Builder builder) {
         builder.push("Dungeon Options");
 
             beeDungeonRarity = builder

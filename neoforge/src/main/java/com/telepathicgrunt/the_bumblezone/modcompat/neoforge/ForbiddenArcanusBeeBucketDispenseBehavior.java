@@ -6,8 +6,8 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,7 +27,7 @@ public class ForbiddenArcanusBeeBucketDispenseBehavior extends DefaultDispenseIt
      * Dispense the specified stack, play the dispenser sound and spawn particles.
      */
     public ItemStack execute(BlockSource source, ItemStack stack) {
-        ServerLevel world = source.getLevel();
+        ServerLevel world = source.level();
         Position dispensePosition = DispenserBlock.getDispensePosition(source);
         BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
         BlockState blockstate = world.getBlockState(dispenseBlockPos);
@@ -65,15 +65,15 @@ public class ForbiddenArcanusBeeBucketDispenseBehavior extends DefaultDispenseIt
      * Play the dispenser sound from the specified block.
      */
     protected void playSound(BlockSource source) {
-        source.getLevel().levelEvent(1002, source.getPos(), 0);
+        source.level().levelEvent(1002, source.pos(), 0);
     }
 
     /**
      * Adds glass bottle to dispenser or if no room, dispense it
      */
     private static void addBucketToDispenser(BlockSource source) {
-        if (source.getEntity() instanceof DispenserBlockEntity) {
-            DispenserBlockEntity dispenser = source.getEntity();
+        if (source.blockEntity() instanceof DispenserBlockEntity) {
+            DispenserBlockEntity dispenser = source.blockEntity();
             ItemStack honeyBottle = new ItemStack(BuiltInRegistries.ITEM.get(ForbiddenArcanusCompat.EMPTY_BUCKET_RL));
             if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);

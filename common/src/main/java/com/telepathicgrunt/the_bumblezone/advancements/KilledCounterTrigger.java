@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -16,23 +15,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 
+import java.util.Optional;
+
 public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTrigger.Instance> {
-    private final ResourceLocation id;
-
-    public KilledCounterTrigger(ResourceLocation id) {
-        this.id = id;
-    }
+    public KilledCounterTrigger() {}
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
-    public KilledCounterTrigger.Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
+    public KilledCounterTrigger.Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
         JsonElement beeArmorJson = jsonObject.get("bee_armor_required");
         JsonElement targetTagJson = jsonObject.get("is_target_tag");
-        return new KilledCounterTrigger.Instance(
+        return new Instance(
                 predicate,
                 new ResourceLocation(jsonObject.get("target_entity").getAsString()),
                 jsonObject.get("target_count").getAsInt(),
@@ -44,14 +36,14 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
         super.trigger(serverPlayer, (trigger) -> trigger.matches(serverPlayer, currentEntity, module));
     }
 
-    public class Instance extends AbstractCriterionTriggerInstance {
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private final int targetCount;
         private final ResourceLocation targetEntity;
         private final boolean isTargetTag;
         private final boolean beeArmorRequired;
 
-        public Instance(ContextAwarePredicate predicate, ResourceLocation targetEntity, int targetCount, boolean isTargetTag, boolean beeArmorRequired) {
-            super(id, predicate);
+        public Instance(Optional<ContextAwarePredicate> predicate, ResourceLocation targetEntity, int targetCount, boolean isTargetTag, boolean beeArmorRequired) {
+            super(predicate);
             this.targetCount = targetCount;
             this.targetEntity = targetEntity;
             this.isTargetTag = isTargetTag;
@@ -79,8 +71,8 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext serializationContext) {
-            JsonObject jsonobject = super.serializeToJson(serializationContext);
+        public JsonObject serializeToJson() {
+            JsonObject jsonobject = super.serializeToJson();
             jsonobject.addProperty("target_count", this.targetCount);
             jsonobject.addProperty("target_entity", this.targetEntity.toString());
             jsonobject.addProperty("is_target_tag", this.isTargetTag);

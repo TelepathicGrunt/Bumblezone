@@ -2,40 +2,40 @@ package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BzClientConfig {
-    public static final ForgeConfigSpec GENERAL_SPEC;
+    public static final ModConfigSpec GENERAL_SPEC;
 
-    public static ForgeConfigSpec.DoubleValue fogBrightnessPercentage;
-    public static ForgeConfigSpec.DoubleValue fogThickness;
-    public static ForgeConfigSpec.BooleanValue enableDimensionFog;
-    public static ForgeConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
-    public static ForgeConfigSpec.BooleanValue playSempiternalSanctumMusic;
-    public static ForgeConfigSpec.BooleanValue renderBeeQueenBonusTradeItem;
-    public static ForgeConfigSpec.BooleanValue disableEssenceBlockShaders;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightBosses;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightMonsters;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightTamed;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightLivingEntities;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightCommonItems;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightUncommonItems;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightRareItems;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceHighlightEpicItems;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceStructureNameClient;
-    public static ForgeConfigSpec.IntValue knowingEssenceStructureNameXCoord;
-    public static ForgeConfigSpec.IntValue knowingEssenceStructureNameYCoord;
-    public static ForgeConfigSpec.BooleanValue radianceEssenceArmorDurability;
-    public static ForgeConfigSpec.IntValue radianceEssenceArmorDurabilityXCoord;
-    public static ForgeConfigSpec.IntValue radianceEssenceArmorDurabilityYCoord;
+    public static ModConfigSpec.DoubleValue fogBrightnessPercentage;
+    public static ModConfigSpec.DoubleValue fogThickness;
+    public static ModConfigSpec.BooleanValue enableDimensionFog;
+    public static ModConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
+    public static ModConfigSpec.BooleanValue playSempiternalSanctumMusic;
+    public static ModConfigSpec.BooleanValue renderBeeQueenBonusTradeItem;
+    public static ModConfigSpec.BooleanValue disableEssenceBlockShaders;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightBosses;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightMonsters;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightTamed;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightLivingEntities;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightCommonItems;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightUncommonItems;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightRareItems;
+    public static ModConfigSpec.BooleanValue knowingEssenceHighlightEpicItems;
+    public static ModConfigSpec.BooleanValue knowingEssenceStructureNameClient;
+    public static ModConfigSpec.IntValue knowingEssenceStructureNameXCoord;
+    public static ModConfigSpec.IntValue knowingEssenceStructureNameYCoord;
+    public static ModConfigSpec.BooleanValue radianceEssenceArmorDurability;
+    public static ModConfigSpec.IntValue radianceEssenceArmorDurabilityXCoord;
+    public static ModConfigSpec.IntValue radianceEssenceArmorDurabilityYCoord;
 
     static {
-        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
         setupConfig(configBuilder);
         GENERAL_SPEC = configBuilder.build();
     }
 
-    private static void setupConfig(ForgeConfigSpec.Builder builder) {
+    private static void setupConfig(ModConfigSpec.Builder builder) {
         builder.push("The Bumblezone Client Dimension Options");
 
         fogBrightnessPercentage = builder

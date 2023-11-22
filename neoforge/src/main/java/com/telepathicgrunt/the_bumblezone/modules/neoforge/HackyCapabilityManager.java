@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modules.neoforge;
 
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.capabilities.CapabilityManager;
 import org.objectweb.asm.Type;
 import sun.misc.Unsafe;
 

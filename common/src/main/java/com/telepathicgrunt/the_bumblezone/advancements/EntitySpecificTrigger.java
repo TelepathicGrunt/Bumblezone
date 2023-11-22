@@ -5,28 +5,20 @@ import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
 
+import java.util.Optional;
+
 public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecificTrigger.Instance> {
-    private final ResourceLocation id;
 
-    public EntitySpecificTrigger(ResourceLocation id) {
-        this.id = id;
-    }
+    public EntitySpecificTrigger() {}
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
-    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
-        ContextAwarePredicate entityPredicate = EntityPredicate.fromJson(jsonObject, "entity", deserializationContext);
+    public Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
+        Optional<ContextAwarePredicate> entityPredicate = EntityPredicate.fromJson(jsonObject, "entity", deserializationContext);
         return new Instance(predicate, entityPredicate);
     }
 
@@ -35,12 +27,12 @@ public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecific
         this.trigger(serverPlayer, (instance) -> instance.matches(lootcontext));
     }
 
-    public class Instance extends AbstractCriterionTriggerInstance {
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private final ContextAwarePredicate attackerEntityPredicate;
 
-        public Instance(ContextAwarePredicate predicate, ContextAwarePredicate attackerEntityPredicate) {
-            super(id, predicate);
-            this.attackerEntityPredicate = attackerEntityPredicate;
+        public Instance(Optional<ContextAwarePredicate> predicate, Optional<ContextAwarePredicate> attackerEntityPredicate) {
+            super(predicate);
+            this.attackerEntityPredicate = attackerEntityPredicate.get();
         }
 
         public boolean matches(LootContext lootContext) {
@@ -48,9 +40,9 @@ public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecific
         }
 
         @Override
-        public JsonObject serializeToJson(SerializationContext serializationContext) {
-            JsonObject jsonobject = super.serializeToJson(serializationContext);
-            jsonobject.add("entity", this.attackerEntityPredicate.toJson(serializationContext));
+        public JsonObject serializeToJson() {
+            JsonObject jsonobject = super.serializeToJson();
+            jsonobject.add("entity", this.attackerEntityPredicate.toJson());
             return jsonobject;
         }
     }

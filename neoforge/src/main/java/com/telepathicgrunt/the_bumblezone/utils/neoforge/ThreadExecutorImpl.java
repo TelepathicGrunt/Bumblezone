@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.utils.neoforge;
 
-import net.minecraftforge.fml.util.thread.SidedThreadGroups;
+import net.neoforged.fml.util.thread.SidedThreadGroups;
 
 public class ThreadExecutorImpl {
     public static Thread createServerThread(Runnable runnable, String name) {

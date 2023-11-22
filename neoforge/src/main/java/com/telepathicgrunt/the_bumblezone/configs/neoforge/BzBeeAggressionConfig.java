@@ -1,30 +1,30 @@
 package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BzBeeAggressionConfig {
-    public static final ForgeConfigSpec GENERAL_SPEC;
+    public static final ModConfigSpec GENERAL_SPEC;
 
     // bee aggression
-    public static ForgeConfigSpec.BooleanValue beehemothTriggersWrath;
-    public static ForgeConfigSpec.BooleanValue allowWrathOfTheHiveOutsideBumblezone;
-    public static ForgeConfigSpec.BooleanValue showWrathOfTheHiveParticles;
-    public static ForgeConfigSpec.BooleanValue aggressiveBees;
-    public static ForgeConfigSpec.IntValue aggressionTriggerRadius;
-    public static ForgeConfigSpec.IntValue howLongWrathOfTheHiveLasts;
-    public static ForgeConfigSpec.IntValue howLongProtectionOfTheHiveLasts;
-    public static ForgeConfigSpec.IntValue speedBoostLevel;
-    public static ForgeConfigSpec.IntValue absorptionBoostLevel;
-    public static ForgeConfigSpec.IntValue strengthBoostLevel;
+    public static ModConfigSpec.BooleanValue beehemothTriggersWrath;
+    public static ModConfigSpec.BooleanValue allowWrathOfTheHiveOutsideBumblezone;
+    public static ModConfigSpec.BooleanValue showWrathOfTheHiveParticles;
+    public static ModConfigSpec.BooleanValue aggressiveBees;
+    public static ModConfigSpec.IntValue aggressionTriggerRadius;
+    public static ModConfigSpec.IntValue howLongWrathOfTheHiveLasts;
+    public static ModConfigSpec.IntValue howLongProtectionOfTheHiveLasts;
+    public static ModConfigSpec.IntValue speedBoostLevel;
+    public static ModConfigSpec.IntValue absorptionBoostLevel;
+    public static ModConfigSpec.IntValue strengthBoostLevel;
 
     static {
-        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
         setupConfig(configBuilder);
         GENERAL_SPEC = configBuilder.build();
     }
 
-    private static void setupConfig(ForgeConfigSpec.Builder builder) {
+    private static void setupConfig(ModConfigSpec.Builder builder) {
         builder.push("Wrath of the Hive Options");
 
             builder.push("Bees Aggression Options");

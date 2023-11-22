@@ -10,9 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class BloodMagicCompat implements ModCompat {
 
@@ -21,7 +22,7 @@ public class BloodMagicCompat implements ModCompat {
 	public BloodMagicCompat() {
 		AIR_SIGIL = BuiltInRegistries.ITEM.get(new ResourceLocation("bloodmagic", "airsigil"));
 
-		IEventBus eventBus = MinecraftForge.EVENT_BUS;
+		IEventBus eventBus = NeoForge.EVENT_BUS;
 		eventBus.addListener(BloodMagicCompat::onAirSigilItemUse);
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup

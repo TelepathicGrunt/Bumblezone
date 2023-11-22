@@ -12,8 +12,8 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ModifiableBiomeInfo;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
 
 public record BzModCompatBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> feature, GenerationStep.Decoration step, String modid) implements BiomeModifier {
 
@@ -36,7 +36,7 @@ public record BzModCompatBiomeModifier(HolderSet<Biome> biomes, HolderSet<Placed
             else if (modid.equals("resourcefulbees")) {
                 if (BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins) {
                     feature.stream().filter(placedFeatureHolder -> {
-                        FeatureConfiguration featureConfiguration = placedFeatureHolder.get().feature().get().config();
+                        FeatureConfiguration featureConfiguration = placedFeatureHolder.value().feature().value().config();
                         if (featureConfiguration instanceof OreConfiguration oreConfiguration) {
                             return oreConfiguration.targetStates.stream().noneMatch(e -> e.state.isAir());
                         }

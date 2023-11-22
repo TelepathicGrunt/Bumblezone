@@ -27,15 +27,15 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.util.BlockSnapshot;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
@@ -62,7 +62,7 @@ public class PlatformHooksImpl {
 
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return ModList.get().getModContainerById(modid)
-                .map(container -> new ForgeModInfo(container.getModInfo(), qualifierIsVersion))
+                .map(container -> new NeoForgeModInfo(container.getModInfo(), qualifierIsVersion))
                 .orElse(null);
     }
 
@@ -83,7 +83,7 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static int getXpDrop(LivingEntity entity, Player attackingPlayer, int xp) {
-        return ForgeEventFactory.getExperienceDrop(entity, attackingPlayer, xp);
+        return EventHooks.getExperienceDrop(entity, attackingPlayer, xp);
     }
 
     @Contract(pure = true)
@@ -103,12 +103,12 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason, CompoundTag tag) {
-        return ForgeEventFactory.onFinalizeSpawn(entity, world, world.getCurrentDifficultyAt(BlockPos.containing(entity.position())), spawnReason, spawnGroupData, tag);
+        return EventHooks.onFinalizeSpawn(entity, world, world.getCurrentDifficultyAt(BlockPos.containing(entity.position())), spawnReason, spawnGroupData, tag);
     }
 
     public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(level, pos, state, player);
-        MinecraftForge.EVENT_BUS.post(event);
+        NeoForge.EVENT_BUS.post(event);
         return event.isCanceled();
     }
 
@@ -140,16 +140,16 @@ public class PlatformHooksImpl {
         }
 
         if (placingBlock) {
-            return !ForgeEventFactory.onBlockPlace(entity, BlockSnapshot.create(level.dimension(), level, pos), Direction.UP);
+            return !EventHooks.onBlockPlace(entity, BlockSnapshot.create(level.dimension(), level, pos), Direction.UP);
         }
         else if (entity instanceof LivingEntity livingEntity) {
-            return ForgeEventFactory.onEntityDestroyBlock(livingEntity, pos, level.getBlockState(pos));
+            return EventHooks.onEntityDestroyBlock(livingEntity, pos, level.getBlockState(pos));
         }
         return true;
     }
 
     public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
-        return ForgeHooks.onTravelToDimension(serverPlayer, dimension);
+        return CommonHooks.onTravelToDimension(serverPlayer, dimension);
     }
 
     public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {

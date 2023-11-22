@@ -8,30 +8,24 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Optional;
+
 public class GenericTrigger extends SimpleCriterionTrigger<GenericTrigger.Instance> {
-    private final ResourceLocation id;
 
-    public GenericTrigger(ResourceLocation id) {
-        this.id = id;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
-    public Instance createInstance(JsonObject jsonObject, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
-        return new Instance(predicate);
-    }
+    public GenericTrigger() {}
 
     public void trigger(ServerPlayer serverPlayer) {
         super.trigger(serverPlayer, (e) -> true);
     }
 
-    public class Instance extends AbstractCriterionTriggerInstance {
-        public Instance(ContextAwarePredicate predicate) {
-            super(id, predicate);
+    @Override
+    protected Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> optional, DeserializationContext deserializationContext) {
+        return new Instance(optional);
+    }
+
+    public static class Instance extends AbstractCriterionTriggerInstance {
+        public Instance(Optional<ContextAwarePredicate> predicate) {
+            super(predicate);
         }
     }
 }

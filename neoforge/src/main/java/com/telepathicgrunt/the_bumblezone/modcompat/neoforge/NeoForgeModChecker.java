@@ -6,7 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.loadupModCompat;
 import static com.telepathicgrunt.the_bumblezone.modcompat.ModChecker.printErrorToLogs;
 
-public class ForgeModChecker {
+public class NeoForgeModChecker {
 
     /**
      * -- DO NOT TURN THE LAMBDAS INTO METHOD REFS. Method refs are not classloading safe. --
@@ -24,14 +24,14 @@ public class ForgeModChecker {
         String modid = "";
         try {
 
-            modid = "pokecube_mobs";
-            loadupModCompat(modid, () -> new PokecubeCompat());
+//            modid = "pokecube_mobs";
+//            loadupModCompat(modid, () -> new PokecubeCompat());
 
             modid = "quark";
             loadupModCompat(modid, () -> new QuarkCompat());
 
-            modid = "productivebees";
-            loadupModCompat(modid, () -> new ProductiveBeesCompat());
+//            modid = "productivebees";
+//            loadupModCompat(modid, () -> new ProductiveBeesCompat());
 
             modid = "bk";
             loadupModCompat(modid, () -> new BeekeeperCompat());
@@ -48,8 +48,8 @@ public class ForgeModChecker {
             modid = "dragonenchants";
             loadupModCompat(modid, () -> new DragonEnchantsCompat());
 
-            modid = "curios";
-            loadupModCompat(modid, () -> new CuriosCompat());
+//            modid = "curios";
+//            loadupModCompat(modid, () -> new CuriosCompat());
 
             modid = "rubidium";
             loadupModCompat(modid, () -> new RubidiumCompat());
@@ -79,8 +79,8 @@ public class ForgeModChecker {
             modid = "reliquary";
             loadupModCompat(modid, () -> new ReliquaryCompat());
 
-            modid = "mekanism";
-            loadupModCompat(modid, () -> new MekanismCompat());
+//            modid = "mekanism";
+//            loadupModCompat(modid, () -> new MekanismCompat());
 
             modid = "tropicraft";
             loadupModCompat(modid, () -> new TropicraftCompat());

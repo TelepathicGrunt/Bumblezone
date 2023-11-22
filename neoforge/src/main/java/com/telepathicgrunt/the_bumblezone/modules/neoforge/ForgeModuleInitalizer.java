@@ -10,12 +10,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +52,8 @@ public class ForgeModuleInitalizer {
         });
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ForgeModuleInitalizer::onRegisterCapabilties);
-        MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, ForgeModuleInitalizer::onEntityAttach);
-        MinecraftForge.EVENT_BUS.addListener(ForgeModuleInitalizer::onPlayerClone);
+        NeoForge.EVENT_BUS.addGenericListener(Entity.class, ForgeModuleInitalizer::onEntityAttach);
+        NeoForge.EVENT_BUS.addListener(ForgeModuleInitalizer::onPlayerClone);
     }
 
     public static void onRegisterCapabilties(RegisterCapabilitiesEvent event) {

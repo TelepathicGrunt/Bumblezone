@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.neoforge;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.telepathicgrunt.the_bumblezone.client.BeehemothControls;
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.client.settings.IKeyConflictContext;
+import net.neoforged.neoforge.client.settings.IKeyConflictContext;;
 
 public class BeehemothControlsImpl {
     public static KeyMapping createKey(String display, BeehemothControls.KeyConflict conflict, InputConstants.Key key, String category) {

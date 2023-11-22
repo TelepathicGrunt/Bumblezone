@@ -1,71 +1,71 @@
 package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BzGeneralConfig {
-    public static final ForgeConfigSpec GENERAL_SPEC;
+    public static final ModConfigSpec GENERAL_SPEC;
 
-    public static ForgeConfigSpec.ConfigValue<List<? extends String>> variantBeeTypes;
-    public static ForgeConfigSpec.DoubleValue beehemothSpeed;
-    public static ForgeConfigSpec.BooleanValue beehemothFriendlyFire;
-    public static ForgeConfigSpec.BooleanValue specialBeeSpawning;
-    public static ForgeConfigSpec.BooleanValue beeLootInjection;
-    public static ForgeConfigSpec.BooleanValue moddedBeeLootInjection;
-    public static ForgeConfigSpec.BooleanValue glisteringHoneyBrewingRecipe;
-    public static ForgeConfigSpec.BooleanValue beeStingerBrewingRecipe;
-    public static ForgeConfigSpec.BooleanValue beeSoupBrewingRecipe;
-    public static ForgeConfigSpec.IntValue nearbyBeesPerPlayerInBz;
-    public static ForgeConfigSpec.BooleanValue dispensersDropGlassBottles;
-    public static ForgeConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
-    public static ForgeConfigSpec.BooleanValue pileOfPollenHyperFireSpread;
-    public static ForgeConfigSpec.BooleanValue superCandlesBurnsMobs;
-    public static ForgeConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
-    public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
-    public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
-    public static ForgeConfigSpec.BooleanValue beeQueenSpecialDayTrades;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthLaBeeDaLoca;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeWareOfTheTemple;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthKnowing;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthRadiance;
-    public static ForgeConfigSpec.IntValue musicDiscTimeLengthLife;
-    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
-    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
-    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
-    public static ForgeConfigSpec.BooleanValue crystallineFlowerConsumeExperienceUI;
-    public static ForgeConfigSpec.IntValue crystallineFlowerEnchantingPowerAllowedPerTier;
-    public static ForgeConfigSpec.IntValue crystallineFlowerExtraXpNeededForTiers;
-    public static ForgeConfigSpec.IntValue crystallineFlowerExtraTierCost;
-    public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
-    public static ForgeConfigSpec.BooleanValue repeatableEssenceEvents;
-    public static ForgeConfigSpec.IntValue cosmicCrystalHealth;
-    public static ForgeConfigSpec.IntValue ragingEssenceAbilityUse;
-    public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
-    public static ForgeConfigSpec.IntValue knowingEssenceAbilityUse;
-    public static ForgeConfigSpec.IntValue knowingEssenceCooldown;
-    public static ForgeConfigSpec.BooleanValue knowingEssenceStructureNameServer;
-    public static ForgeConfigSpec.IntValue calmingEssenceAbilityUse;
-    public static ForgeConfigSpec.IntValue calmingEssenceCooldown;
-    public static ForgeConfigSpec.IntValue lifeEssenceAbilityUse;
-    public static ForgeConfigSpec.IntValue lifeEssenceCooldown;
-    public static ForgeConfigSpec.IntValue radianceEssenceAbilityUse;
-    public static ForgeConfigSpec.IntValue radianceEssenceCooldown;
-    public static ForgeConfigSpec.IntValue continuityEssenceCooldown;
+    public static ModConfigSpec.ConfigValue<List<? extends String>> variantBeeTypes;
+    public static ModConfigSpec.DoubleValue beehemothSpeed;
+    public static ModConfigSpec.BooleanValue beehemothFriendlyFire;
+    public static ModConfigSpec.BooleanValue specialBeeSpawning;
+    public static ModConfigSpec.BooleanValue beeLootInjection;
+    public static ModConfigSpec.BooleanValue moddedBeeLootInjection;
+    public static ModConfigSpec.BooleanValue glisteringHoneyBrewingRecipe;
+    public static ModConfigSpec.BooleanValue beeStingerBrewingRecipe;
+    public static ModConfigSpec.BooleanValue beeSoupBrewingRecipe;
+    public static ModConfigSpec.IntValue nearbyBeesPerPlayerInBz;
+    public static ModConfigSpec.BooleanValue dispensersDropGlassBottles;
+    public static ModConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
+    public static ModConfigSpec.BooleanValue pileOfPollenHyperFireSpread;
+    public static ModConfigSpec.BooleanValue superCandlesBurnsMobs;
+    public static ModConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
+    public static ModConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
+    public static ModConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
+    public static ModConfigSpec.BooleanValue beeQueenSpecialDayTrades;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthLaBeeDaLoca;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthBeeWareOfTheTemple;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthKnowing;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthRadiance;
+    public static ModConfigSpec.IntValue musicDiscTimeLengthLife;
+    public static ModConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
+    public static ModConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
+    public static ModConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
+    public static ModConfigSpec.BooleanValue crystallineFlowerConsumeExperienceUI;
+    public static ModConfigSpec.IntValue crystallineFlowerEnchantingPowerAllowedPerTier;
+    public static ModConfigSpec.IntValue crystallineFlowerExtraXpNeededForTiers;
+    public static ModConfigSpec.IntValue crystallineFlowerExtraTierCost;
+    public static ModConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
+    public static ModConfigSpec.BooleanValue repeatableEssenceEvents;
+    public static ModConfigSpec.IntValue cosmicCrystalHealth;
+    public static ModConfigSpec.IntValue ragingEssenceAbilityUse;
+    public static ModConfigSpec.IntValue ragingEssenceCooldown;
+    public static ModConfigSpec.IntValue knowingEssenceAbilityUse;
+    public static ModConfigSpec.IntValue knowingEssenceCooldown;
+    public static ModConfigSpec.BooleanValue knowingEssenceStructureNameServer;
+    public static ModConfigSpec.IntValue calmingEssenceAbilityUse;
+    public static ModConfigSpec.IntValue calmingEssenceCooldown;
+    public static ModConfigSpec.IntValue lifeEssenceAbilityUse;
+    public static ModConfigSpec.IntValue lifeEssenceCooldown;
+    public static ModConfigSpec.IntValue radianceEssenceAbilityUse;
+    public static ModConfigSpec.IntValue radianceEssenceCooldown;
+    public static ModConfigSpec.IntValue continuityEssenceCooldown;
 
     static {
-        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
         setupConfig(configBuilder);
         GENERAL_SPEC = configBuilder.build();
     }
 
-    private static void setupConfig(ForgeConfigSpec.Builder builder) {
+    private static void setupConfig(ModConfigSpec.Builder builder) {
         builder.push("Variant Bee Options");
 
         variantBeeTypes = builder

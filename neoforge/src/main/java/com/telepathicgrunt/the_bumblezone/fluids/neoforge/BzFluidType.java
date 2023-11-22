@@ -2,9 +2,9 @@ package com.telepathicgrunt.the_bumblezone.fluids.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.Util;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.SoundAction;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.common.SoundAction;
+import net.neoforged.neoforge.fluids.FluidType;
 
 import java.util.function.Consumer;
 

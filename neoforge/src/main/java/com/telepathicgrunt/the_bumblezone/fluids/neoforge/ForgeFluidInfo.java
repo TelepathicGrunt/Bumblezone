@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -18,7 +17,7 @@ public class ForgeFluidInfo implements FluidInfo {
     private final FluidProperties properties;
     private final Supplier<BzFluidType> type;
 
-    public ForgeFluidInfo(RegistryObject<BzFluidType> type, FluidProperties properties) {
+    public ForgeFluidInfo(Supplier<BzFluidType> type, FluidProperties properties) {
         this.properties = properties;
         this.type = type;
     }
