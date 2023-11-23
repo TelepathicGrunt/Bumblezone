@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public interface CustomRegistry<T> extends ResourcefulRegistry<T> {
 
     static <T, K extends Registry<T>> CustomRegistry<T> of(String modId, Class<T> type, ResourceKey<K> key, boolean save, boolean sync, boolean allowModification) {
-        Pair<Supplier<CustomRegistryLookup<T, T>>, ResourcefulRegistry<T>> pair = ResourcefulRegistries.createCustomRegistryInternal(modId, type, key, save, sync, allowModification);
+        Pair<Supplier<CustomRegistryLookup<T, T>>, ResourcefulRegistry<T>> pair = ResourcefulRegistries.createCustomRegistryInternal(modId, key, save, sync, allowModification);
         return new CustomRegistry<>() {
             @Override
             public CustomRegistryLookup<T, T> lookup() {

@@ -107,7 +107,7 @@ public class HoneyBottleDispenseBehavior extends DefaultDispenseItemBehavior {
      */
     @Override
     protected void playSound(BlockSource source) {
-        source.getLevel().levelEvent(1002, source.getPos(), 0);
+        source.level().levelEvent(1002, source.pos(), 0);
     }
 
     /**

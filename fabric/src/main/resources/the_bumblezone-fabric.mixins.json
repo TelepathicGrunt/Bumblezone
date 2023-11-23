@@ -50,7 +50,6 @@
     "item.InventoryMixin",
     "item.ItemStackMixin",
     "item.RecordItemMixin",
-    "item.SimpleCookingSerializerMixin",
     "loot.LootTableMixin",
     "menu.ResultSlotMixin"
   ]
