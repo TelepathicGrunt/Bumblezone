@@ -28,7 +28,7 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
      * checks if Potion effect is ready to be applied this tick.
      */
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration >= 1;
     }
 
@@ -36,31 +36,31 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
      * sync paralysis to client so they can shake on client side
      */
     @Override
-    public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
-        MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-        if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {
-            MobEffectClientSyncPacket.sendToClient(entity, effect);
+    public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
+        MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.get());
+        if(!livingEntity.isRemoved() && effect != null && livingEntity.level() instanceof ServerLevel) {
+            MobEffectClientSyncPacket.sendToClient(livingEntity, effect);
         }
-        super.addAttributeModifiers(entity, attributes, amplifier);
+
+        super.onEffectStarted(livingEntity, amplifier);
     }
 
-    @Override
-    public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
-        MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-        if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {
-            MobEffectClientSyncPacket.sendToClient(
-                entity,
-                new MobEffectInstance(
-                    BzEffects.PARALYZED.get(),
-                    0,
-                    effect.getAmplifier() + 1,
-                    false,
-                    true,
-                    true)
-            );
-        }
-        super.removeAttributeModifiers(entity, attributes, amplifier);
-    }
+    //TODO: Mixin effect removal and apply this (Check if needed first)
+//    public void onEffectRemoval(LivingEntity entity) {
+//        MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
+//        if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {
+//            MobEffectClientSyncPacket.sendToClient(
+//                entity,
+//                new MobEffectInstance(
+//                    BzEffects.PARALYZED.get(),
+//                    0,
+//                    effect.getAmplifier() + 1,
+//                    false,
+//                    true,
+//                    true)
+//            );
+//        }
+//    }
 
     public static boolean isParalyzed(LivingEntity livingEntity) {
         if(livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {

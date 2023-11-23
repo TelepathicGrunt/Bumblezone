@@ -236,7 +236,7 @@ public class BumblezoneForge {
                 final Pack pack = Pack.create(
                     Bumblezone.MODID + ":add_pack/" + id.getPath(), displayName,
                     mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
-                    ServerPacksSource.fixedResources(new PathPackResources(packInfo.description().getString(), resourcePath, true)),
+                    new PathPackResources.PathResourcesSupplier(resourcePath, true),
                     packInfo,
                     Pack.Position.BOTTOM,
                     false,

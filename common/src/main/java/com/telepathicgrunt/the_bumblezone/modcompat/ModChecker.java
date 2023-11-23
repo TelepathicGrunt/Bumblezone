@@ -36,7 +36,6 @@ public class ModChecker {
 	public static boolean potionOfBeesPresent = false;
 	public static boolean twilightForestPresent = false;
 	public static boolean dragonEnchantsPresent = false;
-	public static boolean rubidiumPresent = false;
 	public static boolean goodallPresent = false;
 	public static boolean backpackedPresent = false;
 	public static boolean projectileDamageAttributePresent = false;

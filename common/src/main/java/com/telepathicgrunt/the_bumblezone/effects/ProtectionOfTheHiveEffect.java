@@ -38,7 +38,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect implements EffectExtens
      * checks if Potion effect is ready to be applied this tick.
      */
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration >= 1;
     }
 
@@ -46,20 +46,19 @@ public class ProtectionOfTheHiveEffect extends MobEffect implements EffectExtens
      * Calm all attacking bees when first applied to the entity
      */
     @Override
-    public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
-
+    public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
         SEE_THROUGH_WALLS.range(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D);
-        List<Bee> beeList = entity.level().getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, entity, entity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
+        List<Bee> beeList = livingEntity.level().getNearbyEntities(Bee.class, SEE_THROUGH_WALLS, livingEntity, livingEntity.getBoundingBox().inflate(BzBeeAggressionConfigs.aggressionTriggerRadius * 0.5D));
 
         for (Bee bee : beeList) {
-            if(bee.getTarget() == entity && !bee.isNoAi()) {
+            if(bee.getTarget() == livingEntity && !bee.isNoAi()) {
                 bee.setTarget(null);
                 bee.setPersistentAngerTarget(null);
                 bee.setRemainingPersistentAngerTime(0);
             }
         }
 
-        super.addAttributeModifiers(entity, attributes, amplifier);
+        super.onEffectStarted(livingEntity, amplifier);
     }
 
     /**

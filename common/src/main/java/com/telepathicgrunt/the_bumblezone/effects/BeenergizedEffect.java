@@ -22,7 +22,7 @@ public class BeenergizedEffect extends MobEffect implements EffectExtension {
      * checks if Potion effect is ready to be applied this tick.
      */
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration >= 1;
     }
 }

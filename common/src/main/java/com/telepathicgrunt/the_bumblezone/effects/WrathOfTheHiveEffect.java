@@ -62,7 +62,7 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
      * checks if Potion effect is ready to be applied this tick.
      */
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration >= 1;
     }
 
@@ -272,10 +272,9 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
     }
 
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
-    @Override
-    public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
+    // TODO: Mixin apply this to effect removal to re-apply
+    public void effectRemoval(LivingEntity entity) {
         if (entity instanceof Mob mob && mob.isNoAi()) {
-            super.removeAttributeModifiers(entity, attributes, amplifier);
             return;
         }
 
@@ -287,10 +286,6 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
                     1,
                     false,
                     true));
-        }
-        else{
-            // remove the effect like normal
-            super.removeAttributeModifiers(entity, attributes, amplifier);
         }
     }
 

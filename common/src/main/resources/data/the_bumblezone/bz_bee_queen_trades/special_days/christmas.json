@@ -70,6 +70,13 @@
       "required": false
     },
     {
+      "id": "create_confectionery:gingerbread_man",
+      "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "spectrum:star_candy",
       "count": 1,
       "xp_reward": 0,
@@ -79,6 +86,20 @@
     {
       "id": "spectrum:purple_star_candy",
       "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "simplefarming:candy",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "simplefarming:candy_cane",
+      "count": 3,
       "xp_reward": 0,
       "weight": 1,
       "required": false

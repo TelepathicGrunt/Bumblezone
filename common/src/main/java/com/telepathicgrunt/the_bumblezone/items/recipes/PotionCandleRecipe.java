@@ -1,8 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.items.recipes;
 
+import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -17,8 +20,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -33,6 +35,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,7 +46,6 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
-    private final ResourceLocation id;
     private final String group;
     private final CraftingBookCategory category;
     private final int outputCount;
@@ -58,9 +60,21 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private final boolean allowLingeringPotions;
     private final int maxLevelCap;
 
-    public PotionCandleRecipe(ResourceLocation id, CraftingBookCategory category, String group, int outputCount, int maxAllowedPotions, NonNullList<Ingredient> shapedRecipeItems, NonNullList<Ingredient> shapelessRecipeItems, int width, int height, boolean allowNormalPotions, boolean allowSplashPotions, boolean allowLingeringPotions, int maxLevelCap) {
-        super(id, category);
-        this.id = id;
+    public PotionCandleRecipe(
+            CraftingBookCategory category,
+            String group,
+            int outputCount,
+            int maxAllowedPotions,
+            NonNullList<Ingredient> shapedRecipeItems,
+            NonNullList<Ingredient> shapelessRecipeItems,
+            int width,
+            int height,
+            boolean allowNormalPotions,
+            boolean allowSplashPotions,
+            boolean allowLingeringPotions,
+            int maxLevelCap)
+    {
+        super(category);
         this.group = group;
         this.category = category;
         this.outputCount = outputCount;
@@ -323,11 +337,6 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
     public RecipeType<?> getType() {
         return RecipeType.CRAFTING;
     }
@@ -338,45 +347,51 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<PotionCandleRecipe>, BzRecipeSerializer<PotionCandleRecipe> {
-        private static NonNullList<Ingredient> getIngredients(JsonArray jsonElements) {
-            NonNullList<Ingredient> defaultedList = NonNullList.create();
 
-            for (int i = 0; i < jsonElements.size(); ++i) {
-                Ingredient ingredient = Ingredient.fromJson(jsonElements.get(i));
-                if (!ingredient.isEmpty()) {
-                    defaultedList.add(ingredient);
+        private static final Codec<PotionCandleRecipe> CODEC = PotionCandleRecipe.Serializer.RawPotionRecipe.CODEC.flatXmap(rawShapedRecipe -> {
+            String[] strings = ShapedRecipeAccessor.callShrink(rawShapedRecipe.shapedPattern);
+            int width = strings[0].length();
+            int height = strings.length;
+            NonNullList<Ingredient> shapedRecipeItems = NonNullList.withSize(width * height, Ingredient.EMPTY);
+            HashSet<String> set = Sets.newHashSet(rawShapedRecipe.shapedKey.keySet());
+            for (int k = 0; k < strings.length; ++k) {
+                String string = strings[k];
+                for (int l = 0; l < string.length(); ++l) {
+                    String string2 = string.substring(l, l + 1);
+                    Ingredient ingredient = string2.equals(" ") ? Ingredient.EMPTY : rawShapedRecipe.shapedKey.get(string2);
+                    if (ingredient == null) {
+                        return DataResult.error(() -> "Pattern references symbol '" + string2 + "' but it's not defined in the shapedKey");
+                    }
+                    set.remove(string2);
+                    shapedRecipeItems.set(l + width * k, ingredient);
                 }
             }
+            if (!set.isEmpty()) {
+                return DataResult.error(() -> "Key defines symbols that aren't used in shapedPattern: " + set);
+            }
+            PotionCandleRecipe potionCandleRecipe = new PotionCandleRecipe(
+                    rawShapedRecipe.category,
+                    rawShapedRecipe.group,
+                    rawShapedRecipe.resultCount(),
+                    rawShapedRecipe.maxAllowedPotions(),
+                    shapedRecipeItems,
+                    rawShapedRecipe.shapelessIngredients(),
+                    width,
+                    height,
+                    rawShapedRecipe.allowNormalPotions(),
+                    rawShapedRecipe.allowSplashPotions(),
+                    rawShapedRecipe.allowLingeringPotions(),
+                    rawShapedRecipe.maxLevelCap());
 
-            return defaultedList;
-        }
+            return DataResult.success(potionCandleRecipe);
+        },
+        potionCandleRecipe -> {
+            throw new NotImplementedException("Serializing potionCandleRecipe is not implemented yet.");
+        });
 
         @Override
-        public PotionCandleRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            String category = GsonHelper.getAsString(json, "category", "");
-
-            //shaped
-            Map<String, Ingredient> map = ShapedRecipeAccessor.callKeyFromJson(GsonHelper.getAsJsonObject(json, "key"));
-            String[] astring = ShapedRecipeAccessor.callShrink(ShapedRecipeAccessor.callPatternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
-            int width = astring[0].length();
-            int height = astring.length;
-            NonNullList<Ingredient> shapedRecipeItems = ShapedRecipeAccessor.callDissolvePattern(astring, map, width, height);
-
-            //shapeless
-            NonNullList<Ingredient> shapelessRecipeItems = getIngredients(GsonHelper.getAsJsonArray(json, "shapelessExtraIngredients"));
-            if (shapelessRecipeItems.isEmpty()) {
-                throw new JsonParseException("No shapeless ingredients for Super Potion Candle recipe");
-            }
-
-            int maxPotions = json.get("maxAllowedPotions").getAsInt();
-            boolean allowNormalPotionsRead = json.get("allowNormalPotions").getAsBoolean();
-            boolean allowSplashPotionsRead = json.get("allowSplashPotions").getAsBoolean();
-            boolean allowLingeringPotionsRead = json.get("allowLingeringPotions").getAsBoolean();
-            int maxLevelRead = json.get("maxLevelCap").getAsInt();
-            int resultCount = json.get("resultCount").getAsInt();
-
-            return new PotionCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCount, maxPotions, shapedRecipeItems, shapelessRecipeItems, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+        public Codec<PotionCandleRecipe> codec() {
+            return CODEC;
         }
 
         public JsonObject toJson(PotionCandleRecipe recipe) {
@@ -416,16 +431,16 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             for(String string : pattern) {
                 jsonArray.add(string);
             }
-            json.add("pattern", jsonArray);
+            json.add("shapedPattern", jsonArray);
 
             JsonObject jsonObject = new JsonObject();
             for(Map.Entry<Character, Ingredient> entry : inputs.char2ObjectEntrySet()) {
-                jsonObject.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
+                jsonObject.add(String.valueOf(entry.getKey()), entry.getValue().toJson(true));
             }
-            json.add("key", jsonObject);
+            json.add("shapedKey", jsonObject);
 
             JsonArray shapelessRecipeJsonArray = new JsonArray();
-            recipe.shapelessRecipeItems.stream().map(Ingredient::toJson).forEach(shapelessRecipeJsonArray::add);
+            recipe.shapelessRecipeItems.stream().map(ingredient -> ingredient.toJson(true)).forEach(shapelessRecipeJsonArray::add);
             json.add("shapelessExtraIngredients", shapelessRecipeJsonArray);
 
             json.addProperty("maxAllowedPotions", recipe.maxAllowedPotions);
@@ -439,7 +454,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         }
 
         @Override
-        public PotionCandleRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public PotionCandleRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             String category = buffer.readUtf(32767);
 
@@ -458,7 +473,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             boolean allowLingeringPotionsRead = buffer.readBoolean();
             int maxLevelRead = buffer.readVarInt();
             int resultCountRead = buffer.readVarInt();
-            return new PotionCandleRecipe(recipeId, CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
+            return new PotionCandleRecipe(CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
         @Override
@@ -483,6 +498,70 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             buffer.writeBoolean(recipe.allowLingeringPotions);
             buffer.writeVarInt(recipe.maxLevelCap);
             buffer.writeVarInt(recipe.outputCount);
+        }
+
+        record RawPotionRecipe(String group,
+                               CraftingBookCategory category,
+                               Map<String, Ingredient> shapedKey,
+                               List<String> shapedPattern,
+                               NonNullList<Ingredient> shapelessIngredients,
+                               int maxAllowedPotions,
+                               boolean allowNormalPotions,
+                               boolean allowSplashPotions,
+                               boolean allowLingeringPotions,
+                               int maxLevelCap,
+                               int resultCount)
+        {
+            static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().flatXmap(list -> {
+                if (list.size() > 3) {
+                    return DataResult.error(() -> "Invalid shapedPattern: too many rows, 3 is maximum");
+                }
+                if (list.isEmpty()) {
+                    return DataResult.error(() -> "Invalid shapedPattern: empty shapedPattern not allowed");
+                }
+                int i = list.get(0).length();
+                for (String string : list) {
+                    if (string.length() > 3) {
+                        return DataResult.error(() -> "Invalid shapedPattern: too many columns, 3 is maximum");
+                    }
+                    if (i == string.length()) continue;
+                    return DataResult.error(() -> "Invalid shapedPattern: each row must be the same width");
+                }
+                return DataResult.success(list);
+            }, DataResult::success);
+
+            static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(string -> {
+                if (string.length() != 1) {
+                    return DataResult.error(() -> "Invalid shapedKey entry: '" + string + "' is an invalid symbol (must be 1 character only).");
+                }
+                if (" ".equals(string)) {
+                    return DataResult.error(() -> "Invalid shapedKey entry: ' ' is a reserved symbol.");
+                }
+                return DataResult.success(string);
+            }, DataResult::success);
+
+            public static final Codec<RawPotionRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(potionRecipe -> potionRecipe.group),
+                    CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(potionRecipe -> potionRecipe.category),
+                    ExtraCodecs.strictUnboundedMap(SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY).fieldOf("shapedKey").forGetter(potionRecipe -> potionRecipe.shapedKey),
+                    PATTERN_CODEC.fieldOf("shapedPattern").forGetter(potionRecipe -> potionRecipe.shapedPattern),
+                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
+                        Ingredient[] ingredients = list.stream().filter(ingredient -> !ingredient.isEmpty()).toArray(Ingredient[]::new);
+                        if (ingredients.length == 0) {
+                            return DataResult.error(() -> "No ingredients for shapeless recipe");
+                        }
+                        if (ingredients.length > 9) {
+                            return DataResult.error(() -> "Too many ingredients for shapeless recipe");
+                        }
+                        return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingredients));
+                    }, DataResult::success).forGetter(shapelessRecipe -> shapelessRecipe.shapelessIngredients),
+                    Codec.intRange(1, 6).fieldOf("maxAllowedPotions").forGetter(potionRecipe -> potionRecipe.maxAllowedPotions),
+                    Codec.BOOL.fieldOf("allowNormalPotions").forGetter(potionRecipe -> potionRecipe.allowNormalPotions),
+                    Codec.BOOL.fieldOf("allowSplashPotions").forGetter(potionRecipe -> potionRecipe.allowSplashPotions),
+                    Codec.BOOL.fieldOf("allowLingeringPotions").forGetter(potionRecipe -> potionRecipe.allowLingeringPotions),
+                    Codec.intRange(1, 1000000).fieldOf("maxLevelCap").forGetter(potionRecipe -> potionRecipe.maxLevelCap),
+                    Codec.intRange(1, 64).fieldOf("resultCount").forGetter(potionRecipe -> potionRecipe.resultCount)
+            ).apply(instance, RawPotionRecipe::new));
         }
     }
 }

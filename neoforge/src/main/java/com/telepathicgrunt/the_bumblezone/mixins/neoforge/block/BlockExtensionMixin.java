@@ -9,13 +9,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.extensions.IForgeBlock;
+import net.neoforged.neoforge.common.extensions.IBlockExtension;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(BlockExtension.class)
-public interface BlockExtensionMixin extends IForgeBlock {
+public interface BlockExtensionMixin extends IBlockExtension {
 
     @Shadow
     BlockPathTypes bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob);
@@ -42,12 +42,12 @@ public interface BlockExtensionMixin extends IForgeBlock {
     @Override
     default boolean canStickTo(BlockState state, BlockState other) {
         return this.bz$canStickTo(state, other)
-                .orElseGet(() -> IForgeBlock.super.canStickTo(state, other));
+                .orElseGet(() -> IBlockExtension.super.canStickTo(state, other));
     }
 
     @Override
     default boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter level, BlockPos pos, FluidState fluidState) {
         return this.bz$shouldNotDisplayFluidOverlay()
-                .orElseGet(() -> IForgeBlock.super.shouldDisplayFluidOverlay(state, level, pos, fluidState));
+                .orElseGet(() -> IBlockExtension.super.shouldDisplayFluidOverlay(state, level, pos, fluidState));
     }
 }

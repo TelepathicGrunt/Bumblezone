@@ -15,10 +15,12 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
+import java.util.List;
+
 public class TagItemRemovals extends LootItemConditionalFunction {
     final TagKey<Item> tagKey;
 
-    public TagItemRemovals(LootItemCondition[] itemConditions, TagKey<Item> tagKey) {
+    public TagItemRemovals(List<LootItemCondition> itemConditions, TagKey<Item> tagKey) {
         super(itemConditions);
         this.tagKey = tagKey;
     }

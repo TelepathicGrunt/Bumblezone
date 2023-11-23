@@ -41,6 +41,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -74,6 +75,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.UUID;
 
@@ -555,7 +557,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             float angle = (0.01745329251F * this.yBodyRot);
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
-            passenger.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ() + extraZ);
+            passenger.setPos(
+                    getX() + extraX,
+                    getY() + this.getPassengerRidingPosition(passenger).y() + passenger.getMyRidingOffset(this),
+                    getZ() + extraZ);
 
             double currentSpeed = getDeltaMovement().length();
             if(currentSpeed > 0.000001D &&
@@ -568,10 +573,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        float f = Math.min(0.25F, this.walkAnimation.speed());
+    protected Vector3f getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f) {
+        float ff = Math.min(0.25F, this.walkAnimation.speed());
         float f1 = this.walkAnimation.position();
-        return (double) getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * f);
+        float height = (float) (getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * ff));
+        return new Vector3f(0.0f, height, 0.0f);
     }
 
     @Override

@@ -50,6 +50,7 @@ dependencies {
 
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
 
+    modCompileOnly("dev.emi:trinkets:${rootProject.trinkets}")
     //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
 
     //modLocalRuntime("com.telepathicgrunt:CommandStructures-Fabric:${project.commandstructures_fabric}")

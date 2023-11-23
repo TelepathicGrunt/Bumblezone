@@ -45,10 +45,7 @@ public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel>
             stack.scale(0.6f, 0.6f, 0.6f);
 
             int alpha = 180;
-            MultiBufferSource bufferToUse = buffer;
-            if (!ModChecker.rubidiumPresent) {
-                bufferToUse = new TranslucentItemRenderTypeBuffer(buffer, alpha);
-            }
+            MultiBufferSource bufferToUse = new TranslucentItemRenderTypeBuffer(buffer, alpha);
             this.itemRenderer.renderItem(
                     beeQueenEntity,
                     beeQueenEntity.getBonusTradeItem(),

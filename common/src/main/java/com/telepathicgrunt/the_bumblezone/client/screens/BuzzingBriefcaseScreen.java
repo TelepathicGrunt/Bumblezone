@@ -133,7 +133,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
             }
         }
 
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         RenderSystem.enableDepthTest();
 
