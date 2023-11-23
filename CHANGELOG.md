@@ -1,3 +1,11 @@
+### **(V.7.1.1 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Fixed Bee Queen not showing Thanksgivings only trade properly.
+
+Make Bee Queen not have Luminescent Wax for bonus trades.
+
+
 ### **(V.7.1.0 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:

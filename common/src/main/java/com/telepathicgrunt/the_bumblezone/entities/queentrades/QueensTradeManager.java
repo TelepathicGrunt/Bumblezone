@@ -430,7 +430,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
 
     //Source: http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_thanks_giving_date_for_any_year.htm
     private static LocalDate thanksgivingEveAlgo(int year) {
-        return Year.of(year).atMonth(Month.NOVEMBER).atDay(1).with(TemporalAdjusters.lastInMonth(DayOfWeek.WEDNESDAY));
+        return Year.of(year).atMonth(Month.NOVEMBER).atDay(1).with(TemporalAdjusters.dayOfWeekInMonth(4, DayOfWeek.THURSDAY));
     }
 
     //Source: https://www.geeksforgeeks.org/how-to-calculate-the-easter-date-for-a-given-year-using-gauss-algorithm/#
