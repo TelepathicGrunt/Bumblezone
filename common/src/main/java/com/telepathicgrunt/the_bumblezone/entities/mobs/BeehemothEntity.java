@@ -594,12 +594,10 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    protected void playBlockFallSound() {
-    }
+    protected void playBlockFallSound() {}
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState blockState) {
-    }
+    protected void playStepSound(BlockPos pos, BlockState blockState) {}
 
     @Override
     protected SoundEvent getAmbientSound() {

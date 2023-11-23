@@ -26,7 +26,9 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.advancements.AdvancementTree;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -42,6 +44,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandomList;
@@ -56,6 +59,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -86,6 +90,7 @@ import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -252,17 +257,17 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        return this.getDimensions(Pose.STANDING).height * 0.90f;
+    protected Vector3f getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f) {
+        return new Vector3f(0.0f, this.getDimensions(Pose.STANDING).height * 0.90f, 0.0f);
     }
 
     @Override
-    public void positionRider(Entity entity, MoveFunction moveFunction) {
-        if (this.hasPassenger(entity)) {
-            double riderYOffset = this.getY() + this.getPassengersRidingOffset() + entity.getMyRidingOffset();
+    public void positionRider(Entity passenger, MoveFunction moveFunction) {
+        if (this.hasPassenger(passenger)) {
+            double riderYOffset = this.getY() + this.getPassengerRidingPosition(passenger).y() + passenger.getMyRidingOffset(this);
             Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
-            moveFunction.accept(entity, this.getX() + sideVect.x() - (forwardVect.x() * 0.5d), riderYOffset, this.getZ() + sideVect.z() - (forwardVect.z() * 0.5d));
+            moveFunction.accept(passenger, this.getX() + sideVect.x() - (forwardVect.x() * 0.5d), riderYOffset, this.getZ() + sideVect.z() - (forwardVect.z() * 0.5d));
         }
     }
 
@@ -802,21 +807,28 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private static final ResourceLocation BEE_ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "essence/bee_essence_infusion");
 
     private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
+        AdvancementTree tree = serverPlayer.server.getAdvancements().tree();
         AdvancementHolder parentAdvancement = serverPlayer.server.getAdvancements().get(advancementRL);
         if (parentAdvancement == null) {
             return;
         }
-        Iterable<Advancement> advancements = parentAdvancement.value().getChildren();
-        for (Advancement advancement : advancements) {
-            if (advancement.getId().equals(BEE_ESSENCE_ADVANCEMENT_RL)) {
+        AdvancementNode advancementParentNode = tree.get(parentAdvancement);
+        if (advancementParentNode == null) {
+            return;
+        }
+
+        AdvancementHolder beeEssenceAdvancementHolder = serverPlayer.server.getAdvancements().get(BEE_ESSENCE_ADVANCEMENT_RL);
+        Iterable<AdvancementNode> advancements = advancementParentNode.children();
+        for (AdvancementNode advancementChildNode : advancements) {
+            if (advancementChildNode.holder().equals(beeEssenceAdvancementHolder)) {
                 continue;
             }
 
-            AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+            AdvancementProgress advancementprogress = serverPlayer.getAdvancements().getOrStartProgress(advancementChildNode.holder());
             for (String criteria : advancementprogress.getCompletedCriteria()) {
-                serverPlayer.getAdvancements().revoke(advancement, criteria);
+                serverPlayer.getAdvancements().revoke(advancementChildNode.holder(), criteria);
             }
-            resetAdvancementTree(serverPlayer, advancement.getId());
+            resetAdvancementTree(serverPlayer, advancementChildNode.holder().id());
         }
     }
 
