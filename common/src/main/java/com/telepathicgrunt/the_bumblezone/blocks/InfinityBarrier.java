@@ -37,7 +37,7 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
                 .strength(-1.0F, 3600000.8F)
                 .lightLevel((blockState) -> 15)
                 .noLootTable()
-                .noParticlesOnBreak()
+                .noTerrainParticles()
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
                 .pushReaction(PushReaction.BLOCK));
     }

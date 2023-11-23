@@ -4,8 +4,8 @@ import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehavi
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.item.Item;
@@ -27,7 +27,7 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
      */
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
-        Level world = source.getLevel();
+        Level world = source.level();
         Position dispensePosition = DispenserBlock.getDispensePosition(source);
         BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
         BlockState blockstate = world.getBlockState(dispenseBlockPos);
@@ -61,7 +61,7 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
      */
     @Override
     protected void playSound(BlockSource source) {
-        source.getLevel().levelEvent(1002, source.getPos(), 0);
+        source.level().levelEvent(1002, source.pos(), 0);
     }
 
 
@@ -69,8 +69,8 @@ public class EmptyBucketDispenseBehavior extends DefaultDispenseItemBehavior {
      * Adds honey bottle to dispenser or if no room, dispense it
      */
     private static void addItemToDispenser(BlockSource source, Item newItem) {
-        if (source.getEntity() instanceof DispenserBlockEntity) {
-			DispenserBlockEntity dispenser = source.getEntity();
+        if (source.blockEntity() instanceof DispenserBlockEntity) {
+			DispenserBlockEntity dispenser = source.blockEntity();
             ItemStack honeyBottle = new ItemStack(newItem);
             if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);

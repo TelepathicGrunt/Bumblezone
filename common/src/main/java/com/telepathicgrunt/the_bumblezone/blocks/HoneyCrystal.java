@@ -40,6 +40,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -217,7 +218,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     }
 
     @Override
-    public boolean canPlaceLiquid(BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
+    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter world, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         return !blockState.getValue(WATERLOGGED) && fluid.is(BzTags.CONVERTIBLE_TO_SUGAR_WATER) && fluid.defaultFluidState().isSource();
     }
 
@@ -236,7 +237,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     }
 
     @Override
-    public ItemStack pickupBlock(LevelAccessor world, BlockPos blockPos, BlockState blockState) {
+    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor world, BlockPos blockPos, BlockState blockState) {
         if (blockState.getValue(WATERLOGGED)) {
             world.setBlock(blockPos, blockState.setValue(WATERLOGGED, false), 3);
             return new ItemStack(BzItems.SUGAR_WATER_BUCKET.get());

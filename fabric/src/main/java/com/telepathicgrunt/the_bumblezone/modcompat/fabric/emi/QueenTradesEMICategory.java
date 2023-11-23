@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.fabric.emi;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import dev.emi.emi.EmiPort;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import net.minecraft.network.chat.Component;
@@ -14,6 +13,6 @@ public class QueenTradesEMICategory extends EmiRecipeCategory {
 	}
 
 	public Component getName() {
-		return EmiPort.translatable("the_bumblezone.recipe_viewers.bee_queen_trades");
+		return Component.translatable("the_bumblezone.recipe_viewers.bee_queen_trades");
 	}
 }

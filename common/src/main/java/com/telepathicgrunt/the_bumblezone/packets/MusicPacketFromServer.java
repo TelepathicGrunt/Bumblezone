@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 public record MusicPacketFromServer(ResourceLocation musicRL, boolean play) implements Packet<MusicPacketFromServer> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "music_packet_from_server");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     public static void sendToClient(Player player, ResourceLocation musicRL, boolean play) {
         MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new MusicPacketFromServer(musicRL, play), player);

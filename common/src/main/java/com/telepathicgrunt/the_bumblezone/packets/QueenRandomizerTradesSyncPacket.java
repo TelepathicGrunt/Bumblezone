@@ -58,7 +58,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
         public QueenRandomizerTradesSyncPacket decode(final FriendlyByteBuf buf) {
             List<RandomizeTradeRowInput> parsedData = new ArrayList<>();
 
-            CompoundTag data = buf.readAnySizeNbt();
+            CompoundTag data = buf.readNbt();
             if (data == null) {
                 Bumblezone.LOGGER.error("Queen Randomizer Trade packet is empty??? Wtf???");
                 return new QueenRandomizerTradesSyncPacket(parsedData);

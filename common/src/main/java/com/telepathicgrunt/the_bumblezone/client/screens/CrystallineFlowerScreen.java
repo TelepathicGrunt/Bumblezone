@@ -130,7 +130,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(guiGraphics);
+        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         RenderSystem.enableDepthTest();
 
@@ -715,7 +715,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontal, double delta) {
         if (canScroll(enchantmentsAvailable.size())) {
             int offscreenRows = this.getOffscreenRows();
             float percentage = (float)delta / (float)offscreenRows;

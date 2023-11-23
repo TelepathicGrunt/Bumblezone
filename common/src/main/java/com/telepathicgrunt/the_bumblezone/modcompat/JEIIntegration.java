@@ -25,6 +25,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -33,11 +34,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
@@ -63,10 +67,14 @@ public class JEIIntegration implements IModPlugin {
                 Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".description"));
     }
 
-    private static void registerExtraRecipes(Recipe<?> baseRecipe, IRecipeRegistration registration, boolean oneRecipeOnly) {
-        if (baseRecipe instanceof PotionCandleRecipe potionCandleRecipe) {
+    private static void registerExtraRecipes(RecipeHolder<?> baseRecipe, IRecipeRegistration registration, boolean oneRecipeOnly) {
+        if (baseRecipe.value() instanceof PotionCandleRecipe potionCandleRecipe) {
             List<CraftingRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
-            registration.addRecipes(RecipeTypes.CRAFTING, extraRecipes);
+            List<RecipeHolder<CraftingRecipe>> holders = new ArrayList<>(extraRecipes.size());
+            for (int i = 0; i < extraRecipes.size(); i++) {
+                holders.add(new RecipeHolder<>(new ResourceLocation(baseRecipe.id().getNamespace(), baseRecipe.id().getPath() + "_" + i), extraRecipes.get(i)));
+            }
+            registration.addRecipes(RecipeTypes.CRAFTING, holders);
         }
     }
 

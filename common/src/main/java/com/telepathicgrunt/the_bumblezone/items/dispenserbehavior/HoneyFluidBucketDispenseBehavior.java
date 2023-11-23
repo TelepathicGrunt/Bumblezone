@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -30,7 +30,7 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
      */
     public ItemStack execute(BlockSource source, ItemStack stack) {
         BucketItem bucketitem = (BucketItem) stack.getItem();
-        ServerLevel world = source.getLevel();
+        ServerLevel world = source.level();
         Position dispensePosition = DispenserBlock.getDispensePosition(source);
         BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
         BlockState blockstate = world.getBlockState(dispenseBlockPos);
@@ -100,8 +100,8 @@ public class HoneyFluidBucketDispenseBehavior extends DefaultDispenseItemBehavio
      * Adds bucket to dispenser or if no room, dispense it
      */
     private static void addBucketToDispenser(BlockSource source) {
-        if (source.getEntity() instanceof DispenserBlockEntity) {
-            DispenserBlockEntity dispenser = source.getEntity();
+        if (source.blockEntity() instanceof DispenserBlockEntity) {
+            DispenserBlockEntity dispenser = source.blockEntity();
             ItemStack honeyBottle = new ItemStack(Items.BUCKET);
             if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
                 DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);

@@ -58,7 +58,7 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
         public QueenMainTradesSyncPacket decode(final FriendlyByteBuf buf) {
             List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> parsedData = new ArrayList<>();
 
-            CompoundTag data = buf.readAnySizeNbt();
+            CompoundTag data = buf.readNbt();
             if (data == null) {
                 Bumblezone.LOGGER.error("Queen Main Trade packet is empty??? Wtf???");
                 return new QueenMainTradesSyncPacket(parsedData);

@@ -168,7 +168,7 @@ public class PlatformHooksImpl {
                 if (fluid == Fluids.EMPTY) {
                     blockState = world.getBlockState(blockPos);
                     if (blockState.getBlock() instanceof BucketPickup fluidDrainable) {
-                        ItemStack itemStack2 = fluidDrainable.pickupBlock(world, blockPos, blockState);
+                        ItemStack itemStack2 = fluidDrainable.pickupBlock(user, world, blockPos, blockState);
                         if (!itemStack2.isEmpty()) {
                             user.awardStat(Stats.ITEM_USED.get(bzCustomBucketItem));
                             fluidDrainable.getPickupSound().ifPresent((sound) -> user.playSound(sound, 1.0F, 1.0F));

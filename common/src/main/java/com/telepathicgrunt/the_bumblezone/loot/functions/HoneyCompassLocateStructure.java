@@ -1,13 +1,11 @@
-package com.telepathicgrunt.the_bumblezone.items.functions;
+package com.telepathicgrunt.the_bumblezone.loot.functions;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -15,13 +13,10 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
@@ -42,7 +37,15 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
     final int searchRadius;
     final boolean skipKnownStructures;
 
-    public HoneyCompassLocateStructure(LootItemCondition[] lootItemConditions, TagKey<Structure> destination, int searchRadius, boolean skipKnownStructrues) {
+    public static final Codec<HoneyCompassLocateStructure> CODEC = RecordCodecBuilder.create(instance -> HoneyCompassLocateStructure.commonFields(instance).and(
+            instance.group(
+                    TagKey.codec(Registries.STRUCTURE).fieldOf("destination").forGetter(honeyCompassLocateStructure -> honeyCompassLocateStructure.destination),
+                    Codec.intRange(0, 1000000).orElse(DEFAULT_SEARCH_RADIUS).fieldOf("search_radius").forGetter(honeyCompassLocateStructure -> honeyCompassLocateStructure.searchRadius),
+                    Codec.BOOL.orElse(DEFAULT_SKIP_EXISTING).fieldOf("skip_existing_chunks").forGetter(honeyCompassLocateStructure -> honeyCompassLocateStructure.skipKnownStructures)
+            )
+    ).apply(instance, HoneyCompassLocateStructure::new));
+
+    public HoneyCompassLocateStructure(List<LootItemCondition> lootItemConditions, TagKey<Structure> destination, int searchRadius, boolean skipKnownStructrues) {
         super(lootItemConditions);
         this.destination = destination;
         this.searchRadius = searchRadius;
@@ -102,40 +105,6 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
         ItemStack itemStack = itemStackWeakReference.get();
         if (itemStack != null && blockPos != null) {
             HoneyCompass.addFoundStructureLocation(lootContext.getLevel().dimension(), blockPos, itemStack.getOrCreateTag());
-        }
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<HoneyCompassLocateStructure> {
-        public void serialize(JsonObject jsonObject, HoneyCompassLocateStructure honeyCompassLocateStructure, JsonSerializationContext context) {
-            super.serialize(jsonObject, honeyCompassLocateStructure, context);
-            if (!honeyCompassLocateStructure.destination.equals(ExplorationMapFunction.DEFAULT_DESTINATION)) {
-                jsonObject.addProperty("destination", honeyCompassLocateStructure.destination.location().toString());
-            }
-
-            if (honeyCompassLocateStructure.searchRadius != DEFAULT_SEARCH_RADIUS) {
-                jsonObject.addProperty("search_radius", honeyCompassLocateStructure.searchRadius);
-            }
-
-            if (!honeyCompassLocateStructure.skipKnownStructures) {
-                jsonObject.addProperty("skip_existing_chunks", false);
-            }
-        }
-
-        public HoneyCompassLocateStructure deserialize(JsonObject jsonObject, JsonDeserializationContext context, LootItemCondition[] lootItemConditions) {
-            TagKey<Structure> tagkey = readStructure(jsonObject);
-            int searchRadiusInt = GsonHelper.getAsInt(jsonObject, "search_radius", DEFAULT_SEARCH_RADIUS);
-            boolean skipExistingChunksBool = GsonHelper.getAsBoolean(jsonObject, "skip_existing_chunks", DEFAULT_SKIP_EXISTING);
-            return new HoneyCompassLocateStructure(lootItemConditions, tagkey, searchRadiusInt, skipExistingChunksBool);
-        }
-
-        private static TagKey<Structure> readStructure(JsonObject jsonObject) {
-            if (jsonObject.has("destination")) {
-                String s = GsonHelper.getAsString(jsonObject, "destination");
-                return TagKey.create(Registries.STRUCTURE, new ResourceLocation(s));
-            }
-            else {
-                return BzTags.HONEY_COMPASS_DEFAULT_LOCATING;
-            }
         }
     }
 }

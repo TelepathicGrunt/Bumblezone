@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, int clickedButton) implements Packet<CrystallineFlowerClickedEnchantmentButtonPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     public static void sendToServer(int containIdIn, int ClickedButtonIn) {
         MessageHandler.DEFAULT_CHANNEL.sendToServer(new CrystallineFlowerClickedEnchantmentButtonPacket(containIdIn, ClickedButtonIn));

@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -60,13 +61,13 @@ public class EntityTeleportationHookup {
         if (event.player() instanceof ServerPlayer serverPlayer && event.end()) {
             Level level = serverPlayer.level();
 
-            Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
+            AdvancementHolder advancement = serverPlayer.server.getAdvancements().get(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
             if (advancement == null) {
                 return;
             }
 
             Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
-            if (advancementsProgressMap.containsKey(advancement) && advancementsProgressMap.get(advancement).isDone()) {
+            if (advancementsProgressMap.containsKey(advancement.value()) && advancementsProgressMap.get(advancement.value()).isDone()) {
                 return;
             }
 
@@ -82,7 +83,7 @@ public class EntityTeleportationHookup {
                         PoiManager.Occupancy.ANY
                     ).toList();
 
-                if (poiInRange.size() > 0) {
+                if (!poiInRange.isEmpty()) {
                     BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
 
                     if (BzDimensionConfigs.enableInitialWelcomeMessage) {

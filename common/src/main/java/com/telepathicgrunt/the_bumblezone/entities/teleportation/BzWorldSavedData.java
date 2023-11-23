@@ -15,6 +15,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
+import net.minecraft.network.protocol.game.CommonPlayerSpawnInfo;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -41,19 +42,19 @@ import java.util.Set;
 
 public class BzWorldSavedData extends SavedData {
 	private static final String TELEPORTATION_DATA = Bumblezone.MODID + "teleportation";
-	private static final BzWorldSavedData CLIENT_DUMMY = new BzWorldSavedData(null);
+	private static final BzWorldSavedData CLIENT_DUMMY = new BzWorldSavedData();
+	private static final BzWorldSavedData SERVER_WIDE = new BzWorldSavedData();
 	private static final List<QueuedEntityData> QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE = new ArrayList<>();
 	private static final List<QueuedEntityData> QUEUED_ENTITIES_TO_GENERIC_TELEPORT = new ArrayList<>();
 
-	public BzWorldSavedData(CompoundTag tag) {}
+	public BzWorldSavedData() {}
 
 	public static BzWorldSavedData get(Level world) {
 		if (!(world instanceof ServerLevel)) {
 			return CLIENT_DUMMY;
 		}
 
-		DimensionDataStorage storage = ((ServerLevel)world).getDataStorage();
-		return storage.get(BzWorldSavedData::new, TELEPORTATION_DATA);
+		return SERVER_WIDE;
 	}
 
 	@Override
@@ -269,7 +270,7 @@ public class BzWorldSavedData extends SavedData {
 			}
 
 			if (PlatformHooks.isDimensionAllowed(serverPlayer, destination.dimension())) {
-				serverPlayer.connection.send(new ClientboundRespawnPacket(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), (byte)3, serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()));
+				serverPlayer.connection.send(new ClientboundRespawnPacket(new CommonPlayerSpawnInfo(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()), (byte)3));
 				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
 				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 				serverPlayer.setPortalCooldown();

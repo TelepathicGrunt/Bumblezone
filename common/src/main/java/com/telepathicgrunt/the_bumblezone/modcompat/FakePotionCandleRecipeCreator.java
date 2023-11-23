@@ -1,13 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,7 +34,7 @@ public class FakePotionCandleRecipeCreator {
         Set<MobEffect> effects = new HashSet<>();
         List<Potion> potions = new ArrayList<>();
         for (Potion potion : BuiltInRegistries.POTION) {
-            if (oneRecipeOnly && potions.size() > 0) {
+            if (oneRecipeOnly && !potions.isEmpty()) {
                 break;
             }
 
@@ -110,8 +108,7 @@ public class FakePotionCandleRecipeCreator {
         fakedShapedIngredients.addAll(fakedShapedIngredientsMutable);
 
         return new ShapedRecipe(
-                new ResourceLocation(Bumblezone.MODID, recipe.getId().getPath() + "_" + currentRecipe),
-                Bumblezone.MODID,
+                "the_bumblezone:potion_candle",
                 CraftingBookCategory.MISC,
                 3,
                 3,

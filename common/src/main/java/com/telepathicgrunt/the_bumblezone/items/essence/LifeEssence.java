@@ -209,7 +209,7 @@ public class LifeEssence extends AbilityEssenceItem {
                 }
             }
             else if (block instanceof BonemealableBlock bonemealableBlock &&
-                bonemealableBlock.isValidBonemealTarget(level, blockPos, state, false))
+                bonemealableBlock.isValidBonemealTarget(level, blockPos, state))
             {
                 bonemealableBlock.performBonemeal(level, level.getRandom(), blockPos, state);
                 grewBlock = true;

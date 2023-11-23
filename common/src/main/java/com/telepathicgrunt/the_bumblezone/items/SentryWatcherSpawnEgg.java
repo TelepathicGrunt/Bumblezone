@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -58,10 +58,10 @@ public class SentryWatcherSpawnEgg extends Item {
                 this,
                 new DefaultDispenseItemBehavior() {
                     public ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
-                        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+                        Direction direction = source.state().getValue(DispenserBlock.FACING);
 
                         EntityType<?> entitytype = ((SentryWatcherSpawnEgg)stack.getItem()).getType(stack.getTag());
-                        Entity entity = entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
+                        Entity entity = entitytype.spawn(source.level(), stack, null, source.pos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
                         if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                             sentryWatcherEntity.setTargetFacing(direction);
                             sentryWatcherEntity.setOwner(Optional.of(DISPENSER_OWNER_UUID));

@@ -4,8 +4,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +23,7 @@ public class StringDispenseBehavior extends DefaultDispenseItemBehavior {
      */
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
-        ServerLevel world = source.getLevel();
+        ServerLevel world = source.level();
         Position dispensePosition = DispenserBlock.getDispensePosition(source);
         BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
         BlockState blockstate = world.getBlockState(dispenseBlockPos);
@@ -55,6 +55,6 @@ public class StringDispenseBehavior extends DefaultDispenseItemBehavior {
      */
     @Override
     protected void playSound(BlockSource source) {
-        source.getLevel().levelEvent(1002, source.getPos(), 0);
+        source.level().levelEvent(1002, source.pos(), 0);
     }
 }

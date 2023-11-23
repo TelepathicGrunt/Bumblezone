@@ -51,10 +51,10 @@ public class REICompat implements REIClientPlugin {
         addInfo(BzFluids.HONEY_FLUID.get());
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "potion_candle/from_super_candles"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
+                .ifPresent(recipe -> registerExtraRecipes(recipe.value(), registry, true));
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
-                .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
+                .ifPresent(recipe -> registerExtraRecipes(recipe.value(), registry, false));
 
         if (!QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades.isEmpty()) {
             for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> trade : QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades) {

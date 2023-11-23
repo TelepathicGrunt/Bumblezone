@@ -4,8 +4,8 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.items.SpawnEggItemAccessor;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
@@ -42,9 +42,9 @@ public class DispenserAddedSpawnEgg extends SpawnEggItem {
                 this,
                 new DefaultDispenseItemBehavior() {
                     public ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
-                        Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+                        Direction direction = source.state().getValue(DispenserBlock.FACING);
                         EntityType<?> entitytype = ((SpawnEggItem)stack.getItem()).getType(stack.getTag());
-                        entitytype.spawn(source.getLevel(), stack, null, source.getPos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
+                        entitytype.spawn(source.level(), stack, null, source.pos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
                         stack.shrink(1);
                         return stack;
                     }

@@ -184,7 +184,7 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
     public final boolean canHoldFluid(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, Fluid fluid) {
         Block block = blockState.getBlock();
         if (block instanceof LiquidBlockContainer liquidBlockContainer) {
-            return liquidBlockContainer.canPlaceLiquid(blockGetter, blockPos, blockState, fluid) || ((LiquidBlockContainer) block).canPlaceLiquid(blockGetter, blockPos, blockState, fluid == BzFluids.SUGAR_WATER_FLUID.get() ? Fluids.WATER : Fluids.FLOWING_WATER);
+            return liquidBlockContainer.canPlaceLiquid(null, blockGetter, blockPos, blockState, fluid) || ((LiquidBlockContainer) block).canPlaceLiquid(null, blockGetter, blockPos, blockState, fluid == BzFluids.SUGAR_WATER_FLUID.get() ? Fluids.WATER : Fluids.FLOWING_WATER);
         }
         if (block instanceof DoorBlock || blockState.is(BlockTags.SIGNS) || blockState.is(Blocks.LADDER) || blockState.is(Blocks.SUGAR_CANE) || blockState.is(Blocks.BUBBLE_COLUMN)) {
             return false;
@@ -198,7 +198,7 @@ public abstract class SugarWaterFluid extends BzFlowingFluid {
     @Override
     protected void spreadTo(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, Direction direction, FluidState fluidState) {
         if (blockState.getBlock() instanceof LiquidBlockContainer liquidBlockContainer) {
-            boolean canPlaceLiquid = liquidBlockContainer.canPlaceLiquid(levelAccessor, blockPos, blockState, fluidState.getType());
+            boolean canPlaceLiquid = liquidBlockContainer.canPlaceLiquid(null, levelAccessor, blockPos, blockState, fluidState.getType());
             liquidBlockContainer.placeLiquid(levelAccessor, blockPos, blockState, canPlaceLiquid ? fluidState : Fluids.WATER.defaultFluidState());
         }
         else {

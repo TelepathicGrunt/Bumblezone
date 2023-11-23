@@ -1,8 +1,7 @@
-package com.telepathicgrunt.the_bumblezone.items.functions;
+package com.telepathicgrunt.the_bumblezone.loot.functions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -20,8 +19,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class DropContainerItems extends LootItemConditionalFunction {
-    public DropContainerItems(LootItemCondition[] itemConditions) {
+    public static final Codec<DropContainerItems> CODEC = RecordCodecBuilder.create(instance -> DropContainerItems.commonFields(instance).apply(instance, DropContainerItems::new));
+
+    public DropContainerItems(List<LootItemCondition> itemConditions) {
         super(itemConditions);
     }
 
@@ -57,15 +60,5 @@ public class DropContainerItems extends LootItemConditionalFunction {
             }
         }
         return itemStack;
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<DropContainerItems> {
-        public void serialize(JsonObject jsonObject, DropContainerItems dropContainerItems, JsonSerializationContext jsonSerializationContext) {
-            super.serialize(jsonObject, dropContainerItems, jsonSerializationContext);
-        }
-
-        public DropContainerItems deserialize(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext, LootItemCondition[] containerItems) {
-            return new DropContainerItems(containerItems);
-        }
     }
 }

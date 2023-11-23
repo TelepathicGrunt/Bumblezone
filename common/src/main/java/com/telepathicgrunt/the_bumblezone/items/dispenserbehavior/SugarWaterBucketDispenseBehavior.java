@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.items.dispenserbehavior;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.BucketItem;
@@ -21,7 +21,7 @@ public class SugarWaterBucketDispenseBehavior extends DefaultDispenseItemBehavio
         BucketItem bucketitem = (BucketItem) stack.getItem();
         Position dispensePosition = DispenserBlock.getDispensePosition(source);
         BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
-        ServerLevel world = source.getLevel();
+        ServerLevel world = source.level();
 
         if (bucketitem.emptyContents(null, world, dispenseBlockPos, null)) {
 

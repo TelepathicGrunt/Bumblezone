@@ -25,6 +25,7 @@ import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -801,11 +802,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     private static final ResourceLocation BEE_ESSENCE_ADVANCEMENT_RL = new ResourceLocation(Bumblezone.MODID, "essence/bee_essence_infusion");
 
     private void resetAdvancementTree(ServerPlayer serverPlayer, ResourceLocation advancementRL) {
-        Advancement parentAdvancement = serverPlayer.server.getAdvancements().getAdvancement(advancementRL);
+        AdvancementHolder parentAdvancement = serverPlayer.server.getAdvancements().get(advancementRL);
         if (parentAdvancement == null) {
             return;
         }
-        Iterable<Advancement> advancements = parentAdvancement.getChildren();
+        Iterable<Advancement> advancements = parentAdvancement.value().getChildren();
         for (Advancement advancement : advancements) {
             if (advancement.getId().equals(BEE_ESSENCE_ADVANCEMENT_RL)) {
                 continue;
@@ -820,11 +821,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
-        Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
+        AdvancementHolder advancement = serverPlayer.server.getAdvancements().get(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
+        if (advancement == null) {
+            return false;
+        }
         Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor) serverPlayer.getAdvancements()).getProgress();
-        return advancement != null &&
-                advancementsProgressMap.containsKey(advancement) &&
-                advancementsProgressMap.get(advancement).isDone();
+        return advancementsProgressMap.containsKey(advancement.value()) && advancementsProgressMap.get(advancement.value()).isDone();
     }
 
     private boolean isContainerBlockEntity(ItemStack itemStack) {

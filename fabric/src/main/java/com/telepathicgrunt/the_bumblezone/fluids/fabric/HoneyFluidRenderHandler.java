@@ -115,11 +115,11 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
                     float ak;
                     if (vec3.x == 0.0 && vec3.z == 0.0) {
                         textureAtlasSprite = textureAtlasSprites[0];
-                        z = textureAtlasSprite.getU(0.0);
-                        aa = textureAtlasSprite.getV(0.0);
+                        z = textureAtlasSprite.getU(0.0F);
+                        aa = textureAtlasSprite.getV(0.0F);
                         ab = z;
-                        ac = textureAtlasSprite.getV(16.0);
-                        ad = textureAtlasSprite.getU(16.0);
+                        ac = textureAtlasSprite.getV(16.0F);
+                        ad = textureAtlasSprite.getU(16.0F);
                         ae = ac;
                         af = ad;
                         ag = aa;
@@ -239,11 +239,11 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
                             textureAtlasSprite2 = sprites[0];
                         }
 
-                        float av = textureAtlasSprite2.getU(0.0);
-                        float aw = textureAtlasSprite2.getU(8.0);
+                        float av = textureAtlasSprite2.getU(0.0F);
+                        float aw = textureAtlasSprite2.getU(8.0F);
                         float ax = textureAtlasSprite2.getV((1.0F - af) * 16.0F * 0.5F);
                         float ay = textureAtlasSprite2.getV((1.0F - aa) * 16.0F * 0.5F);
-                        float az = textureAtlasSprite2.getV(8.0);
+                        float az = textureAtlasSprite2.getV(8.0F);
                         float ba = direction.getAxis() == Direction.Axis.Z ? l : m;
                         float bb = k * ba;
                         float bc = k * ba;

@@ -1,8 +1,7 @@
-package com.telepathicgrunt.the_bumblezone.items.functions;
+package com.telepathicgrunt.the_bumblezone.loot.functions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -12,10 +11,13 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UniquifyIfHasItems extends LootItemConditionalFunction {
-    public UniquifyIfHasItems(LootItemCondition[] itemConditions) {
+    public static final Codec<UniquifyIfHasItems> CODEC = RecordCodecBuilder.create(instance -> UniquifyIfHasItems.commonFields(instance).apply(instance, UniquifyIfHasItems::new));
+
+    public UniquifyIfHasItems(List<LootItemCondition> itemConditions) {
         super(itemConditions);
     }
 
@@ -48,15 +50,5 @@ public class UniquifyIfHasItems extends LootItemConditionalFunction {
             }
         }
         return itemStack;
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<UniquifyIfHasItems> {
-        public void serialize(JsonObject jsonObject, UniquifyIfHasItems uniquifyIfHasItems, JsonSerializationContext jsonSerializationContext) {
-            super.serialize(jsonObject, uniquifyIfHasItems, jsonSerializationContext);
-        }
-
-        public UniquifyIfHasItems deserialize(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext, LootItemCondition[] containerItems) {
-            return new UniquifyIfHasItems(containerItems);
-        }
     }
 }

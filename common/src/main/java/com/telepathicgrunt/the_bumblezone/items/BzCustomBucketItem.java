@@ -92,8 +92,8 @@ public class BzCustomBucketItem extends BzBucketItem {
     // We want to use our logic instead of Forge's.
     protected boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
         return blockstate.getBlock() instanceof LiquidBlockContainer &&
-                (((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, getFluid()) ||
-                ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, Fluids.WATER));
+                (((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(null, worldIn, posIn, blockstate, getFluid()) ||
+                ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(null, worldIn, posIn, blockstate, Fluids.WATER));
     }
 
     // Override and redirect forge patched method to our own.
@@ -114,10 +114,10 @@ public class BzCustomBucketItem extends BzBucketItem {
             boolean canPlaceFluid = blockState.isAir() || canBucketPlace;
             boolean feedVanillaWaterOverride = false;
             if (block instanceof LiquidBlockContainer) {
-                if (((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, this.fluid)) {
+                if (((LiquidBlockContainer)block).canPlaceLiquid(player, world, pos, blockState, this.fluid)) {
                     canPlaceFluid = true;
                 }
-                if (this.fluid.is(FluidTags.WATER) && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, blockState, Fluids.WATER)) {
+                if (this.fluid.is(FluidTags.WATER) && ((LiquidBlockContainer)block).canPlaceLiquid(player, world, pos, blockState, Fluids.WATER)) {
                     canPlaceFluid = true;
                     feedVanillaWaterOverride = true;
                 }

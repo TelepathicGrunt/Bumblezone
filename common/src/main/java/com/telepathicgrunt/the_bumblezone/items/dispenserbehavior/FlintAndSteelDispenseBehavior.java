@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
@@ -24,7 +24,7 @@ public class FlintAndSteelDispenseBehavior extends OptionalDispenseItemBehavior 
      */
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
-        ServerLevel level = source.getLevel();
+        ServerLevel level = source.level();
         Position dispensePosition = DispenserBlock.getDispensePosition(source);
         BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
         BlockState blockstate = level.getBlockState(dispenseBlockPos);

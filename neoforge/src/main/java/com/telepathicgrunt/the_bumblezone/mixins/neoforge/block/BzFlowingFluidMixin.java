@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.fluids.neoforge.ForgeFluidInfo;
 import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

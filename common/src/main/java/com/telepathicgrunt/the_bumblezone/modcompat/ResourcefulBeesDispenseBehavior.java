@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DefaultDispenseItemBehaviorInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +23,7 @@ public class ResourcefulBeesDispenseBehavior extends DefaultDispenseItemBehavior
      * Dispense the specified stack, play the dispenser sound and spawn particles.
      */
     public ItemStack execute(BlockSource source, ItemStack stack) {
-        ServerLevel world = source.getLevel();
+        ServerLevel world = source.level();
         Position dispensePosition = DispenserBlock.getDispensePosition(source);
         BlockPos dispenseBlockPos = BlockPos.containing(dispensePosition);
         BlockState blockstate = world.getBlockState(dispenseBlockPos);
@@ -45,6 +45,6 @@ public class ResourcefulBeesDispenseBehavior extends DefaultDispenseItemBehavior
      * Play the dispenser sound from the specified block.
      */
     protected void playSound(BlockSource source) {
-        source.getLevel().levelEvent(1002, source.getPos(), 0);
+        source.level().levelEvent(1002, source.pos(), 0);
     }
 }

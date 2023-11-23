@@ -31,7 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.List;
@@ -92,15 +92,18 @@ public class EMICompat implements EmiPlugin {
         }
     }
 
-    private static void registerExtraRecipes(Recipe<?> baseRecipe, EmiRegistry registry, boolean oneRecipeOnly) {
-        if (baseRecipe instanceof PotionCandleRecipe potionCandleRecipe) {
+    private static void registerExtraRecipes(RecipeHolder<?> baseRecipe, EmiRegistry registry, boolean oneRecipeOnly) {
+        if (baseRecipe.value() instanceof PotionCandleRecipe potionCandleRecipe) {
             List<CraftingRecipe> extraRecipes = FakePotionCandleRecipeCreator.constructFakeRecipes(potionCandleRecipe, oneRecipeOnly);
-            extraRecipes.forEach(r -> registry.addRecipe(
-                    new EmiCraftingRecipe(
-                            r.getIngredients().stream().map(EmiIngredient::of).toList(),
-                            EmiStack.of(r.getResultItem(RegistryAccess.EMPTY)),
-                            r.getId(),
-                            false)));
+            for (int i = 0 ; i < extraRecipes.size(); i++) {
+                CraftingRecipe craftingRecipe = extraRecipes.get(i);
+                registry.addRecipe(
+                        new EmiCraftingRecipe(
+                                craftingRecipe.getIngredients().stream().map(EmiIngredient::of).toList(),
+                                EmiStack.of(craftingRecipe.getResultItem(RegistryAccess.EMPTY)),
+                                new ResourceLocation(baseRecipe.id().getNamespace(), baseRecipe.id().getPath() + "_" + i),
+                                false));
+            }
         }
     }
     

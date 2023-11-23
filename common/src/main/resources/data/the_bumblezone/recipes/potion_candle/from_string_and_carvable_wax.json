@@ -1,7 +1,7 @@
 {
   "type": "the_bumblezone:potion_candle_recipe",
   "category": "misc",
-  "group": "the_bumblezone:string_curtain",
+  "group": "the_bumblezone:potion_candle",
   "pattern": [
     "s",
     "h",
