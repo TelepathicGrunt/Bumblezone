@@ -41,17 +41,38 @@
       "required": false
     },
     {
-      "id": "croptopia:baked_sweet_potato",
-      "count": 3,
+      "id": "farmersdelight:stuffed_potato",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
     },
     {
-      "id": "croptopia:mashed_potatoes",
-      "count": 3,
+      "id": "farmersdelight:steak_and_potatoes",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
+      "required": false
+    },
+    {
+      "id": "croptopia:baked_sweet_potato",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
+      "id": "croptopia:mashed_potatoes",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "simplefarming:baked_sweet_potato",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 2,
       "required": false
     }
   ]

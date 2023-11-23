@@ -28,6 +28,13 @@
       "required": true
     },
     {
+      "id": "immersiveengineering:firework",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 2,
+      "required": false
+    },
+    {
       "id": "galosphere:glow_flare",
       "count": 1,
       "xp_reward": 0,
