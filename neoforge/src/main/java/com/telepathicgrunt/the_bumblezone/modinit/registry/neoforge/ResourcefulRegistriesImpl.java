@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit.registry.neoforge;
 
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfoRegistry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.CustomRegistryLookup;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.Registry;
@@ -24,6 +25,10 @@ public class ResourcefulRegistriesImpl {
         CustomRegistryInfo<T, R> info = new CustomRegistryInfo<>(new LateSupplier<>(), key, save, sync, allowModification);
         CUSTOM_REGISTRIES.add(info);
         return Pair.of(info.lookup(), new NeoForgeResourcefulRegistry<>(key, modId));
+    }
+
+    public static FluidInfoRegistry createFluidRegistry(String id) {
+        return new NeoForgeFluidInfoRegistry(id);
     }
 
     public static void onRegisterForgeRegistries(NewRegistryEvent event) {

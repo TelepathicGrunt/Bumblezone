@@ -339,7 +339,7 @@ public class BumblezoneForge {
         PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(event.getEntity(), event.getStack()));
     }
 
-    private static void onGrantAdvancement(AdvancementEvent event) {
+    private static void onGrantAdvancement(AdvancementEvent.AdvancementEarnEvent event) {
         PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(event.getAdvancement().value(), event.getEntity()));
     }
 

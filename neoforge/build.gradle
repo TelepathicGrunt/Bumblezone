@@ -35,7 +35,7 @@ dependencies {
     // REQUIRED
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-forge-${rootProject.athena}")))
+    modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-neoforge-${rootProject.athena}")))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
