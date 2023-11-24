@@ -310,24 +310,6 @@ public class HoneycombBrood extends ProperFacingBlock {
             if (stage == 3) {
                 spawnBroodMob(world, playerEntity.getRandom(), blockState, position, stage);
             }
-
-            if ((playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
-                    BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
-                    !playerEntity.isCreative() &&
-                    !playerEntity.isSpectator() &&
-                    BzBeeAggressionConfigs.aggressiveBees &&
-                    world.getDifficulty() != Difficulty.PEACEFUL)
-            {
-                if (playerEntity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer)) {
-                    if(playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                        playerEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
-                    }
-                    else {
-                        //Now all bees nearby in Bumblezone will get VERY angry!!!
-                        playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
-                    }
-                }
-            }
         }
 
         super.playerWillDestroy(world, position, state, playerEntity);

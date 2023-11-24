@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -68,7 +69,7 @@ public class BeeAggression {
         BlockState blockState = event.state();
 
         if (player instanceof ServerPlayer serverPlayer && blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
-            angerBees(serverPlayer);
+            angerBees(serverPlayer, blockState.is(BzBlocks.HONEYCOMB_BROOD.get()));
         }
     }
 
@@ -78,11 +79,11 @@ public class BeeAggression {
         ItemStack itemStack = event.item();
 
         if (player instanceof ServerPlayer serverPlayer && itemStack.is(BzTags.WRATH_ACTIVATING_ITEMS_WHEN_PICKED_UP)) {
-            angerBees(serverPlayer);
+            angerBees(serverPlayer, false);
         }
     }
 
-    private static void angerBees(ServerPlayer player) {
+    private static void angerBees(ServerPlayer player, boolean removesProt) {
         //Make sure we are on actual player's computer and not a dedicated server. Vanilla does this check too.
         //Also checks to make sure we are in dimension and that player isn't in creative or spectator
         if ((player.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -107,6 +108,10 @@ public class BeeAggression {
             }
             else {
                 BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(player);
+
+                if (removesProt) {
+                    player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                }
             }
         }
     }
