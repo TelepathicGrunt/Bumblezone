@@ -6,6 +6,8 @@ Fixed Variant Bee not showing angry texture until it stung something.
 ##### Blocks:
 Fixed mining Honeycomb Brood Block without Silk Touch not removing Protection of the Hive effect.
 
+Fixed Glistering Honey Crystal not able to be smelted to Sticky Honey Residue.
+
 
 ### **(V.7.1.1 Changes) (1.20.1 Minecraft)**
 
