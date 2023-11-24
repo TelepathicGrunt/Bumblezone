@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PlayerAdvancements.class)
 public class PlayerAdvancementsMixin {
 
-
     @Shadow private ServerPlayer player;
 
     @Inject(
@@ -24,7 +24,9 @@ public class PlayerAdvancementsMixin {
                     shift = At.Shift.AFTER
             )
     )
-    private void bumblezone$onAward(Advancement advancement, String string, CallbackInfoReturnable<Boolean> cir) {
-        PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(advancement, this.player));
+    private void bumblezone$onAward(AdvancementHolder advancementHolder, String string, CallbackInfoReturnable<Boolean> cir) {
+        if ( advancementHolder != null) {
+            PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(advancementHolder.value(), this.player));
+        }
     }
 }
