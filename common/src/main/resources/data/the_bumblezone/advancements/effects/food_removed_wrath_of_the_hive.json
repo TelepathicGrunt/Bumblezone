@@ -21,7 +21,9 @@
   "criteria": {
     "food_removed_wrath_of_the_hive": {
       "trigger": "the_bumblezone:food_removed_wrath_of_the_hive",
-      "conditions": {}
+      "conditions": {
+        "item": {}
+      }
     }
   },
   "requirements": [

@@ -1,12 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
@@ -24,7 +22,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
@@ -272,8 +269,11 @@ public class WrathOfTheHiveEffect extends MobEffect implements EffectExtension {
     }
 
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
-    // TODO: Mixin apply this to effect removal to re-apply
-    public void effectRemoval(LivingEntity entity) {
+    public static void effectRemoval(LivingEntity entity, MobEffectInstance mobEffectInstance) {
+        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.WRATH_OF_THE_HIVE.get()) {
+            return;
+        }
+
         if (entity instanceof Mob mob && mob.isNoAi()) {
             return;
         }

@@ -21,7 +21,9 @@
   "criteria": {
     "protection_of_the_hive_defense": {
       "trigger": "the_bumblezone:protection_of_the_hive_defense",
-      "conditions": {}
+      "conditions": {
+        "entity": [[]]
+      }
     }
   },
   "requirements": [

@@ -45,7 +45,6 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
         super.onEffectStarted(livingEntity, amplifier);
     }
 
-    //TODO: Mixin effect removal and apply this (Check if needed first)
 //    public void onEffectRemoval(LivingEntity entity) {
 //        MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
 //        if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {

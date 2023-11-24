@@ -20,10 +20,10 @@ public class VariantBeeRenderer extends BeeRenderer {
 
         if(variant != null && !variant.isEmpty()) {
             String type = "";
-            boolean angery = entity.hasStung();
+            boolean angry = entity.isAngry();
             boolean nectar = entity.hasNectar();
 
-            if(angery)
+            if(angry)
                 type = nectar ? "_angry_nectar" : "_angry";
             else if(nectar)
                 type = "_nectar";

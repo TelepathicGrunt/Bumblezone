@@ -21,7 +21,9 @@
   "criteria": {
     "bee_hit_wrath_of_the_hive": {
       "trigger": "the_bumblezone:bee_hit_wrath_of_the_hive",
-      "conditions": {}
+      "conditions": {
+        "entity": [[]]
+      }
     }
   },
   "requirements": [

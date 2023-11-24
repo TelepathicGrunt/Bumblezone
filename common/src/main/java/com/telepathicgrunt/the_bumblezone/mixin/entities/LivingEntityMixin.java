@@ -3,8 +3,10 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.telepathicgrunt.the_bumblezone.client.LocalPlayerParalyzedHandFix;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
+import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -68,5 +70,11 @@ public abstract class LivingEntityMixin extends Entity {
                 LocalPlayerParalyzedHandFix.handleArms((LivingEntity) (Object) this);
             }
         }
+    }
+
+    @Inject(method = "onEffectRemoved(Lnet/minecraft/world/effect/MobEffectInstance;)V",
+            at = @At(value = "TAIL"))
+    private void bumblezone$runAtEffectRemoval(MobEffectInstance mobEffectInstance, CallbackInfo ci) {
+        WrathOfTheHiveEffect.effectRemoval((LivingEntity) (Object) this, mobEffectInstance);
     }
 }

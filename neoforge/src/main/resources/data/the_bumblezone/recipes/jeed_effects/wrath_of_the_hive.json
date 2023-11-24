@@ -15,7 +15,7 @@
       "item": "the_bumblezone:bee_queen_spawn_egg"
     }
   ],
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
       "modid": "jeed"
