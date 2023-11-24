@@ -1,3 +1,9 @@
+### **(V.7.1.2 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Fixed Variant Bee not showing angry texture until it stung something.
+
+
 ### **(V.7.1.1 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:
