@@ -25,7 +25,5 @@
   "result": {
     "item": "the_bumblezone:bumble_bee_chestplate_trans_2"
   },
-  "keep_nbt_of": {
-    "item": "the_bumblezone:bumble_bee_chestplate_2"
-  }
+  "keep_nbt_of": "the_bumblezone:bumble_bee_chestplate_2"
 }

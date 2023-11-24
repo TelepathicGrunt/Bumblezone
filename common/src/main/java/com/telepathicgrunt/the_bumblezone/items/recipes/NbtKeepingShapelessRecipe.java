@@ -38,11 +38,11 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     private final Item itemToKeepNbtOf;
 
     public NbtKeepingShapelessRecipe(String string, CraftingBookCategory craftingBookCategory, ItemStack itemStack, NonNullList<Ingredient> nonNullList, Item itemToKeepNbtOf) {
-        this.itemToKeepNbtOf = itemToKeepNbtOf;
         this.group = string;
         this.category = craftingBookCategory;
         this.result = itemStack;
         this.ingredients = nonNullList;
+        this.itemToKeepNbtOf = itemToKeepNbtOf;
     }
 
     @Override
@@ -151,12 +151,12 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
         public NbtKeepingShapelessRecipe fromNetwork(FriendlyByteBuf friendlyByteBuf) {
             String string = friendlyByteBuf.readUtf();
             CraftingBookCategory craftingBookCategory = friendlyByteBuf.readEnum(CraftingBookCategory.class);
-            int i = friendlyByteBuf.readVarInt();
-            NonNullList<Ingredient> nonNullList = NonNullList.withSize(i, Ingredient.EMPTY);
-            nonNullList.replaceAll(ignored -> Ingredient.fromNetwork(friendlyByteBuf));
+            int ingredientCount = friendlyByteBuf.readVarInt();
+            NonNullList<Ingredient> ingredientNonNullList = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
+            ingredientNonNullList.replaceAll(ignored -> Ingredient.fromNetwork(friendlyByteBuf));
             ItemStack itemStack = friendlyByteBuf.readItem();
             Item item = friendlyByteBuf.readById(BuiltInRegistries.ITEM);
-            return new NbtKeepingShapelessRecipe(string, craftingBookCategory, itemStack, nonNullList, item);
+            return new NbtKeepingShapelessRecipe(string, craftingBookCategory, itemStack, ingredientNonNullList, item);
         }
 
         @Override
