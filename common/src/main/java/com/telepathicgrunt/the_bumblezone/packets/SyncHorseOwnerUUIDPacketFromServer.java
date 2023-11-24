@@ -14,7 +14,7 @@ import java.util.UUID;
 public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) implements Packet<SyncHorseOwnerUUIDPacketFromServer> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "sync_horse_owner_uuid_from_server");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     public static void sendToClient(Entity entity, int horseId, UUID ownerUUID) {
         MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), entity.level(), entity.blockPosition());

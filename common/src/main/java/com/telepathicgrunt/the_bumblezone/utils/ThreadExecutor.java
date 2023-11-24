@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.utils;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerGoingToStopEvent;
-import com.telepathicgrunt.the_bumblezone.items.functions.PrefillMap;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -223,26 +222,6 @@ public class ThreadExecutor {
             }
         }
     }
-
-    public static void mapFilling(
-            ServerLevel level,
-            BlockPos pos,
-            MapItemSavedData data)
-    {
-        CompletableFuture<Object> completableFuture = new CompletableFuture<>();
-        Future<?> future = LOCATING_EXECUTOR_SERVICE.submit(
-                () -> {
-                    try {
-                        PrefillMap.update(level, pos, data);
-                    }
-                    catch (Exception e) {
-                        Bumblezone.LOGGER.error("Off thread map filling crashed. Exception is: ", e);
-                    }
-                }
-        );
-        new LocateTask<>(level.getServer(), completableFuture, future);
-    }
-
 
     public record LocateTask<T>(MinecraftServer server, CompletableFuture<T> completableFuture, Future<?> taskFuture) {
         /**

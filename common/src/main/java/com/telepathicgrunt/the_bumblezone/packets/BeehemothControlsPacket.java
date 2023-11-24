@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 public record BeehemothControlsPacket(byte upPressed, byte downPressed) implements Packet<BeehemothControlsPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "beehemoth_controls");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     /**
      * 2 means no action.

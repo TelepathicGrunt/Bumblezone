@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.items.conditions;
+package com.telepathicgrunt.the_bumblezone.loot.conditions;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;

@@ -158,6 +158,41 @@
       "xp_reward": 0,
       "weight": 1,
       "required": false
+    },
+    {
+      "id": "quark:egg_parrot_red_blue",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "quark:egg_parrot_blue",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "quark:egg_parrot_green",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "quark:egg_parrot_yellow_blue",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "quark:egg_parrot_gray",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
     }
   ]
 }

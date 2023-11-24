@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -11,10 +12,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
-public record MobEffectClientSyncPacket(int entityId, byte effectId, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
+public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "mob_effect_client_sync");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     private static final int FLAG_AMBIENT = 1;
     private static final int FLAG_VISIBLE = 2;
@@ -23,7 +24,7 @@ public record MobEffectClientSyncPacket(int entityId, byte effectId, byte effect
     public MobEffectClientSyncPacket(int mobId, MobEffectInstance mobEffectInstance) {
         this(
                 mobId,
-                (byte) (MobEffect.getId(mobEffectInstance.getEffect()) & 255),
+                BuiltInRegistries.MOB_EFFECT.getKey(mobEffectInstance.getEffect()),
                 (byte) (mobEffectInstance.getAmplifier() & 255),
                 Math.min(mobEffectInstance.getDuration(), 32767),
                 getFlags(mobEffectInstance)
@@ -78,7 +79,7 @@ public record MobEffectClientSyncPacket(int entityId, byte effectId, byte effect
         @Override
         public void encode(MobEffectClientSyncPacket message, FriendlyByteBuf buffer) {
             buffer.writeVarInt(message.entityId);
-            buffer.writeByte(message.effectId);
+            buffer.writeResourceLocation(message.effectRl);
             buffer.writeByte(message.effectAmplifier);
             buffer.writeVarInt(message.effectDurationTicks);
             buffer.writeByte(message.flags);
@@ -88,7 +89,7 @@ public record MobEffectClientSyncPacket(int entityId, byte effectId, byte effect
         public MobEffectClientSyncPacket decode(FriendlyByteBuf buffer) {
             return new MobEffectClientSyncPacket(
                     buffer.readVarInt(),
-                    buffer.readByte(),
+                    buffer.readResourceLocation(),
                     buffer.readByte(),
                     buffer.readVarInt(),
                     buffer.readByte()
@@ -100,7 +101,7 @@ public record MobEffectClientSyncPacket(int entityId, byte effectId, byte effect
             return (player, level) -> {
                 Entity entity = level.getEntity(message.entityId());
                 if (entity instanceof LivingEntity) {
-                    MobEffect mobeffect = MobEffect.byId(message.effectId() & 0xFF);
+                    MobEffect mobeffect = BuiltInRegistries.MOB_EFFECT.get(message.effectRl());
                     if (mobeffect != null) {
                         MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, message.effectDurationTicks(), message.effectAmplifier(), message.isEffectAmbient(), message.isEffectVisible(), message.effectShowsIcon());
                         ((LivingEntity)entity).forceAddEffect(mobeffectinstance, null);

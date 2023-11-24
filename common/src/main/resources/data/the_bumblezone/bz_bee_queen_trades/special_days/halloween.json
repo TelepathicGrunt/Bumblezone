@@ -154,6 +154,13 @@
       "required": false
     },
     {
+      "id": "reliquary:witch_hat",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "born_in_chaos_v1:holiday_candy",
       "count": 2,
       "xp_reward": 0,

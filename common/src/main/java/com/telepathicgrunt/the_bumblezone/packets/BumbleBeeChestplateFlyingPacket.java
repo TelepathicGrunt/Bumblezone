@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<BumbleBeeChestplateFlyingPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "bumblebee_chestplate_flying");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     public static void sendToServer(boolean isFlying) {
         MessageHandler.DEFAULT_CHANNEL.sendToServer(new BumbleBeeChestplateFlyingPacket((byte) (isFlying ? 1 : 0)));

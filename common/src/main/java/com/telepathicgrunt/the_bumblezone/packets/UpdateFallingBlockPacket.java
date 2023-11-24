@@ -15,7 +15,7 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 public record UpdateFallingBlockPacket(int fallingBlockId, short layer) implements Packet<UpdateFallingBlockPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "update_falling_block");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     public static void sendToClient(Entity entity, int fallingBlockId, short layer) {
         MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new UpdateFallingBlockPacket(fallingBlockId, layer), entity.level(), entity.blockPosition());

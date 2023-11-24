@@ -20,7 +20,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
     public static final Gson GSON = new GsonBuilder().create();
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_enchantment");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     public static void sendToClient(ServerPlayer player, int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, int selectedIndex) {
         MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new CrystallineFlowerEnchantmentPacket(containerId, enchantmentSkeletons, selectedIndex), player);

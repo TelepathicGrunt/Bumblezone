@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 public record StinglessBeeHelmetSightPacket(byte giveAdvancement) implements Packet<StinglessBeeHelmetSightPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_sight");
-    public static final Handler HANDLER = new Handler();
+    static final Handler HANDLER = new Handler();
 
     public static void sendToServer(boolean giveAdvancement) {
         MessageHandler.DEFAULT_CHANNEL.sendToServer(new StinglessBeeHelmetSightPacket((byte) (giveAdvancement ? 1 : 0)));
