@@ -545,7 +545,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                     CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(potionRecipe -> potionRecipe.category),
                     ExtraCodecs.strictUnboundedMap(SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY).fieldOf("shapedKey").forGetter(potionRecipe -> potionRecipe.shapedKey),
                     PATTERN_CODEC.fieldOf("shapedPattern").forGetter(potionRecipe -> potionRecipe.shapedPattern),
-                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
+                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("shapelessExtraIngredients").flatXmap(list -> {
                         Ingredient[] ingredients = list.stream().filter(ingredient -> !ingredient.isEmpty()).toArray(Ingredient[]::new);
                         if (ingredients.length == 0) {
                             return DataResult.error(() -> "No ingredients for shapeless recipe");

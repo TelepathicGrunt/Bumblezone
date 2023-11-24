@@ -2,10 +2,10 @@
   "type": "the_bumblezone:potion_candle_recipe",
   "category": "misc",
   "group": "the_bumblezone:potion_candle",
-  "pattern": [
+  "shapedPattern": [
     "c"
   ],
-  "key": {
+  "shapedKey": {
     "c": {
       "tag": "the_bumblezone:super_candles"
     }
