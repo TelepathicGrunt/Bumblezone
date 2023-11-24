@@ -1,13 +1,13 @@
 {
-  "type": "minecraft:smelting",
+  "type": "the_bumblezone:itemstack_smelting_recipe",
   "category": "blocks",
   "group": "the_bumblezone:sticky_honey_residue",
   "ingredient": {
     "item": "the_bumblezone:honey_crystal"
   },
   "result": {
-    "item": "the_bumblezone:sticky_honey_residue",
-    "count": 4
+    "id": "the_bumblezone:sticky_honey_residue",
+    "Count": 4
   },
   "experience": 3.7,
   "cookingtime": 420
