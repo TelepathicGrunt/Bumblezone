@@ -67,7 +67,7 @@ subprojects {
 
                 gameVersions = ["${rootProject.minecraft_version}"]
                 loaders = [name]
-                versionType = "BETA"
+                versionType = "ALPHA"
 
                 uploadFile = tasks.remapJar
 
@@ -93,7 +93,7 @@ subprojects {
                     id = uploadSettings["curse-id"]
                     changelogType = "markdown"
                     changelog = changeLogText
-                    releaseType = "beta"
+                    releaseType = "alpha"
 
                     addGameVersion("${rootProject.minecraft_version}")
                     if (name == "neoforge") {
