@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
@@ -32,6 +33,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -63,7 +65,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -154,6 +158,7 @@ public class FabricEventManager {
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
         UseItemCallback.EVENT.register(FabricEventManager::onItemUse);
+        ServerLivingEntityEvents.ALLOW_DEATH.register(FabricEventManager::allowPlayerDeath);
     }
 
     public static void lateInit() {
@@ -250,5 +255,9 @@ public class FabricEventManager {
             return InteractionResultHolder.success(event.usingStack());
         }
         return InteractionResultHolder.pass(event.usingStack());
+    }
+
+    private static boolean allowPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
+        return !EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource));
     }
 }

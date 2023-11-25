@@ -1,3 +1,9 @@
+### **(V.7.2.1 Changes) (1.20.1 Minecraft)**
+
+##### Items:
+(Fabric): Fixed Essence of Continuity not preventing death for players.
+
+
 ### **(V.7.2.0 Changes) (1.20.2 Minecraft)**
 
 #### Major:
