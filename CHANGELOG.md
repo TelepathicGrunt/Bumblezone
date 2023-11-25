@@ -1,3 +1,9 @@
+### **(V.7.1.3 Changes) (1.20.1 Minecraft)**
+
+##### Items:
+(Fabric/Quilt): Fixed Essence of Continuity not preventing death for players.
+
+
 ### **(V.7.1.2 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:

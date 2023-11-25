@@ -1,14 +1,18 @@
 package com.telepathicgrunt.the_bumblezone.fabricbase;
 
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
+import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 
@@ -42,5 +46,11 @@ public class FabricBaseEventManager {
         RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
         SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
+
+        ServerLivingEntityEvents.ALLOW_DEATH.register(FabricBaseEventManager::allowPlayerDeath);
+    }
+
+    private static boolean allowPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
+        return !EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource));
     }
 }
