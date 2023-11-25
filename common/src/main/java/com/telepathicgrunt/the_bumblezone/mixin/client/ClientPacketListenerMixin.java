@@ -16,14 +16,13 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class ClientPacketListenerMixin {
 
     @Inject(method = "handleAddEntity(Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;getId()I"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientPacketListener;postAddEntitySoundInstance(Lnet/minecraft/world/entity/Entity;)V"),
             locals = LocalCapture.CAPTURE_FAILSOFT,
             require = 0
     )
     private void bumblezone$syncHorseUUID1(
             ClientboundAddEntityPacket clientboundAddEntityPacket,
             CallbackInfo ci,
-            EntityType<?> entitytype,
             Entity entity)
     {
         if (entity instanceof AbstractHorse && entity.level().isClientSide()) {

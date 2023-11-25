@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,10 +37,10 @@ public abstract class EntityMixin {
     public abstract Level level();
 
     @ModifyVariable(method = "positionRider(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$MoveFunction;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getX()D"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity$MoveFunction;accept(Lnet/minecraft/world/entity/Entity;DDD)V"),
             require = 0)
-    private double bumblezone$beeRidingOffset(double yOffset, Entity entity) {
-        return StinglessBeeHelmet.beeRidingOffset(yOffset, ((Entity)(Object)this), entity);
+    private Vec3 bumblezone$beeRidingOffset(Vec3 vec3, Entity passenger) {
+        return StinglessBeeHelmet.beeRidingOffset(vec3, ((Entity)(Object)this), passenger);
     }
 
     @ModifyReturnValue(method = "updateFluidHeightAndDoFluidPushing(Lnet/minecraft/tags/TagKey;D)Z",

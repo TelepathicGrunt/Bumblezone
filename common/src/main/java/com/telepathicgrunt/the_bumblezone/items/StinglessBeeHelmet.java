@@ -25,6 +25,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Set;
 
@@ -189,11 +190,11 @@ public class StinglessBeeHelmet extends BeeArmor {
         return InteractionResult.PASS;
     }
 
-    public static double beeRidingOffset(double yOffset, Entity vehicle, Entity rider) {
+    public static Vec3 beeRidingOffset(Vec3 offset, Entity vehicle, Entity rider) {
         if(vehicle instanceof Player && rider instanceof Bee) {
-            return yOffset + 0.3f;
+            return offset.add(0, 0.3d, 0);
         }
-        return yOffset;
+        return offset;
     }
 
     public static void decrementHighlightingCounter(Player player) {
