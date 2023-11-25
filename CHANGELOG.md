@@ -1,3 +1,9 @@
+### **(V.7.2.2 Changes) (1.20.1 Minecraft)**
+
+##### Entities:
+Fixed rider positioning for Beehemoth and Bee Queen.
+
+
 ### **(V.7.2.1 Changes) (1.20.1 Minecraft)**
 
 ##### Items:

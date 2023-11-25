@@ -552,15 +552,16 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     public void positionRider(Entity passenger, MoveFunction moveFunction) {
+        if (passenger instanceof LivingEntity) {
+            ((LivingEntity)passenger).yBodyRot = this.yBodyRot;
+        }
+
         if (hasPassenger(passenger)) {
-            float radius = -0.25F;
-            float angle = (0.01745329251F * this.yBodyRot);
-            double extraX = radius * Mth.sin((float) (Math.PI + angle));
-            double extraZ = radius * Mth.cos(angle);
-            passenger.setPos(
-                    getX() + extraX,
-                    getY() + this.getPassengerRidingPosition(passenger).y() + passenger.getMyRidingOffset(this),
-                    getZ() + extraZ);
+            Vec3 vec3 = this.getPassengerRidingPosition(passenger);
+            moveFunction.accept(passenger,
+                    vec3.x,
+                    vec3.y + 0.225d + passenger.getMyRidingOffset(this),
+                    vec3.z);
 
             double currentSpeed = getDeltaMovement().length();
             if(currentSpeed > 0.000001D &&
