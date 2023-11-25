@@ -141,12 +141,9 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
                 CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
                 CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
                 Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
-                    Ingredient[] ingredients = list.stream().filter(ingredient -> !ingredient.isEmpty()).toArray(Ingredient[]::new);
+                    Ingredient[] ingredients = list.toArray(Ingredient[]::new);
                     if (ingredients.length == 0) {
                         return DataResult.error(() -> "No ingredients for shapeless recipe");
-                    }
-                    if (ingredients.length > 9) {
-                        return DataResult.error(() -> "Too many ingredients for shapeless recipe");
                     }
                     return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingredients));
                 }, DataResult::success).forGetter(shapelessRecipe -> shapelessRecipe.ingredients)
