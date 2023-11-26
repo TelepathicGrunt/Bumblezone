@@ -5,8 +5,14 @@ Fixed it so Suspicious Pile of Pollen can be brushed even if there is no solid b
 
 Fixed Potion Candles granting effects 1 level higher than what tooltip says.
 
+Luminescent Wax only drops its lit form if mined by a player that had consumed Essence of the Bees before.
+ Otherwise, non-lit version is dropped.
+
 ##### Items:
 (Fabric/Quilt): Fixed placing Sugar Water Bucket next to Sugar Cane not granting advancement.
+
+##### Enchantments:
+Comb Cutter now mines Ancient Wax and Luminescent Wax much faster.
 
 
 ### **(V.7.1.3 Changes) (1.20.1 Minecraft)**

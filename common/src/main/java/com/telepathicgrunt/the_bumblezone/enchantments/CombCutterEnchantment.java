@@ -40,7 +40,8 @@ public class CombCutterEnchantment extends BzEnchantment {
         return TARGET_BLOCKS.getOrCompute(() -> {
             Set<Block> validBlocks = new HashSet<>();
             for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
-                if(key.getPath().contains("comb")) {
+                String path = key.getPath();
+                if(path.contains("comb") || path.contains("luminescent_wax") || path.contains("ancient_wax")) {
                     validBlocks.add(BuiltInRegistries.BLOCK.get(key));
                 }
             }
@@ -54,7 +55,7 @@ public class CombCutterEnchantment extends BzEnchantment {
             for (ResourceLocation key : BuiltInRegistries.BLOCK.keySet()) {
                 String path = key.getPath();
                 Block block = BuiltInRegistries.BLOCK.get(key);
-                if(block instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
+                if (block instanceof BeehiveBlock || path.contains("hive") || path.contains("nest") || (path.contains("wax") && !path.contains("waxed"))) {
                     validBlocks.add(block);
                 }
             }
@@ -63,10 +64,10 @@ public class CombCutterEnchantment extends BzEnchantment {
     }
 
     public static void attemptFasterMining(PlayerBreakSpeedEvent event){
-        if(BzEnchantments.COMB_CUTTER.get().getTargetBlocks().contains(event.state().getBlock())){
+        if (BzEnchantments.COMB_CUTTER.get().getTargetBlocks().contains(event.state().getBlock())){
             mineFaster(event, false);
         }
-        else if(BzEnchantments.COMB_CUTTER.get().getLesserTargetBlocks().contains(event.state().getBlock())){
+        else if (BzEnchantments.COMB_CUTTER.get().getLesserTargetBlocks().contains(event.state().getBlock())){
             mineFaster(event, true);
         }
     }

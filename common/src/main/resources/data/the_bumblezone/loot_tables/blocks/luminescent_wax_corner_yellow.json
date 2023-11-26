@@ -6,8 +6,22 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:luminescent_wax_corner_yellow",
-          "type": "minecraft:item"
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "name": "the_bumblezone:luminescent_wax_corner_yellow",
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "the_bumblezone:essence_only_spawn"
+                }
+              ]
+            },
+            {
+              "name": "the_bumblezone:luminescent_wax_corner",
+              "type": "minecraft:item"
+            }
+          ]
         }
       ],
       "conditions": [
