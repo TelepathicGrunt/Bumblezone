@@ -1,5 +1,8 @@
 ### **(V.7.2.2 Changes) (1.20.1 Minecraft)**
 
+##### Blocks:
+Fixed it so Suspicious Pile of Pollen can be brushed even if there is no solid block behind it.
+
 ##### Entities:
 Fixed rider positioning for Beehemoth and Bee Queen.
 
