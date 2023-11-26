@@ -381,7 +381,7 @@ public class EssenceBlockEntity extends BlockEntity {
 
                                 int xpReward = essenceBlock.getEssenceXpReward();
                                 if (essenceBlockEntity.isBeaten()) {
-                                    xpReward *= 0.1;
+                                    xpReward *= 0.1d;
                                 }
                                 serverPlayer.giveExperiencePoints(xpReward);
                                 essenceBlock.awardPlayerWinStat(serverPlayer);
@@ -432,8 +432,15 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     public void setRemoved() {
-        if (this.level instanceof ServerLevel serverLevel) {
-            EndEvent(serverLevel, this.getBlockPos(), this.getBlockState(), this, false);
+        if (this.getLevel() instanceof ServerLevel serverLevel) {
+            for (UUID playerUUID : this.getPlayerInArena()) {
+                ServerPlayer serverPlayer = (ServerPlayer) serverLevel.getPlayerByUUID(playerUUID);
+                if (serverPlayer != null) {
+                    if (this.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                        essenceBlock.onPlayerLeave(serverLevel, serverPlayer, this);
+                    }
+                }
+            }
         }
         this.getEventBar().removeAllPlayers();
         super.setRemoved();
