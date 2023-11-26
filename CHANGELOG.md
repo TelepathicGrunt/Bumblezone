@@ -8,6 +8,8 @@ Fixed Potion Candles granting effects 1 level higher than what tooltip says.
 Luminescent Wax only drops its lit form if mined by a player that had consumed Essence of the Bees before.
  Otherwise, non-lit version is dropped.
 
+Fixed nasty bug where shutting down the game would get stuck if Essence Block was loaded at any point.
+
 ##### Items:
 (Fabric/Quilt): Fixed placing Sugar Water Bucket next to Sugar Cane not granting advancement.
 
