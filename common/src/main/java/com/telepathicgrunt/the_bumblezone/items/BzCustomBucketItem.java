@@ -54,12 +54,20 @@ public class BzCustomBucketItem extends BzBucketItem {
     public InteractionResultHolder<ItemStack> use(Level world, Player playerEntity, InteractionHand hand) {
         InteractionResultHolder<ItemStack> specialActionResult = PlatformHooks.performItemUse(world, playerEntity, hand, this.fluid, this);
         if (specialActionResult.getResult() != InteractionResult.PASS) {
+            checkAndGrantAdvancement(world, playerEntity, specialActionResult);
             return specialActionResult;
         }
 
         InteractionResultHolder<ItemStack> actionResult = super.use(world, playerEntity, hand);
+        checkAndGrantAdvancement(world, playerEntity, actionResult);
+        return actionResult;
+    }
 
-        if (getFluid() == BzFluids.SUGAR_WATER_FLUID.get() && actionResult.getResult() == InteractionResult.CONSUME && playerEntity instanceof ServerPlayer) {
+    private void checkAndGrantAdvancement(Level world, Player playerEntity, InteractionResultHolder<ItemStack> actionResult) {
+        if (getFluid() == BzFluids.SUGAR_WATER_FLUID.get() &&
+            (actionResult.getResult() == InteractionResult.CONSUME || actionResult.getResult() == InteractionResult.SUCCESS) &&
+            playerEntity instanceof ServerPlayer serverPlayer)
+        {
             BlockHitResult raytraceresult = getPlayerPOVHitResult(world, playerEntity, ClipContext.Fluid.NONE);
             if (raytraceresult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockpos = raytraceresult.getBlockPos();
@@ -79,13 +87,11 @@ public class BzCustomBucketItem extends BzBucketItem {
                     }
                 }
 
-                if (isNextToSugarCane && playerEntity instanceof ServerPlayer serverPlayer) {
+                if (isNextToSugarCane) {
                     BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.trigger(serverPlayer);
                 }
             }
         }
-
-        return actionResult;
     }
 
     // Do not change signature of this method. It will automatically override Forge's canBlockContainFluid they patched into BucketItem.
