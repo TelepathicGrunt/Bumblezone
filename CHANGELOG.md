@@ -1,5 +1,8 @@
 ### **(V.7.1.3 Changes) (1.20.1 Minecraft)**
 
+##### Blocks:
+Fixed it so Suspicious Pile of Pollen can be brushed even if there is no solid block behind it.
+
 ##### Items:
 (Fabric/Quilt): Fixed Essence of Continuity not preventing death for players.
 
