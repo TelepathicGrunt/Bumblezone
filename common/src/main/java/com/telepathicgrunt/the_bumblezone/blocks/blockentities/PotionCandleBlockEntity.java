@@ -214,7 +214,7 @@ public class PotionCandleBlockEntity extends BlockEntity {
                                 MobEffectInstance mobEffectInstance = new MobEffectInstance(
                                         potionCandleBlockEntity.getMobEffect(),
                                         lingeringTime,
-                                        potionCandleBlockEntity.getAmplifier(),
+                                        Math.max(0, potionCandleBlockEntity.getAmplifier() - 1),
                                         true,
                                         true,
                                         !potionCandleBlockEntity.getMobEffect().isInstantenous());

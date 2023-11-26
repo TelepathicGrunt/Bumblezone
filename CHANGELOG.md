@@ -3,6 +3,8 @@
 ##### Blocks:
 Fixed it so Suspicious Pile of Pollen can be brushed even if there is no solid block behind it.
 
+Fixed Potion Candles granting effects 1 level higher than what tooltip says.
+
 ##### Items:
 (Fabric): Fixed placing Sugar Water Bucket next to Sugar Cane not granting advancement.
 
