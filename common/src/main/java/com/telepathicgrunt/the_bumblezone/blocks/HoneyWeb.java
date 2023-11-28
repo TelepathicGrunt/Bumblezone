@@ -109,23 +109,25 @@ public class HoneyWeb extends Block {
         };
     }
 
+    private static int getNewBitFlag(BlockState blockState) {
+        int bitFlag = 0;
+        if (blockState.getValue(NORTHSOUTH)) {
+            bitFlag |= 1;
+        }
+
+        if (blockState.getValue(EASTWEST)) {
+            bitFlag |= (1 << 1);
+        }
+
+        if (blockState.getValue(UPDOWN)) {
+            bitFlag |= (1 << 2);
+        }
+
+        return bitFlag;
+    }
+
     protected int getAABBIndex(BlockState blockState) {
-        return this.stateToIndex.computeIfAbsent(blockState, (a) -> {
-            int bitFlag = 0;
-            if (blockState.getValue(NORTHSOUTH)) {
-                bitFlag |= 1;
-            }
-
-            if (blockState.getValue(EASTWEST)) {
-                bitFlag |= (1 << 1);
-            }
-
-            if (blockState.getValue(UPDOWN)) {
-                bitFlag |= (1 << 2);
-            }
-
-            return bitFlag;
-        });
+        return this.stateToIndex.computeIfAbsent(blockState, HoneyWeb::getNewBitFlag);
     }
 
     @Override
