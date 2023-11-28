@@ -96,17 +96,25 @@ public class StickyHoneyResidue extends Block {
                 .setValue(SOUTH, false)
                 .setValue(WEST, false)
                 .setValue(DOWN, false));
+
+        for (BlockState blockState : this.stateDefinition.getPossibleStates()) {
+            shapeByIndex.computeIfAbsent(
+                    getShapeIndex(blockState),
+                    (bitFlag) -> {
+                        VoxelShape shape = Shapes.empty();
+                        for (Direction direction : Direction.values()) {
+                            if (((bitFlag >> direction.ordinal()) & 1) != 0) {
+                                shape = Shapes.joinUnoptimized(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()], BooleanOp.OR);
+                            }
+                        }
+                        return shape.optimize();
+                    }
+            );
+        }
     }
 
     public StickyHoneyResidue(BlockBehaviour.Properties settings) {
         super(settings);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(UP, false)
-                .setValue(NORTH, false)
-                .setValue(EAST, false)
-                .setValue(SOUTH, false)
-                .setValue(WEST, false)
-                .setValue(DOWN, false));
     }
 
     /**
