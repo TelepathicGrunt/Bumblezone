@@ -1,6 +1,9 @@
 ### **(V.7.1.5 Changes) (1.20.1 Minecraft)**
 
-##### Mod Comapt:
+##### Blocks:
+Fixed rare concurrency crash when caching Sticky Honey Residue blockstates shapes.
+
+##### Mod Compat:
 (Fabric/Quilt): Worked around Porting Lib incompatibility that was breaking fishing in Bumblezone and preventing Bee Stinger drops from bees.
 
 
