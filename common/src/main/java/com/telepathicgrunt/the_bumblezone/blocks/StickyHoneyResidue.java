@@ -75,7 +75,6 @@ public class StickyHoneyResidue extends Block {
     };
 
     protected final Short2ObjectMap<VoxelShape> shapeByIndex = new Short2ObjectArrayMap<>();
-    protected final Short2ObjectMap<AABB> aabbShapeByIndex = new Short2ObjectArrayMap<>();
     private final Object2ShortMap<BlockState> stateToIndex = new Object2ShortOpenHashMap<>();
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP =
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
@@ -125,16 +124,18 @@ public class StickyHoneyResidue extends Block {
         builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
-    protected short getShapeIndex(BlockState blockState) {
-        return this.stateToIndex.computeIfAbsent(blockState, (a) -> {
-            short bitFlag = 0;
-            for (Direction direction : Direction.values()) {
-                if (blockState.getValue(FACING_TO_PROPERTY_MAP.get(direction))) {
-                    bitFlag |= (1 << direction.ordinal());
-                }
+    private static short calculateBitFlag(BlockState blockState) {
+        short bitFlag = 0;
+        for (Direction direction : Direction.values()) {
+            if (blockState.getValue(FACING_TO_PROPERTY_MAP.get(direction))) {
+                bitFlag |= (1 << direction.ordinal());
             }
-            return bitFlag;
-        });
+        }
+        return bitFlag;
+    }
+
+    protected short getShapeIndex(BlockState blockState) {
+        return this.stateToIndex.computeIfAbsent(blockState, StickyHoneyResidue::calculateBitFlag);
     }
 
     /**
@@ -143,31 +144,7 @@ public class StickyHoneyResidue extends Block {
      */
     @Override
     public VoxelShape getShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return shapeByIndex.computeIfAbsent(
-            getShapeIndex(blockstate),
-            (bitFlag) -> {
-                VoxelShape shape = Shapes.empty();
-                for (Direction direction : Direction.values()) {
-                    if (((bitFlag >> direction.ordinal()) & 1) != 0) {
-                        shape = Shapes.joinUnoptimized(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()], BooleanOp.OR);
-                    }
-                }
-                return shape.optimize();
-            }
-        );
-    }
-
-    public AABB getAABBShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return aabbShapeByIndex.computeIfAbsent(
-                getShapeIndex(blockstate),
-                (bitFlag) -> {
-                    VoxelShape shape = getShape(blockstate, world, pos, context);
-                    if (shape.isEmpty()) {
-                        return AABB.ofSize(new Vec3(0,0,0),0,0,0);
-                    }
-                    return shape.bounds();
-                }
-        );
+        return shapeByIndex.getOrDefault(getShapeIndex(blockstate), Shapes.empty());
     }
 
     @Override
