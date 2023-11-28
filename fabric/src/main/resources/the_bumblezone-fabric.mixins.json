@@ -50,7 +50,6 @@
     "item.InventoryMixin",
     "item.ItemStackMixin",
     "item.RecordItemMixin",
-    "loot.LootTableMixin",
     "menu.ResultSlotMixin"
   ]
 }

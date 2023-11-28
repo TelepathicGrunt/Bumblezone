@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.BiomeColorFluidRenderHandler;
 import com.telepathicgrunt.the_bumblezone.fluids.fabric.HoneyFluidRenderHandler;
+import com.telepathicgrunt.the_bumblezone.loot.LootTableModifier;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
@@ -93,6 +94,8 @@ public class FabricClientEventManager {
 
         ClientTickEvents.START_CLIENT_TICK.register((mc) -> ClientTickEvent.EVENT.invoke(ClientTickEvent.START));
         ClientTickEvents.END_CLIENT_TICK.register((mc) -> ClientTickEvent.EVENT.invoke(ClientTickEvent.END));
+
+        LootTableModifier.modifyLootTables();
     }
 
     private static <T extends AbstractContainerMenu, U extends Screen & MenuAccess<T>> void registerScreen(MenuType<T> type, RegisterMenuScreenEvent.ScreenConstructor<T, U> provider) {
