@@ -1,3 +1,9 @@
+### **(V.7.1.5 Changes) (1.20.1 Minecraft)**
+
+##### Mod Comapt:
+(Fabric/Quilt): Worked around Porting Lib incompatibility that was breaking fishing in Bumblezone and preventing Bee Stinger drops from bees.
+
+
 ### **(V.7.1.4 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:
