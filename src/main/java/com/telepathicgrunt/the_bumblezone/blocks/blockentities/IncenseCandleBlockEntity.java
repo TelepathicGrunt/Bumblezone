@@ -214,7 +214,7 @@ public class IncenseCandleBlockEntity extends BlockEntity {
                                 MobEffectInstance mobEffectInstance = new MobEffectInstance(
                                         incenseCandleBlockEntity.getMobEffect(),
                                         lingeringTime,
-                                        incenseCandleBlockEntity.getAmplifier(),
+                                        Math.max(0, incenseCandleBlockEntity.getAmplifier() - 1),
                                         true,
                                         true,
                                         !incenseCandleBlockEntity.getMobEffect().isInstantenous());

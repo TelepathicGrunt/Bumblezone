@@ -54,6 +54,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -77,13 +78,17 @@ public class StickyHoneyResidue extends Block {
     };
 
     protected final Short2ObjectMap<VoxelShape> shapeByIndex = new Short2ObjectArrayMap<>();
-    protected final Short2ObjectMap<AABB> aabbShapeByIndex = new Short2ObjectArrayMap<>();
     private final Object2ShortMap<BlockState> stateToIndex = new Object2ShortOpenHashMap<>();
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP =
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(Properties.of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE).noCollission().strength(6.0f, 0.0f).noOcclusion());
+        super(Properties
+                .of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE)
+                .noCollission()
+                .strength(6.0f, 0.0f)
+                .noOcclusion());
+
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
                 .setValue(NORTH, false)
@@ -91,17 +96,25 @@ public class StickyHoneyResidue extends Block {
                 .setValue(SOUTH, false)
                 .setValue(WEST, false)
                 .setValue(DOWN, false));
+
+        for (BlockState blockState : this.stateDefinition.getPossibleStates()) {
+            shapeByIndex.computeIfAbsent(
+                getShapeIndex(blockState),
+                (bitFlag) -> {
+                    VoxelShape shape = Shapes.empty();
+                    for (Direction direction : Direction.values()) {
+                        if (((bitFlag >> direction.ordinal()) & 1) != 0) {
+                            shape = Shapes.joinUnoptimized(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()], BooleanOp.OR);
+                        }
+                    }
+                    return shape.optimize();
+                }
+            );
+        }
     }
 
     public StickyHoneyResidue(Properties settings) {
         super(settings);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(UP, false)
-                .setValue(NORTH, false)
-                .setValue(EAST, false)
-                .setValue(SOUTH, false)
-                .setValue(WEST, false)
-                .setValue(DOWN, false));
     }
 
     /**
@@ -112,16 +125,18 @@ public class StickyHoneyResidue extends Block {
         builder.add(UP, NORTH, EAST, SOUTH, WEST, DOWN);
     }
 
-    protected short getShapeIndex(BlockState blockState) {
-        return this.stateToIndex.computeIfAbsent(blockState, (a) -> {
-            short bitFlag = 0;
-            for (Direction direction : Direction.values()) {
-                if (blockState.getValue(FACING_TO_PROPERTY_MAP.get(direction))) {
-                    bitFlag |= (1 << direction.ordinal());
-                }
+    private static short calculateBitFlag(BlockState blockState) {
+        short bitFlag = 0;
+        for (Direction direction : Direction.values()) {
+            if (blockState.getValue(FACING_TO_PROPERTY_MAP.get(direction))) {
+                bitFlag |= (1 << direction.ordinal());
             }
-            return bitFlag;
-        });
+        }
+        return bitFlag;
+    }
+
+    protected short getShapeIndex(BlockState blockState) {
+        return this.stateToIndex.computeIfAbsent(blockState, StickyHoneyResidue::calculateBitFlag);
     }
 
     /**
@@ -130,31 +145,7 @@ public class StickyHoneyResidue extends Block {
      */
     @Override
     public VoxelShape getShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return shapeByIndex.computeIfAbsent(
-            getShapeIndex(blockstate),
-            (bitFlag) -> {
-                VoxelShape shape = Shapes.empty();
-                for (Direction direction : Direction.values()) {
-                    if (((bitFlag >> direction.ordinal()) & 1) != 0) {
-                        shape = Shapes.or(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()]);
-                    }
-                }
-                return shape;
-            }
-        );
-    }
-
-    public AABB getAABBShape(BlockState blockstate, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return aabbShapeByIndex.computeIfAbsent(
-                getShapeIndex(blockstate),
-                (bitFlag) -> {
-                    VoxelShape shape = getShape(blockstate, world, pos, context);
-                    if (shape.isEmpty()) {
-                        return AABB.ofSize(new Vec3(0,0,0),0,0,0);
-                    }
-                    return shape.bounds();
-                }
-        );
+        return shapeByIndex.getOrDefault(getShapeIndex(blockstate), Shapes.empty());
     }
 
     @Override
@@ -204,8 +195,9 @@ public class StickyHoneyResidue extends Block {
             return;
         }
 
-        AABB aabb = getAABBShape(blockState, level, blockPos, null).move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-        if (aabb.intersects(entity.getBoundingBox())) {
+        VoxelShape voxelShape = getShape(blockState, level, blockPos, null);
+        AABB entityBounds = entity.getBoundingBox().move(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ());
+        if (Shapes.joinIsNotEmpty(Shapes.create(entityBounds), voxelShape, BooleanOp.AND)) {
 
             entity.makeStuckInBlock(blockState, new Vec3(0.35D, 0.2F, 0.35D));
             if (entity instanceof LivingEntity livingEntity && !(entity instanceof Player player && player.isCreative())) {

@@ -3,6 +3,10 @@
   "values": [
     "the_bumblezone:beehemoth",
     {
+      "id": "alexscaves:gloomoth",
+      "required": false
+    },
+    {
       "id": "alexsmobs:tarantula_hawk",
       "required": false
     },
@@ -55,6 +59,10 @@
       "required": false
     },
     {
+      "id": "deep_aether:venomite",
+      "required": false
+    },
+    {
       "id": "endlessencore:fleet",
       "required": false
     },
@@ -68,6 +76,34 @@
     },
     {
       "id": "enemyexpansion:flutterfly",
+      "required": false
+    },
+    {
+      "id": "enemyexpansion:fly",
+      "required": false
+    },
+    {
+      "id": "feywild:bee_knight",
+      "required": false
+    },
+    {
+      "id": "feywild:spring_pixie",
+      "required": false
+    },
+    {
+      "id": "feywild:summer_pixie",
+      "required": false
+    },
+    {
+      "id": "feywild:autumn_pixie",
+      "required": false
+    },
+    {
+      "id": "feywild:winter_pixie",
+      "required": false
+    },
+    {
+      "id": "galosphere:spectre",
       "required": false
     },
     {
@@ -132,6 +168,10 @@
     },
     {
       "id": "moonbits:stunbug",
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:butterfly",
       "required": false
     },
     {
@@ -295,6 +335,22 @@
       "required": false
     },
     {
+      "id": "twilightforest:mosquito_swarm",
+      "required": false
+    },
+    {
+      "id": "ulterlands:flyvern",
+      "required": false
+    },
+    {
+      "id": "untamedwilds:butterfly",
+      "required": false
+    },
+    {
+      "id": "unusualend:ender_firefly",
+      "required": false
+    },
+    {
       "id": "whisperwoods:moth",
       "required": false
     },
@@ -332,18 +388,6 @@
     },
     {
       "id": "wonderouswilds:firefly",
-      "required": false
-    },
-    {
-      "id": "ulterlands:flyvern",
-      "required": false
-    },
-    {
-      "id": "unusualend:ender_firefly",
-      "required": false
-    },
-    {
-      "id": "twilightforest:mosquito_swarm",
       "required": false
     }
   ]
