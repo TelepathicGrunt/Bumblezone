@@ -35,7 +35,7 @@ public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
         StructureTemplateManager structureManager = context.level().getLevel().getStructureManager();
         StructureTemplate template = structureManager.get(nbtRL).orElseThrow(() -> {
-            String errorMsg = "Identifier to the specified nbt file was not found! : " + nbtRL;
+            String errorMsg = "Honeycomb cave NBT not found!";
             Bumblezone.LOGGER.error(errorMsg);
             return new RuntimeException(errorMsg);
         });
