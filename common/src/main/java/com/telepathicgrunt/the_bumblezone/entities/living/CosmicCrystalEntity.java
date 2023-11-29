@@ -74,6 +74,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -1133,7 +1134,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         this.yRotO = this.getYRot();
         this.xRotO = this.getXRot();
 
-        for (MobEffectInstance mobEffectInstance : this.getActiveEffects()) {
+        for (MobEffectInstance mobEffectInstance : new ArrayList<>(this.getActiveEffects())) {
             MobEffect mobEffect = mobEffectInstance.getEffect();
             int currentEffectTick = mobEffectInstance.isInfiniteDuration() ? Integer.MAX_VALUE : mobEffectInstance.getDuration();
 
