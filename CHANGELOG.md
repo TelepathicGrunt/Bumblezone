@@ -3,11 +3,16 @@
 ##### Blocks:
 Fixed rare concurrency crash when caching Sticky Honey Residue blockstates shapes.
 
-##### Mod Compat:
-(Fabric/Quilt): Worked around Porting Lib incompatibility that was breaking fishing in Bumblezone and preventing Bee Stinger drops from bees.
+##### Effects:
+Fixed server-client sync issue with Paralysis effect.
+
+Paralysis that is managed to be put on undead mobs will be removed from undead mobs.
 
 ##### Misc:
 Tiny optimizations.
+
+##### Mod Compat:
+(Fabric/Quilt): Worked around Porting Lib incompatibility that was breaking fishing in Bumblezone and preventing Bee Stinger drops from bees.
 
 
 ### **(V.7.1.4 Changes) (1.20.1 Minecraft)**

@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
 
@@ -38,6 +39,11 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
+        if (effect != null && entity.getMobType() == MobType.UNDEAD) {
+            entity.removeEffect(this);
+            return;
+        }
+
         if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {
             MobEffectClientSyncPacket.sendToClient(entity, effect);
         }
@@ -53,7 +59,7 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
                 new MobEffectInstance(
                     BzEffects.PARALYZED.get(),
                     0,
-                    effect.getAmplifier() + 1,
+                    effect.getAmplifier(),
                     false,
                     true,
                     true)
