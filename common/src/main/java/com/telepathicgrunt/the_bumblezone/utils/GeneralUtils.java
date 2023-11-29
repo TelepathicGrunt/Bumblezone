@@ -424,11 +424,7 @@ public class GeneralUtils {
     }
 
     public static <B, T extends B> boolean isInTag(Registry<B> registry, TagKey<B> key, T value) {
-        return registry.getTag(key)
-                .stream()
-                .flatMap(HolderSet.ListBacked::stream)
-                .filter(Holder::isBound)
-                .anyMatch(holder -> holder.value() == value);
+        return registry.getHolder(registry.getId(value)).orElseThrow().is(key);
     }
 
     /**
