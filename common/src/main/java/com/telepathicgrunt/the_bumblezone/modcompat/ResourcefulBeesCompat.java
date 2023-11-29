@@ -143,8 +143,8 @@ public class ResourcefulBeesCompat implements ModCompat {
             Optional<HolderSet.Named<Block>> optionalNamed = blockRegistry.getTag(spawnsInBeeDungeonsTag);
             if (optionalNamed.isEmpty()) return null;
 
-            List<Block> holders = GeneralUtils.getListOfNonDummyBlocks(optionalNamed);
-            if (holders.size() == 0) return null;
+            List<Block> holders = GeneralUtils.convertHoldersetToList(optionalNamed);
+            if (holders.isEmpty()) return null;
 
             Block rbComb = holders.get(random.nextInt(random.nextInt(holders.size()) + 1));
             return new StructureTemplate.StructureBlockInfo(worldPos, rbComb.defaultBlockState(), null);

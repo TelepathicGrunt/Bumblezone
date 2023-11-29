@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,12 +85,16 @@ public class TagReplaceProcessor extends StructureProcessor {
                 }
                 randomSource.nextBoolean(); // In curtain situations, we need to run randomsource once to get truly random values afterwards.
 
-                List<Block> blockList = GeneralUtils.getListOfNonDummyBlocks(optionalBlocks)
-                        .stream()
-                        .filter(block -> blacklistedOutputBlockTag
-                                .map(blockTagKey -> !block.defaultBlockState().is(blockTagKey))
-                                .orElse(true))
-                        .toList();
+                List<Block> blockList = optionalBlocks
+                        .map(holderSet -> holderSet
+                                .stream()
+                                .filter(block -> blacklistedOutputBlockTag
+                                        .map(blockTagKey -> !block.is(blockTagKey))
+                                        .orElse(true))
+                                .map(Holder::value)
+                                .toList()
+                        )
+                        .orElse(new ArrayList<>());
 
                 if (doubleTallFlower) {
                     blockList = blockList.stream()
