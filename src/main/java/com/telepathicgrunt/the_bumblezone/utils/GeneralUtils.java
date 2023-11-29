@@ -10,10 +10,14 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -367,7 +371,13 @@ public class GeneralUtils {
             structurePiece.move(xOffset, 0, zOffset);
         }
     }
-    
+
+    //////////////////////////////////////////////
+
+    public static <B, T extends B> boolean isInTag(Registry<B> registry, TagKey<B> key, T value) {
+        return registry.getHolder(registry.getId(value)).orElseThrow().is(key);
+    }
+
     //////////////////////////////////////////////
     // Source: https://github.com/Shadows-of-Fire/Placebo/blob/35bc107709970cd7f2f24cf73b2c4337ab00fb3b/src/main/java/shadows/placebo/container/ContainerUtil.java
 
