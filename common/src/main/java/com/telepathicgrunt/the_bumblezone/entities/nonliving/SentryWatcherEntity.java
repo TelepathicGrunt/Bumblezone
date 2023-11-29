@@ -1110,16 +1110,19 @@ public class SentryWatcherEntity extends Entity implements Enemy {
          for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
 
             BlockState state = this.level().getBlockState(pos);
-            if (!state.getCollisionShape(this.level(), pos).isEmpty() || state.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
-               if (state.is(BzTags.SENTRY_WATCHER_FORCED_NEVER_DESTROY)) {
-                  canDemolish = false;
-                  break;
-               }
-               else {
-                  demolishPos.add(pos.immutable());
-                  totalhardness += state.getBlock().getExplosionResistance();
-                  if (state.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
-                     alwaysDestroyCounter++;
+            VoxelShape blockShape = state.getCollisionShape(this.level(), pos);
+            if (!blockShape.isEmpty() || state.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
+               if (blockShape.max(Direction.Axis.Y) > this.getY() - this.getBlockY()) {
+                  if (state.is(BzTags.SENTRY_WATCHER_FORCED_NEVER_DESTROY)) {
+                     canDemolish = false;
+                     break;
+                  }
+                  else {
+                     demolishPos.add(pos.immutable());
+                     totalhardness += state.getBlock().getExplosionResistance();
+                     if (state.is(BzTags.SENTRY_WATCHER_ALWAYS_DESTROY)) {
+                        alwaysDestroyCounter++;
+                     }
                   }
                }
             }
@@ -1153,8 +1156,10 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    private Vec3 collide(Vec3 incomingSpeed) {
       AABB sentryBoundingBox = this.getBoundingBox();
-      List<VoxelShape> shapesCollidedWith = this.level().getEntityCollisions(this, sentryBoundingBox.expandTowards(incomingSpeed));
-      Vec3 collidedVelocity = incomingSpeed.lengthSqr() == 0.0 ?
+      List<VoxelShape> shapesCollidedWith = new ArrayList<>();
+      boolean isNotMoving = incomingSpeed.lengthSqr() == 0.0;
+
+      Vec3 collidedVelocity = isNotMoving ?
               incomingSpeed :
               collideBoundingBox(
                       this,

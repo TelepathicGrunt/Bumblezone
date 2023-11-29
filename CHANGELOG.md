@@ -6,6 +6,9 @@ Fixed rare concurrency crash when caching Sticky Honey Residue blockstates shape
 ##### Mod Compat:
 (Fabric/Quilt): Worked around Porting Lib incompatibility that was breaking fishing in Bumblezone and preventing Bee Stinger drops from bees.
 
+##### Misc:
+Tiny optimizations.
+
 
 ### **(V.7.1.4 Changes) (1.20.1 Minecraft)**
 
