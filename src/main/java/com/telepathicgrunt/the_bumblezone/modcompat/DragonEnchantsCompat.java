@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -21,7 +23,7 @@ public class DragonEnchantsCompat {
 	public static boolean isTeleportHandled(BlockHitResult blockHitResult, Entity owner, Projectile projectile) {
 		if (projectile != null &&
 			projectile.getPersistentData().getBoolean(END_STEP_ENCHANT_ATTACHED_TAG) &&
-			ForgeRegistries.ENCHANTMENTS.getHolder(END_STEP_RL).get().is(BzTags.ENCHANT_SPECIAL_DEDICATED_COMPAT))
+			GeneralUtils.isInTag(Registry.ENCHANTMENT, BzTags.ENCHANT_SPECIAL_DEDICATED_COMPAT, Registry.ENCHANTMENT.get(END_STEP_RL)))
 		{
 			return EntityTeleportationHookup.runTeleportProjectileImpact(blockHitResult, owner, projectile);
 		}

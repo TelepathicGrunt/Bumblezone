@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
@@ -139,7 +140,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
         }
 
         HashSet<MobEffect> setPicker = new HashSet<>(effects);
-        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS).contains(e)).toList();
+        List<MobEffect> filteredMobEffects = setPicker.stream().filter(e -> !GeneralUtils.isInTag(Registry.MOB_EFFECT, BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS, e)).toList();
         chosenEffect = filteredMobEffects.get(new Random().nextInt(filteredMobEffects.size()));
         if (chosenEffect == null) {
             return getResultStack(this.outputCount);
@@ -294,7 +295,7 @@ public class IncenseCandleRecipe implements CraftingRecipe, IShapedRecipe<Crafti
             }
         }
 
-        if (mobEffects.stream().allMatch(e -> Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.tags()).getTag(BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS).contains(e.getEffect()))) {
+        if (mobEffects.stream().allMatch(e -> GeneralUtils.isInTag(Registry.MOB_EFFECT, BzTags.DISALLOWED_INCENSE_CANDLE_EFFECTS, e.getEffect()))) {
             return false;
         }
 

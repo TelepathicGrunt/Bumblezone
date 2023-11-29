@@ -11,9 +11,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -382,6 +384,10 @@ public class GeneralUtils {
                 .filter(block -> !block.defaultBlockState().isAir() && !block.getClass().getName().endsWith("BlockDummyAir"))
                 .toList()
             ).orElseGet(ArrayList::new);
+    }
+
+    public static <B, T extends B> boolean isInTag(Registry<B> registry, TagKey<B> key, T value) {
+        return registry.getHolder(registry.getId(value)).orElseThrow().is(key);
     }
 
     //////////////////////////////////////////////
