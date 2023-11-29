@@ -47,7 +47,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
         ChunkAccess cachedChunk = level.getChunk(chunkCornerPos);
 
         Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(config.flowerTag);
-        List<Block> blockList = GeneralUtils.getListOfNonDummyBlocks(optionalBlocks);
+        List<Block> blockList = GeneralUtils.convertHoldersetToList(optionalBlocks);
         blockList.removeIf(block -> !block.defaultBlockState().is(context.config().disallowedFlowerTag));
 
         if (blockList.isEmpty()) {

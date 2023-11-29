@@ -414,11 +414,10 @@ public class GeneralUtils {
 
     //////////////////////////////////////////////
 
-    public static List<Block> getListOfNonDummyBlocks(Optional<HolderSet.Named<Block>> blockTagResult) {
+    public static <T> List<T> convertHoldersetToList(Optional<HolderSet.Named<T>> blockTagResult) {
         return blockTagResult.map(holders -> holders
                 .stream()
                 .map(Holder::value)
-                .filter(block -> !block.defaultBlockState().isAir() && !block.getClass().getName().endsWith("BlockDummyAir"))
                 .toList()
             ).orElseGet(ArrayList::new);
     }

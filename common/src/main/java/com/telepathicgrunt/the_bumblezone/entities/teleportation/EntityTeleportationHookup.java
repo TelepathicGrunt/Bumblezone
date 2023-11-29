@@ -404,7 +404,7 @@ public class EntityTeleportationHookup {
 
     private static boolean isValidBelowBlock(Level world, Entity entity, BlockPos hivePos) {
         Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-        if (blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
+        if (blockTag.isPresent() && !GeneralUtils.convertHoldersetToList(blockTag).isEmpty()) {
             if (world.getBlockState(hivePos.below()).is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
                 return true;
             }
@@ -475,7 +475,7 @@ public class EntityTeleportationHookup {
                 //checks if block under hive is correct if config needs one
                 boolean validBelowBlock = false;
                 Optional<HolderSet.Named<Block>> blockTag = BuiltInRegistries.BLOCK.getTag(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT);
-                if (blockTag.isPresent() && GeneralUtils.getListOfNonDummyBlocks(blockTag).size() != 0) {
+                if (blockTag.isPresent() && !GeneralUtils.convertHoldersetToList(blockTag).isEmpty()) {
 
                     for (BlockState belowBlock : belowHiveBlocks) {
                         if (belowBlock.is(BzTags.REQUIRED_BLOCKS_UNDER_HIVE_TO_TELEPORT)) {
