@@ -1,26 +1,4 @@
-### **(V.6.8.0 Changes) (1.19.2 Minecraft)**
+### **(V.6.8.1 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
-Honey Bee Leggings now will eject pollen if standing on Wet Sponge or when in Water! New advancement added for this.
- Also, now works with Armor Stands so you can automate Pollen Puff generation! See if you can figure out a contraption to do this!
-
-##### Entities:
-Honey Slime is no longer marked as Enemy. Golems won't attack them now.
-
-##### Effects:
-Fixed Wrath of the Hive growing Brood Blocks that are too far above or below mob.
-
-Adjusted Wrath of the Hive effect to not run every tick. Might see a tiny bit of performance boost.
-
-##### Advancements:
-Re-organized advancement layout to be very similar to 1.20.1 Bumblezone's advancement layout.
-
-Removed Honey Crystal Placed In Water advancement as it was pointless.
-
-Removed Walk Into Pile of Pollen advancement as it was pointless.
-
-Fixed Beehive Beeswax to Bee Nests advancement not triggering when Visual Workstation is on.
-
-Lower requirement for Stingless Bee Helmet advancement from 60 bees to 50 bees.
-
-Darken background for Bumblezone advancement tab.
+Fixed rare crash when consuming Essence of the Bees while having another mod add status effect to you at exact moment.
