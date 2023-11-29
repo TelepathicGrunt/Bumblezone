@@ -30,6 +30,8 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
+import java.util.HashSet;
+
 public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEntity, CosmicCrystalModel<CosmicCrystalEntity>> {
     private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
     private static final ResourceLocation LASER_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/cosmic_crystal_laser.png");
@@ -112,7 +114,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 green *= 0.75f;
                 blue *= 0.75f;
             }
-            for(MobEffect mobEffect : cosmicCrystalEntity.getActiveEffectsMap().keySet()) {
+            for(MobEffect mobEffect : new HashSet<>(cosmicCrystalEntity.getActiveEffectsMap().keySet())) {
                 if (mobEffect == MobEffects.POISON) {
                     red *= 0.75f;
                     blue *= 0.75f;
