@@ -140,7 +140,7 @@ public class FakePotionCandleRecipeCreator {
             return ItemStack.EMPTY;
         }
 
-        PotionCandleRecipe.balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
+        PotionCandleRecipe.balanceMainStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
         amplifier.set(Math.min(amplifier.get(), recipe.getMaxLevelCap()));
 
         return PotionCandleRecipe.createTaggedPotionCandle(

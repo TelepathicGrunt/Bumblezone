@@ -182,6 +182,8 @@ public class BzTags {
 
     public static final TagKey<MobEffect> HEAVY_AIR_REMOVE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "heavy_air/remove_effects"));
     public static final TagKey<MobEffect> DISALLOWED_POTION_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "potion_candle/disallowed_effects"));
+    public static final TagKey<MobEffect> ONE_MINUTE_POTION_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "potion_candle/capped_to_1_minute_effects"));
+    public static final TagKey<MobEffect> TEN_SECONDS_POTION_CANDLE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "potion_candle/capped_to_10_seconds_effects"));
     public static final TagKey<MobEffect> LIFE_CURE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/life/cure_effects"));
     public static final TagKey<MobEffect> RADIANCE_SUN_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/radiance/sun_effects"));
     public static final TagKey<MobEffect> RAGING_RAGE_EFFECTS = TagKey.create(Registries.MOB_EFFECT, new ResourceLocation(Bumblezone.MODID, "essence/raging/rage_effects"));

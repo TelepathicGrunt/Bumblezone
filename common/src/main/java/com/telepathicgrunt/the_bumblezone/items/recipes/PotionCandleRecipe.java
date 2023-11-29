@@ -165,13 +165,13 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             return getResultStack(this.outputCount);
         }
 
-        balanceStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
+        balanceMainStats(chosenEffect, maxDuration, amplifier, potionEffectsFound);
         amplifier.set(Math.min(amplifier.get(), this.maxLevelCap));
 
         return createTaggedPotionCandle(chosenEffect, maxDuration, amplifier, splashCount, lingerCount, this.outputCount);
     }
 
-    public static void balanceStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
+    public static void balanceMainStats(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, AtomicInteger potionEffectsFound) {
         amplifier.set(amplifier.get() / potionEffectsFound.get());
 
         float durationBaseMultiplier = ((0.4f / (0.9f * potionEffectsFound.get())) + (amplifier.get() * 0.22f));
@@ -182,9 +182,22 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             int activationAmounts = (int)Math.ceil((double) maxDuration.intValue() / thresholdTime);
             maxDuration.set((int) (activationAmounts * thresholdTime));
         }
+        else {
+            if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.TEN_SECONDS_POTION_CANDLE_EFFECTS, chosenEffect)) {
+                maxDuration.set(Math.min(200, maxDuration.get()));
+            }
+            else if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.ONE_MINUTE_POTION_CANDLE_EFFECTS, chosenEffect)) {
+                maxDuration.set(Math.min(1200, maxDuration.get()));
+            }
+        }
     }
 
-    public static ItemStack createTaggedPotionCandle(MobEffect chosenEffect, AtomicInteger maxDuration, AtomicInteger amplifier, int splashCount, int lingerCount, int outputCount) {
+    public static ItemStack createTaggedPotionCandle(MobEffect chosenEffect,
+                                                     AtomicInteger maxDuration,
+                                                     AtomicInteger amplifier,
+                                                     int splashCount,
+                                                     int lingerCount,
+                                                     int outputCount) {
         ItemStack resultStack = getResultStack(outputCount);
 
         CompoundTag tag = resultStack.getOrCreateTag();
@@ -200,16 +213,25 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, 1);
         }
         else if (chosenEffect == MobEffects.NIGHT_VISION) {
-            setLingerTime(lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
+            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
         }
         else {
-            setLingerTime(lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
+            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
         }
         return resultStack;
     }
 
-    private static void setLingerTime(int lingerCount, CompoundTag blockEntityTag, int baseLingerTime) {
-        blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, baseLingerTime + (lingerCount * baseLingerTime * 2));
+    private static void setLingerTime(MobEffect chosenEffect, int lingerCount, CompoundTag blockEntityTag, int baseLingerTime) {
+        int lingerTime = baseLingerTime + (lingerCount * baseLingerTime * 2);
+
+        if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.TEN_SECONDS_POTION_CANDLE_EFFECTS, chosenEffect)) {
+            lingerTime = Math.min(200, lingerTime);
+        }
+        else if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.ONE_MINUTE_POTION_CANDLE_EFFECTS, chosenEffect)) {
+            lingerTime = Math.min(1200, lingerTime);
+        }
+
+        blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, lingerTime);
     }
 
     @Override
