@@ -305,11 +305,11 @@ public class EntityTeleportationHookup {
             if (!isAllowTeleportItem) {
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(usingStack);
                 for (Enchantment enchantment : enchantments.keySet()) {
-                    if (EnchantmentUtils.isEnchantmentTagged(enchantment, BzTags.ITEM_WITH_TELEPORT_ENCHANT)) {
+                    if (GeneralUtils.isInTag(Registry.ENCHANTMENT, BzTags.ITEM_WITH_TELEPORT_ENCHANT, enchantment)) {
                         isAllowTeleportItem = true;
                         break;
                     }
-                    else if (user.isShiftKeyDown() && EnchantmentUtils.isEnchantmentTagged(enchantment, BzTags.ITEM_WITH_TELEPORT_ENCHANT_CROUCHING)) {
+                    else if (user.isShiftKeyDown() && GeneralUtils.isInTag(Registry.ENCHANTMENT, BzTags.ITEM_WITH_TELEPORT_ENCHANT_CROUCHING, enchantment)) {
                         isAllowTeleportItem = true;
                         break;
                     }

@@ -95,8 +95,10 @@ public class EnchantmentUtils {
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
 		for(Enchantment enchantment : Registry.ENCHANTMENT) {
-			boolean forceAllowed = isEnchantmentForcedAllowed(enchantment);
-			if (!forceAllowed && isEnchantmentBanned(enchantment)) {
+
+			boolean forceAllowed = GeneralUtils.isInTag(Registry.ENCHANTMENT, BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
+			boolean disallowed = GeneralUtils.isInTag(Registry.ENCHANTMENT, BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
+			if (!forceAllowed && disallowed) {
 				continue;
 			}
 
@@ -119,24 +121,6 @@ public class EnchantmentUtils {
 		}
 		list.sort(EnchantmentUtils::compareEnchantments);
 		return list;
-	}
-
-	private static boolean isEnchantmentForcedAllowed(Enchantment enchantment) {
-		return isEnchantmentTagged(enchantment, BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
-	}
-
-	private static boolean isEnchantmentBanned(Enchantment enchantment) {
-		return isEnchantmentTagged(enchantment, BzTags.DISALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS);
-	}
-
-	public static boolean isEnchantmentTagged(Enchantment enchantment, TagKey<Enchantment> enchantmentTag) {
-		Iterable<Holder<Enchantment>> taggedEnchantments = Registry.ENCHANTMENT.getTagOrEmpty(enchantmentTag);
-		for (Holder<Enchantment> enchantmentHolder : taggedEnchantments) {
-			if (enchantmentHolder.value().equals(enchantment)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {
