@@ -284,7 +284,7 @@ public class BzWorldSavedData extends SavedData {
 
 			if(teleportedEntity instanceof LivingEntity livingEntity) {
 				if (livingEntity instanceof ServerPlayer serverPlayer) {
-					for(MobEffectInstance effectInstance : livingEntity.getActiveEffects()) {
+					for(MobEffectInstance effectInstance : new ArrayList<>(livingEntity.getActiveEffects())) {
 						serverPlayer.connection.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), effectInstance));
 					}
 				}

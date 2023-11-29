@@ -25,6 +25,8 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+
 public class EssenceOfTheBees extends Item {
 
     public EssenceOfTheBees(Properties properties) {
@@ -58,8 +60,8 @@ public class EssenceOfTheBees extends Item {
                     2F,
                     (serverPlayer.getRandom().nextFloat() * 0.2F) + 0.6F);
 
-            for (MobEffectInstance effectToRemove : serverPlayer.getActiveEffects()) {
-                if (!effectToRemove.getEffect().isBeneficial() && serverPlayer.hasEffect(effectToRemove.getEffect())) {
+            for (MobEffectInstance effectToRemove : new ArrayList<>(serverPlayer.getActiveEffects())) {
+                if (!effectToRemove.getEffect().isBeneficial()) {
                     serverPlayer.removeEffect(effectToRemove.getEffect());
                 }
             }
