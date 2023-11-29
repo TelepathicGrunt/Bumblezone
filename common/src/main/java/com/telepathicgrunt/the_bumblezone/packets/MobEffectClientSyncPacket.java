@@ -103,8 +103,13 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
                 if (entity instanceof LivingEntity) {
                     MobEffect mobeffect = BuiltInRegistries.MOB_EFFECT.get(message.effectRl());
                     if (mobeffect != null) {
-                        MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, message.effectDurationTicks(), message.effectAmplifier(), message.isEffectAmbient(), message.isEffectVisible(), message.effectShowsIcon());
-                        ((LivingEntity)entity).forceAddEffect(mobeffectinstance, null);
+                        if (message.effectDurationTicks() == 0) {
+                            ((LivingEntity)entity).removeEffect(mobeffect);
+                        }
+                        else {
+                            MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, message.effectDurationTicks(), message.effectAmplifier(), message.isEffectAmbient(), message.isEffectVisible(), message.effectShowsIcon());
+                            ((LivingEntity)entity).forceAddEffect(mobeffectinstance, null);
+                        }
                     }
                 }
             };

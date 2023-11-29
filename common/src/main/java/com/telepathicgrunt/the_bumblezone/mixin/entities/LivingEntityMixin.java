@@ -76,5 +76,6 @@ public abstract class LivingEntityMixin extends Entity {
             at = @At(value = "TAIL"))
     private void bumblezone$runAtEffectRemoval(MobEffectInstance mobEffectInstance, CallbackInfo ci) {
         WrathOfTheHiveEffect.effectRemoval((LivingEntity) (Object) this, mobEffectInstance);
+        ParalyzedEffect.effectRemoval((LivingEntity) (Object) this, mobEffectInstance);
     }
 }

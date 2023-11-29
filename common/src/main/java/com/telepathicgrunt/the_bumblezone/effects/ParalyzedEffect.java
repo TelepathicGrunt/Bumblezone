@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
 
@@ -38,6 +39,11 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
     @Override
     public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
         MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.get());
+        if (livingEntity.getMobType() == MobType.UNDEAD) {
+            livingEntity.removeEffect(this);
+            return;
+        }
+
         if(!livingEntity.isRemoved() && effect != null && livingEntity.level() instanceof ServerLevel) {
             MobEffectClientSyncPacket.sendToClient(livingEntity, effect);
         }
@@ -45,21 +51,23 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
         super.onEffectStarted(livingEntity, amplifier);
     }
 
-//    public void onEffectRemoval(LivingEntity entity) {
-//        MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-//        if(!entity.isRemoved() && effect != null && entity.level() instanceof ServerLevel) {
-//            MobEffectClientSyncPacket.sendToClient(
-//                entity,
-//                new MobEffectInstance(
-//                    BzEffects.PARALYZED.get(),
-//                    0,
-//                    effect.getAmplifier() + 1,
-//                    false,
-//                    true,
-//                    true)
-//            );
-//        }
-//    }
+    // Make sure client removes effect when done.
+    public static void effectRemoval(LivingEntity entity, MobEffectInstance mobEffectInstance) {
+        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.PARALYZED.get()) {
+            return;
+        }
+
+        MobEffectClientSyncPacket.sendToClient(
+            entity,
+            new MobEffectInstance(
+                BzEffects.PARALYZED.get(),
+                0,
+                mobEffectInstance.getAmplifier(),
+                false,
+                true,
+                true)
+        );
+    }
 
     public static boolean isParalyzed(LivingEntity livingEntity) {
         if(livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
