@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 import java.util.function.Consumer;
 
-@Mixin(LootTable.class)
+@Mixin(value = LootTable.class, priority = 900)
 public class LootTableMixin {
 
     /**
