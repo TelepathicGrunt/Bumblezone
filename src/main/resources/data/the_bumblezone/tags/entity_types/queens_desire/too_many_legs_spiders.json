@@ -129,6 +129,10 @@
     {
       "id": "twilightforest:king_spider",
       "required": false
+    },
+    {
+      "id": "witherstormmod:sickened_spider",
+      "required": false
     }
   ]
 }
