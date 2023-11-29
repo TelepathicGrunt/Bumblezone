@@ -3,6 +3,10 @@
 ##### Blocks:
 Fixed rare concurrency crash when caching Sticky Honey Residue blockstates shapes.
 
+Added two new tags for Potion Candle. Paralysis effect is now capped to 10 seconds if used for Potion Candle.
+ `the_bumblezone:potion_candle/capped_to_1_minute_effects`
+ `the_bumblezone:potion_candle/capped_to_10_seconds_effects`
+
 ##### Effects:
 Fixed server-client sync issue with Paralysis effect.
 
