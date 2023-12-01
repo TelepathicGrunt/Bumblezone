@@ -840,12 +840,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     private static boolean finalbeeQueenAdvancementDone(ServerPlayer serverPlayer) {
-        AdvancementHolder advancement = serverPlayer.server.getAdvancements().get(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
-        if (advancement == null) {
+        AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(BzCriterias.QUEENS_DESIRE_FINAL_ADVANCEMENT);
+        if (advancementHolder == null) {
             return false;
         }
-        Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor) serverPlayer.getAdvancements()).getProgress();
-        return advancementsProgressMap.containsKey(advancement.value()) && advancementsProgressMap.get(advancement.value()).isDone();
+        Map<AdvancementHolder, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor) serverPlayer.getAdvancements()).getProgress();
+        return advancementsProgressMap.containsKey(advancementHolder) && advancementsProgressMap.get(advancementHolder).isDone();
     }
 
     private boolean isContainerBlockEntity(ItemStack itemStack) {

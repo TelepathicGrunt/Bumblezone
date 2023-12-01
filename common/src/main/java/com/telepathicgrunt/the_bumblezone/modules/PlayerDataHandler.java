@@ -10,7 +10,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -157,6 +156,6 @@ public class PlayerDataHandler {
         }
 
         var progress = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
-        return progress.containsKey(advancementHolder.value()) && progress.get(advancementHolder.value()).isDone();
+        return progress.containsKey(advancementHolder) && progress.get(advancementHolder).isDone();
     }
 }

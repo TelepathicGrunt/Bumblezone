@@ -61,13 +61,13 @@ public class EntityTeleportationHookup {
         if (event.player() instanceof ServerPlayer serverPlayer && event.end()) {
             Level level = serverPlayer.level();
 
-            AdvancementHolder advancement = serverPlayer.server.getAdvancements().get(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
-            if (advancement == null) {
+            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
+            if (advancementHolder == null) {
                 return;
             }
 
-            Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
-            if (advancementsProgressMap.containsKey(advancement.value()) && advancementsProgressMap.get(advancement.value()).isDone()) {
+            Map<AdvancementHolder, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+            if (advancementsProgressMap.containsKey(advancementHolder) && advancementsProgressMap.get(advancementHolder).isDone()) {
                 return;
             }
 

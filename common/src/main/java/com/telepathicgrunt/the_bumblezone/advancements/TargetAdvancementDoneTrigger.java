@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
@@ -39,11 +38,11 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
         }
 
         public boolean matches(ServerPlayer serverPlayer) {
-            AdvancementHolder advancement = serverPlayer.server.getAdvancements().get(targetAdvancement);
-            Map<Advancement, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
-            return advancement != null &&
-                    advancementsProgressMap.containsKey(advancement.value()) &&
-                    advancementsProgressMap.get(advancement.value()).isDone();
+            AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(targetAdvancement);
+            Map<AdvancementHolder, AdvancementProgress> advancementsProgressMap = ((PlayerAdvancementsAccessor)serverPlayer.getAdvancements()).getProgress();
+            return advancementHolder != null &&
+                    advancementsProgressMap.containsKey(advancementHolder) &&
+                    advancementsProgressMap.get(advancementHolder).isDone();
         }
 
         @Override
