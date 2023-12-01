@@ -48,7 +48,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
         Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(config.flowerTag);
         List<Block> blockList = GeneralUtils.convertHoldersetToList(optionalBlocks);
-        blockList.removeIf(block -> !block.defaultBlockState().is(context.config().disallowedFlowerTag));
+        blockList.removeIf(block -> block.defaultBlockState().is(context.config().disallowedFlowerTag));
 
         if (blockList.isEmpty()) {
             return false;
