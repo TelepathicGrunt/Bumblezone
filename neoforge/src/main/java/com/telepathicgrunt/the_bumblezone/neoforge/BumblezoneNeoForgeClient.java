@@ -67,7 +67,7 @@ import net.neoforged.neoforge.event.TickEvent;
 import java.io.IOException;
 import java.util.function.Function;
 
-public class BumblezoneForgeClient {
+public class BumblezoneNeoForgeClient {
 
 
     public static void init() {
@@ -75,23 +75,23 @@ public class BumblezoneForgeClient {
 
         IEventBus forgeBus = NeoForge.EVENT_BUS;
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        forgeBus.addListener(BumblezoneForgeClient::onBlockScreen);
-        forgeBus.addListener(BumblezoneForgeClient::onKeyInput);
-        forgeBus.addListener(BumblezoneForgeClient::onClientTick);
-        forgeBus.addListener(BumblezoneForgeClient::onScreenRendering);
-        forgeBus.addListener(BumblezoneForgeClient::onBeforeBlockOutlineRendering);
-        forgeBus.addListener(BumblezoneForgeClient::onGuiRendering);
+        forgeBus.addListener(BumblezoneNeoForgeClient::onBlockScreen);
+        forgeBus.addListener(BumblezoneNeoForgeClient::onKeyInput);
+        forgeBus.addListener(BumblezoneNeoForgeClient::onClientTick);
+        forgeBus.addListener(BumblezoneNeoForgeClient::onScreenRendering);
+        forgeBus.addListener(BumblezoneNeoForgeClient::onBeforeBlockOutlineRendering);
+        forgeBus.addListener(BumblezoneNeoForgeClient::onGuiRendering);
         forgeBus.addListener(EventPriority.LOWEST, true, DimensionFog::fogThicknessAdjustments);
 
-        modBus.addListener(BumblezoneForgeClient::onClientSetup);
-        modBus.addListener(BumblezoneForgeClient::onRegisterParticles);
-        modBus.addListener(BumblezoneForgeClient::onRegisterShaders);
-        modBus.addListener(BumblezoneForgeClient::onRegisterKeys);
-        modBus.addListener(BumblezoneForgeClient::onRegisterItemColors);
-        modBus.addListener(BumblezoneForgeClient::onRegisterBlockColors);
-        modBus.addListener(BumblezoneForgeClient::onRegisterEntityRenderers);
-        modBus.addListener(BumblezoneForgeClient::onEntityLayers);
-        modBus.addListener(BumblezoneForgeClient::onRegisterDimensionEffects);
+        modBus.addListener(BumblezoneNeoForgeClient::onClientSetup);
+        modBus.addListener(BumblezoneNeoForgeClient::onRegisterParticles);
+        modBus.addListener(BumblezoneNeoForgeClient::onRegisterShaders);
+        modBus.addListener(BumblezoneNeoForgeClient::onRegisterKeys);
+        modBus.addListener(BumblezoneNeoForgeClient::onRegisterItemColors);
+        modBus.addListener(BumblezoneNeoForgeClient::onRegisterBlockColors);
+        modBus.addListener(BumblezoneNeoForgeClient::onRegisterEntityRenderers);
+        modBus.addListener(BumblezoneNeoForgeClient::onEntityLayers);
+        modBus.addListener(BumblezoneNeoForgeClient::onRegisterDimensionEffects);
 
         RegisterClientFluidPropertiesEvent.EVENT.invoke(new RegisterClientFluidPropertiesEvent((info, properties) -> {}));
     }
@@ -101,7 +101,7 @@ public class BumblezoneForgeClient {
             ClientSetupEnqueuedEvent.EVENT.invoke(new ClientSetupEnqueuedEvent(Runnable::run));
             RegisterEffectRenderersEvent.EVENT.invoke(RegisterEffectRenderersEvent.INSTANCE);
             RegisterRenderTypeEvent.EVENT.invoke(new RegisterRenderTypeEvent(ItemBlockRenderTypes::setRenderLayer, ItemBlockRenderTypes::setRenderLayer));
-            RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(BumblezoneForgeClient::registerScreen));
+            RegisterMenuScreenEvent.EVENT.invoke(new RegisterMenuScreenEvent(BumblezoneNeoForgeClient::registerScreen));
             RegisterItemPropertiesEvent.EVENT.invoke(new RegisterItemPropertiesEvent(ItemProperties::register));
             RegisterBlockEntityRendererEvent.EVENT.invoke(new RegisterBlockEntityRendererEvent<>(BlockEntityRenderers::register));
         });
@@ -172,7 +172,7 @@ public class BumblezoneForgeClient {
     }
 
     public static void onRegisterParticles(RegisterParticleProvidersEvent event) {
-        RegisterParticleEvent.EVENT.invoke(new RegisterParticleEvent(BumblezoneForgeClient.registerParticle(event)));
+        RegisterParticleEvent.EVENT.invoke(new RegisterParticleEvent(BumblezoneNeoForgeClient.registerParticle(event)));
     }
 
     private static RegisterParticleEvent.Registrar registerParticle(RegisterParticleProvidersEvent event) {

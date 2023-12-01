@@ -59,11 +59,6 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     private static final class Serializer implements ModuleSerializer<PlayerDataModule> {
 
         @Override
-        public Class<PlayerDataModule> moduleClass() {
-            return PlayerDataModule.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return new ResourceLocation(Bumblezone.MODID, "player_data");
         }

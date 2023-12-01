@@ -3,15 +3,10 @@ package com.telepathicgrunt.the_bumblezone.mixins.neoforge.item;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
-import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,10 +34,5 @@ public class BzBucketItemMixin extends BucketItem implements FluidGetter {
     @Override
     public FlowingFluid getFluid() {
         return bz$fluidSupplier.get();
-    }
-
-    @Override
-    public ICapabilityProvider initCapabilities(@NotNull ItemStack stack, @Nullable CompoundTag nbt) {
-        return new FluidBucketWrapper(stack);
     }
 }

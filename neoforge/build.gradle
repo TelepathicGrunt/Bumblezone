@@ -33,7 +33,7 @@ configurations {
 
 dependencies {
     // REQUIRED
-    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    neoForge "net.neoforged:neoforge:20.2.103-beta-rework-caps"
 
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-neoforge-${rootProject.athena}")))
 

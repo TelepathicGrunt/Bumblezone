@@ -6,7 +6,6 @@
     "block.BlockExtensionMixin",
     "block.BzFlowingFluidMixin",
     "block.BzLiquidBlockMixin",
-    "block.BzRandomizableContainerBlockEntityMixin",
     "block.FireBlockInvoker",
     "block.FireBlockMixin",
     "effect.EffectExtensionMixin",

@@ -1,0 +1,33 @@
+package com.telepathicgrunt.the_bumblezone.modules.base.neoforge;
+
+import com.telepathicgrunt.the_bumblezone.modules.base.Module;
+import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.neoforged.neoforge.common.util.INBTSerializable;
+
+public class NeoForgeModuleSerializer<T extends Module<T>> implements INBTSerializable {
+    private final T module;
+
+    public NeoForgeModuleSerializer(T module) {
+        this.module = module;
+    }
+
+    public T getModule() {
+        return module;
+    }
+
+    @Override
+    public Tag serializeNBT() {
+        CompoundTag compoundTag = new CompoundTag();
+        module.serializer().write(compoundTag, module);
+        return compoundTag;
+    }
+
+    @Override
+    public void deserializeNBT(Tag tag) {
+        if (tag instanceof CompoundTag compoundTag) {
+            module.serializer().read(module, compoundTag);
+        }
+    }
+}

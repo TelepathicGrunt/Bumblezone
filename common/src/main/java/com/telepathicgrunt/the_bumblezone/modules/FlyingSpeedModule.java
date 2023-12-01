@@ -28,11 +28,6 @@ public class FlyingSpeedModule implements Module<FlyingSpeedModule> {
     private static final class Serializer implements ModuleSerializer<FlyingSpeedModule> {
 
         @Override
-        public Class<FlyingSpeedModule> moduleClass() {
-            return FlyingSpeedModule.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return new ResourceLocation(Bumblezone.MODID, "original_flying_speed");
         }

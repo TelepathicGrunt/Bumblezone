@@ -135,6 +135,7 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
+        mavenLocal()
         maven {
             url "https://maven.neoforged.net/releases/"
         }

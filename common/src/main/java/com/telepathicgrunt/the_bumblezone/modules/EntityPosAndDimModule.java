@@ -50,11 +50,6 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     private static final class Serializer implements ModuleSerializer<EntityPosAndDimModule> {
 
         @Override
-        public Class<EntityPosAndDimModule> moduleClass() {
-            return EntityPosAndDimModule.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return new ResourceLocation(Bumblezone.MODID, "entity_dim_component");
         }

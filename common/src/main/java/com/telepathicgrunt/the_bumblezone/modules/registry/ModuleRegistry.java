@@ -15,9 +15,9 @@ public class ModuleRegistry {
     public static final ModuleHolder<PlayerDataModule> PLAYER_DATA = ModuleHelper.createHolder(PlayerDataModule.SERIALIZER);
 
     public static void register(ModuleRegistrar registrar) {
-        registrar.registerLivingEntityModule(FLYING_SPEED, p -> new FlyingSpeedModule(), false);
-        registrar.registerLivingEntityModule(LIVING_ENTITY_DATA, p -> new LivingEntityDataModule(), false);
-        registrar.registerLivingEntityModule(ENTITY_POS_AND_DIM, p -> new EntityPosAndDimModule(), true);
-        registrar.registerPlayerModule(PLAYER_DATA, p -> new PlayerDataModule(), true);
+        registrar.registerLivingEntityModule(FLYING_SPEED, FlyingSpeedModule::new, false);
+        registrar.registerLivingEntityModule(LIVING_ENTITY_DATA, LivingEntityDataModule::new, false);
+        registrar.registerLivingEntityModule(ENTITY_POS_AND_DIM, EntityPosAndDimModule::new, true);
+        registrar.registerPlayerModule(PLAYER_DATA, PlayerDataModule::new, true);
     }
 }

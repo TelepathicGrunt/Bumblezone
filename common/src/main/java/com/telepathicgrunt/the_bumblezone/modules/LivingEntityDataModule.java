@@ -28,11 +28,6 @@ public class LivingEntityDataModule implements Module<LivingEntityDataModule> {
     private static final class Serializer implements ModuleSerializer<LivingEntityDataModule> {
 
         @Override
-        public Class<LivingEntityDataModule> moduleClass() {
-            return LivingEntityDataModule.class;
-        }
-
-        @Override
         public ResourceLocation id() {
             return new ResourceLocation(Bumblezone.MODID, "living_entity_data");
         }

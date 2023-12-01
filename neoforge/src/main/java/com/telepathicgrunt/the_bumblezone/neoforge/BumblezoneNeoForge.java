@@ -44,10 +44,11 @@ import com.telepathicgrunt.the_bumblezone.mixins.neoforge.block.FireBlockInvoker
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzAttachmentTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzBiomeModifiers;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzGlobalLootModifier;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.neoforge.ResourcefulRegistriesImpl;
-import com.telepathicgrunt.the_bumblezone.modules.neoforge.ForgeModuleInitalizer;
+import com.telepathicgrunt.the_bumblezone.modules.neoforge.NeoForgeModuleInitalizer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,7 +61,6 @@ import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackCompatibility;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.server.packs.repository.ServerPacksSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -114,62 +114,63 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 @Mod(Bumblezone.MODID)
-public class BumblezoneForge {
+public class BumblezoneNeoForge {
 
-    public BumblezoneForge(IEventBus modEventBus) {
+    public BumblezoneNeoForge(IEventBus modEventBus) {
         BzConfigHandler.setup();
-        ForgeModuleInitalizer.init();
+        NeoForgeModuleInitalizer.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.NORMAL, ResourcefulRegistriesImpl::onRegisterForgeRegistries);
 
         Bumblezone.init();
 
         IEventBus eventBus = NeoForge.EVENT_BUS;
 
-        BzBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
         BzGlobalLootModifier.GLM.register(modEventBus);
+        BzBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
+        BzAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            BumblezoneForgeClient.init();
+            BumblezoneNeoForgeClient.init();
         }
 
-        modEventBus.addListener(BumblezoneForge::onRegisterPackFinder);
-        modEventBus.addListener(BumblezoneForge::onRegisterAttributes);
-        modEventBus.addListener(BumblezoneForge::onSetup);
-        modEventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onFinalSetup);
-        modEventBus.addListener(BumblezoneForge::onAddTabContents);
-        modEventBus.addListener(BumblezoneForge::onSpawnPlacements);
+        modEventBus.addListener(BumblezoneNeoForge::onRegisterPackFinder);
+        modEventBus.addListener(BumblezoneNeoForge::onRegisterAttributes);
+        modEventBus.addListener(BumblezoneNeoForge::onSetup);
+        modEventBus.addListener(EventPriority.LOWEST, BumblezoneNeoForge::onFinalSetup);
+        modEventBus.addListener(BumblezoneNeoForge::onAddTabContents);
+        modEventBus.addListener(BumblezoneNeoForge::onSpawnPlacements);
 
-        eventBus.addListener(BumblezoneForge::onBabySpawn);
-        eventBus.addListener(BumblezoneForge::onServerStarting);
-        eventBus.addListener(BumblezoneForge::onServerStopping);
-        eventBus.addListener(BumblezoneForge::onAddVillagerTrades);
-        eventBus.addListener(BumblezoneForge::onWanderingTrades);
-        eventBus.addListener(BumblezoneForge::onRegisterCommand);
-        eventBus.addListener(BumblezoneForge::onProjectileHit);
-        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemAttackBlock);
-        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUseOnBlock);
-        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onItemUse);
-        eventBus.addListener(EventPriority.HIGH, BumblezoneForge::onProjectileHitHighPriority);
-        eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onBlockBreak);
-        eventBus.addListener(BumblezoneForge::onPlayerTick);
-        eventBus.addListener(BumblezoneForge::onPickupItem);
-        eventBus.addListener(BumblezoneForge::onGrantAdvancement);
-        eventBus.addListener(BumblezoneForge::onInteractEntity);
-        eventBus.addListener(BumblezoneForge::onItemCrafted);
-        eventBus.addListener(BumblezoneForge::onBreakSpeed);
-        eventBus.addListener(BumblezoneForge::onTagsUpdate);
-        eventBus.addListener(BumblezoneForge::onLevelTick);
-        eventBus.addListener(BumblezoneForge::onAddReloadListeners);
-        eventBus.addListener(BumblezoneForge::onDatapackSync);
-        eventBus.addListener(BumblezoneForge::onEntityAttacked);
-        eventBus.addListener(BumblezoneForge::onEntityDeath);
-        eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityDeathLowest);
-        eventBus.addListener(BumblezoneForge::onEntitySpawn);
-        eventBus.addListener(BumblezoneForge::onEntityTick);
-        eventBus.addListener(BumblezoneForge::onEntityDimensionTravel);
-        eventBus.addListener(BumblezoneForge::onEntityVisibility);
-        eventBus.addListener(BumblezoneForge::onFinishUseItem);
-        eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityHurtLowest);
+        eventBus.addListener(BumblezoneNeoForge::onBabySpawn);
+        eventBus.addListener(BumblezoneNeoForge::onServerStarting);
+        eventBus.addListener(BumblezoneNeoForge::onServerStopping);
+        eventBus.addListener(BumblezoneNeoForge::onAddVillagerTrades);
+        eventBus.addListener(BumblezoneNeoForge::onWanderingTrades);
+        eventBus.addListener(BumblezoneNeoForge::onRegisterCommand);
+        eventBus.addListener(BumblezoneNeoForge::onProjectileHit);
+        eventBus.addListener(EventPriority.HIGH, BumblezoneNeoForge::onItemAttackBlock);
+        eventBus.addListener(EventPriority.HIGH, BumblezoneNeoForge::onItemUseOnBlock);
+        eventBus.addListener(EventPriority.HIGH, BumblezoneNeoForge::onItemUse);
+        eventBus.addListener(EventPriority.HIGH, BumblezoneNeoForge::onProjectileHitHighPriority);
+        eventBus.addListener(EventPriority.LOWEST, BumblezoneNeoForge::onBlockBreak);
+        eventBus.addListener(BumblezoneNeoForge::onPlayerTick);
+        eventBus.addListener(BumblezoneNeoForge::onPickupItem);
+        eventBus.addListener(BumblezoneNeoForge::onGrantAdvancement);
+        eventBus.addListener(BumblezoneNeoForge::onInteractEntity);
+        eventBus.addListener(BumblezoneNeoForge::onItemCrafted);
+        eventBus.addListener(BumblezoneNeoForge::onBreakSpeed);
+        eventBus.addListener(BumblezoneNeoForge::onTagsUpdate);
+        eventBus.addListener(BumblezoneNeoForge::onLevelTick);
+        eventBus.addListener(BumblezoneNeoForge::onAddReloadListeners);
+        eventBus.addListener(BumblezoneNeoForge::onDatapackSync);
+        eventBus.addListener(BumblezoneNeoForge::onEntityAttacked);
+        eventBus.addListener(BumblezoneNeoForge::onEntityDeath);
+        eventBus.addListener(EventPriority.LOWEST, BumblezoneNeoForge::onEntityDeathLowest);
+        eventBus.addListener(BumblezoneNeoForge::onEntitySpawn);
+        eventBus.addListener(BumblezoneNeoForge::onEntityTick);
+        eventBus.addListener(BumblezoneNeoForge::onEntityDimensionTravel);
+        eventBus.addListener(BumblezoneNeoForge::onEntityVisibility);
+        eventBus.addListener(BumblezoneNeoForge::onFinishUseItem);
+        eventBus.addListener(EventPriority.LOWEST, BumblezoneNeoForge::onEntityHurtLowest);
     }
 
     private static void onAddTabContents(BuildCreativeModeTabContentsEvent event) {
@@ -366,7 +367,7 @@ public class BumblezoneForge {
     }
 
     private static void onSpawnPlacements(SpawnPlacementRegisterEvent event) {
-        RegisterSpawnPlacementsEvent.EVENT.invoke(new RegisterSpawnPlacementsEvent(BumblezoneForge.registerPlacement(event)));
+        RegisterSpawnPlacementsEvent.EVENT.invoke(new RegisterSpawnPlacementsEvent(BumblezoneNeoForge.registerPlacement(event)));
     }
 
     private static RegisterSpawnPlacementsEvent.Registrar registerPlacement(SpawnPlacementRegisterEvent event) {

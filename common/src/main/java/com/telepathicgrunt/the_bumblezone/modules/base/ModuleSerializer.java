@@ -6,8 +6,6 @@ import net.minecraft.server.level.ServerPlayer;
 
 public interface ModuleSerializer<T extends Module<T>> {
 
-    Class<T> moduleClass();
-
     ResourceLocation id();
 
     void read(T module, CompoundTag tag);

@@ -1,15 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.modules.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleFactory;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 public record ModuleComponent<T extends Module<T>>(T module) implements Component {
 
-    public static <E, T extends Module<T>> ModuleComponent<T> create(E input, ModuleFactory<E, T> factory) {
-        return new ModuleComponent<>(factory.create(input));
+    public static <E, T extends Module<T>> ModuleComponent<T> create(Supplier<T> factory) {
+        return new ModuleComponent<>(factory.get());
     }
 
     @Override
