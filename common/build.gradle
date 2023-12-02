@@ -6,7 +6,7 @@ dependencies {
 
     modRuntimeOnly(modCompileOnly("earth.terrarium.athena:athena-common-${rootProject.athena}"))
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras}"))
 
 
     // COMPAT
