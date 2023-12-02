@@ -80,7 +80,7 @@ public class StickyHoneyResidue extends Block {
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
                 .noCollission()
                 .strength(6.0f, 0.0f)
@@ -95,6 +95,10 @@ public class StickyHoneyResidue extends Block {
                 .setValue(SOUTH, false)
                 .setValue(WEST, false)
                 .setValue(DOWN, false));
+    }
+
+    public StickyHoneyResidue(BlockBehaviour.Properties settings) {
+        super(settings);
 
         for (BlockState blockState : this.stateDefinition.getPossibleStates()) {
             shapeByIndex.computeIfAbsent(
@@ -110,10 +114,6 @@ public class StickyHoneyResidue extends Block {
                     }
             );
         }
-    }
-
-    public StickyHoneyResidue(BlockBehaviour.Properties settings) {
-        super(settings);
     }
 
     /**
