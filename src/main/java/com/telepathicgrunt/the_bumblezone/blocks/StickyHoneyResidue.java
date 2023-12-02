@@ -83,7 +83,7 @@ public class StickyHoneyResidue extends Block {
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
     public StickyHoneyResidue() {
-        super(Properties
+        this(Properties
                 .of(BzBlocks.ORANGE_NOT_SOLID, MaterialColor.TERRACOTTA_ORANGE)
                 .noCollission()
                 .strength(6.0f, 0.0f)
@@ -96,25 +96,25 @@ public class StickyHoneyResidue extends Block {
                 .setValue(SOUTH, false)
                 .setValue(WEST, false)
                 .setValue(DOWN, false));
-
-        for (BlockState blockState : this.stateDefinition.getPossibleStates()) {
-            shapeByIndex.computeIfAbsent(
-                getShapeIndex(blockState),
-                (bitFlag) -> {
-                    VoxelShape shape = Shapes.empty();
-                    for (Direction direction : Direction.values()) {
-                        if (((bitFlag >> direction.ordinal()) & 1) != 0) {
-                            shape = Shapes.joinUnoptimized(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()], BooleanOp.OR);
-                        }
-                    }
-                    return shape.optimize();
-                }
-            );
-        }
     }
 
     public StickyHoneyResidue(Properties settings) {
         super(settings);
+
+        for (BlockState blockState : this.stateDefinition.getPossibleStates()) {
+            shapeByIndex.computeIfAbsent(
+                    getShapeIndex(blockState),
+                    (bitFlag) -> {
+                        VoxelShape shape = Shapes.empty();
+                        for (Direction direction : Direction.values()) {
+                            if (((bitFlag >> direction.ordinal()) & 1) != 0) {
+                                shape = Shapes.joinUnoptimized(shape, BASE_SHAPES_BY_DIRECTION_ORDINAL[direction.ordinal()], BooleanOp.OR);
+                            }
+                        }
+                        return shape.optimize();
+                    }
+            );
+        }
     }
 
     /**
