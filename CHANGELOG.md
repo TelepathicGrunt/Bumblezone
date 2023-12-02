@@ -1,3 +1,9 @@
+### **(V.6.8.2 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed crash with Sticky Honey Redstone.
+
+
 ### **(V.6.8.1 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
