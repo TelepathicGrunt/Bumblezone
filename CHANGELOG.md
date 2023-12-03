@@ -1,3 +1,9 @@
+### **(V.7.2.7 Changes) (1.20.2 Minecraft)**
+
+##### Mod Compat:
+(Fabric): Fixed error when trying to run with Emi Loot mod.
+
+
 ### **(V.7.2.6 Changes) (1.20.2 Minecraft)**
 
 ##### Blocks:
