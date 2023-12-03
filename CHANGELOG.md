@@ -1,5 +1,10 @@
 ### **(V.7.2.7 Changes) (1.20.2 Minecraft)**
 
+##### Structures:
+Replaced Chorus Fruit in Subway's one End-themed piece with another Ender Pearl. Better progression balance with vanilla.
+
+Replaced Shulker Shell in Subway's one End-themed piece with another End Crystal. Better progression balance with vanilla.
+
 ##### Mod Compat:
 (Fabric): Fixed error when trying to run with Emi Loot mod.
 
