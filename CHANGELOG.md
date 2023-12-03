@@ -1,3 +1,9 @@
+### **(V.7.2.6 Changes) (1.20.2 Minecraft)**
+
+##### Blocks:
+Fixed incompat with Sounds Physics Remastered mod where it caused players to get launched away from Essence Block despite not near it.
+
+
 ### **(V.7.2.5 Changes) (1.20.2 Minecraft)**
 
 #### Major:

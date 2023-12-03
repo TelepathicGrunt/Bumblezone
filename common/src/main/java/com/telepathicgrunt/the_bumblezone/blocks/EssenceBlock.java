@@ -118,12 +118,17 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                 return Shapes.empty();
             }
 
+            boolean isInBounds = entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)));
+            if (!isInBounds) {
+                return Shapes.empty();
+            }
+
             boolean isClientside = entity.level().isClientSide();
             boolean isNonPlayer = entity instanceof LivingEntity && !(entity instanceof Player);
             boolean isNonEssencedServerPlayer = entity instanceof ServerPlayer serverPlayer && !EssenceOfTheBees.hasEssence(serverPlayer);
 
             if (isClientside || isNonPlayer || isNonEssencedServerPlayer) {
-                if (!isClientside && entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)))) {
+                if (!isClientside) {
                     if (entity instanceof ServerPlayer serverPlayer) {
                         BlockEntity blockEntity = level.getBlockEntity(blockPos);
                         if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity && essenceBlockEntity.getPlayerInArena().isEmpty()) {
