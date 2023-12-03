@@ -15,12 +15,15 @@ public class LootTableModifier {
     public static void modifyLootTables() {
 
         // Bee Stinger
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) ->
-            tableBuilder.withPool(new LootPool.Builder()
-                .when(DyingBeeEntitiesDrops::new)
-                .setRolls(ConstantValue.exactly(1))
-                .add(LootTableReference.lootTableReference(NewLootInjectorApplier.STINGER_DROP_LOOT_TABLE_RL))
-        ));
+        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+                if (!id.equals(NewLootInjectorApplier.STINGER_DROP_LOOT_TABLE_RL)) {
+                    tableBuilder.withPool(new LootPool.Builder()
+                            .when(DyingBeeEntitiesDrops::new)
+                            .setRolls(ConstantValue.exactly(1))
+                            .add(LootTableReference.lootTableReference(NewLootInjectorApplier.STINGER_DROP_LOOT_TABLE_RL)));
+                }
+            }
+        );
 
         // Fishing Loot
         ResourceLocation laterPhase = new ResourceLocation(Bumblezone.MODID, "later_phase");
