@@ -113,11 +113,11 @@ public class GeneralUtils {
         }
         else {
             return level.getEntitiesOfClass(
-                    Bee.class,
-                    new AABB(
-                            position.offset(-16, -16,-16),
-                            position.offset(16, 16,16)
-                    )
+                Bee.class,
+                new AABB(
+                    Vec3.atLowerCornerOf(position.offset(-16, -16,-16)),
+                    Vec3.atLowerCornerOf(position.offset(16, 16,16))
+                )
             ).size();
         }
     }

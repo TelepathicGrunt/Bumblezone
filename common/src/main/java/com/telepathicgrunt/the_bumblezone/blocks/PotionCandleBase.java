@@ -197,10 +197,9 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (player != null && player.getAbilities().instabuild) {
-            super.playerWillDestroy(level, pos, state, player);
-            return;
+            return super.playerWillDestroy(level, pos, state, player);
         }
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -211,6 +210,8 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
         }
+
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override

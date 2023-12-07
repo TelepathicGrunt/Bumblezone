@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,16 +20,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class HoneyCrystalShardEntity extends AbstractArrow {
+    private static final ItemStack DEFAULT_HONEY_CRYSTAL_SHARD_STACK = new ItemStack(BzItems.HONEY_CRYSTAL_SHARDS.get());
 
     public HoneyCrystalShardEntity(EntityType<? extends HoneyCrystalShardEntity> entityType, Level level) {
-        super(entityType, level);
+        super(entityType, level, DEFAULT_HONEY_CRYSTAL_SHARD_STACK);
         this.setBaseDamage(4);
         this.setKnockback(1);
         this.setCritArrow(true);
     }
 
-    public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity) {
-        super(BzEntities.HONEY_CRYSTAL_SHARD.get(), livingEntity, level);
+    public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
+        super(BzEntities.HONEY_CRYSTAL_SHARD.get(), livingEntity, level, itemStack);
         this.setBaseDamage(4);
         this.setKnockback(1);
         this.setCritArrow(true);

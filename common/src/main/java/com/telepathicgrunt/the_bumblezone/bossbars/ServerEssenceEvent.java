@@ -20,6 +20,6 @@ public class ServerEssenceEvent extends ServerBossEvent {
 
     public void setEndEventTimer(int endEventTimer) {
         this.endEventTimer = endEventTimer;
-        this.setName(Component.translatable(this.translation, StringUtil.formatTickDuration(this.getEndEventTimer())));
+        this.setName(Component.translatable(this.translation, StringUtil.formatTickDuration(this.getEndEventTimer(), 1.0f)));
     }
 }

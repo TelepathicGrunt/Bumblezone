@@ -284,8 +284,8 @@ public class HoneycombBrood extends ProperFacingBlock {
                 int livingEntitiesNearby = world.getEntitiesOfClass(
                     LivingEntity.class,
                     new AABB(
-                        position.offset(-48, -48,-48),
-                        position.offset(48, 48,48)
+                        Vec3.atLowerCornerOf(position.offset(-48, -48,-48)),
+                        Vec3.atLowerCornerOf(position.offset(48, 48,48))
                     )
                 ).size();
 
@@ -300,9 +300,11 @@ public class HoneycombBrood extends ProperFacingBlock {
     /**
      * Called before the Block is set to air in the world. Called regardless of if the player's tool can actually collect
      * this block
+     *
+     * @return
      */
     @Override
-    public void playerWillDestroy(Level world, BlockPos position, BlockState state, Player playerEntity) {
+    public BlockState playerWillDestroy(Level world, BlockPos position, BlockState state, Player playerEntity) {
         ListTag listOfEnchants = playerEntity.getMainHandItem().getEnchantmentTags();
         if (listOfEnchants.stream().noneMatch(enchant -> enchant.getAsString().contains("minecraft:silk_touch"))) {
             BlockState blockState = world.getBlockState(position);
@@ -312,7 +314,7 @@ public class HoneycombBrood extends ProperFacingBlock {
             }
         }
 
-        super.playerWillDestroy(world, position, state, playerEntity);
+        return super.playerWillDestroy(world, position, state, playerEntity);
     }
 
 

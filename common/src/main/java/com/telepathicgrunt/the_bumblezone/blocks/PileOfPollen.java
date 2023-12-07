@@ -87,7 +87,7 @@ public class PileOfPollen extends FallingBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos blockPos, BlockState blockState) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos blockPos, BlockState blockState) {
         return new ItemStack(BzItems.POLLEN_PUFF.get());
     }
 

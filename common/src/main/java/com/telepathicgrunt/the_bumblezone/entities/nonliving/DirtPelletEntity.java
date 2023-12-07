@@ -307,7 +307,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
         ItemEntity itemEntity = new ItemEntity(livingEntity.level(), livingEntity.getX(), d, livingEntity.getZ(), itemStack);
         itemEntity.setPickUpDelay(40);
         if (setOwner) {
-            itemEntity.setThrower(livingEntity.getUUID());
+            itemEntity.setThrower(livingEntity);
         }
         if (randomMovement) {
             float f = this.random.nextFloat() * 0.5f;

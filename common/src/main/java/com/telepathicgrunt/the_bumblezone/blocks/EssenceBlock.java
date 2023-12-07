@@ -118,7 +118,10 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                 return Shapes.empty();
             }
 
-            boolean isInBounds = entity.getBoundingBox().inflate(0.01D).intersects(new AABB(blockPos, blockPos.offset(1, 1, 1)));
+            boolean isInBounds = entity.getBoundingBox().inflate(0.01D).intersects(new AABB(
+                    Vec3.atLowerCornerOf(blockPos),
+                    Vec3.atLowerCornerOf(blockPos.offset(1, 1, 1))));
+
             if (!isInBounds) {
                 return Shapes.empty();
             }

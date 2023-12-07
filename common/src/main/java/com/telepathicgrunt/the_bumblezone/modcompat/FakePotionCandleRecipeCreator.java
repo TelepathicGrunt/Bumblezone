@@ -17,11 +17,13 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -110,9 +112,7 @@ public class FakePotionCandleRecipeCreator {
         return new ShapedRecipe(
                 "the_bumblezone:potion_candle",
                 CraftingBookCategory.MISC,
-                3,
-                3,
-                fakedShapedIngredients,
+                new ShapedRecipePattern(3, 3, fakedShapedIngredients, Optional.empty()),
                 createResultStack(recipe, potionStack)
         );
     }

@@ -59,17 +59,18 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     private Item item;
 
     public PileOfPollenSuspicious() {
-        super(null, Properties.of()
-                    .mapColor(MapColor.COLOR_YELLOW)
-                    .isViewBlocking((blockState, world, blockPos) -> true)
-                    .isSuffocating((blockState, blockGetter, blockPos) -> false)
-                    .noOcclusion()
-                    .noCollission()
-                    .strength(0.1F)
-                    .pushReaction(PushReaction.DESTROY)
-                    .sound(SoundType.SNOW),
+        super(null,
                 SoundEvents.BRUSH_SAND,
-                SoundEvents.BRUSH_SAND_COMPLETED);
+                SoundEvents.BRUSH_SAND_COMPLETED,
+                Properties.of()
+                        .mapColor(MapColor.COLOR_YELLOW)
+                        .isViewBlocking((blockState, world, blockPos) -> true)
+                        .isSuffocating((blockState, blockGetter, blockPos) -> false)
+                        .noOcclusion()
+                        .noCollission()
+                        .strength(0.1F)
+                        .pushReaction(PushReaction.DESTROY)
+                        .sound(SoundType.SNOW));
     }
 
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -86,7 +87,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter world, BlockPos blockPos, BlockState blockState) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos blockPos, BlockState blockState) {
         return new ItemStack(BzItems.POLLEN_PUFF.get());
     }
 

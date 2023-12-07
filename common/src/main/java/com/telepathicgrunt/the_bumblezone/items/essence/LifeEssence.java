@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.mixin.blocks.StemBlockAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
@@ -227,7 +228,7 @@ public class LifeEssence extends AbilityEssenceItem {
     private boolean doesNotHaveFruitNearby(ServerLevel level, StemBlock stemblock, BlockPos blockPos) {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockState neighborState = level.getBlockState(blockPos.relative(direction));
-            if (neighborState.is(stemblock.getFruit())) {
+            if (neighborState.is(((StemBlockAccessor)stemblock).getFruit())) {
                 return false;
             }
         }

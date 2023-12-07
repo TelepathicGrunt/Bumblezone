@@ -3,6 +3,8 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "entities.AbstractArrowAccessor",
+    "blocks.StemBlockAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -52,7 +54,6 @@
     "entities.PlayerMixin",
     "entities.ServerPlayerMixin",
     "entities.ServerPlayerTimeInAirMixin",
-    "entities.ThrownTridentAccessor",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldMobMixin",
     "items.HoneyShieldPlayerMixin",

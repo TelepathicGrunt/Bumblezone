@@ -205,7 +205,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      * Return this blockitem for creative middle click (pick block)
      */
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         return BzItems.HONEY_CRYSTAL.get().getDefaultInstance();
     }
 

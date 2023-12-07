@@ -19,6 +19,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -95,7 +96,7 @@ public class CarvableWax extends ProperFacingBlock {
      * Return correct blockitem for creative middle click (pick block)
      */
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         if (state.hasProperty(CARVING)) {
             Carving pattern = state.getValue(CARVING);
 
