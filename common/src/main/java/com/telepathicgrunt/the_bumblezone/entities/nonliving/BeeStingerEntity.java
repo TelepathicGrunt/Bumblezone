@@ -16,17 +16,19 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class BeeStingerEntity extends AbstractArrow {
+    private static final ItemStack DEFAULT_BEE_STINGER_STACK = new ItemStack(BzItems.BEE_STINGER.get());
 
     public BeeStingerEntity(EntityType<? extends BeeStingerEntity> entityType, Level level) {
-        super(entityType, level);
+        super(entityType, level, DEFAULT_BEE_STINGER_STACK);
         this.setBaseDamage(0.5d);
     }
 
-    public BeeStingerEntity(Level level, LivingEntity livingEntity) {
-        super(BzEntities.BEE_STINGER_ENTITY.get(), livingEntity, level);
+    public BeeStingerEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
+        super(BzEntities.BEE_STINGER_ENTITY.get(), livingEntity, level, itemStack);
         this.setBaseDamage(0.5d);
         if (livingEntity instanceof Player player && player.getAbilities().instabuild) {
             this.pickup = Pickup.CREATIVE_ONLY;

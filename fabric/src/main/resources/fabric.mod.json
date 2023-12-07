@@ -47,7 +47,7 @@
     ],
     "depends": {
         "fabricloader": ">=0.15.0",
-        "minecraft": ">=1.20",
+        "minecraft": ">=1.20.3",
         "fabric": ">=0.83.0",
         "midnightlib": ">=1.4.0"
     },

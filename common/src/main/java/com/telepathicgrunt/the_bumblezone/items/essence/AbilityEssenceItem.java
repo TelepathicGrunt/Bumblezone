@@ -164,7 +164,7 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         }
         else if (getForcedCooldown(stack)) {
             components.add(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", StringUtil.formatTickDuration(getCooldownTickLength() - getCooldownTime(stack))).withStyle(ChatFormatting.DARK_RED));
+            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", StringUtil.formatTickDuration(getCooldownTickLength() - getCooldownTime(stack), 1.0f)).withStyle(ChatFormatting.DARK_RED));
             components.add(Component.empty());
             addDescriptionComponents(components);
         }

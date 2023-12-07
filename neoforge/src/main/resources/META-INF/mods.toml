@@ -24,12 +24,7 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
 [[dependencies.the_bumblezone]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20.2,)"
-
-[[dependencies.the_bumblezone]]
-    modId="neoforge"
-    mandatory=true
-    versionRange="[20.2.86,)"
+    versionRange="[1.20.3,)"
 
 [[dependencies.the_bumblezone]]
     modId="productivebees"

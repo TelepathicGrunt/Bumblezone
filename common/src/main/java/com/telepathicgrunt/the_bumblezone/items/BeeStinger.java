@@ -25,7 +25,7 @@ public class BeeStinger extends BzArrowItem {
         if (!stack.is(BzItems.CRYSTAL_CANNON.get()) && livingEntity instanceof ServerPlayer serverPlayer) {
             PlayerDataHandler.onBeeStingerFired(serverPlayer);
         }
-        return new BeeStingerEntity(level, livingEntity);
+        return new BeeStingerEntity(level, livingEntity, BzItems.BEE_STINGER.get().getDefaultInstance());
     }
 
     @Override

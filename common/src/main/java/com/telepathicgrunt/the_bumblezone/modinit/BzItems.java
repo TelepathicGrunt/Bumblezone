@@ -217,6 +217,6 @@ public class BzItems {
     public static final RegistryEntry<Item> ESSENCE_CONTINUITY = ITEMS.register("essence_continuity", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
     public static void SetupCauldronCompat() {
-        CauldronInteraction.WATER.put(BzItems.FLOWER_HEADWEAR.get(), CauldronInteraction.DYED_ITEM);
+        CauldronInteraction.WATER.map().put(BzItems.FLOWER_HEADWEAR.get(), CauldronInteraction.DYED_ITEM);
     }
 }
