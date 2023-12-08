@@ -30,7 +30,7 @@ public class BeeBread extends Item {
         if (entity.hasEffect(BzEffects.BEENERGIZED.get())) {
             currentEffectAmplifier = Math.min(entity.getEffect(BzEffects.BEENERGIZED.get()).getAmplifier() + 1, 2);
             if (currentEffectAmplifier == 2 && playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger(serverPlayer);
+                BzCriterias.BEENERGIZED_MAXED_TRIGGER.get().trigger(serverPlayer);
             }
         }
         entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, currentEffectAmplifier, true, true, true));

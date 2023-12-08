@@ -1,25 +1,24 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
 
 import java.util.Optional;
 
-public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecificTrigger.Instance> {
+public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecificTrigger.TriggerInstance> {
 
     public EntitySpecificTrigger() {}
 
     @Override
-    public Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
-        Optional<ContextAwarePredicate> entityPredicate = EntityPredicate.fromJson(jsonObject, "entity", deserializationContext);
-        return new Instance(predicate, entityPredicate);
+    public Codec<EntitySpecificTrigger.TriggerInstance> codec() {
+        return EntitySpecificTrigger.TriggerInstance.CODEC;
     }
 
     public void trigger(ServerPlayer serverPlayer, Entity entity) {
@@ -27,23 +26,20 @@ public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecific
         this.trigger(serverPlayer, (instance) -> instance.matches(lootcontext));
     }
 
-    public static class Instance extends AbstractCriterionTriggerInstance {
-        private final ContextAwarePredicate attackerEntityPredicate;
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> entity) implements SimpleCriterionTrigger.SimpleInstance {
 
-        public Instance(Optional<ContextAwarePredicate> predicate, Optional<ContextAwarePredicate> attackerEntityPredicate) {
-            super(predicate);
-            this.attackerEntityPredicate = attackerEntityPredicate.get();
+        public static final Codec<EntitySpecificTrigger.TriggerInstance> CODEC =
+                RecordCodecBuilder.create(instance -> instance.group(
+                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(EntitySpecificTrigger.TriggerInstance::player),
+                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "entity").forGetter(EntitySpecificTrigger.TriggerInstance::entity)
+                ).apply(instance, EntitySpecificTrigger.TriggerInstance::new));
+
+        public boolean matches(LootContext context) {
+            return matches(entity(), context);
         }
 
-        public boolean matches(LootContext lootContext) {
-            return this.attackerEntityPredicate.matches(lootContext);
-        }
-
-        @Override
-        public JsonObject serializeToJson() {
-            JsonObject jsonobject = super.serializeToJson();
-            jsonobject.add("entity", this.attackerEntityPredicate.toJson());
-            return jsonobject;
+        private static boolean matches(Optional<ContextAwarePredicate> optional, LootContext arg) {
+            return optional.isEmpty() || optional.get().matches(arg);
         }
     }
 }

@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -135,11 +134,11 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
         return remainingInv;
     }
 
-    public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe>, BzRecipeSerializer<ContainerCraftingRecipe> {
+    public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
         private static final Codec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(shapelessRecipe -> shapelessRecipe.group),
                 CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
-                CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
+                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
                 Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
                     Ingredient[] ingredients = list.toArray(Ingredient[]::new);
                     if (ingredients.length == 0) {

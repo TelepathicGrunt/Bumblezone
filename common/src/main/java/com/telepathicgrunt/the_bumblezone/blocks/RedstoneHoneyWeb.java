@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -41,8 +42,10 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         }
     });
 
+    public static final MapCodec<RedstoneHoneyWeb> CODEC = Block.simpleCodec(RedstoneHoneyWeb::new);
+
     public RedstoneHoneyWeb() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_RED)
                 .forceSolidOn()
                 .lightLevel(blockState -> (blockState.getValue(POWER) + 9) / 10)
@@ -50,12 +53,21 @@ public class RedstoneHoneyWeb extends HoneyWeb {
                 .requiresCorrectToolForDrops()
                 .strength(4.0F)
                 .pushReaction(PushReaction.DESTROY));
+    }
+
+    public RedstoneHoneyWeb(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTHSOUTH, false)
                 .setValue(EASTWEST, false)
                 .setValue(UPDOWN, false)
                 .setValue(POWER, 0));
+    }
+
+    @Override
+    public MapCodec<? extends RedstoneHoneyWeb> codec() {
+        return CODEC;
     }
 
     @Override
@@ -74,7 +86,7 @@ public class RedstoneHoneyWeb extends HoneyWeb {
                 level.scheduleTick(new BlockPos(blockPos), this, 10);
 
                 if(entity instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.TRIGGER_REDSTONE_HONEY_WEB_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.TRIGGER_REDSTONE_HONEY_WEB_TRIGGER.get().trigger(serverPlayer);
                 }
             }
         }

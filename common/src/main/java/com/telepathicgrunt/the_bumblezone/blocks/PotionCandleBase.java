@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -62,16 +63,27 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
+    public static final MapCodec<PotionCandleBase> CODEC = Block.simpleCodec(PotionCandleBase::new);
+
     public PotionCandleBase() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.SAND)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0)
                 .noOcclusion()
                 .strength(0.1F)
                 .sound(SoundType.CANDLE)
                 .pushReaction(PushReaction.DESTROY));
+    }
+
+    public PotionCandleBase(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
+    }
+
+    @Override
+    public MapCodec<? extends PotionCandleBase> codec() {
+        return CODEC;
     }
 
     @Override
@@ -190,7 +202,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
                     potionCandleBlockEntity.getMobEffect().isInstantenous() &&
                     !potionCandleBlockEntity.getMobEffect().isBeneficial())
                 {
-                    BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.get().trigger(serverPlayer);
                 }
             }
         }
@@ -330,7 +342,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
             }
 
             if (potionsUsed >= 2) {
-                BzCriterias.CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER.trigger(serverPlayer);
+                BzCriterias.CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER.get().trigger(serverPlayer);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,8 +28,10 @@ import java.util.List;
 public class StickyHoneyRedstone extends StickyHoneyResidue {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
+    public static final MapCodec<StickyHoneyRedstone> CODEC = Block.simpleCodec(StickyHoneyRedstone::new);
+
     public StickyHoneyRedstone() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_RED)
                 .lightLevel(blockState -> blockState.getValue(POWERED) ? 1 : 0)
                 .noCollission()
@@ -36,6 +39,10 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
                 .noOcclusion()
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY));
+    }
+
+    public StickyHoneyRedstone(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(UP, false)
@@ -45,6 +52,11 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
                 .setValue(WEST, false)
                 .setValue(DOWN, false)
                 .setValue(POWERED, false));
+    }
+
+    @Override
+    public MapCodec<? extends StickyHoneyRedstone> codec() {
+        return CODEC;
     }
 
     /**

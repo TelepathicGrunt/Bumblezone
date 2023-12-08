@@ -368,7 +368,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         return category;
     }
 
-    public static class Serializer implements RecipeSerializer<PotionCandleRecipe>, BzRecipeSerializer<PotionCandleRecipe> {
+    public static class Serializer implements RecipeSerializer<PotionCandleRecipe> {
 
         private static final Codec<PotionCandleRecipe> CODEC = PotionCandleRecipe.Serializer.RawPotionRecipe.CODEC.flatXmap(rawShapedRecipe -> {
             String[] strings = ShapedRecipeAccessor.callShrink(rawShapedRecipe.shapedPattern);
@@ -414,65 +414,6 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         @Override
         public Codec<PotionCandleRecipe> codec() {
             return CODEC;
-        }
-
-        public JsonObject toJson(PotionCandleRecipe recipe) {
-            JsonObject json = new JsonObject();
-
-            json.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZER.getKey(BzRecipes.POTION_CANDLE_RECIPE.get()).toString());
-            json.addProperty("group", recipe.group);
-            json.addProperty("category", recipe.category.getSerializedName());
-
-            NonNullList<Ingredient> recipeIngredients = recipe.shapedRecipeItems;
-            var ingredients = new Object2CharOpenHashMap<Ingredient>();
-            var inputs = new Char2ObjectOpenHashMap<Ingredient>();
-            ingredients.defaultReturnValue(' ');
-            char currentChar = 'A';
-            for (Ingredient ingredient : recipeIngredients) {
-                if (!ingredient.isEmpty()
-                        && ingredients.putIfAbsent(ingredient, currentChar) == ingredients.defaultReturnValue()) {
-                    inputs.putIfAbsent(currentChar, ingredient);
-                    currentChar++;
-                }
-            }
-
-            var pattern = new ArrayList<String>();
-            var patternLine = new StringBuilder();
-            for (int i = 0; i < recipeIngredients.size(); i++) {
-                if (i != 0 && i % recipe.getWidth() == 0) {
-                    pattern.add(patternLine.toString());
-                    patternLine.setLength(0);
-                }
-
-                Ingredient ingredient = recipeIngredients.get(i);
-                patternLine.append(ingredients.getChar(ingredient));
-            }
-            pattern.add(patternLine.toString());
-
-            JsonArray jsonArray = new JsonArray();
-            for(String string : pattern) {
-                jsonArray.add(string);
-            }
-            json.add("shapedPattern", jsonArray);
-
-            JsonObject jsonObject = new JsonObject();
-            for(Map.Entry<Character, Ingredient> entry : inputs.char2ObjectEntrySet()) {
-                jsonObject.add(String.valueOf(entry.getKey()), entry.getValue().toJson(true));
-            }
-            json.add("shapedKey", jsonObject);
-
-            JsonArray shapelessRecipeJsonArray = new JsonArray();
-            recipe.shapelessRecipeItems.stream().map(ingredient -> ingredient.toJson(true)).forEach(shapelessRecipeJsonArray::add);
-            json.add("shapelessExtraIngredients", shapelessRecipeJsonArray);
-
-            json.addProperty("maxAllowedPotions", recipe.maxAllowedPotions);
-            json.addProperty("allowNormalPotions", recipe.allowNormalPotions);
-            json.addProperty("allowSplashPotions", recipe.allowSplashPotions);
-            json.addProperty("allowLingeringPotions", recipe.allowLingeringPotions);
-            json.addProperty("maxLevelCap", recipe.maxLevelCap);
-            json.addProperty("resultCount", recipe.result.getCount());
-
-            return json;
         }
 
         @Override

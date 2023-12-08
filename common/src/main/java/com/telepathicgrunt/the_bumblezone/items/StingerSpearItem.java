@@ -113,7 +113,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
                     true));
 
             if (user instanceof ServerPlayer serverPlayer) {
-                BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.trigger(serverPlayer);
+                BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
         }
 
@@ -131,7 +131,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
                 enemy.getType() == EntityType.WITHER &&
                 enemy.isDeadOrDying() &&
                 PlayerDataHandler.rootAdvancementDone(serverPlayer)) {
-            BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
+            BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.get().trigger(serverPlayer);
         }
 
         return true;

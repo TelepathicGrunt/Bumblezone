@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.InfinityBarrierBlockEntity;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,8 +33,11 @@ import org.jetbrains.annotations.Nullable;
 
 
 public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
+
+    public static final MapCodec<InfinityBarrier> CODEC = Block.simpleCodec(InfinityBarrier::new);
+
     public InfinityBarrier() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.NONE)
                 .strength(-1.0F, 3600000.8F)
                 .lightLevel((blockState) -> 15)
@@ -41,6 +46,16 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
                 .pushReaction(PushReaction.BLOCK));
     }
+
+    public InfinityBarrier(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends InfinityBarrier> codec() {
+        return CODEC;
+    }
+
 
     @Nullable
     @Override

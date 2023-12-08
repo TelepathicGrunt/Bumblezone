@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import net.minecraft.core.BlockPos;
@@ -43,16 +44,27 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape AABB = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 
+    public static final MapCodec<SuperCandleBase> CODEC = Block.simpleCodec(SuperCandleBase::new);
+
     public SuperCandleBase() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.SAND)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? 15 : 0)
                 .noOcclusion()
                 .strength(0.1F)
                 .sound(SoundType.CANDLE)
                 .pushReaction(PushReaction.DESTROY));
+    }
+
+    public SuperCandleBase(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
+    }
+
+    @Override
+    public MapCodec<? extends SuperCandleBase> codec() {
+        return CODEC;
     }
 
     @Override

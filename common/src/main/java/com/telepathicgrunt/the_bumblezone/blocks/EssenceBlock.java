@@ -89,15 +89,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     BzBlocks.ESSENCE_BLOCK_WHITE.get()
                 ))));
 
-    public EssenceBlock(Properties properties) {
-        super(properties
-                .strength(-1.0f, 3600000.8f)
-                .lightLevel((blockState) -> 15)
-                .noLootTable()
-                .forceSolidOn()
-                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
-                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
-                .pushReaction(PushReaction.BLOCK));
+    protected EssenceBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -32,12 +33,23 @@ import java.util.List;
 
 public class PorousHoneycomb extends Block {
 
+    public static final MapCodec<PorousHoneycomb> CODEC = Block.simpleCodec(PorousHoneycomb::new);
+
     public PorousHoneycomb() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_ORANGE)
                 .instrument(NoteBlockInstrument.BANJO)
                 .strength(0.5F, 0.5F)
                 .sound(SoundType.CORAL_BLOCK));
+    }
+
+    public PorousHoneycomb(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends PorousHoneycomb> codec() {
+        return CODEC;
     }
 
     @Override

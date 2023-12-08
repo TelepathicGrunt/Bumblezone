@@ -284,7 +284,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                   this.setLastHurtByMob(player);
                }
 
-               BzCriterias.HONEY_SLIME_HARVEST_TRIGGER.trigger(serverPlayer);
+               BzCriterias.HONEY_SLIME_HARVEST_TRIGGER.get().trigger(serverPlayer);
             }
             return InteractionResult.SUCCESS;
          }

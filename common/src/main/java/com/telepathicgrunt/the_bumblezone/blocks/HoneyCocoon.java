@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
@@ -70,6 +71,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlock {
+
+    public static final MapCodec<HoneyCocoon> CODEC = Block.simpleCodec(HoneyCocoon::new);
+
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty IS_LOOT_CONTAINER = BooleanProperty.create("is_loot");
 
@@ -77,12 +81,16 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     public static final int waterDropDelay = 150;
 
     public HoneyCocoon() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.COLOR_YELLOW)
                 .strength(0.3F, 0.3F)
                 .randomTicks()
                 .noOcclusion()
                 .sound(SoundType.HONEY_BLOCK));
+    }
+
+    public HoneyCocoon(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(IS_LOOT_CONTAINER, Boolean.FALSE));
 
@@ -90,6 +98,11 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         voxelshape = Shapes.joinUnoptimized(voxelshape, Block.box(3.0D, 0.0D, 3.0D, 13.0D, 3.0D, 13.0D), BooleanOp.OR);
         voxelshape = Shapes.joinUnoptimized(voxelshape, Block.box(3.0D, 13.0D, 3.0D, 13.0D, 16.0D, 13.0D), BooleanOp.OR);
         shape = voxelshape.optimize();
+    }
+
+    @Override
+    public MapCodec<? extends HoneyCocoon> codec() {
+        return CODEC;
     }
 
     @Override
@@ -353,7 +366,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack itemStack) {
         if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) > 0 && player instanceof ServerPlayer serverPlayer) {
-            BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.trigger(serverPlayer);
+            BzCriterias.HONEY_COCOON_SILK_TOUCH_TRIGGER.get().trigger(serverPlayer);
         }
 
         super.playerDestroy(level, player, pos, state, blockEntity, itemStack);

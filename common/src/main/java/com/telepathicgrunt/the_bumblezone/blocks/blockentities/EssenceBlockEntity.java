@@ -373,7 +373,7 @@ public class EssenceBlockEntity extends BlockEntity {
 
                         if (won) {
                             if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
-                                BzCriterias.ESSENCE_EVENT_REWARD_TRIGGER.trigger(serverPlayer, essenceBlock.getEssenceItemReward());
+                                BzCriterias.ESSENCE_EVENT_REWARD_TRIGGER.get().trigger(serverPlayer, essenceBlock.getEssenceItemReward());
                                 if (!serverPlayer.addItem(essenceBlock.getEssenceItemReward())) {
                                     ItemStack reward = essenceBlock.getEssenceItemReward();
                                     serverPlayer.drop(reward, false);

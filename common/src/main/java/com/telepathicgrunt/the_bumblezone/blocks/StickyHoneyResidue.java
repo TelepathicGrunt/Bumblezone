@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -79,6 +80,8 @@ public class StickyHoneyResidue extends Block {
     public static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP =
             PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().collect(Util.toMap());
 
+    public static final MapCodec<StickyHoneyResidue> CODEC = Block.simpleCodec(StickyHoneyResidue::new);
+
     public StickyHoneyResidue() {
         this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
@@ -87,14 +90,6 @@ public class StickyHoneyResidue extends Block {
                 .noOcclusion()
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY));
-
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(UP, false)
-                .setValue(NORTH, false)
-                .setValue(EAST, false)
-                .setValue(SOUTH, false)
-                .setValue(WEST, false)
-                .setValue(DOWN, false));
     }
 
     public StickyHoneyResidue(BlockBehaviour.Properties settings) {
@@ -114,6 +109,19 @@ public class StickyHoneyResidue extends Block {
                     }
             );
         }
+
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(UP, false)
+                .setValue(NORTH, false)
+                .setValue(EAST, false)
+                .setValue(SOUTH, false)
+                .setValue(WEST, false)
+                .setValue(DOWN, false));
+    }
+
+    @Override
+    public MapCodec<? extends StickyHoneyResidue> codec() {
+        return CODEC;
     }
 
     /**
@@ -338,7 +346,7 @@ public class StickyHoneyResidue extends Block {
             }
 
             if (playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.trigger(serverPlayer);
+                BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.get().trigger(serverPlayer);
             }
 
             world.destroyBlock(position, false);

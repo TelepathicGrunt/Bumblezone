@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -16,11 +17,18 @@ public class RotationAxisBlock extends Block {
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
     public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
 
+    public static final MapCodec<RotationAxisBlock> CODEC = Block.simpleCodec(RotationAxisBlock::new);
+
     protected RotationAxisBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(ROTATION, 0)
                 .setValue(AXIS, Direction.Axis.Y));
+    }
+
+    @Override
+    public MapCodec<? extends RotationAxisBlock> codec() {
+        return CODEC;
     }
 
     @Override

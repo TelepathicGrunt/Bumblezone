@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
@@ -68,8 +69,10 @@ public class PileOfPollen extends FallingBlock {
     };
     private Item item;
 
+    public static final MapCodec<PileOfPollen> CODEC = Block.simpleCodec(PileOfPollen::new);
+
     public PileOfPollen() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_YELLOW)
                 .isViewBlocking((blockState, world, blockPos) -> true)
                 .isSuffocating((blockState, blockGetter, blockPos) -> false)
@@ -79,6 +82,15 @@ public class PileOfPollen extends FallingBlock {
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY)
                 .sound(SoundType.SNOW));
+    }
+
+    public PileOfPollen(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends PileOfPollen> codec() {
+        return CODEC;
     }
 
     @Override
@@ -288,7 +300,7 @@ public class PileOfPollen extends FallingBlock {
                 newYDelta < -0.9D &&
                 blockState.getValue(LAYERS) >= 7)
             {
-                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger(serverPlayer);
+                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.get().trigger(serverPlayer);
             }
 
             if (deltaMovement.y > 0) {

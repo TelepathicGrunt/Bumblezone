@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -27,6 +30,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -55,16 +59,30 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     private static final int SOUL_LIGHT_LEVEL = 14;
     private final boolean isSoul;
 
+    public static final MapCodec<SuperCandleWick> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.BOOL.fieldOf("is_soul").forGetter(wick -> wick.isSoul),
+            SuperCandleWick.propertiesCodec()
+    ).apply(instance, SuperCandleWick::new));
+
     public SuperCandleWick(boolean isSoul) {
-        super(Properties.of()
+        this(isSoul, Properties.of()
                 .mapColor(MapColor.COLOR_BLACK)
                 .lightLevel((blockState) -> blockState.getValue(LIT) ? (isSoul ? SOUL_LIGHT_LEVEL : NORMAL_LIGHT_LEVEL) : 0)
                 .replaceable()
                 .noCollission()
                 .noLootTable());
+    }
+
+    public SuperCandleWick(boolean isSoul, Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
         this.isSoul = isSoul;
+    }
+
+    @Override
+    public MapCodec<? extends SuperCandleWick> codec() {
+        return CODEC;
     }
 
     public boolean isSoul() {
@@ -161,7 +179,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                             potionCandleBlockEntity.getMobEffect().isInstantenous() &&
                             !potionCandleBlockEntity.getMobEffect().isBeneficial())
                     {
-                        BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
             }

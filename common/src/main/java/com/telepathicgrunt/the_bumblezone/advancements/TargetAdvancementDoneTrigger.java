@@ -1,41 +1,42 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ExtraCodecs;
 
 import java.util.Map;
 import java.util.Optional;
 
-public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetAdvancementDoneTrigger.Instance> {
+public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetAdvancementDoneTrigger.TriggerInstance> {
 
     public TargetAdvancementDoneTrigger() {}
 
     @Override
-    public TargetAdvancementDoneTrigger.Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
-        return new TargetAdvancementDoneTrigger.Instance(predicate, new ResourceLocation(jsonObject.get("target_advancement").getAsString()));
+    public Codec<TargetAdvancementDoneTrigger.TriggerInstance> codec() {
+        return TargetAdvancementDoneTrigger.TriggerInstance.CODEC;
     }
 
     public void trigger(ServerPlayer serverPlayer) {
         super.trigger(serverPlayer, (trigger) -> trigger.matches(serverPlayer));
     }
 
-    public class Instance extends AbstractCriterionTriggerInstance {
-        private final ResourceLocation targetAdvancement;
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceLocation targetAdvancement) implements SimpleCriterionTrigger.SimpleInstance {
 
-        public Instance(Optional<ContextAwarePredicate> predicate, ResourceLocation targetAdvancement) {
-            super(predicate);
-            this.targetAdvancement = targetAdvancement;
-        }
+        public static final Codec<TargetAdvancementDoneTrigger.TriggerInstance> CODEC =
+                RecordCodecBuilder.create(instance -> instance.group(
+                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::player),
+                        ResourceLocation.CODEC.fieldOf("target_advancement").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::targetAdvancement)
+                ).apply(instance, TargetAdvancementDoneTrigger.TriggerInstance::new));
 
         public boolean matches(ServerPlayer serverPlayer) {
             AdvancementHolder advancementHolder = serverPlayer.server.getAdvancements().get(targetAdvancement);
@@ -44,18 +45,11 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
                     advancementsProgressMap.containsKey(advancementHolder) &&
                     advancementsProgressMap.get(advancementHolder).isDone();
         }
-
-        @Override
-        public JsonObject serializeToJson() {
-            JsonObject jsonobject = super.serializeToJson();
-            jsonobject.addProperty("target_advancement", this.targetAdvancement.toString());
-            return jsonobject;
-        }
     }
 
     public static void OnAdvancementGiven(PlayerGrantAdvancementEvent event) {
         if (event.player() instanceof ServerPlayer serverPlayer) {
-            BzCriterias.TARGET_ADVANCEMENT_DONE_TRIGGER.trigger(serverPlayer);
+            BzCriterias.TARGET_ADVANCEMENT_DONE_TRIGGER.get().trigger(serverPlayer);
         }
     }
 }

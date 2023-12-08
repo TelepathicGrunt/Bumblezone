@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
@@ -14,19 +15,32 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 
-public class LuminescentWaxChannel extends RotationAxisBlock implements LuminescentWaxBase{
+public class LuminescentWaxChannel extends RotationAxisBlock implements LuminescentWaxBase {
+
+    public static final MapCodec<LuminescentWaxChannel> CODEC = Block.simpleCodec(LuminescentWaxChannel::new);
+
     public LuminescentWaxChannel(MapColor mapColor, int light) {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(mapColor)
                 .instrument(NoteBlockInstrument.BASS)
                 .lightLevel((blockState) -> light)
                 .strength(3.0F, 19.0F));
+    }
+
+    public LuminescentWaxChannel(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends LuminescentWaxChannel> codec() {
+        return CODEC;
     }
 
     @Override
@@ -57,7 +71,7 @@ public class LuminescentWaxChannel extends RotationAxisBlock implements Luminesc
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.CARVE_WAX_TRIGGER.trigger(serverPlayer, position);
+                BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                 if (!serverPlayer.getAbilities().instabuild) {
                     itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);

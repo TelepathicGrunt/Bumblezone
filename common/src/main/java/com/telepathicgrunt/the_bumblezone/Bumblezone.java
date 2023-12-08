@@ -191,6 +191,7 @@ public class Bumblezone {
         BzSurfaceRules.SURFACE_RULES.init();
         BzDimension.DENSITY_FUNCTIONS.init();
         BzBlockEntities.BLOCK_ENTITIES.init();
+        BzCriterias.CRITERION_TRIGGERS.init();
         BzPlacements.PLACEMENT_MODIFIER.init();
         BzProcessors.STRUCTURE_PROCESSOR.init();
         BzCreativeTabs.CREATIVE_MODE_TABS.init();

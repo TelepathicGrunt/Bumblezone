@@ -677,7 +677,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
                 if (tradedItems > 0 && itemEntity.getOwner() != null) {
                     if (level().getPlayerByUUID(itemEntity.getOwner().getUUID()) instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.get().trigger(serverPlayer);
                         PlayerDataHandler.onQueenBeeTrade(serverPlayer, tradedItems);
 
                         if (finalbeeQueenAdvancementDone(serverPlayer)) {
@@ -787,7 +787,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                 player.setItemInHand(hand, stack);
 
                 if (player instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.get().trigger(serverPlayer);
                     PlayerDataHandler.onQueenBeeTrade(serverPlayer);
 
                     if (finalbeeQueenAdvancementDone(serverPlayer)) {

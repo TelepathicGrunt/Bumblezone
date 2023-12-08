@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -23,11 +25,22 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class AncientWaxSlab extends SlabBlock implements AncientWaxBase {
 
+    public static final MapCodec<AncientWaxSlab> CODEC = Block.simpleCodec(AncientWaxSlab::new);
+
     public AncientWaxSlab() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0F, 19.0F));
+    }
+
+    public AncientWaxSlab(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends AncientWaxSlab> codec() {
+        return CODEC;
     }
 
     @Override
@@ -50,7 +63,7 @@ public class AncientWaxSlab extends SlabBlock implements AncientWaxBase {
 
                 playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
                 if (playerEntity instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.CARVE_WAX_TRIGGER.trigger(serverPlayer, position);
+                    BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                     if (!serverPlayer.getAbilities().instabuild) {
                         itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);

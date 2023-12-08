@@ -91,21 +91,21 @@ public class BumblezoneAPI {
      * Trigger Bumblezone's advancement for teleporting into the Bumblezone dimension as if you used an Ender Pearl.
      */
     public static void triggerEnderPearlAdvancement(ServerPlayer serverPlayer) {
-        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
+        BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.get().trigger(serverPlayer);
     }
 
     /**
      * Trigger Bumblezone's advancement for teleporting into the Bumblezone dimension as if you used a Piston.
      */
     public static void triggerPistonAdvancement(ServerPlayer serverPlayer) {
-        BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.trigger(serverPlayer);
+        BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.get().trigger(serverPlayer);
     }
 
     /**
      * Trigger Bumblezone's advancement for teleporting out of the Bumblezone dimension.
      */
     public static void triggerExitingBumblezoneAdvancement(ServerPlayer serverPlayer) {
-        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger(serverPlayer);
+        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.get().trigger(serverPlayer);
     }
 
     /**
@@ -136,7 +136,7 @@ public class BumblezoneAPI {
      * Trigger Bumblezone's advancement for getting more combs from a hive by shearing with a tool that has Comb Cutter enchantment.
      */
     public static void triggerCombCutterExtraDropAdvancement(ServerPlayer serverPlayer) {
-        BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger(serverPlayer);
+        BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.get().trigger(serverPlayer);
     }
 
     /**

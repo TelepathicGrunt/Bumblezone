@@ -2,31 +2,23 @@ package com.telepathicgrunt.the_bumblezone.items.recipes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.mojang.datafixers.kinds.Applicative;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 
 public class NbtKeepingShapelessRecipe implements CraftingRecipe {
@@ -103,11 +95,11 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
         return BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE.get();
     }
 
-    public static class Serializer implements RecipeSerializer<NbtKeepingShapelessRecipe>, BzRecipeSerializer<NbtKeepingShapelessRecipe> {
+    public static class Serializer implements RecipeSerializer<NbtKeepingShapelessRecipe> {
         private static final Codec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(shapelessRecipe -> shapelessRecipe.group),
                 CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
-                CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
+                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
                 Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
                     Ingredient[] ingredients = list.toArray(Ingredient[]::new);
                     if (ingredients.length == 0) {
@@ -121,27 +113,6 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
         @Override
         public Codec<NbtKeepingShapelessRecipe> codec() {
             return CODEC;
-        }
-
-        public JsonObject toJson(NbtKeepingShapelessRecipe recipe) {
-            JsonObject json = new JsonObject();
-            json.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZER.getKey(BzRecipes.NBT_KEEPING_SHAPELESS_RECIPE.get()).toString());
-            json.addProperty("group", recipe.getGroup());
-
-            JsonArray ingredients = new JsonArray();
-            for (Ingredient ingredient : recipe.getIngredients()) {
-                ingredients.add(ingredient.toJson(true));
-            }
-            json.add("ingredients", ingredients);
-
-            JsonObject result = new JsonObject();
-            result.addProperty("item", BuiltInRegistries.ITEM.getKey(recipe.getResultItem(RegistryAccess.EMPTY).getItem()).toString());
-            result.addProperty("count", recipe.getResultItem(RegistryAccess.EMPTY).getCount());
-            json.add("result", result);
-            JsonObject itemNbtToKeep = new JsonObject();
-            itemNbtToKeep.addProperty("item", BuiltInRegistries.ITEM.getKey(recipe.itemToKeepNbtOf).toString());
-            json.add("keep_nbt_of", itemNbtToKeep);
-            return json;
         }
 
         @Override

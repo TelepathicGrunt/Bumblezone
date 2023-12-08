@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -16,11 +17,18 @@ public class RotationFacingBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
 
+    public static final MapCodec<RotationFacingBlock> CODEC = Block.simpleCodec(RotationFacingBlock::new);
+
     protected RotationFacingBlock(Properties settings) {
         super(settings);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(ROTATION, 1)
                 .setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public MapCodec<? extends RotationFacingBlock> codec() {
+        return CODEC;
     }
 
     @Override

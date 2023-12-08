@@ -93,7 +93,7 @@ public class CombCutterEnchantment extends BzEnchantment {
         if (equipmentLevel > 0 && !itemStack.isEmpty()) {
             Block.popResource(world, pos, new ItemStack(Items.HONEYCOMB, equipmentLevel * 3));
             if(playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.trigger(serverPlayer);
+                BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.get().trigger(serverPlayer);
             }
         }
     }

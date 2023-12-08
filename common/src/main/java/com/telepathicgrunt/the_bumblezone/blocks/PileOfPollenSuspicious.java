@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.StateFocusedBrushableBlockEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityCollisionContextAccessor;
@@ -13,8 +15,10 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -41,6 +45,7 @@ import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -58,19 +63,34 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     protected static final VoxelShape SHAPE = Shapes.block();
     private Item item;
 
+    public static final MapCodec<? extends PileOfPollenSuspicious> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("turns_into").forGetter(PileOfPollenSuspicious::getTurnsInto),
+            BuiltInRegistries.SOUND_EVENT.byNameCodec().fieldOf("brush_sound").forGetter(PileOfPollenSuspicious::getBrushSound),
+            BuiltInRegistries.SOUND_EVENT.byNameCodec().fieldOf("brush_comleted_sound").forGetter(PileOfPollenSuspicious::getBrushCompletedSound), PileOfPollenSuspicious.propertiesCodec()
+    ).apply(instance, PileOfPollenSuspicious::new));
+
     public PileOfPollenSuspicious() {
-        super(null,
+        this(null,
                 SoundEvents.BRUSH_SAND,
                 SoundEvents.BRUSH_SAND_COMPLETED,
                 Properties.of()
-                        .mapColor(MapColor.COLOR_YELLOW)
-                        .isViewBlocking((blockState, world, blockPos) -> true)
-                        .isSuffocating((blockState, blockGetter, blockPos) -> false)
-                        .noOcclusion()
-                        .noCollission()
-                        .strength(0.1F)
-                        .pushReaction(PushReaction.DESTROY)
-                        .sound(SoundType.SNOW));
+                .mapColor(MapColor.COLOR_YELLOW)
+                .isViewBlocking((blockState, world, blockPos) -> true)
+                .isSuffocating((blockState, blockGetter, blockPos) -> false)
+                .noOcclusion()
+                .noCollission()
+                .strength(0.1F)
+                .pushReaction(PushReaction.DESTROY)
+                .sound(SoundType.SNOW));
+    }
+
+    public PileOfPollenSuspicious(Block block, SoundEvent soundEvent1, SoundEvent soundEvent2, BlockBehaviour.Properties properties) {
+        super(block, soundEvent1, soundEvent2, properties);
+    }
+
+    @Override
+    public MapCodec<BrushableBlock> codec() {
+        return (MapCodec<BrushableBlock>)CODEC;
     }
 
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -224,7 +244,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
             double newYDelta = deltaMovement.y;
 
             if(entity instanceof ServerPlayer serverPlayer && entity.fallDistance > 18 && newYDelta < -0.9D) {
-                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.trigger(serverPlayer);
+                BzCriterias.FALLING_ON_POLLEN_BLOCK_TRIGGER.get().trigger(serverPlayer);
             }
 
             if (!entity.getType().is(BzTags.PILE_OF_POLLEN_CANNOT_SLOW)) {

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
@@ -55,6 +56,8 @@ public class StringCurtain extends Block {
     public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     protected final Map<Pair<Direction, Boolean>, VoxelShape> collisionShapeByMap;
 
+    public static final MapCodec<StringCurtain> CODEC = Block.simpleCodec(StringCurtain::new);
+
     public StringCurtain() {
         this(Properties.of()
                 .mapColor(MapColor.WOOL)
@@ -68,12 +71,18 @@ public class StringCurtain extends Block {
 
     public StringCurtain(Properties properties) {
         super(properties);
+
         this.collisionShapeByMap = this.makeShapes();
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(ATTACHED, true)
                 .setValue(CENTER, true)
                 .setValue(IS_END, true)
                 .setValue(HORIZONTAL_FACING, Direction.NORTH));
+    }
+
+    @Override
+    public MapCodec<? extends StringCurtain> codec() {
+        return CODEC;
     }
 
     @Override
@@ -288,7 +297,7 @@ public class StringCurtain extends Block {
                     }
 
                     if(playerEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
                 return InteractionResult.SUCCESS;

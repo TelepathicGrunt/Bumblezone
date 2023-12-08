@@ -75,7 +75,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect implements EffectExtens
                resetBeeAngry(entity.level(), entity.getLastHurtByMob());
                entity.getLastHurtByMob().addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, amplifier, true, true, true));
                if (entity instanceof ServerPlayer serverPlayer) {
-                   BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.trigger(serverPlayer, serverPlayer.getLastHurtByMob());
+                   BzCriterias.PROTECTION_OF_THE_HIVE_DEFENSE_TRIGGER.get().trigger(serverPlayer, serverPlayer.getLastHurtByMob());
                }
            }
        }

@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -66,6 +67,8 @@ public class HoneyWeb extends Block {
         map.put(Direction.Axis.Y, UPDOWN);
     }));
 
+    public static final MapCodec<HoneyWeb> CODEC = Block.simpleCodec(HoneyWeb::new);
+
     public HoneyWeb() {
         this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_ORANGE)
@@ -77,14 +80,20 @@ public class HoneyWeb extends Block {
                 .pushReaction(PushReaction.DESTROY));
     }
 
-    public HoneyWeb(BlockBehaviour.Properties properties) {
+    public HoneyWeb(Properties properties) {
         super(properties);
+
         this.collisionShapeByIndex = this.makeShapes();
         this.shapeByIndex = this.makeShapes();
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(NORTHSOUTH, false)
                 .setValue(EASTWEST, false)
                 .setValue(UPDOWN, false));
+    }
+
+    @Override
+    public MapCodec<? extends HoneyWeb> codec() {
+        return CODEC;
     }
 
     @Override
@@ -238,7 +247,7 @@ public class HoneyWeb extends Block {
             }
 
             if (playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.CLEANUP_HONEY_WEB_TRIGGER.trigger(serverPlayer);
+                BzCriterias.CLEANUP_HONEY_WEB_TRIGGER.get().trigger(serverPlayer);
             }
 
             world.destroyBlock(position, false);

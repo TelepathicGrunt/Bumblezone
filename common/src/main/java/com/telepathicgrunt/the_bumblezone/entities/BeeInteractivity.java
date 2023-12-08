@@ -98,7 +98,7 @@ public class BeeInteractivity {
                 removedWrath = calmAndSpawnHearts(world, playerEntity, beeEntity, 0.3f, 3);
 
                 if(removedWrath && playerEntity instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger(serverPlayer, itemstackOriginal);
+                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.get().trigger(serverPlayer, itemstackOriginal);
                 }
 
                 playerEntity.swing(hand, true);
@@ -118,7 +118,7 @@ public class BeeInteractivity {
                     if (isRoyalFed || playerEntity.getRandom().nextBoolean()) {
                         beeEntity.setBaby(false);
                         if(playerEntity instanceof ServerPlayer serverPlayer) {
-                            BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.trigger(serverPlayer);
+                            BzCriterias.HONEY_BUCKET_BEE_GROW_TRIGGER.get().trigger(serverPlayer);
                         }
                     }
                 }
@@ -130,14 +130,14 @@ public class BeeInteractivity {
                     }
 
                     if(nearbyAdultBees >= 2 && playerEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.HONEY_BUCKET_BEE_LOVE_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
 
                 if (isRoyalFed) {
                     beeEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), isRoyalFedBucket ? 90000 : 20000, 3, true, true, true));
                     if (playerEntity instanceof ServerPlayer) {
-                        BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger((ServerPlayer) playerEntity);
+                        BzCriterias.BEENERGIZED_MAXED_TRIGGER.get().trigger((ServerPlayer) playerEntity);
                     }
                 }
             }
@@ -157,7 +157,7 @@ public class BeeInteractivity {
                 PlayerDataHandler.onBeesFed(serverPlayer);
 
                 if(removedWrath) {
-                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.trigger(serverPlayer, itemstackOriginal);
+                    BzCriterias.FOOD_REMOVED_WRATH_OF_THE_HIVE_TRIGGER.get().trigger(serverPlayer, itemstackOriginal);
                 }
             }
 
@@ -189,7 +189,7 @@ public class BeeInteractivity {
                     ((BeeEntityInvoker)beeEntity).callSetHasNectar(false);
 
                     if(playerEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.BEE_DROP_POLLEN_PUFF_TRIGGER.get().trigger(serverPlayer);
                     }
                     return InteractionResult.SUCCESS;
                 }
@@ -219,7 +219,7 @@ public class BeeInteractivity {
                     true));
 
             if (playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
+                BzCriterias.GETTING_PROTECTION_TRIGGER.get().trigger(serverPlayer);
             }
         }
 

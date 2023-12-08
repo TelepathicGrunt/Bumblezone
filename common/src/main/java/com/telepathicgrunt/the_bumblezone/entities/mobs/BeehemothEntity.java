@@ -630,7 +630,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         if(!isQueen() && getFriendship() >= 1000) {
             setQueen(true);
             if(getOwner() instanceof ServerPlayer serverPlayer) {
-                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.trigger(serverPlayer);
+                BzCriterias.QUEEN_BEEHEMOTH_TRIGGER.get().trigger(serverPlayer);
             }
 
             if(this.level().isClientSide()) {

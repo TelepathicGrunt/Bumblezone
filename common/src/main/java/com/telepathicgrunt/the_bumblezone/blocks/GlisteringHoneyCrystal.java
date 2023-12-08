@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -29,8 +30,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 
 public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockExtension {
+
+    public static final MapCodec<GlisteringHoneyCrystal> CODEC = Block.simpleCodec(GlisteringHoneyCrystal::new);
+
     public GlisteringHoneyCrystal() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .instrument(NoteBlockInstrument.PLING)
                 .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
@@ -41,8 +45,17 @@ public class GlisteringHoneyCrystal extends ProperFacingBlock implements BlockEx
                 .strength(0.4F, 0.4f)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE)
                 .noOcclusion());
+    }
+
+    public GlisteringHoneyCrystal(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
+    }
+
+    @Override
+    public MapCodec<? extends GlisteringHoneyCrystal> codec() {
+        return CODEC;
     }
 
     @Override

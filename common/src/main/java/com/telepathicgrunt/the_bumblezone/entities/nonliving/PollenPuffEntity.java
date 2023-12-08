@@ -141,19 +141,19 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 
             if(this.getOwner() instanceof ServerPlayer serverPlayer) {
-                BzCriterias.POLLEN_PUFF_POLLINATED_BEE_TRIGGER.trigger(serverPlayer);
+                BzCriterias.POLLEN_PUFF_POLLINATED_BEE_TRIGGER.get().trigger(serverPlayer);
             }
         }
         else if(entity instanceof Panda panda) {
             panda.sneeze(true);
 
             if(this.getOwner() instanceof ServerPlayer serverPlayer) {
-                BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.trigger(serverPlayer);
+                BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.get().trigger(serverPlayer);
             }
         }
         else if(entity instanceof Fireball fireball && fireball.getOwner() instanceof Ghast) {
             if(this.getOwner() instanceof ServerPlayer serverPlayer) {
-                BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.trigger(serverPlayer);
+                BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.get().trigger(serverPlayer);
             }
         }
         else if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
@@ -180,7 +180,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
-                    BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.get().trigger(serverPlayer);
                 }
             }
         }
@@ -300,7 +300,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
                     PlayerDataHandler.onFlowerSpawned(serverPlayer);
                     if(isTallPlant) {
-                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
                 spawnedPlant = true;

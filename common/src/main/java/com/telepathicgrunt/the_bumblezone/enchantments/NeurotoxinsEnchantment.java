@@ -121,10 +121,10 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
                         true));
 
                 if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.STINGER_SPEAR_PARALYZING_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.STINGER_SPEAR_PARALYZING_TRIGGER.get().trigger(serverPlayer);
 
                     if (livingEntity.getHealth() > 70) {
-                        BzCriterias.STINGER_SPEAR_PARALYZE_BOSS_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.STINGER_SPEAR_PARALYZE_BOSS_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
 

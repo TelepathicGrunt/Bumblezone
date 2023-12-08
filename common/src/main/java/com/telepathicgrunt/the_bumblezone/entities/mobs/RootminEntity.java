@@ -521,7 +521,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                }
 
                if (player instanceof ServerPlayer serverPlayer) {
-                  BzCriterias.ROOTMIN_FLOWER_SWAP_TRIGGER.trigger(serverPlayer);
+                  BzCriterias.ROOTMIN_FLOWER_SWAP_TRIGGER.get().trigger(serverPlayer);
                }
             }
             return InteractionResult.SUCCESS;

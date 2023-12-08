@@ -39,7 +39,7 @@ public class PlayerDataHandler {
         {
             ModuleHelper.getModule(event.player(), ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.craftedBeehives++;
-                BzCriterias.BEEHIVE_CRAFTED_TRIGGER.trigger(serverPlayer, module.craftedBeehives);
+                BzCriterias.BEEHIVE_CRAFTED_TRIGGER.get().trigger(serverPlayer, module.craftedBeehives);
             });
         }
     }
@@ -50,7 +50,7 @@ public class PlayerDataHandler {
         if (event.player() instanceof ServerPlayer player && rootAdvancementDone(player)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.beesBred++;
-                BzCriterias.BEE_BREEDING_TRIGGER.trigger(player, module.beesBred);
+                BzCriterias.BEE_BREEDING_TRIGGER.get().trigger(player, module.beesBred);
             });
         }
     }
@@ -59,7 +59,7 @@ public class PlayerDataHandler {
         if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.flowersSpawned++;
-                BzCriterias.POLLEN_PUFF_SPAWN_FLOWERS_TRIGGER.trigger(serverPlayer, module.flowersSpawned);
+                BzCriterias.POLLEN_PUFF_SPAWN_FLOWERS_TRIGGER.get().trigger(serverPlayer, module.flowersSpawned);
             });
         }
     }
@@ -72,7 +72,7 @@ public class PlayerDataHandler {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 ResourceLocation id = EntityType.getKey(event.entity().getType());
                 if (id != null) {
-                    BzCriterias.KILLED_COUNTER_TRIGGER.trigger(player, event.entity(), module);
+                    BzCriterias.KILLED_COUNTER_TRIGGER.get().trigger(player, event.entity(), module);
                 }
             });
         }
@@ -84,7 +84,7 @@ public class PlayerDataHandler {
         if (event.user() instanceof ServerPlayer player && rootAdvancementDone(player)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.honeyBottleDrank++;
-                BzCriterias.HONEY_BOTTLE_DRANK_TRIGGER.trigger(player, module.honeyBottleDrank);
+                BzCriterias.HONEY_BOTTLE_DRANK_TRIGGER.get().trigger(player, module.honeyBottleDrank);
             });
         }
     }
@@ -93,7 +93,7 @@ public class PlayerDataHandler {
         if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.beeStingersFired++;
-                BzCriterias.BEE_STINGER_SHOOTER_TRIGGER.trigger(serverPlayer, module.beeStingersFired);
+                BzCriterias.BEE_STINGER_SHOOTER_TRIGGER.get().trigger(serverPlayer, module.beeStingersFired);
             });
         }
     }
@@ -102,7 +102,7 @@ public class PlayerDataHandler {
         if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.beeSaved++;
-                BzCriterias.BEE_SAVED_BY_STINGER_TRIGGER.trigger(serverPlayer, module.beeSaved);
+                BzCriterias.BEE_SAVED_BY_STINGER_TRIGGER.get().trigger(serverPlayer, module.beeSaved);
             });
         }
     }
@@ -111,7 +111,7 @@ public class PlayerDataHandler {
         if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.pollenPuffHits++;
-                BzCriterias.POLLEN_PUFF_HIT_TRIGGER.trigger(serverPlayer, module.pollenPuffHits);
+                BzCriterias.POLLEN_PUFF_HIT_TRIGGER.get().trigger(serverPlayer, module.pollenPuffHits);
             });
         }
     }
@@ -122,7 +122,7 @@ public class PlayerDataHandler {
         if (event.player() instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
             ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.honeySlimeBred++;
-                BzCriterias.HONEY_SLIME_BRED_TRIGGER.trigger(serverPlayer, module.honeySlimeBred);
+                BzCriterias.HONEY_SLIME_BRED_TRIGGER.get().trigger(serverPlayer, module.honeySlimeBred);
             });
         }
     }
@@ -131,7 +131,7 @@ public class PlayerDataHandler {
         if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.beesFed++;
-                BzCriterias.BEE_FED_TRIGGER.trigger(serverPlayer, module.beesFed);
+                BzCriterias.BEE_FED_TRIGGER.get().trigger(serverPlayer, module.beesFed);
             });
         }
     }
@@ -140,7 +140,7 @@ public class PlayerDataHandler {
         if (player instanceof ServerPlayer serverPlayer && rootAdvancementDone(serverPlayer)) {
             ModuleHelper.getModule(player, ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
                 module.queenBeeTrade += tradedItems;
-                BzCriterias.BEE_QUEEN_TRADING_TRIGGER.trigger(serverPlayer, module.queenBeeTrade);
+                BzCriterias.BEE_QUEEN_TRADING_TRIGGER.get().trigger(serverPlayer, module.queenBeeTrade);
             });
         }
     }

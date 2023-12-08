@@ -356,7 +356,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             consumeSlotFullyObstructed();
 
             if(tiersToMax > 0 && crystallineFlowerBlockEntity.isMaxTier() && player instanceof ServerPlayer serverPlayer) {
-                BzCriterias.GROW_CRYSTALLINE_FLOWER_TRIGGER.trigger(serverPlayer);
+                BzCriterias.GROW_CRYSTALLINE_FLOWER_TRIGGER.get().trigger(serverPlayer);
             }
             syncXpTier();
             crystallineFlowerBlockEntity.syncPillar();
@@ -428,7 +428,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             syncXpTier();
 
             if(desiredTierUpgrade > 0 && crystallineFlowerBlockEntity.isMaxTier() && player instanceof ServerPlayer serverPlayer) {
-                BzCriterias.GROW_CRYSTALLINE_FLOWER_TRIGGER.trigger(serverPlayer);
+                BzCriterias.GROW_CRYSTALLINE_FLOWER_TRIGGER.get().trigger(serverPlayer);
             }
         }
     }
@@ -440,7 +440,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             syncXpTier();
 
             if(levelToConsume >= 5 && player instanceof ServerPlayer serverPlayer) {
-                BzCriterias.ENCHANT_CRYSTALLINE_FLOWER_TRIGGER.trigger(serverPlayer);
+                BzCriterias.ENCHANT_CRYSTALLINE_FLOWER_TRIGGER.get().trigger(serverPlayer);
             }
         }
         else if (xpTier.get() > 1) {

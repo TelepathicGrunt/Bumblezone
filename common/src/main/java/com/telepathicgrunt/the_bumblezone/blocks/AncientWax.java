@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -23,11 +24,22 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class AncientWax extends Block implements AncientWaxBase {
 
+    public static final MapCodec<AncientWax> CODEC = Block.simpleCodec(AncientWax::new);
+
     public AncientWax() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0F, 19.0F));
+    }
+
+    public AncientWax(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends AncientWax> codec() {
+        return CODEC;
     }
 
     @Override
@@ -50,7 +62,7 @@ public class AncientWax extends Block implements AncientWaxBase {
 
                 playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
                 if (playerEntity instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.CARVE_WAX_TRIGGER.trigger(serverPlayer, position);
+                    BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                     if (!serverPlayer.getAbilities().instabuild) {
                         itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);

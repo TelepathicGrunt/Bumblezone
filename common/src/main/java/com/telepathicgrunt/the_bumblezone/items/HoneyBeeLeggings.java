@@ -75,7 +75,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                 if (livingEntity.getBlockStateOn().is(BzTags.HONEY_BEE_BOOTS_REMOVES_POLLEN_BLOCKS)) {
                     ejectPollen = true;
                     if(livingEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
 
@@ -84,7 +84,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                     if (state.getFluidState().is(BzTags.HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS)) {
                         ejectPollen = true;
                         if(livingEntity instanceof ServerPlayer serverPlayer) {
-                            BzCriterias.HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER.trigger(serverPlayer);
+                            BzCriterias.HONEY_BEE_LEGGINGS_POLLEN_REMOVAL_TRIGGER.get().trigger(serverPlayer);
                         }
                     }
                 }
@@ -111,7 +111,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                 else if(random.nextFloat() < (((beeWearablesCount - 1) * 0.015f) + (isSprinting ? 0.015f : 0.00333f)) && withinBlock.is(BlockTags.FLOWERS)) {
                     setPollinated(itemstack);
                     if(livingEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_TRIGGER.get().trigger(serverPlayer);
                         serverPlayer.awardStat(BzStats.HONEY_BEE_LEGGINGS_FLOWER_POLLEN_RL.get());
                     }
                 }

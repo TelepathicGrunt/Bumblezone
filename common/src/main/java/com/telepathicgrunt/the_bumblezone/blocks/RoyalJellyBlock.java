@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -33,13 +34,24 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtension {
     protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
 
+    public static final MapCodec<RoyalJellyBlock> CODEC = Block.simpleCodec(RoyalJellyBlock::new);
+
     public RoyalJellyBlock() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.COLOR_PURPLE)
                 .speedFactor(0.4F)
                 .jumpFactor(0.5F)
                 .noOcclusion()
                 .sound(SoundType.HONEY_BLOCK));
+    }
+
+    public RoyalJellyBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends RoyalJellyBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -130,7 +142,7 @@ public class RoyalJellyBlock extends HalfTransparentBlock implements BlockExtens
             }
 
             if (nextToStickyPiston) {
-                BzCriterias.ROYAL_JELLY_BLOCK_PISTON_TRIGGER.trigger(serverPlayer);
+                BzCriterias.ROYAL_JELLY_BLOCK_PISTON_TRIGGER.get().trigger(serverPlayer);
             }
         }
     }

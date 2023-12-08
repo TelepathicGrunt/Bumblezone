@@ -88,7 +88,7 @@ public class BzCustomBucketItem extends BzBucketItem {
                 }
 
                 if (isNextToSugarCane) {
-                    BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.SUGAR_WATER_NEXT_TO_SUGAR_CANE_TRIGGER.get().trigger(serverPlayer);
                 }
             }
         }

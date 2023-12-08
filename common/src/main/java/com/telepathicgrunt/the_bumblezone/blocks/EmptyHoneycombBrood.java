@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
@@ -30,14 +31,26 @@ import net.minecraft.world.phys.Vec3;
 
 public class EmptyHoneycombBrood extends ProperFacingBlock {
 
+    public static final MapCodec<EmptyHoneycombBrood> CODEC = Block.simpleCodec(EmptyHoneycombBrood::new);
+
     public EmptyHoneycombBrood() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_ORANGE)
                 .instrument(NoteBlockInstrument.BANJO)
                 .strength(0.5F, 0.5F)
                 .sound(SoundType.CORAL_BLOCK));
+    }
+
+
+    public EmptyHoneycombBrood(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH));
+    }
+
+    @Override
+    public MapCodec<? extends EmptyHoneycombBrood> codec() {
+        return CODEC;
     }
 
     @Override

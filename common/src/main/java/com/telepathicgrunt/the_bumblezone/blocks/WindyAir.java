@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.MapMaker;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -38,16 +39,27 @@ import java.util.concurrent.ConcurrentMap;
 public class WindyAir extends ProperFacingBlock {
     private static final ConcurrentMap<String, Map<Direction, Integer>> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
 
+    public static final MapCodec<WindyAir> CODEC = Block.simpleCodec(WindyAir::new);
+
     public WindyAir() {
-        super(Properties.of()
+        this(Properties.of()
                 .strength(0.01f, 0)
                 .noCollission()
                 .replaceable()
                 .noLootTable()
                 .noOcclusion()
                 .pushReaction(PushReaction.DESTROY));
+    }
+
+    public WindyAir(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
+    }
+
+    @Override
+    public MapCodec<? extends WindyAir> codec() {
+        return CODEC;
     }
 
     @Override

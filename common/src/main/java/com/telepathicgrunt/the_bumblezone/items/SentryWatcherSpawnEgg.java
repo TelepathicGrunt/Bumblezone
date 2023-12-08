@@ -128,7 +128,7 @@ public class SentryWatcherSpawnEgg extends Item {
                     }
 
                     if (player instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.get().trigger(serverPlayer);
                     }
 
                     sentryWatcherEntity.setOwner(Optional.of(player.getUUID()));
@@ -170,7 +170,7 @@ public class SentryWatcherSpawnEgg extends Item {
                         sentryWatcherEntity.setTargetFacing(player.getDirection());
 
                         if (player instanceof ServerPlayer serverPlayer) {
-                            BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.trigger(serverPlayer);
+                            BzCriterias.SENTRY_WATCHER_SPAWN_EGG_USED_TRIGGER.get().trigger(serverPlayer);
                         }
 
                         if (!player.getAbilities().instabuild) {

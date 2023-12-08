@@ -296,7 +296,7 @@ public class HoneyCompass extends Item implements Vanishable {
             return;
         }
 
-        BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
+        BzCriterias.HONEY_COMPASS_USE_TRIGGER.get().trigger(serverPlayer);
         boolean singleCompass = !serverPlayer.getAbilities().instabuild && itemStack.getCount() == 1;
         if (singleCompass) {
             addFoundStructureLocation(serverLevel.dimension(), structurePos, itemStack.getOrCreateTag());
@@ -340,7 +340,7 @@ public class HoneyCompass extends Item implements Vanishable {
         if (player != null && isValidBeeHive(targetBlock)) {
             level.playSound(null, blockPos, BzSounds.HONEY_COMPASS_BLOCK_LOCK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             if(player instanceof ServerPlayer serverPlayer) {
-                BzCriterias.HONEY_COMPASS_USE_TRIGGER.trigger(serverPlayer);
+                BzCriterias.HONEY_COMPASS_USE_TRIGGER.get().trigger(serverPlayer);
             }
 
             if (!level.isClientSide()) {

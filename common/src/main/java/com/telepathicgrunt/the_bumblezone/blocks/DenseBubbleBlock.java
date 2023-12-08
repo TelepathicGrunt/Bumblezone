@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -36,8 +37,10 @@ import java.util.Optional;
 
 public class DenseBubbleBlock extends Block implements BucketPickup {
 
+    public static final MapCodec<DenseBubbleBlock> CODEC = Block.simpleCodec(DenseBubbleBlock::new);
+
     public DenseBubbleBlock() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.WATER)
                 .liquid()
                 .noCollission()
@@ -47,6 +50,16 @@ public class DenseBubbleBlock extends Block implements BucketPickup {
                 .sound(SoundType.EMPTY)
                 .pushReaction(PushReaction.DESTROY));
     }
+
+    public DenseBubbleBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends DenseBubbleBlock> codec() {
+        return CODEC;
+    }
+
 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {

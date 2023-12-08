@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
@@ -40,14 +41,26 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FilledPorousHoneycomb extends Block {
 
+    public static final MapCodec<FilledPorousHoneycomb> CODEC = Block.simpleCodec(FilledPorousHoneycomb::new);
+
     public FilledPorousHoneycomb() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_ORANGE)
                 .instrument(NoteBlockInstrument.BANJO)
                 .strength(0.5F, 0.5F)
                 .sound(SoundType.CORAL_BLOCK)
                 .speedFactor(0.8F));
     }
+
+    public FilledPorousHoneycomb(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends FilledPorousHoneycomb> codec() {
+        return CODEC;
+    }
+
 
     /**
      * Allow player to harvest honey and put honey into this block using bottles
@@ -84,7 +97,7 @@ public class FilledPorousHoneycomb extends Block {
                 }
 
                 if (hasProtection && playerEntity instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.HONEY_PERMISSION_TRIGGER.get().trigger(serverPlayer);
                 }
             }
 

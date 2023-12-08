@@ -1,54 +1,50 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.Entity;
 
 import java.util.Optional;
 
-public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTrigger.Instance> {
+public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTrigger.TriggerInstance> {
     public KilledCounterTrigger() {}
 
     @Override
-    public KilledCounterTrigger.Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
-        JsonElement beeArmorJson = jsonObject.get("bee_armor_required");
-        JsonElement targetTagJson = jsonObject.get("is_target_tag");
-        return new Instance(
-                predicate,
-                new ResourceLocation(jsonObject.get("target_entity").getAsString()),
-                jsonObject.get("target_count").getAsInt(),
-                targetTagJson != null && targetTagJson.getAsBoolean(),
-                beeArmorJson != null && beeArmorJson.getAsBoolean());
+    public Codec<KilledCounterTrigger.TriggerInstance> codec() {
+        return KilledCounterTrigger.TriggerInstance.CODEC;
     }
 
     public void trigger(ServerPlayer serverPlayer, Entity currentEntity, PlayerDataModule module) {
         super.trigger(serverPlayer, (trigger) -> trigger.matches(serverPlayer, currentEntity, module));
     }
 
-    public static class Instance extends AbstractCriterionTriggerInstance {
-        private final int targetCount;
-        private final ResourceLocation targetEntity;
-        private final boolean isTargetTag;
-        private final boolean beeArmorRequired;
+    public record TriggerInstance(
+        Optional<ContextAwarePredicate> player,
+        int targetCount,
+        ResourceLocation targetEntity,
+        boolean isTargetTag,
+        boolean beeArmorRequired
+    ) implements SimpleCriterionTrigger.SimpleInstance {
 
-        public Instance(Optional<ContextAwarePredicate> predicate, ResourceLocation targetEntity, int targetCount, boolean isTargetTag, boolean beeArmorRequired) {
-            super(predicate);
-            this.targetCount = targetCount;
-            this.targetEntity = targetEntity;
-            this.isTargetTag = isTargetTag;
-            this.beeArmorRequired = beeArmorRequired;
-        }
+        public static final Codec<KilledCounterTrigger.TriggerInstance> CODEC =
+                RecordCodecBuilder.create(instance -> instance.group(
+                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(KilledCounterTrigger.TriggerInstance::player),
+                        ExtraCodecs.POSITIVE_INT.fieldOf("target_count").forGetter(KilledCounterTrigger.TriggerInstance::targetCount),
+                        ResourceLocation.CODEC.fieldOf("target_entity").forGetter(KilledCounterTrigger.TriggerInstance::targetEntity),
+                        Codec.BOOL.fieldOf("is_target_tag").forGetter(KilledCounterTrigger.TriggerInstance::isTargetTag),
+                        Codec.BOOL.fieldOf("bee_armor_required").forGetter(KilledCounterTrigger.TriggerInstance::beeArmorRequired)
+                ).apply(instance, KilledCounterTrigger.TriggerInstance::new));
 
         public boolean matches(ServerPlayer serverPlayer, Entity currentEntity, PlayerDataModule module) {
             boolean entityMatch;
@@ -68,16 +64,6 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
             return entityMatch &&
                     (!this.beeArmorRequired || BeeArmor.getBeeThemedWearablesCount(serverPlayer) >= 4) &&
                     currentCount >= this.targetCount;
-        }
-
-        @Override
-        public JsonObject serializeToJson() {
-            JsonObject jsonobject = super.serializeToJson();
-            jsonobject.addProperty("target_count", this.targetCount);
-            jsonobject.addProperty("target_entity", this.targetEntity.toString());
-            jsonobject.addProperty("is_target_tag", this.isTargetTag);
-            jsonobject.addProperty("bee_armor_required", this.beeArmorRequired);
-            return jsonobject;
         }
     }
 }

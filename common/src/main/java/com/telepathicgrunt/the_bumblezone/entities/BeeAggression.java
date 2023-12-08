@@ -107,7 +107,7 @@ public class BeeAggression {
                 }
             }
             else {
-                BzCriterias.HONEY_PERMISSION_TRIGGER.trigger(player);
+                BzCriterias.HONEY_PERMISSION_TRIGGER.get().trigger(player);
 
                 if (removesProt) {
                     player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
@@ -147,7 +147,7 @@ public class BeeAggression {
                     BzBeeAggressionConfigs.aggressiveBees)
             {
                 if(player instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.BEE_HIT_WRATH_OF_THE_HIVE_TRIGGER.trigger(serverPlayer, attackerEntity);
+                    BzCriterias.BEE_HIT_WRATH_OF_THE_HIVE_TRIGGER.get().trigger(serverPlayer, attackerEntity);
                 }
 
                 player.addEffect(new MobEffectInstance(
@@ -273,7 +273,7 @@ public class BeeAggression {
         StructureManager structureManager = ((ServerLevel)serverPlayer.level()).structureManager();
         if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.WRATH_CAUSING).isValid()) {
             if (!FlowerHeadwearHelmet.getFlowerHeadwear(serverPlayer).isEmpty()) {
-                BzCriterias.FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER.trigger(serverPlayer);
+                BzCriterias.FLOWER_HEADWEAR_WRATH_STRUCTURE_TRIGGER.get().trigger(serverPlayer);
                 return;
             }
 

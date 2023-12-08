@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
@@ -27,8 +28,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -37,6 +40,9 @@ import java.util.UUID;
 
 
 public class EssenceBlockGreen extends EssenceBlock {
+
+    public static final MapCodec<EssenceBlockGreen> CODEC = Block.simpleCodec(EssenceBlockGreen::new);
+
     private static final int ROOTMIN_HEALTH = 30;
     private static final float STAGE_2_THRESHOLD = 0.75f;
     private static final float STAGE_3_THRESHOLD = 0.575f;
@@ -44,7 +50,24 @@ public class EssenceBlockGreen extends EssenceBlock {
     private static final float STAGE_5_THRESHOLD = 0.15f;
 
     public EssenceBlockGreen() {
-        super(Properties.of().mapColor(MapColor.COLOR_GREEN));
+        this(Properties.of()
+                .mapColor(MapColor.COLOR_GREEN)
+                .strength(-1.0f, 3600000.8f)
+                .lightLevel((blockState) -> 15)
+                .noLootTable()
+                .forceSolidOn()
+                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
+                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
+                .pushReaction(PushReaction.BLOCK));
+    }
+
+    public EssenceBlockGreen(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends EssenceBlockGreen> codec() {
+        return CODEC;
     }
 
     @Override

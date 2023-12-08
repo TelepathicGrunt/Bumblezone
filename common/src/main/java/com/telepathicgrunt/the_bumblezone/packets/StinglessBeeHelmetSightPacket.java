@@ -44,7 +44,7 @@ public record StinglessBeeHelmetSightPacket(byte giveAdvancement) implements Pac
         public PacketContext handle(StinglessBeeHelmetSightPacket message) {
             return (player, level) -> {
                 if(player instanceof ServerPlayer serverPlayer && message.giveAdvancement() != 0) {
-                    BzCriterias.STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.STINGLESS_BEE_HELMET_SUPER_SIGHT_TRIGGER.get().trigger(serverPlayer);
                 }
             };
         }

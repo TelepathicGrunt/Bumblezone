@@ -1,44 +1,38 @@
 package com.telepathicgrunt.the_bumblezone.advancements;
 
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ExtraCodecs;
 
 import java.util.Optional;
 
-public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Instance> {
+public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.TriggerInstance> {
 
     public CounterTrigger() {}
+
+    @Override
+    public Codec<CounterTrigger.TriggerInstance> codec() {
+        return CounterTrigger.TriggerInstance.CODEC;
+    }
 
     public void trigger(ServerPlayer serverPlayer, int currentCount) {
         super.trigger(serverPlayer, (trigger) -> trigger.matches(currentCount));
     }
 
-    @Override
-    protected Instance createInstance(JsonObject jsonObject, Optional<ContextAwarePredicate> predicate, DeserializationContext deserializationContext) {
-        return new Instance(predicate, jsonObject.get("target_count").getAsInt());
-    }
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, int targetCount) implements SimpleCriterionTrigger.SimpleInstance {
 
-    public static class Instance extends AbstractCriterionTriggerInstance {
-        private final int targetCount;
+        public static final Codec<CounterTrigger.TriggerInstance> CODEC =
+                RecordCodecBuilder.create(instance -> instance.group(
+                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(CounterTrigger.TriggerInstance::player),
+                        ExtraCodecs.POSITIVE_INT.fieldOf("target_count").forGetter(CounterTrigger.TriggerInstance::targetCount)
+                ).apply(instance, CounterTrigger.TriggerInstance::new));
 
-        public Instance(Optional<ContextAwarePredicate> predicate, int targetCount) {
-            super(predicate);
-            this.targetCount = targetCount;
-        }
-
-        public boolean matches(int currentCount) {
-            return currentCount >= targetCount;
-        }
-
-        @Override
-        public JsonObject serializeToJson() {
-            JsonObject jsonobject = super.serializeToJson();
-            jsonobject.addProperty("target_count", this.targetCount);
-            return jsonobject;
+        public boolean matches(int count) {
+            return count == targetCount();
         }
     }
 }

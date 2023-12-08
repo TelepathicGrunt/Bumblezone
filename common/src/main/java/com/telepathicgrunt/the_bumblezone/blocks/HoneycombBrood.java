@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -60,20 +61,31 @@ import java.util.List;
 
 
 public class HoneycombBrood extends ProperFacingBlock {
+
+    public static final MapCodec<HoneycombBrood> CODEC = Block.simpleCodec(HoneycombBrood::new);
+
     private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_3;
 
     public HoneycombBrood() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.COLOR_ORANGE)
                 .instrument(NoteBlockInstrument.BANJO)
                 .randomTicks().strength(0.5F, 0.5F)
                 .sound(SoundType.CORAL_BLOCK).
                 speedFactor(0.8F));
+    }
+
+    public HoneycombBrood(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.SOUTH).setValue(STAGE, 0));
     }
 
+    @Override
+    public MapCodec<? extends HoneycombBrood> codec() {
+        return CODEC;
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -211,7 +223,7 @@ public class HoneycombBrood extends ProperFacingBlock {
                             }
 
                             if(playerEntity instanceof ServerPlayer serverPlayer) {
-                                BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.trigger(serverPlayer);
+                                BzCriterias.HONEY_BUCKET_BROOD_TRIGGER.get().trigger(serverPlayer);
                             }
                         }
 
@@ -243,7 +255,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts, 1, false, false,  true));
 
         if (playerEntity instanceof ServerPlayer serverPlayer) {
-            BzCriterias.GETTING_PROTECTION_TRIGGER.trigger(serverPlayer);
+            BzCriterias.GETTING_PROTECTION_TRIGGER.get().trigger(serverPlayer);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.Maps;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -63,8 +64,10 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     });
     private Item item;
 
+    public static final MapCodec<HoneyCrystal> CODEC = Block.simpleCodec(HoneyCrystal::new);
+
     public HoneyCrystal() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .instrument(NoteBlockInstrument.HAT)
                 .lightLevel((blockState) -> 1)
@@ -72,10 +75,19 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE)
                 .noOcclusion()
                 .pushReaction(PushReaction.DESTROY));
+    }
+
+    public HoneyCrystal(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.UP)
                 .setValue(WATERLOGGED, Boolean.FALSE));
+    }
+
+    @Override
+    public MapCodec<? extends HoneyCrystal> codec() {
+        return CODEC;
     }
 
     /**

@@ -106,7 +106,7 @@ public class BumbleBeeChestplate extends BeeArmor {
             else {
                 tag.putBoolean("isFlying", false);
                 if(beeWearablesCount >= 4 && player instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.BUMBLE_BEE_CHESTPLATE_MAX_FLIGHT_TRIGGER.get().trigger(serverPlayer);
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -65,6 +66,9 @@ import java.util.List;
 
 
 public class CrystallineFlower extends BaseEntityBlock {
+
+    public static final MapCodec<CrystallineFlower> CODEC = Block.simpleCodec(CrystallineFlower::new);
+
     public static final BooleanProperty FLOWER =  BooleanProperty.create("flower");
     protected final VoxelShape shapeFlower = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
     protected final VoxelShape shapeBody = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
@@ -73,7 +77,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     private static final Component OCCUPIED_CRYSTALLINE_FLOWER_TEXT = Component.translatable("system.the_bumblezone.occupied_crystalline_flower");
 
     public CrystallineFlower() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.TERRACOTTA_YELLOW)
                 .lightLevel((blockState) -> blockState.getValue(FLOWER) ? 7 : 0)
                 .noCollission()
@@ -81,8 +85,18 @@ public class CrystallineFlower extends BaseEntityBlock {
                 .strength(0.4F, 0.01F)
                 .pushReaction(PushReaction.DESTROY)
                 .sound(BzSounds.HONEY_CRYSTALS_TYPE));
+    }
+
+
+    public CrystallineFlower(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(FLOWER, false));
+    }
+
+    @Override
+    public MapCodec<? extends CrystallineFlower> codec() {
+        return CODEC;
     }
 
     @Override

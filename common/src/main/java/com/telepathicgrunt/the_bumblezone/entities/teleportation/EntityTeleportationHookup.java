@@ -84,7 +84,7 @@ public class EntityTeleportationHookup {
                     ).toList();
 
                 if (!poiInRange.isEmpty()) {
-                    BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.get().trigger(serverPlayer);
 
                     if (BzDimensionConfigs.enableInitialWelcomeMessage) {
                         ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
@@ -108,7 +108,7 @@ public class EntityTeleportationHookup {
             if (livingEntity.getY() < -2) {
                 if (BzDimensionConfigs.enableExitTeleportation) {
                     if (livingEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.get().trigger(serverPlayer);
                     }
 
                     if (livingEntity.getY() < -4) {
@@ -135,7 +135,7 @@ public class EntityTeleportationHookup {
             else if (livingEntity.getY() > 255) {
                 if (BzDimensionConfigs.enableExitTeleportation) {
                     if (livingEntity instanceof ServerPlayer) {
-                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.trigger((ServerPlayer) livingEntity);
+                        BzCriterias.TELEPORT_OUT_OF_BUMBLEZONE_TRIGGER.get().trigger((ServerPlayer) livingEntity);
                     }
 
                     if (livingEntity.getY() > 257) {
@@ -395,7 +395,7 @@ public class EntityTeleportationHookup {
         if (thrower instanceof ServerPlayer serverPlayer) {
             if (projectile != null) {
                 if (BuiltInRegistries.ENTITY_TYPE.getKey(projectile.getType()).getPath().contains("pearl")) {
-                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.TELEPORT_TO_BUMBLEZONE_PEARL_TRIGGER.get().trigger(serverPlayer);
                 }
                 projectile.remove(Entity.RemovalReason.DISCARDED);
             }
@@ -502,7 +502,7 @@ public class EntityTeleportationHookup {
                 //if the entity was pushed into a beehive, begin the teleportation.
                 if (validBelowBlock) {
                     if (pushedEntity instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.TELEPORT_TO_BUMBLEZONE_PISTON_TRIGGER.get().trigger(serverPlayer);
                     }
                     BzWorldSavedData.queueEntityToTeleport(pushedEntity, BzDimension.BZ_WORLD_KEY);
                 }

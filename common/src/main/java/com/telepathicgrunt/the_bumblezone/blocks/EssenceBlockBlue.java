@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
@@ -37,9 +38,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +50,32 @@ import java.util.UUID;
 
 
 public class EssenceBlockBlue extends EssenceBlock {
+
+    public static final MapCodec<EssenceBlockBlue> CODEC = Block.simpleCodec(EssenceBlockBlue::new);
+
     private static final float ENTITIES_TO_KILL = 50;
 
     public EssenceBlockBlue() {
-        super(Properties.of().mapColor(MapColor.COLOR_BLUE));
+        this(Properties.of()
+                .mapColor(MapColor.COLOR_BLUE)
+                .strength(-1.0f, 3600000.8f)
+                .lightLevel((blockState) -> 15)
+                .noLootTable()
+                .forceSolidOn()
+                .isValidSpawn((blockState, blockGetter, blockPos, entityType) -> false)
+                .isViewBlocking((blockState, blockGetter, blockPos) -> false)
+                .pushReaction(PushReaction.BLOCK));
     }
+
+    public EssenceBlockBlue(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends EssenceBlockBlue> codec() {
+        return CODEC;
+    }
+
 
     @Override
     public ResourceLocation getArenaNbt() {

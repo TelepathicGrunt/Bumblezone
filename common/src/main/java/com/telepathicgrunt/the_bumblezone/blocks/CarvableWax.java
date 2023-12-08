@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -64,17 +65,29 @@ public class CarvableWax extends ProperFacingBlock {
         }
     }
 
+    public static final MapCodec<CarvableWax> CODEC = Block.simpleCodec(CarvableWax::new);
+
     private Item item;
 
     public CarvableWax() {
-        super(Properties.of()
+        this(Properties.of()
                 .mapColor(MapColor.SAND)
                 .instrument(NoteBlockInstrument.FLUTE)
                 .strength(0.28F, 0.28F)
                 .sound(SoundType.WOOD));
+    }
+
+
+    public CarvableWax(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any().setValue(CARVING, Carving.UNCARVED));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
+    }
+
+    @Override
+    public MapCodec<? extends CarvableWax> codec() {
+        return CODEC;
     }
 
     @Override
@@ -149,7 +162,7 @@ public class CarvableWax extends ProperFacingBlock {
 
             playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.CARVE_WAX_TRIGGER.trigger(serverPlayer, position);
+                BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                 if (!serverPlayer.getAbilities().instabuild) {
                     itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);

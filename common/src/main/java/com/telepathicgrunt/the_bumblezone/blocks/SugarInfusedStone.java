@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
@@ -16,12 +17,23 @@ import net.minecraft.world.level.material.MapColor;
 
 public class SugarInfusedStone extends Block {
 
+    public static final MapCodec<SugarInfusedStone> CODEC = Block.simpleCodec(SugarInfusedStone::new);
+
     public SugarInfusedStone() {
-        super(BlockBehaviour.Properties.of()
+        this(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
                 .instrument(NoteBlockInstrument.BASEDRUM)
                 .requiresCorrectToolForDrops()
                 .strength(1.5F, 6.0F));
+    }
+
+    public SugarInfusedStone(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends SugarInfusedStone> codec() {
+        return CODEC;
     }
 
     @Override

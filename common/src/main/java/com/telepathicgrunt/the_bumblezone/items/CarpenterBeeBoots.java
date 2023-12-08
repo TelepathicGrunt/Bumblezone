@@ -137,7 +137,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                                 serverPlayer.awardStat(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL.get());
 
                                 if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_MINED_BLOCKS_RL.get(), StatFormatter.DEFAULT)) >= 64) {
-                                    BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.trigger(serverPlayer);
+                                    BzCriterias.CARPENTER_BEE_BOOTS_MINED_BLOCKS_TRIGGER.get().trigger(serverPlayer);
                                 }
                             }
                             PlatformHooks.afterBlockBreakEvent(world, belowBlockPos, state, entity, player);
@@ -214,7 +214,7 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
                                         serverPlayer.awardStat(BzStats.CARPENTER_BEE_BOOTS_WALL_HANG_TIME_RL.get());
 
                                         if(serverPlayer.getStats().getValue(Stats.CUSTOM.get(BzStats.CARPENTER_BEE_BOOTS_WALL_HANG_TIME_RL.get(), StatFormatter.DEFAULT)) >= 4000) {
-                                            BzCriterias.CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER.trigger(serverPlayer);
+                                            BzCriterias.CARPENTER_BEE_BOOTS_WALL_HANGING_TRIGGER.get().trigger(serverPlayer);
                                         }
                                     }
                                 }

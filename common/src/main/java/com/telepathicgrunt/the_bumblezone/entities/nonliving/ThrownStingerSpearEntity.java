@@ -122,11 +122,11 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             this.getOwner() instanceof ServerPlayer serverPlayer)
         {
             if (!serverPlayer.blockPosition().closerThan(this.blockPosition(), 50)) {
-                BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.trigger(serverPlayer);
+                BzCriterias.STINGER_SPEAR_LONG_RANGE_KILL_TRIGGER.get().trigger(serverPlayer);
             }
 
             if (entity.getType() == EntityType.WITHER && PlayerDataHandler.rootAdvancementDone(serverPlayer)) {
-                BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.trigger(serverPlayer);
+                BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.get().trigger(serverPlayer);
             }
         }
 
@@ -147,7 +147,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                     true));
 
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
-                BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.trigger(serverPlayer);
+                BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
         }
 

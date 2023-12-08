@@ -126,7 +126,7 @@ public interface SuperCandle {
                 level.getBlockState(blockPos.above()).getBlock() instanceof SuperCandleWick candleWick &&
                 candleWick.isSoul())
         {
-            BzCriterias.LIGHT_SOUL_SUPER_CANDLE_TRIGGER.trigger(serverPlayer);
+            BzCriterias.LIGHT_SOUL_SUPER_CANDLE_TRIGGER.get().trigger(serverPlayer);
         }
 
         return litWick;

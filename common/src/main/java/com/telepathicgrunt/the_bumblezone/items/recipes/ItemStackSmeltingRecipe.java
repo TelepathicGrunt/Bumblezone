@@ -100,7 +100,7 @@ public class ItemStackSmeltingRecipe extends AbstractCookingRecipe {
         return BzRecipes.ITEMSTACK_SMELTING_RECIPE.get();
     }
 
-    public static class ItemStackSmeltingRecipeSerializer implements RecipeSerializer<ItemStackSmeltingRecipe>, BzRecipeSerializer<ItemStackSmeltingRecipe> {
+    public static class ItemStackSmeltingRecipeSerializer implements RecipeSerializer<ItemStackSmeltingRecipe> {
         private final Codec<ItemStackSmeltingRecipe> codec = RecordCodecBuilder.create(instance -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(abstractCookingRecipe -> abstractCookingRecipe.group),
                 CookingBookCategory.CODEC.fieldOf("category").orElse(CookingBookCategory.MISC).forGetter(abstractCookingRecipe -> abstractCookingRecipe.category),

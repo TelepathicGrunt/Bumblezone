@@ -115,7 +115,7 @@ public class BeeStingerEntity extends AbstractArrow {
                 livingEntity.removeEffect(MobEffects.WEAKNESS);
 
                 if(!livingEntity.isDeadOrDying() && this.getOwner() instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.BEE_STINGER_PARALYZE_TRIGGER.trigger(serverPlayer);
+                    BzCriterias.BEE_STINGER_PARALYZE_TRIGGER.get().trigger(serverPlayer);
                 }
             }
         }

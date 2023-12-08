@@ -1,5 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
+import com.mojang.datafixers.kinds.Applicative;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -14,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -23,12 +27,30 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class AncientWaxStairs extends StairBlock implements AncientWaxBase {
 
+    protected final BlockState baseState;
+
+    public static final MapCodec<AncientWaxStairs> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            BlockState.CODEC.fieldOf("base_state").forGetter(stairBlock -> stairBlock.baseState),
+            StairBlock.propertiesCodec()
+    ).apply(instance, AncientWaxStairs::new));
+
     public AncientWaxStairs(BlockState state) {
-        super(state, Properties.of()
+        this(state, Properties.of()
                 .mapColor(MapColor.TERRACOTTA_BROWN)
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(3.0F, 19.0F));
     }
+
+    public AncientWaxStairs(BlockState state, Properties properties) {
+        super(state, properties);
+        this.baseState = state;
+    }
+
+    @Override
+    public MapCodec<? extends AncientWaxStairs> codec() {
+        return CODEC;
+    }
+
 
     @Override
     public void stepOn(Level level, BlockPos blockPos, BlockState state, Entity entity) {
@@ -49,7 +71,7 @@ public class AncientWaxStairs extends StairBlock implements AncientWaxBase {
 
                 playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
                 if (playerEntity instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.CARVE_WAX_TRIGGER.trigger(serverPlayer, position);
+                    BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                     if (!serverPlayer.getAbilities().instabuild) {
                         itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);

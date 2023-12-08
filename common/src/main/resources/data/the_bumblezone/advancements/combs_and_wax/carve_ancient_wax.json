@@ -23,7 +23,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
-          "tag": "the_bumblezone:ancient_wax/full_blocks"
+          "blocks": "#the_bumblezone:ancient_wax/full_blocks"
         }
       }
     },
@@ -31,7 +31,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
-          "tag": "the_bumblezone:ancient_wax/slabs"
+          "blocks": "#the_bumblezone:ancient_wax/slabs"
         }
       }
     },
@@ -39,7 +39,7 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
-          "tag": "the_bumblezone:ancient_wax/stairs"
+          "blocks": "#the_bumblezone:ancient_wax/stairs"
         }
       }
     }

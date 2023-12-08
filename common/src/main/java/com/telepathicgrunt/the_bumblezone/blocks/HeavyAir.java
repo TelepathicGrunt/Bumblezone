@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.google.common.collect.MapMaker;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.entities.TemporaryPlayerData;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
@@ -35,16 +36,28 @@ import java.util.concurrent.ConcurrentMap;
 
 
 public class HeavyAir extends Block {
+
+    public static final MapCodec<HeavyAir> CODEC = Block.simpleCodec(HeavyAir::new);
+
     private static final ConcurrentMap<String, Integer> APPLIED_PUSH_FOR_ENTITY = new MapMaker().concurrencyLevel(2).weakKeys().makeMap();
 
     public HeavyAir() {
-        super(Properties.of()
+        this(Properties.of()
                 .strength(-1.0f, 0)
                 .noCollission()
                 .replaceable()
                 .noLootTable()
                 .noOcclusion()
                 .pushReaction(PushReaction.DESTROY));
+    }
+
+    public HeavyAir(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public MapCodec<? extends HeavyAir> codec() {
+        return CODEC;
     }
 
     @Override

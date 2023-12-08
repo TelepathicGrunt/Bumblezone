@@ -82,7 +82,7 @@ public class BuzzingBriefcaseMenu extends AbstractContainerMenu {
                     bee.heal(2);
 
                     if (player instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BUZZING_BRIEFCASE_HEAL_TRIGGER.trigger(serverPlayer);
+                        BzCriterias.BUZZING_BRIEFCASE_HEAL_TRIGGER.get().trigger(serverPlayer);
                     }
 
                     if (!player.getAbilities().instabuild) {
