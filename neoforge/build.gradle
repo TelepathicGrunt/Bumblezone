@@ -81,7 +81,6 @@ dependencies {
 
     //modRuntimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
     //modRuntimeOnly("dev.architectury:architectury-forge:${project.architectury}")
-    //modRuntimeOnly("curse.maven:travelersbackpacks-321117:${project.travelersbackpacks_file_id}")
     //modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
 
