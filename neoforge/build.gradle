@@ -33,7 +33,7 @@ configurations {
 
 dependencies {
     // REQUIRED
-    neoForge "net.neoforged:neoforge:20.2.103-beta-rework-caps"
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-neoforge-${rootProject.athena}")))
 
@@ -81,8 +81,8 @@ dependencies {
 
     //modRuntimeOnly("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config}")
     //modRuntimeOnly("dev.architectury:architectury-forge:${project.architectury}")
-    //modRuntimeOnly("top.theillusivec4.curios:curios-forge:${project.curios}")
-    modCompileOnly("top.theillusivec4.curios:curios-forge:${project.curios}:api")
+    //modRuntimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
+    modCompileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api")
 
     // modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4803547")
     // modRuntimeOnly("curse.maven:worldedit-225608:4586218")
