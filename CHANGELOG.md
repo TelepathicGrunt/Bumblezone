@@ -1,3 +1,9 @@
+### **(V.7.1.10 Changes) (1.20.1 Minecraft)**
+
+##### Loots:
+(Fabric/Quilt): Fixed Loot Viewer mods showing Bee Stinger as a drop for loot tables when it doesn't actually drop. 
+
+
 ### **(V.7.1.9 Changes) (1.20.1 Minecraft)**
 
 ##### Structures:

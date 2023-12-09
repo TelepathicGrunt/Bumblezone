@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
-import com.telepathicgrunt.the_bumblezone.loot.LootTableModifier;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -49,8 +48,6 @@ public class FabricBaseEventManager {
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
 
         ServerLivingEntityEvents.ALLOW_DEATH.register(FabricBaseEventManager::allowPlayerDeath);
-
-        LootTableModifier.modifyLootTables();
     }
 
     private static boolean allowPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
