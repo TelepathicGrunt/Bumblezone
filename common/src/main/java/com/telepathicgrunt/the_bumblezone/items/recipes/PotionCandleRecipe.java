@@ -30,16 +30,21 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 
 public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     private final String group;
@@ -236,14 +241,14 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     }
 
     /**
-     * These are used in the forge mixin.
+     * These are used in the neoforge mixin.
      */
     public int getWidth() {
         return this.width;
     }
 
     /**
-     * These are used in the forge mixin.
+     * These are used in the neoforge mixin.
      */
     public int getHeight() {
         return this.height;
@@ -471,33 +476,43 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                                int maxLevelCap,
                                int resultCount)
         {
-            static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().flatXmap(list -> {
+            static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().comapFlatMap((list) -> {
                 if (list.size() > 3) {
-                    return DataResult.error(() -> "Invalid shapedPattern: too many rows, 3 is maximum");
+                    return DataResult.error(() -> "Invalid pattern: too many rows, 3 is maximum");
                 }
-                if (list.isEmpty()) {
-                    return DataResult.error(() -> "Invalid shapedPattern: empty shapedPattern not allowed");
+                else if (list.isEmpty()) {
+                    return DataResult.error(() -> "Invalid pattern: empty pattern not allowed");
                 }
-                int i = list.get(0).length();
-                for (String string : list) {
-                    if (string.length() > 3) {
-                        return DataResult.error(() -> "Invalid shapedPattern: too many columns, 3 is maximum");
-                    }
-                    if (i == string.length()) continue;
-                    return DataResult.error(() -> "Invalid shapedPattern: each row must be the same width");
-                }
-                return DataResult.success(list);
-            }, DataResult::success);
+                else {
+                    int length = list.get(0).length();
+                    Iterator<String> var2 = list.iterator();
+                    String string;
+                    do {
+                        if (!var2.hasNext()) {
+                            return DataResult.success(list);
+                        }
 
-            static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(string -> {
+                        string = var2.next();
+                        if (string.length() > 3) {
+                            return DataResult.error(() -> "Invalid pattern: too many columns, 3 is maximum");
+                        }
+                    }
+                    while(length == string.length());
+
+                    return DataResult.error(() -> "Invalid pattern: each row must be the same width");
+                }
+            }, Function.identity());
+
+            static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.comapFlatMap((string) -> {
                 if (string.length() != 1) {
-                    return DataResult.error(() -> "Invalid shapedKey entry: '" + string + "' is an invalid symbol (must be 1 character only).");
+                    return DataResult.error(() -> "Invalid key entry: '" + string + "' is an invalid symbol (must be 1 character only).");
                 }
-                if (" ".equals(string)) {
-                    return DataResult.error(() -> "Invalid shapedKey entry: ' ' is a reserved symbol.");
+                else {
+                    return " ".equals(string) ?
+                            DataResult.error(() -> "Invalid key entry: ' ' is a reserved symbol.") :
+                            DataResult.success(String.valueOf(string.charAt(0)));
                 }
-                return DataResult.success(string);
-            }, DataResult::success);
+            }, String::valueOf);
 
             public static final Codec<RawPotionRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(potionRecipe -> potionRecipe.group),
