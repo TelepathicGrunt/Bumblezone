@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.recipes;
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipePatternAccessor;
@@ -410,7 +411,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         },
         potionCandleRecipe -> {
             throw new NotImplementedException("Serializing potionCandleRecipe is not implemented yet.");
-        });
+        }).codec();
 
         @Override
         public Codec<PotionCandleRecipe> codec() {
@@ -514,7 +515,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                 }
             }, String::valueOf);
 
-            public static final Codec<RawPotionRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            public static final MapCodec<RawPotionRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(potionRecipe -> potionRecipe.group),
                     CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(potionRecipe -> potionRecipe.category),
                     ExtraCodecs.strictUnboundedMap(SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY).fieldOf("shapedKey").forGetter(potionRecipe -> potionRecipe.shapedKey),
