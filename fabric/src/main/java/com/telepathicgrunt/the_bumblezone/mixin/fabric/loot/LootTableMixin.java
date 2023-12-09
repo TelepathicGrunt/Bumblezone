@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.loot;
 
 
+import com.telepathicgrunt.the_bumblezone.loot.LootUtils;
 import com.telepathicgrunt.the_bumblezone.loot.NewLootInjectorApplier;
-import com.telepathicgrunt.the_bumblezone.loots.LootUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;

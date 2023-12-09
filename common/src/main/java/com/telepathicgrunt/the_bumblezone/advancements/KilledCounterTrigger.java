@@ -42,8 +42,8 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
                         ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(KilledCounterTrigger.TriggerInstance::player),
                         ExtraCodecs.POSITIVE_INT.fieldOf("target_count").forGetter(KilledCounterTrigger.TriggerInstance::targetCount),
                         ResourceLocation.CODEC.fieldOf("target_entity").forGetter(KilledCounterTrigger.TriggerInstance::targetEntity),
-                        Codec.BOOL.fieldOf("is_target_tag").forGetter(KilledCounterTrigger.TriggerInstance::isTargetTag),
-                        Codec.BOOL.fieldOf("bee_armor_required").forGetter(KilledCounterTrigger.TriggerInstance::beeArmorRequired)
+                        Codec.BOOL.fieldOf("is_target_tag").orElse(false).forGetter(KilledCounterTrigger.TriggerInstance::isTargetTag),
+                        Codec.BOOL.fieldOf("bee_armor_required").orElse(false).forGetter(KilledCounterTrigger.TriggerInstance::beeArmorRequired)
                 ).apply(instance, KilledCounterTrigger.TriggerInstance::new));
 
         public boolean matches(ServerPlayer serverPlayer, Entity currentEntity, PlayerDataModule module) {

@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.loot;
 
-import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.loot.LootDataManagerAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.fabric.loot.LootDataManagerAccessor;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.server.MinecraftServer;

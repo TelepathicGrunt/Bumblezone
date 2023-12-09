@@ -1,10 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.loot.conditions.BumblezoneDimensionCheck;
-import com.telepathicgrunt.the_bumblezone.loot.conditions.DyingBeeEntitiesDrops;
 import com.telepathicgrunt.the_bumblezone.loot.conditions.EssenceOnlySpawn;
-import com.telepathicgrunt.the_bumblezone.loot.conditions.NonBumblezoneDimensionCheck;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;

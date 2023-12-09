@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "minecraft:fern",
-    "minecraft:grass",
+    "minecraft:short_grass",
     "minecraft:azalea",
     {
       "id": "alexscaves:tree_star",

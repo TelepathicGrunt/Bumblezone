@@ -210,7 +210,6 @@ public class Bumblezone {
 
     private static void setup(final SetupEvent event) {
     	event.enqueueWork(() -> {
-            BzCriterias.registerCriteriaTriggers();
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
             BzRecipes.registerBrewingStandRecipes();

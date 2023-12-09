@@ -1,19 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.items.recipes;
 
 import com.google.common.collect.Sets;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
-import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipeAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipePatternAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Object2CharOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -371,7 +367,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     public static class Serializer implements RecipeSerializer<PotionCandleRecipe> {
 
         private static final Codec<PotionCandleRecipe> CODEC = PotionCandleRecipe.Serializer.RawPotionRecipe.CODEC.flatXmap(rawShapedRecipe -> {
-            String[] strings = ShapedRecipeAccessor.callShrink(rawShapedRecipe.shapedPattern);
+            String[] strings = ShapedRecipePatternAccessor.callShrink(rawShapedRecipe.shapedPattern);
             int width = strings[0].length();
             int height = strings.length;
             NonNullList<Ingredient> shapedRecipeItems = NonNullList.withSize(width * height, Ingredient.EMPTY);

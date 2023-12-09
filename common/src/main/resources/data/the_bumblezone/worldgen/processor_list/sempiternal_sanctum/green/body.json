@@ -29,7 +29,7 @@
             "Name": "minecraft:air"
           },
           "input_predicate": {
-            "block": "minecraft:grass",
+            "block": "minecraft:short_grass",
             "predicate_type": "minecraft:random_block_match",
             "probability": 0.55
           },
@@ -41,7 +41,7 @@
     },
     {
       "processor_type": "the_bumblezone:tag_replace_processor",
-      "input_block": "minecraft:grass",
+      "input_block": "minecraft:short_grass",
       "output_block_tag": "the_bumblezone:sempiternal_sanctum/allowed_green_flowers",
       "blacklisted_output_block_tag": "the_bumblezone:sempiternal_sanctum/forced_disallowed_green_flowers",
       "double_tall_flower": false,

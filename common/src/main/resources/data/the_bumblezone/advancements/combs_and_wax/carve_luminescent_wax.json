@@ -23,7 +23,8 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
-          "tag": "the_bumblezone:luminescent_wax/channels"
+          "resourcelocation": "the_bumblezone:luminescent_wax/channels",
+          "is_tag": true
         }
       }
     },
@@ -31,7 +32,8 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
-          "tag": "the_bumblezone:luminescent_wax/corners"
+          "resourcelocation": "the_bumblezone:luminescent_wax/corners",
+          "is_tag": true
         }
       }
     },
@@ -39,7 +41,8 @@
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
         "block":{
-          "tag": "the_bumblezone:luminescent_wax/nodes"
+          "resourcelocation": "the_bumblezone:luminescent_wax/nodes",
+          "is_tag": true
         }
       }
     }

@@ -8,7 +8,7 @@
           "weight": 2
         },
         {
-          "data": { "Name": "minecraft:grass" },
+          "data": { "Name": "minecraft:short_grass" },
           "weight": 2
         }
       ]
@@ -23,7 +23,7 @@
           "weight": 2
         },
         {
-          "data": { "Name": "minecraft:grass" },
+          "data": { "Name": "minecraft:short_grass" },
           "weight": 2
         },
         {

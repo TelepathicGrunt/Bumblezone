@@ -90,7 +90,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
 
     @Override
     public MapCodec<BrushableBlock> codec() {
-        return (MapCodec<BrushableBlock>)CODEC;
+        return (MapCodec<BrushableBlock>)(MapCodec<?>)CODEC;
     }
 
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
