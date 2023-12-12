@@ -1,7 +1,7 @@
-### **(V.7.2.8 Changes) (1.20.4 Minecraft)**
+### **(V.7.2.9 Changes) (1.20.4 Minecraft)**
 
-#### Major:
-Updated to 1.20.4
+##### Advancements:
+Fixed Bumblezone fishing advancement being triggered outside of Bumblezone dimension.
 
-##### Loots:
-(Fabric/Quilt): Fixed Loot Viewer mods showing Bee Stinger as a drop for loot tables when it doesn't actually drop.
+##### Mod Compat:
+Bumblezone mob icons added for Journeymap and Xaeros mod! Special thanks to CrispyTwig for icon art!
