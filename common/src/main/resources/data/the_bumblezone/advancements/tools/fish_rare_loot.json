@@ -23,6 +23,17 @@
     "fished_rare_loot_1": {
       "trigger": "minecraft:fishing_rod_hooked",
       "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "the_bumblezone:the_bumblezone"
+              }
+            }
+          }
+        ],
         "item": {
           "items": [
             "minecraft:saddle",
@@ -42,6 +53,17 @@
     "fished_rare_loot_2": {
       "trigger": "minecraft:fishing_rod_hooked",
       "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "the_bumblezone:the_bumblezone"
+              }
+            }
+          }
+        ],
         "item": {
           "tag": "the_bumblezone:music_discs",
           "count": 1

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "the_bumblezone:textures/entity/electric_ring_entity.png": "outlined_sprite:the_bumblezone/electric_ring_entity.png",
+    "default": "outlined_sprite:the_bumblezone/electric_ring_entity.png"
+  }
+}
