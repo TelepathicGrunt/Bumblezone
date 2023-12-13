@@ -1,5 +1,8 @@
 ### **(V.7.2.9 Changes) (1.20.4 Minecraft)**
 
+##### Blocks:
+Allow Crystalline Flower to replace Windy Air and Heavy Air.
+
 ##### Advancements:
 Fixed Bumblezone fishing advancement being triggered outside of Bumblezone dimension.
 

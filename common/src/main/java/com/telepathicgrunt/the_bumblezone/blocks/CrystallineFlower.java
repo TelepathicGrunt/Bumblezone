@@ -364,7 +364,7 @@ public class CrystallineFlower extends BaseEntityBlock {
 
         for(int i = 0; i < scanArea; i++) {
             BlockState currentState = level.getBlockState(mutable);
-            if (!currentState.isAir() && !currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get())) {
+            if (!(currentState.isAir() || currentState.is(BzTags.AIR_LIKE)) && !currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get())) {
                 obstructions.add(true);
             }
             else {
