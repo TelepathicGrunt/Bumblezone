@@ -3,6 +3,9 @@
 ##### Blocks:
 Allow Crystalline Flower to replace Windy Air and Heavy Air.
 
+##### Recipes:
+Fixed Bumblezone special smelting recipe type crashing some mods and not showing in REI.
+
 ##### Advancements:
 Fixed Bumblezone fishing advancement being triggered outside of Bumblezone dimension.
 

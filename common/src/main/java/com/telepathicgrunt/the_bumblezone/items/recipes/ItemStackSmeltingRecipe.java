@@ -18,10 +18,11 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
-public class ItemStackSmeltingRecipe extends AbstractCookingRecipe {
+public class ItemStackSmeltingRecipe extends SmeltingRecipe {
     protected final RecipeType<?> type;
     protected final CookingBookCategory category;
     protected final String group;
@@ -31,7 +32,7 @@ public class ItemStackSmeltingRecipe extends AbstractCookingRecipe {
     protected final int cookingTime;
 
     public ItemStackSmeltingRecipe(String string, CookingBookCategory cookingBookCategory, Ingredient ingredient, ItemStack itemStack, float f, int i) {
-        super(RecipeType.SMELTING, string, cookingBookCategory, ingredient, itemStack, f, i);
+        super(string, cookingBookCategory, ingredient, itemStack, f, i);
         this.type = RecipeType.SMELTING;
         this.category = cookingBookCategory;
         this.group = string;
