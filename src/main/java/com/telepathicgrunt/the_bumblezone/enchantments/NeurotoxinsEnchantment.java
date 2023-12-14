@@ -31,7 +31,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
     @Override
     public int getMinCost(int level) {
         if (level > MAX_LEVEL) {
-            return Integer.MAX_VALUE - 2;
+            return 200;
         }
 
         return 14 * level;
@@ -40,7 +40,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
     @Override
     public int getMaxCost(int level) {
         if (level > MAX_LEVEL) {
-            return Integer.MAX_VALUE - 1;
+            return 200;
         }
 
         return super.getMinCost(level) + 50;
