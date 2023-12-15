@@ -22,16 +22,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class MusicHandler {
     public static class MusicFader {
         public final SoundInstance music;
-        public final Consumer<Minecraft> stopOtherMusic;
+        public final Predicate<Minecraft> stopOtherMusic;
         public final int counterStart;
         public boolean fadeIn;
         public int counter;
 
-        public MusicFader(SoundInstance music, Consumer<Minecraft> stopOtherMusic, int counterStart, boolean fadeIn) {
+        public MusicFader(SoundInstance music, Predicate<Minecraft> stopOtherMusic, int counterStart, boolean fadeIn) {
             this.music = music;
             this.stopOtherMusic = stopOtherMusic;
             this.counterStart = counterStart;
@@ -46,6 +47,7 @@ public class MusicHandler {
     private static SoundInstance SEMPITERNAL_SANCTUM_MUSIC = null;
     private static SoundInstance ESSENCE_EVENT_MUSIC = null;
     private static final ResourceLocation BIOME_MUSIC = new ResourceLocation(Bumblezone.MODID, "biome_music");
+    public static boolean BUMBLEZONE_MUSIC_PLAYING = false;
 
     public static void tickMusicFader(PlayerTickEvent event) {
         Minecraft minecraftClient = Minecraft.getInstance();
@@ -55,9 +57,14 @@ public class MusicHandler {
             Map.Entry<ResourceLocation, MusicFader> entry = iterator.next();
             MusicFader musicFader = entry.getValue();
             if (musicFader.fadeIn) {
-                musicFader.stopOtherMusic.accept(minecraftClient);
+                boolean success = musicFader.stopOtherMusic.test(minecraftClient);
+                if (!success) {
+                    minecraftClient.getSoundManager().stop(musicFader.music);
+                    iterator.remove();
+                    continue;
+                }
 
-                boolean isPlaying = minecraftClient.getSoundManager().isActive(musicFader.music);
+                boolean isPlaying = isMusicPlaying(minecraftClient, musicFader.music);
                 if (!isPlaying) {
                     minecraftClient.getSoundManager().play(musicFader.music);
                 }
@@ -88,25 +95,33 @@ public class MusicHandler {
     // CLIENT-SIDED
     public static void playStopAngryBeeMusic(Player entity, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        if (play && (ANGRY_BEE_MUSIC == null || !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC))) {
-            if (ESSENCE_EVENT_MUSIC != null && minecraftClient.getSoundManager().isActive(ESSENCE_EVENT_MUSIC)) {
+        if (play && (ANGRY_BEE_MUSIC == null || !isMusicPlaying(minecraftClient, ANGRY_BEE_MUSIC))) {
+            if (ESSENCE_EVENT_MUSIC != null && isMusicPlaying(minecraftClient, ESSENCE_EVENT_MUSIC)) {
                 return;
             }
-            if (!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
+            if (!entity.isCreative() && !entity.isSpectator() && entity == minecraftClient.player && !isMusicPlaying(minecraftClient, ANGRY_BEE_MUSIC)) {
                 ANGRY_BEE_MUSIC = SimpleSoundInstance.forMusic(BzSounds.ANGERED_BEES.get());
 
+                BUMBLEZONE_MUSIC_PLAYING = true;
                 minecraftClient.getSoundManager().play(ANGRY_BEE_MUSIC);
                 setMusicVolume(minecraftClient, ANGRY_BEE_MUSIC, 0.01f);
                 addMusicFade(ANGRY_BEE_MUSIC, 100, true, (m) -> {
+                    if (isMusicPlaying(minecraftClient, ESSENCE_EVENT_MUSIC)) {
+                        return false;
+                    }
+
                     m.getSoundManager().stop(BIOME_MUSIC, SoundSource.MUSIC);
                     m.getSoundManager().stop(SoundEvents.MUSIC_CREATIVE.key().location(), SoundSource.MUSIC);
                     m.getSoundManager().stop(SoundEvents.MUSIC_GAME.key().location(), SoundSource.MUSIC);
                     m.getSoundManager().stop(BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), SoundSource.MUSIC);
+
+                    return true;
                 }) ;
             }
         }
         else if (!play && ANGRY_BEE_MUSIC != null) {
-            addMusicFade(ANGRY_BEE_MUSIC, 150, false, (m) -> {});
+            BUMBLEZONE_MUSIC_PLAYING = false;
+            addMusicFade(ANGRY_BEE_MUSIC, 150, false, (m) -> false);
         }
     }
 
@@ -118,27 +133,36 @@ public class MusicHandler {
             return;
         }
 
-        if (play && (SEMPITERNAL_SANCTUM_MUSIC == null || !minecraftClient.getSoundManager().isActive(SEMPITERNAL_SANCTUM_MUSIC))) {
-            if (ANGRY_BEE_MUSIC != null && minecraftClient.getSoundManager().isActive(ANGRY_BEE_MUSIC)) {
+        if (play && (SEMPITERNAL_SANCTUM_MUSIC == null || !isMusicPlaying(minecraftClient, SEMPITERNAL_SANCTUM_MUSIC))) {
+            if (ANGRY_BEE_MUSIC != null && isMusicPlaying(minecraftClient, ANGRY_BEE_MUSIC)) {
                 return;
             }
-            if (ESSENCE_EVENT_MUSIC != null && minecraftClient.getSoundManager().isActive(ESSENCE_EVENT_MUSIC)) {
+            if (ESSENCE_EVENT_MUSIC != null && isMusicPlaying(minecraftClient, ESSENCE_EVENT_MUSIC)) {
                 return;
             }
-            if(!entity.isCreative() && entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(SEMPITERNAL_SANCTUM_MUSIC)) {
+            if (entity == minecraftClient.player && !isMusicPlaying(minecraftClient, SEMPITERNAL_SANCTUM_MUSIC)) {
                 SEMPITERNAL_SANCTUM_MUSIC = SimpleSoundInstance.forMusic(BzSounds.SEMPITERNAL_SANCTUM.get());
 
+                BUMBLEZONE_MUSIC_PLAYING = true;
                 minecraftClient.getSoundManager().play(SEMPITERNAL_SANCTUM_MUSIC);
                 setMusicVolume(minecraftClient, SEMPITERNAL_SANCTUM_MUSIC, 0.01f);
                 addMusicFade(SEMPITERNAL_SANCTUM_MUSIC, 1000, true, (m) -> {
+                    if (isMusicPlaying(minecraftClient, ESSENCE_EVENT_MUSIC) || isMusicPlaying(minecraftClient, ANGRY_BEE_MUSIC)) {
+                        return false;
+                    }
+
+                    m.getSoundManager().stop(SoundEvents.MUSIC_CREATIVE.key().location(), SoundSource.MUSIC);
                     m.getSoundManager().stop(BIOME_MUSIC, SoundSource.MUSIC);
                     m.getSoundManager().stop(SoundEvents.MUSIC_CREATIVE.key().location(), SoundSource.MUSIC);
                     m.getSoundManager().stop(SoundEvents.MUSIC_GAME.key().location(), SoundSource.MUSIC);
+
+                    return true;
                 });
             }
         }
         else if (!play && SEMPITERNAL_SANCTUM_MUSIC != null) {
-            addMusicFade(SEMPITERNAL_SANCTUM_MUSIC, 500, false, (m) -> {});
+            BUMBLEZONE_MUSIC_PLAYING = false;
+            addMusicFade(SEMPITERNAL_SANCTUM_MUSIC, 500, false, (m) -> false);
         }
     }
 
@@ -149,10 +173,11 @@ public class MusicHandler {
             return;
         }
 
-        if (play && (ESSENCE_EVENT_MUSIC == null || !minecraftClient.getSoundManager().isActive(ESSENCE_EVENT_MUSIC))) {
-            if(entity == minecraftClient.player && !minecraftClient.getSoundManager().isActive(ESSENCE_EVENT_MUSIC)) {
+        if (play && (ESSENCE_EVENT_MUSIC == null || !isMusicPlaying(minecraftClient, ESSENCE_EVENT_MUSIC))) {
+            if(entity == minecraftClient.player && !isMusicPlaying(minecraftClient, ESSENCE_EVENT_MUSIC)) {
                 ESSENCE_EVENT_MUSIC = SimpleSoundInstance.forMusic(soundEvent);
 
+                BUMBLEZONE_MUSIC_PLAYING = true;
                 minecraftClient.getSoundManager().play(ESSENCE_EVENT_MUSIC);
                 setMusicVolume(minecraftClient, ESSENCE_EVENT_MUSIC, 0.01f);
                 addMusicFade(ESSENCE_EVENT_MUSIC, 300, true, (m) -> {
@@ -161,15 +186,17 @@ public class MusicHandler {
                     m.getSoundManager().stop(SoundEvents.MUSIC_GAME.key().location(), SoundSource.MUSIC);
                     m.getSoundManager().stop(BzSounds.ANGERED_BEES.get().getLocation(), SoundSource.MUSIC);
                     m.getSoundManager().stop(BzSounds.SEMPITERNAL_SANCTUM.get().getLocation(), SoundSource.MUSIC);
+                    return true;
                 });
             }
         }
         else if (!play && ESSENCE_EVENT_MUSIC != null) {
-            addMusicFade(ESSENCE_EVENT_MUSIC, 300, false, (m) -> {});
+            BUMBLEZONE_MUSIC_PLAYING = false;
+            addMusicFade(ESSENCE_EVENT_MUSIC, 300, false, (m) -> false);
         }
     }
 
-    private static void addMusicFade(SoundInstance soundInstance, int counterStart, boolean fadeIn, Consumer<Minecraft> stopOtherMusic) {
+    private static void addMusicFade(SoundInstance soundInstance, int counterStart, boolean fadeIn, Predicate<Minecraft> stopOtherMusic) {
         if (MUSIC_FADERS.containsKey(soundInstance.getLocation())) {
             MusicFader musicFader = MUSIC_FADERS.get(soundInstance.getLocation());
             boolean originalFadeIn = musicFader.fadeIn;
@@ -194,5 +221,9 @@ public class MusicHandler {
         if (channelHandle != null) {
             channelHandle.execute((channel -> channel.setVolume(Math.min(volume, playerSetVolume))));
         }
+    }
+
+    private static boolean isMusicPlaying(Minecraft minecraftClient, SoundInstance soundInstance) {
+        return minecraftClient.getSoundManager().isActive(soundInstance);
     }
 }
