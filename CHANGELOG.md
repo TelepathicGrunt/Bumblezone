@@ -9,6 +9,9 @@ Fixed Bumblezone special smelting recipe type crashing some mods and not showing
 ##### Advancements:
 Fixed Bumblezone fishing advancement being triggered outside of Bumblezone dimension.
 
+##### Music:
+Attempt to fix multiple songs playing at once when in Sempiternal Sanctum.
+
 ##### Mod Compat:
 Bumblezone mob icons added for Journeymap and Xaeros mod! Special thanks to CrispyTwig for icon art!
 
