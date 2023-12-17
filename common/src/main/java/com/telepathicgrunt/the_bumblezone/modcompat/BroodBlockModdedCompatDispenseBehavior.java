@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import com.mojang.datafixers.util.Function5;
+import com.mojang.datafixers.util.Function6;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
@@ -18,10 +20,22 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.function.Function;
 
-public class GoodallBottledBeeDispenseBehavior extends DefaultDispenseItemBehavior {
-    public static DispenseItemBehavior DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR;
-    public static final DefaultDispenseItemBehavior DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
+
+public class BroodBlockModdedCompatDispenseBehavior extends DefaultDispenseItemBehavior {
+    public static final DefaultDispenseItemBehavior DEFAULT_DROP_ITEM_BEHAVIOR = new DefaultDispenseItemBehavior();
+
+    private DispenseItemBehavior originalModdedDispenseItemBehavior;
+    private Function6<DispenseItemBehavior, BlockSource, ItemStack, ServerLevel, BlockPos, BlockState, ItemStack> behaviorToRun;
+
+    public BroodBlockModdedCompatDispenseBehavior(
+            DispenseItemBehavior originalModdedDispenseItemBehavior,
+            Function6<DispenseItemBehavior, BlockSource, ItemStack, ServerLevel, BlockPos, BlockState, ItemStack> behaviorToRun)
+    {
+        this.originalModdedDispenseItemBehavior = originalModdedDispenseItemBehavior;
+        this.behaviorToRun = behaviorToRun;
+    }
 
     /**
      * Dispense the specified stack, play the dispenser sound and spawn particles.
@@ -33,28 +47,10 @@ public class GoodallBottledBeeDispenseBehavior extends DefaultDispenseItemBehavi
         BlockState blockstate = world.getBlockState(dispenseBlockPos);
 
         if (blockstate.getBlock() == BzBlocks.EMPTY_HONEYCOMB_BROOD.get()) {
-            world.setBlockAndUpdate(dispenseBlockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
-                .setValue(HoneycombBrood.FACING, blockstate.getValue(EmptyHoneycombBrood.FACING))
-                .setValue(HoneycombBrood.STAGE, GoodallCompat.isBabyBottledBeesItem(stack) ? 2 : 3));
-
-            stack.shrink(1);
-
-            if(!BzGeneralConfigs.dispensersDropGlassBottles) {
-                if (!stack.isEmpty()) {
-                    addGlassBottleToDispenser(source);
-                }
-                else {
-                    stack = new ItemStack(Items.GLASS_BOTTLE);
-                }
-            }
-            else {
-                DROP_ITEM_BEHAVIOR.dispense(source, new ItemStack(Items.GLASS_BOTTLE));
-            }
-
-            return stack;
+            return behaviorToRun.apply(originalModdedDispenseItemBehavior, source, stack, world, dispenseBlockPos, blockstate);
         }
         else {
-            return ((DefaultDispenseItemBehaviorInvoker) DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR).invokeExecute(source, stack);
+            return ((DefaultDispenseItemBehaviorInvoker) originalModdedDispenseItemBehavior).invokeExecute(source, stack);
         }
     }
 
@@ -65,18 +61,5 @@ public class GoodallBottledBeeDispenseBehavior extends DefaultDispenseItemBehavi
      */
     protected void playSound(BlockSource source) {
         source.getLevel().levelEvent(1002, source.getPos(), 0);
-    }
-
-    /**
-     * Adds glass bottle to dispenser or if no room, dispense it
-     */
-    private static void addGlassBottleToDispenser(BlockSource source) {
-        if (source.getEntity() instanceof DispenserBlockEntity) {
-            DispenserBlockEntity dispenser = source.getEntity();
-            ItemStack honeyBottle = new ItemStack(Items.GLASS_BOTTLE);
-            if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
-                DROP_ITEM_BEHAVIOR.dispense(source, honeyBottle);
-            }
-        }
     }
 }

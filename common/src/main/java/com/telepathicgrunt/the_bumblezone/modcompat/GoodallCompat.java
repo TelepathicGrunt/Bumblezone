@@ -1,7 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -13,6 +18,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -24,12 +31,46 @@ public class GoodallCompat implements ModCompat {
         BOTTLED_BEE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("goodall", "bottled_bee"));
 
         if (BOTTLED_BEE.isPresent() && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
-            GoodallBottledBeeDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BOTTLED_BEE.get()));
-            DispenserBlock.registerBehavior(BOTTLED_BEE.get(), new GoodallBottledBeeDispenseBehavior()); // adds compatibility with bottled bee in dispensers
+            setupDispenserCompat(BOTTLED_BEE.get()); // adds compatibility with bottled bee in dispensers
         }
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.goodallPresent = true;
+    }
+
+    private static void setupDispenserCompat(Item containerItem) {
+        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
+                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
+                            .setValue(HoneycombBrood.STAGE, GoodallCompat.isBabyBottledBeesItem(itemStack) ? 2 : 3));
+
+                    itemStack.shrink(1);
+
+                    if(!BzGeneralConfigs.dispensersDropGlassBottles) {
+                        if (!itemStack.isEmpty()) {
+                            if (blockSource.getEntity() instanceof DispenserBlockEntity) {
+                                DispenserBlockEntity dispenser = blockSource.getEntity();
+                                ItemStack honeyBottle = new ItemStack(Items.GLASS_BOTTLE);
+                                if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
+                                    originalModdedDispenseBehavior.dispense(blockSource, honeyBottle);
+                                }
+                            }
+                        }
+                        else {
+                            itemStack = new ItemStack(Items.GLASS_BOTTLE);
+                        }
+                    }
+                    else {
+                        BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, new ItemStack(Items.GLASS_BOTTLE));
+                    }
+
+                    return itemStack;
+                }
+        );
+
+        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
     }
 
     @Override

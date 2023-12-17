@@ -1,9 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
@@ -23,6 +27,7 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.CommonLevelAccessor;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -30,6 +35,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.EnumSet;
@@ -49,12 +56,27 @@ public class ResourcefulBeesCompat implements ModCompat {
         BEE_JAR = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("resourcefulbees", "bee_jar"));
 
         if (BEE_JAR.isPresent() && BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock) {
-            ResourcefulBeesDispenseBehavior.DEFAULT_BOTTLED_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BEE_JAR.get()));
-            DispenserBlock.registerBehavior(BEE_JAR.get(), new ResourcefulBeesDispenseBehavior()); // adds compatibility with bottled bee in dispensers
+            setupDispenserCompat(BEE_JAR.get()); // adds compatibility with bee jars in dispensers
         }
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.resourcefulBeesPresent = true;
+    }
+
+    private static void setupDispenserCompat(Item containerItem) {
+        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
+                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
+                            .setValue(HoneycombBrood.STAGE, ResourcefulBeesCompat.isFilledBabyBeeJarItem(itemStack) ? 2 : 3));
+
+                    itemStack.getOrCreateTag().remove("Entity");
+                    return itemStack;
+                }
+        );
+
+        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
     }
 
     @Override
