@@ -1,3 +1,9 @@
+### **(V.7.1.12 Changes) (1.20.1 Minecraft)**
+
+##### Blocks:
+Rotated Super Candle/Potion Candle's wicks to be at 45 degrees like vanilla candle wicks.
+
+
 ### **(V.7.1.11 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:
