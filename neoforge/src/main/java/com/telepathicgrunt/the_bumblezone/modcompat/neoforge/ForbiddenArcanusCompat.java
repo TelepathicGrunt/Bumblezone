@@ -1,9 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.modcompat.BroodBlockModdedCompatDispenseBehavior;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -13,6 +18,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 
 import java.util.EnumSet;
 import java.util.Optional;
@@ -25,12 +32,46 @@ public class ForbiddenArcanusCompat implements ModCompat {
         Optional<Item> bucketBee = BuiltInRegistries.ITEM.getOptional(BEE_BUCKET_RL);
 
         if (bucketBee.isPresent() && BzModCompatibilityConfigs.allowBeeBucketRevivingEmptyBroodBlock) {
-            ForbiddenArcanusBeeBucketDispenseBehavior.DEFAULT_BEE_BUCKET_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(bucketBee.get()));
-            DispenserBlock.registerBehavior(bucketBee.get(), new ForbiddenArcanusBeeBucketDispenseBehavior()); // adds compatibility with bottled bee in dispensers
+            setupDispenserCompat(bucketBee.get()); // adds compatibility with bee bucket in dispensers
         }
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.forbiddenArcanusPresent = true;
+    }
+
+    private static void setupDispenserCompat(Item containerItem) {
+        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
+                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
+                            .setValue(HoneycombBrood.STAGE, itemStack.hasTag() && itemStack.getOrCreateTag().getInt("Age") < 0 ? 2 : 3));
+
+                    itemStack.shrink(1);
+
+                    if(!BzGeneralConfigs.dispensersDropGlassBottles) {
+                        if (!itemStack.isEmpty()) {
+                            if (blockSource.blockEntity() instanceof DispenserBlockEntity) {
+                                DispenserBlockEntity dispenser = blockSource.blockEntity();
+                                ItemStack honeyBottle = new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL));
+                                if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
+                                    BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, honeyBottle);
+                                }
+                            }
+                        }
+                        else {
+                            itemStack = new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL));
+                        }
+                    }
+                    else {
+                        BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL)));
+                    }
+
+                    return itemStack;
+                }
+        );
+
+        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
     }
 
     @Override

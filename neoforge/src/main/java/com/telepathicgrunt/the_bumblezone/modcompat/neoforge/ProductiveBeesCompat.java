@@ -1,11 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
 import com.mojang.datafixers.util.Pair;
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.modcompat.BroodBlockModdedCompatDispenseBehavior;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import cy.jdkdigital.productivebees.common.block.AdvancedBeehive;
@@ -37,6 +41,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.neoforged.neoforge.common.util.Lazy;
@@ -79,17 +85,57 @@ public class ProductiveBeesCompat implements ModCompat {
 //        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("productivebees", "sturdy_bee_cage"));
 //
 //        if (BEE_CAGE.isPresent() && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
-//            ProductiveBeesDispenseBehavior.DEFAULT_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(BEE_CAGE.get()));
-//            DispenserBlock.registerBehavior(BEE_CAGE.get(), new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
+//            setupDispenserCompat(BEE_CAGE.get()); // adds compatibility with bee cage in dispensers
 //        }
 //
 //        if (STURDY_BEE_CAGE.isPresent() && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
-//            ProductiveBeesDispenseBehavior.DEFAULT_STURDY_BEE_CAGED_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(STURDY_BEE_CAGE.get()));
-//            DispenserBlock.registerBehavior(STURDY_BEE_CAGE.get(), new ProductiveBeesDispenseBehavior()); // adds compatibility with caged bee in dispensers
+//            setupDispenserCompat(STURDY_BEE_CAGE.get()); // adds compatibility with sturdy bee cage in dispensers
 //        }
 //
 //        // Keep at end so it is only set to true if no exceptions was thrown during setup
 //        ModChecker.productiveBeesPresent = true;
+//    }
+//    private static void setupDispenserCompat(Item containerItem) {
+//        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
+//                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+//                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+//                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+//                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
+//                            .setValue(HoneycombBrood.STAGE, ProductiveBeesCompat.isFilledBabyBeeCageItem(itemStack) ? 2 : 3));
+//
+//                    boolean isSturdy = ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent() && itemStack.is(ProductiveBeesCompat.STURDY_BEE_CAGE.get());
+//                    itemStack.shrink(1);
+//
+//                    if (!itemStack.isEmpty()) {
+//                        if (blockSource.getEntity() instanceof DispenserBlockEntity) {
+//                            DispenserBlockEntity dispenser = blockSource.getEntity();
+//                            ItemStack emptyCage = ItemStack.EMPTY;
+//                            if (isSturdy && ProductiveBeesCompat.STURDY_BEE_CAGE.isPresent()) {
+//                                emptyCage = new ItemStack(ProductiveBeesCompat.STURDY_BEE_CAGE.get());
+//                            }
+//                            else if (ProductiveBeesCompat.BEE_CAGE.isPresent()) {
+//                                emptyCage = new ItemStack(ProductiveBeesCompat.BEE_CAGE.get());
+//                            }
+//
+//                            if (!HopperBlockEntity.addItem(null, dispenser, emptyCage, null).isEmpty()) {
+//                                BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, emptyCage);
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        if (isSturdy) {
+//                            itemStack = new ItemStack(ProductiveBeesCompat.STURDY_BEE_CAGE.get());
+//                        }
+//                        else if (BEE_CAGE.isPresent()) {
+//                            itemStack = new ItemStack(ProductiveBeesCompat.BEE_CAGE.get());
+//                        }
+//                    }
+//
+//                    return itemStack;
+//                }
+//        );
+//
+//        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
 //    }
 //
 //    @Override

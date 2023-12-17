@@ -1,9 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
+import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.DispenserBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.modcompat.BroodBlockModdedCompatDispenseBehavior;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
@@ -21,6 +24,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.entity.DispenserBlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.HitResult;
@@ -45,24 +50,64 @@ public class PotionOfBeesCompat implements ModCompat {
         LINGERING_POTION_OF_BEES_ENTITY = BuiltInRegistries.ENTITY_TYPE.getOptional(new ResourceLocation("potionofbees", "lingering_potion_of_bees"));
 
         if (POTION_OF_BEES.isPresent() && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock) {
-            PotionOfBeesBeePotionDispenseBehavior.DEFAULT_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(POTION_OF_BEES.get()));
-            DispenserBlock.registerBehavior(POTION_OF_BEES.get(), new PotionOfBeesBeePotionDispenseBehavior()); // adds compatibility with bee potions in dispensers
+            setupDispenserCompat(POTION_OF_BEES.get()); // adds compatibility with bee potions in dispensers
         }
 
         if (SPLASH_POTION_OF_BEES.isPresent() && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock) {
-            PotionOfBeesBeePotionDispenseBehavior.DEFAULT_SPLASH_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(SPLASH_POTION_OF_BEES.get()));
-            DispenserBlock.registerBehavior(SPLASH_POTION_OF_BEES.get(), new PotionOfBeesBeePotionDispenseBehavior()); // adds compatibility with bee splash potion in dispensers
+            setupDispenserCompat(SPLASH_POTION_OF_BEES.get()); // adds compatibility with bee splash potions in dispensers
         }
 
         if (LINGERING_POTION_OF_BEES.isPresent() && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock) {
-            PotionOfBeesBeePotionDispenseBehavior.DEFAULT_LINGERING_POTION_BEE_DISPENSE_BEHAVIOR = ((DispenserBlockInvoker)Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(LINGERING_POTION_OF_BEES.get()));
-            DispenserBlock.registerBehavior(LINGERING_POTION_OF_BEES.get(), new PotionOfBeesBeePotionDispenseBehavior()); // adds compatibility with bee splash potion in dispensers
+            setupDispenserCompat(LINGERING_POTION_OF_BEES.get()); // adds compatibility with bee lingering potions in dispensers
         }
 
         ProjectileHitEvent.EVENT.addListener(PotionOfBeesCompat::onProjectileHit);
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.potionOfBeesPresent = true;
+    }
+
+    private static void setupDispenserCompat(Item containerItem) {
+        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
+                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+                    if (PotionOfBeesCompat.isLingeringPotionOfBeesItem(itemStack)) {
+                        PotionOfBeesCompat.reviveBroodsInRange(serverLevel, blockPos, 3);
+                    }
+                    else if (PotionOfBeesCompat.isSplashPotionOfBeesItem(itemStack)) {
+                        PotionOfBeesCompat.reviveBroodsInRange(serverLevel, blockPos, 1);
+                    }
+                    else {
+                        serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+                                .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
+                                .setValue(HoneycombBrood.STAGE, 3));
+                    }
+
+                    itemStack.shrink(1);
+
+                    if(!BzGeneralConfigs.dispensersDropGlassBottles) {
+                        if (!itemStack.isEmpty()) {
+                            if (blockSource.blockEntity() instanceof DispenserBlockEntity) {
+                                DispenserBlockEntity dispenser = blockSource.blockEntity();
+                                ItemStack honeyBottle = new ItemStack(Items.GLASS_BOTTLE);
+                                if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
+                                    BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, honeyBottle);
+                                }
+                            }
+                        }
+                        else {
+                            itemStack = new ItemStack(Items.GLASS_BOTTLE);
+                        }
+                    }
+                    else {
+                        BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, new ItemStack(Items.GLASS_BOTTLE));
+                    }
+
+                    return itemStack;
+                }
+        );
+
+        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
     }
 
     @Override
