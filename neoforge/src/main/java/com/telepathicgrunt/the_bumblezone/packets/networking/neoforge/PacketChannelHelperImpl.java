@@ -33,15 +33,19 @@ public class PacketChannelHelperImpl {
             throw new IllegalStateException("Channel " + name + " not registered");
         }
         channel.channel.registerMessage(++channel.packets, packetClass, handler::encode, handler::decode, (msg, ctx) -> {
-            Player player = null;
-            if (ctx.getSender() == null) {
-                player = GeneralUtilsClient.getClientPlayer();
-            }
+            Player sender = ctx.getSender();
 
-            if (player != null) {
-                Player finalPlayer = player;
-                ctx.enqueueWork(() -> handler.handle(msg).apply(finalPlayer, finalPlayer.level()));
-            }
+            ctx.enqueueWork(() -> {
+                Player player = null;
+                if (sender == null) {
+                    player = GeneralUtilsClient.getClientPlayer();
+                }
+
+                if (player != null) {
+                    handler.handle(msg).apply(player, player.level());
+                }
+            });
+
             ctx.setPacketHandled(true);
         });
     }
@@ -53,9 +57,13 @@ public class PacketChannelHelperImpl {
         }
         channel.channel.registerMessage(++channel.packets, packetClass, handler::encode, handler::decode, (msg, ctx) -> {
             Player player = ctx.getSender();
-            if (player != null) {
-                ctx.enqueueWork(() -> handler.handle(msg).apply(player, player.level()));
-            }
+
+            ctx.enqueueWork(() -> {
+                if (player != null) {
+                    handler.handle(msg).apply(player, player.level());
+                }
+            });
+
             ctx.setPacketHandled(true);
         });
     }
