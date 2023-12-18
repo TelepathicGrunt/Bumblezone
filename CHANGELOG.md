@@ -10,6 +10,9 @@ Cleaned up Pollen Puff, Honey Crystal Shard, and Bee Bread textures a little bit
 
 Fixed Essence of Continuity prevent death by /kill command.
 
+##### Entities:
+Allowed Essence of the Bees players be able to swap Rootmin flowers now.
+
 
 ### **(V.7.2.9 Changes) (1.20.4 Minecraft)**
 

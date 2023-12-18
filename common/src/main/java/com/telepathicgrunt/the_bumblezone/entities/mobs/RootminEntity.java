@@ -487,12 +487,17 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       boolean instantBuild = player.getAbilities().instabuild;
 
       if (itemstack.getItem() instanceof BlockItem blockItem &&
-              (instantBuild ||
-                      BeeArmor.getBeeThemedWearablesCount(player) > 0 ||
-                      !FlowerHeadwearHelmet.getFlowerHeadwear(player).isEmpty())) {
+            (instantBuild ||
+            (player instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) ||
+            BeeArmor.getBeeThemedWearablesCount(player) > 0 ||
+            !FlowerHeadwearHelmet.getFlowerHeadwear(player).isEmpty()))
+      {
          BlockState blockState = blockItem.getBlock().defaultBlockState();
 
-         if (blockState.is(BzTags.ROOTMIN_ALLOWED_FLOWERS) && !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWERS)) {
+         if (blockState.is(BzTags.ROOTMIN_ALLOWED_FLOWERS) &&
+              !blockState.is(BzTags.ROOTMIN_FORCED_DISALLOWED_FLOWERS) &&
+              (this.getFlowerBlock() == null || this.getFlowerBlock() != blockState))
+         {
             if (!this.level().isClientSide()) {
                if (!instantBuild && this.getFlowerBlock() != null) {
                   ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);
