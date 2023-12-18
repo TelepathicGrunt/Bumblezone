@@ -5,7 +5,9 @@ import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedDat
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -25,6 +27,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DeathMessageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -103,6 +107,18 @@ public class ContinuityEssence extends AbilityEssenceItem {
     public static boolean CancelledDeath(EntityDeathEvent event) {
         LivingEntity livingEntity = event.entity();
         if (livingEntity instanceof ServerPlayer player) {
+            DamageSource source = event.source();
+            Registry<DamageType> damageTypeRegistry = player.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);
+
+            // Kill command. Do not activate in that case.
+            if (damageTypeRegistry.get(DamageTypes.GENERIC_KILL) == event.source().type() &&
+                source.getEntity() == null &&
+                source.getDirectEntity() == null &&
+                source.getSourcePosition() == null)
+            {
+                return false;
+            }
+
             ItemStack stack = player.getOffhandItem();
             if (player.isDeadOrDying() &&
                 stack.getItem() instanceof ContinuityEssence continuityEssence &&
