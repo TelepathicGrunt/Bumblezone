@@ -3,6 +3,12 @@
 ##### Blocks:
 Rotated Super Candle/Potion Candle's wicks to be at 45 degrees like vanilla candle wicks.
 
+##### Blocks:
+Cleaned up Sticky Honey Residue and Sticky Honey Redstone textures a little bit.
+
+##### Items:
+Cleaned up Pollen Puff, Honey Crystal Shard, and Bee Bread textures a little bit.
+
 
 ### **(V.7.2.9 Changes) (1.20.4 Minecraft)**
 
