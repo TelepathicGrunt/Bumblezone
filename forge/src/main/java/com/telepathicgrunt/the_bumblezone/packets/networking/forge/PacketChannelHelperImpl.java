@@ -34,15 +34,19 @@ public class PacketChannelHelperImpl {
         }
         channel.channel.registerMessage(++channel.packets, packetClass, handler::encode, handler::decode, (msg, ctx) -> {
             NetworkEvent.Context context = ctx.get();
-            Player player = null;
-            if (context.getSender() == null) {
-                player = GeneralUtilsClient.getClientPlayer();
-            }
+            Player sender = context.getSender();
 
-            if (player != null) {
-                Player finalPlayer = player;
-                context.enqueueWork(() -> handler.handle(msg).apply(finalPlayer, finalPlayer.level()));
-            }
+            context.enqueueWork(() -> {
+                Player player = null;
+                if (sender == null) {
+                    player = GeneralUtilsClient.getClientPlayer();
+                }
+
+                if (player != null) {
+                    handler.handle(msg).apply(player, player.level());
+                }
+            });
+
             context.setPacketHandled(true);
         });
     }
@@ -55,9 +59,13 @@ public class PacketChannelHelperImpl {
         channel.channel.registerMessage(++channel.packets, packetClass, handler::encode, handler::decode, (msg, ctx) -> {
             NetworkEvent.Context context = ctx.get();
             Player player = context.getSender();
-            if (player != null) {
-                context.enqueueWork(() -> handler.handle(msg).apply(player, player.level()));
-            }
+
+            context.enqueueWork(() -> {
+                if (player != null) {
+                    handler.handle(msg).apply(player, player.level());
+                }
+            });
+
             context.setPacketHandled(true);
         });
     }

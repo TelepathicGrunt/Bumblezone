@@ -13,6 +13,9 @@ Fixed Essence of Continuity prevent death by /kill command.
 ##### Entities:
 Allowed Essence of the Bees players be able to swap Rootmin flowers now.
 
+##### Misc:
+Fixed Bee Queen Trades not being synced from server to client properly at times for recipe viewers to see (such as REI/EMI/JEI).
+
 
 ### **(V.7.1.11 Changes) (1.20.1 Minecraft)**
 
