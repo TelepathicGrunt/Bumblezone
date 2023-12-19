@@ -45,7 +45,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import net.minecraft.ChatFormatting;
-import net.minecraft.SharedConstants;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -244,8 +243,6 @@ public class NeoForgeEventManager {
     private static Pack.Info createInfoForLatest(Component description, boolean hidden) {
         return new Pack.Info(
                 description,
-                SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA),
-                SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES),
                 PackCompatibility.COMPATIBLE,
                 FeatureFlagSet.of(),
                 new ArrayList<>(),

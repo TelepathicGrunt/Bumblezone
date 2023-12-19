@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modules.base.neoforge;
 
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
