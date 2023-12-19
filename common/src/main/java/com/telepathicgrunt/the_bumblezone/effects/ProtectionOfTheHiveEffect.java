@@ -3,13 +3,11 @@ package com.telepathicgrunt.the_bumblezone.effects;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class ProtectionOfTheHiveEffect extends MobEffect implements EffectExtension {
+public class ProtectionOfTheHiveEffect extends MobEffect {
     private final static TargetingConditions SEE_THROUGH_WALLS = (TargetingConditions.forCombat()).ignoreLineOfSight();
 
     public ProtectionOfTheHiveEffect(MobEffectCategory type, int potionColor) {

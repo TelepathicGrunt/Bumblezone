@@ -2,17 +2,15 @@ package com.telepathicgrunt.the_bumblezone.effects;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
-import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
 
-public class ParalyzedEffect extends MobEffect implements EffectExtension {
+public class ParalyzedEffect extends MobEffect {
     public ParalyzedEffect(MobEffectCategory type, int potionColor) {
         super(type, potionColor);
     }
