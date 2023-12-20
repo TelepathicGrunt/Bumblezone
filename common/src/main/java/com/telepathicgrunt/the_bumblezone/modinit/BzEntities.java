@@ -32,7 +32,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 public class BzEntities {
     public static final ResourcefulRegistry<EntityType<?>> ENTITIES = ResourcefulRegistries.create(BuiltInRegistries.ENTITY_TYPE, Bumblezone.MODID);
 
-    public static final RegistryEntry<EntityType<VariantBeeEntity>> VARIANT_BEE = ENTITIES.register("variant_bee", () -> PlatformHooks.createEntityType(VariantBeeEntity::new, MobCategory.CREATURE, 1F, true, 8, 3, "variant_bee"));
+    public static final RegistryEntry<EntityType<VariantBeeEntity>> VARIANT_BEE = ENTITIES.register("variant_bee", () -> PlatformHooks.createEntityType(VariantBeeEntity::new, MobCategory.CREATURE, 0.7f, 0.6f, true, 8, 3, "variant_bee"));
     public static final RegistryEntry<EntityType<HoneySlimeEntity>> HONEY_SLIME = ENTITIES.register("honey_slime", () -> PlatformHooks.createEntityType(HoneySlimeEntity::new, MobCategory.CREATURE, 1F, true, 8, 3, "honey_slime"));
     public static final RegistryEntry<EntityType<BeehemothEntity>> BEEHEMOTH = ENTITIES.register("beehemoth", () -> PlatformHooks.createEntityType(BeehemothEntity::new, MobCategory.CREATURE, 1.2F, false, 16, 3, "beehemoth"));
     public static final RegistryEntry<EntityType<BeeQueenEntity>> BEE_QUEEN = ENTITIES.register("bee_queen", () -> PlatformHooks.createEntityType(BeeQueenEntity::new, MobCategory.CREATURE, 2.9F, false, 16, 3, "bee_queen"));
