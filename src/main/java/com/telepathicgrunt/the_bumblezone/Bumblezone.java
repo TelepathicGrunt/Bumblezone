@@ -42,6 +42,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntityDataSerializer;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzGlobalLootModifier;
@@ -178,6 +179,7 @@ public class Bumblezone{
         BzBiomeHeightRegistry.BIOME_HEIGHT.register(modEventBus);
         BzBiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.register(modEventBus);
+        BzEntityDataSerializer.ENTITY_DATA_SERIALIZER.register(modEventBus);
 
         if (ModList.get().isLoaded("productivebees")) {
             ProductiveBeesCompatRegs.CONFIGURED_FEATURES.register(modEventBus);
