@@ -105,6 +105,8 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.forgespi.language.IModFileInfo;
 import net.minecraftforge.forgespi.language.IModInfo;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.resource.PathPackResources;
 
 import java.nio.file.Files;
@@ -130,6 +132,7 @@ public class BumblezoneForge {
             BumblezoneForgeClient.init();
         }
 
+        modEventBus.addListener(BumblezoneForge::onRegistryEvent);
         modEventBus.addListener(BumblezoneForge::onRegisterPackFinder);
         modEventBus.addListener(BumblezoneForge::onRegisterAttributes);
         modEventBus.addListener(BumblezoneForge::onSetup);
@@ -211,9 +214,6 @@ public class BumblezoneForge {
     private static void onFinalSetup(FMLCommonSetupEvent event) {
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(event::enqueueWork));
         event.enqueueWork(ForgeModChecker::setupModCompat);
-        event.enqueueWork(() ->
-                RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
-                        (id, serializer) -> EntityDataSerializers.registerSerializer(serializer))));
     }
 
     private static void onServerStarting(ServerAboutToStartEvent event) {
@@ -222,6 +222,13 @@ public class BumblezoneForge {
 
     private static void onServerStopping(ServerStoppingEvent event) {
         ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE);
+    }
+
+    private static void onRegistryEvent(RegisterEvent event) {
+        if (event.getRegistryKey() == ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS) {
+            RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
+                    (id, serializer) -> event.register(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, id, () -> serializer)));
+        }
     }
 
     private static void onRegisterPackFinder(AddPackFindersEvent event) {
