@@ -46,7 +46,6 @@ dependencies {
     modRuntimeOnly("maven.modrinth:modmenu:${rootProject.mod_menu}")
 
     modCompileOnly("dev.emi:trinkets:${rootProject.trinkets}")
-    modCompileOnly("dev.emi:emi-fabric:${rootProject.emi}:api")
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
     modCompileOnly("curse.maven:restricted_portals-228266:${rootProject.restricted_portals_file_id}")
 

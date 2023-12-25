@@ -1,20 +1,20 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
+package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
-import com.telepathicgrunt.the_bumblezone.modcompat.FakePotionCandleRecipeCreator;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabric.emi.EMIQueenRandomizerTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabric.emi.EMIQueenTradesInfo;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabric.emi.QueenRandomizerTradesEMICategory;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabric.emi.QueenTradesEMICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.emi.EMIQueenRandomizerTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.emi.EMIQueenTradesInfo;
+import com.telepathicgrunt.the_bumblezone.modcompat.emi.QueenRandomizerTradesEMICategory;
+import com.telepathicgrunt.the_bumblezone.modcompat.emi.QueenTradesEMICategory;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.RandomizeTradeRowInput;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiCraftingRecipe;
@@ -37,6 +37,7 @@ import net.minecraft.world.level.material.Fluid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@EmiEntrypoint
 public class EMICompat implements EmiPlugin {
     public static final EmiStack WORKSTATION = EmiStack.of(BzItems.BEE_QUEEN_SPAWN_EGG.get());
     public static final EmiRecipeCategory QUEEN_TRADES = new QueenTradesEMICategory();

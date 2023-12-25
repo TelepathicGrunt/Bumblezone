@@ -12,6 +12,7 @@ dependencies {
     // COMPAT
     modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-forge-api:${rootProject.jei}")
     modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-common-api:${rootProject.jei}")
+    modCompileOnly("dev.emi:emi-xplat-intermediary:${rootProject.emi}:api")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${rootProject.rei}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${rootProject.rei}")
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")

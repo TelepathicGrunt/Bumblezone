@@ -1,7 +1,7 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.fabric.emi;
+package com.telepathicgrunt.the_bumblezone.modcompat.emi;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modcompat.fabric.EMICompat;
+import com.telepathicgrunt.the_bumblezone.modcompat.EMICompat;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;

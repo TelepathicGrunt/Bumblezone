@@ -48,7 +48,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -100,6 +99,8 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import net.neoforged.neoforgespi.language.IModFileInfo;
 import net.neoforged.neoforgespi.language.IModInfo;
 
@@ -109,6 +110,7 @@ import java.util.ArrayList;
 
 public class NeoForgeEventManager {
     public static void init(IEventBus modEventBus, IEventBus eventBus) {
+        modEventBus.addListener(NeoForgeEventManager::onRegistryEvent);
         modEventBus.addListener(NeoForgeEventManager::onRegisterPackFinder);
         modEventBus.addListener(NeoForgeEventManager::onRegisterAttributes);
         modEventBus.addListener(NeoForgeEventManager::onSetup);
@@ -191,9 +193,6 @@ public class NeoForgeEventManager {
     private static void onFinalSetup(FMLCommonSetupEvent event) {
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(event::enqueueWork));
         event.enqueueWork(NeoForgeModChecker::setupModCompat);
-        event.enqueueWork(() ->
-                RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
-                        (id, serializer) -> EntityDataSerializers.registerSerializer(serializer))));
     }
 
     private static void onServerStarting(ServerAboutToStartEvent event) {
@@ -202,6 +201,13 @@ public class NeoForgeEventManager {
 
     private static void onServerStopping(ServerStoppingEvent event) {
         ServerGoingToStopEvent.EVENT.invoke(ServerGoingToStopEvent.INSTANCE);
+    }
+
+    private static void onRegistryEvent(RegisterEvent event) {
+        if (event.getRegistryKey() == NeoForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS) {
+            RegisterDataSerializersEvent.EVENT.invoke(new RegisterDataSerializersEvent(
+                    (id, serializer) -> event.register(NeoForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, id, () -> serializer)));
+        }
     }
 
     private static void onRegisterPackFinder(AddPackFindersEvent event) {
