@@ -1,19 +1,8 @@
-### **(V.6.8.4 Changes) (1.19.2 Minecraft)**
-
-##### Blocks:
-Rotated Super Candle/Potion Candle's wicks to be at 45 degrees like vanilla candle wicks.
-
-##### Blocks:
-Cleaned up Sticky Honey Residue and Sticky Honey Redstone textures a little bit.
+### **(V.6.8.5 Changes) (1.19.2 Minecraft)**
 
 ##### Items:
-Cleaned up Pollen Puff, Honey Crystal Shard, and Bee Bread textures a little bit.
-
-
-### **(V.6.8.3 Changes) (1.19.2 Minecraft)**
+Rebalances Food and Saturation of Bee Bread
 
 ##### Mod Compat:
-Bumblezone mob icons added for Journeymap and Xaeros mod! Special thanks to CrispyTwig for icon art!
-
-Fixed Apotheosis/Zenith from granting Neurotoxin 4.
-  (Edit your config for Apotheosis/Zenith to make Neurotoxin limit be 3 if you already loaded game with them on)
+(Forge): With help from a ton of people, we narrowed down seemingly random client disconnects from server due to how me and others
+ were registering our custom entity data serializers. This Bumblezone jar should fix it on my end by using the Forge registry.

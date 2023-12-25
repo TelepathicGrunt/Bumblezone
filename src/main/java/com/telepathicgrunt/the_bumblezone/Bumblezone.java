@@ -23,7 +23,6 @@ import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.ItemUseOnBlock;
 import com.telepathicgrunt.the_bumblezone.entities.ProjectileImpact;
 import com.telepathicgrunt.the_bumblezone.entities.WanderingTrades;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.entities.pollenpuffentityflowers.PollenPuffEntityPollinateManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
@@ -33,14 +32,39 @@ import com.telepathicgrunt.the_bumblezone.modcompat.BuzzierBeesCompatRegs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
 import com.telepathicgrunt.the_bumblezone.modcompat.ProductiveBeesCompatRegs;
-import com.telepathicgrunt.the_bumblezone.modinit.*;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeModifiers;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCommands;
+import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzGlobalLootModifier;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPredicates;
+import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
+import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
+import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
+import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceRules;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.world.dimension.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.world.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
@@ -197,8 +221,6 @@ public class Bumblezone{
 
     private void modCompatSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            EntityDataSerializers.registerSerializer(BeeQueenEntity.QUEEN_POSE_SERIALIZER);
-
             // Dispenser isn't synchronized. Needs to be enqueueWork to prevent crash if
             // another mod registers to it at the same exact time.
             DispenserItemSetup.setupDispenserBehaviors();
