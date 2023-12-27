@@ -1,3 +1,9 @@
+### **(V.7.2.12 Changes) (1.20.4 Minecraft)**
+
+##### Lang:
+Fixed Rootmin Shooting lang entry
+
+
 ### **(V.7.2.11 Changes) (1.20.4 Minecraft)**
 
 ##### Items:
