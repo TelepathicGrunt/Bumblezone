@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "betterarcheology:growth_totem",
+      "required": false
+    },
+    {
       "id": "blue_skies:muckweed",
       "required": false
     },
