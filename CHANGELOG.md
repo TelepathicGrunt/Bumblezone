@@ -3,6 +3,12 @@
 ##### Lang:
 Fixed Rootmin Shooting lang entry
 
+##### Misc:
+(NeoForge): Fixed crash when trying to view Bumblezone entry in Mod List menu.
+
+##### Mod Compat:
+Removed Better Archeology's Growth Totems from Bumblezone's Hanging Garden and from Honey Cocoon loot.
+
 
 ### **(V.7.2.11 Changes) (1.20.4 Minecraft)**
 

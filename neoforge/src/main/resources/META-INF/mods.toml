@@ -5,7 +5,7 @@ license="https://github.com/TelepathicGrunt/Bumblezone/blob/latest-released/LICE
 
 [[mods]] #mandatory
 modId="the_bumblezone" #mandatory
-logoFile= "../assets/the_bumblezone/the_bumblezone_logo_large.png"
+logoFile= "assets/the_bumblezone/the_bumblezone_logo_large.png"
 logoBlur=false
 version="${version}" #mandatory
 displayName="The Bumblezone" #mandatory
