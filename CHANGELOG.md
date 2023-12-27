@@ -3,6 +3,9 @@
 ##### Lang:
 Fixed Rootmin Shooting lang entry
 
+##### Mod Compat:
+Removed Better Archeology's Growth Totems from Bumblezone's Hanging Garden and from Honey Cocoon loot.
+
 
 ### **(V.7.1.13 Changes) (1.20.1 Minecraft)**
 
