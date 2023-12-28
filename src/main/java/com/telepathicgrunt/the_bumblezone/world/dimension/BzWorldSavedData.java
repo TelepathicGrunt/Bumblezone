@@ -6,6 +6,8 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.RestrictedPortalsCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
+import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
+import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +19,7 @@ import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -242,13 +245,14 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	private static ServerPlayer createSilkTouchFakePlayer(ServerLevel level) {
-		ServerPlayer serverPlayer = FakePlayerFactory.getMinecraft(level);
+		FakeServerPlayer player = new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"))
+				.create(level.getServer(), level, "breaker");
 		ItemStack fakeHandItem = Items.STONE_PICKAXE.getDefaultInstance();
 		HashMap<Enchantment, Integer> enchantmentHashMap = new HashMap<>();
 		enchantmentHashMap.put(Enchantments.SILK_TOUCH, 1);
 		EnchantmentHelper.setEnchantments(enchantmentHashMap, fakeHandItem);
-		serverPlayer.setItemInHand(InteractionHand.MAIN_HAND, fakeHandItem);
-		return serverPlayer;
+		player.setItemInHand(InteractionHand.MAIN_HAND, fakeHandItem);
+		return player;
 	}
 
 	private static void teleportEntityAndAssignToVehicle(Entity entity, Entity vehicle, ServerLevel destination, Vec3 destinationPosition, Set<Entity> teleportedEntities) {
