@@ -71,8 +71,14 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
             percentValue *= ((double)(recipe.reward.weight) / Registry.ITEM.getTag(recipe.reward.tagKey.get()).get().size());
         }
 
-        String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
-        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentRounded.length() * 3), 11, 0xFF808080);
+        String percentRounded;
+        if (percentValue < 1) {
+            percentRounded = String.valueOf(Math.max(Math.round(percentValue * 10D) / 10D, 0.1D));
+        }
+        else {
+            percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
+        }
+        Minecraft.getInstance().font.draw(stack, Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded), 38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3)), 11, 0xFF808080);
 
         if (recipe.input.tagKey().isPresent()) {
             tagIcon.draw(stack, 11, 11);
@@ -90,7 +96,7 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
             if (recipe.reward.tagKey.isPresent() && recipe.outputFocused) {
                 percent *= ((double)(recipe.reward.weight) / Registry.ITEM.getTag(recipe.reward.tagKey.get()).get().size());
             }
-            String percentString =  String.valueOf(percent);;
+            String percentString =  String.valueOf(percent);
             return List.of(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percentString.substring(0, Math.min(percentString.length(), 5))));
         }
         return IRecipeCategory.super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);

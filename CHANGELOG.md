@@ -6,6 +6,8 @@ Properly break and drop blocks that would've suffocated the player when teleport
 ##### Mod Compat:
 Removed Better Archeology's Growth Totems from Bumblezone's Hanging Garden and from Honey Cocoon loot.
 
+Show tenth place for Bee Queen trades in REI/EMI/JEI if the trade chance is below 1%
+
 
 ### **(V.6.8.5 Changes) (1.19.2 Minecraft)**
 
