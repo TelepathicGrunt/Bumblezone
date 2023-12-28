@@ -3,6 +3,8 @@
 ##### Lang:
 Fixed Rootmin Shooting lang entry
 
+Special thanks to Unroman for updating uk_ua lang file!
+
 ##### Teleportation:
 Properly break and drop blocks that would've suffocated the player when teleporting to and from Bumblezone.
 
