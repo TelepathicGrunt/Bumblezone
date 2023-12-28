@@ -1,5 +1,8 @@
 ### **(V.6.8.6 Changes) (1.19.2 Minecraft)**
 
+##### Teleportation:
+Properly break and drop blocks that would've suffocated the player when teleporting to and from Bumblezone.
+
 ##### Mod Compat:
 Removed Better Archeology's Growth Totems from Bumblezone's Hanging Garden and from Honey Cocoon loot.
 
