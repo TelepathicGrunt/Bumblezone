@@ -82,10 +82,16 @@ public class QueenTradesREICategory implements DisplayCategory<REIQueenTradesInf
 
 		double percentValue = (double)(display.getWeight()) / (display.getGroupWeight()) * 100;
 		String percent = String.valueOf(percentValue);
-		String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
+		String percentRounded;
+		if (percentValue < 1) {
+			percentRounded = String.valueOf(Math.max(Math.round(percentValue * 10D) / 10D, 0.1D));
+		}
+		else {
+			percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
+		}
 
 		widgets.add(Widgets.createTooltip(new Rectangle(bounds.getX() + 32, bounds.getY() + 2, 22, 20), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5)))));
-		widgets.add(Widgets.createLabel(new Point(bounds.getX() + (38 - (percentRounded.length() * 3)), bounds.getY() + 11), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded)).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
+		widgets.add(Widgets.createLabel(new Point(bounds.getX() + (38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3))), bounds.getY() + 11), Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded)).leftAligned().noShadow().color(0xFF404040, 0xFFBBBBBB));
 		return widgets;
 	}
 }
