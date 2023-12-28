@@ -1,5 +1,12 @@
 ### **(V.7.2.12 Changes) (1.20.4 Minecraft)**
 
+##### Blocks:
+Made Sticky Honey Residue and Sticky Honey Redstone be visually closer to the block they are attached to.
+
+Fixed Sticky Honey Residue and Sticky Honey Redstone textures being flipped when facing north, west, or east.
+
+Slightly adjusted textures of Sticky Honey Residue, Sticky Honey Redstone, Honey Web, and Redstone Honey Web.
+
 ##### Lang:
 Fixed Rootmin Shooting lang entry
 
