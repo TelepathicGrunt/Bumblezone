@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.modcompat.emi;
+package com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.emi;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modcompat.EMICompat;
