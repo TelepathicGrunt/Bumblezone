@@ -111,12 +111,18 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 
 		double percentValue = (double)(getWeight()) / (getGroupWeight()) * 100;
 		String percent = String.valueOf(percentValue);
-		String percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
+		String percentRounded;
+		if (percentValue < 1) {
+			percentRounded = String.valueOf(Math.max(Math.round(percentValue * 10D) / 10D, 0.1D));
+		}
+		else {
+			percentRounded = String.valueOf(Math.max(Math.round(percentValue), 1));
+		}
 
 		DrawableWidget tooltipWidget = new DrawableWidget(32, 2, 22, 20, (matrices, mouseX, mouseY, delta) -> {});
 		tooltipWidget.tooltip((x, z) -> List.of(ClientTooltipComponent.create(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_tooltip", percent.substring(0, Math.min(percent.length(), 5))).getVisualOrderText())));
 		widgets.add(tooltipWidget);
 
-		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded).getVisualOrderText(), 38 - (percentRounded.length() * 3), 11, 0xFF404040, false));
+		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_chance_text", percentRounded).getVisualOrderText(), 38 - (percentValue < 1 ? 6 : (percentRounded.length() * 3)), 11, 0xFF404040, false));
 	}
 }
