@@ -3,6 +3,9 @@
 ##### Lang:
 Fixed Rootmin Shooting lang entry
 
+##### Teleportation:
+Properly break and drop blocks that would've suffocated the player when teleporting to and from Bumblezone.
+
 ##### Misc:
 (NeoForge): Fixed crash when trying to view Bumblezone entry in Mod List menu.
 
