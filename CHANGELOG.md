@@ -3,6 +3,9 @@
 ##### Lang:
 Fixed Rootmin Shooting lang entry
 
+##### Teleportation:
+Properly break and drop blocks that would've suffocated the player when teleporting to and from Bumblezone.
+
 ##### Mod Compat:
 Removed Better Archeology's Growth Totems from Bumblezone's Hanging Garden and from Honey Cocoon loot.
 
@@ -13,5 +16,5 @@ Removed Better Archeology's Growth Totems from Bumblezone's Hanging Garden and f
 Rebalances Food and Saturation of Bee Bread and Bee Soup
 
 ##### Mod Compat:
-With help from a ton of people, we narrowed down seemingly random client disconnects from server due to how me and others 
+(NeoForge): With help from a ton of people, we narrowed down seemingly random client disconnects from server due to how me and others 
  were registering our custom entity data serializers. This Bumblezone jar should fix it on my end by using the Forge registry.

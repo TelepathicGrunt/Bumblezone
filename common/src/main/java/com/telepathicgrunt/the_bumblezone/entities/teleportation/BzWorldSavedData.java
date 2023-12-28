@@ -20,19 +20,29 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +54,7 @@ public class BzWorldSavedData extends SavedData {
 	private static final BzWorldSavedData CLIENT_DUMMY = new BzWorldSavedData(null);
 	private static final List<QueuedEntityData> QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE = new ArrayList<>();
 	private static final List<QueuedEntityData> QUEUED_ENTITIES_TO_GENERIC_TELEPORT = new ArrayList<>();
+	private static final List<NextTickRunnable> RUNNABLES_FOR_NEXT_TICK = new ArrayList<>();
 
 	public BzWorldSavedData(CompoundTag tag) {}
 
@@ -89,7 +100,9 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	public static void tick(ServerLevel world) {
-		if(QUEUED_ENTITIES_TO_GENERIC_TELEPORT.size() != 0) {
+		RUNNABLES_FOR_NEXT_TICK.removeIf(r -> r.executeTick(world));
+
+		if(QUEUED_ENTITIES_TO_GENERIC_TELEPORT.size() > 0) {
 			Set<Entity> teleportedEntities = new HashSet<>();
 			for (QueuedEntityData entry : QUEUED_ENTITIES_TO_GENERIC_TELEPORT) {
 				ResourceKey<Level> destinationKey = entry.getDestination();
@@ -105,7 +118,7 @@ public class BzWorldSavedData extends SavedData {
 			QUEUED_ENTITIES_TO_GENERIC_TELEPORT.removeIf(entry -> teleportedEntities.contains(entry.getEntity()));
 		}
 
-		if(QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.size() != 0) {
+		if(QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE.size() > 0) {
 			Set<Entity> teleportedEntities = new HashSet<>();
 			for (QueuedEntityData entry : QUEUED_ENTITIES_TO_TELEPORT_FOR_BUMBLEZONE) {
 				if (!entry.getIsCurrentTeleporting()) {
@@ -193,23 +206,26 @@ public class BzWorldSavedData extends SavedData {
 			BlockPos blockPos = BlockPos.containing(destinationPosFound);
 
 			if (bumblezoneWorld != null && bumblezoneWorld.getBlockState(blockPos.above()).isSuffocating(bumblezoneWorld, blockPos.above())) {
-				//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
-				//and honeycomb walls to prevent drowning
-				//This is the last resort
-				bumblezoneWorld.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.above(), Blocks.AIR.defaultBlockState());
+				RUNNABLES_FOR_NEXT_TICK.add(new NextTickRunnable(bumblezoneWorld.getGameTime() + 5, () -> {
+					//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
+					//and honeycomb walls to prevent drowning
+					//This is the last resort
+					ServerPlayer fakePlayer = createSilkTouchFakePlayer(bumblezoneWorld);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos, Blocks.AIR);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.above(), Blocks.AIR);
 
-				bumblezoneWorld.setBlockAndUpdate(blockPos.below(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.above().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.below(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.above().above(), Blocks.HONEYCOMB_BLOCK);
 
-				bumblezoneWorld.setBlockAndUpdate(blockPos.north(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.west(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.east(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.south(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.north().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.west().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.east().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
-				bumblezoneWorld.setBlockAndUpdate(blockPos.south().above(), Blocks.HONEYCOMB_BLOCK.defaultBlockState());
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.north(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.west(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.east(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.south(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.north().above(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.west().above(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.east().above(), Blocks.HONEYCOMB_BLOCK);
+					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.south().above(), Blocks.HONEYCOMB_BLOCK);
+				}));
 			}
 
 			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
@@ -236,11 +252,31 @@ public class BzWorldSavedData extends SavedData {
 	public static void exitingBumblezone(Entity entity, Vec3 destinationPosition, ServerLevel destination, Set<Entity> teleportedEntities) {
 		BlockPos destBlockPos = BlockPos.containing(destinationPosition);
 		if (destination.getBlockState(destBlockPos.above()).isSuffocating(destination, destBlockPos.above())) {
-			destination.setBlock(destBlockPos, Blocks.AIR.defaultBlockState(), 3);
-			destination.setBlock(destBlockPos.above(), Blocks.AIR.defaultBlockState(), 3);
+			RUNNABLES_FOR_NEXT_TICK.add(new NextTickRunnable(destination.getGameTime() + 5, () -> {
+				ServerPlayer fakePlayer = createSilkTouchFakePlayer(destination);
+				destroyAndPlaceBlock(destination, fakePlayer, destBlockPos, Blocks.AIR);
+				destroyAndPlaceBlock(destination, fakePlayer, destBlockPos.above(), Blocks.AIR);
+			}));
 		}
 		Entity baseVehicle = entity.getRootVehicle();
 		baseTeleporting(entity, destinationPosition, destination, teleportedEntities, baseVehicle);
+	}
+
+	private static void destroyAndPlaceBlock(ServerLevel level, ServerPlayer fakePlayer, BlockPos blockPos, Block block) {
+		BlockState state = level.getBlockState(blockPos);
+		BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(blockPos) : null;
+		Block.dropResources(state, level, blockPos, blockEntity, fakePlayer, fakePlayer.getMainHandItem());
+		level.setBlockAndUpdate(blockPos, block.defaultBlockState());
+	}
+
+	private static ServerPlayer createSilkTouchFakePlayer(ServerLevel level) {
+		ServerPlayer serverPlayer = PlatformHooks.getFakePlayer(level);
+		ItemStack fakeHandItem = Items.STONE_PICKAXE.getDefaultInstance();
+		HashMap<Enchantment, Integer> enchantmentHashMap = new HashMap<>();
+		enchantmentHashMap.put(Enchantments.SILK_TOUCH, 1);
+		EnchantmentHelper.setEnchantments(enchantmentHashMap, fakeHandItem);
+		serverPlayer.setItemInHand(InteractionHand.MAIN_HAND, fakeHandItem);
+		return serverPlayer;
 	}
 
 	private static void baseTeleporting(Entity entity, Vec3 destinationPosition, ServerLevel destination, Set<Entity> teleportedEntities, Entity baseVehicle) {
@@ -351,6 +387,16 @@ public class BzWorldSavedData extends SavedData {
 								effectInstance.isVisible(),
 								effectInstance.showIcon()));
 			}
+		}
+	}
+
+	private record NextTickRunnable(long targetTick, Runnable runnable) {
+		public boolean executeTick(ServerLevel serverLevel) {
+			if (serverLevel.getGameTime() >= targetTick()) {
+				runnable.run();
+				return true;
+			}
+			return false;
 		}
 	}
 
