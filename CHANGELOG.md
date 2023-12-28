@@ -1,5 +1,12 @@
 ### **(V.6.8.6 Changes) (1.19.2 Minecraft)**
 
+##### Blocks:
+Made Sticky Honey Residue and Sticky Honey Redstone be visually closer to the block they are attached to.
+
+Fixed Sticky Honey Residue and Sticky Honey Redstone textures being flipped when facing north, west, or east.
+
+Slightly adjusted textures of Sticky Honey Residue, Sticky Honey Redstone, Honey Web, and Redstone Honey Web.
+
 ##### Teleportation:
 Properly break and drop blocks that would've suffocated the player when teleporting to and from Bumblezone.
 
