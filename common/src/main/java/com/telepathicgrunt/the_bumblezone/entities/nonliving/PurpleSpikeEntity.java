@@ -164,29 +164,28 @@ public class PurpleSpikeEntity extends Entity {
             if (!list.isEmpty()) {
                 for (Entity entity : list) {
                     if (entity instanceof LivingEntity livingEntity) {
-                        float damageAmount;
-                        float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
+                        if (!this.level().isClientSide()) {
+                            float damageAmount;
+                            float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
 
-                        if (livingEntity instanceof ServerPlayer serverPlayer) {
-                            if (serverPlayer.isCreative()) {
-                                continue;
-                            }
+                            if (livingEntity instanceof ServerPlayer serverPlayer) {
+                                if (serverPlayer.isCreative()) {
+                                    continue;
+                                }
 
-                            if (EssenceOfTheBees.hasEssence(serverPlayer)) {
-                                damageAmount = maxHealth / 5;
+                                if (EssenceOfTheBees.hasEssence(serverPlayer)) {
+                                    damageAmount = maxHealth / 5;
+                                }
+                                else {
+                                    damageAmount = maxHealth / 3;
+                                }
                             }
                             else {
-                                damageAmount = maxHealth / 3;
+                                damageAmount = maxHealth / 10;
                             }
-                        }
-                        else {
-                            damageAmount = maxHealth / 10;
-                        }
 
-                        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), damageAmount);
-                        this.makeParticle(1, true);
+                            livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), damageAmount);
 
-                        if (!this.level().isClientSide()) {
                             for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
                                 if (mobEffect.isBeneficial()) {
                                     livingEntity.removeEffect(mobEffect);
@@ -201,6 +200,8 @@ public class PurpleSpikeEntity extends Entity {
                                     true,
                                     true));
                         }
+                        
+                        this.makeParticle(1, true);
                     }
                 }
             }
