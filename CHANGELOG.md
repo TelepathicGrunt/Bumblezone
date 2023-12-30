@@ -1,8 +1,6 @@
 ### **(V.7.1.15 Changes) (1.20.4 Minecraft)**
 
 ##### Entities:
-Fixed Sentry Watcher movement being stuttery. Mojang made Entity not lerp movement by default... Had to add back lerping for Sentry Watcher.
-
 Fixed Purple Spike inflicting poison effect that doesn't remove itself when its effect timer runs out.
 
 
