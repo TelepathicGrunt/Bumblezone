@@ -1213,13 +1213,39 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       return collidedVelocity;
    }
 
-   public void lerpTo(double d, double e, double f, float g, float h, int i, boolean bl) {
+   @Override
+   public void lerpTo(double d, double e, double f, float g, float h, int i) {
       this.lerpX = d;
       this.lerpY = e;
       this.lerpZ = f;
       this.lerpYRot = g;
       this.lerpXRot = h;
       this.lerpSteps = i;
+   }
+
+   @Override
+   public double lerpTargetX() {
+      return this.lerpSteps > 0 ? this.lerpX : this.getX();
+   }
+
+   @Override
+   public double lerpTargetY() {
+      return this.lerpSteps > 0 ? this.lerpY : this.getY();
+   }
+
+   @Override
+   public double lerpTargetZ() {
+      return this.lerpSteps > 0 ? this.lerpZ : this.getZ();
+   }
+
+   @Override
+   public float lerpTargetXRot() {
+      return this.lerpSteps > 0 ? (float)this.lerpXRot : this.getXRot();
+   }
+
+   @Override
+   public float lerpTargetYRot() {
+      return this.lerpSteps > 0 ? (float)this.lerpYRot : this.getYRot();
    }
 
    @Override

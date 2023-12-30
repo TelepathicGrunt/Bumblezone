@@ -186,19 +186,21 @@ public class PurpleSpikeEntity extends Entity {
                         livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), damageAmount);
                         this.makeParticle(1, true);
 
-                        for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
-                            if (mobEffect.isBeneficial()) {
-                                livingEntity.removeEffect(mobEffect);
+                        if (!this.level().isClientSide()) {
+                            for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+                                if (mobEffect.isBeneficial()) {
+                                    livingEntity.removeEffect(mobEffect);
+                                }
                             }
-                        }
 
-                        livingEntity.addEffect(new MobEffectInstance(
-                                MobEffects.POISON,
-                                200,
-                                1,
-                                true,
-                                true,
-                                true));
+                            livingEntity.addEffect(new MobEffectInstance(
+                                    MobEffects.POISON,
+                                    200,
+                                    1,
+                                    true,
+                                    true,
+                                    true));
+                        }
                     }
                 }
             }
