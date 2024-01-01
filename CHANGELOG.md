@@ -6,6 +6,9 @@ Fixed Purple Spike inflicting poison effect that doesn't remove itself when its 
 ##### Teleportation:
 Fixed infinite loop if teleporting to and from Bumblezone is cancelled by another mod or script.
 
+##### Mod Compat:
+(Fabric): Spectrum Jetpacks's jetpacks will now be disabled when in Heavy Air block
+
 
 ### **(V.7.1.14 Changes) (1.20.4 Minecraft)**
 
