@@ -200,7 +200,7 @@ public class PurpleSpikeEntity extends Entity {
                                     true,
                                     true));
                         }
-                        
+
                         this.makeParticle(1, true);
                     }
                 }
