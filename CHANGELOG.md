@@ -5,6 +5,9 @@ Fixed Sentry Watcher movement being stuttery. Mojang made Entity not lerp moveme
 
 Fixed Purple Spike inflicting poison effect that doesn't remove itself when its effect timer runs out.
 
+##### Teleportation:
+Fixed infinite loop if teleporting to and from Bumblezone is cancelled by another mod or script.
+
 
 ### **(V.7.2.12 Changes) (1.20.4 Minecraft)**
 

@@ -338,10 +338,10 @@ public class BzWorldSavedData extends SavedData {
 			entity.remove(Entity.RemovalReason.CHANGED_DIMENSION);
 		}
 
-		if(teleportedEntity != null) {
-			// update set to keep track of entities teleported
-			teleportedEntities.add(entity);
+		// update set to keep track of entities teleported
+		teleportedEntities.add(entity);
 
+		if(teleportedEntity != null) {
 			ChunkPos chunkpos = new ChunkPos(BlockPos.containing(destinationPosition.x, destinationPosition.y, destinationPosition.z));
 			destination.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 1, entity.getId());
 
