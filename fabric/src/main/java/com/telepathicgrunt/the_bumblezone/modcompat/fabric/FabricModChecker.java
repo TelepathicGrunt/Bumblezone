@@ -25,6 +25,9 @@ public class FabricModChecker {
             modid = "trinkets";
             loadupModCompat(modid, () -> new TrinketsCompat());
 
+            modid = "spectrumjetpacks";
+            loadupModCompat(modid, () -> new SpectrumJetpackCompat());
+
             modid = "restrictedportals";
             loadupModCompat(modid, () -> new RestrictedPortalsCompat());
         }
