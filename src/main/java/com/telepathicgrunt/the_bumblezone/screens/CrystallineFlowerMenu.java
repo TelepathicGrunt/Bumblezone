@@ -632,6 +632,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 for (EnchantmentSkeleton skeleton : availableEnchantmentsSkeletons) {
                     passedData.writeUtf(CrystallineFlowerEnchantmentPacket.gson.toJson(skeleton));
                 }
+                passedData.writeResourceLocation(selectedEnchant);
                 ServerPlayNetworking.send(serverPlayer, CrystallineFlowerEnchantmentPacket.PACKET_ID, passedData);
             }
         }
@@ -639,7 +640,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
     @NotNull
     private Map<ResourceLocation, EnchantmentInstance> getAvaliableEnchantments(ItemStack tempCopy) {
-        int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier;
+        int level = xpTier.get() * BzConfig.crystallineFlowerEnchantingPowerAllowedPerTier;
         return EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
     }
 

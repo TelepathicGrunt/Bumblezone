@@ -708,7 +708,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         if (sectionId >= 0 && sectionId < enchantmentsAvailableSortedList.size()) {
             FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
             passedData.writeInt(this.menu.containerId);
-            passedData.writeVarInt(enchantmentsAvailableSortedList.get(sectionId));
+            passedData.writeResourceLocation(enchantmentsAvailableSortedList.get(sectionId));
             ClientPlayNetworking.send(CrystallineFlowerClickedEnchantmentButtonPacket.PACKET_ID, passedData);
         }
         else {
