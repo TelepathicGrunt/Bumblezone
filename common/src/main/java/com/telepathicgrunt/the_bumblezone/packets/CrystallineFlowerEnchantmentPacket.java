@@ -71,8 +71,8 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
 
                     Language language = Language.getInstance();
                     CrystallineFlowerScreen.enchantmentsAvailableSortedList = map.keySet().stream().sorted((r1, r2) -> {
-                        String s1 = language.getOrDefault("enchantment."+r1.getNamespace()+"."+r1.getPath(), r1.toString());
-                        String s2 = language.getOrDefault("enchantment."+r2.getNamespace()+"."+r2.getPath(), r2.toString());
+                        String s1 = language.getOrDefault("enchantment."+r1.getNamespace()+"."+r1.getPath(), r1.getPath());
+                        String s2 = language.getOrDefault("enchantment."+r2.getNamespace()+"."+r2.getPath(), r2.getPath());
                         return s1.compareTo(s2);
                     }).collect(Collectors.toList());
 
