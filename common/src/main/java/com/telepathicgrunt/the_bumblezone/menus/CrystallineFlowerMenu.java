@@ -33,9 +33,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.EntityBlock;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 public class CrystallineFlowerMenu extends AbstractContainerMenu {
     public static final int CONSUME_SLOT = 0;
@@ -54,9 +54,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     public final CrystallineFlowerBlockEntity crystallineFlowerBlockEntity;
     public final Slot consumeSlot;
     public final Slot bookSlot;
-    private final Slot enchantedSlot;
+    public final Slot enchantedSlot;
 
-    public final DataSlot selectedEnchantmentIndex = DataSlot.standalone();
+    public ResourceLocation selectedEnchantment = null;
     public final DataSlot xpBarPercent = DataSlot.standalone();
     public final DataSlot xpTier = DataSlot.standalone();
     public final DataSlot tierCostUpper = DataSlot.standalone();
@@ -131,7 +131,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
                 ItemStack bookSlotItem = bookSlot.getItem();
                 if (bookSlotItem.isEmpty()) {
-                    selectedEnchantmentIndex.set(-1);
+                    selectedEnchantment = null;
                 }
 
                 if (!player.level().isClientSide()) {
@@ -161,7 +161,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
                 // get enchantments previously available
                 ItemStack oldConsumeStack = bookSlot.getItem().copy();
-                List<EnchantmentInstance> oldAvailableEnchantments = getAvaliableEnchantments(oldConsumeStack);
+                Map<ResourceLocation, EnchantmentInstance> oldAvailableEnchantments = getAvaliableEnchantments(oldConsumeStack);
 
                 // drain book and xp
                 bookSlot.remove(1);
@@ -170,16 +170,16 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                 if (!player.level().isClientSide()) {
 
                     // try to keep same enchantment selected
-                    EnchantmentInstance oldEnchantSelected = oldAvailableEnchantments.get(selectedEnchantmentIndex.get());
-                    selectedEnchantmentIndex.set(-1);
+                    EnchantmentInstance oldEnchantSelected = oldAvailableEnchantments.get(selectedEnchantment);
+                    selectedEnchantment = null;
 
-                    setupResultSlot(oldEnchantSelected.enchantment);
+                    setupResultSlot(BuiltInRegistries.ENCHANTMENT.getKey(oldEnchantSelected.enchantment));
                     broadcastChanges();
                     crystallineFlowerBlockEntity.setBookSlotItems(bookSlot.getItem());
                     crystallineFlowerBlockEntity.syncPillar();
                 }
                 else {
-                    selectedEnchantmentIndex.set(-1);
+                    selectedEnchantment = null;
                 }
 
                 super.onTake(player, itemStack);
@@ -198,7 +198,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             addSlot(new Slot(playerInventory, i, 8 + i * 18, playerInvYOffset + 58));
         }
 
-        this.selectedEnchantmentIndex.set(-1);
+        this.selectedEnchantment = null;
         this.xpBarPercent.set(0);
         this.xpTier.set(0);
         this.tierCostUpper.set(0);
@@ -223,7 +223,6 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
         syncXpTier();
 
-        addDataSlot(this.selectedEnchantmentIndex);
         addDataSlot(this.xpBarPercent);
         addDataSlot(this.xpTier);
         addDataSlot(this.tierCostUpper);
@@ -241,7 +240,14 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         if (this.crystallineFlowerBlockEntity != null) {
             this.bookSlot.set(this.crystallineFlowerBlockEntity.getBookSlotItems());
             this.consumeSlot.set(this.crystallineFlowerBlockEntity.getConsumeSlotItems());
+            this.broadcastChanges();
         }
+    }
+
+    @Override
+    public void sendAllDataToRemote() {
+        super.sendAllDataToRemote();
+        this.setupResultSlot();
     }
 
     private void syncXpTier() {
@@ -280,18 +286,19 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
     @Override
     public void slotsChanged(Container inventory) {}
 
+    public boolean clickMenuEnchantment(Player player, ResourceLocation selectedEnchant) {
+        selectedEnchantment = selectedEnchant;
+        if (!player.level().isClientSide()) {
+            setupResultSlot();
+            broadcastChanges();
+        }
+        return true;
+    }
+
     @Override
     public boolean clickMenuButton(Player player, int id) {
-        if (id >= 0) {
-            selectedEnchantmentIndex.set(id);
-            if (!player.level().isClientSide()) {
-                setupResultSlot();
-                broadcastChanges();
-            }
-            return true;
-        }
         // drain xp 1
-        else if (id == -2) {
+        if (id == -2) {
             drainPlayerXPLevel(1);
             if (!player.level().isClientSide()) {
                 setupResultSlot();
@@ -528,7 +535,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         setupResultSlot(null);
     }
 
-    private void setupResultSlot(Enchantment oldEnchantment) {
+    private void setupResultSlot(ResourceLocation oldEnchantment) {
         ItemStack bookSlotItem = bookSlot.getItem();
         int existingEnchantments;
         if (!bookSlotItem.isEmpty() && xpTier.get() > 1) {
@@ -536,7 +543,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         }
         else {
             tooManyEnchantmentsOnInput.set(0);
-            selectedEnchantmentIndex.set(-1);
+            selectedEnchantment = null;
             if (enchantedSlot.hasItem()) {
                 enchantedSlot.set(ItemStack.EMPTY);
             }
@@ -545,7 +552,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
         if (existingEnchantments >= 3) {
             tooManyEnchantmentsOnInput.set(1);
-            selectedEnchantmentIndex.set(-1);
+            selectedEnchantment = null;
             if (enchantedSlot.hasItem()) {
                 enchantedSlot.set(ItemStack.EMPTY);
             }
@@ -560,18 +567,21 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             ItemStack tempCopy = toEnchant.copy();
             tempCopy.setCount(1);
 
-            List<EnchantmentInstance> availableEnchantments = getAvaliableEnchantments(tempCopy);
+            Map<ResourceLocation, EnchantmentInstance> availableEnchantments = getAvaliableEnchantments(tempCopy);
 
-            if (availableEnchantments.size() == 0) {
+            if (availableEnchantments.isEmpty()) {
                 if (enchantedSlot.hasItem()) {
                     enchantedSlot.set(ItemStack.EMPTY);
                 }
-                selectedEnchantmentIndex.set(-1);
+                selectedEnchantment = null;
+            }
+            else if (availableEnchantments.containsKey(oldEnchantment)) {
+                selectedEnchantment = oldEnchantment;
             }
 
-            if (selectedEnchantmentIndex.get() != -1) {
-                if (selectedEnchantmentIndex.get() != -1 && availableEnchantments.size() > selectedEnchantmentIndex.get()) {
-                    EnchantmentInstance enchantmentForItem = availableEnchantments.get(selectedEnchantmentIndex.get());
+            if (selectedEnchantment != null) {
+                if (availableEnchantments.containsKey(selectedEnchantment)) {
+                    EnchantmentInstance enchantmentForItem = availableEnchantments.get(selectedEnchantment);
 
                     if (tempCopy.is(Items.BOOK)) {
                         ItemStack enchantedBook = Items.ENCHANTED_BOOK.getDefaultInstance();
@@ -603,7 +613,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
 
             if (player instanceof ServerPlayer serverPlayer) {
                 List<EnchantmentSkeleton> availableEnchantmentsSkeletons =
-                        availableEnchantments.stream().map(e -> {
+                        availableEnchantments.values().stream().map(e -> {
                             ResourceLocation resourceLocation = BuiltInRegistries.ENCHANTMENT.getKey(e.enchantment);
                             return new EnchantmentSkeleton(
                                     resourceLocation.getPath(),
@@ -616,21 +626,13 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                             );
                         }).toList();
 
-                int selectedIndex = -1;
-                for (int i = 0; i < availableEnchantments.size(); i++) {
-                    if (availableEnchantments.get(i).enchantment == oldEnchantment) {
-                        selectedIndex = i;
-                        break;
-                    }
-                }
-
-                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, availableEnchantmentsSkeletons, selectedIndex);
+                ResourceLocation selectedEnchant = this.selectedEnchantment == null ? new ResourceLocation("minecraft", "empty") : this.selectedEnchantment;
+                CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, availableEnchantmentsSkeletons, selectedEnchant);
             }
         }
     }
 
-    @NotNull
-    private List<EnchantmentInstance> getAvaliableEnchantments(ItemStack tempCopy) {
+    private Map<ResourceLocation, EnchantmentInstance> getAvaliableEnchantments(ItemStack tempCopy) {
         int level = xpTier.get() * BzGeneralConfigs.crystallineFlowerEnchantingPowerAllowedPerTier;
         return EnchantmentUtils.allAllowedEnchantsWithoutMaxLimit(level, tempCopy, xpTier.get());
     }

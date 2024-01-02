@@ -8,12 +8,12 @@ import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
-public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, int clickedButton) implements Packet<CrystallineFlowerClickedEnchantmentButtonPacket> {
+public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, ResourceLocation clickedButton) implements Packet<CrystallineFlowerClickedEnchantmentButtonPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
     static final Handler HANDLER = new Handler();
 
-    public static void sendToServer(int containIdIn, int ClickedButtonIn) {
+    public static void sendToServer(int containIdIn, ResourceLocation ClickedButtonIn) {
         MessageHandler.DEFAULT_CHANNEL.sendToServer(new CrystallineFlowerClickedEnchantmentButtonPacket(containIdIn, ClickedButtonIn));
     }
 
@@ -32,12 +32,12 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, i
         @Override
         public void encode(CrystallineFlowerClickedEnchantmentButtonPacket message, FriendlyByteBuf buffer) {
             buffer.writeInt(message.containerId);
-            buffer.writeVarInt(message.clickedButton);
+            buffer.writeResourceLocation(message.clickedButton);
         }
 
         @Override
         public CrystallineFlowerClickedEnchantmentButtonPacket decode(FriendlyByteBuf buffer) {
-            return new CrystallineFlowerClickedEnchantmentButtonPacket(buffer.readInt(), buffer.readVarInt());
+            return new CrystallineFlowerClickedEnchantmentButtonPacket(buffer.readInt(), buffer.readResourceLocation());
         }
 
         @Override
@@ -48,7 +48,7 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, i
                 }
 
                 if (player.containerMenu.containerId == message.containerId() && player.containerMenu instanceof CrystallineFlowerMenu flowerMenu) {
-                    flowerMenu.clickMenuButton(player, message.clickedButton());
+                    flowerMenu.clickMenuEnchantment(player, message.clickedButton());
                 }
             };
         }

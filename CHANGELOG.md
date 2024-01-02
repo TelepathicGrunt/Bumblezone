@@ -1,5 +1,9 @@
 ### **(V.7.2.13 Changes) (1.20.4 Minecraft)**
 
+##### Blocks:
+Changed Crystalline Flower so that it sorts enchantments on clientside based on the actual translated names of enchantments.
+ Will be much easier to find the enchantment you want.
+
 ##### Entities:
 Fixed Sentry Watcher movement being stuttery. Mojang made Entity not lerp movement by default... Had to add back lerping for Sentry Watcher.
 
