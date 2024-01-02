@@ -27,6 +27,11 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     private int currentXp = 0;
     private String guid = java.util.UUID.randomUUID().toString();
 
+    public static final String BOOK_SLOT_ITEMS = "bookItems";
+    public static final String CONSUME_SLOT_ITEMS = "consumeItems";
+    private ItemStack bookSlotItems = ItemStack.EMPTY;
+    private ItemStack consumeSlotItems = ItemStack.EMPTY;
+
     protected CrystallineFlowerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
     }
@@ -59,6 +64,27 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         this.guid = guid;
     }
 
+    public ItemStack getBookSlotItems() {
+        return this.bookSlotItems;
+    }
+
+    public void setBookSlotItems(ItemStack bookSlotItems) {
+        this.bookSlotItems = bookSlotItems;
+    }
+
+    public ItemStack getConsumeSlotItems() {
+        return this.consumeSlotItems;
+    }
+
+    public void setConsumeSlotItems(ItemStack consumeSlotItems) {
+        this.consumeSlotItems = consumeSlotItems;
+        setPillar(0);
+    }
+
+    public void syncPillar() {
+        setPillar(0);
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
@@ -68,6 +94,8 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         if (this.guid.isEmpty()) {
             this.guid = java.util.UUID.randomUUID().toString();
         }
+        this.bookSlotItems = ItemStack.of(compoundTag.getCompound(BOOK_SLOT_ITEMS));
+        this.consumeSlotItems = ItemStack.of(compoundTag.getCompound(CONSUME_SLOT_ITEMS));
     }
 
     @Override
@@ -80,6 +108,8 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         compoundTag.putInt(TIER_TAG, this.xpTier);
         compoundTag.putInt(XP_TAG, this.currentXp);
         compoundTag.putString(GUID_TAG, this.guid);
+        compoundTag.put(BOOK_SLOT_ITEMS, this.bookSlotItems.save(new CompoundTag()));
+        compoundTag.put(CONSUME_SLOT_ITEMS, this.consumeSlotItems.save(new CompoundTag()));
     }
 
     @Override
