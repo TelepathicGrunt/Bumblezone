@@ -1,5 +1,9 @@
 ### **(V.7.1.15 Changes) (1.20.4 Minecraft)**
 
+##### Blocks:
+Changed Crystalline Flower so that it sorts enchantments on clientside based on the actual translated names of enchantments.
+ Will be much easier to find the enchantment you want.
+
 ##### Entities:
 Fixed Purple Spike inflicting poison effect that doesn't remove itself when its effect timer runs out.
 

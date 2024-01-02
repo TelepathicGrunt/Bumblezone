@@ -10,20 +10,26 @@ import com.telepathicgrunt.the_bumblezone.menus.EnchantmentSkeleton;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
 import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
+import net.minecraft.locale.Language;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.animal.Animal;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-public record CrystallineFlowerEnchantmentPacket(int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, int selectedIndex) implements Packet<CrystallineFlowerEnchantmentPacket> {
+public record CrystallineFlowerEnchantmentPacket(int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, ResourceLocation selectedResourceLocation) implements Packet<CrystallineFlowerEnchantmentPacket> {
     public static final Gson GSON = new GsonBuilder().create();
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_enchantment");
     static final Handler HANDLER = new Handler();
 
-    public static void sendToClient(ServerPlayer player, int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, int selectedIndex) {
-        MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new CrystallineFlowerEnchantmentPacket(containerId, enchantmentSkeletons, selectedIndex), player);
+    public static void sendToClient(ServerPlayer player, int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, ResourceLocation selectedResourceLocation) {
+        MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new CrystallineFlowerEnchantmentPacket(containerId, enchantmentSkeletons, selectedResourceLocation), player);
     }
 
     @Override
@@ -42,7 +48,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
         public void encode(CrystallineFlowerEnchantmentPacket message, FriendlyByteBuf buffer) {
             buffer.writeInt(message.containerId());
             buffer.writeCollection(message.enchantmentSkeletons(), (buf, enchantmentSkeleton) -> buf.writeUtf(GSON.toJson(enchantmentSkeleton)));
-            buffer.writeInt(message.selectedIndex);
+            buffer.writeResourceLocation(message.selectedResourceLocation);
         }
 
         @Override
@@ -50,17 +56,28 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
             return new CrystallineFlowerEnchantmentPacket(
                     buffer.readInt(),
                     buffer.readList(buf -> GSON.fromJson(buf.readUtf(), EnchantmentSkeleton.class)),
-                    buffer.readInt());
+                    buffer.readResourceLocation());
         }
 
         @Override
         public PacketContext handle(CrystallineFlowerEnchantmentPacket message) {
             return (player, level) -> {
-                if(GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().containerMenu.containerId == message.containerId){
-                    CrystallineFlowerScreen.enchantmentsAvailable = message.enchantmentSkeletons();
+                if (GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().containerMenu.containerId == message.containerId){
+                    Map<ResourceLocation, EnchantmentSkeleton> map = new HashMap<>();
+                    for (EnchantmentSkeleton enchantmentSkeleton : message.enchantmentSkeletons()) {
+                        map.put(new ResourceLocation(enchantmentSkeleton.namespace, enchantmentSkeleton.path), enchantmentSkeleton);
+                    }
+                    CrystallineFlowerScreen.enchantmentsAvailable = map;
+
+                    Language language = Language.getInstance();
+                    CrystallineFlowerScreen.enchantmentsAvailableSortedList = map.keySet().stream().sorted((r1, r2) -> {
+                        String s1 = language.getOrDefault("enchantment."+r1.getNamespace()+"."+r1.getPath(), r1.toString());
+                        String s2 = language.getOrDefault("enchantment."+r2.getNamespace()+"."+r2.getPath(), r2.toString());
+                        return s1.compareTo(s2);
+                    }).collect(Collectors.toList());
+
                     if (GeneralUtilsClient.getClientPlayer().containerMenu instanceof CrystallineFlowerMenu crystallineFlowerMenu) {
-                        crystallineFlowerMenu.selectedEnchantmentIndex.set(message.selectedIndex());
-                        CrystallineFlowerClickedEnchantmentButtonPacket.sendToServer(GeneralUtilsClient.getClientPlayer().containerMenu.containerId, message.selectedIndex());
+                        crystallineFlowerMenu.selectedEnchantment = message.selectedResourceLocation().equals(new ResourceLocation("minecraft", "empty")) ? null : message.selectedResourceLocation();
                     }
                 }
             };

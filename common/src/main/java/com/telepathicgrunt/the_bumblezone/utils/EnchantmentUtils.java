@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -114,8 +115,8 @@ public class EnchantmentUtils {
 			items.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)));
 	}
 
-	public static List<EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
-		List<EnchantmentInstance> list = Lists.newArrayList();
+	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
+		Map<ResourceLocation, EnchantmentInstance> map = new HashMap<>();
 		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
 		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
@@ -137,15 +138,14 @@ public class EnchantmentUtils {
 					if (forceAllowed || level >= enchantment.getMinCost(i)) {
 						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, xpTier <= 2 ? 1 : i);
 						if (xpTier > EnchantmentUtils.getEnchantmentTierCost(enchantmentInstance)) {
-							list.add(enchantmentInstance);
+							map.put(BuiltInRegistries.ENCHANTMENT.getKey(enchantmentInstance.enchantment), enchantmentInstance);
 							break;
 						}
 					}
 				}
 			}
 		}
-		list.sort(EnchantmentUtils::compareEnchantments);
-		return list;
+		return map;
 	}
 
 	@ExpectPlatform
