@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CrystallineFlowerEnchantmentPacket {
@@ -27,10 +28,26 @@ public class CrystallineFlowerEnchantmentPacket {
                         String jsonData = buf.readUtf();
                         enchantmentSkeletons.add(gson.fromJson(jsonData, EnchantmentSkeleton.class));
                     }
+                    ResourceLocation selectedEnchantment = buf.readResourceLocation();
 
                     client.execute(() -> {
                         if(Minecraft.getInstance().player != null && Minecraft.getInstance().player.containerMenu.containerId == containerId){
-                            CrystallineFlowerScreen.enchantmentsAvailable = enchantmentSkeletons;
+                            Map<ResourceLocation, EnchantmentSkeleton> map = new HashMap<>();
+                            for (EnchantmentSkeleton enchantmentSkeleton : enchantmentSkeletons) {
+                                map.put(new ResourceLocation(enchantmentSkeleton.namespace, enchantmentSkeleton.path), enchantmentSkeleton);
+                            }
+                            CrystallineFlowerScreen.enchantmentsAvailable = map;
+
+                            Language language = Language.getInstance();
+                            CrystallineFlowerScreen.enchantmentsAvailableSortedList = map.keySet().stream().sorted((r1, r2) -> {
+                                String s1 = language.getLanguageData().getOrDefault("enchantment."+r1.getNamespace()+"."+r1.getPath(), r1.getPath());
+                                String s2 = language.getLanguageData().getOrDefault("enchantment."+r2.getNamespace()+"."+r2.getPath(), r2.getPath());
+                                return s1.compareTo(s2);
+                            }).collect(Collectors.toList());
+
+                            if (GeneralUtilsClient.getClientPlayer().containerMenu instanceof CrystallineFlowerMenu crystallineFlowerMenu) {
+                                crystallineFlowerMenu.selectedEnchantment = selectedEnchantment.equals(new ResourceLocation("minecraft", "empty")) ? null : selectedEnchantment;
+                            }
                         }
                     });
                 });

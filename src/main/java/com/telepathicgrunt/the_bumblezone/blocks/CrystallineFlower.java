@@ -402,30 +402,17 @@ public class CrystallineFlower extends BaseEntityBlock {
 
     @Override
     public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-        int searchLevel = 0;
-        int searchTreasure = 0;
-
         int flowerBlockBelow = flowerHeightBelow(level, pos);
         BlockPos bottomPlant = pos.below(flowerBlockBelow);
 
         BlockEntity blockEntity = level.getBlockEntity(bottomPlant);
-        if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
-            searchLevel = (crystallineFlowerBlockEntity.getXpTier() * 2) + 1;
-            if (crystallineFlowerBlockEntity.getXpTier() > 5) {
-                searchTreasure = 1;
-            }
-        }
 
-        int finalSearchTreasure = searchTreasure;
-        int finalSearchLevel = searchLevel;
         CrystallineFlowerBlockEntity finalCrystallineFlowerBlockEntity = blockEntity instanceof CrystallineFlowerBlockEntity ? (CrystallineFlowerBlockEntity) blockEntity : null;
         return new SimpleMenuProvider(
                 (containerId, inventory, player) -> new CrystallineFlowerMenu(
                         containerId,
                         inventory,
                         ContainerLevelAccess.create(level, pos.below(flowerBlockBelow)),
-                        finalSearchLevel,
-                        finalSearchTreasure,
                         finalCrystallineFlowerBlockEntity
                 ), CONTAINER_TITLE);
     }
