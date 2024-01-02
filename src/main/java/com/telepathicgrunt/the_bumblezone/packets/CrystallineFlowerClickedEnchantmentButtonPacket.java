@@ -13,14 +13,14 @@ public class CrystallineFlowerClickedEnchantmentButtonPacket {
         ServerPlayNetworking.registerGlobalReceiver(PACKET_ID,
             (minecraftServer, serverPlayer, packetListener, buf, packetSender) -> {
                 int containerId = buf.readInt();
-                int clickedButton = buf.readVarInt();
+                ResourceLocation clickedButton = buf.readResourceLocation();
                 minecraftServer.execute(() -> {
                     if(serverPlayer == null) {
                         return;
                     }
 
                     if (serverPlayer.containerMenu.containerId == containerId && serverPlayer.containerMenu instanceof CrystallineFlowerMenu flowerMenu) {
-                        flowerMenu.clickMenuButton(serverPlayer, clickedButton);
+                        flowerMenu.clickMenuEnchantment(serverPlayer, clickedButton);
                     }
                 });
             });

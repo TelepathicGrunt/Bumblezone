@@ -33,8 +33,10 @@ import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -122,7 +124,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private int prevXpTier = 0;
     private boolean prevBookSlotEmpty = true;
 
-    public static List<EnchantmentSkeleton> enchantmentsAvailable = new ArrayList<>();
+    public static Map<ResourceLocation, EnchantmentSkeleton> enchantmentsAvailable = new HashMap<>();
+    public static List<ResourceLocation> enchantmentsAvailableSortedList = new ArrayList<>();
 
     public CrystallineFlowerScreen(CrystallineFlowerMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -153,26 +156,27 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         renderScroller(poseStack, startX + ENCHANTMENT_SCROLLBAR_X_OFFSET, startY + ENCHANTMENT_SCROLLBAR_Y_OFFSET);
 
         handleEnchantmentAreaRow(mouseX, mouseY,
-            (Integer sectionId) -> {
-                if (sectionId >= enchantmentsAvailable.size()) {
+            (Integer selectedIndex) -> {
+                if (selectedIndex > enchantmentsAvailableSortedList.size()) {
                     return false;
                 }
 
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
-                EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(sectionId);
-                boolean isCurse = enchantmentEntry.isCurse;
-                boolean isTreasure = enchantmentEntry.isTreasure;
-                int row = sectionId - this.startIndex;
-                if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
+                ResourceLocation selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
+                EnchantmentSkeleton enchantmentSkeleton = enchantmentsAvailable.get(selectedEnchant);
+                boolean isCurse = enchantmentSkeleton.isCurse;
+                boolean isTreasure = enchantmentSkeleton.isTreasure;
+                int row = enchantmentsAvailableSortedList.indexOf(selectedEnchant) - this.startIndex;
+                if (new ResourceLocation(enchantmentSkeleton.namespace, enchantmentSkeleton.path).equals(this.menu.selectedEnchantment)) {
                     RenderSystem.enableDepthTest();
                     blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
                             poseStack,
                             rowStartX,
                             rowStartY + row * ENCHANTMENT_SECTION_HEIGHT,
-                            enchantmentEntry,
+                            enchantmentSkeleton,
                             isCurse ? 0x990000 : isTreasure ? 0xFFF000 : 0xFFD000,
                             0xC0FF00
                     );
@@ -184,26 +188,27 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                             poseStack,
                             rowStartX,
                             rowStartY + row * 19,
-                            enchantmentEntry,
+                            enchantmentSkeleton,
                             isCurse ? 0x800000 : isTreasure ? 0xFFFF50 : 0x402020,
                             0x304000
                     );
                 }
                 return true;
             },
-            (Integer sectionId) -> {
-                if (sectionId >= enchantmentsAvailable.size()) {
+            (Integer selectedIndex) -> {
+                if (selectedIndex > enchantmentsAvailableSortedList.size()) {
                     return;
                 }
 
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderTexture(0, CONTAINER_BACKGROUND);
 
-                EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(sectionId);
+                ResourceLocation selectedEnchant = enchantmentsAvailableSortedList.get(selectedIndex);
+                EnchantmentSkeleton enchantmentEntry = enchantmentsAvailable.get(selectedEnchant);
                 boolean isCurse = enchantmentEntry.isCurse;
                 boolean isTreasure = enchantmentEntry.isTreasure;
-                int row = sectionId - this.startIndex;
-                if (sectionId == this.menu.selectedEnchantmentIndex.get()) {
+                int row = selectedIndex - this.startIndex;
+                if (selectedEnchant.equals(this.menu.selectedEnchantment)) {
                     RenderSystem.enableDepthTest();
                     blit(poseStack, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, getBlitOffset(), ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(
@@ -232,8 +237,8 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
             MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.too_many_enchants").withStyle(ChatFormatting.BOLD);
             Screen.drawCenteredString(poseStack, font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
         }
-        else if (this.menu.selectedEnchantmentIndex.get() != -1) {
-            EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantmentIndex.get());
+        else if (this.menu.selectedEnchantment != null && this.menu.enchantedSlot.hasItem()) {
+            EnchantmentSkeleton enchantment = enchantmentsAvailable.get(this.menu.selectedEnchantment);
             int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
             MutableComponent mutableComponent = Component.translatable("the_bumblezone.container.crystalline_flower.tier_cost_arrow", tierCost).withStyle(ChatFormatting.BOLD);
             Screen.drawCenteredString(poseStack, font, mutableComponent, rowStartX + 45, rowStartY - 36, 0xD03010);
@@ -463,6 +468,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         }
         else {
             enchantmentsAvailable.clear();
+            enchantmentsAvailableSortedList.clear();
         }
     }
 
@@ -493,7 +499,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     private void renderScroller(PoseStack poseStack, int posX, int posY) {
-        int rowCount = enchantmentsAvailable.size() + 1 - 3;
+        int rowCount = enchantmentsAvailableSortedList.size() + 1 - 3;
         if (rowCount > 1) {
             if (startIndex > rowCount) {
                 scrollOff = 1.0F;
@@ -516,7 +522,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private boolean handleEnchantmentAreaRow(double mouseX, double mouseY, Function<Integer, Boolean> targetedSectionTask, Consumer<Integer> untargetedSectionTask) {
         int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
         int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
-        int selectableSections = this.startIndex + Math.min(enchantmentsAvailable.size(), 3);
+        int selectableSections = this.startIndex + Math.min(enchantmentsAvailableSortedList.size(), 3);
         boolean targetedSectionTaskSuccess = false;
         for(int currentSection = this.startIndex; currentSection < selectableSections; ++currentSection) {
             int sectionOffset = currentSection - this.startIndex;
@@ -536,15 +542,15 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         super.renderTooltip(poseStack, x, y);
         int startX = this.leftPos + ENCHANTMENT_AREA_X_OFFSET - 2;
         int startY = this.topPos + ENCHANTMENT_AREA_Y_OFFSET - 2;
-        int selectableSections = this.startIndex + Math.min(enchantmentsAvailable.size(), 3);
+        int selectableSections = this.startIndex + Math.min(enchantmentsAvailableSortedList.size(), 3);
         for(int currentSection = this.startIndex; currentSection < selectableSections; ++currentSection) {
-            if (currentSection >= enchantmentsAvailable.size()) continue;
+            if (currentSection >= enchantmentsAvailableSortedList.size()) continue;
 
             int sectionOffset = currentSection - this.startIndex;
             double sectionMouseX = x - (double)(startX);
             double sectionMouseY = y - (double)(startY + sectionOffset * ENCHANTMENT_SECTION_HEIGHT);
             if (sectionMouseX >= 0.0D && sectionMouseX < ENCHANTMENT_SECTION_WIDTH && sectionMouseY >= 0.0D && sectionMouseY < ENCHANTMENT_SECTION_HEIGHT) {
-                EnchantmentSkeleton enchantment = enchantmentsAvailable.get(currentSection);
+                EnchantmentSkeleton enchantment = enchantmentsAvailable.get(enchantmentsAvailableSortedList.get(currentSection));
                 int tierCost = EnchantmentUtils.getEnchantmentTierCost(enchantment.level, enchantment.minCost, enchantment.isTreasure, enchantment.isCurse);
 
                 String translatedEnchantmentName = Language.getInstance().getOrDefault("""
@@ -609,7 +615,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         this.scrolling = false;
 
         if (handleEnchantmentAreaRow(mouseX, mouseY, (Integer sectionId) -> {
-            if(this.menu.clickMenuButton(this.minecraft.player, sectionId)) {
+            if (this.menu.clickMenuEnchantment(this.minecraft.player, CrystallineFlowerScreen.enchantmentsAvailableSortedList.get(sectionId))) {
                 sendButtonPressToMenu(sectionId);
                 return true;
             }
@@ -699,10 +705,10 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
 
     private void sendButtonPressToMenu(Integer sectionId) {
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
-        if (sectionId >= 0) {
+        if (sectionId >= 0 && sectionId < enchantmentsAvailableSortedList.size()) {
             FriendlyByteBuf passedData = new FriendlyByteBuf(Unpooled.buffer());
             passedData.writeInt(this.menu.containerId);
-            passedData.writeVarInt(sectionId);
+            passedData.writeVarInt(enchantmentsAvailableSortedList.get(sectionId));
             ClientPlayNetworking.send(CrystallineFlowerClickedEnchantmentButtonPacket.PACKET_ID, passedData);
         }
         else {
@@ -711,7 +717,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-        if (this.scrolling && canScroll(enchantmentsAvailable.size())) {
+        if (this.scrolling && canScroll(enchantmentsAvailableSortedList.size())) {
             int topY = this.topPos + ENCHANTMENT_SCROLLBAR_Y_OFFSET;
             int bottomY = topY + ENCHANTMENT_SCROLLBAR_Y_RANGE;
             this.scrollOff = ((float)mouseY - (float)topY - 7.5F) / ((float)(bottomY - topY) - 15.0F);
@@ -725,7 +731,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-        if (canScroll(enchantmentsAvailable.size())) {
+        if (canScroll(enchantmentsAvailableSortedList.size())) {
             int offscreenRows = this.getOffscreenRows();
             float percentage = (float)delta / (float)offscreenRows;
             this.scrollOff = Mth.clamp(this.scrollOff - percentage, 0.0F, 1.0F);
@@ -736,11 +742,18 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     }
 
     protected int getOffscreenRows() {
-        return Math.max(enchantmentsAvailable.size() - 3, 0);
+        return Math.max(enchantmentsAvailableSortedList.size() - 3, 0);
     }
 
     @Override
     protected boolean hasClickedOutside(double mouseX, double mouseY, int left, int top, int button) {
         return mouseX < (double)left || mouseY < (double)top || mouseX >= (double)(left + this.imageWidth) || mouseY >= (double)(top + this.imageHeight + 32);
+    }
+
+    @Override
+    public void onClose() {
+        CrystallineFlowerScreen.enchantmentsAvailable.clear();
+        CrystallineFlowerScreen.enchantmentsAvailableSortedList.clear();
+        super.onClose();
     }
 }

@@ -1,3 +1,12 @@
+### **(V.6.8.7 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Changed Crystalline Flower so that it sorts enchantments on clientside based on the actual translated names of enchantments.
+ Will be much easier to find the enchantment you want.
+
+Crystalline Flower will now hold onto items in its consume and enchant slots in the block itself instead of returning them when exiting UI.
+
+
 ### **(V.6.8.6 Changes) (1.19.2 Minecraft)**
 
 ##### Blocks:
