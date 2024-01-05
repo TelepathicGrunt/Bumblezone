@@ -15,6 +15,8 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
  `the_bumblezone:honey_web/cannot_slow`
  `the_bumblezone:sticky_honey_residue/cannot_slow`
 
+Fixed Super Candle unlit wick being tilted
+
 ##### Entities:
 Fixed Sentry Watcher movement being stuttery. Mojang made Entity not lerp movement by default... Had to add back lerping for Sentry Watcher.
 
