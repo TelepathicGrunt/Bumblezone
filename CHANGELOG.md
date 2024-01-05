@@ -6,6 +6,10 @@ Changed Crystalline Flower so that it sorts enchantments on clientside based on 
 
 Crystalline Flower will now hold onto items in its consume and enchant slots in the block itself instead of returning them when exiting UI.
 
+Added two new entity type tags for marking entities as immune to the slowdown effects from Sticky Honey Residue and Honey Web blocks:
+ `the_bumblezone:honey_web/cannot_slow`
+ `the_bumblezone:sticky_honey_residue/cannot_slow`
+
 
 ### **(V.6.8.6 Changes) (1.19.2 Minecraft)**
 
