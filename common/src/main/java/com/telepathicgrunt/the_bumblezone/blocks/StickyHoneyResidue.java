@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -27,7 +25,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -184,7 +181,8 @@ public class StickyHoneyResidue extends Block {
     @Deprecated
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof HoneySlimeEntity) {
+        if (entity.getType().is(BzTags.STICKY_HONEY_RESIDUE_CANNOT_SLOW)) {
+            super.entityInside(blockState, level, blockPos, entity);
             return;
         }
 

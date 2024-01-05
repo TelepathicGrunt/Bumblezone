@@ -137,7 +137,8 @@ public class HoneyWeb extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof HoneySlimeEntity) {
+        if (entity.getType().is(BzTags.HONEY_WEB_CANNOT_SLOW)) {
+            super.entityInside(blockState, level, blockPos, entity);
             return;
         }
 
