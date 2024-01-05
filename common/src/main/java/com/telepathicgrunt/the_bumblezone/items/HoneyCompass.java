@@ -149,7 +149,16 @@ public class HoneyCompass extends Item implements Vanishable {
                 BlockPos pos = getStoredPosition(itemStack);
                 Optional<ResourceKey<Level>> storedDimension = getStoredDimension(itemStack);
                 if (pos != null && storedDimension.isPresent() && level.dimension().equals(storedDimension.get())) {
-                    components.add(Component.translatable("item.the_bumblezone.honey_compass_distance", player.blockPosition().distManhattan(pos))
+                    int distance;
+                    if (isStructureCompass(itemStack)) {
+                        float xDist = Math.abs(player.blockPosition().getX() - pos.getX());
+                        float zDist = Math.abs(player.blockPosition().getZ() - pos.getZ());
+                        distance = (int) (xDist + zDist);
+                    }
+                    else {
+                        distance = player.blockPosition().distManhattan(pos);
+                    }
+                    components.add(Component.translatable("item.the_bumblezone.honey_compass_distance", distance)
                             .withStyle(ChatFormatting.DARK_GRAY));
                 }
             }

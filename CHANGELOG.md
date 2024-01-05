@@ -15,6 +15,9 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
  `the_bumblezone:honey_web/cannot_slow`
  `the_bumblezone:sticky_honey_residue/cannot_slow`
 
+##### Items:
+Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
+
 ##### Entities:
 Added quarterTurns option to Sentry Watcher nbt. Set this in the entity to true or 1b for the entity to do quarter turns instead of half turns.
 
