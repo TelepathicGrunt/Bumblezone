@@ -90,6 +90,8 @@ public class BzTags {
     public static final TagKey<Fluid> HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings/removes_pollen"));
 
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "pollen_puff/can_pollinate"));
+    public static final TagKey<EntityType<?>> HONEY_WEB_CANNOT_SLOW = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "honey_web/cannot_slow"));
+    public static final TagKey<EntityType<?>> STICKY_HONEY_RESIDUE_CANNOT_SLOW = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue/cannot_slow"));
     public static final TagKey<EntityType<?>> DISALLOWED_BEE_CANNON_BEES = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "bee_cannon/disallowed_bee_pickup"));
     public static final TagKey<EntityType<?>> FORCED_ALLOWED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/forced_allowed_passengers"));
     public static final TagKey<EntityType<?>> DISALLOWED_STINGLESS_BEE_HELMET_PASSENGERS = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet/disallowed_passengers"));
