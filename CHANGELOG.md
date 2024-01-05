@@ -10,6 +10,9 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
  `the_bumblezone:honey_web/cannot_slow`
  `the_bumblezone:sticky_honey_residue/cannot_slow`
 
+##### Items:
+Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
+
 
 ### **(V.6.8.6 Changes) (1.19.2 Minecraft)**
 
