@@ -122,6 +122,8 @@ public class BzTags {
 
     public static final TagKey<EntityType<?>> POLLEN_PUFF_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pollen_puff/can_pollinate"));
     public static final TagKey<EntityType<?>> PILE_OF_POLLEN_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "pile_of_pollen/cannot_slow"));
+    public static final TagKey<EntityType<?>> HONEY_WEB_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "honey_web/cannot_slow"));
+    public static final TagKey<EntityType<?>> STICKY_HONEY_RESIDUE_CANNOT_SLOW = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "sticky_honey_residue/cannot_slow"));
     public static final TagKey<EntityType<?>> BUZZING_BRIEFCASE_CAN_POLLINATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "buzzing_briefcase/can_pollinate"));
     public static final TagKey<EntityType<?>> BUZZING_BRIEFCASE_DISALLOWED_BEE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "buzzing_briefcase/disallowed_bee_pickup"));
     public static final TagKey<EntityType<?>> CANNON_BEES_DISALLOWED_BEE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_cannon/disallowed_bee_pickup"));
