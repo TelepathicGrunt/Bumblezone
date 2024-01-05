@@ -17,6 +17,9 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
 
 Fixed Super Candle unlit wick being tilted
 
+##### Items:
+Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
+
 ##### Entities:
 Fixed Sentry Watcher movement being stuttery. Mojang made Entity not lerp movement by default... Had to add back lerping for Sentry Watcher.
 
