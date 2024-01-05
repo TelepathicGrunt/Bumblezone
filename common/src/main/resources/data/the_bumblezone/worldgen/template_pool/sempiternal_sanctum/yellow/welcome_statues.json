@@ -2,7 +2,7 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/common/statue_1",
         "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
@@ -11,7 +11,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/common/statue_2",
         "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
@@ -20,7 +20,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/common/statue_3",
         "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
@@ -29,7 +29,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/common/statue_4",
         "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
@@ -38,7 +38,7 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/common/statue_5",
         "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
@@ -47,9 +47,63 @@
       }
     },
     {
-      "weight": 1,
+      "weight": 2,
       "element": {
         "location": "the_bumblezone:sempiternal_sanctum/common/statue_6",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/common/statue_7",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/common/statue_8",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/common/statue_9",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/common/statue_10",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/common/statue_11",
+        "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "the_bumblezone:sempiternal_sanctum/common/statue_12",
         "processors": "the_bumblezone:sempiternal_sanctum/yellow/inside",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

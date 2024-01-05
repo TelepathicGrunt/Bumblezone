@@ -86,6 +86,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    private int shakingTime = 0;
    private Direction targetFacing;
    private boolean explosionPrimed = false;
+   private boolean quarterTurns = false;
    private boolean prevShaking;
    private int shakeStartTick;
    private Vec3 prevVelocity;
@@ -194,6 +195,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    public void addAdditionalSaveData(CompoundTag compoundTag) {
       compoundTag.putBoolean("explosionPrimed", explosionPrimed);
+      compoundTag.putBoolean("quarterTurns", quarterTurns);
       if (this.activatedStart != null) {
          compoundTag.putDouble("activatedStartX", this.activatedStart.x());
          compoundTag.putDouble("activatedStartZ", this.activatedStart.z());
@@ -223,6 +225,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    public void readAdditionalSaveData(CompoundTag compoundTag) {
       this.explosionPrimed = compoundTag.getBoolean("explosionPrimed");
+      this.quarterTurns = compoundTag.getBoolean("quarterTurns");
       this.activatedStart = new Vec3(compoundTag.getDouble("activatedStartX"), 0, compoundTag.getDouble("activatedStartZ"));
       this.setHasActivated(compoundTag.getBoolean("activated"));
       this.setHasShaking(compoundTag.getBoolean("shaking"));
@@ -671,7 +674,12 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    private void deactivate() {
       this.setHasActivated(false);
-      this.setTargetFacing(this.getTargetFacing().getOpposite());
+      if (this.quarterTurns) {
+         this.setTargetFacing(this.getTargetFacing().getCounterClockWise());
+      }
+      else {
+         this.setTargetFacing(this.getTargetFacing().getOpposite());
+      }
       this.setDeltaMovement(0, this.getDeltaMovement().y(), 0);
 
       if (this.level() instanceof ServerLevel serverLevel) {

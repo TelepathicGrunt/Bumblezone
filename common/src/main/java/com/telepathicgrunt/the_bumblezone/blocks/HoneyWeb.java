@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import com.telepathicgrunt.the_bumblezone.entities.nonliving.SentryWatcherEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
@@ -146,7 +147,7 @@ public class HoneyWeb extends Block {
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
-        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof HoneySlimeEntity) {
+        if (entity instanceof Bee || entity instanceof BeehemothEntity || entity instanceof HoneySlimeEntity || entity instanceof SentryWatcherEntity) {
             return;
         }
 

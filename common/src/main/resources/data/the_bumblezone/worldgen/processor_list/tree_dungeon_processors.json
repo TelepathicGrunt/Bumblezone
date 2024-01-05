@@ -28,6 +28,13 @@
     {
       "processor_type": "the_bumblezone:pillar_processor",
       "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 10,
+          "min_inclusive": 8
+        }
+      },
       "pillar_processor_list": "the_bumblezone:tree_dungeon_processors",
       "pillar_trigger_and_replacements": [
         {
@@ -43,6 +50,13 @@
     {
       "processor_type": "the_bumblezone:pillar_processor",
       "direction": "down",
+      "pillar_length": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 10,
+          "min_inclusive": 8
+        }
+      },
       "pillar_processor_list": "the_bumblezone:tree_dungeon_processors",
       "pillar_trigger_and_replacements": [
         {

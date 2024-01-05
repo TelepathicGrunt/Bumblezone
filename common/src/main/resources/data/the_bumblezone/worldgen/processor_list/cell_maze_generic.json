@@ -36,6 +36,249 @@
       "processor_type": "minecraft:rule"
     },
     {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals"
+          },
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.1
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:cave_air"
+          },
+          "input_predicate": {
+            "block": "minecraft:poppy",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.2
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
+      "rules": [
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "2",
+              "facing": "north"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "3",
+              "facing": "north"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "4",
+              "facing": "north"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "2",
+              "facing": "south"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "3",
+              "facing": "south"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "4",
+              "facing": "south"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "2",
+              "facing": "west"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "3",
+              "facing": "west"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "4",
+              "facing": "west"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "2",
+              "facing": "east"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "3",
+              "facing": "east"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        },
+        {
+          "output_state": {
+            "Name": "minecraft:pink_petals",
+            "Properties": {
+              "flower_amount": "4",
+              "facing": "east"
+            }
+          },
+          "input_predicate": {
+            "block": "minecraft:pink_petals",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.083
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          }
+        }
+      ],
+      "processor_type": "minecraft:rule"
+    },
+    {
       "processor_type": "minecraft:capped",
       "limit": 2,
       "delegate": {
