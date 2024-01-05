@@ -1,10 +1,19 @@
 ### **(V.7.1.15 Changes) (1.20.4 Minecraft)**
 
+##### Structures:
+Added more rooms to Cell Maze and Sempiternal Sanctums! Special thanks to Tera for the new pieces!
+
+Made caves not carve into Cell Maze structures.
+
+Made Tree Dungeons only place pillars of dirt down about 10 blocks instead of forever downward.
+
 ##### Blocks:
 Changed Crystalline Flower so that it sorts enchantments on clientside based on the actual translated names of enchantments.
  Will be much easier to find the enchantment you want.
 
 ##### Entities:
+Added quarterTurns option to Sentry Watcher nbt. Set this in the entity to true or 1b for the entity to do quarter turns instead of half turns.
+
 Fixed Purple Spike inflicting poison effect that doesn't remove itself when its effect timer runs out.
 
 ##### Teleportation:
