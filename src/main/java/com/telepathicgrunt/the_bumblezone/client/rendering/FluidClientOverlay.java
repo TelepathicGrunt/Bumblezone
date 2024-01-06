@@ -129,7 +129,21 @@ public class FluidClientOverlay {
     }
 
     public static float getDimensionBrightnessAtEyes(Entity entity) {
-        float lightLevelAtEyes = entity.level.getRawBrightness(new BlockPos(entity.getEyePosition(1)), 0);
+        Level level = entity.level;
+        float lightLevelAtEyes;
+
+        if (level.dimensionType().hasSkyLight()) {
+            lightLevelAtEyes = level.getRawBrightness(new BlockPos(entity.getEyePosition(1)), level.getSkyDarken());
+            level.updateSkyBrightness();
+            if (level.isNight()) {
+                float moonBrightness = level.getMoonBrightness();
+                lightLevelAtEyes *= moonBrightness;
+            }
+        }
+        else {
+            lightLevelAtEyes = level.getRawBrightness(new BlockPos(entity.getEyePosition(1)), 0);
+        }
+
         return lightLevelAtEyes / 15f;
     }
 
