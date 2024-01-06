@@ -1,4 +1,4 @@
-### **(V.7.1.15 Changes) (1.20.4 Minecraft)**
+### **(V.7.1.15 Changes) (1.20.1 Minecraft)**
 
 ##### Structures:
 Added more rooms to Cell Maze and Sempiternal Sanctums! Special thanks to Tera for the new pieces!
@@ -34,7 +34,7 @@ Fixed infinite loop if teleporting to and from Bumblezone is cancelled by anothe
 (Fabric): Spectrum Jetpacks's jetpacks will now be disabled when in Heavy Air block
 
 
-### **(V.7.1.14 Changes) (1.20.4 Minecraft)**
+### **(V.7.1.14 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:
 Made Sticky Honey Residue and Sticky Honey Redstone be visually closer to the block they are attached to.
