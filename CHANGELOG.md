@@ -17,7 +17,7 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
 
 Fixed Honey Fluid and Royal Jelly Fluid having a too bright overlay when inside it at night in Overworld.
 
-Honey Fluid and Royal Jelly Fluid not will flow faster in warmer biomes! And slower in really cold biomes.
+Honey Fluid and Royal Jelly Fluid now will flow faster in warmer biomes! And slower in really cold biomes.
 
 Fixed Honey Fluid and Royal Jelly Fluid bucket able to place the fluid in ultrawarm dimensions like the Nether. Now they turn into Glistering Honey Crystal block.
 
