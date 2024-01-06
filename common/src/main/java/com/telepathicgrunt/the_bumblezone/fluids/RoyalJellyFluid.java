@@ -266,7 +266,7 @@ public abstract class RoyalJellyFluid extends BzFlowingFluid {
     }
 
     public static int adjustedFlowSpeed(int originalSpeed, LevelAccessor level, BlockPos blockPos) {
-        return (int) (originalSpeed / Math.max(1, level.getBiome(blockPos).value().getBaseTemperature()));
+        return (int) (originalSpeed / Math.min(2, Math.max(0.75, level.getBiome(blockPos).value().getBaseTemperature() + 0.2f)));
     }
 
     public static class Flowing extends RoyalJellyFluid {
