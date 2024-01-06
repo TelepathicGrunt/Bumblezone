@@ -19,5 +19,7 @@ Fixed Honey Fluid and Royal Jelly Fluid having a too bright overlay when inside 
 
 Honey Fluid and Royal Jelly Fluid not will flow faster in warmer biomes! And slower in really cold biomes.
 
+Fixed Honey Fluid and Royal Jelly Fluid bucket able to place the fluid in ultrawarm dimensions like the Nether. Now they turn into Glistering Honey Crystal block.
+
 ##### Items:
 Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
