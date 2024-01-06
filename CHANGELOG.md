@@ -1,5 +1,10 @@
 ### **(V.6.8.7 Changes) (1.19.2 Minecraft)**
 
+##### Structures:
+Added more rooms to Cell Maze! Special thanks to Tera for the new pieces!
+
+Made caves not carve into Cell Maze structures.
+
 ##### Blocks:
 Changed Crystalline Flower so that it sorts enchantments on clientside based on the actual translated names of enchantments.
  Will be much easier to find the enchantment you want.

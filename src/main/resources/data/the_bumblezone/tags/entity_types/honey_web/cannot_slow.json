@@ -1,10 +1,7 @@
 {
   "replace": false,
   "values": [
-    "the_bumblezone:sentry_watcher",
-    "the_bumblezone:cosmic_crystal_entity",
     "the_bumblezone:honey_slime",
-    "#the_bumblezone:bees",
     "#the_bumblezone:bee_like"
   ]
 }
