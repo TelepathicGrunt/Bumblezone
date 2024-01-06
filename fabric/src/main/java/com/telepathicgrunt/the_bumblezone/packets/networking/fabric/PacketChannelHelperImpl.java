@@ -12,10 +12,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public class PacketChannelHelperImpl {
-    public static void registerChannel(ResourceLocation channel) {
-        //Do Nothing
-    }
-
     public static <T extends Packet<T>> void registerS2CPacket(ResourceLocation channel, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {
         if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
             FabricClientPacketHelper.clientOnlyRegister(createChannelLocation(channel, id), handler);

@@ -44,6 +44,7 @@ import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.packets.networking.neoforge.PacketChannelHelperImpl;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -118,6 +119,7 @@ public class NeoForgeEventManager {
         modEventBus.addListener(NeoForgeEventManager::onAddTabContents);
         modEventBus.addListener(NeoForgeEventManager::onSpawnPlacements);
         modEventBus.addListener(NeoForgeEventManager::registerBumblezoneCapProviders);
+        modEventBus.addListener(PacketChannelHelperImpl::registerPayloads);
 
         eventBus.addListener(NeoForgeEventManager::onBabySpawn);
         eventBus.addListener(NeoForgeEventManager::onServerStarting);

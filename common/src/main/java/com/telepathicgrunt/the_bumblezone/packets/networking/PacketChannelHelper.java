@@ -15,11 +15,6 @@ import org.jetbrains.annotations.ApiStatus;
 public class PacketChannelHelper {
 
     @ExpectPlatform
-    public static void registerChannel(ResourceLocation channel) {
-        throw new NotImplementedException();
-    }
-
-    @ExpectPlatform
     public static <T extends Packet<T>> void registerS2CPacket(ResourceLocation channel, ResourceLocation id, PacketHandler<T> handler, Class<T> packetClass) {
         throw new NotImplementedException();
     }
