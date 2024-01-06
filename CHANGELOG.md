@@ -34,6 +34,9 @@ Fixed Purple Spike inflicting poison effect that doesn't remove itself when its 
 ##### Teleportation:
 Fixed infinite loop if teleporting to and from Bumblezone is cancelled by another mod or script.
 
+##### Lang:
+Lowercased some stuff in ru_ru to match vanilla Russian casings (Thanks to SwayMinin for this PR)
+
 ##### Mod Compat:
 (Fabric): Spectrum Jetpacks's jetpacks will now be disabled when in Heavy Air block
 
