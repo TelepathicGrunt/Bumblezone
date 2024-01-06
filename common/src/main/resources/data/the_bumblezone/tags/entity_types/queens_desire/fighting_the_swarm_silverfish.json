@@ -3,6 +3,10 @@
   "values": [
     "minecraft:silverfish",
     {
+      "id": "archon:mana_leech",
+      "required": false
+    },
+    {
       "id": "enemyexpansion:silverpet",
       "required": false
     },
