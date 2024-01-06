@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -169,7 +170,7 @@ public class BzSmartBucket extends BucketItem {
             if (!canPlaceFluid) {
                 return hitResult != null && this.emptyContents(player, world, hitResult.getBlockPos().relative(hitResult.getDirection()), null);
             }
-            else if (world.dimensionType().ultraWarm() && this.fluid.is(FluidTags.WATER)) {
+            else if (world.dimensionType().ultraWarm()) {
                 double x = pos.getX();
                 double y = pos.getY();
                 double z = pos.getZ();
@@ -179,10 +180,7 @@ public class BzSmartBucket extends BucketItem {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, x + Math.random(), y + Math.random(), z + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
 
-                if (this.fluid.is(BzTags.SUGAR_WATER_FLUID) &&
-                    world instanceof ServerLevel serverLevel &&
-                    world.getServer() != null)
-                {
+                if (this.fluid.is(BzTags.SUGAR_WATER_FLUID) && world instanceof ServerLevel serverLevel) {
                     Vec3 targetPos = hitResult != null ? hitResult.getLocation() : new Vec3(pos.getX(), pos.getY(), pos.getZ());
 
                     LootTable sugarWaterEvaporateLootTable = world.getServer().getLootTables().get(new ResourceLocation(Bumblezone.MODID, "fluids/sugar_water_evaporates"));
@@ -194,6 +192,9 @@ public class BzSmartBucket extends BucketItem {
                         itementity.setDefaultPickUpDelay();
                         world.addFreshEntity(itementity);
                     }
+                }
+                else if (this.fluid.is(BzTags.HONEY_FLUID) && world instanceof ServerLevel serverLevel) {
+                    serverLevel.setBlock(pos, BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState(), 3);
                 }
 
                 return true;

@@ -101,8 +101,8 @@ public class BzItems {
     public static final Item BEE_STINGER = new BeeStinger(new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB));
     public static final Item SUGAR_WATER_BUCKET = new BzSmartBucket(BzFluids.SUGAR_WATER_FLUID, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).craftRemainder(Items.BUCKET).stacksTo(1));
     public static final Item SUGAR_WATER_BOTTLE = new SugarWaterBottle((new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)).craftRemainder(Items.GLASS_BOTTLE).food((new FoodProperties.Builder()).nutrition(1).saturationMod(0.05F).effect(new MobEffectInstance(MobEffects.DIG_SPEED, 600, 0), 1.0F).build()).stacksTo(16));
-    public static final Item HONEY_BUCKET = new BucketItem(BzFluids.HONEY_FLUID, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).craftRemainder(Items.BUCKET).stacksTo(1));
-    public static final Item ROYAL_JELLY_BUCKET = new BucketItem(BzFluids.ROYAL_JELLY_FLUID, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.EPIC).craftRemainder(Items.BUCKET).stacksTo(1));
+    public static final Item HONEY_BUCKET = new BzSmartBucket(BzFluids.HONEY_FLUID, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).craftRemainder(Items.BUCKET).stacksTo(1));
+    public static final Item ROYAL_JELLY_BUCKET = new BzSmartBucket(BzFluids.ROYAL_JELLY_FLUID, new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.EPIC).craftRemainder(Items.BUCKET).stacksTo(1));
     public static final Item ROYAL_JELLY_BOTTLE = new RoyalJellyBottle((new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB).rarity(Rarity.EPIC)).craftRemainder(Items.GLASS_BOTTLE).food((new FoodProperties.Builder()).nutrition(10).saturationMod(0.2F).effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0), 1.0F).effect(new MobEffectInstance(BzEffects.BEENERGIZED, 1200, 1), 1.0F).build()).stacksTo(16));
     public static final Item HONEY_SLIME_SPAWN_EGG = new SpawnEggItem(BzEntities.HONEY_SLIME, 0xFFCC00, 0xFCA800, (new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
     public static final Item BEEHEMOTH_SPAWN_EGG = new SpawnEggItem(BzEntities.BEEHEMOTH, 0xFFCA47, 0x68372A, (new Item.Properties().tab(BUMBLEZONE_CREATIVE_TAB)));
