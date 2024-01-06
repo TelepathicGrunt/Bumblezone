@@ -29,7 +29,7 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
 [[dependencies.the_bumblezone]]
     modId="neoforge"
     type="required"
-    versionRange="[20.4.46-beta,)"
+    versionRange="[20.4.80-beta,)"
 
 [[dependencies.the_bumblezone]]
     modId="productivebees"

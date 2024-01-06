@@ -1,5 +1,8 @@
 ### **(V.7.3.0 Changes) (1.20.4 Minecraft)**
 
+##### Major:
+(NeoForge): Updated NeoForge version to work with the new networking code. NeoForge v20.4.80 or newer is now required.
+
 ##### Structures:
 Added more rooms to Cell Maze and Sempiternal Sanctums! Special thanks to Tera for the new pieces!
 
