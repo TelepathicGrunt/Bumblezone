@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,16 +49,24 @@ public class HoneyFluidBlock extends LiquidBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState blockState, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        if (this.neighboringFluidInteractions(world, pos)) {
-            world.scheduleTick(pos, blockState.getFluidState().getType(), this.fluid.getTickDelay(world));
+    public void neighborChanged(BlockState blockState, Level world, BlockPos blockPos, Block block, BlockPos fromPos, boolean notify) {
+        if (this.neighboringFluidInteractions(world, blockPos)) {
+            world.scheduleTick(blockPos, blockState.getFluidState().getType(), HoneyFluid.adjustedFlowSpeed(this.fluid.getTickDelay(world), world, blockPos));
         }
+    }
+
+    @Override
+    public BlockState updateShape(BlockState blockState, Direction direction, BlockState previousBlockState, LevelAccessor level, BlockPos blockPos, BlockPos blockPos1) {
+        if (blockState.getFluidState().isSource() || previousBlockState.getFluidState().isSource()) {
+            level.scheduleTick(blockPos, blockState.getFluidState().getType(), HoneyFluid.adjustedFlowSpeed(this.fluid.getTickDelay(level), level, blockPos));
+        }
+        return super.updateShape(blockState, direction, previousBlockState, level, blockPos, blockPos1);
     }
 
     @Override
     public void onPlace(BlockState blockState, Level world, BlockPos blockPos, BlockState previousBlockState, boolean notify) {
         if (this.neighboringFluidInteractions(world, blockPos)) {
-            world.scheduleTick(blockPos, blockState.getFluidState().getType(), this.fluid.getTickDelay(world));
+            world.scheduleTick(blockPos, blockState.getFluidState().getType(), HoneyFluid.adjustedFlowSpeed(this.fluid.getTickDelay(world), world, blockPos));
         }
     }
 
