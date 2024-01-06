@@ -19,7 +19,7 @@ Fixed Honey Fluid and Royal Jelly Fluid having a too bright overlay when inside 
 
 Fixed Honey Fluid and Royal Jelly Fluid making world too dark when going in and out of the fluid while hiding HUD.
 
-Honey Fluid and Royal Jelly Fluid not will flow faster in warmer biomes! And slower in really cold biomes.
+Honey Fluid and Royal Jelly Fluid now will flow faster in warmer biomes! And slower in really cold biomes.
 
 Fixed Honey Fluid and Royal Jelly Fluid bucket able to place the fluid in ultrawarm dimensions like the Nether. Now they turn into Glistering Honey Crystal block.
 
