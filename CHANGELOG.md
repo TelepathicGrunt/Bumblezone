@@ -19,6 +19,8 @@ Fixed Super Candle unlit wick being tilted.
 
 Fixed Honey Fluid having a too bright overlay when inside it at night in Overworld.
 
+(Fabric): Fixed Honey Fluid fog color being wrong in certain dimensions and applying thick fog too early before fully submerged.
+
 ##### Items:
 Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
 
