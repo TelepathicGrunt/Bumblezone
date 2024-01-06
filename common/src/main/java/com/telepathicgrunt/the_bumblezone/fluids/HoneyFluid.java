@@ -292,7 +292,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
     }
 
     public static int adjustedFlowSpeed(int originalSpeed, LevelAccessor level, BlockPos blockPos) {
-        return (int) (originalSpeed / Math.min(2, Math.max(0.75, level.getBiome(blockPos).value().getBaseTemperature() + 0.2f)));
+        return (int) (originalSpeed / Math.min(1.75, Math.max(0.75, level.getBiome(blockPos).value().getBaseTemperature() + 0.2f)));
     }
 
     public static class Flowing extends HoneyFluid {
