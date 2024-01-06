@@ -164,7 +164,7 @@ public class PurpleSpikeEntity extends Entity {
             if (!list.isEmpty()) {
                 for (Entity entity : list) {
                     if (entity instanceof LivingEntity livingEntity) {
-                        if (this.level().isClientSide()) {
+                        if (!this.level().isClientSide()) {
                             float damageAmount;
                             float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
 
