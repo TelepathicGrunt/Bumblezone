@@ -138,7 +138,7 @@ public abstract class HoneyFluid extends FlowingFluid {
                 fluidState = newFluidState;
                 BlockState blockstate = newFluidState.createLegacyBlock();
                 world.setBlock(blockPos, blockstate, 2);
-                world.scheduleTick(blockPos, newFluidState.getType(), spreadDelay);
+                world.scheduleTick(blockPos, newFluidState.getType(), adjustedFlowSpeed(spreadDelay, world, blockPos));
                 world.updateNeighborsAt(blockPos, blockstate.getBlock());
             }
         }
@@ -331,6 +331,10 @@ public abstract class HoneyFluid extends FlowingFluid {
     protected static int decreaseAirSupply(int airSupply, LivingEntity entity, RandomSource random) {
         int respiration = EnchantmentHelper.getRespiration(entity);
         return respiration > 0 && random.nextInt(respiration + 1) > 0 ? airSupply : airSupply - 1;
+    }
+    
+    public static int adjustedFlowSpeed(int originalSpeed, LevelAccessor level, BlockPos blockPos) {
+        return (int) (originalSpeed / Math.min(2, Math.max(0.75, level.getBiome(blockPos).value().getBaseTemperature() + 0.2f)));
     }
 
     public static class Flowing extends HoneyFluid {

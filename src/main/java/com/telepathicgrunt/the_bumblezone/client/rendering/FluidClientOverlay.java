@@ -103,6 +103,7 @@ public class FluidClientOverlay {
             );
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
+            float[] olderShaderColor = RenderSystem.getShaderColor().clone();
             RenderSystem.setShaderColor(brightness, brightness, brightness, 0.95F);
             float modifiedYaw = -clientPlayerEntity.getYRot() / (64.0F * 8F);
             float modifiedPitch = clientPlayerEntity.getXRot() / (64.0F * 8F);
@@ -113,6 +114,7 @@ public class FluidClientOverlay {
             bufferBuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(1.0F + modifiedYaw, 1.0F + modifiedPitch).endVertex();
             bufferBuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(2.0F + modifiedYaw, 0.0F + modifiedPitch).endVertex();
             BufferUploader.drawWithShader(bufferBuilder.end());
+            RenderSystem.setShaderColor(olderShaderColor[0], olderShaderColor[1], olderShaderColor[2], olderShaderColor[3]);
             RenderSystem.disableBlend();
             return true;
         }
