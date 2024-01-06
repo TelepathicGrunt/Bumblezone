@@ -15,7 +15,9 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
  `the_bumblezone:honey_web/cannot_slow`
  `the_bumblezone:sticky_honey_residue/cannot_slow`
 
-Fixed Honey Fluid having a too bright overlay when inside it at night in Overworld.
+Fixed Honey Fluid and Royal Jelly Fluid having a too bright overlay when inside it at night in Overworld.
+
+Honey Fluid and Royal Jelly Fluid not will flow faster in warmer biomes! And slower in really cold biomes.
 
 ##### Items:
 Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
