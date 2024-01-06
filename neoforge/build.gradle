@@ -84,10 +84,10 @@ dependencies {
     //modRuntimeOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}")
     modCompileOnly("top.theillusivec4.curios:curios-neoforge:${project.curios}:api")
 
-    // modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4977107")
+     modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4977107")
     // modRuntimeOnly("curse.maven:worldedit-225608:4586218")
-    // modRuntimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_forge}")
-    // modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_forge}")
+     modRuntimeOnly("com.telepathicgrunt:CommandStructures-Neoforge:${project.commandstructures_forge}")
+     modRuntimeOnly("com.telepathicgrunt:StructureVoidToggle-Neoforge:${project.structurevoidtoggle_forge}")
 
 }
 
