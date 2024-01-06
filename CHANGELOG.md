@@ -17,7 +17,11 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
 
 Fixed Super Candle unlit wick being tilted.
 
-Fixed Honey Fluid having a too bright overlay when inside it at night in Overworld.
+Fixed Honey Fluid and Royal Jelly Fluid having a too bright overlay when inside it at night in Overworld.
+
+Fixed Honey Fluid and Royal Jelly Fluid making world too dark when going ina nd out of the fluid while hiding HUD.
+
+Honey Fluid and Royal Jelly Fluid not will flow faster in warmer biomes!
 
 (Fabric): Fixed Honey Fluid fog color being wrong in certain dimensions and applying thick fog too early before fully submerged.
 

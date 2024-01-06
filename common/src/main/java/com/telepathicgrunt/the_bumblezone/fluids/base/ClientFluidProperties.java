@@ -163,6 +163,7 @@ public class ClientFluidProperties {
         float f = LightTexture.getBrightness(player.level().dimensionType(), player.level().getMaxLocalRawBrightness(blockpos));
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
+        float[] olderShaderColor = RenderSystem.getShaderColor().clone();
         RenderSystem.setShaderColor(f, f, f, 0.1F);
         float f7 = -player.getYRot() / 64.0F;
         float f8 = player.getXRot() / 64.0F;
@@ -173,6 +174,7 @@ public class ClientFluidProperties {
         bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(0.0F + f7, 0.0F + f8).endVertex();
         bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(4.0F + f7, 0.0F + f8).endVertex();
         BufferUploader.drawWithShader(bufferbuilder.end());
+        RenderSystem.setShaderColor(olderShaderColor[0], olderShaderColor[1], olderShaderColor[2], olderShaderColor[3]);
         RenderSystem.disableBlend();
     }
 }
