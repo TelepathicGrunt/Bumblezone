@@ -17,6 +17,8 @@ Added two new entity type tags for marking entities as immune to the slowdown ef
 
 Fixed Honey Fluid having a too bright overlay when inside it at night in Overworld.
 
+(Fabric/Quilt): Fixed Honey Fluid fog color being wrong in certain dimensions and applying thick fog too early before fully submerged.
+
 ##### Items:
 Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
 
