@@ -38,7 +38,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/bridge",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -65,7 +65,7 @@
       }
     },
     {
-      "weight": 14,
+      "weight": 15,
       "element": {
         "location": "the_bumblezone:cell_maze/crystal_room",
         "processors": "the_bumblezone:cell_maze_generic_less_crystals",
@@ -83,7 +83,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/flower_pond",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -92,7 +92,7 @@
       }
     },
     {
-      "weight": 8,
+      "weight": 6,
       "element": {
         "location": "the_bumblezone:cell_maze/hanging_cocoons",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -110,7 +110,7 @@
       }
     },
     {
-      "weight": 14,
+      "weight": 15,
       "element": {
         "location": "the_bumblezone:cell_maze/honey_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -119,7 +119,7 @@
       }
     },
     {
-      "weight": 22,
+      "weight": 23,
       "element": {
         "location": "the_bumblezone:cell_maze/pillar_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -128,7 +128,7 @@
       }
     },
     {
-      "weight": 14,
+      "weight": 15,
       "element": {
         "location": "the_bumblezone:cell_maze/pollen_deep_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -137,7 +137,7 @@
       }
     },
     {
-      "weight": 14,
+      "weight": 15,
       "element": {
         "location": "the_bumblezone:cell_maze/pollen_shallow_room",
         "processors": "the_bumblezone:cell_maze_generic",
@@ -146,7 +146,7 @@
       }
     },
     {
-      "weight": 14,
+      "weight": 15,
       "element": {
         "location": "the_bumblezone:cell_maze/sticky_room",
         "processors": "the_bumblezone:cell_maze_generic",
