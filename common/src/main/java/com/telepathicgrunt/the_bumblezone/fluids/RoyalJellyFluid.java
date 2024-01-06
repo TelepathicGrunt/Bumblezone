@@ -92,6 +92,7 @@ public abstract class RoyalJellyFluid extends BzFlowingFluid {
         return 1;
     }
 
+    @Override
     public int getTickDelay(LevelReader world) {
         return 30;
     }
@@ -134,7 +135,7 @@ public abstract class RoyalJellyFluid extends BzFlowingFluid {
                 fluidState = newFluidState;
                 BlockState blockstate = newFluidState.createLegacyBlock();
                 world.setBlock(blockPos, blockstate, 2);
-                world.scheduleTick(blockPos, newFluidState.getType(), spreadDelay);
+                world.scheduleTick(blockPos, newFluidState.getType(), adjustedFlowSpeed(spreadDelay, world, blockPos));
                 world.updateNeighborsAt(blockPos, blockstate.getBlock());
             }
         }
@@ -263,6 +264,10 @@ public abstract class RoyalJellyFluid extends BzFlowingFluid {
                     (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
 
         return fluidState.getValue(ABOVE_FLUID) || aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
+    }
+
+    public static int adjustedFlowSpeed(int originalSpeed, LevelAccessor level, BlockPos blockPos) {
+        return (int) (originalSpeed / Math.max(1, level.getBiome(blockPos).value().getBaseTemperature()));
     }
 
     public static class Flowing extends RoyalJellyFluid {
