@@ -10,6 +10,8 @@ Made caves not carve into Cell Maze structures.
 
 Made Tree Dungeons only place pillars of dirt down about 10 blocks instead of forever downward.
 
+Fixed some Luminescent Wax blocks facing wrong way in Sempiternal Sanctums.
+
 ##### Blocks:
 Changed Crystalline Flower so that it sorts enchantments on clientside based on the actual translated names of enchantments.
  Will be much easier to find the enchantment you want.
