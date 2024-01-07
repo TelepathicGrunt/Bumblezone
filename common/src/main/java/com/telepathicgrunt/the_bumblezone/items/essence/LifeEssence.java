@@ -166,7 +166,7 @@ public class LifeEssence extends AbilityEssenceItem {
     }
 
     private void growPlantBlock(ItemStack stack, ServerLevel level, ServerPlayer serverPlayer, BlockPos blockPos, BlockState state) {
-        if (state.is(BzTags.GROW_PLANTS) && !state.is(BzTags.FORCE_DISALLOWED_GROW_PLANT)) {
+        if (state.is(BzTags.LIFE_GROW_PLANTS) && !state.is(BzTags.LIFE_FORCE_DISALLOWED_GROW_PLANT)) {
             Block block = state.getBlock();
             boolean grewBlock = false;
 

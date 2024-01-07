@@ -67,12 +67,12 @@ public class KnowingEssenceLootBlockOutlining {
                         BlockEntity blockEntity = blockEntityEntry.getValue();
                         BlockState blockState = blockEntity.getBlockState();
                         Block block = blockState.getBlock();
-                        if ((blockState.is(BzTags.BLOCK_ENTITY_FORCED_HIGHLIGHTING) ||
+                        if ((blockState.is(BzTags.KNOWING_BLOCK_ENTITY_FORCED_HIGHLIGHTING) ||
                             blockEntity instanceof RandomizableContainerBlockEntity ||
                             blockEntity instanceof BrushableBlockEntity ||
                             blockEntity instanceof EnderChestBlockEntity ||
                             block instanceof EnderChestBlock)
-                            && !blockState.is(BzTags.BLOCK_ENTITY_PREVENT_HIGHLIGHTING))
+                            && !blockState.is(BzTags.KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING))
                         {
                              BlockPos lootBlockPos = blockEntityEntry.getKey();
 

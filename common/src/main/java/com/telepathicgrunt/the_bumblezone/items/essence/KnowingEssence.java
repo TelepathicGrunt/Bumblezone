@@ -164,28 +164,28 @@ public class KnowingEssence extends AbilityEssenceItem {
 
     public static int GetTeamColor(Entity entity, Player player) {
         EntityType<?> entityType = entity.getType();
-        if (entityType.is(BzTags.ENTITY_PREVENT_HIGHLIGHTING)) {
+        if (entityType.is(BzTags.KNOWING_ENTITY_PREVENT_HIGHLIGHTING)) {
             return NO_HIGHLIGHT;
         }
-        else if (entityType.is(BzTags.ENTITY_FORCED_WHITE_HIGHLIGHT)) {
+        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_WHITE_HIGHLIGHT)) {
             return WHITE;
         }
-        else if (entityType.is(BzTags.ENTITY_FORCED_PURPLE_HIGHLIGHT)) {
+        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_PURPLE_HIGHLIGHT)) {
             return PURPLE;
         }
-        else if (entityType.is(BzTags.ENTITY_FORCED_CYAN_HIGHLIGHT)) {
+        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_CYAN_HIGHLIGHT)) {
             return CYAN;
         }
-        else if (entityType.is(BzTags.ENTITY_FORCED_GREEN_HIGHLIGHT)) {
+        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_GREEN_HIGHLIGHT)) {
             return GREEN;
         }
-        else if (entityType.is(BzTags.ENTITY_FORCED_YELLOW_HIGHLIGHT)) {
+        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_YELLOW_HIGHLIGHT)) {
             return YELLOW;
         }
-        else if (entityType.is(BzTags.ENTITY_FORCED_ORANGE_HIGHLIGHT)) {
+        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_ORANGE_HIGHLIGHT)) {
             return ORANGE;
         }
-        else if (entityType.is(BzTags.ENTITY_FORCED_RED_HIGHLIGHT)) {
+        else if (entityType.is(BzTags.KNOWING_ENTITY_FORCED_RED_HIGHLIGHT)) {
             return RED;
         }
 
