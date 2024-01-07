@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "minecraft:dark_oak_sapling",
-    "minecraft:mangrove_propagule"
+    "minecraft:mangrove_propagule",
+    {
+      "id": "#spectrum:colored_saplings",
+      "required": false
+    },
+    {
+      "id": "spectrum:ominous_sapling",
+      "required": false
+    }
   ]
 }
