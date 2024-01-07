@@ -143,22 +143,25 @@ public class LifeEssence extends AbilityEssenceItem {
         int maxY = Math.min(level.getMaxBuildHeight(), playerPos.getY() + radius);
         int minZ = playerPos.getZ() - radius;
         int maxZ = playerPos.getZ() + radius;
+
+        boolean foundValidChunkSection = false;
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
 
                 if (cachedChunk == null ||
-                    currentCachedChunkPos.x != SectionPos.blockToSectionCoord(x) ||
-                    currentCachedChunkPos.z != SectionPos.blockToSectionCoord(z))
+                        currentCachedChunkPos.x != SectionPos.blockToSectionCoord(x) ||
+                        currentCachedChunkPos.z != SectionPos.blockToSectionCoord(z))
                 {
                     currentCachedChunkPos = new ChunkPos(SectionPos.blockToSectionCoord(x), SectionPos.blockToSectionCoord(z));
                     cachedChunk = level.getChunk(currentCachedChunkPos.x, currentCachedChunkPos.z);
                 }
 
-                boolean foundValidChunkSection = false;
+                foundValidChunkSection = false;
                 for (int y = maxY; y >= minY; y--) {
                     if (cachedChunk.getSection(cachedChunk.getSectionIndex(y))
                         .maybeHas(a -> a.is(BzTags.LIFE_GROW_PLANTS) && !a.is(BzTags.LIFE_FORCE_DISALLOWED_GROW_PLANT)))
                     {
+                        foundValidChunkSection = true;
                         mutableBlockPos.set(x, y, z);
                         BlockState state = cachedChunk.getBlockState(mutableBlockPos);
 
@@ -167,16 +170,21 @@ public class LifeEssence extends AbilityEssenceItem {
                             return;
                         }
                     }
-                    else {
-                        y = y - (y % 16) - 1;
+                    else if (y != minY) {
+                        y = Math.max(minY, SectionPos.sectionToBlockCoord(SectionPos.blockToSectionCoord(y)));
                     }
                 }
 
                 if (!foundValidChunkSection) {
-                    z = z + (16 - (z % 16)) - 1;
-                    if (z >= maxZ) {
-                        x = x + (16 - (x % 16)) - 1;
+                    if (z != maxZ) {
+                        z = Math.min(maxZ, SectionPos.sectionToBlockCoord(SectionPos.blockToSectionCoord(z) + 1));
                     }
+                }
+            }
+
+            if (!foundValidChunkSection) {
+                if (x != maxX) {
+                    x = Math.min(maxX, SectionPos.sectionToBlockCoord(SectionPos.blockToSectionCoord(x) + 1));
                 }
             }
         }
