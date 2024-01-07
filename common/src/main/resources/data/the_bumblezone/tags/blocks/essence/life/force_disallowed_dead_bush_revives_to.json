@@ -4,11 +4,219 @@
     "minecraft:dark_oak_sapling",
     "minecraft:mangrove_propagule",
     {
+      "id": "alexscaves:pewen_sapling",
+      "required": false
+    },
+    {
+      "id": "alexscaves:thornwood_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:bright_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:starlit_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:frostbright_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:comet_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:lunar_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:dusk_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:maple_sapling",
+      "required": false
+    },
+    {
+      "id": "blue_skies:crescent_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:dead_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:magic_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:umbran_sapling",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:hellbark_sapling",
+      "required": false
+    },
+    {
+      "id": "byg:blue_enchanted_sapling",
+      "required": false
+    },
+    {
+      "id": "byg:green_enchanted_sapling",
+      "required": false
+    },
+    {
+      "id": "byg:lament_sapling",
+      "required": false
+    },
+    {
+      "id": "byg:ether_sapling",
+      "required": false
+    },
+    {
+      "id": "byg:nightshade_sapling",
+      "required": false
+    },
+    {
+      "id": "byg:withering_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "deep_aether:sunroot_sapling",
+      "required": false
+    },
+    {
+      "id": "deep_aether:blue_roseroot_sapling",
+      "required": false
+    },
+    {
+      "id": "deep_aether:conberry_sapling",
+      "required": false
+    },
+    {
+      "id": "deep_aether:cruderoot_sapling",
+      "required": false
+    },
+    {
+      "id": "deep_aether:roseroot_sapling",
+      "required": false
+    },
+    {
+      "id": "deep_aether:yagroot_roots",
+      "required": false
+    },
+    {
+      "id": "habitat:fairy_ring_mushroom",
+      "required": false
+    },
+    {
+      "id": "minecells:red_putrid_sapling",
+      "required": false
+    },
+    {
+      "id": "phantasm:pream_sapling",
+      "required": false
+    },
+    {
+      "id": "occultism:otherworld_sapling_natural",
+      "required": false
+    },
+    {
+      "id": "occultism:otherworld_sapling",
+      "required": false
+    },
+    {
+      "id": "rats:pirat_sapling.json",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:ashen_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:bamboo_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:brimwood_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:cactus_flower",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:cobalt_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_pine_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_sapling",
+      "required": false
+    },
+    {
       "id": "#spectrum:colored_saplings",
       "required": false
     },
     {
       "id": "spectrum:ominous_sapling",
+      "required": false
+    },
+    {
+      "id": "silentgear:netherwood_sapling",
+      "required": false
+    },
+    {
+      "id": "twilightforest:time_sapling",
+      "required": false
+    },
+    {
+      "id": "twilightforest:transformation_sapling",
+      "required": false
+    },
+    {
+      "id": "twilightforest:mining_sapling",
+      "required": false
+    },
+    {
+      "id": "twilightforest:sorting_sapling",
+      "required": false
+    },
+    {
+      "id": "twilightforest:hollow_oak_sapling",
+      "required": false
+    },
+    {
+      "id": "undergarden:smogstem_sapling",
+      "required": false
+    },
+    {
+      "id": "undergarden:wigglewood_sapling",
+      "required": false
+    },
+    {
+      "id": "undergarden:grongle_sapling",
+      "required": false
+    },
+    {
+      "id": "tropicraft:red_mangrove_propagule",
+      "required": false
+    },
+    {
+      "id": "tropicraft:tall_mangrove_propagule",
+      "required": false
+    },
+    {
+      "id": "tropicraft:tea_mangrove_propagule",
+      "required": false
+    },
+    {
+      "id": "tropicraft:black_mangrove_propagule",
       "required": false
     }
   ]

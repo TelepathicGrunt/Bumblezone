@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "minecraft:dead_bush"
+    "minecraft:dead_bush",
+    {
+      "id": "biomesoplenty:dead_sapling",
+      "required": false
+    },
+    {
+      "id": "regions_unexplored:dead_sapling",
+      "required": false
+    }
   ]
 }
