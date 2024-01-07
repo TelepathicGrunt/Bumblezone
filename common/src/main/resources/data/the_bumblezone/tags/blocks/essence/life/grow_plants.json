@@ -3,6 +3,11 @@
   "values": [
     "#minecraft:bee_growables",
     "#minecraft:saplings",
-    "minecraft:nether_wart"
+    "minecraft:bamboo_sapling",
+    "minecraft:cactus",
+    "minecraft:cocoa",
+    "minecraft:dead_bush",
+    "minecraft:nether_wart",
+    "minecraft:sugar_cane"
   ]
 }

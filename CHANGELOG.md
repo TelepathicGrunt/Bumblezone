@@ -30,6 +30,13 @@ Fixed Honey Fluid and Royal Jelly Fluid bucket able to place the fluid in ultraw
 ##### Items:
 Fixed it so that Honey Compasses locked to a structure will ignore y value difference when showing distance to target when advanced tooltips is on.
 
+Essence of Life now grows Sugar Cane, Cactus, Bamboo Sapling, and Cocoa Beans! It'll revive Dead Bush into a random Sapling! (Minus Mangrove and Dark Oak saplings)
+ New tags for controlling all this. All blocks must be in `the_bumblezone:essence/life/grow_plants` for any reviving or growing to activate:
+ `the_bumblezone:essence/life/three_high_pillar_plant`
+ `the_bumblezone:essence/life/is_dead_bush`
+ `the_bumblezone:essence/life/dead_bush_revives_to`
+ `the_bumblezone:essence/life/force_disallowed_dead_bush_revives_to`
+
 ##### Entities:
 Added quarterTurns option to Sentry Watcher nbt. Set this in the entity to true or 1b for the entity to do quarter turns instead of half turns.
 

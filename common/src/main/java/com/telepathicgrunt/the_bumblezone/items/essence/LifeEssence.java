@@ -28,12 +28,14 @@ import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class LifeEssence extends AbilityEssenceItem {
@@ -173,7 +175,22 @@ public class LifeEssence extends AbilityEssenceItem {
                 return;
             }
 
-            if (block instanceof CropBlock cropBlock) {
+            if (state.is(BzTags.LIFE_IS_DEAD_BUSH)) {
+                List<Block> saplings = GeneralUtils.convertHoldersetToList(BuiltInRegistries.BLOCK.getTag(BzTags.LIFE_DEAD_BUSH_REVIVES_TO));
+                saplings.removeIf(sapling -> GeneralUtils.isInTag(BuiltInRegistries.BLOCK, BzTags.LIFE_FORCE_DISALLOWED_DEAD_BUSH_REVIVES_TO, sapling));
+                if (saplings.size() > 0) {
+                    Block chosenSapling = saplings.get(level.random.nextInt(saplings.size()));
+                    level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
+                    if (chosenSapling.defaultBlockState().canSurvive(level, blockPos)) {
+                        level.setBlock(blockPos, chosenSapling.defaultBlockState(), 3);
+                        grewBlock = true;
+                    }
+                    else {
+                        level.setBlock(blockPos, state, 2);
+                    }
+                }
+            }
+            else if (block instanceof CropBlock cropBlock) {
                 if (!cropBlock.isMaxAge(state)) {
                     BlockState newState = cropBlock.getStateForAge(cropBlock.getAge(state) + 1);
                     level.setBlock(blockPos, newState, 3);
@@ -214,6 +231,25 @@ public class LifeEssence extends AbilityEssenceItem {
                 bonemealableBlock.performBonemeal(level, level.getRandom(), blockPos, state);
                 grewBlock = true;
             }
+            else if (!(state.is(BzTags.LIFE_THREE_HIGH_PILLAR_PLANT) && level.getBlockState(blockPos.above()).is(state.getBlock()))) {
+                Optional<Property<?>> optionalProperty = state.getProperties().stream().filter(p -> p.getName().equalsIgnoreCase("age")).findAny();
+                if (optionalProperty.isPresent()) {
+                    Property<?> property = optionalProperty.get();
+                    if (property.getValueClass() == Integer.class &&
+                            property.getPossibleValues().stream().max(Comparable::compareTo).orElse(null) != state.getValue(property))
+                    {
+                        BlockState newState = state.setValue((Property<Integer>)property, ((Integer)state.getValue(property)) + 1);
+                        level.setBlock(blockPos, newState, 3);
+                        grewBlock = true;
+                    }
+                    else if (state.is(BzTags.LIFE_THREE_HIGH_PILLAR_PLANT)) {
+                        grewBlock = growUpOneToThreeHighLimit(level, blockPos, state);
+                    }
+                }
+                else if (state.is(BzTags.LIFE_THREE_HIGH_PILLAR_PLANT)) {
+                    grewBlock = growUpOneToThreeHighLimit(level, blockPos, state);
+                }
+            }
 
             if (grewBlock) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
@@ -222,6 +258,28 @@ public class LifeEssence extends AbilityEssenceItem {
                 }
             }
         }
+    }
+
+    private static boolean growUpOneToThreeHighLimit(ServerLevel level, BlockPos blockPos, BlockState state) {
+        int currentHeight = 1;
+
+        int aboveOffset = 1;
+        while (level.getBlockState(blockPos.above(aboveOffset)).is(state.getBlock()) && aboveOffset <= 3 && currentHeight <= 3) {
+            aboveOffset++;
+            currentHeight++;
+        }
+
+        int belowOffset = 1;
+        while (level.getBlockState(blockPos.below(belowOffset)).is(state.getBlock()) && belowOffset <= 3 && currentHeight <= 3) {
+            belowOffset++;
+            currentHeight++;
+        }
+
+        if (currentHeight < 3 && level.getBlockState(blockPos.above(aboveOffset)).isAir()) {
+            level.setBlock(blockPos.above(aboveOffset), state.getBlock().defaultBlockState(), 3);
+            return true;
+        }
+        return false;
     }
 
     private boolean doesNotHaveFruitNearby(ServerLevel level, StemBlock stemblock, BlockPos blockPos) {
