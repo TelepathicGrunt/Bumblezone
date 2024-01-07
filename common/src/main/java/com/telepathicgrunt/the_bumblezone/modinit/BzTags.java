@@ -57,6 +57,10 @@ public class BzTags {
     public static final TagKey<Block> KNOWING_BLOCK_ENTITY_PREVENT_HIGHLIGHTING = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/knowing/block_entity_prevent_highlighting"));
     public static final TagKey<Block> LIFE_FORCE_DISALLOWED_GROW_PLANT = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/force_disallowed_grow_plant"));
     public static final TagKey<Block> LIFE_GROW_PLANTS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/grow_plants"));
+    public static final TagKey<Block> LIFE_THREE_HIGH_PILLAR_PLANT = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/three_high_pillar_plant"));
+    public static final TagKey<Block> LIFE_IS_DEAD_BUSH = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/is_dead_bush"));
+    public static final TagKey<Block> LIFE_DEAD_BUSH_REVIVES_TO = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/dead_bush_revives_to"));
+    public static final TagKey<Block> LIFE_FORCE_DISALLOWED_DEAD_BUSH_REVIVES_TO = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/life/force_disallowed_dead_bush_revives_to"));
     public static final TagKey<Block> POLLEN_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "pollen"));
     public static final TagKey<Block> SENTRY_WATCHER_ALWAYS_DESTROY = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/always_destroy"));
     public static final TagKey<Block> SENTRY_WATCHER_FORCED_NEVER_DESTROY = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "sentry_watcher/forced_never_destroy"));
