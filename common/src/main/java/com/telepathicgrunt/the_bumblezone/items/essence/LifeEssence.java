@@ -31,10 +31,12 @@ import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -154,13 +156,28 @@ public class LifeEssence extends AbilityEssenceItem {
                     cachedChunk = level.getChunk(currentCachedChunkPos.x, currentCachedChunkPos.z);
                 }
 
+                boolean foundValidChunkSection = false;
                 for (int y = maxY; y >= minY; y--) {
-                    mutableBlockPos.set(x, y, z);
-                    BlockState state = cachedChunk.getBlockState(mutableBlockPos);
+                    if (cachedChunk.getSection(cachedChunk.getSectionIndex(y))
+                        .maybeHas(a -> a.is(BzTags.LIFE_GROW_PLANTS) && !a.is(BzTags.LIFE_FORCE_DISALLOWED_GROW_PLANT)))
+                    {
+                        mutableBlockPos.set(x, y, z);
+                        BlockState state = cachedChunk.getBlockState(mutableBlockPos);
 
-                    growPlantBlock(stack, level, serverPlayer, mutableBlockPos, state);
-                    if (getForcedCooldown(stack)) {
-                        return;
+                        growPlantBlock(stack, level, serverPlayer, mutableBlockPos, state);
+                        if (getForcedCooldown(stack)) {
+                            return;
+                        }
+                    }
+                    else {
+                        y = y - (y % 16) - 1;
+                    }
+                }
+
+                if (!foundValidChunkSection) {
+                    z = z + (16 - (z % 16)) - 1;
+                    if (z >= maxZ) {
+                        x = x + (16 - (x % 16)) - 1;
                     }
                 }
             }
