@@ -115,12 +115,12 @@ public abstract class EntityMixin {
         Entity current = (Entity) (Object) this;
         if (current instanceof Mob || comparer instanceof Mob) {
             if (current instanceof Player player && CalmingEssence.IsCalmingEssenceActive(player)) {
-                if (!comparer.getType().is(BzTags.ALLOW_ANGER_THROUGH)) {
+                if (!comparer.getType().is(BzTags.CALMING_ALLOW_ANGER_THROUGH)) {
                     cir.setReturnValue(false);
                 }
             }
             else if (comparer instanceof Player player && CalmingEssence.IsCalmingEssenceActive(player)) {
-                if (!current.getType().is(BzTags.ALLOW_ANGER_THROUGH)) {
+                if (!current.getType().is(BzTags.CALMING_ALLOW_ANGER_THROUGH)) {
                     cir.setReturnValue(false);
                 }
             }
