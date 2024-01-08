@@ -3,6 +3,9 @@
 ##### Structures:
 Adjusted rates of some statues in Sempiternal Sanctum
 
+##### Items:
+Updated JEI/EMI/REI description for Honey Bucket and Royal Jelly Bucket.
+
 
 ### **(V.7.2.0 Changes) (1.20.1 Minecraft)**
 
