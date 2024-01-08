@@ -1,3 +1,9 @@
+### **(V.7.3.1 Changes) (1.20.4 Minecraft)**
+
+##### Structures:
+Adjusted rates of some statues in Sempiternal Sanctum
+
+
 ### **(V.7.3.0 Changes) (1.20.4 Minecraft)**
 
 ##### Major:
