@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.living;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlockWhite;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
@@ -75,6 +76,7 @@ import org.joml.Vector3f;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -1381,6 +1383,13 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
+    public boolean canBeAffected(MobEffectInstance mobEffectInstance) {
+        return mobEffectInstance.getEffect() != MobEffects.REGENERATION &&
+                mobEffectInstance.getEffect() != MobEffects.HEAL &&
+                mobEffectInstance.getEffect() != MobEffects.ABSORPTION;
+    }
+
+    @Override
     public void kill() {
         this.setHealth(0);
         this.die(this.damageSources().genericKill());
@@ -1509,11 +1518,6 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     @Override
     public boolean isNoGravity() {
-        return true;
-    }
-
-    @Override
-    public boolean canBeAffected(MobEffectInstance mobEffectInstance) {
         return true;
     }
 
@@ -1649,6 +1653,10 @@ public class CosmicCrystalEntity extends LivingEntity {
 
         return false;
     }
+
+    // Try to stop healing
+    @Override
+    public void heal(float f) {}
 
     private void spawnLargeParticleCloud(int radius) {
         int radiusSquared = radius * radius;

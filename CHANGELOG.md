@@ -3,6 +3,15 @@
 ##### Structures:
 Adjusted rates of some statues in Sempiternal Sanctum
 
+Removed Mining Fatigue from White and Green Essence arenas because some *certain* mods messes with player attack speed when mining fatigue is on.
+
+##### Entities:
+Cosmic Crystal Entity now overrides heal to make it do nothing. Should help stop *certain* other mods form healing this boss which makes fight impossible.
+
+Cosmic Crystal Entity now rejects Regeneration, Heal, and Absorption status effect to stop *certain* other mods from healing the boss.
+
+Dirt Pellet hitbox size doubled and increase range for hitting the projectile back to sender.
+
 ##### Items:
 Updated JEI/EMI/REI description for Honey Bucket and Royal Jelly Bucket.
 

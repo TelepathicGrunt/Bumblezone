@@ -351,7 +351,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
     @Override
     public float getPickRadius() {
         double speed = this.getDeltaMovement().length();
-        return (float)(speed / 1.5d);
+        return (float) Math.max(speed, 8);
     }
 
     @Override

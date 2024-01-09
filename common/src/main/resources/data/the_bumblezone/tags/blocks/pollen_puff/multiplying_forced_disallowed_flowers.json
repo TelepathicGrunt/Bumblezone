@@ -266,6 +266,22 @@
       "required": false
     },
     {
+      "id": "unusualprehistory:bennet",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:petrified_bush",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:archaeos",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:horsetail",
+      "required": false
+    },
+    {
       "id": "windswept:wither_rose_bush",
       "required": false
     },

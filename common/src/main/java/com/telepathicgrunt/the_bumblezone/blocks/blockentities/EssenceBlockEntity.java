@@ -288,19 +288,21 @@ public class EssenceBlockEntity extends BlockEntity {
                         essenceBlockEntity.setChanged();
                     }
                     else {
-                        if (!essenceBlockEntity.getEventBar().getPlayers().contains(serverPlayer)) {
-                            essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
-                            if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                        if (essenceBlockEntity.getBlockState().getBlock() instanceof EssenceBlock essenceBlock) {
+                            if (!essenceBlockEntity.getEventBar().getPlayers().contains(serverPlayer)) {
+                                essenceBlockEntity.getEventBar().addPlayer(serverPlayer);
                                 essenceBlock.onPlayerEnter(serverLevel, serverPlayer, essenceBlockEntity);
                             }
-                        }
 
-                        serverPlayer.addEffect(new MobEffectInstance(
-                                MobEffects.DIG_SLOWDOWN,
-                                essenceBlockEntity.getEventTimer(),
-                                3,
-                                false,
-                                false));
+                            if (essenceBlock.hasMiningFatigue()) {
+                                serverPlayer.addEffect(new MobEffectInstance(
+                                        MobEffects.DIG_SLOWDOWN,
+                                        essenceBlockEntity.getEventTimer(),
+                                        3,
+                                        false,
+                                        false));
+                            }
+                        }
                     }
                 }
                 else {

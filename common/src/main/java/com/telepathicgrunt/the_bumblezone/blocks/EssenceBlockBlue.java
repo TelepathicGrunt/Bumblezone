@@ -83,6 +83,11 @@ public class EssenceBlockBlue extends EssenceBlock {
     }
 
     @Override
+    public boolean hasMiningFatigue() {
+        return true;
+    }
+
+    @Override
     public void awardPlayerWinStat(ServerPlayer serverPlayer) {
         serverPlayer.awardStat(BzStats.CALMING_EVENT_DEFEATED_RL.get());
     }
