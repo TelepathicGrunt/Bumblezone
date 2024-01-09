@@ -177,6 +177,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
 
     public abstract int getEssenceXpReward();
 
+    public abstract boolean hasMiningFatigue();
+
     public void onPlayerEnter(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {}
 
     public void onPlayerLeave(ServerLevel serverLevel, ServerPlayer serverPlayer, EssenceBlockEntity essenceBlockEntity) {

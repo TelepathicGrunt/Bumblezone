@@ -105,6 +105,11 @@ public class EssenceBlockGreen extends EssenceBlock {
     }
 
     @Override
+    public boolean hasMiningFatigue() {
+        return false;
+    }
+
+    @Override
     public void performUniqueArenaTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity) {
 
         BlockPos rootminPos = blockPos.offset(9, -3, 0);
