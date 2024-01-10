@@ -124,6 +124,14 @@
       "required": false
     },
     {
+      "id": "goety:haunted_sapling",
+      "required": false
+    },
+    {
+      "id": "goety:rotten_sapling",
+      "required": false
+    },
+    {
       "id": "habitat:fairy_ring_mushroom",
       "required": false
     },
@@ -188,6 +196,22 @@
       "required": false
     },
     {
+      "id": "tropicraft:red_mangrove_propagule",
+      "required": false
+    },
+    {
+      "id": "tropicraft:tall_mangrove_propagule",
+      "required": false
+    },
+    {
+      "id": "tropicraft:tea_mangrove_propagule",
+      "required": false
+    },
+    {
+      "id": "tropicraft:black_mangrove_propagule",
+      "required": false
+    },
+    {
       "id": "twilightforest:time_sapling",
       "required": false
     },
@@ -220,19 +244,11 @@
       "required": false
     },
     {
-      "id": "tropicraft:red_mangrove_propagule",
+      "id": "vintagedelight:magic_peanut",
       "required": false
     },
     {
-      "id": "tropicraft:tall_mangrove_propagule",
-      "required": false
-    },
-    {
-      "id": "tropicraft:tea_mangrove_propagule",
-      "required": false
-    },
-    {
-      "id": "tropicraft:black_mangrove_propagule",
+      "id": "wizards_reborn:arcane_wood_sapling",
       "required": false
     }
   ]

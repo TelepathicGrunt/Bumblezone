@@ -413,6 +413,30 @@
       "required": false
     },
     {
+      "id": "phantasm:crystal_block",
+      "required": false
+    },
+    {
+      "id": "phantasm:crystal_tiles",
+      "required": false
+    },
+    {
+      "id": "phantasm:crystal_pillar",
+      "required": false
+    },
+    {
+      "id": "phantasm:void_crystal_block",
+      "required": false
+    },
+    {
+      "id": "phantasm:void_crystal_tiles",
+      "required": false
+    },
+    {
+      "id": "phantasm:void_crystal_pillar",
+      "required": false
+    },
+    {
       "id": "#quark:corundum",
       "required": false
     },

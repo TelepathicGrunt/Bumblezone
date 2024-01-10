@@ -5,6 +5,8 @@ Adjusted rates of some statues in Sempiternal Sanctum
 
 Removed Mining Fatigue from White and Green Essence arenas because some *certain* mods messes with player attack speed when mining fatigue is on.
 
+Dance Floor structure now has a bigger variety of music discs it can have.
+
 ##### Entities:
 Cosmic Crystal Entity now overrides heal to make it do nothing. Should help stop *certain* other mods form healing this boss which makes fight impossible.
 
