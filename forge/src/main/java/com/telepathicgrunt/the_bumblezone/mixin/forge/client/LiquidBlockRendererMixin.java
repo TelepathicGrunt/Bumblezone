@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge.client;
+package com.telepathicgrunt.the_bumblezone.mixin.forge.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;

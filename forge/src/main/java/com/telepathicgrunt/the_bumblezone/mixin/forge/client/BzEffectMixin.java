@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge.client;
+package com.telepathicgrunt.the_bumblezone.mixin.forge.client;
 
 import com.telepathicgrunt.the_bumblezone.client.rendering.MobEffectRenderer;
 import com.telepathicgrunt.the_bumblezone.effects.BzEffect;

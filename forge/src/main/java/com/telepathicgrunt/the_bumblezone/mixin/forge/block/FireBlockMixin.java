@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge.block;
+package com.telepathicgrunt.the_bumblezone.mixin.forge.block;
 
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;

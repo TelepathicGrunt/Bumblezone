@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge.effect;
+package com.telepathicgrunt.the_bumblezone.mixin.forge.effect;
 
 import com.telepathicgrunt.the_bumblezone.platform.EffectExtension;
 import net.minecraft.world.item.ItemStack;

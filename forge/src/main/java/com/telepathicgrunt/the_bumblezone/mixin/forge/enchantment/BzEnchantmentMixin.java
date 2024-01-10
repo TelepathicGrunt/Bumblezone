@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge.enchantment;
+package com.telepathicgrunt.the_bumblezone.mixin.forge.enchantment;
 
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;

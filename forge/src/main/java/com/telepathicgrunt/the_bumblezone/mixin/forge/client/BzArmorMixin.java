@@ -1,8 +1,8 @@
-package com.telepathicgrunt.the_bumblezone.mixins.forge.client;
+package com.telepathicgrunt.the_bumblezone.mixin.forge.client;
 
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.forge.ForgeArmorProviders;
-import com.telepathicgrunt.the_bumblezone.items.BzDyeableArmor;
+import com.telepathicgrunt.the_bumblezone.items.BzArmor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.world.entity.Entity;
@@ -19,13 +19,13 @@ import org.spongepowered.asm.mixin.Unique;
 
 import java.util.function.Consumer;
 
-@Mixin(BzDyeableArmor.class)
-public class BzDyeableArmorMixin extends ArmorItem {
+@Mixin(BzArmor.class)
+public class BzArmorMixin extends ArmorItem {
 
     @Unique
     private ArmorModelProvider bz$armorModelProvider;
 
-    public BzDyeableArmorMixin(ArmorMaterial arg, Type arg2, Properties arg3) {
+    public BzArmorMixin(ArmorMaterial arg, ArmorItem.Type arg2, Properties arg3) {
         super(arg, arg2, arg3);
     }
 

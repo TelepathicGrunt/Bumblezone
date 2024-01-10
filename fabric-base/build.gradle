@@ -42,12 +42,13 @@ dependencies {
     modCompileOnly "maven.modrinth:modmenu:${rootProject.mod_menu}"
     modRuntimeOnly "maven.modrinth:modmenu:${rootProject.mod_menu}"
 
-    //modCompileOnly("com.github.CaffeineMC:sodium-fabric:${rootProject.sodium}")
     modCompileOnly("dev.emi:trinkets:${trinkets}")
 
     modCompileOnly "dev.emi:emi-fabric:${rootProject.emi}"
 
     modCompileOnly "curse.maven:restricted-portals-228266:${rootProject.restricted_portals_file_id}"
+
+    modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
 }
 
 processResources {

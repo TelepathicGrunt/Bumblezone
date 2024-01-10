@@ -52,6 +52,9 @@ dependencies {
 
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
 
+    //modRuntimeOnly("maven.modrinth:sodium:${rootProject.sodium}")
+    //modRuntimeOnly("maven.modrinth:indium:${rootProject.indium}")
+
     //modLocalRuntime("dev.emi:emi-fabric:${rootProject.emi}")
 
 //    modRuntimeOnly("curse.maven:huge-structure-blocks-474114:4803539")
