@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.telepathicgrunt.the_bumblezone.mixin.fabric",
+  "plugin": "com.telepathicgrunt.the_bumblezone.mixin.fabric.BumblezonFabricMixinConfig",
   "compatibilityLevel": "JAVA_17",
   "injectors": {
     "defaultRequire": 1
@@ -14,6 +15,7 @@
     "client.ParticleEngineMixin",
     "client.ReceivingLevelScreenMixin",
     "client.ScreenEffectRendererMixin",
+    "mods.SodiumFluidMixin",
     "mods.MidnightConfigScreenMixin"
   ],
   "mixins": [

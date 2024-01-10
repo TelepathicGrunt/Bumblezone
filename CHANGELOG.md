@@ -17,6 +17,9 @@ Dirt Pellet hitbox size doubled and increase range for hitting the projectile ba
 ##### Items:
 Updated JEI/EMI/REI description for Honey Bucket and Royal Jelly Bucket.
 
+##### Mod Compat:
+Fixed Honey Fluid/Royal Jelly Honey Fluid not rendering their flowing correctly when Sodium is on.
+
 
 ### **(V.7.3.0 Changes) (1.20.4 Minecraft)**
 
