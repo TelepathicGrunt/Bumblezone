@@ -193,6 +193,69 @@
       "xp_reward": 0,
       "weight": 1,
       "required": false
+    },
+    {
+      "id": "mysticsbiomes:pink_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:orange_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:pink_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:yellow_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:lime_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:cyan_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "mysticsbiomes:purple_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "deep_aether:quail_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "alexsmobs:emu_egg",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
     }
   ]
 }

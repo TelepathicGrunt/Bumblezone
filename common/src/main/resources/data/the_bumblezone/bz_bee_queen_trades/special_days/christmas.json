@@ -42,6 +42,41 @@
       "required": false
     },
     {
+      "id": "batsgalore:generic_candy",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "batsgalore:candy_cane",
+      "count": 3,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "batsgalore:elf_hat",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "batsgalore:reindeer_nose",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "aether:candy_cane",
+      "count": 2,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "endermanoverhaul:snowy_hood",
       "count": 1,
       "xp_reward": 0,
@@ -114,6 +149,34 @@
     {
       "id": "snowyspirit:gingerbread_cookie",
       "count": 4,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "farmersdelight:chicken_soup",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "festive_delight:festive_chicken_block",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "festive_delight:festive_chicken_block",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "festive_delight:festive_chiken_block",
+      "count": 1,
       "xp_reward": 0,
       "weight": 1,
       "required": false
