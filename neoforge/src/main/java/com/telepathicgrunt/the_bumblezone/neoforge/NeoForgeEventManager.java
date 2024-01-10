@@ -39,7 +39,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
-import com.telepathicgrunt.the_bumblezone.mixins.neoforge.block.FireBlockInvoker;
+import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;

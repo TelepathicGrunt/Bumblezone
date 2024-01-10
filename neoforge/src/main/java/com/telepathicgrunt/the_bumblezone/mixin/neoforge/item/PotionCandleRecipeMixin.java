@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.neoforge.item;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.item;
 
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import net.minecraft.world.inventory.CraftingContainer;

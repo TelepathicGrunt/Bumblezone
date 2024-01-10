@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.neoforge.block;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.block;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FireBlock;

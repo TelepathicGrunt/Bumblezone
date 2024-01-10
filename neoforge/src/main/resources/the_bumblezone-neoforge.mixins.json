@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.telepathicgrunt.the_bumblezone.mixins.neoforge",
+  "package": "com.telepathicgrunt.the_bumblezone.mixin.neoforge",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "block.BlockExtensionMixin",

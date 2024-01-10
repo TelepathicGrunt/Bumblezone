@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.neoforge.enchantment;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.enchantment;
 
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;

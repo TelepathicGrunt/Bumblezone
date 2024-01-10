@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.neoforge.effect;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.effect;
 
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import net.minecraft.world.effect.MobEffect;

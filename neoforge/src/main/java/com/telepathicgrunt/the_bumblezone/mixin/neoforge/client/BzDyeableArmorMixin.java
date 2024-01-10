@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixins.neoforge.client;
+package com.telepathicgrunt.the_bumblezone.mixin.neoforge.client;
 
 import com.telepathicgrunt.the_bumblezone.client.armor.ArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.neoforge.ForgeArmorProviders;
