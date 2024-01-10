@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "com.telepathicgrunt.the_bumblezone.mixin.fabric",
-  "plugin": "com.telepathicgrunt.the_bumblezone.mixin.fabric.BumblezonFabricMixinConfig",
+  "plugin": "com.telepathicgrunt.the_bumblezone.mixin.fabric.BumblezoneFabricMixinConfig",
   "compatibilityLevel": "JAVA_17",
   "injectors": {
     "defaultRequire": 1
