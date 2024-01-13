@@ -36,6 +36,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -277,7 +278,10 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
                         };
 
                         ItemStack armorItem = livingEntity.getItemBySlot(equipmentSlot);
-                        if (!armorItem.isEmpty()) {
+                        if (!armorItem.isEmpty() &&
+                            !EnchantmentHelper.hasBindingCurse(armorItem) &&
+                            !armorItem.is(BzTags.LIFE_ARENA_ARMOR_CANNOT_BE_KNOCKED_OFF))
+                        {
                             livingEntity.setItemSlot(equipmentSlot, ItemStack.EMPTY);
                             dropItemFromEntity(livingEntity, armorItem, false, true);
                             break;

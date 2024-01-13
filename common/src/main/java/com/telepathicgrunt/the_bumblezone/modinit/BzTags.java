@@ -109,6 +109,7 @@ public class BzTags {
     public static final TagKey<Item> HONEY_DRUNK_TRIGGER_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "queens_desire/honey_drunk_trigger_items"));
     public static final TagKey<Item> BZ_ARMOR_ABILITY_ENHANCING_WEARABLES = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "bee_armors/bz_armor_ability_enhancing_wearables"));
     public static final TagKey<Item> CALMING_ARENA_DROWNED_BONUS_HELD_ITEM = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/calming_arena/drowned_bonus_held_item"));
+    public static final TagKey<Item> LIFE_ARENA_ARMOR_CANNOT_BE_KNOCKED_OFF = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/life_arena/armor_cannot_be_knocked_off"));
     public static final TagKey<Item> RADIANCE_CANNOT_REPAIR = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "essence/radiance/cannot_repair"));
     public static final TagKey<Item> ABILITY_ESSENCE_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "ability_essence_items"));
     public static final TagKey<Item> WASHING_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "washing_items"));
