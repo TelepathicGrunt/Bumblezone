@@ -12,6 +12,7 @@
     "minecraft:wither",
     "minecraft:ender_dragon",
     "the_bumblezone:beehemoth",
-    "the_bumblezone:variant_bee"
+    "the_bumblezone:variant_bee",
+    "#the_bumblezone:string_curtains/blocks_pathfinding_for_non_bee_mob"
   ]
 }

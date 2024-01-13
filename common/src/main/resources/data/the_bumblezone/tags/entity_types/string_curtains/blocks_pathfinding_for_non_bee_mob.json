@@ -111,6 +111,10 @@
       "required": false
     },
     {
+      "id": "hornets:hornet",
+      "required": false
+    },
+    {
       "id": "infernalexp:glowsilk_moth",
       "required": false
     },
