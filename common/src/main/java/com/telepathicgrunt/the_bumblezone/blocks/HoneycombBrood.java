@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -253,6 +254,16 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     private static void applyProtection(Player playerEntity, ItemStack itemstack) {
         playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts, 1, false, false,  true));
+
+        ((ServerLevel)playerEntity.level()).sendParticles(BzParticles.SPARKLE_PARTICLE.get(),
+                playerEntity.position().x(),
+                playerEntity.getEyeY() - 0.25d,
+                playerEntity.position().z(),
+                20,
+                playerEntity.getRandom().nextDouble() / 5 - 0.1d,
+                playerEntity.getRandom().nextDouble() / 5 - 0.1d,
+                playerEntity.getRandom().nextDouble() / 5 - 0.1d,
+                0.1D);
 
         if (playerEntity instanceof ServerPlayer serverPlayer) {
             BzCriterias.GETTING_PROTECTION_TRIGGER.get().trigger(serverPlayer);
