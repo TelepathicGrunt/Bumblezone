@@ -122,6 +122,10 @@
       "required": false
     },
     {
+      "id": "hornets:hornet",
+      "required": false
+    },
+    {
       "id": "infernalexp:warpbeetle",
       "required": false
     },

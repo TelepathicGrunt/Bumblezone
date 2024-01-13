@@ -3,6 +3,9 @@
 ##### Entities:
 Made Green Sempiternal Sanctum event Rootmin now not knock off equipped armor that has Curse of the Binding or is in `the_bumblezone:essence/life_arena/armor_cannot_be_knocked_off` item tag.
 
+##### Mod Compat:
+Hornet mod's Hornets can now rarely have mob spawners for them in certain Bumblezone structures.
+
 
 ### **(V.7.2.1 Changes) (1.20.1 Minecraft)**
 

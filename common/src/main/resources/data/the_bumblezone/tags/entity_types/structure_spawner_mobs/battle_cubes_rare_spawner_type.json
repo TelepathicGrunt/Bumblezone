@@ -6,6 +6,10 @@
       "required": false
     },
     {
+      "id": "hornets:hornet",
+      "required": false
+    },
+    {
       "id": "blue_skies:venom_spider",
       "required": false
     },

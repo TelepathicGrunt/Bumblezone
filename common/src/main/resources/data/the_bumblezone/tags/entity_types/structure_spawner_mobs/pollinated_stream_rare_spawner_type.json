@@ -14,6 +14,10 @@
       "required": false
     },
     {
+      "id": "hornets:hornet",
+      "required": false
+    },
+    {
       "id": "sullysmod:jungle_spider",
       "required": false
     },
