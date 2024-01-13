@@ -1,3 +1,9 @@
+### **(V.6.9.1 Changes) (1.19.2 Minecraft)**
+
+##### Effects:
+Getting Protection of the Hive now spawns a bit of particles at player head to signal the buff has been refreshed.
+
+
 ### **(V.6.9.0 Changes) (1.19.2 Minecraft)**
 
 ##### Structures:
