@@ -3,6 +3,9 @@
 ##### Entities:
 Made Green Sempiternal Sanctum event Rootmin now not knock off equipped armor that has Curse of the Binding or is in `the_bumblezone:essence/life_arena/armor_cannot_be_knocked_off` item tag.
 
+##### Effects:
+Getting Protection of the Hive now spawns a bit of particles at player head to signal the buff has been refreshed.
+
 ##### Mod Compat:
 Hornet mod's Hornets can now rarely have mob spawners for them in certain Bumblezone structures.
 
