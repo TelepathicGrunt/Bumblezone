@@ -193,7 +193,7 @@ public class BeeInteractivity {
                     false,
                     true));
 
-            ((ServerLevel)playerEntity.level).sendParticles(BzParticles.SPARKLE_PARTICLE.get(),
+            ((ServerLevel)playerEntity.level).sendParticles(BzParticles.SPARKLE_PARTICLE,
                     playerEntity.position().x(),
                     playerEntity.getEyeY() - 0.25d,
                     playerEntity.position().z(),
