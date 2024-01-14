@@ -223,7 +223,7 @@ public class BeeInteractivity {
             playerEntity.addEffect(new MobEffectInstance(
                     BzEffects.PROTECTION_OF_THE_HIVE.get(),
                     BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts.get(),
-                    2,
+                    0,
                     false,
                     false,
                     true));
