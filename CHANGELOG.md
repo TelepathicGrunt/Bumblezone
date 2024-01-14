@@ -8,6 +8,12 @@ Getting Protection of the Hive now spawns a bit of particles at player head to s
 
 Fixed Protection of the Hive being granted at multiple levels when it is only supposed to be level 1.
 
+##### Structures:
+Spider Infested Bee Dungeon is now set to spawn more often by changing default config value for them.
+ Edit your configs to set spiderInfestedBeeDungeonRarity to 5 if Bumblezone config file is already made.
+
+1/5th of the Battle Cube structure's spawners will now be Cave Spider instead of Spider spawners.
+
 
 ### **(V.7.3.1 Changes) (1.20.4 Minecraft)**
 

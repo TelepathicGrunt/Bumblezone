@@ -37,9 +37,9 @@ public class BzWorldgenConfig {
             spiderInfestedBeeDungeonRarity = builder
                 .comment(" \n-----------------------------------------------------\n",
                        " How rare Spider Infested Bee Dungeons are. Higher numbers means more rare.",
-                       " Default rate is 8. Setting to 1001 will disable Bee Dungeons.\n")
+                       " Default rate is 5. Setting to 1001 will disable Bee Dungeons.\n")
                 .translation("the_bumblezone.config.spiderinfestedbeedungeonrarity")
-                .defineInRange("spiderInfestedBeeDungeonRarity", 8, 1, 1001);
+                .defineInRange("spiderInfestedBeeDungeonRarity", 5, 1, 1001);
 
             spawnerRateSpiderBeeDungeon = builder
                 .comment(" \n-----------------------------------------------------\n",

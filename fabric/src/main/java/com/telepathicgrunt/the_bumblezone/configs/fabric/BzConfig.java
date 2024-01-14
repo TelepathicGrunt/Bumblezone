@@ -187,7 +187,7 @@ public class BzConfig extends MidnightConfig {
     public static int treeDungeonRarity = 2;
 
     @Entry(min=0, max=1001)
-    public static int spiderInfestedBeeDungeonRarity = 8;
+    public static int spiderInfestedBeeDungeonRarity = 5;
 
     @Entry(min=0, max=1)
     public static float spawnerRateSpiderBeeDungeon = 0.2f;
