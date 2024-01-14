@@ -457,6 +457,14 @@
       "required": false
     },
     {
+      "id": "thingamajigs:bulby_flower",
+      "required": false
+    },
+    {
+      "id": "thingamajigs:droopy_flower",
+      "required": false
+    },
+    {
       "id": "trailsandtalesplus:white_petals",
       "required": false
     },

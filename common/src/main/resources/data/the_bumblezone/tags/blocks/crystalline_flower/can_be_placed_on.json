@@ -609,6 +609,42 @@
       "required": false
     },
     {
+      "id": "truedarkness:eridium_block",
+      "required": false
+    },
+    {
+      "id": "truedarkness:metenite_block",
+      "required": false
+    },
+    {
+      "id": "truedarkness:trudnite_block",
+      "required": false
+    },
+    {
+      "id": "truedarkness:cry_block",
+      "required": false
+    },
+    {
+      "id": "truedarkness:cvetaliy_block",
+      "required": false
+    },
+    {
+      "id": "truedarkness:dark_crystal_cluster_block",
+      "required": false
+    },
+    {
+      "id": "truedarkness:firenite_block",
+      "required": false
+    },
+    {
+      "id": "truedarkness:eridium",
+      "required": false
+    },
+    {
+      "id": "truedarkness:metenite",
+      "required": false
+    },
+    {
       "id": "twigs:polished_amethyst",
       "required": false
     },
@@ -658,6 +694,10 @@
     },
     {
       "id": "wilderwilds:lime_pearlescent_mesoglea",
+      "required": false
+    },
+    {
+      "id": "wizards_reborn:arcanum_block",
       "required": false
     }
   ]

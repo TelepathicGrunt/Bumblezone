@@ -520,6 +520,10 @@
       "required": false
     },
     {
+      "id": "thingamajigs:bulby_flower",
+      "required": false
+    },
+    {
       "id": "trailsandtalesplus:cyan_petals",
       "required": false
     },

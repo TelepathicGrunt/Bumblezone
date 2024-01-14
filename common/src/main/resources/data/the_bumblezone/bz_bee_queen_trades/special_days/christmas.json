@@ -287,6 +287,41 @@
       "required": false
     },
     {
+      "id": "thingamajigs:christmas_component",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:festive_door",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:santa_statue",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:santa_inflatable",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:present_pile",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
       "id": "#supplementaries:presents",
       "count": 1,
       "xp_reward": 0,
