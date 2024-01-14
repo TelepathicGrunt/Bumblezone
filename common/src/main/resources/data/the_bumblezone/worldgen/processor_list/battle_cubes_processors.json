@@ -3,8 +3,12 @@
     {
       "spawner_mob_entries": [
         {
+          "resourcelocation": "minecraft:cave_spider",
+          "weight": 20
+        },
+        {
           "resourcelocation": "minecraft:spider",
-          "weight": 100
+          "weight": 80
         }
       ],
       "chance_to_override_with_tagged_mobs":  0.222,
