@@ -81,6 +81,13 @@
       "xp_reward": 0,
       "weight": 2,
       "required": false
+    },
+    {
+      "id": "thingamajigs:roast_turkey",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
     }
   ]
 }

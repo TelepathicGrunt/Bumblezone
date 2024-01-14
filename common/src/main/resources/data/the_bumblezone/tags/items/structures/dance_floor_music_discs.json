@@ -14,6 +14,10 @@
       "required": false
     },
     {
+      "id": "truedarkness:music_misc_turquoise_flower",
+      "required": false
+    },
+    {
       "id": "windswept:music_disc_bumblebee",
       "required": false
     }

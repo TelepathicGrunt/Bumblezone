@@ -280,6 +280,10 @@
       "required": false
     },
     {
+      "id": "thingamajigs:droopy_flower",
+      "required": false
+    },
+    {
       "id": "trailsandtalesplus:yellow_petals",
       "required": false
     },

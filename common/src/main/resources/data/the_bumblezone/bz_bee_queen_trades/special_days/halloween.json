@@ -495,6 +495,111 @@
       "xp_reward": 0,
       "weight": 1,
       "required": false
+    },
+    {
+      "id": "thingamajigs:white_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:light_gray_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:gray_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:black_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:brown_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:red_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:yellow_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:lime_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:green_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:cyan_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:light_blue_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:blue_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:purple_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:magenta_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
+    },
+    {
+      "id": "thingamajigs:pink_jol",
+      "count": 1,
+      "xp_reward": 0,
+      "weight": 1,
+      "required": false
     }
   ]
 }
