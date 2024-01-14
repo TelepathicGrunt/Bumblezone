@@ -343,6 +343,14 @@
       "required": false
     },
     {
+      "id": "thingamajigs:bulby_flower",
+      "required": false
+    },
+    {
+      "id": "thingamajigs:droopy_flower",
+      "required": false
+    },
+    {
       "id": "twigs:azalea_flowers",
       "required": false
     },
