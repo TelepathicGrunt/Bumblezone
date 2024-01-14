@@ -3,6 +3,8 @@
 ##### Effects:
 Getting Protection of the Hive now spawns a bit of particles at player head to signal the buff has been refreshed.
 
+Fixed Protection of the Hive being granted at multiple levels when it is only supposed to be level 1.
+
 
 ### **(V.6.9.0 Changes) (1.19.2 Minecraft)**
 
