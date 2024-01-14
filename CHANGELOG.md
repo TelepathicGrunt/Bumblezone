@@ -6,6 +6,8 @@ Made Green Sempiternal Sanctum event Rootmin now not knock off equipped armor th
 ##### Effects:
 Getting Protection of the Hive now spawns a bit of particles at player head to signal the buff has been refreshed.
 
+Fixed Protection of the Hive being granted at multiple levels when it is only supposed to be level 1.
+
 ##### Mod Compat:
 Hornet mod's Hornets can now rarely have mob spawners for them in certain Bumblezone structures.
 

@@ -241,7 +241,13 @@ public class HoneycombBrood extends ProperFacingBlock {
     }
 
     private static void applyProtection(Player playerEntity, ItemStack itemstack) {
-        playerEntity.addEffect(new MobEffectInstance(BzEffects.PROTECTION_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts, 1, false, false,  true));
+        playerEntity.addEffect(new MobEffectInstance(
+                BzEffects.PROTECTION_OF_THE_HIVE.get(),
+                BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts,
+                0,
+                false,
+                false,
+                true));
 
         ((ServerLevel)playerEntity.level()).sendParticles(BzParticles.SPARKLE_PARTICLE.get(),
                 playerEntity.position().x(),
