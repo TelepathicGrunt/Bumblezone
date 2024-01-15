@@ -6,6 +6,9 @@ Fixed side texture being squished for Honey Fluid and Royal Jelly Fluid when the
 (NeoForge): Removed hacky mixins for Bumblezone's fluids and now uses NeoForge's new event for fluid rendering.
  Requires NeoForge 20.4.99-beta or newer now.
 
+##### Bee Aggression:
+Spider/Bear-like entities that are OwnableEntities that spawn into Bumblezone's dimension will not get attacked right away if the entity is owned by a player.
+
 
 ### **(V.7.3.2 Changes) (1.20.1 Minecraft)**
 
