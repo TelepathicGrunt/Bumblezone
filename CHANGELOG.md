@@ -1,3 +1,12 @@
+### **(V.7.3.3 Changes) (1.20.1 Minecraft)**
+
+##### Fluids:
+Fixed side texture being squished for Honey Fluid and Royal Jelly Fluid when they are flowing downward and not yet a full block.
+
+(NeoForge): Removed hacky mixins for Honey fluids and now uses NeoForge's new event for fluid rendering.
+ Requires NeoForge 20.4.98-beta or newer now.
+
+
 ### **(V.7.3.2 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:

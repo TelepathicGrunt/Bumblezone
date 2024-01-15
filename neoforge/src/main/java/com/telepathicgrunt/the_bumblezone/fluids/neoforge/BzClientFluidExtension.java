@@ -2,7 +2,10 @@ package com.telepathicgrunt.the_bumblezone.fluids.neoforge;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.HoneyFluidRendering;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -10,8 +13,10 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.textures.FluidSpriteCache;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -84,5 +89,17 @@ public class BzClientFluidExtension implements IClientFluidTypeExtensions {
     public void modifyFogRender(Camera camera, FogRenderer.FogMode mode, float renderDistance, float partialTick, float nearDistance, float farDistance, FogShape shape) {
         checkForProperties();
         properties.modifyFog(camera, mode, renderDistance, partialTick, nearDistance, farDistance, shape);
+    }
+
+    @Override
+    public boolean renderFluid(FluidState fluidState, BlockAndTintGetter getter, BlockPos pos, VertexConsumer vertexConsumer, BlockState blockState) {
+        if (fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
+            HoneyFluidRendering.renderSpecialHoneyFluid(pos, getter, vertexConsumer, blockState, fluidState, FluidSpriteCache.getFluidSprites(getter, pos, fluidState));
+        }
+        else {
+            Minecraft.getInstance().getBlockRenderer().getLiquidBlockRenderer().tesselate(getter, pos, vertexConsumer, blockState, fluidState);
+        }
+
+        return true;
     }
 }
