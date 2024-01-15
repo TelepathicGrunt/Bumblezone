@@ -30,6 +30,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -207,7 +208,8 @@ public class BeeAggression {
             entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
             BzBeeAggressionConfigs.aggressiveBees &&
             entity instanceof Mob mobEntity &&
-            !mobEntity.isNoAi())
+            !mobEntity.isNoAi() &&
+            (!(entity instanceof OwnableEntity ownableEntity) || ownableEntity.getOwnerUUID() == null))
         {
             if (mobEntity.getType().is(BzTags.FORCED_BEE_CALM_AT)) {
                 return false;

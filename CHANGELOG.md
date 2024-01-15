@@ -1,5 +1,11 @@
 ### **(V.7.2.2 Changes) (1.20.1 Minecraft)**
 
+##### Bee Aggression:
+Spider/Bear-like entities that are OwnableEntities that spawn into Bumblezone's dimension will not get attacked right away if the entity is owned by a player.
+
+
+### **(V.7.2.2 Changes) (1.20.1 Minecraft)**
+
 ##### Entities:
 Made Green Sempiternal Sanctum event Rootmin now not knock off equipped armor that has Curse of the Binding or is in `the_bumblezone:essence/life_arena/armor_cannot_be_knocked_off` item tag.
 
