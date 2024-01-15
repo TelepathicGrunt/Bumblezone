@@ -17,6 +17,8 @@ Spider Infested Bee Dungeon is now set to spawn more often by changing default c
 ##### Mod Compat:
 Hornet mod's Hornets can now rarely have mob spawners for them in certain Bumblezone structures.
 
+(Fabric/Quilt): Fixed potential crash with Sodium
+
 
 ### **(V.7.2.1 Changes) (1.20.1 Minecraft)**
 
