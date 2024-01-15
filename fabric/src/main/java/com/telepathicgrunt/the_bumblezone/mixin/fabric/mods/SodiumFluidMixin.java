@@ -30,7 +30,7 @@ public class SodiumFluidMixin {
             sodiumSinkingVertexBuilder.reset();
 
             FluidRenderHandlerRegistry.INSTANCE.get(fluidState.getType())
-                    .renderFluid(blockPos, world, sodiumSinkingVertexBuilder, world.getBlockState(blockPos), fluidState);
+                    .renderFluid(blockPos, world, sodiumSinkingVertexBuilder, world.getBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ()), fluidState);
 
             Material material = DefaultMaterials.forFluidState(fluidState);
             sodiumSinkingVertexBuilder.flush(buffers.get(material), material, new Vector3f());

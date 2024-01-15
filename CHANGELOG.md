@@ -14,6 +14,9 @@ Spider Infested Bee Dungeon is now set to spawn more often by changing default c
 
 1/5th of the Battle Cube structure's spawners will now be Cave Spider instead of Spider spawners.
 
+##### Mod Compat:
+(Fabric): Fixed potential crash with Sodium
+
 
 ### **(V.7.3.1 Changes) (1.20.4 Minecraft)**
 
