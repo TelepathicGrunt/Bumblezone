@@ -1,3 +1,9 @@
+### **(V.6.9.2 Changes) (1.19.2 Minecraft)**
+
+##### Items:
+Fixed Honey Compass not using the actual tag saved in it when trying to relocate a structure.
+
+
 ### **(V.6.9.1 Changes) (1.19.2 Minecraft)**
 
 ##### Effects:
