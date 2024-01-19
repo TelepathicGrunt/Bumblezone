@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.utils.neoforge;
 
+import com.mojang.authlib.GameProfile;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
@@ -97,8 +98,11 @@ public class PlatformHooksImpl {
     }
 
     @Contract(pure = true)
-    public static ServerPlayer getFakePlayer(ServerLevel level) {
-        return FakePlayerFactory.getMinecraft(level);
+    public static ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
+        if (gameProfile == null) {
+            return FakePlayerFactory.getMinecraft(level);
+        }
+        return FakePlayerFactory.get(level, gameProfile);
     }
 
     @Contract(pure = true)

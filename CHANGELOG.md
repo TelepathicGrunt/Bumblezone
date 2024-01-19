@@ -1,3 +1,9 @@
+### **(V.7.3.4 Changes) (1.20.4 Minecraft)**
+
+##### Mod Compat:
+Passed owner of thrown Pollen Puff to FakePlayers so claim owners can throw Pollen Puff to place blocks in their own claims.
+
+
 ### **(V.7.3.3 Changes) (1.20.4 Minecraft)**
 
 ##### Fluids:

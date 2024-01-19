@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import com.mojang.authlib.GameProfile;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
@@ -54,7 +55,7 @@ public class PlatformHooks {
 
     @ExpectPlatform
     @Contract(pure = true)
-    public static ServerPlayer getFakePlayer(ServerLevel level) {
+    public static ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
         throw new NotImplementedException("PlatformHooks getFakePlayer is not implemented!");
     }
 
