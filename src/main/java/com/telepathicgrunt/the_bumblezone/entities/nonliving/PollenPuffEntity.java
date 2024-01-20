@@ -237,8 +237,15 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 return false;
             }
 
-            FakeServerPlayer player = new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"))
-                    .create(this.level.getServer(), (ServerLevel) this.level, "placer");
+            FakePlayerBuilder fakePlayerBuilder = new FakePlayerBuilder(new ResourceLocation(Bumblezone.MODID, "default_fake_player"));
+            FakeServerPlayer player;
+            if (this.getOwner() instanceof ServerPlayer serverPlayer) {
+                player = fakePlayerBuilder.create(this.level.getServer(), (ServerLevel) this.level, serverPlayer.getGameProfile());
+            }
+            else {
+                player = fakePlayerBuilder.create(this.level.getServer(), (ServerLevel) this.level, "placer");
+            }
+
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;
