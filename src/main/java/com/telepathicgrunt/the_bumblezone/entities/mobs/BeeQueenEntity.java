@@ -64,9 +64,11 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -274,7 +276,22 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (isInvulnerableTo(source)) {
+        if (source.getDirectEntity() instanceof Snowball snowball &&
+            snowball.getType() == EntityType.SNOWBALL &&
+            QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(Items.SNOWBALL))
+        {
+            if (!this.level.isClientSide()) {
+                Vec3 forwardVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees());
+                Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
+                ItemEntity itemEntity = new ItemEntity(this.level, 0, 0, 0, Items.SNOWBALL.getDefaultInstance());
+                if (snowball.getOwner() instanceof Player player) {
+                    itemEntity.setOwner(player.getUUID());
+                }
+                tradeItemEntity(itemEntity, forwardVect, sideVect);
+            }
+            return false;
+        }
+        else if (isInvulnerableTo(source)) {
             return false;
         }
         else if(isOnPortalCooldown() && source == DamageSource.IN_WALL) {
@@ -560,56 +577,60 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             AABB scanArea = this.getBoundingBox().deflate(0.45, 0.9, 0.45).move(forwardVect.x() * 0.5d, -0.95, forwardVect.z() * 0.5d);
             List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, scanArea);
             items.stream().filter(ie -> !ie.hasPickUpDelay()).findFirst().ifPresent((itemEntity) -> {
-                int tradedItems = 0;
-                Item item = itemEntity.getItem().getItem();
-                if (QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
-                    for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
-                        Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
-                        if (reward.isPresent()) {
-                            spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), itemEntity.getThrower());
-                            tradedItems++;
-                        }
-                    }
-                }
-
-                if (tradedItems > 0) {
-                    itemEntity.remove(RemovalReason.DISCARDED);
-                }
-                else {
-                    itemEntity.remove(RemovalReason.DISCARDED);
-                    ItemEntity rejectedItemEntity = new ItemEntity(
-                            this.level,
-                            this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
-                            this.getY() + 0.3,
-                            this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
-                            itemEntity.getItem(),
-                            (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 3,
-                            0.4f,
-                            (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 3);
-                    this.level.addFreshEntity(rejectedItemEntity);
-                    rejectedItemEntity.setDefaultPickUpDelay();
-                    spawnAngryParticles(2);
-                    setQueenPose(BeeQueenPose.ITEM_REJECT);
-                }
-
-                setThrowCooldown(50);
-
-                if (tradedItems > 0 && itemEntity.getThrower() != null) {
-                    if (level.getPlayerByUUID(itemEntity.getThrower()) instanceof ServerPlayer serverPlayer) {
-                        BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
-                        MiscComponent.onQueenBeeTrade(serverPlayer, tradedItems);
-
-                        if (finalbeeQueenAdvancementDone(serverPlayer)) {
-                            MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
-                            if (!capability.receivedEssencePrize) {
-                                spawnReward(forwardVect, sideVect, ESSENCE_DROP.get(), ItemStack.EMPTY, serverPlayer.getUUID());
-                                capability.receivedEssencePrize = true;
-                                serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
-                            }
-                        }
-                    }
-                }
+                tradeItemEntity(itemEntity, forwardVect, sideVect);
             });
+        }
+    }
+
+    private void tradeItemEntity(ItemEntity itemEntity, Vec3 forwardVect, Vec3 sideVect) {
+        int tradedItems = 0;
+        Item item = itemEntity.getItem().getItem();
+        if (QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.containsKey(item)) {
+            for (int i = 0; i < itemEntity.getItem().getCount(); i++) {
+                Optional<WeightedTradeResult> reward = QueensTradeManager.QUEENS_TRADE_MANAGER.queenTrades.get(item).getRandom(this.random);
+                if (reward.isPresent()) {
+                    spawnReward(forwardVect, sideVect, reward.get(), itemEntity.getItem(), itemEntity.getThrower());
+                    tradedItems++;
+                }
+            }
+        }
+
+        if (tradedItems > 0) {
+            itemEntity.remove(RemovalReason.DISCARDED);
+        }
+        else {
+            itemEntity.remove(RemovalReason.DISCARDED);
+            ItemEntity rejectedItemEntity = new ItemEntity(
+                    this.level,
+                    this.getX() + (sideVect.x() * 1.75) + (forwardVect.x() * 1),
+                    this.getY() + 0.3,
+                    this.getZ() + (sideVect.z() * 1.75) + (forwardVect.x() * 1),
+                    itemEntity.getItem(),
+                    (this.random.nextFloat() - 0.5f) / 10 + forwardVect.x() / 3,
+                    0.4f,
+                    (this.random.nextFloat() - 0.5f) / 10 + forwardVect.z() / 3);
+            this.level.addFreshEntity(rejectedItemEntity);
+            rejectedItemEntity.setDefaultPickUpDelay();
+            spawnAngryParticles(2);
+            setQueenPose(BeeQueenPose.ITEM_REJECT);
+        }
+
+        setThrowCooldown(50);
+
+        if (tradedItems > 0 && itemEntity.getThrower() != null) {
+            if (level.getPlayerByUUID(itemEntity.getThrower()) instanceof ServerPlayer serverPlayer) {
+                BzCriterias.BEE_QUEEN_FIRST_TRADE_TRIGGER.trigger(serverPlayer);
+                MiscComponent.onQueenBeeTrade(serverPlayer, tradedItems);
+
+                if (finalbeeQueenAdvancementDone(serverPlayer)) {
+                    MiscComponent capability = Bumblezone.MISC_COMPONENT.get(serverPlayer);
+                    if (!capability.receivedEssencePrize) {
+                        spawnReward(forwardVect, sideVect, ESSENCE_DROP.get(), ItemStack.EMPTY, serverPlayer.getUUID());
+                        capability.receivedEssencePrize = true;
+                        serverPlayer.displayClientMessage(Component.translatable("entity.the_bumblezone.bee_queen.mention_reset").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GOLD), false);
+                    }
+                }
+            }
         }
     }
 
