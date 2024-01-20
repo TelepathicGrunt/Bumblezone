@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
+import com.mojang.authlib.GameProfile;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.capabilities.EntityMisc;
@@ -228,7 +229,13 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 return false;
             }
 
-            FakePlayer player = FakePlayerFactory.getMinecraft((ServerLevel) this.level);
+            FakePlayer player;
+            if (this.getOwner() instanceof ServerPlayer serverPlayer) {
+                player = FakePlayerFactory.get((ServerLevel) this.level, serverPlayer.getGameProfile());
+            }
+            else {
+                player = FakePlayerFactory.getMinecraft((ServerLevel) this.level);
+            }
             if(blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;
