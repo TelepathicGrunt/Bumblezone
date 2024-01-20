@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.utils.fabric;
 
+import com.mojang.authlib.GameProfile;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.mixin.fabricbase.entity.EntityAccessor;
@@ -115,8 +116,11 @@ public class PlatformHooksImpl {
     }
 
     @Contract(pure = true)
-    public static ServerPlayer getFakePlayer(ServerLevel level) {
-        return FakePlayer.get(level);
+    public static ServerPlayer getFakePlayer(ServerLevel level, GameProfile gameProfile) {
+        if (gameProfile == null) {
+            return FakePlayer.get(level);
+        }
+        return FakePlayer.get(level, gameProfile);
     }
 
     @Contract(pure = true)

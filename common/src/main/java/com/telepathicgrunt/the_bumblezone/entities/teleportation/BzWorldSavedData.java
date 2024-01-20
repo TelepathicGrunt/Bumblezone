@@ -270,7 +270,7 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	private static ServerPlayer createSilkTouchFakePlayer(ServerLevel level) {
-		ServerPlayer serverPlayer = PlatformHooks.getFakePlayer(level);
+		ServerPlayer serverPlayer = PlatformHooks.getFakePlayer(level, null);
 		ItemStack fakeHandItem = Items.STONE_PICKAXE.getDefaultInstance();
 		HashMap<Enchantment, Integer> enchantmentHashMap = new HashMap<>();
 		enchantmentHashMap.put(Enchantments.SILK_TOUCH, 1);
