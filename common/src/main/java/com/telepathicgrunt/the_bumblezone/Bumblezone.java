@@ -110,7 +110,9 @@ import org.slf4j.Logger;
 
 public class Bumblezone {
 
-    // Note to self, use -XX:+AllowEnchancedClassRedefinition arg with JetBrainsRuntime SDK (JBRSDK) + Single HotSwap Plugin to enable hotswapping goodness.
+    // Note to self:
+    // -XX:+AllowEnchancedClassRedefinition arg with JetBrainsRuntime SDK (JBRSDK) + Single HotSwap Plugin to enable better hotswapping
+    // -Dmixin.debug.export=true for mixin dump of transformed classes.
 
     public static final String MODID = "the_bumblezone";
     public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
