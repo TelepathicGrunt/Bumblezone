@@ -11,4 +11,4 @@ Beehemoth will not lose friendship if hurt while untamed.
 ##### Mod Compat:
 Passed owner of thrown Pollen Puff to FakePlayers so claim owners can throw Pollen Puff to place blocks in their own claims.
 
-Updated compat with Ars Nouveau. Ars must now be 4.9.0 or newer if you have that mod on.
+(Forge): Updated compat with Ars Nouveau. Ars must now be 4.9.0 or newer if you have that mod on.
