@@ -57,7 +57,6 @@ public class ArsNouveauCompat implements ModCompat {
 //
 //	protected static final Set<AbstractCastMethod> ALLOWED_CAST_METHODS = Sets.newHashSet(
 //		MethodProjectile.INSTANCE,
-//		MethodOrbit.INSTANCE,
 //		MethodTouch.INSTANCE,
 //		MethodUnderfoot.INSTANCE
 //	);
@@ -152,9 +151,6 @@ public class ArsNouveauCompat implements ModCompat {
 //			}
 //
 //			if (event.spell.getCastMethod() == MethodProjectile.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
-//				return;
-//			}
-//			else if (event.spell.getCastMethod() == MethodOrbit.INSTANCE && !ForgeRegistries.ENTITY_TYPES.getValue(SPELL_FOLLOW_PROJ_RL).is(BzTags.TELEPORT_PROJECTILES)) {
 //				return;
 //			}
 //			else if (ModChecker.arsElementalPresent) {
