@@ -292,14 +292,17 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                 setOrderedToSit(false);
 
                 if (source.type() != level().damageSources().inWall().type()) {
-                    if (entity != null && entity.getUUID().equals(getOwnerUUID())) {
+                    if (entity != null && entity.getUUID().equals(getOwnerUUID()) && this.isTame()) {
                         addFriendship((int) (-3 * amount));
                     }
+
                     if (BzBeeAggressionConfigs.aggressiveBees &&
-                            BzBeeAggressionConfigs.beehemothTriggersWrath &&
-                            entity instanceof LivingEntity livingEntity)
+                        BzBeeAggressionConfigs.beehemothTriggersWrath &&
+                        entity instanceof LivingEntity livingEntity)
                     {
-                        addFriendship((int) (-amount));
+                        if (this.isTame()) {
+                            addFriendship((int) (-amount));
+                        }
                         if (!(livingEntity instanceof Player player && (player.isCreative() || level().getDifficulty() == Difficulty.PEACEFUL)) &&
                                 (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                                 !livingEntity.isSpectator())
@@ -313,7 +316,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             }
                         }
                     }
-                    else {
+                    else if (this.isTame()) {
                         addFriendship((int) -amount);
                     }
                 }
@@ -440,72 +443,40 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             }
             // Taming Beehemoth
             else if (stack.is(BzTags.BEE_FEEDING_ITEMS)) {
-                if(getFriendship() >= 0) {
-                    float tameChance;
-                    int friendshipAmount = 6;
-                    if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
-                        friendshipAmount = 1000;
-                        tameChance = 1f;
-                        for (int i = 0; i < 75; i++) {
-                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
-                        }
-                    }
-                    else if (item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
-                        friendshipAmount = 250;
-                        tameChance = 1f;
-                        for (int i = 0; i < 30; i++) {
-                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
-                        }
-                    }
-                    else if (stack.is(BzTags.HONEY_BUCKETS) || item == BzItems.BEE_BREAD.get()) {
-                        tameChance = 0.25f;
-                    }
-                    else if (itemRL.getPath().contains("honey")) {
-                        tameChance = 0.1f;
-                    }
-                    else {
-                        tameChance = 0.067f;
-                    }
-
-                    if (this.random.nextFloat() < tameChance) {
-                        tame(player);
-                        setFriendship(friendshipAmount);
-                        setOrderedToSit(true);
-                        this.level().broadcastEntityEvent(this, (byte) 7);
-                    }
-                    else {
-                        this.level().broadcastEntityEvent(this, (byte) 6);
+                float tameChance;
+                int friendshipAmount = 6;
+                if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
+                    friendshipAmount = 1000;
+                    tameChance = 1f;
+                    for (int i = 0; i < 75; i++) {
+                        spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                     }
                 }
+                else if (item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
+                    friendshipAmount = 250;
+                    tameChance = 1f;
+                    for (int i = 0; i < 30; i++) {
+                        spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
+                    }
+                }
+                else if (stack.is(BzTags.HONEY_BUCKETS) || item == BzItems.BEE_BREAD.get()) {
+                    tameChance = 0.25f;
+                }
+                else if (itemRL.getPath().contains("honey")) {
+                    tameChance = 0.1f;
+                }
                 else {
-                    addFriendship(1);
-                    if (stack.is(BzTags.ROYAL_JELLY_BUCKETS)) {
-                        addFriendship(1000);
-                        for (int i = 0; i < 75; i++) {
-                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
-                        }
-                        return InteractionResult.PASS;
-                    }
-                    else if (item == BzItems.ROYAL_JELLY_BOTTLE.get()) {
-                        addFriendship(250);
-                        for (int i = 0; i < 30; i++) {
-                            spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
-                        }
-                        return InteractionResult.PASS;
-                    }
-                    else if(item == BzItems.BEE_BREAD.get()) {
-                        addFriendship(5);
-                        return InteractionResult.PASS;
-                    }
-                    else if (stack.is(BzTags.HONEY_BUCKETS)) {
-                        addFriendship(3);
-                    }
-                    else if (itemRL.getPath().contains("honey")) {
-                        addFriendship(2);
-                    }
-                    else {
-                        addFriendship(1);
-                    }
+                    tameChance = 0.067f;
+                }
+
+                if (this.random.nextFloat() < tameChance) {
+                    tame(player);
+                    setFriendship(friendshipAmount);
+                    setOrderedToSit(true);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
+                }
+                else {
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
 
                 GeneralUtils.givePlayerItem(player, hand, ItemStack.EMPTY, true, true);
