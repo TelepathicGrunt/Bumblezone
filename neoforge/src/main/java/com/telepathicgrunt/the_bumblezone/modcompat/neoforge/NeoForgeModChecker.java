@@ -48,8 +48,8 @@ public class NeoForgeModChecker {
             modid = "dragonenchants";
             loadupModCompat(modid, () -> new DragonEnchantsCompat());
 
-//            modid = "curios";
-//            loadupModCompat(modid, () -> new CuriosCompat());
+            modid = "curios";
+            loadupModCompat(modid, () -> new CuriosCompat());
 
             modid = "trophymanager";
             loadupModCompat(modid, () -> new JonnTrophiesCompat());

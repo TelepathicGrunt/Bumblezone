@@ -17,32 +17,32 @@ import java.util.EnumSet;
 import java.util.function.Predicate;
 
 public class CuriosCompat implements ModCompat {
-//	public CuriosCompat() {
-//		CuriosApi.registerCurio(BzItems.FLOWER_HEADWEAR.get(), new FlowerHeadwearCurio());
-//		ModChecker.curiosPresent = true;
-//	}
-//
-//	@Override
-//	public EnumSet<Type> compatTypes() {
-//		return EnumSet.of(Type.CUSTOM_EQUIPMENT_SLOTS);
-//	}
-//
-//	public int getNumberOfMatchingEquippedItemsInCustomSlots(Entity entity, Predicate<ItemStack> itemStackPredicate) {
-//		if (entity instanceof LivingEntity livingEntity) {
-//			return CuriosApi.getCuriosInventory(livingEntity).map(i -> i.findCurios(itemStackPredicate).size()).orElse(0);
-//		}
-//
-//		return 0;
-//	}
-//
-//	private static class FlowerHeadwearCurio implements ICurioItem {
-//		public void curioTick(SlotContext slotContext, ItemStack stack) {
-//			if (slotContext.entity() instanceof Player player &&
-//				stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet &&
-//				!player.getItemBySlot(EquipmentSlot.HEAD).is(BzItems.FLOWER_HEADWEAR.get()))
-//			{
-//				flowerHeadwearHelmet.bz$onArmorTick(stack, player.level(), player);
-//			}
-//		}
-//	}
+	public CuriosCompat() {
+		CuriosApi.registerCurio(BzItems.FLOWER_HEADWEAR.get(), new FlowerHeadwearCurio());
+		ModChecker.curiosPresent = true;
+	}
+
+	@Override
+	public EnumSet<Type> compatTypes() {
+		return EnumSet.of(Type.CUSTOM_EQUIPMENT_SLOTS);
+	}
+
+	public int getNumberOfMatchingEquippedItemsInCustomSlots(Entity entity, Predicate<ItemStack> itemStackPredicate) {
+		if (entity instanceof LivingEntity livingEntity) {
+			return CuriosApi.getCuriosInventory(livingEntity).map(i -> i.findCurios(itemStackPredicate).size()).orElse(0);
+		}
+
+		return 0;
+	}
+
+	private static class FlowerHeadwearCurio implements ICurioItem {
+		public void curioTick(SlotContext slotContext, ItemStack stack) {
+			if (slotContext.entity() instanceof Player player &&
+				stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet &&
+				!player.getItemBySlot(EquipmentSlot.HEAD).is(BzItems.FLOWER_HEADWEAR.get()))
+			{
+				flowerHeadwearHelmet.bz$onArmorTick(stack, player.level(), player);
+			}
+		}
+	}
 }

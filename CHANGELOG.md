@@ -7,3 +7,5 @@ Beehemoth will not lose friendship if hurt while untamed.
 
 ##### Mod Compat:
 Passed owner of thrown Pollen Puff to FakePlayers so claim owners can throw Pollen Puff to place blocks in their own claims.
+
+Re-enabled Curios compat.
