@@ -41,3 +41,8 @@ description='''A wonderful bee dimension mod with lots of new exploration and ad
     mandatory=false
     ordering="AFTER"
     versionRange="[0,)"
+
+[[dependencies.the_bumblezone]]
+    modId="ars_nouveau"
+    mandatory=false
+    versionRange="[1.20.1-4.9.0.152,)"
