@@ -15,4 +15,4 @@ Added `the_bumblezone:paralyzed/immune` entity type tag to allow people to say w
  Can add `minecraft:player` to the tag to make players immune to paralyzed.
 
 Added `paralyzedMaxTickDuration` config option to allow setting maximum tick time an entity can stay paralyzed for at once.
- Set to 600 by default to accommodate Long Paralyzed potion. (Actions that re-apply Paralyzed effect will reset timer tho)
+ Set to 600 by default. (Actions that re-apply Paralyzed effect will reset timer tho)
