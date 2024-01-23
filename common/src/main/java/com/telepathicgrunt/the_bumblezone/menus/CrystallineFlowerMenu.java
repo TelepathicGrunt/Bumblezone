@@ -275,6 +275,9 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                         if (totalXPRequires <= playerXP) {
                             tierAbleToBeBought++;
                         }
+                        else {
+                            break;
+                        }
                     }
                 }
                 playerHasXPForTier.set(tierAbleToBeBought);
