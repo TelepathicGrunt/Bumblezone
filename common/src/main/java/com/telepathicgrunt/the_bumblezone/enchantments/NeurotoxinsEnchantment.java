@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.AbstractArrowAccessor;
@@ -27,7 +28,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.util.Optional;
 
 public class NeurotoxinsEnchantment extends BzEnchantment {
-    private static final int MAX_LEVEL = 3;
 
     public NeurotoxinsEnchantment() {
         super(Rarity.RARE, EnchantmentCategory.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
@@ -35,7 +35,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
 
     @Override
     public int getMinCost(int level) {
-        if (level > MAX_LEVEL) {
+        if (level > BzGeneralConfigs.neurotoxinMaxLevel) {
             return 201;
         }
 
@@ -44,7 +44,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
 
     @Override
     public int getMaxCost(int level) {
-        if (level > MAX_LEVEL) {
+        if (level > BzGeneralConfigs.neurotoxinMaxLevel) {
             return 200;
         }
 
@@ -53,7 +53,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
 
     @Override
     public int getMaxLevel() {
-        return MAX_LEVEL;
+        return BzGeneralConfigs.neurotoxinMaxLevel;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
             if(livingEntity.getRandom().nextFloat() < applyChance) {
                 livingEntity.addEffect(new MobEffectInstance(
                         BzEffects.PARALYZED.get(),
-                        100 * level,
+                        Math.min(100 * level, BzGeneralConfigs.paralyzedMaxTickDuration),
                         level,
                         false,
                         true,

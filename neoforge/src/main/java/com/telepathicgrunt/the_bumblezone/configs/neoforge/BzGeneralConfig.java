@@ -24,6 +24,8 @@ public class BzGeneralConfig {
     public static ModConfigSpec.IntValue broodBlocksBeeSpawnCapacity;
     public static ModConfigSpec.BooleanValue pileOfPollenHyperFireSpread;
     public static ModConfigSpec.BooleanValue superCandlesBurnsMobs;
+    public static ModConfigSpec.IntValue neurotoxinMaxLevel;
+    public static ModConfigSpec.IntValue paralyzedMaxTickDuration;
     public static ModConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
     public static ModConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
     public static ModConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
@@ -168,6 +170,27 @@ public class BzGeneralConfig {
                         " Whether Bee Soup can be used to make Potions of Neurotoxin")
                 .translation("the_bumblezone.config.beesoupbrewingrecipe")
                 .define("beeSoupBrewingRecipe", true);
+
+        builder.pop();
+
+
+        builder.push("Enchantments Options");
+
+
+        neurotoxinMaxLevel = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Maximum level that Neurotoxin enchantment can be." +
+                        " Will not retroactively fixed existing enchanted items.\n")
+                .translation("the_bumblezone.config.neurotoxinmaxlevel")
+                .defineInRange("neurotoxinMaxLevel", 2, 1, 255);
+
+
+        paralyzedMaxTickDuration = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Sets maximum tick duration the Paralyzed effect can be on an entity." +
+                        " Actions that reapply Paralyzed can still reset the timer and keep entity stunned.\n")
+                .translation("the_bumblezone.config.paralyzedmaxtickduration")
+                .defineInRange("paralyzedMaxTickDuration", 600, 1, 1000000);
 
         builder.pop();
 
@@ -454,6 +477,8 @@ public class BzGeneralConfig {
         BzGeneralConfigs.broodBlocksBeeSpawnCapacity = broodBlocksBeeSpawnCapacity.get();
         BzGeneralConfigs.pileOfPollenHyperFireSpread = pileOfPollenHyperFireSpread.get();
         BzGeneralConfigs.superCandlesBurnsMobs = superCandlesBurnsMobs.get();
+        BzGeneralConfigs.neurotoxinMaxLevel = neurotoxinMaxLevel.get();
+        BzGeneralConfigs.paralyzedMaxTickDuration = paralyzedMaxTickDuration.get();
         BzGeneralConfigs.beeQueenBonusTradeRewardMultiplier = beeQueenBonusTradeRewardMultiplier.get();
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks.get();
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified.get();

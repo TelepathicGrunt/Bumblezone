@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -32,17 +35,25 @@ public class ParalyzedEffect extends MobEffect {
     }
 
     /**
-     * sync paralysis to client so they can shake on client side
+     * sync paralyzed to client so they can shake on client side
      */
     @Override
     public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
         MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.get());
-        if (livingEntity.getMobType() == MobType.UNDEAD) {
+        if (effect == null) {
+            return;
+        }
+
+        if (livingEntity.getMobType() == MobType.UNDEAD || livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
             livingEntity.removeEffect(this);
             return;
         }
 
-        if(!livingEntity.isRemoved() && effect != null && livingEntity.level() instanceof ServerLevel) {
+        if (effect.getDuration() > BzGeneralConfigs.paralyzedMaxTickDuration) {
+            ((MobEffectInstanceAccessor)effect).setDuration(BzGeneralConfigs.paralyzedMaxTickDuration);
+        }
+
+        if(!livingEntity.isRemoved() && livingEntity.level() instanceof ServerLevel) {
             MobEffectClientSyncPacket.sendToClient(livingEntity, effect);
         }
 

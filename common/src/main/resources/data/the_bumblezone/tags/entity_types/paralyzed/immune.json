@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:iron_golem",
+    "minecraft:snow_golem",
+    "the_bumblezone:cosmic_crystal_entity"
+  ]
+}
