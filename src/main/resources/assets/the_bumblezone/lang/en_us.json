@@ -206,9 +206,9 @@
   "enchantment_lore.the_bumblezone:potent_poison.description": "Inflict poison when it hits a non-undead mob. Higher level increase duration and poison level.",
   "enchantment_lore_forge.the_bumblezone:potent_poison.description": "Inflict poison when it hits a non-undead mob. Higher level increase duration and poison level.",
   "enchantment.the_bumblezone.neurotoxins": "Neurotoxins",
-  "enchantment.the_bumblezone.neurotoxins.desc": "Chance to inflict Paralysis on non-undead mob. Higher health mobs decreases paralysis chance.",
-  "enchantment_lore.the_bumblezone:neurotoxins.description": "Chance to inflict Paralysis on non-undead mob. Higher health mobs decreases paralysis chance.",
-  "enchantment_lore_forge.the_bumblezone:neurotoxins.description": "Chance to inflict Paralysis on non-undead mob. Higher health mobs decreases paralysis chance.",
+  "enchantment.the_bumblezone.neurotoxins.desc": "Chance to inflict Paralyzed on non-undead mob and non-iron/snow golems. Higher health mobs decreases paralysis chance.",
+  "enchantment_lore.the_bumblezone:neurotoxins.description": "Chance to inflict Paralyzed on non-undead mob and non-iron/snow golems. Higher health mobs decreases paralysis chance.",
+  "enchantment_lore_forge.the_bumblezone:neurotoxins.description": "Chance to inflict Paralyzed on non-undead mob and non-iron/snow golems. Higher health mobs decreases paralysis chance.",
 
   "biome.the_bumblezone.sugar_water_floor": "Sugar Water Floor",
   "biome.the_bumblezone.hive_wall": "Hive Wall",

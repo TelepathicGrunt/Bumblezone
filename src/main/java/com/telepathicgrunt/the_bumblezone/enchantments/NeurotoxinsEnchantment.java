@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.capabilities.BzCapabilities;
 import com.telepathicgrunt.the_bumblezone.capabilities.NeurotoxinsMissCounter;
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearEntity;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ThrownTridentAccessor;
@@ -23,7 +24,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 public class NeurotoxinsEnchantment extends Enchantment {
-    private static final int MAX_LEVEL = 2;
 
     public NeurotoxinsEnchantment() {
         super(Rarity.RARE, EnchantmentCategory.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
@@ -31,7 +31,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        if (level > MAX_LEVEL) {
+        if (level > BzGeneralConfigs.neurotoxinMaxLevel.get()) {
             return 201;
         }
 
@@ -40,7 +40,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
 
     @Override
     public int getMaxCost(int level) {
-        if (level > MAX_LEVEL) {
+        if (level > BzGeneralConfigs.neurotoxinMaxLevel.get()) {
             return 200;
         }
 
@@ -49,7 +49,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return MAX_LEVEL;
+        return BzGeneralConfigs.neurotoxinMaxLevel.get();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
             if(livingEntity.getRandom().nextFloat() < applyChance) {
                 livingEntity.addEffect(new MobEffectInstance(
                         BzEffects.PARALYZED.get(),
-                        100 * level,
+                        Math.min(100 * level, BzGeneralConfigs.paralyzedMaxTickDuration.get()),
                         level,
                         false,
                         true,

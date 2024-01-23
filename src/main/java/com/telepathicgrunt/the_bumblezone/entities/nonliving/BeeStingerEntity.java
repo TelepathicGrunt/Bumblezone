@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -108,7 +109,7 @@ public class BeeStingerEntity extends AbstractArrow {
             if (isPoisoned && isSlowed && isWeakened && livingEntity.getRandom().nextFloat() < 0.25f) {
                 livingEntity.addEffect(new MobEffectInstance(
                         BzEffects.PARALYZED.get(),
-                        100,
+                        Math.min(BzGeneralConfigs.paralyzedMaxTickDuration.get(), 100),
                         0,
                         true,
                         true,

@@ -1,12 +1,16 @@
 package com.telepathicgrunt.the_bumblezone.effects;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
 
@@ -32,15 +36,29 @@ public class ParalyzedEffect extends MobEffect {
     }
 
     /**
-     * sync paralysis to client so they can shake on client side
+     * sync paralyzed to client so they can shake on client side
      */
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
+        super.addAttributeModifiers(entity, attributes, amplifier);
+
         MobEffectInstance effect = entity.getEffect(BzEffects.PARALYZED.get());
-        if(!entity.isRemoved() && effect != null && entity.level instanceof ServerLevel) {
+        if (effect == null) {
+            return;
+        }
+
+        if (entity.getMobType() == MobType.UNDEAD || entity.getType().is(BzTags.PARALYZED_IMMUNE)) {
+            entity.removeEffect(this);
+            return;
+        }
+
+        if (effect.getDuration() > BzGeneralConfigs.paralyzedMaxTickDuration.get()) {
+            ((MobEffectInstanceAccessor)effect).setDuration(BzGeneralConfigs.paralyzedMaxTickDuration.get());
+        }
+
+        if(!entity.isRemoved() && entity.level instanceof ServerLevel) {
             MobEffectClientSyncPacket.sendToClient(entity, effect);
         }
-        super.addAttributeModifiers(entity, attributes, amplifier);
     }
 
     @Override

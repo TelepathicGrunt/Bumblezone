@@ -105,6 +105,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_HIGH = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_high"));
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_LOW = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_low"));
     public static final TagKey<EntityType<?>> TELEPORT_PROJECTILES = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/teleport_projectiles"));
+    public static final TagKey<EntityType<?>> PARALYZED_IMMUNE = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "paralyzed/immune"));
 
     public static final TagKey<Structure> NO_DUNGEONS = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "no_dungeons"));
     public static final TagKey<Structure> NO_CAVES = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(Bumblezone.MODID, "no_caves"));
