@@ -4,7 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import vazkii.quark.content.client.tooltip.EnchantedBookTooltips;
+import org.violetmoon.quark.content.client.tooltip.EnchantedBookTooltips;
 
 public class QuarkCompat implements ModCompat {
 
