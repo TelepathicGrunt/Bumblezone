@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.configs.neoforge;
 
+import com.telepathicgrunt.the_bumblezone.items.potions.ConfigSafePotion;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPotions;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.config.IConfigSpec;
@@ -36,6 +38,11 @@ public class BzConfigHandler {
     }
 
     private static void onConfigReload(ModConfigEvent.Reloading event) {
+        BzPotions.POTIONS.getEntries().forEach(p -> {
+            if (p instanceof ConfigSafePotion configSafePotion) {
+                configSafePotion.clearCachedEffectList();
+            }
+        });
         copyToCommon(event.getConfig().getSpec());
     }
 
