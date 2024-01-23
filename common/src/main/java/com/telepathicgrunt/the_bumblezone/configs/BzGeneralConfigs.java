@@ -32,6 +32,8 @@ public class BzGeneralConfigs {
     public static boolean dispensersDropGlassBottles = false;
     public static int broodBlocksBeeSpawnCapacity = 40;
     public static boolean pileOfPollenHyperFireSpread = false;
+    public static int neurotoxinMaxLevel = 2;
+    public static int paralyzedMaxTickDuration = 600;
     public static int beeQueenBonusTradeRewardMultiplier = 3;
     public static int beeQueenBonusTradeDurationInTicks = 24000;
     public static int beeQueenBonusTradeAmountTillSatified = 24;

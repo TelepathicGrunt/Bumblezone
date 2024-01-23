@@ -67,6 +67,16 @@ public class BzConfig extends MidnightConfig {
 
 
     @Comment
+    public static Comment enchantmentsComment;
+
+    @Entry(min=1, max=255)
+    public static int neurotoxinMaxLevel = 2;
+
+    @Entry(min=1, max=1000000)
+    public static int paralyzedMaxTickDuration = 600;
+
+
+    @Comment
     public static Comment crystallineFlowerComment;
 
     @Entry
@@ -385,6 +395,10 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.broodBlocksBeeSpawnCapacity = broodBlocksBeeSpawnCapacity;
         BzGeneralConfigs.pileOfPollenHyperFireSpread = pileOfPollenHyperFireSpread;
         BzGeneralConfigs.superCandlesBurnsMobs = superCandlesBurnsMobs;
+
+        //Enchantment Mechanics
+        BzGeneralConfigs.neurotoxinMaxLevel = neurotoxinMaxLevel;
+        BzGeneralConfigs.paralyzedMaxTickDuration = paralyzedMaxTickDuration;
 
         //Crystalline Flower
         BzGeneralConfigs.crystallineFlowerConsumeItemEntities = crystallineFlowerConsumeItemEntities;

@@ -150,6 +150,7 @@ public class BzTags {
     public static final TagKey<EntityType<?>> BEE_LIKE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "bee_like"));
     public static final TagKey<EntityType<?>> ANCIENT_WAX_IMMUNE_TO_EFFECTS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "ancient_wax/immune_to_effects"));
     public static final TagKey<EntityType<?>> LUMINESCENT_WAX_IMMUNE_TO_EFFECTS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "luminescent_wax/immune_to_effects"));
+    public static final TagKey<EntityType<?>> PARALYZED_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "paralyzed/immune"));
     public static final TagKey<EntityType<?>> HEAVY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "heavy_air/immune_to_gravity_effect"));
     public static final TagKey<EntityType<?>> WINDY_AIR_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "windy_air/immune_to_push_effect"));
     public static final TagKey<EntityType<?>> TARGET_ENTITY_HIT_BY_TELEPORT_PROJECTILE_ANYWHERE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/target_entity_hit_by_teleport_projectile_anywhere"));
