@@ -13,7 +13,7 @@ Added `neurotoxinMaxLevel` config option to allow setting what the max level is 
 ##### Effects:
 Iron Golem and Snow Golem are now immune to Paralyzed effect.
 
-Added `the_bumblezone:paralyzed:immune` entity type tag to allow people to say what cannot be paralyzed in addition to undead mobs.
+Added `the_bumblezone:paralyzed/immune` entity type tag to allow people to say what cannot be paralyzed in addition to undead mobs.
  Can add `minecraft:player` to the tag to make players immune to paralyzed.
 
 Added `paralyzedMaxTickDuration` config option to allow setting maximum tick time an entity can stay paralyzed for at once. 
