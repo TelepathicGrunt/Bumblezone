@@ -59,8 +59,8 @@ dependencies {
     modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
     modCompileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}")
 
-    modCompileOnly("curse.maven:quark-243121:${project.quark_file_id}")
-    modCompileOnly("curse.maven:autoreglib-250363:${project.autoreglib_file_id}")
+    modCompileOnly("org.violetmoon.quark:Quark:${project.quark}")
+    modCompileOnly("org.violetmoon.zeta:Zeta:${project.zeta}")
 
     // modRuntimeOnly("curse.maven:better-advancements-272515:4631253")
     // modRuntimeOnly("curse.maven:spit-it-out-857141:4614678")
