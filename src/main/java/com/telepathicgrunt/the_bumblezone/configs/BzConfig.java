@@ -53,6 +53,17 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean superCandlesBurnsMobs = true;
 
+
+    @Comment
+    public static Comment enchantmentsComment;
+
+    @Entry(min=1, max=255)
+    public static int neurotoxinMaxLevel = 2;
+
+    @Entry(min=1, max=1000000)
+    public static int paralyzedMaxTickDuration = 600;
+
+
     @Comment
     public static Comment crystallineFlowerComment;
 
