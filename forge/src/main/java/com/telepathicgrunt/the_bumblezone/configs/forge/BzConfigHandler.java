@@ -1,5 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.configs.forge;
 
+import com.telepathicgrunt.the_bumblezone.items.potions.ConfigSafePotion;
+import com.telepathicgrunt.the_bumblezone.modinit.BzPotions;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.IConfigSpec;
@@ -36,6 +38,11 @@ public class BzConfigHandler {
     }
 
     private static void onConfigReload(ModConfigEvent.Reloading event) {
+        BzPotions.POTIONS.getEntries().forEach(p -> {
+            if (p instanceof ConfigSafePotion configSafePotion) {
+                configSafePotion.clearCachedEffectList();
+            }
+        });
         copyToCommon(event.getConfig().getSpec());
     }
 
@@ -47,5 +54,4 @@ public class BzConfigHandler {
         if (spec == BzBeeAggressionConfig.GENERAL_SPEC) BzBeeAggressionConfig.copyToCommon();
         if (spec == BzModCompatibilityConfig.GENERAL_SPEC) BzModCompatibilityConfig.copyToCommon();
     }
-
 }

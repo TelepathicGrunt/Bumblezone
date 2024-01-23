@@ -55,7 +55,7 @@ public class ParalyzedEffect extends MobEffect implements EffectExtension {
             ((MobEffectInstanceAccessor)effect).setDuration(BzGeneralConfigs.paralyzedMaxTickDuration);
         }
 
-        if(!entity.isRemoved()&& entity.level() instanceof ServerLevel) {
+        if(!entity.isRemoved() && entity.level() instanceof ServerLevel) {
             MobEffectClientSyncPacket.sendToClient(entity, effect);
         }
 
