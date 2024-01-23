@@ -284,9 +284,10 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
     private void drawPushableButtons(GuiGraphics guiGraphics, int startX, int startY, int mouseX, int mouseY) {
         if (BzGeneralConfigs.crystallineFlowerConsumeExperienceUI) {
             if (pressedXp1Timer > 0 ||
-                    this.menu.xpTier.get() == 7 ||
-                    isPathObstructed(1) ||
-                    !canPlayerBuyTier(1)) {
+                this.menu.xpTier.get() == 7 ||
+                isPathObstructed(1) ||
+                !canPlayerBuyTier(1))
+            {
                 pressedXp1Timer--;
                 RenderSystem.enableDepthTest();
                 guiGraphics.blit(CONTAINER_BACKGROUND, startX + XP_CONSUME_1_X_OFFSET, startY + XP_CONSUME_1_Y_OFFSET, XP_CONSUME_1_U_OFFSET, XP_CONSUME_1_V_OFFSET + 18, 18, 18, 256, 256);

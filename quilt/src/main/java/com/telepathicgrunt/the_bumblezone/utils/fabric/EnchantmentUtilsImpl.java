@@ -31,12 +31,4 @@ public class EnchantmentUtilsImpl {
     public static boolean isAllowedOnBooks(Enchantment enchantment) {
         return true;
     }
-
-    public static float getEnchantPower(Level world, BlockPos pos) {
-        final BlockState state = world.getBlockState(pos);
-        final Block block = world.getBlockState(pos).getBlock();
-        return BlockContentRegistries.ENCHANTING_BOOSTERS.get(block)
-                .map(booster -> booster.getEnchantingBoost(world, state, pos))
-                .orElse(0f);
-    }
 }

@@ -1,15 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
-import com.google.common.collect.Lists;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -18,12 +15,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,19 +30,10 @@ import java.util.Objects;
 public class EnchantmentUtils {
 
 	/**
-	 * Be warned, minecraft doesn't update experienceTotal properly, so we have
-	 * to do this.
+	 * Be warned, minecraft doesn't update experienceTotal properly, so we have to do this.
 	 */
-	public static int getPlayerXP(Player player) {
-		return (int) (EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
-	}
-
-	public static void addPlayerXP(Player player, int amount) {
-		int experience = getPlayerXP(player) + amount;
-		player.totalExperience = experience;
-		player.experienceLevel = EnchantmentUtils.getLevelForExperience(experience);
-		int expForLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
-		player.experienceProgress = (float) (experience - expForLevel) / (float) player.getXpNeededForNextLevel();
+	public static long getPlayerXP(Player player) {
+		return (long) (EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
 	}
 
 	public static int xpBarCap(int level) {
@@ -58,61 +44,15 @@ public class EnchantmentUtils {
 		return 7 + level * 2;
 	}
 
-	private static int sum(int n, int a0, int d) {
-		return n * (2 * a0 + (n - 1) * d) / 2;
+	private static long sum(int n, int a0, int d) {
+		return n * (2L * a0 + (n - 1L) * d) / 2L;
 	}
 
-	public static int getExperienceForLevel(int level) {
+	public static long getExperienceForLevel(int level) {
 		if (level == 0) return 0;
 		if (level <= 15) return sum(level, 7, 2);
 		if (level <= 30) return 315 + sum(level - 15, 37, 5);
-		return 1395 + sum(level - 30, 112, 9);
-	}
-
-	public static int getXpToNextLevel(int level) {
-		int levelXP = EnchantmentUtils.getLevelForExperience(level);
-		int nextXP = EnchantmentUtils.getExperienceForLevel(level + 1);
-		return nextXP - levelXP;
-	}
-
-	public static int getLevelForExperience(int targetXp) {
-		int level = 0;
-		while (true) {
-			final int xpToNextLevel = xpBarCap(level);
-			if (targetXp < xpToNextLevel) return level;
-			level++;
-			targetXp -= xpToNextLevel;
-		}
-	}
-
-	public static float getPower(Level world, BlockPos position) {
-		float power = 0;
-
-		for (int deltaZ = -1; deltaZ <= 1; ++deltaZ) {
-			for (int deltaX = -1; deltaX <= 1; ++deltaX) {
-				if ((deltaZ != 0 || deltaX != 0) && world.isEmptyBlock(position.offset(deltaX, 0, deltaZ)) && world.isEmptyBlock(position.offset(deltaX, 1, deltaZ))) {
-					power += getEnchantPower(world, position.offset(deltaX * 2, 0, deltaZ * 2));
-					power += getEnchantPower(world, position.offset(deltaX * 2, 1, deltaZ * 2));
-					if (deltaX != 0 && deltaZ != 0) {
-						power += getEnchantPower(world, position.offset(deltaX * 2, 0, deltaZ));
-						power += getEnchantPower(world, position.offset(deltaX * 2, 1, deltaZ));
-						power += getEnchantPower(world, position.offset(deltaX, 0, deltaZ * 2));
-						power += getEnchantPower(world, position.offset(deltaX, 1, deltaZ * 2));
-					}
-				}
-			}
-		}
-		return power;
-	}
-
-	@ExpectPlatform
-	public static float getEnchantPower(Level world, BlockPos pos) {
-		throw new NotImplementedException();
-	}
-
-	public static void addAllBooks(Enchantment enchantment, List<ItemStack> items) {
-		for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++)
-			items.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)));
+		return 1395L + sum(level - 30, 112, 9);
 	}
 
 	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
@@ -202,14 +142,5 @@ public class EnchantmentUtils {
 		cost += BzGeneralConfigs.crystallineFlowerExtraTierCost;
 
 		return Math.max(1, Math.min(6, cost));
-	}
-
-	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
-		ResourceKey<Enchantment> resourceKey1 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
-		ResourceKey<Enchantment> resourceKey2 = BuiltInRegistries.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
-
-		int ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
-		if (ret == 0) ret = enchantment2.level - enchantment1.level;
-		return ret;
 	}
 }

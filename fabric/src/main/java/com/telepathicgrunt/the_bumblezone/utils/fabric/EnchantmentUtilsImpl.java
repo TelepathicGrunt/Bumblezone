@@ -29,8 +29,4 @@ public class EnchantmentUtilsImpl {
     public static boolean isAllowedOnBooks(Enchantment enchantment) {
         return true;
     }
-
-    public static float getEnchantPower(Level world, BlockPos pos) {
-        return world.getBlockState(pos).is(Blocks.BOOKSHELF) ? 1.0F : 0.0F;
-    }
 }
