@@ -32,62 +32,21 @@ import java.util.Objects;
 public class EnchantmentUtils {
 
 	/**
-	 * Be warned, minecraft doesn't update experienceTotal properly, so we have
-	 * to do this.
-	 *
-	 * @param player
-	 * @return
+	 * Be warned, minecraft doesn't update experienceTotal properly, so we have to do this.
 	 */
-	public static int getPlayerXP(Player player) {
-		return (int) (EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
+	public static long getPlayerXP(Player player) {
+		return (long) (EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
 	}
 
-	public static void addPlayerXP(Player player, int amount) {
-		int experience = getPlayerXP(player) + amount;
-		player.totalExperience = experience;
-		player.experienceLevel = EnchantmentUtils.getLevelForExperience(experience);
-		int expForLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
-		player.experienceProgress = (float) (experience - expForLevel) / (float) player.getXpNeededForNextLevel();
+	private static long sum(int n, int a0, int d) {
+		return n * (2L * a0 + (n - 1L) * d) / 2L;
 	}
 
-	public static int xpBarCap(int level) {
-		if (level >= 30) return 112 + (level - 30) * 9;
-
-		if (level >= 15) return 37 + (level - 15) * 5;
-
-		return 7 + level * 2;
-	}
-
-	private static int sum(int n, int a0, int d) {
-		return n * (2 * a0 + (n - 1) * d) / 2;
-	}
-
-	public static int getExperienceForLevel(int level) {
+	public static long getExperienceForLevel(int level) {
 		if (level == 0) return 0;
 		if (level <= 15) return sum(level, 7, 2);
 		if (level <= 30) return 315 + sum(level - 15, 37, 5);
-		return 1395 + sum(level - 30, 112, 9);
-	}
-
-	public static int getXpToNextLevel(int level) {
-		int levelXP = EnchantmentUtils.getLevelForExperience(level);
-		int nextXP = EnchantmentUtils.getExperienceForLevel(level + 1);
-		return nextXP - levelXP;
-	}
-
-	public static int getLevelForExperience(int targetXp) {
-		int level = 0;
-		while (true) {
-			final int xpToNextLevel = xpBarCap(level);
-			if (targetXp < xpToNextLevel) return level;
-			level++;
-			targetXp -= xpToNextLevel;
-		}
-	}
-
-	public static void addAllBooks(Enchantment enchantment, List<ItemStack> items) {
-		for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++)
-			items.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)));
+		return 1395L + sum(level - 30, 112, 9);
 	}
 
 	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
@@ -165,14 +124,5 @@ public class EnchantmentUtils {
 		cost += BzConfig.crystallineFlowerExtraTierCost;
 
 		return Math.max(1, Math.min(6, cost));
-	}
-
-	public static int compareEnchantments(EnchantmentInstance enchantment1, EnchantmentInstance enchantment2) {
-		ResourceKey<Enchantment> resourceKey1 = Registry.ENCHANTMENT.getResourceKey(enchantment2.enchantment).get();
-		ResourceKey<Enchantment> resourceKey2 = Registry.ENCHANTMENT.getResourceKey(enchantment1.enchantment).get();
-
-		int ret = resourceKey2.location().getPath().compareTo(resourceKey1.location().getPath());
-		if (ret == 0) ret = enchantment2.level - enchantment1.level;
-		return ret;
 	}
 }
