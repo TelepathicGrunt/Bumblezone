@@ -264,7 +264,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             else {
                 int tierAbleToBeBought = 0;
                 int totalXPRequires = 0;
-                int playerXP = EnchantmentUtils.getPlayerXP(player);
+                long playerXP = EnchantmentUtils.getPlayerXP(player);
                 for (int i = 0; i < 3; i++) {
                     if (this.crystallineFlowerBlockEntity.getXpTier() + i < 7) {
                         totalXPRequires += this.crystallineFlowerBlockEntity.getMaxXpForTier(this.crystallineFlowerBlockEntity.getXpTier() + i);
@@ -424,7 +424,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
             int xpRequested = crystallineFlowerBlockEntity.getXpForNextTiers(freeTierSpot);
             int xpObtained;
             if (!player.getAbilities().instabuild) {
-                xpObtained = Math.min(EnchantmentUtils.getPlayerXP(player), xpRequested);
+                xpObtained = (int) Math.min(EnchantmentUtils.getPlayerXP(player), xpRequested);
                 player.giveExperiencePoints(-xpRequested);
             }
             else {

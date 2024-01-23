@@ -1,11 +1,5 @@
-### **(V.7.3.4 Changes) (1.20.4 Minecraft)**
+### **(V.7.3.5 Changes) (1.20.4 Minecraft)**
 
-##### Entities:
-Hardcoded Bee Queen to "catch" Snowballs thrown at it if snowballs is a valid Bee Queen trade. Will not work for other projectiles.
-
-Beehemoth will not lose friendship if hurt while untamed.
-
-##### Mod Compat:
-Passed owner of thrown Pollen Puff to FakePlayers so claim owners can throw Pollen Puff to place blocks in their own claims.
-
-Re-enabled Curios compat.
+##### Blocks:
+Allow Crystalline Flower to keep the consume xp buttons active when player has an ungodly absurd amount of xp.
+ Person had so much xp that it overflowed some calculations and caused the consume xp levels buttons to get stuck disabled.
