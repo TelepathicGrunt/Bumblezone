@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "minecraft:iron_golem",
-    "minecraft:snow_golem"
+    "minecraft:snow_golem",
+    {
+      "id": "c:golems",
+      "required": false
+    },
+    {
+      "id": "forge:golems",
+      "required": false
+    }
   ]
 }
