@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -22,7 +23,9 @@ public final class NewLootInjectorApplier {
         if (BzConfig.beeLootInjection || BzConfig.moddedBeeLootInjection) {
             if(context.hasParam(LootContextParams.THIS_ENTITY)) {
                 if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
-                    if (!((LootContextBzVisitedLootInterface)context).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL)) {
+                    if (!((LootContextBzVisitedLootInterface)context).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL) &&
+                        !((EntityLootDropInterface)bee).thebumblezone_hasPerformedEntityDrops())
+                    {
                         ResourceLocation beeRL = Registry.ENTITY_TYPE.getKey(bee.getType());
                         return (BzConfig.beeLootInjection && beeRL.getNamespace().equals("minecraft")) ||
                                 (BzConfig.moddedBeeLootInjection && !beeRL.getNamespace().equals("minecraft"));
@@ -39,5 +42,12 @@ public final class NewLootInjectorApplier {
         ((LootContextBzVisitedLootInterface)context).addVisitedBzVisitedLootRL(STINGER_DROP_LOOT_TABLE_RL);
         ObjectArrayList<ItemStack> newItems = stingerLootTable.getRandomItems(context);
         originalLoot.addAll(newItems);
+
+        if(context.hasParam(LootContextParams.THIS_ENTITY)) {
+            Entity entity = context.getParam(LootContextParams.THIS_ENTITY);
+            if (entity != null) {
+                ((EntityLootDropInterface)entity).thebumblezone_performedEntityDrops();
+            }
+        }
     }
 }
