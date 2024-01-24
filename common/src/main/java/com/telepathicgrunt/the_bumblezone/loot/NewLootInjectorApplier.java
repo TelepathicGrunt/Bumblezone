@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -26,7 +27,9 @@ public final class NewLootInjectorApplier {
         if (BzGeneralConfigs.beeLootInjection || BzGeneralConfigs.moddedBeeLootInjection) {
             if(context.hasParam(LootContextParams.THIS_ENTITY)) {
                 if (context.getParam(LootContextParams.THIS_ENTITY) instanceof Bee bee) {
-                    if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL)) {
+                    if (!((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).getVisitedBzVisitedLootRL().contains(STINGER_DROP_LOOT_TABLE_RL) &&
+                        !((EntityLootDropInterface)bee).thebumblezone_hasPerformedEntityDrops())
+                    {
                         ResourceLocation beeRL = BuiltInRegistries.ENTITY_TYPE.getKey(bee.getType());
                         return (BzGeneralConfigs.beeLootInjection && beeRL.getNamespace().equals("minecraft")) ||
                                 (BzGeneralConfigs.moddedBeeLootInjection && !beeRL.getNamespace().equals("minecraft"));
@@ -52,5 +55,12 @@ public final class NewLootInjectorApplier {
         ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
         stingerLootTable.getRandomItems(((LootContextAccessor)context).getParams(), newItems::add);
         originalLoot.addAll(newItems);
+
+        if(context.hasParam(LootContextParams.THIS_ENTITY)) {
+            Entity entity = context.getParam(LootContextParams.THIS_ENTITY);
+            if (entity != null) {
+                ((EntityLootDropInterface)entity).thebumblezone_performedEntityDrops();
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.items.StinglessBeeHelmet;
 import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
+import com.telepathicgrunt.the_bumblezone.loot.EntityLootDropInterface;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -21,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -28,7 +30,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Entity.class, priority = 1200)
-public abstract class EntityMixin {
+public abstract class EntityMixin implements EntityLootDropInterface {
+
+    @Unique
+    public boolean thebumblezone_performedEntityDrops = false;
+
+    @Override
+    public boolean thebumblezone_hasPerformedEntityDrops() {
+        return thebumblezone_performedEntityDrops;
+    }
+
+    @Override
+    public void thebumblezone_performedEntityDrops() {
+        thebumblezone_performedEntityDrops = true;
+    }
 
     @Shadow
     public abstract AABB getBoundingBox();
