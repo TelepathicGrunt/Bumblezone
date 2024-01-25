@@ -44,7 +44,6 @@ public class BzCriterias {
     public static final RegistryEntry<GenericTrigger> CLEANUP_HONEY_WEB_TRIGGER = CRITERION_TRIGGERS.register("cleanup_honey_web", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = CRITERION_TRIGGERS.register("cleanup_sticky_honey_residue", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> COMB_CUTTER_EXTRA_DROPS_TRIGGER = CRITERION_TRIGGERS.register("comb_cutter_extra_drops", GenericTrigger::new);
-    public static final RegistryEntry<GenericTrigger> CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER = CRITERION_TRIGGERS.register("craft_multi_potion_potion_candle", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> CRYSTAL_CANNON_FULL_TRIGGER = CRITERION_TRIGGERS.register("crystal_cannon_full", GenericTrigger::new);
     public static final RegistryEntry<GenericTrigger> ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = CRITERION_TRIGGERS.register("enchant_crystalline_flower", GenericTrigger::new);
     public static final RegistryEntry<ItemSpecificTrigger> ESSENCE_EVENT_REWARD_TRIGGER = CRITERION_TRIGGERS.register("essence_event_reward", ItemSpecificTrigger::new);

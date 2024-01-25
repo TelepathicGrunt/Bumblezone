@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
 import com.telepathicgrunt.the_bumblezone.events.entity.BabySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -16,32 +15,15 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.BeehiveBlock;
 
 public class PlayerDataHandler {
 
     public static void initEvents() {
-        PlayerCraftedItemEvent.EVENT.addListener(PlayerDataHandler::onItemCrafted);
         BabySpawnEvent.EVENT.addListener(PlayerDataHandler::onBeeBreed);
         BabySpawnEvent.EVENT.addListener(PlayerDataHandler::onHoneySlimeBred);
         EntityDeathEvent.EVENT_LOWEST.addListener(PlayerDataHandler::onEntityKilled);
         FinishUseItemEvent.EVENT.addListener(PlayerDataHandler::onHoneyBottleDrank);
-    }
-
-    public static void onItemCrafted(PlayerCraftedItemEvent event) {
-        ItemStack createdItem = event.item();
-        if (event.player() instanceof ServerPlayer serverPlayer &&
-                createdItem.getItem() instanceof BlockItem blockItem &&
-                blockItem.getBlock() instanceof BeehiveBlock &&
-                rootAdvancementDone(serverPlayer))
-        {
-            ModuleHelper.getModule(event.player(), ModuleRegistry.PLAYER_DATA).ifPresent(module -> {
-                module.craftedBeehives++;
-                BzCriterias.BEEHIVE_CRAFTED_TRIGGER.get().trigger(serverPlayer, module.craftedBeehives);
-            });
-        }
     }
 
     public static void onBeeBreed(boolean cancelled, BabySpawnEvent event) {

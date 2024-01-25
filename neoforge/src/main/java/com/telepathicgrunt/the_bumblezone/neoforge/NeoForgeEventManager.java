@@ -31,7 +31,6 @@ import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerEntityInteractEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEvent;
@@ -137,7 +136,6 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onPickupItem);
         eventBus.addListener(NeoForgeEventManager::onGrantAdvancement);
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
-        eventBus.addListener(NeoForgeEventManager::onItemCrafted);
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdate);
         eventBus.addListener(NeoForgeEventManager::onLevelTick);
@@ -333,10 +331,6 @@ public class NeoForgeEventManager {
             event.setCancellationResult(result);
             event.setCanceled(true);
         }
-    }
-
-    private static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-        PlayerCraftedItemEvent.EVENT.invoke(new PlayerCraftedItemEvent(event.getEntity(), event.getCrafting(), event.getInventory()));
     }
 
     private static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
