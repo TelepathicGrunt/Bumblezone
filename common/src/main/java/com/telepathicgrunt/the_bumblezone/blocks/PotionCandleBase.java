@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
-import com.telepathicgrunt.the_bumblezone.events.player.PlayerCraftedItemEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -23,7 +22,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -311,25 +309,5 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
             return BlockPathTypes.DAMAGE_FIRE;
         }
         return null;
-    }
-
-    public static void multiPotionCandleCrafted(PlayerCraftedItemEvent event) {
-        if (event.player() instanceof ServerPlayer serverPlayer && event.item().is(BzItems.POTION_CANDLE.get())) {
-            int containerSize = event.table().getContainerSize();
-            int potionsUsed = 0;
-            for (int i = 0; i < containerSize; i++) {
-                ItemStack consumedItems = event.table().getItem(i);
-                if (consumedItems.is(Items.POTION) ||
-                    consumedItems.is(Items.SPLASH_POTION) ||
-                    consumedItems.is(Items.LINGERING_POTION))
-                {
-                    potionsUsed++;
-                }
-            }
-
-            if (potionsUsed >= 2) {
-                BzCriterias.CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER.trigger(serverPlayer);
-            }
-        }
     }
 }

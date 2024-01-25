@@ -41,7 +41,6 @@ public class BzCriterias {
     public static final GenericTrigger CLEANUP_HONEY_WEB_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_honey_web"));
     public static final GenericTrigger CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "cleanup_sticky_honey_residue"));
     public static final GenericTrigger COMB_CUTTER_EXTRA_DROPS_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "comb_cutter_extra_drops"));
-    public static final GenericTrigger CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "craft_multi_potion_potion_candle"));
     public static final GenericTrigger CRYSTAL_CANNON_FULL_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "crystal_cannon_full"));
     public static final GenericTrigger ENCHANT_CRYSTALLINE_FLOWER_TRIGGER = new GenericTrigger(new ResourceLocation(Bumblezone.MODID, "enchant_crystalline_flower"));
     public static final ItemSpecificTrigger ESSENCE_EVENT_REWARD_TRIGGER = new ItemSpecificTrigger(new ResourceLocation(Bumblezone.MODID, "essence_event_reward"));
@@ -116,7 +115,6 @@ public class BzCriterias {
         register(CLEANUP_HONEY_WEB_TRIGGER);
         register(CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER);
         register(COMB_CUTTER_EXTRA_DROPS_TRIGGER);
-        register(CRAFT_MULTI_POTION_POTION_CANDLE_TRIGGER);
         register(CRYSTAL_CANNON_FULL_TRIGGER);
         register(BEE_HIT_WRATH_OF_THE_HIVE_TRIGGER);
         register(ENCHANT_CRYSTALLINE_FLOWER_TRIGGER);
