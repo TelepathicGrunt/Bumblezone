@@ -63,7 +63,11 @@ public class CombCutterEnchantment extends Enchantment {
             breakSpeed = (equipmentLevel * equipmentLevel) + (lesserTarget ? 3 : 13);
 
             if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-                breakSpeed /= ((Math.pow(playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier(), 6) + 2) * 20);
+                int amplifier = playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();
+                if (amplifier < 0) {
+                    amplifier = 3;
+                }
+                breakSpeed /= ((Math.pow(amplifier, 6) + 2) * 20);
             }
         }
         return breakSpeed;
