@@ -5,3 +5,6 @@ Adjusted some code to make extra sure that killed bees with stingers only drop 1
 
 ##### Advancements:
 Removed some hacks and now use or hook into vanilla's `minecraft:recipe_crafted` advancement trigger for some Bumblezone advancements.
+
+##### Enchantments:
+Comb Cutter now treats negative Mining Fatigue as level 4 fatigue properly just like vanilla.
