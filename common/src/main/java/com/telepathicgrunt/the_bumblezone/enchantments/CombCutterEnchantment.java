@@ -80,7 +80,11 @@ public class CombCutterEnchantment extends BzEnchantment {
             double newSpeed = (equipmentLevel * equipmentLevel) + (lesserTarget ? 3 : 13);
 
             if (playerEntity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-                newSpeed /= ((Math.pow(playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier(), 6) + 2) * 20);
+                int amplifier = playerEntity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();
+                if (amplifier < 0) {
+                    amplifier = 3;
+                }
+                newSpeed /= ((Math.pow(amplifier, 6) + 2) * 20);
             }
 
             event.speed().addAndGet(newSpeed);
