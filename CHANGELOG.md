@@ -1,5 +1,10 @@
 ### **(V.7.3.6 Changes) (1.20.4 Minecraft)**
 
+##### Blocks:
+Fixed Heavy Air not pulling down players properly with increased gravity on client side.
+ This issue was most noticeable on servers where if Elytra flying, the delay of when server syncs velocity
+ could be too later and players dies instantly due to gravity increased velocity growing for too long.
+
 ##### Items:
 Adjusted some code to make extra sure that killed bees with stingers only drop 1 Bee Stinger instead of multiple when other certain mods are present.
 

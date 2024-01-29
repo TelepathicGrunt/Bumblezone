@@ -54,7 +54,7 @@
     "entities.PlayerAdvancementsAccessor",
     "entities.PlayerMixin",
     "entities.ServerPlayerMixin",
-    "entities.ServerPlayerTimeInAirMixin",
+    "entities.PlayerTimeInAirMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldMobMixin",
     "items.HoneyShieldPlayerMixin",

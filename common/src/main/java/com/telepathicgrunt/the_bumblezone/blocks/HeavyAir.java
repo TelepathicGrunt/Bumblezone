@@ -19,6 +19,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -111,15 +112,15 @@ public class HeavyAir extends Block {
 
         double extraGravity = -0.005d;
 
-        if (entity instanceof ServerPlayer serverPlayer) {
-            if ((serverPlayer.isCreative() && serverPlayer.getAbilities().flying) || serverPlayer.isSpectator()) {
+        if (entity instanceof Player player) {
+            if ((player.isCreative() && player.getAbilities().flying) || player.isSpectator()) {
                 return;
             }
 
-            if (serverPlayer.getAbilities().flying) {
-                serverPlayer.getAbilities().flying = false;
-                serverPlayer.getAbilities().mayfly = false;
-                serverPlayer.onUpdateAbilities();
+            if (player.getAbilities().flying) {
+                player.getAbilities().flying = false;
+                player.getAbilities().mayfly = false;
+                player.onUpdateAbilities();
             }
 
             if (entity instanceof TemporaryPlayerData temporaryPlayerData) {
