@@ -318,6 +318,7 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean disableEssenceBlockShaders = false;
 
+
     @Comment
     public static Comment knowingEssenceComment;
 
@@ -354,6 +355,7 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static int knowingEssenceStructureNameYCoord = 16;
 
+
     @Comment
     public static Comment radianceEssenceComment;
 
@@ -365,6 +367,17 @@ public class BzConfig extends MidnightConfig {
 
     @Entry
     public static int radianceEssenceArmorDurabilityYCoord = 16;
+
+
+    @Comment
+    public static Comment essenceItemsClientComment;
+
+    @Entry
+    public static int essenceItemHUDVisualEffectLayers = 3;
+
+    @Entry
+    public static float essenceItemHUDVisualEffectSpeed = 1;
+
 
     @ApiStatus.Internal
     public static void setup() {
@@ -490,6 +503,8 @@ public class BzConfig extends MidnightConfig {
         BzClientConfigs.radianceEssenceArmorDurability = radianceEssenceArmorDurability;
         BzClientConfigs.radianceEssenceArmorDurabilityXCoord = radianceEssenceArmorDurabilityXCoord;
         BzClientConfigs.radianceEssenceArmorDurabilityYCoord = radianceEssenceArmorDurabilityYCoord;
+        BzClientConfigs.essenceItemHUDVisualEffectLayers = essenceItemHUDVisualEffectLayers;
+        BzClientConfigs.essenceItemHUDVisualEffectSpeed = essenceItemHUDVisualEffectSpeed;
     }
 
 }

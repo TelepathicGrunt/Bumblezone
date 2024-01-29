@@ -35,7 +35,7 @@ public class RadianceEssence extends AbilityEssenceItem {
 
     @Override
     public int getColor() {
-        return 0xF7D200;
+        return 0xEAC027;
     }
 
     @Override

@@ -19,4 +19,6 @@ public class BzClientConfigs {
     public static boolean radianceEssenceArmorDurability = true;
     public static int radianceEssenceArmorDurabilityXCoord = 4;
     public static int radianceEssenceArmorDurabilityYCoord = 16;
+    public static int essenceItemHUDVisualEffectLayers = 3;
+    public static float essenceItemHUDVisualEffectSpeed = 1;
 }

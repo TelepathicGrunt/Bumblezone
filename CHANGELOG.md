@@ -13,3 +13,8 @@ Removed some hacks and now use or hook into vanilla's `minecraft:recipe_crafted`
 
 ##### Enchantments:
 Comb Cutter now treats negative Mining Fatigue as level 4 fatigue properly just like vanilla.
+
+##### Configs:
+Added essenceItemHUDVisualEffectLayers and essenceItemHUDVisualEffectSpeed, so you can change the HUD effect overlay when holding essence item in offhand slot.
+ Set essenceItemHUDVisualEffectLayers to 0 to disable the HUD overlay entirely.
+ Set essenceItemHUDVisualEffectSpeed to 0 to disable the spinning effect entirely for the HUD effect.

@@ -28,6 +28,8 @@ public class BzClientConfig {
     public static ModConfigSpec.BooleanValue radianceEssenceArmorDurability;
     public static ModConfigSpec.IntValue radianceEssenceArmorDurabilityXCoord;
     public static ModConfigSpec.IntValue radianceEssenceArmorDurabilityYCoord;
+    public static ModConfigSpec.IntValue essenceItemHUDVisualEffectLayers;
+    public static ModConfigSpec.DoubleValue essenceItemHUDVisualEffectSpeed;
 
     static {
         ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
@@ -61,6 +63,24 @@ public class BzClientConfig {
                         " Whether Bumblezone dimension has thick fog or not.\n")
                 .translation("the_bumblezone.config.enabledimensionfog")
                 .define("enableDimensionFog", true);
+
+        builder.pop();
+
+        builder.push("Essence Item HUD Rendering Configs");
+
+        essenceItemHUDVisualEffectLayers = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How many of the rotating texture layers to show on HUD when Essence item is in offhand slot.",
+                        " 0 to turn the rendering off.\n")
+                .translation("the_bumblezone.config.essenceitemhudvisualeffectlayers")
+                .defineInRange("essenceItemHUDVisualEffectLayers", 3, 0, 3);
+
+        essenceItemHUDVisualEffectSpeed = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How fast to spin the rotating texture layers on HUD when Essence item is in offhand slot.",
+                        " 0.5 for half speed. 0 to turn the spinning off.\n")
+                .translation("the_bumblezone.config.essenceitemhudvisualeffectspeed")
+                .defineInRange("essenceItemHUDVisualEffectSpeed", 1.0D, 0, 100);
 
         builder.pop();
 
@@ -208,5 +228,7 @@ public class BzClientConfig {
         BzClientConfigs.radianceEssenceArmorDurability = radianceEssenceArmorDurability.get();
         BzClientConfigs.radianceEssenceArmorDurabilityXCoord = radianceEssenceArmorDurabilityXCoord.get();
         BzClientConfigs.radianceEssenceArmorDurabilityYCoord = radianceEssenceArmorDurabilityYCoord.get();
+        BzClientConfigs.essenceItemHUDVisualEffectLayers = essenceItemHUDVisualEffectLayers.get();
+        BzClientConfigs.essenceItemHUDVisualEffectSpeed = essenceItemHUDVisualEffectSpeed.get().floatValue();
     }
 }
