@@ -29,10 +29,7 @@ public class RadianceEssenceArmorMessage {
             for (ItemStack armorStack : player.getArmorSlots()) {
                 boolean isLowDurability = false;
                 MutableComponent bodyText;
-                if (armorStack.isEmpty()) {
-                    bodyText = Component.empty();
-                }
-                else {
+                if (!armorStack.isEmpty()) {
                     int maxDamage = armorStack.getMaxDamage();
                     int currentHealth = armorStack.getMaxDamage() - armorStack.getDamageValue();
                     if (currentHealth < maxDamage * 0.25) {
@@ -42,23 +39,23 @@ public class RadianceEssenceArmorMessage {
                     else {
                         bodyText = Component.translatable(DURABILITY_TEXT, currentHealth, maxDamage);
                     }
-                }
 
-                if (i == 3) {
-                    MutableComponent line = setupComponent(minecraft, HELMET_TEXT, bodyText, isLowDurability);
-                    renderScrollingString(minecraft, guiGraphics, armorStack, line, 60, 30);
-                }
-                else if (i == 2) {
-                    MutableComponent line = setupComponent(minecraft, CHESTPLATE_TEXT, bodyText, isLowDurability);
-                    renderScrollingString(minecraft, guiGraphics, armorStack, line, 40, 20);
-                }
-                else if (i == 1) {
-                    MutableComponent line = setupComponent(minecraft, LEGGINGS_TEXT, bodyText, isLowDurability);
-                    renderScrollingString(minecraft, guiGraphics, armorStack, line, 20, 10);
-                }
-                else if (i == 0) {
-                    MutableComponent line = setupComponent(minecraft, BOOTS_TEXT, bodyText, isLowDurability);
-                    renderScrollingString(minecraft, guiGraphics, armorStack, line, 0, 0);
+                    if (i == 3) {
+                        MutableComponent line = setupComponent(minecraft, HELMET_TEXT, bodyText, isLowDurability);
+                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 60, 30);
+                    }
+                    else if (i == 2) {
+                        MutableComponent line = setupComponent(minecraft, CHESTPLATE_TEXT, bodyText, isLowDurability);
+                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 40, 20);
+                    }
+                    else if (i == 1) {
+                        MutableComponent line = setupComponent(minecraft, LEGGINGS_TEXT, bodyText, isLowDurability);
+                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 20, 10);
+                    }
+                    else if (i == 0) {
+                        MutableComponent line = setupComponent(minecraft, BOOTS_TEXT, bodyText, isLowDurability);
+                        renderScrollingString(minecraft, guiGraphics, armorStack, line, 0, 0);
+                    }
                 }
 
                 i++;
