@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.essence;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,6 +17,10 @@ public class EssenceOverlay {
     private static final ResourceLocation TEXTURE_OVERLAY_1 = new ResourceLocation(Bumblezone.MODID, "textures/misc/active_essence_overlay.png");
 
     public static void essenceItemOverlay(Player player, GuiGraphics guiGraphics) {
+        if (BzClientConfigs.essenceItemHUDVisualEffectLayers == 0) {
+            return;
+        }
+
         ItemStack offhandItem = player.getOffhandItem();
 
         if (!(offhandItem.getItem() instanceof AbilityEssenceItem abilityEssenceItem) || player.getCooldowns().isOnCooldown(abilityEssenceItem)) {
@@ -44,16 +49,15 @@ public class EssenceOverlay {
         float rotationX = guiGraphics.guiWidth() / 2f;
         float rotationY = guiGraphics.guiHeight();
 
-
-        for(int layer = 0; layer < 3; layer++) {
+        for(int layer = 0; layer < BzClientConfigs.essenceItemHUDVisualEffectLayers; layer++) {
             poseStack.pushPose();
 
             int rotationDirection = layer % 2 == 1 ? -1 : 1;
             float squash = 0.12f - (layer * 0.04f);
-            double spinSlowdown = 200 + (layer * 150);
+            double spinSlowdown = 400 + (layer * 150);
             double currentMillisecond = System.currentTimeMillis() % (360 * spinSlowdown);
-            double degrees = (currentMillisecond / spinSlowdown) * rotationDirection;
-            float angle = (float) (degrees * Mth.DEG_TO_RAD);
+            double degrees = ((currentMillisecond / spinSlowdown) * BzClientConfigs.essenceItemHUDVisualEffectSpeed) * rotationDirection;
+            float angle = (float) ((degrees + 45) * Mth.DEG_TO_RAD);
 
             Matrix4f rotationMatrix = new Matrix4f(
                     Mth.cos(angle), -Mth.sin(angle), 0, 0,
