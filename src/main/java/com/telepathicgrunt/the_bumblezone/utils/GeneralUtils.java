@@ -13,6 +13,7 @@ import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,6 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NoiseColumn;
@@ -43,6 +45,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -399,6 +402,55 @@ public class GeneralUtils {
      */
     public static int merge(int upper, int lower) {
         return (upper << 16) + (lower & 0x0000FFFF);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * cachedSideChunks MUST be an array of 7. Or else crash.
+     * direction can be null for center chunk.
+     * reusableBlockPos will be set to the final position with direction off set if present.
+     */
+    public static ChunkAccess getDirectionalBasedChunkForSpot(LevelAccessor level, ChunkAccess[] cachedSideChunks, @Nullable Direction direction, BlockPos centerPos, BlockPos.MutableBlockPos reusableBlockPos) {
+        reusableBlockPos.set(centerPos); // Set reusable position to center
+
+        // Special logic for offset positions
+        if (direction != null) {
+            // Obtain the offset direction and position
+            reusableBlockPos.move(direction);
+            int directionIndex = direction.get3DDataValue();
+
+            // If offset position is outside center chunk. Grab side chunk using offset portion of the cache instead.
+            // Otherwise, it will fall back to using center chunk if offset position does not land outside center chunk.
+            if (SectionPos.blockToSectionCoord(centerPos.getX()) != SectionPos.blockToSectionCoord(reusableBlockPos.getX()) ||
+                    SectionPos.blockToSectionCoord(centerPos.getZ()) != SectionPos.blockToSectionCoord(reusableBlockPos.getZ()))
+            {
+                // Get side offset chunk
+                ChunkAccess cachedChunk = cachedSideChunks[directionIndex];
+
+                // Cache if not yet cached
+                if (cachedChunk == null) {
+                    cachedChunk = level.getChunk(reusableBlockPos);
+                    cachedSideChunks[directionIndex] = cachedChunk;
+                }
+
+                // Returned the cached chunk
+                return cachedChunk;
+            }
+        }
+
+        // Always get center chunk when no direction present
+        ChunkAccess cachedChunk = cachedSideChunks[6]; // Index 6 will be center chunk
+
+        // Cache if not yet cached
+        if (cachedChunk == null) {
+            cachedChunk = level.getChunk(reusableBlockPos);
+            cachedSideChunks[6] = cachedChunk;
+        }
+
+        // Returned the cached chunk
+        return cachedChunk;
     }
 
     //////////////////////////////////////////////
