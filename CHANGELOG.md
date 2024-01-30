@@ -28,3 +28,6 @@ Adjusted Essence Arena to try and not remove grave blocks when arena is despawni
 Added essenceItemHUDVisualEffectLayers and essenceItemHUDVisualEffectSpeed, so you can change the HUD effect overlay when holding essence item in offhand slot.
  Set essenceItemHUDVisualEffectLayers to 0 to disable the HUD overlay entirely.
  Set essenceItemHUDVisualEffectSpeed to 0 to disable the spinning effect entirely for the HUD effect.
+
+##### Dimension:
+Tried some optimizations for cave generation. Chunks in the dimension may generate a bit faster now for people.

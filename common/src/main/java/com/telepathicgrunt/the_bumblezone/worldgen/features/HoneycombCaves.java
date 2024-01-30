@@ -158,7 +158,8 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        setSeed(context.level().getSeed());
+        WorldGenLevel level = context.level();
+        setSeed(level.getSeed());
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(context.origin());
 
         int disallowedBottomRange = Integer.MAX_VALUE;
@@ -179,6 +180,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         int orgX = context.origin().getX();
         int orgY = context.origin().getY();
         int orgZ = context.origin().getZ();
+        ChunkAccess chunk = level.getChunk(mutableBlockPos);
 
         for (int y = 15; y < 241; y++) {
             if (y > disallowedBottomRange && y < disallowedTopRange) {
@@ -189,12 +191,27 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 for (int z = 0; z < 16; z++) {
                     mutableBlockPos.set(orgX, orgY, orgZ).move(x, y, z);
 
+                    if (chunk.getSection(chunk.getSectionIndex(mutableBlockPos.getY())).hasOnlyAir()) {
+                        x = 16;
+                        y += 16 - (y % 16);
+                        break;
+                    }
+
                     double noise1 = noiseGen.noise3_Classic(
                             mutableBlockPos.getX() * 0.019D,
                             mutableBlockPos.getZ() * 0.019D,
                             mutableBlockPos.getY() * 0.038D);
 
-                    if(noise1 >= 0.0360555127546399D) {
+                    if (noise1 >= 0.0360555127546399D) {
+                        if (noise1 >= 0.6) {
+                            z += 6;
+                        }
+                        else if (noise1 >= 0.4) {
+                            z += 4;
+                        }
+                        else if (noise1 >= 0.2) {
+                            z += 2;
+                        }
                         continue;
                     }
 
@@ -206,7 +223,16 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                     double finalNoise = noise1 * noise1 + noise2 * noise2;
 
                     if (finalNoise < 0.0013f) {
-                        hexagon(context.level(), context.chunkGenerator(), mutableBlockPos, context.random(), noise1);
+                        hexagon(level, context.chunkGenerator(), mutableBlockPos, context.random(), noise1);
+                    }
+                    else if (finalNoise >= 0.6) {
+                        z += 6;
+                    }
+                    else if (finalNoise >= 0.4) {
+                        z += 4;
+                    }
+                    else if (finalNoise >= 0.2) {
+                        z += 2;
                     }
                 }
             }
@@ -256,11 +282,11 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     {
         if (blockState.canOcclude() && !blockState.canBeReplaced() && !blockState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE)) {
             boolean isNextToAir = shouldCloseOff(world, chunk, blockPos, mutable);
-            if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
+            if (blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
 
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
-                    if(isNextToAir)
+                    if (isNextToAir)
                         world.setBlock(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                     else
                         world.setBlock(blockPos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), 3);
@@ -270,7 +296,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
 
                     BlockPos abovePos = blockPos.above();
                     BlockState aboveState = chunk.getBlockState(abovePos);
-                    if(!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
+                    if (!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
                         world.setBlock(abovePos, Blocks.CAVE_AIR.defaultBlockState(), 3);
 
                         if (aboveState.getBlock() instanceof DoublePlantBlock && aboveState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER) {
