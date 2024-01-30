@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import com.telepathicgrunt.the_bumblezone.worldgen.processors.ArenaSpecialBlockHandlerProcessor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
@@ -71,7 +72,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
                     BzBlocks.ESSENCE_BLOCK_WHITE.get(),
                     BzBlocks.INFINITY_BARRIER.get()
-                ))));
+                )))
+                .addProcessor(new ArenaSpecialBlockHandlerProcessor(false)));
 
     public static final GeneralUtils.Lazy<StructurePlaceSettings> PLACEMENT_SETTINGS_WITH_ENTITIES = new GeneralUtils.Lazy<>(() ->
             new StructurePlaceSettings()
@@ -87,7 +89,8 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     BzBlocks.ESSENCE_BLOCK_GREEN.get(),
                     BzBlocks.ESSENCE_BLOCK_YELLOW.get(),
                     BzBlocks.ESSENCE_BLOCK_WHITE.get()
-                ))));
+                )))
+                .addProcessor(new ArenaSpecialBlockHandlerProcessor(true)));
 
     public EssenceBlock(Properties properties) {
         super(properties

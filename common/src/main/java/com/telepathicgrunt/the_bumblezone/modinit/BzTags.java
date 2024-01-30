@@ -69,6 +69,7 @@ public class BzTags {
     public static final TagKey<Block> ROOTMIN_FORCED_DISALLOWED_FLOWERS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "rootmin/forced_disallowed_flowers"));
     public static final TagKey<Block> ESSENCE_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence_blocks"));
     public static final TagKey<Block> AIR_LIKE = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "air_like"));
+    public static final TagKey<Block> ESSENCE_ARENA_DOES_NOT_REPLACE = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "essence/arena_does_not_replace"));
 
     public static final TagKey<Item> TURN_SLIME_TO_HONEY_SLIME = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "turn_slime_to_honey_slime"));
     public static final TagKey<Item> HONEY_CRYSTAL_SHIELD_REPAIR_ITEMS = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "repair_items/honey_crystal_shield"));

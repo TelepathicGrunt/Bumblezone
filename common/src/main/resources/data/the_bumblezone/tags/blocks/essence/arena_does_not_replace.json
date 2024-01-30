@@ -1,0 +1,81 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "forgottengraves:grave",
+      "required": false
+    },
+    {
+      "id": "forgottengraves:grave_old",
+      "required": false
+    },
+    {
+      "id": "forgottengraves:grave_weathered",
+      "required": false
+    },
+    {
+      "id": "forgottengraves:grave_forgotten",
+      "required": false
+    },
+    {
+      "id": "gravestone:gravestone",
+      "required": false
+    },
+    {
+      "id": "gravestones:gravestone",
+      "required": false
+    },
+    {
+      "id": "minecolonies:blockminecoloniesgrave",
+      "required": false
+    },
+    {
+      "id": "simpletomb:grave_normal",
+      "required": false
+    },
+    {
+      "id": "simpletomb:grave_simple",
+      "required": false
+    },
+    {
+      "id": "simpletomb:grave_cross",
+      "required": false
+    },
+    {
+      "id": "simpletomb:tombstone",
+      "required": false
+    },
+    {
+      "id": "twilightforest:keepsake_casket",
+      "required": false
+    },
+    {
+      "id": "universal_graves:grave",
+      "required": false
+    },
+    {
+      "id": "universal_graves:container_grave",
+      "required": false
+    },
+    {
+      "id": "universal_graves:temp_grave",
+      "required": false
+    },
+    {
+      "id": "universal_graves:visual_grave",
+      "required": false
+    },
+    {
+      "id": "yigd:grave",
+      "required": false
+    },
+    {
+      "id":  "#simplygraves:graves",
+      "required": false
+    },
+    {
+      "id": "#tombstone:graves",
+      "required": false
+    }
+  ]
+}
