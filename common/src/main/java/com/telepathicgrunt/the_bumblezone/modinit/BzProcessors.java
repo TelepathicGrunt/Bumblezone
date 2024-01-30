@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
+import com.telepathicgrunt.the_bumblezone.worldgen.processors.ArenaSpecialBlockHandlerProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.BeeDungeonProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.BlockMergeOverridesProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.CloseOffOutsideFluidsProcessor;
@@ -48,4 +49,5 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<BlockMergeOverridesProcessor>> BLOCK_MERGE_OVERRIDES_PROCESSOR = STRUCTURE_PROCESSOR.register("block_merge_overrides_processor", () -> () -> BlockMergeOverridesProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<StrongerWaterloggingProcessor>> STRONGER_WATERLOGGING_PROCESSOR = STRUCTURE_PROCESSOR.register("stronger_waterlogging_processor", () -> () -> StrongerWaterloggingProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<ArenaSpecialBlockHandlerProcessor>> ARENA_SPECIAL_BLOCK_HANDLER_PROCESSOR = STRUCTURE_PROCESSOR.register("arena_special_block_handler_processor", () -> () -> ArenaSpecialBlockHandlerProcessor.CODEC);
 }

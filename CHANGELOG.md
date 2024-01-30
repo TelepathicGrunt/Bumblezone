@@ -16,6 +16,14 @@ Removed some hacks and now use or hook into vanilla's `minecraft:recipe_crafted`
 ##### Enchantments:
 Comb Cutter now treats negative Mining Fatigue as level 4 fatigue properly just like vanilla.
 
+##### Structures:
+Fixed ability to abuse the Essence Arena spawning and despawning to duplicate chest contents in a specific way.
+
+Adjusted Essence Arena to try and drop any chest-like blocks and its contents if players manage to place one inside the arena.
+
+Adjusted Essence Arena to try and not remove grave blocks when arena is despawning.
+ Controlled by `the_bumblezone:essence_arena_does_not_replace` block tag.
+
 ##### Configs:
 Added essenceItemHUDVisualEffectLayers and essenceItemHUDVisualEffectSpeed, so you can change the HUD effect overlay when holding essence item in offhand slot.
  Set essenceItemHUDVisualEffectLayers to 0 to disable the HUD overlay entirely.
