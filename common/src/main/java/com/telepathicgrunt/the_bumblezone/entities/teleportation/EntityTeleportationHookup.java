@@ -192,7 +192,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (isTeleportAllowedInDimension(level)) {
+        if (isTeleportAllowedInDimension(level, thrower)) {
 
             // get nearby hives
             BlockPos hivePos = null;
@@ -238,7 +238,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (hitResult instanceof EntityHitResult entityHitResult && isTeleportAllowedInDimension(level)) {
+        if (hitResult instanceof EntityHitResult entityHitResult && isTeleportAllowedInDimension(level, thrower)) {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
 
@@ -311,7 +311,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (isTeleportAllowedInDimension(level)) {
+        if (isTeleportAllowedInDimension(level, user)) {
 
             if (!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(clickedPos))) {
                 return false;
@@ -357,7 +357,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (isTeleportAllowedInDimension(level)) {
+        if (isTeleportAllowedInDimension(level, user)) {
 
             if (!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(targetPosition))) {
                 return false;
@@ -377,7 +377,11 @@ public class EntityTeleportationHookup {
         return false;
     }
 
-    private static boolean isTeleportAllowedInDimension(Level level) {
+    private static boolean isTeleportAllowedInDimension(Level level, Entity entity) {
+        if (entity.isOnPortalCooldown()) {
+            return false;
+        }
+
         if (!BzDimensionConfigs.enableEntranceTeleportation || level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             return false;
         }
@@ -445,10 +449,7 @@ public class EntityTeleportationHookup {
         ServerLevel world = (ServerLevel) pushedEntity.level();
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzDimensionConfigs.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
-        {
+        if (isTeleportAllowedInDimension(world, pushedEntity)) {
             if (BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) {
                 return; // Skip checks if entity is teleporting already to Bz.
             }

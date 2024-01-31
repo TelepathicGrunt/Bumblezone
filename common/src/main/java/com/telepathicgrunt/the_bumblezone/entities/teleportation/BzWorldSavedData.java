@@ -308,7 +308,7 @@ public class BzWorldSavedData extends SavedData {
 				serverPlayer.connection.send(new ClientboundRespawnPacket(new CommonPlayerSpawnInfo(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()), (byte)3));
 				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
 				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
-				serverPlayer.setPortalCooldown();
+				serverPlayer.setPortalCooldown(100);
 				serverPlayer.server.getPlayerList().sendLevelInfo(serverPlayer, destination);
 				serverPlayer.server.getPlayerList().sendAllPlayerInfo(serverPlayer);
 				serverPlayer.addEffect(new MobEffectInstance(
@@ -332,7 +332,7 @@ public class BzWorldSavedData extends SavedData {
 			}
 			newEntity.restoreFrom(entity);
 			newEntity.moveTo(destinationPosition.x, destinationPosition.y, destinationPosition.z, entity.getYRot(), entity.getXRot());
-			newEntity.setPortalCooldown();
+			newEntity.setPortalCooldown(100);
 			destination.addDuringTeleport(newEntity);
 			teleportedEntity = newEntity;
 			entity.remove(Entity.RemovalReason.CHANGED_DIMENSION);
