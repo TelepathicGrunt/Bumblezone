@@ -1,3 +1,12 @@
+### **(V.7.2.6 Changes) (1.20.1 Minecraft)**
+
+##### Teleportation:
+Added a check for portal cooldown on player and entities.
+ If cooldown is active on entity (even if set by Nether Portal which is 15 second cooldown), you won't be able to teleport to Bumblezone. 
+ Exiting Bumblezone adds a 5 second portal cooldown on entity as well.
+ This should help prevent teleportation loops issues.
+
+
 ### **(V.7.2.5 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:

@@ -57,9 +57,12 @@ public class EntityTeleportationHookup {
 
     //Notify people of Bumblezone's advancements so they know how to enter dimension
     public static void playerTick(PlayerTickEvent event) {
-        if (event.player() instanceof ServerPlayer serverPlayer && event.end()) {
-            Level level = serverPlayer.level();
-
+        if (event.player() instanceof ServerPlayer serverPlayer &&
+            event.end() &&
+            serverPlayer.level() instanceof ServerLevel serverLevel &&
+            (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
+            !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
+        {
             Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(BzCriterias.IS_NEAR_BEEHIVE_ADVANCEMENT);
             if (advancement == null) {
                 return;
@@ -70,29 +73,23 @@ public class EntityTeleportationHookup {
                 return;
             }
 
-            if (level instanceof ServerLevel serverLevel &&
-                (serverLevel.getGameTime() + serverPlayer.getUUID().getLeastSignificantBits()) % 100 == 0 &&
-                !serverLevel.dimension().equals(BzDimension.BZ_WORLD_KEY))
-            {
+            List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
+                    (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
+                    serverPlayer.blockPosition(),
+                    8,
+                    PoiManager.Occupancy.ANY
+                ).toList();
 
-                List<PoiRecord> poiInRange = serverLevel.getPoiManager().getInSquare(
-                        (pointOfInterestType) -> pointOfInterestType.is(BzTags.IS_NEAR_BEEHIVE_ADVANCEMENT_TRIGGER_POI),
-                        serverPlayer.blockPosition(),
-                        8,
-                        PoiManager.Occupancy.ANY
-                    ).toList();
+            if (poiInRange.size() > 0) {
+                BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
 
-                if (poiInRange.size() > 0) {
-                    BzCriterias.IS_NEAR_BEEHIVE_TRIGGER.trigger(serverPlayer);
-
-                    if (BzDimensionConfigs.enableInitialWelcomeMessage) {
-                        ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
-                            if (!playerData.gottenWelcomed) {
-                                playerData.gottenWelcomed = true;
-                                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
-                            }
-                        });
-                    }
+                if (BzDimensionConfigs.enableInitialWelcomeMessage) {
+                    ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+                        if (!playerData.gottenWelcomed) {
+                            playerData.gottenWelcomed = true;
+                            serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+                        }
+                    });
                 }
             }
         }
@@ -191,7 +188,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (isTeleportAllowedInDimension(level)) {
+        if (isTeleportAllowedInDimension(level, thrower)) {
 
             // get nearby hives
             BlockPos hivePos = null;
@@ -237,7 +234,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if thrower is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (hitResult instanceof EntityHitResult entityHitResult && isTeleportAllowedInDimension(level)) {
+        if (hitResult instanceof EntityHitResult entityHitResult && isTeleportAllowedInDimension(level, thrower)) {
             Entity hitEntity = entityHitResult.getEntity();
             boolean passedCheck = false;
 
@@ -310,7 +307,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (isTeleportAllowedInDimension(level)) {
+        if (isTeleportAllowedInDimension(level, user)) {
 
             if (!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(clickedPos))) {
                 return false;
@@ -356,7 +353,7 @@ public class EntityTeleportationHookup {
 
         // Make sure we are on server by checking if user is ServerPlayer and that we are not in bumblezone.
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (isTeleportAllowedInDimension(level)) {
+        if (isTeleportAllowedInDimension(level, user)) {
 
             if (!EntityTeleportationBackend.isValidBeeHive(level.getBlockState(targetPosition))) {
                 return false;
@@ -376,7 +373,11 @@ public class EntityTeleportationHookup {
         return false;
     }
 
-    private static boolean isTeleportAllowedInDimension(Level level) {
+    private static boolean isTeleportAllowedInDimension(Level level, Entity entity) {
+        if (entity.isOnPortalCooldown()) {
+            return false;
+        }
+
         if (!BzDimensionConfigs.enableEntranceTeleportation || level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)) {
             return false;
         }
@@ -444,10 +445,7 @@ public class EntityTeleportationHookup {
         ServerLevel world = (ServerLevel) pushedEntity.level();
 
         // If onlyOverworldHivesTeleports is set to true, then only run this code in Overworld.
-        if (BzDimensionConfigs.enableEntranceTeleportation &&
-            !world.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) &&
-            (!BzDimensionConfigs.onlyOverworldHivesTeleports || world.dimension().equals(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(BzDimensionConfigs.defaultDimension)))))
-        {
+        if (isTeleportAllowedInDimension(world, pushedEntity)) {
             if (BzWorldSavedData.isEntityQueuedToTeleportAlready(pushedEntity)) {
                 return; // Skip checks if entity is teleporting already to Bz.
             }
