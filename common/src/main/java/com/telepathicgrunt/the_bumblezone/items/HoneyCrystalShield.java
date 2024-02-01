@@ -76,8 +76,6 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
     @Override
     public int bz$getMaxDamage(ItemStack stack) {
         if(stack.hasTag()) {
-            upgradeLegacyShield(stack);
-
             int shieldLevel = Math.max(Math.min(stack.getOrCreateTag().getInt("ShieldLevel"), maxShieldLevel), 0);
             if (shieldLevel != 0) {
                 return stack.getItem().getMaxDamage() + shieldDurabilityBoostPerLevel[shieldLevel];
@@ -89,21 +87,6 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
     // Runs on Forge
     public int getMaxDamage(ItemStack stack) {
         return this.bz$getMaxDamage(stack);
-    }
-
-    private void upgradeLegacyShield(ItemStack stack) {
-        if(stack.hasTag() && !stack.getTag().contains("ShieldLevel")) {
-            int repairCost = stack.getOrCreateTag().getInt("RepairCost");
-            if (repairCost >= 32) {
-                stack.getOrCreateTag().putInt("ShieldLevel", maxShieldLevel);
-            }
-            else if(repairCost >= 16) {
-                stack.getOrCreateTag().putInt("ShieldLevel", maxShieldLevel - 1);
-            }
-            else if(repairCost >= 5) {
-                stack.getOrCreateTag().putInt("ShieldLevel", maxShieldLevel / 2);
-            }
-        }
     }
 
     /**
