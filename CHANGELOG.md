@@ -1,3 +1,9 @@
+### **(V.7.3.8 Changes) (1.20.4 Minecraft)**
+
+##### Mod Compat:
+Fixed crash with Botania's Spectator item if used near a Lootr Honey Cocoon if Lootr is on.
+
+
 ### **(V.7.3.7 Changes) (1.20.4 Minecraft)**
 
 ##### Dimension:
