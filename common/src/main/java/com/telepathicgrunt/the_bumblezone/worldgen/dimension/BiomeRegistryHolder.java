@@ -11,7 +11,7 @@ public class BiomeRegistryHolder {
     private static final ResourceLocation EMPTY_RL = new ResourceLocation("b", "empty");
 
     public static void setupBiomeRegistry(MinecraftServer server) {
-        BIOME_REGISTRY = server.registryAccess().registryOrThrow(Registries.BIOME);
+        BIOME_REGISTRY = server.registryAccess().registry(Registries.BIOME).get();
     }
 
     public static ResourceLocation convertToRL(int id) {

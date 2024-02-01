@@ -11,7 +11,6 @@ import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.SectionPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -40,15 +39,13 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         BlockPos blockPos = new ChunkPos(context.origin()).getMiddleBlockPosition(context.origin().getY());
-        WorldGenLevel level = context.level();
-
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         if (bulkSectionAccess.getBlockState(blockPos).is(Blocks.CAVE_AIR)) {
             for(Direction.Axis axis : Direction.Axis.values()) {
                 Set<BlockPos> validSpaces = new HashSet<>();
                 validSpaces.add(blockPos);
-                boolean isInBounds = setIfValidSpace(level, axis, blockPos, blockPos, validSpaces);
+                boolean isInBounds = setIfValidSpace(bulkSectionAccess, axis, blockPos, blockPos, validSpaces);
                 if(isInBounds) {
                     for(BlockPos validPos : validSpaces) {
                         for(int attempt = 0; attempt < 12; attempt++) {
@@ -82,7 +79,7 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
         return false;
     }
 
-    private boolean setIfValidSpace(WorldGenLevel level, Direction.Axis axis, BlockPos originPos, BlockPos currentPos, Set<BlockPos> validSpaces) {
+    private boolean setIfValidSpace(UnsafeBulkSectionAccess bulkSectionAccess, Direction.Axis axis, BlockPos originPos, BlockPos currentPos, Set<BlockPos> validSpaces) {
         int maxDistance = 14;
         for(Direction direction : AXIS_TO_FACINGS.get(axis)) {
             BlockPos newBlockPos = currentPos.relative(direction);
@@ -95,10 +92,10 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
             }
 
             if(!validSpaces.contains(newBlockPos)) {
-                BlockState state = level.getBlockState(newBlockPos);
+                BlockState state = bulkSectionAccess.getBlockState(newBlockPos);
                 if(state.isAir() || state.is(BzBlocks.PILE_OF_POLLEN.get()) || state.is(BzBlocks.HONEY_WEB.get())) {
                     validSpaces.add(newBlockPos);
-                    if(!setIfValidSpace(level, axis, originPos, newBlockPos, validSpaces)) {
+                    if(!setIfValidSpace(bulkSectionAccess, axis, originPos, newBlockPos, validSpaces)) {
                         return false;
                     }
                 }

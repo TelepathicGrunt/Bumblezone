@@ -46,7 +46,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
         BlockPos.MutableBlockPos mutableBlockPosForChunk = new BlockPos.MutableBlockPos();
         ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
-        Biome targetBiome = context.level().registryAccess().registryOrThrow(Registries.BIOME).get(context.config().biomeRL);
+        Biome targetBiome = context.level().registryAccess().registry(Registries.BIOME).get().get(context.config().biomeRL);
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         for (int xOffset = -1; xOffset <= 1; xOffset++) {
