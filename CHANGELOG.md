@@ -3,6 +3,9 @@
 ##### Dimension:
 More optimization attempts for worldgen. See if this makes dimension load chunks faster...
 
+##### Advancements:
+Fixed the Bee Queen Beehive Crafting advancement being granted when crafting anything 12 times.
+
 ##### Teleportation:
 Added a check for portal cooldown on player and entities.
  If cooldown is active on entity (even if set by Nether Portal which is 15 second cooldown), you won't be able to teleport to Bumblezone. 
