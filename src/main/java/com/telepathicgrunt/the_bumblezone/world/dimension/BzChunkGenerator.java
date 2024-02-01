@@ -262,7 +262,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
         else {
             biomeManager = worldGenRegion.getBiomeManager();
         }
-        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY), Blender.of(worldGenRegion));
+        this.buildSurface(chunkAccess, worldgenerationcontext, randomState, structureManager, biomeManager, worldGenRegion.registryAccess().registry(Registry.BIOME_REGISTRY).get(), Blender.of(worldGenRegion));
     }
 
     public void buildSurface(ChunkAccess chunkAccess, WorldGenerationContext worldGenerationContext, RandomState randomState, StructureManager structureManager, BiomeManager biomeManager, Registry<Biome> biomeRegistry, Blender blender) {
