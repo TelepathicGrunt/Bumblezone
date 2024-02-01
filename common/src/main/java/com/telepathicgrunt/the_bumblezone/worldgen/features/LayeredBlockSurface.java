@@ -117,21 +117,11 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                             
                             // Vary the pollen piles
                             if (blockToPlace.hasProperty(BlockStateProperties.LAYERS)) {
-                                bulkSectionAccess.getSection(finalPosition).setBlockState(
-                                        SectionPos.sectionRelative(finalPosition.getX()),
-                                        SectionPos.sectionRelative(finalPosition.getY()),
-                                        SectionPos.sectionRelative(finalPosition.getZ()),
-                                        blockToPlace.setValue(BlockStateProperties.LAYERS, layerHeight),
-                                        false);
+                                bulkSectionAccess.setBlockState(finalPosition, blockToPlace.setValue(BlockStateProperties.LAYERS, layerHeight), false);
                                 context.level().scheduleTick(finalPosition, blockToPlace.getBlock(), 0);
                             }
                             else {
-                                bulkSectionAccess.getSection(finalPosition).setBlockState(
-                                        SectionPos.sectionRelative(finalPosition.getX()),
-                                        SectionPos.sectionRelative(finalPosition.getY()),
-                                        SectionPos.sectionRelative(finalPosition.getZ()),
-                                        blockToPlace,
-                                        false);
+                                bulkSectionAccess.setBlockState(finalPosition, blockToPlace, false);
 
                                 if (blockToPlace.hasBlockEntity()) {
                                     BlockEntity blockEntity = ((EntityBlock)blockToPlace.getBlock()).newBlockEntity(finalPosition, blockToPlace);

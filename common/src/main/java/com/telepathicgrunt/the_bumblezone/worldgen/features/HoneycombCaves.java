@@ -282,66 +282,33 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
 
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
-                    if (isNextToAir)
-                        bulkSectionAccess.getSection(blockPos).setBlockState(
-                                SectionPos.sectionRelative(blockPos.getX()),
-                                SectionPos.sectionRelative(blockPos.getY()),
-                                SectionPos.sectionRelative(blockPos.getZ()),
-                                BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(),
-                                false);
-                    else
-                        bulkSectionAccess.getSection(blockPos).setBlockState(
-                                SectionPos.sectionRelative(blockPos.getX()),
-                                SectionPos.sectionRelative(blockPos.getY()),
-                                SectionPos.sectionRelative(blockPos.getZ()),
-                                BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(),
-                                false);
+                    if (isNextToAir) {
+                        bulkSectionAccess.setBlockState(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
+                    }
+                    else {
+                        bulkSectionAccess.setBlockState(blockPos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), false);
+                    }
                 }
                 else {
-                    bulkSectionAccess.getSection(blockPos).setBlockState(
-                            SectionPos.sectionRelative(blockPos.getX()),
-                            SectionPos.sectionRelative(blockPos.getY()),
-                            SectionPos.sectionRelative(blockPos.getZ()),
-                            Blocks.CAVE_AIR.defaultBlockState(),
-                            false);
+                    bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
 
                     BlockPos abovePos = blockPos.above();
                     BlockState aboveState = bulkSectionAccess.getBlockState(abovePos);
                     if (!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
-                        bulkSectionAccess.getSection(blockPos).setBlockState(
-                                SectionPos.sectionRelative(blockPos.getX()),
-                                SectionPos.sectionRelative(blockPos.getY()),
-                                SectionPos.sectionRelative(blockPos.getZ()),
-                                Blocks.CAVE_AIR.defaultBlockState(),
-                                false);
+                        bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
 
                         if (aboveState.getBlock() instanceof DoublePlantBlock && aboveState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER) {
-                            bulkSectionAccess.getSection(blockPos).setBlockState(
-                                    SectionPos.sectionRelative(blockPos.getX()),
-                                    SectionPos.sectionRelative(blockPos.getY()),
-                                    SectionPos.sectionRelative(blockPos.getZ()),
-                                    Blocks.CAVE_AIR.defaultBlockState(),
-                                    false);
+                            bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
                         }
                     }
                 }
             }
             else if (posResult == 1) {
                 if (random.nextInt(3) == 0) {
-                    bulkSectionAccess.getSection(blockPos).setBlockState(
-                            SectionPos.sectionRelative(blockPos.getX()),
-                            SectionPos.sectionRelative(blockPos.getY()),
-                            SectionPos.sectionRelative(blockPos.getZ()),
-                            Blocks.HONEYCOMB_BLOCK.defaultBlockState(),
-                            false);
+                    bulkSectionAccess.setBlockState(blockPos, Blocks.HONEYCOMB_BLOCK.defaultBlockState(), false);
                 }
                 else {
-                    bulkSectionAccess.getSection(blockPos).setBlockState(
-                            SectionPos.sectionRelative(blockPos.getX()),
-                            SectionPos.sectionRelative(blockPos.getY()),
-                            SectionPos.sectionRelative(blockPos.getZ()),
-                            BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(),
-                            false);
+                    bulkSectionAccess.setBlockState(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
                 }
             }
         }

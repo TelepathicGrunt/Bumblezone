@@ -122,5 +122,14 @@ public class UnsafeBulkSectionAccess {
         int k = SectionPos.sectionRelative(blockPos.getZ());
         return levelChunkSection.getBlockState(i, j, k);
     }
+
+    public void setBlockState(BlockPos blockPos, BlockState state, boolean lockSection) {
+        this.getSection(blockPos).setBlockState(
+                SectionPos.sectionRelative(blockPos.getX()),
+                SectionPos.sectionRelative(blockPos.getY()),
+                SectionPos.sectionRelative(blockPos.getZ()),
+                state,
+                lockSection);
+    }
 }
 
