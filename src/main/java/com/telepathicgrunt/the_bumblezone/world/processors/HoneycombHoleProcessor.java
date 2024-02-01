@@ -42,10 +42,13 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         BlockState checkedState = chunk.getBlockState(structureBlockInfoWorld.pos);
 
         // does world checks for cave and pollen powder
-        if(checkedState.isAir() || !checkedState.getFluidState().isEmpty()) {
+        if (checkedState.isAir() || !checkedState.getFluidState().isEmpty()) {
             if (placingState.isAir() || placingState.is(BzBlocks.PILE_OF_POLLEN.get())) {
-                if(!checkedState.getFluidState().isEmpty() || structureBlockInfoWorld.pos.getY() <= floodLevel) {
+                if (!checkedState.getFluidState().isEmpty() || structureBlockInfoWorld.pos.getY() <= floodLevel) {
                     chunk.setBlockState(structureBlockInfoWorld.pos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), false);
+                    if (checkedState.hasBlockEntity()) {
+                        chunk.removeBlockEntity(structureBlockInfoWorld.pos);
+                    }
                     return null;
                 }
             }
@@ -55,7 +58,11 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         }
 
         // brood
-        if(placingState.is(BzBlocks.HONEYCOMB_BROOD.get())) {
+        if (placingState.is(BzBlocks.HONEYCOMB_BROOD.get())) {
+            if (checkedState.hasBlockEntity()) {
+                chunk.removeBlockEntity(structureBlockInfoWorld.pos);
+            }
+
             if (random.nextInt(5) < 2) {
                 return new StructureTemplate.StructureBlockInfo(worldPos, placingState.setValue(HoneycombBrood.STAGE, random.nextInt(3)), null);
             }
@@ -75,7 +82,11 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         }
 
         // ring around brood
-        if(placingState.is(Blocks.HONEY_BLOCK) || placingState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
+        if (placingState.is(Blocks.HONEY_BLOCK) || placingState.is(BzBlocks.FILLED_POROUS_HONEYCOMB.get())) {
+            if (checkedState.hasBlockEntity()) {
+                chunk.removeBlockEntity(structureBlockInfoWorld.pos);
+            }
+
             if (random.nextInt(3) == 0) {
                 return new StructureTemplate.StructureBlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), null);
             }
@@ -85,11 +96,15 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         }
 
         // Pollen pile
-        else if(placingState.is(BzBlocks.PILE_OF_POLLEN.get())) {
+        else if (placingState.is(BzBlocks.PILE_OF_POLLEN.get())) {
             // Check if pollen pile can even be placed here safely
             BlockState belowState = chunk.getBlockState(structureBlockInfoWorld.pos.below());
-            if(belowState.isAir() || !belowState.getFluidState().isEmpty()) {
+            if (belowState.isAir() || !belowState.getFluidState().isEmpty()) {
                 return null;
+            }
+
+            if (checkedState.hasBlockEntity()) {
+                chunk.removeBlockEntity(structureBlockInfoWorld.pos);
             }
 
             if (random.nextInt(80) != 0) {
@@ -101,12 +116,19 @@ public class HoneycombHoleProcessor extends StructureProcessor {
         }
 
         // main body
-        else if(placingState.is(Blocks.HONEYCOMB_BLOCK)) {
+        else if (placingState.is(Blocks.HONEYCOMB_BLOCK)) {
             if (random.nextInt(3) != 0) {
+                if (checkedState.hasBlockEntity()) {
+                    chunk.removeBlockEntity(structureBlockInfoWorld.pos);
+                }
+
                 return new StructureTemplate.StructureBlockInfo(worldPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), null);
             }
         }
 
+        if (checkedState.hasBlockEntity()) {
+            chunk.removeBlockEntity(structureBlockInfoWorld.pos);
+        }
         return structureBlockInfoWorld;
     }
 
