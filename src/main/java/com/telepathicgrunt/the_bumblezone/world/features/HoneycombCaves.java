@@ -282,6 +282,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
             boolean isNextToAir = shouldCloseOff(bulkSectionAccess, blockPos, mutable);
             if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
 
+            boolean isBlockEntity = blockState.hasBlockEntity();
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
                     if (isNextToAir) {
@@ -290,16 +291,25 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                     else {
                         bulkSectionAccess.setBlockState(blockPos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), false);
                     }
+
+                    if (isBlockEntity) {
+                        world.getChunk(blockPos).removeBlockEntity(blockPos);
+                    }
                 }
                 else {
                     bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
 
                     if(abovePosResult <= 1) {
                         BlockPos abovePos = blockPos.above();
-                        BlockState aboveState = world.getBlockState(abovePos);
+                        BlockState aboveState = bulkSectionAccess.getBlockState(abovePos);
+
                         if(!aboveState.isAir() && !aboveState.isCollisionShapeFullBlock(world, abovePos)) {
                             bulkSectionAccess.setBlockState(abovePos, Blocks.CAVE_AIR.defaultBlockState(), false);
                         }
+                    }
+
+                    if (isBlockEntity) {
+                        world.getChunk(blockPos).removeBlockEntity(blockPos);
                     }
                 }
             }
@@ -309,6 +319,10 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 }
                 else {
                     bulkSectionAccess.setBlockState(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
+                }
+
+                if (isBlockEntity) {
+                    world.getChunk(blockPos).removeBlockEntity(blockPos);
                 }
             }
         }
