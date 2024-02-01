@@ -44,7 +44,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             return false;
         }
 
-        Registry<Structure> structureRegistry = context.level().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+        Registry<Structure> structureRegistry = context.level().registryAccess().registry(Registry.STRUCTURE_REGISTRY).get();
         StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
 
         if (origin.getY() > 130 && origin.getY() < 148) {

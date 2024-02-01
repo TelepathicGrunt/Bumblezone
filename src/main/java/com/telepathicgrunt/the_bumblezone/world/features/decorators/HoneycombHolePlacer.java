@@ -48,7 +48,7 @@ public class HoneycombHolePlacer extends PlacementModifier {
         List<StructureStart> structureStarts = new ArrayList<>();
         List<StructureStart> structureStartsPiecewiseCheck = new ArrayList<>();
         if (placementContext.getLevel() instanceof WorldGenRegion worldGenRegion) {
-            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY);
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registry.STRUCTURE_REGISTRY).get();
             structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
 
             ChunkPos chunkPos = new ChunkPos(blockPos);
