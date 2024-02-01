@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.GlisteringHoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -63,12 +64,13 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
             }
         }
 
+        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         boolean validSpot = false;
         boolean superSlant = false;
         Direction wallDirection = null;
         for (Direction direction : Direction.Plane.VERTICAL) {
             blockpos$Mutable.set(origin).move(direction, 5);
-            BlockState state = level.getBlockState(blockpos$Mutable);
+            BlockState state = bulkSectionAccess.getBlockState(blockpos$Mutable);
             if (state.canOcclude()) {
                 validSpot = true;
                 break;
@@ -77,7 +79,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             blockpos$Mutable.set(origin).move(direction, 1);
-            BlockState state = level.getBlockState(blockpos$Mutable);
+            BlockState state = bulkSectionAccess.getBlockState(blockpos$Mutable);
             if (state.canOcclude()) {
                 superSlant = true;
                 wallDirection = direction;
@@ -90,7 +92,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
         }
 
         blockpos$Mutable.set(origin).move(Direction.UP, 5);
-        int directionSign = level.getBlockState(blockpos$Mutable).canOcclude() ? -1 : 1;
+        int directionSign = bulkSectionAccess.getBlockState(blockpos$Mutable).canOcclude() ? -1 : 1;
         int currentY = origin.getY() - (directionSign * 5);
         int thickness = random.nextInt(3) + 4;
         int height = random.nextInt(5) + 12;
@@ -136,16 +138,13 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
                                 currentY,
                                 origin.getZ() + z + currentZSlant);
 
-                        BlockState state = level.getBlockState(blockpos$Mutable);
+                        BlockState state = bulkSectionAccess.getBlockState(blockpos$Mutable);
                         if (!state.canOcclude() && !state.is(BzBlocks.CRYSTALLINE_FLOWER.get())) {
                             BlockState newState = BzBlocks.GLISTERING_HONEY_CRYSTAL.get().defaultBlockState();
                             if (random.nextFloat() < 0.5f) {
                                 newState = newState.setValue(GlisteringHoneyCrystal.FACING, Direction.getRandom(random));
                             }
-                            level.setBlock(
-                                    blockpos$Mutable,
-                                    newState,
-                                    3);
+                            bulkSectionAccess.setBlockState(blockpos$Mutable, newState, false);
                         }
                     }
                 }
