@@ -295,10 +295,16 @@ public class EssenceBlockEntity extends BlockEntity {
                             }
 
                             if (essenceBlock.hasMiningFatigue()) {
+                                if (serverPlayer.hasEffect(MobEffects.DIG_SLOWDOWN) &&
+                                    serverPlayer.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier() >= 0)
+                                {
+                                    serverPlayer.removeEffect(MobEffects.DIG_SLOWDOWN);
+                                }
+
                                 serverPlayer.addEffect(new MobEffectInstance(
                                         MobEffects.DIG_SLOWDOWN,
                                         essenceBlockEntity.getEventTimer(),
-                                        3,
+                                        -1,
                                         false,
                                         false));
                             }

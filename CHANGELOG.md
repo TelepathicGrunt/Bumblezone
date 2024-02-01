@@ -6,6 +6,10 @@ More optimization attempts for worldgen. See if this makes dimension load chunks
 ##### Advancements:
 Fixed the Bee Queen Beehive Crafting advancement being granted when crafting anything 12 times.
 
+##### Structures:
+Made Sempiternal Sanctum's Essence events now give negative Mining Fatigue effect.
+ This will make mining blocks still extremely slow but your attack speed is actually increased now!
+
 ##### Teleportation:
 Added a check for portal cooldown on player and entities.
  If cooldown is active on entity (even if set by Nether Portal which is 15 second cooldown), you won't be able to teleport to Bumblezone. 
