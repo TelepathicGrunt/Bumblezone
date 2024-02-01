@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
+import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -69,9 +70,8 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         double noise1;
         double noise2;
         double finalNoise;
-        ChunkAccess[] cachedChunks = new ChunkAccess[7];
-        cachedChunks[6] = level.getChunk(mutableBlockPos);
 
+        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         for (int y = 15; y < context.chunkGenerator().getGenDepth() - 14; y++) {
             if (y > disallowedBottomRange && y < disallowedTopRange) {
                 continue;
@@ -81,7 +81,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                 for (int z = 0; z < 16; z++) {
                     mutableBlockPos.set(context.origin()).move(x, y, z);
 
-                    if (cachedChunks[6].getSection(cachedChunks[6].getSectionIndex(mutableBlockPos.getY())).hasOnlyAir()) {
+                    if (bulkSectionAccess.getSection(mutableBlockPos).hasOnlyAir()) {
                         x = 16;
                         y += 16 - (y % 16);
                         break;
@@ -114,7 +114,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                     finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
 
                     if (finalNoise < 0.01305f) {
-                        carve(context.level(), mutableBlockPos, finalNoise, noise1, cachedChunks);
+                        carve(level, bulkSectionAccess, mutableBlockPos, finalNoise, noise1);
                     }
                     else if (finalNoise >= 0.6) {
                         z += 6;
@@ -132,15 +132,13 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    private static void carve(WorldGenLevel world, BlockPos.MutableBlockPos position, double finalNoise, double noise, ChunkAccess[] cachedChunks) {
-        ChunkAccess cachedChunk = GeneralUtils.getDirectionalBasedChunkForSpot(world, cachedChunks, null, position, position);
-
-        BlockState currentState = cachedChunk.getBlockState(position);
+    private static void carve(WorldGenLevel world, UnsafeBulkSectionAccess bulkSectionAccess, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
+        BlockState currentState = bulkSectionAccess.getBlockState(position);
         if (!currentState.isAir() && currentState.getFluidState().isEmpty() && !currentState.is(BzBlocks.PILE_OF_POLLEN)) {
             // varies the surface of the cave surface
             if (finalNoise > 0.0105f) {
                 if ((noise * 3) % 2 < 0.35D) {
-                    cachedChunk.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), false);
+                    bulkSectionAccess.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), false);
                 }
                 return;
             }
@@ -148,8 +146,8 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             // cannot carve next to fluids
             BlockPos.MutableBlockPos sidePos = new BlockPos.MutableBlockPos();
             for (Direction direction : Direction.values()) {
-                ChunkAccess cachedChunkForFluid  = GeneralUtils.getDirectionalBasedChunkForSpot(world, cachedChunks, direction, position, sidePos);
-                if (!cachedChunkForFluid.getBlockState(sidePos).getFluidState().isEmpty()) {
+                sidePos.set(position).move(direction);
+                if (!bulkSectionAccess.getBlockState(sidePos).getFluidState().isEmpty()) {
                     return;
                 }
             }
@@ -160,7 +158,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             position.move(Direction.UP);
 
             if (!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.getMaterial().blocksMotion()) {
-                cachedChunk.setBlockState(position, BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), false);
+                bulkSectionAccess.setBlockState(position, BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), false);
                 world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN, 0);
 
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
@@ -168,17 +166,17 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                     position.move(Direction.UP);
                     // cannot carve next to fluids
                     for (Direction direction : Direction.values()) {
-                        ChunkAccess cachedChunkForFluid = GeneralUtils.getDirectionalBasedChunkForSpot(world, cachedChunks, direction, position, sidePos);
-                        if (!cachedChunkForFluid.getBlockState(sidePos).getFluidState().isEmpty()) {
+                        sidePos.set(position).move(direction);
+                        if (!bulkSectionAccess.getBlockState(sidePos).getFluidState().isEmpty()) {
                             return;
                         }
                     }
-                    cachedChunk.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
+                    bulkSectionAccess.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
                 }
                 position.move(Direction.DOWN, carveHeight);
             }
             else {
-                cachedChunk.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
+                bulkSectionAccess.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
             }
         }
     }
