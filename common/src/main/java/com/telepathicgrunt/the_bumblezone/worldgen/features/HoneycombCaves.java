@@ -280,6 +280,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
             boolean isNextToAir = shouldCloseOff(bulkSectionAccess, blockPos, mutable);
             if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
 
+            boolean isBlockEntity = blockState.hasBlockEntity();
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
                     if (isNextToAir) {
@@ -287,6 +288,10 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                     }
                     else {
                         bulkSectionAccess.setBlockState(blockPos, BzFluids.SUGAR_WATER_BLOCK.get().defaultBlockState(), false);
+                    }
+
+                    if (isBlockEntity) {
+                        world.getChunk(blockPos).removeBlockEntity(blockPos);
                     }
                 }
                 else {
@@ -298,7 +303,11 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                         bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
 
                         if (aboveState.getBlock() instanceof DoublePlantBlock && aboveState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER) {
-                            bulkSectionAccess.setBlockState(blockPos, Blocks.CAVE_AIR.defaultBlockState(), false);
+                            bulkSectionAccess.setBlockState(abovePos, Blocks.CAVE_AIR.defaultBlockState(), false);
+                        }
+
+                        if (isBlockEntity) {
+                            world.getChunk(blockPos).removeBlockEntity(blockPos);
                         }
                     }
                 }
@@ -309,6 +318,10 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
                 }
                 else {
                     bulkSectionAccess.setBlockState(blockPos, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
+                }
+
+                if (isBlockEntity) {
+                    world.getChunk(blockPos).removeBlockEntity(blockPos);
                 }
             }
         }
