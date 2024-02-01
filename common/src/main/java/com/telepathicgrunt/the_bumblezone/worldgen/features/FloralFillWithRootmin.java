@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.FloralFillWi
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -44,7 +46,6 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         BlockPos chunkCornerPos = new ChunkPos(context.origin()).getWorldPosition().above(context.origin().getY());
-        ChunkAccess cachedChunk = level.getChunk(chunkCornerPos);
 
         Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(config.flowerTag);
         List<Block> blockList = GeneralUtils.convertHoldersetToList(optionalBlocks);
@@ -54,99 +55,136 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
             return false;
         }
 
-        for (int xOffset = 0; xOffset < 16; xOffset++) {
-            for (int zOffset = 0; zOffset < 16; zOffset++) {
-                boolean spawnRootmin = false;
-                boolean spawnFlower = false;
-                if (randomSource.nextFloat() < config.rootminChance) {
-                    spawnRootmin = true;
-                }
-                else if (randomSource.nextFloat() < config.flowerChance) {
-                    spawnFlower = true;
-                }
+        ChunkAccess cachedChunk = level.getChunk(chunkCornerPos);
+        try (BulkSectionAccess bulkSectionAccess = new BulkSectionAccess(context.level())) {
+            for (int xOffset = 0; xOffset < 16; xOffset++) {
+                for (int zOffset = 0; zOffset < 16; zOffset++) {
+                    boolean spawnRootmin = false;
+                    boolean spawnFlower = false;
+                    if (randomSource.nextFloat() < config.rootminChance) {
+                        spawnRootmin = true;
+                    }
+                    else if (randomSource.nextFloat() < config.flowerChance) {
+                        spawnFlower = true;
+                    }
 
-                if (!spawnRootmin && !spawnFlower) {
-                    continue;
-                }
+                    if (!spawnRootmin && !spawnFlower) {
+                        continue;
+                    }
 
-                mutable.set(chunkCornerPos).move(xOffset, 0, zOffset);
-                boolean isAtGrassBlock = setMutableToGrassBlock(cachedChunk, mutable);
-                if (!isAtGrassBlock || mutable.getY() <= cachedChunk.getMinBuildHeight() || mutable.getY() >= cachedChunk.getMaxBuildHeight()) {
-                    continue;
-                }
+                    mutable.set(chunkCornerPos).move(xOffset, 0, zOffset);
+                    boolean isAtGrassBlock = setMutableToGrassBlock(cachedChunk, bulkSectionAccess, mutable);
+                    if (!isAtGrassBlock || mutable.getY() <= cachedChunk.getMinBuildHeight() || mutable.getY() >= cachedChunk.getMaxBuildHeight()) {
+                        continue;
+                    }
 
-                if (!level.isEmptyBlock(mutable.above())) {
-                    continue;
-                }
+                    if (!bulkSectionAccess.getBlockState(mutable.above()).isAir()) {
+                        continue;
+                    }
 
-                BlockState chosenFlower = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
-                if (chosenFlower.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
-                    chosenFlower = chosenFlower.setValue(BlockStateProperties.FLOWER_AMOUNT, 4);
-                }
+                    BlockState chosenFlower = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
+                    if (chosenFlower.hasProperty(BlockStateProperties.FLOWER_AMOUNT)) {
+                        chosenFlower = chosenFlower.setValue(BlockStateProperties.FLOWER_AMOUNT, 4);
+                    }
 
-                if (chosenFlower.getBlock() instanceof DoublePlantBlock) {
-                    chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
-                }
+                    if (chosenFlower.getBlock() instanceof DoublePlantBlock) {
+                        chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
+                    }
 
-                if (spawnRootmin && mutable.getY() != 39) {
-                    cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
+                    if (spawnRootmin && mutable.getY() != 39) {
+                        bulkSectionAccess.getSection(mutable).setBlockState(
+                                SectionPos.sectionRelative(mutable.getX()),
+                                SectionPos.sectionRelative(mutable.getY()),
+                                SectionPos.sectionRelative(mutable.getZ()),
+                                Blocks.AIR.defaultBlockState(),
+                                false);
 
-                    Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel());
-                    if (spawningEntity instanceof RootminEntity rootmin) {
-                        rootmin.finalizeSpawn(
-                                level,
-                                level.getCurrentDifficultyAt(mutable),
-                                MobSpawnType.CHUNK_GENERATION,
-                                null,
-                                null);
+                        Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel());
+                        if (spawningEntity instanceof RootminEntity rootmin) {
+                            rootmin.finalizeSpawn(
+                                    level,
+                                    level.getCurrentDifficultyAt(mutable),
+                                    MobSpawnType.CHUNK_GENERATION,
+                                    null,
+                                    null);
 
-                        rootmin.setPersistenceRequired();
-                        rootmin.setFlowerBlock(chosenFlower);
-                        rootmin.moveTo(
-                                (double)mutable.getX() + 0.5D,
-                                mutable.getY(),
-                                (double)mutable.getZ() + 0.5D,
-                                0.0F,
-                                0.0F);
-                        rootmin.hideAsBlock(new Vec3(
-                                mutable.getX() + 0.5D,
-                                mutable.getY(),
-                                mutable.getZ() + 0.5D));
-                        rootmin.yHeadRot = 0;
-                        rootmin.yHeadRotO = 0;
-                        rootmin.yBodyRot = 0;
-                        rootmin.yBodyRotO = 0;
+                            rootmin.setPersistenceRequired();
+                            rootmin.setFlowerBlock(chosenFlower);
+                            rootmin.moveTo(
+                                    (double)mutable.getX() + 0.5D,
+                                    mutable.getY(),
+                                    (double)mutable.getZ() + 0.5D,
+                                    0.0F,
+                                    0.0F);
+                            rootmin.hideAsBlock(new Vec3(
+                                    mutable.getX() + 0.5D,
+                                    mutable.getY(),
+                                    mutable.getZ() + 0.5D));
+                            rootmin.yHeadRot = 0;
+                            rootmin.yHeadRotO = 0;
+                            rootmin.yBodyRot = 0;
+                            rootmin.yBodyRotO = 0;
 
-                        level.addFreshEntityWithPassengers(rootmin);
+                            level.addFreshEntityWithPassengers(rootmin);
 
-                        mutable.move(Direction.UP);
-                        BlockState aboveState = cachedChunk.getBlockState(mutable);
-                        if (aboveState.is(BlockTags.REPLACEABLE)) {
-                            cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
-                            if (aboveState.getBlock() instanceof DoublePlantBlock){
-                                mutable.move(Direction.UP);
-                                cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
+                            mutable.move(Direction.UP);
+                            BlockState aboveState = bulkSectionAccess.getBlockState(mutable);
+                            if (aboveState.is(BlockTags.REPLACEABLE)) {
+                                bulkSectionAccess.getSection(mutable).setBlockState(
+                                        SectionPos.sectionRelative(mutable.getX()),
+                                        SectionPos.sectionRelative(mutable.getY()),
+                                        SectionPos.sectionRelative(mutable.getZ()),
+                                        Blocks.AIR.defaultBlockState(),
+                                        false);
+
+                                if (aboveState.getBlock() instanceof DoublePlantBlock){
+                                    mutable.move(Direction.UP);
+                                    bulkSectionAccess.getSection(mutable).setBlockState(
+                                            SectionPos.sectionRelative(mutable.getX()),
+                                            SectionPos.sectionRelative(mutable.getY()),
+                                            SectionPos.sectionRelative(mutable.getZ()),
+                                            Blocks.AIR.defaultBlockState(),
+                                            false);
+                                }
                             }
                         }
                     }
-                }
-                else {
-                    if (chosenFlower.getBlock() instanceof DoublePlantBlock) {
-                        mutable.move(Direction.UP, 2);
-                        BlockState aboveState = cachedChunk.getBlockState(mutable);
-
-                        if (aboveState.isAir() || aboveState.is(BlockTags.REPLACEABLE)) {
-                            mutable.move(Direction.DOWN);
-                            cachedChunk.setBlockState(mutable, chosenFlower, false);
-
-                            chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
-                            mutable.move(Direction.UP);
-                            cachedChunk.setBlockState(mutable, chosenFlower, false);
-                        }
-                    }
                     else {
-                        mutable.move(Direction.UP);
-                        cachedChunk.setBlockState(mutable, chosenFlower, false);
+                        if (chosenFlower.getBlock() instanceof DoublePlantBlock) {
+                            mutable.move(Direction.UP, 2);
+                            BlockState aboveState = bulkSectionAccess.getBlockState(mutable);
+
+                            if (aboveState.isAir() || aboveState.is(BlockTags.REPLACEABLE)) {
+                                mutable.move(Direction.DOWN);
+                                bulkSectionAccess.getSection(mutable).setBlockState(
+                                        SectionPos.sectionRelative(mutable.getX()),
+                                        SectionPos.sectionRelative(mutable.getY()),
+                                        SectionPos.sectionRelative(mutable.getZ()),
+                                        chosenFlower,
+                                        false);
+
+
+                                chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
+                                mutable.move(Direction.UP);
+                                bulkSectionAccess.getSection(mutable).setBlockState(
+                                        SectionPos.sectionRelative(mutable.getX()),
+                                        SectionPos.sectionRelative(mutable.getY()),
+                                        SectionPos.sectionRelative(mutable.getZ()),
+                                        chosenFlower,
+                                        false);
+
+                            }
+                        }
+                        else {
+                            mutable.move(Direction.UP);
+                            bulkSectionAccess.getSection(mutable).setBlockState(
+                                    SectionPos.sectionRelative(mutable.getX()),
+                                    SectionPos.sectionRelative(mutable.getY()),
+                                    SectionPos.sectionRelative(mutable.getZ()),
+                                    chosenFlower,
+                                    false);
+
+                        }
                     }
                 }
             }
@@ -154,8 +192,8 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
         return true;
     }
 
-    private boolean setMutableToGrassBlock(ChunkAccess cachedChunk, BlockPos.MutableBlockPos mutable) {
-        BlockState currentState = cachedChunk.getBlockState(mutable);
+    private boolean setMutableToGrassBlock(ChunkAccess cachedChunk, BulkSectionAccess bulkSectionAccess, BlockPos.MutableBlockPos mutable) {
+        BlockState currentState = bulkSectionAccess.getBlockState(mutable);
         Direction previousDirection = null;
         while (!currentState.is(Blocks.GRASS_BLOCK) &&
                 mutable.getY() > cachedChunk.getMinBuildHeight() &&
@@ -186,7 +224,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                 previousDirection = Direction.UP;
             }
 
-            currentState = cachedChunk.getBlockState(mutable);
+            currentState = bulkSectionAccess.getBlockState(mutable);
         }
 
         return currentState.is(Blocks.GRASS_BLOCK);

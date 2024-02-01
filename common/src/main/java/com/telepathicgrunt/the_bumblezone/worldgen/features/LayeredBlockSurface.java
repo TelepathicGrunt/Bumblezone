@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLayerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -46,18 +48,20 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
         Biome targetBiome = context.level().registryAccess().registryOrThrow(Registries.BIOME).get(context.config().biomeRL);
 
-        for (int xOffset = -1; xOffset <= 1; xOffset++) {
-            for (int zOffset = -1; zOffset <= 1; zOffset++) {
-                ChunkPos currentChunkPos = new ChunkPos(chunkPos.x + xOffset, chunkPos.z + zOffset);
-                mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
-                ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
-                fillChunkWithPollen(context, currentChunkPos.getWorldPosition(), cachedChunk, targetBiome);
+        try (BulkSectionAccess bulkSectionAccess = new BulkSectionAccess(context.level())) {
+            for (int xOffset = -1; xOffset <= 1; xOffset++) {
+                for (int zOffset = -1; zOffset <= 1; zOffset++) {
+                    ChunkPos currentChunkPos = new ChunkPos(chunkPos.x + xOffset, chunkPos.z + zOffset);
+                    mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
+                    ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
+                    fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, currentChunkPos.getWorldPosition(), targetBiome);
+                }
             }
         }
         return true;
     }
 
-    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, BlockPos startPos, ChunkAccess chunk, Biome targetBiome) {
+    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, BulkSectionAccess bulkSectionAccess, ChunkAccess cachedChunk, BlockPos startPos, Biome targetBiome) {
         int configHeight = context.config().height;
         BlockState configBlockState = context.config().state;
         Optional<BlockState> configRareBlockState = context.config().rareState;
@@ -66,30 +70,31 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         BlockState previousBlockState = Blocks.AIR.defaultBlockState();
         RandomSource random = context.random();
 
+        int maxY = (context.chunkGenerator().getGenDepth() + context.chunkGenerator().getMinY()) - 1;
         for (int xOffset = 0; xOffset <= 15; xOffset++) {
             for (int zOffset = 0; zOffset <= 15; zOffset++) {
-                mutable.set(startPos.getX() + xOffset, context.chunkGenerator().getGenDepth() + context.chunkGenerator().getMinY(), startPos.getZ() + zOffset);
+                mutable.set(startPos.getX() + xOffset, maxY, startPos.getZ() + zOffset);
                 if(targetBiome != context.level().getBiome(mutable).value()) {
                     continue;
                 }
 
                 while (mutable.getY() >= context.chunkGenerator().getMinY()) {
-                    currentBlockState = chunk.getBlockState(mutable);
+                    currentBlockState = bulkSectionAccess.getBlockState(mutable);
 
                     if (!currentBlockState.isAir() && currentBlockState.getFluidState().isEmpty() &&
                         !currentBlockState.is(configBlockState.getBlock()) && previousBlockState.getBlock() == Blocks.AIR &&
                         !(configRareBlockState.isPresent() && currentBlockState.is(configRareBlockState.get().getBlock())))
                     {
-                        BlockState belowBlockState = chunk.getBlockState(mutable);
+                        BlockState belowBlockState = bulkSectionAccess.getBlockState(mutable);
                         if (!belowBlockState.isFaceSturdy(context.level(), mutable, Direction.UP)) {
                             previousBlockState = currentBlockState;
                             mutable.move(Direction.DOWN);
                             continue;
                         }
 
-                        for (int height = 1; height <= configHeight; height++) {
+                        for (int height = 1; height <= configHeight && mutable.getY() + height < maxY; height++) {
                             BlockPos finalPosition = mutable.above(height);
-                            BlockState finalBlockState = chunk.getBlockState(finalPosition);
+                            BlockState finalBlockState = bulkSectionAccess.getBlockState(finalPosition);
                             if (!finalBlockState.isAir()) {
                                 break;
                             }
@@ -105,26 +110,37 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
 
                             BlockState blockToPlace = configBlockState;
                             if ((height < configHeight || layerHeight == 8) &&
-                                configRareBlockState.isPresent() &&
-                                random.nextFloat() < context.config().rareStateChance)
+                                    configRareBlockState.isPresent() &&
+                                    random.nextFloat() < context.config().rareStateChance)
                             {
                                 blockToPlace = configRareBlockState.get();
                             }
 
                             // Vary the pollen piles
                             if (blockToPlace.hasProperty(BlockStateProperties.LAYERS)) {
-                                chunk.setBlockState(finalPosition, blockToPlace.setValue(BlockStateProperties.LAYERS, layerHeight), false);
+                                bulkSectionAccess.getSection(finalPosition).setBlockState(
+                                        SectionPos.sectionRelative(finalPosition.getX()),
+                                        SectionPos.sectionRelative(finalPosition.getY()),
+                                        SectionPos.sectionRelative(finalPosition.getZ()),
+                                        blockToPlace.setValue(BlockStateProperties.LAYERS, layerHeight),
+                                        false);
                                 context.level().scheduleTick(finalPosition, blockToPlace.getBlock(), 0);
                             }
                             else {
-                                chunk.setBlockState(finalPosition, blockToPlace, false);
+                                bulkSectionAccess.getSection(finalPosition).setBlockState(
+                                        SectionPos.sectionRelative(finalPosition.getX()),
+                                        SectionPos.sectionRelative(finalPosition.getY()),
+                                        SectionPos.sectionRelative(finalPosition.getZ()),
+                                        blockToPlace,
+                                        false);
+
                                 if (blockToPlace.hasBlockEntity()) {
                                     BlockEntity blockEntity = ((EntityBlock)blockToPlace.getBlock()).newBlockEntity(finalPosition, blockToPlace);
                                     if (blockEntity != null) {
                                         if (blockEntity instanceof BrushableBlockEntity brushableBlock && context.config().suspiciousBlockLoot.isPresent()) {
                                             brushableBlock.setLootTable(context.config().suspiciousBlockLoot.get(), random.nextLong());
                                         }
-                                        chunk.setBlockEntity(blockEntity);
+                                        cachedChunk.setBlockEntity(blockEntity);
                                     }
                                 }
                             }

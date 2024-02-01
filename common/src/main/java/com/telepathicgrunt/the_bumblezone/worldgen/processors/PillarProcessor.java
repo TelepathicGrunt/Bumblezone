@@ -101,7 +101,7 @@ public class PillarProcessor extends StructureProcessor {
 
             // Creates the pillars in the world that replaces air and liquids
             BlockState currentBlock = currentChunk.getBlockState(worldPos.below());
-            while((forcePlacement || !currentBlock.canOcclude() || currentBlock.is(BlockTags.REPLACEABLE)) &&
+            while((forcePlacement || (!currentBlock.canOcclude() && !currentBlock.hasBlockEntity()) || currentBlock.is(BlockTags.REPLACEABLE)) &&
                 (forcePlacement || currentPos.getY() >= terrainY) &&
                 !levelReader.isOutsideBuildHeight(currentPos.getY()) &&
                 currentPos.closerThan(worldPos, pillarHeight)

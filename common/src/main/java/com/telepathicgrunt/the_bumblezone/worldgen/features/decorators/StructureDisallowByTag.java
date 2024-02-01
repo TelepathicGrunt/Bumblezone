@@ -46,7 +46,7 @@ public class StructureDisallowByTag extends PlacementModifier {
     public Stream<BlockPos> getPositions(PlacementContext placementContext, RandomSource random, BlockPos blockPos) {
 
         if (placementContext.getLevel() instanceof WorldGenRegion worldGenRegion) {
-            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
             StructureManager structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
             ChunkPos chunkPos = new ChunkPos(blockPos);
 

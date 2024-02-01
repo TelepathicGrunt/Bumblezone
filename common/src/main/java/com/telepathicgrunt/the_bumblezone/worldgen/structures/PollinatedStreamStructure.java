@@ -63,7 +63,7 @@ public class PollinatedStreamStructure extends Structure {
                 context,
                 this.startPool,
                 this.size,
-                context.registryAccess().registryOrThrow(Registries.STRUCTURE).getKey(this),
+                context.registryAccess().registry(Registries.STRUCTURE).get().getKey(this),
                 centerPos,
                 false,
                 this.projectStartToHeightmap,

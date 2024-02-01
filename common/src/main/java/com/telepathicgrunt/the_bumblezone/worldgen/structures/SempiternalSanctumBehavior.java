@@ -53,7 +53,7 @@ public class SempiternalSanctumBehavior {
                     // Don't send message if player logs in while in structure.
                     if (serverPlayer.tickCount > 40) {
                         ResourceLocation resourceLocation = serverPlayer.level().registryAccess()
-                                .registryOrThrow(Registries.STRUCTURE)
+                                .registry(Registries.STRUCTURE).get()
                                 .getKey(detectedStructure.getStructure());
 
                         ChatFormatting color;

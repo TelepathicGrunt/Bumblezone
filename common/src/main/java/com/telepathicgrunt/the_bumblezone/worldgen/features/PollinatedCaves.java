@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -55,7 +57,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         int disallowedBottomRange = Integer.MAX_VALUE;
         int disallowedTopRange = Integer.MIN_VALUE;
         if (context.level() instanceof WorldGenRegion worldGenRegion) {
-            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            Registry<Structure> structureRegistry = worldGenRegion.registryAccess().registry(Registries.STRUCTURE).get();
             StructureManager structureManager = ((WorldGenRegionAccessor)worldGenRegion).getStructureManager();
             ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
             List<StructureStart> structureStarts = structureManager.startsForStructure(chunkPos,
@@ -70,61 +72,61 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         double noise1;
         double noise2;
         double finalNoise;
-        ChunkAccess[] cachedChunks = new ChunkAccess[7];
-        cachedChunks[6] = level.getChunk(mutableBlockPos);
 
-        for (int y = 15; y < context.chunkGenerator().getGenDepth() - 14; y++) {
-            if (y > disallowedBottomRange && y < disallowedTopRange) {
-                continue;
-            }
+        try (BulkSectionAccess bulkSectionAccess = new BulkSectionAccess(context.level())) {
+            for (int y = 15; y < context.chunkGenerator().getGenDepth() - 14; y++) {
+                if (y > disallowedBottomRange && y < disallowedTopRange) {
+                    continue;
+                }
 
-            for (int x = 0; x < 16; x++) {
-                for (int z = 0; z < 16; z++) {
-                    mutableBlockPos.set(context.origin()).move(x, y, z);
+                for (int x = 0; x < 16; x++) {
+                    for (int z = 0; z < 16; z++) {
+                        mutableBlockPos.set(context.origin()).move(x, y, z);
 
-                    if (cachedChunks[6].getSection(cachedChunks[6].getSectionIndex(mutableBlockPos.getY())).hasOnlyAir()) {
-                        x = 16;
-                        y += 16 - (y % 16);
-                        break;
-                    }
+                        if (bulkSectionAccess.getSection(mutableBlockPos).hasOnlyAir()) {
+                            x = 16;
+                            y += 16 - (y % 16);
+                            break;
+                        }
 
-                    noise1 = noiseGen.noise3_Classic(
-                            mutableBlockPos.getX() * 0.019D,
-                            mutableBlockPos.getZ() * 0.019D,
-                            mutableBlockPos.getY() * 0.038D);
+                        noise1 = noiseGen.noise3_Classic(
+                                mutableBlockPos.getX() * 0.019D,
+                                mutableBlockPos.getZ() * 0.019D,
+                                mutableBlockPos.getY() * 0.038D);
 
-                    if (noise1 >= 0.0360555127546399D) {
-                        if (noise1 >= 0.6) {
+                        if (noise1 >= 0.0360555127546399D) {
+                            if (noise1 >= 0.6) {
+                                z += 6;
+                            }
+                            else if (noise1 >= 0.4) {
+                                z += 4;
+                            }
+                            else if (noise1 >= 0.2) {
+                                z += 2;
+                            }
+                            continue;
+                        }
+
+                        noise2 = noiseGen2.noise3_Classic(
+                                mutableBlockPos.getX() * 0.019D,
+                                mutableBlockPos.getZ() * 0.019D,
+                                mutableBlockPos.getY() * 0.038D);
+
+                        double heightPressure = Math.max((30f - y) / 90f, 0);
+                        finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
+
+                        if (finalNoise < 0.01305f) {
+                            carve(level, bulkSectionAccess, mutableBlockPos, finalNoise, noise1);
+                        }
+                        else if (finalNoise >= 0.6) {
                             z += 6;
                         }
-                        else if (noise1 >= 0.4) {
+                        else if (finalNoise >= 0.4) {
                             z += 4;
                         }
-                        else if (noise1 >= 0.2) {
+                        else if (finalNoise >= 0.2) {
                             z += 2;
                         }
-                        continue;
-                    }
-
-                    noise2 = noiseGen2.noise3_Classic(
-                            mutableBlockPos.getX() * 0.019D,
-                            mutableBlockPos.getZ() * 0.019D,
-                            mutableBlockPos.getY() * 0.038D);
-
-                    double heightPressure = Math.max((30f - y) / 90f, 0);
-                    finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
-
-                    if (finalNoise < 0.01305f) {
-                        carve(level, mutableBlockPos, finalNoise, noise1, cachedChunks);
-                    }
-                    else if (finalNoise >= 0.6) {
-                        z += 6;
-                    }
-                    else if (finalNoise >= 0.4) {
-                        z += 4;
-                    }
-                    else if (finalNoise >= 0.2) {
-                        z += 2;
                     }
                 }
             }
@@ -133,10 +135,8 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    private static void carve(WorldGenLevel world, BlockPos.MutableBlockPos position, double finalNoise, double noise, ChunkAccess[] cachedChunks) {
-        ChunkAccess cachedChunk = GeneralUtils.getDirectionalBasedChunkForSpot(world, cachedChunks, null, position, position);
-
-        BlockState currentState = cachedChunk.getBlockState(position);
+    private static void carve(WorldGenLevel world, BulkSectionAccess bulkSectionAccess, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
+        BlockState currentState = bulkSectionAccess.getBlockState(position);
         if (!currentState.isAir() &&
             currentState.getFluidState().isEmpty() &&
             !currentState.is(BzBlocks.PILE_OF_POLLEN.get()) &&
@@ -145,7 +145,12 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             // varies the surface of the cave surface
             if (finalNoise > 0.0105f) {
                 if ((noise * 3) % 2 < 0.35D) {
-                    cachedChunk.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
+                    bulkSectionAccess.getSection(position).setBlockState(
+                            SectionPos.sectionRelative(position.getX()),
+                            SectionPos.sectionRelative(position.getY()),
+                            SectionPos.sectionRelative(position.getZ()),
+                            BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(),
+                            false);
                 }
                 return;
             }
@@ -153,19 +158,24 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             // cannot carve next to fluids
             BlockPos.MutableBlockPos sidePos = new BlockPos.MutableBlockPos();
             for (Direction direction : Direction.values()) {
-                ChunkAccess cachedChunkForFluid  = GeneralUtils.getDirectionalBasedChunkForSpot(world, cachedChunks, direction, position, sidePos);
-                if (!cachedChunkForFluid.getBlockState(sidePos).getFluidState().isEmpty()) {
+                sidePos.set(position).move(direction);
+                if (!bulkSectionAccess.getBlockState(sidePos).getFluidState().isEmpty()) {
                     return;
                 }
             }
 
             // places cave air or pollen pile
             position.move(Direction.DOWN);
-            BlockState belowState = cachedChunk.getBlockState(position);
+            BlockState belowState = bulkSectionAccess.getBlockState(position);
             position.move(Direction.UP);
 
             if (!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.blocksMotion()) {
-                cachedChunk.setBlockState(position, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), false);
+                bulkSectionAccess.getSection(position).setBlockState(
+                        SectionPos.sectionRelative(position.getX()),
+                        SectionPos.sectionRelative(position.getY()),
+                        SectionPos.sectionRelative(position.getZ()),
+                        BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)),
+                        false);
                 world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN.get(), 0);
 
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
@@ -173,17 +183,28 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                     position.move(Direction.UP);
                     // cannot carve next to fluids
                     for (Direction direction : Direction.values()) {
-                        ChunkAccess cachedChunkForFluid = GeneralUtils.getDirectionalBasedChunkForSpot(world, cachedChunks, direction, position, sidePos);
-                        if (!cachedChunkForFluid.getBlockState(sidePos).getFluidState().isEmpty()) {
+                        sidePos.set(position).move(direction);
+                        if (!bulkSectionAccess.getBlockState(sidePos).getFluidState().isEmpty()) {
                             return;
                         }
                     }
-                    cachedChunk.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
+
+                    bulkSectionAccess.getSection(position).setBlockState(
+                            SectionPos.sectionRelative(position.getX()),
+                            SectionPos.sectionRelative(position.getY()),
+                            SectionPos.sectionRelative(position.getZ()),
+                            Blocks.CAVE_AIR.defaultBlockState(),
+                            false);
                 }
                 position.move(Direction.DOWN, carveHeight);
             }
             else {
-                cachedChunk.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
+                bulkSectionAccess.getSection(position).setBlockState(
+                        SectionPos.sectionRelative(position.getX()),
+                        SectionPos.sectionRelative(position.getY()),
+                        SectionPos.sectionRelative(position.getZ()),
+                        Blocks.CAVE_AIR.defaultBlockState(),
+                        false);
             }
         }
     }

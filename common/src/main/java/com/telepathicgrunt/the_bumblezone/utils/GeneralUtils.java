@@ -818,54 +818,6 @@ public class GeneralUtils {
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    /**
-     * cachedSideChunks MUST be an array of 7. Or else crash.
-     * direction can be null for center chunk.
-     * reusableBlockPos will be set to the final position with direction off set if present.
-     */
-    public static ChunkAccess getDirectionalBasedChunkForSpot(LevelAccessor level, ChunkAccess[] cachedSideChunks, @Nullable Direction direction, BlockPos centerPos, BlockPos.MutableBlockPos reusableBlockPos) {
-        reusableBlockPos.set(centerPos); // Set reusable position to center
-
-        // Special logic for offset positions
-        if (direction != null) {
-            // Obtain the offset direction and position
-            reusableBlockPos.move(direction);
-            int directionIndex = direction.get3DDataValue();
-
-            // If offset position is outside center chunk. Grab side chunk using offset portion of the cache instead.
-            // Otherwise, it will fall back to using center chunk if offset position does not land outside center chunk.
-            if (SectionPos.blockToSectionCoord(centerPos.getX()) != SectionPos.blockToSectionCoord(reusableBlockPos.getX()) ||
-                    SectionPos.blockToSectionCoord(centerPos.getZ()) != SectionPos.blockToSectionCoord(reusableBlockPos.getZ()))
-            {
-                // Get side offset chunk
-                ChunkAccess cachedChunk = cachedSideChunks[directionIndex];
-
-                // Cache if not yet cached
-                if (cachedChunk == null) {
-                    cachedChunk = level.getChunk(reusableBlockPos);
-                    cachedSideChunks[directionIndex] = cachedChunk;
-                }
-
-                // Returned the cached chunk
-                return cachedChunk;
-            }
-        }
-
-        // Always get center chunk when no direction present
-        ChunkAccess cachedChunk = cachedSideChunks[6]; // Index 6 will be center chunk
-
-        // Cache if not yet cached
-        if (cachedChunk == null) {
-            cachedChunk = level.getChunk(reusableBlockPos);
-            cachedSideChunks[6] = cachedChunk;
-        }
-
-        // Returned the cached chunk
-        return cachedChunk;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////
-
     // For comparison with POI
 //            PoiManager poiManager = ((ServerLevel)world).getPoiManager();
 //            for (int i = 0; i < 1000; i++) {
