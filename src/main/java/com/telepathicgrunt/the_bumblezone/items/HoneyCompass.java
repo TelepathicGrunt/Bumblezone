@@ -246,7 +246,7 @@ public class HoneyCompass extends Item implements Vanishable {
         if (getBooleanTag(itemStack.getTag(), TAG_FAILED) && hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG)) {
             if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenSettings().generateStructures()) {
                 TagKey<Structure> structureTagKey = TagKey.create(Registry.STRUCTURE_REGISTRY, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
-                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(structureTagKey);
+                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registry.STRUCTURE_REGISTRY).get().getTag(structureTagKey);
                 Set<Structure> structureSets = ((ChunkGeneratorAccessor)serverLevel.getChunkSource().getGenerator()).getPlacementsForStructure().keySet();
                 boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.value()));
                 if (structureExists) {
@@ -277,7 +277,7 @@ public class HoneyCompass extends Item implements Vanishable {
         }
 
         if (level instanceof ServerLevel serverLevel && !isStructureCompass(itemStack)) {
-            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY).getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING);
+            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registry.STRUCTURE_REGISTRY).get().getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING);
             Set<Structure> structureSets = ((ChunkGeneratorAccessor)serverLevel.getChunkSource().getGenerator()).getPlacementsForStructure().keySet();
             boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> structureSets.contains(structureHolder.value()));
             if (structureExists) {

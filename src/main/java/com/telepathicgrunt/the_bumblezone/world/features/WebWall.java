@@ -7,6 +7,7 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyWeb;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFeatures;
+import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,13 +39,13 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         BlockPos blockPos = new ChunkPos(context.origin()).getMiddleBlockPosition(context.origin().getY());
-        WorldGenLevel level = context.level();
 
-        if(level.getBlockState(blockPos).is(Blocks.CAVE_AIR)) {
+        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
+        if(bulkSectionAccess.getBlockState(blockPos).is(Blocks.CAVE_AIR)) {
             for(Direction.Axis axis : Direction.Axis.values()) {
                 Set<BlockPos> validSpaces = new HashSet<>();
                 validSpaces.add(blockPos);
-                boolean isInBounds = setIfValidSpace(level, axis, blockPos, blockPos, validSpaces);
+                boolean isInBounds = setIfValidSpace(bulkSectionAccess, axis, blockPos, blockPos, validSpaces);
                 if(isInBounds) {
                     for(BlockPos validPos : validSpaces) {
                         for(int attempt = 0; attempt < 12; attempt++) {
@@ -61,12 +62,12 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
                             ));
                         }
 
-                        BlockState state = level.getBlockState(validPos);
+                        BlockState state = bulkSectionAccess.getBlockState(validPos);
                         if (state.is(BzBlocks.HONEY_WEB)) {
-                            level.setBlock(validPos, state.setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), 3);
+                            bulkSectionAccess.setBlockState(validPos, state.setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), false);
                         }
                         else {
-                            level.setBlock(validPos, BzBlocks.HONEY_WEB.defaultBlockState().setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), 3);
+                            bulkSectionAccess.setBlockState(validPos, BzBlocks.HONEY_WEB.defaultBlockState().setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), false);
                         }
                     }
 
@@ -77,7 +78,7 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
         return false;
     }
 
-    private boolean setIfValidSpace(WorldGenLevel level, Direction.Axis axis, BlockPos originPos, BlockPos currentPos, Set<BlockPos> validSpaces) {
+    private boolean setIfValidSpace(UnsafeBulkSectionAccess bulkSectionAccess, Direction.Axis axis, BlockPos originPos, BlockPos currentPos, Set<BlockPos> validSpaces) {
         int maxDistance = 14;
         for(Direction direction : AXIS_TO_FACINGS.get(axis)) {
             BlockPos newBlockPos = currentPos.relative(direction);
@@ -90,10 +91,10 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
             }
 
             if(!validSpaces.contains(newBlockPos)) {
-                BlockState state = level.getBlockState(newBlockPos);
+                BlockState state = bulkSectionAccess.getBlockState(newBlockPos);
                 if(state.isAir() || state.is(BzBlocks.PILE_OF_POLLEN) || state.is(BzBlocks.HONEY_WEB)) {
                     validSpaces.add(newBlockPos);
-                    if(!setIfValidSpace(level, axis, originPos, newBlockPos, validSpaces)) {
+                    if(!setIfValidSpace(bulkSectionAccess, axis, originPos, newBlockPos, validSpaces)) {
                         return false;
                     }
                 }
