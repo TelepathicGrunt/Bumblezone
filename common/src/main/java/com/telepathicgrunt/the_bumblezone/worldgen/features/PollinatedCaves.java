@@ -134,19 +134,14 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
     private static void carve(WorldGenLevel world, UnsafeBulkSectionAccess bulkSectionAccess, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
         BlockState currentState = bulkSectionAccess.getBlockState(position);
         if (!currentState.isAir() &&
-                currentState.getFluidState().isEmpty() &&
-                !currentState.is(BzBlocks.PILE_OF_POLLEN.get()) &&
-                !currentState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE))
+            currentState.getFluidState().isEmpty() &&
+            !currentState.is(BzBlocks.PILE_OF_POLLEN.get()) &&
+            !currentState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE))
         {
             // varies the surface of the cave surface
             if (finalNoise > 0.0105f) {
                 if ((noise * 3) % 2 < 0.35D) {
-                    bulkSectionAccess.getSection(position).setBlockState(
-                            SectionPos.sectionRelative(position.getX()),
-                            SectionPos.sectionRelative(position.getY()),
-                            SectionPos.sectionRelative(position.getZ()),
-                            BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(),
-                            false);
+                    bulkSectionAccess.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), false);
                 }
                 return;
             }
@@ -166,12 +161,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             position.move(Direction.UP);
 
             if (!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.blocksMotion()) {
-                bulkSectionAccess.getSection(position).setBlockState(
-                        SectionPos.sectionRelative(position.getX()),
-                        SectionPos.sectionRelative(position.getY()),
-                        SectionPos.sectionRelative(position.getZ()),
-                        BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)),
-                        false);
+                bulkSectionAccess.setBlockState(position, BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), false);
                 world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN.get(), 0);
 
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
@@ -186,22 +176,12 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                         }
                     }
 
-                    bulkSectionAccess.getSection(position).setBlockState(
-                            SectionPos.sectionRelative(position.getX()),
-                            SectionPos.sectionRelative(position.getY()),
-                            SectionPos.sectionRelative(position.getZ()),
-                            Blocks.CAVE_AIR.defaultBlockState(),
-                            false);
+                    bulkSectionAccess.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
                 }
                 position.move(Direction.DOWN, carveHeight);
             }
             else {
-                bulkSectionAccess.getSection(position).setBlockState(
-                        SectionPos.sectionRelative(position.getX()),
-                        SectionPos.sectionRelative(position.getY()),
-                        SectionPos.sectionRelative(position.getZ()),
-                        Blocks.CAVE_AIR.defaultBlockState(),
-                        false);
+                bulkSectionAccess.setBlockState(position, Blocks.CAVE_AIR.defaultBlockState(), false);
             }
         }
     }

@@ -92,12 +92,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                 }
 
                 if (spawnRootmin && mutable.getY() != 39) {
-                    bulkSectionAccess.getSection(mutable).setBlockState(
-                            SectionPos.sectionRelative(mutable.getX()),
-                            SectionPos.sectionRelative(mutable.getY()),
-                            SectionPos.sectionRelative(mutable.getZ()),
-                            Blocks.AIR.defaultBlockState(),
-                            false);
+                    bulkSectionAccess.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
 
                     Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel());
                     if (spawningEntity instanceof RootminEntity rootmin) {
@@ -130,21 +125,11 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                         mutable.move(Direction.UP);
                         BlockState aboveState = bulkSectionAccess.getBlockState(mutable);
                         if (aboveState.is(BlockTags.REPLACEABLE)) {
-                            bulkSectionAccess.getSection(mutable).setBlockState(
-                                    SectionPos.sectionRelative(mutable.getX()),
-                                    SectionPos.sectionRelative(mutable.getY()),
-                                    SectionPos.sectionRelative(mutable.getZ()),
-                                    Blocks.AIR.defaultBlockState(),
-                                    false);
+                            bulkSectionAccess.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
 
                             if (aboveState.getBlock() instanceof DoublePlantBlock){
                                 mutable.move(Direction.UP);
-                                bulkSectionAccess.getSection(mutable).setBlockState(
-                                        SectionPos.sectionRelative(mutable.getX()),
-                                        SectionPos.sectionRelative(mutable.getY()),
-                                        SectionPos.sectionRelative(mutable.getZ()),
-                                        Blocks.AIR.defaultBlockState(),
-                                        false);
+                                bulkSectionAccess.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
                             }
                         }
                     }
@@ -156,34 +141,16 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
                         if (aboveState.isAir() || aboveState.is(BlockTags.REPLACEABLE)) {
                             mutable.move(Direction.DOWN);
-                            bulkSectionAccess.getSection(mutable).setBlockState(
-                                    SectionPos.sectionRelative(mutable.getX()),
-                                    SectionPos.sectionRelative(mutable.getY()),
-                                    SectionPos.sectionRelative(mutable.getZ()),
-                                    chosenFlower,
-                                    false);
-
+                            bulkSectionAccess.setBlockState(mutable, chosenFlower, false);
 
                             chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
                             mutable.move(Direction.UP);
-                            bulkSectionAccess.getSection(mutable).setBlockState(
-                                    SectionPos.sectionRelative(mutable.getX()),
-                                    SectionPos.sectionRelative(mutable.getY()),
-                                    SectionPos.sectionRelative(mutable.getZ()),
-                                    chosenFlower,
-                                    false);
-
+                            bulkSectionAccess.setBlockState(mutable, chosenFlower, false);
                         }
                     }
                     else {
                         mutable.move(Direction.UP);
-                        bulkSectionAccess.getSection(mutable).setBlockState(
-                                SectionPos.sectionRelative(mutable.getX()),
-                                SectionPos.sectionRelative(mutable.getY()),
-                                SectionPos.sectionRelative(mutable.getZ()),
-                                chosenFlower,
-                                false);
-
+                        bulkSectionAccess.setBlockState(mutable, chosenFlower, false);
                     }
                 }
             }

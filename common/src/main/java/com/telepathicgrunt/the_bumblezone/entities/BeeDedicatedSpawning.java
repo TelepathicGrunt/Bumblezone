@@ -4,7 +4,6 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
-import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,10 +54,9 @@ public final class BeeDedicatedSpawning {
                     }
                 }
 
-                UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(world);
                 for(int i = nearbyBees; i <= beesPerPlayer; i++) {
                     BlockPos newBeePos = GeneralUtils.getRandomBlockposWithinRange(serverPlayer, 45, 20);
-                    if(!bulkSectionAccess.getBlockState(newBeePos).isAir()) {
+                    if(!world.getBlockState(newBeePos).isAir()) {
                         continue;
                     }
 

@@ -151,12 +151,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
                             if (random.nextFloat() < 0.5f) {
                                 newState = newState.setValue(GlisteringHoneyCrystal.FACING, Direction.getRandom(random));
                             }
-                            bulkSectionAccess.getSection(blockpos$Mutable).setBlockState(
-                                    SectionPos.sectionRelative(blockpos$Mutable.getX()),
-                                    SectionPos.sectionRelative(blockpos$Mutable.getY()),
-                                    SectionPos.sectionRelative(blockpos$Mutable.getZ()),
-                                    newState,
-                                    false);
+                            bulkSectionAccess.setBlockState(blockpos$Mutable, newState, false);
                         }
                     }
                 }

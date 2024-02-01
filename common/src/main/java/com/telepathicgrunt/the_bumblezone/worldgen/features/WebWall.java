@@ -67,20 +67,10 @@ public class WebWall extends Feature<NoneFeatureConfiguration> {
 
                         BlockState state = bulkSectionAccess.getBlockState(validPos);
                         if (state.is(BzBlocks.HONEY_WEB.get())) {
-                            bulkSectionAccess.getSection(validPos).setBlockState(
-                                    SectionPos.sectionRelative(validPos.getX()),
-                                    SectionPos.sectionRelative(validPos.getY()),
-                                    SectionPos.sectionRelative(validPos.getZ()),
-                                    state.setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true),
-                                    false);
+                            bulkSectionAccess.setBlockState(validPos, state.setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), false);
                         }
                         else {
-                            bulkSectionAccess.getSection(validPos).setBlockState(
-                                    SectionPos.sectionRelative(validPos.getX()),
-                                    SectionPos.sectionRelative(validPos.getY()),
-                                    SectionPos.sectionRelative(validPos.getZ()),
-                                    BzBlocks.HONEY_WEB.get().defaultBlockState().setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true),
-                                    false);
+                            bulkSectionAccess.setBlockState(validPos, BzBlocks.HONEY_WEB.get().defaultBlockState().setValue(HoneyWeb.AXIS_TO_PROP.get(axis), true), false);
                         }
                     }
 

@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -48,6 +49,15 @@ public class UnsafeBulkSectionAccess {
         int j = SectionPos.sectionRelative(blockPos.getY());
         int k = SectionPos.sectionRelative(blockPos.getZ());
         return levelChunkSection.getBlockState(i, j, k);
+    }
+
+    public void setBlockState(BlockPos blockPos, BlockState state, boolean lockSection) {
+        this.getSection(blockPos).setBlockState(
+                SectionPos.sectionRelative(blockPos.getX()),
+                SectionPos.sectionRelative(blockPos.getY()),
+                SectionPos.sectionRelative(blockPos.getZ()),
+                state,
+                lockSection);
     }
 }
 
