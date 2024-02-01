@@ -139,7 +139,7 @@ public class GiantHoneyCrystalFeature extends Feature<NoneFeatureConfiguration> 
                                 origin.getZ() + z + currentZSlant);
 
                         BlockState state = bulkSectionAccess.getBlockState(blockpos$Mutable);
-                        if (!state.canOcclude() && !state.is(BzBlocks.CRYSTALLINE_FLOWER)) {
+                        if (!state.canOcclude() && !state.hasBlockEntity()) {
                             BlockState newState = BzBlocks.GLISTERING_HONEY_CRYSTAL.defaultBlockState();
                             if (random.nextFloat() < 0.5f) {
                                 newState = newState.setValue(GlisteringHoneyCrystal.FACING, Direction.getRandom(random));

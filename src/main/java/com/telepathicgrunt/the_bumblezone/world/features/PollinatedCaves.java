@@ -139,6 +139,9 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             if (finalNoise > 0.0105f) {
                 if ((noise * 3) % 2 < 0.35D) {
                     bulkSectionAccess.setBlockState(position, BzBlocks.FILLED_POROUS_HONEYCOMB.defaultBlockState(), false);
+                    if (currentState.hasBlockEntity()) {
+                        world.getChunk(position).removeBlockEntity(position);
+                    }
                 }
                 return;
             }
@@ -157,6 +160,9 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
             BlockState belowState = world.getBlockState(position);
             position.move(Direction.UP);
 
+            if (currentState.hasBlockEntity()) {
+                world.getChunk(position).removeBlockEntity(position);
+            }
             if (!belowState.isAir() && belowState.getFluidState().isEmpty() && belowState.getMaterial().blocksMotion()) {
                 bulkSectionAccess.setBlockState(position, BzBlocks.PILE_OF_POLLEN.defaultBlockState().setValue(PileOfPollen.LAYERS, (int)Math.max(Math.min((noise + 1D) * 3D, 8), 1)), false);
                 world.scheduleTick(position, BzBlocks.PILE_OF_POLLEN, 0);
