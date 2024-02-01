@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
+import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -20,8 +21,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.chunk.BulkSectionAccess;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -183,68 +182,66 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         int orgY = context.origin().getY();
         int orgZ = context.origin().getZ();
 
-        try (BulkSectionAccess bulkSectionAccess = new BulkSectionAccess(context.level())) {
-            for (int y = 15; y < 241; y++) {
-                if (y > disallowedBottomRange && y < disallowedTopRange) {
-                    continue;
-                }
+        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
+        for (int y = 15; y < 241; y++) {
+            if (y > disallowedBottomRange && y < disallowedTopRange) {
+                continue;
+            }
 
-                for (int x = 0; x < 16; x++) {
-                    for (int z = 0; z < 16; z++) {
-                        mutableBlockPos.set(orgX, orgY, orgZ).move(x, y, z);
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    mutableBlockPos.set(orgX, orgY, orgZ).move(x, y, z);
 
-                        if (bulkSectionAccess.getSection(mutableBlockPos).hasOnlyAir()) {
-                            x = 16;
-                            y += 16 - (y % 16);
-                            break;
-                        }
+                    if (bulkSectionAccess.getSection(mutableBlockPos).hasOnlyAir()) {
+                        x = 16;
+                        y += 16 - (y % 16);
+                        break;
+                    }
 
-                        double noise1 = noiseGen.noise3_Classic(
-                                mutableBlockPos.getX() * 0.019D,
-                                mutableBlockPos.getZ() * 0.019D,
-                                mutableBlockPos.getY() * 0.038D);
+                    double noise1 = noiseGen.noise3_Classic(
+                            mutableBlockPos.getX() * 0.019D,
+                            mutableBlockPos.getZ() * 0.019D,
+                            mutableBlockPos.getY() * 0.038D);
 
-                        if (noise1 >= 0.0360555127546399D) {
-                            if (noise1 >= 0.6) {
-                                z += 6;
-                            }
-                            else if (noise1 >= 0.4) {
-                                z += 4;
-                            }
-                            else if (noise1 >= 0.2) {
-                                z += 2;
-                            }
-                            continue;
-                        }
-
-                        double noise2 = noiseGen2.noise3_Classic(
-                                mutableBlockPos.getX() * 0.019D,
-                                mutableBlockPos.getZ() * 0.019D,
-                                mutableBlockPos.getY() * 0.038D);
-
-                        double finalNoise = noise1 * noise1 + noise2 * noise2;
-
-                        if (finalNoise < 0.0013f) {
-                            hexagon(level, bulkSectionAccess, context.chunkGenerator(), mutableBlockPos, context.random(), noise1);
-                        }
-                        else if (finalNoise >= 0.6) {
+                    if (noise1 >= 0.0360555127546399D) {
+                        if (noise1 >= 0.6) {
                             z += 6;
                         }
-                        else if (finalNoise >= 0.4) {
+                        else if (noise1 >= 0.4) {
                             z += 4;
                         }
-                        else if (finalNoise >= 0.2) {
+                        else if (noise1 >= 0.2) {
                             z += 2;
                         }
+                        continue;
+                    }
+
+                    double noise2 = noiseGen2.noise3_Classic(
+                            mutableBlockPos.getX() * 0.019D,
+                            mutableBlockPos.getZ() * 0.019D,
+                            mutableBlockPos.getY() * 0.038D);
+
+                    double finalNoise = noise1 * noise1 + noise2 * noise2;
+
+                    if (finalNoise < 0.0013f) {
+                        hexagon(level, bulkSectionAccess, context.chunkGenerator(), mutableBlockPos, context.random(), noise1);
+                    }
+                    else if (finalNoise >= 0.6) {
+                        z += 6;
+                    }
+                    else if (finalNoise >= 0.4) {
+                        z += 4;
+                    }
+                    else if (finalNoise >= 0.2) {
+                        z += 2;
                     }
                 }
             }
         }
-
         return true;
     }
 
-    private static void hexagon(WorldGenLevel world, BulkSectionAccess bulkSectionAccess, ChunkGenerator generator, BlockPos position, RandomSource random, double noise) {
+    private static void hexagon(WorldGenLevel world, UnsafeBulkSectionAccess bulkSectionAccess, ChunkGenerator generator, BlockPos position, RandomSource random, double noise) {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(position);
         BlockState blockState;
         int index = (int) (((noise * 0.5D) + 0.5D) * 7);
@@ -271,7 +268,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     }
 
     private static void carveAtBlock(WorldGenLevel world,
-                                     BulkSectionAccess bulkSectionAccess,
+                                     UnsafeBulkSectionAccess bulkSectionAccess,
                                      ChunkGenerator generator,
                                      RandomSource random,
                                      BlockPos blockPos,
@@ -281,7 +278,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
     {
         if (blockState.canOcclude() && !blockState.canBeReplaced() && !blockState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE)) {
             boolean isNextToAir = shouldCloseOff(bulkSectionAccess, blockPos, mutable);
-            if (blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
+            if(blockPos.getY() >= generator.getSeaLevel() && isNextToAir) return;
 
             if (posResult == 2) {
                 if (blockPos.getY() < generator.getSeaLevel()) {
@@ -350,7 +347,7 @@ public class HoneycombCaves extends Feature<NoneFeatureConfiguration> {
         }
     }
 
-    private static boolean shouldCloseOff(BulkSectionAccess bulkSectionAccess,
+    private static boolean shouldCloseOff(UnsafeBulkSectionAccess bulkSectionAccess,
                                           BlockPos position,
                                           BlockPos.MutableBlockPos mutableBlockPos)
     {

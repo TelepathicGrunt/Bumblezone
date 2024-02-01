@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features;
 
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
+import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLayerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -48,20 +48,19 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
         Biome targetBiome = context.level().registryAccess().registryOrThrow(Registries.BIOME).get(context.config().biomeRL);
 
-        try (BulkSectionAccess bulkSectionAccess = new BulkSectionAccess(context.level())) {
-            for (int xOffset = -1; xOffset <= 1; xOffset++) {
-                for (int zOffset = -1; zOffset <= 1; zOffset++) {
-                    ChunkPos currentChunkPos = new ChunkPos(chunkPos.x + xOffset, chunkPos.z + zOffset);
-                    mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
-                    ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
-                    fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, currentChunkPos.getWorldPosition(), targetBiome);
-                }
+        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
+        for (int xOffset = -1; xOffset <= 1; xOffset++) {
+            for (int zOffset = -1; zOffset <= 1; zOffset++) {
+                ChunkPos currentChunkPos = new ChunkPos(chunkPos.x + xOffset, chunkPos.z + zOffset);
+                mutableBlockPosForChunk.set(currentChunkPos.getWorldPosition());
+                ChunkAccess cachedChunk = context.level().getChunk(currentChunkPos.getWorldPosition());
+                fillChunkWithPollen(context, bulkSectionAccess, cachedChunk, currentChunkPos.getWorldPosition(), targetBiome);
             }
         }
         return true;
     }
 
-    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, BulkSectionAccess bulkSectionAccess, ChunkAccess cachedChunk, BlockPos startPos, Biome targetBiome) {
+    private void fillChunkWithPollen(FeaturePlaceContext<BiomeBasedLayerConfig> context, UnsafeBulkSectionAccess bulkSectionAccess, ChunkAccess cachedChunk, BlockPos startPos, Biome targetBiome) {
         int configHeight = context.config().height;
         BlockState configBlockState = context.config().state;
         Optional<BlockState> configRareBlockState = context.config().rareState;
@@ -82,8 +81,8 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                     currentBlockState = bulkSectionAccess.getBlockState(mutable);
 
                     if (!currentBlockState.isAir() && currentBlockState.getFluidState().isEmpty() &&
-                        !currentBlockState.is(configBlockState.getBlock()) && previousBlockState.getBlock() == Blocks.AIR &&
-                        !(configRareBlockState.isPresent() && currentBlockState.is(configRareBlockState.get().getBlock())))
+                            !currentBlockState.is(configBlockState.getBlock()) && previousBlockState.getBlock() == Blocks.AIR &&
+                            !(configRareBlockState.isPresent() && currentBlockState.is(configRareBlockState.get().getBlock())))
                     {
                         BlockState belowBlockState = bulkSectionAccess.getBlockState(mutable);
                         if (!belowBlockState.isFaceSturdy(context.level(), mutable, Direction.UP)) {

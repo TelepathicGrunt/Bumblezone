@@ -5,8 +5,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OpenSimplex2F;
+import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -18,8 +18,6 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.BulkSectionAccess;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -73,74 +71,72 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
         double noise2;
         double finalNoise;
 
-        try (BulkSectionAccess bulkSectionAccess = new BulkSectionAccess(context.level())) {
-            for (int y = 15; y < context.chunkGenerator().getGenDepth() - 14; y++) {
-                if (y > disallowedBottomRange && y < disallowedTopRange) {
-                    continue;
-                }
+        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
+        for (int y = 15; y < context.chunkGenerator().getGenDepth() - 14; y++) {
+            if (y > disallowedBottomRange && y < disallowedTopRange) {
+                continue;
+            }
 
-                for (int x = 0; x < 16; x++) {
-                    for (int z = 0; z < 16; z++) {
-                        mutableBlockPos.set(context.origin()).move(x, y, z);
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    mutableBlockPos.set(context.origin()).move(x, y, z);
 
-                        if (bulkSectionAccess.getSection(mutableBlockPos).hasOnlyAir()) {
-                            x = 16;
-                            y += 16 - (y % 16);
-                            break;
-                        }
+                    if (bulkSectionAccess.getSection(mutableBlockPos).hasOnlyAir()) {
+                        x = 16;
+                        y += 16 - (y % 16);
+                        break;
+                    }
 
-                        noise1 = noiseGen.noise3_Classic(
-                                mutableBlockPos.getX() * 0.019D,
-                                mutableBlockPos.getZ() * 0.019D,
-                                mutableBlockPos.getY() * 0.038D);
+                    noise1 = noiseGen.noise3_Classic(
+                            mutableBlockPos.getX() * 0.019D,
+                            mutableBlockPos.getZ() * 0.019D,
+                            mutableBlockPos.getY() * 0.038D);
 
-                        if (noise1 >= 0.0360555127546399D) {
-                            if (noise1 >= 0.6) {
-                                z += 6;
-                            }
-                            else if (noise1 >= 0.4) {
-                                z += 4;
-                            }
-                            else if (noise1 >= 0.2) {
-                                z += 2;
-                            }
-                            continue;
-                        }
-
-                        noise2 = noiseGen2.noise3_Classic(
-                                mutableBlockPos.getX() * 0.019D,
-                                mutableBlockPos.getZ() * 0.019D,
-                                mutableBlockPos.getY() * 0.038D);
-
-                        double heightPressure = Math.max((30f - y) / 90f, 0);
-                        finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
-
-                        if (finalNoise < 0.01305f) {
-                            carve(level, bulkSectionAccess, mutableBlockPos, finalNoise, noise1);
-                        }
-                        else if (finalNoise >= 0.6) {
+                    if (noise1 >= 0.0360555127546399D) {
+                        if (noise1 >= 0.6) {
                             z += 6;
                         }
-                        else if (finalNoise >= 0.4) {
+                        else if (noise1 >= 0.4) {
                             z += 4;
                         }
-                        else if (finalNoise >= 0.2) {
+                        else if (noise1 >= 0.2) {
                             z += 2;
                         }
+                        continue;
+                    }
+
+                    noise2 = noiseGen2.noise3_Classic(
+                            mutableBlockPos.getX() * 0.019D,
+                            mutableBlockPos.getZ() * 0.019D,
+                            mutableBlockPos.getY() * 0.038D);
+
+                    double heightPressure = Math.max((30f - y) / 90f, 0);
+                    finalNoise = (noise1 * noise1) + (noise2 * noise2) + heightPressure;
+
+                    if (finalNoise < 0.01305f) {
+                        carve(level, bulkSectionAccess, mutableBlockPos, finalNoise, noise1);
+                    }
+                    else if (finalNoise >= 0.6) {
+                        z += 6;
+                    }
+                    else if (finalNoise >= 0.4) {
+                        z += 4;
+                    }
+                    else if (finalNoise >= 0.2) {
+                        z += 2;
                     }
                 }
             }
         }
-
         return true;
     }
 
-    private static void carve(WorldGenLevel world, BulkSectionAccess bulkSectionAccess, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
+    private static void carve(WorldGenLevel world, UnsafeBulkSectionAccess bulkSectionAccess, BlockPos.MutableBlockPos position, double finalNoise, double noise) {
         BlockState currentState = bulkSectionAccess.getBlockState(position);
         if (!currentState.isAir() &&
-            currentState.getFluidState().isEmpty() &&
-            !currentState.is(BzBlocks.PILE_OF_POLLEN.get()) &&
-            !currentState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE))
+                currentState.getFluidState().isEmpty() &&
+                !currentState.is(BzBlocks.PILE_OF_POLLEN.get()) &&
+                !currentState.is(BzTags.FORCE_CAVE_TO_NOT_CARVE))
         {
             // varies the surface of the cave surface
             if (finalNoise > 0.0105f) {
@@ -181,6 +177,7 @@ public class PollinatedCaves extends Feature<NoneFeatureConfiguration> {
                 int carveHeight = Math.abs((int) ((noise * 1000) % 0.8D)) * 2 + 1;
                 for (int i = 0; i < carveHeight; i++) {
                     position.move(Direction.UP);
+
                     // cannot carve next to fluids
                     for (Direction direction : Direction.values()) {
                         sidePos.set(position).move(direction);
