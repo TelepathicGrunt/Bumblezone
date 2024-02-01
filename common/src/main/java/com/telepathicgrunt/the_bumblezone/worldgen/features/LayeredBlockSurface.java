@@ -46,7 +46,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
         BlockPos.MutableBlockPos mutableBlockPos = context.origin().mutable();
         BlockPos.MutableBlockPos mutableBlockPosForChunk = new BlockPos.MutableBlockPos();
         ChunkPos chunkPos = new ChunkPos(mutableBlockPos);
-        Biome targetBiome = context.level().registryAccess().registryOrThrow(Registries.BIOME).get(context.config().biomeRL);
+        Biome targetBiome = context.level().registryAccess().registry(Registries.BIOME).get().get(context.config().biomeRL);
 
         UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         for (int xOffset = -1; xOffset <= 1; xOffset++) {
@@ -81,8 +81,8 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                     currentBlockState = bulkSectionAccess.getBlockState(mutable);
 
                     if (!currentBlockState.isAir() && currentBlockState.getFluidState().isEmpty() &&
-                            !currentBlockState.is(configBlockState.getBlock()) && previousBlockState.getBlock() == Blocks.AIR &&
-                            !(configRareBlockState.isPresent() && currentBlockState.is(configRareBlockState.get().getBlock())))
+                        !currentBlockState.is(configBlockState.getBlock()) && previousBlockState.getBlock() == Blocks.AIR &&
+                        !(configRareBlockState.isPresent() && currentBlockState.is(configRareBlockState.get().getBlock())))
                     {
                         BlockState belowBlockState = bulkSectionAccess.getBlockState(mutable);
                         if (!belowBlockState.isFaceSturdy(context.level(), mutable, Direction.UP)) {
@@ -109,8 +109,8 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
 
                             BlockState blockToPlace = configBlockState;
                             if ((height < configHeight || layerHeight == 8) &&
-                                    configRareBlockState.isPresent() &&
-                                    random.nextFloat() < context.config().rareStateChance)
+                                configRareBlockState.isPresent() &&
+                                random.nextFloat() < context.config().rareStateChance)
                             {
                                 blockToPlace = configRareBlockState.get();
                             }
