@@ -105,6 +105,42 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         }
     }
 
+    @Override
+    public ItemStack getItem(int slotIndex) {
+        if (isLootWithLootrOn()) {
+            return ItemStack.EMPTY;
+        }
+
+        return super.getItem(slotIndex);
+    }
+
+    @Override
+    public ItemStack removeItem(int slotIndex, int removeAmount) {
+        if (isLootWithLootrOn()) {
+            return ItemStack.EMPTY;
+        }
+
+        return super.removeItem(slotIndex, removeAmount);
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slotIndex) {
+        if (isLootWithLootrOn()) {
+            return ItemStack.EMPTY;
+        }
+
+        return super.removeItemNoUpdate(slotIndex);
+    }
+
+    @Override
+    public void setItem(int slotIndex, ItemStack itemStack) {
+        if (isLootWithLootrOn()) {
+            return;
+        }
+
+        super.setItem(slotIndex, itemStack);
+    }
+
     private boolean isLootWithLootrOn() {
         return this.getLootTable() != null && this.getBlockState().getValue(HoneyCocoon.IS_LOOT_CONTAINER) && ModChecker.lootrPresent;
     }
