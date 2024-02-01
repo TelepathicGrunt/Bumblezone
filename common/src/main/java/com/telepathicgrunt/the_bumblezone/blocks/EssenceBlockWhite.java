@@ -87,7 +87,7 @@ public class EssenceBlockWhite extends EssenceBlock {
 
     @Override
     public boolean hasMiningFatigue() {
-        return false;
+        return true;
     }
 
     @Override
