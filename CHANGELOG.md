@@ -1,10 +1,13 @@
 ### **(V.7.3.7 Changes) (1.20.4 Minecraft)**
 
+##### Dimension:
+More optimization attempts for worldgen. See if this makes dimension load chunks faster...
+
 ##### Teleportation:
 Added a check for portal cooldown on player and entities.
  If cooldown is active on entity (even if set by Nether Portal which is 15 second cooldown), you won't be able to teleport to Bumblezone.
  Exiting Bumblezone adds a 5 second portal cooldown on entity as well.
- This should help prevent teleportation loops issues.
+ This should help prevent teleportation loops issues.]()
 
 
 ### **(V.7.3.6 Changes) (1.20.4 Minecraft)**

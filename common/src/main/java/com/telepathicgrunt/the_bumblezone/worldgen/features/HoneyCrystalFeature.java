@@ -32,7 +32,7 @@ public class HoneyCrystalFeature extends Feature<HoneyCrystalFeatureConfig> {
 
         if (originalBlockstate.getBlock() == Blocks.CAVE_AIR ||
             (context.config().exposed && originalBlockstate.isAir()) ||
-            (originalBlockstate.getFluidState().is(FluidTags.WATER)) && originalBlockstate.getCollisionShape(context.level(), blockpos$Mutable).isEmpty())
+            (originalBlockstate.getFluidState().is(FluidTags.WATER) && originalBlockstate.getCollisionShape(context.level(), blockpos$Mutable).isEmpty()))
         {
 
             for (Direction face : Direction.values()) {

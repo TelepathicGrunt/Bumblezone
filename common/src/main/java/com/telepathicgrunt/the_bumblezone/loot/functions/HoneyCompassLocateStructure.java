@@ -75,7 +75,7 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
                 HoneyCompass.setSearchId(itemStack.getOrCreateTag(), searchId);
 
                 ResourceKey<Structure> structure = null;
-                Registry<Structure> structureRegistry = lootContext.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE);
+                Registry<Structure> structureRegistry = lootContext.getLevel().registryAccess().registry(Registries.STRUCTURE).get();
                 List<Structure> structuresList = structureRegistry
                         .getTag(destination)
                         .map(holders -> holders

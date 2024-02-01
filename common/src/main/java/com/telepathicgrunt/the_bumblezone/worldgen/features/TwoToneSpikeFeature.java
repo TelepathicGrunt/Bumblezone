@@ -53,7 +53,7 @@ public class TwoToneSpikeFeature extends Feature<TwoToneSpikeFeatureConfig> {
             return false;
         }
 
-        Registry<Structure> structureRegistry = context.level().registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Registry<Structure> structureRegistry = context.level().registryAccess().registry(Registries.STRUCTURE).get();
         if (context.level() instanceof WorldGenRegion) {
             StructureManager structureManager = ((WorldGenRegionAccessor)context.level()).getStructureManager();
 

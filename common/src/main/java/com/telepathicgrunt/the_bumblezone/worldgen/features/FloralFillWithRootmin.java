@@ -4,10 +4,12 @@ import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.FloralFillWithRootminConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -44,7 +46,6 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         BlockPos chunkCornerPos = new ChunkPos(context.origin()).getWorldPosition().above(context.origin().getY());
-        ChunkAccess cachedChunk = level.getChunk(chunkCornerPos);
 
         Optional<HolderSet.Named<Block>> optionalBlocks = BuiltInRegistries.BLOCK.getTag(config.flowerTag);
         List<Block> blockList = GeneralUtils.convertHoldersetToList(optionalBlocks);
@@ -54,6 +55,8 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
             return false;
         }
 
+        ChunkAccess cachedChunk = level.getChunk(chunkCornerPos);
+        UnsafeBulkSectionAccess bulkSectionAccess = new UnsafeBulkSectionAccess(context.level());
         for (int xOffset = 0; xOffset < 16; xOffset++) {
             for (int zOffset = 0; zOffset < 16; zOffset++) {
                 boolean spawnRootmin = false;
@@ -70,12 +73,12 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                 }
 
                 mutable.set(chunkCornerPos).move(xOffset, 0, zOffset);
-                boolean isAtGrassBlock = setMutableToGrassBlock(cachedChunk, mutable);
+                boolean isAtGrassBlock = setMutableToGrassBlock(cachedChunk, bulkSectionAccess, mutable);
                 if (!isAtGrassBlock || mutable.getY() <= cachedChunk.getMinBuildHeight() || mutable.getY() >= cachedChunk.getMaxBuildHeight()) {
                     continue;
                 }
 
-                if (!level.isEmptyBlock(mutable.above())) {
+                if (!bulkSectionAccess.getBlockState(mutable.above()).isAir()) {
                     continue;
                 }
 
@@ -89,7 +92,12 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                 }
 
                 if (spawnRootmin && mutable.getY() != 39) {
-                    cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
+                    bulkSectionAccess.getSection(mutable).setBlockState(
+                            SectionPos.sectionRelative(mutable.getX()),
+                            SectionPos.sectionRelative(mutable.getY()),
+                            SectionPos.sectionRelative(mutable.getZ()),
+                            Blocks.AIR.defaultBlockState(),
+                            false);
 
                     Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel());
                     if (spawningEntity instanceof RootminEntity rootmin) {
@@ -120,12 +128,23 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                         level.addFreshEntityWithPassengers(rootmin);
 
                         mutable.move(Direction.UP);
-                        BlockState aboveState = cachedChunk.getBlockState(mutable);
+                        BlockState aboveState = bulkSectionAccess.getBlockState(mutable);
                         if (aboveState.is(BlockTags.REPLACEABLE)) {
-                            cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
+                            bulkSectionAccess.getSection(mutable).setBlockState(
+                                    SectionPos.sectionRelative(mutable.getX()),
+                                    SectionPos.sectionRelative(mutable.getY()),
+                                    SectionPos.sectionRelative(mutable.getZ()),
+                                    Blocks.AIR.defaultBlockState(),
+                                    false);
+
                             if (aboveState.getBlock() instanceof DoublePlantBlock){
                                 mutable.move(Direction.UP);
-                                cachedChunk.setBlockState(mutable, Blocks.AIR.defaultBlockState(), false);
+                                bulkSectionAccess.getSection(mutable).setBlockState(
+                                        SectionPos.sectionRelative(mutable.getX()),
+                                        SectionPos.sectionRelative(mutable.getY()),
+                                        SectionPos.sectionRelative(mutable.getZ()),
+                                        Blocks.AIR.defaultBlockState(),
+                                        false);
                             }
                         }
                     }
@@ -133,20 +152,38 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                 else {
                     if (chosenFlower.getBlock() instanceof DoublePlantBlock) {
                         mutable.move(Direction.UP, 2);
-                        BlockState aboveState = cachedChunk.getBlockState(mutable);
+                        BlockState aboveState = bulkSectionAccess.getBlockState(mutable);
 
                         if (aboveState.isAir() || aboveState.is(BlockTags.REPLACEABLE)) {
                             mutable.move(Direction.DOWN);
-                            cachedChunk.setBlockState(mutable, chosenFlower, false);
+                            bulkSectionAccess.getSection(mutable).setBlockState(
+                                    SectionPos.sectionRelative(mutable.getX()),
+                                    SectionPos.sectionRelative(mutable.getY()),
+                                    SectionPos.sectionRelative(mutable.getZ()),
+                                    chosenFlower,
+                                    false);
+
 
                             chosenFlower = chosenFlower.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER);
                             mutable.move(Direction.UP);
-                            cachedChunk.setBlockState(mutable, chosenFlower, false);
+                            bulkSectionAccess.getSection(mutable).setBlockState(
+                                    SectionPos.sectionRelative(mutable.getX()),
+                                    SectionPos.sectionRelative(mutable.getY()),
+                                    SectionPos.sectionRelative(mutable.getZ()),
+                                    chosenFlower,
+                                    false);
+
                         }
                     }
                     else {
                         mutable.move(Direction.UP);
-                        cachedChunk.setBlockState(mutable, chosenFlower, false);
+                        bulkSectionAccess.getSection(mutable).setBlockState(
+                                SectionPos.sectionRelative(mutable.getX()),
+                                SectionPos.sectionRelative(mutable.getY()),
+                                SectionPos.sectionRelative(mutable.getZ()),
+                                chosenFlower,
+                                false);
+
                     }
                 }
             }
@@ -154,8 +191,8 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
         return true;
     }
 
-    private boolean setMutableToGrassBlock(ChunkAccess cachedChunk, BlockPos.MutableBlockPos mutable) {
-        BlockState currentState = cachedChunk.getBlockState(mutable);
+    private boolean setMutableToGrassBlock(ChunkAccess cachedChunk, UnsafeBulkSectionAccess bulkSectionAccess, BlockPos.MutableBlockPos mutable) {
+        BlockState currentState = bulkSectionAccess.getBlockState(mutable);
         Direction previousDirection = null;
         while (!currentState.is(Blocks.GRASS_BLOCK) &&
                 mutable.getY() > cachedChunk.getMinBuildHeight() &&
@@ -186,7 +223,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                 previousDirection = Direction.UP;
             }
 
-            currentState = cachedChunk.getBlockState(mutable);
+            currentState = bulkSectionAccess.getBlockState(mutable);
         }
 
         return currentState.is(Blocks.GRASS_BLOCK);

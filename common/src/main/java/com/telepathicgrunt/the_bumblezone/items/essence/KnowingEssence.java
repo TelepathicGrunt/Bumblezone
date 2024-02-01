@@ -113,7 +113,7 @@ public class KnowingEssence extends AbilityEssenceItem {
                     CompoundTag tag = stack.getOrCreateTag();
                     if (!structures.isEmpty()) {
                         StringBuilder stringBuilder = new StringBuilder();
-                        Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+                        Registry<Structure> structureRegistry = level.registryAccess().registry(Registries.STRUCTURE).get();
                         int structureCount = 0;
 
                         for (Structure structure : structures) {

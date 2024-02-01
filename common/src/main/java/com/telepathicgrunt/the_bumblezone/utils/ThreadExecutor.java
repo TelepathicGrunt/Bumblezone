@@ -192,7 +192,7 @@ public class ThreadExecutor {
             int searchRadius,
             boolean skipExistingChunks)
     {
-        Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+        Registry<Structure> structureRegistry = level.registryAccess().registry(Registries.STRUCTURE).get();
         Optional<Holder.Reference<Structure>> structureRegistryHolder = structureRegistry.getHolder(structureKey);
         if (structureRegistryHolder.isEmpty()) {
             completableFuture.complete(null);

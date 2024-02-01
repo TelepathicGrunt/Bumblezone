@@ -246,7 +246,7 @@ public class HoneyCompass extends Item implements Vanishable {
         if (getBooleanTag(itemStack.getTag(), TAG_FAILED) && hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG)) {
             if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
                 TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
-                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE).getTag(structureTagKey);
+                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).get().getTag(structureTagKey);
                 boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).size() > 0);
                 if (structureExists) {
                     itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
@@ -276,7 +276,7 @@ public class HoneyCompass extends Item implements Vanishable {
         }
 
         if (level instanceof ServerLevel serverLevel && !isStructureCompass(itemStack)) {
-            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registryOrThrow(Registries.STRUCTURE).getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING);
+            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).get().getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING);
             boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).size() > 0);
             if (structureExists) {
                 itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
