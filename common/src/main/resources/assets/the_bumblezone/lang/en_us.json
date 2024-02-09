@@ -687,6 +687,7 @@
   "buzzing_briefcase.the_bumblezone.bee_typing.enby_bee": "Enby Bee",
   "buzzing_briefcase.the_bumblezone.bee_typing.reverse_bee": "Reverse Bee",
   "buzzing_briefcase.the_bumblezone.bee_typing.neapolitan_bee": "Neapolitan Bee",
+  "buzzing_briefcase.the_bumblezone.bee_typing.rainbow_bee": "Rainbow Bee",
 
   "command.the_bumblezone.invalid_data_arg": "The data argument is invalid. Please pick one of the suggestion's entries.",
   "command.the_bumblezone.invalid_entity_arg": "The entity argument is missing for this data request. Please pick an entity from the suggestion's entries.",

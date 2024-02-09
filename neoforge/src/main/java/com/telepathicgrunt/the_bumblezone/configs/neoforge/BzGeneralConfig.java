@@ -90,7 +90,8 @@ public class BzGeneralConfig {
                         "pan_bee",
                         "enby_bee",
                         "reverse_bee",
-                        "neapolitan_bee"), entry -> true);
+                        "neapolitan_bee",
+                        "rainbow_bee"), entry -> true);
 
         builder.pop();
 
