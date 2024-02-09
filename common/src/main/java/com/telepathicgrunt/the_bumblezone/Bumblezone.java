@@ -244,11 +244,5 @@ public class Bumblezone {
                 Component.literal("Bumblezone - Anti Trypophobia"),
                 AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );
-
-        event.add(
-                new ResourceLocation(MODID, "ancient_luminescent_contrast_increase"),
-                Component.literal("Bumblezone - Ancient & Luminescent Wax Contrast Increase"),
-                AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
-        );
     }
 }
