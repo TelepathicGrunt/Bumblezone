@@ -76,7 +76,7 @@ subprojects {
                 projectId = uploadSettings["modrinth-id"]
 
                 gameVersions = ["${rootProject.minecraft_version}"]
-                if (name = "forge") {
+                if (name == "forge") {
                     loaders = [name, "neoforge"]
                 }
                 else {
@@ -111,8 +111,8 @@ subprojects {
 
                     addGameVersion("${rootProject.minecraft_version}")
                     addGameVersion(name.capitalize())
-                    if (name = "forge") {
-                        addGameVersion("Neoforge")
+                    if (name == "forge") {
+                        addGameVersion("NeoForge")
                     }
 
                     mainArtifact(tasks.remapJar) {
