@@ -104,7 +104,7 @@ public class LifeEssence extends AbilityEssenceItem {
             healHealth(stack, serverPlayer, tamableAnimal);
             cureEntityOfEffects(stack, serverPlayer, tamableAnimal);
         }
-        else if (entity instanceof LivingEntity livingEntity && entity.getTeam() != null && entity.getTeam().isAlliedTo(serverPlayer.getTeam())) {
+        else if (entity instanceof LivingEntity livingEntity && entity.isAlliedTo(serverPlayer)) {
             healHealth(stack, serverPlayer, livingEntity);
             cureEntityOfEffects(stack, serverPlayer, livingEntity);
         }
