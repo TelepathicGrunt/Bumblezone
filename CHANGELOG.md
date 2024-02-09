@@ -12,7 +12,10 @@ Made Heavy Air and Windy Air be seen as air for better mod compat and thus allow
 ##### Entities:
 Added Rainbow Bee skin for Variant Bees! If you had already launched game with Bumblezone, add "rainbow_bee" to the variantBeeTypes config file for new bee skin to show up.
 
-#### Misc
+#### Structures:
+Hid the Netherite Block in Sempiternal Sanctums a little bit better.
+
+#### Misc:
 Fabric version requires v0.95.3 of Fabric API now. This is so I can make use of marking my air blocks as air.
 
 ##### Mod Compat:
