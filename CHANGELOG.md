@@ -1,3 +1,10 @@
+### **(V.7.2.9 Changes) (1.20.1 Minecraft)**
+
+##### Items:
+Adjusted how Life Essence heals allied players. Hopefully should work better with other mods that creates teams.
+ (Basically I check entity.isAlliedTo(serverPlayer) now so other mods need to make this return try for their team systems)
+
+
 ### **(V.7.3.8 Changes) (1.20.4 Minecraft)**
 
 ##### Mod Compat:
