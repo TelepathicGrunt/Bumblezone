@@ -76,7 +76,12 @@ subprojects {
                 projectId = uploadSettings["modrinth-id"]
 
                 gameVersions = ["${rootProject.minecraft_version}"]
-                loaders = [name]
+                if (name = "forge") {
+                    loaders = [name, "neoforge"]
+                }
+                else {
+                    loaders = [name]
+                }
                 versionType = "RELEASE"
 
                 uploadFile = tasks.remapJar
@@ -106,6 +111,9 @@ subprojects {
 
                     addGameVersion("${rootProject.minecraft_version}")
                     addGameVersion(name.capitalize())
+                    if (name = "forge") {
+                        addGameVersion("Neoforge")
+                    }
 
                     mainArtifact(tasks.remapJar) {
                         displayName = "The Bumblezone v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"

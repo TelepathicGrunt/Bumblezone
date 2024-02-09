@@ -413,6 +413,34 @@
       "required": false
     },
     {
+      "id": "outer_end:halite",
+      "required": false
+    },
+    {
+      "id": "outer_end:cobalt_crystal_lamp",
+      "required": false
+    },
+    {
+      "id": "outer_end:mint_crystal_lamp",
+      "required": false
+    },
+    {
+      "id": "outer_end:rose_crystal_lamp",
+      "required": false
+    },
+    {
+      "id": "outer_end:rose_crystal",
+      "required": false
+    },
+    {
+      "id": "outer_end:mint_crystal",
+      "required": false
+    },
+    {
+      "id": "outer_end:cobalt_crystal",
+      "required": false
+    },
+    {
       "id": "phantasm:crystal_block",
       "required": false
     },
