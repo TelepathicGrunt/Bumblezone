@@ -10,6 +10,9 @@ Rid the ancient_luminescent_contrast_increase internal resourcepack and made the
 ##### Entities:
 Added Rainbow Bee skin for Variant Bees! If you had already launched game with Bumblezone, add "rainbow_bee" to the variantBeeTypes config file for new bee skin to show up.
 
+#### Structures:
+Hid the Netherite Block in Sempiternal Sanctums a little bit better.
+
 ##### Mod Compat:
 Fixed compat with Extra Golems (Throwing Pollen puff at certain golems spawns specific plants)
 
