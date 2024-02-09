@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.HoneyCrystalFeatureConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,7 +32,7 @@ public class HoneyCrystalFeature extends Feature<HoneyCrystalFeatureConfig> {
         ChunkPos currentChunkPos = new ChunkPos(blockpos$Mutable);
 
         if (originalBlockstate.getBlock() == Blocks.CAVE_AIR ||
-            (context.config().exposed && originalBlockstate.isAir()) ||
+            (context.config().exposed && originalBlockstate.isAir() && !originalBlockstate.is(BzTags.AIR_LIKE)) ||
             (originalBlockstate.getFluidState().is(FluidTags.WATER) && originalBlockstate.getCollisionShape(context.level(), blockpos$Mutable).isEmpty()))
         {
 

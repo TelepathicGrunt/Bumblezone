@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -18,14 +19,20 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -34,6 +41,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.BiConsumer;
 
 
 public class WindyAir extends ProperFacingBlock {
@@ -43,7 +51,8 @@ public class WindyAir extends ProperFacingBlock {
 
     public WindyAir() {
         this(Properties.of()
-                .strength(0.01f, 0)
+                .strength(0.05f, 0)
+                .air()
                 .noCollission()
                 .replaceable()
                 .noLootTable()
@@ -158,6 +167,27 @@ public class WindyAir extends ProperFacingBlock {
         if (entity instanceof Player player) {
             player.awardStat(BzStats.WINDY_AIR_TIME_RL.get());
         }
+    }
+
+    @Deprecated
+    public void onExplosionHit(BlockState blockState, Level level, BlockPos blockPos, Explosion explosion, BiConsumer<ItemStack, BlockPos> biConsumer) {
+        if (explosion.getBlockInteraction() == Explosion.BlockInteraction.TRIGGER_BLOCK) {
+            return;
+        }
+        Block block = blockState.getBlock();
+        boolean bl = explosion.getIndirectSourceEntity() instanceof Player;
+        if (block.dropFromExplosion(explosion) && level instanceof ServerLevel) {
+            ServerLevel serverLevel = (ServerLevel)level;
+            BlockEntity blockEntity = blockState.hasBlockEntity() ? level.getBlockEntity(blockPos) : null;
+            LootParams.Builder builder = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, explosion.getDirectSourceEntity());
+            if (explosion.getBlockInteraction() == Explosion.BlockInteraction.DESTROY_WITH_DECAY) {
+                builder.withParameter(LootContextParams.EXPLOSION_RADIUS, Float.valueOf(explosion.radius()));
+            }
+            blockState.spawnAfterBreak(serverLevel, blockPos, ItemStack.EMPTY, bl);
+            blockState.getDrops(builder).forEach(itemStack -> biConsumer.accept(itemStack, blockPos));
+        }
+        level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+        block.wasExploded(level, blockPos, explosion);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {

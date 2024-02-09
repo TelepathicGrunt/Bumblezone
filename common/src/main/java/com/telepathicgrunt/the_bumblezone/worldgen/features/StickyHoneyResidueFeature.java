@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features;
 import com.mojang.serialization.Codec;
 import com.telepathicgrunt.the_bumblezone.blocks.StickyHoneyResidue;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
@@ -33,7 +34,7 @@ public class StickyHoneyResidueFeature extends Feature<NoneFeatureConfiguration>
         ChunkPos currentChunkPos = new ChunkPos(context.origin());
         BlockState originalBlockstate = context.level().getBlockState(context.origin());
 
-        if (originalBlockstate.isAir()) {
+        if (originalBlockstate.isAir() && !originalBlockstate.is(BzTags.AIR_LIKE)) {
             BlockState honeyResidue = ALL_DIRECTION_RESIDUE;
             if (honeyResidue.canSurvive(context.level(), context.origin())) {
                 honeyResidue = honeyResidue.updateShape(Direction.DOWN, honeyResidue, context.level(), context.origin(), context.origin());

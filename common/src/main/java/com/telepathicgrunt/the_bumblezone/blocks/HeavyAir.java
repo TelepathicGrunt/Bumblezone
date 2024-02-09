@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -21,19 +22,28 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.BiConsumer;
 
 
 public class HeavyAir extends Block {
@@ -44,7 +54,8 @@ public class HeavyAir extends Block {
 
     public HeavyAir() {
         this(Properties.of()
-                .strength(-1.0f, 0)
+                .strength(0.05f, 0)
+                .air()
                 .noCollission()
                 .replaceable()
                 .noLootTable()
@@ -163,6 +174,28 @@ public class HeavyAir extends Block {
         return false;
     }
 
+    @Deprecated
+    public void onExplosionHit(BlockState blockState, Level level, BlockPos blockPos, Explosion explosion, BiConsumer<ItemStack, BlockPos> biConsumer) {
+        if (explosion.getBlockInteraction() == Explosion.BlockInteraction.TRIGGER_BLOCK) {
+            return;
+        }
+        Block block = blockState.getBlock();
+        boolean bl = explosion.getIndirectSourceEntity() instanceof Player;
+        if (block.dropFromExplosion(explosion) && level instanceof ServerLevel) {
+            ServerLevel serverLevel = (ServerLevel)level;
+            BlockEntity blockEntity = blockState.hasBlockEntity() ? level.getBlockEntity(blockPos) : null;
+            LootParams.Builder builder = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, explosion.getDirectSourceEntity());
+            if (explosion.getBlockInteraction() == Explosion.BlockInteraction.DESTROY_WITH_DECAY) {
+                builder.withParameter(LootContextParams.EXPLOSION_RADIUS, Float.valueOf(explosion.radius()));
+            }
+            blockState.spawnAfterBreak(serverLevel, blockPos, ItemStack.EMPTY, bl);
+            blockState.getDrops(builder).forEach(itemStack -> biConsumer.accept(itemStack, blockPos));
+        }
+        level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 3);
+        block.wasExploded(level, blockPos, explosion);
+    }
+
+    @Override
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource) {
         if (randomSource.nextFloat() < 0.04f) {
             level.addParticle(

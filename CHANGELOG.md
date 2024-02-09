@@ -7,6 +7,8 @@ Adjusted how Life Essence heals allied players. Hopefully should work better wit
 ##### Blocks:
 Rid the ancient_luminescent_contrast_increase internal resourcepack and made the textures for it now used by default.
 
+Made Heavy Air and Windy Air be seen as air for better mod compat and thus allow more ways of removing the air. Ideally...
+
 ##### Entities:
 Added Rainbow Bee skin for Variant Bees! If you had already launched game with Bumblezone, add "rainbow_bee" to the variantBeeTypes config file for new bee skin to show up.
 

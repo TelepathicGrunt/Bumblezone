@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.player.Player;
@@ -18,11 +19,11 @@ public abstract class ClientLevelMixin {
     @Inject(method = "getMarkerParticleTarget()Lnet/minecraft/world/level/block/Block;",
             at = @At(value = "RETURN"),
             cancellable = true)
-    private void bumblezone$showWindyAirInSurvival(CallbackInfoReturnable<Block> cir) {
+    private void bumblezone$showBumblezoneAirInSurvival(CallbackInfoReturnable<Block> cir) {
         Player player = Minecraft.getInstance().player;
         if (player != null) {
             Item item = player.getMainHandItem().getItem();
-            if (item instanceof BlockItem blockItem && item == BzItems.WINDY_AIR.get()) {
+            if (item instanceof BlockItem blockItem && ((BlockItem) item).getBlock().builtInRegistryHolder().is(BzTags.AIR_LIKE)) {
                 cir.setReturnValue(blockItem.getBlock());
             }
         }
