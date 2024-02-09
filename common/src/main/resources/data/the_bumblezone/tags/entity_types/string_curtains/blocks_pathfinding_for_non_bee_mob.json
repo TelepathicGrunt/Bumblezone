@@ -207,6 +207,10 @@
       "required": false
     },
     {
+      "id": "outer_end:spectrafly",
+      "required": false
+    },
+    {
       "id": "aquamirae:golden_moth",
       "required": false
     },

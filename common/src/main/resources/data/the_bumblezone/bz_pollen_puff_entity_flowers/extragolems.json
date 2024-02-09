@@ -2,8 +2,7 @@
   "golems:golem": [
     {
       "nbt_match": {
-        "Material": "golems:mushroom",
-        "Texture": 0
+        "Golem": "golems:brown_mushroom"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -17,8 +16,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:mushroom",
-        "Texture": 1
+        "Golem": "golems:red_mushroom"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -32,7 +30,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:moss"
+        "Golem": "golems:moss"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -54,7 +52,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:leaves"
+        "Golem": "golems:leaves"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -72,7 +70,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:mangrove_roots"
+        "Golem": "golems:mangrove_roots"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -90,7 +88,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:hay"
+        "Golem": "golems:hay"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -108,8 +106,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:stem",
-        "Texture": 0
+        "Golem": "golems:crimson_stem"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -127,8 +124,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:stem",
-        "Texture": 1
+        "Golem": "golems:warped_stem"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -146,8 +142,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:nether_wart",
-        "Texture": 0
+        "Golem": "golems:nether_wart"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -169,8 +164,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:nether_wart",
-        "Texture": 1
+        "Golem": "golems:warped_wart"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -192,8 +186,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:log",
-        "Texture": 0
+        "Golem": "golems:dark_oak_log"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -211,8 +204,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:log",
-        "Texture": 1
+        "Golem": "golems:oak_log"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -230,8 +222,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:log",
-        "Texture": 2
+        "Golem": "golems:acacia_log"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -249,8 +240,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:log",
-        "Texture": 3
+        "Golem": "golems:birch_log"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -268,8 +258,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:log",
-        "Texture": 4
+        "Golem": "golems:jungle_log"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -287,8 +276,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:log",
-        "Texture": 5
+        "Golem": "golems:spruce_log"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -306,8 +294,7 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:log",
-        "Texture": 6
+        "Golem": "golems:mangrove_log"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
@@ -325,7 +312,25 @@
     },
     {
       "nbt_match": {
-        "Material": "golems:melon"
+        "Golem": "golems:cherry_log"
+      },
+      "plants_to_spawn": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": { "Name": "minecraft:cherry_sapling" },
+            "weight": 1
+          },
+          {
+            "data": { "Name": "minecraft:air" },
+            "weight": 2
+          }
+        ]
+      }
+    },
+    {
+      "nbt_match": {
+        "Golem": "golems:melon"
       },
       "plants_to_spawn": {
         "type": "minecraft:weighted_state_provider",
