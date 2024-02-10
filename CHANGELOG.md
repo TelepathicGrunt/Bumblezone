@@ -10,9 +10,11 @@ Fixed essence of continuity not removing harmful status effects when respawning.
 Essence of Life will now heal other nearby players if PvP is turned off for the world.
 
 ##### Blocks:
-Made Honeycomb Brood Block not spawn mobs if the DoBlockDrops gamerule is set to false.
+Made Honeycomb Brood Block not spawn mobs if the doTileDrops gamerule is set to false.
 
 Fixed it so Silk Touch mining Honeycomb Brood Blocks does not cause Wrath of the Hive effect.
+
+Waterlogged Honey Cocoons will not drop items if doTileDrops gamerule is set to false.
 
 ##### Misc:
 Made Essence cooldown timer and Essence arena timer show only minutes and seconds. No milliseconds.
