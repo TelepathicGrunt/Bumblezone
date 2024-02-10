@@ -41,6 +41,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -160,9 +161,9 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        if(!blockState.getValue(WATERLOGGED)) {
+        if (!blockState.getValue(WATERLOGGED)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-            if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+            if (blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 if (!honeyCocoonBlockEntity.isUnpackedLoottable() || blockState.getValue(IS_LOOT_CONTAINER)) {
                     return;
                 }
@@ -174,42 +175,41 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
                 List<Pair<ItemStack, Integer>> emptyBroods = new ArrayList<>();
                 List<Pair<ItemStack, Integer>> beeFeeding = new ArrayList<>();
-                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
+                for (int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
                     ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
-                    if(!itemStack.isEmpty()) {
-                        if(itemStack.getItem() == BzItems.EMPTY_HONEYCOMB_BROOD.get()) {
+                    if (!itemStack.isEmpty()) {
+                        if (itemStack.getItem() == BzItems.EMPTY_HONEYCOMB_BROOD.get()) {
                             emptyBroods.add(new Pair<>(itemStack, i));
                         }
 
-                        if(itemStack.is(BzTags.BEE_FEEDING_ITEMS)) {
+                        if (itemStack.is(BzTags.BEE_FEEDING_ITEMS)) {
                             beeFeeding.add(new Pair<>(itemStack, i));
                         }
                     }
                 }
 
-                if(emptyBroods.isEmpty() || beeFeeding.isEmpty()) {
+                if (emptyBroods.isEmpty() || beeFeeding.isEmpty()) {
                     return;
                 }
 
-
                 honeyCocoonBlockEntity.removeItem(emptyBroods.get(random.nextInt(emptyBroods.size())).getSecond(), 1);
                 ItemStack consumedItem = honeyCocoonBlockEntity.removeItem(beeFeeding.get(random.nextInt(beeFeeding.size())).getSecond(), 1);
-                if(PlatformHooks.hasCraftingRemainder(consumedItem)) {
+                if (PlatformHooks.hasCraftingRemainder(consumedItem)) {
                     ItemStack ejectedItem = PlatformHooks.getCraftingRemainder(consumedItem);
-                    if(ejectedItem.isEmpty()) {
+                    if (ejectedItem.isEmpty()) {
                         ejectedItem = ContainerCraftingRecipe.HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(consumedItem.getItem()).getDefaultInstance();
                     }
 
-                    if(!ejectedItem.isEmpty()) {
+                    if (!ejectedItem.isEmpty()) {
                         GeneralUtils.spawnItemEntity(serverLevel, blockPos, ejectedItem, 0, 0.2D);
                     }
                 }
 
                 boolean addedToInv = false;
-                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
+                for (int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
                     ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
                     if (itemStack.isEmpty() || (itemStack.getItem() == BzItems.HONEYCOMB_BROOD.get() && itemStack.getCount() < 64)) {
-                        if(itemStack.isEmpty()) {
+                        if (itemStack.isEmpty()) {
                             honeyCocoonBlockEntity.setItem(i, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance());
                         }
                         else {
@@ -220,7 +220,8 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                         break;
                     }
                 }
-                if(!addedToInv) {
+
+                if (!addedToInv) {
                     GeneralUtils.spawnItemEntity(serverLevel, blockPos, BzItems.HONEYCOMB_BROOD.get().getDefaultInstance(), 0, 0.2D);
                 }
             }
@@ -229,9 +230,9 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        if(blockState.getValue(WATERLOGGED)) {
+        if (blockState.getValue(WATERLOGGED) && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
-            if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
+            if (blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 if (!honeyCocoonBlockEntity.isUnpackedLoottable() || blockState.getValue(IS_LOOT_CONTAINER)) {
                     return;
                 }
@@ -244,14 +245,14 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 serverLevel.scheduleTick(blockPos, blockState.getBlock(), waterDropDelay);
 
                 List<Pair<ItemStack, Integer>> itemStacks = new ArrayList<>();
-                for(int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
+                for (int i = 0; i < honeyCocoonBlockEntity.getContainerSize(); i++) {
                     ItemStack itemStack = honeyCocoonBlockEntity.getItem(i);
-                    if(!itemStack.isEmpty()) {
+                    if (!itemStack.isEmpty()) {
                         itemStacks.add(new Pair<>(itemStack, i));
                     }
                 }
 
-                if(itemStacks.isEmpty()) {
+                if (itemStacks.isEmpty()) {
                     return;
                 }
 
@@ -374,7 +375,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 int i = 0;
                 int j = 0;
 
-                for(ItemStack itemstack : nonnulllist) {
+                for (ItemStack itemstack : nonnulllist) {
                     if (!itemstack.isEmpty()) {
                         ++j;
                         if (i <= 4) {
@@ -403,7 +404,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      */
     @Override
     public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
-        if(!blockState.getValue(WATERLOGGED)) {
+        if (!blockState.getValue(WATERLOGGED)) {
             if (random.nextFloat() < 0.05F) {
                 this.spawnHoneyParticles(world, position, random);
             }
