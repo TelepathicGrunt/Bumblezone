@@ -5,6 +5,12 @@ Fixed potential crash with using Essence of Continuity.
 
 Made it harder to abuse swapping the same Essences around and bypassing cooldowns.
 
+##### Mod Compat:
+Removed mixin into Sodium that I was using to make my Honey Fluids render properly.
+ Was fixing this: https://github.com/CaffeineMC/sodium-fabric/issues/2253
+ The mixin removal is because 0.6.0 Sodium is moving classes around and likely would crash the mixin.
+ Use Embeddium for now if you wish to see Bumblezone's Honey Fluid rendering properly.
+
 
 ### **(V.7.2.8 Changes) (1.20.1 Minecraft)**
 
