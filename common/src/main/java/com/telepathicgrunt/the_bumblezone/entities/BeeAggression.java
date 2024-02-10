@@ -34,6 +34,8 @@ import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -64,12 +66,18 @@ public class BeeAggression {
 
     //if player mines a tagged angerable block, bees gets very mad...
     public static void minedBlockAnger(boolean cancelled, BlockBreakEvent event) {
-        if(cancelled) return;
+        if (cancelled) {
+            return;
+        }
 
         Player player = event.player();
         BlockState blockState = event.state();
 
         if (player instanceof ServerPlayer serverPlayer && blockState.is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
+            if (blockState.is(BzBlocks.HONEYCOMB_BROOD.get()) && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, serverPlayer.getMainHandItem()) != 0) {
+                return;
+            }
+
             angerBees(serverPlayer, blockState.is(BzBlocks.HONEYCOMB_BROOD.get()));
         }
     }

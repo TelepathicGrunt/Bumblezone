@@ -9,6 +9,11 @@ Fixed essence of continuity not removing harmful status effects when respawning.
 
 Essence of Life will now heal other nearby players if PvP is turned off for the world.
 
+##### Blocks:
+Made Honeycomb Brood Blocks not spawn mobs if the DoBlockDrops gamerule is set to false.
+
+Fixed it so Silk Touch mining Honeycomb Brood Blocks does not cause Wrath of the Hive effect.
+
 ##### Mod Compat:
 Removed mixin into Sodium that I was using to make my Honey Fluids render properly.
  Was fixing this: https://github.com/CaffeineMC/sodium-fabric/issues/2253
