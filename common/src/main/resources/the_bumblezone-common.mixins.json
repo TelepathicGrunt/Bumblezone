@@ -54,6 +54,7 @@
     "entities.PlayerAdvancementsAccessor",
     "entities.PlayerMixin",
     "entities.PlayerTimeInAirMixin",
+    "entities.ServerPlayerAccessor",
     "entities.ServerPlayerMixin",
     "gameplay.CooldownInstanceAccessor",
     "gameplay.ItemCooldownsAccessor",
