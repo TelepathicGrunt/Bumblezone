@@ -4,6 +4,7 @@
   "plugin": "com.telepathicgrunt.the_bumblezone.mixin.BumblezoneMixinConfig",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "entities.ServerPlayerAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -51,8 +52,8 @@
     "entities.MobSpawnLocationMixin",
     "entities.PlayerAdvancementsAccessor",
     "entities.PlayerMixin",
-    "entities.ServerPlayerMixin",
     "entities.PlayerTimeInAirMixin",
+    "entities.ServerPlayerMixin",
     "entities.ThrownTridentAccessor",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldMobMixin",

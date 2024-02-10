@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.ServerPlayerAccessor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -309,9 +310,10 @@ public class ContinuityEssence extends AbilityEssenceItem {
     private static void playerReset(ServerPlayer player) {
         player.setHealth(player.getMaxHealth());
         player.getFoodData().setExhaustion(0);
-        player.getFoodData().eat(100, 100);
+        player.getFoodData().eat(20, 20);
         player.clearFire();
         player.setAirSupply(player.getMaxAirSupply());
+        ((ServerPlayerAccessor)player).setStartingToFallPosition(null);
         player.invulnerableTime = 40;
         player.deathTime = 0;
         player.fallDistance = 0;
