@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
+  "plugin": "com.telepathicgrunt.the_bumblezone.mixin.BumblezoneMixinConfig",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "blocks.BeehiveBlockEntityMixin",
@@ -54,6 +55,8 @@
     "entities.PlayerMixin",
     "entities.PlayerTimeInAirMixin",
     "entities.ServerPlayerMixin",
+    "gameplay.CooldownInstanceAccessor",
+    "gameplay.ItemCooldownsAccessor",
     "gameplay.ServerPlayerGameModeMixin",
     "items.GlassBottleUseMixin",
     "items.HoneyShieldMobMixin",

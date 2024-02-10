@@ -1,15 +1,18 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.mixin.gameplay.CooldownInstanceAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.gameplay.ItemCooldownsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -131,18 +134,31 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
 
             if (getForcedCooldown(stack)) {
                 incrementCooldownTime(stack);
+                if (!serverPlayer.getCooldowns().isOnCooldown(stack.getItem())) {
+                    serverPlayer.getCooldowns().addCooldown(stack.getItem(), getCooldownTickLength() - getCooldownTime(stack));
+                }
             }
             else {
-                if (serverPlayer.getOffhandItem() == stack) {
-                    if (!getIsActive(stack)) {
-                        setIsActive(stack, true);
-                    }
-                    applyAbilityEffects(stack, level, serverPlayer);
+                if (serverPlayer.getCooldowns().isOnCooldown(stack.getItem())) {
+                    ItemCooldowns.CooldownInstance cooldownInstance = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).getCooldowns().get(stack.getItem());
+                    int cooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).getTickCount() - ((CooldownInstanceAccessor)cooldownInstance).getStartTime();
+
+                    setForcedCooldown(stack, true);
+                    setCooldownTime(stack, cooldownTime);
+                    setIsActive(stack, false);
                 }
                 else {
-                    rechargeAbilitySlowly(stack, level, serverPlayer);
-                    if (getIsActive(stack)) {
-                        setIsActive(stack, false);
+                    if (serverPlayer.getOffhandItem() == stack) {
+                        if (!getIsActive(stack)) {
+                            setIsActive(stack, true);
+                        }
+                        applyAbilityEffects(stack, level, serverPlayer);
+                    }
+                    else {
+                        rechargeAbilitySlowly(stack, level, serverPlayer);
+                        if (getIsActive(stack)) {
+                            setIsActive(stack, false);
+                        }
                     }
                 }
             }
@@ -164,7 +180,7 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         }
         else if (getForcedCooldown(stack)) {
             components.add(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", StringUtil.formatTickDuration(getCooldownTickLength() - getCooldownTime(stack), 1.0f)).withStyle(ChatFormatting.DARK_RED));
+            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", GeneralUtils.formatTickDurationNoMilliseconds(getCooldownTickLength() - getCooldownTime(stack), level.tickRateManager().tickrate())).withStyle(ChatFormatting.DARK_RED));
             components.add(Component.empty());
             addDescriptionComponents(components);
         }

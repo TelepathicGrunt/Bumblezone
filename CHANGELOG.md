@@ -1,3 +1,14 @@
+### **(V.7.3.10 Changes) (1.20.4 Minecraft)**
+
+##### Items:
+Fixed potential crash with using Essence of Continuity.
+
+Made it harder to abuse swapping the same Essences around and bypassing cooldowns.
+
+##### Misc:
+Made Essence cooldown timer and Essence arena timer show only minutes and seconds. No milliseconds.
+
+
 ### **(V.7.3.9 Changes) (1.20.4 Minecraft)**
 
 ##### Items:
