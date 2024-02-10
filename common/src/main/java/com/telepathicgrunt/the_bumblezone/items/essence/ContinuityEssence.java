@@ -30,6 +30,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DeathMessageType;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -320,5 +321,11 @@ public class ContinuityEssence extends AbilityEssenceItem {
         player.setPortalCooldown();
         player.setDeltaMovement(new Vec3(0, 0, 0));
         player.setOldPosAndRot();
+
+        for (MobEffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
+            if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+                player.removeEffect(effect.getEffect());
+            }
+        }
     }
 }

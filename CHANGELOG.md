@@ -5,6 +5,8 @@ Fixed potential crash with using Essence of Continuity.
 
 Made it harder to abuse swapping the same Essences around and bypassing cooldowns.
 
+Fixed essence of continuity not removing harmful status effects when respawning.
+
 ##### Mod Compat:
 Removed mixin into Sodium that I was using to make my Honey Fluids render properly.
  Was fixing this: https://github.com/CaffeineMC/sodium-fabric/issues/2253
