@@ -5,6 +5,8 @@ Fixed potential crash with using Essence of Continuity.
 
 Made it harder to abuse swapping the same Essences around and bypassing cooldowns.
 
+Fixed essence of continuity not removing harmful status effects when respawning.
+
 ##### Misc:
 Made Essence cooldown timer and Essence arena timer show only minutes and seconds. No milliseconds.
 
