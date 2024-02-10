@@ -151,7 +151,7 @@ public class EssenceBlockEntity extends BlockEntity {
             this.eventBar.setProgress(compoundTag.getFloat(PROGRESS_TAG));
             this.extraEventTrackingProgress = compoundTag.getInt(EXTRA_EVENT_TRACKING_PROGRESS_TAG);
             this.eventTimer = compoundTag.getInt(EVENT_TIMER_TAG);
-            this.eventBar.setEndEventTimer(this.eventTimer);
+            this.eventBar.setEndEventTimer(this.eventTimer, 1.0f);
             if (compoundTag.contains(UUID_TAG)) {
                 this.uuid = compoundTag.getUUID(UUID_TAG);
             }
@@ -331,7 +331,7 @@ public class EssenceBlockEntity extends BlockEntity {
         }
         else {
             essenceBlockEntity.setEventTimer(essenceBlockEntity.getEventTimer() - 1);
-            essenceBlockEntity.getEventBar().setEndEventTimer(essenceBlockEntity.getEventTimer());
+            essenceBlockEntity.getEventBar().setEndEventTimer(essenceBlockEntity.getEventTimer(), 1.0f);
             if (blockState.getBlock() instanceof EssenceBlock essenceBlock) {
                 essenceBlock.performUniqueArenaTick(serverLevel, blockPos, blockState, essenceBlockEntity);
             }

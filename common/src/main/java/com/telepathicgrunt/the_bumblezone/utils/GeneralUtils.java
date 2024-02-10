@@ -23,6 +23,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.InteractionHand;
@@ -74,6 +75,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -814,6 +816,16 @@ public class GeneralUtils {
                 }
             }
         }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    public static String formatTickDurationNoMilliseconds(int tickDuration, float tickRate) {
+        int j = Mth.floor((float)tickDuration / tickRate);
+        int k = j / 60;
+        j %= 60;
+        k %= 60;
+        return String.format(Locale.ROOT, "%02d:%02d", k, j);
     }
 
     /////////////////////////////////////////////////////////////////////////////////

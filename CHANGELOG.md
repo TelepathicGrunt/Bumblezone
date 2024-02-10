@@ -1,3 +1,11 @@
+### **(V.7.2.9 Changes) (1.20.1 Minecraft)**
+
+##### Items:
+Fixed potential crash with using Essence of Continuity.
+
+Made it harder to abuse swapping the same Essences around and bypassing cooldowns.
+
+
 ### **(V.7.2.8 Changes) (1.20.1 Minecraft)**
 
 ##### Items:

@@ -1,6 +1,8 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabricbase;
+package com.telepathicgrunt.the_bumblezone.mixin;
 
+import com.telepathicgrunt.the_bumblezone.utils.LogFilters;
 import net.fabricmc.loader.api.FabricLoader;
+import org.apache.logging.log4j.LogManager;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -8,10 +10,16 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import java.util.List;
 import java.util.Set;
 
-public class BumblezoneFabricMixinConfig implements IMixinConfigPlugin {
+public class BumblezoneMixinConfig implements IMixinConfigPlugin {
 
     @Override
-    public void onLoad(String mixinPackage) {}
+    public void onLoad(String mixinPackage) {
+        // Has to be done early to stop the early log spams.
+        org.apache.logging.log4j.Logger rootLogger = LogManager.getRootLogger();
+        if (rootLogger instanceof org.apache.logging.log4j.core.Logger) {
+            ((org.apache.logging.log4j.core.Logger) rootLogger).addFilter(new LogFilters());
+        }
+    }
 
     @Override
     public String getRefMapperConfig() {
@@ -20,10 +28,6 @@ public class BumblezoneFabricMixinConfig implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (mixinClassName.contains("com.telepathicgrunt.the_bumblezone.mixin.fabric.mods.SodiumFluidMixin")) {
-            return FabricLoader.getInstance().isModLoaded("sodium");
-        }
-
         return true;
     }
 

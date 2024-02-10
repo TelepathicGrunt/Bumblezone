@@ -100,11 +100,13 @@ import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.QueenRandomizerTradesSyncPacket;
+import com.telepathicgrunt.the_bumblezone.utils.LogFilters;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.worldgen.surfacerules.PollinatedSurfaceSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 
 public class Bumblezone {
@@ -116,6 +118,8 @@ public class Bumblezone {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
+        LOGGER.info("there is a brick about to fall through your roof at terminal velocity");
+
         BzTags.initTags();
 
         //Events
@@ -235,6 +239,7 @@ public class Bumblezone {
         PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenOptions().seed());
         BiomeRegistryHolder.setupBiomeRegistry(event.getServer());
         ThreadExecutor.setupExecutorService();
+        LogFilters.filterActive = false; // Filtering is no longer needed.
     }
 
     private static void setupBuiltInResourcePack(final AddBuiltinResourcePacks event) {

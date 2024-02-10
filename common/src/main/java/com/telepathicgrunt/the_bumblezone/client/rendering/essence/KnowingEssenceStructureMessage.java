@@ -23,7 +23,7 @@ public class KnowingEssenceStructureMessage {
         if (KnowingEssence.IsKnowingEssenceActive(player) && BzClientConfigs.knowingEssenceStructureNameClient) {
             ItemStack offHandItem = player.getOffhandItem();
             String structureResourceLocationStrings = KnowingEssence.GetAllStructure(offHandItem);
-            if (structureResourceLocationStrings != null && !structureResourceLocationStrings.isEmpty()) {
+            if (!structureResourceLocationStrings.isEmpty()) {
                 Minecraft minecraft = Minecraft.getInstance();
                 String[] structEntries = structureResourceLocationStrings.split(" ");
                 Component line1 = null;

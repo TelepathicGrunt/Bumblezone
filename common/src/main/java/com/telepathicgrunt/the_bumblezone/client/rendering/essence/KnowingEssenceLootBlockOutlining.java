@@ -46,7 +46,6 @@ public class KnowingEssenceLootBlockOutlining {
         if (KnowingEssence.IsKnowingEssenceActive(player)) {
             Level level = player.level();
 
-
             Vec3 cameraPos = camera.getPosition();
             BlockPos worldSpot = BlockPos.containing(cameraPos);
 

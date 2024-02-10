@@ -211,21 +211,21 @@ public class ContinuityEssence extends AbilityEssenceItem {
         if (causer == null) {
             listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
                     "item.the_bumblezone.essence_continuity_written_book_body_no_causer",
-                    java.time.LocalDate.now(),
+                    java.time.LocalDate.now().toString(),
                     oldPosition.getX(),
                     oldPosition.getY(),
                     oldPosition.getZ(),
-                    oldDimension.location(),
+                    oldDimension.location().toString(),
                     getDeathMessage(finalDestination, damageSource, serverPlayer)))));
         }
         else {
             listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
                     "item.the_bumblezone.essence_continuity_written_book_body",
-                    java.time.LocalDate.now(),
+                    java.time.LocalDate.now().toString(),
                     oldPosition.getX(),
                     oldPosition.getY(),
                     oldPosition.getZ(),
-                    oldDimension.location(),
+                    oldDimension.location().toString(),
                     causer.getName(),
                     getDeathMessage(finalDestination, damageSource, serverPlayer)))));
         }
