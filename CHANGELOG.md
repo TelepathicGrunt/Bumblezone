@@ -7,6 +7,8 @@ Made it harder to abuse swapping the same Essences around and bypassing cooldown
 
 Fixed essence of continuity not removing harmful status effects when respawning.
 
+Essence of Life will now heal other nearby players if PvP is turned off for the world.
+
 ##### Mod Compat:
 Removed mixin into Sodium that I was using to make my Honey Fluids render properly.
  Was fixing this: https://github.com/CaffeineMC/sodium-fabric/issues/2253
