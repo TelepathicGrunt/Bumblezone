@@ -106,6 +106,10 @@ public class LifeEssence extends AbilityEssenceItem {
             healHealth(stack, serverPlayer, tamableAnimal);
             cureEntityOfEffects(stack, serverPlayer, tamableAnimal);
         }
+        else if (entity instanceof ServerPlayer serverPlayer2 && !serverPlayer.serverLevel().getServer().isPvpAllowed()) {
+            healHealth(stack, serverPlayer, serverPlayer2);
+            cureEntityOfEffects(stack, serverPlayer, serverPlayer2);
+        }
         else if (entity instanceof LivingEntity livingEntity && entity.isAlliedTo(serverPlayer)) {
             healHealth(stack, serverPlayer, livingEntity);
             cureEntityOfEffects(stack, serverPlayer, livingEntity);

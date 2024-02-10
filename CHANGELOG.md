@@ -7,6 +7,8 @@ Made it harder to abuse swapping the same Essences around and bypassing cooldown
 
 Fixed essence of continuity not removing harmful status effects when respawning.
 
+Essence of Life will now heal other nearby players if PvP is turned off for the world.
+
 ##### Misc:
 Made Essence cooldown timer and Essence arena timer show only minutes and seconds. No milliseconds.
 
