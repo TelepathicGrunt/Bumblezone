@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.client.MusicHandler;
 import com.telepathicgrunt.the_bumblezone.configs.BzConfig;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -26,6 +27,9 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Block;
 
@@ -73,6 +77,10 @@ public class BeeAggression {
     //if player mines an angerable tagged block, bees gets very mad...
     public static void blockBreakAnger(Player player, Block block) {
         if (player instanceof ServerPlayer serverPlayer && block.defaultBlockState().is(BzTags.WRATH_ACTIVATING_BLOCKS_WHEN_MINED)) {
+            if (block == BzBlocks.HONEYCOMB_BROOD && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, serverPlayer.getMainHandItem()) != 0) {
+                return;
+            }
+
             angerBees(serverPlayer);
         }
     }

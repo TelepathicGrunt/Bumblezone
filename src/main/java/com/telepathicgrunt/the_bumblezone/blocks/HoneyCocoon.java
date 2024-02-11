@@ -44,6 +44,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -224,7 +225,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
-        if(blockState.getValue(WATERLOGGED)) {
+        if(blockState.getValue(WATERLOGGED) && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
             BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
             if(blockEntity instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
                 if (!honeyCocoonBlockEntity.isUnpackedLoottable()) {
