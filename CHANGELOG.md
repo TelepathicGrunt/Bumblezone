@@ -9,6 +9,10 @@ Fixed essence of continuity not removing harmful status effects when respawning.
 
 Essence of Life will now heal other nearby players if PvP is turned off for the world.
 
+(NeoForge): Honey Bucket, Royal Jelly Bucket, Sugar Water Bucket, Honey Bottle, Royal Jelly Bottle, and Sugar Water Bottle
+ now will give their respective fluids when extracting the fluid from them with machines or something. 
+ The bzHoneyFluidFromHoneyBottles config option can be used to disable Bumblezone Honey Fluid from vanilla Honey Bottles.
+
 ##### Blocks:
 Fixed it so Silk Touch mining Honeycomb Brood Blocks does not cause Wrath of the Hive effect.
 

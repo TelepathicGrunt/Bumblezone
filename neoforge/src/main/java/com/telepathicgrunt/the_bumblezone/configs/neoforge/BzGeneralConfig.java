@@ -10,6 +10,7 @@ import java.util.List;
 public class BzGeneralConfig {
     public static final ModConfigSpec GENERAL_SPEC;
 
+    public static ModConfigSpec.BooleanValue bzHoneyFluidFromHoneyBottles;
     public static ModConfigSpec.ConfigValue<List<? extends String>> variantBeeTypes;
     public static ModConfigSpec.DoubleValue beehemothSpeed;
     public static ModConfigSpec.BooleanValue beehemothFriendlyFire;
@@ -68,6 +69,17 @@ public class BzGeneralConfig {
     }
 
     private static void setupConfig(ModConfigSpec.Builder builder) {
+        builder.push("Bumblezone Fluid Options");
+
+        bzHoneyFluidFromHoneyBottles = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether extracting fluid from Honey Bottles will attempt to generate Bumblezone Honey Fluid.\n")
+                .translation("the_bumblezone.config.bzhoneyfluidfromhoneybottles")
+                .define("bzHoneyFluidFromHoneyBottles", true);
+
+        builder.pop();
+
+
         builder.push("Variant Bee Options");
 
         variantBeeTypes = builder

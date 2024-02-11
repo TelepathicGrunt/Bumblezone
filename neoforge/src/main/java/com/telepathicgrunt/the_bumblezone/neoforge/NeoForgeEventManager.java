@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
@@ -38,11 +39,14 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerPickupItemEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerTickEvent;
+import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBottlesWrapper;
+import com.telepathicgrunt.the_bumblezone.fluids.neoforge.BzFluidBucketWrapper;
 import com.telepathicgrunt.the_bumblezone.mixin.neoforge.block.FireBlockInvoker;
 import com.telepathicgrunt.the_bumblezone.modcompat.neoforge.NeoForgeModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.packets.networking.neoforge.PacketChannelHelperImpl;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
@@ -62,6 +66,7 @@ import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
@@ -71,6 +76,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.CapabilityHooks;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
@@ -98,6 +104,8 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStackSimple;
+import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -463,7 +471,41 @@ public class NeoForgeEventManager {
     }
 
     public static void registerBumblezoneCapProviders(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BzBlockEntities.HONEY_COCOON.get(),
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                BzBlockEntities.HONEY_COCOON.get(),
                 (honeyCocoon, side) -> new SidedInvWrapper(honeyCocoon, Direction.UP));
+
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new BzFluidBucketWrapper(stack),
+                BzItems.HONEY_BUCKET.get());
+
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new BzFluidBucketWrapper(stack),
+                BzItems.ROYAL_JELLY_BUCKET.get());
+
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new BzFluidBucketWrapper(stack),
+                BzItems.SUGAR_WATER_BUCKET.get());
+
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new BzFluidBottlesWrapper(stack, BzFluids.ROYAL_JELLY_FLUID.get()),
+                BzItems.ROYAL_JELLY_BOTTLE.get());
+
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new BzFluidBottlesWrapper(stack, BzFluids.SUGAR_WATER_FLUID.get()),
+                BzItems.SUGAR_WATER_BOTTLE.get());
+
+        if (BzGeneralConfig.bzHoneyFluidFromHoneyBottles.get()) {
+            event.registerItem(
+                    Capabilities.FluidHandler.ITEM,
+                    (stack, ctx) -> new BzFluidBottlesWrapper(stack, BzFluids.HONEY_FLUID.get()),
+                    Items.HONEY_BOTTLE);
+        }
     }
 }
