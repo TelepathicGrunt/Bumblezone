@@ -20,6 +20,10 @@ Made Honeycomb Brood Block not spawn mobs if the doTileDrops gamerule is set to 
 
 Waterlogged Honey Cocoons will not drop items if doTileDrops gamerule is set to false.
 
+##### Fluids:
+Royal Jelly Fluid cannot be picked up with a Glass Bottle in world now to prevent people from wasting it due to how valuable it is.
+ A message will appear saying to us a Bucket instead.
+
 ##### Misc:
 Made Essence cooldown timer and Essence arena timer show only minutes and seconds. No milliseconds.
 
