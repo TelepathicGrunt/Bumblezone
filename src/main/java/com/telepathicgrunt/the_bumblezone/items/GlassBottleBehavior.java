@@ -5,7 +5,9 @@ import com.telepathicgrunt.the_bumblezone.fluids.SugarWaterFluid;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -37,8 +39,13 @@ public class GlassBottleBehavior {
     public static boolean useBottleOnBzHoneyLikeFluid(Level world, Player playerEntity, InteractionHand playerHand, BlockPos blockPos) {
         FluidState currentFluidState = world.getFluidState(blockPos);
 
-        return convertHoneyFluidToBottleForm(world, playerEntity, playerHand, blockPos, currentFluidState, BzTags.BZ_HONEY_FLUID, Items.HONEY_BOTTLE) ||
-                convertHoneyFluidToBottleForm(world, playerEntity, playerHand, blockPos, currentFluidState, BzTags.ROYAL_JELLY_FLUID, BzItems.ROYAL_JELLY_BOTTLE);
+        if (currentFluidState.is(BzTags.ROYAL_JELLY_FLUID) && currentFluidState.isSource()) {
+            Component message = Component.translatable("system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.LIGHT_PURPLE);
+            playerEntity.displayClientMessage(message, true);
+            return false;
+        }
+
+        return convertHoneyFluidToBottleForm(world, playerEntity, playerHand, blockPos, currentFluidState, BzTags.BZ_HONEY_FLUID, Items.HONEY_BOTTLE);
     }
 
     private static boolean convertHoneyFluidToBottleForm(Level world, Player playerEntity, InteractionHand playerHand, BlockPos blockPos, FluidState currentFluidState, TagKey<Fluid> fluidTag, Item resultItem) {

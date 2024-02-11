@@ -1,3 +1,17 @@
+### **(V.6.9.7 Changes) (1.19.2 Minecraft)**
+
+##### Blocks:
+Fixed it so Silk Touch mining Honeycomb Brood Blocks does not cause Wrath of the Hive effect.
+
+Made Honeycomb Brood Blocks not spawn mobs if the doTileDrops gamerule is set to false.
+
+Waterlogged Honey Cocoons will not drop items if doTileDrops gamerule is set to false.
+
+##### Fluids:
+Royal Jelly Fluid cannot be picked up with a Glass Bottle in world now to prevent people from wasting it due to how valuable it is.
+ A message will appear saying to us a Bucket instead.
+
+
 ### **(V.6.9.6 Changes) (1.19.2 Minecraft)**
 
 ##### Dimension:
