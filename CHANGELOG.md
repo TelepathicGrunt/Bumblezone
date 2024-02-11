@@ -16,6 +16,10 @@ Made Honeycomb Brood Blocks not spawn mobs if the doTileDrops gamerule is set to
 
 Waterlogged Honey Cocoons will not drop items if doTileDrops gamerule is set to false.
 
+##### Fluids:
+Royal Jelly Fluid cannot be picked up with a Glass Bottle in world now to prevent people from wasting it due to how valuable it is.
+ A message will appear saying to us a Bucket instead.
+
 ##### Mod Compat:
 Removed mixin into Sodium that I was using to make my Honey Fluids render properly.
  Was fixing this: https://github.com/CaffeineMC/sodium-fabric/issues/2253
