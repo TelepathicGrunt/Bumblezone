@@ -9,6 +9,9 @@ Fixed essence of continuity not removing harmful status effects when respawning.
 
 Essence of Life will now heal other nearby players if PvP is turned off for the world.
 
+(Forge only): Added a small Easter Egg where Buzzing Briefcase can be used as Furnace fuel even if the briefcase has bees inside!
+ 150 burn time pls an additional 1500 burn time for each bee inside. This kills the bees :(
+
 ##### Blocks:
 Fixed it so Silk Touch mining Honeycomb Brood Blocks does not cause Wrath of the Hive effect.
 
