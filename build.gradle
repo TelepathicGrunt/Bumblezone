@@ -11,7 +11,7 @@ buildscript {
 
 plugins {
 	id "net.darkhax.curseforgegradle" version "1.0.7"
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.5-SNAPSHOT'
 	id "com.modrinth.minotaur" version "2.+"
 }
 
@@ -112,9 +112,7 @@ dependencies {
 
 	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixin_extra_version}")))
 
-	modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
-		force = true //Force the version we want rather than trusting Gradle to pick it over transitive suggestions
-	}
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
 	modRuntimeOnly "maven.modrinth:midnightlib:${project.midnightlib_version}"
