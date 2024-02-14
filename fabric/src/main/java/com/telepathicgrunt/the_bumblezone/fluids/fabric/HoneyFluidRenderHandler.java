@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.impl.client.rendering.fluid.FluidRenderHandlerRegistryImpl;
@@ -38,7 +39,7 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
             HoneyFluidRendering.renderSpecialHoneyFluid(blockPos, level, vertexConsumer, blockState, fluidState, sprites);
         }
         else {
-            ((FluidRenderHandlerRegistryImpl) FluidRenderHandlerRegistry.INSTANCE).renderFluid(blockPos, level, vertexConsumer, blockState, fluidState);
+            super.renderFluid(blockPos, level, vertexConsumer, blockState, fluidState);
         }
     }
 }
