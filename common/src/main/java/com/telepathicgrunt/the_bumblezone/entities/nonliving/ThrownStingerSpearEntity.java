@@ -32,7 +32,7 @@ import net.minecraft.world.phys.Vec3;
 public class ThrownStingerSpearEntity extends AbstractArrow {
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownStingerSpearEntity.class, EntityDataSerializers.BOOLEAN);
-    private static ItemStack DEFAULT_SPEAR_STACK = new ItemStack(BzItems.STINGER_SPEAR.get());
+    private static final ItemStack DEFAULT_SPEAR_STACK = new ItemStack(BzItems.STINGER_SPEAR.get());
     private boolean dealtDamage;
     public int clientSideReturnSpearTickCount;
 
@@ -95,7 +95,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         Entity entity = entityHitResult.getEntity();
         float damageAmount = StingerSpearItem.BASE_THROWN_DAMAGE;
         if (entity instanceof LivingEntity livingentity) {
-            damageAmount += EnchantmentHelper.getDamageBonus(DEFAULT_SPEAR_STACK, livingentity.getMobType());
+            damageAmount += EnchantmentHelper.getDamageBonus(this.getPickupItemStackOrigin(), livingentity.getMobType());
         }
 
         Entity owner = this.getOwner();
@@ -136,7 +136,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.DEFAULT_SPEAR_STACK);
+        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.getPickupItemStackOrigin());
         if (livingEntity.getMobType() != MobType.UNDEAD) {
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -152,9 +152,9 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         }
 
         if(this.getOwner() instanceof Player player) {
-            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.DEFAULT_SPEAR_STACK);
+            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.getPickupItemStackOrigin());
             if (neuroToxinLevel > 0) {
-                this.DEFAULT_SPEAR_STACK.hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                this.getPickupItemStackOrigin().hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
         }
     }
@@ -172,11 +172,6 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         else {
             return false;
         }
-    }
-
-    @Override
-    protected ItemStack getPickupItem() {
-        return this.DEFAULT_SPEAR_STACK.copy();
     }
 
     public boolean isFoil() {
@@ -215,19 +210,14 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
-        if (compoundTag.contains("StingerSpear", 10)) {
-            DEFAULT_SPEAR_STACK = ItemStack.of(compoundTag.getCompound("StingerSpear"));
-        }
-
         dealtDamage = compoundTag.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(DEFAULT_SPEAR_STACK));
+        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(this.getPickupItemStackOrigin()));
         this.entityData.set(ID_FOIL, compoundTag.getBoolean("IsFoil"));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
-        compoundTag.put("StingerSpear", DEFAULT_SPEAR_STACK.save(new CompoundTag()));
         compoundTag.putBoolean("DealtDamage", dealtDamage);
         compoundTag.putBoolean("IsFoil", isFoil());
     }

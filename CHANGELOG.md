@@ -1,5 +1,8 @@
 ### **(V.7.3.11 Changes) (1.20.4 Minecraft)**
 
+##### Items:
+Fixed Stinger Spears losing their nbt (data) when thrown.
+
 ##### Fluids:
 (Fabric): Changed code for upcoming Fabric API fluid renderer breakage.
 
