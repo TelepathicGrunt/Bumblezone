@@ -1,3 +1,9 @@
+### **(V.7.3.12 Changes) (1.20.4 Minecraft)**
+
+##### Blocks:
+Improve the error reporting in logs when Essence Blocks fail to load or save arena areas.
+
+
 ### **(V.7.3.11 Changes) (1.20.4 Minecraft)**
 
 ##### Items:

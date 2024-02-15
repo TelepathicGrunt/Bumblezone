@@ -43,7 +43,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnorePr
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -217,18 +216,18 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                     // Save area
                     StructureTemplate savingStructureTemplate;
                     try {
-                        savingStructureTemplate = structureTemplateManager.getOrCreate(essenceBlockEntity.getSavedNbt());
+                        savingStructureTemplate = structureTemplateManager.getOrCreate(essenceBlockEntity.getSavedNbtLocation());
                     }
-                    catch (ResourceLocationException resourceLocationException) {
-                        Bumblezone.LOGGER.error("Bumblezone Essence Block failed to create the NBT file to save area - {} - {} - {}", essenceBlockEntity, blockState, getArenaNbt());
+                    catch (Exception exception) {
+                        Bumblezone.LOGGER.error("Bumblezone Essence Block failed to create the NBT file to save area - {} - {} - {} - Location: {} - Error: {}", blockState, blockPos, getArenaNbt(), essenceBlockEntity.getSavedNbtLocationAsString(), exception);
                         return;
                     }
                     savingStructureTemplate.fillFromWorld(serverLevel, blockPos.offset(negativeHalfLengths), size, !PLACEMENT_SETTINGS.getOrFillFromInternal().isIgnoreEntities(), essenceBlock);
                     try {
-                        structureTemplateManager.save(essenceBlockEntity.getSavedNbt());
+                        structureTemplateManager.save(essenceBlockEntity.getSavedNbtLocation());
                     }
-                    catch (ResourceLocationException resourceLocationException) {
-                        Bumblezone.LOGGER.error("Bumblezone Essence Block failed to save area into NBT file - {} - {} - {}", essenceBlockEntity, blockState, getArenaNbt());
+                    catch (Exception exception) {
+                        Bumblezone.LOGGER.error("Bumblezone Essence Block failed to save area into NBT file - {} - {} - {} - Location: {} - Error: {}", blockState, blockPos, getArenaNbt(), essenceBlockEntity.getSavedNbtLocationAsString(), exception);
                         return;
                     }
 
