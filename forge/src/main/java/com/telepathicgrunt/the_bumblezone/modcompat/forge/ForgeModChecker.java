@@ -27,9 +27,6 @@ public class ForgeModChecker {
             modid = "pokecube_mobs";
             loadupModCompat(modid, () -> new PokecubeCompat());
 
-            modid = "quark";
-            loadupModCompat(modid, () -> new QuarkCompat());
-
             modid = "productivebees";
             loadupModCompat(modid, () -> new ProductiveBeesCompat());
 

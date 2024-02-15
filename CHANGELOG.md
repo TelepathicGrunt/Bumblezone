@@ -3,6 +3,10 @@
 ##### Fluids:
 (Fabric/Quilt): Changed code for upcoming Fabric API fluid renderer breakage.
 
+##### Mod Compat:
+(Forge): Removed the code compat with Quark due to how fragile it is. Instead, made PR to Quark to add 
+ Bumblezone's items to their enchantingStacks config. https://github.com/VazkiiMods/Quark/pull/4669
+
 
 ### **(V.7.2.9 Changes) (1.20.1 Minecraft)**
 

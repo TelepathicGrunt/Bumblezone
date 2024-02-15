@@ -191,8 +191,6 @@ allprojects {
             url = 'https://maven.blamejared.com'
             content {
                 includeGroup 'mezz.jei'
-                includeGroup 'org.violetmoon.quark'
-                includeGroup 'org.violetmoon.zeta'
             }
         }
         maven {
