@@ -42,6 +42,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -237,15 +238,15 @@ public class EssenceBlockEntity extends BlockEntity {
                 this.getBlockPos().getX() + "_" +
                 this.getBlockPos().getY() + "_" +
                 this.getBlockPos().getZ() + "_" +
-                this.getUUID());
+                this.getUUID().toString().toLowerCase(Locale.ROOT));
     }
 
     public String getSavedNbtLocationAsString() {
-        return Bumblezone.MODID + "/essence/saved_area/" +
+        return Bumblezone.MODID + ":essence/saved_area/" +
                 this.getBlockPos().getX() + "_" +
                 this.getBlockPos().getY() + "_" +
                 this.getBlockPos().getZ() + "_" +
-                this.getUUID();
+                this.getUUID().toString().toLowerCase(Locale.ROOT);
     }
 
     @Override
