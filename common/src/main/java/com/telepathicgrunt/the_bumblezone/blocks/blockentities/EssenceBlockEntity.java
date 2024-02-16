@@ -42,6 +42,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -232,12 +233,20 @@ public class EssenceBlockEntity extends BlockEntity {
         compoundTag.put(ARENA_SIZE_TAG, NbtUtils.writeBlockPos(this.arenaSize));
     }
 
-    public ResourceLocation getSavedNbt() {
+    public ResourceLocation getSavedNbtLocation() {
         return new ResourceLocation(Bumblezone.MODID, "essence/saved_area/" +
                 this.getBlockPos().getX() + "_" +
                 this.getBlockPos().getY() + "_" +
                 this.getBlockPos().getZ() + "_" +
-                this.getUUID());
+                this.getUUID().toString().toLowerCase(Locale.ROOT));
+    }
+
+    public String getSavedNbtLocationAsString() {
+        return Bumblezone.MODID + ":essence/saved_area/" +
+                this.getBlockPos().getX() + "_" +
+                this.getBlockPos().getY() + "_" +
+                this.getBlockPos().getZ() + "_" +
+                this.getUUID().toString().toLowerCase(Locale.ROOT);
     }
 
     @Override
@@ -340,7 +349,7 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     public static void EndEvent(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, EssenceBlockEntity essenceBlockEntity, boolean won) {
-        Optional<StructureTemplate> optionalStructureTemplate = serverLevel.getStructureManager().get(essenceBlockEntity.getSavedNbt());
+        Optional<StructureTemplate> optionalStructureTemplate = serverLevel.getStructureManager().get(essenceBlockEntity.getSavedNbtLocation());
         optionalStructureTemplate.ifPresentOrElse(structureTemplate -> {
             Vec3i size = structureTemplate.getSize();
             BlockPos negativeHalfLengths = new BlockPos(-size.getX() / 2, -size.getY() / 2, -size.getZ() / 2);
@@ -428,7 +437,7 @@ public class EssenceBlockEntity extends BlockEntity {
             if (!essenceBlockEntity.getPlayerInArena().isEmpty() && won && !BzGeneralConfigs.repeatableEssenceEvents) {
                 serverLevel.setBlock(blockPos, BzBlocks.HEAVY_AIR.get().defaultBlockState(), 3);
             }
-        }, () -> Bumblezone.LOGGER.warn("Bumblezone Essence Block failed to restore area from saved NBT - {} - {}", essenceBlockEntity, blockState));
+        }, () -> Bumblezone.LOGGER.error("Bumblezone Essence Block failed to restore area from saved NBT - {} - {} - Location: {}", essenceBlockEntity, blockState, essenceBlockEntity.getSavedNbtLocationAsString()));
 
         essenceBlockEntity.getEventBar().removeAllPlayers();
         essenceBlockEntity.getPlayerInArena().clear();

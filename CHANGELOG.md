@@ -1,3 +1,9 @@
+### **(V.7.2.11 Changes) (1.20.1 Minecraft)**
+
+##### Blocks:
+Improve the error reporting in logs when Essence Blocks fail to load or save arena areas.
+
+
 ### **(V.7.2.10 Changes) (1.20.1 Minecraft)**
 
 ##### Fluids:
