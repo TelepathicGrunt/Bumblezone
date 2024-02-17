@@ -3,6 +3,12 @@
 ##### Blocks:
 Improve the error reporting in logs when Essence Blocks fail to load or save arena areas.
 
+##### Structures:
+Made sure Wither Rose cannot spawn in Bumblezone structure's Honey Cocoon loot.
+
+##### Mod Compat:
+(Fabric/Quilt): Stopped spawning Spectrum's Doombloom in Bumblezone's structures.
+
 
 ### **(V.7.2.10 Changes) (1.20.1 Minecraft)**
 

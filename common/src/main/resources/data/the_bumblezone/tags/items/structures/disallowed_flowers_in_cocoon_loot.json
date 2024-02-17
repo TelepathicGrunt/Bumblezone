@@ -1,5 +1,6 @@
 {
   "values": [
+    "minecraft:wither_rose",
     {
       "id": "betterarcheology:growth_totem",
       "required": false
@@ -14,6 +15,10 @@
     },
     {
       "id": "#botania:special_flowers",
+      "required": false
+    },
+    {
+      "id": "bovinesandbuttercups:custom_flower",
       "required": false
     },
     {
@@ -46,6 +51,10 @@
     },
     {
       "id": "farmersdelight:wild_beetroots",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:wild_tomatoes",
       "required": false
     },
     {
@@ -121,11 +130,59 @@
       "required": false
     },
     {
+      "id": "spectrum:doombloom",
+      "required": false
+    },
+    {
+      "id": "terrestria:monsteras",
+      "required": false
+    },
+    {
+      "id": "tropicraft:pathos",
+      "required": false
+    },
+    {
+      "id": "tropicraft:foliage",
+      "required": false
+    },
+    {
+      "id": "tropicraft:dracaena",
+      "required": false
+    },
+    {
+      "id": "tropicraft:tropical_fern",
+      "required": false
+    },
+    {
+      "id": "tropicraft:croton",
+      "required": false
+    },
+    {
+      "id": "srias_flowers:obama_plant",
+      "required": false
+    },
+    {
       "id": "undergarden:shimmerweed",
       "required": false
     },
     {
       "id": "undergarden:tall_shimmerweed",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:bennet",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:petrified_bush",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:archaeos",
+      "required": false
+    },
+    {
+      "id": "unusualprehistory:horsetail",
       "required": false
     },
     {

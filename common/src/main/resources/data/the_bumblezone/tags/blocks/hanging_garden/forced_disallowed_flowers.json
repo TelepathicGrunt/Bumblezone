@@ -580,6 +580,10 @@
       "required": false
     },
     {
+      "id": "spectrum:doombloom",
+      "required": false
+    },
+    {
       "id": "srias_flowers:obama_plant",
       "required": false
     },
