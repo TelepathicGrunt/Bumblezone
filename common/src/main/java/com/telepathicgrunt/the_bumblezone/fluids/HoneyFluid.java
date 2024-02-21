@@ -26,6 +26,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
@@ -273,9 +275,14 @@ public abstract class HoneyFluid extends BzFlowingFluid {
             }
         }
         else if(direction == Direction.DOWN) {
-            FluidState belowFluidState = world.getBlockState(blockPos.below()).getFluidState();
+            BlockState belowState = world.getBlockState(blockPos.below());
+            FluidState belowFluidState = belowState.getFluidState();
             if (belowFluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
                 return !currentFluidState.isSource() && (belowFluidState.getAmount() != 8 || currentFluidState.getValue(BOTTOM_LEVEL) != 0);
+            }
+            else {
+                return !(currentFluidState.isSource() || currentFluidState.getValue(BOTTOM_LEVEL) == 0) ||
+                        !isFaceOccludedByNeighbor(world, blockPos, Direction.DOWN, 0.8888889F, belowState);
             }
         }
         else {
@@ -288,6 +295,21 @@ public abstract class HoneyFluid extends BzFlowingFluid {
         }
 
         return true;
+    }
+
+    private static boolean isFaceOccludedByNeighbor(BlockGetter blockGetter, BlockPos blockPos, Direction direction, float f, BlockState blockState) {
+        return isFaceOccludedByState(blockGetter, direction, f, blockPos.relative(direction), blockState);
+    }
+
+    private static boolean isFaceOccludedByState(BlockGetter blockGetter, Direction direction, float f, BlockPos blockPos, BlockState blockState) {
+        if (blockState.canOcclude()) {
+            VoxelShape voxelShape = Shapes.box(0.0, 0.0, 0.0, 1.0, f, 1.0);
+            VoxelShape voxelShape2 = blockState.getOcclusionShape(blockGetter, blockPos);
+            return Shapes.blockOccudes(voxelShape, voxelShape2, direction);
+        }
+        else {
+            return false;
+        }
     }
 
     public static int adjustedFlowSpeed(int originalSpeed, LevelAccessor level, BlockPos blockPos) {

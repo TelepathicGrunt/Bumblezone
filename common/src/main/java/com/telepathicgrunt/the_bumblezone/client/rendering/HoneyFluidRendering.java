@@ -49,9 +49,8 @@ public class HoneyFluidRendering {
         boolean renderSouth = HoneyFluid.shouldRenderSide(level, blockPos, Direction.SOUTH, fluidState);
         boolean renderWest = HoneyFluid.shouldRenderSide(level, blockPos, Direction.WEST, fluidState);
         boolean renderEast = HoneyFluid.shouldRenderSide(level, blockPos, Direction.EAST, fluidState);
-        boolean renderDown = HoneyFluid.shouldRenderSide(level, blockPos, Direction.DOWN, fluidState) ||
-                !isFaceOccludedByNeighbor(level, blockPos, Direction.DOWN, 0.8888889F, blockState2);
-
+        boolean renderDown = HoneyFluid.shouldRenderSide(level, blockPos, Direction.DOWN, fluidState);
+        
         if (sameFluidAbove || renderDown || renderEast || renderWest || renderNorth || renderSouth) {
             float j = level.getShade(Direction.DOWN, true);
             float k = level.getShade(Direction.UP, true);

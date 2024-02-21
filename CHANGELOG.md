@@ -3,6 +3,8 @@
 ##### Blocks:
 Improve the error reporting in logs when Essence Blocks fail to load or save arena areas.
 
+Honey Fluid and Royal Jelly Fluid will now not render bottom layers when connected to itself vertically.
+
 ##### Structures:
 Made sure Wither Rose cannot spawn in Bumblezone structure's Honey Cocoon loot.
 
