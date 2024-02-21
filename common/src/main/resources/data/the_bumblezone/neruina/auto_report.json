@@ -1,0 +1,8 @@
+{
+  "modid": "the_bumblezone",
+  "repo": "TelepathicGrunt/Bumblezone",
+  "body": "<report>",
+  "title": "Neruina <type> Crash Report - <name> - <date> <time>",
+  "labels": ["auto-report", "bug"],
+  "assignees": "TelepathicGrunt"
+}

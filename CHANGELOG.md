@@ -15,6 +15,8 @@ Made Essence of Knowledge now highlight Chest Minecarts and Chest Boats.
 Made sure Wither Rose cannot spawn in Bumblezone structure's Honey Cocoon loot.
 
 ##### Mod Compat:
+Opted into Neruina's future auto-reporting system
+
 (Fabric/Quilt): Stopped spawning Spectrum's Doombloom in Bumblezone's structures.
 
 
