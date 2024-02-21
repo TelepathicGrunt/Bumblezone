@@ -11,6 +11,8 @@ Buffed the durations of effects from drinking Royal Jelly Bottle from 1 minute t
 Made Stinger Spear not lose extra durability if hitting an undead mob or Paralyze immune mob with Neurotoxin enchantment.
  Also nerfed the extra durability cost of Neurotoxin from 5 to 4.
 
+Made Essence of Knowledge now highlight Chest Minecarts and Chest Boats.
+
 ##### Structures:
 Made sure Wither Rose cannot spawn in Bumblezone structure's Honey Cocoon loot.
 
