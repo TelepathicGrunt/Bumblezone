@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -136,9 +137,9 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.getPickupItemStackOrigin());
-        if (livingEntity.getMobType() != MobType.UNDEAD) {
-            livingEntity.addEffect(new MobEffectInstance(
+       if (livingEntity.getMobType() != MobType.UNDEAD) {
+           int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.getPickupItemStackOrigin());
+           livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
                     100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
                     potentPoisonLevel, // 0, 1, 2, 3 level poison if
@@ -149,12 +150,12 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
-        }
 
-        if(this.getOwner() instanceof Player player) {
-            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.getPickupItemStackOrigin());
-            if (neuroToxinLevel > 0) {
-                this.getPickupItemStackOrigin().hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            if (this.getOwner() instanceof LivingEntity ownerEntity && !livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
+                int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.getPickupItemStackOrigin());
+                if (neuroToxinLevel > 0) {
+                    this.getPickupItemStackOrigin().hurtAndBreak(4, ownerEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                }
             }
         }
     }

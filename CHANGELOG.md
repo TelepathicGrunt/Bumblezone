@@ -8,6 +8,9 @@ Honey Fluid and Royal Jelly Fluid will now not render bottom layers when connect
 ##### Items:
 Buffed the durations of effects from drinking Royal Jelly Bottle from 1 minute to 8 minutes. Beenergized from the item is now level 3 instead of 2.
 
+Made Stinger Spear not lose extra durability if hitting an undead mob or Paralyze immune mob with Neurotoxin enchantment.
+ Also nerfed the extra durability cost of Neurotoxin from 5 to 4.
+
 ##### Structures:
 Made sure Wither Rose cannot spawn in Bumblezone structure's Honey Cocoon loot.
 

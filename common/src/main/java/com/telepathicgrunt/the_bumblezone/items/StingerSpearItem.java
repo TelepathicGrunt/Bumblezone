@@ -89,7 +89,8 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         if (itemStack.getDamageValue() >= itemStack.getMaxDamage() - 1) {
             return InteractionResultHolder.fail(itemStack);
-        } else {
+        }
+        else {
             player.startUsingItem(interactionHand);
             return InteractionResultHolder.consume(itemStack);
         }
@@ -102,8 +103,10 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
 
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity enemy, LivingEntity user) {
-        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get() , itemStack);
+        int durabilityDecrease = 1;
+
         if (enemy.getMobType() != MobType.UNDEAD) {
+            int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), itemStack);
             enemy.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
                     100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
@@ -115,22 +118,22 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
             if (user instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.get().trigger(serverPlayer);
             }
-        }
 
-        int durabilityDecrease = 1;
-        if (user instanceof Player) {
-            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get() , itemStack);
-            if (neuroToxinLevel > 0) {
-                durabilityDecrease = 5;
+            if (!enemy.getType().is(BzTags.PARALYZED_IMMUNE)) {
+                int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
+                if (neuroToxinLevel > 0) {
+                    durabilityDecrease = 4;
+                }
             }
         }
 
         itemStack.hurtAndBreak(durabilityDecrease, user, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
         if (user instanceof ServerPlayer serverPlayer &&
-                enemy.getType() == EntityType.WITHER &&
-                enemy.isDeadOrDying() &&
-                PlayerDataHandler.rootAdvancementDone(serverPlayer)) {
+            enemy.getType() == EntityType.WITHER &&
+            enemy.isDeadOrDying() &&
+            PlayerDataHandler.rootAdvancementDone(serverPlayer))
+        {
             BzCriterias.STINGER_SPEAR_KILLED_WITH_WITHER_TRIGGER.get().trigger(serverPlayer);
         }
 
