@@ -3,6 +3,9 @@
 ##### Blocks:
 Improve the error reporting in logs when Essence Blocks fail to load or save arena areas.
 
+##### Items:
+Buffed the durations of effects from drinking Royal Jelly Bottle from 1 minute to 7 minutes. Beenergized from the item is now level 3 instead of 2.
+
 ##### Structures:
 Made sure Wither Rose cannot spawn in Bumblezone structure's Honey Cocoon loot.
 
