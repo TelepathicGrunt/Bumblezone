@@ -16,6 +16,9 @@ Made Essence of Knowledge now highlight Chest Minecarts and Chest Boats.
 ##### Structures:
 Made sure Wither Rose cannot spawn in Bumblezone structure's Honey Cocoon loot.
 
+##### Mod Compat:
+Opted into Neruina's future auto-reporting system
+
 
 ### **(V.7.3.11 Changes) (1.20.4 Minecraft)**
 
