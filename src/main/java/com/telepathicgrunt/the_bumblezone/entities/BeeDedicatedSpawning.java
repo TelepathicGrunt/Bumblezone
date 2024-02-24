@@ -32,15 +32,22 @@ public final class BeeDedicatedSpawning {
 
         // Remove all wild bees too far from a player.
         for(Bee wildBee : allWildBees) {
+            boolean isTooFar = true;
+
             for (ServerPlayer serverPlayer : serverPlayers) {
                 if(isFakePlayer(serverPlayer)) {
                     continue;
                 }
 
-                if(wildBee.position().subtract(serverPlayer.position()).length() > despawnDistance) {
-                    wildBee.remove(Entity.RemovalReason.DISCARDED);
-                    entityCountChange--;
+                if (wildBee.position().subtract(serverPlayer.position()).length() <= despawnDistance) {
+                    isTooFar = false;
+                    break;
                 }
+            }
+
+            if (isTooFar) {
+                wildBee.remove(Entity.RemovalReason.DISCARDED);
+                entityCountChange--;
             }
         }
 
