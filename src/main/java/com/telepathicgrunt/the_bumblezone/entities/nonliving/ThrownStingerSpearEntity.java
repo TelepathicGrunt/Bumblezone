@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -141,8 +142,8 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-        int potentPoisonLevel =  this.spearItem.getEnchantmentLevel(BzEnchantments.POTENT_POISON.get());
         if (livingEntity.getMobType() != MobType.UNDEAD) {
+            int potentPoisonLevel =  this.spearItem.getEnchantmentLevel(BzEnchantments.POTENT_POISON.get());
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
                     100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
@@ -154,12 +155,12 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.trigger(serverPlayer);
             }
-        }
 
-        if(this.getOwner() instanceof Player player) {
-            int neuroToxinLevel = this.spearItem.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
-            if (neuroToxinLevel > 0) {
-                this.spearItem.hurtAndBreak(5, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            if (this.getOwner() instanceof LivingEntity ownerEntity && !livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
+                int neuroToxinLevel = this.spearItem.getEnchantmentLevel(BzEnchantments.NEUROTOXINS.get());
+                if (neuroToxinLevel > 0) {
+                    this.spearItem.hurtAndBreak(4, ownerEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                }
             }
         }
     }

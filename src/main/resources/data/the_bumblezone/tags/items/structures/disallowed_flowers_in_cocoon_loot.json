@@ -1,5 +1,6 @@
 {
   "values": [
+    "minecraft:wither_rose",
     {
       "id": "betterarcheology:growth_totem",
       "required": false
