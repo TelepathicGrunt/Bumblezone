@@ -46,11 +46,17 @@ public class FabricBaseEventManager {
         RegisterEntityAttributesEvent.EVENT.invoke(new RegisterEntityAttributesEvent(FabricDefaultAttributeRegistry::register));
         SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
-
-        ServerLivingEntityEvents.ALLOW_DEATH.register(FabricBaseEventManager::allowPlayerDeath);
+        ServerLivingEntityEvents.ALLOW_DEATH.register(FabricBaseEventManager::allowLivingEntityDeath);
     }
 
-    private static boolean allowPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
-        return !EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource));
+    private static boolean allowLivingEntityDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
+        if (!EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+            return false;
+        }
+        else if (!EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+            return false;
+        }
+
+        return true;
     }
 }

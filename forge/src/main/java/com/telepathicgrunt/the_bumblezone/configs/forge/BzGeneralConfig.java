@@ -50,6 +50,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue cosmicCrystalHealth;
     public static ForgeConfigSpec.IntValue ragingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue ragingEssenceCooldown;
+    public static ForgeConfigSpec.ConfigValue<List<? extends Integer>> ragingEssenceStrengthLevels;
     public static ForgeConfigSpec.IntValue knowingEssenceAbilityUse;
     public static ForgeConfigSpec.IntValue knowingEssenceCooldown;
     public static ForgeConfigSpec.BooleanValue knowingEssenceStructureNameServer;
@@ -396,6 +397,19 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.ragingessencecooldown")
                 .defineInRange("ragingEssenceCooldown", 36000, 0, 1000000);
 
+        ragingEssenceStrengthLevels = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How many rage levels there are and what level Strength effect each rage level gives.\n" +
+                                " The list is in order of the effect levels that the player will get as they make highlighted kills.\n" +
+                                " Adding or removing numbers will change the maximum number of rage tiers too.\n")
+                .translation("the_bumblezone.config.ragingessencestrengthlevels")
+                .defineList("ragingEssenceStrengthLevels", Arrays.asList(1, 2, 3, 5, 8, 14, 20), (entry) -> {
+                    if (entry instanceof Integer integer) {
+                        return integer > 0;
+                    }
+                    return false;
+                });
+
 
         knowingEssenceAbilityUse = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -504,6 +518,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth.get();
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse.get();
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown.get();
+        BzGeneralConfigs.ragingEssenceStrengthLevels = ragingEssenceStrengthLevels.get().stream().mapToInt(i->i).toArray();
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse.get();
         BzGeneralConfigs.knowingEssenceCooldown = knowingEssenceCooldown.get();
         BzGeneralConfigs.knowingEssenceStructureNameServer = knowingEssenceStructureNameServer.get();

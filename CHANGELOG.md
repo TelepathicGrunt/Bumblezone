@@ -3,6 +3,15 @@
 ##### Dimension:
 Fixed bees despawning too close to player if dimension has more than 1 player in it and spread out.
 
+##### Items:
+Fixed Essence of Raging item being broken where if it go on brief cooldown, it then reset and does full long cooldown.
+
+Essence of Raging no longer resets rage level if killing non-highlighted enemy.
+
+Essence of Raging no longer has brief cooldown after rage level is reset.
+
+Added ragingEssenceStrengthLevels config option to allow changing how many rage levels there are and how strong the Strength effect is for each level.
+
 
 ### **(V.7.2.11 Changes) (1.20.1 Minecraft)**
 

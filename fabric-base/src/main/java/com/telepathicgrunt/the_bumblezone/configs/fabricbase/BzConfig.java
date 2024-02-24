@@ -120,6 +120,9 @@ public class BzConfig extends MidnightConfig {
     public static int ragingEssenceCooldown = 36000;
 
     @Entry
+    public static int[] ragingEssenceStrengthLevels = new int[] { 1, 2, 3, 5, 8, 14, 20 };
+
+    @Entry
     public static int knowingEssenceAbilityUse = 1200;
 
     @Entry
@@ -470,6 +473,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;
         BzGeneralConfigs.ragingEssenceAbilityUse = ragingEssenceAbilityUse;
         BzGeneralConfigs.ragingEssenceCooldown = ragingEssenceCooldown;
+        BzGeneralConfigs.ragingEssenceStrengthLevels = ragingEssenceStrengthLevels;
         BzGeneralConfigs.knowingEssenceAbilityUse = knowingEssenceAbilityUse;
         BzGeneralConfigs.knowingEssenceCooldown = knowingEssenceCooldown;
         BzGeneralConfigs.knowingEssenceStructureNameServer = knowingEssenceStructureNameServer;

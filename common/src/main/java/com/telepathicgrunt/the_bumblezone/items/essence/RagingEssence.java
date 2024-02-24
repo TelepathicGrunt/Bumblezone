@@ -45,19 +45,8 @@ public class RagingEssence extends AbilityEssenceItem {
 
     private static final int radius = 24;
     private static final int trackingRange = radius * radius * 4;
-    private static final int maxRageState = 7;
     private static final int maxEmpoweredTimeFramePer5Ticks = 75;
     private static final int maxCurrentTargets = 4;
-
-    final Map<Integer, Integer> RAGE_TO_STRENGTH = Map.of(
-            1, 0,
-            2, 1,
-            3, 2,
-            4, 3,
-            5, 5,
-            6, 10,
-            7, 16
-    );
 
     private static final String RAGE_STATE_TAG = "rageStateLevel";
     private static final String CURRENT_TARGET_TAG = "currentTargets";
@@ -152,7 +141,7 @@ public class RagingEssence extends AbilityEssenceItem {
                 List<UUID> currentTargetsToKill = getCurrentTargets(stack);
 
                 // Setup targets to kill if present
-                if (currentTargetsToKill.size() < maxCurrentTargets && rageState + currentTargetsToKill.size() <= maxRageState) {
+                if (currentTargetsToKill.size() < maxCurrentTargets && rageState + currentTargetsToKill.size() <= BzGeneralConfigs.ragingEssenceStrengthLevels.length) {
                     List<Entity> entities = level.getEntities(serverPlayer, new AABB(
                                 serverPlayer.getX() - radius,
                                 serverPlayer.getY() - (radius / 4D),
@@ -168,7 +157,7 @@ public class RagingEssence extends AbilityEssenceItem {
 
                         // Lower health entities to kill first
                         entities.sort((e1, e2) -> (int) (((LivingEntity)e1).getHealth() - ((LivingEntity)e2).getHealth()));
-                        int rageLeft = maxRageState - rageState;
+                        int rageLeft = BzGeneralConfigs.ragingEssenceStrengthLevels.length - rageState;
                         int entitiesToAdd = Math.min(rageLeft + 1, maxCurrentTargets) - currentTargetsToKill.size();
                         for (int i = entitiesToAdd; i >= 1 && !entities.isEmpty(); i--) {
                             if (i == 1) {
@@ -211,7 +200,7 @@ public class RagingEssence extends AbilityEssenceItem {
                             serverPlayer.addEffect(new MobEffectInstance(
                                     MobEffects.DAMAGE_BOOST,
                                     getEmpoweredTimeRemaining(stack) * 4,
-                                    RAGE_TO_STRENGTH.get(rageState),
+                                    BzGeneralConfigs.ragingEssenceStrengthLevels[rageState - 1] - 1,
                                     false,
                                     false));
                         }
@@ -240,9 +229,11 @@ public class RagingEssence extends AbilityEssenceItem {
                 !player.getCooldowns().isOnCooldown(stack.getItem()))
             {
                 List<UUID> currentTargetsToKill = RagingEssence.getCurrentTargets(stack);
-                if (currentTargetsToKill.contains(livingEntity.getUUID())) {
-                    int rageState = RagingEssence.getRageState(stack) + 1;
-                    if (rageState > maxRageState) {
+                int rageState = RagingEssence.getRageState(stack) + 1;
+                if (rageState == BzGeneralConfigs.ragingEssenceStrengthLevels.length ||
+                    currentTargetsToKill.contains(livingEntity.getUUID()))
+                {
+                    if (rageState > BzGeneralConfigs.ragingEssenceStrengthLevels.length) {
                         resetRage(stack, player);
                     }
                     else {
@@ -256,9 +247,6 @@ public class RagingEssence extends AbilityEssenceItem {
 //                        Component message = Component.literal("DEBUG: Rage state is " + rageState);
 //                        player.displayClientMessage(message, true);
                     }
-                }
-                else {
-                    resetRage(stack, player);
                 }
             }
         }
@@ -287,12 +275,21 @@ public class RagingEssence extends AbilityEssenceItem {
             serverPlayer.removeEffect(effectHolder.value());
         }
 
-        serverPlayer.getCooldowns().addCooldown(stack.getItem(), 200);
+        serverPlayer.serverLevel().sendParticles(
+                ParticleTypes.POOF,
+                serverPlayer.position().x(),
+                serverPlayer.position().y() + 1,
+                serverPlayer.position().z(),
+                50,
+                serverPlayer.getRandom().nextGaussian() * 0.3D,
+                (serverPlayer.getRandom().nextGaussian() * 0.25D) + 0.1,
+                serverPlayer.getRandom().nextGaussian() * 0.3D,
+                0.06f);
     }
 
     public static void spawnParticles(ServerLevel world, Vec3 location, RandomSource random, int rageState) {
 
-        if (rageState == maxRageState) {
+        if (rageState == BzGeneralConfigs.ragingEssenceStrengthLevels.length) {
             rageState *= 2;
         }
 
@@ -334,51 +331,28 @@ public class RagingEssence extends AbilityEssenceItem {
         return GetTeamColor(entity, player) != -1;
     }
 
-    private static final int RED_1 = 0x550000;
-    private static final int RED_2 = 0x770000;
-    private static final int RED_3 = 0x990000;
-    private static final int RED_4 = 0xBB0000;
-    private static final int RED_5 = 0xDD0000;
-    private static final int RED_6 = 0xFF0000;
-    private static final int NO_HIGHLIGHT = -1;
-
     public static int GetTeamColor(Entity entity, Player player) {
         ItemStack stack = player.getOffhandItem();
 
         int rageState = RagingEssence.getRageState(stack);
         List<UUID> currentTargetsToKill = RagingEssence.getCurrentTargets(stack);
 
-        if ((rageState == RagingEssence.maxRageState && isTargetable(entity, player.getUUID())) ||
+        if ((rageState == BzGeneralConfigs.ragingEssenceStrengthLevels.length && isTargetable(entity, player.getUUID())) ||
             currentTargetsToKill.contains(entity.getUUID()))
         {
-            switch (rageState) {
-                case 0, 1 -> {
-                    return RED_1;
-                }
-                case 2 -> {
-                    return RED_2;
-                }
-                case 3 -> {
-                    return RED_3;
-                }
-                case 4 -> {
-                    return RED_4;
-                }
-                case 5 -> {
-                    return RED_5;
-                }
-                case 6 -> {
-                    return RED_6;
-                }
-                case 7 -> {
-                    float percentage = Math.abs(((player.tickCount % 40) - 20) / 20f);
-                    int red = 0xFF;
-                    int green = Mth.lerpInt(percentage, 0x00, 0x80);
-                    return ((red & 0xFF) << 16) | ((green & 0xFF) << 8);
-                }
+
+            if (rageState == BzGeneralConfigs.ragingEssenceStrengthLevels.length) {
+                float percentage = Math.abs(((player.tickCount % 40) - 20) / 20f);
+                int red = 0xFF;
+                int green = Mth.lerpInt(percentage, 0x00, 0x80);
+                return ((red & 0xFF) << 16) | ((green & 0xFF) << 8);
+            }
+            else {
+                float percentage = (float)rageState / BzGeneralConfigs.ragingEssenceStrengthLevels.length;
+                return (Mth.lerpInt(percentage, 0x55, 0xFF) << 16);
             }
         }
 
-        return NO_HIGHLIGHT;
+        return -1; // No highlight
     }
 }
