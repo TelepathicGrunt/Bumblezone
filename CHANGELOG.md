@@ -1,3 +1,9 @@
+### **(V.7.2.12 Changes) (1.20.1 Minecraft)**
+
+##### Dimension:
+Fixed bees despawning too close to player if dimension has more than 1 player in it and spread out.
+
+
 ### **(V.7.2.11 Changes) (1.20.1 Minecraft)**
 
 ##### Blocks:
