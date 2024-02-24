@@ -35,8 +35,8 @@ public final class BeeDedicatedSpawning {
                 }
 
                 if (wildBee.position().subtract(serverPlayer.position()).length() <= despawnDistance) {
-                    wildBee.remove(Entity.RemovalReason.DISCARDED);
-                    entityCountChange--;
+                    isTooFar = false;
+                    break;
                 }
             }
 
