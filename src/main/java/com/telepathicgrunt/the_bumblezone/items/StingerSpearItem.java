@@ -102,8 +102,10 @@ public class StingerSpearItem extends TridentItem {
 
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity enemy, LivingEntity user) {
-        int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON, itemStack);
+        int durabilityDecrease = 1;
+
         if (enemy.getMobType() != MobType.UNDEAD) {
+            int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON, itemStack);
             enemy.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
                     100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
@@ -115,13 +117,12 @@ public class StingerSpearItem extends TridentItem {
             if (user instanceof ServerPlayer serverPlayer) {
                 BzCriterias.STINGER_SPEAR_POISONING_TRIGGER.trigger(serverPlayer);
             }
-        }
 
-        int durabilityDecrease = 1;
-        if(user instanceof Player) {
-            int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS, itemStack);
-            if (neuroToxinLevel > 0) {
-                durabilityDecrease = 5;
+            if (!enemy.getType().is(BzTags.PARALYZED_IMMUNE)) {
+                int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS, itemStack);
+                if (neuroToxinLevel > 0) {
+                    durabilityDecrease = 4;
+                }
             }
         }
 
