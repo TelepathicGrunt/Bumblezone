@@ -96,10 +96,12 @@ public class GeneralUtils {
             if (entity.isAlive() && entity instanceof LivingEntity) {
                 counter++;
             }
+
             if(entity instanceof Bee) {
                 BEE_SET.add((Bee)entity);
             }
         }
+
         ACTIVE_ENTITIES = counter;
         BEE_SET.removeIf(bee ->
                 bee.isPersistenceRequired()
