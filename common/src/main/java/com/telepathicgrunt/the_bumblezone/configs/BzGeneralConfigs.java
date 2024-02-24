@@ -60,6 +60,7 @@ public class BzGeneralConfigs {
     public static int cosmicCrystalHealth = 60;
     public static int ragingEssenceAbilityUse = 28;
     public static int ragingEssenceCooldown = 36000;
+    public static int[] ragingEssenceStrengthLevels = new int[] { 1, 2, 3, 5, 7, 11, 17 };
     public static int knowingEssenceAbilityUse = 1200;
     public static int knowingEssenceCooldown = 18000;
     public static boolean knowingEssenceStructureNameServer = true;

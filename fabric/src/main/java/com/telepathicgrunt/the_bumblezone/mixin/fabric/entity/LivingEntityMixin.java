@@ -63,16 +63,6 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    @Inject(method = "die", at = @At("HEAD"), cancellable = true)
-    private void bumblezone$onDeath(DamageSource source, CallbackInfo ci) {
-        if (EntityDeathEvent.EVENT.invoke(new EntityDeathEvent((LivingEntity) ((Object) this), source))) {
-            ci.cancel();
-        }
-        else if (EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent((LivingEntity) ((Object) this), source))) {
-            ci.cancel();
-        }
-    }
-
     @Inject(method = "actuallyHurt",
             at = @At(
                     value = "INVOKE",

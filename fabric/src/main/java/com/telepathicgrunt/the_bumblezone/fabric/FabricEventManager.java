@@ -158,7 +158,7 @@ public class FabricEventManager {
         AttackBlockCallback.EVENT.register(FabricEventManager::onItemAttackBlock);
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
         UseItemCallback.EVENT.register(FabricEventManager::onItemUse);
-        ServerLivingEntityEvents.ALLOW_DEATH.register(FabricEventManager::allowPlayerDeath);
+        ServerLivingEntityEvents.ALLOW_DEATH.register(FabricEventManager::allowLivingEntityDeath);
     }
 
     public static void lateInit() {
@@ -257,7 +257,14 @@ public class FabricEventManager {
         return InteractionResultHolder.pass(event.usingStack());
     }
 
-    private static boolean allowPlayerDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
-        return !EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource));
+    private static boolean allowLivingEntityDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
+        if (!EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+            return false;
+        }
+        else if (!EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+            return false;
+        }
+
+        return true;
     }
 }
