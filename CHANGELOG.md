@@ -1,3 +1,9 @@
+### **(V.7.2.13 Changes) (1.20.1 Minecraft)**
+
+##### Misc:
+Fixed crash from mixins not specified in mixin json file.
+
+
 ### **(V.7.2.12 Changes) (1.20.1 Minecraft)**
 
 ##### Dimension:
