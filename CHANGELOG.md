@@ -1,3 +1,9 @@
+### **(V.7.2.14 Changes) (1.20.1 Minecraft)**
+
+##### Structures:
+Fixed Sempiternal Sanctum events showing the wrong time for their event timers. Serious issue.
+
+
 ### **(V.7.2.13 Changes) (1.20.1 Minecraft)**
 
 ##### Misc:

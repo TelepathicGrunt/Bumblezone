@@ -173,10 +173,10 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
                     ac = j;
                     ae = j;
                     ag = j;
-                    this.vertex(vertexConsumer, d, e + (double)y, w + 1.0, ac, ae, ag, z, af, ap);
-                    this.vertex(vertexConsumer, d, e + (double)y, w, ac, ae, ag, z, ad, ap);
-                    this.vertex(vertexConsumer, d + 1.0, e + (double)y, w, ac, ae, ag, ab, ad, ap);
-                    this.vertex(vertexConsumer, d + 1.0, e + (double)y, w + 1.0, ac, ae, ag, ab, af, ap);
+                    this.downVertex(vertexConsumer, d, e + (double)y, w + 1.0, ac, ae, ag, z, af, ap);
+                    this.downVertex(vertexConsumer, d, e + (double)y, w, ac, ae, ag, z, ad, ap);
+                    this.downVertex(vertexConsumer, d + 1.0, e + (double)y, w, ac, ae, ag, ab, ad, ap);
+                    this.downVertex(vertexConsumer, d + 1.0, e + (double)y, w + 1.0, ac, ae, ag, ab, af, ap);
                 }
 
                 int aq = this.getLightColor(level, blockPos);
@@ -268,6 +268,10 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
 
     private void vertex(VertexConsumer vertexConsumer, double d, double e, double f, float g, float h, float i, float j, float k, int l) {
         vertexConsumer.vertex(d, e, f).color(g, h, i, 1.0F).uv(j, k).uv2(l).normal(0.0F, 1.0F, 0.0F).endVertex();
+    }
+
+    private void downVertex(VertexConsumer vertexConsumer, double d, double e, double f, float g, float h, float i, float j, float k, int l) {
+        vertexConsumer.vertex(d, e, f).color(g, h, i, 1.0F).uv(j, k).uv2(l).normal(0.0F, -1.0F, 0.0F).endVertex();
     }
 
     private static boolean isNeighborSameFluid(FluidState fluidState, FluidState fluidState2) {
