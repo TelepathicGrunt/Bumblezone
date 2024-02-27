@@ -1,3 +1,9 @@
+### **(V.7.2.15 Changes) (1.20.1 Minecraft)**
+
+##### Items:
+Capped Resistance to a maximum of level 4 when crafting Resistance Potion Candles. 
+
+
 ### **(V.7.2.14 Changes) (1.20.1 Minecraft)**
 
 ##### Structures:
