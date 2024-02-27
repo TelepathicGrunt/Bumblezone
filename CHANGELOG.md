@@ -1,3 +1,12 @@
+### **(V.7.3.14 Changes) (1.20.4 Minecraft)**
+
+##### Items:
+Capped Resistance to a maximum of level 4 when crafting Resistance Potion Candles.
+
+##### Fluids:
+Flipped normal of Honey Fluid's bottom texture face. No longer matches vanilla's fluid which has the bottom face's normal facing upward.
+
+
 ### **(V.7.3.13 Changes) (1.20.4 Minecraft)**
 
 ##### Dimension:
