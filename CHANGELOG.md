@@ -7,7 +7,7 @@ Capped Resistance to a maximum of level 4 when crafting Resistance Potion Candle
 Flipped normal of Honey Fluid's bottom texture face. No longer matches vanilla's fluid which has the bottom face's normal facing upward.
 
 ##### Misc:
-Fixed all entities not dropping loot because of a mix up with a fabric event.
+(Fabric): Fixed all entities not dropping loot because of a mix up with a fabric event.
 
 
 ### **(V.7.3.13 Changes) (1.20.4 Minecraft)**
