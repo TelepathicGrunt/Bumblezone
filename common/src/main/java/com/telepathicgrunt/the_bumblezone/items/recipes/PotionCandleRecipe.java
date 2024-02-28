@@ -161,8 +161,8 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         amplifier.set(amplifier.get() / potionEffectsFound.get());
 
         // Resistance level 5 or higher is 100% damage immunity.
-        if (chosenEffect == MobEffects.DAMAGE_RESISTANCE && amplifier.get() > 3) {
-            amplifier.set(3);
+        if (chosenEffect == MobEffects.DAMAGE_RESISTANCE && amplifier.get() > 4) {
+            amplifier.set(4);
         }
 
         float durationBaseMultiplier = ((0.4f / (0.9f * potionEffectsFound.get())) + (amplifier.get() * 0.22f));
