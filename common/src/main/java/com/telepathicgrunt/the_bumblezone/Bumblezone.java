@@ -99,7 +99,6 @@ import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
 import com.telepathicgrunt.the_bumblezone.packets.QueenRandomizerTradesSyncPacket;
-import com.telepathicgrunt.the_bumblezone.utils.LogFilters;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import com.telepathicgrunt.the_bumblezone.worldgen.dimension.BiomeRegistryHolder;
 import com.telepathicgrunt.the_bumblezone.worldgen.surfacerules.PollinatedSurfaceSource;
@@ -237,7 +236,6 @@ public class Bumblezone {
         PollinatedSurfaceSource.RandomLayerStateRule.initNoise(event.getServer().getWorldData().worldGenOptions().seed());
         BiomeRegistryHolder.setupBiomeRegistry(event.getServer());
         ThreadExecutor.setupExecutorService();
-        LogFilters.filterActive = false; // Filtering is no longer needed.
     }
 
     private static void setupBuiltInResourcePack(final AddBuiltinResourcePacks event) {
