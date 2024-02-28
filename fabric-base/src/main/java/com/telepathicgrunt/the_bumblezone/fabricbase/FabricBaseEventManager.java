@@ -50,10 +50,10 @@ public class FabricBaseEventManager {
     }
 
     private static boolean allowLivingEntityDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
-        if (!EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+        if (EntityDeathEvent.EVENT.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
             return false;
         }
-        else if (!EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
+        else if (EntityDeathEvent.EVENT_LOWEST.invoke(new EntityDeathEvent(livingEntity, damageSource))) {
             return false;
         }
 
