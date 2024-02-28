@@ -4,7 +4,7 @@
 Capped Resistance to a maximum of level 4 when crafting Resistance Potion Candles. 
 
 ##### Misc:
-Fixed all entities not dropping loot because of a mix up with a fabric event.
+(Fabric/Quilt): Fixed all entities not dropping loot because of a mix up with a fabric event.
 
 
 ### **(V.7.2.14 Changes) (1.20.1 Minecraft)**
