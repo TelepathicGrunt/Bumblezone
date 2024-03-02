@@ -1,3 +1,12 @@
+### **(V.7.3.15 Changes) (1.20.4 Minecraft)**
+
+##### Blocks:
+Fixed Honey Cocoon darkening the background too much.
+
+##### Mod Compat:
+Fixed broken Pollen Puff compat with Melon Golem mod.
+
+
 ### **(V.7.3.14 Changes) (1.20.4 Minecraft)**
 
 ##### Items:

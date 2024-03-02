@@ -1,5 +1,5 @@
 {
-  "melongolem:entitymelongolem": [{
+  "melongolem:melon_golem": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
       "entries": [
@@ -14,7 +14,7 @@
       ]
     }
   }],
-  "melongolem:entitytinymelongolem": [{
+  "melongolem:tiny_melon_golem": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
       "entries": [
@@ -29,7 +29,7 @@
       ]
     }
   }],
-  "melongolem:entityglisteringmelongolem": [{
+  "melongolem:glistering_melon_golem": [{
     "plants_to_spawn": {
       "type": "minecraft:weighted_state_provider",
       "entries": [
