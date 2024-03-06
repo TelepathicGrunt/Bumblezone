@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import net.minecraft.core.BlockPos;
@@ -39,7 +40,7 @@ public class DropContainerItems extends LootItemConditionalFunction {
         Vec3 spawnPos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
         BlockEntity be = lootContext.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if(spawnPos != null && be instanceof Container container) {
-            if (!(ModChecker.lootrPresent &&
+            if (!(ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat &&
                 container instanceof HoneyCocoonBlockEntity honeyCocoonBlockEntity &&
                 honeyCocoonBlockEntity.getLootTable() != null))
             {

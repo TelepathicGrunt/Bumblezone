@@ -96,4 +96,6 @@ public class BzModCompatibilityConfigs {
 	public static boolean allowGoodallBottledBeesRevivingEmptyBroodBlock = true;
 
 	public static boolean allowBeekeeperTradesCompat = true;
+
+	public static boolean allowLootrCompat = true;
 }

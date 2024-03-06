@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCocoon;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.menus.StrictChestMenu;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
@@ -77,8 +78,9 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, HoneyCocoonBlockEntity honeyCocoonBlockEntity) {
         if (level instanceof ServerLevel serverLevel) {
-            if (honeyCocoonBlockEntity.getLootTable() != null && blockState.getValue(HoneyCocoon.IS_LOOT_CONTAINER) != ModChecker.lootrPresent) {
-                serverLevel.setBlock(blockPos, blockState.setValue(HoneyCocoon.IS_LOOT_CONTAINER, ModChecker.lootrPresent), 2);
+            boolean lootrActive = ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat;
+            if (honeyCocoonBlockEntity.getLootTable() != null && blockState.getValue(HoneyCocoon.IS_LOOT_CONTAINER) != lootrActive) {
+                serverLevel.setBlock(blockPos, blockState.setValue(HoneyCocoon.IS_LOOT_CONTAINER, lootrActive), 2);
             }
         }
     }
@@ -142,7 +144,7 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     }
 
     private boolean isLootWithLootrOn() {
-        return this.getLootTable() != null && this.getBlockState().getValue(HoneyCocoon.IS_LOOT_CONTAINER) && ModChecker.lootrPresent;
+        return this.getLootTable() != null && this.getBlockState().getValue(HoneyCocoon.IS_LOOT_CONTAINER) && ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat;
     }
 
     @Override
@@ -192,7 +194,7 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
 
     @Override
     public void unpackLootTable(Player player) {
-        if (ModChecker.lootrPresent) {
+        if (ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat) {
             return;
         }
 

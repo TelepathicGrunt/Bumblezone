@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.blocks;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -298,7 +299,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
         }
         else {
             MenuProvider menuprovider = null;
-            if (ModChecker.lootrPresent && blockstate.getValue(IS_LOOT_CONTAINER)) {
+            if (ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat && blockstate.getValue(IS_LOOT_CONTAINER)) {
                 if (world.getBlockEntity(position) instanceof HoneyCocoonBlockEntity blockEntity && blockEntity.getLootTable() != null) {
                     menuprovider = LootrCompat.getCocoonMenu((ServerPlayer) playerEntity, blockEntity);
                 }

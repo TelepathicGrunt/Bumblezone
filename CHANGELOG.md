@@ -6,6 +6,8 @@ Fixed Honey Cocoon darkening the background too much.
 ##### Mod Compat:
 Fixed broken Pollen Puff compat with Melon Golem mod.
 
+Added config to allow disabling Lootr compat. Forgot to make the config for that
+
 
 ### **(V.7.3.14 Changes) (1.20.4 Minecraft)**
 

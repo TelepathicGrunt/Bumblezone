@@ -306,6 +306,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean allowGoodallBottledBeesRevivingEmptyBroodBlock = true;
 
+    @Entry
+    public static boolean allowLootrCompat = true;
+
 
     @Comment
     public static Comment clientComment;
@@ -488,6 +491,7 @@ public class BzConfig extends MidnightConfig {
         //Compat
         BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat;
         BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock;
+        BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat;
 
         //Client
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
