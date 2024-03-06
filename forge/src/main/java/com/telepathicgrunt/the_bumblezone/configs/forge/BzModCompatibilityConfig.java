@@ -52,6 +52,8 @@ public class BzModCompatibilityConfig {
 
 	public static ForgeConfigSpec.BooleanValue allowBeekeeperTradesCompat;
 
+	public static ForgeConfigSpec.BooleanValue allowLootrCompat;
+
 	static {
 		ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
 		setupConfig(configBuilder);
@@ -388,6 +390,17 @@ public class BzModCompatibilityConfig {
 
 			builder.pop();
 
+
+			builder.push("Lootr Options");
+
+			allowLootrCompat = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" Allow loot Cocoons to have compat with Lootr\n")
+					.translation("the_bumblezone.config.allowLootrCompat")
+					.define("allowLootrCompat", true);
+
+			builder.pop();
+
 		builder.pop();
 	}
 
@@ -435,5 +448,7 @@ public class BzModCompatibilityConfig {
 		BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins = spawnResourcefulBeesHoneycombVeins.get();
 		BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock = allowResourcefulBeesBeeJarRevivingEmptyBroodBlock.get();
 		BzModCompatibilityConfigs.allowResourcefulBeesSpawnFromDispenserFedBroodBlock = allowResourcefulBeesSpawnFromDispenserFedBroodBlock.get();
+
+		BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat.get();
 	}
 }

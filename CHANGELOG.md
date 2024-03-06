@@ -1,3 +1,8 @@
+### **(V.7.2.16 Changes) (1.20.1 Minecraft)**
+
+Added config to allow disabling Lootr compat. Forgot to make the config for that
+
+
 ### **(V.7.2.15 Changes) (1.20.1 Minecraft)**
 
 ##### Items:
