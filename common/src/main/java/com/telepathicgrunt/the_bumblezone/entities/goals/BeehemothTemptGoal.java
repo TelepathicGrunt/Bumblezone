@@ -1,10 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,12 +19,12 @@ public class BeehemothTemptGoal extends Goal {
     private final double speedModifier;
     @Nullable
     protected Player player;
-    private final Ingredient items;
+    private final TagKey<Item> temptItemTag;
 
-    public BeehemothTemptGoal(BeehemothEntity pathfinderMob, double speedModifier, Ingredient ingredient) {
+    public BeehemothTemptGoal(BeehemothEntity pathfinderMob, double speedModifier, TagKey<Item> temptItemTag) {
         this.mob = pathfinderMob;
         this.speedModifier = speedModifier;
-        this.items = ingredient;
+        this.temptItemTag = temptItemTag;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         this.targetingConditions = TEMP_TARGETING.copy().selector(entity -> this.mob.getOwner() == entity).selector(this::shouldFollow);
     }
@@ -45,7 +47,7 @@ public class BeehemothTemptGoal extends Goal {
     }
 
     private boolean shouldFollow(LivingEntity livingEntity) {
-        return this.items.test(livingEntity.getMainHandItem()) || this.items.test(livingEntity.getOffhandItem());
+        return livingEntity.getMainHandItem().is(this.temptItemTag) || livingEntity.getOffhandItem().is(this.temptItemTag);
     }
 
     @Override

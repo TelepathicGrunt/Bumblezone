@@ -132,8 +132,8 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 0.012D, Ingredient.of(BzTags.BEEHEMOTH_FAST_LURING_DESIRED_ITEMS)));
-        this.goalSelector.addGoal(2, new BeehemothTemptGoal(this, 0.006D, Ingredient.of(BzTags.BEEHEMOTH_DESIRED_ITEMS)));
+        this.goalSelector.addGoal(1, new BeehemothTemptGoal(this, 0.012D, BzTags.BEEHEMOTH_FAST_LURING_DESIRED_ITEMS));
+        this.goalSelector.addGoal(2, new BeehemothTemptGoal(this, 0.006D, BzTags.BEEHEMOTH_DESIRED_ITEMS));
         this.goalSelector.addGoal(3, new BeehemothFlyingStillGoal(this));
         this.goalSelector.addGoal(4, new BeehemothRandomFlyGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 60));

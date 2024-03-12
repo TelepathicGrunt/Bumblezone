@@ -76,7 +76,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    private static final EntityDataAccessor<Integer> IN_HONEY_GROWTH_TIME = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
    private static final EntityDataAccessor<Integer> ANGRY_TIMER = SynchedEntityData.defineId(HoneySlimeEntity.class, EntityDataSerializers.INT);
    private static final UniformInt MAX_ANGER_DURATION = TimeUtil.rangeOfSeconds(22, 36);
-   private static final Ingredient LURING_BREEDING_ITEM = Ingredient.of(BzTags.HONEY_SLIME_DESIRED_ITEMS);
    private UUID target_UUID;
 
    private static final HashSet<Block> HONEY_BASED_BLOCKS = new HashSet<>();
@@ -101,7 +100,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
       this.targetSelector.addGoal(1, new HoneySlimeRevengeGoal(this));
       this.targetSelector.addGoal(1, new HoneySlimeAngerAttackingGoal(this));
       this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-      this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this, 1.2D, LURING_BREEDING_ITEM));
+      this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this, BzTags.HONEY_SLIME_DESIRED_ITEMS));
       this.goalSelector.addGoal(4, new HoneySlimeHopGoal(this));
       this.goalSelector.addGoal(4, new HoneySlimeFaceRandomGoal(this));
    }
@@ -365,7 +364,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
 
    @Override
    public boolean isFood(ItemStack stack) {
-      return LURING_BREEDING_ITEM.test(stack);
+      return stack.is(BzTags.HONEY_SLIME_DESIRED_ITEMS);
    }
 
    @Override
