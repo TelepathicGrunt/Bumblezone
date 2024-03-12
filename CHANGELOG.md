@@ -1,3 +1,9 @@
+### **(V.7.2.18 Changes) (1.20.1 Minecraft)**
+
+##### Mod Compat:
+Fixed Cell Maze Honey Cocoons being all linked to same inventory when Lootr is on.
+
+
 ### **(V.7.2.17 Changes) (1.20.1 Minecraft)**
 
 ##### Entities:
