@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class KeyboardHandlerMixin {
 
     @Inject(method = "keyPress",
-            at = @At(value = "TAIL"))
+            at = @At(value = "HEAD"))
     private void bumblezone$keyPressHandling(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         KeyInputEvent.EVENT.invoke(new KeyInputEvent(key, scancode, action));
     }

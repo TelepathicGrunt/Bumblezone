@@ -754,6 +754,13 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         }
     }
 
+    @Override
+    public void ejectPassengers() {
+        super.ejectPassengers();
+        this.movingStraightUp = false;
+        this.movingStraightDown = false;
+    }
+
     public boolean isTargetBlocked(Vec3 target) {
         Vec3 vec3 = new Vec3(getX(), getEyeY(), getZ());
         return this.level().clip(new ClipContext(vec3, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)).getType() != HitResult.Type.MISS;
