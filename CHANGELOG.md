@@ -3,6 +3,9 @@
 ##### Entities:
 (NeoForge): Fixed Honey Slimes not tempted or breedable with Sugar.
 
+##### Mod Compat:
+Fixed Cell Maze Honey Cocoons being all linked to same inventory when Lootr is on.
+
 
 ### **(V.7.3.16 Changes) (1.20.4 Minecraft)**
 
