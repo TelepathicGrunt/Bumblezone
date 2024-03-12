@@ -2,9 +2,11 @@ package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.HoneySlimeEntity;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -20,11 +22,11 @@ public class HoneySlimeTemptGoal extends Goal {
     private double yaw;
     protected Player closestPlayer;
     private int delayTemptCounter;
-    private final Ingredient temptItem;
+    private final TagKey<Item> temptItemTag;
 
-    public HoneySlimeTemptGoal(HoneySlimeEntity creatureIn, double speedIn, Ingredient temptItemsIn) {
+    public HoneySlimeTemptGoal(HoneySlimeEntity creatureIn, TagKey<Item> temptItemTag) {
         this.slime = creatureIn;
-        this.temptItem = temptItemsIn;
+        this.temptItemTag = temptItemTag;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -48,7 +50,7 @@ public class HoneySlimeTemptGoal extends Goal {
     }
 
     protected boolean isTempting(ItemStack stack) {
-        return this.temptItem.test(stack);
+        return stack.is(this.temptItemTag);
     }
 
     /**

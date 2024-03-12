@@ -1,3 +1,9 @@
+### **(V.7.3.17 Changes) (1.20.4 Minecraft)**
+
+##### Entities:
+(NeoForge): Fixed Honey Slimes not tempted or breedable with Sugar.
+
+
 ### **(V.7.3.16 Changes) (1.20.4 Minecraft)**
 
 ##### Entities:
