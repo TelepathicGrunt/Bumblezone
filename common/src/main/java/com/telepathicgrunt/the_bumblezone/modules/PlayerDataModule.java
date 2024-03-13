@@ -21,6 +21,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
 
     public boolean isBeeEssenced = false;
     public boolean gottenWelcomed = false;
+    public boolean gottenWelcomedInDimension = false;
     public boolean receivedEssencePrize = false;
     public long tradeResetPrimedTime = -1000;
     public int craftedBeehives = 0;
@@ -73,6 +74,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
             module.mobsKilledTracker.clear();
             module.isBeeEssenced = tag.getBoolean("is_bee_essenced");
             module.gottenWelcomed = tag.getBoolean("gotten_welcomed");
+            module.gottenWelcomedInDimension = tag.getBoolean("gotten_welcomed_in_dimension");
             module.receivedEssencePrize = tag.getBoolean("received_essence_prize");
             module.tradeResetPrimedTime = tag.getLong("trade_reset_primed_time");
             module.craftedBeehives = tag.getInt("crafted_beehives");
@@ -100,6 +102,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
         public void write(CompoundTag tag, PlayerDataModule module) {
             tag.putBoolean("is_bee_essenced", module.isBeeEssenced);
             tag.putBoolean("gotten_welcomed", module.gottenWelcomed);
+            tag.putBoolean("gotten_welcomed_in_dimension", module.gottenWelcomedInDimension);
             tag.putBoolean("received_essence_prize", module.receivedEssencePrize);
             tag.putLong("trade_reset_primed_time", module.tradeResetPrimedTime);
             tag.putInt("crafted_beehives", module.craftedBeehives);
@@ -138,6 +141,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
             }
 
             thisModule.gottenWelcomed = oldModule.gottenWelcomed;
+            thisModule.gottenWelcomedInDimension = oldModule.gottenWelcomedInDimension;
         }
     }
 }

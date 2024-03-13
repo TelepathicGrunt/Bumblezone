@@ -1,5 +1,9 @@
 ### **(V.7.2.18 Changes) (1.20.1 Minecraft)**
 
+##### Misc:
+Reshow hint to view Bumblezone's advancements when entering Bumblezone for first time. 
+ Can be disabled with enableInitialWelcomeMessage config option.
+
 ##### Mod Compat:
 Fixed Cell Maze Honey Cocoons being all linked to same inventory when Lootr is on.
 
