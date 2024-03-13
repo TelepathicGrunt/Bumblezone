@@ -1,5 +1,9 @@
 ### **(V.7.3.17 Changes) (1.20.4 Minecraft)**
 
+##### Misc:
+Reshow hint to view Bumblezone's advancements when entering Bumblezone for first time.
+ Can be disabled with enableInitialWelcomeMessage config option.
+
 ##### Entities:
 (NeoForge): Fixed Honey Slimes not tempted or breedable with Sugar.
 

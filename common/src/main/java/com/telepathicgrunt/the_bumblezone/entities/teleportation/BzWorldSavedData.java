@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.teleportation;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.ServerLevelTickEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
@@ -205,27 +206,40 @@ public class BzWorldSavedData extends SavedData {
 			ServerLevel bumblezoneWorld = minecraftServer.getLevel(BzDimension.BZ_WORLD_KEY);
 			BlockPos blockPos = BlockPos.containing(destinationPosFound);
 
-			if (bumblezoneWorld != null && bumblezoneWorld.getBlockState(blockPos.above()).isSuffocating(bumblezoneWorld, blockPos.above())) {
-				RUNNABLES_FOR_NEXT_TICK.add(new NextTickRunnable(bumblezoneWorld.getGameTime() + 5, () -> {
-					//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
-					//and honeycomb walls to prevent drowning
-					//This is the last resort
-					ServerPlayer fakePlayer = createSilkTouchFakePlayer(bumblezoneWorld);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos, Blocks.AIR);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.above(), Blocks.AIR);
+			if (bumblezoneWorld != null) {
+				if (bumblezoneWorld.getBlockState(blockPos.above()).isSuffocating(bumblezoneWorld, blockPos.above())) {
+					RUNNABLES_FOR_NEXT_TICK.add(new NextTickRunnable(bumblezoneWorld.getGameTime() + 5, () -> {
+						//We are going to spawn player at exact spot of scaled coordinates by placing air at the spot with honeycomb bottom
+						//and honeycomb walls to prevent drowning
+						//This is the last resort
+						ServerPlayer fakePlayer = createSilkTouchFakePlayer(bumblezoneWorld);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos, Blocks.AIR);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.above(), Blocks.AIR);
 
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.below(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.above().above(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.below(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.above().above(), Blocks.HONEYCOMB_BLOCK);
 
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.north(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.west(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.east(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.south(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.north().above(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.west().above(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.east().above(), Blocks.HONEYCOMB_BLOCK);
-					destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.south().above(), Blocks.HONEYCOMB_BLOCK);
-				}));
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.north(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.west(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.east(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.south(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.north().above(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.west().above(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.east().above(), Blocks.HONEYCOMB_BLOCK);
+						destroyAndPlaceBlock(bumblezoneWorld, fakePlayer, blockPos.south().above(), Blocks.HONEYCOMB_BLOCK);
+					}));
+				}
+
+				if (BzDimensionConfigs.enableInitialWelcomeMessage && entity instanceof ServerPlayer serverPlayer) {
+					RUNNABLES_FOR_NEXT_TICK.add(new NextTickRunnable(bumblezoneWorld.getGameTime() + 20, () -> {
+						ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(playerData -> {
+							if (!playerData.gottenWelcomedInDimension) {
+								playerData.gottenWelcomedInDimension = true;
+								serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.advancement_hint"), false);
+							}
+						});
+					}));
+				}
 			}
 
 			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
