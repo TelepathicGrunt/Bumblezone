@@ -4,23 +4,43 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
+import org.joml.Vector3f;
 
 public class WindParticle extends TextureSheetParticle {
-    private WindParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites) {
+    private SingleQuadParticle.FacingCameraMode facingCameraMode;
+
+    private WindParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites, boolean isEnvironmental) {
         super(clientWorld, xPos, yPos, zPos);
-        this.xd += xSpeed;
-        this.yd += ySpeed;
-        this.zd += zSpeed;
+
+        if (isEnvironmental) {
+            this.xd += 0.1d;
+            this.yd += 0;
+            this.zd += 0;
+            this.lifetime = 50 + this.random.nextInt(10);
+        }
+        else {
+            this.xd += xSpeed;
+            this.yd += ySpeed;
+            this.zd += zSpeed;
+            this.lifetime = 25 + this.random.nextInt(5);
+        }
+
         this.gravity = 0;
         this.quadSize *= (this.random.nextFloat() * 0.2f) + 0.7f;
-        this.lifetime = 25 + this.random.nextInt(5);
         this.hasPhysics = false;
+        this.sprite = sprites.get(0, 1);
 
-        boolean isVertical = Math.abs(this.yd) > ((Math.abs(this.xd) + Math.abs(this.zd)) / 2);
-        this.sprite = sprites.get(isVertical? 1 : 0, 1);
+        Vector3f directionVec = new Vector3f((float) xSpeed, (float) ySpeed, (float) zSpeed).normalize();
+        facingCameraMode = (quaternionf, camera, f) -> {
+            quaternionf.identity();
+            quaternionf.rotateX(Mth.PI / 2);
+            quaternionf.lookAlong(directionVec, camera.getLookVector()).conjugate();
+        };
     }
 
     @Override
@@ -42,18 +62,23 @@ public class WindParticle extends TextureSheetParticle {
         this.setLocationFromBoundingbox();
     }
 
+    @Override
+    public SingleQuadParticle.FacingCameraMode getFacingCameraMode() {
+        return this.facingCameraMode;
+    }
+
     public static class Factory implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprites;
-        private final boolean isMoving;
+        private final boolean isEnvironmental;
 
-        public Factory(SpriteSet sprite, boolean isMoving) {
+        public Factory(SpriteSet sprite, boolean isEnvironmental) {
             this.sprites = sprite;
-            this.isMoving = isMoving;
+            this.isEnvironmental = isEnvironmental;
         }
 
         @Override
         public Particle createParticle(SimpleParticleType particleType, ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed) {
-            return new WindParticle(clientWorld, xPos, yPos, zPos, isMoving ? 0.1f : xSpeed, ySpeed, zSpeed, sprites);
+            return new WindParticle(clientWorld, xPos, yPos, zPos, xSpeed, ySpeed, zSpeed, sprites, isEnvironmental);
         }
     }
 }

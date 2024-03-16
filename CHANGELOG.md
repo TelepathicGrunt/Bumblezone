@@ -1,3 +1,10 @@
+### **(V.7.3.18 Changes) (1.20.4 Minecraft)**
+
+##### Blocks:
+Made Windy Air particles stop always facing the camera.
+ The particle's rotation is now locked in the direction the particle is moving.
+
+
 ### **(V.7.3.17 Changes) (1.20.4 Minecraft)**
 
 ##### Misc:
@@ -10,33 +17,3 @@ Reshow hint to view Bumblezone's advancements when entering Bumblezone for first
 ##### Mod Compat:
 Fixed Cell Maze Honey Cocoons being all linked to same inventory when Lootr is on.
 
-
-### **(V.7.3.16 Changes) (1.20.4 Minecraft)**
-
-##### Entities:
-(Fabric): Fixed Beehemoth not detecting up/down flying keys being released.
-
-Fixed Beehemoth thinking up/down key is still pressed is dismounted while holding those keys and then re-mounting.
-
-
-### **(V.7.3.15 Changes) (1.20.4 Minecraft)**
-
-##### Blocks:
-Fixed Honey Cocoon darkening the background too much.
-
-##### Mod Compat:
-Fixed broken Pollen Puff compat with Melon Golem mod.
-
-Added config to allow disabling Lootr compat. Forgot to make the config for that
-
-
-### **(V.7.3.14 Changes) (1.20.4 Minecraft)**
-
-##### Items:
-Capped Resistance to a maximum of level 4 when crafting Resistance Potion Candles.
-
-##### Fluids:
-Flipped normal of Honey Fluid's bottom texture face. No longer matches vanilla's fluid which has the bottom face's normal facing upward.
-
-##### Misc:
-(Fabric): Fixed all entities not dropping loot because of a mix up with a fabric event.
