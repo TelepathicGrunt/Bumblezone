@@ -12,7 +12,7 @@ import net.minecraft.util.Mth;
 import org.joml.Vector3f;
 
 public class WindParticle extends TextureSheetParticle {
-    private SingleQuadParticle.FacingCameraMode facingCameraMode;
+    private final SingleQuadParticle.FacingCameraMode facingCameraMode;
 
     private WindParticle(ClientLevel clientWorld, double xPos, double yPos, double zPos, double xSpeed, double ySpeed, double zSpeed, SpriteSet sprites, boolean isEnvironmental) {
         super(clientWorld, xPos, yPos, zPos);
@@ -21,7 +21,7 @@ public class WindParticle extends TextureSheetParticle {
             this.xd += 0.1d;
             this.yd += 0;
             this.zd += 0;
-            this.lifetime = 50 + this.random.nextInt(10);
+            this.lifetime = 100 + this.random.nextInt(10);
         }
         else {
             this.xd += xSpeed;
@@ -35,7 +35,7 @@ public class WindParticle extends TextureSheetParticle {
         this.hasPhysics = false;
         this.sprite = sprites.get(0, 1);
 
-        Vector3f directionVec = new Vector3f((float) xSpeed, (float) ySpeed, (float) zSpeed).normalize();
+        Vector3f directionVec = new Vector3f((float) this.xd, (float) this.yd, (float) this.zd).normalize();
         facingCameraMode = (quaternionf, camera, f) -> {
             quaternionf.identity();
             quaternionf.rotateX(Mth.PI / 2);
