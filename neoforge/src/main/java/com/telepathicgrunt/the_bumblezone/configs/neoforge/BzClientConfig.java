@@ -10,6 +10,7 @@ public class BzClientConfig {
     public static ModConfigSpec.DoubleValue fogBrightnessPercentage;
     public static ModConfigSpec.DoubleValue fogThickness;
     public static ModConfigSpec.BooleanValue enableDimensionFog;
+    public static ModConfigSpec.BooleanValue useBackupModelForVariantBee;
     public static ModConfigSpec.BooleanValue playWrathOfHiveEffectMusic;
     public static ModConfigSpec.BooleanValue playSempiternalSanctumMusic;
     public static ModConfigSpec.BooleanValue renderBeeQueenBonusTradeItem;
@@ -177,24 +178,33 @@ public class BzClientConfig {
 
         builder.pop();
 
-        playWrathOfHiveEffectMusic = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
-                .translation("the_bumblezone.config.playwrathofhiveeffectmusic")
-                .define("playWrathOfHiveEffectMusic", true);
+        builder.push("Entity Model/Renderer configs");
 
-
-        playSempiternalSanctumMusic = builder
+        useBackupModelForVariantBee = builder
                 .comment(" \n-----------------------------------------------------\n",
-                        " If on, Bee-ware of the Temple by LudoCrypt will play when you are in Sempiternal Sanctum.\n")
-                .translation("the_bumblezone.config.playsempiternalsanctummusic")
-                .define("playSempiternalSanctumMusic", true);
+                        " Turn this on if Variant Bee's model is messed up by another mod or resourcepack. Requires restart.\n")
+                .translation("the_bumblezone.config.usebackupmodelforvariantbee")
+                .define("useBackupModelForVariantBee", false);
 
         renderBeeQueenBonusTradeItem = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " Whether to show the item on the Bee Queen that the Queen wants for Bonus Trades.\n")
                 .translation("the_bumblezone.config.renderbeequeenbonusTradeitem")
                 .define("renderBeeQueenBonusTradeItem", true);
+
+        builder.pop();
+
+        playWrathOfHiveEffectMusic = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " If on, Flight of the Bumblebee by Rimsky Korsakov will play when you have Wrath of the Hive effect on.\n")
+                .translation("the_bumblezone.config.playwrathofhiveeffectmusic")
+                .define("playWrathOfHiveEffectMusic", true);
+
+        playSempiternalSanctumMusic = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " If on, Bee-ware of the Temple by LudoCrypt will play when you are in Sempiternal Sanctum.\n")
+                .translation("the_bumblezone.config.playsempiternalsanctummusic")
+                .define("playSempiternalSanctumMusic", true);
 
         disableEssenceBlockShaders = builder
                 .comment("""
@@ -210,6 +220,7 @@ public class BzClientConfig {
         BzDimensionConfigs.fogBrightnessPercentage = fogBrightnessPercentage.get();
         BzDimensionConfigs.fogThickness = fogThickness.get();
         BzDimensionConfigs.enableDimensionFog = enableDimensionFog.get();
+        BzClientConfigs.useBackupModelForVariantBee = useBackupModelForVariantBee.get();
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic.get();
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic.get();
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem.get();

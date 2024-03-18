@@ -4,6 +4,16 @@
 Made Windy Air particles stop always facing the camera.
  The particle's rotation is now locked in the direction the particle is moving.
 
+##### Entity:
+Fixed crash when one removes all skins from the Variant Bee config option.
+ This will make Variant Bee look like a vanilla bee as a fallback.
+
+##### Configs:
+
+Added useBackupModelForVariantBee config option that will let you bypass issues with other mods or resourcepacks changing vanilla Bee's model.
+
+(NeoForge): Moved renderBeeQueenBonusTradeItem config option to be in same section as useBackupModelForVariantBee.
+
 
 ### **(V.7.3.17 Changes) (1.20.4 Minecraft)**
 
