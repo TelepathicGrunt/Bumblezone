@@ -1,22 +1,21 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering;
+package com.telepathicgrunt.the_bumblezone.client.rendering.variantbee;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.VariantBeeEntity;
-import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.Bee;
 
-public class VariantBeeRenderer extends BeeRenderer {
+public class BackupVariantBeeRenderer extends MobRenderer<VariantBeeEntity, BackupVariantBeeModel<VariantBeeEntity>> {
     private static final ResourceLocation VANILLA_BEE_TEXTURE = new ResourceLocation("minecraft", "textures/entity/bee/bee.png");
 
-    public VariantBeeRenderer(EntityRendererProvider.Context context) {
-        super(context);
+    public BackupVariantBeeRenderer(EntityRendererProvider.Context context) {
+        super(context, new BackupVariantBeeModel<>(context.bakeLayer(BackupVariantBeeModel.LAYER_LOCATION)), 0.4f);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Bee entity) {
-        String variant = ((VariantBeeEntity)entity).getVariant();
+    public ResourceLocation getTextureLocation(VariantBeeEntity entity) {
+        String variant = entity.getVariant();
 
         if(variant != null && !variant.isEmpty()) {
             String type = "";

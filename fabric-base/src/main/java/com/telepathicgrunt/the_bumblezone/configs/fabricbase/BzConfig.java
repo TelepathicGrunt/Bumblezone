@@ -314,13 +314,16 @@ public class BzConfig extends MidnightConfig {
     public static Comment clientComment;
 
     @Entry
+    public static boolean useBackupModelForVariantBee = false;
+
+    @Entry
+    public static boolean renderBeeQueenBonusTradeItem = true;
+
+    @Entry
     public static boolean playWrathOfHiveEffectMusic = true;
 
     @Entry
     public static boolean playSempiternalSanctumMusic = true;
-
-    @Entry
-    public static boolean renderBeeQueenBonusTradeItem = true;
 
     @Entry
     public static boolean disableEssenceBlockShaders = false;
@@ -494,6 +497,7 @@ public class BzConfig extends MidnightConfig {
         BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat;
 
         //Client
+        BzClientConfigs.useBackupModelForVariantBee = useBackupModelForVariantBee;
         BzClientConfigs.playWrathOfHiveEffectMusic = playWrathOfHiveEffectMusic;
         BzClientConfigs.playSempiternalSanctumMusic = playSempiternalSanctumMusic;
         BzClientConfigs.renderBeeQueenBonusTradeItem = renderBeeQueenBonusTradeItem;

@@ -95,26 +95,34 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidInteractionRegistry;
 import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ConfigTracker;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forgespi.language.IModFileInfo;
 import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.resource.PathPackResources;
 
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 @Mod(Bumblezone.MODID)
 public class BumblezoneForge {
 
     public BumblezoneForge() {
         BzConfigHandler.setup();
+        loadBumblezoneClientConfigsEarly();
+
         ForgeModuleInitalizer.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.NORMAL, ResourcefulRegistriesImpl::onRegisterForgeRegistries);
 
@@ -168,6 +176,26 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onEntityVisibility);
         eventBus.addListener(BumblezoneForge::onFinishUseItem);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityHurtLowest);
+    }
+
+    private static void loadBumblezoneClientConfigsEarly() {
+        Optional<? extends ModContainer> modContainerById = ModList.get().getModContainerById(Bumblezone.MODID);
+        modContainerById.ifPresent(container ->
+            ConfigTracker.INSTANCE.configSets()
+                .get(ModConfig.Type.CLIENT)
+                .forEach(c -> {
+                    if (c.getFileName().contains(Bumblezone.MODID)) {
+                        try {
+                            Method method = ConfigTracker.INSTANCE.getClass().getDeclaredMethod("openConfig", ModConfig.class, Path.class);
+                            method.setAccessible(true);
+                            method.invoke(ConfigTracker.INSTANCE, c, FMLPaths.CONFIGDIR.get());
+                            method.setAccessible(false);
+                        }
+                        catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }));
     }
 
     private static void onAddTabContents(BuildCreativeModeTabContentsEvent event) {

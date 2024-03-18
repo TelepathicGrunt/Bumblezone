@@ -1202,6 +1202,7 @@
   "the_bumblezone.midnightconfig.allowGoodallBottledBeesRevivingEmptyBroodBlock": "Allow Goodall's Bottled Bee Revive Brood Blocks Compat",
   "the_bumblezone.midnightconfig.allowLootrCompat": "Allow loot Cocoons to have compat with Lootr",
   "the_bumblezone.midnightconfig.clientComment": "§o§6    Client Section",
+  "the_bumblezone.midnightconfig.useBackupModelForVariantBee": "Use Backup Model For Variant Bee",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Play Wrath Of Hive Effect Music",
   "the_bumblezone.midnightconfig.playSempiternalSanctumMusic": "Play Sempiternal Sanctum Music",
   "the_bumblezone.midnightconfig.renderBeeQueenBonusTradeItem": "Render Bee Queen wanted item",

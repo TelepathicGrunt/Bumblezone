@@ -32,7 +32,7 @@ public class VariantBeeEntity extends Bee {
 
    public String getVariant() {
       String variant = this.entityData.get(VARIANT);
-      if (!level().isClientSide() && (variant == null || variant.isEmpty())) {
+      if (!level().isClientSide() && (variant == null || variant.isEmpty()) && !BzGeneralConfigs.variantBeeTypes.isEmpty()) {
          variant = BzGeneralConfigs.variantBeeTypes.get(random.nextInt(BzGeneralConfigs.variantBeeTypes.size()));
          setVariant(variant);
       }
@@ -40,7 +40,7 @@ public class VariantBeeEntity extends Bee {
    }
 
    public void setVariant(String variant) {
-      if (!level().isClientSide() && (variant == null || variant.isEmpty())) {
+      if (!level().isClientSide() && (variant == null || variant.isEmpty()) && !BzGeneralConfigs.variantBeeTypes.isEmpty()) {
          variant = BzGeneralConfigs.variantBeeTypes.get(random.nextInt(BzGeneralConfigs.variantBeeTypes.size()));
       }
       this.entityData.set(VARIANT, variant);

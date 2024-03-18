@@ -20,7 +20,8 @@ import com.telepathicgrunt.the_bumblezone.client.particles.SparkleParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.VoiceParticle;
 import com.telepathicgrunt.the_bumblezone.client.particles.WindParticle;
 import com.telepathicgrunt.the_bumblezone.client.rendering.HiddenEffectIconRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.VariantBeeRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.BackupVariantBeeRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.BackupVariantBeeModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.armor.BeeArmorModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.armor.FlowerHeadwearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.beehemoth.BeehemothModel;
@@ -48,10 +49,12 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryW
 import com.telepathicgrunt.the_bumblezone.client.rendering.sentrywatcher.SentryWatcherRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.stingerspear.StingerSpearRenderer;
+import com.telepathicgrunt.the_bumblezone.client.rendering.variantbee.VariantBeeRenderer;
 import com.telepathicgrunt.the_bumblezone.client.screens.BuzzingBriefcaseScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen;
 import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
@@ -93,6 +96,7 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
+import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -403,6 +407,10 @@ public class BumblezoneClient {
     }
 
     public static void registerEntityLayers(RegisterEntityLayersEvent event) {
+        if (BzClientConfigs.useBackupModelForVariantBee) {
+            event.register(BackupVariantBeeModel.LAYER_LOCATION, BackupVariantBeeModel::createBodyLayer);
+        }
+
         event.register(BeehemothModel.LAYER_LOCATION, BeehemothModel::createBodyLayer);
         event.register(BeeQueenModel.LAYER_LOCATION, BeeQueenModel::createBodyLayer);
         event.register(SentryWatcherModel.LAYER_LOCATION, SentryWatcherModel::createBodyLayer);
@@ -420,7 +428,13 @@ public class BumblezoneClient {
 
     @SuppressWarnings("rawtypes")
     public static void registerEntityRenderers(RegisterEntityRenderersEvent event) {
-        event.register((EntityType) BzEntities.VARIANT_BEE.get(), VariantBeeRenderer::new);
+        if (BzClientConfigs.useBackupModelForVariantBee) {
+            event.register(BzEntities.VARIANT_BEE.get(), BackupVariantBeeRenderer::new);
+        }
+        else {
+            event.register((EntityType) BzEntities.VARIANT_BEE.get(), VariantBeeRenderer::new);
+        }
+
         event.register(BzEntities.HONEY_SLIME.get(), HoneySlimeRendering::new);
         event.register(BzEntities.BEEHEMOTH.get(), BeehemothRenderer::new);
         event.register(BzEntities.BEE_QUEEN.get(), BeeQueenRenderer::new);

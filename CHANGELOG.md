@@ -1,3 +1,15 @@
+### **(V.7.2.19 Changes) (1.20.1 Minecraft)**
+
+##### Entity:
+Fixed crash when one removes all skins from the Variant Bee config option.
+ This will make Variant Bee look like a vanilla bee as a fallback.
+
+##### Configs:
+Added useBackupModelForVariantBee config option that will let you bypass issues with other mods or resourcepacks changing vanilla Bee's model.
+
+(Forge): Moved renderBeeQueenBonusTradeItem config option to be in same section as useBackupModelForVariantBee.
+
+
 ### **(V.7.2.18 Changes) (1.20.1 Minecraft)**
 
 ##### Misc:
