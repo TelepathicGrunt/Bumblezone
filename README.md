@@ -68,12 +68,6 @@ repositories {
             includeGroup 'earth.terrarium.athena'
         }
     }
-    maven {
-        url = 'https://jitpack.io'
-        content {
-            includeGroup 'com.github.llamalad7.mixinextras'
-        }
-    }
     
     // Fabric/Quilt only
     maven {

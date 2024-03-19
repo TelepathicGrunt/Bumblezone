@@ -226,13 +226,6 @@ allprojects {
 //            }
 //        }
         maven {
-            url = 'https://jitpack.io'
-            content {
-                includeGroup 'com.github.LlamaLad7'
-                includeGroup 'com.github.llamalad7.mixinextras'
-            }
-        }
-        maven {
             url 'https://modmaven.dev/'
             content {
                 includeGroup 'mekanism'

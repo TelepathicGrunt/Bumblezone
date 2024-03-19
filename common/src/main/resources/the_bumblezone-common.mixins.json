@@ -3,7 +3,6 @@
   "package": "com.telepathicgrunt.the_bumblezone.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "entities.AgeableMobAccessor",
     "blocks.BeehiveBlockEntityMixin",
     "blocks.BeehiveMixin",
     "blocks.BigDripleafBlockMixin",
@@ -28,6 +27,7 @@
     "effects.MobEffectInstanceAccessor",
     "entities.AbstractArrowMixin",
     "entities.AbstractHorseMixin",
+    "entities.AgeableMobAccessor",
     "entities.AmphibiousNodeEvaluatorMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
