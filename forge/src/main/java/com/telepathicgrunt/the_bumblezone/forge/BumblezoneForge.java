@@ -121,7 +121,6 @@ public class BumblezoneForge {
 
     public BumblezoneForge() {
         BzConfigHandler.setup();
-        loadBumblezoneClientConfigsEarly();
 
         ForgeModuleInitalizer.init();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.NORMAL, ResourcefulRegistriesImpl::onRegisterForgeRegistries);
@@ -176,26 +175,6 @@ public class BumblezoneForge {
         eventBus.addListener(BumblezoneForge::onEntityVisibility);
         eventBus.addListener(BumblezoneForge::onFinishUseItem);
         eventBus.addListener(EventPriority.LOWEST, BumblezoneForge::onEntityHurtLowest);
-    }
-
-    private static void loadBumblezoneClientConfigsEarly() {
-        Optional<? extends ModContainer> modContainerById = ModList.get().getModContainerById(Bumblezone.MODID);
-        modContainerById.ifPresent(container ->
-            ConfigTracker.INSTANCE.configSets()
-                .get(ModConfig.Type.CLIENT)
-                .forEach(c -> {
-                    if (c.getFileName().contains(Bumblezone.MODID)) {
-                        try {
-                            Method method = ConfigTracker.INSTANCE.getClass().getDeclaredMethod("openConfig", ModConfig.class, Path.class);
-                            method.setAccessible(true);
-                            method.invoke(ConfigTracker.INSTANCE, c, FMLPaths.CONFIGDIR.get());
-                            method.setAccessible(false);
-                        }
-                        catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }));
     }
 
     private static void onAddTabContents(BuildCreativeModeTabContentsEvent event) {
