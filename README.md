@@ -24,16 +24,16 @@ Don't forget to change \<modversion> with the actual latest version of this mod 
 dependencies {
    ...
    FORGE: 
-     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-forge")
+     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-forge")
      
    FABRIC: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-fabric"
+     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-fabric"
      
    QUILT: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-quilt"
+     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-quilt"
      
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-common"
+     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-common"
 }
 ```
 
@@ -97,21 +97,21 @@ Don't forget to change \<modversion> with the actual latest version of this mod 
 dependencies {
    ...
    FORGE: 
-     implementation fg.deobf("com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-forge")
+     implementation fg.deobf("com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-forge")
      implementation fg.deobf("earth.terrarium.athena:athena-forge-1.20.1:3.1.1")
      
    FABRIC: 
-     modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-fabric"
+     modImplementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-fabric"
      modImplementation "earth.terrarium.athena:athena-fabric-1.20.1:3.1.1"
      modImplementation "maven.modrinth:midnightlib:1.4.1-fabric" 
    
    QUILT: 
-     modImplementation "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-quilt"
+     modImplementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-quilt"
      modImplementation "earth.terrarium.athena:athena-fabric-1.20.1:3.1.1"
      modImplementation "maven.modrinth:midnightlib:1.4.1-fabric" 
      
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:\<modversion>+1.20.1-common"
+     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.1-common"
 }
 ```
 
