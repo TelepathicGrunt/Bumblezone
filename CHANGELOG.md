@@ -1,3 +1,9 @@
+### **(V.7.2.20 Changes) (1.20.1 Minecraft)**
+
+##### Entity:
+Fix Honey Slime crash when certain combinations of mods are on.
+
+
 ### **(V.7.2.19 Changes) (1.20.1 Minecraft)**
 
 ##### Entity:
@@ -18,24 +24,3 @@ Reshow hint to view Bumblezone's advancements when entering Bumblezone for first
 
 ##### Mod Compat:
 Fixed Cell Maze Honey Cocoons being all linked to same inventory when Lootr is on.
-
-
-### **(V.7.2.17 Changes) (1.20.1 Minecraft)**
-
-##### Entities:
-Fixed Beehemoth thinking up/down key is still pressed is dismounted while holding those keys and then re-mounting.
-
-
-### **(V.7.2.16 Changes) (1.20.1 Minecraft)**
-
-##### Mod Compat:
-Added config to allow disabling Lootr compat. Forgot to make the config for that
-
-
-### **(V.7.2.15 Changes) (1.20.1 Minecraft)**
-
-##### Items:
-Capped Resistance to a maximum of level 4 when crafting Resistance Potion Candles. 
-
-##### Misc:
-(Fabric/Quilt): Fixed all entities not dropping loot because of a mix up with a fabric event.

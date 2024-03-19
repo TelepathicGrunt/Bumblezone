@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeRevengeGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeTemptGoal;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.AgeableMobAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -52,7 +53,6 @@ import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -121,13 +121,15 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
 
    @Override
    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-      this.refreshDimensions();
-      if (!this.isPassenger()) {
-         this.setYRot(this.yHeadRot);
-         this.setYBodyRot(this.yHeadRot);
-      }
-      if (this.isInWater() && this.random.nextInt(20) == 0) {
-         this.doWaterSplashEffect();
+      if (AgeableMobAccessor.getDATA_BABY_ID().equals(key)) {
+         this.refreshDimensions();
+         if (!this.isPassenger()) {
+            this.setYRot(this.yHeadRot);
+            this.setYBodyRot(this.yHeadRot);
+         }
+         if (this.isInWater() && this.random.nextInt(20) == 0) {
+            this.doWaterSplashEffect();
+         }
       }
       super.onSyncedDataUpdated(key);
    }
