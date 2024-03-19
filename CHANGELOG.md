@@ -1,3 +1,9 @@
+### **(V.7.3.19 Changes) (1.20.4 Minecraft)**
+
+##### Entity:
+Fix Honey Slime crash when certain combinations of mods are on.
+
+
 ### **(V.7.3.18 Changes) (1.20.4 Minecraft)**
 
 ##### Blocks:

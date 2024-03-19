@@ -29,6 +29,7 @@
     "entities.AbstractArrowAccessor",
     "entities.AbstractArrowMixin",
     "entities.AbstractHorseMixin",
+    "entities.AgeableMobAccessor",
     "entities.AmphibiousNodeEvaluatorMixin",
     "entities.BeeEntityInvoker",
     "entities.BeeEntityMixin",
