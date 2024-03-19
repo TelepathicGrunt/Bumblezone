@@ -1,5 +1,8 @@
 ### **(V.7.3.19 Changes) (1.20.4 Minecraft)**
 
+##### Misc:
+(NeoForge): Fixed startup crash.
+
 ##### Entity:
 Fix Honey Slime crash when certain combinations of mods are on.
 

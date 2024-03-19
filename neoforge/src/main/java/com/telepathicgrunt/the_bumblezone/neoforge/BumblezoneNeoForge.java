@@ -27,8 +27,7 @@ import java.util.Optional;
 public class BumblezoneNeoForge {
 
     public BumblezoneNeoForge(IEventBus modEventBus) {
-        BzConfigHandler.setup();
-        loadBumblezoneClientConfigsEarly();
+        BzConfigHandler.setup(modEventBus);
 
         NeoForgeModuleInitalizer.init();
         modEventBus.addListener(EventPriority.NORMAL, ResourcefulRegistriesImpl::onRegisterForgeRegistries);
@@ -46,25 +45,5 @@ public class BumblezoneNeoForge {
         }
 
         NeoForgeEventManager.init(modEventBus, eventBus);
-    }
-
-    private static void loadBumblezoneClientConfigsEarly() {
-        Optional<? extends ModContainer> modContainerById = ModList.get().getModContainerById(Bumblezone.MODID);
-        modContainerById.ifPresent(container ->
-            ConfigTracker.INSTANCE.configSets()
-                .get(ModConfig.Type.CLIENT)
-                .forEach(c -> {
-                    if (c.getFileName().contains(Bumblezone.MODID)) {
-                        try {
-                            Method method = ConfigTracker.INSTANCE.getClass().getDeclaredMethod("openConfig", ModConfig.class, Path.class);
-                            method.setAccessible(true);
-                            method.invoke(ConfigTracker.INSTANCE, c, FMLPaths.CONFIGDIR.get());
-                            method.setAccessible(false);
-                        }
-                        catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }));
     }
 }
