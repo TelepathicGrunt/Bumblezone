@@ -32,7 +32,7 @@ dependencies {
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${rootProject.mixin_extras}"))
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${rootProject.mixin_extras}"))
 
 
     // COMPAT
