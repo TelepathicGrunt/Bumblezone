@@ -237,6 +237,12 @@ public class PlatformHooksImpl {
     public static void disableFlight(Player player) {
         player.getAbilities().flying = false;
         player.getAbilities().mayfly = false;
+
+        if (player.level().isClientSide()) {
+            return;
+        }
+
+        // Sync on server only
         player.onUpdateAbilities();
     }
 }

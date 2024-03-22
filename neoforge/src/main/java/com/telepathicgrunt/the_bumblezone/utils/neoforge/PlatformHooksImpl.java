@@ -169,9 +169,14 @@ public class PlatformHooksImpl {
     }
 
     public static void disableFlight(Player player) {
+        player.getAbilities().mayfly = false;
+
         if (player.level().isClientSide()) {
             return;
         }
+
+        // Sync on server only
+        player.onUpdateAbilities();
 
         AttributeInstance attributeInstance = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT.value());
         if (attributeInstance != null && !attributeInstance.hasModifier(DisableFlightAttribute.DISABLE_FLIGHT)) {
