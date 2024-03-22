@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.neoforge;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
+import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
@@ -323,6 +324,8 @@ public class NeoForgeEventManager {
         if (event.side == LogicalSide.CLIENT) {
             PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
+
+        DisableFlightAttribute.onPlayerTickToRemoveDisabledFlight(event);
     }
 
     private static void onPickupItem(PlayerEvent.ItemPickupEvent event) {

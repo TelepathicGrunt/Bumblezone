@@ -1,3 +1,10 @@
+### **(V.7.3.20 Changes) (1.20.4 Minecraft)**
+
+##### Misc:
+(NeoForge): Uses the new Creative Flight Attribute from NeoForge for Heavy Air to disable modded Creative Flight.
+ Requires v20.4.209 or newer NeoForge.
+
+
 ### **(V.7.3.19 Changes) (1.20.4 Minecraft)**
 
 ##### Misc:

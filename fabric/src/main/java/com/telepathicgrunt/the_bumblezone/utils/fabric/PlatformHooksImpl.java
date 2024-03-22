@@ -233,4 +233,10 @@ public class PlatformHooksImpl {
     public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         return targetBackupClass.isInstance(stack.getItem());
     }
+
+    public static void disableFlight(Player player) {
+        player.getAbilities().flying = false;
+        player.getAbilities().mayfly = false;
+        player.onUpdateAbilities();
+    }
 }

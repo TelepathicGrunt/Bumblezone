@@ -145,4 +145,9 @@ public class PlatformHooks {
     public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         throw new NotImplementedException("PlatformHooks isToolAction is not implemented!");
     }
+
+    @ExpectPlatform
+    public static void disableFlight(Player player) {
+        throw new NotImplementedException("PlatformHooks disableFlight is not implemented!");
+    }
 }
