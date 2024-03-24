@@ -37,6 +37,10 @@ public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeath
 
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level world, Player player) {
+        if (player.getCooldowns().isOnCooldown(itemstack.getItem())) {
+            return;
+        }
+
         int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
 
         MobEffectInstance wrath = player.getEffect(BzEffects.WRATH_OF_THE_HIVE.get());
@@ -59,7 +63,11 @@ public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeath
 
     public static ItemStack getFlowerHeadwear(Entity entity) {
         for(ItemStack armor : entity.getArmorSlots()) {
-            if(armor.getItem() instanceof FlowerHeadwearHelmet) {
+            if(armor.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet) {
+                if (entity instanceof Player player && player.getCooldowns().isOnCooldown(flowerHeadwearHelmet)) {
+                    continue;
+                }
+
                 return armor;
             }
         }
@@ -68,12 +76,17 @@ public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeath
         for (ModCompat compat : ModChecker.CUSTOM_EQUIPMENT_SLOTS_COMPATS) {
             compat.getNumberOfMatchingEquippedItemsInCustomSlots(entity, (itemStack) -> {
                 if (itemStack.is(BzItems.FLOWER_HEADWEAR.get())) {
+                    if (entity instanceof Player player && player.getCooldowns().isOnCooldown(itemStack.getItem())) {
+                        return false;
+                    }
+
                     flowerStack.set(itemStack);
                     return true;
                 }
                 return false;
             });
         }
+
         return flowerStack.get();
     }
 }
