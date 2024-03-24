@@ -33,6 +33,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.ModLoader;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
@@ -182,5 +184,9 @@ public class PlatformHooksImpl {
         if (attributeInstance != null && !attributeInstance.hasModifier(DisableFlightAttribute.DISABLE_FLIGHT)) {
             attributeInstance.addTransientModifier(DisableFlightAttribute.DISABLE_FLIGHT);
         }
+    }
+
+    public static boolean isDevEnvironment() {
+        return !FMLLoader.isProduction();
     }
 }

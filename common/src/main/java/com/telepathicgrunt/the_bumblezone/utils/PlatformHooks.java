@@ -150,4 +150,9 @@ public class PlatformHooks {
     public static void disableFlight(Player player) {
         throw new NotImplementedException("PlatformHooks disableFlight is not implemented!");
     }
+
+    @ExpectPlatform
+    public static boolean isDevEnvironment() {
+        throw new NotImplementedException("PlatformHooks isDevEnvironment is not implemented!");
+    }
 }

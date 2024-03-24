@@ -245,4 +245,8 @@ public class PlatformHooksImpl {
         // Sync on server only
         player.onUpdateAbilities();
     }
+
+    public static boolean isDevEnvironment() {
+        return FabricLoader.getInstance().isDevelopmentEnvironment();
+    }
 }
