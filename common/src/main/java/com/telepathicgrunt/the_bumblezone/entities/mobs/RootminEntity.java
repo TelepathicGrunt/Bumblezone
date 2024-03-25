@@ -420,15 +420,6 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
       }
 
-      this.refreshDimensions();
-      if (!this.isPassenger()) {
-         this.setYRot(this.yHeadRot);
-         this.setYBodyRot(this.yHeadRot);
-      }
-      if (this.isInWater() && this.random.nextInt(20) == 0) {
-         this.doWaterSplashEffect();
-      }
-
       super.onSyncedDataUpdated(entityDataAccessor);
    }
 
