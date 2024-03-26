@@ -1,3 +1,9 @@
+### **(V.7.3.21 Changes) (1.20.4 Minecraft)**
+
+##### Items:
+Honey Compasses used in Creative Mode will now say they spawned a new compass in inventory rather than failed to locate.
+
+
 ### **(V.7.3.20 Changes) (1.20.4 Minecraft)**
 
 ##### Fluids:
