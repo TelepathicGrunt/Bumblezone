@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.rendering.FluidClientOverlay;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.client.renderer.LightTexture;
@@ -12,8 +11,9 @@ import org.joml.Vector3f;
 
 public class HoneyFluidClientProperties {
 
-    public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_still");
-    public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_flow");
+    public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid/still");
+    public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid/flow");
+    public static final ResourceLocation HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid/flow_diagonal");
 
     public static ClientFluidProperties create(FluidProperties properties) {
         return new ClientFluidProperties(properties)
@@ -21,6 +21,7 @@ public class HoneyFluidClientProperties {
                 .still(HONEY_FLUID_STILL_TEXTURE)
                 .flowing(HONEY_FLUID_FLOWING_TEXTURE)
                 .overlay(HONEY_FLUID_FLOWING_TEXTURE)
+                .diagonal(HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE)
                 .screenOverlay(FluidClientOverlay::renderHoneyOverlay)
                 .modifyFogColor((camera, level, pos, fluidState, fluid, fogColor) -> {
                     // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.

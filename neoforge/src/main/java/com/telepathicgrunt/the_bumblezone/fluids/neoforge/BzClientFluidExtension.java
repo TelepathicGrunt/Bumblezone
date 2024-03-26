@@ -3,9 +3,10 @@ package com.telepathicgrunt.the_bumblezone.fluids.neoforge;
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.HoneyFluidRendering;
+import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidRendering;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.neoforge.BzFluidSpriteCache;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -27,6 +28,7 @@ public class BzClientFluidExtension implements IClientFluidTypeExtensions {
 
     private final BzFluidType type;
     private ClientFluidProperties properties;
+
 
     public BzClientFluidExtension(BzFluidType type) {
         this.type = type;
@@ -58,6 +60,11 @@ public class BzClientFluidExtension implements IClientFluidTypeExtensions {
     public ResourceLocation getOverlayTexture() {
         checkForProperties();
         return properties.overlay();
+    }
+
+    public ResourceLocation getDiagonalTexture() {
+        checkForProperties();
+        return properties.diagonal();
     }
 
     @Override
@@ -94,7 +101,7 @@ public class BzClientFluidExtension implements IClientFluidTypeExtensions {
     @Override
     public boolean renderFluid(FluidState fluidState, BlockAndTintGetter getter, BlockPos pos, VertexConsumer vertexConsumer, BlockState blockState) {
         if (fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
-            HoneyFluidRendering.renderSpecialHoneyFluid(pos, getter, vertexConsumer, blockState, fluidState, FluidSpriteCache.getFluidSprites(getter, pos, fluidState));
+            HoneyFluidRendering.renderSpecialHoneyFluid(pos, getter, vertexConsumer, blockState, fluidState, BzFluidSpriteCache.getFluidSprites(getter, pos, fluidState));
         }
         else {
             Minecraft.getInstance().getBlockRenderer().getLiquidBlockRenderer().tesselate(getter, pos, vertexConsumer, blockState, fluidState);

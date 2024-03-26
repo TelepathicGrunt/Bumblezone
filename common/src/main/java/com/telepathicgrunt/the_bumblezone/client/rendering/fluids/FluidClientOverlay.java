@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.client.rendering;
+package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;

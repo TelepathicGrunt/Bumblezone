@@ -41,6 +41,7 @@ public class ClientFluidProperties {
     private ResourceLocation still;
     private ResourceLocation flowing;
     private ResourceLocation overlay;
+    private ResourceLocation diagonal;
 
     public ClientFluidProperties(FluidProperties properties) {
         this(properties.id());
@@ -86,6 +87,11 @@ public class ClientFluidProperties {
         return this;
     }
 
+    public ClientFluidProperties diagonal(ResourceLocation diagonal) {
+        this.diagonal = diagonal;
+        return this;
+    }
+
     public ClientFluidProperties screenOverlay(ResourceLocation screenOverlay) {
         this.fluidOverlay = (mc, stack) -> {
             if (mc.player == null) return;
@@ -116,6 +122,10 @@ public class ClientFluidProperties {
 
     public ResourceLocation overlay() {
         return overlay;
+    }
+
+    public ResourceLocation diagonal() {
+        return diagonal;
     }
 
     public void fluidOverlay(Minecraft mc, PoseStack stack) {
