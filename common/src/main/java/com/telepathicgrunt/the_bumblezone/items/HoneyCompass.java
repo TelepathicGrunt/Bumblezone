@@ -317,6 +317,10 @@ public class HoneyCompass extends Item implements Vanishable {
             if (!serverPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
             }
+            else {
+                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
+                serverPlayer.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_creative").withStyle(ChatFormatting.YELLOW), true);
+            }
 
             addFoundStructureLocation(serverLevel.dimension(), structurePos, newCompoundTag);
             if (!serverPlayer.getInventory().add(newCompass)) {
