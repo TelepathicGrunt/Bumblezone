@@ -13,12 +13,14 @@ import org.joml.Vector3f;
 public class RoyalJellyClientProperties {
     public static final ResourceLocation ROYAL_JELLY_FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/royal_jelly_fluid_still");
     public static final ResourceLocation ROYAL_JELLY_FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/royal_jelly_fluid_flow");
+    public static final ResourceLocation ROYAL_JELLY_FLUID_FLOWING_DIAGONAL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/royal_jelly_fluid_flow_diagonal");
 
     public static ClientFluidProperties create(FluidProperties properties) {
         return new ClientFluidProperties(properties)
                 .still(ROYAL_JELLY_FLUID_STILL_TEXTURE)
                 .flowing(ROYAL_JELLY_FLUID_FLOWING_TEXTURE)
                 .overlay(ROYAL_JELLY_FLUID_FLOWING_TEXTURE)
+                .diagonal(ROYAL_JELLY_FLUID_FLOWING_DIAGONAL_TEXTURE)
                 .tintColor(0xFFFFFFFF)
                 .screenOverlay(FluidClientOverlay::renderHoneyOverlay)
                 .modifyFogColor((camera, level, pos, fluidState, fluid, fogColor) -> {

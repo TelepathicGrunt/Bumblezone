@@ -7,9 +7,11 @@ import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -22,11 +24,18 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
 
+    protected final TextureAtlasSprite[] sprites;
+    protected final ResourceLocation diagonalTexture;
+
     public HoneyFluidRenderHandler(ClientFluidProperties properties) {
         super(properties.still(), properties.flowing(), properties.overlay());
+
+        this.diagonalTexture = properties.diagonal();
+        this.sprites = new TextureAtlasSprite[4];
     }
 
     @Override
@@ -123,10 +132,19 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
                         ag = aa;
                     }
                     else {
-                        textureAtlasSprite = textureAtlasSprites[1];
+                        boolean isDiagonal = vec3.x % 1.0 != 0.0 || vec3.z % 1.0 != 0.0;
+                        float sizing = 1;
+                        if (isDiagonal) {
+                            textureAtlasSprite = sprites[3];
+                            sizing = 1.43f;
+                        }
+                        else {
+                            textureAtlasSprite = sprites[1];
+                        }
+
                         ah = (float) Mth.atan2(vec3.z, vec3.x) - 1.5707964F;
-                        ai = Mth.sin(ah) * 0.25F;
-                        float aj = Mth.cos(ah) * 0.25F;
+                        ai = Mth.sin(ah) * 0.25F * sizing;
+                        float aj = Mth.cos(ah) * 0.25F * sizing;
                         z = textureAtlasSprite.getU(8.0F + (-aj - ai) * 16.0F);
                         aa = textureAtlasSprite.getV(8.0F + (-aj + ai) * 16.0F);
                         ab = textureAtlasSprite.getU(8.0F + (-aj + ai) * 16.0F);
@@ -347,5 +365,18 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
         } else {
             return !blockState.isSolid() ? 0.0F : -1.0F;
         }
+    }
+
+    @Override
+    public TextureAtlasSprite[] getFluidSprites(@Nullable BlockAndTintGetter view, @Nullable BlockPos pos, FluidState state) {
+        return sprites;
+    }
+
+    @Override
+    public void reloadTextures(TextureAtlas textureAtlas) {
+        sprites[0] = textureAtlas.getSprite(stillTexture);
+        sprites[1] = textureAtlas.getSprite(flowingTexture);
+        sprites[2] = textureAtlas.getSprite(overlayTexture);
+        sprites[3] = textureAtlas.getSprite(diagonalTexture);
     }
 }

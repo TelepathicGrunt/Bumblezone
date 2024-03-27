@@ -14,6 +14,7 @@ public class HoneyFluidClientProperties {
 
     public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_still");
     public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_flow");
+    public static final ResourceLocation HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid_flow_diagonal");
 
     public static ClientFluidProperties create(FluidProperties properties) {
         return new ClientFluidProperties(properties)
@@ -21,6 +22,7 @@ public class HoneyFluidClientProperties {
                 .still(HONEY_FLUID_STILL_TEXTURE)
                 .flowing(HONEY_FLUID_FLOWING_TEXTURE)
                 .overlay(HONEY_FLUID_FLOWING_TEXTURE)
+                .diagonal(HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE)
                 .screenOverlay(FluidClientOverlay::renderHoneyOverlay)
                 .modifyFogColor((camera, level, pos, fluidState, fluid, fogColor) -> {
                     // Scale the brightness of fog but make sure it is never darker than the dimension's min brightness.
