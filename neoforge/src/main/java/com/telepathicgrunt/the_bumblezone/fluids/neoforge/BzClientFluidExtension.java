@@ -6,11 +6,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidRendering;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.utils.neoforge.BzFluidSpriteCache;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -101,7 +101,12 @@ public class BzClientFluidExtension implements IClientFluidTypeExtensions {
     @Override
     public boolean renderFluid(FluidState fluidState, BlockAndTintGetter getter, BlockPos pos, VertexConsumer vertexConsumer, BlockState blockState) {
         if (fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
-            HoneyFluidRendering.renderSpecialHoneyFluid(pos, getter, vertexConsumer, blockState, fluidState, BzFluidSpriteCache.getFluidSprites(getter, pos, fluidState));
+            TextureAtlasSprite[] sprites = new TextureAtlasSprite[4];
+            sprites[0] = FluidSpriteCache.getSprite(this.getStillTexture(fluidState, getter, pos));
+            sprites[1] = FluidSpriteCache.getSprite(this.getFlowingTexture(fluidState, getter, pos));
+            sprites[2] = FluidSpriteCache.getSprite(this.getOverlayTexture(fluidState, getter, pos));
+            sprites[3] = FluidSpriteCache.getSprite(this.getDiagonalTexture());
+            HoneyFluidRendering.renderSpecialHoneyFluid(pos, getter, vertexConsumer, blockState, fluidState, sprites);
         }
         else {
             Minecraft.getInstance().getBlockRenderer().getLiquidBlockRenderer().tesselate(getter, pos, vertexConsumer, blockState, fluidState);
