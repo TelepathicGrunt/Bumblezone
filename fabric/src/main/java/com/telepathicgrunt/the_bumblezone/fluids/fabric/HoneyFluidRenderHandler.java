@@ -21,7 +21,7 @@ public class HoneyFluidRenderHandler extends SimpleFluidRenderHandler {
 
     public HoneyFluidRenderHandler(ClientFluidProperties properties) {
         super(properties.still(), properties.flowing(), properties.overlay());
-        diagonalTexture = properties.diagonal();
+        this.diagonalTexture = properties.diagonal();
         this.sprites = new TextureAtlasSprite[4];
     }
 
