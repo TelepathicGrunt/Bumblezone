@@ -5,9 +5,17 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.RegisterEntityAttributesEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.SetupEvent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.EmptyItemFluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -15,6 +23,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Items;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -47,6 +56,27 @@ public class FabricBaseEventManager {
         SetupEvent.EVENT.invoke(new SetupEvent(Runnable::run));
         FinalSetupEvent.EVENT.invoke(new FinalSetupEvent(Runnable::run));
         ServerLivingEntityEvents.ALLOW_DEATH.register(FabricBaseEventManager::allowLivingEntityDeath);
+
+        FluidStorage.combinedItemApiProvider(BzItems.HONEY_BUCKET.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.BUCKET), FluidVariant.of(BzFluids.HONEY_FLUID.get()), FluidConstants.BUCKET));
+
+        FluidStorage.combinedItemApiProvider(BzItems.ROYAL_JELLY_BUCKET.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.BUCKET), FluidVariant.of(BzFluids.ROYAL_JELLY_FLUID.get()), FluidConstants.BUCKET));
+
+        FluidStorage.combinedItemApiProvider(BzItems.ROYAL_JELLY_BOTTLE.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.GLASS_BOTTLE), FluidVariant.of(BzFluids.ROYAL_JELLY_FLUID.get()), FluidConstants.BUCKET / 4));
+
+        FluidStorage.combinedItemApiProvider(Items.GLASS_BOTTLE).register(context ->
+                new EmptyItemFluidStorage(context, bottle -> ItemVariant.of(BzItems.ROYAL_JELLY_BOTTLE.get()), BzFluids.ROYAL_JELLY_FLUID.get(), FluidConstants.BUCKET / 4));
+
+        FluidStorage.combinedItemApiProvider(BzItems.SUGAR_WATER_BUCKET.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.BUCKET), FluidVariant.of(BzFluids.SUGAR_WATER_FLUID.get()), FluidConstants.BUCKET));
+
+        FluidStorage.combinedItemApiProvider(BzItems.SUGAR_WATER_BOTTLE.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.GLASS_BOTTLE), FluidVariant.of(BzFluids.SUGAR_WATER_FLUID.get()), FluidConstants.BUCKET / 4));
+
+        FluidStorage.combinedItemApiProvider(Items.GLASS_BOTTLE).register(context ->
+                new EmptyItemFluidStorage(context, bottle -> ItemVariant.of(BzItems.SUGAR_WATER_BOTTLE.get()), BzFluids.SUGAR_WATER_FLUID.get(), FluidConstants.BUCKET / 4));
     }
 
     private static boolean allowLivingEntityDeath(LivingEntity livingEntity, DamageSource damageSource, float damage) {
