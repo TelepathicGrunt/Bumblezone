@@ -25,6 +25,8 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemAttackBlockEve
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseEvent;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerItemUseOnBlockEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.fabric.fabricapi.BiomeModificationContextImplMixin;
+import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
+import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -47,6 +49,12 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.EmptyItemFluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.Util;
@@ -75,6 +83,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -159,6 +168,27 @@ public class FabricEventManager {
         UseBlockCallback.EVENT.register(FabricEventManager::onItemUseOnBlock);
         UseItemCallback.EVENT.register(FabricEventManager::onItemUse);
         ServerLivingEntityEvents.ALLOW_DEATH.register(FabricEventManager::allowLivingEntityDeath);
+
+        FluidStorage.combinedItemApiProvider(BzItems.HONEY_BUCKET.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.BUCKET), FluidVariant.of(BzFluids.HONEY_FLUID.get()), FluidConstants.BUCKET));
+
+        FluidStorage.combinedItemApiProvider(BzItems.ROYAL_JELLY_BUCKET.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.BUCKET), FluidVariant.of(BzFluids.ROYAL_JELLY_FLUID.get()), FluidConstants.BUCKET));
+
+        FluidStorage.combinedItemApiProvider(BzItems.ROYAL_JELLY_BOTTLE.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.GLASS_BOTTLE), FluidVariant.of(BzFluids.ROYAL_JELLY_FLUID.get()), FluidConstants.BUCKET / 4));
+
+        FluidStorage.combinedItemApiProvider(Items.GLASS_BOTTLE).register(context ->
+                new EmptyItemFluidStorage(context, bottle -> ItemVariant.of(BzItems.ROYAL_JELLY_BOTTLE.get()), BzFluids.ROYAL_JELLY_FLUID.get(), FluidConstants.BUCKET / 4));
+
+        FluidStorage.combinedItemApiProvider(BzItems.SUGAR_WATER_BUCKET.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.BUCKET), FluidVariant.of(BzFluids.SUGAR_WATER_FLUID.get()), FluidConstants.BUCKET));
+
+        FluidStorage.combinedItemApiProvider(BzItems.SUGAR_WATER_BOTTLE.get()).register(context ->
+                new FullItemFluidStorage(context, bottle -> ItemVariant.of(Items.GLASS_BOTTLE), FluidVariant.of(BzFluids.SUGAR_WATER_FLUID.get()), FluidConstants.BUCKET / 4));
+
+        FluidStorage.combinedItemApiProvider(Items.GLASS_BOTTLE).register(context ->
+                new EmptyItemFluidStorage(context, bottle -> ItemVariant.of(BzItems.SUGAR_WATER_BOTTLE.get()), BzFluids.SUGAR_WATER_FLUID.get(), FluidConstants.BUCKET / 4));
     }
 
     public static void lateInit() {
