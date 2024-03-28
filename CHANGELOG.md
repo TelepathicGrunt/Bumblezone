@@ -3,6 +3,9 @@
 ##### Items:
 Honey Compasses used in Creative Mode will now say they spawned a new compass in inventory rather than failed to locate.
 
+##### Blocks:
+Fixed possible rare Honey Cocoon crash during worldgen if it is replaced with air before chunk is fully made.
+
 ##### Misc:
 (NeoForge): Requires v20.4.214 NeoForge or newer due to making use of a new NooForge method.
 
