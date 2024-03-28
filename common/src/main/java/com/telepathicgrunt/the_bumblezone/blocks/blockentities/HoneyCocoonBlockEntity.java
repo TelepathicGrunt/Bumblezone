@@ -144,7 +144,12 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     }
 
     private boolean isLootWithLootrOn() {
-        return this.getLootTable() != null && this.getBlockState().getValue(HoneyCocoon.IS_LOOT_CONTAINER) && ModChecker.lootrPresent && BzModCompatibilityConfigs.allowLootrCompat;
+        if (this.getLootTable() == null || !ModChecker.lootrPresent || !BzModCompatibilityConfigs.allowLootrCompat) {
+            return false;
+        }
+
+        BlockState state = this.getBlockState();
+        return state.is(BzBlocks.HONEY_COCOON.get()) && state.getValue(HoneyCocoon.IS_LOOT_CONTAINER);
     }
 
     @Override
