@@ -6,6 +6,9 @@ Honey Compasses used in Creative Mode will now say they spawned a new compass in
 ##### Blocks:
 Fixed possible rare Honey Cocoon crash during worldgen if it is replaced with air before chunk is fully made.
 
+##### Fluids:
+Fixed top texture of Honey Fluid and Royal Jelly Fluid not rendering if the same fluid is above but not yet touching the below fluid.
+
 ##### Misc:
 (NeoForge): Requires v20.4.214 NeoForge or newer due to making use of a new NooForge method.
 

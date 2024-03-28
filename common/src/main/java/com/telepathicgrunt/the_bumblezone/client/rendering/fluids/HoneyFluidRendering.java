@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
@@ -19,6 +20,9 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
+import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
 
 public class HoneyFluidRendering {
 
@@ -93,8 +97,8 @@ public class HoneyFluidRendering {
             float v3;
             float v4;
 
-            if (isNotSameFluidAbove &&
-                (!isFaceOccludedByNeighbor(level, blockPos, Direction.UP, Math.min(Math.min(p, r), Math.min(q, o)), aboveState) || shouldRenderUp))
+            if ((isNotSameFluidAbove && !isFaceOccludedByNeighbor(level, blockPos, Direction.UP, Math.min(Math.min(p, r), Math.min(q, o)), aboveState))
+                || shouldRenderUp)
             {
                 p -= 0.001F;
                 r -= 0.001F;
@@ -343,8 +347,14 @@ public class HoneyFluidRendering {
 
     private static float getHeight(BlockAndTintGetter blockAndTintGetter, Fluid fluid, BlockPos blockPos, BlockState blockState, FluidState fluidState) {
         if (fluid.isSame(fluidState.getType())) {
-            BlockState blockState2 = blockAndTintGetter.getBlockState(blockPos.above());
-            return fluid.isSame(blockState2.getFluidState().getType()) ? 1.0F : fluidState.getOwnHeight();
+            FluidState aboveFluidState = blockAndTintGetter.getFluidState(blockPos.above());
+
+            boolean aboveFluidIsThisFluid =
+                    !aboveFluidState.isEmpty() &&
+                        aboveFluidState.getType().isSame(fluid) &&
+                        (aboveFluidState.isSource() || !aboveFluidState.is(BzTags.SPECIAL_HONEY_LIKE) || aboveFluidState.getValue(BOTTOM_LEVEL) == 0);
+
+            return aboveFluidIsThisFluid ? 1.0f : fluidState.getOwnHeight();
         }
         else {
             return !blockState.isSolid() ? 0.0F : -1.0F;
