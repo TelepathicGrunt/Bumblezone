@@ -49,7 +49,10 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
+
+import java.util.List;
 
 public class PlatformHooksImpl {
 
@@ -249,4 +252,6 @@ public class PlatformHooksImpl {
     public static boolean isDevEnvironment() {
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
+
+    public static boolean shouldMobSplit(Mob parent, List<Mob> children) { return true; }
 }

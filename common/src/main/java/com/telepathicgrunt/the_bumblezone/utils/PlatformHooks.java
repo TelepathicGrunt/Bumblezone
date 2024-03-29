@@ -32,6 +32,8 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 /**
  * We use @Contract(pure = true) because intellij will think that they always return the same value.
  */
@@ -154,5 +156,10 @@ public class PlatformHooks {
     @ExpectPlatform
     public static boolean isDevEnvironment() {
         throw new NotImplementedException("PlatformHooks isDevEnvironment is not implemented!");
+    }
+
+    @ExpectPlatform
+    public static boolean shouldMobSplit(Mob parent, List<Mob> children) {
+        throw new NotImplementedException("PlatformHooks fireMobSplitEvents is not implemented!");
     }
 }

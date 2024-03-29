@@ -15,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -61,6 +62,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -185,6 +187,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
             boolean flag = this.isNoAi();
             int splitAmount = 2 + this.random.nextInt(3);
 
+            ArrayList<Mob> children = new ArrayList<>();
             for(int currentNewSlime = 0; currentNewSlime < splitAmount; ++currentNewSlime) {
                float xOffset = ((float)(currentNewSlime % 2) - 0.5F) * 0.5F;
                float zOffset = ((float)(currentNewSlime / 2) - 0.5F) * 0.5F;
@@ -201,7 +204,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                      honeySlime.setInvulnerable(this.isInvulnerable());
                      honeySlime.setupHoneySlime(honeySlime.isBaby(), true);
                      honeySlime.moveTo(this.getX() + (double)xOffset, this.getY() + 0.5, this.getZ() + (double)zOffset, this.random.nextFloat() * 360.0F, 0.0F);
-                     this.level().addFreshEntity(honeySlime);
+                     children.add(honeySlime);
                   }
                }
                else {
@@ -216,9 +219,13 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
                      slime.setInvulnerable(this.isInvulnerable());
                      slime.setSize(1, true);
                      slime.moveTo(this.getX() + (double)xOffset, this.getY() + 0.5, this.getZ() + (double)zOffset, this.random.nextFloat() * 360.0F, 0.0F);
-                     this.level().addFreshEntity(slime);
+                     children.add(slime);
                   }
                }
+            }
+
+            if (PlatformHooks.shouldMobSplit(this, children)) {
+               children.forEach(this.level()::addFreshEntity);
             }
          }
 

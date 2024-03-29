@@ -48,6 +48,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class PlatformHooksImpl {
@@ -188,5 +189,9 @@ public class PlatformHooksImpl {
 
     public static boolean isDevEnvironment() {
         return !FMLLoader.isProduction();
+    }
+
+    public static boolean shouldMobSplit(Mob parent, List<Mob> children) {
+        return !EventHooks.onMobSplit(parent, children).isCanceled();
     }
 }
