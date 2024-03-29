@@ -30,6 +30,7 @@ public class BzGeneralConfig {
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
     public static ForgeConfigSpec.BooleanValue beeQueenSpecialDayTrades;
+    public static ForgeConfigSpec.BooleanValue allowWanderingTraderMusicDiscsTrades;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthBeeLaxingWithTheHomBees;
@@ -255,6 +256,66 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.beequeenspecialdaytrades")
                 .define("beeQueenSpecialDayTrades", true);
 
+        crystallineFlowerConsumeItemEntities = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower block will eat any item entity that touches the block's collision box in the world\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeitementities")
+                .define("crystallineFlowerConsumeItemEntities", true);
+
+        crystallineFlowerConsumeExperienceOrbEntities = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower block will pull in and eat any experience orb that touches it in the world\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeexperienceorbentities")
+                .define("crystallineFlowerConsumeExperienceOrbEntities", true);
+
+        crystallineFlowerConsumeItemUI = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower's GUI allows players to feed it items directly\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeitemui")
+                .define("crystallineFlowerConsumeItemUI", true);
+
+        crystallineFlowerConsumeExperienceUI = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether the Crystalline Flower's GUI allows players to feed it the player's experience\n")
+                .translation("the_bumblezone.config.crystallineflowerconsumeexperienceui")
+                .define("crystallineFlowerConsumeExperienceUI", true);
+
+
+        crystallineFlowerEnchantingPowerAllowedPerTier = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Controls how much \"enchanting power\" is used per tier to determine what enchantment shows up.",
+                        " Enchantments of higher levels or rarity requires more \"enchanting power\" before they show up in the UI.",
+                        " Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.",
+                        " Except here, the flower's tier times this config value is used as the threshold to know what enchantment and level to show.\n")
+                .translation("the_bumblezone.config.crystallineflowerenchantingpowerallowedpertier")
+                .defineInRange("crystallineFlowerEnchantingPowerAllowedPerTier", 8, 0, 1000);
+
+
+        crystallineFlowerExtraXpNeededForTiers = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How much extra experience is required to reach the next tier for the Crystalline Flower.",
+                        " Remember, item consuming is also affected as items are converted to experience when the flower consumes it.\n")
+                .translation("the_bumblezone.config.crystallineflowerextraxpneededfortiers")
+                .defineInRange("crystallineFlowerExtraXpNeededForTiers", 0, -1000000, 1000000);
+
+
+        crystallineFlowerExtraTierCost = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Increases or decreases the tier cost of all enchantments available by whatever value you set.",
+                        " The enchantment's tier cost will be capped between 1 and 6.\n")
+                .translation("the_bumblezone.config.crystallineflowerextratiercost")
+                .defineInRange("crystallineFlowerExtraTierCost", 0, -5, 5);
+
+        builder.pop();
+
+        builder.push("Music Disc Options");
+
+        allowWanderingTraderMusicDiscsTrades = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Whether Wandering Traders can have rare trade for Bumblezone Music Discs\n")
+                .translation("the_bumblezone.config.allowwanderingtradermusicdiscstrades")
+                .define("allowWanderingTraderMusicDiscsTrades", true);
+
         musicDiscTimeLengthFlightOfTheBumblebee = builder
                 .comment(" \n-----------------------------------------------------\n",
                         " How long in seconds this music disc will be playing music.",
@@ -310,56 +371,6 @@ public class BzGeneralConfig {
                         " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
                 .translation("the_bumblezone.config.musicdisctimelengthlife")
                 .defineInRange("musicDiscTimeLengthLife", 86, 0 , 1000000);
-
-        crystallineFlowerConsumeItemEntities = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether the Crystalline Flower block will eat any item entity that touches the block's collision box in the world\n")
-                .translation("the_bumblezone.config.crystallineflowerconsumeitementities")
-                .define("crystallineFlowerConsumeItemEntities", true);
-
-        crystallineFlowerConsumeExperienceOrbEntities = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether the Crystalline Flower block will pull in and eat any experience orb that touches it in the world\n")
-                .translation("the_bumblezone.config.crystallineflowerconsumeexperienceorbentities")
-                .define("crystallineFlowerConsumeExperienceOrbEntities", true);
-
-        crystallineFlowerConsumeItemUI = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether the Crystalline Flower's GUI allows players to feed it items directly\n")
-                .translation("the_bumblezone.config.crystallineflowerconsumeitemui")
-                .define("crystallineFlowerConsumeItemUI", true);
-
-        crystallineFlowerConsumeExperienceUI = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Whether the Crystalline Flower's GUI allows players to feed it the player's experience\n")
-                .translation("the_bumblezone.config.crystallineflowerconsumeexperienceui")
-                .define("crystallineFlowerConsumeExperienceUI", true);
-
-
-        crystallineFlowerEnchantingPowerAllowedPerTier = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Controls how much \"enchanting power\" is used per tier to determine what enchantment shows up.",
-                        " Enchantments of higher levels or rarity requires more \"enchanting power\" before they show up in the UI.",
-                        " Think of this like how Enchanting Tables only shows stronger or rarer enchantments when you have more bookshelves.",
-                        " Except here, the flower's tier times this config value is used as the threshold to know what enchantment and level to show.\n")
-                .translation("the_bumblezone.config.crystallineflowerenchantingpowerallowedpertier")
-                .defineInRange("crystallineFlowerEnchantingPowerAllowedPerTier", 8, 0, 1000);
-
-
-        crystallineFlowerExtraXpNeededForTiers = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " How much extra experience is required to reach the next tier for the Crystalline Flower.",
-                        " Remember, item consuming is also affected as items are converted to experience when the flower consumes it.\n")
-                .translation("the_bumblezone.config.crystallineflowerextraxpneededfortiers")
-                .defineInRange("crystallineFlowerExtraXpNeededForTiers", 0, -1000000, 1000000);
-
-
-        crystallineFlowerExtraTierCost = builder
-                .comment(" \n-----------------------------------------------------\n",
-                        " Increases or decreases the tier cost of all enchantments available by whatever value you set.",
-                        " The enchantment's tier cost will be capped between 1 and 6.\n")
-                .translation("the_bumblezone.config.crystallineflowerextratiercost")
-                .defineInRange("crystallineFlowerExtraTierCost", 0, -5, 5);
 
         builder.pop();
 
@@ -498,6 +509,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks.get();
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified.get();
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades.get();
+        BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades.get();
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee.get();
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();
         BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees.get();

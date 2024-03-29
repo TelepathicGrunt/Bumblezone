@@ -41,6 +41,7 @@ public class BzGeneralConfigs {
     public static boolean beeQueenSpecialDayTrades = true;
     public static boolean superCandlesBurnsMobs = true;
     public static boolean keepEssenceOfTheBeesOnRespawning = true;
+    public static boolean allowWanderingTraderMusicDiscsTrades = true;
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 216;
     public static int musicDiscTimeLengthHoneyBee = 216;
     public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;

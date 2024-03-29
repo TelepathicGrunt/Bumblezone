@@ -9,6 +9,10 @@ Honey Compasses used in Creative Mode will now say they spawned a new compass in
 ##### Blocks:
 Fixed possible rare Honey Cocoon crash during worldgen if it is replaced with air before chunk is fully made.
 
+##### Configs:
+Added allowWanderingTraderMusicDiscsTrades config option.
+ Also moved the music disc configs into their own section in the configs.
+
 ##### Fluids:
 (Fabric/Quilt): Backported diagonal textures for Honey Fluid and Royal Jelly Honey Fluid. Forge cannot support this due to lack of API.
 

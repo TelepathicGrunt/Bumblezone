@@ -1190,6 +1190,8 @@
   "the_bumblezone.midnightconfig.beeLootInjection": "Bee Loot Injection",
   "the_bumblezone.midnightconfig.moddedBeeLootInjection": "Modded Bee Loot Injection",
   "the_bumblezone.midnightconfig.nearbyBeesPerPlayerInBz": "Nearby Bees Per Player In Bz",
+  "the_bumblezone.midnightconfig.musicDiscComment": "§o§6    Music Disc Section",
+  "the_bumblezone.midnightconfig.allowWanderingTraderMusicDiscsTrades": "Allow Wandering Trader Music Disc Trades",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthFlightOfTheBumblebee": "Music Disc Time Length Flight Of The Bumblebee",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthHoneyBee": "Music Disc Time Length Honey Bee",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthLaBeeDaLoca": "Music Disc Time Length La Bee-da Loca",

@@ -272,6 +272,13 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static int nearbyBeesPerPlayerInBz = 25;
 
+
+    @Comment
+    public static Comment musicDiscComment;
+
+    @Entry
+    public static boolean allowWanderingTraderMusicDiscsTrades = true;
+
     @Entry
     public static int musicDiscTimeLengthFlightOfTheBumblebee = 84;
 
@@ -466,6 +473,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeStingerBrewingRecipe = beeStingerBrewingRecipe;
         BzGeneralConfigs.beeSoupBrewingRecipe = beeSoupBrewingRecipe;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
+        BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades;
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee;
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee;
         BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca;
