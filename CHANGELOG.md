@@ -3,6 +3,8 @@
 ##### Items:
 Honey Compasses used in Creative Mode will now say they spawned a new compass in inventory rather than failed to locate.
 
+Fixed Bee Bread not giving Beehemoths the Beenergized effect when feeding.
+
 (Fabric/Quilt): Made Honey Bucket, Royal Jelly Bucket, Royal Jelly Bottle, Sugar Water Bucket, and Sugar Water Bottle all use the Fabric API's FluidStorage API.
  So these items are now seen as containing the Bumblezone fluids. Vanilla Honey Bottle is untouched to prevent mod compat issues.
 

@@ -26,14 +26,7 @@ public class BeeBread extends Item {
             return InteractionResult.PASS;
         }
 
-        int currentEffectAmplifier = 0;
-        if (entity.hasEffect(BzEffects.BEENERGIZED.get())) {
-            currentEffectAmplifier = Math.min(entity.getEffect(BzEffects.BEENERGIZED.get()).getAmplifier() + 1, 2);
-            if (currentEffectAmplifier == 2 && playerEntity instanceof ServerPlayer serverPlayer) {
-                BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger(serverPlayer);
-            }
-        }
-        entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, currentEffectAmplifier, true, true, true));
+        grantStackingBeenergized(playerEntity, entity);
 
         ItemStack itemstack = playerEntity.getItemInHand(playerHand);
         if (!playerEntity.isCreative()) {
@@ -43,5 +36,16 @@ public class BeeBread extends Item {
         PlayerDataHandler.onBeesFed(playerEntity);
         playerEntity.swing(playerHand, true);
         return InteractionResult.SUCCESS;
+    }
+
+    public static void grantStackingBeenergized(Player playerEntity, LivingEntity fedEntity) {
+        int currentEffectAmplifier = 0;
+        if (fedEntity.hasEffect(BzEffects.BEENERGIZED.get())) {
+            currentEffectAmplifier = Math.min(fedEntity.getEffect(BzEffects.BEENERGIZED.get()).getAmplifier() + 1, 2);
+            if (currentEffectAmplifier == 2 && playerEntity instanceof ServerPlayer serverPlayer) {
+                BzCriterias.BEENERGIZED_MAXED_TRIGGER.trigger(serverPlayer);
+            }
+        }
+        fedEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 6000, currentEffectAmplifier, true, true, true));
     }
 }

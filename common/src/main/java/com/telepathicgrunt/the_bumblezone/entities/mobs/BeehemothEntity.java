@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothFlyingStillGoa
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothRandomFlyGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.BeehemothTemptGoal;
 import com.telepathicgrunt.the_bumblezone.entities.navigation.DirectPathNavigator;
+import com.telepathicgrunt.the_bumblezone.items.BeeBread;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -387,6 +388,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             heal(2);
                             BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 0.8f, 5);
                             addFriendship(5);
+                            BeeBread.grantStackingBeenergized(player, this);
                         }
                         else if (stack.is(BzTags.HONEY_BUCKETS)) {
                             heal(getMaxHealth() - getHealth());
