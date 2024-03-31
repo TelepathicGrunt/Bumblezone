@@ -1,3 +1,9 @@
+### **(V.7.4.1 Changes) (1.20.4 Minecraft)**
+
+##### Music:
+Forgot to compress the new song from 36MB down to 5MB and make it properly mono.
+
+
 ### **(V.7.4.0 Changes) (1.20.4 Minecraft)**
 
 ##### Structures:
