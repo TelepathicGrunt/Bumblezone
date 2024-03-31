@@ -1,13 +1,32 @@
-### **(V.7.3.21 Changes) (1.20.4 Minecraft)**
+### **(V.7.4.0 Changes) (1.20.4 Minecraft)**
+
+##### Structures:
+Added new music for the White Sempiternal Sanctum event! Special thanks to Punpudle for creating the song!!
+
+##### Entities:
+Cosmic Crystal Entity's smashing attack now explodes when hitting its target rather than only when hitting blocks.
+
+(NeoForge): Fire MobSplitEvent event when Honey Slime splits up.
 
 ##### Items:
+Added a music disc for the brand new song! (Song is called A First A Last)
+
 Honey Compasses used in Creative Mode will now say they spawned a new compass in inventory rather than failed to locate.
+
+Fixed Bee Bread not giving Beehemoths the Beenergized effect when feeding.
 
 ##### Blocks:
 Fixed possible rare Honey Cocoon crash during worldgen if it is replaced with air before chunk is fully made.
 
 ##### Fluids:
 Fixed top texture of Honey Fluid and Royal Jelly Fluid not rendering if the same fluid is above but not yet touching the below fluid.
+
+##### Configs:
+Added allowWanderingTraderMusicDiscsTrades config option.
+ Also moved the music disc configs into their own section in the configs.
+
+(Fabric): Added missing translations for knowingEssenceStructureNameServer, 
+ knowingEssenceStructureNameClient, disableEssenceBlockShaders, treeDungeonRarity
 
 ##### Misc:
 (NeoForge): Requires v20.4.214 NeoForge or newer due to making use of a new NooForge method.

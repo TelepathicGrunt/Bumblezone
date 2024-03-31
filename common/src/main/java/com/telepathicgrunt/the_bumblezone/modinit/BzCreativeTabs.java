@@ -153,6 +153,7 @@ public class BzCreativeTabs {
             BzItems.MUSIC_DISC_KNOWING_RENREN,
             BzItems.MUSIC_DISC_RADIANCE_RENREN,
             BzItems.MUSIC_DISC_LIFE_RENREN,
+            BzItems.MUSIC_DISC_A_LAST_FIRST_LAST,
             BzItems.HONEY_SLIME_SPAWN_EGG,
             BzItems.VARIANT_BEE_SPAWN_EGG,
             BzItems.BEEHEMOTH_SPAWN_EGG,

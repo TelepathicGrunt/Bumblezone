@@ -63,6 +63,15 @@
       }
     ]
   },
+  "music.continuity_event": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/a_last_first_last_mono",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
   "music.angered_bees": {
     "sounds": [
       {
@@ -132,6 +141,14 @@
     "sounds": [
       {
         "name": "the_bumblezone:music/life_renren_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.a_last_first_last_mono": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/a_last_first_last_mono",
         "stream": true
       }
     ]

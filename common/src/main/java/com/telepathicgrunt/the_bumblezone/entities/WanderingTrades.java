@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -8,6 +9,10 @@ import net.minecraft.world.item.Items;
 public class WanderingTrades {
 
     public static void addWanderingTrades(RegisterWanderingTradesEvent event) {
+        if (!BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades) {
+            return;
+        }
+
         event.addRareTrade(new GeneralUtils.BasicItemTrade(
                 Items.EMERALD,
                 BzItems.MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV.get(),
@@ -81,6 +86,16 @@ public class WanderingTrades {
         event.addRareTrade(new GeneralUtils.BasicItemTrade(
                 Items.EMERALD,
                 BzItems.MUSIC_DISC_LIFE_RENREN.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
+
+        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_A_LAST_FIRST_LAST.get(),
                 20,
                 1,
                 1,

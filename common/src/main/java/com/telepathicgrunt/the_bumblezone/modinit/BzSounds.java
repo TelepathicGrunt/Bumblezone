@@ -19,6 +19,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> KNOWING_EVENT = registerSoundEvent("music.knowing_event");
     public static final RegistryEntry<SoundEvent> RADIANCE_EVENT = registerSoundEvent("music.radiance_event");
     public static final RegistryEntry<SoundEvent> LIFE_EVENT = registerSoundEvent("music.life_event");
+    public static final RegistryEntry<SoundEvent> CONTINUITY_EVENT = registerSoundEvent("music.continuity_event");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_HONEY_BEE_RAT_FACED_BOY = registerSoundEvent("music_disc.honey_bee_rat_faced_boy");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_FLIGHT_OF_THE_BUMBLEBEE_RIMSKY_KORSAKOV = registerSoundEvent("music_disc.flight_of_the_bumblebee_rimsky_korsakov");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_LA_BEE_DA_LOCA = registerSoundEvent("music_disc.la_bee_da_loca");
@@ -27,6 +28,7 @@ public class BzSounds {
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_KNOWING_RENREN = registerSoundEvent("music_disc.knowing_renren");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_RADIANCE_RENREN = registerSoundEvent("music_disc.radiance_renren");
     public static final RegistryEntry<SoundEvent> MUSIC_DISC_LIFE_RENREN = registerSoundEvent("music_disc.life_renren");
+    public static final RegistryEntry<SoundEvent> MUSIC_DISC_A_LAST_FIRST_LAST_MONO = registerSoundEvent("music_disc.a_last_first_last_mono");
     public static final RegistryEntry<SoundEvent> BEEHEMOTH_HURT = registerSoundEvent("entity.the_bumblezone.beehemoth.hurt");
     public static final RegistryEntry<SoundEvent> BEEHEMOTH_DEATH = registerSoundEvent("entity.the_bumblezone.beehemoth.death");
     public static final RegistryEntry<SoundEvent> BEEHEMOTH_LOOP = registerSoundEvent("entity.the_bumblezone.beehemoth.loop");
