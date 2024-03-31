@@ -1,4 +1,4 @@
-### **(V.7.2.22 Changes) (1.20.1 Minecraft)**
+### **(V.7.3.0 Changes) (1.20.1 Minecraft)**
 
 ##### Structures:
 Added new music for the White Sempiternal Sanctum event! Special thanks to Punpudle for creating the song!!
