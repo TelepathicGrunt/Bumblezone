@@ -919,51 +919,55 @@ public class CosmicCrystalEntity extends LivingEntity {
                 this.addDeltaMovement(this.getLookAngle().scale(crashSpeed));
 
                 if (this.getCollided() || this.horizontalCollision || this.verticalCollision || this.onGround()) {
-                    if (!this.level().isClientSide()) {
-
-                        this.level().explode(
-                                this,
-                                this.getX(),
-                                this.getY(),
-                                this.getZ(),
-                                3,
-                                Level.ExplosionInteraction.MOB);
-
-                        this.level().playSound(
-                                this,
-                                this.blockPosition(),
-                                BzSounds.COSMIC_CRYSTAL_ENTITY_CRASHES.get(),
-                                SoundSource.HOSTILE,
-                                1,
-                                1f);
-
-                        for (BlockPos pos : BlockPos.betweenClosed(
-                                this.blockPosition().offset(-2, -2, -2),
-                                this.blockPosition().offset(2, 2, 2)))
-                        {
-                            this.level().levelEvent(2001, pos, Block.getId(this.level().getBlockState(pos)));
-                        }
-
-                        this.level().getEntities(this, this.getBoundingBox().inflate(16)).forEach(e -> {
-                            if (e instanceof Player player) {
-                                player.indicateDamage(0, 0);
-                            }
-                        });
-
-                        this.setCollided(true);
-                    }
-                    else {
-                        spawnLargeParticleCloud(5);
-                    }
-
-                    this.setDeltaMovement(0, 0, 0);
-                    this.setSecondPhase(false);
+                    collidingAttackExplosion();
                 }
             }
             else {
                 this.setSecondPhase(false);
             }
         }
+    }
+
+    private void collidingAttackExplosion() {
+        if (!this.level().isClientSide()) {
+
+            this.level().explode(
+                    this,
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    3,
+                    Level.ExplosionInteraction.MOB);
+
+            this.level().playSound(
+                    this,
+                    this.blockPosition(),
+                    BzSounds.COSMIC_CRYSTAL_ENTITY_CRASHES.get(),
+                    SoundSource.HOSTILE,
+                    1,
+                    1f);
+
+            for (BlockPos pos : BlockPos.betweenClosed(
+                    this.blockPosition().offset(-2, -2, -2),
+                    this.blockPosition().offset(2, 2, 2)))
+            {
+                this.level().levelEvent(2001, pos, Block.getId(this.level().getBlockState(pos)));
+            }
+
+            this.level().getEntities(this, this.getBoundingBox().inflate(16)).forEach(e -> {
+                if (e instanceof Player player) {
+                    player.indicateDamage(0, 0);
+                }
+            });
+
+            this.setCollided(true);
+        }
+        else {
+            spawnLargeParticleCloud(5);
+        }
+
+        this.setDeltaMovement(0, 0, 0);
+        this.setSecondPhase(false);
     }
 
     private void spinningTrackingBehaviour() {
@@ -1625,6 +1629,10 @@ public class CosmicCrystalEntity extends LivingEntity {
     private boolean physicalHurtAttack(LivingEntity livingEntity) {
         float damageAmount;
         float maxHealth = Math.max(livingEntity.getHealth(), livingEntity.getMaxHealth());
+
+        if (this.getCosmicCrystalState() == CosmicCrystalState.TRACKING_SMASHING_ATTACK && this.targetEntity == livingEntity) {
+            collidingAttackExplosion();
+        }
 
         if (livingEntity instanceof ServerPlayer serverPlayer) {
             if (serverPlayer.isCreative()) {

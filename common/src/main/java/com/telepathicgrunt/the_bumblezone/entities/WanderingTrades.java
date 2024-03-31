@@ -92,5 +92,15 @@ public class WanderingTrades {
                 10,
                 0.5F
         ));
+
+        event.addRareTrade(new GeneralUtils.BasicItemTrade(
+                Items.EMERALD,
+                BzItems.MUSIC_DISC_A_LAST_FIRST_LAST.get(),
+                20,
+                1,
+                1,
+                10,
+                0.5F
+        ));
     }
 }
