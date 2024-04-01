@@ -1,3 +1,9 @@
+### **(V.7.3.2 Changes) (1.20.1 Minecraft)**
+
+##### Misc:
+Fixed MC-268617 with a mixin. This is so people with Modrinth App can play Bumblezone. https://github.com/modrinth/theseus/issues/1048
+
+
 ### **(V.7.3.1 Changes) (1.20.1 Minecraft)**
 
 ##### Items:
