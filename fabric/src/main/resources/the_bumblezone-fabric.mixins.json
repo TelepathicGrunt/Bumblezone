@@ -51,6 +51,7 @@
     "item.ItemStackMixin",
     "item.RecordItemMixin",
     "loot.LootDataManagerAccessor",
-    "loot.LootTableMixin"
+    "loot.LootTableMixin",
+    "util.FileUtilMixin"
   ]
 }

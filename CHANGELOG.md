@@ -1,3 +1,10 @@
+### **(V.7.4.2 Changes) (1.20.4 Minecraft)**
+
+##### Misc:
+Fixed MC-268617 on Fabric with a mixin. NeoForge is going to have a fix natively with a patch.
+  This is so people with Modrinth App can play Bumblezone. https://github.com/modrinth/theseus/issues/1048
+
+
 ### **(V.7.4.1 Changes) (1.20.4 Minecraft)**
 
 ##### Items:
