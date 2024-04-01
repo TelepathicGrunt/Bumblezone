@@ -1,4 +1,4 @@
-### **(V.6.9.9 Changes) (1.19.2 Minecraft)**
+### **(V.6.9.10 Changes) (1.19.2 Minecraft)**
 
-##### Fluids:
-New textures for Honey Fluid and Royal Jelly Honey Fluid! Special thanks to Kryppers for creating these new textures!
+##### Items:
+Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of the Royal Jelly Bottles.
