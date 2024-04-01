@@ -205,7 +205,6 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
             if (blockEntity instanceof EssenceBlockEntity essenceBlockEntity &&
                 essenceBlockEntity.getPlayerInArena().isEmpty())
             {
-
                 StructureTemplateManager structureTemplateManager = serverLevel.getStructureManager();
                 Optional<StructureTemplate> optionalStructureTemplate = structureTemplateManager.get(getArenaNbt());
                 optionalStructureTemplate.ifPresentOrElse(loadingStructureTemplate -> {
@@ -279,12 +278,12 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
                             }
                         }
                     }
+
+                    essenceBlockEntity.getEventBar().setProgress(1f);
+                    essenceBlockEntity.setEventTimer(this.getEventTimeFrame());
+                    essenceBlockEntity.setChanged();
                 },
                 () -> Bumblezone.LOGGER.error("Bumblezone Essence Block failed to even detect the nbt file at all {} - {} - {}", essenceBlockEntity, blockState, getArenaNbt()));
-
-                essenceBlockEntity.getEventBar().setProgress(1f);
-                essenceBlockEntity.setEventTimer(this.getEventTimeFrame());
-                essenceBlockEntity.setChanged();
             }
         }
     }
