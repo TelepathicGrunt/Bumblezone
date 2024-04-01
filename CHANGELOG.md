@@ -1,5 +1,8 @@
 ### **(V.7.3.2 Changes) (1.20.1 Minecraft)**
 
+##### Items:
+Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of the Royal Jelly Bottles.
+
 ##### Misc:
 Fixed MC-268617 with a mixin. This is so people with Modrinth App can play Bumblezone. https://github.com/modrinth/theseus/issues/1048
 
