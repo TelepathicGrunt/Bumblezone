@@ -1,9 +1,9 @@
 {
-  "feature": "the_bumblezone:buzzier_bees/honeycomb_tiles_blob",
+  "feature": "the_bumblezone:buzzier_bees/chiseled_honeycomb_bricks_blob",
   "placement": [
     {
       "type": "minecraft:count",
-      "count": 55
+      "count": 90
     },
     {
       "type": "minecraft:in_square"
