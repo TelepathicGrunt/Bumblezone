@@ -67,8 +67,6 @@ dependencies {
     modCompileOnly("curse.maven:pokecube_aio-285121:${project.pokecubeaio_version}")
 
     modCompileOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
-    //modRuntimeOnly("curse.maven:buzzier_bees-355458:${project.buzzier_bees_file_id}")
-    //modRuntimeOnly("curse.maven:blueprint-382216:${project.blueprint_file_id}")
 
     modCompileOnly("com.hollingsworth.ars_nouveau:ars_nouveau-${project.ars_nouveau}")
     modCompileOnly("curse.maven:ars_elemental-561470:${project.ars_elemental_file_id}")
