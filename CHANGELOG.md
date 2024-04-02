@@ -3,6 +3,9 @@
 ##### Items:
 Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of the Royal Jelly Bottles.
 
+##### Mod Compat:
+(Forge): Made Buzzier Bees's Honeycomb Bricks and Chiseled Honeycomb Bricks spawn in Bumblezone caves.
+
 ##### Misc:
 Fixed MC-268617 with a mixin. This is so people with Modrinth App can play Bumblezone. https://github.com/modrinth/theseus/issues/1048
 

@@ -8,6 +8,14 @@
     {
       "id": "the_bumblezone:buzzier_bees/honeycomb_tiles_blob",
       "required": false
+    },
+    {
+      "id": "the_bumblezone:buzzier_bees/honeycomb_bricks_blob",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:buzzier_bees/chiseled_honeycomb_bricks_blob",
+      "required": false
     }
   ]
 }
