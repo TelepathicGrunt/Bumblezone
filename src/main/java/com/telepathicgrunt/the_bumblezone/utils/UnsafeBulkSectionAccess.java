@@ -28,13 +28,15 @@ public class UnsafeBulkSectionAccess {
         if (i < 0 || i >= this.level.getSectionsCount()) {
             return null;
         }
-        long l2 = SectionPos.asLong(blockPos);
-        if (this.lastSection == null || this.lastSectionKey != l2) {
-            this.lastSection = this.acquiredSections.computeIfAbsent(l2, l -> {
+        long posAsLong = SectionPos.asLong(blockPos);
+        if (this.lastSection == null || this.lastSectionKey != posAsLong) {
+            this.lastSection = this.acquiredSections.get(posAsLong);
+            if (this.lastSection == null) {
                 ChunkAccess chunkAccess = this.level.getChunk(SectionPos.blockToSectionCoord(blockPos.getX()), SectionPos.blockToSectionCoord(blockPos.getZ()));
-                return chunkAccess.getSection(i);
-            });
-            this.lastSectionKey = l2;
+                this.lastSection = chunkAccess.getSection(i);
+                this.acquiredSections.put(posAsLong, this.lastSection);
+            }
+            this.lastSectionKey = posAsLong;
         }
         return this.lastSection;
     }
