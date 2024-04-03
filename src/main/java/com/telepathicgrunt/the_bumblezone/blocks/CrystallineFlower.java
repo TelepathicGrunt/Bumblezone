@@ -330,7 +330,7 @@ public class CrystallineFlower extends BaseEntityBlock {
         int i = 0;
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         BlockState currentState = level.getBlockState(mutable.set(pos.above()));
-        while (currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get()) && mutable.getY() <= level.getMaxBuildHeight()) {
+        while (currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get()) && mutable.getY() < level.getMaxBuildHeight()) {
             i++;
             mutable.move(Direction.UP);
             currentState = level.getBlockState(mutable);
@@ -343,14 +343,20 @@ public class CrystallineFlower extends BaseEntityBlock {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         mutable.set(pos);
 
-        for(int i = 0; i < scanArea; i++) {
-            BlockState currentState = level.getBlockState(mutable);
-            if (!currentState.isAir() && !currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get())) {
+        for (int i = 0; i < scanArea; i++) {
+            if (mutable.getY() >= level.getMaxBuildHeight()) {
                 obstructions.add(true);
             }
             else {
-                obstructions.add(false);
+                BlockState currentState = level.getBlockState(mutable);
+                if (!currentState.isAir() && !currentState.is(BzBlocks.CRYSTALLINE_FLOWER.get())) {
+                    obstructions.add(true);
+                }
+                else {
+                    obstructions.add(false);
+                }
             }
+
             mutable.move(Direction.UP);
         }
 
