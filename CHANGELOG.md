@@ -3,6 +3,9 @@
 ##### Items:
 Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of the Royal Jelly Bottles.
 
+##### Structures:
+Increased spawnrate of some structures.
+
 ##### Misc:
 Fixed MC-268617 on Fabric with a mixin. NeoForge is going to have a fix natively with a patch.
   This is so people with Modrinth App can play Bumblezone. https://github.com/modrinth/theseus/issues/1048
