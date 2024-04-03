@@ -3,6 +3,8 @@
 ##### Items:
 Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of the Royal Jelly Bottles.
 
+Fixed Life Essence item crashing when used near or above world height limit.
+
 ##### Structures:
 Increased spawnrate of some structures.
 
