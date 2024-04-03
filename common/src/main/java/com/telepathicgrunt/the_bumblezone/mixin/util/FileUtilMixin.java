@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.fabric.util;
+package com.telepathicgrunt.the_bumblezone.mixin.util;
 
 import net.minecraft.FileUtil;
 import org.spongepowered.asm.mixin.Mixin;

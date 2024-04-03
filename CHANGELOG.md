@@ -12,8 +12,7 @@ Fixed Crystalline Flower behaving/placing incorrectly when placed near or at wor
 Increased spawnrate of some structures.
 
 ##### Misc:
-Fixed MC-268617 on Fabric with a mixin. NeoForge is going to have a fix natively with a patch.
-  This is so people with Modrinth App can play Bumblezone. https://github.com/modrinth/theseus/issues/1048
+Fixed MC-268617 on Fabric with a mixin. This is so people with Modrinth App can play Bumblezone. https://github.com/modrinth/theseus/issues/1048
 
 
 ### **(V.7.4.1 Changes) (1.20.4 Minecraft)**

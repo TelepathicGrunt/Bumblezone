@@ -67,6 +67,7 @@
     "items.SpawnEggItemAccessor",
     "loot.LootContextAccessor",
     "loot.LootParamsMixin",
+    "util.FileUtilMixin",
     "util.WeightedRandomListAccessor",
     "world.BiomeManagerAccessor",
     "world.LevelMixin",
