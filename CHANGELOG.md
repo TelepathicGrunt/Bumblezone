@@ -5,6 +5,9 @@ Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of th
 
 Fixed Life Essence item crashing when used near or above world height limit.
 
+##### Blocks:
+Fixed Crystalline Flower behaving/placing incorrectly when placed near or at world build height.
+
 ##### Structures:
 Increased spawnrate of some structures.
 
