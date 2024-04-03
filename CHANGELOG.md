@@ -3,6 +3,9 @@
 ##### Items:
 Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of the Royal Jelly Bottles.
 
+##### Structures:
+Increased spawnrate of some structures.
+
 ##### Mod Compat:
 (Forge): Made Buzzier Bees's Honeycomb Bricks and Chiseled Honeycomb Bricks spawn in Bumblezone caves.
 
