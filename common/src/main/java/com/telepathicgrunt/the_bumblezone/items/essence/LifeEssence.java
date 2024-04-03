@@ -144,7 +144,7 @@ public class LifeEssence extends AbilityEssenceItem {
         int minX = playerPos.getX() - radius;
         int maxX = playerPos.getX() + radius;
         int minY = Math.max(level.getMinBuildHeight(), playerPos.getY() - radius);
-        int maxY = Math.min(level.getMaxBuildHeight(), playerPos.getY() + radius);
+        int maxY = Math.min(level.getMaxBuildHeight() - 1, playerPos.getY() + radius);
         int minZ = playerPos.getZ() - radius;
         int maxZ = playerPos.getZ() + radius;
 
