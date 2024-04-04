@@ -1,5 +1,11 @@
 ### **(V.7.4.2 Changes) (1.20.4 Minecraft)**
 
+##### Music:
+Made White Sempiternal Sanctum event music now stereo!
+
+
+### **(V.7.4.2 Changes) (1.20.4 Minecraft)**
+
 ##### Items:
 Made all Royal Jelly items in JEI/REI/EMI have info for how to obtain more of the Royal Jelly Bottles.
 
