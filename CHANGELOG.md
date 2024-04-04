@@ -1,3 +1,9 @@
+### **(V.7.3.3 Changes) (1.20.1 Minecraft)**
+
+##### Music:
+Made White Sempiternal Sanctum event music now stereo!
+
+
 ### **(V.7.3.2 Changes) (1.20.1 Minecraft)**
 
 ##### Items:
