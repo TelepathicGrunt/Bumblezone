@@ -1,5 +1,8 @@
 ### **(V.7.4.2 Changes) (1.20.4 Minecraft)**
 
+##### Structures:
+Fixed Stinger Spear Shrine's Stinger Spear missing lore and enchantments.
+
 ##### Music:
 Made White Sempiternal Sanctum event music now stereo!
 
