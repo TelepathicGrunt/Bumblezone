@@ -1,4 +1,4 @@
-### **(V.7.4.2 Changes) (1.20.4 Minecraft)**
+### **(V.7.4.3 Changes) (1.20.4 Minecraft)**
 
 ##### Entities:
 Lowered volume of Cosmic Crystal Entity's laser a bit.
