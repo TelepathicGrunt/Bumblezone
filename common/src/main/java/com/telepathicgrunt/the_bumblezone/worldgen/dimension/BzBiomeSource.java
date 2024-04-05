@@ -73,14 +73,14 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
 
     @Override
     protected Stream<Holder<Biome>> collectPossibleBiomes() {
-        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(blobBiomes.stream(), mainBiomes.stream()).collect(Collectors.toSet())).stream();
+        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(Stream.concat(blobBiomes.stream(), mainBiomes.stream()), rareBlobBiomes.stream()).collect(Collectors.toSet())).stream();
     }
 
     @Override
     public Set<Holder<Biome>> possibleBiomes() {
-        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(blobBiomes.stream(), mainBiomes.stream()).collect(Collectors.toSet()));
+        return this.lazyPossibleBiomes.getOrCompute(() -> Stream.concat(Stream.concat(blobBiomes.stream(), mainBiomes.stream()), rareBlobBiomes.stream()).collect(Collectors.toSet()));
     }
-
+    
     public static <T extends Area, C extends BigContext<T>> AreaFactory<T> stack(long seed, AreaTransformer1 parent, AreaFactory<T> incomingArea, int count, LongFunction<C> contextFactory) {
         AreaFactory<T> LayerFactory = incomingArea;
 
