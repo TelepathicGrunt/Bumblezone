@@ -3,6 +3,9 @@
 ##### Music:
 Made White Sempiternal Sanctum event music now stereo!
 
+##### Mod Compat:
+(Forge): Removed a little bit of logspam with Pokecube Pollen Puff Compat.
+
 
 ### **(V.7.3.2 Changes) (1.20.1 Minecraft)**
 
