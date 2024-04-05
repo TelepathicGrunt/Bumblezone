@@ -708,7 +708,7 @@
       {
         "attenuation_distance": 16,
         "name": "block/beacon/power1",
-        "volume": 1,
+        "volume": 0.75,
         "pitch": 0.1
       }
     ],

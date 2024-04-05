@@ -1,5 +1,8 @@
 ### **(V.7.4.2 Changes) (1.20.4 Minecraft)**
 
+##### Entities:
+Lowered volume of Cosmic Crystal Entity's laser a bit.
+
 ##### Structures:
 Fixed Stinger Spear Shrine's Stinger Spear missing lore and enchantments.
 
