@@ -23,7 +23,6 @@ public class ReceivingLevelScreenMixin extends Screen {
     private void bumblezone$renderNewScreenWhenEnteringBumblezone(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY) {
             DimensionTeleportingScreen.renderScreenAndText(((ReceivingLevelScreen)(Object)this), guiGraphics);
-            super.render(guiGraphics, mouseX, mouseY, partialTick);
             ci.cancel();
         }
     }

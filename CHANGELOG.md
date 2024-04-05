@@ -9,6 +9,9 @@ Fixed Stinger Spear Shrine's Stinger Spear missing lore and enchantments.
 ##### Music:
 Made White Sempiternal Sanctum event music now stereo!
 
+##### Dimension:
+(Fabric): Fixed teleporting to Bumblezone not having custom background on the waiting screen.
+
 
 ### **(V.7.4.2 Changes) (1.20.4 Minecraft)**
 

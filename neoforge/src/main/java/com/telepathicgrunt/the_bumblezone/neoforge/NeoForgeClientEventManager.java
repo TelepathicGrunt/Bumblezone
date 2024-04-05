@@ -179,8 +179,8 @@ public class NeoForgeClientEventManager {
 
     public static void onScreenRendering(ScreenEvent.Render.Pre event) {
         if (event.getScreen() instanceof ReceivingLevelScreen receivingLevelScreen &&
-                GeneralUtilsClient.getClientPlayer() != null &&
-                GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
+            GeneralUtilsClient.getClientPlayer() != null &&
+            GeneralUtilsClient.getClientPlayer().level().dimension() == BzDimension.BZ_WORLD_KEY)
         {
             DimensionTeleportingScreen.renderScreenAndText(receivingLevelScreen, event.getGuiGraphics());
             event.setCanceled(true);
