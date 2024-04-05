@@ -1,5 +1,8 @@
 ### **(V.7.3.3 Changes) (1.20.1 Minecraft)**
 
+##### Entities:
+Lowered volume of Cosmic Crystal Entity's laser a bit.
+
 ##### Music:
 Made White Sempiternal Sanctum event music now stereo!
 
