@@ -17,7 +17,7 @@ public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) im
     static final Handler HANDLER = new Handler();
 
     public static void sendToClient(Entity entity, int horseId, UUID ownerUUID) {
-        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), entity.level(), entity.blockPosition());
+        MessageHandler.DEFAULT_CHANNEL.sendToPlayersInLevel(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), entity.level());
     }
 
     @Override

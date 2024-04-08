@@ -61,7 +61,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
     }
 
     public static void sendToClient(Entity entity, MobEffectInstance mobEffectInstance) {
-        MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new MobEffectClientSyncPacket(entity.getId(), mobEffectInstance), entity.level(), entity.blockPosition());
+        MessageHandler.DEFAULT_CHANNEL.sendToPlayersInLevel(new MobEffectClientSyncPacket(entity.getId(), mobEffectInstance), entity.level());
     }
 
     @Override
