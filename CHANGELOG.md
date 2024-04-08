@@ -1,3 +1,9 @@
+### **(V.7.4.4 Changes) (1.20.4 Minecraft)**
+
+##### Misc:
+Fixed worldgen deadlock if a horse with an owner UUID is spawned during world generation.
+
+
 ### **(V.7.4.3 Changes) (1.20.4 Minecraft)**
 
 ##### Entities:
