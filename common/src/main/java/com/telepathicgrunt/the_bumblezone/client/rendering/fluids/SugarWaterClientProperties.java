@@ -23,7 +23,7 @@ public class SugarWaterClientProperties {
                     if (level != null && pos != null) {
                         return BiomeColors.getAverageWaterColor(level, pos) | 0xFF000000;
                     }
-                    return 0xFF3F76E4;
+                    return 0xFF5685E2;
                 });
     }
 }
