@@ -74,6 +74,11 @@ public class SugarWaterFluidType extends FluidType {
             }
 
             @Override
+            public int getTintColor() {
+                return 0xFF5685E2;
+            }
+
+            @Override
             public int getTintColor(FluidState state, BlockAndTintGetter getter, BlockPos pos) {
                 return BiomeColors.getAverageWaterColor(getter, pos) | 0xFF000000;
             }
