@@ -84,6 +84,7 @@ public class NeurotoxinsEnchantment extends Enchantment {
 
     public static void applyNeurotoxins(Entity attacker, Entity victim, ItemStack itemStack) {
         int level = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS, itemStack);
+        level = Math.min(level, BzConfig.neurotoxinMaxLevel);
 
         if(level > 0 && victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
             if (livingEntity.hasEffect(BzEffects.PARALYZED)) {
