@@ -70,6 +70,7 @@
     "entities.ThrowableProjectileMixin",
     "entities.ThrownTridentAccessor",
     "entities.WalkNodeEvaluatorMixin",
+    "items.BowItemMixin",
     "items.BucketItemAccessor",
     "items.GlassBottleUseMixin",
     "items.HoneyPickupMixin",
