@@ -24,6 +24,6 @@ public class HoneyCrystalShards extends BzArrowItem {
     @Override
     public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, Player player) {
         int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
-        return OptionalBoolean.of(enchantLevel > 0);
+        return enchantLevel > 0 ? OptionalBoolean.of(true) : OptionalBoolean.EMPTY;
     }
 }

@@ -45,6 +45,7 @@
     "entity.WalkNodeEvaluatorMixin",
     "fluid.BzBucketItemMixin",
     "fluid.BzLiquidBlockMixin",
+    "item.BowItemMixin",
     "item.BucketItemAccessor",
     "item.InventoryMixin",
     "item.ItemStackMixin",
