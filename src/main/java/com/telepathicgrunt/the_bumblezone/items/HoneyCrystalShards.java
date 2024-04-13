@@ -22,6 +22,6 @@ public class HoneyCrystalShards extends ArrowItem {
     @Override
     public boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
         int enchantLevel = bow.getEnchantmentLevel(Enchantments.INFINITY_ARROWS);
-        return enchantLevel > 0;
+        return enchantLevel > 0 || super.isInfinite(stack, bow, player);
     }
 }
