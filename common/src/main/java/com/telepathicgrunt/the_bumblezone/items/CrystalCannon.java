@@ -148,7 +148,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
         if (tryAddCrystal(crystalCannon)) {
             boolean infinite = player.getAbilities().instabuild ||
                     (projectItem1.getItem() instanceof HoneyCrystalShards &&
-                            ((HoneyCrystalShards)projectItem1.getItem()).bz$isInfinite(projectItem1, crystalCannon, player).get());
+                            ((HoneyCrystalShards)projectItem1.getItem()).bz$isInfinite(projectItem1, crystalCannon, player).orElseGet(() -> false));
 
             if (!infinite) {
                 projectItem1.shrink(1);
