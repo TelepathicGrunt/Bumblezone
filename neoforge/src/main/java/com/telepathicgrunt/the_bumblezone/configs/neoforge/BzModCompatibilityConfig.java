@@ -252,10 +252,9 @@ public class BzModCompatibilityConfig {
 			allowedBees = builder
 					.comment(" \n-----------------------------------------------------\n",
 							" Allow what Productive Bees bees should be able to spawn in Bumblezone. ")
-					.translation("the_bumblezone.config.blacklistedbees")
-					.defineList("blacklistedBees",
-							List.of("productivebees:diamond",
-									"productivebees:iron",
+					.translation("the_bumblezone.config.allowedBees")
+					.defineList("allowedBees",
+							List.of("productivebees:iron",
 									"productivebees:coal",
 									"productivebees:redstone",
 									"productivebees:copper",

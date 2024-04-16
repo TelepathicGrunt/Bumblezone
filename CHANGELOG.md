@@ -7,6 +7,10 @@ Allow Infinity enchantment to work properly with Bee Stinger being used as bow a
 Made it so items with pre-existing Neurotoxin enchantment level greater than neurotoxinMaxLevel config 
  will now cap it's actual effect power to the config value's level.
 
+##### Mod Compat:
+Fixed config for allowing Productive Bees bees spawning in bumblezone being called blacklistedBees when it was really supposed to be allowedBees.
+ Removed Diamond Bee from being allowed.
+
 
 ### **(V.7.4.4 Changes) (1.20.4 Minecraft)**
 
