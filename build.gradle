@@ -147,15 +147,18 @@ allprojects {
             }
         }
         maven {
-            url = 'https://beta.cursemaven.com'
+            name = 'Ladysnake Mods'
+            url = 'https://maven.ladysnake.org/releases'
             content {
-                includeGroup 'curse.maven'
+                includeGroup 'io.github.ladysnake'
+                includeGroupByRegex 'dev\\.onyxstudios.*'
             }
         }
         maven {
-            url = 'https://www.cursemaven.com'
+            url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
             content {
-                includeGroup 'curse.maven'
+                includeGroup 'com.telepathicgrunt'
+                includeGroup 'earth.terrarium.athena'
             }
         }
         maven {
@@ -165,11 +168,15 @@ allprojects {
             }
         }
         maven {
-            name = 'Ladysnake Mods'
-            url = 'https://maven.ladysnake.org/releases'
+            url = 'https://www.cursemaven.com'
             content {
-                includeGroup 'io.github.ladysnake'
-                includeGroupByRegex 'dev\\.onyxstudios.*'
+                includeGroup 'curse.maven'
+            }
+        }
+        maven {
+            url = 'https://beta.cursemaven.com'
+            content {
+                includeGroup 'curse.maven'
             }
         }
         maven {
@@ -183,13 +190,6 @@ allprojects {
             url = 'https://maven.blamejared.com'
             content {
                 includeGroup 'mezz.jei'
-            }
-        }
-        maven {
-            url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
-            content {
-                includeGroup 'com.telepathicgrunt'
-                includeGroup 'earth.terrarium.athena'
             }
         }
         maven {
@@ -211,12 +211,6 @@ allprojects {
                 includeGroup 'com.hollingsworth.ars_nouveau'
             }
         }
-//        maven {
-//            url "https://maven.saps.dev/snapshots"
-//            content {
-//                includeGroup "dev.ftb.mods"
-//            }
-//        }
         maven {
             url 'https://modmaven.dev/'
             content {
