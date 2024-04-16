@@ -11,6 +11,8 @@ Made it so items with pre-existing Neurotoxin enchantment level greater than neu
 Fixed config for allowing Productive Bees bees spawning in bumblezone being called blacklistedBees when it was really supposed to be allowedBees.
  Removed Diamond Bee from being allowed.
 
+Removed Spectrum's Nephrite flower from Hanging Gardens.
+
 
 ### **(V.7.4.4 Changes) (1.20.4 Minecraft)**
 
