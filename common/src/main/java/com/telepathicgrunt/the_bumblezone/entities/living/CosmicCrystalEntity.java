@@ -1622,16 +1622,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             damageAmount = maxHealth / 4;
         }
 
-        float targetHealth = livingEntity.getHealth() - damageAmount;
-        DamageSource damageSource = this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this);
-        boolean setDamaging = livingEntity.invulnerableTime <= 0 && !livingEntity.isInvulnerableTo(damageSource);
-        livingEntity.hurt(damageSource, damageAmount);
-        if (setDamaging && !livingEntity.isDeadOrDying()) {
-            livingEntity.setHealth(targetHealth);
-            if (livingEntity.isDeadOrDying()) {
-                livingEntity.die(damageSource);
-            }
-        }
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), damageAmount);
         return false;
     }
 
@@ -1659,16 +1650,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             damageAmount = maxHealth / 6;
         }
 
-        float targetHealth = livingEntity.getHealth() - damageAmount;
-        DamageSource damageSource = this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this);
-        boolean setDamaging = livingEntity.invulnerableTime <= 0 && !livingEntity.isInvulnerableTo(damageSource);
-        livingEntity.hurt(damageSource, damageAmount);
-        if (setDamaging && !livingEntity.isDeadOrDying()) {
-            livingEntity.setHealth(targetHealth);
-            if (livingEntity.isDeadOrDying()) {
-                livingEntity.die(damageSource);
-            }
-        }
+        livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), damageAmount);
         this.lastPhysicalHit = this.currentStateTimeTick;
 
         for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {

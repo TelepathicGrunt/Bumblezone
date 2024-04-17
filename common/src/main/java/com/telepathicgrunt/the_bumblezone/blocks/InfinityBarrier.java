@@ -12,7 +12,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
@@ -58,17 +57,7 @@ public class InfinityBarrier extends BaseEntityBlock implements BlockExtension {
     public void playerDestroy(Level level, Player player, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity, ItemStack itemStack) {
         if (level instanceof ServerLevel) {
             if (!player.isCreative()) {
-                float damageAmount = Math.max(player.getHealth(), player.getMaxHealth()) / 2;
-                float targetHealth = player.getHealth() - damageAmount;
-                DamageSource damageSource = level.damageSources().source(BzDamageSources.ARCHITECTS_TYPE);
-                boolean setDamaging = player.invulnerableTime <= 0 && !player.isInvulnerableTo(damageSource);
-                player.hurt(damageSource, damageAmount);
-                if (setDamaging && !player.isDeadOrDying()) {
-                    player.setHealth(targetHealth);
-                    if (player.isDeadOrDying()) {
-                        player.die(damageSource);
-                    }
-                }
+                player.hurt(level.damageSources().source(BzDamageSources.ARCHITECTS_TYPE), Math.max(player.getHealth(), player.getMaxHealth()) / 2);
             }
         }
     }
