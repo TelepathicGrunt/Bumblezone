@@ -71,8 +71,8 @@ public class NeoForgeModChecker {
             modid = "reliquary";
             loadupModCompat(modid, () -> new ReliquaryCompat());
 
-//            modid = "mekanism";
-//            loadupModCompat(modid, () -> new MekanismCompat());
+            modid = "mekanism";
+            loadupModCompat(modid, () -> new MekanismCompat());
 
             modid = "tropicraft";
             loadupModCompat(modid, () -> new TropicraftCompat());

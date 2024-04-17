@@ -13,6 +13,8 @@ Fixed config for allowing Productive Bees bees spawning in bumblezone being call
 
 Removed Spectrum's Nephrite flower from Hanging Gardens.
 
+Reactivated Mekanism teleporting multi-tool compat
+
 
 ### **(V.7.4.4 Changes) (1.20.4 Minecraft)**
 
