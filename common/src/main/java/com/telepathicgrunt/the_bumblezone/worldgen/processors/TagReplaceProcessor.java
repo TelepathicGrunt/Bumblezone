@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -125,6 +127,22 @@ public class TagReplaceProcessor extends StructureProcessor {
 
                     if (newBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
                         newBlockState = newBlockState.setValue(BlockStateProperties.WATERLOGGED, !structureBlockInfoWorld.state().getFluidState().isEmpty());
+                    }
+
+                    if (newBlockState.getBlock() instanceof LeavesBlock) {
+                        Optional<Property<?>> optionalProperty = newBlockState.getProperties().stream().filter(p -> p.getName().equalsIgnoreCase("age")).findAny();
+                        if (optionalProperty.isPresent()) {
+                            Property<?> property = optionalProperty.get();
+                            if (property.getValueClass() == Integer.class) {
+                                newBlockState = newBlockState.setValue(
+                                        (Property<Integer>)property,
+                                        (Integer)property.getPossibleValues().stream().toArray()[randomSource.nextInt(property.getPossibleValues().size())]);
+                            }
+                        }
+
+                        if (newBlockState.hasProperty(BlockStateProperties.DISTANCE)) {
+                            newBlockState = newBlockState.setValue(BlockStateProperties.DISTANCE, 1);
+                        }
                     }
 
                     ChunkAccess chunk = worldReader.getChunk(structureBlockInfoWorld.pos());
