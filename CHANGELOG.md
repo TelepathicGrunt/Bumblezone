@@ -7,6 +7,12 @@ Allow modded Infinity-like behaviors to work properly with Bee Stinger being use
 Made it so items with pre-existing Neurotoxin enchantment level greater than neurotoxinMaxLevel config
  will now cap it's actual effect power to the config value's level.
 
+##### Structures:
+Better handle some blocks in Hanging Gardens.
+
+##### Mod Compat:
+Removed Spectrum's Nephrite flower and leaves from Hanging Gardens. Kept Nephrite leaves in Sempiternal Sanctums
+
 
 ### **(V.6.9.11 Changes) (1.19.2 Minecraft)**
 

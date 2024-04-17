@@ -13,9 +13,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -95,6 +97,35 @@ public class TagReplaceProcessor extends StructureProcessor {
                     for(Property<?> property : infoIn2.state.getProperties()) {
                         if(newBlockState.hasProperty(property)) {
                             newBlockState = getStateWithProperty(newBlockState, infoIn2.state, property);
+                        }
+                    }
+
+                    if (newBlockState.getBlock() instanceof MultifaceBlock) {
+                        for(Direction direction : Direction.values()) {
+                            BooleanProperty faceProperty = MultifaceBlock.getFaceProperty(direction);
+                            if (newBlockState.hasProperty(faceProperty)) {
+                                newBlockState = newBlockState.setValue(faceProperty, direction == Direction.DOWN);
+                            }
+                        }
+                    }
+
+                    if (newBlockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                        newBlockState = newBlockState.setValue(BlockStateProperties.WATERLOGGED, !infoIn2.state.getFluidState().isEmpty());
+                    }
+
+                    if (newBlockState.getBlock() instanceof LeavesBlock) {
+                        Optional<Property<?>> optionalProperty = newBlockState.getProperties().stream().filter(p -> p.getName().equalsIgnoreCase("age")).findAny();
+                        if (optionalProperty.isPresent()) {
+                            Property<?> property = optionalProperty.get();
+                            if (property.getValueClass() == Integer.class) {
+                                newBlockState = newBlockState.setValue(
+                                        (Property<Integer>)property,
+                                        (Integer)property.getPossibleValues().stream().toArray()[randomSource.nextInt(property.getPossibleValues().size())]);
+                            }
+                        }
+
+                        if (newBlockState.hasProperty(BlockStateProperties.DISTANCE)) {
+                            newBlockState = newBlockState.setValue(BlockStateProperties.DISTANCE, 1);
                         }
                     }
 
