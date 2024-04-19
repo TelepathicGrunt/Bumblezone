@@ -58,7 +58,6 @@ public class BzModCompatibilityConfigs {
 			"productivebees:zombie"
 	);
 	public static List<String> allowedBees = List.of(
-			"productivebees:diamond",
 			"productivebees:iron",
 			"productivebees:coal",
 			"productivebees:redstone",
