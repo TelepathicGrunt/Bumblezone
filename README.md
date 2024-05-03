@@ -8,7 +8,7 @@
 
 For developers that want to add Bumblezone to their mod's workspace:
 
-```
+```gradle
 repositories {
   maven {
      url "https://nexus.resourcefulbees.com/repository/telepathicgrunt/"
@@ -18,19 +18,19 @@ repositories {
 
 &nbsp;
 
-Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
+Don't forget to change <modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
 
-```
+```gradle
 dependencies {
    ...
    NEOFORGE: 
-     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:&lt;modversion>+1.20.2-neoforge")
+     compileOnly fg.deobf("com.telepathicgrunt:Bumblezone:<modversion>+1.20.2-neoforge")
      
    FABRIC/QUILT: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:&lt;modversion>+1.20.2-fabric"
+     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.2-fabric"
      
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:&lt;modversion>+1.20.2-common"
+     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.2-common"
 }
 ```
 
@@ -40,7 +40,7 @@ dependencies {
 
 For developers that want to add Bumblezone to their mod's workspace:
 
-```
+```gradle
 repositories {
     maven {
         url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
@@ -66,21 +66,21 @@ repositories {
 
 &nbsp;
 
-Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
+Don't forget to change <modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
 
-```
+```gradle
 dependencies {
    ...
    NEOFORGE: 
-     implementation fg.deobf("com.telepathicgrunt:Bumblezone:&lt;modversion>+1.20.2-neoforge")
+     implementation fg.deobf("com.telepathicgrunt:Bumblezone:<modversion>+1.20.2-neoforge")
      implementation fg.deobf("earth.terrarium.athena:athena-forge-1.20.1:3.1.1")
      
    FABRIC/QUILT: 
-     modImplementation "com.telepathicgrunt:Bumblezone:&lt;modversion>+1.20.2-fabric"
+     modImplementation "com.telepathicgrunt:Bumblezone:<modversion>+1.20.2-fabric"
      modImplementation "earth.terrarium.athena:athena-fabric-1.20.1:3.1.1"
      modImplementation "maven.modrinth:midnightlib:1.4.1-fabric" 
    
    ARCH COMMON MODULE: 
-     modCompileOnly "com.telepathicgrunt:Bumblezone:&lt;modversion>+1.20.2-common"
+     modCompileOnly "com.telepathicgrunt:Bumblezone:<modversion>+1.20.2-common"
 }
 ```
