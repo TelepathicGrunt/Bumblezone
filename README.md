@@ -18,7 +18,7 @@ repositories {
 
 &nbsp;
 
-Don't forget to change <modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
+Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
 
 ```gradle
 dependencies {
@@ -66,7 +66,7 @@ repositories {
 
 &nbsp;
 
-Don't forget to change <modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
+Don't forget to change &lt;modversion> with the actual latest version of this mod like `7.2.0` for example. (See older branches's README.md for their stuff)
 
 ```gradle
 dependencies {
