@@ -1,3 +1,9 @@
+### **(V.7.4.6 Changes) (1.20.4 Minecraft)**
+
+##### Fluids:
+Fixed fluid fog/overlay rendering when player stands under falling honey fluids.
+
+
 ### **(V.7.4.5 Changes) (1.20.4 Minecraft)**
 
 ##### Items:
