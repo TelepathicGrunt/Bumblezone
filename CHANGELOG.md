@@ -5,6 +5,9 @@ Fixed fluid fog/overlay rendering when player stands under falling honey fluids.
 
 Fixed Bumblezone fluid filled buckets able to place fluids in claimed chunks that should block placing.
 
+##### Entities:
+Fixed Cosmic Crystal Entity not despawning if killed outside the Sempiternal Sanctum event.
+
 
 ### **(V.7.3.5 Changes) (1.20.1 Minecraft)**
 

@@ -507,6 +507,10 @@ public class CosmicCrystalEntity extends LivingEntity {
                     1f);
         }
 
+        if (this.isDeadOrDying() && this.level().shouldTickDeath(this)) {
+            this.tickDeath();
+        }
+
         if (this.noAI) {
             return;
         }
@@ -1054,7 +1058,6 @@ public class CosmicCrystalEntity extends LivingEntity {
 
     @Override
     public void baseTick() {
-
         if (this.isPassenger()) {
             this.stopRiding();
         }
@@ -1113,9 +1116,6 @@ public class CosmicCrystalEntity extends LivingEntity {
         }
         if (this.invulnerableTime > 0) {
             --this.invulnerableTime;
-        }
-        if (this.isDeadOrDying() && this.level().shouldTickDeath(this)) {
-            this.tickDeath();
         }
         if (this.lastHurtByPlayerTime > 0) {
             --this.lastHurtByPlayerTime;
