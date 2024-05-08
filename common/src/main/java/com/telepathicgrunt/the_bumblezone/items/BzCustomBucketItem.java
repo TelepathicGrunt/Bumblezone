@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import dev.architectury.injectables.annotations.PlatformOnly;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -111,7 +112,7 @@ public class BzCustomBucketItem extends BzBucketItem {
 
     @Override
     public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult) {
-        if (!(this.fluid instanceof FlowingFluid)) {
+        if (!(this.fluid instanceof FlowingFluid) || !GeneralUtils.isPermissionAllowedAtSpot(world, player, pos, true)) {
             return false;
         }
         else {
