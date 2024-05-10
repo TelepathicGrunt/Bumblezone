@@ -19,6 +19,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -26,11 +27,14 @@ import java.util.List;
 
 public class ThronePillarBehavior {
     public static void applyFatigueAndSpawningBeeQueen(ServerPlayer serverPlayer) {
-        StructureManager structureManager = ((ServerLevel) serverPlayer.level()).structureManager();
+        ServerLevel level = (ServerLevel) serverPlayer.level();
+        StructureManager structureManager = level.structureManager();
         StructureStart structureStart = structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE);
         if (structureStart.isValid()) {
-            boolean hasBeeQueen = !serverPlayer.level().getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty();
-            if (hasBeeQueen && !serverPlayer.isCreative() && !serverPlayer.isSpectator() && !EssenceOfTheBees.hasEssence(serverPlayer)) {
+            BlockPos structureCenter = structureStart.getBoundingBox().getCenter();
+            boolean hasBeeQueenNearStructureCenter = !level.getEntitiesOfClass(BeeQueenEntity.class, AABB.ofSize(structureCenter.getCenter(), 16, 16, 16), (e) -> !e.isNoAi()).isEmpty();
+            boolean hasBeeQueenNearby = hasBeeQueenNearStructureCenter || !level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty();
+            if (hasBeeQueenNearby && !serverPlayer.isCreative() && !serverPlayer.isSpectator() && !EssenceOfTheBees.hasEssence(serverPlayer)) {
                 serverPlayer.addEffect(new MobEffectInstance(
                         MobEffects.DIG_SLOWDOWN,
                         100,
@@ -40,7 +44,6 @@ public class ThronePillarBehavior {
                         true));
             }
 
-            BlockPos structureCenter = structureStart.getBoundingBox().getCenter();
             List<ItemStack> throneCompasses = new ArrayList<>();
             for (ItemStack item : serverPlayer.getInventory().items) {
                 if (item.is(BzItems.HONEY_COMPASS.get())) {
@@ -55,8 +58,7 @@ public class ThronePillarBehavior {
                 }
             }
 
-            if (!hasBeeQueen && !throneCompasses.isEmpty()) {
-                ServerLevel level = (ServerLevel) serverPlayer.level();
+            if (!hasBeeQueenNearby && !throneCompasses.isEmpty()) {
                 BeeQueenEntity newBeeQueen = BzEntities.BEE_QUEEN.get().create(level);
 
                 BlockPos queenPos = new BlockPos(structureCenter.getX(), 133, structureCenter.getZ());
