@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.EntityTeleportationHookup;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.items.EssenceOfTheBees;
+import com.telepathicgrunt.the_bumblezone.world.structures.ThronePillarBehavior;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +20,7 @@ public abstract class ServerPlayerMixin {
         ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
         if (!EssenceOfTheBees.hasEssence(serverPlayer)) {
             BeeAggression.applyAngerIfInTaggedStructures(serverPlayer);
-            BeeQueenEntity.applyMiningFatigueInStructures(serverPlayer);
+            ThronePillarBehavior.applyFatigueAndSpawningBeeQueen(serverPlayer);
         }
     }
 
