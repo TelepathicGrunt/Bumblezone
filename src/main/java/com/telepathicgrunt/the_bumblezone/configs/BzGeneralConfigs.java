@@ -21,6 +21,7 @@ public class BzGeneralConfigs {
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeRewardMultiplier;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
     public static ForgeConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
+    public static ForgeConfigSpec.BooleanValue beeQueenRespawning;
     public static ForgeConfigSpec.BooleanValue keepEssenceOfTheBeesOnRespawning;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ForgeConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
@@ -180,6 +181,12 @@ public class BzGeneralConfigs {
                         " Setting this to 0 disables bonus Trades.\n")
                 .translation("the_bumblezone.config.beequeenbonusTradeamounttillsatified")
                 .defineInRange("beeQueenBonusTradeAmountTillSatified", 24, 0, 1000000);
+
+        beeQueenRespawning = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Allow Bee Queen to respawn in Throne Pillar when located with fresh Throne Honey Compass.\n")
+                .translation("the_bumblezone.config.beequeenrespawning")
+                .define("beeQueenRespawning", true);
 
         keepEssenceOfTheBeesOnRespawning = builder
                 .comment(" \n-----------------------------------------------------\n",
