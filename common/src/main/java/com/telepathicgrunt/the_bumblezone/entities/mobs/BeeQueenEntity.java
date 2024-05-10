@@ -11,7 +11,6 @@ import com.telepathicgrunt.the_bumblezone.entities.goals.BeeQueenAngerableMeleeA
 import com.telepathicgrunt.the_bumblezone.entities.navigation.DirectPathNavigator;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
-import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ItemEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.PlayerAdvancementsAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -24,7 +23,6 @@ import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
@@ -44,7 +42,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandomList;
@@ -86,7 +83,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -372,25 +368,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         if (!this.level().isClientSide) {
             this.updatePersistentAnger((ServerLevel) this.level(), false);
-        }
-    }
-
-    public static void applyMiningFatigueInStructures(ServerPlayer serverPlayer) {
-        if (serverPlayer.isCreative() || serverPlayer.isSpectator() || EssenceOfTheBees.hasEssence(serverPlayer)) {
-            return;
-        }
-
-        StructureManager structureManager = ((ServerLevel) serverPlayer.level()).structureManager();
-        if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE).isValid() &&
-            !serverPlayer.level().getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty())
-        {
-            serverPlayer.addEffect(new MobEffectInstance(
-                    MobEffects.DIG_SLOWDOWN,
-                    100,
-                    2,
-                    false,
-                    false,
-                    true));
         }
     }
 

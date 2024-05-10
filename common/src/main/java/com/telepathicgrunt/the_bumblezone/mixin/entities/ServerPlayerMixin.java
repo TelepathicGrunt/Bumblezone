@@ -1,16 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.worldgen.structures.SempiternalSanctumBehavior;
+import com.telepathicgrunt.the_bumblezone.worldgen.structures.ThronePillarBehavior;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.BeehiveBlock;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,7 +28,7 @@ public abstract class ServerPlayerMixin {
     private void bumblezone$checkIfInSpecialStructures(CallbackInfo ci) {
         ServerPlayer serverPlayer = (ServerPlayer)(Object)this;
         BeeAggression.applyAngerIfInTaggedStructures(serverPlayer);
-        BeeQueenEntity.applyMiningFatigueInStructures(serverPlayer);
+        ThronePillarBehavior.applyFatigueAndSpawningBeeQueen(serverPlayer);
         SempiternalSanctumBehavior.runStructureMessagesAndFatigue(serverPlayer);
     }
 

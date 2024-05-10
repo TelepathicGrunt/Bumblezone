@@ -59,6 +59,7 @@ public class HoneyCompass extends Item implements Vanishable {
     public static final String TAG_CUSTOM_DESCRIPTION_TYPE = "CustomDescription";
     public static final String TAG_LOCKED = "Locked";
     public static final String TAG_COMPASS_SEARCH_ID = "searchId";
+    public static final String TAG_LOCATED_SPECIAL_STRUCTURE = "locatedSpecialStructure";
 
     public HoneyCompass(Item.Properties properties) {
         super(properties);
