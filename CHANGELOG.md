@@ -1,7 +1,7 @@
 ### **(V.7.4.7 Changes) (1.20.4 Minecraft)**
 
 ##### Structures:
-Throne-locating Honey Compasses will now be marked if they are in inventory of a player entering Throne Pillar structure.
+Throne-locating Honey Compasses will now be marked if they are in inventory of a player entering the compass's located Throne Pillar structure.
  When an unmarked Throne-locating Honey Compasses is in bounds of a Throne Pillar structure without Bee Queen,
  the Bee Queen will be respawned and a Royal Jelly Fluid block restored farther above.
  Controlled by beeQueenRespawning config.
