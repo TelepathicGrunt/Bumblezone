@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.structures;
 
+import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
@@ -42,6 +43,10 @@ public class ThronePillarBehavior {
                         false,
                         false,
                         true));
+            }
+
+            if (!BzGeneralConfigs.beeQueenRespawning) {
+                return;
             }
 
             List<ItemStack> throneCompasses = new ArrayList<>();
