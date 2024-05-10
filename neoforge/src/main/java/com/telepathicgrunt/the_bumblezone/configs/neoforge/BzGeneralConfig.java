@@ -31,6 +31,7 @@ public class BzGeneralConfig {
     public static ModConfigSpec.IntValue beeQueenBonusTradeDurationInTicks;
     public static ModConfigSpec.IntValue beeQueenBonusTradeAmountTillSatified;
     public static ModConfigSpec.BooleanValue beeQueenSpecialDayTrades;
+    public static ModConfigSpec.BooleanValue beeQueenRespawning;
     public static ModConfigSpec.BooleanValue allowWanderingTraderMusicDiscsTrades;
     public static ModConfigSpec.IntValue musicDiscTimeLengthFlightOfTheBumblebee;
     public static ModConfigSpec.IntValue musicDiscTimeLengthHoneyBee;
@@ -268,6 +269,12 @@ public class BzGeneralConfig {
                         " Whether to allow special trades to activate during certain days of the year.\n")
                 .translation("the_bumblezone.config.beequeenspecialdaytrades")
                 .define("beeQueenSpecialDayTrades", true);
+
+        beeQueenRespawning = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " Allow Bee Queen to respawn in Throne Pillar when located with fresh Throne Honey Compass.\n")
+                .translation("the_bumblezone.config.beequeenrespawning")
+                .define("beeQueenRespawning", true);
 
         crystallineFlowerConsumeItemEntities = builder
                 .comment(" \n-----------------------------------------------------\n",
@@ -529,6 +536,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.beeQueenBonusTradeDurationInTicks = beeQueenBonusTradeDurationInTicks.get();
         BzGeneralConfigs.beeQueenBonusTradeAmountTillSatified = beeQueenBonusTradeAmountTillSatified.get();
         BzGeneralConfigs.beeQueenSpecialDayTrades = beeQueenSpecialDayTrades.get();
+        BzGeneralConfigs.beeQueenRespawning = beeQueenRespawning.get();
         BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades.get();
         BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee.get();
         BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee.get();
