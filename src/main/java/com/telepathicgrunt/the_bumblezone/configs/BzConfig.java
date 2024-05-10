@@ -165,6 +165,9 @@ public class BzConfig extends MidnightConfig {
     public static int beeQueenBonusTradeAmountTillSatified = 24;
 
     @Entry
+    public static boolean beeQueenRespawning = true;
+
+    @Entry
     public static boolean specialBeeSpawning = true;
 
     @Entry
