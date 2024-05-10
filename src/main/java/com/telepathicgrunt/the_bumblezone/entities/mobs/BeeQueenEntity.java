@@ -350,25 +350,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         }
     }
 
-    public static void applyMiningFatigueInStructures(ServerPlayer serverPlayer) {
-        if(serverPlayer.isCreative() || serverPlayer.isSpectator()) {
-            return;
-        }
-
-        StructureManager structureManager = ((ServerLevel)serverPlayer.level).structureManager();
-        if (structureManager.getStructureWithPieceAt(serverPlayer.blockPosition(), BzTags.BEE_QUEEN_MINING_FATIGUE).isValid() &&
-            !serverPlayer.level.getEntitiesOfClass(BeeQueenEntity.class, serverPlayer.getBoundingBox().inflate(30.0D, 30.0D, 30.0D), (e) -> !e.isNoAi()).isEmpty())
-        {
-            serverPlayer.addEffect(new MobEffectInstance(
-                    MobEffects.DIG_SLOWDOWN,
-                    100,
-                    2,
-                    false,
-                    false,
-                    true));
-        }
-    }
-
     @Override
     public void tick() {
         super.tick();
