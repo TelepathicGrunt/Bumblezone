@@ -45,7 +45,7 @@ public class ThronePillarBehavior {
 
             List<ItemStack> throneCompasses = new ArrayList<>();
             for (ItemStack item : serverPlayer.getInventory().items) {
-                if (item.is(BzItems.HONEY_COMPASS.get())) {
+                if (item.is(BzItems.HONEY_COMPASS)) {
                     CompoundTag tag = item.getOrCreateTag();
                     if (!tag.getBoolean(HoneyCompass.TAG_LOCATED_SPECIAL_STRUCTURE) &&
                         tag.getString(HoneyCompass.TAG_TYPE).equals("structure") &&
@@ -58,7 +58,7 @@ public class ThronePillarBehavior {
             }
 
             if (!hasBeeQueenNearby && !throneCompasses.isEmpty()) {
-                BeeQueenEntity newBeeQueen = BzEntities.BEE_QUEEN.get().create(level);
+                BeeQueenEntity newBeeQueen = BzEntities.BEE_QUEEN.create(level);
 
                 BlockPos queenPos = new BlockPos(structureCenter.getX(), 133, structureCenter.getZ());
                 newBeeQueen.setPos(Vec3.atCenterOf(queenPos));
@@ -66,7 +66,7 @@ public class ThronePillarBehavior {
 
                 level.addFreshEntity(newBeeQueen);
 
-                level.setBlock(queenPos.above(17), BzFluids.ROYAL_JELLY_FLUID_BLOCK.get().defaultBlockState(), 3);
+                level.setBlock(queenPos.above(17), BzFluids.ROYAL_JELLY_FLUID_BLOCK.defaultBlockState(), 3);
             }
 
             throneCompasses.forEach(compass -> compass.getOrCreateTag().putBoolean(HoneyCompass.TAG_LOCATED_SPECIAL_STRUCTURE, true));
