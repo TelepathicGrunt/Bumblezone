@@ -37,6 +37,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -400,11 +402,11 @@ public class StringCurtain extends Block {
     }
 
     @Nullable
-    public static BlockPathTypes getCurtainBlockPathType(Entity mob, BlockGetter blockGetter, BlockPos blockPos, BlockPathTypes blockPathType) {
-        if (blockPathType == BlockPathTypes.OPEN && mob != null) {
+    public static PathType getCurtainBlockPathType(Entity mob, PathfindingContext pathfindingContext, BlockPos blockPos, PathType blockPathType) {
+        if (blockPathType == PathType.OPEN && mob != null) {
             boolean shouldBlockPathfinding = shouldBlockOffEntity(mob);
-            if (shouldBlockPathfinding && blockGetter.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
-                return BlockPathTypes.BLOCKED;
+            if (shouldBlockPathfinding && pathfindingContext.getBlockState(blockPos).is(BzTags.STRING_CURTAINS)) {
+                return PathType.BLOCKED;
             }
         }
         return null;

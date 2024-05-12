@@ -4,6 +4,10 @@ import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,13 +40,16 @@ public class HiddenEffect extends BzEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
         super.applyEffectTick(livingEntity, amplifier);
 
-        MobEffectInstance effect = livingEntity.getEffect(BzEffects.HIDDEN.get());
+        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+        Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.getHolder(BzEffects.HIDDEN.getId()).get();
+        MobEffectInstance effect = livingEntity.getEffect(hiddenEffectReference);
         if (effect != null && effect.getDuration() <= 1) {
             PileOfPollen.reapplyHiddenEffectIfInsidePollenPile(livingEntity);
         }
+        return true;
     }
 
     /**
@@ -67,7 +74,9 @@ public class HiddenEffect extends BzEffect {
     }
 
     public static void hideEntity(EntityVisibilityEvent event) {
-        MobEffectInstance hiddenEffect = event.entity().getEffect(BzEffects.HIDDEN.get());
+        Registry<MobEffect> mobEffects = event.entity().level().registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+        Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.getHolder(BzEffects.HIDDEN.getId()).get();
+        MobEffectInstance hiddenEffect = event.entity().getEffect(hiddenEffectReference);
         if(hiddenEffect != null) {
             event.modify(0);
         }

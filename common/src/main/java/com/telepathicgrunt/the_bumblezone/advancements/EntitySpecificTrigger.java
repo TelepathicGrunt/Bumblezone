@@ -30,8 +30,8 @@ public class EntitySpecificTrigger extends SimpleCriterionTrigger<EntitySpecific
 
         public static final Codec<EntitySpecificTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(EntitySpecificTrigger.TriggerInstance::player),
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "entity").forGetter(EntitySpecificTrigger.TriggerInstance::entity)
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(EntitySpecificTrigger.TriggerInstance::player),
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(EntitySpecificTrigger.TriggerInstance::entity)
                 ).apply(instance, EntitySpecificTrigger.TriggerInstance::new));
 
         public boolean matches(LootContext context) {

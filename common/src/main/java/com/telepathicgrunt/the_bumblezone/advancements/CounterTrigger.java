@@ -27,7 +27,7 @@ public class CounterTrigger extends SimpleCriterionTrigger<CounterTrigger.Trigge
 
         public static final Codec<CounterTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(CounterTrigger.TriggerInstance::player),
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(CounterTrigger.TriggerInstance::player),
                         ExtraCodecs.POSITIVE_INT.fieldOf("target_count").forGetter(CounterTrigger.TriggerInstance::targetCount)
                 ).apply(instance, CounterTrigger.TriggerInstance::new));
 

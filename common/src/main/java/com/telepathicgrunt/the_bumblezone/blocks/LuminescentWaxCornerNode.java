@@ -9,7 +9,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
@@ -45,13 +47,10 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
 
 
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         if (blockState.getBlock() instanceof LuminescentWaxCornerNode &&
-            (PlatformHooks.isToolAction(itemstack, ShearsItem.class, "shears_carve") ||
-            PlatformHooks.isToolAction(itemstack, SwordItem.class, "sword_dig")))
+            (PlatformHooks.isToolAction(itemStack, ShearsItem.class, "shears_carve") ||
+            PlatformHooks.isToolAction(itemStack, SwordItem.class, "sword_dig")))
         {
 
             Direction newDirectProperty = blockState.getValue(FACING);
@@ -61,27 +60,27 @@ public class LuminescentWaxCornerNode extends RotationFacingBlock implements Lum
                 newRotateProperty = 0;
             }
 
-            world.setBlock(position,
+            level.setBlock(position,
                 blockState
                     .setValue(FACING, newDirectProperty)
                     .setValue(ROTATION, newRotateProperty),
             3);
 
-            this.spawnDestroyParticles(world, playerEntity, position, blockState);
+            this.spawnDestroyParticles(level, playerEntity, position, blockState);
 
-            playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
+            playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
             if (playerEntity instanceof ServerPlayer serverPlayer) {
                 BzCriterias.CARVE_WAX_TRIGGER.get().trigger(serverPlayer, position);
 
                 if (!serverPlayer.getAbilities().instabuild) {
-                    itemstack.hurt(1, playerEntity.getRandom(), serverPlayer);
+                    itemStack.hurtAndBreak(1, serverPlayer, playerHand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
                 }
             }
 
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
-        return super.use(blockState, world, position, playerEntity, playerHand, raytraceResult);
+        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
     }
 
     @Override

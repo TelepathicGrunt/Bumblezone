@@ -49,6 +49,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -285,25 +286,25 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    public void animateTick(BlockState blockState, Level world, BlockPos position, RandomSource random) {
+    public void animateTick(BlockState blockState, Level level, BlockPos position, RandomSource random) {
         if (blockState.hasProperty(LIT) && blockState.getValue(LIT)) {
-            BlockEntity blockEntity = world.getBlockEntity(position);
+            BlockEntity blockEntity = level.getBlockEntity(position);
             if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity && potionCandleBlockEntity.getMobEffect() != null) {
                 int color = potionCandleBlockEntity.getColor();
                 Vec3 colorRGB = PotionCandleBlockEntity.convertIntegerColorToRGB(color);
 
                 //number of particles in this tick
                 for (int i = 0; i < random.nextInt(3); ++i) {
-                    this.spawnAmbientEffectParticles(world, random, position, colorRGB.x(), colorRGB.y(), colorRGB.z());
+                    this.spawnEffectParticles(level, random, position, colorRGB.x(), colorRGB.y(), colorRGB.z());
                 }
             }
         }
-        super.animateTick(blockState, world, position, random);
+        super.animateTick(blockState, level, position, random);
     }
 
 
-    private void spawnAmbientEffectParticles(Level world, RandomSource random, BlockPos position, double red, double green, double blue) {
-        world.addParticle(ParticleTypes.AMBIENT_ENTITY_EFFECT,
+    private void spawnEffectParticles(Level level, RandomSource random, BlockPos position, double red, double green, double blue) {
+        level.addParticle(ParticleTypes.EFFECT,
                 position.getX() + 0.4d + (random.nextDouble() * 0.2d),
                 position.getY() + 0.7d + (random.nextDouble() * 0.2d),
                 position.getZ() + 0.4d + (random.nextDouble() * 0.2d),
@@ -313,14 +314,14 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return !(state.hasProperty(LIT) && state.getValue(LIT));
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
+        return !(blockState.hasProperty(LIT) && blockState.getValue(LIT));
     }
 
     @Override
-    public BlockPathTypes bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
+    public PathType bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {
-            return BlockPathTypes.DAMAGE_FIRE;
+            return PathType.DAMAGE_FIRE;
         }
         return null;
     }

@@ -6,7 +6,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = AmphibiousNodeEvaluator.class, priority = 1200)
 public class AmphibiousNodeEvaluatorMixin extends WalkNodeEvaluator {
 
-    @WrapOperation(method = "getBlockPathType(Lnet/minecraft/world/level/BlockGetter;III)Lnet/minecraft/world/level/pathfinder/BlockPathTypes;",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/pathfinder/AmphibiousNodeEvaluator;getBlockPathTypeRaw(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/pathfinder/BlockPathTypes;"),
+    @WrapOperation(method = "getPathType(Lnet/minecraft/world/level/pathfinder/PathfindingContext;III)Lnet/minecraft/world/level/pathfinder/PathType;",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/pathfinder/PathfindingContext;getPathTypeFromState(III)Lnet/minecraft/world/level/pathfinder/PathType;"),
             require = 0)
-    private BlockPathTypes bumblezone$bzStringCurtainBlockingBees(BlockGetter blockGetter, BlockPos blockPos, Operation<BlockPathTypes> original) {
-        BlockPathTypes blockPathType = original.call(blockGetter, blockPos);
-        BlockPathTypes blocked = StringCurtain.getCurtainBlockPathType(this.mob, blockGetter, blockPos, blockPathType);
+    private PathType bumblezone$bzStringCurtainBlockingBees(PathfindingContext instance, int x, int y, int z, Operation<PathType> original) {
+        PathType blockPathType = original.call(instance, x, y, z);
+        PathType blocked = StringCurtain.getCurtainBlockPathType(this.mob, instance, new BlockPos(x, y, z), blockPathType);
         if (blocked != null) return blocked;
         return blockPathType;
     }

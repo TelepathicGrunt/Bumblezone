@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -179,26 +180,17 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
      */
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState blockstate,
-                                 Level world,
-                                 BlockPos position,
-                                 Player playerEntity,
-                                 InteractionHand playerHand,
-                                 BlockHitResult raytraceResult)
-    {
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+        if (itemStack.getItem() == Items.GLASS_BOTTLE) {
 
-        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-
-        if (itemstack.getItem() == Items.GLASS_BOTTLE) {
-
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
+            level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
 
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false, true);
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
-        return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
     }
 
     /**
@@ -260,7 +252,7 @@ public class HoneyCrystal extends ProperFacingBlock implements SimpleWaterlogged
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         return false;
     }
 

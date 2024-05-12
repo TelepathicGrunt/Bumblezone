@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -86,34 +87,32 @@ public class PorousHoneycomb extends Block {
      * Allow player to harvest honey and put honey into this block using bottles
      */
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState thisBlockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         /*
          * Player is adding honey to this block if it is not filled with honey
          */
-        if (itemstack.getItem() == Items.HONEY_BOTTLE) {
-            world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3); // added honey to this block
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+        if (itemStack.getItem() == Items.HONEY_BOTTLE) {
+            level.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3); // added honey to this block
+            level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BOTTLE_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
             GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
 
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
-        else if (itemstack.is(BzTags.HONEY_BUCKETS)) {
+        else if (itemStack.is(BzTags.HONEY_BUCKETS)) {
             // added honey to this block and neighboring blocks
-            world.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
+            level.setBlock(position, BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
 
             // Clientside shuffle wont match server so let server fill neighbors and autosync to client.
-            if(!world.isClientSide()) {
+            if(!level.isClientSide()) {
                 int filledNeighbors = 0;
                 List<Direction> shuffledDirections = Arrays.asList(Direction.values());
                 Collections.shuffle(shuffledDirections);
                 for(Direction direction : shuffledDirections) {
-                    BlockState sideState = world.getBlockState(position.relative(direction));
+                    BlockState sideState = level.getBlockState(position.relative(direction));
                     if(sideState.is(BzBlocks.POROUS_HONEYCOMB.get())) {
-                        world.setBlock(position.relative(direction), BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
+                        level.setBlock(position.relative(direction), BzBlocks.FILLED_POROUS_HONEYCOMB.get().defaultBlockState(), 3);
                         filledNeighbors++;
                     }
 
@@ -121,13 +120,13 @@ public class PorousHoneycomb extends Block {
                 }
             }
 
-            world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
+            level.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
 
             GeneralUtils.givePlayerItem(playerEntity, playerHand, ItemStack.EMPTY, true, true);
 
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
-        return super.use(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
     }
 }

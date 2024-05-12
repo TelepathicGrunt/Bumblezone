@@ -11,7 +11,9 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,6 +23,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
@@ -66,24 +70,23 @@ public class FilledPorousHoneycomb extends Block {
      * Allow player to harvest honey and put honey into this block using bottles
      */
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState thisBlockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         /*
          * Player is harvesting the honey from this block if it is filled with honey
          */
-        if (itemstack.getItem() == Items.GLASS_BOTTLE) {
+        if (itemStack.getItem() == Items.GLASS_BOTTLE) {
             world.setBlock(position, BzBlocks.POROUS_HONEYCOMB.get().defaultBlockState(), 3); // removed honey from this block
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(Items.HONEY_BOTTLE), false, true);
 
-            if ((playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
+            Level level = playerEntity.level();
+            if ((level.dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
                     BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                     !playerEntity.isCreative() &&
                     !playerEntity.isSpectator() &&
                     BzBeeAggressionConfigs.aggressiveBees)
             {
-                boolean hasProtection = playerEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                Registry<MobEffect> mobEffects = level.registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+                boolean hasProtection = playerEntity.hasEffect(mobEffects.getHolder(BzEffects.PROTECTION_OF_THE_HIVE.getId()).get());
                 if(!hasProtection &&
                     playerEntity instanceof ServerPlayer serverPlayer &&
                     !EssenceOfTheBees.hasEssence(serverPlayer) &&
@@ -93,7 +96,7 @@ public class FilledPorousHoneycomb extends Block {
                     serverPlayer.displayClientMessage(message, true);
 
                     //Now all bees nearby in Bumblezone will get VERY angry!!!
-                    playerEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
+                    playerEntity.addEffect(new MobEffectInstance(mobEffects.getHolder(BzEffects.WRATH_OF_THE_HIVE.getId()).get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                 }
 
                 if (hasProtection && playerEntity instanceof ServerPlayer serverPlayer) {
@@ -101,10 +104,10 @@ public class FilledPorousHoneycomb extends Block {
                 }
             }
 
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
-        return super.use(thisBlockState, world, position, playerEntity, playerHand, raytraceResult);
+        return super.useItemOn(itemStack, blockState, world, position, playerEntity, playerHand, raytraceResult);
     }
 
     @Override

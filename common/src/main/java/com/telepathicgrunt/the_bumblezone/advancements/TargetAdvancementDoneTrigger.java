@@ -34,7 +34,7 @@ public class TargetAdvancementDoneTrigger extends SimpleCriterionTrigger<TargetA
 
         public static final Codec<TargetAdvancementDoneTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::player),
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::player),
                         ResourceLocation.CODEC.fieldOf("target_advancement").forGetter(TargetAdvancementDoneTrigger.TriggerInstance::targetAdvancement)
                 ).apply(instance, TargetAdvancementDoneTrigger.TriggerInstance::new));
 

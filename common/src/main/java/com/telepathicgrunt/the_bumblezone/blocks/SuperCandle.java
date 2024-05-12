@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -79,38 +80,37 @@ public interface SuperCandle {
         }
     }
 
-    default boolean CandleLightBehaviors(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand) {
-        ItemStack handItem = player.getItemInHand(interactionHand);
-        if (handItem.isEmpty() && blockState.getValue(BlockStateProperties.LIT)) {
+    default boolean CandleLightBehaviors(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand playerHand) {
+        if (itemStack.isEmpty() && blockState.getValue(BlockStateProperties.LIT)) {
             SuperCandleWick.extinguish(player, level.getBlockState(blockPos.above()), level, blockPos.above());
             return true;
         }
         else if (!blockState.getValue(BlockStateProperties.LIT)) {
-            if (handItem.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
+            if (itemStack.is(BzTags.INFINITE_CANDLE_LIGHTING_ITEMS)) {
                 if (lightCandle(level, blockPos, player)) {
-                    if (!handItem.isEmpty()) {
-                        player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                    if (!itemStack.isEmpty()) {
+                        player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
                     }
                 }
                 return true;
             }
-            else if (handItem.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
+            else if (itemStack.is(BzTags.DAMAGEABLE_CANDLE_LIGHTING_ITEMS)) {
                 boolean successfulLit = lightCandle(level, blockPos, player);
-                if (!handItem.isEmpty() && successfulLit) {
-                    player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                if (!itemStack.isEmpty() && successfulLit) {
+                    player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
                 }
                 if (successfulLit && player instanceof ServerPlayer serverPlayer && !player.getAbilities().instabuild) {
-                    handItem.hurt(1, level.getRandom(), serverPlayer);
+                    itemStack.hurtAndBreak(1, serverPlayer, playerHand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
                 }
                 return true;
             }
-            else if (handItem.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
+            else if (itemStack.is(BzTags.CONSUMABLE_CANDLE_LIGHTING_ITEMS)) {
                 boolean successfulLit = lightCandle(level, blockPos, player);
-                if (!handItem.isEmpty() && successfulLit) {
-                    player.awardStat(Stats.ITEM_USED.get(handItem.getItem()));
+                if (!itemStack.isEmpty() && successfulLit) {
+                    player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
                 }
                 if (successfulLit && !player.getAbilities().instabuild) {
-                    handItem.shrink(1);
+                    itemStack.shrink(1);
                 }
                 return true;
             }

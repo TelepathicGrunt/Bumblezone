@@ -4,6 +4,8 @@ import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleBase;
 import com.telepathicgrunt.the_bumblezone.blocks.SuperCandleWick;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -42,7 +44,7 @@ public class PotionCandleBlockEntity extends BlockEntity {
     public static final String RANGE_TAG = "range";
     public static final String LINGER_TIME_TAG = "linger_time";
     private int color = DEFAULT_COLOR;
-    private MobEffect mobEffect = null;
+    private Holder<MobEffect> mobEffect = null;
     private int amplifier = 0;
     private int maxDuration = DEFAULT_MAX_DURATION;
     private int currentDuration = 0;
@@ -67,11 +69,11 @@ public class PotionCandleBlockEntity extends BlockEntity {
         this.color = colorIn;
     }
 
-    public MobEffect getMobEffect() {
+    public Holder<MobEffect> getMobEffect() {
         return this.mobEffect;
     }
 
-    public void setMobEffect(MobEffect mobEffect) {
+    public void setMobEffect(Holder<MobEffect> mobEffect) {
         this.mobEffect = mobEffect;
     }
 
@@ -120,11 +122,11 @@ public class PotionCandleBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
+    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
         this.color = compoundTag.contains(COLOR_TAG) ? compoundTag.getInt(COLOR_TAG) : DEFAULT_COLOR;
         if (compoundTag.contains(STATUS_EFFECT_TAG) && !compoundTag.getString(STATUS_EFFECT_TAG).trim().equals("")) {
-            this.mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(new ResourceLocation(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
+            this.mobEffect = BuiltInRegistries.MOB_EFFECT.getHolder(new ResourceLocation(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
         }
         else {
             this.mobEffect = null;
@@ -143,15 +145,15 @@ public class PotionCandleBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
         saveFieldsToTag(compoundTag);
     }
 
     private void saveFieldsToTag(CompoundTag compoundTag) {
         compoundTag.putInt(COLOR_TAG, this.color);
         if (this.mobEffect != null) {
-            compoundTag.putString(STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(this.mobEffect).toString());
+            compoundTag.putString(STATUS_EFFECT_TAG, this.mobEffect.getRegisteredName());
         }
         compoundTag.putInt(AMPLIFIER_TAG, this.amplifier);
         compoundTag.putInt(MAX_DURATION_TAG, this.maxDuration);
@@ -163,9 +165,9 @@ public class PotionCandleBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void saveToItem(ItemStack stack) {
+    public void saveToItem(ItemStack stack, HolderLookup.Provider provider) {
         CompoundTag compoundTag = new CompoundTag();
-        this.saveAdditional(compoundTag);
+        this.saveAdditional(compoundTag, provider);
         BlockItem.setBlockEntityData(stack, this.getType(), compoundTag);
     }
 
@@ -175,7 +177,7 @@ public class PotionCandleBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         saveFieldsToTag(tag);
         return tag;
@@ -183,7 +185,7 @@ public class PotionCandleBlockEntity extends BlockEntity {
 
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity) {
         if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
-            boolean isInstant = potionCandleBlockEntity.getMobEffect() != null && potionCandleBlockEntity.getMobEffect().isInstantenous();
+            boolean isInstant = potionCandleBlockEntity.getMobEffect() != null && potionCandleBlockEntity.getMobEffect().value().isInstantenous();
             boolean instantPotionTime = isInstantEffectApplyTime(level, potionCandleBlockEntity);
 
             if (blockState.hasProperty(SuperCandleBase.LIT) && blockState.getValue(SuperCandleBase.LIT)) {
@@ -217,13 +219,13 @@ public class PotionCandleBlockEntity extends BlockEntity {
                                         Math.max(0, potionCandleBlockEntity.getAmplifier() - 1),
                                         true,
                                         true,
-                                        !potionCandleBlockEntity.getMobEffect().isInstantenous());
+                                        !potionCandleBlockEntity.getMobEffect().value().isInstantenous());
 
                                 livingEntity.addEffect(mobEffectInstance);
                             }
 
                             if (isInstant && level instanceof ServerLevel serverLevel) {
-                                spawnEffectParticles(serverLevel, blockPos, potionCandleBlockEntity.getMobEffect().isBeneficial(), potionCandleBlockEntity.getRange());
+                                spawnEffectParticles(serverLevel, blockPos, potionCandleBlockEntity.getMobEffect().value().isBeneficial(), potionCandleBlockEntity.getRange());
                             }
                         }
                     }

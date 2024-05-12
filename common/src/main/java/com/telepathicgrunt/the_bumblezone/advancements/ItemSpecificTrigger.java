@@ -30,12 +30,12 @@ public class ItemSpecificTrigger extends SimpleCriterionTrigger<ItemSpecificTrig
 
         public static final Codec<ItemSpecificTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(ItemSpecificTrigger.TriggerInstance::player),
-                        ExtraCodecs.strictOptionalField(ItemPredicate.CODEC, "item").forGetter(ItemSpecificTrigger.TriggerInstance::item)
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(ItemSpecificTrigger.TriggerInstance::player),
+                        ItemPredicate.CODEC.optionalFieldOf("item").forGetter(ItemSpecificTrigger.TriggerInstance::item)
                 ).apply(instance, ItemSpecificTrigger.TriggerInstance::new));
 
         public boolean matches(ItemStack itemStack) {
-            return this.item.isEmpty() || this.item.get().matches(itemStack);
+            return this.item.isEmpty() || this.item.get().test(itemStack);
         }
     }
 }

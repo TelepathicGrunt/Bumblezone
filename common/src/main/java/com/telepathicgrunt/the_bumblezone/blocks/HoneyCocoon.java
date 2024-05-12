@@ -19,6 +19,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -32,13 +33,16 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -277,25 +281,20 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public InteractionResult use(BlockState blockstate, Level world,
-                                 BlockPos position, Player playerEntity,
-                                 InteractionHand playerHand, BlockHitResult raytraceResult) {
-
-        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-
-        if (itemstack.getItem() == Items.GLASS_BOTTLE && blockstate.getValue(WATERLOGGED)) {
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+         if (itemStack.getItem() == Items.GLASS_BOTTLE && blockstate.getValue(WATERLOGGED)) {
 
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
 
             GeneralUtils.givePlayerItem(playerEntity, playerHand, new ItemStack(BzItems.SUGAR_WATER_BOTTLE.get()), false, true);
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
         else if (world.isClientSide) {
             world.playSound(playerEntity, playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(),
                     BzSounds.HONEY_COCOON_OPEN.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
         else {
             MenuProvider menuprovider = null;
@@ -313,7 +312,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
                 playerEntity.openMenu(menuprovider);
             }
 
-            return InteractionResult.CONSUME;
+            return ItemInteractionResult.CONSUME;
         }
     }
 
@@ -322,14 +321,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
      */
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState blockstate, LivingEntity livingEntity, ItemStack itemStack) {
-        if (itemStack.hasCustomHoverName()) {
-            BlockEntity blockentity = level.getBlockEntity(pos);
-            if (blockentity instanceof HoneyCocoonBlockEntity) {
-                ((HoneyCocoonBlockEntity)blockentity).setCustomName(itemStack.getHoverName());
-            }
-        }
-
-        if (blockstate.getValue(WATERLOGGED)) {
+       if (blockstate.getValue(WATERLOGGED)) {
             level.scheduleTick(pos, BzFluids.SUGAR_WATER_FLUID.get(), BzFluids.SUGAR_WATER_FLUID.get().getTickDelay(level));
             level.scheduleTick(pos, blockstate.getBlock(), waterDropDelay);
         }
@@ -375,17 +367,17 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(itemStack, level, tooltip, flag);
-        CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
-        if (compoundtag != null) {
-            if (compoundtag.contains("LootTable", 8)) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
+        CustomData customData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        if (!customData.isEmpty()) {
+            if (customData.contains("LootTable")) {
                 tooltip.add(Component.literal("???????"));
             }
 
-            if (compoundtag.contains("Items", 9)) {
+            if (customData.contains("Items")) {
                 NonNullList<ItemStack> nonnulllist = NonNullList.withSize(27, ItemStack.EMPTY);
-                ContainerHelper.loadAllItems(compoundtag, nonnulllist);
+                ContainerHelper.loadAllItems(customData.copyTag(), nonnulllist, tooltipContext.registries());
                 int i = 0;
                 int j = 0;
 
@@ -409,7 +401,7 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter world, BlockPos pos, PathComputationType type) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         return false;
     }
 

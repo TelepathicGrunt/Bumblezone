@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -142,13 +144,13 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getAbilities().mayBuild) {
-            if (CandleLightBehaviors(blockState, level, blockPos, player, interactionHand)) {
-                return InteractionResult.sidedSuccess(level.isClientSide);
+            if (CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand)) {
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -169,14 +171,14 @@ public class SuperCandleBase extends Block implements SimpleWaterloggedBlock, Su
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return !(state.hasProperty(LIT) && state.getValue(LIT));
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
+        return !(blockState.hasProperty(LIT) && blockState.getValue(LIT));
     }
 
     @Override
-    public BlockPathTypes bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
+    public PathType bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {
-            return BlockPathTypes.DAMAGE_FIRE;
+            return PathType.DAMAGE_FIRE;
         }
         return null;
     }

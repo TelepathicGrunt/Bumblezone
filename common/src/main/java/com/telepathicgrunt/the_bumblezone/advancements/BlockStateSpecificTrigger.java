@@ -31,7 +31,7 @@ public class BlockStateSpecificTrigger extends SimpleCriterionTrigger<BlockState
 
         public static final Codec<BlockStateSpecificTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(BlockStateSpecificTrigger.TriggerInstance::player),
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(BlockStateSpecificTrigger.TriggerInstance::player),
                         CodecUtils.BlockMatcher.CODEC.fieldOf("block").forGetter(BlockStateSpecificTrigger.TriggerInstance::blockMatcher)
                 ).apply(instance, BlockStateSpecificTrigger.TriggerInstance::new));
 

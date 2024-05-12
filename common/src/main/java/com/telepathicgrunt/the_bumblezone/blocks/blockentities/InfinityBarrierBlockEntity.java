@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -44,8 +45,8 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
+    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
         if (this.level != null && this.level.isClientSide()) {
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 8);
         }
@@ -55,12 +56,12 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
-        saveFieldsToTag(compoundTag);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
+        saveFieldsToTag(compoundTag, provider);
     }
 
-    private void saveFieldsToTag(CompoundTag compoundTag) {
+    private void saveFieldsToTag(CompoundTag compoundTag, HolderLookup.Provider provider) {
         compoundTag.putInt(PRIMARY_COLOR_TAG, this.primaryColor);
         compoundTag.putInt(SECONDARY_COLOR_TAG, this.secondaryColor);
     }
@@ -71,9 +72,9 @@ public class InfinityBarrierBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
-        saveFieldsToTag(tag);
+        saveFieldsToTag(tag, provider);
         return tag;
     }
 

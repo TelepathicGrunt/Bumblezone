@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
+import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
@@ -14,10 +15,14 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -53,6 +58,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.lang.ref.Reference;
 
 public class PileOfPollen extends FallingBlock {
     public static final IntegerProperty LAYERS = BlockStateProperties.LAYERS;
@@ -116,7 +123,7 @@ public class PileOfPollen extends FallingBlock {
     }
 
     @Override
-    public boolean isPathfindable(BlockState blockState, BlockGetter world, BlockPos blockPos, PathComputationType pathType) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         return true;
     }
 
@@ -373,10 +380,9 @@ public class PileOfPollen extends FallingBlock {
 
             // make entity invisible if hidden inside
             if(!entity.level().isClientSide() &&
-                entity instanceof LivingEntity livingEntity &&
-                !livingEntity.hasEffect(BzEffects.HIDDEN.get()))
+                entity instanceof LivingEntity livingEntity)
             {
-                applyHiddenEffectIfBuried(livingEntity, blockState, blockPos);
+                applyHiddenEffectIfBuried(livingEntity, blockState, blockPos, true);
             }
         }
     }
@@ -395,7 +401,7 @@ public class PileOfPollen extends FallingBlock {
                         mutableBlockPos.set(x, y, z);
                         BlockState blockState = level.getBlockState(mutableBlockPos);
                         if (blockState.is(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get())) {
-                            applyHiddenEffectIfBuried(livingEntity, blockState, mutableBlockPos);
+                            applyHiddenEffectIfBuried(livingEntity, blockState, mutableBlockPos, false);
                         }
                     }
                 }
@@ -403,12 +409,21 @@ public class PileOfPollen extends FallingBlock {
         }
     }
 
-    static void applyHiddenEffectIfBuried(LivingEntity livingEntity, BlockState blockState, BlockPos blockPos) {
+    static void applyHiddenEffectIfBuried(LivingEntity livingEntity, BlockState blockState, BlockPos blockPos, boolean doesNotRefreshExistingHidden) {
+
+        Registry<MobEffect> mobEffects = livingEntity.level().registryAccess().registryOrThrow(Registries.MOB_EFFECT);
+        Holder.Reference<MobEffect> hiddenEffectReference = mobEffects.getHolder(BzEffects.HIDDEN.getId()).get();
+        if (doesNotRefreshExistingHidden) {
+            if (livingEntity.hasEffect(hiddenEffectReference)) {
+                return;
+            }
+        }
+
         AABB blockBounds = blockState.getShape(livingEntity.level(), blockPos).bounds().move(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
         if (blockBounds.contains(livingEntity.getEyePosition())) {
             livingEntity.addEffect(new MobEffectInstance(
-                    BzEffects.HIDDEN.get(),
+                    hiddenEffectReference,
                     10,
                     1,
                     true,
@@ -417,7 +432,7 @@ public class PileOfPollen extends FallingBlock {
         }
         else if (blockBounds.contains(livingEntity.getEyePosition().add(0, -0.2d, 0))) {
             livingEntity.addEffect(new MobEffectInstance(
-                    BzEffects.HIDDEN.get(),
+                    hiddenEffectReference,
                     10,
                     0,
                     true,

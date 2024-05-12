@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -86,36 +87,36 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
+    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
         this.xpTier = compoundTag.getInt(TIER_TAG);
         this.currentXp = Math.min(compoundTag.getInt(XP_TAG), getMaxXpForTier(this.xpTier));
         this.guid = compoundTag.getString(GUID_TAG);
         if (this.guid.isEmpty()) {
             this.guid = java.util.UUID.randomUUID().toString();
         }
-        this.bookSlotItems = ItemStack.of(compoundTag.getCompound(BOOK_SLOT_ITEMS));
-        this.consumeSlotItems = ItemStack.of(compoundTag.getCompound(CONSUME_SLOT_ITEMS));
+        this.bookSlotItems = ItemStack.parse(provider, compoundTag.getCompound(BOOK_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
+        this.consumeSlotItems = ItemStack.parse(provider, compoundTag.getCompound(CONSUME_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
-        saveFieldsToTag(compoundTag);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
+        saveFieldsToTag(compoundTag, provider);
     }
 
-    private void saveFieldsToTag(CompoundTag compoundTag) {
+    private void saveFieldsToTag(CompoundTag compoundTag, HolderLookup.Provider provider) {
         compoundTag.putInt(TIER_TAG, this.xpTier);
         compoundTag.putInt(XP_TAG, this.currentXp);
         compoundTag.putString(GUID_TAG, this.guid);
-        compoundTag.put(BOOK_SLOT_ITEMS, this.bookSlotItems.save(new CompoundTag()));
-        compoundTag.put(CONSUME_SLOT_ITEMS, this.consumeSlotItems.save(new CompoundTag()));
+        compoundTag.put(BOOK_SLOT_ITEMS, this.bookSlotItems.save(provider));
+        compoundTag.put(CONSUME_SLOT_ITEMS, this.consumeSlotItems.save(provider));
     }
 
     @Override
-    public void saveToItem(ItemStack stack) {
+    public void saveToItem(ItemStack stack, HolderLookup.Provider provider) {
         CompoundTag compoundTag = new CompoundTag();
-        this.saveAdditional(compoundTag);
+        this.saveAdditional(compoundTag, provider);
         BlockItem.setBlockEntityData(stack, this.getType(), compoundTag);
     }
 
@@ -125,9 +126,9 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
-        saveFieldsToTag(tag);
+        saveFieldsToTag(tag, provider);
         return tag;
     }
 
@@ -204,7 +205,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                     if (bottomHeight != 0) {
                         BlockEntity targetBlockEntity = level.getBlockEntity(this.getBlockPos().below(bottomHeight));
                         if (targetBlockEntity instanceof CrystallineFlowerBlockEntity) {
-                            targetBlockEntity.load(crystallineFlowerBlockEntity.getUpdateTag());
+                            targetBlockEntity.loadWithComponents(crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess()), level.registryAccess());
                         }
                     }
 
@@ -240,7 +241,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
 
                     BlockEntity blockEntity2 = level.getBlockEntity(operatingPos);
                     if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                        crystallineFlowerBlockEntity2.load(crystallineFlowerBlockEntity.getUpdateTag());
+                        crystallineFlowerBlockEntity2.loadWithComponents(crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess()), level.registryAccess());
                         blockEntity2.setChanged();
                     }
                 }
@@ -253,7 +254,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
                     if (i != 0) {
                         BlockEntity blockEntity2 = level.getBlockEntity(updatePos);
                         if (blockEntity2 instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity2) {
-                            crystallineFlowerBlockEntity2.load(crystallineFlowerBlockEntity.getUpdateTag());
+                            crystallineFlowerBlockEntity2.loadWithComponents(crystallineFlowerBlockEntity.getUpdateTag(level.registryAccess()), level.registryAccess());
                         }
                     }
                 }

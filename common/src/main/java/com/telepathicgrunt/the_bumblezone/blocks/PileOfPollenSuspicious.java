@@ -124,7 +124,7 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
     }
 
     @Override
-    public boolean isPathfindable(BlockState blockState, BlockGetter world, BlockPos blockPos, PathComputationType pathType) {
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
         return true;
     }
 
@@ -304,8 +304,8 @@ public class PileOfPollenSuspicious extends BrushableBlock implements StateRetur
             }
 
             // make entity invisible if hidden inside
-            if(entity instanceof LivingEntity livingEntity && !livingEntity.hasEffect(BzEffects.HIDDEN.get())) {
-                PileOfPollen.applyHiddenEffectIfBuried(livingEntity, blockState, blockPos);
+            if(entity instanceof LivingEntity livingEntity) {
+                PileOfPollen.applyHiddenEffectIfBuried(livingEntity, blockState, blockPos, true);
             }
         }
     }

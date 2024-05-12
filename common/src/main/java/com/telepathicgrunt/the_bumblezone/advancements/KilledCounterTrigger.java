@@ -39,7 +39,7 @@ public class KilledCounterTrigger extends SimpleCriterionTrigger<KilledCounterTr
 
         public static final Codec<KilledCounterTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(KilledCounterTrigger.TriggerInstance::player),
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(KilledCounterTrigger.TriggerInstance::player),
                         ExtraCodecs.POSITIVE_INT.fieldOf("target_count").forGetter(KilledCounterTrigger.TriggerInstance::targetCount),
                         ResourceLocation.CODEC.fieldOf("target_entity").forGetter(KilledCounterTrigger.TriggerInstance::targetEntity),
                         Codec.BOOL.fieldOf("is_target_tag").orElse(false).forGetter(KilledCounterTrigger.TriggerInstance::isTargetTag),

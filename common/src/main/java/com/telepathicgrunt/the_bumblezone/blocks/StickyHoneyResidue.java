@@ -12,6 +12,7 @@ import it.unimi.dsi.fastutil.shorts.Short2ObjectMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -22,6 +23,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +31,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -330,26 +333,23 @@ public class StickyHoneyResidue extends Block {
      * Allow player to remove this block with water buckets, water bottles, or wet sponges
      */
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
-
-        if (itemstack.is(BzTags.WASHING_ITEMS) &&
-                (!itemstack.is(Items.POTION) ||
-                    (itemstack.getTag() != null && itemstack.getTag().getString("Potion").contains("water"))))
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
+        if (itemStack.is(BzTags.WASHING_ITEMS) &&
+            (!itemStack.is(Items.POTION) ||
+            (itemStack.getComponents().has(DataComponents.POTION_CONTENTS) && itemStack.getComponents().get(DataComponents.POTION_CONTENTS).is(Potions.WATER))))
         {
 
-            if (!itemstack.isEmpty()) {
-                playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
+            if (!itemStack.isEmpty()) {
+                playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
             }
 
             if (playerEntity instanceof ServerPlayer serverPlayer) {
                 BzCriterias.CLEANUP_STICKY_HONEY_RESIDUE_TRIGGER.get().trigger(serverPlayer);
             }
 
-            world.destroyBlock(position, false);
+            level.destroyBlock(position, false);
 
-            world.playSound(
+            level.playSound(
                     playerEntity,
                     playerEntity.getX(),
                     playerEntity.getY(),
@@ -360,35 +360,35 @@ public class StickyHoneyResidue extends Block {
                     1.0F);
 
             if (playerEntity instanceof ServerPlayer serverPlayer) {
-                if (blockstate.getValue(UP)) {
-                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.95D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+                if (blockState.getValue(UP)) {
+                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.95D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
 
-                if (blockstate.getValue(NORTH)) {
-                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
+                if (blockState.getValue(NORTH)) {
+                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.05D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
-                if (blockstate.getValue(EAST)) {
-                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.95D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+                if (blockState.getValue(EAST)) {
+                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.95D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
-                if (blockstate.getValue(SOUTH)) {
-                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
+                if (blockState.getValue(SOUTH)) {
+                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.5D, position.getZ() + 0.95D, 6, 0.3D, 0.3D, 0.0D, 1);
                 }
 
-                if (blockstate.getValue(WEST)) {
-                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.05D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
+                if (blockState.getValue(WEST)) {
+                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.05D, position.getY() + 0.5D, position.getZ() + 0.5D, 6, 0.0D, 0.3D, 0.3D, 1);
                 }
 
-                if (blockstate.getValue(DOWN)) {
-                    ((ServerLevel) world).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.05D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
+                if (blockState.getValue(DOWN)) {
+                    ((ServerLevel) level).sendParticles(serverPlayer, ParticleTypes.FALLING_WATER, true, position.getX() + 0.5D, position.getY() + 0.05D, position.getZ() + 0.5D, 6, 0.3D, 0.0D, 0.3D, 1);
                 }
             }
 
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
-        return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+        return super.useItemOn(itemStack, blockState, level, position, playerEntity, playerHand, raytraceResult);
     }
 
     @Override

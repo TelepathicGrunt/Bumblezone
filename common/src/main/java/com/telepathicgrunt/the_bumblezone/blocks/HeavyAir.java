@@ -116,8 +116,8 @@ public class HeavyAir extends Block {
                     .toList();
 
             for (Holder<MobEffect> effectToRemove : effectsToRemove) {
-                if (livingEntity.hasEffect(effectToRemove.value())) {
-                    livingEntity.removeEffect(effectToRemove.value());
+                if (livingEntity.hasEffect(effectToRemove)) {
+                    livingEntity.removeEffect(effectToRemove);
                 }
             }
         }

@@ -6,7 +6,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 /**
  * This class is used to provide the same methods as forge has in their IForgeBlock interface.
@@ -16,8 +16,8 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 public interface BlockExtension {
 
 
-    default BlockPathTypes bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
-        return state.getBlock() == Blocks.LAVA ? BlockPathTypes.LAVA : state.getBlock() == Blocks.FIRE ? BlockPathTypes.DAMAGE_FIRE : null;
+    default PathType bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
+        return state.getBlock() == Blocks.LAVA ? PathType.LAVA : state.getBlock() == Blocks.FIRE ? PathType.DAMAGE_FIRE : null;
     }
 
     default boolean bz$isStickyBlock(BlockState state) {

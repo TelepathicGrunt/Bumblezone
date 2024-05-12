@@ -30,7 +30,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -42,8 +41,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -176,8 +175,8 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                     BlockEntity blockEntity = level.getBlockEntity(pos.below());
                     if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity &&
                             potionCandleBlockEntity.getMobEffect() != null &&
-                            potionCandleBlockEntity.getMobEffect().isInstantenous() &&
-                            !potionCandleBlockEntity.getMobEffect().isBeneficial())
+                            potionCandleBlockEntity.getMobEffect().value().isInstantenous() &&
+                            !potionCandleBlockEntity.getMobEffect().value().isBeneficial())
                     {
                         BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.get().trigger(serverPlayer);
                     }
@@ -198,7 +197,7 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
                 if (!entity.fireImmune()) {
                     entity.setRemainingFireTicks(entity.getRemainingFireTicks() + 1);
                     if (entity.getRemainingFireTicks() <= 0) {
-                        entity.setSecondsOnFire(1);
+                        entity.setRemainingFireTicks(1);
                     }
 
                     entity.hurt(level.damageSources().inFire(), 0.5f);
@@ -333,14 +332,14 @@ public class SuperCandleWick extends Block implements SimpleWaterloggedBlock, Bl
     }
 
     @Override
-    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
-        return !(state.hasProperty(LIT) && state.getValue(LIT));
+    protected boolean isPathfindable(BlockState blockState, PathComputationType pathComputationType) {
+        return !(blockState.hasProperty(LIT) && blockState.getValue(LIT));
     }
 
     @Override
-    public BlockPathTypes bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
+    public PathType bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob) {
         if (state.hasProperty(LIT) && state.getValue(LIT)) {
-            return BlockPathTypes.DAMAGE_FIRE;
+            return PathType.DAMAGE_FIRE;
         }
         return null;
     }

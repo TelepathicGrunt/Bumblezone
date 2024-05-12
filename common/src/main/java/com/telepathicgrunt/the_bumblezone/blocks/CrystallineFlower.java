@@ -20,6 +20,7 @@ import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -37,8 +38,11 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
@@ -219,7 +223,7 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity) {
@@ -435,14 +439,14 @@ public class CrystallineFlower extends BaseEntityBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(itemStack, level, tooltip, flag);
-        CompoundTag compoundtag = BlockItem.getBlockEntityData(itemStack);
-        if (compoundtag != null) {
-            if (compoundtag.contains(CrystallineFlowerBlockEntity.TIER_TAG)) {
-                int tier = compoundtag.getInt(CrystallineFlowerBlockEntity.TIER_TAG);
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
+        CustomData customData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        if (!customData.isEmpty()) {
+            if (customData.contains(CrystallineFlowerBlockEntity.TIER_TAG)) {
+                int tier = customData.getUnsafe().getInt(CrystallineFlowerBlockEntity.TIER_TAG);
                 if (tier != 0) {
-                    int xp = compoundtag.getInt(CrystallineFlowerBlockEntity.XP_TAG);
+                    int xp = customData.getUnsafe().getInt(CrystallineFlowerBlockEntity.XP_TAG);
                     tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_1", tier).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
                     tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_2", xp).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
                 }

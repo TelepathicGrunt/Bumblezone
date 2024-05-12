@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -145,8 +146,8 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
+    public void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
         if (compoundTag != null) {
             this.beaten = compoundTag.getBoolean(BEATEN_TAG);
             this.eventBar.setProgress(compoundTag.getFloat(PROGRESS_TAG));
@@ -174,9 +175,7 @@ public class EssenceBlockEntity extends BlockEntity {
                 }
             }
 
-            if (compoundTag.contains(ARENA_SIZE_TAG)) {
-                this.arenaSize = NbtUtils.readBlockPos(compoundTag.getCompound(ARENA_SIZE_TAG));
-            }
+            this.arenaSize = NbtUtils.readBlockPos(compoundTag.getCompound(ARENA_SIZE_TAG), "arenaSize").orElse(BlockPos.ZERO);
         }
 
         if (this.level != null && this.level.isClientSide()) {
@@ -185,8 +184,8 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
         saveFieldsToTag(compoundTag);
 
         // In case player teleports away and chunk unloads this block
@@ -255,7 +254,7 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         saveFieldsToTag(tag);
         return tag;

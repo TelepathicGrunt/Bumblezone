@@ -286,7 +286,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                         UUID.fromString("03c85bd0-09eb-11ee-be56-0242ac120002"),
                         "Essence Arena Health Boost",
                         extraHealth,
-                        AttributeModifier.Operation.ADDITION));
+                        AttributeModifier.Operation.ADD_VALUE));
                 rootminEntity.heal(extraHealth + rootminEntity.getMaxHealth());
             }
 
@@ -296,7 +296,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                         UUID.fromString("0ebdc338-5575-11ee-8c99-0242ac120002"),
                         "Essence Arena Knockback Resistance Boost",
                         0.25d,
-                        AttributeModifier.Operation.ADDITION));
+                        AttributeModifier.Operation.ADD_VALUE));
             }
 
             entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atLowerCornerOf(Direction.SOUTH.getNormal()));

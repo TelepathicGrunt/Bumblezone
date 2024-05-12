@@ -236,7 +236,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                             UUID.fromString("03c85bd0-09eb-11ee-be56-0242ac120002"),
                             "Essence Arena Health Boost",
                             mobHealthBoost,
-                            AttributeModifier.Operation.ADDITION));
+                            AttributeModifier.Operation.ADD_VALUE));
                     livingEntity.heal(mobHealthBoost);
                 }
 
@@ -246,7 +246,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                             UUID.fromString("355141f8-09eb-11ee-be56-0242ac120002"),
                             "Essence Arena Damage Boost",
                             mobAttackBoost,
-                            AttributeModifier.Operation.ADDITION));
+                            AttributeModifier.Operation.ADD_VALUE));
                 }
 
                 AttributeInstance livingEntityAttributeSpeed = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -255,7 +255,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                             UUID.fromString("39ca0496-fa37-488f-8199-c4779f1afe0c"),
                             "Essence Arena Speed Boost",
                             isEssenced ? 0.04 : 0.08,
-                            AttributeModifier.Operation.ADDITION));
+                            AttributeModifier.Operation.ADD_VALUE));
                 }
 
                 AttributeInstance livingEntityAttributeFlyingSpeed = livingEntity.getAttribute(Attributes.FLYING_SPEED);
@@ -264,7 +264,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                             UUID.fromString("c762c216-0a3a-11ee-be56-0242ac120002"),
                             "Essence Arena Flying Speed Boost",
                             0.02,
-                            AttributeModifier.Operation.ADDITION));
+                            AttributeModifier.Operation.ADD_VALUE));
                 }
 
                 AttributeInstance livingEntityAttributeFollowRange = livingEntity.getAttribute(Attributes.FOLLOW_RANGE);
@@ -273,7 +273,7 @@ public class EssenceBlockBlue extends EssenceBlock {
                             UUID.fromString("23a7a8a9-85bc-4dc3-9417-a4bd4b1b95a2"),
                             "Essence Arena Sight Boost",
                             32,
-                            AttributeModifier.Operation.ADDITION));
+                            AttributeModifier.Operation.ADD_VALUE));
                 }
             }
 

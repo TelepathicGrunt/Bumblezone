@@ -27,7 +27,7 @@ public class GenericTrigger extends SimpleCriterionTrigger<GenericTrigger.Trigge
 
         public static final Codec<GenericTrigger.TriggerInstance> CODEC =
                 RecordCodecBuilder.create(instance -> instance.group(
-                        ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(GenericTrigger.TriggerInstance::player)
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(GenericTrigger.TriggerInstance::player)
                 ).apply(instance, GenericTrigger.TriggerInstance::new));
 
         public boolean matches(boolean passthrough) {

@@ -10,10 +10,11 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,8 +24,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 import java.util.stream.IntStream;
@@ -52,15 +53,15 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     }
 
     @Override
-    public void load(@NotNull CompoundTag tag) {
-        super.load(tag);
-        this.loadFromTag(tag);
+    public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        this.loadFromTag(tag, provider);
     }
 
-    public void loadFromTag(CompoundTag compoundTag) {
+    public void loadFromTag(CompoundTag compoundTag, HolderLookup.Provider provider) {
         this.itemStacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(compoundTag) && compoundTag.contains("Items", 9)) {
-            ContainerHelper.loadAllItems(compoundTag, this.itemStacks);
+            ContainerHelper.loadAllItems(compoundTag, this.itemStacks, provider);
         }
         if (compoundTag.hasUUID("blockEntityUuid")) {
             this.blockEntityUuid = compoundTag.getUUID("blockEntityUuid");
@@ -68,10 +69,10 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
         if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.itemStacks);
+            ContainerHelper.saveAllItems(tag, this.itemStacks, provider);
         }
         tag.putUUID("blockEntityUuid", this.getBlockEntityUuid());
     }
@@ -222,8 +223,7 @@ public class HoneyCocoonBlockEntity extends BzRandomizableContainerBlockEntity {
         return this.blockEntityUuid;
     }
 
-    @Nullable
-    public ResourceLocation getLootTable () {
+    public ResourceKey<LootTable> getLootTable() {
         return this.lootTable;
     }
 

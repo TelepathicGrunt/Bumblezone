@@ -10,6 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -67,7 +68,7 @@ public interface AncientWaxBase {
         }
     }
 
-    default InteractionResult swapBlocks(Level world, BlockState currentState, BlockPos blockPos, TagKey<Block> blockIterationTag) {
+    default ItemInteractionResult swapBlocks(Level level, BlockState currentState, BlockPos blockPos, TagKey<Block> blockIterationTag) {
         Optional<HolderSet.Named<Block>> tagEntries = BuiltInRegistries.BLOCK.getTag(blockIterationTag);
         if (tagEntries.isPresent() && tagEntries.get().size() > 1) {
 
@@ -84,12 +85,12 @@ public interface AncientWaxBase {
                     }
                 }
 
-                world.setBlock(blockPos, newState, 3);
-                return InteractionResult.SUCCESS;
+                level.setBlock(blockPos, newState, 3);
+                return ItemInteractionResult.SUCCESS;
             }
 
         }
 
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }
