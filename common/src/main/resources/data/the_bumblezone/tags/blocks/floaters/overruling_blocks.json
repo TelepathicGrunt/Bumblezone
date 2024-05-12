@@ -15,7 +15,7 @@
     "the_bumblezone:empty_honeycomb_brood_block",
     "the_bumblezone:honeycomb_brood_block",
     {
-      "id": "#forge:storage_blocks/honeycombs",
+      "id": "#c:storage_blocks/honeycomb",
       "required": false
     },
     {

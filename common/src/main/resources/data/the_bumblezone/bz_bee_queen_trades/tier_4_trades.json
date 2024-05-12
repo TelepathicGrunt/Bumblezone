@@ -13,6 +13,10 @@
       "required": true
     },
     {
+      "id": "minecraft:beehive",
+      "required": true
+    },
+    {
       "id": "the_bumblezone:bee_soup",
       "required": true
     },
@@ -21,11 +25,7 @@
       "required": false
     },
     {
-      "id": "#c:beehive",
-      "required": false
-    },
-    {
-      "id": "#forge:beehive",
+      "id": "#c:beehives",
       "required": false
     },
     {

@@ -31,11 +31,7 @@
       "required": false
     },
     {
-      "id": "#c:sugar",
-      "required": false
-    },
-    {
-      "id": "#forge:sugar",
+      "id": "#c:sugars",
       "required": false
     }
   ]

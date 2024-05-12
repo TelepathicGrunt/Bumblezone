@@ -2,10 +2,6 @@
   "replace": false,
   "values": [
     {
-      "id": "#forge:buckets/honey",
-      "required": false
-    },
-    {
       "id": "#c:buckets/honey",
       "required": false
     }

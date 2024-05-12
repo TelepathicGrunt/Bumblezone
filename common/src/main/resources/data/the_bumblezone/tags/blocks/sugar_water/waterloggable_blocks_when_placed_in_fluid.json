@@ -51,18 +51,6 @@
       "required": false
     },
     {
-      "id": "#c:chest",
-      "required": false
-    },
-    {
-      "id": "#c:ender_chests",
-      "required": false
-    },
-    {
-      "id": "#c:wooden_chests",
-      "required": false
-    },
-    {
       "id": "#c:clusters",
       "required": false
     },
@@ -72,30 +60,6 @@
     },
     {
       "id": "#c:scaffoldings",
-      "required": false
-    },
-    {
-      "id": "#forge:glass_panes",
-      "required": false
-    },
-    {
-      "id": "#forge:chests",
-      "required": false
-    },
-    {
-      "id": "#forge:fences",
-      "required": false
-    },
-    {
-      "id": "#forge:clusters",
-      "required": false
-    },
-    {
-      "id": "#forge:slabs",
-      "required": false
-    },
-    {
-      "id": "#forge:scaffoldings",
       "required": false
     }
   ]

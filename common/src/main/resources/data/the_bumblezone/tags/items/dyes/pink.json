@@ -3,11 +3,7 @@
   "values": [
     "minecraft:pink_dye",
     {
-      "id": "#c:pink_dyes",
-      "required": false
-    },
-    {
-      "id": "#forge:dyes/pink",
+      "id": "#c:dyes/pink",
       "required": false
     }
   ]

@@ -9,6 +9,10 @@
       "required": true
     },
     {
+      "id": "#c:foods/berries",
+      "required": true
+    },
+    {
       "id": "windswept:holly_berries",
       "required": false
     },

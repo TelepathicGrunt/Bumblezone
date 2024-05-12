@@ -17,19 +17,15 @@
     "#minecraft:beehives",
     "#the_bumblezone:worldgen_checks/honeycombs_that_features_can_carve",
     {
-      "id": "#forge:storage_blocks/honeycombs",
-      "required": false
-    },
-    {
-      "id": "#forge:storage_blocks/wax",
-      "required": false
-    },
-    {
-      "id": "#c:storage_blocks/honeycombs",
+      "id": "#c:storage_blocks/honeycomb",
       "required": false
     },
     {
       "id": "#c:storage_blocks/wax",
+      "required": false
+    },
+    {
+      "id": "#c:waxes",
       "required": false
     },
     {

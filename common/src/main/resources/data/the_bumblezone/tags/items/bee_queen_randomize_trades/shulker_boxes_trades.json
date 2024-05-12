@@ -2,10 +2,6 @@
   "replace": false,
   "values": [
     {
-      "id": "#forge:shulker_boxes",
-      "required": false
-    },
-    {
       "id": "#c:shulker_boxes",
       "required": false
     }

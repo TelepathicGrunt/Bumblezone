@@ -29,19 +29,11 @@
       "required": true
     },
     {
-      "id": "#c:honey_bottle",
+      "id": "#c:bottles/honey",
       "required": false
     },
     {
-      "id": "#c:storage_blocks/wax",
-      "required": false
-    },
-    {
-      "id": "#forge:honey_bottle",
-      "required": false
-    },
-    {
-      "id": "#forge:storage_blocks/wax",
+      "id": "#c:storage_blocks/waxes",
       "required": false
     },
     {

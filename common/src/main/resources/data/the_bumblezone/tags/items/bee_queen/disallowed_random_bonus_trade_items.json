@@ -36,47 +36,15 @@
     "#the_bumblezone:string_curtains",
     "#the_bumblezone:super_candles",
     {
-      "id": "#forge:concrete_powder",
-      "required": false
-    },
-    {
-      "id": "#forge:concrete",
-      "required": false
-    },
-    {
-      "id": "#forge:dyes",
-      "required": false
-    },
-    {
-      "id": "#forge:glazed_terracotta",
-      "required": false
-    },
-    {
-      "id": "#forge:shulker_boxes",
-      "required": false
-    },
-    {
-      "id": "#forge:stained_glass_panes",
-      "required": false
-    },
-    {
-      "id": "#forge:stained_glass",
-      "required": false
-    },
-    {
-      "id": "#forge:fence_gates/wooden",
-      "required": false
-    },
-    {
       "id": "#c:fence_gates/wooden",
       "required": false
     },
     {
-      "id": "#c:concrete_powder",
+      "id": "#c:concrete_powders",
       "required": false
     },
     {
-      "id": "#c:concrete",
+      "id": "#c:concretes",
       "required": false
     },
     {
@@ -84,7 +52,7 @@
       "required": false
     },
     {
-      "id": "#c:glazed_terracotta",
+      "id": "#c:glazed_terracottas",
       "required": false
     },
     {
@@ -96,7 +64,7 @@
       "required": false
     },
     {
-      "id": "#c:stained_glass",
+      "id": "#c:stained_glasses",
       "required": false
     },
     {

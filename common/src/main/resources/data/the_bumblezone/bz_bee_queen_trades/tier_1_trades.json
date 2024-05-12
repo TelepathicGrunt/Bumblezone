@@ -45,7 +45,7 @@
       "required": false
     },
     {
-      "id": "#c:wax",
+      "id": "#c:waxes",
       "required": false
     },
     {
@@ -54,22 +54,6 @@
     },
     {
       "id": "#c:honeycombs",
-      "required": false
-    },
-    {
-      "id": "#forge:crops",
-      "required": false
-    },
-    {
-      "id": "#forge:wax",
-      "required": false
-    },
-    {
-      "id": "#forge:storage_blocks/honeycomb",
-      "required": false
-    },
-    {
-      "id": "#forge:honeycombs",
       "required": false
     },
     {

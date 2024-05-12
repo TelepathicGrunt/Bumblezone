@@ -3,11 +3,7 @@
   "values": [
     "minecraft:cyan_dye",
     {
-      "id": "#c:cyan_dyes",
-      "required": false
-    },
-    {
-      "id": "#forge:dyes/cyan",
+      "id": "#c:dyes/cyan",
       "required": false
     }
   ]

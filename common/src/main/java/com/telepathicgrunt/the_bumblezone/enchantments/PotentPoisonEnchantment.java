@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +32,7 @@ public class PotentPoisonEnchantment extends Enchantment {
 
     @Override
     public void doPostAttack(LivingEntity attacker, Entity victim, int level) {
-        if(victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
+        if(victim instanceof LivingEntity livingEntity && !livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
                     100 + 100 * (level - ((level - 1) / 2)), // 200, 300, 300 duration

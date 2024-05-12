@@ -3,11 +3,7 @@
   "values": [
     "minecraft:magenta_dye",
     {
-      "id": "#c:magenta_dyes",
-      "required": false
-    },
-    {
-      "id": "#forge:dyes/magenta",
+      "id": "#c:dyes/magenta",
       "required": false
     }
   ]

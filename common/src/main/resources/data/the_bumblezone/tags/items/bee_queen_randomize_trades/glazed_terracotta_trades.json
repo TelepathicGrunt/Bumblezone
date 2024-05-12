@@ -2,11 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#forge:glazed_terracotta",
-      "required": false
-    },
-    {
-      "id": "#c:glazed_terracotta",
+      "id": "#c:glazed_terracottas",
       "required": false
     }
   ]

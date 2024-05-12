@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "minecraft:water",
-    "minecraft:flowing_water",
-    "#the_bumblezone:sugar_water"
-  ]
-}

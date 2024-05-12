@@ -3,11 +3,7 @@
   "values": [
     "minecraft:green_dye",
     {
-      "id": "#c:green_dyes",
-      "required": false
-    },
-    {
-      "id": "#forge:dyes/green",
+      "id": "#c:dyes/green",
       "required": false
     }
   ]
