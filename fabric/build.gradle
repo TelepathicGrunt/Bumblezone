@@ -31,8 +31,6 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
 
-    include("me.luligabi:NoIndium:${rootProject.noindium}")
-
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
