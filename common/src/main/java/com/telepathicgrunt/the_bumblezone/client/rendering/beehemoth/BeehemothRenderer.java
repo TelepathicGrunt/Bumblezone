@@ -43,7 +43,7 @@ public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothMod
         if (this.entityRenderDispatcher.distanceToSqr(entity) > 100.0) {
             return;
         }
-        float f = entity.getNameTagOffsetY() + 0.5F;
+        float f = entity.getBbHeight() + 1F;
         poseStack.pushPose();
         poseStack.translate(0.0f, f, 0.0f);
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());

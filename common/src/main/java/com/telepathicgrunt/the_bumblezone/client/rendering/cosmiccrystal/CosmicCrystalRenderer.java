@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -114,22 +115,22 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 green *= 0.75f;
                 blue *= 0.75f;
             }
-            for(MobEffect mobEffect : new HashSet<>(cosmicCrystalEntity.getActiveEffectsMap().keySet())) {
-                if (mobEffect == MobEffects.POISON) {
+            for (Holder<MobEffect> mobEffect : new HashSet<>(cosmicCrystalEntity.getActiveEffectsMap().keySet())) {
+                if (mobEffect.is(MobEffects.POISON)) {
                     red *= 0.75f;
                     blue *= 0.75f;
                 }
-                else if (mobEffect == MobEffects.WITHER) {
+                else if (mobEffect.is(MobEffects.WITHER)) {
                     red *= 0.5f;
                     green *= 0.5f;
                     blue *= 0.5f;
                 }
-                else if (!mobEffect.isInstantenous() && !mobEffect.isBeneficial()) {
-                    String namespace = BuiltInRegistries.MOB_EFFECT.getKey(mobEffect).getNamespace();
+                else if (!mobEffect.value().isInstantenous() && !mobEffect.value().isBeneficial()) {
+                    String namespace = mobEffect.unwrapKey().get().location().getNamespace();
                     if (!namespace.equals("minecraft") && !namespace.equals(Bumblezone.MODID)) {
-                        red = (red + (GeneralUtils.getRed(mobEffect.getColor()) / 255f)) / 2f;
-                        green = (green + (GeneralUtils.getGreen(mobEffect.getColor()) / 255f)) / 2f;
-                        blue = (blue + (GeneralUtils.getBlue(mobEffect.getColor()) / 255f)) / 2f;
+                        red = (red + (GeneralUtils.getRed(mobEffect.value().getColor()) / 255f)) / 2f;
+                        green = (green + (GeneralUtils.getGreen(mobEffect.value().getColor()) / 255f)) / 2f;
+                        blue = (blue + (GeneralUtils.getBlue(mobEffect.value().getColor()) / 255f)) / 2f;
                     }
                 }
             }
@@ -150,7 +151,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
         if (this.entityRenderDispatcher.distanceToSqr(entity) > 100.0) {
             return;
         }
-        float f = entity.getNameTagOffsetY() + 0.5F;
+        float f = entity.getBbHeight() + 1F;
         poseStack.pushPose();
         poseStack.translate(0.0f, f, 0.0f);
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
@@ -261,24 +262,22 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
             float uv1 = laserLength * 2.5f + uv2;
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(BumblezoneClient.ENTITY_CUTOUT_EMISSIVE_RENDER_TYPE.apply(LASER_LOCATION));
             PoseStack.Pose pose = poseStack.last();
-            Matrix4f matrix4f = pose.pose();
-            Matrix3f matrix3f = pose.normal();
-            vertex(vertexConsumer, matrix4f, matrix3f, x1, y1, z1, red2, green2, blue2, ux1, uv1);
-            vertex(vertexConsumer, matrix4f, matrix3f, x1, y2, z1, red, green, blue, ux1, uv2);
-            vertex(vertexConsumer, matrix4f, matrix3f, x2, y2, z2, red, green, blue, ux2, uv2);
-            vertex(vertexConsumer, matrix4f, matrix3f, x2, y1, z2, red2, green2, blue2, ux2, uv1);
-            vertex(vertexConsumer, matrix4f, matrix3f, x3, y1, z3, red2, green2, blue2, ux1, uv1);
-            vertex(vertexConsumer, matrix4f, matrix3f, x3, y2, z3, red, green, blue, ux1, uv2);
-            vertex(vertexConsumer, matrix4f, matrix3f, x4, y2, z4, red, green, blue, ux2, uv2);
-            vertex(vertexConsumer, matrix4f, matrix3f, x4, y1, z4, red2, green2, blue2, ux2, uv1);
+            vertex(vertexConsumer, pose, x1, y1, z1, red2, green2, blue2, ux1, uv1);
+            vertex(vertexConsumer, pose, x1, y2, z1, red, green, blue, ux1, uv2);
+            vertex(vertexConsumer, pose, x2, y2, z2, red, green, blue, ux2, uv2);
+            vertex(vertexConsumer, pose, x2, y1, z2, red2, green2, blue2, ux2, uv1);
+            vertex(vertexConsumer, pose, x3, y1, z3, red2, green2, blue2, ux1, uv1);
+            vertex(vertexConsumer, pose, x3, y2, z3, red, green, blue, ux1, uv2);
+            vertex(vertexConsumer, pose, x4, y2, z4, red, green, blue, ux2, uv2);
+            vertex(vertexConsumer, pose, x4, y1, z4, red2, green2, blue2, ux2, uv1);
             float as = 0.0f;
             if (cosmicCrystalEntity.tickCount % 4 < 2) {
                 as = 0.5f;
             }
-            vertex(vertexConsumer, matrix4f, matrix3f, x7, y1, z5, red2, green2, blue2, 0.5f, as + 0.5f);
-            vertex(vertexConsumer, matrix4f, matrix3f, z9, y1, z6, red2, green2, blue2, 1.0f, as + 0.5f);
-            vertex(vertexConsumer, matrix4f, matrix3f, x5, y1, z7, red2, green2, blue2, 1.0f, as);
-            vertex(vertexConsumer, matrix4f, matrix3f, x6, y1, z8, red2, green2, blue2, 0.5f, as);
+            vertex(vertexConsumer, pose, x7, y1, z5, red2, green2, blue2, 0.5f, as + 0.5f);
+            vertex(vertexConsumer, pose, z9, y1, z6, red2, green2, blue2, 1.0f, as + 0.5f);
+            vertex(vertexConsumer, pose, x5, y1, z7, red2, green2, blue2, 1.0f, as);
+            vertex(vertexConsumer, pose, x6, y1, z8, red2, green2, blue2, 0.5f, as);
             poseStack.popPose();
 
             laserScreenShake(cosmicCrystalEntity, endPos);
@@ -306,14 +305,14 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
         }
     }
 
-    private static void vertex(VertexConsumer vertexConsumer, Matrix4f matrix4f, Matrix3f matrix3f, float x, float y, float z, int red, int green, int blue, float ux, float uz) {
+    private static void vertex(VertexConsumer vertexConsumer, PoseStack.Pose pose, float x, float y, float z, int red, int green, int blue, float ux, float uz) {
         vertexConsumer
-                .vertex(matrix4f, x, y, z)
+                .vertex(pose, x, y, z)
                 .color(red, green, blue, 255)
                 .uv(ux, uz)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(0xF000F0)
-                .normal(matrix3f, 0.0f, 1.0f, 0.0f)
+                .normal(pose, 0.0f, 1.0f, 0.0f)
                 .endVertex();
     }
 

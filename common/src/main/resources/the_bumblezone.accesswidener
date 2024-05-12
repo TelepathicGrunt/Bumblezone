@@ -17,6 +17,7 @@ accessible field net/minecraft/client/renderer/RenderStateShard NO_TRANSPARENCY 
 accessible field net/minecraft/client/renderer/RenderStateShard RENDERTYPE_ENERGY_SWIRL_SHADER Lnet/minecraft/client/renderer/RenderStateShard$ShaderStateShard;
 accessible field net/minecraft/client/renderer/RenderStateShard TRANSLUCENT_TRANSPARENCY Lnet/minecraft/client/renderer/RenderStateShard$TransparencyStateShard;
 accessible class net/minecraft/client/renderer/FogRenderer$FogData
+accessible method net/minecraft/client/renderer/blockentity/BlockEntityRenderers register (Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/client/renderer/blockentity/BlockEntityRendererProvider;)V
 
 accessible method net/minecraft/world/entity/item/FallingBlockEntity <init> (Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/level/block/state/BlockState;)V
 accessible method net/minecraft/client/particle/SuspendedParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/client/particle/SpriteSet;DDD)V
@@ -30,11 +31,10 @@ accessible method net/minecraft/client/particle/ParticleEngine$MutableSpriteSet 
 
 accessible method net/minecraft/world/item/Item getPlayerPOVHitResult (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ClipContext$Fluid;)Lnet/minecraft/world/phys/BlockHitResult;
 
-accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/damagesource/DamageSource;
-
 extendable method net/minecraft/world/level/material/FlowingFluid canHoldFluid (Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/Fluid;)Z
 
 accessible method net/minecraft/world/level/block/entity/BrushableBlockEntity dropContent (Lnet/minecraft/world/entity/player/Player;)V
 extendable method net/minecraft/world/level/block/entity/BrushableBlockEntity brushingCompleted (Lnet/minecraft/world/entity/player/Player;)V
 
+accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/damagesource/DamageSource;
 accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;

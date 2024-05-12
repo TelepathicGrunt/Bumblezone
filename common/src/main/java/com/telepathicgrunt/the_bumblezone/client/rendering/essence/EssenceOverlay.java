@@ -78,7 +78,7 @@ public class EssenceOverlay {
                     rotationX, rotationY, 0, 1
             );
 
-            poseStack.mulPoseMatrix(translationMatrix.mul(scalingMatrix).mul(rotationMatrix));
+            poseStack.mulPose(translationMatrix.mul(scalingMatrix).mul(rotationMatrix));
 
             guiGraphics.blit(TEXTURE_OVERLAY_1,
                     (int) -rotationX,

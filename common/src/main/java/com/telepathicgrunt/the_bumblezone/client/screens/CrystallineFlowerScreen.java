@@ -453,10 +453,6 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
         if (!book.isEmpty() && this.menu.xpTier.get() > 1 && this.menu.tooManyEnchantmentsOnInput.get() != 1) {
             ItemStack tempBook = book.copy();
             tempBook.setCount(1);
-            CompoundTag compoundtag = book.getTag();
-            if (compoundtag != null) {
-                tempBook.setTag(compoundtag.copy());
-            }
         }
         else {
             enchantmentsAvailable.clear();

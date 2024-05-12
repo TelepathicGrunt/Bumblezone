@@ -87,8 +87,9 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
             m *= -1.0f;
             k *= -1.0f;
         }
+        float scale = rootminEntity.getScale();
         float l = this.getBob(rootminEntity, partialTicks);
-        this.setupRotations(rootminEntity, stack, l, h, partialTicks);
+        this.setupRotations(rootminEntity, stack, l, h, partialTicks, scale);
         stack.scale(-1.0f, -1.0f, 1.0f);
         this.scale(rootminEntity, stack, partialTicks);
         stack.translate(0.0f, -1.501f, 0.0f);

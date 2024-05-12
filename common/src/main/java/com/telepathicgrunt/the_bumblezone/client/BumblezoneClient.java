@@ -98,6 +98,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.BrushableBlockRenderer;
 import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -310,7 +311,9 @@ public class BumblezoneClient {
                 BzItems.HONEYCOMB_BROOD.get(),
                 new ResourceLocation("is_creative_tab_icon"),
                 (itemStack, world, livingEntity, integer) ->
-                        itemStack.hasTag() && itemStack.getTag().getBoolean("isCreativeTabIcon") ? 1.0F : 0.0F
+                        itemStack.getComponents().has(DataComponents.CUSTOM_DATA) &&
+                        itemStack.getComponents().get(DataComponents.CUSTOM_DATA).contains("isCreativeTabIcon") &&
+                        itemStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe().getBoolean("isCreativeTabIcon") ? 1.0F : 0.0F
         );
 
 

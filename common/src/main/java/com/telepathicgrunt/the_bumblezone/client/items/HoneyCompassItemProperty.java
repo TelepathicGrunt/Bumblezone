@@ -5,6 +5,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtUtils;
@@ -44,7 +45,7 @@ public class HoneyCompassItemProperty {
                         return 0;
                     }
 
-                    BlockPos blockPos = this.getStructurePosition(clientLevel, itemStack.getOrCreateTag());
+                    BlockPos blockPos = this.getStructurePosition(clientLevel, itemStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe());
                     long gameTime = clientLevel.getGameTime();
                     if (blockPos != null && !(entity.position().distanceToSqr((double)blockPos.getX() + 0.5, entity.position().y(), (double)blockPos.getZ() + 0.5) < 1.0E-5F)) {
                         boolean isLocalPlayer = livingEntity instanceof Player && ((Player)livingEntity).isLocalPlayer();
@@ -100,7 +101,7 @@ public class HoneyCompassItemProperty {
                 if (structurePos && dimension) {
                     Optional<ResourceKey<Level>> optional = Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, compoundTag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
                     if (optional.isPresent() && level.dimension() == optional.get()) {
-                        return NbtUtils.readBlockPos(compoundTag.getCompound(HoneyCompass.TAG_TARGET_POS));
+                        return NbtUtils.readBlockPos(compoundTag, HoneyCompass.TAG_TARGET_POS).orElse(BlockPos.ZERO);
                     }
                 }
 

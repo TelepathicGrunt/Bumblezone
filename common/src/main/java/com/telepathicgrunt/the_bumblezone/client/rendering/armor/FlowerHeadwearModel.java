@@ -19,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 
 public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
 
@@ -45,10 +46,9 @@ public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
             float green;
             float blue;
             ItemStack stack = this.entityLiving.getItemBySlot(slot);
-            if (stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet &&
-                flowerHeadwearHelmet.hasCustomColor(stack))
+            if (stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet)
             {
-                int color = flowerHeadwearHelmet.getColor(stack);
+                int color = DyedItemColor.getOrDefault(stack, FlowerHeadwearColoring.DEFAULT_COLOR);
                 red = GeneralUtils.getRed(color) / 255f;
                 green = GeneralUtils.getGreen(color) / 255f;
                 blue = GeneralUtils.getBlue(color) / 255f;

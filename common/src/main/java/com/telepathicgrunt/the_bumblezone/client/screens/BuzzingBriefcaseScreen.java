@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.resources.LegacyStuffWrapper;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -104,8 +105,8 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         ItemStack briefcaseStack = menu.getItems().get(0);
-        if (!briefcaseStack.isEmpty() && !briefcaseStack.getOrCreateTag().equals(this.cachedBriefcaseTag)) {
-            this.cachedBriefcaseTag = briefcaseStack.getOrCreateTag();
+        if (!briefcaseStack.isEmpty() && !briefcaseStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe().equals(this.cachedBriefcaseTag)) {
+            this.cachedBriefcaseTag = briefcaseStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe();
 
             List<Entity> beesStored = BuzzingBriefcase.getBeesStored(inventory.player.level(), briefcaseStack, false);
             if (isDiffFoundInBeeList(beesStored)) {
