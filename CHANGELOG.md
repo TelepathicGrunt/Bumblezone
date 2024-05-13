@@ -1,3 +1,9 @@
+### **(V.7.3.8 Changes) (1.20.1 Minecraft)**
+
+##### Lang:
+Updated zh_cn (Special thanks to TskimiSeiran)
+
+
 ### **(V.7.3.7 Changes) (1.20.1 Minecraft)**
 
 ##### Structures:
