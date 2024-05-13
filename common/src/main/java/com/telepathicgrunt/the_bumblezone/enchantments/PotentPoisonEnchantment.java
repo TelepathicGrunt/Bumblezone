@@ -1,33 +1,26 @@
 package com.telepathicgrunt.the_bumblezone.enchantments;
 
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class PotentPoisonEnchantment extends Enchantment {
 
     public PotentPoisonEnchantment() {
-        super(Rarity.UNCOMMON, EnchantmentCategory.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-    }
-
-    @Override
-    public int getMinCost(int level) {
-        return 8 + level * 5;
-    }
-
-    @Override
-    public int getMaxCost(int level) {
-        return super.getMinCost(level) + 50;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3;
+        super(Enchantment.definition(
+                BzTags.POTENT_POISON_ENCHANTABLE,
+                4,
+                3,
+                Enchantment.dynamicCost(8, 5),
+                Enchantment.constantCost(50),
+                3,
+                EquipmentSlot.MAINHAND)
+        );
     }
 
     @Override

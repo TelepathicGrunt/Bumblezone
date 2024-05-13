@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 public class HoneycombHolePlacer extends PlacementModifier {
     private enum SliceState {NEITHER, AIR, SOLID}
     private static final HoneycombHolePlacer INSTANCE = new HoneycombHolePlacer();
-    public static final Codec<HoneycombHolePlacer> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<HoneycombHolePlacer> CODEC = MapCodec.unit(() -> INSTANCE);
 
     public static HoneycombHolePlacer honeycombHolePlacer() {
         return INSTANCE;

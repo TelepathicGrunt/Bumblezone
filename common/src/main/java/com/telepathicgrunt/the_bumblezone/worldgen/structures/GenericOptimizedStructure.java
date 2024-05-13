@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.structures;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -23,7 +24,7 @@ import java.util.Optional;
 
 public class GenericOptimizedStructure extends Structure {
 
-    public static final Codec<GenericOptimizedStructure> CODEC = RecordCodecBuilder.<GenericOptimizedStructure>mapCodec(instance ->
+    public static final MapCodec<GenericOptimizedStructure> CODEC = RecordCodecBuilder.<GenericOptimizedStructure>mapCodec(instance ->
             instance.group(GenericOptimizedStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
@@ -34,7 +35,7 @@ public class GenericOptimizedStructure extends Structure {
                     Codec.intRange(1, 100).optionalFieldOf("valid_biome_radius_check").forGetter(structure -> structure.biomeRadius),
                     Codec.intRange(1, 100).optionalFieldOf("min_y_limit").forGetter(structure -> structure.minYLimit),
                     Codec.BOOL.fieldOf("disable_bound_checks").orElse(false).forGetter(structure -> structure.disableBoundChecks)
-            ).apply(instance, GenericOptimizedStructure::new)).codec();
+            ).apply(instance, GenericOptimizedStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;
     private final Optional<ResourceLocation> startJigsawName;

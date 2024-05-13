@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 
 public record PollinatedSurfaceSource (BlockState resultState, RandomLayerStateRule rule) implements SurfaceRules.RuleSource {
-    public static final KeyDispatchDataCodec<PollinatedSurfaceSource> CODEC = KeyDispatchDataCodec.of(BlockState.CODEC.xmap(PollinatedSurfaceSource::new, PollinatedSurfaceSource::resultState).fieldOf("result_state").codec());
+    public static final KeyDispatchDataCodec<PollinatedSurfaceSource> CODEC = KeyDispatchDataCodec.of(BlockState.CODEC.xmap(PollinatedSurfaceSource::new, PollinatedSurfaceSource::resultState).fieldOf("result_state"));
 
     PollinatedSurfaceSource(BlockState blockState) {
         this(blockState, new RandomLayerStateRule(blockState));

@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.predicates;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPredicates;
 import net.minecraft.core.BlockPos;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.PosRuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.PosRuleTestType;
 
 public class PieceOriginAxisAlignedLinearPosRuleTest extends PosRuleTest {
-    public static final Codec<PieceOriginAxisAlignedLinearPosRuleTest> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<PieceOriginAxisAlignedLinearPosRuleTest> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.FLOAT.fieldOf("min_chance").orElse(0.0F).forGetter((ruleTest) -> ruleTest.minChance),
             Codec.FLOAT.fieldOf("max_chance").orElse(0.0F).forGetter((ruleTest) -> ruleTest.maxChance),
             Codec.INT.fieldOf("min_dist").orElse(0).forGetter((ruleTest) -> ruleTest.minDistance),

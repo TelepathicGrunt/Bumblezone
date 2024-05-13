@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.configs.BzWorldgenConfigs;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -28,7 +28,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  */
 public class SpiderInfestedBeeDungeonProcessor extends StructureProcessor {
 
-    public static final Codec<SpiderInfestedBeeDungeonProcessor> CODEC = Codec.unit(SpiderInfestedBeeDungeonProcessor::new);
+    public static final MapCodec<SpiderInfestedBeeDungeonProcessor> CODEC = MapCodec.unit(SpiderInfestedBeeDungeonProcessor::new);
     private SpiderInfestedBeeDungeonProcessor() { }
 
     @Override

@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
@@ -18,7 +19,7 @@ public class RoofedDimensionSurfacePlacement extends PlacementModifier {
     private final int minHeight;
     private final int maxWaterDepth;
 
-    public static final Codec<RoofedDimensionSurfacePlacement> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
+    public static final MapCodec<RoofedDimensionSurfacePlacement> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
             Codec.INT.fieldOf("min_height").orElse(0).forGetter(nbtFeatureConfig -> nbtFeatureConfig.minHeight),
             Codec.INT.fieldOf("max_water_depth").orElse(0).forGetter(nbtFeatureConfig -> nbtFeatureConfig.maxWaterDepth)
     ).apply(configInstance, RoofedDimensionSurfacePlacement::new));

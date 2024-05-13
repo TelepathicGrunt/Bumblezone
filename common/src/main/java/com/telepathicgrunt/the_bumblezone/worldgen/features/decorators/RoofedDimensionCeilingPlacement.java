@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,7 @@ public class RoofedDimensionCeilingPlacement extends PlacementModifier {
 
     private final int maxHeight;
 
-    public static final Codec<RoofedDimensionCeilingPlacement> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
+    public static final MapCodec<RoofedDimensionCeilingPlacement> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
             Codec.INT.fieldOf("max_height").orElse(0).forGetter(nbtFeatureConfig -> nbtFeatureConfig.maxHeight)
     ).apply(configInstance, RoofedDimensionCeilingPlacement::new));
 

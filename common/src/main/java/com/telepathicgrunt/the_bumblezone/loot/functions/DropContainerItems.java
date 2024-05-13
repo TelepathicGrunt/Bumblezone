@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.loot.functions;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class DropContainerItems extends LootItemConditionalFunction {
-    public static final Codec<DropContainerItems> CODEC = RecordCodecBuilder.create(instance -> DropContainerItems.commonFields(instance).apply(instance, DropContainerItems::new));
+    public static final MapCodec<DropContainerItems> CODEC = RecordCodecBuilder.mapCodec(instance -> DropContainerItems.commonFields(instance).apply(instance, DropContainerItems::new));
 
     public DropContainerItems(List<LootItemCondition> itemConditions) {
         super(itemConditions);

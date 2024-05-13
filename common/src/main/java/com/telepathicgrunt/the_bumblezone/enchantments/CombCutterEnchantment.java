@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
@@ -19,7 +20,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -33,7 +33,15 @@ public class CombCutterEnchantment extends BzEnchantment {
     private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
     public CombCutterEnchantment() {
-        super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Enchantment.definition(
+                BzTags.COMB_CUTTER_ENCHANTABLE,
+                5,
+                1,
+                Enchantment.dynamicCost(10, 1),
+                Enchantment.constantCost(13),
+                1,
+                EquipmentSlot.MAINHAND)
+        );
     }
 
     public Set<Block> getTargetBlocks() {
@@ -100,21 +108,6 @@ public class CombCutterEnchantment extends BzEnchantment {
                 BzCriterias.COMB_CUTTER_EXTRA_DROPS_TRIGGER.get().trigger(serverPlayer);
             }
         }
-    }
-
-    @Override
-    public int getMinCost(int level) {
-        return 10 * (level - 1);
-    }
-
-    @Override
-    public int getMaxCost(int level) {
-        return super.getMinCost(level) + 13;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 1;
     }
 
     @Override

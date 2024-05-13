@@ -12,7 +12,6 @@ import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;

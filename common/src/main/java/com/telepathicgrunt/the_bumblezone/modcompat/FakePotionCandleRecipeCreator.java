@@ -12,7 +12,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.LingeringPotionItem;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -40,16 +39,16 @@ public class FakePotionCandleRecipeCreator {
                 break;
             }
 
-            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect()).orElseThrow()).is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS))) {
+            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect().value()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect().value()).orElseThrow()).is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS))) {
                 continue;
             }
 
-            potion.getEffects().forEach(e -> effects.add(e.getEffect()));
+            potion.getEffects().forEach(e -> effects.add(e.getEffect().value()));
             potions.add(potion);
         }
         potions.sort(Comparator.comparingInt(a -> a.getEffects().size()));
         for (Potion potion : potions) {
-            if (potion.getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect()))) {
+            if (potion.getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect().value()))) {
                 continue;
             }
 

@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.fluids.base;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.HashMap;
@@ -20,8 +20,8 @@ public record FluidProperties(
         boolean canExtinguish,
         boolean canConvertToSource,
         boolean supportsBoating,
-        BlockPathTypes pathType,
-        BlockPathTypes adjacentPathType,
+        PathType pathType,
+        PathType adjacentPathType,
         boolean canHydrate,
         int lightLevel,
         int density,
@@ -46,8 +46,8 @@ public record FluidProperties(
         boolean canExtinguish = false;
         boolean canConvertToSource = true;
         boolean supportsBoating = false;
-        BlockPathTypes pathType = BlockPathTypes.WATER;
-        BlockPathTypes adjacentPathType = BlockPathTypes.WATER_BORDER;
+        PathType pathType = PathType.WATER;
+        PathType adjacentPathType = PathType.WATER_BORDER;
         boolean canHydrate = true;
         int lightLevel = 0;
         int density = 1000;
@@ -104,12 +104,12 @@ public record FluidProperties(
             return this;
         }
 
-        public Builder pathType(BlockPathTypes pathType) {
+        public Builder pathType(PathType pathType) {
             this.pathType = pathType;
             return this;
         }
 
-        public Builder adjacentPathType(BlockPathTypes adjacentPathType) {
+        public Builder adjacentPathType(PathType adjacentPathType) {
             this.adjacentPathType = adjacentPathType;
             return this;
         }

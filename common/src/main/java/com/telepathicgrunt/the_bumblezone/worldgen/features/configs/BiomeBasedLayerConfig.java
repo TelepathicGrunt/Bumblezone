@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.configs;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import java.util.Optional;
 
 public class BiomeBasedLayerConfig implements FeatureConfiguration {
-    public static final Codec<BiomeBasedLayerConfig> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<BiomeBasedLayerConfig> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.intRange(0, DimensionType.Y_SIZE).fieldOf("height").forGetter((config) -> config.height),
             BlockState.CODEC.fieldOf("state").forGetter((config) -> config.state),
             BlockState.CODEC.optionalFieldOf("rare_state").forGetter((config) -> config.rareState),

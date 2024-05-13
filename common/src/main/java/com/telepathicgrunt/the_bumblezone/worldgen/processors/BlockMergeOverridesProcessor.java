@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 public class BlockMergeOverridesProcessor extends StructureProcessor {
 
-    public static final Codec<BlockMergeOverridesProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<BlockMergeOverridesProcessor> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             TagKey.codec(Registries.BLOCK).fieldOf("overridable_blocks").forGetter(config -> config.overridableBlocks),
             TagKey.codec(Registries.BLOCK).fieldOf("overruling_blocks").forGetter(config -> config.overrulingBlocks)
     ).apply(instance, instance.stable(BlockMergeOverridesProcessor::new)));

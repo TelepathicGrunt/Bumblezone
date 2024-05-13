@@ -1,9 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.items.recipes;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import net.minecraft.core.NonNullList;
@@ -96,7 +95,7 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<NbtKeepingShapelessRecipe> {
-        private static final Codec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        private static final MapCodec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(shapelessRecipe -> shapelessRecipe.group),
                 CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
                 ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),

@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.mixin.client;
 
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

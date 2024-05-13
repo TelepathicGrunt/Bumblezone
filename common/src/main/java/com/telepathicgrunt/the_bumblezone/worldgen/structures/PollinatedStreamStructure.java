@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.structures;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import net.minecraft.core.BlockPos;
@@ -19,7 +20,7 @@ import java.util.Optional;
 
 public class PollinatedStreamStructure extends Structure {
 
-    public static final Codec<PollinatedStreamStructure> CODEC = RecordCodecBuilder.<PollinatedStreamStructure>mapCodec(instance ->
+    public static final MapCodec<PollinatedStreamStructure> CODEC = RecordCodecBuilder.<PollinatedStreamStructure>mapCodec(instance ->
             instance.group(PollinatedStreamStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
@@ -27,7 +28,7 @@ public class PollinatedStreamStructure extends Structure {
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter)
-            ).apply(instance, PollinatedStreamStructure::new)).codec();
+            ).apply(instance, PollinatedStreamStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;
     private final Optional<ResourceLocation> startJigsawName;

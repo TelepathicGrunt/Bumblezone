@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  */
 public class NoiseReplaceWithPropertiesProcessor extends StructureProcessor {
 
-    public static final Codec<NoiseReplaceWithPropertiesProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<NoiseReplaceWithPropertiesProcessor> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.inputBlock),
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("output_block").forGetter(config -> config.outputBlock),
             Codec.floatRange(0, 1).fieldOf("threshold").forGetter(config -> config.threshold),

@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 public class FluidTickProcessor extends StructureProcessor {
 
-    public static final Codec<FluidTickProcessor> CODEC = Codec.unit(FluidTickProcessor::new);
+    public static final MapCodec<FluidTickProcessor> CODEC = MapCodec.unit(FluidTickProcessor::new);
 
     public FluidTickProcessor() { }
 

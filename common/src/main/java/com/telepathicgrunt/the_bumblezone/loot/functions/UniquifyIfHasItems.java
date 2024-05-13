@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.loot.functions;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class UniquifyIfHasItems extends LootItemConditionalFunction {
-    public static final Codec<UniquifyIfHasItems> CODEC = RecordCodecBuilder.create(instance -> UniquifyIfHasItems.commonFields(instance).apply(instance, UniquifyIfHasItems::new));
+    public static final MapCodec<UniquifyIfHasItems> CODEC = RecordCodecBuilder.mapCodec(instance -> UniquifyIfHasItems.commonFields(instance).apply(instance, UniquifyIfHasItems::new));
 
     public UniquifyIfHasItems(List<LootItemCondition> itemConditions) {
         super(itemConditions);

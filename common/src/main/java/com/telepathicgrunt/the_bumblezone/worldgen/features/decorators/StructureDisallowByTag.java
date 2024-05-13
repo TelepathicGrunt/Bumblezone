@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.mixin.world.WorldGenRegionAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
@@ -27,7 +28,7 @@ public class StructureDisallowByTag extends PlacementModifier {
     private final Optional<TagKey<Structure>> disallowTag;
     private final boolean piecewiseCheck;
 
-    public static final Codec<StructureDisallowByTag> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
+    public static final MapCodec<StructureDisallowByTag> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
             TagKey.codec(Registries.STRUCTURE).optionalFieldOf("disallow_tag").forGetter(structureDisallowByTag -> structureDisallowByTag.disallowTag),
             Codec.BOOL.fieldOf("piecewise_check").forGetter(structureDisallowByTag -> structureDisallowByTag.piecewiseCheck)
     ).apply(configInstance, StructureDisallowByTag::new));

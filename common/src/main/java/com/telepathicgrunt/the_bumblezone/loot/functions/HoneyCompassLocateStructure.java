@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.loot.functions;
 
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -37,7 +38,7 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
     final int searchRadius;
     final boolean skipKnownStructures;
 
-    public static final Codec<HoneyCompassLocateStructure> CODEC = RecordCodecBuilder.create(instance -> HoneyCompassLocateStructure.commonFields(instance).and(
+    public static final MapCodec<HoneyCompassLocateStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> HoneyCompassLocateStructure.commonFields(instance).and(
             instance.group(
                     TagKey.codec(Registries.STRUCTURE).fieldOf("destination").forGetter(honeyCompassLocateStructure -> honeyCompassLocateStructure.destination),
                     Codec.intRange(0, 1000000).orElse(DEFAULT_SEARCH_RADIUS).fieldOf("search_radius").forGetter(honeyCompassLocateStructure -> honeyCompassLocateStructure.searchRadius),

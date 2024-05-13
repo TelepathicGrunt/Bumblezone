@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.entities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;

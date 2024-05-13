@@ -14,8 +14,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCookingSerializer;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 public class BzRecipes {
     public static final ResourcefulRegistry<RecipeSerializer<?>> RECIPES = ResourcefulRegistries.create(BuiltInRegistries.RECIPE_SERIALIZER, Bumblezone.MODID);
@@ -28,13 +26,13 @@ public class BzRecipes {
 
     public static void registerBrewingStandRecipes() {
         if (BzGeneralConfigs.glisteringHoneyBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD.value(), BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK.value());
         }
         if (BzGeneralConfigs.beeStingerBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD.value(), BzItems.BEE_STINGER.get(), Potions.LONG_POISON.value());
         }
         if (BzGeneralConfigs.beeSoupBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD, BzItems.BEE_SOUP.get(), BzPotions.NEUROTOXIN.get());
+            PotionBrewingAccessor.callAddMix(Potions.AWKWARD.value(), BzItems.BEE_SOUP.get(), BzPotions.NEUROTOXIN.get());
             PotionBrewingAccessor.callAddMix(BzPotions.NEUROTOXIN.get(), Items.REDSTONE, BzPotions.LONG_NEUROTOXIN.get());
         }
     }

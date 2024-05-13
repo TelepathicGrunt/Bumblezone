@@ -25,7 +25,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.levelgen.Heightmap;
 
@@ -48,10 +48,10 @@ public class BzEntities {
     public static final RegistryEntry<EntityType<CosmicCrystalEntity>> COSMIC_CRYSTAL_ENTITY = ENTITIES.register("cosmic_crystal_entity", () -> PlatformHooks.createEntityType(CosmicCrystalEntity::new, MobCategory.MISC, 1F, 2f, true, 8, 3, "cosmic_crystal_entity"));
 
     public static void registerEntitySpawnRestrictions(RegisterSpawnPlacementsEvent event) {
-        event.register(HONEY_SLIME.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
-        event.register(BEEHEMOTH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules);
-        event.register(BEE_QUEEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeeQueenEntity::checkMobSpawnRules);
-        event.register(ROOTMIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.register(HONEY_SLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
+        event.register(BEEHEMOTH.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeehemothEntity::checkMobSpawnRules);
+        event.register(BEE_QUEEN.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BeeQueenEntity::checkMobSpawnRules);
+        event.register(ROOTMIN.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules);
     }
 
     public static void registerEntityAttributes(RegisterEntityAttributesEvent event) {

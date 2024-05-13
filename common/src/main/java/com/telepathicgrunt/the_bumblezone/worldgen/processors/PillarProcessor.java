@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 public class PillarProcessor extends StructureProcessor {
     private static final ResourceLocation EMPTY_RL = new ResourceLocation("minecraft", "empty");
 
-    public static final Codec<PillarProcessor> CODEC  = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<PillarProcessor> CODEC  = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.mapPair(BlockState.CODEC.fieldOf("trigger"), BlockState.CODEC.fieldOf("replacement"))
                     .codec().listOf()
                     .xmap((list) -> list.stream().collect(Collectors.toMap(Pair::getFirst, Pair::getSecond)),

@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 public class StrongerWaterloggingProcessor extends StructureProcessor {
 
-    public static final Codec<StrongerWaterloggingProcessor> CODEC = Codec.unit(StrongerWaterloggingProcessor::new);
+    public static final MapCodec<StrongerWaterloggingProcessor> CODEC = MapCodec.unit(StrongerWaterloggingProcessor::new);
 
     private StrongerWaterloggingProcessor() { }
 

@@ -3,7 +3,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.gameplay;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.server.level.ServerPlayerGameMode;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;

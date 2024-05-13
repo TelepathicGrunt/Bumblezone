@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 public class ArenaSpecialBlockHandlerProcessor extends StructureProcessor {
 
-    public static final Codec<ArenaSpecialBlockHandlerProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<ArenaSpecialBlockHandlerProcessor> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.BOOL.fieldOf("clear_containers_only").forGetter(config -> config.clearContainersOnly)
     ).apply(instance, instance.stable(ArenaSpecialBlockHandlerProcessor::new)));
 

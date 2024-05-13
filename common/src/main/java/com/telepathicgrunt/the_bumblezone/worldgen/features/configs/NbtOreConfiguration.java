@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.configs;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import java.util.List;
 
 public class NbtOreConfiguration implements FeatureConfiguration {
-    public static final Codec<NbtOreConfiguration> CODEC = RecordCodecBuilder.create(
+    public static final MapCodec<NbtOreConfiguration> CODEC = RecordCodecBuilder.mapCodec(
         (instance) -> instance.group(
             Codec.list(TargetBlockState.CODEC).fieldOf("targets").forGetter((arg) -> arg.targetStates),
             Codec.intRange(0, 64).fieldOf("size").forGetter((arg) -> arg.size),

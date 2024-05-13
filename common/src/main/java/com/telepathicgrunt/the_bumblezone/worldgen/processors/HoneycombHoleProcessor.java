@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
@@ -23,7 +24,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 public class HoneycombHoleProcessor extends StructureProcessor {
 
-    public static final Codec<HoneycombHoleProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<HoneycombHoleProcessor> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.INT.fieldOf("flood_level").forGetter(config -> config.floodLevel)
     ).apply(instance, instance.stable(HoneycombHoleProcessor::new)));
 

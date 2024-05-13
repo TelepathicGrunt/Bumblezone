@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.blocks;
 
 import com.mojang.serialization.MapCodec;
-import com.telepathicgrunt.the_bumblezone.effects.HiddenEffect;
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
@@ -58,8 +57,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.lang.ref.Reference;
 
 public class PileOfPollen extends FallingBlock {
     public static final IntegerProperty LAYERS = BlockStateProperties.LAYERS;

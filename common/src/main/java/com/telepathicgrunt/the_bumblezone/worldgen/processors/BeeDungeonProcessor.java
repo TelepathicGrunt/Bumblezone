@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneyCrystal;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
@@ -29,7 +29,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 public class BeeDungeonProcessor extends StructureProcessor {
 
 
-    public static final Codec<BeeDungeonProcessor> CODEC = Codec.unit(BeeDungeonProcessor::new);
+    public static final MapCodec<BeeDungeonProcessor> CODEC = MapCodec.unit(BeeDungeonProcessor::new);
 
     private BeeDungeonProcessor() {
     }

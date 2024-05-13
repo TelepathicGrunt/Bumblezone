@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.configs;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 public class ItemFrameConfig implements FeatureConfiguration {
-    public static final Codec<ItemFrameConfig> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
+    public static final MapCodec<ItemFrameConfig> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
             RegistryCodecs.homogeneousList(Registries.ITEM, BuiltInRegistries.ITEM.byNameCodec()).fieldOf("items_to_pick_from").forGetter(config -> config.itemToPickFrom),
             Attachment.CODEC.fieldOf("attachment").forGetter(config -> config.attachment)
     ).apply(configInstance, ItemFrameConfig::new));

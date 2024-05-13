@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.dimension;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -34,8 +35,8 @@ import java.util.stream.Stream;
 
 public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiomeSource {
 
-    public static final Codec<BzBiomeSource> CODEC =
-            RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<BzBiomeSource> CODEC =
+            RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Codec.LONG.fieldOf("seed").orElse(0L).stable().forGetter(bzBiomeProvider -> bzBiomeProvider.seed),
                 Biome.LIST_CODEC.fieldOf("blob_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.blobBiomes),
                 Biome.LIST_CODEC.fieldOf("rare_blob_biomes").orElse(HolderSet.direct()).forGetter((biomeSource) -> biomeSource.rareBlobBiomes),
@@ -67,7 +68,7 @@ public class BzBiomeSource extends BiomeSource implements BiomeManager.NoiseBiom
     }
 
     @Override
-    protected Codec<? extends BiomeSource> codec() {
+    protected MapCodec<? extends BiomeSource> codec() {
         return CODEC;
     }
 

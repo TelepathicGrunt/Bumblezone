@@ -7,6 +7,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.TagsUpdatedEvent;
@@ -62,7 +63,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         Optional<List<RawTradeOutputEntry>> resultItems,
         boolean randomizerTrade)
     {
-        public static final Codec<TradeCollection> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+        public static final MapCodec<TradeCollection> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 SpecialDaysEntry.CODEC.optionalFieldOf("special_days").forGetter(e -> e.specialDaysEntry),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("randomizes").forGetter(e -> e.randomizerItems),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("wants").forGetter(e -> e.wantItems),
@@ -72,7 +73,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     }
 
     public record SpecialDaysEntry(Optional<String> dateAlgorithm, Optional<Integer> month, Optional<Integer> day, int daysLong, String specialMessage, ChatFormatting textColor) {
-        public static final Codec<SpecialDaysEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+        public static final MapCodec<SpecialDaysEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Codec.STRING.optionalFieldOf("date_algorithm").forGetter(e -> e.dateAlgorithm),
                 Codec.intRange(1, 12).optionalFieldOf("start_month").forGetter(e -> e.month),
                 Codec.intRange(1, 31).optionalFieldOf("start_day").forGetter(e -> e.day),
@@ -83,14 +84,14 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     }
 
     public record RawTradeInputEntry(String entry, boolean required) {
-        public static final Codec<RawTradeInputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+        public static final MapCodec<RawTradeInputEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.STRING.fieldOf("id").forGetter(e -> e.entry),
             Codec.BOOL.fieldOf("required").forGetter(e -> e.required)
         ).apply(instance, instance.stable(RawTradeInputEntry::new)));
     }
 
     public record RawTradeOutputEntry(String entry, boolean required, int count, int xpReward, int weight) {
-        public static final Codec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+        public static final MapCodec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Codec.STRING.fieldOf("id").forGetter(e -> e.entry),
                 Codec.BOOL.fieldOf("required").forGetter(e -> e.required),
                 Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),
@@ -100,14 +101,14 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     }
 
     public record TradeWantEntry(Optional<TagKey<Item>> tagKey, HolderSet<Item> wantItems) {
-        public static final Codec<TradeWantEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+        public static final MapCodec<TradeWantEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
                 RegistryCodecs.homogeneousList(Registries.ITEM, BuiltInRegistries.ITEM.byNameCodec()).fieldOf("wantItems").forGetter(e -> e.wantItems)
         ).apply(instance, instance.stable(TradeWantEntry::new)));
     }
 
     public record TradeResultEntry(Optional<TagKey<Item>> tagKey, HolderSet<Item> resultItems, int count, int xpReward, int weight) {
-        public static final Codec<TradeResultEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+        public static final MapCodec<TradeResultEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 TagKey.codec(Registries.ITEM).optionalFieldOf("tagkey").forGetter(e -> e.tagKey),
                 RegistryCodecs.homogeneousList(Registries.ITEM, BuiltInRegistries.ITEM.byNameCodec()).fieldOf("wantItems").forGetter(e -> e.resultItems),
                 Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),

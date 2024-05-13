@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.dimension;
 
 import com.google.common.collect.Sets;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
@@ -72,7 +71,7 @@ import java.util.function.Predicate;
 
 public class BzChunkGenerator extends NoiseBasedChunkGenerator {
 
-    public static final Codec<BzChunkGenerator> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<BzChunkGenerator> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                     BiomeSource.CODEC.fieldOf("biome_source").forGetter(bzChunkGenerator -> bzChunkGenerator.biomeSource),
                     NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(bzChunkGenerator -> bzChunkGenerator.settings))
             .apply(instance, instance.stable(BzChunkGenerator::new)));
@@ -140,7 +139,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
     }
 
     @Override
-    protected Codec<? extends ChunkGenerator> codec() {
+    protected MapCodec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
 
@@ -460,7 +459,7 @@ public class BzChunkGenerator extends NoiseBasedChunkGenerator {
                                     PlatformHooks.finalizeSpawn(mob, serverLevelAccessor, null, MobSpawnType.CHUNK_GENERATION, null);
 
                                     if (mob.checkSpawnObstruction(serverLevelAccessor)) {
-                                        spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata, null);
+                                        spawngroupdata = mob.finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.CHUNK_GENERATION, spawngroupdata);
                                         mob.moveTo(mob.getX(), mob.getY() + 1, mob.getZ());
                                         serverLevelAccessor.addFreshEntityWithPassengers(mob);
                                     }

@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
 
 public record BzModCompatBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> feature, GenerationStep.Decoration step, String modid) implements BiomeModifier {
 
-    public static final Codec<BzModCompatBiomeModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+    public static final MapCodec<BzModCompatBiomeModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(BzModCompatBiomeModifier::biomes),
             PlacedFeature.LIST_CODEC.fieldOf("feature").forGetter(BzModCompatBiomeModifier::feature),
             GenerationStep.Decoration.CODEC.fieldOf("step").forGetter(BzModCompatBiomeModifier::step),

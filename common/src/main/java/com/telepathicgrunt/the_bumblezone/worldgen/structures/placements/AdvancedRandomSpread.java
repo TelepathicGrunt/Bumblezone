@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.structures.placements;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructurePlacementType;
 import net.minecraft.core.Holder;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AdvancedRandomSpread extends RandomSpreadStructurePlacement {
-    public static final Codec<AdvancedRandomSpread> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<AdvancedRandomSpread> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Vec3i.offsetCodec(16).optionalFieldOf("locate_offset", Vec3i.ZERO).forGetter(AdvancedRandomSpread::locateOffset),
             StructurePlacement.FrequencyReductionMethod.CODEC.optionalFieldOf("frequency_reduction_method", StructurePlacement.FrequencyReductionMethod.DEFAULT).forGetter(AdvancedRandomSpread::frequencyReductionMethod),
             Codec.floatRange(0.0F, 1.0F).optionalFieldOf("frequency", 1.0F).forGetter(AdvancedRandomSpread::frequency),
@@ -138,7 +139,7 @@ public class AdvancedRandomSpread extends RandomSpreadStructurePlacement {
 
     public record SuperExclusionZone(List<AvoidData> avoidStructureData) {
         public static final Codec<AdvancedRandomSpread.SuperExclusionZone> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-                Codec.list(AvoidData.CODEC).fieldOf("list_of_avoids").forGetter(AdvancedRandomSpread.SuperExclusionZone::avoidStructureData)
+                Codec.list(AvoidData.CODEC.codec()).fieldOf("list_of_avoids").forGetter(AdvancedRandomSpread.SuperExclusionZone::avoidStructureData)
         ).apply(builder, AdvancedRandomSpread.SuperExclusionZone::new));
 
 
@@ -167,7 +168,7 @@ public class AdvancedRandomSpread extends RandomSpreadStructurePlacement {
         }
 
         private record AvoidData(HolderSet<StructureSet> otherSet, int chunkCount, Optional<Integer> allowedChunkCount) {
-            public static final Codec<AvoidData> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+            public static final MapCodec<AvoidData> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
                     RegistryCodecs.homogeneousList(Registries.STRUCTURE_SET, StructureSet.DIRECT_CODEC).fieldOf("other_set").forGetter(AvoidData::otherSet),
                     ExtraCodecs.POSITIVE_INT.fieldOf("chunk_count").forGetter(AvoidData::chunkCount),
                     ExtraCodecs.POSITIVE_INT.optionalFieldOf("allowed_chunk_count").forGetter(AvoidData::allowedChunkCount)

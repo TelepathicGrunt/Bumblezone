@@ -21,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class MusicHandler {

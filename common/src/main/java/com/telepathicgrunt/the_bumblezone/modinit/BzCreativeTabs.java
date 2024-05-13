@@ -6,11 +6,14 @@ import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -178,7 +181,9 @@ public class BzCreativeTabs {
                     .title(Component.translatable("itemGroup." + Bumblezone.MODID + ".main_tab"))
                     .icon(() -> {
                         ItemStack iconStack = BzItems.HONEYCOMB_BROOD.get().getDefaultInstance();
-                        iconStack.getOrCreateTag().putBoolean("isCreativeTabIcon", true);
+                        CompoundTag tag = new CompoundTag();
+                        tag.putBoolean("isCreativeTabIcon", true);
+                        iconStack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
                         return iconStack;
                     })
                     .displayItems((itemDisplayParameters, output) ->

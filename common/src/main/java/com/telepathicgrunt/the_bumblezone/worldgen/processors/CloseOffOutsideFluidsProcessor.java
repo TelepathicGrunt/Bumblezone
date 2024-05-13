@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  */
 public class CloseOffOutsideFluidsProcessor extends StructureProcessor {
 
-    public static final Codec<CloseOffOutsideFluidsProcessor> CODEC = Codec.unit(CloseOffOutsideFluidsProcessor::new);
+    public static final MapCodec<CloseOffOutsideFluidsProcessor> CODEC = MapCodec.unit(CloseOffOutsideFluidsProcessor::new);
     private CloseOffOutsideFluidsProcessor() { }
 
     @Override

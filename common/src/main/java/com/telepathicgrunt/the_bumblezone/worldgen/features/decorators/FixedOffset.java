@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class FixedOffset extends PlacementModifier {
     private final BlockPos offset;
 
-    public static final Codec<FixedOffset> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
+    public static final MapCodec<FixedOffset> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
             BlockPos.CODEC.fieldOf("offset").forGetter(fixedOffset -> fixedOffset.offset)
     ).apply(configInstance, FixedOffset::new));
 

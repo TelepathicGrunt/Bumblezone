@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.rendering.transparentitem.TranslucentItemRenderTypeBuffer;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

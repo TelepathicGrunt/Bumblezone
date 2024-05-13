@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.utils.UnsafeBulkSectionAccess;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLayerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;

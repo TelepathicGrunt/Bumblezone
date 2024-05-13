@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.queentrades;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class WeightedTradeResult implements WeightedEntry {
-    public static final Codec<WeightedTradeResult> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<WeightedTradeResult> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             TagKey.codec(Registries.ITEM).optionalFieldOf("t").forGetter(e -> e.tagKey),
             BuiltInRegistries.ITEM.byNameCodec().listOf().optionalFieldOf("w").forGetter(e -> e.items),
             Codec.intRange(1, 64).fieldOf("c").forGetter(e -> e.count),

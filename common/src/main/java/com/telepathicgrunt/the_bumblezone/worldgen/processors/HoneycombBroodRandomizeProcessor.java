@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.blocks.HoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  */
 public class HoneycombBroodRandomizeProcessor extends StructureProcessor {
 
-    public static final Codec<HoneycombBroodRandomizeProcessor> CODEC = Codec.unit(HoneycombBroodRandomizeProcessor::new);
+    public static final MapCodec<HoneycombBroodRandomizeProcessor> CODEC = MapCodec.unit(HoneycombBroodRandomizeProcessor::new);
 
     private HoneycombBroodRandomizeProcessor() {
     }

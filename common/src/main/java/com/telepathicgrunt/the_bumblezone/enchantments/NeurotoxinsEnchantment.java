@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
@@ -15,14 +16,14 @@ import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.Optional;
@@ -30,30 +31,15 @@ import java.util.Optional;
 public class NeurotoxinsEnchantment extends BzEnchantment {
 
     public NeurotoxinsEnchantment() {
-        super(Rarity.RARE, EnchantmentCategory.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-    }
-
-    @Override
-    public int getMinCost(int level) {
-        if (level > BzGeneralConfigs.neurotoxinMaxLevel) {
-            return 201;
-        }
-
-        return 14 * level;
-    }
-
-    @Override
-    public int getMaxCost(int level) {
-        if (level > BzGeneralConfigs.neurotoxinMaxLevel) {
-            return 200;
-        }
-
-        return super.getMinCost(level) + 50;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return BzGeneralConfigs.neurotoxinMaxLevel;
+        super(Enchantment.definition(
+                BzTags.NEUROTOXIN_ENCHANTABLE,
+                1,
+                BzGeneralConfigs.neurotoxinMaxLevel,
+                Enchantment.dynamicCost(14, 1),
+                Enchantment.constantCost(50),
+                6,
+                EquipmentSlot.MAINHAND)
+        );
     }
 
     @Override
@@ -95,7 +81,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
         int level = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), itemStack);
         level = Math.min(level, BzGeneralConfigs.neurotoxinMaxLevel);
 
-        if(level > 0 && victim instanceof LivingEntity livingEntity && livingEntity.getMobType() != MobType.UNDEAD) {
+        if(level > 0 && victim instanceof LivingEntity livingEntity && !livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
             if (livingEntity.hasEffect(BzEffects.PARALYZED.get())) {
                 return;
             }

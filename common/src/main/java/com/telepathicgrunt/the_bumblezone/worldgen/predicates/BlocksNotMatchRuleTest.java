@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.predicates;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPredicates;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTestType;
 import java.util.List;
 
 public class BlocksNotMatchRuleTest extends RuleTest {
-    public static final Codec<BlocksNotMatchRuleTest> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<BlocksNotMatchRuleTest> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().listOf().fieldOf("blocks_to_not_match").forGetter(config -> config.blocksToNotMatch)
     ).apply(instance, BlocksNotMatchRuleTest::new));
 

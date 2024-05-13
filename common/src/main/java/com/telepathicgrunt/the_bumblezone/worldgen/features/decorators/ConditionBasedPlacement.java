@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.utils.LazySupplier;
 import net.minecraft.core.BlockPos;
@@ -11,11 +12,11 @@ import net.minecraft.world.level.levelgen.placement.RepeatingPlacement;
 
 public class ConditionBasedPlacement extends RepeatingPlacement {
 
-    public static final Codec<ConditionBasedPlacement> CODEC = Codec.BOOL.fieldOf("condition")
+    public static final MapCodec<ConditionBasedPlacement> CODEC = Codec.BOOL.fieldOf("condition")
             .flatXmap(
                     (bool) -> DataResult.success(new ConditionBasedPlacement(bool)),
                     (placement) ->  DataResult.success(placement.condition.get())
-            ).codec();
+            );
 
     private final LazySupplier<Boolean> condition;
 

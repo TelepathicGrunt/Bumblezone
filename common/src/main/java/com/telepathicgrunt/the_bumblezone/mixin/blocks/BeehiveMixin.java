@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.mixin.blocks;
 
 import com.telepathicgrunt.the_bumblezone.enchantments.CombCutterEnchantment;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
-import dev.architectury.injectables.annotations.PlatformOnly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

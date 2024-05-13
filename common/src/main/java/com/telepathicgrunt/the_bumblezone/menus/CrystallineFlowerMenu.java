@@ -12,8 +12,8 @@ import com.telepathicgrunt.the_bumblezone.packets.CrystallineFlowerEnchantmentPa
 import com.telepathicgrunt.the_bumblezone.utils.EnchantmentUtils;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -26,12 +26,10 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.EntityBlock;
 
 import java.util.List;
@@ -542,7 +540,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
         ItemStack bookSlotItem = bookSlot.getItem();
         int existingEnchantments;
         if (!bookSlotItem.isEmpty() && xpTier.get() > 1) {
-            existingEnchantments = EnchantmentHelper.getEnchantments(bookSlotItem).size();
+            existingEnchantments = bookSlotItem.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).size();
         }
         else {
             tooManyEnchantmentsOnInput.set(0);
@@ -590,15 +588,12 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                         ItemStack enchantedBook = Items.ENCHANTED_BOOK.getDefaultInstance();
                         enchantedBook.setCount(1);
 
-                        CompoundTag compoundtag = tempCopy.getTag();
-                        if (compoundtag != null) {
-                            enchantedBook.setTag(compoundtag.copy());
-                        }
+                        enchantedBook.applyComponents(tempCopy.getComponentsPatch());
                         tempCopy = enchantedBook;
                     }
 
                     if (tempCopy.is(Items.BOOK) || tempCopy.is(Items.ENCHANTED_BOOK)) {
-                        EnchantedBookItem.addEnchantment(tempCopy, enchantmentForItem);
+                        tempCopy.enchant(enchantmentForItem.enchantment, enchantmentForItem.level);
                     }
                     else {
                         tempCopy.enchant(enchantmentForItem.enchantment, enchantmentForItem.level);

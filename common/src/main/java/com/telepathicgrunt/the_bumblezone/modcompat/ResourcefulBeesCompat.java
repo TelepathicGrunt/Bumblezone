@@ -129,7 +129,6 @@ public class ResourcefulBeesCompat implements ModCompat {
                     (ServerLevelAccessor) world,
                     world.getCurrentDifficultyAt(rbBee.blockPosition()),
                     event.spawnType(),
-                    null,
                     null);
 
             world.addFreshEntity(rbBee);

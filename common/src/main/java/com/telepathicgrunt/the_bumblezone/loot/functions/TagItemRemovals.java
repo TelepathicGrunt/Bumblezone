@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.loot.functions;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import net.minecraft.core.registries.Registries;
@@ -17,7 +17,7 @@ import java.util.List;
 public class TagItemRemovals extends LootItemConditionalFunction {
     final TagKey<Item> tagKey;
 
-    public static final Codec<TagItemRemovals> CODEC = RecordCodecBuilder.create(instance -> TagItemRemovals.commonFields(instance).and(
+    public static final MapCodec<TagItemRemovals> CODEC = RecordCodecBuilder.mapCodec(instance -> TagItemRemovals.commonFields(instance).and(
             instance.group(TagKey.codec(Registries.ITEM).fieldOf("tag").forGetter(tagItemRemovals -> tagItemRemovals.tagKey)).t1()
     ).apply(instance, TagItemRemovals::new));
 

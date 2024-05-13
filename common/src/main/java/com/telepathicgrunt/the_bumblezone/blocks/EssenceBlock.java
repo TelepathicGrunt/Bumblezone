@@ -13,7 +13,6 @@ import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.ArenaSpecialBlockHandlerProcessor;
 import net.minecraft.ChatFormatting;
-import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;

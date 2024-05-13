@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
@@ -22,7 +23,7 @@ public class Random3DClusterPlacement extends RepeatingPlacement {
     private final Optional<IntProvider> range;
     private final boolean allowUnderwater;
 
-    public static final Codec<Random3DClusterPlacement> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
+    public static final MapCodec<Random3DClusterPlacement> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
             IntProvider.codec(0, 100000).fieldOf("count").forGetter(nbtFeatureConfig -> nbtFeatureConfig.count),
             IntProvider.codec(0, 256).optionalFieldOf("height_range").forGetter(nbtFeatureConfig -> nbtFeatureConfig.range),
             Codec.BOOL.fieldOf("allow_underwater").forGetter(nbtFeatureConfig -> nbtFeatureConfig.allowUnderwater)

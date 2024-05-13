@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
@@ -18,8 +19,8 @@ import java.util.stream.Stream;
 public class Random3DUndergroundChunkPlacement extends RepeatingPlacement {
 
     private final IntProvider count;
-    public static final Codec<Random3DUndergroundChunkPlacement> CODEC = IntProvider.codec(0, 100000)
-            .fieldOf("count").xmap(Random3DUndergroundChunkPlacement::new, placement -> placement.count).codec();
+    public static final MapCodec<Random3DUndergroundChunkPlacement> CODEC = IntProvider.codec(0, 100000)
+            .fieldOf("count").xmap(Random3DUndergroundChunkPlacement::new, placement -> placement.count);
 
     private Random3DUndergroundChunkPlacement(IntProvider intProvider) {
         this.count = intProvider;

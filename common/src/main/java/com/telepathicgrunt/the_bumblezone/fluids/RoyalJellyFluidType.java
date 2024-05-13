@@ -3,7 +3,7 @@ package com.telepathicgrunt.the_bumblezone.fluids;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class RoyalJellyFluidType {
 
@@ -15,8 +15,8 @@ public class RoyalJellyFluidType {
                 .canExtinguish(true)
                 .canPushEntity(true)
                 .canSwim(true)
-                .pathType(BlockPathTypes.WATER)
-                .adjacentPathType(BlockPathTypes.WATER_BORDER)
+                .pathType(PathType.WATER)
+                .adjacentPathType(PathType.WATER_BORDER)
                 .canConvertToSource(false)
                 .fallDistanceModifier(0.15f)
                 .motionScale(0.0115)

@@ -5,7 +5,10 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.loot.LootContextAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
@@ -15,6 +18,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class NewLootInjectorApplier {
     private NewLootInjectorApplier() {}
@@ -50,7 +54,12 @@ public final class NewLootInjectorApplier {
     }
 
     public static void injectLoot(LootContext context, List<ItemStack> originalLoot, ResourceLocation lootTableToPullFrom) {
-        LootTable stingerLootTable = context.getLevel().getServer().getLootData().getLootTable(lootTableToPullFrom);
+        Optional<Holder.Reference<LootTable>> optionalLootTableReference = context.getResolver().get(Registries.LOOT_TABLE, ResourceKey.create(Registries.LOOT_TABLE, lootTableToPullFrom));
+        if (optionalLootTableReference.isEmpty()) {
+            return;
+        }
+
+        LootTable stingerLootTable = optionalLootTableReference.get().value();
         ((LootParamsBzVisitedLootInterface)((LootContextAccessor)context).getParams()).addVisitedBzVisitedLootRL(lootTableToPullFrom);
         ObjectArrayList<ItemStack> newItems = new ObjectArrayList<>();
         stingerLootTable.getRandomItems(((LootContextAccessor)context).getParams(), newItems::add);

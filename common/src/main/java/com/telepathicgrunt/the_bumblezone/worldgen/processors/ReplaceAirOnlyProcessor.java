@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import net.minecraft.core.BlockPos;
@@ -22,7 +23,7 @@ import java.util.HashSet;
  */
 public class ReplaceAirOnlyProcessor extends StructureProcessor {
 
-    public static final Codec<ReplaceAirOnlyProcessor> CODEC  = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<ReplaceAirOnlyProcessor> CODEC  = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 BuiltInRegistries.BLOCK.byNameCodec().listOf()
                             .xmap(Sets::newHashSet, Lists::newArrayList)
                             .optionalFieldOf("blocks_to_always_replace", new HashSet<>())

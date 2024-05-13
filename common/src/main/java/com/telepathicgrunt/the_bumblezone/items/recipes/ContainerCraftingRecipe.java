@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items.recipes;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
@@ -135,7 +136,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
-        private static final Codec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        private static final MapCodec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(shapelessRecipe -> shapelessRecipe.group),
                 CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
                 ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),

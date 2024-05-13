@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.loot.conditions;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootConditionTypes;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 public class EssenceOnlySpawn implements LootItemCondition {
     static final EssenceOnlySpawn INSTANCE = new EssenceOnlySpawn();
-    public static final Codec<EssenceOnlySpawn> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<EssenceOnlySpawn> CODEC = MapCodec.unit(() -> INSTANCE);
 
     public EssenceOnlySpawn() {
         super();

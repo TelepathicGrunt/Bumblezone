@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -28,7 +29,7 @@ import java.util.Optional;
 
 public class SpawnerRandomizingProcessor extends StructureProcessor {
 
-    public static final Codec<SpawnerRandomizingProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<SpawnerRandomizingProcessor> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.mapPair(BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("resourcelocation"), ExtraCodecs.POSITIVE_INT.fieldOf("weight")).codec().listOf().fieldOf("spawner_mob_entries").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.mainSpawnerData),
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE, BuiltInRegistries.ENTITY_TYPE.byNameCodec()).optionalFieldOf("override_mobs_to_pick_from").forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.overrideMobsToPickFrom),
             Codec.floatRange(0, 1).fieldOf("chance_to_override_with_tagged_mobs").orElse(0F).forGetter(spawnerRandomizingProcessor -> spawnerRandomizingProcessor.chanceToOverrideWithTaggedMobs)

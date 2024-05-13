@@ -82,7 +82,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPOI;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
-import com.telepathicgrunt.the_bumblezone.modinit.BzPatterns;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPotions;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPredicates;
@@ -182,7 +181,6 @@ public class Bumblezone {
         BzPredicates.RULE_TEST.init();
         BzStructures.STRUCTURES.init();
         BzDimension.BIOME_SOURCE.init();
-        BzPatterns.BANNER_PATTERNS.init();
         BzParticles.PARTICLE_TYPES.init();
         BzPredicates.POS_RULE_TEST.init();
         BzDimension.CHUNK_GENERATOR.init();

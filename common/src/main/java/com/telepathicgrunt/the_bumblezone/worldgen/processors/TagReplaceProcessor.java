@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 
 public class TagReplaceProcessor extends StructureProcessor {
 
-    public static final Codec<TagReplaceProcessor> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+    public static final MapCodec<TagReplaceProcessor> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("input_block").forGetter(config -> config.inputBlock),
             TagKey.codec(Registries.BLOCK).fieldOf("output_block_tag").forGetter(config -> config.outputBlockTag),
             TagKey.codec(Registries.BLOCK).optionalFieldOf("blacklisted_output_block_tag").forGetter(config -> config.blacklistedOutputBlockTag),
