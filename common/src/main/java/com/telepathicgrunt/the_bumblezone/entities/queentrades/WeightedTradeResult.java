@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class WeightedTradeResult implements WeightedEntry {
-    public static final MapCodec<WeightedTradeResult> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+    public static final Codec<WeightedTradeResult> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             TagKey.codec(Registries.ITEM).optionalFieldOf("t").forGetter(e -> e.tagKey),
             BuiltInRegistries.ITEM.byNameCodec().listOf().optionalFieldOf("w").forGetter(e -> e.items),
             Codec.intRange(1, 64).fieldOf("c").forGetter(e -> e.count),

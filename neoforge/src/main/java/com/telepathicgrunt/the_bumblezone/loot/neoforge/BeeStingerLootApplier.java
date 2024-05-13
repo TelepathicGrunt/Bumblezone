@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.loot.neoforge;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.loot.NewLootInjectorApplier;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -15,8 +16,8 @@ import java.util.function.Supplier;
 
 public class BeeStingerLootApplier extends LootModifier {
 
-    public static final Supplier<Codec<BeeStingerLootApplier>> CODEC = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, BeeStingerLootApplier::new)));
+    public static final Supplier<MapCodec<BeeStingerLootApplier>> CODEC = Suppliers.memoize(() ->
+            RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, BeeStingerLootApplier::new)));
 
     public BeeStingerLootApplier(final LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -31,7 +32,7 @@ public class BeeStingerLootApplier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();
     }
 }

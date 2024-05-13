@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.platform;
 
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -18,7 +19,7 @@ public interface ItemExtension {
     }
 
     default int bz$getMaxDamage(ItemStack stack) {
-        return getBzItem().getMaxDamage();
+        return getBzItem().components().getOrDefault(DataComponents.MAX_DAMAGE, 0);
     }
 
     default void bz$setDamage(ItemStack stack, int damage) {

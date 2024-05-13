@@ -1,13 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.loot;
 
-import com.telepathicgrunt.the_bumblezone.mixin.fabric.loot.LootDataManagerAccessor;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.storage.loot.LootDataId;
 import net.minecraft.world.level.storage.loot.LootTable;
-
-import java.util.Map;
 
 public class LootUtils {
     public static MinecraftServer CURRENT_SERVER = null;
@@ -23,16 +21,12 @@ public class LootUtils {
             return CACHED_IS_ENTITY_LOOT_TABLES.getBoolean(lootTable);
         }
 
-        Map<LootDataId<?>, ?> map = ((LootDataManagerAccessor)minecraftServer.getLootData()).getElements();
-        String lootTablePath = "";
-        for (Map.Entry<LootDataId<?>, ?> lootDataEntry : map.entrySet()) {
-            if (lootDataEntry.getValue().equals(lootTable)) {
-                lootTablePath = lootDataEntry.getKey().location().getPath();
-                break;
-            }
-        }
+        ResourceLocation resourceLocation = minecraftServer
+                .registryAccess()
+                .registryOrThrow(Registries.LOOT_TABLE)
+                .getKey(lootTable);
 
-        boolean isEntityLootTable = lootTablePath.contains("entities/");
+        boolean isEntityLootTable = (resourceLocation == null ? "" : resourceLocation.getPath()).contains("entities/");
         CACHED_IS_ENTITY_LOOT_TABLES.put(lootTable, isEntityLootTable);
         return isEntityLootTable;
     }

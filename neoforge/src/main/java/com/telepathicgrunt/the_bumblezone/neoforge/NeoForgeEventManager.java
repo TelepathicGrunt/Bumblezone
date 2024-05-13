@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.neoforge;
 
 import com.google.common.util.concurrent.AtomicDouble;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.neoforge.BzGeneralConfig;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
@@ -49,21 +48,17 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.packets.networking.neoforge.PacketChannelHelperImpl;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackCompatibility;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -71,20 +66,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.LogicalSide;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.CapabilityHooks;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
@@ -102,20 +92,13 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStackSimple;
-import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
-import net.neoforged.neoforgespi.language.IModFileInfo;
-import net.neoforged.neoforgespi.language.IModInfo;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
 
 public class NeoForgeEventManager {
     public static void init(IEventBus modEventBus, IEventBus eventBus) {
@@ -141,13 +124,15 @@ public class NeoForgeEventManager {
         eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onItemUse);
         eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onProjectileHitHighPriority);
         eventBus.addListener(EventPriority.LOWEST, NeoForgeEventManager::onBlockBreak);
-        eventBus.addListener(NeoForgeEventManager::onPlayerTick);
+        eventBus.addListener(NeoForgeEventManager::onPlayerTickPre);
+        eventBus.addListener(NeoForgeEventManager::onPlayerTickPost);
         eventBus.addListener(NeoForgeEventManager::onPickupItem);
         eventBus.addListener(NeoForgeEventManager::onGrantAdvancement);
         eventBus.addListener(NeoForgeEventManager::onInteractEntity);
         eventBus.addListener(NeoForgeEventManager::onBreakSpeed);
         eventBus.addListener(NeoForgeEventManager::onTagsUpdate);
-        eventBus.addListener(NeoForgeEventManager::onLevelTick);
+        eventBus.addListener(NeoForgeEventManager::onLevelTickPre);
+        eventBus.addListener(NeoForgeEventManager::onLevelTickPost);
         eventBus.addListener(NeoForgeEventManager::onAddReloadListeners);
         eventBus.addListener(NeoForgeEventManager::onDatapackSync);
         eventBus.addListener(NeoForgeEventManager::onEntityAttacked);
@@ -220,57 +205,19 @@ public class NeoForgeEventManager {
     }
 
     private static void onRegisterPackFinder(AddPackFindersEvent event) {
+
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
-                IModFileInfo info = getPackInfo(id);
-                Path resourcePath = info.getFile().findResource("resourcepacks/" + id.getPath());
-
-                final Pack.Info packInfo = createInfoForLatest(displayName, mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED);
-                final Pack pack = Pack.create(
-                        Bumblezone.MODID + ":add_pack/" + id.getPath(), displayName,
-                        mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
-                        new PathPackResources.PathResourcesSupplier(resourcePath, true),
-                        packInfo,
-                        Pack.Position.BOTTOM,
-                        false,
-                        createSource(mode)
+                event.addPackFinders(
+                    new ResourceLocation(id.getNamespace(), "resourcepacks/" + id.getPath()),
+                    PackType.CLIENT_RESOURCES,
+                    displayName,
+                    PackSource.BUILT_IN,
+                    mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
+                    Pack.Position.BOTTOM
                 );
-                event.addRepositorySource((packConsumer) -> packConsumer.accept(pack));
             }));
         }
-    }
-
-    private static IModFileInfo getPackInfo(ResourceLocation pack) {
-        if (!FMLLoader.isProduction()) {
-            for (IModInfo mod : ModList.get().getMods()) {
-                if (mod.getModId().startsWith("generated_") && fileExists(mod, "resourcepacks/" + pack.getPath())) {
-                    return mod.getOwningFile();
-                }
-            }
-        }
-        return ModList.get().getModFileById(pack.getNamespace());
-    }
-
-    private static boolean fileExists(IModInfo info, String path) {
-        return Files.exists(info.getOwningFile().getFile().findResource(path.split("/")));
-    }
-
-    private static Pack.Info createInfoForLatest(Component description, boolean hidden) {
-        return new Pack.Info(
-                description,
-                PackCompatibility.COMPATIBLE,
-                FeatureFlagSet.of(),
-                new ArrayList<>(),
-                hidden
-        );
-    }
-
-    private static PackSource createSource(AddBuiltinResourcePacks.PackMode mode) {
-        final Component text = Component.translatable("pack.source.builtin");
-        return PackSource.create(
-                component -> Component.translatable("pack.nameAndSource", component, text).withStyle(ChatFormatting.GRAY),
-                mode != AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
-        );
     }
 
     private static void onBabySpawn(BabyEntitySpawnEvent event) {
@@ -317,15 +264,24 @@ public class NeoForgeEventManager {
         }
     }
 
-    private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        PlayerTickEvent eventObject = new PlayerTickEvent(event.player, event.phase == TickEvent.Phase.END);
+    private static void onPlayerTickPre(net.neoforged.neoforge.event.tick.PlayerTickEvent.Pre event) {
+        PlayerTickEvent eventObject = new PlayerTickEvent(event.getEntity(), false);
 
         PlayerTickEvent.EVENT.invoke(eventObject);
-        if (event.side == LogicalSide.CLIENT) {
+        if (event.getEntity().level().isClientSide()) {
             PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
         }
 
         DisableFlightAttribute.onPlayerTickToRemoveDisabledFlight(event);
+    }
+
+    private static void onPlayerTickPost(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
+        PlayerTickEvent eventObject = new PlayerTickEvent(event.getEntity(), true);
+
+        PlayerTickEvent.EVENT.invoke(eventObject);
+        if (event.getEntity().level().isClientSide()) {
+            PlayerTickEvent.CLIENT_EVENT.invoke(eventObject);
+        }
     }
 
     private static void onPickupItem(PlayerEvent.ItemPickupEvent event) {
@@ -367,9 +323,18 @@ public class NeoForgeEventManager {
         };
     }
 
-    private static void onLevelTick(TickEvent.LevelTickEvent event) {
-        if (event.level.isClientSide) return;
-        ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(event.level, event.phase == TickEvent.Phase.END));
+    private static void onLevelTickPre(LevelTickEvent.Pre event) {
+        if (event.getLevel().isClientSide()) {
+            return;
+        }
+        ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(event.getLevel(), false));
+    }
+
+    private static void onLevelTickPost(LevelTickEvent.Post event) {
+        if (event.getLevel().isClientSide()) {
+            return;
+        }
+        ServerLevelTickEvent.EVENT.invoke(new ServerLevelTickEvent(event.getLevel(), true));
     }
 
     private static void onAddReloadListeners(AddReloadListenerEvent event) {
@@ -407,8 +372,10 @@ public class NeoForgeEventManager {
         }
     }
 
-    private static void onEntityTick(LivingEvent.LivingTickEvent event) {
-        EntityTickEvent.EVENT.invoke(new EntityTickEvent(event.getEntity()));
+    private static void onEntityTick(net.neoforged.neoforge.event.tick.EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof LivingEntity livingEntity) {
+            EntityTickEvent.EVENT.invoke(new EntityTickEvent(livingEntity));
+        }
     }
 
     private static void onEntitySpawn(MobSpawnEvent.FinalizeSpawn event) {
@@ -453,7 +420,6 @@ public class NeoForgeEventManager {
         InteractionResult result = PlayerItemAttackBlockEvent.EVENT_HIGH.invoke(eventBz);
         if (result != null) {
             event.setCanceled(true);
-            event.setCancellationResult(result);
         }
     }
 

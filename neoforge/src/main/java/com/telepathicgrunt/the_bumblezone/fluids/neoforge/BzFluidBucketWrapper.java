@@ -31,7 +31,7 @@ public class BzFluidBucketWrapper implements IFluidHandlerItem {
     public FluidStack getFluid() {
         Item item = container.getItem();
         if (item instanceof BucketItem) {
-            return new FluidStack(((BucketItem) item).getFluid(), FluidType.BUCKET_VOLUME);
+            return new FluidStack(((BucketItem) item).content, FluidType.BUCKET_VOLUME);
         }
         else {
             return FluidStack.EMPTY;
@@ -87,7 +87,7 @@ public class BzFluidBucketWrapper implements IFluidHandlerItem {
         }
 
         FluidStack fluidStack = getFluid();
-        if (!fluidStack.isEmpty() && fluidStack.isFluidEqual(resource)) {
+        if (!fluidStack.isEmpty() && FluidStack.isSameFluidSameComponents(fluidStack, resource)) {
             if (action.execute()) {
                 setFluid(FluidStack.EMPTY);
             }

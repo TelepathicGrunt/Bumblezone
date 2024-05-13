@@ -3,12 +3,13 @@ package com.telepathicgrunt.the_bumblezone.datagen;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.data.DataGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 // Source: https://github.com/BluSunrize/ImmersiveEngineering/blob/1.20.1/src/datagen/java/blusunrize/immersiveengineering/data/IEDataGenerator.java
-@Mod.EventBusSubscriber(modid = Bumblezone.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Bumblezone.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class StructureNbtUpdaterDatagen {
 
     @SubscribeEvent

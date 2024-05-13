@@ -68,7 +68,7 @@ public class ThronePillarBehavior {
 
                 BlockPos queenPos = new BlockPos(structureCenter.getX(), 133, structureCenter.getZ());
                 newBeeQueen.setPos(Vec3.atCenterOf(queenPos));
-                newBeeQueen.finalizeSpawn(level, level.getCurrentDifficultyAt(newBeeQueen.blockPosition()), MobSpawnType.STRUCTURE, null, null);
+                newBeeQueen.finalizeSpawn(level, level.getCurrentDifficultyAt(newBeeQueen.blockPosition()), MobSpawnType.STRUCTURE, null);
 
                 PlatformHooks.finalizeSpawn(newBeeQueen, level, null, MobSpawnType.STRUCTURE, null);
                 level.addFreshEntity(newBeeQueen);

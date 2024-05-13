@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
 import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +26,7 @@ public class LootrCompatImpl {
             LootrAPI.LOG.error("Unable to fill loot cocoon in " + blockEntity.getLevel().dimension() + " at " + blockEntity.getBlockPos() + " as the loot table was null.");
             return;
         }
-        LootTable loottable = blockEntity.getLevel().getServer().getLootData().getLootTable(table);
+        LootTable loottable = blockEntity.getLevel().registryAccess().registryOrThrow(Registries.LOOT_TABLE).get(table);
         if (loottable == LootTable.EMPTY) {
             LootrAPI.LOG.error("Unable to fill loot cocoon in " + blockEntity.getLevel().dimension() + " at " + blockEntity.getBlockPos() + " as the loot table '" + table + "' couldn't be resolved! Please search the loot table in `latest.log` to see if there are errors in loading.");
             return;

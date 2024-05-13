@@ -127,13 +127,12 @@ public class PlatformHooksImpl {
     }
 
     @Contract(pure = true)
-    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason, CompoundTag tag) {
+    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
         return entity.finalizeSpawn(
                 world,
                 world.getCurrentDifficultyAt(entity.blockPosition()),
                 spawnReason,
-                spawnGroupData,
-                tag);
+                spawnGroupData);
     }
 
     public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {

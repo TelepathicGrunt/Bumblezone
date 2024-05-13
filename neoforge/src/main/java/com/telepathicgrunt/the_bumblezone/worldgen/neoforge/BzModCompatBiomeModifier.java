@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.neoforge;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzBiomeModifiers;
@@ -50,7 +51,7 @@ public record BzModCompatBiomeModifier(HolderSet<Biome> biomes, HolderSet<Placed
         }
     }
 
-    public Codec<? extends BiomeModifier> codec() {
+    public MapCodec<? extends BiomeModifier> codec() {
         return BzBiomeModifiers.BIOME_MODIFIER.get();
     }
 }

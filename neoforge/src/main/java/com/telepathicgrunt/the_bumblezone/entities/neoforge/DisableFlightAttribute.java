@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.UUID;
 
@@ -18,19 +18,18 @@ public class DisableFlightAttribute {
             UUID.fromString("4fb10ad4-37b2-4fe8-b5a3-3431b948d4d2"),
             Bumblezone.MODID,
             -1D,
-            AttributeModifier.Operation.MULTIPLY_TOTAL);
+            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
 
-    public static void onPlayerTickToRemoveDisabledFlight(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (event.phase == TickEvent.Phase.START &&
-            !player.level().isClientSide() &&
+    public static void onPlayerTickToRemoveDisabledFlight(PlayerTickEvent.Pre event) {
+        Player player = event.getEntity();
+        if (!player.level().isClientSide() &&
             player.level().getServer().getTickCount() % 40 == 5 && // Offset
             !player.isCreative() &&
             !player.isSpectator() &&
             player.isAlive())
         {
-            AttributeInstance attributeInstance = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT.value());
+            AttributeInstance attributeInstance = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
 
             if (attributeInstance != null && attributeInstance.hasModifier(DISABLE_FLIGHT)) {
                  removeAttributeIfNotInHeavyAir(player, attributeInstance);
@@ -60,7 +59,7 @@ public class DisableFlightAttribute {
                 }
             }
 
-            attributeInstance.removeModifier(DISABLE_FLIGHT.getId());
+            attributeInstance.removeModifier(DISABLE_FLIGHT);
         }
     }
 }

@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.features.configs.BiomeBasedLa
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
@@ -126,7 +127,7 @@ public class LayeredBlockSurface extends Feature<BiomeBasedLayerConfig> {
                                     BlockEntity blockEntity = ((EntityBlock)blockToPlace.getBlock()).newBlockEntity(finalPosition, blockToPlace);
                                     if (blockEntity != null) {
                                         if (blockEntity instanceof BrushableBlockEntity brushableBlock && context.config().suspiciousBlockLoot.isPresent()) {
-                                            brushableBlock.setLootTable(context.config().suspiciousBlockLoot.get(), random.nextLong());
+                                            brushableBlock.setLootTable(ResourceKey.create(Registries.LOOT_TABLE, context.config().suspiciousBlockLoot.get()), random.nextLong());
                                         }
                                         cachedChunk.setBlockEntity(blockEntity);
                                     }

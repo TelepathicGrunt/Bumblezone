@@ -44,7 +44,7 @@ public class ArenaSpecialBlockHandlerProcessor extends StructureProcessor {
                 if (structureBlockState.getBlock() instanceof EntityBlock entityBlock) {
                     blockEntity = entityBlock.newBlockEntity(structureBlockInfoWorld.pos(), structureBlockState);
                     if (blockEntity != null) {
-                        blockEntity.load(structureBlockInfoWorld.nbt());
+                        blockEntity.loadWithComponents(structureBlockInfoWorld.nbt(), worldView.registryAccess());
                     }
                 }
                 ItemStack itemStack = new ItemStack(Items.DIAMOND_PICKAXE);

@@ -79,19 +79,7 @@ public class EnchantmentUtils {
 		}
 		return map;
 	}
-
-	@ExpectPlatform
-	@Contract(pure = true)
-	public static boolean canApplyAtEnchantingTable(Enchantment enchantment, ItemStack stack) {
-		throw new NotImplementedException();
-	}
-
-	@ExpectPlatform
-	@Contract(pure = true)
-	public static boolean isAllowedOnBooks(Enchantment enchantment) {
-		throw new NotImplementedException();
-	}
-
+	
 	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {
 		ListTag listtag = EnchantedBookItem.getEnchantments(itemStack);
 		Map<Enchantment, Integer> existingEnchants = new Object2IntOpenHashMap<>();

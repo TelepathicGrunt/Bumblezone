@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.loot.neoforge;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.loot.NewLootInjectorApplier;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -15,8 +16,8 @@ import java.util.function.Supplier;
 
 public class DimensionFishingLootApplier extends LootModifier {
 
-    public static final Supplier<Codec<DimensionFishingLootApplier>> CODEC = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, DimensionFishingLootApplier::new)));
+    public static final Supplier<MapCodec<DimensionFishingLootApplier>> CODEC = Suppliers.memoize(() ->
+            RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, DimensionFishingLootApplier::new)));
 
     public DimensionFishingLootApplier(final LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -34,7 +35,7 @@ public class DimensionFishingLootApplier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();
     }
 }

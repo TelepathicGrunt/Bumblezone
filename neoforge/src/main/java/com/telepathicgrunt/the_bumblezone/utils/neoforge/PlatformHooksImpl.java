@@ -79,7 +79,7 @@ public class PlatformHooksImpl {
 
     @Contract(pure = true)
     public static Fluid getBucketFluid(BucketItem bucket) {
-        return bucket.getFluid();
+        return bucket.content;
     }
 
     @Contract(pure = true)
@@ -116,8 +116,8 @@ public class PlatformHooksImpl {
     }
 
     @Contract(pure = true)
-    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason, CompoundTag tag) {
-        return EventHooks.onFinalizeSpawn(entity, world, world.getCurrentDifficultyAt(BlockPos.containing(entity.position())), spawnReason, spawnGroupData, tag);
+    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
+        return EventHooks.onFinalizeSpawn(entity, world, world.getCurrentDifficultyAt(BlockPos.containing(entity.position())), spawnReason, spawnGroupData);
     }
 
     public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
@@ -181,7 +181,7 @@ public class PlatformHooksImpl {
         // Sync on server only
         player.onUpdateAbilities();
 
-        AttributeInstance attributeInstance = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT.value());
+        AttributeInstance attributeInstance = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
         if (attributeInstance != null && !attributeInstance.hasModifier(DisableFlightAttribute.DISABLE_FLIGHT)) {
             attributeInstance.addTransientModifier(DisableFlightAttribute.DISABLE_FLIGHT);
         }

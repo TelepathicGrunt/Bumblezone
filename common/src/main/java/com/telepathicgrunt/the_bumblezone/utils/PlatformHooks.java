@@ -51,7 +51,7 @@ public class PlatformHooks {
 
     @ExpectPlatform
     @Contract(pure = true)
-    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason, CompoundTag tag) {
+    public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
         throw new NotImplementedException("PlatformHooks canEntitySpawn is not implemented!");
     }
 

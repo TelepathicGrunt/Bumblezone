@@ -42,7 +42,7 @@ public class HangingGardenMob extends Feature<NoneFeatureConfiguration> {
         Entity spawningEntity = entityToSpawn.create(context.level().getLevel());
 
         if (spawningEntity instanceof Mob mob) {
-            mob.finalizeSpawn(context.level(), context.level().getCurrentDifficultyAt(context.origin()), MobSpawnType.STRUCTURE, null, null);
+            mob.finalizeSpawn(context.level(), context.level().getCurrentDifficultyAt(context.origin()), MobSpawnType.STRUCTURE, null);
             mob.setPersistenceRequired();
         }
 

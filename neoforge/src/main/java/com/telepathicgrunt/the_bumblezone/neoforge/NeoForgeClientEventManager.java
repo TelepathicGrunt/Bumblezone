@@ -55,11 +55,10 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
-import net.neoforged.neoforge.client.event.RenderGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
-import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -70,7 +69,8 @@ public class NeoForgeClientEventManager {
 
         eventBus.addListener(NeoForgeClientEventManager::onBlockScreen);
         eventBus.addListener(NeoForgeClientEventManager::onKeyInput);
-        eventBus.addListener(NeoForgeClientEventManager::onClientTick);
+        eventBus.addListener(NeoForgeClientEventManager::onClientTickPre);
+        eventBus.addListener(NeoForgeClientEventManager::onClientTickPost);
         eventBus.addListener(NeoForgeClientEventManager::onScreenRendering);
         eventBus.addListener(NeoForgeClientEventManager::onBeforeBlockOutlineRendering);
         eventBus.addListener(NeoForgeClientEventManager::onGuiRendering);
@@ -150,8 +150,12 @@ public class NeoForgeClientEventManager {
         KeyInputEvent.EVENT.invoke(new KeyInputEvent(event.getKey(), event.getScanCode(), event.getAction()));
     }
 
-    private static void onClientTick(TickEvent.ClientTickEvent event) {
-        ClientTickEvent.EVENT.invoke(new ClientTickEvent(event.phase == TickEvent.Phase.END));
+    private static void onClientTickPre(net.neoforged.neoforge.client.event.ClientTickEvent.Pre event) {
+        ClientTickEvent.EVENT.invoke(new ClientTickEvent(false));
+    }
+
+    private static void onClientTickPost(net.neoforged.neoforge.client.event.ClientTickEvent.Post event) {
+        ClientTickEvent.EVENT.invoke(new ClientTickEvent(true));
     }
 
     public static void onBlockScreen(RenderBlockScreenEffectEvent event) {
@@ -187,8 +191,8 @@ public class NeoForgeClientEventManager {
         }
     }
 
-    public static void onGuiRendering(RenderGuiOverlayEvent.Pre event) {
-        if (Minecraft.getInstance().player != null && event.getOverlay().id().equals(VanillaGuiOverlay.HOTBAR.id())) {
+    public static void onGuiRendering(RenderGuiLayerEvent.Pre event) {
+        if (Minecraft.getInstance().player != null && event.getName().equals(VanillaGuiLayers.HOTBAR)) {
             EssenceOverlay.essenceItemOverlay(Minecraft.getInstance().player, event.getGuiGraphics());
             KnowingEssenceStructureMessage.inStructureMessage(Minecraft.getInstance().player, event.getGuiGraphics());
             RadianceEssenceArmorMessage.armorDurabilityMessage(Minecraft.getInstance().player, event.getGuiGraphics());

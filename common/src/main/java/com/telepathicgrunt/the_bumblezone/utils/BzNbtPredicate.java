@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.utils;
 
 
 import com.mojang.serialization.Codec;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NumericTag;
@@ -9,6 +10,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import org.jetbrains.annotations.Nullable;
 
 // Source: https://github.com/Resourceful-Bees/ResourcefulLib/blob/master/common/src/main/java/com/teamresourceful/resourcefullib/common/codecs/predicates/NbtPredicate.java
@@ -18,7 +20,7 @@ public record BzNbtPredicate(CompoundTag tag) {
     public static final Codec<BzNbtPredicate> CODEC = CompoundTag.CODEC.xmap(BzNbtPredicate::new, BzNbtPredicate::tag);
 
     public boolean matches(ItemStack pStack) {
-        return this == ANY || this.matches(pStack.getTag());
+        return this == ANY || this.matches(pStack.getComponents().getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe());
     }
 
     public boolean matches(Entity pEntity) {
@@ -34,7 +36,7 @@ public record BzNbtPredicate(CompoundTag tag) {
         if (entity instanceof Player player) {
             ItemStack itemstack = player.getInventory().getSelected();
             if (!itemstack.isEmpty()) {
-                compoundtag.put("SelectedItem", itemstack.save(new CompoundTag()));
+                compoundtag.put("SelectedItem", itemstack.save(entity.level().registryAccess()));
             }
         }
 
