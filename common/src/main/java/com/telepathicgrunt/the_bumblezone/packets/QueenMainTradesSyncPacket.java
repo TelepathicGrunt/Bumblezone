@@ -4,19 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
+import com.teamresourceful.resourcefullib.common.network.Packet;
+import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.modcompat.recipecategories.MainTradeRowInput;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.WeightedRandomList;
 
@@ -27,35 +27,24 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
     public static Gson gson = new GsonBuilder().create();
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "queen_main_trades_sync_packet");
-    public static final QueenMainTradesSyncPacket.Handler HANDLER = new QueenMainTradesSyncPacket.Handler();
+    public static final ClientboundPacketType<QueenMainTradesSyncPacket> TYPE = new QueenMainTradesSyncPacket.Handler();
 
     public static void sendToClient(DatapackSyncEvent event) {
         MessageHandler.DEFAULT_CHANNEL.sendToPlayer(new QueenMainTradesSyncPacket(QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades), event.player());
     }
 
     @Override
-    public ResourceLocation getID() {
-        return ID;
-    }
-
-    @Override
-    public PacketHandler<QueenMainTradesSyncPacket> getHandler() {
-        return HANDLER;
+    public PacketType<QueenMainTradesSyncPacket> type() {
+        return TYPE;
     }
 
     /*
      * What the client will do with the packet
      */
-    public static class Handler implements PacketHandler<QueenMainTradesSyncPacket> {
-        //this is what gets run on the client
-        public PacketContext handle(final QueenMainTradesSyncPacket pkt) {
-            return (player, level) -> QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades = pkt.recipeViewerMainTrades();
-        }
+    public static class Handler implements ClientboundPacketType<QueenMainTradesSyncPacket> {
 
-        /*
-         * How the client will read the packet.
-         */
-        public QueenMainTradesSyncPacket decode(final FriendlyByteBuf buf) {
+        @Override
+        public QueenMainTradesSyncPacket decode(final RegistryFriendlyByteBuf buf) {
             List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> parsedData = new ArrayList<>();
 
             CompoundTag data = buf.readNbt();
@@ -83,10 +72,8 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
             return new QueenMainTradesSyncPacket(parsedData);
         }
 
-        /*
-         * creates the packet buffer and sets its values
-         */
-        public void encode(final QueenMainTradesSyncPacket pkt, final FriendlyByteBuf buf) {
+        @Override
+        public void encode(final QueenMainTradesSyncPacket pkt, final RegistryFriendlyByteBuf buf) {
             CompoundTag data = new CompoundTag();
             ListTag listTag = new ListTag();
             for (Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>> tradeRow : pkt.recipeViewerMainTrades()) {
@@ -104,6 +91,21 @@ public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRan
             }
             data.put("main_trades", listTag);
             buf.writeNbt(data);
+        }
+
+        @Override
+        public Runnable handle(final QueenMainTradesSyncPacket pkt) {
+            return () -> QueensTradeManager.QUEENS_TRADE_MANAGER.recipeViewerMainTrades = pkt.recipeViewerMainTrades();
+        }
+
+        @Override
+        public Class<QueenMainTradesSyncPacket> type() {
+            return QueenMainTradesSyncPacket.class;
+        }
+
+        @Override
+        public ResourceLocation id() {
+            return ID;
         }
     }
 }

@@ -1,10 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.teamresourceful.resourcefullib.common.network.Packet;
+import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -14,43 +15,48 @@ import java.util.UUID;
 public record SyncHorseOwnerUUIDPacketFromServer(int horseId, UUID ownerUUID) implements Packet<SyncHorseOwnerUUIDPacketFromServer> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "sync_horse_owner_uuid_from_server");
-    static final Handler HANDLER = new Handler();
+    public static final ClientboundPacketType<SyncHorseOwnerUUIDPacketFromServer> TYPE = new SyncHorseOwnerUUIDPacketFromServer.Handler();
 
     public static void sendToClient(Entity entity, int horseId, UUID ownerUUID) {
         MessageHandler.DEFAULT_CHANNEL.sendToPlayersInLevel(new SyncHorseOwnerUUIDPacketFromServer(horseId, ownerUUID), entity.level());
     }
 
     @Override
-    public ResourceLocation getID() {
-        return ID;
+    public PacketType<SyncHorseOwnerUUIDPacketFromServer> type() {
+        return TYPE;
     }
 
-    @Override
-    public PacketHandler<SyncHorseOwnerUUIDPacketFromServer> getHandler() {
-        return HANDLER;
-    }
-
-    private static final class Handler implements PacketHandler<SyncHorseOwnerUUIDPacketFromServer> {
+    private static final class Handler implements ClientboundPacketType<SyncHorseOwnerUUIDPacketFromServer> {
 
         @Override
-        public void encode(SyncHorseOwnerUUIDPacketFromServer message, FriendlyByteBuf buffer) {
+        public void encode(SyncHorseOwnerUUIDPacketFromServer message, RegistryFriendlyByteBuf buffer) {
             buffer.writeVarInt(message.horseId());
             buffer.writeUUID(message.ownerUUID());
         }
 
         @Override
-        public SyncHorseOwnerUUIDPacketFromServer decode(FriendlyByteBuf buffer) {
+        public SyncHorseOwnerUUIDPacketFromServer decode(RegistryFriendlyByteBuf buffer) {
             return new SyncHorseOwnerUUIDPacketFromServer(buffer.readVarInt(), buffer.readUUID());
         }
 
         @Override
-        public PacketContext handle(SyncHorseOwnerUUIDPacketFromServer message) {
-            return (player, level) -> {
-                Entity entity = level.getEntity(message.horseId());
+        public Runnable handle(SyncHorseOwnerUUIDPacketFromServer message) {
+            return () -> {
+                Entity entity = Minecraft.getInstance().level.getEntity(message.horseId());
                 if (entity instanceof AbstractHorse abstractHorse) {
                     abstractHorse.setOwnerUUID(message.ownerUUID());
                 }
             };
+        }
+
+        @Override
+        public Class<SyncHorseOwnerUUIDPacketFromServer> type() {
+            return SyncHorseOwnerUUIDPacketFromServer.class;
+        }
+
+        @Override
+        public ResourceLocation id() {
+            return ID;
         }
     }
 }

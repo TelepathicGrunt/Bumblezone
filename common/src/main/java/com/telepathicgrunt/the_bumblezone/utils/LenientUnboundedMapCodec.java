@@ -29,9 +29,8 @@ public record LenientUnboundedMapCodec<K, V>(Codec<K> keyCodec, Codec<V> element
                     final DataResult<V> v = elementCodec().parse(ops, pair.getSecond());
 
                     final DataResult<Pair<K, V>> entry = k.apply2stable(Pair::of, v);
-                    final Either<Pair<K, V>, DataResult.PartialResult<Pair<K, V>>> either = entry.get();
-                    either.ifLeft(p -> read.put(p.getFirst(), p.getSecond()));
-                    either.ifRight(e -> failed.add(pair)); // We use an either here as it doesn't create optional and just consumes on the ifs
+                    entry.resultOrPartial().ifPresent(partial -> read.put(partial.getFirst(), partial.getSecond()));
+                    entry.error().ifPresent(error -> failed.add(pair));
                     return r.apply2stable((u, p) -> u, entry);
                 },
                 (r1, r2) -> r1.apply2stable((u1, u2) -> u1, r2)

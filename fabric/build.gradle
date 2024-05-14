@@ -25,6 +25,7 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
     modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
+    modImplementation("com.teamresourceful.resourcefullib:resourcefullib-fabric-${rootProject.resourcefullib}")
 
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")

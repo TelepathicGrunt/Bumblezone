@@ -1,30 +1,30 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.teamresourceful.resourcefullib.common.network.Network;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.packets.networking.NetworkChannel;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.NetworkDirection;
+import net.minecraft.resources.ResourceLocation;
 
 public class MessageHandler {
 
     //setup channel to send packages through
-    public static final NetworkChannel DEFAULT_CHANNEL = new NetworkChannel(Bumblezone.MODID, "networking");
+    public static final Network DEFAULT_CHANNEL = new Network(new ResourceLocation(Bumblezone.MODID, "networking"), 1);
 
     /*
      * Register the channel so it exists
      */
     public static void init() {
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, BeehemothControlsPacket.ID, BeehemothControlsPacket.HANDLER, BeehemothControlsPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, BumbleBeeChestplateFlyingPacket.ID, BumbleBeeChestplateFlyingPacket.HANDLER, BumbleBeeChestplateFlyingPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, StinglessBeeHelmetSightPacket.ID, StinglessBeeHelmetSightPacket.HANDLER, StinglessBeeHelmetSightPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, CrystallineFlowerClickedEnchantmentButtonPacket.ID, CrystallineFlowerClickedEnchantmentButtonPacket.HANDLER, CrystallineFlowerClickedEnchantmentButtonPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, SyncHorseOwnerUUIDPacketToServer.ID, SyncHorseOwnerUUIDPacketToServer.HANDLER, SyncHorseOwnerUUIDPacketToServer.class);
+        DEFAULT_CHANNEL.register(BeehemothControlsPacket.TYPE);
+        DEFAULT_CHANNEL.register(BumbleBeeChestplateFlyingPacket.TYPE);
+        DEFAULT_CHANNEL.register(StinglessBeeHelmetSightPacket.TYPE);
+        DEFAULT_CHANNEL.register(CrystallineFlowerClickedEnchantmentButtonPacket.TYPE);
+        DEFAULT_CHANNEL.register(SyncHorseOwnerUUIDPacketToServer.TYPE);
 
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, CrystallineFlowerEnchantmentPacket.ID, CrystallineFlowerEnchantmentPacket.HANDLER, CrystallineFlowerEnchantmentPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, MobEffectClientSyncPacket.ID, MobEffectClientSyncPacket.HANDLER, MobEffectClientSyncPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, UpdateFallingBlockPacket.ID, UpdateFallingBlockPacket.HANDLER, UpdateFallingBlockPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, QueenMainTradesSyncPacket.ID, QueenMainTradesSyncPacket.HANDLER, QueenMainTradesSyncPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, QueenRandomizerTradesSyncPacket.ID, QueenRandomizerTradesSyncPacket.HANDLER, QueenRandomizerTradesSyncPacket.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, SyncHorseOwnerUUIDPacketFromServer.ID, SyncHorseOwnerUUIDPacketFromServer.HANDLER, SyncHorseOwnerUUIDPacketFromServer.class);
-        DEFAULT_CHANNEL.registerPacket(NetworkDirection.SERVER_TO_CLIENT, MusicPacketFromServer.ID, MusicPacketFromServer.HANDLER, MusicPacketFromServer.class);
+        DEFAULT_CHANNEL.register(CrystallineFlowerEnchantmentPacket.TYPE);
+        DEFAULT_CHANNEL.register(MobEffectClientSyncPacket.TYPE);
+        DEFAULT_CHANNEL.register(UpdateFallingBlockPacket.TYPE);
+        DEFAULT_CHANNEL.register(QueenMainTradesSyncPacket.TYPE);
+        DEFAULT_CHANNEL.register(QueenRandomizerTradesSyncPacket.TYPE);
+        DEFAULT_CHANNEL.register(SyncHorseOwnerUUIDPacketFromServer.TYPE);
+        DEFAULT_CHANNEL.register(MusicPacketFromServer.TYPE);
     }
 }

@@ -1,13 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.teamresourceful.resourcefullib.common.network.Packet;
+import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FallingBlockEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -15,43 +16,48 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 public record UpdateFallingBlockPacket(int fallingBlockId, short layer) implements Packet<UpdateFallingBlockPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "update_falling_block");
-    static final Handler HANDLER = new Handler();
+    public static final ClientboundPacketType<UpdateFallingBlockPacket> TYPE = new UpdateFallingBlockPacket.Handler();
 
     public static void sendToClient(Entity entity, int fallingBlockId, short layer) {
         MessageHandler.DEFAULT_CHANNEL.sendToAllLoaded(new UpdateFallingBlockPacket(fallingBlockId, layer), entity.level(), entity.blockPosition());
     }
 
     @Override
-    public ResourceLocation getID() {
-        return ID;
+    public PacketType<UpdateFallingBlockPacket> type() {
+        return TYPE;
     }
 
-    @Override
-    public PacketHandler<UpdateFallingBlockPacket> getHandler() {
-        return HANDLER;
-    }
-
-    private static final class Handler implements PacketHandler<UpdateFallingBlockPacket> {
+    private static final class Handler implements ClientboundPacketType<UpdateFallingBlockPacket> {
 
         @Override
-        public void encode(UpdateFallingBlockPacket message, FriendlyByteBuf buffer) {
+        public void encode(UpdateFallingBlockPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeVarInt(message.fallingBlockId);
             buffer.writeShort(message.layer);
         }
 
         @Override
-        public UpdateFallingBlockPacket decode(FriendlyByteBuf buffer) {
+        public UpdateFallingBlockPacket decode(RegistryFriendlyByteBuf buffer) {
             return new UpdateFallingBlockPacket(buffer.readVarInt(), buffer.readShort());
         }
 
         @Override
-        public PacketContext handle(UpdateFallingBlockPacket message) {
-            return (player, level) -> {
-                Entity entity = level.getEntity(message.fallingBlockId);
+        public Runnable handle(UpdateFallingBlockPacket message) {
+            return () -> {
+                Entity entity = Minecraft.getInstance().level.getEntity(message.fallingBlockId);
                 if (entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
                     ((FallingBlockEntityAccessor) fallingBlockEntity).setBlockState(BzBlocks.PILE_OF_POLLEN.get().defaultBlockState().setValue(PileOfPollen.LAYERS, (int) message.layer));
                 }
             };
+        }
+
+        @Override
+        public Class<UpdateFallingBlockPacket> type() {
+            return UpdateFallingBlockPacket.class;
+        }
+
+        @Override
+        public ResourceLocation id() {
+            return ID;
         }
     }
 }

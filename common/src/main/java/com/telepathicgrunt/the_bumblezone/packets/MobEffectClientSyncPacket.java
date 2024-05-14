@@ -1,13 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.teamresourceful.resourcefullib.common.network.Packet;
+import com.teamresourceful.resourcefullib.common.network.base.ClientboundPacketType;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "mob_effect_client_sync");
-    static final Handler HANDLER = new Handler();
+    public static final ClientboundPacketType<MobEffectClientSyncPacket> TYPE = new MobEffectClientSyncPacket.Handler();
 
     private static final int FLAG_AMBIENT = 1;
     private static final int FLAG_VISIBLE = 2;
@@ -24,7 +24,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
     public MobEffectClientSyncPacket(int mobId, MobEffectInstance mobEffectInstance) {
         this(
             mobId,
-            BuiltInRegistries.MOB_EFFECT.getKey(mobEffectInstance.getEffect()),
+            BuiltInRegistries.MOB_EFFECT.getKey(mobEffectInstance.getEffect().value()),
             (byte) (mobEffectInstance.getAmplifier() & 255),
             Math.min(mobEffectInstance.getDuration(), 32767),
             getFlags(mobEffectInstance)
@@ -65,19 +65,14 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
     }
 
     @Override
-    public ResourceLocation getID() {
-        return ID;
+    public PacketType<MobEffectClientSyncPacket> type() {
+        return TYPE;
     }
 
-    @Override
-    public PacketHandler<MobEffectClientSyncPacket> getHandler() {
-        return HANDLER;
-    }
-
-    private static final class Handler implements PacketHandler<MobEffectClientSyncPacket> {
+    private static final class Handler implements ClientboundPacketType<MobEffectClientSyncPacket> {
 
         @Override
-        public void encode(MobEffectClientSyncPacket message, FriendlyByteBuf buffer) {
+        public void encode(MobEffectClientSyncPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeVarInt(message.entityId);
             buffer.writeResourceLocation(message.effectRl);
             buffer.writeByte(message.effectAmplifier);
@@ -86,7 +81,7 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
         }
 
         @Override
-        public MobEffectClientSyncPacket decode(FriendlyByteBuf buffer) {
+        public MobEffectClientSyncPacket decode(RegistryFriendlyByteBuf buffer) {
             return new MobEffectClientSyncPacket(
                     buffer.readVarInt(),
                     buffer.readResourceLocation(),
@@ -97,22 +92,31 @@ public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl,
         }
 
         @Override
-        public PacketContext handle(MobEffectClientSyncPacket message) {
-            return (player, level) -> {
-                Entity entity = level.getEntity(message.entityId());
+        public Runnable handle(MobEffectClientSyncPacket message) {
+            return () -> {
+                Entity entity = Minecraft.getInstance().level.getEntity(message.entityId());
                 if (entity instanceof LivingEntity) {
-                    MobEffect mobeffect = BuiltInRegistries.MOB_EFFECT.get(message.effectRl());
-                    if (mobeffect != null) {
+                    BuiltInRegistries.MOB_EFFECT.getHolder(message.effectRl()).ifPresent(mobEffect -> {
                         if (message.effectDurationTicks() == 0) {
-                            ((LivingEntity)entity).removeEffect(mobeffect);
+                            ((LivingEntity) entity).removeEffect(mobEffect);
                         }
                         else {
-                            MobEffectInstance mobeffectinstance = new MobEffectInstance(mobeffect, message.effectDurationTicks(), message.effectAmplifier(), message.isEffectAmbient(), message.isEffectVisible(), message.effectShowsIcon());
-                            ((LivingEntity)entity).forceAddEffect(mobeffectinstance, null);
+                            MobEffectInstance mobeffectinstance = new MobEffectInstance(mobEffect, message.effectDurationTicks(), message.effectAmplifier(), message.isEffectAmbient(), message.isEffectVisible(), message.effectShowsIcon());
+                            ((LivingEntity) entity).forceAddEffect(mobeffectinstance, null);
                         }
-                    }
+                    });
                 }
             };
+        }
+
+        @Override
+        public Class<MobEffectClientSyncPacket> type() {
+            return MobEffectClientSyncPacket.class;
+        }
+
+        @Override
+        public ResourceLocation id() {
+            return ID;
         }
     }
 }

@@ -8,6 +8,7 @@ dependencies {
 
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras}"))
 
+    modImplementation("com.teamresourceful.resourcefullib:resourcefullib-common-${rootProject.resourcefullib}")
 
     // COMPAT
     modCompileOnly("mezz.jei:jei-${rootProject.jei_mc}-forge-api:${rootProject.jei}")

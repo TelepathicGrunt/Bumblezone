@@ -37,6 +37,8 @@ dependencies {
 
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-neoforge-${rootProject.athena}")))
 
+    modRuntimeOnly(modCompileOnly("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${rootProject.resourcefullib}"))
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 

@@ -41,10 +41,11 @@ subprojects {
             "fabric": [
                     "fabric-api": true,
                     "midnightlib": true,
+                    "resourceful-lib": true,
                     "better-advancements": false
             ],
             "neoforge": [
-                    //"better-advancements": false
+                    "resourceful-lib": true
             ]
     ]
 
@@ -158,6 +159,8 @@ allprojects {
             url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
             content {
                 includeGroup 'com.telepathicgrunt'
+                includeGroup 'com.teamresourceful.resourcefullib'
+                includeGroup 'com.teamresourceful'
                 includeGroup 'earth.terrarium.athena'
             }
         }

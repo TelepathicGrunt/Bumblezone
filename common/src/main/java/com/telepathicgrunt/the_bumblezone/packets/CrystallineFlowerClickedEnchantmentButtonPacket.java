@@ -1,48 +1,46 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.teamresourceful.resourcefullib.common.network.Packet;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
+import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+
+import java.util.function.Consumer;
 
 public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, ResourceLocation clickedButton) implements Packet<CrystallineFlowerClickedEnchantmentButtonPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
-    static final Handler HANDLER = new Handler();
+    public static final ServerboundPacketType<CrystallineFlowerClickedEnchantmentButtonPacket> TYPE = new CrystallineFlowerClickedEnchantmentButtonPacket.Handler();
 
     public static void sendToServer(int containIdIn, ResourceLocation ClickedButtonIn) {
         MessageHandler.DEFAULT_CHANNEL.sendToServer(new CrystallineFlowerClickedEnchantmentButtonPacket(containIdIn, ClickedButtonIn));
     }
 
     @Override
-    public ResourceLocation getID() {
-        return ID;
+    public PacketType<CrystallineFlowerClickedEnchantmentButtonPacket> type() {
+        return TYPE;
     }
 
-    @Override
-    public PacketHandler<CrystallineFlowerClickedEnchantmentButtonPacket> getHandler() {
-        return HANDLER;
-    }
-
-    private static class Handler implements PacketHandler<CrystallineFlowerClickedEnchantmentButtonPacket> {
+    private static class Handler implements ServerboundPacketType<CrystallineFlowerClickedEnchantmentButtonPacket> {
 
         @Override
-        public void encode(CrystallineFlowerClickedEnchantmentButtonPacket message, FriendlyByteBuf buffer) {
+        public void encode(CrystallineFlowerClickedEnchantmentButtonPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeInt(message.containerId);
             buffer.writeResourceLocation(message.clickedButton);
         }
 
         @Override
-        public CrystallineFlowerClickedEnchantmentButtonPacket decode(FriendlyByteBuf buffer) {
+        public CrystallineFlowerClickedEnchantmentButtonPacket decode(RegistryFriendlyByteBuf buffer) {
             return new CrystallineFlowerClickedEnchantmentButtonPacket(buffer.readInt(), buffer.readResourceLocation());
         }
 
         @Override
-        public PacketContext handle(CrystallineFlowerClickedEnchantmentButtonPacket message) {
-            return (player, level) -> {
+        public Consumer<Player> handle(CrystallineFlowerClickedEnchantmentButtonPacket message) {
+            return (player) -> {
                 if(player == null) {
                     return;
                 }
@@ -51,6 +49,16 @@ public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, R
                     flowerMenu.clickMenuEnchantment(player, message.clickedButton());
                 }
             };
+        }
+
+        @Override
+        public Class<CrystallineFlowerClickedEnchantmentButtonPacket> type() {
+            return CrystallineFlowerClickedEnchantmentButtonPacket.class;
+        }
+
+        @Override
+        public ResourceLocation id() {
+            return ID;
         }
     }
 

@@ -1,17 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.packets;
 
+import com.teamresourceful.resourcefullib.common.network.Packet;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
+import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeehemothEntity;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.Packet;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketContext;
-import com.telepathicgrunt.the_bumblezone.packets.networking.base.PacketHandler;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+
+import java.util.function.Consumer;
 
 public record BeehemothControlsPacket(byte upPressed, byte downPressed) implements Packet<BeehemothControlsPacket> {
 
     public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "beehemoth_controls");
-    static final Handler HANDLER = new Handler();
+    public static final ServerboundPacketType<BeehemothControlsPacket> TYPE = new Handler();
 
     /**
      * 2 means no action.
@@ -23,31 +26,26 @@ public record BeehemothControlsPacket(byte upPressed, byte downPressed) implemen
     }
 
     @Override
-    public ResourceLocation getID() {
-        return ID;
+    public PacketType<BeehemothControlsPacket> type() {
+        return TYPE;
     }
 
-    @Override
-    public PacketHandler<BeehemothControlsPacket> getHandler() {
-        return HANDLER;
-    }
-
-    private static class Handler implements PacketHandler<BeehemothControlsPacket> {
+    private static class Handler implements ServerboundPacketType<BeehemothControlsPacket> {
 
         @Override
-        public void encode(BeehemothControlsPacket message, FriendlyByteBuf buffer) {
+        public void encode(BeehemothControlsPacket message, RegistryFriendlyByteBuf buffer) {
             buffer.writeByte(message.upPressed);
             buffer.writeByte(message.downPressed);
         }
 
         @Override
-        public BeehemothControlsPacket decode(FriendlyByteBuf buffer) {
+        public BeehemothControlsPacket decode(RegistryFriendlyByteBuf buffer) {
             return new BeehemothControlsPacket(buffer.readByte(), buffer.readByte());
         }
 
         @Override
-        public PacketContext handle(BeehemothControlsPacket message) {
-            return (player, level) -> {
+        public Consumer<Player> handle(BeehemothControlsPacket message) {
+            return (player) -> {
                 if(player == null) {
                     return;
                 }
@@ -62,6 +60,15 @@ public record BeehemothControlsPacket(byte upPressed, byte downPressed) implemen
                 }
             };
         }
-    }
 
+        @Override
+        public Class<BeehemothControlsPacket> type() {
+            return BeehemothControlsPacket.class;
+        }
+
+        @Override
+        public ResourceLocation id() {
+            return ID;
+        }
+    }
 }
