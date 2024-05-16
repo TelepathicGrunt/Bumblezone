@@ -23,7 +23,6 @@
     "blocks.WaterEquivalenceMixin",
     "blocks.WaterlilyBlockMixin",
     "blocks.WaterlogForPlacingBlockMixin",
-    "containers.PotionBrewingAccessor",
     "containers.ShapedRecipePatternAccessor",
     "effects.MobEffectInstanceAccessor",
     "entities.AbstractArrowAccessor",
@@ -60,7 +59,6 @@
     "gameplay.ItemCooldownsAccessor",
     "gameplay.ServerPlayerGameModeMixin",
     "items.GlassBottleUseMixin",
-    "items.HoneyShieldDisablingPlayerMixin",
     "items.HoneyShieldPlayerMixin",
     "items.MapItemMixin",
     "items.PlayerDamageShieldInvoker",
@@ -77,8 +75,7 @@
     "world.StructurePoolAccessor",
     "world.StructureProcessorAccessor",
     "world.StructureTemplateAccessor",
-    "world.StructureTemplateMixin",
-    "world.WorldGenRegionAccessor"
+    "world.StructureTemplateMixin"
   ],
   "client": [
     "client.BlockRenderDispatcherAccessor",

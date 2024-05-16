@@ -8,7 +8,7 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.common.extensions.IBlockExtension;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 public interface BlockExtensionMixin extends IBlockExtension {
 
     @Shadow
-    BlockPathTypes bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob);
+    PathType bz$getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, Mob mob);
 
     @Shadow
     boolean bz$isStickyBlock(BlockState state);
@@ -30,7 +30,7 @@ public interface BlockExtensionMixin extends IBlockExtension {
     OptionalBoolean bz$shouldNotDisplayFluidOverlay();
 
     @Override
-    default @Nullable BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+    default @Nullable PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
         return this.bz$getBlockPathType(state, level, pos, mob);
     }
 

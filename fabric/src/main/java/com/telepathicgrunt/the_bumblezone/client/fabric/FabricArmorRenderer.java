@@ -27,7 +27,7 @@ public class FabricArmorRenderer implements ArmorRenderer {
                 light,
                 stack,
                 provider.getFinalModel(entity, stack, slot, model),
-                new ResourceLocation(provider.getArmorTexture(entity, stack, slot, null))
+                provider.getArmorTexture(entity, stack, slot, null)
         );
     }
 

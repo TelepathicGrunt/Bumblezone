@@ -14,25 +14,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ServerPlayerMixin {
 
 
-    @Inject(
-            method = "changeDimension",
+    @Inject(method = "changeDimension",
             at = @At("HEAD"),
-            cancellable = true
-    )
+            cancellable = true)
     private void bumblezone$onTravelToDimension(ServerLevel serverLevel, CallbackInfoReturnable<Entity> cir) {
         if (EntityTravelingToDimensionEvent.EVENT.invoke(new EntityTravelingToDimensionEvent(serverLevel.dimension(), (ServerPlayer)(Object)this))) {
             cir.setReturnValue(null);
         }
     }
 
-    @Inject(
-            method = "teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDFF)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/level/ServerPlayer;level()Lnet/minecraft/world/level/Level;"
-            ),
-            cancellable = true
-    )
+    @Inject(method = "teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDFF)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;level()Lnet/minecraft/world/level/Level;"),
+            cancellable = true)
     private void bumblezone$onTeleportTo(ServerLevel serverLevel, double d, double e, double f, float g, float h, CallbackInfo ci) {
         if (EntityTravelingToDimensionEvent.EVENT.invoke(new EntityTravelingToDimensionEvent(serverLevel.dimension(), (ServerPlayer)(Object)this))) {
             ci.cancel();

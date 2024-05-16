@@ -13,15 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(Animal.class)
 public class AnimalMixin {
 
-    @Inject(
-        method = "spawnChildFromBreeding",
-        at = @At(
-                value = "INVOKE_ASSIGN",
-                target = "Lnet/minecraft/world/entity/animal/Animal;getBreedOffspring(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/AgeableMob;)Lnet/minecraft/world/entity/AgeableMob;"
-        ),
+    @Inject(method = "spawnChildFromBreeding",
+        at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/entity/animal/Animal;getBreedOffspring(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/AgeableMob;)Lnet/minecraft/world/entity/AgeableMob;"),
         locals = LocalCapture.CAPTURE_FAILHARD,
-        cancellable = true
-    )
+        cancellable = true)
     public void bumblezone$onSpawnChildFromBreeding(ServerLevel serverLevel, Animal otherParent, CallbackInfo ci, AgeableMob baby) {
         Animal parent = (Animal)(Object)this;
         if (BabySpawnEvent.EVENT.invoke(new BabySpawnEvent(parent, otherParent, parent.getLoveCause(), baby))) {

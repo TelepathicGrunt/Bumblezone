@@ -15,13 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public class NaturalSpawnerMixin {
 
 
-    @WrapOperation(
-            method = "spawnCategoryForPosition(Lnet/minecraft/world/entity/MobCategory;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/NaturalSpawner$SpawnPredicate;Lnet/minecraft/world/level/NaturalSpawner$AfterSpawnCallback;)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/NaturalSpawner;isValidPositionForMob(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;D)Z"
-            )
-    )
+    @WrapOperation(method = "spawnCategoryForPosition(Lnet/minecraft/world/entity/MobCategory;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/NaturalSpawner$SpawnPredicate;Lnet/minecraft/world/level/NaturalSpawner$AfterSpawnCallback;)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/NaturalSpawner;isValidPositionForMob(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;D)Z"))
     private static boolean bumblezone$onEntitySpawn(ServerLevel serverLevel, Mob mob, double d, Operation<Boolean> operation) {
         if (EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(mob, serverLevel, mob.isBaby(), MobSpawnType.NATURAL))) {
             return false;
@@ -29,13 +24,8 @@ public class NaturalSpawnerMixin {
         return operation.call(serverLevel, mob, d);
     }
 
-    @WrapOperation(
-            method = "spawnMobsForChunkGeneration",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/Mob;checkSpawnRules(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;)Z"
-            )
-    )
+    @WrapOperation(method = "spawnMobsForChunkGeneration",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;checkSpawnRules(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;)Z"))
     private static boolean bumbelzone$onCheckEntitySpawn(Mob instance, LevelAccessor levelAccessor, MobSpawnType mobSpawnType, Operation<Boolean> operation) {
         if (EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(instance, levelAccessor, instance.isBaby(), mobSpawnType))) {
             return false;

@@ -41,10 +41,8 @@ public abstract class LivingEntityMixin {
     @Shadow
     public abstract int getUseItemRemainingTicks();
 
-    @ModifyReturnValue(
-            method = "getVisibilityPercent",
-            at = @At(value = "RETURN")
-    )
+    @ModifyReturnValue(method = "getVisibilityPercent",
+            at = @At(value = "RETURN"))
     private double bumblezone$onEntityVisibility(double visibility, @Nullable Entity entity) {
         EntityVisibilityEvent event = new EntityVisibilityEvent(visibility, (LivingEntity) ((Object) this), entity);
         EntityVisibilityEvent.EVENT.invoke(event);
@@ -64,13 +62,10 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "actuallyHurt",
-            at = @At(
-                    value = "INVOKE",
+            at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/LivingEntity;getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F",
-                    ordinal = 0
-            ),
-            cancellable = true
-    )
+                    ordinal = 0),
+            cancellable = true)
     private void bumblezone$onActualHurt(DamageSource source, float amount, CallbackInfo cir) {
         if (EntityHurtEvent.EVENT_LOWEST.invoke(new EntityHurtEvent((LivingEntity) ((Object) this), source, amount))) {
             cir.cancel();
@@ -79,11 +74,7 @@ public abstract class LivingEntityMixin {
 
     @WrapOperation(
             method = "completeUsingItem",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"
-            )
-    )
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"))
     private ItemStack bumblezone$onCompleteUsingItem(ItemStack instance, Level level, LivingEntity livingEntity, Operation<ItemStack> operation) {
         ItemStack copy = instance.copy();
         ItemStack stack = operation.call(instance, level, livingEntity);

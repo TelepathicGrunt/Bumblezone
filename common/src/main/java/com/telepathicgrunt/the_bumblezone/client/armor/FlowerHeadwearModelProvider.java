@@ -5,9 +5,11 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.armor.FlowerHeadwearM
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,8 +17,8 @@ public class FlowerHeadwearModelProvider implements ArmorModelProvider {
     private FlowerHeadwearModel model;
 
     @Override
-    public String getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, String type) {
-        return Bumblezone.MODID + ":textures/models/armor/flower_headwear_layer.png";
+    public ResourceLocation getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
+        return new ResourceLocation(Bumblezone.MODID, "textures/models/armor/flower_headwear_layer.png");
     }
 
     @Override

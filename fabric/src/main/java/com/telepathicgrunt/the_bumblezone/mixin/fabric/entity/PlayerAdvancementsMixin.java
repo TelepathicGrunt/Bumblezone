@@ -16,14 +16,10 @@ public class PlayerAdvancementsMixin {
 
     @Shadow private ServerPlayer player;
 
-    @Inject(
-            method = "award",
-            at = @At(
-                    value = "INVOKE",
+    @Inject(method = "award",
+            at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/advancements/AdvancementRewards;grant(Lnet/minecraft/server/level/ServerPlayer;)V",
-                    shift = At.Shift.AFTER
-            )
-    )
+                    shift = At.Shift.AFTER))
     private void bumblezone$onAward(AdvancementHolder advancementHolder, String string, CallbackInfoReturnable<Boolean> cir) {
         if ( advancementHolder != null) {
             PlayerGrantAdvancementEvent.EVENT.invoke(new PlayerGrantAdvancementEvent(advancementHolder.value(), this.player));

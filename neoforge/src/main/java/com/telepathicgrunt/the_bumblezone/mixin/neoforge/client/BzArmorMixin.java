@@ -5,6 +5,8 @@ import com.telepathicgrunt.the_bumblezone.client.neoforge.ForgeArmorProviders;
 import com.telepathicgrunt.the_bumblezone.items.BzArmor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,16 +27,16 @@ public class BzArmorMixin extends ArmorItem {
     @Unique
     private ArmorModelProvider bz$armorModelProvider;
 
-    public BzArmorMixin(ArmorMaterial arg, ArmorItem.Type arg2, Properties arg3) {
+    public BzArmorMixin(Holder<ArmorMaterial> arg, ArmorItem.Type arg2, Properties arg3) {
         super(arg, arg2, arg3);
     }
 
     @Override
-    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
         if (bz$armorModelProvider == null) {
             bz$armorModelProvider = ArmorModelProvider.get(stack.getItem());
         }
-        return bz$armorModelProvider.getArmorTexture(entity, stack, slot, type);
+        return bz$armorModelProvider.getArmorTexture(entity, stack, slot, layer);
     }
 
     @Override

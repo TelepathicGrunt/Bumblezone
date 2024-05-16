@@ -10,10 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MidnightConfig.MidnightConfigScreen.class)
 public class MidnightConfigScreenMixin {
 
-    @Inject(
-            method = "tick",
-            at = @At("TAIL")
-    )
+    @Inject(method = "tick", at = @At("TAIL"))
     private void bumblezone$onTick(CallbackInfo ci) {
         BzConfig.copyConfigsToCommon();
     }

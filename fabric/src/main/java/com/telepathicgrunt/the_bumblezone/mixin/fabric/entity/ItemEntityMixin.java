@@ -13,14 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(ItemEntity.class)
 public class ItemEntityMixin {
 
-    @Inject(
-            method = "playerTouch",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/player/Player;take(Lnet/minecraft/world/entity/Entity;I)V"
-            ),
-            locals = LocalCapture.CAPTURE_FAILHARD
-    )
+    @Inject(method = "playerTouch",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;take(Lnet/minecraft/world/entity/Entity;I)V"),
+            locals = LocalCapture.CAPTURE_FAILHARD)
     private void bumelzone$onPlayerTouch(Player player, CallbackInfo ci, ItemStack stack) {
         PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(player, stack.copy()));
     }

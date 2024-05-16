@@ -16,20 +16,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PatrolSpawner.class)
 public class PatrolSpawnerMixin {
 
-    @Inject(
-            method = "spawnPatrolMember",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/monster/PatrollingMonster;finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
-            ),
-            cancellable = true
-    )
+    @Inject(method = "spawnPatrolMember",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/PatrollingMonster;finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData;"),
+            cancellable = true)
     public void bumblezone$onSpawnEntity(ServerLevel serverLevel,
                                          BlockPos blockPos,
                                          RandomSource randomSource,
                                          boolean bl,
                                          CallbackInfoReturnable<Boolean> cir,
-                                         @Local(ordinal = 0) PatrollingMonster patrollingMonster) {
+                                         @Local(ordinal = 0) PatrollingMonster patrollingMonster)
+    {
         if (EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(patrollingMonster, serverLevel, patrollingMonster.isBaby(), MobSpawnType.PATROL))) {
             cir.setReturnValue(false);
         }

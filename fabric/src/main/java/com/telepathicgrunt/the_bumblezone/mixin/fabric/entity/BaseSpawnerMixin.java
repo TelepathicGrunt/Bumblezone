@@ -15,13 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BaseSpawnerMixin {
 
 
-    @WrapOperation(
-            method = "serverTick",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/Mob;checkSpawnObstruction(Lnet/minecraft/world/level/LevelReader;)Z"
-            )
-    )
+    @WrapOperation(method = "serverTick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;checkSpawnObstruction(Lnet/minecraft/world/level/LevelReader;)Z"))
     private boolean bumblezone$onEntitySpawn(Mob instance, LevelReader level, Operation<Boolean> operation) {
         if (level instanceof Level theLevel && EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(instance, theLevel, instance.isBaby(), MobSpawnType.SPAWNER))) {
             // Return false makes it so the if statement is true to then skip spawning the mob

@@ -2,9 +2,11 @@ package com.telepathicgrunt.the_bumblezone.client.armor;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
@@ -28,8 +30,8 @@ public interface ArmorModelProvider {
         return PROVIDERS.getOrDefault(item, DEFAULT);
     }
 
-    default String getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, String type) {
-        return "minecraft:textures/models/armor/leather_layer_1.png";
+    default ResourceLocation getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
+        return new ResourceLocation("minecraft", "textures/models/armor/leather_layer_1.png");
     }
 
     @NotNull HumanoidModel<?> getModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original);

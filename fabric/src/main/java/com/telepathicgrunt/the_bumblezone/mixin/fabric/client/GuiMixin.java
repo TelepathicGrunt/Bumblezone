@@ -14,11 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = Gui.class, priority = 1200)
 public class GuiMixin {
 
-    @Inject(method = "render(Lnet/minecraft/client/gui/GuiGraphics;F)V",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;getPlayerMode()Lnet/minecraft/world/level/GameType;",
-                    ordinal = 0,
-                    shift = At.Shift.BEFORE),
+    @Inject(method = "renderHotbarAndDecorations(Lnet/minecraft/client/gui/GuiGraphics;F)V",
+            at = @At(value = "HEAD"),
             require = 0)
     private void bumblezone$renderEssenceOverlay(GuiGraphics guiGraphics, float f, CallbackInfo ci) {
         if (Minecraft.getInstance().player != null) {

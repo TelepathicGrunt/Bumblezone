@@ -6,9 +6,11 @@ import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,12 +20,12 @@ public class BeeArmorModelProvider implements ArmorModelProvider {
     private int variant;
 
     @Override
-    public String getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, String type) {
+    public ResourceLocation getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
         if (stack.getItem() instanceof BeeArmor beeArmor && beeArmor.hasTransTexture()) {
-            return Bumblezone.MODID + ":textures/models/armor/trans_bee_material_layer_" + variant + ".png";
+            return new ResourceLocation(Bumblezone.MODID, "textures/models/armor/trans_bee_material_layer_" + variant + ".png");
         }
         else {
-            return Bumblezone.MODID + ":textures/models/armor/bee_material_layer_" + variant + ".png";
+            return new ResourceLocation(Bumblezone.MODID, "textures/models/armor/bee_material_layer_" + variant + ".png");
         }
     }
 

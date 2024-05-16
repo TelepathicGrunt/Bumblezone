@@ -34,7 +34,8 @@ public abstract class PlayerMixin extends Entity {
 
     @Shadow protected boolean wasUnderwater;
 
-    @Shadow @Final private Inventory inventory;
+    @Shadow @Final
+    Inventory inventory;
 
     @Shadow public abstract ItemCooldowns getCooldowns();
 
@@ -42,25 +43,19 @@ public abstract class PlayerMixin extends Entity {
         super(entityType, level);
     }
 
-    @ModifyReturnValue(
-            method = "getDestroySpeed",
-            at = @At("RETURN")
-    )
+    @ModifyReturnValue(method = "getDestroySpeed",
+            at = @At("RETURN"))
     private float bumblezone$onGetDigSpeed(float speed, BlockState state) {
         AtomicDouble eventSpeed = new AtomicDouble(speed);
         PlayerBreakSpeedEvent.EVENT.invoke(new PlayerBreakSpeedEvent((Player) ((Object)this), state, eventSpeed));
         return eventSpeed.floatValue();
     }
 
-    @Inject(
-            method = "interactOn",
-            at = @At(
-                    value = "INVOKE",
+    @Inject(method = "interactOn",
+            at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;",
-                    ordinal = 0
-            ),
-            cancellable = true
-    )
+                    ordinal = 0),
+            cancellable = true)
     private void bumblezone$onInteractOn(Entity entity, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
         InteractionResult result = PlayerEntityInteractEvent.EVENT.invoke(new PlayerEntityInteractEvent((Player) ((Object)this), entity, interactionHand));
         if (result != null) {
@@ -68,10 +63,8 @@ public abstract class PlayerMixin extends Entity {
         }
     }
 
-    @Inject(
-            method = "tick",
-            at = @At("HEAD")
-    )
+    @Inject(method = "tick",
+            at = @At("HEAD"))
     private void bumblezone$onTickPre(CallbackInfo ci) {
         PlayerTickEvent eventObject = new PlayerTickEvent((Player) ((Object)this), false);
 
@@ -81,10 +74,8 @@ public abstract class PlayerMixin extends Entity {
         }
     }
 
-    @Inject(
-            method = "tick",
-            at = @At("TAIL")
-    )
+    @Inject(method = "tick",
+            at = @At("TAIL"))
     private void bumblezone$onTickPost(CallbackInfo ci) {
         PlayerTickEvent eventObject = new PlayerTickEvent((Player) ((Object)this), true);
 
@@ -95,7 +86,8 @@ public abstract class PlayerMixin extends Entity {
     }
 
     @Inject(method = "updateIsUnderwater()Z",
-            at = @At(value = "RETURN"), cancellable = true)
+            at = @At(value = "RETURN"),
+            cancellable = true)
     private void bumblezone$setUnderwater(CallbackInfoReturnable<Boolean> cir) {
         if(!cir.getReturnValue()) {
             this.wasUnderwater = this.isEyeInFluid(BzTags.SPECIAL_HONEY_LIKE);
@@ -106,7 +98,9 @@ public abstract class PlayerMixin extends Entity {
     }
 
     @WrapOperation(method = "hurtCurrentlyUsedShield",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0))
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z",
+                    ordinal = 0))
     private boolean bumblezone$damageHoneyCrystalShield(ItemStack callingItem, Item vanillaShield, Operation<Boolean> originalCall) {
         if(callingItem.is(BzItems.HONEY_CRYSTAL_SHIELD.get())) {
             return true;
@@ -116,7 +110,7 @@ public abstract class PlayerMixin extends Entity {
 
     @Inject(method = "disableShield",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemCooldowns;addCooldown(Lnet/minecraft/world/item/Item;I)V"))
-    private void bumblezone$applyCooldownForShield(boolean sprinting, CallbackInfo ci) {
+    private void bumblezone$applyCooldownForShield(CallbackInfo ci) {
         inventory.items.forEach(item -> {
             if (item.getItem() instanceof BzShieldItem) {
                 getCooldowns().addCooldown(item.getItem(), 100);

@@ -8,9 +8,7 @@
     "block.BzLiquidBlockMixin",
     "block.FireBlockInvoker",
     "block.FireBlockMixin",
-    "block.PistonStructureResolverMixin",
     "effect.WrathOfTheHiveEffectMixin",
-    "enchantment.BzEnchantmentMixin",
     "entity.EntityMixin",
     "item.BzArrowItemMixin",
     "item.BzBucketItemMixin",
@@ -19,7 +17,6 @@
   ],
   "client": [
     "client.BzArmorMixin",
-    "client.BzDyeableArmorMixin",
     "client.BzEffectMixin"
   ],
   "injectors": {
