@@ -41,7 +41,7 @@ public class BuzzierBeesCompat implements ModCompat {
 
     private static void setupDispenserCompat(Item containerItem) {
         BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(containerItem),
                 (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
                     serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
                             .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))

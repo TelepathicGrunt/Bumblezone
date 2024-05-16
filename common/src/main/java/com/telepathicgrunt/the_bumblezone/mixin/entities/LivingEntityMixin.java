@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.client.LocalPlayerParalyzedHandFix;
 import com.telepathicgrunt.the_bumblezone.effects.ParalyzedEffect;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -29,10 +30,10 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Shadow
-    public abstract boolean hasEffect(MobEffect mobEffect);
+    public abstract boolean hasEffect(Holder<MobEffect> mobEffect);
 
     @Shadow
-    public abstract double getAttributeValue(Attribute attribute);
+    public abstract double getAttributeValue(Holder<Attribute> attribute);
 
     @Shadow
     public abstract AttributeMap getAttributes();
@@ -55,7 +56,7 @@ public abstract class LivingEntityMixin extends Entity {
             at = @At(value = "RETURN"))
     private float bumblezone$flyingSpeedBeenergized(float flyingSpeed) {
         if(hasEffect(BzEffects.BEENERGIZED.get()) && this.attributes.hasAttribute(Attributes.FLYING_SPEED)) {
-            return ((float) (getAttributeValue(Attributes.FLYING_SPEED) / Attributes.FLYING_SPEED.getDefaultValue()) * flyingSpeed);
+            return ((float) (getAttributeValue(Attributes.FLYING_SPEED) / Attributes.FLYING_SPEED.value().getDefaultValue()) * flyingSpeed);
         }
         return flyingSpeed;
     }

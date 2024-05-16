@@ -2,6 +2,8 @@ package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.events.RegisterBrewingRecipeEvent;
+import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ContainerCraftingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.ItemStackSmeltingRecipe;
 import com.telepathicgrunt.the_bumblezone.items.recipes.NbtKeepingShapelessRecipe;
@@ -13,6 +15,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class BzRecipes {
@@ -24,16 +27,16 @@ public class BzRecipes {
     public static final RegistryEntry<RecipeSerializer<NbtKeepingShapelessRecipe>> NBT_KEEPING_SHAPELESS_RECIPE = RECIPES.register("nbt_keeping_shapeless_recipe", NbtKeepingShapelessRecipe.Serializer::new);
     public static final RegistryEntry<RecipeSerializer<ItemStackSmeltingRecipe>> ITEMSTACK_SMELTING_RECIPE = RECIPES.register("itemstack_smelting_recipe", ItemStackSmeltingRecipe.ItemStackSmeltingRecipeSerializer::new);
 
-    public static void registerBrewingStandRecipes() {
+    public static void registerBrewingStandRecipes(RegisterBrewingRecipeEvent event) {
         if (BzGeneralConfigs.glisteringHoneyBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD.value(), BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK.value());
+            event.registrator().accept(Potions.AWKWARD, BzItems.GLISTERING_HONEY_CRYSTAL.get(), Potions.LUCK);
         }
         if (BzGeneralConfigs.beeStingerBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD.value(), BzItems.BEE_STINGER.get(), Potions.LONG_POISON.value());
+            event.registrator().accept(Potions.AWKWARD, BzItems.BEE_STINGER.get(), Potions.LONG_POISON);
         }
         if (BzGeneralConfigs.beeSoupBrewingRecipe) {
-            PotionBrewingAccessor.callAddMix(Potions.AWKWARD.value(), BzItems.BEE_SOUP.get(), BzPotions.NEUROTOXIN.get());
-            PotionBrewingAccessor.callAddMix(BzPotions.NEUROTOXIN.get(), Items.REDSTONE, BzPotions.LONG_NEUROTOXIN.get());
+            event.registrator().accept(Potions.AWKWARD, BzItems.BEE_SOUP.get(), BzPotions.NEUROTOXIN);
+            event.registrator().accept(BzPotions.NEUROTOXIN.get(), Items.REDSTONE, BzPotions.LONG_NEUROTOXIN.get());
         }
     }
 }

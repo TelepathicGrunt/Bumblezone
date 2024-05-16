@@ -25,14 +25,12 @@ public abstract class AbstractArrowMixin {
         AbstractArrow abstractArrow = ((AbstractArrow)(Object)this);
 
         ItemStack pickupItem = getPickupItem();
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(pickupItem);
-        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-            if (entry.getKey() == BzEnchantments.POTENT_POISON.get() && entry.getValue() > 0) {
-                entry.getKey().doPostAttack(
-                        abstractArrow.getOwner() instanceof LivingEntity livingEntity1 ? livingEntity1 : null,
-                        livingEntity,
-                        entry.getValue());
-            }
+        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), pickupItem);
+        if (enchantmentLevel > 0) {
+            BzEnchantments.POTENT_POISON.get().doPostAttack(
+                    abstractArrow.getOwner() instanceof LivingEntity livingEntity1 ? livingEntity1 : null,
+                    livingEntity,
+                    enchantmentLevel);
         }
     }
 }

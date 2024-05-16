@@ -25,6 +25,7 @@ import com.telepathicgrunt.the_bumblezone.entities.teleportation.ProjectileImpac
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.RegisterBrewingRecipeEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
@@ -211,7 +212,6 @@ public class Bumblezone {
     	event.enqueueWork(() -> {
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
-            BzRecipes.registerBrewingStandRecipes();
             BzItems.SetupCauldronCompat();
 		});
         MessageHandler.init();

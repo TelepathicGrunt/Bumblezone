@@ -60,7 +60,7 @@
     "gameplay.ItemCooldownsAccessor",
     "gameplay.ServerPlayerGameModeMixin",
     "items.GlassBottleUseMixin",
-    "items.HoneyShieldMobMixin",
+    "items.HoneyShieldDisablingPlayerMixin",
     "items.HoneyShieldPlayerMixin",
     "items.MapItemMixin",
     "items.PlayerDamageShieldInvoker",

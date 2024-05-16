@@ -69,7 +69,7 @@ public class PotionOfBeesCompat implements ModCompat {
 
     private static void setupDispenserCompat(Item containerItem) {
         BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(containerItem)),
+                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(containerItem),
                 (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
                     if (PotionOfBeesCompat.isLingeringPotionOfBeesItem(itemStack)) {
                         PotionOfBeesCompat.reviveBroodsInRange(serverLevel, blockPos, 3);

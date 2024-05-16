@@ -23,19 +23,19 @@ public class DispenserItemSetup {
         //grab the original bottle behaviors and set it as a fallback for our custom behavior
         //this is so we don't override another mod's Dispenser behavior that they set to the bottles.
         HoneyBottleDispenseBehavior.DEFAULT_HONEY_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(Items.HONEY_BOTTLE));
+                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(Items.HONEY_BOTTLE);
 
         GlassBottleDispenseBehavior.DEFAULT_GLASS_BOTTLE_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(Items.GLASS_BOTTLE));
+                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(Items.GLASS_BOTTLE);
 
         EmptyBucketDispenseBehavior.DEFAULT_EMPTY_BUCKET_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(Items.BUCKET));
+                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(Items.BUCKET);
 
         FlintAndSteelDispenseBehavior.DEFAULT_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(Items.FLINT_AND_STEEL));
+                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(Items.FLINT_AND_STEEL);
 
         StringDispenseBehavior.DEFAULT_STRING_DISPENSE_BEHAVIOR =
-                ((DispenserBlockInvoker) Blocks.DISPENSER).invokeGetDispenseMethod(new ItemStack(Items.STRING));
+                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(Items.STRING);
 
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenseBehavior());
         DispenserBlock.registerBehavior(Items.HONEY_BOTTLE, new HoneyBottleDispenseBehavior());

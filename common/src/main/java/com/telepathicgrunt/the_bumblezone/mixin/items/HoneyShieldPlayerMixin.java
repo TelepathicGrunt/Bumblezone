@@ -12,7 +12,7 @@ public class HoneyShieldPlayerMixin {
 
     @Inject(method = "disableShield",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemCooldowns;addCooldown(Lnet/minecraft/world/item/Item;I)V"))
-    private void bumblezone$applyCooldownForHoneyCrystalShield(boolean sprinting, CallbackInfo ci) {
+    private void bumblezone$applyCooldownForHoneyCrystalShield(CallbackInfo ci) {
         ((Player)(Object)this).getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
     }
 }

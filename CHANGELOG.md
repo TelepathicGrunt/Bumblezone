@@ -8,4 +8,12 @@ Honey Crystal Shield now can have Mending.
 
 note: add explicit quick charge for cannons 
 
-not: redo armor tick
+note: redo armor tick
+
+note: stingless bee helmet bee riding
+
+note: enchantment testing
+
+note: honey compass testing
+
+note: briefcase and cannon testing

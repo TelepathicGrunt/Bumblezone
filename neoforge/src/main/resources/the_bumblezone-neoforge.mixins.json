@@ -8,6 +8,7 @@
     "block.BzLiquidBlockMixin",
     "block.FireBlockInvoker",
     "block.FireBlockMixin",
+    "block.PistonStructureResolverMixin",
     "effect.WrathOfTheHiveEffectMixin",
     "enchantment.BzEnchantmentMixin",
     "entity.EntityMixin",

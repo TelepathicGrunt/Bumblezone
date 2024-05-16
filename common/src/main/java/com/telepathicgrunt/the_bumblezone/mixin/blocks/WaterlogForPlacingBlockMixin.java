@@ -24,7 +24,7 @@ public class WaterlogForPlacingBlockMixin {
             at = @At(value = "RETURN"),
             require = 0)
     private BlockState bumblezone$waterlogWhenPlacedIntoSugarWater(BlockState blockState, BlockPlaceContext blockPlaceContext) {
-        if(blockState != null && blockState.hasProperty(BlockStateProperties.WATERLOGGED) && !blockState.getValue(BlockStateProperties.WATERLOGGED) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(blockState)) {
+        if (blockState != null && blockState.hasProperty(BlockStateProperties.WATERLOGGED) && !blockState.getValue(BlockStateProperties.WATERLOGGED) && GeneralUtils.isBlockAllowedForSugarWaterWaterlogging(blockState)) {
             if (!(blockState.hasProperty(SlabBlock.TYPE) && blockState.getValue(SlabBlock.TYPE) == SlabType.DOUBLE)){
                 FluidState fluidState = blockPlaceContext.getLevel().getFluidState(blockPlaceContext.getClickedPos());
                 if (fluidState.getType() == BzFluids.SUGAR_WATER_FLUID.get()) {

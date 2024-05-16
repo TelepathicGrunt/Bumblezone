@@ -51,8 +51,8 @@ public abstract class EntityMixin implements EntityLootDropInterface {
     @Shadow
     public abstract Level level();
 
-    @ModifyVariable(method = "positionRider(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$MoveFunction;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity$MoveFunction;accept(Lnet/minecraft/world/entity/Entity;DDD)V"),
+    @ModifyVariable(method = "getVehicleAttachmentPoint(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/Vec3;",
+            at = @At(value = "TAIL", target = "Lnet/minecraft/world/entity/Entity$MoveFunction;accept(Lnet/minecraft/world/entity/Entity;DDD)V"),
             require = 0)
     private Vec3 bumblezone$beeRidingOffset(Vec3 vec3, Entity passenger) {
         return StinglessBeeHelmet.beeRidingOffset(vec3, ((Entity)(Object)this), passenger);

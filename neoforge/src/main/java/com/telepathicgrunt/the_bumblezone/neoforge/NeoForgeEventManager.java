@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribu
 import com.telepathicgrunt.the_bumblezone.events.AddCreativeTabEntriesEvent;
 import com.telepathicgrunt.the_bumblezone.events.BlockBreakEvent;
 import com.telepathicgrunt.the_bumblezone.events.ProjectileHitEvent;
+import com.telepathicgrunt.the_bumblezone.events.RegisterBrewingRecipeEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
@@ -47,7 +48,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
-import com.telepathicgrunt.the_bumblezone.packets.networking.neoforge.PacketChannelHelperImpl;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -110,7 +110,6 @@ public class NeoForgeEventManager {
         modEventBus.addListener(NeoForgeEventManager::onAddTabContents);
         modEventBus.addListener(NeoForgeEventManager::onSpawnPlacements);
         modEventBus.addListener(NeoForgeEventManager::registerBumblezoneCapProviders);
-        modEventBus.addListener(PacketChannelHelperImpl::registerPayloads);
 
         eventBus.addListener(NeoForgeEventManager::onBabySpawn);
         eventBus.addListener(NeoForgeEventManager::onServerStarting);
@@ -118,6 +117,7 @@ public class NeoForgeEventManager {
         eventBus.addListener(NeoForgeEventManager::onAddVillagerTrades);
         eventBus.addListener(NeoForgeEventManager::onWanderingTrades);
         eventBus.addListener(NeoForgeEventManager::onRegisterCommand);
+        eventBus.addListener(NeoForgeEventManager::onRegisterBrewingRecipies);
         eventBus.addListener(NeoForgeEventManager::onProjectileHit);
         eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onItemAttackBlock);
         eventBus.addListener(EventPriority.HIGH, NeoForgeEventManager::onItemUseOnBlock);
@@ -241,6 +241,10 @@ public class NeoForgeEventManager {
 
     private static void onRegisterCommand(net.neoforged.neoforge.event.RegisterCommandsEvent event) {
         RegisterCommandsEvent.EVENT.invoke(new RegisterCommandsEvent(event.getDispatcher(), event.getCommandSelection(), event.getBuildContext()));
+    }
+
+    private static void onRegisterBrewingRecipies(net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent event) {
+        RegisterBrewingRecipeEvent.EVENT.invoke(new RegisterBrewingRecipeEvent(event.getBuilder()::addMix));
     }
 
     private static void onProjectileHit(ProjectileImpactEvent event) {
