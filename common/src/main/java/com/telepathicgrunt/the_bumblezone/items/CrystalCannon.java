@@ -1,12 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.telepathicgrunt.the_bumblezone.datacomponents.CrystalCannonData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
-import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -16,60 +16,87 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
 import org.joml.Vector3f;
 
 import java.util.function.Predicate;
 
-public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, ItemExtension {
-    public static final String TAG_CRYSTALS = "CrystalStored";
-
+public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension {
     public CrystalCannon(Properties properties) {
-        super(properties.durability(80));
+        super(properties.component(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData()));
+    }
+
+    @Override
+    protected void shootProjectile(LivingEntity livingEntity, Projectile projectile, int projectileIndex, float shootingPower, float difficulty, float someMagicNumber, @Nullable LivingEntity livingEntity2) {
+        float offset = 0;
+        if (projectileIndex == 1) {
+            offset = (livingEntity.getRandom().nextFloat() * 5f) + 3.5f;
+        }
+        else if (projectileIndex == 2) {
+            offset = (livingEntity.getRandom().nextFloat() * 5f) - 11.5f;
+        }
+        else if (projectileIndex != 0) {
+            offset = livingEntity.getRandom().nextFloat() * 10f - 5f;
+        }
+
+        Vec3 entityEyePos = new Vec3(
+                livingEntity.getX(),
+                livingEntity.getEyeY() - 0.25f,
+                livingEntity.getZ());
+        projectile.moveTo(entityEyePos.x(),
+                entityEyePos.y(),
+                entityEyePos.z(),
+                livingEntity.getYRot(),
+                livingEntity.getXRot());
+
+        Vec3 upVector = livingEntity.getUpVector(1.0F);
+        Vec3 viewVector = livingEntity.getViewVector(1.0F);
+        Vector3f shootVector = viewVector.toVector3f();
+        if (projectileIndex != 0) {
+            Quaternionfc quaternion1 = new Quaternionf(upVector.x(), upVector.y(), upVector.z(), offset);
+            shootVector.rotate(quaternion1);
+        }
+
+        float weaponProjectileSpeed = 1.9F * shootingPower;
+        projectile.shoot(
+                shootVector.x(),
+                shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),
+                shootVector.z(),
+                weaponProjectileSpeed,
+                1);
     }
 
     @Override
     public void releaseUsing(ItemStack crystalCannon, Level level, LivingEntity livingEntity, int currentDuration) {
-        if (!level.isClientSide() && livingEntity instanceof Player player) {
-            ItemStack mutableCrystalCannon = player.getItemInHand(InteractionHand.MAIN_HAND);
+        if (!level.isClientSide()) {
+            ItemStack mutableCrystalCannon = livingEntity.getItemInHand(InteractionHand.MAIN_HAND);
 
             int numberOfCrystals = getNumberOfCrystals(mutableCrystalCannon);
             int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, mutableCrystalCannon);
             int remainingDuration = this.getUseDuration(mutableCrystalCannon) - currentDuration;
             if (remainingDuration >= 20 - (quickCharge * 3) && numberOfCrystals > 0) {
                 int crystalsToSpawn = getAndClearStoredCrystals(level, mutableCrystalCannon);
-                for (int i = 0; i < crystalsToSpawn; i++) {
-                    float offset = 0;
-                    if (i == 1) {
-                        offset = (livingEntity.getRandom().nextFloat() * 5f) + 3.5f;
-                    }
-                    else if (i == 2) {
-                        offset = (livingEntity.getRandom().nextFloat() * 5f) - 11.5f;
-                    }
-                    else if (i != 0) {
-                        offset = livingEntity.getRandom().nextFloat() * 10f - 5f;
-                    }
-
+                for (int crystalIndex = 0; crystalIndex < crystalsToSpawn; crystalIndex++) {
                     AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
 
                     double weaponDamage = newCrystal.getBaseDamage();
-                    int power = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, crystalCannon);
+                    int power = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, crystalCannon);
                     if (power > 0) {
                         weaponDamage += (power * 0.5D) + 0.5D;
                     }
                     newCrystal.setBaseDamage(weaponDamage);
 
-                    int punch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, crystalCannon);
+                    int punch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, crystalCannon);
                     if (punch > 0) {
                         newCrystal.setKnockback(newCrystal.getKnockback() + punch);
                     }
@@ -80,45 +107,23 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
                     }
 
                     newCrystal.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-                    Vec3 playerEyePos = new Vec3(
-                            player.getX(),
-                            player.getEyeY() - 0.25f,
-                            player.getZ());
-                    newCrystal.moveTo(playerEyePos.x(),
-                            playerEyePos.y(),
-                            playerEyePos.z(),
-                            player.getYRot(),
-                            player.getXRot());
-
-                    Vec3 upVector = player.getUpVector(1.0F);
-                    Vec3 viewVector = player.getViewVector(1.0F);
-                    Vector3f shootVector = viewVector.toVector3f();
-                    if (i != 0) {
-                        Quaternionfc quaternion1 = new Quaternionf(upVector.x(), upVector.y(), upVector.z(), offset);
-                        shootVector.rotate(quaternion1);
-                    }
-
-                    float weaponProjectileSpeed = 1.9F;
-                    newCrystal.shoot(
-                            shootVector.x(),
-                            shootVector.y() + (livingEntity.getRandom().nextFloat() * 0.2f + 0.01f),
-                            shootVector.z(),
-                            weaponProjectileSpeed,
-                            1);
+                    shootProjectile(livingEntity, newCrystal, crystalIndex, 1, 1.0F, 0, null);
                     level.addFreshEntity(newCrystal);
 
-                    player.awardStat(Stats.ITEM_USED.get(mutableCrystalCannon.getItem()));
+                    if (livingEntity instanceof Player player) {
+                        player.awardStat(Stats.ITEM_USED.get(mutableCrystalCannon.getItem()));
+                    }
 
-                    level.playSound(null, player.blockPosition(), BzSounds.CRYSTAL_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
-                    mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    level.playSound(null, livingEntity.blockPosition(), BzSounds.CRYSTAL_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (livingEntity.getRandom().nextFloat() * 0.2F) + 0.6F);
+                    mutableCrystalCannon.hurtAndBreak(1, livingEntity, EquipmentSlot.MAINHAND);
 
-                    if(numberOfCrystals >= 3 && player instanceof ServerPlayer serverPlayer) {
+                    if(numberOfCrystals >= 3 && livingEntity instanceof ServerPlayer serverPlayer) {
                         BzCriterias.CRYSTAL_CANNON_FULL_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
 
                 // Consume one extra durability
-                mutableCrystalCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                mutableCrystalCannon.hurtAndBreak(1, livingEntity, EquipmentSlot.MAINHAND);
             }
         }
     }
@@ -161,30 +166,24 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
 
     public static int getAndClearStoredCrystals(Level level, ItemStack crystalCannonItem) {
         int numberOfCrystals = getNumberOfCrystals(crystalCannonItem);
-        if(numberOfCrystals > 0) {
-            CompoundTag tag = crystalCannonItem.getOrCreateTag();
-            int crystals = tag.getInt(TAG_CRYSTALS);
-            tag.putInt(TAG_CRYSTALS, Math.max(0, crystals - 3));
+        if (numberOfCrystals > 0) {
+            crystalCannonItem.set(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData(0));
         }
         return numberOfCrystals;
     }
 
     public static boolean tryAddCrystal(ItemStack crystalCannonItem) {
-        if(getNumberOfCrystals(crystalCannonItem) < 3) {
-            CompoundTag tag = crystalCannonItem.getOrCreateTag();
-            int crystals = tag.getInt(TAG_CRYSTALS);
-            tag.putInt(TAG_CRYSTALS, crystals + 1);
+        if (getNumberOfCrystals(crystalCannonItem) < 3) {
+            CrystalCannonData crystalCannonData = crystalCannonItem.get(BzDataComponents.CRYSTAL_CANNON_DATA.get());
+            crystalCannonItem.set(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData(crystalCannonData.crystalStored() + 1));
             return true;
         }
         return false;
     }
 
     public static int getNumberOfCrystals(ItemStack crystalCannonItem) {
-        if(crystalCannonItem.hasTag()) {
-            CompoundTag tag = crystalCannonItem.getOrCreateTag();
-            return tag.getInt(TAG_CRYSTALS);
-        }
-        return 0;
+        CrystalCannonData crystalCannonData = crystalCannonItem.get(BzDataComponents.CRYSTAL_CANNON_DATA.get());
+        return crystalCannonData.crystalStored();
     }
 
     /**
@@ -223,24 +222,5 @@ public class CrystalCannon extends ProjectileWeaponItem implements Vanishable, I
     @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.BOW;
-    }
-
-    @Override
-    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if(enchantment == Enchantments.QUICK_CHARGE ||
-            enchantment == Enchantments.PIERCING ||
-            enchantment == Enchantments.POWER_ARROWS ||
-            enchantment == Enchantments.PUNCH_ARROWS)
-        {
-            return OptionalBoolean.TRUE;
-        }
-
-        return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
-    }
-
-    // Runs on Forge
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return this.bz$canApplyAtEnchantingTable(stack, enchantment)
-                .orElseGet(() -> enchantment.category.canEnchant(stack.getItem()));
     }
 }

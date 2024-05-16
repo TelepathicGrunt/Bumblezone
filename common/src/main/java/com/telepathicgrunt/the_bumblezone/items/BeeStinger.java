@@ -30,7 +30,7 @@ public class BeeStinger extends BzArrowItem {
 
     @Override
     public OptionalBoolean bz$isInfinite(ItemStack stack, ItemStack bow, Player player) {
-        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
+        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bow);
         return enchantLevel > 0 ? OptionalBoolean.of(true) : OptionalBoolean.EMPTY;
     }
 }

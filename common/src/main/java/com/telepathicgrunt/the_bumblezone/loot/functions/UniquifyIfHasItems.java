@@ -3,9 +3,10 @@ package com.telepathicgrunt.the_bumblezone.loot.functions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
@@ -28,27 +29,18 @@ public class UniquifyIfHasItems extends LootItemConditionalFunction {
 
     @Override
     public ItemStack run(ItemStack itemStack, LootContext lootContext) {
-        CompoundTag parentTag = null;
-        CompoundTag tag = itemStack.getTag();
-        if(tag != null && tag.contains("BlockEntityTag")) {
-            parentTag = tag;
-            tag = tag.getCompound("BlockEntityTag");
+        CompoundTag tag = new CompoundTag();
+        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (customData != null && !customData.isEmpty()) {
+            tag = customData.copyTag();
         }
 
-        if(tag != null) {
-            ListTag listtag = tag.getList("Items", 10);
-            if(listtag.size() == 0 && tag.size() == 1 && (parentTag == null || parentTag.size() == 1)) {
-                itemStack.setTag(null);
-            }
-            else if(!tag.contains("UUID")) {
-                if(parentTag != null) {
-                    parentTag.putString("UUID", UUID.randomUUID().toString());
-                }
-                else {
-                    tag.putString("UUID", UUID.randomUUID().toString());
-                }
-            }
+        if (tag.size() != 1 && !tag.contains("UUID") && tag.hasUUID("items") && !tag.getList("Items", 10).isEmpty()) {
+            tag.putString("UUID", UUID.randomUUID().toString());
         }
+
+        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, customData);
+
         return itemStack;
     }
 }

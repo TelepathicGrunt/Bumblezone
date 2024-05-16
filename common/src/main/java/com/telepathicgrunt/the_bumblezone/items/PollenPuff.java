@@ -2,10 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Position;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
@@ -13,7 +10,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,16 +20,7 @@ public class PollenPuff extends Item {
     public PollenPuff(Item.Properties properties) {
         super(properties);
 
-        DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
-            protected Projectile getProjectile(Level world, Position position, ItemStack itemStack) {
-                return Util.make(new PollenPuffEntity(
-                        world,
-                        position.x(),
-                        position.y(),
-                        position.z()),
-                        (pollenPuffEntity) -> pollenPuffEntity.setItem(itemStack));
-            }
-        });
+        DispenserBlock.registerProjectileBehavior(this);
     }
 
     @Override

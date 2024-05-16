@@ -6,19 +6,21 @@ import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeatherItem {
-    public FlowerHeadwearHelmet(ArmorMaterial material, Type armorType, Properties properties) {
+public class FlowerHeadwearHelmet extends ArmorItem implements ItemExtension {
+    public FlowerHeadwearHelmet(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
         super(material, armorType, properties);
     }
 
@@ -30,7 +32,7 @@ public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeath
         return repair.is(BzTags.FLOWER_HEADWEAR_REPAIR_ITEMS);
     }
 
-    // Runs on Forge
+    // Runs on NeoForge
     public void onArmorTick(ItemStack itemstack, Level world, Player player) {
         this.bz$onArmorTick(itemstack, world, player);
     }
@@ -56,12 +58,12 @@ public class FlowerHeadwearHelmet extends BzDyeableArmor implements DyeableLeath
                 player.getRandom().nextFloat() < 0.002f &&
                 itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {
-                itemstack.hurtAndBreak(1, player, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.HEAD));
+                itemstack.hurtAndBreak(1, player, EquipmentSlot.HEAD);
             }
         }
     }
 
-    public static ItemStack getFlowerHeadwear(Entity entity) {
+    public static ItemStack getFlowerHeadwear(LivingEntity entity) {
 
         for (ItemStack armor : entity.getArmorSlots()) {
             if (armor.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet) {

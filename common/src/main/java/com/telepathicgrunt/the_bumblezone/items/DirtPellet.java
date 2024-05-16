@@ -2,15 +2,11 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
-import net.minecraft.Util;
-import net.minecraft.core.Position;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -20,16 +16,7 @@ public class DirtPellet extends Item {
     public DirtPellet(Properties properties) {
         super(properties);
 
-        DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
-            protected Projectile getProjectile(Level world, Position position, ItemStack itemStack) {
-                return Util.make(new DirtPelletEntity(
-                        world,
-                        position.x(),
-                        position.y(),
-                        position.z()),
-                        (dirtPelletEntity) -> dirtPelletEntity.setItem(itemStack));
-            }
-        });
+        DispenserBlock.registerProjectileBehavior(this);
     }
 
     @Override

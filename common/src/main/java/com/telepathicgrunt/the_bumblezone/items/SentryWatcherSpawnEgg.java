@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
@@ -35,7 +36,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -57,10 +57,10 @@ public class SentryWatcherSpawnEgg extends Item {
         DispenserBlock.registerBehavior(
                 this,
                 new DefaultDispenseItemBehavior() {
-                    public ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
+                    public @NotNull ItemStack execute(@NotNull BlockSource source, @NotNull ItemStack stack) {
                         Direction direction = source.state().getValue(DispenserBlock.FACING);
 
-                        EntityType<?> entitytype = ((SentryWatcherSpawnEgg)stack.getItem()).getType(stack.getTag());
+                        EntityType<?> entitytype = ((SentryWatcherSpawnEgg)stack.getItem()).getType(stack);
                         Entity entity = entitytype.spawn(source.level(), stack, null, source.pos().relative(direction), MobSpawnType.DISPENSER, direction != Direction.UP, false);
                         if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
                             sentryWatcherEntity.setTargetFacing(direction);
@@ -98,7 +98,7 @@ public class SentryWatcherSpawnEgg extends Item {
 
                 BlockEntity blockEntity = level.getBlockEntity(blockPos);
                 if (blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity) {
-                    EntityType<?> entityType = this.getType(itemStack.getTag());
+                    EntityType<?> entityType = this.getType(itemStack);
                     spawnerBlockEntity.setEntityId(entityType, level.getRandom());
                     blockEntity.setChanged();
                     level.sendBlockUpdated(blockPos, blockState, blockState, 3);
@@ -116,7 +116,7 @@ public class SentryWatcherSpawnEgg extends Item {
                 blockPos2 = blockPos.relative(direction);
             }
 
-            EntityType<?> entityType2 = this.getType(itemStack.getTag());
+            EntityType<?> entityType2 = this.getType(itemStack);
             Entity entity = entityType2.spawn((ServerLevel)level, itemStack, useOnContext.getPlayer(), blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP);
             if (entity != null) {
                 if (entity instanceof SentryWatcherEntity sentryWatcherEntity) {
@@ -160,7 +160,7 @@ public class SentryWatcherSpawnEgg extends Item {
                 return InteractionResultHolder.pass(itemStack);
             }
             else if (level.mayInteract(player, blockPos) && player.mayUseItemAt(blockPos, blockHitResult.getDirection(), itemStack)) {
-                EntityType<?> entityType = this.getType(itemStack.getTag());
+                EntityType<?> entityType = this.getType(itemStack);
                 Entity entity = entityType.spawn((ServerLevel)level, itemStack, player, blockPos, MobSpawnType.SPAWN_EGG, false, false);
                 if (entity == null) {
                     return InteractionResultHolder.pass(itemStack);
@@ -196,11 +196,14 @@ public class SentryWatcherSpawnEgg extends Item {
         }
     }
 
-    public EntityType<?> getType(@Nullable CompoundTag compoundTag) {
-        if (compoundTag != null && compoundTag.contains("EntityTag", 10)) {
-            CompoundTag compoundTag2 = compoundTag.getCompound("EntityTag");
-            if (compoundTag2.contains("id", 8)) {
-                return EntityType.byString(compoundTag2.getString("id")).orElse(this.entityType.get());
+    public EntityType<?> getType(ItemStack itemStack) {
+        if (itemStack.has(DataComponents.ENTITY_DATA)) {
+            CompoundTag compoundTag = itemStack.get(DataComponents.ENTITY_DATA).getUnsafe();
+            if (compoundTag.contains("EntityTag")) {
+                CompoundTag compoundTag2 = compoundTag.getCompound("EntityTag");
+                if (compoundTag2.contains("id", 8)) {
+                    return EntityType.byString(compoundTag2.getString("id")).orElse(this.entityType.get());
+                }
             }
         }
 

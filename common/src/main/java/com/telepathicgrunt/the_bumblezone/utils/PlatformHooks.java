@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,11 +39,13 @@ import java.util.List;
 public class PlatformHooks {
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float size, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
         throw new NotImplementedException("PlatformHooks createEntityType is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
         throw new NotImplementedException("PlatformHooks createEntityType 2 is not implemented!");
     }
@@ -103,41 +104,49 @@ public class PlatformHooks {
 
     @Nullable
     @ExpectPlatform
+    @Contract(pure=true)
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         throw new NotImplementedException("PlatformHooks getModInfo is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static boolean sendBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         throw new NotImplementedException("PlatformHooks sendBlockBreakEvent is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static void afterBlockBreakEvent(Level level, BlockPos pos, BlockState state, BlockEntity entity, Player player) {
         throw new NotImplementedException("PlatformHooks sendBlockBreakEvent is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidInfo... fluids) {
         throw new NotImplementedException("PlatformHooks getFluidHeight is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static boolean isEyesInNoFluid(Entity entity) {
         throw new NotImplementedException("PlatformHooks isEyesInNoFluid is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static InteractionResultHolder<ItemStack> performItemUse(Level world, Player user, InteractionHand hand, Fluid fluid, BzCustomBucketItem bzCustomBucketItem) {
         throw new NotImplementedException("PlatformHooks performItemUse is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static boolean isPermissionAllowedAtSpot(Level level, Entity entity, BlockPos pos, boolean placingBlock) {
         throw new NotImplementedException("PlatformHooks isPermissionAllowedAtSpot is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static boolean isDimensionAllowed(ServerPlayer serverPlayer, ResourceKey<Level> dimension) {
         throw new NotImplementedException("PlatformHooks isDimensionAllowed is not implemented!");
     }
@@ -149,16 +158,25 @@ public class PlatformHooks {
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static void disableFlight(Player player) {
         throw new NotImplementedException("PlatformHooks disableFlight is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
     public static boolean isDevEnvironment() {
         throw new NotImplementedException("PlatformHooks isDevEnvironment is not implemented!");
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
+    public static boolean isClientEnvironment() {
+        throw new NotImplementedException("PlatformHooks isClientEnvironment is not implemented!");
+    }
+
+    @ExpectPlatform
+    @Contract(pure=true)
     public static boolean shouldMobSplit(Mob parent, List<Mob> children) {
         throw new NotImplementedException("PlatformHooks fireMobSplitEvents is not implemented!");
     }

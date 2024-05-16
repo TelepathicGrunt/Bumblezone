@@ -70,6 +70,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCommands;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCreativeTabs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDimension;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -193,6 +194,7 @@ public class Bumblezone {
         BzProcessors.STRUCTURE_PROCESSOR.init();
         BzCreativeTabs.CREATIVE_MODE_TABS.init();
         BzBiomeHeightRegistry.BIOME_HEIGHT.init();
+        BzDataComponents.DATA_COMPONENT_TYPE.init();
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.init();
         BzLootConditionTypes.LOOT_ITEM_CONDITION_TYPE.init();
         BzStructurePlacementType.STRUCTURE_PLACEMENT_TYPE.init();

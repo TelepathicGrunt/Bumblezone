@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
-import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,8 +25,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
@@ -37,12 +36,12 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class BeeCannon extends Item implements Vanishable, ItemExtension {
+public class BeeCannon extends Item implements ItemExtension {
     public static final String TAG_BEES = "BeesStored";
     public static final int MAX_NUMBER_OF_BEES = 3;
 
     public BeeCannon(Properties properties) {
-        super(properties.durability(50));
+        super(properties.component(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY));
     }
 
     @Override
@@ -107,7 +106,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
                         }
                     }
 
-                    mutableBeeCannon.hurtAndBreak(1, player, playerEntity -> playerEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    mutableBeeCannon.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                 });
 
                 level.playSound(null, player.blockPosition(), BzSounds.BEE_CANNON_FIRES.get(), SoundSource.PLAYERS, 1.0F, (player.getRandom().nextFloat() * 0.2F) + 0.6F);
@@ -153,23 +152,24 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
     }
 
     public static List<Entity> tryReleaseBees(Level level, ItemStack beeCannonItem) {
-        if (getNumberOfBees(beeCannonItem) > 0) {
-            CompoundTag tag = beeCannonItem.getOrCreateTag();
-            ListTag beeList = tag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+        if (getNumberOfBees(beeCannonItem) > 0 && beeCannonItem.has(BzDataComponents.BEE_CANNON_DATA.get())) {
+            CompoundTag cannonTag = beeCannonItem.get(BzDataComponents.BEE_CANNON_DATA.get()).copyTag();
+            ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
             List<Entity> releasedBees = new ObjectArrayList<>();
             for (int i = beeList.size() - 1; i >= 0; i--) {
                 CompoundTag beeTag = beeList.getCompound(0);
                 beeList.remove(0);
                 releasedBees.add(EntityType.loadEntityRecursive(beeTag, level, entityx -> entityx));
             }
+            beeCannonItem.set(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.of(cannonTag));
             return releasedBees;
         }
         return new ObjectArrayList<>();
     }
 
     public static boolean tryAddBee(ItemStack beeCannonItem, Entity bee) {
-        if (getNumberOfBees(beeCannonItem) < MAX_NUMBER_OF_BEES) {
-            CompoundTag cannonTag = beeCannonItem.getOrCreateTag();
+        if (getNumberOfBees(beeCannonItem) < MAX_NUMBER_OF_BEES && beeCannonItem.has(BzDataComponents.BEE_CANNON_DATA.get())) {
+            CompoundTag cannonTag = beeCannonItem.get(BzDataComponents.BEE_CANNON_DATA.get()).copyTag();
             ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
             CompoundTag beeTag = new CompoundTag();
 
@@ -181,6 +181,7 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
             beeList.add(beeTag);
 
             bee.discard();
+            beeCannonItem.set(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.of(cannonTag));
             return true;
         }
         return false;
@@ -188,15 +189,15 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
 
     @SuppressWarnings("ConstantConditions")
     public static int getNumberOfBees(ItemStack beeCannonItem) {
-        if (beeCannonItem.hasTag()) {
-            CompoundTag tag = beeCannonItem.getTag();
-            if (tag.contains(TAG_BEES)) {
-                ListTag beeList = tag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
+        if (beeCannonItem.has(BzDataComponents.BEE_CANNON_DATA.get())) {
+            CompoundTag cannonTag = beeCannonItem.get(BzDataComponents.BEE_CANNON_DATA.get()).copyTag();
+            if (cannonTag.contains(TAG_BEES)) {
+                ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
                 return beeList.size();
             }
             else {
                 ListTag listTag = new ListTag();
-                tag.put(TAG_BEES, listTag);
+                cannonTag.put(TAG_BEES, listTag);
             }
         }
         return 0;
@@ -223,20 +224,5 @@ public class BeeCannon extends Item implements Vanishable, ItemExtension {
     @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.BOW;
-    }
-
-    @Override
-    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        if (enchantment == Enchantments.QUICK_CHARGE) {
-            return OptionalBoolean.TRUE;
-        }
-
-        return OptionalBoolean.of(enchantment.category.canEnchant(stack.getItem()));
-    }
-
-    // Runs on Forge
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return this.bz$canApplyAtEnchantingTable(stack, enchantment)
-                .orElseGet(() -> enchantment.category.canEnchant(stack.getItem()));
     }
 }

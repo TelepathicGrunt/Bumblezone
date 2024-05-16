@@ -1,20 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassBaseData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassStateData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassTargetData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
-import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +32,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -40,55 +39,48 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class HoneyCompass extends Item implements Vanishable {
-    public static final String TAG_TARGET_POS = "TargetPos";
-    public static final String TAG_TARGET_DIMENSION = "TargetDimension";
-    public static final String TAG_TYPE = "CompassType";
-    public static final String TAG_LOADING = "IsLoading";
-    public static final String TAG_FAILED = "IsFailed";
-    public static final String TAG_STRUCTURE_TAG = "TargetStructureTag";
-    public static final String TAG_TARGET_BLOCK = "TargetBlock";
-    public static final String TAG_CUSTOM_NAME_TYPE = "CustomName";
-    public static final String TAG_CUSTOM_DESCRIPTION_TYPE = "CustomDescription";
-    public static final String TAG_LOCKED = "Locked";
-    public static final String TAG_COMPASS_SEARCH_ID = "searchId";
-    public static final String TAG_LOCATED_SPECIAL_STRUCTURE = "locatedSpecialStructure";
-
+public class HoneyCompass extends Item {
     public HoneyCompass(Item.Properties properties) {
-        super(properties);
+        super(properties
+                .component(BzDataComponents.HONEY_COMPASS_BASE_DATA.get(), new HoneyCompassBaseData())
+                .component(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(), new HoneyCompassStateData())
+                .component(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(), new HoneyCompassTargetData()));
     }
 
     @Override
     public boolean isFoil(ItemStack itemStack) {
-        return getBooleanTag(itemStack.getTag(), TAG_LOCKED) || super.isFoil(itemStack);
+        HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+        return honeyCompassStateData.locked() || super.isFoil(itemStack);
     }
 
     @Override
     public String getDescriptionId(ItemStack itemStack) {
-        if (getBooleanTag(itemStack.getTag(), TAG_LOADING)) {
+        HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+        if (honeyCompassStateData.isLoading()) {
             return "item.the_bumblezone.honey_compass_structure_loading";
         }
 
-        if (getBooleanTag(itemStack.getTag(), TAG_FAILED)) {
+        if (honeyCompassStateData.isFailed()) {
             return "item.the_bumblezone.honey_compass_structure_failed";
         }
 
-        if (hasTagSafe(itemStack.getTag(), TAG_CUSTOM_NAME_TYPE)) {
-            return itemStack.getTag().getString(TAG_CUSTOM_NAME_TYPE);
+        HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+        if (honeyCompassBaseData.customName().isPresent()) {
+            return honeyCompassBaseData.customName().get();
         }
 
-        if(isStructureCompass(itemStack)) {
+        if (honeyCompassBaseData.isStructureCompass()) {
             return "item.the_bumblezone.honey_compass_structure";
         }
 
-        if(isBlockCompass(itemStack)) {
+        if (honeyCompassBaseData.isBlockCompass()) {
             return "item.the_bumblezone.honey_compass_block";
         }
 
@@ -96,13 +88,12 @@ public class HoneyCompass extends Item implements Vanishable {
     }
 
     public Component getName(ItemStack itemStack) {
-        if(isBlockCompass(itemStack)) {
-            String blockString = getStoredBlock(itemStack);
-            if (blockString != null) {
-                Block block = BuiltInRegistries.BLOCK.get(new ResourceLocation(blockString));
-                if (block != Blocks.AIR) {
-                    return Component.translatable(this.getDescriptionId(itemStack), block.getName());
-                }
+        HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+        if (honeyCompassBaseData.isBlockCompass()) {
+            HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+            Optional<Block> block = honeyCompassTargetData.getStoredBlock();
+            if (block.isPresent() && block.get() != Blocks.AIR) {
+                return Component.translatable(this.getDescriptionId(itemStack), block.get().getName());
             }
             return Component.translatable(this.getDescriptionId(itemStack), Component.translatable("item.the_bumblezone.honey_compass_unknown_block"));
         }
@@ -110,25 +101,27 @@ public class HoneyCompass extends Item implements Vanishable {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        if (getBooleanTag(itemStack.getTag(), TAG_FAILED)) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+        HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+        if (honeyCompassStateData.isFailed()) {
             components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_failed_description"));
             return;
         }
 
-        if (hasTagSafe(itemStack.getTag(), TAG_CUSTOM_DESCRIPTION_TYPE)) {
-            components.add(Component.translatable(itemStack.getTag().getString(TAG_CUSTOM_DESCRIPTION_TYPE)));
-            appendAdvancedTooltipInfo(itemStack, level, components, tooltipFlag);
+        HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+        if (honeyCompassBaseData.customDescription().isPresent()) {
+            components.add(Component.translatable(honeyCompassBaseData.customDescription().get()));
+            appendAdvancedTooltipInfo(itemStack, tooltipContext, components, tooltipFlag);
             return;
         }
 
-        if (isBlockCompass(itemStack)) {
+        if (honeyCompassBaseData.isBlockCompass()) {
             components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description1"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description2"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description3"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_block_description4"));
         }
-        else if (isStructureCompass(itemStack)) {
+        else if (honeyCompassBaseData.isStructureCompass()) {
             components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description1"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description2"));
             components.add(Component.translatable("item.the_bumblezone.honey_compass_structure_description3"));
@@ -140,27 +133,28 @@ public class HoneyCompass extends Item implements Vanishable {
             components.add(Component.translatable("item.the_bumblezone.honey_compass_description4"));
         }
 
-        appendAdvancedTooltipInfo(itemStack, level, components, tooltipFlag);
+        appendAdvancedTooltipInfo(itemStack, tooltipContext, components, tooltipFlag);
     }
 
-    private static void appendAdvancedTooltipInfo(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        if (level != null && level.isClientSide()) {
+    private static void appendAdvancedTooltipInfo(ItemStack itemStack, TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+        if (tooltipContext != null && PlatformHooks.isClientEnvironment()) {
             Player player = GeneralUtilsClient.getClientPlayer();
-            if (player != null && tooltipFlag.isAdvanced() && (isBlockCompass(itemStack) || isStructureCompass(itemStack))) {
-                BlockPos pos = getStoredPosition(itemStack);
-                Optional<ResourceKey<Level>> storedDimension = getStoredDimension(itemStack);
-                if (pos != null && storedDimension.isPresent() && level.dimension().equals(storedDimension.get())) {
+            HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+            if (player != null && tooltipFlag.isAdvanced() && (honeyCompassBaseData.isBlockCompass() || honeyCompassBaseData.isStructureCompass())) {
+                HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+                Optional<BlockPos> targetPos = honeyCompassTargetData.targetPos();
+                Optional<ResourceKey<Level>> storedDimension = honeyCompassTargetData.targetDimension();
+                if (targetPos.isPresent() && storedDimension.isPresent() && player.level().dimension().equals(storedDimension.get())) {
                     int distance;
-                    if (isStructureCompass(itemStack)) {
-                        float xDist = Math.abs(player.blockPosition().getX() - pos.getX());
-                        float zDist = Math.abs(player.blockPosition().getZ() - pos.getZ());
+                    if (honeyCompassBaseData.isStructureCompass()) {
+                        float xDist = Math.abs(player.blockPosition().getX() - targetPos.get().getX());
+                        float zDist = Math.abs(player.blockPosition().getZ() - targetPos.get().getZ());
                         distance = (int) (xDist + zDist);
                     }
                     else {
-                        distance = player.blockPosition().distManhattan(pos);
+                        distance = player.blockPosition().distManhattan(targetPos.get());
                     }
-                    components.add(Component.translatable("item.the_bumblezone.honey_compass_distance", distance)
-                            .withStyle(ChatFormatting.DARK_GRAY));
+                    components.add(Component.translatable("item.the_bumblezone.honey_compass_distance", distance).withStyle(ChatFormatting.DARK_GRAY));
                 }
             }
         }
@@ -169,73 +163,95 @@ public class HoneyCompass extends Item implements Vanishable {
     @Override
     public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
         if (!level.isClientSide) {
-            CompoundTag tag = itemStack.getOrCreateTag();
+            HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+            boolean locked = honeyCompassStateData.locked();
+            Optional<UUID> searchId = honeyCompassStateData.searchId();
+            boolean isLoading = honeyCompassStateData.isLoading();
+            boolean isFailed = honeyCompassStateData.isFailed();
+            boolean locatedSpecialStructure = honeyCompassStateData.locatedSpecialStructure();
+
+            HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+            String compassType = honeyCompassBaseData.compassType();
+
+            HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+            Optional<BlockPos> targetPos = honeyCompassTargetData.targetPos();
+            Optional<ResourceKey<Level>> targetDimension = honeyCompassTargetData.targetDimension();
+            Optional<String> targetBlock = honeyCompassTargetData.targetBlock();
+            Optional<String> targetStructureTag = honeyCompassTargetData.targetStructureTag();
 
             if (level.getGameTime() % 20 == 0) {
-                UUID searchId = getSearchId(tag);
-                if (searchId != null) {
+                if (searchId.isPresent()) {
                     // Location was found and already saved.
-                    if (tag.contains(TAG_TARGET_POS)) {
-                        removeSearchIdMode(tag, searchId);
+                    if (targetPos.isPresent()) {
+                        ThreadExecutor.removeSearchResult(searchId.get());
+                        searchId = Optional.empty();
                     }
                     else {
-                        Optional<BlockPos> searchResult = ThreadExecutor.getSearchResult(searchId);
+                        Optional<BlockPos> searchResult = ThreadExecutor.getSearchResult(searchId.get());
                         // null return mean no search queued up for this compass
                         if (searchResult == null) {
-                            itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
+                            isFailed = true;
                         }
-                        else {
-                            searchResult.ifPresent(blockPos ->
-                                    HoneyCompass.addFoundStructureLocation(level.dimension(), blockPos, tag)
-                            );
+                        else if (searchResult.isPresent()) {
+                            BlockPos newPos = searchResult.get();
+
+                            compassType = "structure";
+
+                            targetPos = Optional.of(newPos);
+                            targetDimension = Optional.of(level.dimension());
+                            targetBlock = Optional.empty();
+                            targetStructureTag = Optional.empty();
+
+                            isLoading = false;
+                            isFailed = false;
                         }
                     }
                 }
             }
 
-            if (!getBooleanTag(tag, TAG_FAILED) &&
-                !getBooleanTag(tag, TAG_LOADING) &&
-                hasTagSafe(tag, TAG_STRUCTURE_TAG) &&
-                !hasTagSafe(tag, TAG_TARGET_POS))
-            {
-                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, true);
+            if (!isFailed && !isLoading && targetStructureTag.isPresent() && targetPos.isEmpty()) {
+                isFailed = true;
             }
 
-            if (getBooleanTag(tag, TAG_LOADING) && !ThreadExecutor.isRunningASearch() && !ThreadExecutor.hasQueuedSearch()) {
-                tag.putBoolean(TAG_LOADING, false);
-                tag.putBoolean(TAG_FAILED, true);
+            if (isLoading && !ThreadExecutor.isRunningASearch() && !ThreadExecutor.hasQueuedSearch()) {
+                isLoading = false;
+                isFailed = true;
             }
 
-            if (isBlockCompass(itemStack)) {
-                if (tag.contains(TAG_TARGET_POS) && tag.contains(TAG_TARGET_BLOCK) && tag.contains(TAG_TARGET_DIMENSION)) {
+            if (honeyCompassBaseData.isBlockCompass()) {
+                if (targetBlock.isPresent() && targetPos.isPresent() && targetDimension.isPresent()) {
+                    if (targetDimension.get().equals(level.dimension())) {
+                        if (!level.isInWorldBounds(targetPos.get())) {
+                            targetPos = Optional.empty();
+                            targetDimension = Optional.empty();
+                            targetBlock = Optional.empty();
+                            compassType = "";
 
-                    Optional<ResourceKey<Level>> optional = Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, tag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
-                    if (optional.isPresent() && optional.get().equals(level.dimension())) {
-                        BlockPos blockPos = NbtUtils.readBlockPos(tag.getCompound(TAG_TARGET_POS));
-                        if (!level.isInWorldBounds(blockPos)) {
-                            tag.remove(TAG_TARGET_POS);
-                            tag.remove(TAG_TARGET_DIMENSION);
-                            tag.remove(TAG_TARGET_BLOCK);
-                            tag.remove(TAG_TYPE);
+                            setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
+                            setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
                             return;
                         }
 
-                        ChunkAccess chunk = level.getChunk(blockPos.getX() >> 4, blockPos.getZ() >> 4, ChunkStatus.FULL, false);
-                        if(chunk != null && !(BuiltInRegistries.BLOCK.getKey(chunk.getBlockState(blockPos).getBlock()).toString().equals(tag.getString(TAG_TARGET_BLOCK)))) {
-                            tag.remove(TAG_TARGET_POS);
-                            tag.remove(TAG_TARGET_DIMENSION);
-                            tag.remove(TAG_TARGET_BLOCK);
-                            tag.remove(TAG_TYPE);
+                        ChunkAccess chunk = level.getChunk(targetPos.get().getX() >> 4, targetPos.get().getZ() >> 4, ChunkStatus.FULL, false);
+                        if(chunk != null && !(BuiltInRegistries.BLOCK.getKey(chunk.getBlockState(targetPos.get()).getBlock()).toString().equals(targetBlock.get()))) {
+                            targetPos = Optional.empty();
+                            targetDimension = Optional.empty();
+                            targetBlock = Optional.empty();
+                            compassType = "";
                         }
                     }
                 }
                 else {
-                    tag.remove(TAG_TARGET_POS);
-                    tag.remove(TAG_TARGET_DIMENSION);
-                    tag.remove(TAG_TARGET_BLOCK);
-                    tag.remove(TAG_TYPE);
+                    targetPos = Optional.empty();
+                    targetDimension = Optional.empty();
+                    targetBlock = Optional.empty();
+                    compassType = "";
                 }
             }
+
+            setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
+            setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
+            setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
         }
     }
 
@@ -244,58 +260,108 @@ public class HoneyCompass extends Item implements Vanishable {
         ItemStack itemStack = player.getItemInHand(interactionHand);
         BlockPos playerPos = player.blockPosition();
 
-        if (getBooleanTag(itemStack.getTag(), TAG_FAILED) && hasTagSafe(itemStack.getTag(), TAG_STRUCTURE_TAG)) {
+        HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+        boolean locked = honeyCompassStateData.locked();
+        Optional<UUID> searchId = honeyCompassStateData.searchId();
+        boolean isLoading = honeyCompassStateData.isLoading();
+        boolean isFailed = honeyCompassStateData.isFailed();
+        boolean locatedSpecialStructure = honeyCompassStateData.locatedSpecialStructure();
+
+        HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+        String compassType = honeyCompassBaseData.compassType();
+
+        HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+        Optional<BlockPos> targetPos = honeyCompassTargetData.targetPos();
+        Optional<ResourceKey<Level>> targetDimension = honeyCompassTargetData.targetDimension();
+        Optional<String> targetBlock = honeyCompassTargetData.targetBlock();
+        Optional<String> targetStructureTag = honeyCompassTargetData.targetStructureTag();
+
+        InteractionResultHolder<ItemStack> interactionResult = null;
+        if (isFailed && targetStructureTag.isPresent()) {
             if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
-                TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, new ResourceLocation(itemStack.getOrCreateTag().getString(TAG_STRUCTURE_TAG)));
-                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).get().getTag(structureTagKey);
-                boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).size() > 0);
+                TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, new ResourceLocation(targetStructureTag.get()));
+                Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).flatMap(registry -> registry.getTag(structureTagKey));
+                boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
                 if (structureExists) {
-                    itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
-                    itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
+                    isLoading = true;
+                    isFailed = false;
                     ThreadExecutor.locate((ServerLevel) level, structureTagKey, playerPos, 100, false)
                             .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
+                    interactionResult = InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
                 }
                 else {
                     player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
-                    return InteractionResultHolder.pass(itemStack);
+                    interactionResult = InteractionResultHolder.pass(itemStack);
                 }
             }
-            return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
         }
 
-        if (itemStack.hasTag() && getBooleanTag(itemStack.getOrCreateTag(), TAG_LOADING)) {
+        if (interactionResult != null) {
+            setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
+            setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
+            setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
+            return interactionResult;
+        }
+
+        if (isLoading) {
             if (ThreadExecutor.isRunningASearch() || ThreadExecutor.hasQueuedSearch()) {
+                setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
+                setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
+                setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
                 return InteractionResultHolder.fail(itemStack);
             }
             else {
-                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, false);
+                isLoading = false;
             }
         }
 
-        if (getBooleanTag(itemStack.getTag(), TAG_LOCKED)) {
+        if (locked) {
             return super.use(level, player, interactionHand);
         }
 
-        if (level instanceof ServerLevel serverLevel && !isStructureCompass(itemStack)) {
-            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).get().getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING);
-            boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).size() > 0);
+        if (level instanceof ServerLevel serverLevel && !honeyCompassBaseData.isStructureCompass()) {
+            Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).flatMap(registry -> registry.getTag(BzTags.HONEY_COMPASS_DEFAULT_LOCATING));
+            boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
             if (structureExists) {
-                itemStack.getOrCreateTag().putBoolean(TAG_LOADING, true);
+                isLoading = true;
                 ThreadExecutor.locate((ServerLevel) level, BzTags.HONEY_COMPASS_DEFAULT_LOCATING, playerPos, 100, false)
                         .thenOnServerThread(foundPos -> setCompassData((ServerLevel) level, (ServerPlayer) player, interactionHand, itemStack, foundPos));
+                interactionResult = InteractionResultHolder.success(itemStack);
             }
             else {
                 player.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_wrong_dimension"), true);
-                return InteractionResultHolder.pass(itemStack);
+                interactionResult = InteractionResultHolder.pass(itemStack);
             }
-            return InteractionResultHolder.success(itemStack);
         }
 
+        setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
+        setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
+        setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
+
+        if (interactionResult != null) {
+            return interactionResult;
+        }
         return super.use(level, player, interactionHand);
     }
 
+
     private void setCompassData(ServerLevel serverLevel, ServerPlayer serverPlayer, InteractionHand interactionHand, ItemStack itemStack, BlockPos structurePos) {
-        itemStack.getOrCreateTag().putBoolean(TAG_LOADING, false);
+        HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+        boolean locked = honeyCompassStateData.locked();
+        Optional<UUID> searchId = honeyCompassStateData.searchId();
+        boolean isLoading = false;
+        boolean isFailed = honeyCompassStateData.isFailed();
+        boolean locatedSpecialStructure = honeyCompassStateData.locatedSpecialStructure();
+
+        HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+        String compassType = honeyCompassBaseData.compassType();
+
+        HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+        Optional<BlockPos> targetPos = honeyCompassTargetData.targetPos();
+        Optional<ResourceKey<Level>> targetDimension = honeyCompassTargetData.targetDimension();
+        Optional<String> targetBlock = honeyCompassTargetData.targetBlock();
+        Optional<String> targetStructureTag = honeyCompassTargetData.targetStructureTag();
+
         serverLevel.playSound(null, serverPlayer.blockPosition(), BzSounds.HONEY_COMPASS_STRUCTURE_LOCK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
         serverPlayer.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
@@ -309,25 +375,41 @@ public class HoneyCompass extends Item implements Vanishable {
         BzCriterias.HONEY_COMPASS_USE_TRIGGER.get().trigger(serverPlayer);
         boolean singleCompass = !serverPlayer.getAbilities().instabuild && itemStack.getCount() == 1;
         if (singleCompass) {
-            addFoundStructureLocation(serverLevel.dimension(), structurePos, itemStack.getOrCreateTag());
+            compassType = "structure";
+
+            targetPos = Optional.of(structurePos);
+            targetDimension = Optional.of(serverLevel.dimension());
+            targetBlock = Optional.empty();
+            targetStructureTag = Optional.empty();
+
+            isFailed = false;
         }
         else {
-            ItemStack newCompass = new ItemStack(BzItems.HONEY_COMPASS.get(), 1);
-            CompoundTag newCompoundTag = itemStack.hasTag() ? itemStack.getTag().copy() : new CompoundTag();
-            newCompass.setTag(newCompoundTag);
+            ItemStack newCompass = itemStack.copyWithCount(1);
             if (!serverPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
             }
             else {
-                itemStack.getOrCreateTag().putBoolean(TAG_FAILED, false);
+                isFailed = false;
                 serverPlayer.displayClientMessage(Component.translatable("item.the_bumblezone.honey_compass_structure_creative").withStyle(ChatFormatting.YELLOW), true);
             }
 
-            addFoundStructureLocation(serverLevel.dimension(), structurePos, newCompoundTag);
+            HoneyCompassStateData newHoneyCompassStateData = newCompass.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+            HoneyCompassBaseData newHoneyCompassBaseData = newCompass.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+            HoneyCompassTargetData newHoneyCompassTargetData = newCompass.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+
+            setCompassStateData(newHoneyCompassStateData, newHoneyCompassStateData.locked(), Optional.empty(), false, false, newHoneyCompassStateData.locatedSpecialStructure(), newCompass);
+            setCompassBaseData(newHoneyCompassBaseData, "structure", newCompass);
+            setCompassTargetData(newHoneyCompassTargetData, Optional.empty(), Optional.empty(), Optional.of(structurePos), Optional.of(serverLevel.dimension()), newCompass);
+
             if (!serverPlayer.getInventory().add(newCompass)) {
                 serverPlayer.drop(newCompass, false);
             }
         }
+
+        setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
+        setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
+        setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
     }
 
     @Override
@@ -335,42 +417,77 @@ public class HoneyCompass extends Item implements Vanishable {
         BlockPos blockPos = useOnContext.getClickedPos();
         Level level = useOnContext.getLevel();
         Player player = useOnContext.getPlayer();
-        ItemStack handCompass = useOnContext.getItemInHand();
-        BlockState targetBlock = level.getBlockState(blockPos);
+        ItemStack itemStack = useOnContext.getItemInHand();
+        BlockState blockState = level.getBlockState(blockPos);
 
-        if (handCompass.hasTag() && getBooleanTag(handCompass.getOrCreateTag(), TAG_LOADING)) {
+        HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+        boolean locked = honeyCompassStateData.locked();
+        Optional<UUID> searchId = honeyCompassStateData.searchId();
+        boolean isLoading = honeyCompassStateData.isLoading();
+        boolean isFailed = honeyCompassStateData.isFailed();
+        boolean locatedSpecialStructure = honeyCompassStateData.locatedSpecialStructure();
+
+        if (isLoading) {
             if (ThreadExecutor.isRunningASearch() || ThreadExecutor.hasQueuedSearch()) {
                 return InteractionResult.FAIL;
             }
             else {
-                handCompass.getOrCreateTag().putBoolean(TAG_LOADING, false);
+                isLoading = false;
             }
         }
 
-        if (getBooleanTag(handCompass.getTag(), TAG_LOCKED)) {
+        if (locked) {
+            setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
             return super.useOn(useOnContext);
         }
 
-        if (player != null && isValidBeeHive(targetBlock)) {
+        if (player != null && isValidBeeHive(blockState)) {
             level.playSound(null, blockPos, BzSounds.HONEY_COMPASS_BLOCK_LOCK.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             if(player instanceof ServerPlayer serverPlayer) {
                 BzCriterias.HONEY_COMPASS_USE_TRIGGER.get().trigger(serverPlayer);
             }
 
             if (!level.isClientSide()) {
-                boolean singleCompass = !player.getAbilities().instabuild && handCompass.getCount() == 1;
+                boolean singleCompass = !player.getAbilities().instabuild && itemStack.getCount() == 1;
+
                 if (singleCompass) {
-                    addBlockTags(level.dimension(), blockPos, handCompass.getOrCreateTag(), targetBlock.getBlock());
+                    HoneyCompassBaseData honeyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+                    HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+
+                    String compassType = "block";
+
+                    Optional<BlockPos> targetPos = Optional.of(blockPos);
+                    Optional<ResourceKey<Level>> targetDimension = Optional.of(level.dimension());
+                    Optional<String> targetBlock = Optional.of(BuiltInRegistries.BLOCK.getKey(blockState.getBlock()).toString());
+                    Optional<String> targetStructureTag = Optional.empty();
+
+                    isFailed = false;
+
+                    setCompassStateData(honeyCompassStateData, locked, searchId, isLoading, isFailed, locatedSpecialStructure, itemStack);
+                    setCompassBaseData(honeyCompassBaseData, compassType, itemStack);
+                    setCompassTargetData(honeyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, itemStack);
                 }
                 else {
-                    ItemStack newCompass = new ItemStack(BzItems.HONEY_COMPASS.get(), 1);
-                    CompoundTag newCompoundTag = handCompass.hasTag() ? handCompass.getTag().copy() : new CompoundTag();
-                    newCompass.setTag(newCompoundTag);
+                    ItemStack newCompass = itemStack.copyWithCount(1);
                     if (!player.getAbilities().instabuild) {
-                        handCompass.shrink(1);
+                        itemStack.shrink(1);
                     }
 
-                    addBlockTags(level.dimension(), blockPos, newCompoundTag, targetBlock.getBlock());
+                    HoneyCompassStateData newHoneyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+                    HoneyCompassBaseData newHoneyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+                    HoneyCompassTargetData newHoneyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+
+                    String compassType = "block";
+
+                    Optional<BlockPos> targetPos = Optional.of(blockPos);
+                    Optional<ResourceKey<Level>> targetDimension = Optional.of(level.dimension());
+                    Optional<String> targetBlock = Optional.of(BuiltInRegistries.BLOCK.getKey(blockState.getBlock()).toString());
+                    Optional<String> targetStructureTag = Optional.empty();
+
+                    setCompassStateData(newHoneyCompassStateData, locked, searchId, false, false, locatedSpecialStructure, newCompass);
+                    setCompassBaseData(newHoneyCompassBaseData, compassType, newCompass);
+                    setCompassTargetData(newHoneyCompassTargetData, targetBlock, targetStructureTag, targetPos, targetDimension, newCompass);
+
                     if (!player.getInventory().add(newCompass)) {
                         player.drop(newCompass, false);
                     }
@@ -388,108 +505,31 @@ public class HoneyCompass extends Item implements Vanishable {
 
         if(block.is(BzTags.DISALLOWED_POSITION_TRACKING_BLOCKS)) return false;
 
-        if(block.is(BlockTags.BEEHIVES) || block.getBlock() instanceof BeehiveBlock) {
+        if (block.is(BlockTags.BEEHIVES) || block.getBlock() instanceof BeehiveBlock) {
             return true;
         }
 
         return false;
     }
 
-    public static boolean getBooleanTag(CompoundTag compoundTag, String tagName) {
-        if (compoundTag == null || !compoundTag.contains(tagName)) {
-            return false;
+    private static void setCompassTargetData(HoneyCompassTargetData honeyCompassTargetData, Optional<String> targetBlock, Optional<String> targetStructureTag, Optional<BlockPos> targetPos, Optional<ResourceKey<Level>> targetDimension, ItemStack itemStack) {
+        if (honeyCompassTargetData.isDifferent(targetBlock, targetStructureTag, targetPos, targetDimension)) {
+            itemStack.set(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(),
+                    new HoneyCompassTargetData(targetBlock, targetStructureTag, targetPos, targetDimension));
         }
-        return compoundTag.getBoolean(tagName);
     }
 
-    public static boolean hasTagSafe(CompoundTag compoundTag, String tagName) {
-        return compoundTag != null && compoundTag.contains(tagName);
-    }
-
-    public static void setSearchId(CompoundTag compoundTag, UUID uuid) {
-        compoundTag.putUUID(TAG_COMPASS_SEARCH_ID, uuid);
-    }
-
-    public static UUID getSearchId(CompoundTag compoundTag) {
-        if (compoundTag.contains(TAG_COMPASS_SEARCH_ID)) {
-            return compoundTag.getUUID(TAG_COMPASS_SEARCH_ID);
+    private static void setCompassBaseData(HoneyCompassBaseData honeyCompassBaseData, String compassType, ItemStack itemStack) {
+        if (!honeyCompassBaseData.compassType().equals(compassType)) {
+            itemStack.set(BzDataComponents.HONEY_COMPASS_BASE_DATA.get(),
+                    new HoneyCompassBaseData(compassType, honeyCompassBaseData.customName(), honeyCompassBaseData.customDescription()));
         }
-
-        return null;
     }
 
-    public static void setStructureTags(CompoundTag compoundTag, TagKey<Structure> structureTagKey) {
-        compoundTag.putString(TAG_STRUCTURE_TAG, structureTagKey.location().toString());
-    }
-
-    public static void addFoundStructureLocation(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag) {
-        compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
-        Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
-        compoundTag.putString(TAG_TYPE, "structure");
-        compoundTag.remove(TAG_TARGET_BLOCK);
-        compoundTag.remove(HoneyCompass.TAG_LOADING);
-        compoundTag.remove(HoneyCompass.TAG_FAILED);
-        compoundTag.remove(HoneyCompass.TAG_STRUCTURE_TAG);
-    }
-
-    public static void addBlockTags(ResourceKey<Level> resourceKey, BlockPos blockPos, CompoundTag compoundTag, Block block) {
-        compoundTag.put(TAG_TARGET_POS, NbtUtils.writeBlockPos(blockPos));
-        Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, resourceKey).resultOrPartial(Bumblezone.LOGGER::error).ifPresent(tag -> compoundTag.put(TAG_TARGET_DIMENSION, tag));
-        compoundTag.putString(TAG_TYPE, "block");
-        compoundTag.putString(TAG_TARGET_BLOCK, BuiltInRegistries.BLOCK.getKey(block).toString());
-        compoundTag.remove(HoneyCompass.TAG_LOADING);
-        compoundTag.remove(HoneyCompass.TAG_FAILED);
-        compoundTag.remove(HoneyCompass.TAG_STRUCTURE_TAG);
-    }
-
-    public static boolean isBlockCompass(ItemStack compassItem) {
-        if(compassItem.hasTag()) {
-            CompoundTag tag = compassItem.getTag();
-            return tag != null && tag.contains(TAG_TYPE) && tag.getString(TAG_TYPE).equals("block");
+    private static void setCompassStateData(HoneyCompassStateData honeyCompassStateData, boolean locked, Optional<UUID> searchId, boolean isLoading, boolean isFailed, boolean locatedSpecialStructure, ItemStack itemStack) {
+        if (!honeyCompassStateData.isDifferent(locked, searchId, isLoading, isFailed, locatedSpecialStructure)) {
+            itemStack.set(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(),
+                    new HoneyCompassStateData(locked, searchId, isLoading, isFailed, locatedSpecialStructure));
         }
-        return false;
-    }
-
-    public static String getStoredBlock(ItemStack compassItem) {
-        if(compassItem.hasTag()) {
-            CompoundTag tag = compassItem.getTag();
-            if (tag != null && tag.contains(TAG_TARGET_BLOCK)) {
-                return tag.getString(TAG_TARGET_BLOCK);
-            }
-        }
-        return null;
-    }
-
-    public static BlockPos getStoredPosition(ItemStack compassItem) {
-        if(compassItem.hasTag()) {
-            CompoundTag tag = compassItem.getTag();
-            if (tag != null && tag.contains(TAG_TARGET_POS)) {
-                return NbtUtils.readBlockPos(tag.getCompound(TAG_TARGET_POS));
-            }
-        }
-        return null;
-    }
-
-    public static Optional<ResourceKey<Level>> getStoredDimension(ItemStack compassItem) {
-        if(compassItem.hasTag()) {
-            CompoundTag tag = compassItem.getTag();
-            if (tag != null && tag.contains(TAG_TARGET_DIMENSION)) {
-                return Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, tag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
-            }
-        }
-        return Optional.empty();
-    }
-
-    public static boolean isStructureCompass(ItemStack compassItem) {
-        if(compassItem.hasTag()) {
-            CompoundTag tag = compassItem.getTag();
-            return tag != null && tag.contains(TAG_TYPE) && tag.getString(TAG_TYPE).equals("structure");
-        }
-        return false;
-    }
-
-    private static void removeSearchIdMode(CompoundTag tag, UUID searchId) {
-        tag.remove(HoneyCompass.TAG_COMPASS_SEARCH_ID);
-        ThreadExecutor.removeSearchResult(searchId);
     }
 }

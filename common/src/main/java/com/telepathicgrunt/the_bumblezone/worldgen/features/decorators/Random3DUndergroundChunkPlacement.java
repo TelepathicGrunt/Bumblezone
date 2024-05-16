@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.decorators;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.modinit.BzPlacements;
 import net.minecraft.core.BlockPos;

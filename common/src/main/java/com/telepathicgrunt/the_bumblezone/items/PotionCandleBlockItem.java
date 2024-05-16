@@ -3,6 +3,8 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -11,8 +13,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,18 +31,19 @@ public class PotionCandleBlockItem extends BlockItem {
     }
 
     @Override
-    protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player, ItemStack stack, BlockState state) {
-        if (level.isClientSide() && stack.hasTag() && level.getBlockEntity(pos) instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
-            CompoundTag blockEntityTag = stack.getOrCreateTag().getCompound("BlockEntityTag");
+    protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player, ItemStack itemStack, BlockState state) {
+        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (level.isClientSide() && customData != null && !customData.isEmpty() && level.getBlockEntity(pos) instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
+            CompoundTag blockEntityTag = customData.copyTag();
 
             int color = blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG) ? blockEntityTag.getInt(PotionCandleBlockEntity.COLOR_TAG) : PotionCandleBlockEntity.DEFAULT_COLOR;
             potionCandleBlockEntity.setColor(color);
 
             ResourceLocation rl = new ResourceLocation(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
-            Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
-            potionCandleBlockEntity.setMobEffect(mobEffect.orElse(null));
+            Optional<Holder.Reference<MobEffect>> optionalMobEffectReference = BuiltInRegistries.MOB_EFFECT.getHolder(rl);
+            optionalMobEffectReference.ifPresent(potionCandleBlockEntity::setMobEffect);
         }
-        return super.updateCustomBlockEntityTag(pos, level, player, stack, state);
+        return super.updateCustomBlockEntityTag(pos, level, player, itemStack, state);
     }
 
     @Override
@@ -47,9 +52,10 @@ public class PotionCandleBlockItem extends BlockItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        if (itemStack.hasTag()) {
-            CompoundTag blockEntityTag = itemStack.getOrCreateTag().getCompound("BlockEntityTag");
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (customData != null && !customData.isEmpty()) {
+            CompoundTag blockEntityTag = customData.copyTag();
             if (blockEntityTag.contains(PotionCandleBlockEntity.STATUS_EFFECT_TAG)) {
                 ResourceLocation rl = new ResourceLocation(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
                 Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);

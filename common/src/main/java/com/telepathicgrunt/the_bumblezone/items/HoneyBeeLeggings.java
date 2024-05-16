@@ -1,20 +1,22 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.PileOfPollen;
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyBeeLeggingsData;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.effects.MobEffectInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStats;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -29,16 +31,12 @@ import net.minecraft.world.phys.Vec3;
 
 public class HoneyBeeLeggings extends BeeArmor {
 
-    public HoneyBeeLeggings(ArmorMaterial material, ArmorItem.Type armorType, Properties properties, int variant) {
-        super(material, armorType, properties, variant, false);
-    }
-
-    /**
-     * Return whether this item is repairable in an anvil.
-     */
-    @Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.is(BzTags.BEE_ARMOR_REPAIR_ITEMS);
+    public HoneyBeeLeggings(Holder<ArmorMaterial> material, ArmorItem.Type armorType, Properties properties, int variant) {
+        super(material,
+            armorType,
+            properties.component(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get(), new HoneyBeeLeggingsData()),
+            variant,
+            false);
     }
 
     // Runs on Forge
@@ -93,7 +91,7 @@ public class HoneyBeeLeggings extends BeeArmor {
             if (ejectPollen) {
                 removeAndSpawnPollen(level, livingEntity.position(), itemstack);
                 if(!level.isClientSide() && random.nextFloat() < 0.1f) {
-                    itemstack.hurtAndBreak(1, livingEntity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
+                    itemstack.hurtAndBreak(1, livingEntity, EquipmentSlot.LEGS);
                 }
             }
             else if(!livingEntity.isShiftKeyDown() && !isPollinated) {
@@ -131,7 +129,7 @@ public class HoneyBeeLeggings extends BeeArmor {
                     random.nextFloat() < 0.004f &&
                     itemstack.getMaxDamage() - itemstack.getDamageValue() > 1)
             {
-                itemstack.hurtAndBreak(1, livingEntity, (playerEntity) -> playerEntity.broadcastBreakEvent(EquipmentSlot.LEGS));
+                itemstack.hurtAndBreak(1, livingEntity, EquipmentSlot.LEGS);
             }
         }
     }
@@ -177,9 +175,9 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
     }
 
-    public static ItemStack getEntityBeeLegging(Entity entity) {
-        for(ItemStack armor : entity.getArmorSlots()) {
-            if(armor.getItem() instanceof HoneyBeeLeggings) {
+    public static ItemStack getEntityBeeLegging(LivingEntity entity) {
+        for (ItemStack armor : entity.getArmorSlots()) {
+            if (armor.getItem() instanceof HoneyBeeLeggings) {
                 return armor;
             }
         }
@@ -188,20 +186,19 @@ public class HoneyBeeLeggings extends BeeArmor {
 
     public static void setPollinated(ItemStack itemStack) {
         if (itemStack.getItem() instanceof HoneyBeeLeggings) {
-            itemStack.getOrCreateTag().putBoolean("pollinated", true);
+            itemStack.set(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get(), new HoneyBeeLeggingsData(true));
         }
     }
 
     public static void clearPollinated(ItemStack itemStack) {
         if (itemStack.getItem() instanceof HoneyBeeLeggings) {
-            itemStack.getOrCreateTag().putBoolean("pollinated", false);
+            itemStack.set(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get(), new HoneyBeeLeggingsData(false));
         }
     }
 
     public static boolean isPollinated(ItemStack itemStack) {
         return itemStack.getItem() instanceof HoneyBeeLeggings &&
-                itemStack.hasTag() &&
-                itemStack.getTag().getBoolean("pollinated");
+                itemStack.get(BzDataComponents.HONEY_BEE_LEGGINGS_DATA.get()).pollinated();
     }
 
     public static void removeAndSpawnPollen(Level world, Vec3 position, ItemStack itemStack) {

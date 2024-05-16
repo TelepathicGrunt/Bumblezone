@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -15,8 +14,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import org.apache.commons.lang3.NotImplementedException;
-import org.jetbrains.annotations.Contract;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +76,7 @@ public class EnchantmentUtils {
 		}
 		return map;
 	}
-	
+
 	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {
 		ListTag listtag = EnchantedBookItem.getEnchantments(itemStack);
 		Map<Enchantment, Integer> existingEnchants = new Object2IntOpenHashMap<>();

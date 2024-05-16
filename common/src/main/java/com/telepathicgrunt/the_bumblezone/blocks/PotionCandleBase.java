@@ -10,19 +10,21 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -180,13 +182,13 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (player.getAbilities().mayBuild) {
-            if (CandleLightBehaviors(blockState, level, blockPos, player, interactionHand)) {
-                return InteractionResult.sidedSuccess(level.isClientSide);
+            if (CandleLightBehaviors(itemStack, blockState, level, blockPos, player, interactionHand)) {
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -197,8 +199,8 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
                 BlockEntity blockEntity = level.getBlockEntity(hit.getBlockPos());
                 if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity &&
                     potionCandleBlockEntity.getMobEffect() != null &&
-                    potionCandleBlockEntity.getMobEffect().isInstantenous() &&
-                    !potionCandleBlockEntity.getMobEffect().isBeneficial())
+                    potionCandleBlockEntity.getMobEffect().value().isInstantenous() &&
+                    !potionCandleBlockEntity.getMobEffect().value().isBeneficial())
                 {
                     BzCriterias.PROJECTILE_LIGHT_INSTANT_POTION_CANDLE_TRIGGER.get().trigger(serverPlayer);
                 }
@@ -215,7 +217,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof PotionCandleBlockEntity potionCandleBlockEntity) {
             ItemStack itemStack = BzItems.POTION_CANDLE.get().getDefaultInstance();
-            potionCandleBlockEntity.saveToItem(itemStack);
+            potionCandleBlockEntity.saveToItem(itemStack, level.registryAccess());
             ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemStack);
             itementity.setDefaultPickUpDelay();
             level.addFreshEntity(itementity);
@@ -253,13 +255,11 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     public static int getItemColor(ItemStack itemStack) {
-        if (itemStack.hasTag()) {
-            CompoundTag tag = itemStack.getTag();
-            if (tag != null && tag.contains("BlockEntityTag")) {
-                CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
-                if (blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG)) {
-                    return blockEntityTag.getInt(PotionCandleBlockEntity.COLOR_TAG);
-                }
+        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (customData != null && !customData.isEmpty()) {
+            CompoundTag tag = customData.copyTag();
+            if (tag.contains(PotionCandleBlockEntity.COLOR_TAG)) {
+                return tag.getInt(PotionCandleBlockEntity.COLOR_TAG);
             }
         }
         return PotionCandleBlockEntity.DEFAULT_COLOR;

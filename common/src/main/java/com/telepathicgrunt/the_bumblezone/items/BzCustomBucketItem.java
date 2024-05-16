@@ -14,6 +14,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -104,8 +105,8 @@ public class BzCustomBucketItem extends BzBucketItem {
                 ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(null, worldIn, posIn, blockstate, Fluids.WATER));
     }
 
-    // Override and redirect forge patched method to our own.
-    @PlatformOnly({"forge"})
+    // Override and redirect neoforge patched method to our own.
+    @PlatformOnly({"neoforge"})
     public boolean emptyContents(@Nullable Player player, Level world, BlockPos pos, @Nullable BlockHitResult hitResult, @Nullable ItemStack container) {
         return emptyContents(player, world, pos, hitResult);
     }
@@ -147,18 +148,21 @@ public class BzCustomBucketItem extends BzBucketItem {
                 if (this.fluid.is(BzTags.SUGAR_WATER_FLUID) && world instanceof ServerLevel serverLevel) {
                     Vec3 targetPos = hitResult != null ? hitResult.getLocation() : new Vec3(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 
-                    LootTable sugarWaterEvaporateLootTable = world.getServer().getLootData()
-                            .getLootTable(new ResourceLocation(Bumblezone.MODID, "fluids/sugar_water_evaporates"));
-                    LootParams lootParams = new LootParams.Builder(serverLevel)
-                            .withParameter(LootContextParams.ORIGIN, targetPos)
-                            .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
-                            .create(LootContextParamSets.COMMAND);
-                    ObjectArrayList<ItemStack> evaporateItems = sugarWaterEvaporateLootTable.getRandomItems(lootParams);
+                    LootTable sugarWaterEvaporateLootTable = world.registryAccess().registryOrThrow(Registries.LOOT_TABLE)
+                            .get(new ResourceLocation(Bumblezone.MODID, "fluids/sugar_water_evaporates"));
 
-                    for (ItemStack itemStackToSpawn : evaporateItems) {
-                        ItemEntity itementity = new ItemEntity(world, targetPos.x(), targetPos.y(), targetPos.z(), itemStackToSpawn);
-                        itementity.setDefaultPickUpDelay();
-                        world.addFreshEntity(itementity);
+                    if (sugarWaterEvaporateLootTable != null) {
+                        LootParams lootParams = new LootParams.Builder(serverLevel)
+                                .withParameter(LootContextParams.ORIGIN, targetPos)
+                                .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
+                                .create(LootContextParamSets.COMMAND);
+                        ObjectArrayList<ItemStack> evaporateItems = sugarWaterEvaporateLootTable.getRandomItems(lootParams);
+
+                        for (ItemStack itemStackToSpawn : evaporateItems) {
+                            ItemEntity itementity = new ItemEntity(world, targetPos.x(), targetPos.y(), targetPos.z(), itemStackToSpawn);
+                            itementity.setDefaultPickUpDelay();
+                            world.addFreshEntity(itementity);
+                        }
                     }
                 }
                 else if (this.fluid.is(BzTags.HONEY_FLUID) && world instanceof ServerLevel serverLevel) {

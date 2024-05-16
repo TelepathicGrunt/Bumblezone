@@ -191,6 +191,10 @@ public class PlatformHooksImpl {
         return !FMLLoader.isProduction();
     }
 
+    public static boolean isClientEnvironment() {
+        return FMLLoader.getDist().isClient();
+    }
+
     public static boolean shouldMobSplit(Mob parent, List<Mob> children) {
         return !EventHooks.onMobSplit(parent, children).isCanceled();
     }

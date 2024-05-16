@@ -1,13 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.platform;
 
-import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -18,16 +17,8 @@ public interface ItemExtension {
         return (Item) this;
     }
 
-    default int bz$getMaxDamage(ItemStack stack) {
-        return getBzItem().components().getOrDefault(DataComponents.MAX_DAMAGE, 0);
-    }
-
     default void bz$setDamage(ItemStack stack, int damage) {
-        stack.getOrCreateTag().putInt("Damage", Math.max(0, damage));
-    }
-
-    default OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return OptionalBoolean.EMPTY;
+        stack.set(DataComponents.DAMAGE, Mth.clamp(damage, 0, stack.getMaxDamage()));
     }
 
     default EquipmentSlot bz$getEquipmentSlot(ItemStack stack) {

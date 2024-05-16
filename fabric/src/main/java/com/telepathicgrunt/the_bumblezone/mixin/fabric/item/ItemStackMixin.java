@@ -15,17 +15,10 @@ public abstract class ItemStackMixin {
 
     @Shadow public abstract Item getItem();
 
-    @Inject(method = "getMaxDamage", at = @At("HEAD"), cancellable = true)
-    public void bumblezone$onGetMaxDamage(CallbackInfoReturnable<Integer> cir) {
-        if (getItem() instanceof ItemExtension extension) {
-            cir.setReturnValue((extension).bz$getMaxDamage((ItemStack) (Object) this));
-        }
-    }
-
     @Inject(method = "setDamageValue", at = @At("HEAD"), cancellable = true)
-    public void bumblezone$onSetDamage(int i, CallbackInfo ci) {
+    public void bumblezone$onSetDamage(int damage, CallbackInfo ci) {
         if (getItem() instanceof ItemExtension extension) {
-            (extension).bz$setDamage((ItemStack) (Object) this, i);
+            (extension).bz$setDamage((ItemStack) (Object) this, damage);
             ci.cancel();
         }
     }
