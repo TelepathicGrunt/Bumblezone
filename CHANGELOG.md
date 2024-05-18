@@ -1,10 +1,12 @@
 ### **(V.7.3.8 Changes) (1.20.1 Minecraft)**
 
 ##### Fluids:
-(Forge/NeoForge): Added diagonal textures for Honey Fluid and ROyal Jelly Fluid.
+(Forge/NeoForge): Added diagonal textures for Honey Fluid and Royal Jelly Fluid.
 
 ##### Items:
-Slightly adjusted Honey Bucket texture.
+Changed Honey Bucket texture and Royal Jelly Bucket textures. Special thanks to crispytwig!
+
+Change texture of Royal Jelly Bottle and Royal Jelly Block.
 
 ##### Config:
 Added alternativeFluidToReplaceHoneyFluid config option to allow swapping Bumblezone Honey Fluid in worldgen with another fluid.
