@@ -40,6 +40,9 @@
     },
     {
       "processor_type": "the_bumblezone:remove_floating_blocks_processor"
+    },
+    {
+      "processor_type": "the_bumblezone:replace_honey_processor"
     }
   ]
 }

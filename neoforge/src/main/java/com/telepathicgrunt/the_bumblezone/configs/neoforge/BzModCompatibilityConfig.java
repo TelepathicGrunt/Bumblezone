@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class BzModCompatibilityConfig {
 	public static final ModConfigSpec GENERAL_SPEC;
 
+	public static ModConfigSpec.ConfigValue<String> alternativeFluidToReplaceHoneyFluid;
 	public static ModConfigSpec.BooleanValue allowHoneyFluidTanksFeedingCompat;
 
 	public static ModConfigSpec.BooleanValue spawnPokecubeBeePokemon;
@@ -64,14 +65,21 @@ public class BzModCompatibilityConfig {
 		builder.push("Mod Compatibility Options");
 			builder.push("General Compat Options");
 
+			alternativeFluidToReplaceHoneyFluid = builder
+					.comment(" \n-----------------------------------------------------\n",
+							" The fluid to replace Bumblezone's Honey Fluid in the dimension. Requires restart.",
+							" Note, this will not replace already placed Bumblezone Honey Fluid.\n")
+					.translation("the_bumblezone.config.alternativefluidtoreplacehoneyfluid")
+					.define("alternativeFluidToReplaceHoneyFluid", "");
+
 			allowHoneyFluidTanksFeedingCompat = builder
-							.comment(" \n-----------------------------------------------------\n",
-									" Will let you feed any item that has a Forge fluid attachmentType attached and has ",
-									"  any fluid that is tagged forge:fluid/honey inside. This works alongside the bee_feeding item tag.",
-									"  An item can still be fed even if bee_feeding tag doesn't have the item as long as the ",
-									" item fit the above conditions with the fluid attachmentType and this config is set to true.\n")
-							.translation("the_bumblezone.config.allowhoneyfluidtanksfeedingcompat")
-							.define("allowHoneyFluidTanksFeedingCompat", true);
+					.comment(" \n-----------------------------------------------------\n",
+							" Will let you feed any item that has a Forge fluid attachmentType attached and has",
+							" any fluid that is tagged forge:fluid/honey inside. This works alongside the bee_feeding item tag.",
+							" An item can still be fed even if bee_feeding tag doesn't have the item as long as the",
+							" item fit the above conditions with the fluid attachmentType and this config is set to true.\n")
+					.translation("the_bumblezone.config.allowhoneyfluidtanksfeedingcompat")
+					.define("allowHoneyFluidTanksFeedingCompat", true);
 
 			builder.pop();
 
@@ -404,6 +412,7 @@ public class BzModCompatibilityConfig {
 	}
 
 	public static void copyToCommon() {
+		BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid = alternativeFluidToReplaceHoneyFluid.get();
 		BzModCompatibilityConfigs.allowHoneyFluidTanksFeedingCompat = allowHoneyFluidTanksFeedingCompat.get();
 
 		BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock = allowPotionOfBeesRevivingEmptyBroodBlock.get();

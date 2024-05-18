@@ -17,6 +17,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.processors.PollenPilingProces
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.RandomReplaceWithPropertiesProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.RemoveFloatingBlocksProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.ReplaceAirOnlyProcessor;
+import com.telepathicgrunt.the_bumblezone.worldgen.processors.ReplaceHoneyProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.ReplaceNotAirProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.SpawnerRandomizingProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.SpiderInfestedBeeDungeonProcessor;
@@ -50,4 +51,5 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<StrongerWaterloggingProcessor>> STRONGER_WATERLOGGING_PROCESSOR = STRUCTURE_PROCESSOR.register("stronger_waterlogging_processor", () -> () -> StrongerWaterloggingProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<ArenaSpecialBlockHandlerProcessor>> ARENA_SPECIAL_BLOCK_HANDLER_PROCESSOR = STRUCTURE_PROCESSOR.register("arena_special_block_handler_processor", () -> () -> ArenaSpecialBlockHandlerProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<ReplaceHoneyProcessor>> REPLACE_HONEY_PROCESSOR = STRUCTURE_PROCESSOR.register("replace_honey_processor", () -> () -> ReplaceHoneyProcessor.CODEC);
 }

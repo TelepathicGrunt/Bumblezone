@@ -47,8 +47,10 @@ public class FriendsAndFoesCompat implements ModCompat {
             event.addTrade(4,
                     new GeneralUtils.BasicItemTrade(Items.EMERALD, BzItems.BEE_BREAD.get(), 10, 3, 10, 22, 0.2F));
 
-            event.addTrade(5,
-                    new GeneralUtils.BasicItemTrade(BzItems.HONEY_BUCKET.get(), Items.EMERALD, 1, 6, 3, 25, 0.2F));
+            if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+                event.addTrade(5,
+                        new GeneralUtils.BasicItemTrade(BzItems.HONEY_BUCKET.get(), Items.EMERALD, 1, 6, 3, 25, 0.2F));
+            }
 
             event.addTrade(5,
                     new GeneralUtils.BasicItemTrade(Items.EMERALD, BzItems.HONEYCOMB_BROOD.get(), 25, 1, 2, 30, 0.2F));
@@ -56,8 +58,10 @@ public class FriendsAndFoesCompat implements ModCompat {
             event.addTrade(5,
                     new GeneralUtils.BasicItemTrade(Items.EMERALD, BzItems.HONEY_COCOON.get(), 15, 1, 3, 30, 0.2F));
 
-            event.addTrade(5,
-                    new GeneralUtils.BasicItemTrade(Items.EMERALD, BzItems.HONEY_BUCKET.get(), 20, 1, 2, 30, 0.2F));
+            if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+                event.addTrade(5,
+                        new GeneralUtils.BasicItemTrade(Items.EMERALD, BzItems.HONEY_BUCKET.get(), 20, 1, 2, 30, 0.2F));
+            }
         }
     }
 }
