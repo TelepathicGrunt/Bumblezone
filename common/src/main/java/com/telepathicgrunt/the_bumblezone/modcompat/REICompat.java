@@ -3,6 +3,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
@@ -48,7 +49,9 @@ public class REICompat implements REIClientPlugin {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
         addInfo(BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(BzFluids.ROYAL_JELLY_FLUID.get());
-        addInfo(BzFluids.HONEY_FLUID.get());
+        if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+            addInfo(BzFluids.HONEY_FLUID.get());
+        }
 
         registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "potion_candle/from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe.value(), registry, true));

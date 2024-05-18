@@ -47,6 +47,9 @@
       "processor_type": "the_bumblezone:spawner_randomizing_processor"
     },
     {
+      "processor_type": "the_bumblezone:replace_honey_processor"
+    },
+    {
       "processor_type": "minecraft:capped",
       "limit": 2,
       "delegate": {

@@ -29,9 +29,9 @@ public class PistonStructureResolverMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void bumblezone$pullableOnlyBlocks2(BlockPos blockPos,
-                                                       Direction direction,
-                                                       CallbackInfoReturnable<Boolean> cir,
-                                                       BlockState blockState)
+                                                Direction direction,
+                                                CallbackInfoReturnable<Boolean> cir,
+                                                BlockState blockState)
     {
         if (blockState.is(BzBlocks.ROYAL_JELLY_BLOCK.get())) {
             this.pushDirection = this.pushDirection.getOpposite();

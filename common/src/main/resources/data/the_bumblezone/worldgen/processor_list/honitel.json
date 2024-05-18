@@ -22,6 +22,9 @@
           }
         }
       ]
+    },
+    {
+      "processor_type": "the_bumblezone:replace_honey_processor"
     }
   ]
 }

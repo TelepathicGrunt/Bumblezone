@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.QueensTradeManager;
 import com.telepathicgrunt.the_bumblezone.entities.queentrades.WeightedTradeResult;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
@@ -85,7 +86,9 @@ public class JEIIntegration implements IModPlugin {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(registration, item.get()));
         addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(registration, BzFluids.ROYAL_JELLY_FLUID.get());
-        addInfo(registration, BzFluids.HONEY_FLUID.get());
+        if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+            addInfo(registration, BzFluids.HONEY_FLUID.get());
+        }
 
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null)
