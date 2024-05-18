@@ -4,6 +4,7 @@ import java.util.List;
 
 public class BzModCompatibilityConfigs {
 
+	public static String alternativeFluidToReplaceHoneyFluid = "";
 	public static boolean allowHoneyFluidTanksFeedingCompat = true;
 
 	public static boolean spawnPokecubeBeePokemon = true;

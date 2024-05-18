@@ -1,5 +1,9 @@
 ### **(V.7.3.8 Changes) (1.20.1 Minecraft)**
 
+##### Config:
+Added alternativeFluidToReplaceHoneyFluid config option to allow swapping Bumblezone Honey Fluid in worldgen with another fluid.
+Give it the resourcelocation of the target fluid to swap to.
+
 ##### Lang:
 Updated zh_cn (Special thanks to TskimiSeiran)
 

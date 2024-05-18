@@ -11,6 +11,9 @@
       "pollen_replace_solids": true
     },
     {
+      "processor_type": "the_bumblezone:replace_honey_processor"
+    },
+    {
       "processor_type": "the_bumblezone:fluid_tick_processor"
     }
   ]

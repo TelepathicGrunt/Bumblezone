@@ -314,6 +314,9 @@ public class BzConfig extends MidnightConfig {
     public static Comment modCompatComment;
 
     @Entry
+    public static String alternativeFluidToReplaceHoneyFluid = "";
+
+    @Entry
     public static boolean allowFriendsAndFoesBeekeeperTradesCompat = true;
 
     @Entry
@@ -508,6 +511,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.continuityEssenceCooldown = continuityEssenceCooldown;
 
         //Compat
+        BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid = alternativeFluidToReplaceHoneyFluid;
         BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat = allowFriendsAndFoesBeekeeperTradesCompat;
         BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock = allowGoodallBottledBeesRevivingEmptyBroodBlock;
         BzModCompatibilityConfigs.allowLootrCompat = allowLootrCompat;
