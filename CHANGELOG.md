@@ -15,6 +15,9 @@ Updated zh_cn (Special thanks to TskimiSeiran)
 ##### Misc:
 Compressed more textures.
 
+##### Mod Compat:
+Made Simple Hats's Bee On Head hat item is now added to `the_bumblezone:bee_armors/bz_armor_ability_enhancing_wearables` item tag.
+
 
 ### **(V.7.4.7 Changes) (1.20.4 Minecraft)**
 
