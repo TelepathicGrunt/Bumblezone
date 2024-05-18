@@ -1,5 +1,8 @@
 ### **(V.7.4.8 Changes) (1.20.4 Minecraft)**
 
+##### Items:
+Slightly adjusted Honey Bucket texture.
+
 ##### Config:
 Added alternativeFluidToReplaceHoneyFluid config option to allow swapping Bumblezone Honey Fluid in worldgen with another fluid.
 Give it the resourcelocation of the target fluid to swap to. You would still need to disable the Honey Bucket recipe yourself by datapack.
