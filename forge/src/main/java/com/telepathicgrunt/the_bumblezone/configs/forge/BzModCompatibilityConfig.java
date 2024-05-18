@@ -404,7 +404,7 @@ public class BzModCompatibilityConfig {
 					.comment(" \n-----------------------------------------------------\n",
 							" Allow loot Cocoons to have compat with Lootr\n")
 					.translation("the_bumblezone.config.allowLootrCompat")
-					.define("allowLootrCompat", false);
+					.define("allowLootrCompat", true);
 
 			builder.pop();
 
