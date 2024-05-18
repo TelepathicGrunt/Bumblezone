@@ -263,4 +263,8 @@ public class PlatformHooksImpl {
     }
 
     public static boolean shouldMobSplit(Mob parent, List<Mob> children) { return true; }
+
+    public static Fluid getBucketItemFluid(BucketItem stack) {
+        return ((BucketItemAccessor)stack).bz$getContents();
+    }
 }

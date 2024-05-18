@@ -201,4 +201,8 @@ public class PlatformHooksImpl {
     public static boolean shouldMobSplit(Mob parent, List<Mob> children) {
         return !EventHooks.onMobSplit(parent, children).isCanceled();
     }
+
+    public static Fluid getBucketItemFluid(BucketItem stack) {
+        return stack.getFluid();
+    }
 }

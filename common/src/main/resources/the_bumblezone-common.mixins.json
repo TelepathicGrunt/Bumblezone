@@ -46,6 +46,7 @@
     "entities.FoxAccessor",
     "entities.HangingEntityMixin",
     "entities.ItemEntityAccessor",
+    "entities.ItemFrameMixin",
     "entities.LightningBoltMixin",
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
