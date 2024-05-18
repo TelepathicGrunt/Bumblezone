@@ -2,7 +2,7 @@
 
 ##### Config:
 Added alternativeFluidToReplaceHoneyFluid config option to allow swapping Bumblezone Honey Fluid in worldgen with another fluid.
-Give it the resourcelocation of the target fluid to swap to.
+Give it the resourcelocation of the target fluid to swap to. You would still need to disable the Honey Bucket recipe yourself by datapack.
 
 ##### Lang:
 Updated zh_cn (Special thanks to TskimiSeiran)
