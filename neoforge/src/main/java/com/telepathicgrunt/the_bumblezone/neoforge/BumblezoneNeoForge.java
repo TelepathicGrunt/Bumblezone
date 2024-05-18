@@ -26,7 +26,7 @@ import java.util.Optional;
 @Mod(Bumblezone.MODID)
 public class BumblezoneNeoForge {
 
-    public BumblezoneNeoForge(IEventBus modEventBus, IEventBus eventBus) {
+    public BumblezoneNeoForge(IEventBus modEventBus) {
         BzConfigHandler.setup(modEventBus);
 
         NeoForgeModuleInitalizer.init();
@@ -38,6 +38,7 @@ public class BumblezoneNeoForge {
         BzBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
         BzAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
 
+        IEventBus eventBus = NeoForge.EVENT_BUS;
         NeoForgeEventManager.init(modEventBus, eventBus);
     }
 }
