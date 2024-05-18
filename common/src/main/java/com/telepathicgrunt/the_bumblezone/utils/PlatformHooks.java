@@ -162,4 +162,10 @@ public class PlatformHooks {
     public static boolean shouldMobSplit(Mob parent, List<Mob> children) {
         throw new NotImplementedException("PlatformHooks fireMobSplitEvents is not implemented!");
     }
+
+    @ExpectPlatform
+    @Contract(pure = true)
+    public static Fluid getBucketItemFluid(BucketItem stack) {
+        throw new NotImplementedException("PlatformHooks getBucketItemFluid is not implemented!");
+    }
 }
