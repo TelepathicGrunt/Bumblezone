@@ -10,6 +10,9 @@ Give it the resourcelocation of the target fluid to swap to. You would still nee
 ##### Lang:
 Updated zh_cn (Special thanks to TskimiSeiran)
 
+##### Misc:
+Compressed more textures.
+
 
 ### **(V.7.4.7 Changes) (1.20.4 Minecraft)**
 
