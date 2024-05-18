@@ -160,4 +160,8 @@ public class PlatformHooksImpl {
         return Arrays.stream(targetToolAction).anyMatch(actionString -> stack.canPerformAction(ToolAction.get(actionString)))
                 || targetBackupClass.isInstance(stack.getItem());
     }
+
+    public static Fluid getBucketItemFluid(BucketItem stack) {
+        return stack.getFluid();
+    }
 }

@@ -233,4 +233,8 @@ public class PlatformHooksImpl {
     public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         return targetBackupClass.isInstance(stack.getItem());
     }
+
+    public static Fluid getBucketItemFluid(BucketItem stack) {
+        return ((BucketItemAccessor)stack).bz$getContents();
+    }
 }

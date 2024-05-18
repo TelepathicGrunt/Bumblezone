@@ -145,4 +145,10 @@ public class PlatformHooks {
     public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         throw new NotImplementedException("PlatformHooks isToolAction is not implemented!");
     }
+
+    @ExpectPlatform
+    @Contract(pure = true)
+    public static Fluid getBucketItemFluid(BucketItem stack) {
+        throw new NotImplementedException("PlatformHooks getBucketItemFluid is not implemented!");
+    }
 }

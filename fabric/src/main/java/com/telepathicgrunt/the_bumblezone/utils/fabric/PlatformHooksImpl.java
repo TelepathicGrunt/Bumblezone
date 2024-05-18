@@ -49,6 +49,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 public class PlatformHooksImpl {
@@ -232,5 +233,9 @@ public class PlatformHooksImpl {
 
     public static boolean isToolAction(ItemStack stack, Class<?> targetBackupClass, String... targetToolAction) {
         return targetBackupClass.isInstance(stack.getItem());
+    }
+
+    public static Fluid getBucketItemFluid(BucketItem stack) {
+        return ((BucketItemAccessor)stack).bz$getContents();
     }
 }
