@@ -49,7 +49,7 @@ public class REICompat implements REIClientPlugin {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(item.get()));
         addInfo(BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(BzFluids.ROYAL_JELLY_FLUID.get());
-        if (!BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+        if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
             addInfo(BzFluids.HONEY_FLUID.get());
         }
 

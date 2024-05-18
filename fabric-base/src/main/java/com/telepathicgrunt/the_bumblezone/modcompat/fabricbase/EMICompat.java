@@ -48,7 +48,7 @@ public class EMICompat implements EmiPlugin {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(registry, item.get()));
         addInfo(registry, BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(registry, BzFluids.ROYAL_JELLY_FLUID.get());
-        if (!BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+        if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
             addInfo(registry, BzFluids.HONEY_FLUID.get());
         }
 

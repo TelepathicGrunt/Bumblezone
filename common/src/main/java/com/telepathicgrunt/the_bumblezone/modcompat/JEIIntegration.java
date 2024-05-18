@@ -81,7 +81,7 @@ public class JEIIntegration implements IModPlugin {
         BzCreativeTabs.CUSTOM_CREATIVE_TAB_ITEMS.forEach(item -> addInfo(registration, item.get()));
         addInfo(registration, BzFluids.SUGAR_WATER_FLUID.get());
         addInfo(registration, BzFluids.ROYAL_JELLY_FLUID.get());
-        if (!BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
+        if (BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty()) {
             addInfo(registration, BzFluids.HONEY_FLUID.get());
         }
 
