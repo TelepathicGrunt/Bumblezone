@@ -25,6 +25,10 @@
       "required": false
     },
     {
+      "id": "simplehats:bee_on_head",
+      "required": false
+    },
+    {
       "id": "spectrum:bee_head",
       "required": false
     },
