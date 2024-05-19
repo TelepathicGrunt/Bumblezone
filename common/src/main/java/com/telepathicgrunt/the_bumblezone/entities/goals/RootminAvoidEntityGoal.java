@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntitySelector;
@@ -140,14 +140,14 @@ public class RootminAvoidEntityGoal extends Goal {
             this.mob.getNavigation().setSpeedModifier(this.sprintSpeedModifier);
 
             if (RootminEntity.POSES_THAT_CAN_BE_FEAR_INTERRUPTED.contains(this.mob.getRootminPose())) {
-                this.mob.setRootminPose(RootminPose.RUN);
+                this.mob.setRootminPose(RootminState.RUN);
             }
         }
         else {
             this.mob.getNavigation().setSpeedModifier(this.walkSpeedModifier);
 
             if (RootminEntity.POSES_THAT_CAN_BE_FEAR_INTERRUPTED.contains(this.mob.getRootminPose())) {
-                this.mob.setRootminPose(RootminPose.WALK);
+                this.mob.setRootminPose(RootminState.WALK);
             }
         }
 

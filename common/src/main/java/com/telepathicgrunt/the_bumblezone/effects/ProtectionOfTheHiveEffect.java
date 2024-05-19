@@ -63,10 +63,10 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
      * Makes the bees swarm at the attacking entity
      */
     @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
        if (entity.hurtTime > 0 && entity.getLastHurtByMob() != null) {
            if (entity.getLastHurtByMob() instanceof Player player && player.isCreative()) {
-               return;
+               return true;
            }
 
            if (!(entity.getLastHurtByMob() instanceof Bee)) {
@@ -78,10 +78,7 @@ public class ProtectionOfTheHiveEffect extends MobEffect {
            }
        }
 
-       if (entity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-           entity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
-           WrathOfTheHiveEffect.calmTheBees(entity.level(), entity);
-       }
+        return true;
     }
 
     /**

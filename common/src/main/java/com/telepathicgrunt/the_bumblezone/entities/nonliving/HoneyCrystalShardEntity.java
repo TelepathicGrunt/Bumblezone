@@ -56,7 +56,7 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
 
             for(int i = 0; i < particlesToSpawn; ++i) {
                 this.level().addParticle(
-                        ParticleTypes.ENTITY_EFFECT,
+                        ParticleTypes.EFFECT,
                         this.getRandomX(0.5D),
                         this.getRandomY(),
                         this.getRandomZ(0.5D),
@@ -69,6 +69,11 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
 
     @Override
     protected ItemStack getPickupItem() {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
         return ItemStack.EMPTY;
     }
 

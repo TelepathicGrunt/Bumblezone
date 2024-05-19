@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.mojang.datafixers.util.Pair;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
 import com.telepathicgrunt.the_bumblezone.configs.BzBeeAggressionConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
@@ -41,7 +40,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.random.WeightedRandomList;
@@ -62,7 +60,6 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -88,7 +85,6 @@ import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,11 +102,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     public final AnimationState attackAnimationState = new AnimationState();
     public final AnimationState itemThrownAnimationState = new AnimationState();
     public final AnimationState itemRejectAnimationState = new AnimationState();
-    public static final EntityDataSerializer<BeeQueenPose> QUEEN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(BeeQueenPose.class);
+    public static final EntityDataSerializer<BeeQueenState> QUEEN_POSE_SERIALIZER = EntityDataSerializer.forValueType(BeeQueenState.STREAM_CODEC);
     private static final EntityDataAccessor<Integer> THROWCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> BEESPAWNCOOLDOWN = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> REMAINING_ANGER_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<BeeQueenPose> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, QUEEN_POSE_SERIALIZER);
+    private static final EntityDataAccessor<BeeQueenState> QUEEN_POSE = SynchedEntityData.defineId(BeeQueenEntity.class, QUEEN_POSE_SERIALIZER);
     private static final EntityDataAccessor<Integer> REMAINING_BONUS_TRADE_TIME = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<ItemStack> BONUS_TRADE_ITEM = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Boolean> ISSPECIALDAY = SynchedEntityData.defineId(BeeQueenEntity.class, EntityDataSerializers.BOOLEAN);
@@ -128,30 +124,30 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(THROWCOOLDOWN, 0);
-        this.entityData.define(REMAINING_ANGER_TIME, 0);
-        this.entityData.define(BEESPAWNCOOLDOWN, 0);
-        this.entityData.define(QUEEN_POSE, BeeQueenPose.NONE);
-        this.entityData.define(REMAINING_BONUS_TRADE_TIME, 0);
-        this.entityData.define(BONUS_TRADE_ITEM, ItemStack.EMPTY);
-        this.entityData.define(ISSPECIALDAY, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(THROWCOOLDOWN, 0);
+        builder.define(REMAINING_ANGER_TIME, 0);
+        builder.define(BEESPAWNCOOLDOWN, 0);
+        builder.define(QUEEN_POSE, BeeQueenState.NONE);
+        builder.define(REMAINING_BONUS_TRADE_TIME, 0);
+        builder.define(BONUS_TRADE_ITEM, ItemStack.EMPTY);
+        builder.define(ISSPECIALDAY, false);
     }
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
         if (QUEEN_POSE.equals(entityDataAccessor)) {
-            BeeQueenPose pose = this.getQueenPose();
-            setAnimationState(pose, BeeQueenPose.ATTACKING, this.attackAnimationState);
-            setAnimationState(pose, BeeQueenPose.ITEM_REJECT, this.itemRejectAnimationState);
-            setAnimationState(pose, BeeQueenPose.ITEM_THROW, this.itemThrownAnimationState);
+            BeeQueenState pose = this.getQueenPose();
+            setAnimationState(pose, BeeQueenState.ATTACKING, this.attackAnimationState);
+            setAnimationState(pose, BeeQueenState.ITEM_REJECT, this.itemRejectAnimationState);
+            setAnimationState(pose, BeeQueenState.ITEM_THROW, this.itemThrownAnimationState);
         }
 
         super.onSyncedDataUpdated(entityDataAccessor);
     }
 
-    private void setAnimationState(BeeQueenPose pose, BeeQueenPose poseToCheckFor, AnimationState animationState) {
+    private void setAnimationState(BeeQueenState pose, BeeQueenState poseToCheckFor, AnimationState animationState) {
         if (pose == poseToCheckFor) {
             animationState.start(this.tickCount);
         }
@@ -180,7 +176,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         tag.putInt("throwcooldown", getThrowCooldown());
         tag.putInt("beespawncooldown", getBeeSpawnCooldown());
         tag.putInt("bonusTradetime", getRemainingBonusTradeTime());
-        tag.put("bonusTradeitem", getBonusTradeItem().save(new CompoundTag()));
+        tag.put("bonusTradeitem", getBonusTradeItem().save(this.level().registryAccess(), new CompoundTag()));
         tag.putBoolean("isSpecialDay", getIsSpecialDay());
         this.addPersistentAngerSaveData(tag);
     }
@@ -191,7 +187,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         setThrowCooldown(tag.getInt("throwcooldown"));
         setBeeSpawnCooldown(tag.getInt("beespawncooldown"));
         setRemainingBonusTradeTime(tag.getInt("bonusTradetime"));
-        setBonusTradeItem(ItemStack.of(tag.getCompound("bonusTradeitem")));
+        setBonusTradeItem(ItemStack.parseOptional(this.level().registryAccess(), tag.getCompound("bonusTradeitem")));
         setIsSpecialDay(tag.getBoolean("isSpecialDay"));
 
         if (getBonusTradeItem().is(BzTags.DISALLOWED_RANDOM_BONUS_TRADE_ITEMS) &&
@@ -203,6 +199,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         this.readPersistentAngerSaveData(this.level(), tag);
     }
 
+    @Override
+    public boolean isFood(ItemStack itemStack) {
+        return false;
+    }
+
     public void setIsSpecialDay(boolean isSpecialDay) {
         this.entityData.set(ISSPECIALDAY, isSpecialDay);
     }
@@ -211,11 +212,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         return this.entityData.get(ISSPECIALDAY);
     }
 
-    public void setQueenPose(BeeQueenPose beeQueenPose) {
-        this.entityData.set(QUEEN_POSE, beeQueenPose);
+    public void setQueenPose(BeeQueenState beeQueenState) {
+        this.entityData.set(QUEEN_POSE, beeQueenState);
     }
 
-    public BeeQueenPose getQueenPose() {
+    public BeeQueenState getQueenPose() {
         return this.entityData.get(QUEEN_POSE);
     }
 
@@ -227,11 +228,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.NONE;
-    }
-
-    @Override
-    public MobType getMobType() {
-        return MobType.ARTHROPOD;
     }
 
     public static boolean checkMobSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor iWorld, MobSpawnType spawnReason, BlockPos blockPos, RandomSource random) {
@@ -255,8 +251,8 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
     }
 
     @Override
-    protected Vector3f getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f) {
-        return new Vector3f(0.0f, this.getDimensions(Pose.STANDING).height * 0.90f, 0.0f);
+    protected Vec3 getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f) {
+        return new Vec3(0.0f, this.getDimensions(Pose.STANDING).height() * 0.90f, 0.0f);
     }
 
     @Override
@@ -271,7 +267,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
             moveFunction.accept(passenger,
                     vec3.x() + sideVect.x() - (forwardVect.x() * 0.5d),
-                    vec3.y() + passenger.getMyRidingOffset(this) + 0.2d,
+                    vec3.y() + passenger.getVehicleAttachmentPoint(this).y() + 0.2d,
                     vec3.z() + sideVect.z() - (forwardVect.z() * 0.5d));
         }
     }
@@ -381,20 +377,20 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             this.idleAnimationState.stop();
         }
 
-        BeeQueenPose pose = this.getQueenPose();
-        if (pose != BeeQueenPose.NONE) {
-            if (pose == BeeQueenPose.ATTACKING && poseTicks > 17) {
-                setQueenPose(BeeQueenPose.NONE);
+        BeeQueenState pose = this.getQueenPose();
+        if (pose != BeeQueenState.NONE) {
+            if (pose == BeeQueenState.ATTACKING && poseTicks > 17) {
+                setQueenPose(BeeQueenState.NONE);
                 poseTicks = 0;
             }
 
-            if (pose == BeeQueenPose.ITEM_REJECT && poseTicks > 20) {
-                setQueenPose(BeeQueenPose.NONE);
+            if (pose == BeeQueenState.ITEM_REJECT && poseTicks > 20) {
+                setQueenPose(BeeQueenState.NONE);
                 poseTicks = 0;
             }
 
-            if (pose == BeeQueenPose.ITEM_THROW && poseTicks > 20) {
-                setQueenPose(BeeQueenPose.NONE);
+            if (pose == BeeQueenState.ITEM_THROW && poseTicks > 20) {
+                setQueenPose(BeeQueenState.NONE);
                 poseTicks = 0;
             }
 
@@ -542,7 +538,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         }
                     }
                     if (notifiedAPlayer) {
-                        setQueenPose(BeeQueenPose.ITEM_THROW);
+                        setQueenPose(BeeQueenState.ITEM_THROW);
                     }
                 }
             }
@@ -585,7 +581,6 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                     (ServerLevel) this.level(),
                     this.level().getCurrentDifficultyAt(spawnBlockPos),
                     MobSpawnType.TRIGGERED,
-                    null,
                     null);
 
             bee.addEffect(new MobEffectInstance(
@@ -598,7 +593,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
             this.level().addFreshEntity(bee);
             this.spawnAngryParticles(6);
-            setQueenPose(BeeQueenPose.ATTACKING);
+            setQueenPose(BeeQueenState.ATTACKING);
         }
         else {
             this.setBeeSpawnCooldown(beeCooldown - 1);
@@ -670,7 +665,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             this.level().addFreshEntity(rejectedItemEntity);
             rejectedItemEntity.setDefaultPickUpDelay();
             spawnAngryParticles(2);
-            setQueenPose(BeeQueenPose.ITEM_REJECT);
+            setQueenPose(BeeQueenState.ITEM_REJECT);
         }
 
         setThrowCooldown(50);
@@ -777,7 +772,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         if (!this.level().isClientSide()) {
             if (!traded) {
                 spawnAngryParticles(2);
-                setQueenPose(BeeQueenPose.ITEM_REJECT);
+                setQueenPose(BeeQueenState.ITEM_REJECT);
             }
             else {
                 setThrowCooldown(50);
@@ -891,21 +886,11 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
 
         int remainingItemToSpawn = reward.count * rewardMultiplier;
         Item chosenItem = reward.getItems().get(random.nextInt(reward.getItems().size()));
-        int itemStackMaxSize = chosenItem.getMaxStackSize();
+        int itemStackMaxSize = chosenItem.getDefaultMaxStackSize();
 
         while (remainingItemToSpawn > 0) {
-            ItemStack rewardItem = chosenItem.getDefaultInstance();
-            setQueenPose(BeeQueenPose.ITEM_THROW);
-
-            if (originalItem.is(ItemTags.BANNERS) && rewardItem.is(ItemTags.BANNERS) && originalItem.hasTag()) {
-                rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
-            }
-            else if (originalItem.is(rewardItem.getItem()) && originalItem.hasTag()) {
-                rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
-            }
-            else if (isContainerBlockEntity(originalItem) && isContainerBlockEntity(rewardItem) && originalItem.hasTag()) {
-                rewardItem.getOrCreateTag().merge(originalItem.getOrCreateTag());
-            }
+            ItemStack rewardItem = chosenItem.getDefaultInstance().copyWithCount(1);
+            setQueenPose(BeeQueenState.ITEM_THROW);
 
             int currentItemStackCount = Math.min(remainingItemToSpawn, itemStackMaxSize);
             rewardItem.setCount(currentItemStackCount);

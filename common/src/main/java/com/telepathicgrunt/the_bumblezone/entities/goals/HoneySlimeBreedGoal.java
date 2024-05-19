@@ -125,7 +125,7 @@ public class HoneySlimeBreedGoal extends Goal {
             childEntity.setAge(-24000);
             childEntity.moveTo(this.slime.getX(), this.slime.getY(), this.slime.getZ(), 0.0F, 0.0F);
 
-            PlatformHooks.finalizeSpawn(childEntity, (ServerLevelAccessor) world, null, MobSpawnType.BREEDING, null);
+            PlatformHooks.finalizeSpawn(childEntity, (ServerLevelAccessor) world, null, MobSpawnType.BREEDING);
             this.world.addFreshEntity(childEntity);
             this.world.broadcastEntityEvent(this.slime, (byte) 18);
             if (this.world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {

@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.entities.living;
 
 import com.telepathicgrunt.the_bumblezone.blocks.EssenceBlockWhite;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
-import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
@@ -17,6 +16,7 @@ import net.minecraft.ReportedException;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -81,7 +81,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class CosmicCrystalEntity extends LivingEntity {
-    public static final EntityDataSerializer<CosmicCrystalState> COSMIC_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.simpleEnum(CosmicCrystalState.class);
+    public static final EntityDataSerializer<CosmicCrystalState> COSMIC_CRYSTAL_STATE_SERIALIZER = EntityDataSerializer.forValueType(CosmicCrystalState.STREAM_CODEC);
     private static final EntityDataAccessor<CosmicCrystalState> COSMIC_CRYSTAL_STATE = SynchedEntityData.defineId(CosmicCrystalEntity.class, COSMIC_CRYSTAL_STATE_SERIALIZER);
     private static final EntityDataAccessor<Integer> INITIAL_ROTATION_ANIMATION_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STATE_TIMESPAN = SynchedEntityData.defineId(CosmicCrystalEntity.class, EntityDataSerializers.INT);
@@ -321,21 +321,21 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(COSMIC_CRYSTAL_STATE, CosmicCrystalState.NORMAL);
-        this.entityData.define(INITIAL_ROTATION_ANIMATION_TIMESPAN, 0);
-        this.entityData.define(STATE_TIMESPAN, 0);
-        this.entityData.define(LASER_START_DELAY, 0);
-        this.entityData.define(LASER_FIRE_START_TIME, 0);
-        this.entityData.define(SYNCED_CURRENT_STATE_TIME_TICK, 0);
-        this.entityData.define(ORBIT_OFFSET_DEGREES, 0);
-        this.entityData.define(DIFFICULTY_BOOST, 1F);
-        this.entityData.define(COLLIDED, false);
-        this.entityData.define(SECOND_PHASE, false);
-        this.entityData.define(ESSENCE_CONTROLLER_UUID, Optional.empty());
-        this.entityData.define(ESSENCE_CONTROLLER_BLOCK_POS, Optional.empty());
-        this.entityData.define(ESSENCE_CONTROLLER_DIMENSION, "");
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(COSMIC_CRYSTAL_STATE, CosmicCrystalState.NORMAL);
+        builder.define(INITIAL_ROTATION_ANIMATION_TIMESPAN, 0);
+        builder.define(STATE_TIMESPAN, 0);
+        builder.define(LASER_START_DELAY, 0);
+        builder.define(LASER_FIRE_START_TIME, 0);
+        builder.define(SYNCED_CURRENT_STATE_TIME_TICK, 0);
+        builder.define(ORBIT_OFFSET_DEGREES, 0);
+        builder.define(DIFFICULTY_BOOST, 1F);
+        builder.define(COLLIDED, false);
+        builder.define(SECOND_PHASE, false);
+        builder.define(ESSENCE_CONTROLLER_UUID, Optional.empty());
+        builder.define(ESSENCE_CONTROLLER_BLOCK_POS, Optional.empty());
+        builder.define(ESSENCE_CONTROLLER_DIMENSION, "");
     }
 
     @Override
@@ -364,7 +364,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             this.setEssenceController(compoundTag.getUUID("essenceController"));
         }
         if (compoundTag.contains("essenceControllerBlockPos")) {
-            this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
+            NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
             this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
@@ -1140,7 +1140,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         this.xRotO = this.getXRot();
 
         for (MobEffectInstance mobEffectInstance : new ArrayList<>(this.getActiveEffects())) {
-            MobEffect mobEffect = mobEffectInstance.getEffect();
+            Holder<MobEffect> mobEffect = mobEffectInstance.getEffect();
             int currentEffectTick = mobEffectInstance.isInfiniteDuration() ? Integer.MAX_VALUE : mobEffectInstance.getDuration();
 
             if (mobEffect == MobEffects.POISON) {
@@ -1169,7 +1169,7 @@ public class CosmicCrystalEntity extends LivingEntity {
                         this);
                 }
             }
-            else if (currentEffectTick > 30 && !mobEffectInstance.getEffect().isBeneficial()) {
+            else if (currentEffectTick > 30 && !mobEffectInstance.getEffect().value().isBeneficial()) {
                 this.forceAddEffect(new MobEffectInstance(
                         mobEffect,
                         30,
@@ -1223,8 +1223,8 @@ public class CosmicCrystalEntity extends LivingEntity {
     @Override
     protected AABB makeBoundingBox() {
         EntityDimensions entityDimensions = ((EntityAccessor)this).getDimensions();
-        float radius = entityDimensions.width / 2.0F;
-        float heightRadius = entityDimensions.height / 2.0F;
+        float radius = entityDimensions.width() / 2.0F;
+        float heightRadius = entityDimensions.height() / 2.0F;
         float yOffset = 1f;
 
         float progress = 1 - Mth.abs(((90 - this.getXRot()) / 90) - 1);
@@ -1373,7 +1373,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         super.onEffectAdded(mobEffectInstance, entity);
 
         if (this.level() instanceof ServerLevel serverLevel) {
-            serverLevel.players().forEach(p -> p.connection.send(new ClientboundUpdateMobEffectPacket(this.getId(), mobEffectInstance)));
+            serverLevel.players().forEach(p -> p.connection.send(new ClientboundUpdateMobEffectPacket(this.getId(), mobEffectInstance, true)));
         }
     }
 
@@ -1514,12 +1514,6 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions entityDimensions) {
-        return entityDimensions.height / 2f;
-    }
-
-
-    @Override
     public boolean isNoGravity() {
         return true;
     }
@@ -1652,8 +1646,8 @@ public class CosmicCrystalEntity extends LivingEntity {
         livingEntity.hurt(this.level().damageSources().source(BzDamageSources.COSMIC_CRYSTAL_TYPE, this), damageAmount);
         this.lastPhysicalHit = this.currentStateTimeTick;
 
-        for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
-            if (mobEffect.isBeneficial()) {
+        for (Holder<MobEffect> mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+            if (mobEffect.value().isBeneficial()) {
                 livingEntity.removeEffect(mobEffect);
             }
         }

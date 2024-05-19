@@ -47,9 +47,9 @@ public class VariantBeeEntity extends Bee {
    }
 
    @Override
-   protected void defineSynchedData() {
-      super.defineSynchedData();
-      this.entityData.define(VARIANT, "");
+   protected void defineSynchedData(SynchedEntityData.Builder builder) {
+      super.defineSynchedData(builder);
+      builder.define(VARIANT, "");
    }
 
    @Override

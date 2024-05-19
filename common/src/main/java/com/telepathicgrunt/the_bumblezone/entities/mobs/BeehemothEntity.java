@@ -47,7 +47,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.PlayerRideable;
 import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.TamableAnimal;
@@ -116,11 +115,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SADDLED, false);
-        this.entityData.define(QUEEN, false);
-        this.entityData.define(FRIENDSHIP, 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(SADDLED, false);
+        builder.define(QUEEN, false);
+        builder.define(FRIENDSHIP, 0);
     }
 
     public static AttributeSupplier.Builder getAttributeBuilder() {
@@ -160,6 +159,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
+    public boolean isFood(ItemStack itemStack) {
+        return itemStack.is(BzTags.BEE_FEEDING_ITEMS);
+    }
+
+    @Override
     protected PathNavigation createNavigation(Level pLevel) {
         return new DirectPathNavigator(this, pLevel);
     }
@@ -167,11 +171,6 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     @Override
     protected Entity.MovementEmission getMovementEmission() {
         return MovementEmission.NONE;
-    }
-
-    @Override
-    public MobType getMobType() {
-        return MobType.ARTHROPOD;
     }
 
     public boolean isQueen() {
@@ -235,17 +234,17 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             AttributeModifier attributeModifier = attributeInstance.getModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID);
 
             if (attributeModifier != null) {
-                if (attributeModifier.getAmount() == healthBoost) {
+                if (attributeModifier.amount() == healthBoost) {
                     doNothingWithCurrentHealth = true;
                 }
                 else {
-                    oldHealthBoost = (int) attributeModifier.getAmount();
+                    oldHealthBoost = (int) attributeModifier.amount();
                 }
             }
 
             if (!doNothingWithCurrentHealth) {
                 attributeInstance.removeModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID);
-                attributeInstance.addTransientModifier(new AttributeModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID, "Friendship Health Boost", healthBoost, AttributeModifier.Operation.ADDITION));
+                attributeInstance.addTransientModifier(new AttributeModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID, "Friendship Health Boost", healthBoost, AttributeModifier.Operation.ADD_VALUE));
 
                 if (oldHealthBoost < healthBoost) {
                     this.heal(healthBoost - oldHealthBoost);
@@ -533,7 +532,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             Vec3 vec3 = this.getPassengerRidingPosition(passenger);
             moveFunction.accept(passenger,
                     vec3.x,
-                    vec3.y + 0.225d + passenger.getMyRidingOffset(this),
+                    vec3.y + 0.225d + passenger.getVehicleAttachmentPoint(this).y(),
                     vec3.z);
 
             double currentSpeed = getDeltaMovement().length();
@@ -547,11 +546,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    protected Vector3f getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f) {
+    protected Vec3 getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f) {
         float ff = Math.min(0.25F, this.walkAnimation.speed());
         float f1 = this.walkAnimation.position();
         float height = (float) (getBbHeight() - 0.2D + (double) (0.12F * Mth.cos(f1 * 0.7F) * 0.7F * ff));
-        return new Vector3f(0.0f, height, 0.0f);
+        return new Vec3(0.0f, height, 0.0f);
     }
 
     @Override
@@ -685,11 +684,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     @Override
     public float getFlyingSpeed() {
         if (!this.isTame() || (!this.isOrderedToSit() && !this.isVehicle())) {
-            return (float) ((getAttributeValue(Attributes.FLYING_SPEED) / Attributes.FLYING_SPEED.getDefaultValue()) * 0.0038f);
+            return (float) ((getAttributeValue(Attributes.FLYING_SPEED) / Attributes.FLYING_SPEED.value().getDefaultValue()) * 0.0038f);
         }
 
-        float reducedAttrDiff = (float) ((getAttributeValue(Attributes.FLYING_SPEED) - Attributes.FLYING_SPEED.getDefaultValue()) / 3F);
-        float adjustedSpeedMultiplier = (float) ((reducedAttrDiff + Attributes.FLYING_SPEED.getDefaultValue()) / Attributes.FLYING_SPEED.getDefaultValue());
+        float reducedAttrDiff = (float) ((getAttributeValue(Attributes.FLYING_SPEED) - Attributes.FLYING_SPEED.value().getDefaultValue()) / 3F);
+        float adjustedSpeedMultiplier = (float) ((reducedAttrDiff + Attributes.FLYING_SPEED.value().getDefaultValue()) / Attributes.FLYING_SPEED.value().getDefaultValue());
         return adjustedSpeedMultiplier * this.flyingSpeed;
     }
 

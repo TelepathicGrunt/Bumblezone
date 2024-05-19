@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntit
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -47,9 +48,9 @@ public class PurpleSpikeEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_ID_SPIKE_CHARGE, spikeChargeTimer > 0);
-        this.entityData.define(DATA_ID_SPIKE_ACTIVE, spikeTimer > 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DATA_ID_SPIKE_CHARGE, spikeChargeTimer > 0);
+        builder.define(DATA_ID_SPIKE_ACTIVE, spikeTimer > 0);
     }
 
     public UUID getEssenceController() {
@@ -117,11 +118,6 @@ public class PurpleSpikeEntity extends Entity {
         this.spikeTimer += spikeTimer;
     }
 
-    @Override
-    protected float getEyeHeight(Pose pose, EntityDimensions entityDimensions) {
-        return 0;
-    }
-
     public void tick() {
         super.tick();
         boolean hasSpikeCharge = this.hasSpikeCharge();
@@ -186,8 +182,8 @@ public class PurpleSpikeEntity extends Entity {
 
                             livingEntity.hurt(this.level().damageSources().source(BzDamageSources.SPIKE_TYPE, this), damageAmount);
 
-                            for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
-                                if (mobEffect.isBeneficial()) {
+                            for (Holder<MobEffect> mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+                                if (mobEffect.value().isBeneficial()) {
                                     livingEntity.removeEffect(mobEffect);
                                 }
                             }
@@ -323,7 +319,7 @@ public class PurpleSpikeEntity extends Entity {
             this.setEssenceController(compoundTag.getUUID("essenceController"));
         }
         if (compoundTag.contains("essenceControllerBlockPos")) {
-            this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
+            NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
             this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));

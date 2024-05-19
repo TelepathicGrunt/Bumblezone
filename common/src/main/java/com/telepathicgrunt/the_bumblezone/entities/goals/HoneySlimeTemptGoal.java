@@ -21,11 +21,9 @@ public class HoneySlimeTemptGoal extends Goal {
     private double yaw;
     protected Player closestPlayer;
     private int delayTemptCounter;
-    private final TagKey<Item> temptItemTag;
 
-    public HoneySlimeTemptGoal(HoneySlimeEntity creatureIn, TagKey<Item> temptItemTag) {
+    public HoneySlimeTemptGoal(HoneySlimeEntity creatureIn) {
         this.slime = creatureIn;
-        this.temptItemTag = temptItemTag;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -49,7 +47,7 @@ public class HoneySlimeTemptGoal extends Goal {
     }
 
     protected boolean isTempting(ItemStack stack) {
-        return stack.is(this.temptItemTag);
+        return this.slime.isFood(stack);
     }
 
     /**

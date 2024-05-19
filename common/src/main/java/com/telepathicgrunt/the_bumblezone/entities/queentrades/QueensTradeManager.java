@@ -63,7 +63,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
         Optional<List<RawTradeOutputEntry>> resultItems,
         boolean randomizerTrade)
     {
-        public static final MapCodec<TradeCollection> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+        public static final Codec<TradeCollection> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 SpecialDaysEntry.CODEC.optionalFieldOf("special_days").forGetter(e -> e.specialDaysEntry),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("randomizes").forGetter(e -> e.randomizerItems),
                 RawTradeInputEntry.CODEC.listOf().optionalFieldOf("wants").forGetter(e -> e.wantItems),
@@ -73,7 +73,7 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     }
 
     public record SpecialDaysEntry(Optional<String> dateAlgorithm, Optional<Integer> month, Optional<Integer> day, int daysLong, String specialMessage, ChatFormatting textColor) {
-        public static final MapCodec<SpecialDaysEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+        public static final Codec<SpecialDaysEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.STRING.optionalFieldOf("date_algorithm").forGetter(e -> e.dateAlgorithm),
                 Codec.intRange(1, 12).optionalFieldOf("start_month").forGetter(e -> e.month),
                 Codec.intRange(1, 31).optionalFieldOf("start_day").forGetter(e -> e.day),
@@ -84,14 +84,14 @@ public class QueensTradeManager extends SimpleJsonResourceReloadListener {
     }
 
     public record RawTradeInputEntry(String entry, boolean required) {
-        public static final MapCodec<RawTradeInputEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+        public static final Codec<RawTradeInputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             Codec.STRING.fieldOf("id").forGetter(e -> e.entry),
             Codec.BOOL.fieldOf("required").forGetter(e -> e.required)
         ).apply(instance, instance.stable(RawTradeInputEntry::new)));
     }
 
     public record RawTradeOutputEntry(String entry, boolean required, int count, int xpReward, int weight) {
-        public static final MapCodec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+        public static final Codec<RawTradeOutputEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 Codec.STRING.fieldOf("id").forGetter(e -> e.entry),
                 Codec.BOOL.fieldOf("required").forGetter(e -> e.required),
                 Codec.intRange(1, 64).fieldOf("count").forGetter(e -> e.count),

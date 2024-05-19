@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
-import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalState;
+import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalState;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.living.CosmicCrystalEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;

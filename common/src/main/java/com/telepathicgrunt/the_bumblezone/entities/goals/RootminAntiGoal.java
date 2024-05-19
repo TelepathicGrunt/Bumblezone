@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -36,7 +36,7 @@ public class RootminAntiGoal extends Goal {
 
     @Override
     public void start() {
-        this.mob.setRootminPose(RootminPose.NONE);
+        this.mob.setRootminPose(RootminState.NONE);
     }
 
     @Override

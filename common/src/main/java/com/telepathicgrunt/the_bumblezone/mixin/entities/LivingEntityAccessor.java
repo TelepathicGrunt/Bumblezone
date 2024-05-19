@@ -19,4 +19,7 @@ public interface LivingEntityAccessor {
 
     @Accessor("lastDamageStamp")
     void setLastDamageStamp(long lastDamageStamp);
+
+    @Invoker("hurtArmor")
+    void callHurtArmor(DamageSource damageSource, float f);
 }

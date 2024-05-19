@@ -102,7 +102,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
       this.targetSelector.addGoal(1, new HoneySlimeRevengeGoal(this));
       this.targetSelector.addGoal(1, new HoneySlimeAngerAttackingGoal(this));
       this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-      this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this, BzTags.HONEY_SLIME_DESIRED_ITEMS));
+      this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this));
       this.goalSelector.addGoal(4, new HoneySlimeHopGoal(this));
       this.goalSelector.addGoal(4, new HoneySlimeFaceRandomGoal(this));
    }
@@ -114,11 +114,11 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    }
 
    @Override
-   protected void defineSynchedData() {
-      super.defineSynchedData();
-      this.entityData.define(IN_HONEY, true);
-      this.entityData.define(IN_HONEY_GROWTH_TIME, 0);
-      this.entityData.define(ANGRY_TIMER, 0);
+   protected void defineSynchedData(SynchedEntityData.Builder builder) {
+      super.defineSynchedData(builder);
+      builder.define(IN_HONEY, true);
+      builder.define(IN_HONEY_GROWTH_TIME, 0);
+      builder.define(ANGRY_TIMER, 0);
    }
 
    @Override

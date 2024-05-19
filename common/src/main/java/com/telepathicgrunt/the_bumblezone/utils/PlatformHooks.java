@@ -51,6 +51,12 @@ public class PlatformHooks {
     }
 
     @ExpectPlatform
+    @Contract(pure=true)
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+        throw new NotImplementedException("PlatformHooks createEntityType 3 is not implemented!");
+    }
+
+    @ExpectPlatform
     @Contract(pure = true)
     public static SpawnGroupData finalizeSpawn(Mob entity, ServerLevelAccessor world, SpawnGroupData spawnGroupData, MobSpawnType spawnReason) {
         throw new NotImplementedException("PlatformHooks canEntitySpawn is not implemented!");

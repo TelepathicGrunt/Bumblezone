@@ -9,11 +9,11 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -55,7 +55,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
             for(int i = 0; i < particlesToSpawn; ++i) {
                 this.level().addParticle(
-                        ParticleTypes.ENTITY_EFFECT,
+                        ParticleTypes.EFFECT,
                         this.getRandomX(0.5D),
                         this.getRandomY(),
                         this.getRandomZ(0.5D),
@@ -68,7 +68,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-        if (livingEntity.getMobType() != MobType.UNDEAD) {
+        if (!livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
             boolean isPoisoned = livingEntity.hasEffect(MobEffects.POISON);
             boolean isSlowed = livingEntity.hasEffect(MobEffects.MOVEMENT_SLOWDOWN);
             boolean isWeakened = livingEntity.hasEffect(MobEffects.WEAKNESS);
@@ -123,7 +123,12 @@ public class BeeStingerEntity extends AbstractArrow {
 
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(BzItems.BEE_STINGER.get());
+        return BzItems.BEE_STINGER.get().getDefaultInstance();
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return BzItems.BEE_STINGER.get().getDefaultInstance();
     }
 
     @Override

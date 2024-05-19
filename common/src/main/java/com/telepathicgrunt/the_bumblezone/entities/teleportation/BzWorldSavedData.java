@@ -10,6 +10,8 @@ import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -32,6 +34,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.BiomeManager;
@@ -68,8 +71,7 @@ public class BzWorldSavedData extends SavedData {
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag data)
-	{
+	public CompoundTag save(CompoundTag data, HolderLookup.Provider provider) {
 		return null;
 	}
 
@@ -285,9 +287,9 @@ public class BzWorldSavedData extends SavedData {
 	private static ServerPlayer createSilkTouchFakePlayer(ServerLevel level) {
 		ServerPlayer serverPlayer = PlatformHooks.getFakePlayer(level, null);
 		ItemStack fakeHandItem = Items.STONE_PICKAXE.getDefaultInstance();
-		HashMap<Enchantment, Integer> enchantmentHashMap = new HashMap<>();
-		enchantmentHashMap.put(Enchantments.SILK_TOUCH, 1);
-		EnchantmentHelper.setEnchantments(enchantmentHashMap, fakeHandItem);
+		ItemEnchantments.Mutable mutableItemEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+		mutableItemEnchantments.set(Enchantments.SILK_TOUCH, 1);
+		fakeHandItem.set(DataComponents.ENCHANTMENTS, mutableItemEnchantments.toImmutable());
 		serverPlayer.setItemInHand(InteractionHand.MAIN_HAND, fakeHandItem);
 		return serverPlayer;
 	}
@@ -318,7 +320,7 @@ public class BzWorldSavedData extends SavedData {
 			}
 
 			if (PlatformHooks.isDimensionAllowed(serverPlayer, destination.dimension())) {
-				serverPlayer.connection.send(new ClientboundRespawnPacket(new CommonPlayerSpawnInfo(destination.dimensionTypeId(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()), (byte)3));
+				serverPlayer.connection.send(new ClientboundRespawnPacket(new CommonPlayerSpawnInfo(destination.dimensionTypeRegistration(), destination.dimension(), BiomeManager.obfuscateSeed(destination.getSeed()), serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer.gameMode.getPreviousGameModeForPlayer(), destination.isDebug(), destination.isFlat(), serverPlayer.getLastDeathLocation(), serverPlayer.getPortalCooldown()), (byte)3));
 				serverPlayer.connection.send(new ClientboundChangeDifficultyPacket(destination.getDifficulty(), destination.getLevelData().isDifficultyLocked()));
 				serverPlayer.teleportTo(destination, destinationPosition.x, destinationPosition.y + 0.1f, destinationPosition.z, serverPlayer.getYRot(), serverPlayer.getXRot());
 				serverPlayer.setPortalCooldown(100);
@@ -361,16 +363,6 @@ public class BzWorldSavedData extends SavedData {
 			if(vehicle != null) {
 				teleportedEntity.startRiding(vehicle);
 			}
-			if(teleportedEntity instanceof LivingEntity livingEntity) {
-				if (livingEntity instanceof ServerPlayer serverPlayer) {
-					for(MobEffectInstance effectInstance : new ArrayList<>(livingEntity.getActiveEffects())) {
-						serverPlayer.connection.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), effectInstance));
-					}
-				}
-				else {
-					reAddStatusEffect(livingEntity);
-				}
-			}
 
 			passengers.forEach(passenger -> teleportEntityAndAssignToVehicle(passenger, teleportedEntity, destination, destinationPosition, teleportedEntities));
 		}
@@ -379,29 +371,6 @@ public class BzWorldSavedData extends SavedData {
 
 	///////////
 	// Utils //
-
-	/**
-	 * Temporary fix until Mojang patches the bug that makes potion effect icons disappear when changing dimension.
-	 * To fix it ourselves, we remove the effect and re-add it to the player.
-	 */
-	private static void reAddStatusEffect(LivingEntity livingEntity) {
-		//re-adds potion effects so the icon remains instead of disappearing when changing dimensions due to a bug
-		ArrayList<MobEffectInstance> effectInstanceList = new ArrayList<>(livingEntity.getActiveEffects());
-		for (int i = effectInstanceList.size() - 1; i >= 0; i--) {
-			MobEffectInstance effectInstance = effectInstanceList.get(i);
-			if (effectInstance != null) {
-				livingEntity.removeEffect(effectInstance.getEffect());
-				livingEntity.addEffect(
-						new MobEffectInstance(
-								effectInstance.getEffect(),
-								effectInstance.getDuration(),
-								effectInstance.getAmplifier(),
-								effectInstance.isAmbient(),
-								effectInstance.isVisible(),
-								effectInstance.showIcon()));
-			}
-		}
-	}
 
 	private record NextTickRunnable(long targetTick, Runnable runnable) {
 		public boolean executeTick(ServerLevel serverLevel) {

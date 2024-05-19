@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.EssenceBlockEntity;
 import com.telepathicgrunt.the_bumblezone.bossbars.ServerEssenceEvent;
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -162,15 +162,15 @@ public class EssenceBlockGreen extends EssenceBlock {
             }
 
             int hitsLeft = Math.round(progress * ROOTMIN_HEALTH);
-            RootminPose rootminPose = rootminEntity.getRootminPose();
+            RootminState rootminState = rootminEntity.getRootminPose();
             if (!rootminEntity.isDeadOrDying()) {
                 rootminEntity.setHealth(hitsLeft);
             }
             float rootminHealthPercent = rootminEntity.getHealth() / ROOTMIN_HEALTH;
 
-            if (rootminPose == RootminPose.SHOCK || rootminPose == RootminPose.ANGRY || rootminPose == RootminPose.CURSE) {
+            if (rootminState == RootminState.SHOCK || rootminState == RootminState.ANGRY || rootminState == RootminState.CURSE) {
                 if (rootminEntity.getLastHurtByMob() != null) {
-                    if (rootminPose == RootminPose.SHOCK) {
+                    if (rootminState == RootminState.SHOCK) {
                         if (rootminHealthPercent > STAGE_2_THRESHOLD && rootminHealthPercent < STAGE_2_THRESHOLD + 0.05f) {
                             rootminEntity.runAngry();
                         }
@@ -181,7 +181,7 @@ public class EssenceBlockGreen extends EssenceBlock {
                             rootminEntity.runCurse();
                         }
                         else if (rootminHealthPercent <= STAGE_4_THRESHOLD) {
-                            rootminEntity.setRootminPose(RootminPose.NONE);
+                            rootminEntity.setRootminPose(RootminState.NONE);
                         }
                         hitsLeft--;
                         rootminEntity.setLastHurtByMob(null);

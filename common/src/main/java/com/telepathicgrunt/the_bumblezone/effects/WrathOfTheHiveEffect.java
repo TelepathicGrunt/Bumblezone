@@ -64,25 +64,28 @@ public class WrathOfTheHiveEffect extends MobEffect {
      * Makes the bees swarm at the entity
      */
     @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
         Level world = entity.level();
 
         if (entity instanceof Mob mob && mob.isNoAi()) {
-            return;
+            return false;
         }
 
         if (entity.isDeadOrDying()) {
             calmTheBees(world, entity);
-            return;
+            return false;
         }
 
         if (entity instanceof Player && world.getDifficulty() == Difficulty.PEACEFUL) {
-            entity.removeEffect(this);
-            return;
+            return false;
         }
 
         if ((entity.level().getGameTime() + entity.getUUID().getLeastSignificantBits()) % 20 != 0) {
-            return;
+            return true;
+        }
+
+        if (entity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+            return false;
         }
 
         //Maximum aggression
@@ -99,17 +102,16 @@ public class WrathOfTheHiveEffect extends MobEffect {
                     // Grab a nearby air materialposition a bit away
                     BlockPos spawnBlockPos = GeneralUtils.getRandomBlockposWithinRange(entity, 30, 10);
                     if(!world.getBlockState(spawnBlockPos).isAir()) {
-                        return;
+                        return false;
                     }
 
                     Bee bee = EntityType.BEE.create(world);
-                    if(bee == null) return;
+                    if(bee == null) return true;
 
                     bee.finalizeSpawn(
                             serverLevel,
                             serverLevel.getCurrentDifficultyAt(spawnBlockPos),
                             MobSpawnType.TRIGGERED,
-                            null,
                             null
                     );
 
@@ -120,7 +122,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                             entity.getRandom().nextFloat() * 360.0F,
                             0.0F);
 
-                    PlatformHooks.finalizeSpawn(bee, (ServerLevelAccessor) world, null, MobSpawnType.TRIGGERED, null);
+                    PlatformHooks.finalizeSpawn(bee, (ServerLevelAccessor) world, null, MobSpawnType.TRIGGERED);
                     world.addFreshEntity(bee);
                 }
             }
@@ -157,6 +159,8 @@ public class WrathOfTheHiveEffect extends MobEffect {
                 }
             }
         }
+
+        return true;
     }
 
     /**

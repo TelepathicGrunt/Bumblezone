@@ -73,9 +73,9 @@ public final class BeeDedicatedSpawning {
                     newBee.setPos(Vec3.atCenterOf(newBeePos));
                     newBee.setDeltaMovement(new Vec3(0, 1D, 0));
                     newBee.setSpeed(0);
-                    newBee.finalizeSpawn(world, world.getCurrentDifficultyAt(newBee.blockPosition()), MobSpawnType.NATURAL, null, null);
+                    newBee.finalizeSpawn(world, world.getCurrentDifficultyAt(newBee.blockPosition()), MobSpawnType.NATURAL, null);
 
-                    PlatformHooks.finalizeSpawn(newBee, world, null, MobSpawnType.NATURAL, null);
+                    PlatformHooks.finalizeSpawn(newBee, world, null, MobSpawnType.NATURAL);
                     world.addFreshEntity(newBee);
                     entityCountChange++;
                 }

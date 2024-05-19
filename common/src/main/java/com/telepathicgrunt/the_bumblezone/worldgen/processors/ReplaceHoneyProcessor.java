@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.processors;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzProcessors;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.material.Fluids;
 public class ReplaceHoneyProcessor extends StructureProcessor {
 
     private Fluid cachedAlternativeFluid = null;
-    public static final Codec<ReplaceHoneyProcessor> CODEC = Codec.unit(ReplaceHoneyProcessor::new);
+    public static final MapCodec<ReplaceHoneyProcessor> CODEC = MapCodec.unit(ReplaceHoneyProcessor::new);
 
     public ReplaceHoneyProcessor() { }
 

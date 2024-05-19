@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -21,7 +22,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -48,10 +48,10 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(ID_LOYALTY, (byte)0);
-        this.entityData.define(ID_FOIL, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(ID_LOYALTY, (byte)0);
+        builder.define(ID_FOIL, false);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
         Entity entity = entityHitResult.getEntity();
         float damageAmount = StingerSpearItem.BASE_THROWN_DAMAGE;
         if (entity instanceof LivingEntity livingentity) {
-            damageAmount += EnchantmentHelper.getDamageBonus(this.getPickupItemStackOrigin(), livingentity.getMobType());
+            damageAmount += EnchantmentHelper.getDamageBonus(this.getPickupItemStackOrigin(), livingentity.getType());
         }
 
         Entity owner = this.getOwner();
@@ -137,7 +137,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity livingEntity) {
-       if (livingEntity.getMobType() != MobType.UNDEAD) {
+       if (!livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
            int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), this.getPickupItemStackOrigin());
            livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -154,7 +154,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
             if (this.getOwner() instanceof LivingEntity ownerEntity && !livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
                 int neuroToxinLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.NEUROTOXINS.get(), this.getPickupItemStackOrigin());
                 if (neuroToxinLevel > 0) {
-                    this.getPickupItemStackOrigin().hurtAndBreak(4, ownerEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    this.getPickupItemStackOrigin().hurtAndBreak(4, ownerEntity, EquipmentSlot.MAINHAND);
                 }
             }
         }
@@ -186,6 +186,11 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     @Override
     protected boolean tryPickup(Player player) {
         return super.tryPickup(player) || this.isNoPhysics() && this.ownedBy(player) && player.getInventory().add(this.getPickupItem());
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        return BzItems.STINGER_SPEAR.get().getDefaultInstance();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RootminAngryGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.RootminAntiGoal;
@@ -89,8 +88,8 @@ import java.util.UUID;
 public class RootminEntity extends PathfinderMob implements Enemy {
 
    private static final EntityDataAccessor<Optional<BlockState>> FLOWER_BLOCK_STATE = SynchedEntityData.defineId(RootminEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_STATE);
-   public static final EntityDataSerializer<RootminPose> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.simpleEnum(RootminPose.class);
-   private static final EntityDataAccessor<RootminPose> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
+   public static final EntityDataSerializer<RootminState> ROOTMIN_POSE_SERIALIZER = EntityDataSerializer.forValueType(RootminState.STREAM_CODEC);
+   private static final EntityDataAccessor<RootminState> ROOTMIN_POSE = SynchedEntityData.defineId(RootminEntity.class, ROOTMIN_POSE_SERIALIZER);
 
    public final AnimationState idleAnimationState = new AnimationState();
    public final AnimationState angryAnimationState = new AnimationState();
@@ -120,30 +119,29 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    private ResourceKey<Level> essenceControllerDimension = null;
    public int animationTimeBetweenHiding = 0;
 
-   public static final Set<RootminPose> POSES_THAT_CANT_BE_MOTION_INTERRUPTED = Set.of(
-           RootminPose.ANGRY,
-           RootminPose.CURIOUS,
-           RootminPose.CURSE,
-           RootminPose.EMBARRASSED,
-           RootminPose.SHOOT,
-           RootminPose.SHOCK,
-           RootminPose.BLOCK_TO_ENTITY,
-           RootminPose.ENTITY_TO_BLOCK
+   public static final Set<RootminState> POSES_THAT_CANT_BE_MOTION_INTERRUPTED = Set.of(
+           RootminState.ANGRY,
+           RootminState.CURIOUS,
+           RootminState.CURSE,
+           RootminState.EMBARRASSED,
+           RootminState.SHOOT,
+           RootminState.SHOCK,
+           RootminState.BLOCK_TO_ENTITY,
+           RootminState.ENTITY_TO_BLOCK
    );
 
-   public static final Set<RootminPose> POSES_THAT_CAN_BE_FEAR_INTERRUPTED = Set.of(
-           RootminPose.ANGRY,
-           RootminPose.CURIOUS,
-           RootminPose.CURSE,
-           RootminPose.EMBARRASSED,
-           RootminPose.SHOCK
+   public static final Set<RootminState> POSES_THAT_CAN_BE_FEAR_INTERRUPTED = Set.of(
+           RootminState.ANGRY,
+           RootminState.CURIOUS,
+           RootminState.CURSE,
+           RootminState.EMBARRASSED,
+           RootminState.SHOCK
    );
 
    public RootminEntity(EntityType<? extends RootminEntity> type, Level worldIn) {
       super(type, worldIn);
       getFlowerBlock();
-      setAnimationState(this.getRootminPose(), RootminPose.NONE, this.idleAnimationState);
-      setMaxUpStep(1);
+      setAnimationState(this.getRootminPose(), RootminState.NONE, this.idleAnimationState);
    }
 
    public void setFlowerBlock(@Nullable BlockState blockState) {
@@ -206,57 +204,57 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       this.essenceControllerDimension = essenceControllerDimension;
    }
 
-   public void setRootminPose(RootminPose rootminPose) {
-      this.entityData.set(ROOTMIN_POSE, rootminPose);
+   public void setRootminPose(RootminState rootminState) {
+      this.entityData.set(ROOTMIN_POSE, rootminState);
    }
 
-   public RootminPose getRootminPose() {
+   public RootminState getRootminPose() {
       return this.entityData.get(ROOTMIN_POSE);
    }
 
    public void runAngry() {
-      if (this.getRootminPose() != RootminPose.ANGRY) {
+      if (this.getRootminPose() != RootminState.ANGRY) {
          this.playSound(BzSounds.ROOTMIN_ANGRY.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 80;
-      setRootminPose(RootminPose.ANGRY);
+      setRootminPose(RootminState.ANGRY);
    }
 
    public void runCurious() {
-      if (this.getRootminPose() != RootminPose.CURIOUS) {
+      if (this.getRootminPose() != RootminState.CURIOUS) {
          this.playSound(BzSounds.ROOTMIN_CURIOUS.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 28;
-      setRootminPose(RootminPose.CURIOUS);
+      setRootminPose(RootminState.CURIOUS);
    }
 
    public void runCurse() {
-      if (this.getRootminPose() != RootminPose.CURSE) {
+      if (this.getRootminPose() != RootminState.CURSE) {
          this.playSound(BzSounds.ROOTMIN_CURSING.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 40;
-      setRootminPose(RootminPose.CURSE);
+      setRootminPose(RootminState.CURSE);
    }
 
    public void runEmbarrassed() {
-      if (this.getRootminPose() != RootminPose.EMBARRASSED) {
+      if (this.getRootminPose() != RootminState.EMBARRASSED) {
          this.playSound(BzSounds.ROOTMIN_EMBARRASSED.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 60;
-      setRootminPose(RootminPose.EMBARRASSED);
+      setRootminPose(RootminState.EMBARRASSED);
    }
 
    public void runShock() {
-      if (this.getRootminPose() != RootminPose.SHOCK) {
+      if (this.getRootminPose() != RootminState.SHOCK) {
          this.playSound(BzSounds.ROOTMIN_SHOCK.get(), 1.0F, (this.getRandom().nextFloat() * 0.2F) + 0.8F);
       }
 
       this.delayTillIdle = 10;
-      setRootminPose(RootminPose.SHOCK);
+      setRootminPose(RootminState.SHOCK);
    }
 
    public void runShoot(@Nullable LivingEntity target, float speedMultipiler, boolean isHoming) {
@@ -267,27 +265,27 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.shootDirt(target, speedMultipiler);
       }
       this.delayTillIdle = 8;
-      setRootminPose(RootminPose.SHOOT);
+      setRootminPose(RootminState.SHOOT);
    }
 
    public void runMultiShoot(@Nullable LivingEntity target, float speedMultipiler, int projectiles) {
       this.shootDirt(target, speedMultipiler, projectiles);
       this.delayTillIdle = 8;
-      setRootminPose(RootminPose.SHOOT);
+      setRootminPose(RootminState.SHOOT);
    }
 
    public void exposeFromBlock() {
       this.isHidden = false;
       this.delayTillIdle = 20;
       this.animationTimeBetweenHiding = 20;
-      setRootminPose(RootminPose.BLOCK_TO_ENTITY);
+      setRootminPose(RootminState.BLOCK_TO_ENTITY);
    }
 
    public void hideAsBlock(Vec3 destination) {
       this.isHidden = true;
       this.delayTillIdle = -1;
       this.animationTimeBetweenHiding = 20;
-      setRootminPose(RootminPose.ENTITY_TO_BLOCK);
+      setRootminPose(RootminState.ENTITY_TO_BLOCK);
       this.getNavigation().stop();
 
       if (destination != null && this.position().subtract(destination).length() < 1) {
@@ -319,7 +317,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
               .add(Attributes.MAX_HEALTH, 10.0D)
               .add(Attributes.MOVEMENT_SPEED, 0.18D)
               .add(Attributes.ATTACK_DAMAGE, 3.0D)
-              .add(Attributes.FOLLOW_RANGE, 30.0D);
+              .add(Attributes.FOLLOW_RANGE, 30.0D)
+              .add(Attributes.STEP_HEIGHT, 1.0D);
    }
 
    @Override
@@ -368,10 +367,10 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.superHatedPlayer = compoundTag.getUUID("superHatedPlayer");
       }
       if (this.isHidden) {
-         this.setRootminPose(RootminPose.ENTITY_TO_BLOCK);
+         this.setRootminPose(RootminState.ENTITY_TO_BLOCK);
       } else {
          if (compoundTag.contains("animationState")) {
-            this.setRootminPose(RootminPose.valueOf(compoundTag.getString("animationState")));
+            this.setRootminPose(RootminState.valueOf(compoundTag.getString("animationState")));
          }
       }
 
@@ -379,7 +378,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          this.setEssenceController(compoundTag.getUUID("essenceController"));
       }
       if (compoundTag.contains("essenceControllerBlockPos")) {
-         this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
+         NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
       }
       if (compoundTag.contains("essenceControllerDimension")) {
          this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
@@ -392,50 +391,50 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
-   protected void defineSynchedData() {
-      super.defineSynchedData();
-      this.entityData.define(FLOWER_BLOCK_STATE, Optional.empty());
-      this.entityData.define(ROOTMIN_POSE, RootminPose.NONE);
+   protected void defineSynchedData(SynchedEntityData.Builder builder) {
+      super.defineSynchedData(builder);
+      builder.define(FLOWER_BLOCK_STATE, Optional.empty());
+      builder.define(ROOTMIN_POSE, RootminState.NONE);
    }
 
    @Override
    public void onSyncedDataUpdated(EntityDataAccessor<?> entityDataAccessor) {
       if (ROOTMIN_POSE.equals(entityDataAccessor)) {
-         RootminPose pose = this.getRootminPose();
-         if (pose == RootminPose.BLOCK_TO_ENTITY || pose == RootminPose.ENTITY_TO_BLOCK) {
+         RootminState pose = this.getRootminPose();
+         if (pose == RootminState.BLOCK_TO_ENTITY || pose == RootminState.ENTITY_TO_BLOCK) {
             this.animationTimeBetweenHiding = 20;
          }
 
-         setAnimationState(pose, RootminPose.NONE, this.idleAnimationState, this.tickCount - 27);
-         setAnimationState(pose, RootminPose.ANGRY, this.angryAnimationState, BzParticles.ANGRY_PARTICLE.get(), 75, 1D);
-         setAnimationState(pose, RootminPose.CURIOUS, this.curiousAnimationState, BzParticles.CURIOUS_PARTICLE.get(), 23, 1D);
-         setAnimationState(pose, RootminPose.CURSE, this.curseAnimationState, BzParticles.CURSING_PARTICLE.get(), 35, 1D);
-         setAnimationState(pose, RootminPose.EMBARRASSED, this.embarassedAnimationState, BzParticles.EMBARRASSED_PARTICLE.get(), 55, 1D);
-         setAnimationState(pose, RootminPose.SHOCK, this.shockAnimationState);
-         setAnimationState(pose, RootminPose.SHOOT, this.shootAnimationState);
-         setAnimationState(pose, RootminPose.RUN, this.runAnimationState);
-         setAnimationState(pose, RootminPose.WALK, this.walkAnimationState);
-         setAnimationState(pose, RootminPose.BLOCK_TO_ENTITY, this.blockToEntityAnimationState);
-         setAnimationState(pose, RootminPose.ENTITY_TO_BLOCK, this.entityToBlockAnimationState, this.tickCount <= 2 ? -100000 : this.tickCount);
+         setAnimationState(pose, RootminState.NONE, this.idleAnimationState, this.tickCount - 27);
+         setAnimationState(pose, RootminState.ANGRY, this.angryAnimationState, BzParticles.ANGRY_PARTICLE.get(), 75, 1D);
+         setAnimationState(pose, RootminState.CURIOUS, this.curiousAnimationState, BzParticles.CURIOUS_PARTICLE.get(), 23, 1D);
+         setAnimationState(pose, RootminState.CURSE, this.curseAnimationState, BzParticles.CURSING_PARTICLE.get(), 35, 1D);
+         setAnimationState(pose, RootminState.EMBARRASSED, this.embarassedAnimationState, BzParticles.EMBARRASSED_PARTICLE.get(), 55, 1D);
+         setAnimationState(pose, RootminState.SHOCK, this.shockAnimationState);
+         setAnimationState(pose, RootminState.SHOOT, this.shootAnimationState);
+         setAnimationState(pose, RootminState.RUN, this.runAnimationState);
+         setAnimationState(pose, RootminState.WALK, this.walkAnimationState);
+         setAnimationState(pose, RootminState.BLOCK_TO_ENTITY, this.blockToEntityAnimationState);
+         setAnimationState(pose, RootminState.ENTITY_TO_BLOCK, this.entityToBlockAnimationState, this.tickCount <= 2 ? -100000 : this.tickCount);
 
       }
 
       super.onSyncedDataUpdated(entityDataAccessor);
    }
 
-   private void setAnimationState(RootminPose pose, RootminPose poseToCheckFor, AnimationState animationState) {
+   private void setAnimationState(RootminState pose, RootminState poseToCheckFor, AnimationState animationState) {
       setAnimationState(pose, poseToCheckFor, animationState, null, 0, 0);
    }
 
-   private void setAnimationState(RootminPose pose, RootminPose poseToCheckFor, AnimationState animationState, int tickCount) {
+   private void setAnimationState(RootminState pose, RootminState poseToCheckFor, AnimationState animationState, int tickCount) {
       setAnimationState(pose, poseToCheckFor, animationState, tickCount, null, 0, 0);
    }
 
-   private void setAnimationState(RootminPose pose, RootminPose poseToCheckFor, AnimationState animationState, ParticleOptions particleType, int particleLifeSpan, double yOffset) {
+   private void setAnimationState(RootminState pose, RootminState poseToCheckFor, AnimationState animationState, ParticleOptions particleType, int particleLifeSpan, double yOffset) {
       setAnimationState(pose, poseToCheckFor, animationState, this.tickCount, particleType, particleLifeSpan, yOffset);
    }
 
-   private void setAnimationState(RootminPose pose, RootminPose poseToCheckFor, AnimationState animationState, int tickCount, ParticleOptions particleType, int particleLifeSpan, double yOffset) {
+   private void setAnimationState(RootminState pose, RootminState poseToCheckFor, AnimationState animationState, int tickCount, ParticleOptions particleType, int particleLifeSpan, double yOffset) {
       if (pose == poseToCheckFor) {
          if (!animationState.isStarted()) {
             animationState.start(tickCount);
@@ -617,9 +616,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                return super.isInvulnerableTo(damageSource);
             } else if (dirtPelletEntity.getOwner() instanceof ServerPlayer serverPlayer &&
                     EssenceOfTheBees.hasEssence(serverPlayer) &&
-                    this.getRootminPose() != RootminPose.ANGRY &&
-                    this.getRootminPose() != RootminPose.CURSE &&
-                    this.getRootminPose() != RootminPose.SHOCK &&
+                    this.getRootminPose() != RootminState.ANGRY &&
+                    this.getRootminPose() != RootminState.CURSE &&
+                    this.getRootminPose() != RootminState.SHOCK &&
                     this.hurtTime == 0) {
                return super.isInvulnerableTo(damageSource);
             }
@@ -637,8 +636,8 @@ public class RootminEntity extends PathfinderMob implements Enemy {
       if (this.hurtTime == 9) {
          if (!this.level().isClientSide()) {
             this.isHidden = false;
-            if (this.getRootminPose() != RootminPose.CURSE &&
-                    this.getRootminPose() != RootminPose.SHOCK) {
+            if (this.getRootminPose() != RootminState.CURSE &&
+                    this.getRootminPose() != RootminState.SHOCK) {
                runShock();
             }
          }
@@ -648,37 +647,37 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          double horizontalSpeed = this.getDeltaMovement().horizontalDistance();
          if (!POSES_THAT_CANT_BE_MOTION_INTERRUPTED.contains(getRootminPose())) {
             if (horizontalSpeed > 0.2d || this.hurtTime > 0) {
-               setRootminPose(RootminPose.RUN);
+               setRootminPose(RootminState.RUN);
             } else if (horizontalSpeed > 0.01d) {
-               setRootminPose(RootminPose.WALK);
+               setRootminPose(RootminState.WALK);
             }
          }
 
-         if (this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK && this.curiosityCooldown >= 0) {
+         if (this.getRootminPose() == RootminState.ENTITY_TO_BLOCK && this.curiosityCooldown >= 0) {
             this.curiosityCooldown--;
          }
 
          if (this.delayTillIdle >= 0) {
             if (delayTillIdle == 0) {
-               setRootminPose(RootminPose.NONE);
+               setRootminPose(RootminState.NONE);
             }
             this.delayTillIdle--;
          } else {
-            if (!isHidden && this.getRootminPose() != RootminPose.NONE && this.isAlive() && horizontalSpeed <= 0.01d) {
-               setRootminPose(RootminPose.NONE);
+            if (!isHidden && this.getRootminPose() != RootminState.NONE && this.isAlive() && horizontalSpeed <= 0.01d) {
+               setRootminPose(RootminState.NONE);
             }
          }
       }
 
       if (animationTimeBetweenHiding > 0) {
          animationTimeBetweenHiding--;
-         if (this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY || this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+         if (this.getRootminPose() == RootminState.BLOCK_TO_ENTITY || this.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
             this.refreshDimensions();
          }
       }
 
       if (this.level() instanceof ServerLevel serverLevel) {
-         if (this.getRootminPose() == RootminPose.SHOCK && this.delayTillIdle == 8) {
+         if (this.getRootminPose() == RootminState.SHOCK && this.delayTillIdle == 8) {
             serverLevel.sendParticles(
                     BzParticles.SHOCK_PARTICLE.get(),
                     this.getX(),
@@ -691,7 +690,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
                     8);
          }
       } else {
-         if (this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK &&
+         if (this.getRootminPose() == RootminState.ENTITY_TO_BLOCK &&
                  this.animationTimeBetweenHiding == 0 &&
                  this.yHeadRotO % 90 != 0 &&
                  this.yHeadRot % 90 != 0 &&
@@ -713,13 +712,13 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    public void aiStep() {
       super.aiStep();
 
-      if (this.isAlive() && (this.getRootminPose() == RootminPose.WALK || this.getRootminPose() == RootminPose.RUN)) {
+      if (this.isAlive() && (this.getRootminPose() == RootminState.WALK || this.getRootminPose() == RootminState.RUN)) {
          Vec3 frontPos = this.position().add(Vec3.atLowerCornerOf(this.getDirection().getNormal()));
          List<RootminEntity> list = this.level().getEntitiesOfClass(
                  RootminEntity.class,
                  this.getBoundingBox().inflate(0.3),
                  rootmin -> rootmin != this &&
-                         rootmin.getRootminPose() == RootminPose.ENTITY_TO_BLOCK &&
+                         rootmin.getRootminPose() == RootminState.ENTITY_TO_BLOCK &&
                          rootmin.position().closerThan(frontPos, 1.3) &&
                          rootmin.getY() - this.position().y() >= -0.5
          );
@@ -757,15 +756,15 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    public boolean canBeCollidedWith() {
-      return this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK && !this.isDeadOrDying();
+      return this.getRootminPose() == RootminState.ENTITY_TO_BLOCK && !this.isDeadOrDying();
    }
 
    @Override
    protected AABB makeBoundingBox() {
-      if (this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY || this.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+      if (this.getRootminPose() == RootminState.BLOCK_TO_ENTITY || this.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
          AABB currentAABB = super.makeBoundingBox();
-         float target = this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY ? 1.56f : 1f;
-         float from = this.getRootminPose() == RootminPose.BLOCK_TO_ENTITY ? 1f : 1.56f;
+         float target = this.getRootminPose() == RootminState.BLOCK_TO_ENTITY ? 1.56f : 1f;
+         float from = this.getRootminPose() == RootminState.BLOCK_TO_ENTITY ? 1f : 1.56f;
          float percentage = (20f - this.animationTimeBetweenHiding) / 20f;
          currentAABB = currentAABB.setMaxY(Mth.lerp(percentage, from + currentAABB.minY, target + currentAABB.minY));
          return currentAABB;
@@ -774,8 +773,9 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
-   protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-      return (float) (this.getBoundingBox().getYsize() - 0.575f);
+   protected EntityDimensions getDefaultDimensions(Pose pose) {
+      EntityDimensions defaultDimensions = this.getDefaultDimensions(pose);
+      return defaultDimensions.withEyeHeight(defaultDimensions.height() - 0.575f).scale(this.getScale());
    }
 
    @Override
@@ -890,7 +890,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          List<RootminEntity> list = mob.level().getEntitiesOfClass(
                  RootminEntity.class,
                  aabb,
-                 rootmin2 -> rootmin2 != mob && rootmin2.getRootminPose() == RootminPose.ENTITY_TO_BLOCK
+                 rootmin2 -> rootmin2 != mob && rootmin2.getRootminPose() == RootminState.ENTITY_TO_BLOCK
          );
 
          if (!list.isEmpty()) {

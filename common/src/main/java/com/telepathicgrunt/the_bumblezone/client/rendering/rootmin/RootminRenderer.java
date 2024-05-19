@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.mixin.client.BlockRenderDispatcherAccessor;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.client.Minecraft;
@@ -146,15 +147,15 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
     }
 
     private void adjustShadow(RootminEntity rootminEntity, float partialTicks) {
-        RootminPose pose = rootminEntity.getRootminPose();
+        RootminState pose = rootminEntity.getRootminPose();
         float percentage = (20f - Math.max(rootminEntity.animationTimeBetweenHiding - partialTicks, 0)) / 20f;
 
-        float target = pose == RootminPose.ENTITY_TO_BLOCK ? 0f : 0.7f;
-        float from = pose != RootminPose.ENTITY_TO_BLOCK ? 0f : 0.7f;
+        float target = pose == RootminState.ENTITY_TO_BLOCK ? 0f : 0.7f;
+        float from = pose != RootminState.ENTITY_TO_BLOCK ? 0f : 0.7f;
         this.shadowRadius = Mth.lerp(percentage, from, target);
 
-        target = pose == RootminPose.ENTITY_TO_BLOCK ? 0f : 1.0f;
-        from = pose != RootminPose.ENTITY_TO_BLOCK ? 0f : 1.0f;
+        target = pose == RootminState.ENTITY_TO_BLOCK ? 0f : 1.0f;
+        from = pose != RootminState.ENTITY_TO_BLOCK ? 0f : 1.0f;
         this.shadowStrength = Mth.lerp(percentage, from, target);
     }
 

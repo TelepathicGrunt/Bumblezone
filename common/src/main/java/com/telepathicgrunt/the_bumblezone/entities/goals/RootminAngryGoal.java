@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -16,12 +16,12 @@ public class RootminAngryGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.mob.getRootminPose() == RootminPose.ANGRY;
+        return this.mob.getRootminPose() == RootminState.ANGRY;
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.mob.getRootminPose() == RootminPose.ANGRY;
+        return this.mob.getRootminPose() == RootminState.ANGRY;
     }
 
     @Override

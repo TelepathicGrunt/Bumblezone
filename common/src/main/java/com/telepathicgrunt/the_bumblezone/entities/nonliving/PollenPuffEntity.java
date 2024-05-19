@@ -88,8 +88,8 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
     @Override
     public void tick() {
         super.tick();
-        if(this.level().isClientSide() && (!this.isInWater() || this.random.nextFloat() < 0.06f)) {
-            for(int i = 0; i < 10; ++i) {
+        if (this.level().isClientSide() && (!this.isInWater() || this.random.nextFloat() < 0.06f)) {
+            for (int i = 0; i < 10; ++i) {
                 PileOfPollen.spawnParticles(this.level(), this.position(), this.random, 0.015D, 0.015D, -0.001D);
             }
         }
@@ -109,7 +109,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 this.handleInsidePortal(blockpos);
                 this.onHit(raytraceresult);
             }
-            else if(blockstate.getFluidState().is(FluidTags.WATER)) {
+            else if (blockstate.getFluidState().is(FluidTags.WATER)) {
                 this.onHit(raytraceresult);
             }
         }
@@ -123,7 +123,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             this.remove(RemovalReason.DISCARDED);
         }
         else {
-            for(int i = 0; i < 150; ++i) {
+            for (int i = 0; i < 150; ++i) {
                 PileOfPollen.spawnParticles(this.level(), this.position(), this.random, 0.04D, 0.04D, -0.001D);
             }
         }
@@ -131,33 +131,33 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitEntity(EntityHitResult entityRayTraceResult) {
-        if(this.level().isClientSide() || consumed) return; // do not run this code if a block already was set.
+        if (this.level().isClientSide() || consumed) return; // do not run this code if a block already was set.
 
         super.onHitEntity(entityRayTraceResult);
         Entity entity = entityRayTraceResult.getEntity();
 
         // pollinates the bee
-        if(entity instanceof Bee && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
+        if (entity instanceof Bee && entity.getType().is(BzTags.POLLEN_PUFF_CAN_POLLINATE)) {
             ((BeeEntityInvoker)entity).callSetHasNectar(true);
             ((Bee)entity).resetTicksWithoutNectarSinceExitingHive();
 
-            if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+            if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.POLLEN_PUFF_POLLINATED_BEE_TRIGGER.get().trigger(serverPlayer);
             }
         }
-        else if(entity instanceof Panda panda) {
+        else if (entity instanceof Panda panda) {
             panda.sneeze(true);
 
-            if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+            if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.POLLEN_PUFF_PANDA_TRIGGER.get().trigger(serverPlayer);
             }
         }
-        else if(entity instanceof Fireball fireball && fireball.getOwner() instanceof Ghast) {
-            if(this.getOwner() instanceof ServerPlayer serverPlayer) {
+        else if (entity instanceof Fireball fireball && fireball.getOwner() instanceof Ghast) {
+            if (this.getOwner() instanceof ServerPlayer serverPlayer) {
                 BzCriterias.POLLEN_PUFF_FIREBALL_TRIGGER.get().trigger(serverPlayer);
             }
         }
-        else if(entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
+        else if (entity instanceof FallingBlockEntity fallingBlockEntity && fallingBlockEntity.getBlockState().is(BzBlocks.PILE_OF_POLLEN.get())) {
             BlockState fallingState = fallingBlockEntity.getBlockState();
             int newLayer = Math.min(8, fallingState.getValue(PileOfPollen.LAYERS) + 1);
             ((FallingBlockEntityAccessor)fallingBlockEntity).setBlockState(fallingState.setValue(PileOfPollen.LAYERS, newLayer));
@@ -165,13 +165,13 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             UpdateFallingBlockPacket.sendToClient(fallingBlockEntity, fallingBlockEntity.getId(), (short)newLayer);
         }
 
-        if(entity instanceof LivingEntity && this.getOwner() instanceof ServerPlayer serverPlayer) {
+        if (entity instanceof LivingEntity && this.getOwner() instanceof ServerPlayer serverPlayer) {
             PlayerDataHandler.onPollenHit(serverPlayer);
         }
 
         if (entity instanceof RootminEntity rootminEntity) {
             BlockState blockstate = rootminEntity.getFlowerBlock();
-            if(blockstate != null && blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
+            if (blockstate != null && blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
                 spawnPlants(rootminEntity.blockPosition(), (r, b) -> blockstate);
             }
         }
@@ -180,29 +180,31 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             if (possiblePlants != null && GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), BlockPos.containing(entityRayTraceResult.getLocation()), true)) {
                 boolean spawnedBlock = spawnPlants(entity.blockPosition(), possiblePlants::getState);
 
-                if(this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
+                if (this.getOwner() instanceof ServerPlayer serverPlayer && spawnedBlock && entity.getType() == EntityType.MOOSHROOM) {
                     BzCriterias.POLLEN_PUFF_MOOSHROOM_TRIGGER.get().trigger(serverPlayer);
                 }
             }
         }
 
-        ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
-        if(!entity.isShiftKeyDown() && !beeLeggings.isEmpty()) {
-            HoneyBeeLeggings.setPollinated(beeLeggings);
+        if (entity instanceof LivingEntity livingEntity) {
+            ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(livingEntity);
+            if (!entity.isShiftKeyDown() && !beeLeggings.isEmpty()) {
+                HoneyBeeLeggings.setPollinated(beeLeggings);
+            }
         }
     }
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
-        if(this.level().isClientSide() || consumed || !GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), blockHitResult.getBlockPos(), true)) return; // do not run this code if a block already was set.
+        if (this.level().isClientSide() || consumed || !GeneralUtils.isPermissionAllowedAtSpot(this.level(), this.getOwner(), blockHitResult.getBlockPos(), true)) return; // do not run this code if a block already was set.
 
         BlockState blockstate = this.level().getBlockState(blockHitResult.getBlockPos());
         blockstate.onProjectileHit(this.level(), blockstate, blockHitResult, this);
 
-        if(blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
+        if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
             spawnPlants(blockHitResult.getBlockPos(), (r, b) -> blockstate);
         }
-        else if(blockstate.is(Blocks.HONEY_BLOCK) ||
+        else if (blockstate.is(Blocks.HONEY_BLOCK) ||
                 blockstate.is(Blocks.SOUL_SAND) ||
                 blockstate.isFaceSturdy(this.level(), blockHitResult.getBlockPos(), blockHitResult.getDirection()))
         {
@@ -212,11 +214,11 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             BlockState belowSideState = this.level().getBlockState(impactSide.below());
             boolean belowSideStateHasCollision = !belowSideState.getCollisionShape(this.level(), impactSide.below()).isEmpty();
 
-            if(sideState.is(pileOfPollen.getBlock())) {
+            if (sideState.is(pileOfPollen.getBlock())) {
                 PileOfPollen.stackPollen(sideState, this.level(), impactSide, pileOfPollen);
                 consumed = true;
             }
-            else if((!belowSideStateHasCollision && (sideState.isAir() || sideState.is(BlockTags.FIRE))) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level(), impactSide) && sideState.canBeReplaced())) {
+            else if ((!belowSideStateHasCollision && (sideState.isAir() || sideState.is(BlockTags.FIRE))) || (belowSideStateHasCollision && pileOfPollen.canSurvive(this.level(), impactSide) && sideState.canBeReplaced())) {
                 this.level().setBlock(impactSide, pileOfPollen, 3);
                 consumed = true;
             }
@@ -226,7 +228,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
     private boolean spawnPlants(BlockPos pos, BiFunction<RandomSource, BlockPos, BlockState> blockStateGetter) {
         boolean spawnedPlant = false;
         int flowerAttempts = 2 + this.random.nextInt(3);
-        for(int i = 0; i < flowerAttempts; i++) {
+        for (int i = 0; i < flowerAttempts; i++) {
             boolean isTallPlant = false;
             BlockPos newPos = pos.offset(
                     this.random.nextInt(5) - 2,
@@ -244,12 +246,12 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 gameProfile = serverPlayer.getGameProfile();
             }
             ServerPlayer fakePlayer = PlatformHooks.getFakePlayer((ServerLevel) this.level(), gameProfile);
-            if(blockstate.getBlock() instanceof DoublePlantBlock) {
+            if (blockstate.getBlock() instanceof DoublePlantBlock) {
                 blockstate = blockstate.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER);
                 isTallPlant = true;
             }
-            else if(blockstate.getBlock() instanceof VineBlock vineBlock) {
-                for(Direction direction : Direction.Plane.HORIZONTAL) {
+            else if (blockstate.getBlock() instanceof VineBlock vineBlock) {
+                for (Direction direction : Direction.Plane.HORIZONTAL) {
                     BooleanProperty faceProperty = VineBlock.getPropertyForFace(direction);
                     boolean flag = ((VineBlockAccessor)vineBlock).callCanSupportAtFace(level(), newPos, direction);
                     blockstate = blockstate.setValue(faceProperty, flag);
@@ -284,7 +286,7 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             }
 
             boolean isWaterBased = blockstate.getFluidState().is(FluidTags.WATER);
-            if((isWaterBased ? this.level().getBlockState(newPos).is(Blocks.WATER) : (isFlowerAmount || this.level().isEmptyBlock(newPos)) && blockstate.canSurvive(this.level(), newPos))) {
+            if ((isWaterBased ? this.level().getBlockState(newPos).is(Blocks.WATER) : (isFlowerAmount || this.level().isEmptyBlock(newPos)) && blockstate.canSurvive(this.level(), newPos))) {
                 if (blockstate.is(Blocks.MOSS_CARPET)) {
                     BlockState belowState = this.level().getBlockState(newPos.below());
                     if (BuiltInRegistries.BLOCK.getKey(belowState.getBlock()).getPath().contains("carpet") || belowState.is(BlockTags.UNSTABLE_BOTTOM_CENTER) || !belowState.isFaceSturdy(this.level(), newPos.below(), Direction.DOWN, SupportType.FULL)) {
@@ -302,9 +304,9 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
                 this.level().setBlock(newPos, blockstate, 3);
                 blockstate.getBlock().setPlacedBy(this.level(), newPos, blockstate, fakePlayer, ItemStack.EMPTY);
 
-                if(this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
+                if (this.getOwner() instanceof ServerPlayer serverPlayer && blockstate.is(BlockTags.FLOWERS)) {
                     PlayerDataHandler.onFlowerSpawned(serverPlayer);
-                    if(isTallPlant) {
+                    if (isTallPlant) {
                         BzCriterias.POLLEN_PUFF_POLLINATED_TALL_FLOWER_TRIGGER.get().trigger(serverPlayer);
                     }
                 }

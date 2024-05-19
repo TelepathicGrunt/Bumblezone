@@ -41,8 +41,8 @@ public class ElectricRingEntity extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_ID_DISAPPEARING_SET, this.disappearingTime > 0);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        builder.define(DATA_ID_DISAPPEARING_SET, this.disappearingTime > 0);
     }
 
     public UUID getEssenceController() {
@@ -75,11 +75,6 @@ public class ElectricRingEntity extends Entity {
 
     protected void setDisappearingMarker(boolean disappearingMarker) {
         this.entityData.set(DATA_ID_DISAPPEARING_SET, disappearingMarker);
-    }
-
-    @Override
-    protected float getEyeHeight(Pose pose, EntityDimensions entityDimensions) {
-        return entityDimensions.height * 0.5f;
     }
 
     public void tick() {
@@ -306,7 +301,7 @@ public class ElectricRingEntity extends Entity {
             this.setEssenceController(compoundTag.getUUID("essenceController"));
         }
         if (compoundTag.contains("essenceControllerBlockPos")) {
-            this.setEssenceControllerBlockPos(NbtUtils.readBlockPos(compoundTag.getCompound("essenceControllerBlockPos")));
+            NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
             this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));

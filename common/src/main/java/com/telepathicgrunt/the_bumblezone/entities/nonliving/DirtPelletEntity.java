@@ -66,10 +66,10 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
     }
 
     @Override
-    protected void defineSynchedData() {
-        this.entityData.define(DATA_HOMING_TARGET_UUID, Optional.empty());
-        this.entityData.define(DATA_IS_HOMING, false);
-        super.defineSynchedData();
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_HOMING_TARGET_UUID, Optional.empty());
+        builder.define(DATA_IS_HOMING, false);
     }
 
     public boolean isEventBased() {

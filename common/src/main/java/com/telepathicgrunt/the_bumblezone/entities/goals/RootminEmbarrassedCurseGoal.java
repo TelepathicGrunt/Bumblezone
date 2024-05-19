@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -17,8 +17,8 @@ public class RootminEmbarrassedCurseGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        boolean isCursing = this.mob.getRootminPose() == RootminPose.CURSE;
-        boolean isEmbarrassed = this.mob.getRootminPose() == RootminPose.EMBARRASSED;
+        boolean isCursing = this.mob.getRootminPose() == RootminState.CURSE;
+        boolean isEmbarrassed = this.mob.getRootminPose() == RootminState.EMBARRASSED;
         return this.mob.rootminToLookAt != null && (isCursing || isEmbarrassed);
     }
 
@@ -27,7 +27,7 @@ public class RootminEmbarrassedCurseGoal extends Goal {
         return this.timer > 0 &&
                 this.mob.rootminToLookAt != null &&
                 !this.mob.isDeadOrDying() &&
-                (this.mob.getRootminPose() == RootminPose.CURSE || this.mob.getRootminPose() == RootminPose.EMBARRASSED);
+                (this.mob.getRootminPose() == RootminState.CURSE || this.mob.getRootminPose() == RootminState.EMBARRASSED);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RootminEmbarrassedCurseGoal extends Goal {
         this.mob.disableAttackGoals = false;
         this.mob.rootminToLookAt = null;
         this.mob.exposedTimer = 0;
-        this.mob.setRootminPose(RootminPose.NONE);
+        this.mob.setRootminPose(RootminState.NONE);
     }
 
     @Override

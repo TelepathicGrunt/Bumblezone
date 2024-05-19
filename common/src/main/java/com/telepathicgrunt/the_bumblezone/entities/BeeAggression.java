@@ -23,13 +23,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -229,7 +229,7 @@ public class BeeAggression {
 
             //must be a bear or insect animal with no wrath of the hive effect on
             return SET_OF_BEE_HATED_NAMED_ENTITIES.contains(entity.getType()) ||
-                    (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.getMobType() == MobType.ARTHROPOD);
+                    (!SET_OF_BEE_NAMED_ENTITIES.contains(entity.getType()) && mobEntity.getType().is(EntityTypeTags.ARTHROPOD));
         }
 
         return false;

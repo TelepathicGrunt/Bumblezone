@@ -16,7 +16,9 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -36,6 +38,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -268,21 +271,23 @@ public class EntityTeleportationHookup {
                 passedCheck = true;
             }
 
-            // Held item check
-            for (ItemStack stack : hitEntity.getHandSlots()) {
-                if (stack == null) {
-                    continue;
+            if (hitEntity instanceof LivingEntity livingEntity) {
+                // Held item check
+                for (ItemStack stack : livingEntity.getHandSlots()) {
+                    if (stack == null) {
+                        continue;
+                    }
+                    if (stack.is(BzTags.TARGET_WITH_HELD_ITEM_HIT_BY_TELEPORT_PROJECTILE)) {
+                        passedCheck = true;
+                        break;
+                    }
                 }
-                if (stack.is(BzTags.TARGET_WITH_HELD_ITEM_HIT_BY_TELEPORT_PROJECTILE)) {
-                    passedCheck = true;
-                    break;
-                }
-            }
 
-            // Armor item check
-            for (ItemStack stack : hitEntity.getArmorSlots()) {
-                if (stack != null && stack.is(BzTags.TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE)) {
-                    passedCheck = true;
+                // Armor item check
+                for (ItemStack stack : livingEntity.getArmorSlots()) {
+                    if (stack != null && stack.is(BzTags.TARGET_ARMOR_HIT_BY_TELEPORT_PROJECTILE)) {
+                        passedCheck = true;
+                    }
                 }
             }
 
@@ -319,16 +324,18 @@ public class EntityTeleportationHookup {
             boolean isAllowTeleportItem = usingStack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE) ||
                     (usingStack.is(BzTags.TELEPORT_ITEM_RIGHT_CLICKED_BEEHIVE_CROUCHING) && user.isShiftKeyDown());
 
-            if (!isAllowTeleportItem) {
-                Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(usingStack);
-                for (Enchantment enchantment : enchantments.keySet()) {
-                    if (GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.ITEM_WITH_TELEPORT_ENCHANT, enchantment)) {
-                        isAllowTeleportItem = true;
-                        break;
-                    }
-                    else if (user.isShiftKeyDown() && GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.ITEM_WITH_TELEPORT_ENCHANT_CROUCHING, enchantment)) {
-                        isAllowTeleportItem = true;
-                        break;
+            if (!isAllowTeleportItem && usingStack.has(DataComponents.ENCHANTMENTS)) {
+                ItemEnchantments enchantments = usingStack.get(DataComponents.ENCHANTMENTS);
+                if (enchantments != null) {
+                    for (Holder<Enchantment> enchantment : enchantments.keySet()) {
+                        if (enchantment.is(BzTags.ITEM_WITH_TELEPORT_ENCHANT)) {
+                            isAllowTeleportItem = true;
+                            break;
+                        }
+                        else if (user.isShiftKeyDown() && enchantment.is(BzTags.ITEM_WITH_TELEPORT_ENCHANT_CROUCHING)) {
+                            isAllowTeleportItem = true;
+                            break;
+                        }
                     }
                 }
             }

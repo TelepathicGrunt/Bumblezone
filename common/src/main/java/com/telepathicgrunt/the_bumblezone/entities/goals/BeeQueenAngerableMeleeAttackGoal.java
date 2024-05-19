@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.beequeen.BeeQueenPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,7 +48,7 @@ public class BeeQueenAngerableMeleeAttackGoal extends Goal {
             this.mob.swing(InteractionHand.MAIN_HAND);
             this.mob.doHurtTarget(target);
             this.mob.spawnAngryParticles(4);
-            this.mob.setQueenPose(BeeQueenPose.ATTACKING);
+            this.mob.setQueenPose(BeeQueenState.ATTACKING);
         }
     }
 

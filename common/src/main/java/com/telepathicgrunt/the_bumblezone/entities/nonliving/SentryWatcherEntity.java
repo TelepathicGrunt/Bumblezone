@@ -1,12 +1,13 @@
 package com.telepathicgrunt.the_bumblezone.entities.nonliving;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.SentryWatcherSpawnEgg;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -104,13 +105,11 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    public SentryWatcherEntity(Level worldIn) {
       super(BzEntities.SENTRY_WATCHER.get(), worldIn);
-      this.setMaxUpStep(MAX_STEP_UP);
       this.noCulling = true;
    }
 
    public SentryWatcherEntity(EntityType<? extends SentryWatcherEntity> type, Level worldIn) {
       super(type, worldIn);
-      this.setMaxUpStep(MAX_STEP_UP);
    }
 
    public int getShakingTime() {
@@ -135,12 +134,12 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    @Override
-   protected void defineSynchedData() {
-      this.entityData.define(DATA_ID_ACTIVATED, false);
-      this.entityData.define(DATA_ID_SHAKING, false);
-      this.entityData.define(DATA_ID_NO_AI, false);
-      this.entityData.define(DATA_ID_TARGET_FACING, this.getTargetFacing());
-      this.entityData.define(DATA_ID_OWNER, Optional.empty());
+   protected void defineSynchedData(SynchedEntityData.Builder builder) {
+      builder.define(DATA_ID_ACTIVATED, false);
+      builder.define(DATA_ID_SHAKING, false);
+      builder.define(DATA_ID_NO_AI, false);
+      builder.define(DATA_ID_TARGET_FACING, this.getTargetFacing());
+      builder.define(DATA_ID_OWNER, Optional.empty());
    }
 
    public boolean hasActivated() {
@@ -307,14 +306,6 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    @Override
-   public Iterable<ItemStack> getArmorSlots() {
-      return new ArrayList<>();
-   }
-
-   @Override
-   public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {}
-
-   @Override
    public boolean causeFallDamage(float f, float g, DamageSource arg) {
       if (f > 1.5) {
          this.playSound(SoundEvents.GENERIC_BIG_FALL, 1.0f, 0.5f);
@@ -387,7 +378,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
    @Override
    public boolean canCollideWith(Entity entity) {
-      if (entity instanceof RootminEntity rootminEntity && rootminEntity.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+      if (entity instanceof RootminEntity rootminEntity && rootminEntity.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
          return false;
       }
 
@@ -582,10 +573,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
 
                         if (livingEntity instanceof Player player) {
                            double armorDamage = Mth.clampedLerp(1, 8, pastSpeed - 0.2d);
-                           player.getInventory().hurtArmor(
-                                   this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this),
-                                   (float) armorDamage,
-                                   Inventory.ALL_ARMOR_SLOTS);
+                           ((LivingEntityAccessor)player).callHurtArmor(this.level().damageSources().source(BzDamageSources.SENTRY_WATCHER_CRUSHING_TYPE, this), (float) armorDamage);
                         }
                      }
                   }
@@ -925,7 +913,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
       this.move(MoverType.SELF, deltaMovement);
 
       deltaMovement = this.getDeltaMovement();
-      if (this.horizontalCollision && (this.getFeetBlockState().is(Blocks.POWDER_SNOW) && PowderSnowBlock.canEntityWalkOnPowderSnow(this))) {
+      if (this.horizontalCollision && (this.getBlockStateOn().is(Blocks.POWDER_SNOW) && PowderSnowBlock.canEntityWalkOnPowderSnow(this))) {
          deltaMovement = new Vec3(deltaMovement.x, 0.2, deltaMovement.z);
       }
 
@@ -1264,6 +1252,11 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    @Override
    public float getVisualRotationYInDegrees() {
       return this.getYRot();
+   }
+
+   @Override
+   public float maxUpStep() {
+      return MAX_STEP_UP;
    }
 
    protected boolean isImmobile() {

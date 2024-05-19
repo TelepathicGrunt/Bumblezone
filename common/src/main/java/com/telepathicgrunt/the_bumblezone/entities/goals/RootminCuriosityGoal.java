@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.client.rendering.rootmin.RootminPose;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.FlowerHeadwearHelmet;
@@ -32,7 +32,7 @@ public class RootminCuriosityGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (this.mob.getRootminPose() != RootminPose.ENTITY_TO_BLOCK || this.mob.animationTimeBetweenHiding != 0) {
+        if (this.mob.getRootminPose() != RootminState.ENTITY_TO_BLOCK || this.mob.animationTimeBetweenHiding != 0) {
             return false;
         }
 
@@ -71,14 +71,14 @@ public class RootminCuriosityGoal extends Goal {
         return !this.mob.isDeadOrDying() &&
                 this.inspect != null &&
                 !this.inspect.isDeadOrDying() &&
-                (!this.isCuriousNow || this.curiosityWaiting > 0 || this.mob.getRootminPose() == RootminPose.CURIOUS) &&
+                (!this.isCuriousNow || this.curiosityWaiting > 0 || this.mob.getRootminPose() == RootminState.CURIOUS) &&
                 (BeeArmor.getBeeThemedWearablesCount(this.inspect) > 0 || !FlowerHeadwearHelmet.getFlowerHeadwear(this.inspect).isEmpty()) &&
                 this.mob.blockPosition().distManhattan(this.inspect.blockPosition()) < 32;
     }
 
     @Override
     public void start() {
-        if (this.mob.getRootminPose() == RootminPose.ENTITY_TO_BLOCK) {
+        if (this.mob.getRootminPose() == RootminState.ENTITY_TO_BLOCK) {
             this.mob.exposeFromBlock();
             this.exposingTiming = 20;
         }
@@ -92,7 +92,7 @@ public class RootminCuriosityGoal extends Goal {
         this.mob.exposedTimer = 0;
         this.exposingTiming = 0;
         this.curiosityWaiting = 0;
-        this.mob.setRootminPose(RootminPose.NONE);
+        this.mob.setRootminPose(RootminState.NONE);
     }
 
     @Override

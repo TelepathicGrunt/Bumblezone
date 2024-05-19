@@ -74,6 +74,16 @@ public class PlatformHooksImpl {
                 .build(buildName);
     }
 
+    public static <T extends Entity> EntityType<T> createEntityType(EntityType.EntityFactory<T> entityFactory, MobCategory category, float xzSize, float ySize, float eyeHeight, boolean scalable, int clientTrackingRange, int updateInterval, String buildName) {
+        return EntityType.Builder
+                .of(entityFactory, category)
+                .sized(xzSize, ySize)
+                .eyeHeight(eyeHeight)
+                .clientTrackingRange(clientTrackingRange)
+                .updateInterval(updateInterval)
+                .build(buildName);
+    }
+
     public static ModInfo getModInfo(String modid, boolean qualifierIsVersion) {
         return ModList.get().getModContainerById(modid)
                 .map(container -> new NeoForgeModInfo(container.getModInfo(), qualifierIsVersion))
@@ -203,6 +213,6 @@ public class PlatformHooksImpl {
     }
 
     public static Fluid getBucketItemFluid(BucketItem stack) {
-        return stack.getFluid();
+        return stack.content;
     }
 }

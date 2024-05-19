@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.packets.MobEffectClientSyncPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -34,6 +35,15 @@ public class ParalyzedEffect extends MobEffect {
         return duration >= 1;
     }
 
+    @Override
+    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+        if (livingEntity.getType().is(EntityTypeTags.UNDEAD) || livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * sync paralyzed to client so they can shake on client side
      */
@@ -41,11 +51,6 @@ public class ParalyzedEffect extends MobEffect {
     public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
         MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.get());
         if (effect == null) {
-            return;
-        }
-
-        if (livingEntity.getMobType() == MobType.UNDEAD || livingEntity.getType().is(BzTags.PARALYZED_IMMUNE)) {
-            livingEntity.removeEffect(this);
             return;
         }
 
