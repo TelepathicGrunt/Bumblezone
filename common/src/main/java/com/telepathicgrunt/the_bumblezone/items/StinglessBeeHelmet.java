@@ -116,7 +116,7 @@ public class StinglessBeeHelmet extends BeeArmor {
             }
         }
 
-        boolean hasWrath = player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+        boolean hasWrath = player.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
         if (hasBeeRider || hasWrath) {
             if (hasWrath ||
                 player.isUnderWater() ||

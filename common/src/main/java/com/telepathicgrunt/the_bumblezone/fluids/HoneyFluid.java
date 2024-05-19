@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -34,7 +34,7 @@ import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_L
 
 public abstract class HoneyFluid extends BzFlowingFluid {
 
-    protected HoneyFluid(FluidInfo properties, boolean source) {
+    protected HoneyFluid(FluidData properties, boolean source) {
         super(properties, source);
     }
 
@@ -317,7 +317,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
     }
 
     public static class Flowing extends HoneyFluid {
-        public Flowing(FluidInfo properties) {
+        public Flowing(FluidData properties) {
             super(properties, false);
             registerDefaultState(getStateDefinition().any()
                     .setValue(LEVEL, 8)
@@ -351,7 +351,7 @@ public abstract class HoneyFluid extends BzFlowingFluid {
 
     public static class Source extends HoneyFluid {
 
-        public Source(FluidInfo properties) {
+        public Source(FluidData properties) {
             super(properties, true);
             registerDefaultState(getStateDefinition().any().setValue(ABOVE_FLUID, false));
         }

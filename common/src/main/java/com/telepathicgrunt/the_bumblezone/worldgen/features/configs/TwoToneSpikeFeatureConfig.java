@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.worldgen.features.configs;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import java.util.List;
 
 public class TwoToneSpikeFeatureConfig implements FeatureConfiguration {
-    public static final MapCodec<TwoToneSpikeFeatureConfig> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
+    public static final Codec<TwoToneSpikeFeatureConfig> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
             TagKey.codec(Registries.BLOCK).fieldOf("allowed_base_block_copies").forGetter(nbtFeatureConfig -> nbtFeatureConfig.allowedBaseBlockCopies),
             BuiltInRegistries.BLOCK.byNameCodec().listOf().fieldOf("tip_blocks").forGetter(nbtFeatureConfig -> nbtFeatureConfig.tipBlocks),
             IntProvider.codec(0, 1000).fieldOf("height_range").forGetter(config -> config.heightRange)

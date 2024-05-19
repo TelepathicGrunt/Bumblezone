@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.RootminState;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;

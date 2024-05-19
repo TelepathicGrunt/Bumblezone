@@ -101,13 +101,13 @@ public class BeeAggression {
                 !player.isCreative() &&
                 !player.isSpectator())
         {
-            if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+            if(!player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
                 if (!EssenceOfTheBees.hasEssence(player) && player.level().getDifficulty() != Difficulty.PEACEFUL) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     player.displayClientMessage(message, true);
 
                     player.addEffect(new MobEffectInstance(
-                            BzEffects.WRATH_OF_THE_HIVE.get(),
+                            BzEffects.WRATH_OF_THE_HIVE.holder(),
                             BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts,
                             2,
                             false,
@@ -119,7 +119,7 @@ public class BeeAggression {
                 BzCriterias.HONEY_PERMISSION_TRIGGER.get().trigger(player);
 
                 if (removesProt) {
-                    player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                    player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
                 }
             }
         }
@@ -147,8 +147,8 @@ public class BeeAggression {
             !((Player)attackerEntity).isCreative() &&
             !attackerEntity.isSpectator())
         {
-            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+            if(player.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
+                player.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(player.level(), player); // prevent bees from be naturally angry
             }
             else if((entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -160,7 +160,7 @@ public class BeeAggression {
                 }
 
                 player.addEffect(new MobEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE.get(),
+                        BzEffects.WRATH_OF_THE_HIVE.holder(),
                         BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts,
                         2,
                         false,
@@ -169,8 +169,8 @@ public class BeeAggression {
             }
         }
         else if(attackerEntity instanceof Mob mob) {
-            if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+            if(mob.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
+                mob.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(mob.level(), mob); // prevent bees from be naturally angry
             }
             else if((entity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) ||
@@ -178,7 +178,7 @@ public class BeeAggression {
                     BzBeeAggressionConfigs.aggressiveBees)
             {
                 mob.addEffect(new MobEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE.get(),
+                        BzEffects.WRATH_OF_THE_HIVE.holder(),
                         BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts,
                         2,
                         false,
@@ -192,7 +192,7 @@ public class BeeAggression {
     public static void entityTypeBeeAnger(Entity entity) {
         if(doesBeesHateEntity(entity)) {
             ((Mob) entity).addEffect(new MobEffectInstance(
-                    BzEffects.WRATH_OF_THE_HIVE.get(),
+                    BzEffects.WRATH_OF_THE_HIVE.holder(),
                     BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts,
                     1,
                     false,
@@ -247,22 +247,22 @@ public class BeeAggression {
         Player playerEntity = event.player();
 
         //removes the wrath of the hive if it is disallowed outside dimension
-        if(!playerEntity.level().isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+        if(!playerEntity.level().isClientSide() && playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
             if (playerEntity.level().getDifficulty() == Difficulty.PEACEFUL) {
-                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
             }
             else if (!(BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone ||
                     playerEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID)))
             {
-                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
             }
         }
 
         //Makes the fog redder when this effect is active
         if(playerEntity.level().isClientSide()) {
-            boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+            boolean wrathEffect = playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
             if(wrathEffect) {
                 MusicHandler.playStopAngryBeeMusic(playerEntity, BzClientConfigs.playWrathOfHiveEffectMusic);
             }
@@ -295,14 +295,14 @@ public class BeeAggression {
                 return;
             }
 
-            if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+            if (!serverPlayer.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
+                if (!serverPlayer.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
                     Component message = Component.translatable("system.the_bumblezone.no_protection").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
                     serverPlayer.displayClientMessage(message, true);
                 }
 
                 serverPlayer.addEffect(new MobEffectInstance(
-                        BzEffects.WRATH_OF_THE_HIVE.get(),
+                        BzEffects.WRATH_OF_THE_HIVE.holder(),
                         BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts,
                         2,
                         false,

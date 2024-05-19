@@ -29,16 +29,15 @@ public class BzClientFluidExtension implements IClientFluidTypeExtensions {
     private final BzFluidType type;
     private ClientFluidProperties properties;
 
-
     public BzClientFluidExtension(BzFluidType type) {
         this.type = type;
     }
 
     private void checkForProperties() {
         if (properties == null) {
-            properties = ClientFluidProperties.get(type.properties().id());
+            properties = ClientFluidProperties.get(type.properties());
             if (properties == null) {
-                throw new IllegalStateException("Client Fluid properties for " + type.properties().id() + " is missing!");
+                throw new IllegalStateException("Client Fluid properties for " + type.getDescriptionId() + " is missing!");
             }
         }
     }

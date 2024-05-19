@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.client;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.armor.BeeArmorModelProvider;
 import com.telepathicgrunt.the_bumblezone.client.armor.FlowerHeadwearModelProvider;
@@ -89,7 +90,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzMenuTypes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import earth.terrarium.athena.api.client.models.FactoryManager;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -193,7 +193,7 @@ public class BumblezoneClient {
     }
 
     public static void registerEffectRenderers(RegisterEffectRenderersEvent event) {
-        event.register(BzEffects.HIDDEN.get(), new HiddenEffectIconRenderer());
+        event.register(BzEffects.HIDDEN.holder(), new HiddenEffectIconRenderer());
     }
 
     public static void registerArmorProviders(RegisterArmorProviderEvent event) {

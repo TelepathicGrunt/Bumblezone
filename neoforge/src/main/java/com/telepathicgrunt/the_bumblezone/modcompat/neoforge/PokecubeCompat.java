@@ -1,27 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
-import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
-import net.minecraft.server.level.WorldGenRegion;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.ServerLevelAccessor;
-import pokecube.api.data.PokedexEntry;
-import pokecube.api.entity.pokemob.IPokemob;
-import pokecube.api.entity.pokemob.PokemobCaps;
-import pokecube.core.PokecubeCore;
-import pokecube.core.database.Database;
-import pokecube.core.entity.pokemobs.helper.PokemobBase;
-
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
 
 public class PokecubeCompat implements ModCompat {
 //    private static final List<PokedexEntry> BABY_POKECUBE_POKEMON_LIST = new ArrayList<>();
@@ -102,7 +81,7 @@ public class PokecubeCompat implements ModCompat {
 //        if (BzModCompatibilityConfigs.beePokemonGetsProtectionEffect && entity instanceof PokemobBase pokemobBase) {
 //            if (POKECUBE_POKEMON_LIST.contains(pokemobBase.pokemobCap.getPokedexEntry())) {
 //                pokemobBase.addEffect(new MobEffectInstance(
-//                        BzEffects.PROTECTION_OF_THE_HIVE.get(),
+//                        BzEffects.PROTECTION_OF_THE_HIVE.holder(),
 //                        Integer.MAX_VALUE - 5,
 //                        0,
 //                        true,

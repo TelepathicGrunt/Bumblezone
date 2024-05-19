@@ -1,15 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.utils.neoforge;
 
 import com.mojang.authlib.GameProfile;
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.entities.neoforge.DisableFlightAttribute;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,19 +21,15 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.NeoForge;
@@ -47,12 +40,10 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.level.BlockEvent;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public class PlatformHooksImpl {
 
@@ -143,9 +134,9 @@ public class PlatformHooksImpl {
         //Do nothing
     }
 
-    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidInfo... fluids) {
-        for (FluidInfo fluid : fluids) {
-            double forgeTypeHeight = entity.getFluidTypeHeight(fluid.source().getFluidType());
+    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
+        for (FluidData fluid : fluids) {
+            double forgeTypeHeight = entity.getFluidTypeHeight(fluid.still().get().getFluidType());
             if (forgeTypeHeight > 0) {
                 return forgeTypeHeight;
             }

@@ -74,7 +74,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 import java.util.UUID;
 
@@ -309,12 +308,12 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                                 (livingEntity.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID) || BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                                 !livingEntity.isSpectator())
                         {
-                            if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                                livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                            if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
+                                livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
                             }
                             else {
                                 //Now all bees nearby in Bumblezone will get VERY angry!!!
-                                livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
+                                livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.holder(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 2, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                             }
                         }
                     }
@@ -371,7 +370,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             heal(40);
                             BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 30);
                             addFriendship(1000);
-                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 90000, 3, true, true, true));
+                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 90000, 3, true, true, true));
                             for (int i = 0; i < 75; i++) {
                                 spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }
@@ -380,7 +379,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
                             heal(10);
                             BeeInteractivity.calmAndSpawnHearts(this.level(), player, this, 1f, 10);
                             addFriendship(250);
-                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 20000, 3, true, true, true));
+                            this.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 20000, 3, true, true, true));
                             for (int i = 0; i < 30; i++) {
                                 spawnParticles(this.level(), this.position(), this.random, 0.1D, 0.1D, 0.1);
                             }

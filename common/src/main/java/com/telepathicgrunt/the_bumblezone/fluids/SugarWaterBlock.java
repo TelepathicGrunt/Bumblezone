@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.material.PushReaction;
 
 public class SugarWaterBlock extends BzLiquidBlock {
 
-    public SugarWaterBlock(FluidInfo baseFluid) {
+    public SugarWaterBlock(FluidData baseFluid) {
         super(baseFluid, BlockBehaviour.Properties.of()
                 .mapColor(MapColor.WATER)
                 .liquid()

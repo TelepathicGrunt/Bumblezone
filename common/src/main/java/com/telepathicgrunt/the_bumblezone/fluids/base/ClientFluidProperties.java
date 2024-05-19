@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -32,7 +33,7 @@ import java.util.function.BiConsumer;
 
 public class ClientFluidProperties {
 
-    private static final Map<ResourceLocation, ClientFluidProperties> PROPERTIES = new HashMap<>();
+    private static final Map<FluidProperties, ClientFluidProperties> PROPERTIES = new HashMap<>();
 
     private ModifyFogColor modifyFogColor = null;
     private ModifyFog modifyFog = null;
@@ -44,11 +45,7 @@ public class ClientFluidProperties {
     private ResourceLocation diagonal;
 
     public ClientFluidProperties(FluidProperties properties) {
-        this(properties.id());
-    }
-
-    public ClientFluidProperties(ResourceLocation id) {
-        PROPERTIES.put(id, this);
+        PROPERTIES.put(properties, this);
     }
 
     public ClientFluidProperties modifyFogColor(ModifyFogColor modifyFogColor) {
@@ -108,8 +105,8 @@ public class ClientFluidProperties {
         return this;
     }
 
-    public static ClientFluidProperties get(ResourceLocation id) {
-        return PROPERTIES.get(id);
+    public static ClientFluidProperties get(FluidProperties fluidProperties) {
+        return PROPERTIES.get(fluidProperties);
     }
 
     public ResourceLocation still() {

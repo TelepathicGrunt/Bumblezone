@@ -136,7 +136,7 @@ public class BeeInteractivity {
                 }
 
                 if (isRoyalFed) {
-                    beeEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), isRoyalFedBucket ? 90000 : 20000, 3, true, true, true));
+                    beeEntity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), isRoyalFedBucket ? 90000 : 20000, 3, true, true, true));
                     if (playerEntity instanceof ServerPlayer) {
                         BzCriterias.BEENERGIZED_MAXED_TRIGGER.get().trigger((ServerPlayer) playerEntity);
                     }
@@ -205,14 +205,14 @@ public class BeeInteractivity {
         boolean calmed = random.nextFloat() < calmChance;
         boolean removedWrath = false;
         if (calmed) {
-            if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
-                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+            if(playerEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
+                playerEntity.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
                 WrathOfTheHiveEffect.calmTheBees(playerEntity.level(), playerEntity);
                 removedWrath = true;
             }
 
             playerEntity.addEffect(new MobEffectInstance(
-                    BzEffects.PROTECTION_OF_THE_HIVE.get(),
+                    BzEffects.PROTECTION_OF_THE_HIVE.holder(),
                     BzBeeAggressionConfigs.howLongProtectionOfTheHiveLasts,
                     0,
                     false,

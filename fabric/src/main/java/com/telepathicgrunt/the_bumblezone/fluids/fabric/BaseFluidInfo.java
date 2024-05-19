@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids.fabric;
 
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -8,7 +8,7 @@ import net.minecraft.world.level.material.FlowingFluid;
 
 import java.util.function.Supplier;
 
-public class BaseFluidInfo implements FluidInfo {
+public class BaseFluidData implements FluidData {
 
     private Supplier<? extends FlowingFluid> stillFluid;
     private Supplier<? extends FlowingFluid> flowingFluid;
@@ -16,7 +16,7 @@ public class BaseFluidInfo implements FluidInfo {
     private Supplier<? extends LiquidBlock> block;
     private final FluidProperties properties;
 
-    public BaseFluidInfo(FluidProperties properties) {
+    public BaseFluidData(FluidProperties properties) {
         this.properties = properties;
     }
 

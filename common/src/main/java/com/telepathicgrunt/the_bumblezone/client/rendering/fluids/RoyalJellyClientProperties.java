@@ -1,10 +1,10 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;

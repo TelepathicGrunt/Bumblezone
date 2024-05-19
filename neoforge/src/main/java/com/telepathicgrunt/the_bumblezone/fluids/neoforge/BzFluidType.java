@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids.neoforge;
 
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
-import net.minecraft.Util;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.common.SoundAction;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -19,7 +18,6 @@ public class BzFluidType extends FluidType {
 
     public static BzFluidType of(FluidProperties fluidProperties) {
         var properties = Properties.create();
-        properties.descriptionId(Util.makeDescriptionId("fluid_type", fluidProperties.id()));
         properties.adjacentPathType(fluidProperties.adjacentPathType());
         properties.canConvertToSource(fluidProperties.canConvertToSource());
         properties.canDrown(fluidProperties.canDrown());
@@ -31,12 +29,12 @@ public class BzFluidType extends FluidType {
         properties.fallDistanceModifier(fluidProperties.fallDistanceModifier());
         properties.lightLevel(fluidProperties.lightLevel());
         properties.motionScale(fluidProperties.motionScale());
-        properties.supportsBoating(fluidProperties.supportsBoating());
+        properties.supportsBoating(fluidProperties.supportsBloating());
         properties.pathType(fluidProperties.pathType());
         properties.rarity(fluidProperties.rarity());
         properties.temperature(fluidProperties.temperature());
         properties.viscosity(fluidProperties.viscosity());
-        fluidProperties.sounds().forEach((name, sound) -> properties.sound(SoundAction.get(name), sound.get()));
+        fluidProperties.sounds().sounds().forEach((name, sound) -> properties.sound(SoundAction.get(name), sound));
         return new BzFluidType(fluidProperties, properties);
     }
 

@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.worldgen.features.configs;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
@@ -11,7 +10,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import java.util.List;
 
 public class TreeDungeonFeatureConfig extends NbtFeatureConfig implements FeatureConfiguration {
-    public static final MapCodec<TreeDungeonFeatureConfig> CODEC = RecordCodecBuilder.mapCodec((configInstance) -> configInstance.group(
+    public static final Codec<TreeDungeonFeatureConfig> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
             ResourceLocation.CODEC.fieldOf("tree_configured_feature").forGetter(nbtFeatureConfig -> nbtFeatureConfig.treeConfiguredFeature),
             ResourceLocation.CODEC.fieldOf("processors").forGetter(nbtFeatureConfig -> nbtFeatureConfig.processor),
             ResourceLocation.CODEC.fieldOf("post_processors").orElse(new ResourceLocation("minecraft:empty")).forGetter(nbtFeatureConfig -> nbtFeatureConfig.postProcessor),

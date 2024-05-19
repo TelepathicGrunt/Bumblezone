@@ -13,7 +13,6 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class BzConfigHandler {
 

@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
+import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.CustomRegistry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +11,7 @@ public final class BzBiomeHeightRegistry {
     private BzBiomeHeightRegistry() {}
 
     public static final ResourceKey<Registry<BiomeTerrain>> BIOME_HEIGHT_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Bumblezone.MODID, "biome_height"));
-    public static final CustomRegistry<BiomeTerrain> BIOME_HEIGHT = CustomRegistry.of(Bumblezone.MODID, BiomeTerrain.class, BIOME_HEIGHT_KEY, false, false, true);
+    public static final CustomRegistry<BiomeTerrain> BIOME_HEIGHT = ResourcefulRegistr.of(Bumblezone.MODID, BiomeTerrain.class, BIOME_HEIGHT_KEY, false, false, true);
 
     public static final RegistryEntry<BiomeTerrain> HIVE_PILLAR = BIOME_HEIGHT.register("hive_pillar", () -> new BiomeTerrain(22f, 0.35f));
     public static final RegistryEntry<BiomeTerrain> HIVE_WALL = BIOME_HEIGHT.register("hive_wall", () -> new BiomeTerrain(19f, 0.25f));

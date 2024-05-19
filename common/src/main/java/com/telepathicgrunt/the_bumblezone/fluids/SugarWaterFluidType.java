@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -8,8 +8,9 @@ import net.minecraft.world.level.pathfinder.PathType;
 public class SugarWaterFluidType {
 
     public static FluidProperties.Builder create() {
-        return new FluidProperties.Builder("sugar_water")
-                .supportsBoating(true)
+
+        return FluidProperties.builder()
+                .supportsBloating(true)
                 .canHydrate(true)
                 .canDrown(true)
                 .canExtinguish(true)
@@ -24,8 +25,8 @@ public class SugarWaterFluidType {
                 .viscosity(1100)
                 .density(1100)
                 .temperature(300)
-                .sound("bucket_fill", () -> SoundEvents.BUCKET_FILL)
-                .sound("bucket_empty", () -> SoundEvents.BUCKET_EMPTY)
-                .sound("fluid_vaporize", () -> SoundEvents.FIRE_EXTINGUISH);
+                .sounds("bucket_fill", SoundEvents.BUCKET_FILL)
+                .sounds("bucket_empty", SoundEvents.BUCKET_EMPTY)
+                .sounds("fluid_vaporize", SoundEvents.FIRE_EXTINGUISH);
     }
 }

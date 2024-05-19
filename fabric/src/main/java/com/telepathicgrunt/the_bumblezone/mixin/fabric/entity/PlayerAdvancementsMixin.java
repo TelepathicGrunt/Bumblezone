@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
 import com.telepathicgrunt.the_bumblezone.events.player.PlayerGrantAdvancementEvent;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;

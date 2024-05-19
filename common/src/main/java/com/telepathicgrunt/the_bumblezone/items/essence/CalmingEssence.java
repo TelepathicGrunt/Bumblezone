@@ -83,7 +83,7 @@ public class CalmingEssence extends AbilityEssenceItem {
                     }
                 }
 
-                if (serverPlayer.removeEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+                if (serverPlayer.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
                     decrementAbilityUseRemaining(stack, serverPlayer, getAbilityUseRemaining(stack));
                 }
                 else if (serverPlayer.isSprinting()) {

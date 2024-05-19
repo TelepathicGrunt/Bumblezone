@@ -95,7 +95,7 @@ public class RoyalJellyBottle extends Item {
         if(!(entity instanceof Bee) && entity.getType() != BzEntities.BEEHEMOTH.get())
             return InteractionResult.PASS;
 
-        entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.get(), 24000, 3, true, true, true));
+        entity.addEffect(new MobEffectInstance(BzEffects.BEENERGIZED.holder(), 24000, 3, true, true, true));
         if (playerEntity instanceof ServerPlayer serverPlayer) {
             BzCriterias.BEENERGIZED_MAXED_TRIGGER.get().trigger(serverPlayer);
         }

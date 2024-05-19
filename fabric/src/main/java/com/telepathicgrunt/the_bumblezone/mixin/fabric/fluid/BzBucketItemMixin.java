@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.fluid;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import net.minecraft.world.level.material.FlowingFluid;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +13,7 @@ public class BzBucketItemMixin implements FluidGetter {
 
     @Final
     @Shadow
-    protected FluidInfo info;
+    protected FluidData info;
 
     @Override
     public FlowingFluid getFluid() {

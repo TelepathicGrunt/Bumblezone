@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids.base;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -25,29 +26,29 @@ import java.util.Optional;
 
 public abstract class BzFlowingFluid extends FlowingFluid {
 
-    private final FluidInfo info;
+    private final FluidData info;
 
-    public BzFlowingFluid(FluidInfo info, boolean source) {
+    public BzFlowingFluid(FluidData info, boolean source) {
         this.info = info;
         if (source) {
-            info.setSource(() -> this);
+            info.setStill(() -> this);
         } else {
             info.setFlowing(() -> this);
         }
     }
 
-    public FluidInfo info() {
+    public FluidData info() {
         return info;
     }
 
     @Override
     public Fluid getFlowing() {
-        return info.flowing();
+        return info.flowing().get();
     }
 
     @Override
     public Fluid getSource() {
-        return info.source();
+        return info.still().get();
     }
 
     @Override
@@ -73,7 +74,7 @@ public abstract class BzFlowingFluid extends FlowingFluid {
 
     @Override
     public Item getBucket() {
-        final Item bucket = info.bucket();
+        final Item bucket = info.bucket().get();
         return bucket == null ? Items.AIR : bucket;
     }
 
@@ -94,24 +95,24 @@ public abstract class BzFlowingFluid extends FlowingFluid {
 
     @Override
     protected BlockState createLegacyBlock(@NotNull FluidState state) {
-        Block block = info.block();
+        Block block = info.block().get();
         if (block == null) return Blocks.AIR.defaultBlockState();
         return block.defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
     }
 
     @Override
     public boolean isSame(@NotNull Fluid fluid) {
-        return fluid == info.source() || fluid == info.flowing();
+        return fluid == info.still().get() || fluid == info.flowing().get();
     }
 
     @Override
     public Optional<SoundEvent> getPickupSound() {
-        final SoundEvent event = info.properties().sounds().getOrDefault("bucket_fill", () -> null).get();
+        final SoundEvent event = info.properties().sounds().getOrDefault("bucket_fill", null);
         return event == null ? Optional.of(SoundEvents.BUCKET_FILL) : Optional.of(event);
     }
 
     public static class Source extends BzFlowingFluid {
-        public Source(FluidInfo info) {
+        public Source(FluidData info) {
             super(info, true);
         }
 
@@ -127,7 +128,7 @@ public abstract class BzFlowingFluid extends FlowingFluid {
     }
 
     public static class Flowing extends BzFlowingFluid {
-        public Flowing(FluidInfo info) {
+        public Flowing(FluidData info) {
             super(info, false);
             this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 7));
         }

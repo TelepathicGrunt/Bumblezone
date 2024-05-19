@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.items.essence.EssenceOfTheBees;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
@@ -36,7 +36,7 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
 
     public static final int maxBottomLayer = 8;
 
-    public RoyalJellyFluidBlock(FluidInfo baseFluid) {
+    public RoyalJellyFluidBlock(FluidData baseFluid) {
         super(baseFluid, BlockBehaviour.Properties.of()
                 .mapColor(MapColor.TERRACOTTA_PURPLE)
                 .liquid()
@@ -165,7 +165,7 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
                 }
 
                 beeEntity.addEffect(new MobEffectInstance(
-                        BzEffects.BEENERGIZED.get(),
+                        BzEffects.BEENERGIZED.holder(),
                         600,
                         0,
                         false,
@@ -190,7 +190,7 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
 
         if (entity instanceof ServerPlayer serverPlayer && EssenceOfTheBees.hasEssence(serverPlayer)) {
             serverPlayer.addEffect(new MobEffectInstance(
-                    BzEffects.BEENERGIZED.get(),
+                    BzEffects.BEENERGIZED.holder(),
                     300,
                     0,
                     false,

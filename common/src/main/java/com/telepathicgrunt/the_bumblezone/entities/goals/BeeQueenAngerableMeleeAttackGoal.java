@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.entities.goals;
 
-import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenState;
 import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenEntity;
+import com.telepathicgrunt.the_bumblezone.entities.mobs.BeeQueenState;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;

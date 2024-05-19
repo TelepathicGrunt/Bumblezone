@@ -49,7 +49,7 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
     }
 
     private static boolean shouldFollow(LivingEntity livingEntity) {
-        if (livingEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get())) {
+        if (livingEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
             return false;
         }
 
@@ -64,7 +64,7 @@ public class BeeFlowerHeadwearTemptGoal extends Goal {
 
         if (this.followEntity == null ||
             this.followEntity.isDeadOrDying() ||
-            this.followEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.get()))
+            this.followEntity.hasEffect(BzEffects.WRATH_OF_THE_HIVE.holder()))
         {
             return false;
         }

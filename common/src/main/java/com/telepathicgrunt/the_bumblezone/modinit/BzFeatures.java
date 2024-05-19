@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
+import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.BeeDungeon;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.BlockEntityCombOre;
 import com.telepathicgrunt.the_bumblezone.worldgen.features.CaveSugarWaterfall;
@@ -44,7 +44,7 @@ public class BzFeatures {
     public static final RegistryEntry<Feature<HoneyCrystalFeatureConfig>> HONEY_CRYSTAL_FEATURE = FEATURES.register("honey_crystals_feature", () -> new HoneyCrystalFeature(HoneyCrystalFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> GIANT_HONEY_CRYSTAL_FEATURE = FEATURES.register("giant_honey_crystal_feature", () -> new GiantHoneyCrystalFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryEntry<Feature<NoneFeatureConfiguration>> STICKY_HONEY_RESIDUE_FEATURE = FEATURES.register("sticky_honey_residue_feature", () -> new StickyHoneyResidueFeature(NoneFeatureConfiguration.CODEC));
-    public static final RegistryEntry<Feature<NbtFeatureConfig>> NBT_FEATURE = FEATURES.register("nbt_feature", () -> new NbtFeature(NbtFeatureConfig.CODEC));
+    public static final RegistryEntry<Feature<NbtFeatureConfig>> NBT_FEATURE = FEATURES.register("nbt_feature", () -> new NbtFeature<>(NbtFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<NbtFeatureConfig>> BEE_DUNGEON = FEATURES.register("bee_dungeon", () -> new BeeDungeon(NbtFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<NbtFeatureConfig>> SPIDER_INFESTED_BEE_DUNGEON = FEATURES.register("spider_infested_bee_dungeon", () -> new SpiderInfestedBeeDungeon(NbtFeatureConfig.CODEC));
     public static final RegistryEntry<Feature<TreeDungeonFeatureConfig>> TREE_DUNGEON = FEATURES.register("tree_dungeon", () -> new TreeDungeon(TreeDungeonFeatureConfig.CODEC));

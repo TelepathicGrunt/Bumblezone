@@ -82,7 +82,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
         level = Math.min(level, BzGeneralConfigs.neurotoxinMaxLevel);
 
         if(level > 0 && victim instanceof LivingEntity livingEntity && !livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
-            if (livingEntity.hasEffect(BzEffects.PARALYZED.get())) {
+            if (livingEntity.hasEffect(BzEffects.PARALYZED.holder())) {
                 return;
             }
 
@@ -100,7 +100,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
 
             if(livingEntity.getRandom().nextFloat() < applyChance) {
                 livingEntity.addEffect(new MobEffectInstance(
-                        BzEffects.PARALYZED.get(),
+                        BzEffects.PARALYZED.holder(),
                         Math.min(100 * level, BzGeneralConfigs.paralyzedMaxTickDuration),
                         level,
                         false,

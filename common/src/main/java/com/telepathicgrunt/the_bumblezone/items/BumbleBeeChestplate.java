@@ -81,7 +81,7 @@ public class BumbleBeeChestplate extends BeeArmor {
         }
 
         int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
-        MobEffectInstance beenergized = player.getEffect(BzEffects.BEENERGIZED.get());
+        MobEffectInstance beenergized = player.getEffect(BzEffects.BEENERGIZED.holder());
         boolean isBeenergized = beenergized != null;
 
         isFlying = finalIsFlying;

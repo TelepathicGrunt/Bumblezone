@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.mojang.authlib.GameProfile;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.items.BzCustomBucketItem;
 import com.telepathicgrunt.the_bumblezone.platform.ModInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -129,7 +129,7 @@ public class PlatformHooks {
 
     @ExpectPlatform
     @Contract(pure=true)
-    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidInfo... fluids) {
+    public static double getFluidHeight(Entity entity, TagKey<Fluid> fallback, FluidData... fluids) {
         throw new NotImplementedException("PlatformHooks getFluidHeight is not implemented!");
     }
 

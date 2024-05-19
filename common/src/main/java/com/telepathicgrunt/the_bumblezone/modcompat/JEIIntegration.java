@@ -55,10 +55,10 @@ public class JEIIntegration implements IModPlugin {
     }
 
     private static void addInfo(IRecipeRegistration registration, Fluid fluid) {
-        addFluidInfo(registration, fluid, registration.getJeiHelpers().getPlatformFluidHelper());
+        addFluidData(registration, fluid, registration.getJeiHelpers().getPlatformFluidHelper());
     }
 
-    private static <T> void addFluidInfo(IRecipeRegistration registration, Fluid fluid, IPlatformFluidHelper<T> platformFluidHelper) {
+    private static <T> void addFluidData(IRecipeRegistration registration, Fluid fluid, IPlatformFluidHelper<T> platformFluidHelper) {
         registration.addIngredientInfo(
                 platformFluidHelper.create(fluid, 1),
                 platformFluidHelper.getFluidIngredientType(),

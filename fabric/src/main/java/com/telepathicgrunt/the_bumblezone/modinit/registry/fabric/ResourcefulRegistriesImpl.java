@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit.registry.fabric;
 
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfoRegistry;
+import com.telepathicgrunt.the_bumblezone.fluids.base.FluidDataRegistry;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.CustomRegistryLookup;
 import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
@@ -26,7 +26,7 @@ public class ResourcefulRegistriesImpl {
         return Pair.of(() -> customRegistry, new CustomResourcefulRegistry<>(builtRegistry, modId));
     }
 
-    public static FluidInfoRegistry createFluidRegistry(String id) {
-        return new CustomFluidInfoRegistry(id);
+    public static FluidDataRegistry createFluidRegistry(String id) {
+        return new CustomFluidDataRegistry(id);
     }
 }

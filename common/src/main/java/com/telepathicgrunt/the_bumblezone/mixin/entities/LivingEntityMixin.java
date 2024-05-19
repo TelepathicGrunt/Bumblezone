@@ -55,7 +55,7 @@ public abstract class LivingEntityMixin extends Entity {
     @ModifyReturnValue(method = "getFlyingSpeed()F",
             at = @At(value = "RETURN"))
     private float bumblezone$flyingSpeedBeenergized(float flyingSpeed) {
-        if(hasEffect(BzEffects.BEENERGIZED.get()) && this.attributes.hasAttribute(Attributes.FLYING_SPEED)) {
+        if(hasEffect(BzEffects.BEENERGIZED.holder()) && this.attributes.hasAttribute(Attributes.FLYING_SPEED)) {
             return ((float) (getAttributeValue(Attributes.FLYING_SPEED) / Attributes.FLYING_SPEED.value().getDefaultValue()) * flyingSpeed);
         }
         return flyingSpeed;

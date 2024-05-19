@@ -330,12 +330,12 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
                         BzBeeAggressionConfigs.allowWrathOfTheHiveOutsideBumblezone) &&
                         BzBeeAggressionConfigs.aggressiveBees)
                     {
-                        if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
-                            livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.get());
+                        if (livingEntity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
+                            livingEntity.removeEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder());
                         }
                         else {
                             //Now all bees nearby in Bumblezone will get VERY angry!!!
-                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.get(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 3, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
+                            livingEntity.addEffect(new MobEffectInstance(BzEffects.WRATH_OF_THE_HIVE.holder(), BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts, 3, false, BzBeeAggressionConfigs.showWrathOfTheHiveParticles, true));
                         }
                     }
 

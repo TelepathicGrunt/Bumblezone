@@ -11,7 +11,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 
 public class ParalyzedEffect extends MobEffect {
@@ -49,7 +48,7 @@ public class ParalyzedEffect extends MobEffect {
      */
     @Override
     public void onEffectStarted(LivingEntity livingEntity, int amplifier) {
-        MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.get());
+        MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.holder());
         if (effect == null) {
             return;
         }
@@ -67,14 +66,14 @@ public class ParalyzedEffect extends MobEffect {
 
     // Make sure client removes effect when done.
     public static void effectRemoval(LivingEntity entity, MobEffectInstance mobEffectInstance) {
-        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.PARALYZED.get()) {
+        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.PARALYZED.holder()) {
             return;
         }
 
         MobEffectClientSyncPacket.sendToClient(
             entity,
             new MobEffectInstance(
-                BzEffects.PARALYZED.get(),
+                BzEffects.PARALYZED.holder(),
                 0,
                 mobEffectInstance.getAmplifier(),
                 false,
@@ -88,7 +87,7 @@ public class ParalyzedEffect extends MobEffect {
             return false;
         }
 
-        return livingEntity.hasEffect(BzEffects.PARALYZED.get());
+        return livingEntity.hasEffect(BzEffects.PARALYZED.holder());
     }
 
     public static boolean isParalyzedClient(LivingEntity livingEntity) {
@@ -96,10 +95,10 @@ public class ParalyzedEffect extends MobEffect {
             return false;
         }
 
-        MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.get());
+        MobEffectInstance effect = livingEntity.getEffect(BzEffects.PARALYZED.holder());
         if(effect != null) {
             if(effect.getDuration() <= 0) {
-                livingEntity.removeEffect(BzEffects.PARALYZED.get());
+                livingEntity.removeEffect(BzEffects.PARALYZED.holder());
             }
 
             return true;

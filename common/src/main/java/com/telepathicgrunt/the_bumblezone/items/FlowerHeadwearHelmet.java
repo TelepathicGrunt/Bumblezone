@@ -45,7 +45,7 @@ public class FlowerHeadwearHelmet extends ArmorItem implements ItemExtension {
 
         int beeWearablesCount = BeeArmor.getBeeThemedWearablesCount(player);
 
-        MobEffectInstance wrath = player.getEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+        MobEffectInstance wrath = player.getEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
         if (wrath != null) {
             if (wrath.getDuration() > 0) {
                 ((MobEffectInstanceAccessor) wrath).callTickDownDuration();

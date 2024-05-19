@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzBucketItem;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -48,9 +48,9 @@ import org.jetbrains.annotations.Nullable;
 public class BzCustomBucketItem extends BzBucketItem {
     public final Fluid fluid;
 
-    public BzCustomBucketItem(FluidInfo info, Properties builder) {
+    public BzCustomBucketItem(FluidData info, Properties builder) {
         super(info, builder);
-        this.fluid = info.source().getSource();
+        this.fluid = info.still().get().getSource();
     }
 
     @Override

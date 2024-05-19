@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
+import com.teamresourceful.resourcefullib.common.registry.HolderRegistryEntry;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
+import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistries;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.ResourcefulRegistry;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class BzArmorMaterials {
     public static final ResourcefulRegistry<ArmorMaterial> ARMOR_MATERIAL = ResourcefulRegistries.create(BuiltInRegistries.ARMOR_MATERIAL, Bumblezone.MODID);
 
-    public static final RegistryEntry<ArmorMaterial> BEE_MATERIAL = ARMOR_MATERIAL.register(
+    public static final HolderRegistryEntry<ArmorMaterial> BEE_MATERIAL = ARMOR_MATERIAL.registerHolder(
             "bee_material", () -> createArmorMaterial(
                     "bee_material",
                     Util.make(new EnumMap<>(ArmorItem.Type.class), enumMap -> {

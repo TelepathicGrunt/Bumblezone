@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone;
 
 import com.mojang.logging.LogUtils;
+import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.advancements.TargetAdvancementDoneTrigger;
 import com.telepathicgrunt.the_bumblezone.blocks.InfinityBarrier;
 import com.telepathicgrunt.the_bumblezone.blocks.StringCurtain;
@@ -95,7 +96,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzStructurePlacementType;
 import com.telepathicgrunt.the_bumblezone.modinit.BzStructures;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSurfaceRules;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.modinit.registry.RegistryEntry;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataHandler;
 import com.telepathicgrunt.the_bumblezone.packets.MessageHandler;
 import com.telepathicgrunt.the_bumblezone.packets.QueenMainTradesSyncPacket;
@@ -165,6 +165,7 @@ public class Bumblezone {
         RegisterSpawnPlacementsEvent.EVENT.addListener(BzEntities::registerEntitySpawnRestrictions);
         DatapackSyncEvent.EVENT.addListener(QueenRandomizerTradesSyncPacket::sendToClient);
         DatapackSyncEvent.EVENT.addListener(QueenMainTradesSyncPacket::sendToClient);
+        RegisterBrewingRecipeEvent.EVENT.addListener(BzRecipes::registerBrewingStandRecipes);
 
         //Registration
         BzItems.ITEMS.init();

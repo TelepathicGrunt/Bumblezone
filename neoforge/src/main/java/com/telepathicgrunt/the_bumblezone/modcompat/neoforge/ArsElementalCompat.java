@@ -1,19 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
-import alexthw.ars_elemental.common.glyphs.EffectConjureTerrain;
-import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
-import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
-import com.google.common.collect.Sets;
-import com.hollingsworth.arsnouveau.api.event.EffectResolveEvent;
-import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
-import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
-import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
-import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-
-import java.util.Set;
 
 public class ArsElementalCompat implements ModCompat {
 //	private static final ResourceLocation SPELL_HOMING_PROJ_RL = new ResourceLocation("ars_nouveau", "homing_spell_proj");

@@ -72,7 +72,7 @@ public class BeeStingerEntity extends AbstractArrow {
             boolean isPoisoned = livingEntity.hasEffect(MobEffects.POISON);
             boolean isSlowed = livingEntity.hasEffect(MobEffects.MOVEMENT_SLOWDOWN);
             boolean isWeakened = livingEntity.hasEffect(MobEffects.WEAKNESS);
-            boolean isParalyzed = livingEntity.hasEffect(BzEffects.PARALYZED.get());
+            boolean isParalyzed = livingEntity.hasEffect(BzEffects.PARALYZED.holder());
 
             livingEntity.addEffect(new MobEffectInstance(
                     MobEffects.POISON,
@@ -104,7 +104,7 @@ public class BeeStingerEntity extends AbstractArrow {
 
             if (isPoisoned && isSlowed && isWeakened && livingEntity.getRandom().nextFloat() < 0.25f) {
                 livingEntity.addEffect(new MobEffectInstance(
-                        BzEffects.PARALYZED.get(),
+                        BzEffects.PARALYZED.holder(),
                         Math.min(BzGeneralConfigs.paralyzedMaxTickDuration, 100),
                         0,
                         true,

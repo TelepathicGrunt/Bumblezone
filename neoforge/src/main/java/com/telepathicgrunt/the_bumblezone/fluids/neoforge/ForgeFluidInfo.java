@@ -1,6 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids.neoforge;
 
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -8,7 +8,7 @@ import net.minecraft.world.level.material.FlowingFluid;
 
 import java.util.function.Supplier;
 
-public class ForgeFluidInfo implements FluidInfo {
+public class ForgeFluidData implements FluidData {
 
     private Supplier<? extends FlowingFluid> stillFluid;
     private Supplier<? extends FlowingFluid> flowingFluid;
@@ -17,7 +17,7 @@ public class ForgeFluidInfo implements FluidInfo {
     private final FluidProperties properties;
     private final Supplier<BzFluidType> type;
 
-    public ForgeFluidInfo(Supplier<BzFluidType> type, FluidProperties properties) {
+    public ForgeFluidData(Supplier<BzFluidType> type, FluidProperties properties) {
         this.properties = properties;
         this.type = type;
     }

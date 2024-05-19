@@ -1,8 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.client.rendering.fluids;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.resources.ResourceLocation;
 

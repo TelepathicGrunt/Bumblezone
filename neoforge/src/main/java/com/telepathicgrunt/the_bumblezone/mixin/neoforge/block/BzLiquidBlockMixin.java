@@ -1,9 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.mixin.neoforge.block;
 
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.telepathicgrunt.the_bumblezone.fluids.base.BzLiquidBlock;
 import com.telepathicgrunt.the_bumblezone.fluids.base.FluidGetter;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidInfo;
-import com.telepathicgrunt.the_bumblezone.fluids.neoforge.ForgeFluidInfo;
+import com.telepathicgrunt.the_bumblezone.fluids.neoforge.ForgeFluidData;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,10 +33,10 @@ public class BzLiquidBlockMixin extends LiquidBlock implements FluidGetter {
         super(arg, arg2);
     }
 
-    @Inject(method = "<init>(Lcom/telepathicgrunt/the_bumblezone/fluids/base/FluidInfo;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V", at = @At("RETURN"))
-    public void bumblezone$onInit(FluidInfo info, BlockBehaviour.Properties properties, CallbackInfo ci) {
-        this.bz$fluidSupplier = info::source;
-        if (info instanceof ForgeFluidInfo forgeInfo) {
+    @Inject(method = "<init>(Lcom/telepathicgrunt/the_bumblezone/fluids/base/FluidData;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V", at = @At("RETURN"))
+    public void bumblezone$onInit(FluidData info, BlockBehaviour.Properties properties, CallbackInfo ci) {
+        this.bz$fluidSupplier = info.still();
+        if (info instanceof ForgeFluidData forgeInfo) {
             forgeInfo.setBlock(() -> this);
         }
     }

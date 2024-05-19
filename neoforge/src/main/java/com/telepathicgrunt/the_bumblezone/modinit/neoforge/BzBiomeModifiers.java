@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modinit.neoforge;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.worldgen.neoforge.BzModCompatBiomeModifier;

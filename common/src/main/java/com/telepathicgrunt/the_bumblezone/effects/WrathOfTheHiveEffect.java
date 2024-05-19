@@ -84,7 +84,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
             return true;
         }
 
-        if (entity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.get())) {
+        if (entity.hasEffect(BzEffects.PROTECTION_OF_THE_HIVE.holder())) {
             return false;
         }
 
@@ -196,7 +196,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         }
 
         boolean isHiding = false;
-        MobEffectInstance hiddenEffect = livingEntity.getEffect(BzEffects.HIDDEN.get());
+        MobEffectInstance hiddenEffect = livingEntity.getEffect(BzEffects.HIDDEN.holder());
         if(hiddenEffect != null && hiddenEffect.getAmplifier() >= 1) {
             isHiding = true;
         }
@@ -224,7 +224,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
                     bee.setTarget(livingEntity);
                 }
 
-                MobEffectInstance effect = livingEntity.getEffect(BzEffects.WRATH_OF_THE_HIVE.get());
+                MobEffectInstance effect = livingEntity.getEffect(BzEffects.WRATH_OF_THE_HIVE.holder());
                 if (effect != null) {
                     int leftoverDuration = effect.getDuration();
 
@@ -271,7 +271,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
 
     // Don't remove wrath effect from mobs that bees are to always be angry at (bears, non-bee insects)
     public static void effectRemoval(LivingEntity entity, MobEffectInstance mobEffectInstance) {
-        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.WRATH_OF_THE_HIVE.get()) {
+        if (entity.level().isClientSide || mobEffectInstance.getEffect() != BzEffects.WRATH_OF_THE_HIVE.holder()) {
             return;
         }
 
@@ -282,7 +282,7 @@ public class WrathOfTheHiveEffect extends MobEffect {
         if(BeeAggression.doesBeesHateEntity(entity)) {
             //refresh the bee anger timer
             entity.addEffect(new MobEffectInstance(
-                    BzEffects.WRATH_OF_THE_HIVE.get(),
+                    BzEffects.WRATH_OF_THE_HIVE.holder(),
                     BzBeeAggressionConfigs.howLongWrathOfTheHiveLasts,
                     1,
                     false,
