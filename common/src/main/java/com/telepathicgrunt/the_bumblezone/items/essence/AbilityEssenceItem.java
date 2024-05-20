@@ -1,7 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceAbilityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceCooldownData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceLastChargeData;
 import com.telepathicgrunt.the_bumblezone.mixin.gameplay.CooldownInstanceAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.gameplay.ItemCooldownsAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -23,20 +28,29 @@ import java.util.function.Supplier;
 
 public abstract class AbilityEssenceItem extends Item implements ItemExtension {
 
-    private static final String IS_IN_INVENTORY_TAG = "isInInventory";
-    private static final String ACTIVE_TAG = "isActive";
-    private static final String LOCKED_TAG = "isLocked";
-    private static final String COOLDOWN_TIME_TAG = "cooldownTime";
-    private static final String FORCED_COOLDOWN_TAG = "forcedCooldown";
-    private static final String LAST_ABILITY_CHARGE_TIMESTAMP_TAG = "lastChargeTime";
-    private static final String ABILITY_USE_REMAINING_TAG = "abilityUseRemaining";
     private final Supplier<Integer> cooldownTickLength;
     private final Supplier<Integer> abilityUseAmount;
 
     public AbilityEssenceItem(Properties properties, Supplier<Integer> cooldownTickLength, Supplier<Integer> abilityUseAmount) {
-        super(properties);
+        super(properties
+                .component(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get(), new AbilityEssenceAbilityData())
+                .component(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData())
+                .component(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData()));
         this.cooldownTickLength = cooldownTickLength;
         this.abilityUseAmount = abilityUseAmount;
+    }
+
+    @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get(), new AbilityEssenceAbilityData());
+        }
+        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData());
+        }
+        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData());
+        }
     }
 
     public abstract int getColor();
@@ -45,150 +59,124 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         return cooldownTickLength.get();
     }
 
-    public static void setLastAbilityChargeTimestamp(ItemStack stack, int gametime) {
-        stack.getOrCreateTag().putInt(LAST_ABILITY_CHARGE_TIMESTAMP_TAG, gametime);
-    }
-
-    public static int getLastAbilityChargeTimestamp(ItemStack stack) {
-        return stack.getOrCreateTag().getInt(LAST_ABILITY_CHARGE_TIMESTAMP_TAG);
-    }
-
-    public static void setIsActive(ItemStack stack, boolean isActive) {
-        stack.getOrCreateTag().putBoolean(ACTIVE_TAG, isActive);
-    }
-
-    public static boolean getIsActive(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean(ACTIVE_TAG);
-    }
-
-    public static void setIsInInventory(ItemStack stack, boolean isInInventory) {
-        stack.getOrCreateTag().putBoolean(IS_IN_INVENTORY_TAG, isInInventory);
-    }
-
-    public static boolean getIsInInventory(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean(IS_IN_INVENTORY_TAG);
-    }
-
-    public static void setIsLocked(ItemStack stack, boolean isLocked) {
-        stack.getOrCreateTag().putBoolean(LOCKED_TAG, isLocked);
-    }
-
-    public static boolean getIsLocked(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean(LOCKED_TAG);
-    }
-
-    public static void setForcedCooldown(ItemStack stack, boolean forcedCooldown) {
-        stack.getOrCreateTag().putBoolean(FORCED_COOLDOWN_TAG, forcedCooldown);
-    }
-
-    public static boolean getForcedCooldown(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean(FORCED_COOLDOWN_TAG);
-    }
-
-    public static void setCooldownTime(ItemStack stack, int cooldownTime) {
-        stack.getOrCreateTag().putInt(COOLDOWN_TIME_TAG, cooldownTime);
-    }
-
-    public static int getCooldownTime(ItemStack stack) {
-        return stack.getOrCreateTag().getInt(COOLDOWN_TIME_TAG);
-    }
-
-    public void incrementCooldownTime(ItemStack stack) {
-        if (getForcedCooldown(stack)) {
-            int currentCooldownTime = getCooldownTime(stack);
+    public void incrementCooldownTime(ItemStack itemStack) {
+        AbilityEssenceCooldownData abilityEssenceCooldownData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get());
+        if (abilityEssenceCooldownData.forcedCooldown()) {
+            int currentCooldownTime = abilityEssenceCooldownData.cooldownTime();
             if (currentCooldownTime < cooldownTickLength.get()) {
-                setCooldownTime(stack, currentCooldownTime + 1);
+                itemStack.set(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData(currentCooldownTime + 1, true));
             }
             else {
-                setCooldownTime(stack, 0);
-                setForcedCooldown(stack, false);
-                rechargeAbilityEntirely(stack);
+                itemStack.set(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData(0, false));
+                rechargeAbilityEntirely(itemStack);
             }
         }
     }
 
-    public void setDepleted(ItemStack stack, ServerPlayer serverPlayer, boolean vanillaItemCooldown) {
-        setForcedCooldown(stack, true);
-        setCooldownTime(stack, 0);
-        setIsActive(stack, false);
+    public void setDepleted(ItemStack itemStack, ServerPlayer serverPlayer, boolean vanillaItemCooldown) {
+        itemStack.set(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData(0, true));
+        AbilityEssenceActivityData abilityEssenceAbilityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
+        itemStack.set(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData(abilityEssenceAbilityData.isInInventory(), false, abilityEssenceAbilityData.isLocked()));
         if (vanillaItemCooldown) {
             serverPlayer.getCooldowns().addCooldown(this, getCooldownTickLength());
         }
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean bl) {
-        if (stack.is(BzTags.ABILITY_ESSENCE_ITEMS) && entity instanceof ServerPlayer serverPlayer) {
-            if (!getIsInInventory(stack)) {
-                setIsInInventory(stack, true);
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
+        if (itemStack.is(BzTags.ABILITY_ESSENCE_ITEMS) && entity instanceof ServerPlayer serverPlayer) {
+            AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
+            boolean isInInventory = abilityEssenceActivityData.isInInventory();
+            boolean isLocked = abilityEssenceActivityData.isLocked();
+            boolean isActive = abilityEssenceActivityData.isActive();
+
+            AbilityEssenceCooldownData abilityEssenceCooldownData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get());
+            int cooldownTime = abilityEssenceCooldownData.cooldownTime();
+            boolean forcedCooldown = abilityEssenceCooldownData.forcedCooldown();
+
+            if (!isInInventory) {
+                isInInventory = true;
             }
 
             if (!EssenceOfTheBees.hasEssence(serverPlayer)) {
-                setIsActive(stack, false);
-                setIsLocked(stack, true);
+                itemStack.set(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData(isInInventory, false, true));
                 return;
             }
-            else if (getIsLocked(stack)) {
-                setIsLocked(stack, false);
+            else if (isLocked) {
+                isLocked = false;
             }
 
-            if (getForcedCooldown(stack)) {
-                if (!serverPlayer.getCooldowns().isOnCooldown(stack.getItem())) {
-                    serverPlayer.getCooldowns().addCooldown(stack.getItem(), getCooldownTickLength() - getCooldownTime(stack));
+            if (forcedCooldown) {
+                if (!serverPlayer.getCooldowns().isOnCooldown(itemStack.getItem())) {
+                    serverPlayer.getCooldowns().addCooldown(itemStack.getItem(), getCooldownTickLength() - cooldownTime);
                 }
-                incrementCooldownTime(stack);
+                incrementCooldownTime(itemStack);
             }
             else {
-                if (serverPlayer.getCooldowns().isOnCooldown(stack.getItem())) {
-                    ItemCooldowns.CooldownInstance cooldownInstance = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).getCooldowns().get(stack.getItem());
-                    int cooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).getTickCount() - ((CooldownInstanceAccessor)cooldownInstance).getStartTime();
+                if (serverPlayer.getCooldowns().isOnCooldown(itemStack.getItem())) {
+                    ItemCooldowns.CooldownInstance cooldownInstance = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).getCooldowns().get(itemStack.getItem());
+                    int tempCooldownTime = ((ItemCooldownsAccessor)serverPlayer.getCooldowns()).getTickCount() - ((CooldownInstanceAccessor)cooldownInstance).getStartTime();
 
-                    if (cooldownTime > 5) {
-                        setForcedCooldown(stack, true);
-                        setCooldownTime(stack, cooldownTime);
-                        setIsActive(stack, false);
+                    if (tempCooldownTime > 5) {
+                        forcedCooldown = true;
+                        cooldownTime = tempCooldownTime;
+                        isActive = false;
                     }
                 }
                 else {
-                    if (serverPlayer.getOffhandItem() == stack) {
-                        if (!getIsActive(stack)) {
-                            setIsActive(stack, true);
+                    if (serverPlayer.getOffhandItem() == itemStack) {
+                        if (!isActive) {
+                            isActive = true;
                         }
-                        applyAbilityEffects(stack, level, serverPlayer);
+                        applyAbilityEffects(itemStack, level, serverPlayer);
                     }
                     else {
-                        rechargeAbilitySlowly(stack, level, serverPlayer);
-                        if (getIsActive(stack)) {
-                            setIsActive(stack, false);
+                        rechargeAbilitySlowly(itemStack, serverPlayer);
+                        if (isActive) {
+                            isActive = false;
                         }
                     }
                 }
+            }
+
+            if (abilityEssenceActivityData.isDifferent(isInInventory, isActive, isLocked)) {
+                itemStack.set(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData(isInInventory, isActive, isLocked));
+            }
+
+            if (abilityEssenceCooldownData.isDifferent(cooldownTime, forcedCooldown)) {
+                itemStack.set(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData(cooldownTime, forcedCooldown));
             }
         }
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
-        if (getIsLocked(stack)) {
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> components, TooltipFlag tooltipFlag) {
+        AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
+        if (abilityEssenceActivityData.isLocked()) {
             components.add(Component.translatable("item.the_bumblezone.essence_locked").withStyle(ChatFormatting.DARK_RED));
             components.add(Component.translatable("item.the_bumblezone.essence_locked_description_1").withStyle(ChatFormatting.GRAY));
             components.add(Component.translatable("item.the_bumblezone.essence_locked_description_2").withStyle(ChatFormatting.GRAY));
         }
-        else if (getIsActive(stack)) {
+        else if (abilityEssenceActivityData.isActive()) {
             components.add(Component.translatable("item.the_bumblezone.essence_active").withStyle(ChatFormatting.RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
+            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(itemStack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
             components.add(Component.empty());
             addDescriptionComponents(components);
+            return;
         }
-        else if (getForcedCooldown(stack)) {
+
+        AbilityEssenceCooldownData abilityEssenceCooldownData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get());
+        int cooldownTime = abilityEssenceCooldownData.cooldownTime();
+        boolean forcedCooldown = abilityEssenceCooldownData.forcedCooldown();
+        if (forcedCooldown) {
             components.add(Component.translatable("item.the_bumblezone.essence_depleted").withStyle(ChatFormatting.DARK_RED));
-            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", GeneralUtils.formatTickDurationNoMilliseconds(getCooldownTickLength() - getCooldownTime(stack), level.tickRateManager().tickrate())).withStyle(ChatFormatting.DARK_RED));
+            components.add(Component.translatable("item.the_bumblezone.essence_cooldown", GeneralUtils.formatTickDurationNoMilliseconds(getCooldownTickLength() - cooldownTime, tooltipContext.tickRate())).withStyle(ChatFormatting.DARK_RED));
             components.add(Component.empty());
             addDescriptionComponents(components);
         }
         else {
             components.add(Component.translatable("item.the_bumblezone.essence_ready").withStyle(ChatFormatting.GREEN));
-            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(stack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
+            components.add(Component.translatable("item.the_bumblezone.essence_usage", getAbilityUseRemaining(itemStack), getMaxAbilityUseAmount()).withStyle(ChatFormatting.YELLOW));
             components.add(Component.empty());
             addDescriptionComponents(components);
         }
@@ -196,44 +184,58 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
 
     abstract void addDescriptionComponents(List<Component> components);
 
-    abstract void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer);
+    abstract void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer);
 
-    public int getAbilityUseRemaining(ItemStack stack) {
-        if (!stack.getOrCreateTag().contains(ABILITY_USE_REMAINING_TAG)) {
-            setAbilityUseRemaining(stack, getMaxAbilityUseAmount());
+    public int getAbilityUseRemaining(ItemStack itemStack) {
+        AbilityEssenceAbilityData abilityEssenceAbilityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get());
+        if (abilityEssenceAbilityData.abilityUseRemaining() < 0) {
             return getMaxAbilityUseAmount();
         }
-
-        return stack.getOrCreateTag().getInt(ABILITY_USE_REMAINING_TAG);
+        return abilityEssenceAbilityData.abilityUseRemaining();
     }
 
     public int getMaxAbilityUseAmount() {
         return abilityUseAmount.get();
     }
 
-    public void setAbilityUseRemaining(ItemStack stack, int abilityUseRemaining) {
-        stack.getOrCreateTag().putInt(ABILITY_USE_REMAINING_TAG, abilityUseRemaining);
+    public void setAbilityUseRemaining(ItemStack itemStack, int abilityUseRemaining) {
+        itemStack.set(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get(), new AbilityEssenceAbilityData(abilityUseRemaining));
+    }
+
+    /**
+     * @return Whether the ability usage has been depleted
+     */
+    public boolean decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
+        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
+        setAbilityUseRemaining(stack, getRemainingUse);
+        if (getRemainingUse == 0) {
+            setDepleted(stack, serverPlayer, false);
+            return true;
+        }
+        return false;
     }
 
     public void rechargeAbilityEntirely(ItemStack stack) {
         setAbilityUseRemaining(stack, getMaxAbilityUseAmount());
     }
 
-    public void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        int abilityUseRemaining = getAbilityUseRemaining(stack);
+    public void rechargeAbilitySlowly(ItemStack itemStack, ServerPlayer serverPlayer) {
+        int abilityUseRemaining = getAbilityUseRemaining(itemStack);
         if (abilityUseRemaining < getMaxAbilityUseAmount()) {
-            int lastChargeTime = getLastAbilityChargeTimestamp(stack);
+            AbilityEssenceLastChargeData abilityEssenceLastChargeData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get());
+            long lastChargeTime = abilityEssenceLastChargeData.lastChargeTime();
             if (lastChargeTime == 0 || serverPlayer.tickCount < lastChargeTime) {
-                setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
+                itemStack.set(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData(serverPlayer.tickCount));
             }
             else {
-                int timeFromLastCharge = serverPlayer.tickCount - lastChargeTime;
+                long timeFromLastCharge = serverPlayer.tickCount - lastChargeTime;
                 int chargeTimeIncrement = Math.max(getCooldownTickLength() / getMaxAbilityUseAmount(), 1);
                 if (timeFromLastCharge % chargeTimeIncrement == 0) {
-                    setAbilityUseRemaining(stack, abilityUseRemaining + 1);
-                    setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
+                    setAbilityUseRemaining(itemStack, abilityUseRemaining + 1);
                 }
             }
+
+            itemStack.set(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData(serverPlayer.tickCount));
         }
     }
 

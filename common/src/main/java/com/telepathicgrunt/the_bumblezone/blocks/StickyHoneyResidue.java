@@ -196,7 +196,7 @@ public class StickyHoneyResidue extends Block {
             return;
         }
 
-        ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+        ItemStack beeLeggings = entity instanceof LivingEntity livingEntity ? HoneyBeeLeggings.getEntityBeeLegging(livingEntity) : ItemStack.EMPTY;
         if(!beeLeggings.isEmpty()) {
             super.entityInside(blockState, level, blockPos, entity);
             return;

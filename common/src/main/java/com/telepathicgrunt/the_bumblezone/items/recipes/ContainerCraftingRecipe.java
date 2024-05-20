@@ -6,10 +6,10 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
@@ -70,7 +70,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.result;
     }
 
@@ -93,7 +93,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingContainer craftingContainer, HolderLookup.Provider provider) {
         return this.result.copy();
     }
 
@@ -137,9 +137,9 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
 
     public static class Serializer implements RecipeSerializer<ContainerCraftingRecipe> {
         private static final MapCodec<ContainerCraftingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(shapelessRecipe -> shapelessRecipe.group),
+                Codec.STRING.fieldOf("group").forGetter(shapelessRecipe -> shapelessRecipe.group),
                 CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
-                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
                 Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
                     Ingredient[] ingredients = list.toArray(Ingredient[]::new);
                     if (ingredients.length == 0) {
@@ -149,37 +149,44 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
                 }, DataResult::success).forGetter(shapelessRecipe -> shapelessRecipe.ingredients)
         ).apply(instance, ContainerCraftingRecipe::new));
 
+        public static final StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> STREAM_CODEC = StreamCodec.of(
+                ContainerCraftingRecipe.Serializer::toNetwork, ContainerCraftingRecipe.Serializer::fromNetwork
+        );
+
         @Override
-        public Codec<ContainerCraftingRecipe> codec() {
+        public MapCodec<ContainerCraftingRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public ContainerCraftingRecipe fromNetwork(FriendlyByteBuf buffer) {
+        public StreamCodec<RegistryFriendlyByteBuf, ContainerCraftingRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        public static ContainerCraftingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String s = buffer.readUtf(32767);
             CraftingBookCategory craftingBookCategory = buffer.readEnum(CraftingBookCategory.class);
             int i = buffer.readVarInt();
             NonNullList<Ingredient> defaultedList = NonNullList.withSize(i, Ingredient.EMPTY);
 
             for (int j = 0; j < defaultedList.size(); ++j) {
-                defaultedList.set(j, Ingredient.fromNetwork(buffer));
+                defaultedList.set(j, Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
             }
 
-            ItemStack itemstack = buffer.readItem();
+            ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
             return new ContainerCraftingRecipe(s, craftingBookCategory, itemstack, defaultedList);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, ContainerCraftingRecipe recipe) {
+        public static void toNetwork(RegistryFriendlyByteBuf buffer, ContainerCraftingRecipe recipe) {
             buffer.writeUtf(recipe.group);
             buffer.writeEnum(recipe.category());
             buffer.writeVarInt(recipe.getIngredients().size());
 
             for (Ingredient ingredient : recipe.getIngredients()) {
-                ingredient.toNetwork(buffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
             }
 
-            buffer.writeItem(recipe.result);
+            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
         }
     }
 }

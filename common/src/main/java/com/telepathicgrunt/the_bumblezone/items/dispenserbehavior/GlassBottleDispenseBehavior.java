@@ -53,10 +53,10 @@ public class GlassBottleDispenseBehavior extends DefaultDispenseItemBehavior {
                 if (!world.getBlockState(blockpos).isSolid()) {
                     Mob beeEntity = EntityType.BEE.create(world);
                     beeEntity.moveTo(blockpos.getX() + 0.5f, blockpos.getY(), blockpos.getZ() + 0.5f, beeEntity.getRandom().nextFloat() * 360.0F, 0.0F);
-                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null, null);
+                    beeEntity.finalizeSpawn(world, world.getCurrentDifficultyAt(BlockPos.containing(beeEntity.position())), MobSpawnType.TRIGGERED, null);
                     beeEntity.setBaby(true);
 
-                    PlatformHooks.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER, null);
+                    PlatformHooks.finalizeSpawn(beeEntity, world, null, MobSpawnType.DISPENSER);
                     deniedBeeSpawn = !world.addFreshEntity(beeEntity);
                 }
             }

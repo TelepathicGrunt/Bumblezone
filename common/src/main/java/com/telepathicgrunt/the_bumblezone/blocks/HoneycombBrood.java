@@ -337,8 +337,6 @@ public class HoneycombBrood extends ProperFacingBlock {
     /**
      * Called before the Block is set to air in the world. Called regardless of if the player's tool can actually collect
      * this block
-     *
-     * @return
      */
     @Override
     public BlockState playerWillDestroy(Level world, BlockPos position, BlockState state, Player playerEntity) {
@@ -384,7 +382,7 @@ public class HoneycombBrood extends ProperFacingBlock {
         entity.moveTo(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, beeMob.getRandom().nextFloat() * 360.0F, 0.0F);
         entity.finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(BlockPos.containing(beeMob.position())), MobSpawnType.TRIGGERED, null);
 
-        PlatformHooks.finalizeSpawn(entity, (ServerLevelAccessor) world, null, MobSpawnType.SPAWNER, null);
+        PlatformHooks.finalizeSpawn(entity, (ServerLevelAccessor) world, null, MobSpawnType.SPAWNER);
         world.addFreshEntity(entity);
     }
 

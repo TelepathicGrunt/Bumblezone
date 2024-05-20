@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -44,6 +45,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -282,39 +284,38 @@ public class StringCurtain extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
-        ItemStack itemstack = playerEntity.getItemInHand(playerHand);
+    public @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockstate, Level world, BlockPos position, Player playerEntity, InteractionHand playerHand, BlockHitResult raytraceResult) {
         if (blockstate.is(BzTags.STRING_CURTAINS)) {
-            if (itemstack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS) && GeneralUtils.isPermissionAllowedAtSpot(world, playerEntity, position, true)) {
+            if (itemStack.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS) && GeneralUtils.isPermissionAllowedAtSpot(world, playerEntity, position, true)) {
                 boolean success = extendCurtainIfPossible(blockstate, world, position);
                 if (success) {
-                    if (!itemstack.isEmpty()) {
-                        playerEntity.awardStat(Stats.ITEM_USED.get(itemstack.getItem()));
+                    if (!itemStack.isEmpty()) {
+                        playerEntity.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
                     }
 
                     if (!playerEntity.getAbilities().instabuild) {
-                        itemstack.shrink(1);
+                        itemStack.shrink(1);
                     }
 
                     if(playerEntity instanceof ServerPlayer serverPlayer) {
                         BzCriterias.EXTEND_STRING_CURTAIN_TRIGGER.get().trigger(serverPlayer);
                     }
                 }
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             }
-            else if (itemstack.is(BzTags.STRING_CURTAINS_ITEMS)) {
+            else if (itemStack.is(BzTags.STRING_CURTAINS_ITEMS)) {
                 playerEntity.displayClientMessage(Component.translatable("block.the_bumblezone.string_curtain.extending_clarification").withStyle(ChatFormatting.WHITE), true);
-                return InteractionResult.FAIL;
+                return ItemInteractionResult.FAIL;
             }
         }
-        return super.use(blockstate, world, position, playerEntity, playerHand, raytraceResult);
+        return super.useItemOn(itemStack, blockstate, world, position, playerEntity, playerHand, raytraceResult);
     }
 
     public static InteractionResult onBlockInteractEvent(PlayerItemUseOnBlockEvent event) {
         Player player = event.user();
         InteractionHand interactionHand = event.hand();
-        if (player != null && player.getItemInHand(interactionHand).is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
+        ItemStack heldItem = player.getItemInHand(interactionHand);
+        if (player != null && heldItem.is(BzTags.STRING_CURTAINS_CURTAIN_EXTENDING_ITEMS)) {
             BlockHitResult hitResult = event.hitResult();
             BlockState clickedState = event.level().getBlockState(hitResult.getBlockPos());
             if (clickedState.is(BzTags.STRING_CURTAINS)) {
@@ -324,14 +325,14 @@ public class StringCurtain extends Block {
             BlockPos pos = hitResult.getBlockPos().relative(hitResult.getDirection()).above();
             BlockState aboveState = player.level().getBlockState(pos);
             if (aboveState.is(BzTags.STRING_CURTAINS)) {
-                InteractionResult interactionResult = aboveState.use(player.level(), player, interactionHand, new BlockHitResult(
+                ItemInteractionResult interactionResult = aboveState.useItemOn(heldItem, player.level(), player, interactionHand, new BlockHitResult(
                         hitResult.getLocation().add(0, 1, 0),
                         hitResult.getDirection(),
                         pos,
                         hitResult.isInside()
                 ));
 
-                if (interactionResult != InteractionResult.PASS) {
+                if (interactionResult != ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) {
                     return InteractionResult.SUCCESS;
                 }
             }

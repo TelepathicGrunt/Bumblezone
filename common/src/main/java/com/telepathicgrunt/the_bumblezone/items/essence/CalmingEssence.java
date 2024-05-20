@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityHurtEvent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
@@ -35,14 +36,6 @@ public class CalmingEssence extends AbilityEssenceItem {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
-    }
-
     @Override
     public int getColor() {
         return 0x00ADED;
@@ -56,8 +49,8 @@ public class CalmingEssence extends AbilityEssenceItem {
     }
 
     @Override
-    public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (getIsActive(stack)) {
+    public void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {
+        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive()) {
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 12L == 0) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
             }
@@ -84,13 +77,13 @@ public class CalmingEssence extends AbilityEssenceItem {
                 }
 
                 if (serverPlayer.removeEffect(BzEffects.WRATH_OF_THE_HIVE.holder())) {
-                    decrementAbilityUseRemaining(stack, serverPlayer, getAbilityUseRemaining(stack));
+                    decrementAbilityUseRemaining(itemStack, serverPlayer, getAbilityUseRemaining(itemStack));
                 }
                 else if (serverPlayer.isSprinting()) {
-                    decrementAbilityUseRemaining(stack, serverPlayer, 60);
+                    decrementAbilityUseRemaining(itemStack, serverPlayer, 60);
                 }
                 else {
-                    decrementAbilityUseRemaining(stack, serverPlayer, 1);
+                    decrementAbilityUseRemaining(itemStack, serverPlayer, 1);
                 }
             }
         }
@@ -104,7 +97,7 @@ public class CalmingEssence extends AbilityEssenceItem {
     public static boolean IsCalmingEssenceActive(Player player) {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
-            return offHandItem.is(BzItems.ESSENCE_CALMING.get()) && getIsActive(offHandItem);
+            return offHandItem.is(BzItems.ESSENCE_CALMING.get()) && offHandItem.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive();
         }
         return false;
     }

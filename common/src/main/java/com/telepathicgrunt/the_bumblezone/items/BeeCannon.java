@@ -45,6 +45,13 @@ public class BeeCannon extends Item implements ItemExtension {
     }
 
     @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.BEE_CANNON_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.EMPTY);
+        }
+    }
+
+    @Override
     public void releaseUsing(ItemStack beeCannon, Level level, LivingEntity livingEntity, int currentDuration) {
         if (!level.isClientSide() && livingEntity instanceof Player player) {
             ItemStack mutableBeeCannon = player.getItemInHand(InteractionHand.MAIN_HAND);

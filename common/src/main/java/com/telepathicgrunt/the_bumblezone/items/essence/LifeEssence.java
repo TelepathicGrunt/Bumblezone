@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.StemBlockAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.ChatFormatting;
@@ -59,28 +60,20 @@ public class LifeEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_life_description_2").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int amount) {
-        int getRemainingUse = getAbilityUseRemaining(stack) - amount;
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
-    }
-
     @Override
-    public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
+    public void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {
         if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 10L == 0 &&
             level instanceof ServerLevel serverLevel &&
-            getIsActive(stack))
+            itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive())
         {
             int radius = 16;
-            healFriendlyNearby(stack, serverLevel, serverPlayer, radius);
-            growNearbyPlants(stack, serverLevel, serverPlayer, radius);
-            cureEntityOfEffects(stack, serverPlayer, serverPlayer);
+            healFriendlyNearby(itemStack, serverLevel, serverPlayer, radius);
+            growNearbyPlants(itemStack, serverLevel, serverPlayer, radius);
+            cureEntityOfEffects(itemStack, serverPlayer, serverPlayer);
         }
     }
 
-    private void healFriendlyNearby(ItemStack stack, Level level, ServerPlayer serverPlayer, int radius) {
+    private void healFriendlyNearby(ItemStack itemStack, Level level, ServerPlayer serverPlayer, int radius) {
         List<Entity> entities = level.getEntities(serverPlayer, new AABB(
                 serverPlayer.getX() - radius,
                 serverPlayer.getY() - radius,
@@ -91,9 +84,9 @@ public class LifeEssence extends AbilityEssenceItem {
         ));
 
         for (Entity entity : entities) {
-            healFriendlyEntity(stack, serverPlayer, entity);
+            healFriendlyEntity(itemStack, serverPlayer, entity);
 
-            if (getForcedCooldown(stack)) {
+            if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get()).forcedCooldown()) {
                 return;
             }
         }
@@ -116,7 +109,7 @@ public class LifeEssence extends AbilityEssenceItem {
 
     private void cureEntityOfEffects(ItemStack stack, ServerPlayer serverPlayer, LivingEntity livingEntity) {
         for (MobEffectInstance effect : new ArrayList<>(livingEntity.getActiveEffects())) {
-            if (GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.LIFE_CURE_EFFECTS, effect.getEffect())) {
+            if (effect.getEffect().is(BzTags.LIFE_CURE_EFFECTS)) {
                 livingEntity.removeEffect(effect.getEffect());
                 decrementAbilityUseRemaining(stack, serverPlayer, 1);
             }
@@ -131,8 +124,8 @@ public class LifeEssence extends AbilityEssenceItem {
         }
     }
 
-    private void growNearbyPlants(ItemStack stack, ServerLevel level, ServerPlayer serverPlayer, int radius) {
-        if (getForcedCooldown(stack)) {
+    private void growNearbyPlants(ItemStack itemStack, ServerLevel level, ServerPlayer serverPlayer, int radius) {
+        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get()).forcedCooldown()) {
             return;
         }
 
@@ -169,8 +162,8 @@ public class LifeEssence extends AbilityEssenceItem {
                         mutableBlockPos.set(x, y, z);
                         BlockState state = cachedChunk.getBlockState(mutableBlockPos);
 
-                        growPlantBlock(stack, level, serverPlayer, mutableBlockPos, state);
-                        if (getForcedCooldown(stack)) {
+                        growPlantBlock(itemStack, level, serverPlayer, mutableBlockPos, state);
+                        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get()).forcedCooldown()) {
                             return;
                         }
                     }
@@ -233,7 +226,7 @@ public class LifeEssence extends AbilityEssenceItem {
                     grewBlock = true;
                 }
                 else if (age == 7 && doesNotHaveFruitNearby(level, stemBlock, blockPos)) {
-                    block.randomTick(state, level, blockPos, level.getRandom());
+                    state.randomTick(level, blockPos, level.getRandom());
                     grewBlock = true;
                 }
             }

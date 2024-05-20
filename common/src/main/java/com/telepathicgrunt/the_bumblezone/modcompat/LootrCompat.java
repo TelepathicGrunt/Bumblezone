@@ -16,7 +16,7 @@ import org.apache.commons.lang3.NotImplementedException;
 public class LootrCompat implements ModCompat {
     public LootrCompat() {
         // Keep at end so it is only set to true if no exceptions was thrown during setup
-        ModChecker.lootrPresent = true;
+        // ModChecker.lootrPresent = true;
     }
 
     @ExpectPlatform

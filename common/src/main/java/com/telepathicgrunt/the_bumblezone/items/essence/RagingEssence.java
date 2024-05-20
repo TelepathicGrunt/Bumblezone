@@ -1,7 +1,14 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceCooldownData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.KnowingEssenceStructureData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceCurrentTargetData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceStateData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceTimerData;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
@@ -44,15 +51,25 @@ public class RagingEssence extends AbilityEssenceItem {
 
     private static final int radius = 24;
     private static final int trackingRange = radius * radius * 4;
-    private static final int maxEmpoweredTimeFramePer5Ticks = 75;
+    private static final int maxEmpoweredTimeLimit = 375;
     private static final int maxCurrentTargets = 4;
-
-    private static final String RAGE_STATE_TAG = "rageStateLevel";
-    private static final String CURRENT_TARGET_TAG = "currentTargets";
-    private static final String EMPOWERED_TIME_REMAINING_TAG = "empoweredTimeRemaining";
 
     public RagingEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
+    }
+
+    @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get(), new RagingEssenceStateData());
+        }
+        if (itemStack.get(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get(), new RagingEssenceCurrentTargetData());
+        }
+        if (itemStack.get(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get(), new RagingEssenceTimerData());
+        }
+        super.verifyComponentsAfterLoad(itemStack);
     }
 
     @Override
@@ -66,57 +83,39 @@ public class RagingEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_raging_description_2").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
     }
 
-    public static void setRageState(ItemStack stack, short rageState) {
-        stack.getOrCreateTag().putShort(RAGE_STATE_TAG, rageState);
+    public static void setRageState(ItemStack itemStack, short rageState) {
+        itemStack.set(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get(), new RagingEssenceStateData(rageState));
     }
 
-    public static short getRageState(ItemStack stack) {
-        return stack.getOrCreateTag().getShort(RAGE_STATE_TAG);
+    public static short getRageState(ItemStack itemStack) {
+        return itemStack.get(BzDataComponents.RAGING_ESSENCE_STATE_DATA.get()).rageStateLevel();
     }
 
-    public static void setEmpoweredTimeRemaining(ItemStack stack, int empoweredTimeRemaining) {
-        stack.getOrCreateTag().putInt(EMPOWERED_TIME_REMAINING_TAG, empoweredTimeRemaining);
+    public static void setEmpoweredTimestamp(ItemStack itemStack, long empoweredTimestamp) {
+        itemStack.set(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get(), new RagingEssenceTimerData(empoweredTimestamp));
     }
 
-    public static int getEmpoweredTimeRemaining(ItemStack stack) {
-        return stack.getOrCreateTag().getInt(EMPOWERED_TIME_REMAINING_TAG);
+    public static long getEmpoweredTimestamp(ItemStack itemStack) {
+        return itemStack.get(BzDataComponents.RAGING_ESSENCE_TIMER_DATA.get()).empoweredTimestamp();
     }
 
-    public static void setCurrentTargets(ItemStack stack, List<UUID> targetsToKill) {
-        CompoundTag compoundTag = stack.getOrCreateTag();
-        ListTag targetList = new ListTag();
-        for (UUID target : targetsToKill) {
-            targetList.add(NbtUtils.createUUID(target));
-        }
-        compoundTag.put(CURRENT_TARGET_TAG, targetList);
+    public static void setCurrentTargets(ItemStack itemStack, List<UUID> targetsToKill) {
+        itemStack.set(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get(), new RagingEssenceCurrentTargetData(targetsToKill));
     }
 
-    public static List<UUID> getCurrentTargets(ItemStack stack) {
-        CompoundTag compoundTag = stack.getOrCreateTag();
-        ListTag targetListTags = compoundTag.getList(CURRENT_TARGET_TAG, ListTag.TAG_INT_ARRAY);
-        List<UUID> targetsToKill = new ArrayList<>();
-        for (Tag tag : targetListTags) {
-            targetsToKill.add(NbtUtils.loadUUID(tag));
-        }
-        return targetsToKill;
-    }
-
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
+    public static List<UUID> getCurrentTargets(ItemStack itemStack) {
+        return itemStack.get(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get()).currentTargets();
     }
 
     @Override
-    public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (getIsActive(stack) && BzGeneralConfigs.ragingEssenceStrengthLevels.length > 0) {
+    public void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {
+        AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
+        if (abilityEssenceActivityData.isActive() && BzGeneralConfigs.ragingEssenceStrengthLevels.length > 0) {
 
             // prevent crash if rage state is a too large value due to config editing while rage is active.
-            int rageState = getRageState(stack);
+            int rageState = getRageState(itemStack);
             if (rageState > BzGeneralConfigs.ragingEssenceStrengthLevels.length) {
-                setRageState(stack, (short) BzGeneralConfigs.ragingEssenceStrengthLevels.length);
+                setRageState(itemStack, (short) BzGeneralConfigs.ragingEssenceStrengthLevels.length);
                 rageState = (short) BzGeneralConfigs.ragingEssenceStrengthLevels.length;
             }
 
@@ -124,18 +123,14 @@ public class RagingEssence extends AbilityEssenceItem {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom(), rageState);
 
                 // timer between kills
-                int empoweredTimeRemaining = getEmpoweredTimeRemaining(stack) - 1;
-                setEmpoweredTimeRemaining(stack , empoweredTimeRemaining);
-
-                if (empoweredTimeRemaining == 0) {
+                if (level.getGameTime() - getEmpoweredTimestamp(itemStack) > maxEmpoweredTimeLimit) {
                     // reset as empowered phase is done
-                    resetRage(stack, serverPlayer);
+                    resetRage(itemStack, serverPlayer);
 //                    Component message = Component.literal("DEBUG: Rage state is " + 0);
 //                    serverPlayer.displayClientMessage(message, true);
 
                     // drain power
-                    decrementAbilityUseRemaining(stack, serverPlayer, 1);
-                    if (getForcedCooldown(stack)) {
+                    if (decrementAbilityUseRemaining(itemStack, serverPlayer, 1)) {
                         return;
                     }
                 }
@@ -143,7 +138,7 @@ public class RagingEssence extends AbilityEssenceItem {
 
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
 
-                List<UUID> currentTargetsToKill = getCurrentTargets(stack);
+                List<UUID> currentTargetsToKill = getCurrentTargets(itemStack);
 
                 // Setup targets to kill if present
                 if (currentTargetsToKill.size() < maxCurrentTargets && rageState + currentTargetsToKill.size() <= BzGeneralConfigs.ragingEssenceStrengthLevels.length) {
@@ -173,7 +168,7 @@ public class RagingEssence extends AbilityEssenceItem {
                             }
                         }
 
-                        setCurrentTargets(stack, currentTargetsToKill);
+                        setCurrentTargets(itemStack, currentTargetsToKill);
                         return;
                     }
                 }
@@ -186,7 +181,7 @@ public class RagingEssence extends AbilityEssenceItem {
 
                         // An entity is out of range. Break chain.
                         if (entity == null || entity.distanceToSqr(serverPlayer.position()) > trackingRange * trackingRange) {
-                            resetRage(stack, serverPlayer);
+                            resetRage(itemStack, serverPlayer);
                             return;
                         }
                     }
@@ -204,15 +199,15 @@ public class RagingEssence extends AbilityEssenceItem {
                         if (effectHolder.value() == MobEffects.DAMAGE_BOOST) {
                             serverPlayer.addEffect(new MobEffectInstance(
                                 MobEffects.DAMAGE_BOOST,
-                                getEmpoweredTimeRemaining(stack) * 4,
+                                (int) ((level.getGameTime() - getEmpoweredTimestamp(itemStack)) * 4),
                                 BzGeneralConfigs.ragingEssenceStrengthLevels[rageState - 1] - 1,
                                 false,
                                 false));
                         }
                         else {
                             serverPlayer.addEffect(new MobEffectInstance(
-                                    effectHolder.value(),
-                                    getEmpoweredTimeRemaining(stack) * 4,
+                                    effectHolder,
+                                    (int) ((level.getGameTime() - getEmpoweredTimestamp(itemStack)) * 4),
                                     rageState,
                                     false,
                                     false));
@@ -227,27 +222,28 @@ public class RagingEssence extends AbilityEssenceItem {
         DamageSource damageSource = event.source();
         LivingEntity livingEntity = event.entity();
         if (damageSource.getEntity() instanceof ServerPlayer player) {
-            ItemStack stack = player.getOffhandItem();
+            ItemStack itemStack = player.getOffhandItem();
+            AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
             if (livingEntity.isDeadOrDying() &&
-                stack.getItem() instanceof RagingEssence ragingEssence &&
-                getIsActive(stack) &&
-                !player.getCooldowns().isOnCooldown(stack.getItem()))
+                itemStack.getItem() instanceof RagingEssence ragingEssence &&
+                abilityEssenceActivityData.isActive() &&
+                !player.getCooldowns().isOnCooldown(itemStack.getItem()))
             {
-                List<UUID> currentTargetsToKill = RagingEssence.getCurrentTargets(stack);
-                int rageState = RagingEssence.getRageState(stack);
+                List<UUID> currentTargetsToKill = RagingEssence.getCurrentTargets(itemStack);
+                int rageState = RagingEssence.getRageState(itemStack);
                 if (rageState == BzGeneralConfigs.ragingEssenceStrengthLevels.length ||
                     currentTargetsToKill.contains(livingEntity.getUUID()))
                 {
                     if (rageState >= BzGeneralConfigs.ragingEssenceStrengthLevels.length) {
-                        resetRage(stack, player);
+                        resetRage(itemStack, player);
                     }
                     else {
-                        RagingEssence.setRageState(stack, (short) (rageState + 1));
-                        setEmpoweredTimeRemaining(stack , maxEmpoweredTimeFramePer5Ticks);
+                        RagingEssence.setRageState(itemStack, (short) (rageState + 1));
+                        setEmpoweredTimestamp(itemStack, livingEntity.level().getGameTime());
 
                         currentTargetsToKill.remove(livingEntity.getUUID());
-                        RagingEssence.setCurrentTargets(stack, currentTargetsToKill);
-                        ragingEssence.decrementAbilityUseRemaining(stack, player, 1);
+                        RagingEssence.setCurrentTargets(itemStack, currentTargetsToKill);
+                        ragingEssence.decrementAbilityUseRemaining(itemStack, player, 1);
 
 //                        Component message = Component.literal("DEBUG: Rage state is " + rageState);
 //                        player.displayClientMessage(message, true);
@@ -277,7 +273,7 @@ public class RagingEssence extends AbilityEssenceItem {
                 .toList();
 
         for (Holder<MobEffect> effectHolder : radianceEffects) {
-            serverPlayer.removeEffect(effectHolder.value());
+            serverPlayer.removeEffect(effectHolder);
         }
 
         serverPlayer.serverLevel().sendParticles(
@@ -326,7 +322,7 @@ public class RagingEssence extends AbilityEssenceItem {
             ItemStack offHandItem = player.getOffhandItem();
 
             return offHandItem.is(BzItems.ESSENCE_RAGING.get()) &&
-                    getIsActive(offHandItem) &&
+                    offHandItem.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive() &&
                     !player.getCooldowns().isOnCooldown(offHandItem.getItem());
         }
         return false;

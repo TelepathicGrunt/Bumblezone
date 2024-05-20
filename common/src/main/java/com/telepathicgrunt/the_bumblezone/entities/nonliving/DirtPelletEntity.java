@@ -8,6 +8,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -102,7 +103,7 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
     }
 
     private ParticleOptions getParticle() {
-        ItemStack itemStack = this.getItemRaw();
+        ItemStack itemStack = this.getItem();
         return itemStack.isEmpty() ?
                 new ItemParticleOption(ParticleTypes.ITEM, this.getDefaultItem().getDefaultInstance()) :
                 new ItemParticleOption(ParticleTypes.ITEM, itemStack);
@@ -259,8 +260,8 @@ public class DirtPelletEntity extends ThrowableItemProjectile {
             );
 
             if (this.eventBased && this.level() instanceof ServerLevel serverLevel) {
-                for(MobEffect mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
-                    if (mobEffect.isBeneficial()) {
+                for(Holder<MobEffect> mobEffect : new HashSet<>(livingEntity.getActiveEffectsMap().keySet())) {
+                    if (mobEffect.value().isBeneficial()) {
                         livingEntity.removeEffect(mobEffect);
                     }
                 }

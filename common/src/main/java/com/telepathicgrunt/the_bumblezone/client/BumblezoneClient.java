@@ -56,6 +56,7 @@ import com.telepathicgrunt.the_bumblezone.client.screens.CrystallineFlowerScreen
 import com.telepathicgrunt.the_bumblezone.client.screens.StrictChestScreen;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
@@ -84,6 +85,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.mixin.client.ClientLevelAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
@@ -349,14 +351,15 @@ public class BumblezoneClient {
             new ResourceLocation("state"),
             (itemStack, world, livingEntity, integer) -> {
                 if (itemStack.getItem() instanceof AbilityEssenceItem abilityEssenceItem) {
-                    if (!AbilityEssenceItem.getIsInInventory(itemStack)) {
+                    AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
+                    if (!abilityEssenceActivityData.isInInventory()) {
                         return 0.0F;
                     }
-                    else if (AbilityEssenceItem.getIsActive(itemStack)) {
+                    else if (abilityEssenceActivityData.isActive()) {
                         return abilityEssenceItem.getAbilityUseRemaining(itemStack) == abilityEssenceItem.getMaxAbilityUseAmount() ?
                               0.2F : 0.25F;
                     }
-                    else if (AbilityEssenceItem.getIsLocked(itemStack) || AbilityEssenceItem.getForcedCooldown(itemStack)) {
+                    else if (abilityEssenceActivityData.isLocked() || itemStack.get(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get()).forcedCooldown()) {
                         return 0.3F;
                     }
                     else {

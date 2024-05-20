@@ -58,10 +58,10 @@ public class FabricClientEventManager {
         RegisterClientFluidPropertiesEvent.EVENT.invoke(new RegisterClientFluidPropertiesEvent(
                 (info, properties) -> {
                     if (info.block() == BzFluids.HONEY_FLUID_BLOCK.get() || info.block() == BzFluids.ROYAL_JELLY_FLUID_BLOCK.get()) {
-                        fluidHandler.register(info.source(), info.flowing(), new HoneyFluidRenderHandler(properties));
+                        fluidHandler.register(info.still().get(), info.flowing().get(), new HoneyFluidRenderHandler(properties));
                     }
                     else {
-                        fluidHandler.register(info.source(), info.flowing(), new BiomeColorFluidRenderHandler(properties));
+                        fluidHandler.register(info.still().get(), info.flowing().get(), new BiomeColorFluidRenderHandler(properties));
                     }
                 }));
 

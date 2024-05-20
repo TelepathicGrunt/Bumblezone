@@ -4,9 +4,11 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.entities.teleportation.BzWorldSavedData;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ServerPlayerAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +26,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.Filterable;
+import net.minecraft.server.network.FilteredText;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -40,6 +44,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.WrittenBookItem;
+import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -75,16 +80,8 @@ public class ContinuityEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_continuity_description_2").withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, true);
-        }
-    }
-
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean bl) {
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
         TickCapsule tickCapsule = NEXT_TICK_BEHAVIORS.poll();
         if (tickCapsule != null) {
             if (level.getGameTime() > tickCapsule.tickTarget) {
@@ -100,11 +97,11 @@ public class ContinuityEssence extends AbilityEssenceItem {
 //            serverPlayer.getCooldowns().removeCooldown(this);
 //        }
 
-        super.inventoryTick(stack, level, entity, i, bl);
+        super.inventoryTick(itemStack, level, entity, i, bl);
     }
 
     @Override
-    void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {}
+    void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {}
 
     public static boolean CancelledDeath(EntityDeathEvent event) {
         LivingEntity livingEntity = event.entity();
@@ -121,17 +118,17 @@ public class ContinuityEssence extends AbilityEssenceItem {
                 return false;
             }
 
-            ItemStack stack = player.getOffhandItem();
+            ItemStack itemStack = player.getOffhandItem();
             if (player.isDeadOrDying() &&
-                stack.getItem() instanceof ContinuityEssence continuityEssence &&
-                getIsActive(stack) &&
-                !player.getCooldowns().isOnCooldown(stack.getItem()))
+                itemStack.getItem() instanceof ContinuityEssence continuityEssence &&
+                itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive() &&
+                !player.getCooldowns().isOnCooldown(itemStack.getItem()))
             {
                 playerReset(player);
 
                 List<MobEffectInstance> mobEffectInstances = new ArrayList<>(player.getActiveEffects());
                 for (MobEffectInstance mobEffectInstance : mobEffectInstances) {
-                    if (!mobEffectInstance.getEffect().isBeneficial()) {
+                    if (!mobEffectInstance.getEffect().value().isBeneficial()) {
                         player.removeEffect(mobEffectInstance.getEffect());
                     }
                 }
@@ -139,7 +136,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
                 MinecraftServer server = player.level().getServer();
                 if (server != null) {
                     spawnParticles(player.serverLevel(), player.position(), player.getRandom());
-                    respawn(stack, continuityEssence, player, server, event.source());
+                    respawn(itemStack, continuityEssence, player, server, event.source());
                 }
                 return true;
             }
@@ -204,24 +201,21 @@ public class ContinuityEssence extends AbilityEssenceItem {
 
     private static void spawnBook(ServerPlayer serverPlayer, DamageSource damageSource, ResourceKey<Level> oldDimension, BlockPos oldPosition, ServerLevel finalDestination, Vec3 playerRespawnPosition) {
         ItemStack newBook = Items.WRITTEN_BOOK.getDefaultInstance();
-        CompoundTag compoundTag = newBook.getOrCreateTag();
-        compoundTag.putString(WrittenBookItem.TAG_TITLE, "Essence of Continuity Record");
-        compoundTag.putString(WrittenBookItem.TAG_AUTHOR, serverPlayer.getName().getString());
 
-        ListTag listTag = new ListTag();
+        List<Filterable<Component>> componentList = new ArrayList<>();
         Entity causer = damageSource.getEntity();
         if (causer == null) {
-            listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
+            componentList.add(Filterable.passThrough(Component.translatable(
                     "item.the_bumblezone.essence_continuity_written_book_body_no_causer",
                     java.time.LocalDate.now().toString(),
                     oldPosition.getX(),
                     oldPosition.getY(),
                     oldPosition.getZ(),
                     oldDimension.location().toString(),
-                    getDeathMessage(finalDestination, damageSource, serverPlayer)))));
+                    getDeathMessage(finalDestination, damageSource, serverPlayer))));
         }
         else {
-            listTag.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable(
+            componentList.add(Filterable.passThrough(Component.translatable(
                     "item.the_bumblezone.essence_continuity_written_book_body",
                     java.time.LocalDate.now().toString(),
                     oldPosition.getX(),
@@ -229,10 +223,16 @@ public class ContinuityEssence extends AbilityEssenceItem {
                     oldPosition.getZ(),
                     oldDimension.location().toString(),
                     causer.getName(),
-                    getDeathMessage(finalDestination, damageSource, serverPlayer)))));
+                    getDeathMessage(finalDestination, damageSource, serverPlayer))));
         }
-        compoundTag.put(WrittenBookItem.TAG_PAGES, listTag);
 
+        newBook.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(
+            Filterable.from(FilteredText.fullyFiltered("Essence of Continuity Record")),
+            serverPlayer.getName().getString(),
+            0,
+            componentList,
+            true
+        ));
         ItemEntity itementity = new ItemEntity(finalDestination,
                 playerRespawnPosition.x(),
                 playerRespawnPosition.y(),
@@ -276,7 +276,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
             itemStack = ItemStack.EMPTY;
         }
 
-        if (!itemStack.isEmpty() && itemStack.hasCustomHoverName()) {
+        if (!itemStack.isEmpty() && itemStack.has(DataComponents.CUSTOM_NAME)) {
             return Component.translatable(string, serverPlayer.getDisplayName(), component, itemStack.getDisplayName());
         }
 
@@ -325,7 +325,7 @@ public class ContinuityEssence extends AbilityEssenceItem {
         player.setOldPosAndRot();
 
         for (MobEffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
-            if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+            if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
                 player.removeEffect(effect.getEffect());
             }
         }

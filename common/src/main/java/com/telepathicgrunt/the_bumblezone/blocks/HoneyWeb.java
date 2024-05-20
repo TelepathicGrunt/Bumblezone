@@ -150,7 +150,7 @@ public class HoneyWeb extends Block {
         }
 
         if (!(entity instanceof Player player && player.isCreative())) {
-            ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+            ItemStack beeLeggings = entity instanceof LivingEntity livingEntity ? HoneyBeeLeggings.getEntityBeeLegging(livingEntity) : ItemStack.EMPTY;
 
             VoxelShape shape = this.shapeByIndex[this.getAABBIndex(blockState)];
             shape = shape.move(blockPos.getX(), blockPos.getY(), blockPos.getZ());

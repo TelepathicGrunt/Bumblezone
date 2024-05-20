@@ -51,6 +51,13 @@ public class BuzzingBriefcase extends Item {
     }
 
     @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.EMPTY);
+        }
+    }
+
+    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (player.getCooldowns().isOnCooldown(stack.getItem())) {

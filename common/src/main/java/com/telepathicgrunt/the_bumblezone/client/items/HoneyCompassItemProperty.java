@@ -1,6 +1,8 @@
 package com.telepathicgrunt.the_bumblezone.client.items;
 
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassTargetData;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.BlockPos;
@@ -45,7 +47,7 @@ public class HoneyCompassItemProperty {
                         return 0;
                     }
 
-                    BlockPos blockPos = this.getStructurePosition(clientLevel, itemStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe());
+                    BlockPos blockPos = this.getStructurePosition(clientLevel, itemStack);
                     long gameTime = clientLevel.getGameTime();
                     if (blockPos != null && !(entity.position().distanceToSqr((double)blockPos.getX() + 0.5, entity.position().y(), (double)blockPos.getZ() + 0.5) < 1.0E-5F)) {
                         boolean isLocalPlayer = livingEntity instanceof Player && ((Player)livingEntity).isLocalPlayer();
@@ -95,13 +97,14 @@ public class HoneyCompassItemProperty {
             }
 
             @Nullable
-            private BlockPos getStructurePosition(Level level, CompoundTag compoundTag) {
-                boolean structurePos = compoundTag.contains(HoneyCompass.TAG_TARGET_POS);
-                boolean dimension = compoundTag.contains(HoneyCompass.TAG_TARGET_DIMENSION);
+            private BlockPos getStructurePosition(Level level, ItemStack itemStack) {
+                HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+                boolean structurePos = honeyCompassTargetData.targetPos().isPresent();
+                boolean dimension = honeyCompassTargetData.targetDimension().isPresent();
                 if (structurePos && dimension) {
-                    Optional<ResourceKey<Level>> optional = Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, compoundTag.get(HoneyCompass.TAG_TARGET_DIMENSION)).result();
+                    Optional<ResourceKey<Level>> optional = honeyCompassTargetData.targetDimension();
                     if (optional.isPresent() && level.dimension() == optional.get()) {
-                        return NbtUtils.readBlockPos(compoundTag, HoneyCompass.TAG_TARGET_POS).orElse(BlockPos.ZERO);
+                        return honeyCompassTargetData.targetPos().orElse(BlockPos.ZERO);
                     }
                 }
 

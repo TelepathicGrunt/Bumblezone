@@ -38,6 +38,7 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -228,7 +229,7 @@ public class GeneralUtils {
 
         @Override
         public MerchantOffer getOffer(Entity entity, RandomSource random) {
-            ItemStack in = new ItemStack(this.itemToTrade, this.amountToGive);
+            ItemCost in = new ItemCost(this.itemToTrade, this.amountToGive);
             ItemStack out = new ItemStack(this.itemToReceive, this.amountToReceive);
             return new MerchantOffer(in, out, this.maxUses, this.experience, this.multiplier);
         }
@@ -546,7 +547,7 @@ public class GeneralUtils {
                 if (blockEntity instanceof RandomizableContainerBlockEntity) {
                     structureBlockInfo.nbt().putLong("LootTableSeed", randomSource.nextLong());
                 }
-                blockEntity.load(structureBlockInfo.nbt());
+                blockEntity.loadWithComponents(structureBlockInfo.nbt(), serverLevelAccessor.registryAccess());
             }
             if (fluidState == null) continue;
             if (blockState.getFluidState().isSource()) {
@@ -627,7 +628,7 @@ public class GeneralUtils {
                 float f = entity.rotate(rotation);
                 entity.moveTo(vec32.x, vec32.y, vec32.z, f + (entity.mirror(mirror) - entity.getYRot()), entity.getXRot());
                 if (bl && entity instanceof Mob) {
-                    ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null, compoundTag);
+                    ((Mob)entity).finalizeSpawn(serverLevelAccessor, serverLevelAccessor.getCurrentDifficultyAt(BlockPos.containing(vec32)), MobSpawnType.STRUCTURE, null);
                 }
                 serverLevelAccessor.addFreshEntityWithPassengers(entity);
             });

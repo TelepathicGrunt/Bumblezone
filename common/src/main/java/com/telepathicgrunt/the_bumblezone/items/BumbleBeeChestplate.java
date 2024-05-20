@@ -33,6 +33,13 @@ public class BumbleBeeChestplate extends BeeArmor {
             transTexture);
     }
 
+    @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData());
+        }
+    }
+
     // Runs on NeoForge
     public void onArmorTick(ItemStack itemstack, Level world, Player player) {
         this.bz$onArmorTick(itemstack, world, player);

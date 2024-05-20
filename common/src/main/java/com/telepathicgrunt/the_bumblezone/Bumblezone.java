@@ -195,7 +195,7 @@ public class Bumblezone {
         BzPlacements.PLACEMENT_MODIFIER.init();
         BzProcessors.STRUCTURE_PROCESSOR.init();
         BzCreativeTabs.CREATIVE_MODE_TABS.init();
-        BzBiomeHeightRegistry.BIOME_HEIGHT.init();
+       // BzBiomeHeightRegistry.BIOME_HEIGHT.init();
         BzDataComponents.DATA_COMPONENT_TYPE.init();
         BzLootFunctionTypes.LOOT_ITEM_FUNCTION_TYPE.init();
         BzLootConditionTypes.LOOT_ITEM_CONDITION_TYPE.init();

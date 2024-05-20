@@ -17,6 +17,6 @@ public class BzBucketItemMixin implements FluidGetter {
 
     @Override
     public FlowingFluid getFluid() {
-        return this.info.source();
+        return this.info.still().get();
     }
 }

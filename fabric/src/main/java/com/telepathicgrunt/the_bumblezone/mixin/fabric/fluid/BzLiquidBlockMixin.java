@@ -27,7 +27,7 @@ public class BzLiquidBlockMixin extends LiquidBlock implements FluidGetter {
 
     @Inject(method = "<init>(Lcom/telepathicgrunt/the_bumblezone/fluids/base/FluidData;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V", at = @At("RETURN"))
     public void bumblezone$onInit(FluidData info, BlockBehaviour.Properties properties, CallbackInfo ci) {
-        this.bz$fluidSupplier = info::source;
+        this.bz$fluidSupplier = info.still();
         if (info instanceof BaseFluidData fabricInfo) {
             fabricInfo.setBlock(() -> this);
         }

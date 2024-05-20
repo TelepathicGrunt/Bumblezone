@@ -46,6 +46,16 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
             false);
     }
 
+    @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.CARPENTER_BEE_BOOTS_MINING_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.CARPENTER_BEE_BOOTS_MINING_DATA.get(), new CarpenterBeeBootsMiningData());
+        }
+        if (itemStack.get(BzDataComponents.CARPENTER_BEE_BOOTS_HANGING_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.CARPENTER_BEE_BOOTS_HANGING_DATA.get(), new CarpenterBeeBootsHangingData());
+        }
+    }
+
     // Runs on Forge
     public void onArmorTick(ItemStack itemstack, Level level, Player player) {
         this.bz$onArmorTick(itemstack, level, player);

@@ -40,7 +40,7 @@ public class FogRendererMixin {
         FluidState state = level.getFluidState(camera.getBlockPosition());
         if (camera.getPosition().y < (double)((float)camera.getBlockPosition().getY() + state.getHeight(level, camera.getBlockPosition()))) {
             if (state.getType() instanceof BzFlowingFluid bzFluid) {
-                ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties().id());
+                ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties());
                 if (properties != null) {
                     Optional<Vector3f> fogColor = properties.modifyFogColor(camera, partialTicks, level, renderDistance, bossColorModifier, new Vector3f(fogRed, fogGreen, fogBlue));
                     fogColor.ifPresent(fogColorUnpacked -> {
@@ -58,7 +58,7 @@ public class FogRendererMixin {
         FluidState state = camera.getEntity().level().getFluidState(camera.getBlockPosition());
         if (camera.getPosition().y < (double)((float)camera.getBlockPosition().getY() + state.getHeight(camera.getEntity().level(), camera.getBlockPosition()))) {
             if (state.getType() instanceof BzFlowingFluid bzFluid) {
-                ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties().id());
+                ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties());
                 if (properties != null) {
                     float start = RenderSystem.getShaderFogStart();
                     float end = RenderSystem.getShaderFogEnd();

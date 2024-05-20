@@ -291,7 +291,7 @@ public class PileOfPollen extends FallingBlock {
             double speedReduction = (entity instanceof Projectile) ? 0.85D : 1 - (layerValueMinusOne * 0.1D);
             double chance = 0.22D + layerValueMinusOne * 0.09D;
 
-            ItemStack beeLeggings = HoneyBeeLeggings.getEntityBeeLegging(entity);
+            ItemStack beeLeggings = entity instanceof LivingEntity livingEntity ? HoneyBeeLeggings.getEntityBeeLegging(livingEntity) : ItemStack.EMPTY;
             if (!beeLeggings.isEmpty()) {
                 speedReduction = Math.max(0.9D, speedReduction);
             }

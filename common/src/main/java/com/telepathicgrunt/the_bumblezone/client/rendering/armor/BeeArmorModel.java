@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.items.BeeArmor;
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
 import com.telepathicgrunt.the_bumblezone.items.HoneyBeeLeggings;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -67,7 +68,7 @@ public class BeeArmorModel extends HumanoidModel<LivingEntity> {
                 leftArm.visible = true;
 
                 ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(entityLiving);
-                if (!itemStack.isEmpty() && itemStack.getOrCreateTag().getBoolean("isFlying")) {
+                if (!itemStack.isEmpty() && itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get()).isFlying()) {
                     long time = System.currentTimeMillis();
                     double currentProg = Math.abs(Math.sin(time / 40d));
                     leftWing.yRot = -45;

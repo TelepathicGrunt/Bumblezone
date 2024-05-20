@@ -59,19 +59,19 @@ public class ResourcefulBeesCompat implements ModCompat {
     }
 
     private static void setupDispenserCompat(Item containerItem) {
-        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
-                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(containerItem),
-                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
-                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
-                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
-                            .setValue(HoneycombBrood.STAGE, ResourcefulBeesCompat.isFilledBabyBeeJarItem(itemStack) ? 2 : 3));
-
-                    itemStack.getOrCreateTag().remove("Entity");
-                    return itemStack;
-                }
-        );
-
-        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
+//        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
+//                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(containerItem),
+//                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+//                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+//                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
+//                            .setValue(HoneycombBrood.STAGE, ResourcefulBeesCompat.isFilledBabyBeeJarItem(itemStack) ? 2 : 3));
+//
+//                    itemStack.getOrCreateTag().remove("Entity");
+//                    return itemStack;
+//                }
+//        );
+//
+//        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
     }
 
     @Override
@@ -168,28 +168,28 @@ public class ResourcefulBeesCompat implements ModCompat {
         return null;
     }
 
-    public static boolean isFilledBeeJarItem(ItemStack stack) {
-        return BEE_JAR.isPresent() && stack.is(BEE_JAR.get()) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("Entity")
-                && stack.getOrCreateTag().getCompound("Entity").contains("id");
-    }
-
-    public static boolean isFilledBabyBeeJarItem(ItemStack stack) {
-        return isFilledBeeJarItem(stack) && stack.getOrCreateTag().getCompound("Entity").getBoolean("isBaby");
-    }
-
-    @Override
-    public InteractionResult onEmptyBroodInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
-        if (!BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock) return InteractionResult.PASS;
-        if (isFilledBeeJarItem(itemstack)) {
-            if (!playerEntity.isCrouching()) {
-                if (!playerEntity.isCreative()) {
-                    itemstack.getOrCreateTag().remove("Entity"); // Remove bee.
-                }
-
-                return isFilledBabyBeeJarItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
-            }
-        }
-
-        return InteractionResult.PASS;
-    }
+//    public static boolean isFilledBeeJarItem(ItemStack stack) {
+//        return BEE_JAR.isPresent() && stack.is(BEE_JAR.get()) && !stack.isEmpty() && stack.hasTag() && stack.getOrCreateTag().contains("Entity")
+//                && stack.getOrCreateTag().getCompound("Entity").contains("id");
+//    }
+//
+//    public static boolean isFilledBabyBeeJarItem(ItemStack stack) {
+//        return isFilledBeeJarItem(stack) && stack.getOrCreateTag().getCompound("Entity").getBoolean("isBaby");
+//    }
+//
+//    @Override
+//    public InteractionResult onEmptyBroodInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
+//        if (!BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock) return InteractionResult.PASS;
+//        if (isFilledBeeJarItem(itemstack)) {
+//            if (!playerEntity.isCrouching()) {
+//                if (!playerEntity.isCreative()) {
+//                    itemstack.getOrCreateTag().remove("Entity"); // Remove bee.
+//                }
+//
+//                return isFilledBabyBeeJarItem(itemstack) ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
+//            }
+//        }
+//
+//        return InteractionResult.PASS;
+//    }
 }

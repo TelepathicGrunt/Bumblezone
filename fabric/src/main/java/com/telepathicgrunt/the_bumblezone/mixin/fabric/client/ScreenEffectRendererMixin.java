@@ -22,7 +22,7 @@ public abstract class ScreenEffectRendererMixin {
     private static void bumblezone$renderFluidOverlay(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci) {
         if (minecraft.player instanceof BzEntityHooks hook) {
             if (hook.bz$getFluidOnEyes().getType() instanceof BzFlowingFluid bzFluid) {
-                ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties().id());
+                ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties());
                 properties.fluidOverlay(minecraft, poseStack);
             }
         }

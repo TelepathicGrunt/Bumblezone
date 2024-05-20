@@ -2,7 +2,10 @@ package com.telepathicgrunt.the_bumblezone.utils;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -14,10 +17,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Enchantment Utility class used by OpenMods.  Replicated here under the permissions of the MIT Licenses.
@@ -44,11 +49,11 @@ public class EnchantmentUtils {
 		return 1395L + sum(level - 30, 112, 9);
 	}
 
-	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack stack, int xpTier) {
+	public static Map<ResourceLocation, EnchantmentInstance> allAllowedEnchantsWithoutMaxLimit(int level, ItemStack itemStack, int xpTier) {
 		Map<ResourceLocation, EnchantmentInstance> map = new HashMap<>();
-		boolean bookFlag = stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
+		boolean bookFlag = itemStack.is(Items.BOOK) || itemStack.is(Items.ENCHANTED_BOOK);
 		boolean allowTreasure = xpTier == 7;
-		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(stack);
+		Map<Enchantment, Integer> existingEnchantments = getEnchantmentsOnBook(itemStack);
 		for(Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
 
 			boolean forceAllowed = GeneralUtils.isInTag(BuiltInRegistries.ENCHANTMENT, BzTags.FORCED_ALLOWED_CRYSTALLINE_FLOWER_ENCHANTMENTS, enchantment);
@@ -62,7 +67,7 @@ public class EnchantmentUtils {
 				minLevelAllowed = Math.max(minLevelAllowed, existingEnchantments.get(enchantment) + 1);
 			}
 
-			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (canApplyAtEnchantingTable(enchantment, stack) || (bookFlag && isAllowedOnBooks(enchantment)))) {
+			if ((!enchantment.isTreasureOnly() || allowTreasure) && (forceAllowed || enchantment.isDiscoverable()) && (bookFlag || (enchantment.canEnchant(itemStack) && enchantment.isPrimaryItem(itemStack)))) {
 				for(int i = enchantment.getMaxLevel(); i > minLevelAllowed - 1; --i) {
 					if (forceAllowed || level >= enchantment.getMinCost(i)) {
 						EnchantmentInstance enchantmentInstance = new EnchantmentInstance(enchantment, xpTier <= 2 ? 1 : i);
@@ -78,18 +83,11 @@ public class EnchantmentUtils {
 	}
 
 	public static Map<Enchantment, Integer> getEnchantmentsOnBook(ItemStack itemStack) {
-		ListTag listtag = EnchantedBookItem.getEnchantments(itemStack);
+		Set<Object2IntMap.Entry<Holder<Enchantment>>> enchantments = itemStack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).entrySet();
 		Map<Enchantment, Integer> existingEnchants = new Object2IntOpenHashMap<>();
 
-		for(int i = 0; i < listtag.size(); ++i) {
-			CompoundTag compoundtag = listtag.getCompound(i);
-			ResourceLocation resourcelocation1 = EnchantmentHelper.getEnchantmentId(compoundtag);
-			if (resourcelocation1 != null) {
-				existingEnchants.put(
-					Objects.requireNonNull(BuiltInRegistries.ENCHANTMENT.get(resourcelocation1)),
-					EnchantmentHelper.getEnchantmentLevel(compoundtag)
-				);
-			}
+		for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments) {
+			existingEnchants.put(entry.getKey().value(), entry.getIntValue());
 		}
 
 		return existingEnchants;

@@ -38,6 +38,16 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
                 .durability(initialDurability));
     }
 
+    @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.HONEY_CRYSTAL_SHIELD_CURRENT_LEVEL_DATA.get(), new HoneyCrystalShieldCurrentLevelData());
+        }
+        if (itemStack.get(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.HONEY_CRYSTAL_SHIELD_DEFINED_LEVELS_DATA.get(), new HoneyCrystalShieldDefinedLevelsData(itemStack.getMaxDamage()));
+        }
+    }
+
     /**
      * Specify what item can repair this shield
      */

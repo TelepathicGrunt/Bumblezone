@@ -3,15 +3,19 @@ package com.telepathicgrunt.the_bumblezone.modcompat;
 import com.telepathicgrunt.the_bumblezone.items.recipes.PotionCandleRecipe;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.LingeringPotionItem;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -33,30 +37,33 @@ public class FakePotionCandleRecipeCreator {
         List<CraftingRecipe> extraRecipes = new ArrayList<>();
         int currentRecipe = 0;
         Set<MobEffect> effects = new HashSet<>();
-        List<Potion> potions = new ArrayList<>();
-        for (Potion potion : BuiltInRegistries.POTION) {
+        List<Holder<Potion>> potions = new ArrayList<>();
+        for (ResourceLocation potionKey : BuiltInRegistries.POTION.keySet()) {
+            Optional<Holder.Reference<Potion>> potion = BuiltInRegistries.POTION.getHolder(potionKey);
             if (oneRecipeOnly && !potions.isEmpty()) {
                 break;
             }
 
-            if (potion.getEffects().stream().allMatch(e -> effects.contains(e.getEffect().value()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect().value()).orElseThrow()).is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS))) {
+            if (potion.isEmpty() || potion.get().value().getEffects().stream().allMatch(e ->
+                effects.contains(e.getEffect().value()) || BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(BuiltInRegistries.MOB_EFFECT.getResourceKey(e.getEffect().value()).orElseThrow()).is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS)))
+            {
                 continue;
             }
 
-            potion.getEffects().forEach(e -> effects.add(e.getEffect().value()));
-            potions.add(potion);
+            potion.get().value().getEffects().forEach(e -> effects.add(e.getEffect().value()));
+            potions.add(potion.get());
         }
-        potions.sort(Comparator.comparingInt(a -> a.getEffects().size()));
-        for (Potion potion : potions) {
-            if (potion.getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect().value()))) {
+        potions.sort(Comparator.comparingInt(a -> a.value().getEffects().size()));
+        for (Holder<Potion> potion : potions) {
+            if (potion.value().getEffects().stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect().value()))) {
                 continue;
             }
 
-            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.POTION.getDefaultInstance(), currentRecipe));
+            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.POTION.getDefaultInstance()));
             currentRecipe++;
-            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance(), currentRecipe));
+            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.SPLASH_POTION.getDefaultInstance()));
             currentRecipe++;
-            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance(), currentRecipe));
+            addRecipeIfValid(extraRecipes, FakePotionCandleRecipeCreator.getFakeShapedRecipe(potionCandleRecipe, potion, Items.LINGERING_POTION.getDefaultInstance()));
             currentRecipe++;
         }
         return extraRecipes;
@@ -68,8 +75,8 @@ public class FakePotionCandleRecipeCreator {
         }
     }
 
-    private static ShapedRecipe getFakeShapedRecipe(PotionCandleRecipe recipe, Potion potion, ItemStack potionItem, int currentRecipe) {
-        ItemStack potionStack = PotionUtils.setPotion(potionItem, potion);
+    private static ShapedRecipe getFakeShapedRecipe(PotionCandleRecipe recipe, Holder<Potion> potion, ItemStack potionItem) {
+        ItemStack potionStack = PotionContents.createItemStack(potionItem.getItem(), potion);
 
         List<Ingredient> fakedShapedIngredientsMutable = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
@@ -122,9 +129,9 @@ public class FakePotionCandleRecipeCreator {
         AtomicInteger amplifier = new AtomicInteger();
         AtomicInteger potionEffectsFound = new AtomicInteger();
 
-        PotionUtils.getMobEffects(potionStack).forEach(me -> {
-            effects.add(me.getEffect());
-            maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
+        potionStack.get(DataComponents.POTION_CONTENTS).getAllEffects().forEach(me -> {
+            effects.add(me.getEffect().value());
+            maxDuration.addAndGet(me.getEffect().value().isInstantenous() ? 200 : me.getDuration());
             amplifier.addAndGet(me.getAmplifier() + 1);
             potionEffectsFound.getAndIncrement();
         });

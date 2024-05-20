@@ -55,6 +55,19 @@ public class HoneyCompass extends Item {
     }
 
     @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.HONEY_COMPASS_BASE_DATA.get(), new HoneyCompassBaseData());
+        }
+        if (itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(), new HoneyCompassStateData());
+        }
+        if (itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(), new HoneyCompassTargetData());
+        }
+    }
+
+    @Override
     public boolean isFoil(ItemStack itemStack) {
         HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
         return honeyCompassStateData.locked() || super.isFoil(itemStack);
@@ -512,21 +525,21 @@ public class HoneyCompass extends Item {
         return false;
     }
 
-    private static void setCompassTargetData(HoneyCompassTargetData honeyCompassTargetData, Optional<String> targetBlock, Optional<String> targetStructureTag, Optional<BlockPos> targetPos, Optional<ResourceKey<Level>> targetDimension, ItemStack itemStack) {
+    public static void setCompassTargetData(HoneyCompassTargetData honeyCompassTargetData, Optional<String> targetBlock, Optional<String> targetStructureTag, Optional<BlockPos> targetPos, Optional<ResourceKey<Level>> targetDimension, ItemStack itemStack) {
         if (honeyCompassTargetData.isDifferent(targetBlock, targetStructureTag, targetPos, targetDimension)) {
             itemStack.set(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(),
                     new HoneyCompassTargetData(targetBlock, targetStructureTag, targetPos, targetDimension));
         }
     }
 
-    private static void setCompassBaseData(HoneyCompassBaseData honeyCompassBaseData, String compassType, ItemStack itemStack) {
+    public static void setCompassBaseData(HoneyCompassBaseData honeyCompassBaseData, String compassType, ItemStack itemStack) {
         if (!honeyCompassBaseData.compassType().equals(compassType)) {
             itemStack.set(BzDataComponents.HONEY_COMPASS_BASE_DATA.get(),
                     new HoneyCompassBaseData(compassType, honeyCompassBaseData.customName(), honeyCompassBaseData.customDescription()));
         }
     }
 
-    private static void setCompassStateData(HoneyCompassStateData honeyCompassStateData, boolean locked, Optional<UUID> searchId, boolean isLoading, boolean isFailed, boolean locatedSpecialStructure, ItemStack itemStack) {
+    public static void setCompassStateData(HoneyCompassStateData honeyCompassStateData, boolean locked, Optional<UUID> searchId, boolean isLoading, boolean isFailed, boolean locatedSpecialStructure, ItemStack itemStack) {
         if (!honeyCompassStateData.isDifferent(locked, searchId, isLoading, isFailed, locatedSpecialStructure)) {
             itemStack.set(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(),
                     new HoneyCompassStateData(locked, searchId, isLoading, isFailed, locatedSpecialStructure));

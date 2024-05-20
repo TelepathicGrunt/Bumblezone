@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.blocks.EmptyHoneycombBrood;
 import com.telepathicgrunt.the_bumblezone.blocks.FilledPorousHoneycomb;
 import com.telepathicgrunt.the_bumblezone.blocks.PorousHoneycomb;
@@ -13,6 +14,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.player.Player;
@@ -51,11 +53,11 @@ public abstract class EntityMixin implements EntityLootDropInterface {
     @Shadow
     public abstract Level level();
 
-    @ModifyVariable(method = "getVehicleAttachmentPoint(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/Vec3;",
-            at = @At(value = "TAIL", target = "Lnet/minecraft/world/entity/Entity$MoveFunction;accept(Lnet/minecraft/world/entity/Entity;DDD)V"),
+    @ModifyReturnValue(method = "getVehicleAttachmentPoint(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/Vec3;",
+            at = @At(value = "RETURN"),
             require = 0)
-    private Vec3 bumblezone$beeRidingOffset(Vec3 vec3, Entity passenger) {
-        return StinglessBeeHelmet.beeRidingOffset(vec3, ((Entity)(Object)this), passenger);
+    private Vec3 bumblezone$beeRidingOffset(Vec3 original, @Local(index = 0, argsOnly = true) Entity vehicle) {
+        return StinglessBeeHelmet.beeRidingOffset(original, vehicle, ((Entity)(Object)this));
     }
 
     @ModifyReturnValue(method = "updateFluidHeightAndDoFluidPushing(Lnet/minecraft/tags/TagKey;D)Z",

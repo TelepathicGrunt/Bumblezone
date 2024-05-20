@@ -61,7 +61,7 @@ public class EssenceOfTheBees extends Item {
                     (serverPlayer.getRandom().nextFloat() * 0.2F) + 0.6F);
 
             for (MobEffectInstance effectToRemove : new ArrayList<>(serverPlayer.getActiveEffects())) {
-                if (!effectToRemove.getEffect().isBeneficial()) {
+                if (!effectToRemove.getEffect().value().isBeneficial()) {
                     serverPlayer.removeEffect(effectToRemove.getEffect());
                 }
             }

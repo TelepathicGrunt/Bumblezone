@@ -4,7 +4,9 @@ import com.teamresourceful.resourcefullib.common.network.Packet;
 import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -44,8 +46,13 @@ public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<B
             return (player) -> {
                 ItemStack itemStack = BumbleBeeChestplate.getEntityBeeChestplate(player);
                 if(!itemStack.isEmpty()) {
-                    CompoundTag tag = itemStack.getOrCreateTag();
-                    tag.putBoolean("isFlying", message.isFlying() != 0);
+                    BumbleBeeChestplateData bumbleBeeChestplateData = itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get());
+                    itemStack.set(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData(
+                        message.isFlying() != 0,
+                        bumbleBeeChestplateData.flyCounter(),
+                        bumbleBeeChestplateData.forcedMaxFlyingTickTime(),
+                        bumbleBeeChestplateData.requiredWearablesCountForForcedFlyingTime()
+                    ));
                 }
             };
         }

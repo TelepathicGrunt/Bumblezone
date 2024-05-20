@@ -4,10 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -44,7 +44,7 @@ public class ItemStackSmeltingRecipe extends SmeltingRecipe {
     }
 
     @Override
-    public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+    public ItemStack assemble(Container container, HolderLookup.Provider provider) {
         return this.result.copy();
     }
 
@@ -65,7 +65,7 @@ public class ItemStackSmeltingRecipe extends SmeltingRecipe {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.result;
     }
 
@@ -99,7 +99,7 @@ public class ItemStackSmeltingRecipe extends SmeltingRecipe {
 
     public static class ItemStackSmeltingRecipeSerializer implements RecipeSerializer<ItemStackSmeltingRecipe> {
         private final MapCodec<ItemStackSmeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(abstractCookingRecipe -> abstractCookingRecipe.group),
+                Codec.STRING.fieldOf("group").forGetter(abstractCookingRecipe -> abstractCookingRecipe.group),
                 CookingBookCategory.CODEC.fieldOf("category").orElse(CookingBookCategory.MISC).forGetter(abstractCookingRecipe -> abstractCookingRecipe.category),
                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(abstractCookingRecipe -> abstractCookingRecipe.ingredient),
                 ItemStack.CODEC.fieldOf("result").forGetter(abstractCookingRecipe -> abstractCookingRecipe.result),
@@ -107,28 +107,35 @@ public class ItemStackSmeltingRecipe extends SmeltingRecipe {
                 Codec.INT.fieldOf("cookingtime").orElse(200).forGetter(abstractCookingRecipe -> abstractCookingRecipe.cookingTime)
         ).apply(instance, ItemStackSmeltingRecipe::new));
 
+        public static final StreamCodec<RegistryFriendlyByteBuf, ItemStackSmeltingRecipe> STREAM_CODEC = StreamCodec.of(
+                ItemStackSmeltingRecipe.ItemStackSmeltingRecipeSerializer::toNetwork, ItemStackSmeltingRecipe.ItemStackSmeltingRecipeSerializer::fromNetwork
+        );
+
         @Override
-        public Codec<ItemStackSmeltingRecipe> codec() {
-            return this.codec;
+        public MapCodec<ItemStackSmeltingRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public ItemStackSmeltingRecipe fromNetwork(FriendlyByteBuf friendlyByteBuf) {
+        public StreamCodec<RegistryFriendlyByteBuf, ItemStackSmeltingRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        public static ItemStackSmeltingRecipe fromNetwork(RegistryFriendlyByteBuf friendlyByteBuf) {
             String string = friendlyByteBuf.readUtf();
             CookingBookCategory cookingBookCategory = friendlyByteBuf.readEnum(CookingBookCategory.class);
-            Ingredient ingredient = Ingredient.fromNetwork(friendlyByteBuf);
-            ItemStack itemStack = friendlyByteBuf.readItem();
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(friendlyByteBuf);
+            ItemStack itemStack = ItemStack.STREAM_CODEC.decode(friendlyByteBuf);
             float f = friendlyByteBuf.readFloat();
             int i = friendlyByteBuf.readVarInt();
             return new ItemStackSmeltingRecipe(string, cookingBookCategory, ingredient, itemStack, f, i);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf friendlyByteBuf, ItemStackSmeltingRecipe itemStackSmeltingRecipe) {
+        public static void toNetwork(RegistryFriendlyByteBuf friendlyByteBuf, ItemStackSmeltingRecipe itemStackSmeltingRecipe) {
             friendlyByteBuf.writeUtf(itemStackSmeltingRecipe.group);
             friendlyByteBuf.writeEnum(itemStackSmeltingRecipe.category());
-            itemStackSmeltingRecipe.ingredient.toNetwork(friendlyByteBuf);
-            friendlyByteBuf.writeItem(itemStackSmeltingRecipe.result);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(friendlyByteBuf, itemStackSmeltingRecipe.ingredient);
+            ItemStack.STREAM_CODEC.encode(friendlyByteBuf, itemStackSmeltingRecipe.result);
             friendlyByteBuf.writeFloat(itemStackSmeltingRecipe.experience);
             friendlyByteBuf.writeVarInt(itemStackSmeltingRecipe.cookingTime);
         }

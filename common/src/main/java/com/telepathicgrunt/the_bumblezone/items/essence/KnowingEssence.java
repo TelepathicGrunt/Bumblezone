@@ -2,7 +2,12 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceAbilityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceCooldownData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.KnowingEssenceStructureData;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.FoxAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
@@ -37,12 +42,19 @@ import java.util.function.Supplier;
 
 public class KnowingEssence extends AbilityEssenceItem {
 
-    private static final String STRUCTURE_LIST = "inStructures";
     private static final Supplier<Integer> cooldownLengthInTicks = () -> BzGeneralConfigs.knowingEssenceCooldown;
     private static final Supplier<Integer> abilityUseAmount = () -> BzGeneralConfigs.knowingEssenceAbilityUse;
 
     public KnowingEssence(Properties properties) {
         super(properties, cooldownLengthInTicks, abilityUseAmount);
+    }
+
+    @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get(), new KnowingEssenceStructureData());
+        }
+        super.verifyComponentsAfterLoad(itemStack);
     }
 
     @Override
@@ -56,47 +68,21 @@ public class KnowingEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_knowing_description_2").withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - 1, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
-    }
-
-    @Override
-    public void rechargeAbilitySlowly(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        int abilityUseRemaining = getAbilityUseRemaining(stack);
-        if (abilityUseRemaining < getMaxAbilityUseAmount()) {
-            int lastChargeTime = getLastAbilityChargeTimestamp(stack);
-            if (lastChargeTime == 0 || serverPlayer.tickCount < lastChargeTime) {
-                setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
-            }
-            else {
-                int timeFromLastCharge = serverPlayer.tickCount - lastChargeTime;
-                int chargeTimeIncrement = Math.max(getCooldownTickLength() / getMaxAbilityUseAmount(), 1);
-                if (timeFromLastCharge % chargeTimeIncrement == 0) {
-                    setAbilityUseRemaining(stack, abilityUseRemaining + 1);
-                    setLastAbilityChargeTimestamp(stack, serverPlayer.tickCount);
-                }
-            }
-        }
-    }
-
     @Override
     public void rechargeAbilityEntirely(ItemStack stack) {
         setAbilityUseRemaining(stack, getMaxAbilityUseAmount());
     }
 
     @Override
-    public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (getIsActive(stack)) {
+    public void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {
+        AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
+        if (abilityEssenceActivityData.isActive()) {
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 5L == 0) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
             }
 
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % 20L == 0) {
-                decrementAbilityUseRemaining(stack, serverPlayer);
+                decrementAbilityUseRemaining(itemStack, serverPlayer, 1);
 
                 if (BzGeneralConfigs.knowingEssenceStructureNameServer) {
                     StructureManager structureManager = ((ServerLevel)level).structureManager();
@@ -110,7 +96,6 @@ public class KnowingEssence extends AbilityEssenceItem {
                         }
                     }
 
-                    CompoundTag tag = stack.getOrCreateTag();
                     if (!structures.isEmpty()) {
                         StringBuilder stringBuilder = new StringBuilder();
                         Registry<Structure> structureRegistry = level.registryAccess().registry(Registries.STRUCTURE).get();
@@ -124,27 +109,27 @@ public class KnowingEssence extends AbilityEssenceItem {
                             structureCount++;
                         }
 
-                        tag.putString(STRUCTURE_LIST, stringBuilder.toString());
+                        itemStack.set(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get(), new KnowingEssenceStructureData(stringBuilder.toString()));
                     }
                     else {
-                        tag.remove(STRUCTURE_LIST);
+                        itemStack.set(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get(), new KnowingEssenceStructureData());
                     }
                 }
                 else {
-                    stack.getOrCreateTag().remove(STRUCTURE_LIST);
+                    itemStack.set(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get(), new KnowingEssenceStructureData());
                 }
             }
         }
     }
 
-    public static String GetAllStructure(ItemStack stack) {
-        return stack.getOrCreateTag().getString(STRUCTURE_LIST);
+    public static String GetAllStructure(ItemStack itemStack) {
+        return itemStack.get(BzDataComponents.KNOWING_ESSENCE_STRUCTURE_DATA.get()).inStructures();
     }
 
     public static boolean IsKnowingEssenceActive(Player player) {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
-            return offHandItem.is(BzItems.ESSENCE_KNOWING.get()) && getIsActive(offHandItem);
+            return offHandItem.is(BzItems.ESSENCE_KNOWING.get()) && offHandItem.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive();
         }
         return false;
     }

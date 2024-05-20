@@ -422,11 +422,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    }
 
    @Override
-   protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-      return 0.625F * sizeIn.height;
-   }
-
-   @Override
    public void refreshDimensions() {
       double x = this.getX();
       double y = this.getY();
@@ -455,11 +450,6 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    @Override
    protected boolean shouldDropLoot() {
       return true;
-   }
-
-   @Override
-   protected ResourceLocation getDefaultLootTable() {
-      return this.getType().getDefaultLootTable();
    }
 
    @Override

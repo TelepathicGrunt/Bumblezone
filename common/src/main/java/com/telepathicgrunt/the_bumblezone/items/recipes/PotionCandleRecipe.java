@@ -12,12 +12,13 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,7 +26,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -126,7 +126,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingContainer inv, HolderLookup.Provider provider) {
         MobEffect chosenEffect;
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
@@ -138,9 +138,9 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         for(int j = 0; j < inv.getContainerSize(); ++j) {
             ItemStack itemStack = inv.getItem(j);
             if (itemStack.is(Items.POTION) || itemStack.is(Items.SPLASH_POTION) || itemStack.is(Items.LINGERING_POTION)) {
-                PotionUtils.getMobEffects(itemStack).forEach(me -> {
-                   effects.add(me.getEffect());
-                   maxDuration.addAndGet(me.getEffect().isInstantenous() ? 200 : me.getDuration());
+                itemStack.get(DataComponents.POTION_CONTENTS).getAllEffects().forEach(me -> {
+                   effects.add(me.getEffect().value());
+                   maxDuration.addAndGet(me.getEffect().value().isInstantenous() ? 200 : me.getDuration());
                    amplifier.addAndGet(me.getAmplifier() + 1);
                    potionEffectsFound.getAndIncrement();
                 });
@@ -263,7 +263,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.result;
     }
 
@@ -320,7 +320,8 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                                 return false;
                             }
 
-                            List<MobEffectInstance> currentMobEffects = PotionUtils.getMobEffects(itemStack);
+                            List<MobEffectInstance> currentMobEffects = new ArrayList<>();
+                            itemStack.get(DataComponents.POTION_CONTENTS).getAllEffects().forEach(currentMobEffects::add);
                             mobEffects.addAll(currentMobEffects);
                             if(currentMobEffects.isEmpty()) {
                                 return false;
@@ -341,7 +342,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             }
         }
 
-        if (mobEffects.stream().allMatch(e -> GeneralUtils.isInTag(BuiltInRegistries.MOB_EFFECT, BzTags.DISALLOWED_POTION_CANDLE_EFFECTS, e.getEffect()))) {
+        if (mobEffects.stream().allMatch(e -> e.getEffect().is(BzTags.DISALLOWED_POTION_CANDLE_EFFECTS))) {
             return false;
         }
 
@@ -378,7 +379,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
 
     public static class Serializer implements RecipeSerializer<PotionCandleRecipe> {
 
-        private static final Codec<PotionCandleRecipe> CODEC = PotionCandleRecipe.Serializer.RawPotionRecipe.CODEC.flatXmap(rawShapedRecipe -> {
+        private static final MapCodec<PotionCandleRecipe> CODEC = PotionCandleRecipe.Serializer.RawPotionRecipe.CODEC.flatXmap(rawShapedRecipe -> {
             String[] strings = ShapedRecipePatternAccessor.callShrink(rawShapedRecipe.shapedPattern);
             int width = strings[0].length();
             int height = strings.length;
@@ -417,26 +418,34 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         },
         potionCandleRecipe -> {
             throw new NotImplementedException("Serializing potionCandleRecipe is not implemented yet.");
-        }).codec();
+        });
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, PotionCandleRecipe> STREAM_CODEC = StreamCodec.of(
+                PotionCandleRecipe.Serializer::toNetwork, PotionCandleRecipe.Serializer::fromNetwork
+        );
 
         @Override
-        public Codec<PotionCandleRecipe> codec() {
+        public MapCodec<PotionCandleRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public PotionCandleRecipe fromNetwork(FriendlyByteBuf buffer) {
+        public StreamCodec<RegistryFriendlyByteBuf, PotionCandleRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        public static PotionCandleRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             String category = buffer.readUtf(32767);
 
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
             NonNullList<Ingredient> shapedRecipe = NonNullList.withSize(width * height, Ingredient.EMPTY);
-            shapedRecipe.replaceAll(ignored -> Ingredient.fromNetwork(buffer));
+            shapedRecipe.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
 
             int ingredientCount = buffer.readVarInt();
             NonNullList<Ingredient> shapelessRecipe = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
-            shapelessRecipe.replaceAll(ignored -> Ingredient.fromNetwork(buffer));
+            shapelessRecipe.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
 
             int maxPotionRead = buffer.readVarInt();
             boolean allowNormalPotionsRead = buffer.readBoolean();
@@ -447,20 +456,19 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             return new PotionCandleRecipe(CraftingBookCategory.valueOf(category.toUpperCase(Locale.ROOT)), group, resultCountRead, maxPotionRead, shapedRecipe, shapelessRecipe, width, height, allowNormalPotionsRead, allowSplashPotionsRead, allowLingeringPotionsRead, maxLevelRead);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, PotionCandleRecipe recipe) {
+        public static void toNetwork(RegistryFriendlyByteBuf buffer, PotionCandleRecipe recipe) {
             buffer.writeUtf(recipe.group);
             buffer.writeUtf(recipe.category.getSerializedName());
 
             buffer.writeVarInt(recipe.width);
             buffer.writeVarInt(recipe.height);
             for(Ingredient ingredient : recipe.shapedRecipeItems) {
-                ingredient.toNetwork(buffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
             }
 
             buffer.writeVarInt(recipe.shapelessRecipeItems.size());
             for (Ingredient ingredient : recipe.shapelessRecipeItems) {
-                ingredient.toNetwork(buffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
             }
 
             buffer.writeVarInt(recipe.maxAllowedPotions);
@@ -522,7 +530,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
             }, String::valueOf);
 
             public static final MapCodec<RawPotionRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(potionRecipe -> potionRecipe.group),
+                    Codec.STRING.fieldOf("group").forGetter(potionRecipe -> potionRecipe.group),
                     CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(potionRecipe -> potionRecipe.category),
                     ExtraCodecs.strictUnboundedMap(SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY).fieldOf("shapedKey").forGetter(potionRecipe -> potionRecipe.shapedKey),
                     PATTERN_CODEC.fieldOf("shapedPattern").forGetter(potionRecipe -> potionRecipe.shapedPattern),

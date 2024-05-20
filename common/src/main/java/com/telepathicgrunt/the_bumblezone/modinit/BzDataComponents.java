@@ -5,6 +5,10 @@ import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistries;
 import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceAbilityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceCooldownData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceLastChargeData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.CarpenterBeeBootsHangingData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.CarpenterBeeBootsMiningData;
@@ -15,6 +19,10 @@ import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassStateData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassTargetData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldCurrentLevelData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldDefinedLevelsData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.KnowingEssenceStructureData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceCurrentTargetData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceStateData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.RagingEssenceTimerData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.StinglessBeeHelmetData;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.component.DataComponentType;
@@ -65,6 +73,30 @@ public class BzDataComponents {
 
     public static final RegistryEntry<DataComponentType<HoneyCompassTargetData>> HONEY_COMPASS_TARGET_DATA = DATA_COMPONENT_TYPE.register(
             "honey_compass_target_data", () -> buildSyncPersistentComponentRegistryFriendly(HoneyCompassTargetData.DIRECT_CODEC, HoneyCompassTargetData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<AbilityEssenceAbilityData>> ABILITY_ESSENCE_ABILITY_DATA = DATA_COMPONENT_TYPE.register(
+            "ability_essence_ability_data", () -> buildSyncPersistentComponentRegistryFriendly(AbilityEssenceAbilityData.DIRECT_CODEC, AbilityEssenceAbilityData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<AbilityEssenceActivityData>> ABILITY_ESSENCE_ACTIVITY_DATA = DATA_COMPONENT_TYPE.register(
+            "ability_essence_activity_data", () -> buildSyncPersistentComponentRegistryFriendly(AbilityEssenceActivityData.DIRECT_CODEC, AbilityEssenceActivityData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<AbilityEssenceLastChargeData>> ABILITY_ESSENCE_LAST_CHARGE_DATA = DATA_COMPONENT_TYPE.register(
+            "ability_essence_last_charge_data", () -> buildSyncPersistentComponentRegistryFriendly(AbilityEssenceLastChargeData.DIRECT_CODEC, AbilityEssenceLastChargeData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<AbilityEssenceCooldownData>> ABILITY_ESSENCE_COOLDOWN_DATA = DATA_COMPONENT_TYPE.register(
+            "ability_essence_cooldown_data", () -> buildSyncPersistentComponentRegistryFriendly(AbilityEssenceCooldownData.DIRECT_CODEC, AbilityEssenceCooldownData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<KnowingEssenceStructureData>> KNOWING_ESSENCE_STRUCTURE_DATA = DATA_COMPONENT_TYPE.register(
+            "knowing_essence_structure_data", () -> buildSyncPersistentComponentRegistryFriendly(KnowingEssenceStructureData.DIRECT_CODEC, KnowingEssenceStructureData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<RagingEssenceStateData>> RAGING_ESSENCE_STATE_DATA = DATA_COMPONENT_TYPE.register(
+            "raging_essence_state_data", () -> buildSyncPersistentComponentRegistryFriendly(RagingEssenceStateData.DIRECT_CODEC, RagingEssenceStateData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<RagingEssenceCurrentTargetData>> RAGING_ESSENCE_CURRENT_TARGET_DATA = DATA_COMPONENT_TYPE.register(
+            "raging_essence_current_target_data", () -> buildSyncPersistentComponentRegistryFriendly(RagingEssenceCurrentTargetData.DIRECT_CODEC, RagingEssenceCurrentTargetData.DIRECT_STREAM_CODEC));
+
+    public static final RegistryEntry<DataComponentType<RagingEssenceTimerData>> RAGING_ESSENCE_TIMER_DATA = DATA_COMPONENT_TYPE.register(
+            "raging_essence_timer_data", () -> buildPersistentComponent(RagingEssenceTimerData.DIRECT_CODEC));
 
     private static <T> DataComponentType<T> buildPersistentComponent(Codec<T> directCodec) {
         return DataComponentType.<T>builder().persistent(directCodec).cacheEncoding().build();

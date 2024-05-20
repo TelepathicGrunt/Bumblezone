@@ -10,9 +10,9 @@ public class BackpackedCompat implements ModCompat {
 	}
 
 	public static boolean isBackpackedHoneyThemedOrOtherItem(ItemStack itemStack) {
-		if (BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getNamespace().equals("backpacked")) {
-			return itemStack.hasTag() && itemStack.getOrCreateTag().getString("BackpackModel").equals("backpacked:honey_jar");
-		}
+//		if (BuiltInRegistries.ITEM.getKey(itemStack.getItem()).getNamespace().equals("backpacked")) {
+//			return itemStack.hasTag() && itemStack.getOrCreateTag().getString("BackpackModel").equals("backpacked:honey_jar");
+//		}
 
 		return true;
 	}

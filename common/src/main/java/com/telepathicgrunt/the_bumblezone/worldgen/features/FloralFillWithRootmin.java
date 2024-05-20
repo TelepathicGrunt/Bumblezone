@@ -99,7 +99,6 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                                 level,
                                 level.getCurrentDifficultyAt(mutable),
                                 MobSpawnType.CHUNK_GENERATION,
-                                null,
                                 null);
 
                         rootmin.setPersistenceRequired();

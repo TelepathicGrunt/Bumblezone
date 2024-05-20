@@ -4,7 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassBaseData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassStateData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassTargetData;
 import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzLootFunctionTypes;
 import com.telepathicgrunt.the_bumblezone.utils.ThreadExecutor;
@@ -28,6 +32,7 @@ import net.minecraft.world.phys.Vec3;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -71,9 +76,22 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
                 UUID searchId = UUID.randomUUID();
                 BlockPos blockPos = BlockPos.containing(vec3);
 
-                itemStack.getOrCreateTag().putBoolean(HoneyCompass.TAG_LOADING, true);
-                HoneyCompass.setStructureTags(itemStack.getOrCreateTag(), destination);
-                HoneyCompass.setSearchId(itemStack.getOrCreateTag(), searchId);
+                HoneyCompassStateData honeyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+                itemStack.set(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(), new HoneyCompassStateData(
+                        honeyCompassStateData.locked(),
+                        Optional.of(searchId),
+                        true,
+                        honeyCompassStateData.isFailed(),
+                        honeyCompassStateData.locatedSpecialStructure()
+                ));
+
+                HoneyCompassTargetData honeyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+                itemStack.set(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get(), new HoneyCompassTargetData(
+                        honeyCompassTargetData.targetBlock(),
+                        Optional.of(destination.location().toString()),
+                        honeyCompassTargetData.targetPos(),
+                        honeyCompassTargetData.targetDimension()
+                ));
 
                 ResourceKey<Structure> structure = null;
                 Registry<Structure> structureRegistry = lootContext.getLevel().registryAccess().registry(Registries.STRUCTURE).get();
@@ -95,9 +113,6 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
                             .thenOnServerThread(foundPos -> setCompassFoundLocationData(weakRefItemStack, lootContext, foundPos));
                 }
             }
-            else if (itemStack.hasTag()) {
-                itemStack.setTag(new CompoundTag());
-            }
         }
         return itemStack;
     }
@@ -105,7 +120,13 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
     private void setCompassFoundLocationData(WeakReference<ItemStack> itemStackWeakReference, LootContext lootContext, BlockPos blockPos) {
         ItemStack itemStack = itemStackWeakReference.get();
         if (itemStack != null && blockPos != null) {
-            HoneyCompass.addFoundStructureLocation(lootContext.getLevel().dimension(), blockPos, itemStack.getOrCreateTag());
+            HoneyCompassStateData newHoneyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+            HoneyCompassBaseData newHoneyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+            HoneyCompassTargetData newHoneyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+
+            HoneyCompass.setCompassStateData(newHoneyCompassStateData, newHoneyCompassStateData.locked(), Optional.empty(), false, false, newHoneyCompassStateData.locatedSpecialStructure(), itemStack);
+            HoneyCompass.setCompassBaseData(newHoneyCompassBaseData, "structure", itemStack);
+            HoneyCompass.setCompassTargetData(newHoneyCompassTargetData, Optional.empty(), Optional.empty(), Optional.of(blockPos), Optional.of(lootContext.getLevel().dimension()), itemStack);
         }
     }
 }

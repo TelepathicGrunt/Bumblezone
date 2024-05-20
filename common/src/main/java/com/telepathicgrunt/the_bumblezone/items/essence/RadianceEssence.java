@@ -1,6 +1,9 @@
 package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceCooldownData;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.ChatFormatting;
@@ -44,17 +47,11 @@ public class RadianceEssence extends AbilityEssenceItem {
         components.add(Component.translatable("item.the_bumblezone.essence_radiance_description_2").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC));
     }
 
-    public void decrementAbilityUseRemaining(ItemStack stack, ServerPlayer serverPlayer, int decreaseAmount) {
-        int getRemainingUse = Math.max(getAbilityUseRemaining(stack) - decreaseAmount, 0);
-        setAbilityUseRemaining(stack, getRemainingUse);
-        if (getRemainingUse == 0) {
-            setDepleted(stack, serverPlayer, false);
-        }
-    }
 
     @Override
-    public void applyAbilityEffects(ItemStack stack, Level level, ServerPlayer serverPlayer) {
-        if (getIsActive(stack) && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13 && level.isDay()) {
+    public void applyAbilityEffects(ItemStack itemStack, Level level, ServerPlayer serverPlayer) {
+        AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
+        if (abilityEssenceActivityData.isActive() && level.getBrightness(LightLayer.SKY, serverPlayer.blockPosition()) >= 13 && level.isDay()) {
             if (((long)serverPlayer.tickCount + serverPlayer.getUUID().getLeastSignificantBits()) % (serverPlayer.isSprinting() ? 2L : 12L) == 0) {
                 spawnParticles(serverPlayer.serverLevel(), serverPlayer.position(), serverPlayer.getRandom());
             }
@@ -75,8 +72,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                                 0,
                                 false,
                                 false));
-                        decrementAbilityUseRemaining(stack, serverPlayer, serverPlayer.isSprinting() ? 3 : 1);
-                        if (getForcedCooldown(stack)) {
+                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, serverPlayer.isSprinting() ? 3 : 1)) {
                             return;
                         }
                     }
@@ -87,8 +83,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                                 1,
                                 false,
                                 false));
-                        decrementAbilityUseRemaining(stack, serverPlayer, 1);
-                        if (getForcedCooldown(stack)) {
+                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, 1)) {
                             return;
                         }
                     }
@@ -99,8 +94,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                                 0,
                                 false,
                                 false));
-                        decrementAbilityUseRemaining(stack, serverPlayer, serverPlayer.getHealth() < serverPlayer.getMaxHealth() ? 5 : 1);
-                        if (getForcedCooldown(stack)) {
+                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, serverPlayer.getHealth() < serverPlayer.getMaxHealth() ? 5 : 1)) {
                             return;
                         }
                     }
@@ -111,8 +105,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                                 1,
                                 false,
                                 false));
-                        decrementAbilityUseRemaining(stack, serverPlayer, 1);
-                        if (getForcedCooldown(stack)) {
+                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, 1)) {
                             return;
                         }
                     }
@@ -123,20 +116,18 @@ public class RadianceEssence extends AbilityEssenceItem {
                                 0,
                                 false,
                                 false));
-                        decrementAbilityUseRemaining(stack, serverPlayer, serverPlayer.getFoodData().needsFood() ? 3 : 1);
-                        if (getForcedCooldown(stack)) {
+                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, serverPlayer.getFoodData().needsFood() ? 3 : 1)) {
                             return;
                         }
                     }
                     else {
                         serverPlayer.addEffect(new MobEffectInstance(
-                                effectHolder.value(),
+                                effectHolder,
                                 120,
                                 0,
                                 false,
                                 false));
-                        decrementAbilityUseRemaining(stack, serverPlayer, 1);
-                        if (getForcedCooldown(stack)) {
+                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, 1)) {
                             return;
                         }
                     }
@@ -145,9 +136,7 @@ public class RadianceEssence extends AbilityEssenceItem {
                 for (ItemStack armorItem : serverPlayer.getArmorSlots()) {
                     if (armorItem.isDamageableItem() && armorItem.isDamaged() && !armorItem.is(BzTags.RADIANCE_CANNOT_REPAIR)) {
                         armorItem.setDamageValue(armorItem.getDamageValue() - 1);
-                        decrementAbilityUseRemaining(stack, serverPlayer, 10);
-
-                        if (getForcedCooldown(stack)) {
+                        if (decrementAbilityUseRemaining(itemStack, serverPlayer, 10)) {
                             return;
                         }
                     }
@@ -172,7 +161,7 @@ public class RadianceEssence extends AbilityEssenceItem {
     public static boolean IsRadianceEssenceActive(Player player) {
         if (player != null) {
             ItemStack offHandItem = player.getOffhandItem();
-            return offHandItem.is(BzItems.ESSENCE_RADIANCE.get()) && getIsActive(offHandItem);
+            return offHandItem.is(BzItems.ESSENCE_RADIANCE.get()) && offHandItem.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()).isActive();
         }
         return false;
     }

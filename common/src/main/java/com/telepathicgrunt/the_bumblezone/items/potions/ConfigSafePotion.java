@@ -29,7 +29,7 @@ public class ConfigSafePotion extends Potion {
     public boolean hasInstantEffects() {
         if (!getCachedEffectList().isEmpty()) {
             for (MobEffectInstance mobEffectInstance : getCachedEffectList()) {
-                if (!mobEffectInstance.getEffect().isInstantenous()) {
+                if (!mobEffectInstance.getEffect().value().isInstantenous()) {
                     continue;
                 }
                 return true;

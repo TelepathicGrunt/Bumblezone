@@ -37,6 +37,13 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     }
 
     @Override
+    public void verifyComponentsAfterLoad(ItemStack itemStack) {
+        if (itemStack.get(BzDataComponents.CRYSTAL_CANNON_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData());
+        }
+    }
+
+    @Override
     protected void shootProjectile(LivingEntity livingEntity, Projectile projectile, int projectileIndex, float shootingPower, float difficulty, float someMagicNumber, @Nullable LivingEntity livingEntity2) {
         float offset = 0;
         if (projectileIndex == 1) {

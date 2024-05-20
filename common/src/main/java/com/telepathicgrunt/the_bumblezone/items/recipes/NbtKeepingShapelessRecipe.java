@@ -5,11 +5,12 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
@@ -47,7 +48,7 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return this.result;
     }
 
@@ -75,14 +76,12 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingContainer craftingContainer, HolderLookup.Provider provider) {
         ItemStack resultItem = this.result.copy();
         for (ItemStack input : craftingContainer.getItems()) {
             if (input.is(this.itemToKeepNbtOf)) {
-                if (input.hasTag()) {
-                    resultItem.setTag(input.getTag());
-                    break;
-                }
+                resultItem = input.transmuteCopy(resultItem.getItem(), 1);
+                break;
             }
         }
 
@@ -96,9 +95,9 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
 
     public static class Serializer implements RecipeSerializer<NbtKeepingShapelessRecipe> {
         private static final MapCodec<NbtKeepingShapelessRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(shapelessRecipe -> shapelessRecipe.group),
+                Codec.STRING.fieldOf("group").forGetter(shapelessRecipe -> shapelessRecipe.group),
                 CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(shapelessRecipe -> shapelessRecipe.category),
-                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(shapelessRecipe -> shapelessRecipe.result),
                 Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(list -> {
                     Ingredient[] ingredients = list.toArray(Ingredient[]::new);
                     if (ingredients.length == 0) {
@@ -109,33 +108,40 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
                 BuiltInRegistries.ITEM.byNameCodec().fieldOf("keep_nbt_of").forGetter(shapelessRecipe -> shapelessRecipe.itemToKeepNbtOf)
         ).apply(instance, NbtKeepingShapelessRecipe::new));
 
+        public static final StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> STREAM_CODEC = StreamCodec.of(
+                NbtKeepingShapelessRecipe.Serializer::toNetwork, NbtKeepingShapelessRecipe.Serializer::fromNetwork
+        );
+
         @Override
-        public Codec<NbtKeepingShapelessRecipe> codec() {
+        public MapCodec<NbtKeepingShapelessRecipe> codec() {
             return CODEC;
         }
 
         @Override
-        public NbtKeepingShapelessRecipe fromNetwork(FriendlyByteBuf friendlyByteBuf) {
+        public StreamCodec<RegistryFriendlyByteBuf, NbtKeepingShapelessRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        public static NbtKeepingShapelessRecipe fromNetwork(RegistryFriendlyByteBuf friendlyByteBuf) {
             String string = friendlyByteBuf.readUtf();
             CraftingBookCategory craftingBookCategory = friendlyByteBuf.readEnum(CraftingBookCategory.class);
             int ingredientCount = friendlyByteBuf.readVarInt();
             NonNullList<Ingredient> ingredientNonNullList = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
-            ingredientNonNullList.replaceAll(ignored -> Ingredient.fromNetwork(friendlyByteBuf));
-            ItemStack itemStack = friendlyByteBuf.readItem();
-            Item item = friendlyByteBuf.readById(BuiltInRegistries.ITEM);
+            ingredientNonNullList.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(friendlyByteBuf));
+            ItemStack itemStack = ItemStack.STREAM_CODEC.decode(friendlyByteBuf);
+            Item item = ItemStack.STREAM_CODEC.decode(friendlyByteBuf).getItem();
             return new NbtKeepingShapelessRecipe(string, craftingBookCategory, itemStack, ingredientNonNullList, item);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf friendlyByteBuf, NbtKeepingShapelessRecipe shapelessRecipe) {
+        public static void toNetwork(RegistryFriendlyByteBuf friendlyByteBuf, NbtKeepingShapelessRecipe shapelessRecipe) {
             friendlyByteBuf.writeUtf(shapelessRecipe.getGroup());
             friendlyByteBuf.writeEnum(shapelessRecipe.category());
             friendlyByteBuf.writeVarInt(shapelessRecipe.getIngredients().size());
             for (Ingredient ingredient : shapelessRecipe.getIngredients()) {
-                ingredient.toNetwork(friendlyByteBuf);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(friendlyByteBuf, ingredient);
             }
-            friendlyByteBuf.writeItem(shapelessRecipe.getResultItem(RegistryAccess.EMPTY));
-            friendlyByteBuf.writeId(BuiltInRegistries.ITEM, shapelessRecipe.itemToKeepNbtOf);
+            ItemStack.STREAM_CODEC.encode(friendlyByteBuf, shapelessRecipe.getResultItem(RegistryAccess.EMPTY));
+            ItemStack.STREAM_CODEC.encode(friendlyByteBuf, shapelessRecipe.itemToKeepNbtOf.getDefaultInstance());
         }
     }
 }
