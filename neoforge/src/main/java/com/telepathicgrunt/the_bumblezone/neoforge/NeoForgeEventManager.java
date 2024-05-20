@@ -64,6 +64,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -80,6 +81,7 @@ import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
 import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
@@ -169,12 +171,12 @@ public class NeoForgeEventManager {
         SetupEvent.EVENT.invoke(new SetupEvent(event::enqueueWork));
 
         FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                BzFluids.SUGAR_WATER_FLUID_TYPE.get().flowing().getFluidType(),
+                BzFluids.SUGAR_WATER_FLUID_TYPE.get().flowing().get().getFluidType(),
                 fluidState -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState()
         ));
 
         FluidInteractionRegistry.addInteraction(NeoForgeMod.LAVA_TYPE.value(), new FluidInteractionRegistry.InteractionInformation(
-                BzFluids.SUGAR_WATER_FLUID_TYPE.get().source().getFluidType(),
+                BzFluids.SUGAR_WATER_FLUID_TYPE.get().still().get().getFluidType(),
                 fluidState -> fluidState.isSource() ? Blocks.OBSIDIAN.defaultBlockState() : BzBlocks.SUGAR_INFUSED_COBBLESTONE.get().defaultBlockState()
         ));
 
@@ -382,12 +384,8 @@ public class NeoForgeEventManager {
         }
     }
 
-    private static void onEntitySpawn(MobSpawnEvent.FinalizeSpawn event) {
-        boolean cancel = EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getSpawnType()), event.isCanceled());
-        if (cancel) {
-            event.setCanceled(true);
-            event.setSpawnCancelled(true);
-        }
+    private static void onEntitySpawn(FinalizeSpawnEvent event) {
+        EntitySpawnEvent.EVENT.invoke(new EntitySpawnEvent(event.getEntity(), event.getLevel(), event.getEntity().isBaby(), event.getEntity().getSpawnType()), event.isCanceled());
     }
 
     private static void onEntityHurtLowest(LivingHurtEvent event) {

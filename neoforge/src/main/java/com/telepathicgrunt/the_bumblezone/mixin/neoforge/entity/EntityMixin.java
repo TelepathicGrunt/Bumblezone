@@ -25,8 +25,8 @@ public abstract class EntityMixin {
             require = 0)
     private void thebumblezone_applyAllWaterBehaviorToSugarWaterFluid(TagKey<Fluid> fluidTagKey, CallbackInfoReturnable<Boolean> cir) {
         if(fluidTagKey == FluidTags.WATER &&
-            (this.getEyeInFluidType() == BzFluids.SUGAR_WATER_FLUID_TYPE.get().flowing().getFluidType() ||
-            this.getEyeInFluidType() == BzFluids.SUGAR_WATER_FLUID_TYPE.get().source().getFluidType()))
+            (this.getEyeInFluidType() == BzFluids.SUGAR_WATER_FLUID_TYPE.get().flowing().get().getFluidType() ||
+            this.getEyeInFluidType() == BzFluids.SUGAR_WATER_FLUID_TYPE.get().still().get().getFluidType()))
         {
             cir.setReturnValue(true);
         }

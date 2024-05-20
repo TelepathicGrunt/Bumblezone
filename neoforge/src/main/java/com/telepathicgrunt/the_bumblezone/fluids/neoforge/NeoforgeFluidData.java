@@ -1,14 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.fluids.neoforge;
 
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
-import com.telepathicgrunt.the_bumblezone.fluids.base.FluidProperties;
+import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.FlowingFluid;
 
 import java.util.function.Supplier;
 
-public class ForgeFluidData implements FluidData {
+public class NeoforgeFluidData implements FluidData {
 
     private Supplier<? extends FlowingFluid> stillFluid;
     private Supplier<? extends FlowingFluid> flowingFluid;
@@ -17,7 +18,7 @@ public class ForgeFluidData implements FluidData {
     private final FluidProperties properties;
     private final Supplier<BzFluidType> type;
 
-    public ForgeFluidData(Supplier<BzFluidType> type, FluidProperties properties) {
+    public NeoforgeFluidData(Supplier<BzFluidType> type, FluidProperties properties) {
         this.properties = properties;
         this.type = type;
     }
@@ -32,8 +33,8 @@ public class ForgeFluidData implements FluidData {
     }
 
     @Override
-    public FlowingFluid flowing() {
-        return flowingFluid.get();
+    public Supplier<? extends FlowingFluid> flowing() {
+        return flowingFluid;
     }
 
     @Override
@@ -42,32 +43,37 @@ public class ForgeFluidData implements FluidData {
     }
 
     @Override
-    public FlowingFluid source() {
-        return stillFluid.get();
+    public Supplier<? extends FlowingFluid> still() {
+        return stillFluid;
     }
 
     @Override
-    public void setSource(Supplier<? extends FlowingFluid> source) {
+    public void setStill(Supplier<? extends FlowingFluid> source) {
         this.stillFluid = source;
     }
 
     @Override
-    public BucketItem bucket() {
-        return bucket.get();
+    public Supplier<? extends Item> bucket() {
+        return bucket;
     }
 
     @Override
-    public void setBucket(Supplier<? extends BucketItem> bucket) {
-        this.bucket = bucket;
+    public void setBucket(Supplier<? extends Item> bucket) {
+        this.bucket = (Supplier<? extends BucketItem>) bucket;
     }
 
     @Override
-    public LiquidBlock block() {
-        return block.get();
+    public Supplier<? extends LiquidBlock> block() {
+        return block;
     }
 
     @Override
     public void setBlock(Supplier<? extends LiquidBlock> block) {
         this.block = block;
+    }
+
+    @Override
+    public <T> T data() {
+        return null;
     }
 }

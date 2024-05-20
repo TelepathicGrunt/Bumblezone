@@ -14,14 +14,4 @@ public abstract class PotionCandleRecipeMixin implements IShapedRecipe<CraftingC
 
     @Shadow
     public abstract int getHeight();
-
-    @Override
-    public int getRecipeWidth() {
-        return getWidth();
-    }
-
-    @Override
-    public int getRecipeHeight() {
-        return getHeight();
-    }
 }

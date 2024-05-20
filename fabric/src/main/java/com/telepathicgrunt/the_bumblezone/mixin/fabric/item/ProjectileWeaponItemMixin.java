@@ -12,7 +12,7 @@ public abstract class ProjectileWeaponItemMixin {
 
     @ModifyExpressionValue(method = "hasInfiniteArrows(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0))
-    protected static boolean bumblezone$infinityBzAmmo(boolean vanillaArrow, ItemStack weapon, ItemStack ammo) {
+    private static boolean bumblezone$infinityBzAmmo(boolean vanillaArrow, ItemStack weapon, ItemStack ammo) {
         if (!vanillaArrow && ammo.getItem() instanceof BzArrowItem) {
             return true;
         }

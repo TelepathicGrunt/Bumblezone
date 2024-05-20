@@ -39,38 +39,38 @@ public class ForbiddenArcanusCompat implements ModCompat {
     }
 
     private static void setupDispenserCompat(Item containerItem) {
-        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
-                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(containerItem),
-                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
-                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
-                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
-                            .setValue(HoneycombBrood.STAGE, itemStack.hasTag() && itemStack.getOrCreateTag().getInt("Age") < 0 ? 2 : 3));
-
-                    itemStack.shrink(1);
-
-                    if(!BzGeneralConfigs.dispensersDropGlassBottles) {
-                        if (!itemStack.isEmpty()) {
-                            if (blockSource.blockEntity() instanceof DispenserBlockEntity) {
-                                DispenserBlockEntity dispenser = blockSource.blockEntity();
-                                ItemStack honeyBottle = new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL));
-                                if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
-                                    BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, honeyBottle);
-                                }
-                            }
-                        }
-                        else {
-                            itemStack = new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL));
-                        }
-                    }
-                    else {
-                        BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL)));
-                    }
-
-                    return itemStack;
-                }
-        );
-
-        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
+//        BroodBlockModdedCompatDispenseBehavior newDispenseBehavior = new BroodBlockModdedCompatDispenseBehavior(
+//                DispenserBlockInvoker.getDISPENSER_REGISTRY().get(containerItem),
+//                (originalModdedDispenseBehavior, blockSource, itemStack, serverLevel, blockPos, blockState) -> {
+//                    serverLevel.setBlockAndUpdate(blockPos, BzBlocks.HONEYCOMB_BROOD.get().defaultBlockState()
+//                            .setValue(HoneycombBrood.FACING, blockState.getValue(EmptyHoneycombBrood.FACING))
+//                            .setValue(HoneycombBrood.STAGE, itemStack.hasTag() && itemStack.getOrCreateTag().getInt("Age") < 0 ? 2 : 3));
+//
+//                    itemStack.shrink(1);
+//
+//                    if(!BzGeneralConfigs.dispensersDropGlassBottles) {
+//                        if (!itemStack.isEmpty()) {
+//                            if (blockSource.blockEntity() instanceof DispenserBlockEntity) {
+//                                DispenserBlockEntity dispenser = blockSource.blockEntity();
+//                                ItemStack honeyBottle = new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL));
+//                                if (!HopperBlockEntity.addItem(null, dispenser, honeyBottle, null).isEmpty()) {
+//                                    BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, honeyBottle);
+//                                }
+//                            }
+//                        }
+//                        else {
+//                            itemStack = new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL));
+//                        }
+//                    }
+//                    else {
+//                        BroodBlockModdedCompatDispenseBehavior.DEFAULT_DROP_ITEM_BEHAVIOR.dispense(blockSource, new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL)));
+//                    }
+//
+//                    return itemStack;
+//                }
+//        );
+//
+//        DispenserBlock.registerBehavior(containerItem, newDispenseBehavior);
     }
 
     @Override
@@ -80,16 +80,16 @@ public class ForbiddenArcanusCompat implements ModCompat {
 
     @Override
     public InteractionResult onEmptyBroodInteract(ItemStack itemstack, Player playerEntity, InteractionHand playerHand) {
-        if (!BzModCompatibilityConfigs.allowBeeBucketRevivingEmptyBroodBlock) return InteractionResult.PASS;
-        if (BuiltInRegistries.ITEM.getKey(itemstack.getItem()).equals(BEE_BUCKET_RL)) {
-            if (!playerEntity.isCrouching()) {
-                if (!playerEntity.isCreative()) {
-                    playerEntity.setItemInHand(playerHand, new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL))); //replaced bottled bee with glass bottle
-                }
-
-                return itemstack.hasTag() && itemstack.getOrCreateTag().getInt("Age") < 0 ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
-            }
-        }
+//        if (!BzModCompatibilityConfigs.allowBeeBucketRevivingEmptyBroodBlock) return InteractionResult.PASS;
+//        if (BuiltInRegistries.ITEM.getKey(itemstack.getItem()).equals(BEE_BUCKET_RL)) {
+//            if (!playerEntity.isCrouching()) {
+//                if (!playerEntity.isCreative()) {
+//                    playerEntity.setItemInHand(playerHand, new ItemStack(BuiltInRegistries.ITEM.get(EMPTY_BUCKET_RL))); //replaced bottled bee with glass bottle
+//                }
+//
+//                return itemstack.hasTag() && itemstack.getOrCreateTag().getInt("Age") < 0 ? InteractionResult.CONSUME_PARTIAL : InteractionResult.SUCCESS;
+//            }
+//        }
 
         return InteractionResult.PASS;
     }

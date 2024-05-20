@@ -17,3 +17,5 @@ note: enchantment testing
 note: honey compass testing
 
 note: briefcase and cannon testing
+
+Note: reimplement custom registries

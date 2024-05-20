@@ -37,18 +37,19 @@ public class JonnTrophiesCompat implements ModCompat {
 	}
 
 	public static boolean isTrophyBeeThemed(ItemStack itemStack) {
-		if (!itemStack.hasTag()) {
-			return false;
-		}
-
-		CompoundTag trophyEntityCompound = itemStack.getOrCreateTag().getCompound("TrophyEntity");
-		String entityType = trophyEntityCompound.getString("entityType");
-
-		if (entityType.isEmpty() || !ResourceLocation.isValidResourceLocation(entityType)) {
-			return false;
-		}
-
-		ResourceLocation entityRL = new ResourceLocation(entityType);
-		return BeeAggression.isBeelikeEntityType(BuiltInRegistries.ENTITY_TYPE.get(entityRL));
+		return false;
+//		if (!itemStack.hasTag()) {
+//			return false;
+//		}
+//
+//		CompoundTag trophyEntityCompound = itemStack.getOrCreateTag().getCompound("TrophyEntity");
+//		String entityType = trophyEntityCompound.getString("entityType");
+//
+//		if (entityType.isEmpty() || !ResourceLocation.isValidResourceLocation(entityType)) {
+//			return false;
+//		}
+//
+//		ResourceLocation entityRL = new ResourceLocation(entityType);
+//		return BeeAggression.isBeelikeEntityType(BuiltInRegistries.ENTITY_TYPE.get(entityRL));
 	}
 }
