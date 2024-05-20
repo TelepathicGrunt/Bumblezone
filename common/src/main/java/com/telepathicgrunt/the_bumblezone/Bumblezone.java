@@ -66,7 +66,6 @@ import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
-import com.telepathicgrunt.the_bumblezone.modinit.BzBiomeHeightRegistry;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCommands;
@@ -213,7 +212,8 @@ public class Bumblezone {
     	event.enqueueWork(() -> {
             BeeAggression.setupBeeHatingList();
             BzStats.initStatEntries();
-            BzItems.SetupCauldronCompat();
+            BzItems.setupCauldronCompat();
+            BzItems.setupDispenserBehaviors();
 		});
         MessageHandler.init();
     }
@@ -230,7 +230,7 @@ public class Bumblezone {
 
     public static void registerDatapackListener(final RegisterReloadListenerEvent event) {
         event.register(new ResourceLocation(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
-        event.register(new ResourceLocation(Bumblezone.MODID, "pollen_puff"),PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+        event.register(new ResourceLocation(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
     }
 
     private static void serverAboutToStart(final ServerGoingToStartEvent event) {

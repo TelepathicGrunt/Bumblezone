@@ -54,6 +54,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.DispenserBlock;
 
 
 public class BzItems {
@@ -215,7 +216,12 @@ public class BzItems {
     public static final RegistryEntry<Item> ESSENCE_RADIANCE = ITEMS.register("essence_radiance", () -> new RadianceEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
     public static final RegistryEntry<Item> ESSENCE_CONTINUITY = ITEMS.register("essence_continuity", () -> new ContinuityEssence(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
 
-    public static void SetupCauldronCompat() {
+    public static void setupCauldronCompat() {
         CauldronInteraction.WATER.map().put(BzItems.FLOWER_HEADWEAR.get(), CauldronInteraction.DYED_ITEM);
+    }
+
+    public static void setupDispenserBehaviors() {
+        DispenserBlock.registerProjectileBehavior(BzItems.POLLEN_PUFF.get());
+        DispenserBlock.registerProjectileBehavior(BzItems.DIRT_PELLET.get());
     }
 }

@@ -25,7 +25,7 @@ public class BzBucketItemMixin extends BucketItem implements FluidGetter {
         super(arg, arg2);
     }
 
-    @Inject(method = "<init>(Lcom/telepathicgrunt/the_bumblezone/fluids/base/FluidData;Lnet/minecraft/world/item/Item$Properties;)V", at = @At("RETURN"))
+    @Inject(method = "<init>(Lcom/teamresourceful/resourcefullib/common/fluid/data/FluidData;Lnet/minecraft/world/item/Item$Properties;)V", at = @At("RETURN"))
     public void bumblezone$onInit(FluidData info, Properties properties, CallbackInfo ci) {
         this.bz$fluidSupplier = info.still();
     }
