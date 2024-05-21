@@ -3,7 +3,7 @@ import os
 import json
 import re
 
-data_folder = os.path.join('..', '..', 'common', 'src', 'main', 'resources', 'data', 'the_bumblezone')
+data_folder = os.path.join('..', 'common', 'src', 'main', 'resources', 'data', 'the_bumblezone')
 
 loot_tables_folder = os.path.join('loot_tables')
 advancements_folder = os.path.join('advancements')
