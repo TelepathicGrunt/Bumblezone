@@ -1,40 +1,105 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Map;
 
 public class PlayerDataModule implements Module<PlayerDataModule> {
+    public static final Codec<PlayerDataModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+            Codec.BOOL.fieldOf("isBeeEssenced").forGetter(module -> module.isBeeEssenced),
+            Codec.BOOL.fieldOf("gottenWelcomed").forGetter(module -> module.gottenWelcomed),
+            Codec.BOOL.fieldOf("gottenWelcomedInDimension").forGetter(module -> module.gottenWelcomedInDimension),
+            Codec.BOOL.fieldOf("receivedEssencePrize").forGetter(module -> module.receivedEssencePrize),
+            Codec.LONG.fieldOf("tradeResetPrimedTime").forGetter(module -> module.tradeResetPrimedTime),
+            Codec.INT.fieldOf("craftedBeehives").forGetter(module -> module.craftedBeehives),
+            Codec.INT.fieldOf("beesBred").forGetter(module -> module.beesBred),
+            Codec.INT.fieldOf("flowersSpawned").forGetter(module -> module.flowersSpawned),
+            Codec.INT.fieldOf("honeyBottleDrank").forGetter(module -> module.honeyBottleDrank),
+            Codec.INT.fieldOf("beeStingersFired").forGetter(module -> module.beeStingersFired),
+            Codec.INT.fieldOf("beeSaved").forGetter(module -> module.beeSaved),
+            Codec.INT.fieldOf("pollenPuffHits").forGetter(module -> module.pollenPuffHits),
+            Codec.INT.fieldOf("honeySlimeBred").forGetter(module -> module.honeySlimeBred),
+            Codec.INT.fieldOf("beesFed").forGetter(module -> module.beesFed),
+            Codec.INT.fieldOf("queenBeeTrade").forGetter(module -> module.queenBeeTrade),
+            Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT).fieldOf("mobsKilledTracker").forGetter(module -> module.mobsKilledTracker)
+    ).apply(instance, PlayerDataModule::new));
 
-    public static final ModuleSerializer<PlayerDataModule> SERIALIZER = new Serializer();
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "player_data");
 
-    public boolean isBeeEssenced = false;
-    public boolean gottenWelcomed = false;
-    public boolean gottenWelcomedInDimension = false;
-    public boolean receivedEssencePrize = false;
-    public long tradeResetPrimedTime = -1000;
-    public int craftedBeehives = 0;
-    public int beesBred = 0;
-    public int flowersSpawned = 0;
-    public int honeyBottleDrank = 0;
-    public int beeStingersFired = 0;
-    public int beeSaved = 0;
-    public int pollenPuffHits = 0;
-    public int honeySlimeBred = 0;
-    public int beesFed = 0;
-    public int queenBeeTrade = 0;
-    public final Map<ResourceLocation, Integer> mobsKilledTracker = new Object2IntOpenHashMap<>();
+    public boolean isBeeEssenced;
+    public boolean gottenWelcomed;
+    public boolean gottenWelcomedInDimension;
+    public boolean receivedEssencePrize;
+    public long tradeResetPrimedTime;
+    public int craftedBeehives;
+    public int beesBred;
+    public int flowersSpawned;
+    public int honeyBottleDrank;
+    public int beeStingersFired;
+    public int beeSaved;
+    public int pollenPuffHits;
+    public int honeySlimeBred;
+    public int beesFed;
+    public int queenBeeTrade;
+    public final Map<ResourceLocation, Integer> mobsKilledTracker;
+
+    public PlayerDataModule(boolean isBeeEssenced,
+                            boolean gottenWelcomed,
+                            boolean gottenWelcomedInDimension,
+                            boolean receivedEssencePrize,
+                            long tradeResetPrimedTime,
+                            int craftedBeehives,
+                            int beesBred,
+                            int flowersSpawned,
+                            int honeyBottleDrank,
+                            int beeStingersFired,
+                            int beeSaved,
+                            int pollenPuffHits,
+                            int honeySlimeBred,
+                            int beesFed,
+                            int queenBeeTrade,
+                            Map<ResourceLocation, Integer> mobsKilledTracker) {
+        this.isBeeEssenced = isBeeEssenced;
+        this.gottenWelcomed = gottenWelcomed;
+        this.gottenWelcomedInDimension = gottenWelcomedInDimension;
+        this.receivedEssencePrize = receivedEssencePrize;
+        this.tradeResetPrimedTime = tradeResetPrimedTime;
+        this.craftedBeehives = craftedBeehives;
+        this.beesBred = beesBred;
+        this.flowersSpawned = flowersSpawned;
+        this.honeyBottleDrank = honeyBottleDrank;
+        this.beeStingersFired = beeStingersFired;
+        this.beeSaved = beeSaved;
+        this.pollenPuffHits = pollenPuffHits;
+        this.honeySlimeBred = honeySlimeBred;
+        this.beesFed = beesFed;
+        this.queenBeeTrade = queenBeeTrade;
+        this.mobsKilledTracker = mobsKilledTracker;
+    }
+
+    public PlayerDataModule() {
+        this.isBeeEssenced = false;
+        this.gottenWelcomed = false;
+        this.gottenWelcomedInDimension = false;
+        this.receivedEssencePrize = false;
+        this.tradeResetPrimedTime = -1000;
+        this.craftedBeehives = 0;
+        this.beesBred = 0;
+        this.flowersSpawned = 0;
+        this.honeyBottleDrank = 0;
+        this.beeStingersFired = 0;
+        this.beeSaved = 0;
+        this.pollenPuffHits = 0;
+        this.honeySlimeBred = 0;
+        this.beesFed = 0;
+        this.queenBeeTrade = 0;
+        this.mobsKilledTracker = new Object2IntOpenHashMap<>();
+    }
 
     public void resetAllTrackerStats() {
         receivedEssencePrize = false;
@@ -53,90 +118,29 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
     }
 
     @Override
-    public ModuleSerializer<PlayerDataModule> serializer() {
-        return SERIALIZER;
+    public Codec<PlayerDataModule> codec() {
+        return CODEC;
     }
 
-    private static final class Serializer implements ModuleSerializer<PlayerDataModule> {
-
-        @Override
-        public ResourceLocation id() {
-            return new ResourceLocation(Bumblezone.MODID, "player_data");
-        }
-
-        @Override
-        public void read(PlayerDataModule module, CompoundTag tag) {
-            module.mobsKilledTracker.clear();
-            module.isBeeEssenced = tag.getBoolean("is_bee_essenced");
-            module.gottenWelcomed = tag.getBoolean("gotten_welcomed");
-            module.gottenWelcomedInDimension = tag.getBoolean("gotten_welcomed_in_dimension");
-            module.receivedEssencePrize = tag.getBoolean("received_essence_prize");
-            module.tradeResetPrimedTime = tag.getLong("trade_reset_primed_time");
-            module.craftedBeehives = tag.getInt("crafted_beehives");
-            module.beesBred = tag.getInt("bees_bred");
-            module.flowersSpawned = tag.getInt("flowers_spawned");
-            module.honeyBottleDrank = tag.getInt("honey_bottle_drank");
-            module.beeStingersFired = tag.getInt("bee_stingers_fired");
-            module.beeSaved = tag.getInt("bee_saved");
-            module.pollenPuffHits = tag.getInt("pollen_puff_hits");
-            module.honeySlimeBred = tag.getInt("honey_slime_bred");
-            module.beesFed = tag.getInt("bees_fed");
-            module.queenBeeTrade = tag.getInt("queen_bee_trade");
-
-            ListTag mapList = tag.getList("mobs_killed_tracker", Tag.TAG_COMPOUND);
-            for (int i = 0; i < mapList.size(); i++) {
-                CompoundTag compoundTag = mapList.getCompound(i);
-                module.mobsKilledTracker.put(
-                        new ResourceLocation(compoundTag.getString("id")),
-                        compoundTag.getInt("count")
-                );
-            }
-        }
-
-        @Override
-        public void write(CompoundTag tag, PlayerDataModule module) {
-            tag.putBoolean("is_bee_essenced", module.isBeeEssenced);
-            tag.putBoolean("gotten_welcomed", module.gottenWelcomed);
-            tag.putBoolean("gotten_welcomed_in_dimension", module.gottenWelcomedInDimension);
-            tag.putBoolean("received_essence_prize", module.receivedEssencePrize);
-            tag.putLong("trade_reset_primed_time", module.tradeResetPrimedTime);
-            tag.putInt("crafted_beehives", module.craftedBeehives);
-            tag.putInt("bees_bred", module.beesBred);
-            tag.putInt("flowers_spawned", module.flowersSpawned);
-            tag.putInt("honey_bottle_drank", module.honeyBottleDrank);
-            tag.putInt("bee_stingers_fired", module.beeStingersFired);
-            tag.putInt("bee_saved", module.beeSaved);
-            tag.putInt("pollen_puff_hits", module.pollenPuffHits);
-            tag.putInt("honey_slime_bred", module.honeySlimeBred);
-            tag.putInt("bees_fed", module.beesFed);
-            tag.putInt("queen_bee_trade", module.queenBeeTrade);
-
-            ListTag mapList = new ListTag();
-            for (Map.Entry<ResourceLocation, Integer> entry : module.mobsKilledTracker.entrySet()) {
-                CompoundTag compoundTag = new CompoundTag();
-                compoundTag.putString("id", entry.getKey().toString());
-                compoundTag.putInt("count", entry.getValue());
-                mapList.add(compoundTag);
-            }
-            tag.put("mobs_killed_tracker", mapList);
-        }
-
-        @Override
-        public void onPlayerCopy(PlayerDataModule oldModule, PlayerDataModule thisModule, ServerPlayer player, boolean isPersistent) {
-            if (isPersistent) {
-                ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
-            }
-            else if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning) {
-                thisModule.isBeeEssenced = oldModule.isBeeEssenced;
-            }
-            else {
-                thisModule.isBeeEssenced = false;
-                Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
-                player.displayClientMessage(message, true);
-            }
-
-            thisModule.gottenWelcomed = oldModule.gottenWelcomed;
-            thisModule.gottenWelcomedInDimension = oldModule.gottenWelcomedInDimension;
-        }
+    @Override
+    public ResourceLocation id() {
+        return ID;
     }
+
+//    public void onPlayerCopy(PlayerDataModule oldModule, PlayerDataModule thisModule, ServerPlayer player, boolean isPersistent) {
+//        if (isPersistent) {
+//            ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
+//        }
+//        else if (BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning) {
+//            thisModule.isBeeEssenced = oldModule.isBeeEssenced;
+//        }
+//        else {
+//            thisModule.isBeeEssenced = false;
+//            Component message = Component.translatable("system.the_bumblezone.lost_bee_essence").withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.RED);
+//            player.displayClientMessage(message, true);
+//        }
+//
+//        thisModule.gottenWelcomed = oldModule.gottenWelcomed;
+//        thisModule.gottenWelcomedInDimension = oldModule.gottenWelcomedInDimension;
+//    }
 }

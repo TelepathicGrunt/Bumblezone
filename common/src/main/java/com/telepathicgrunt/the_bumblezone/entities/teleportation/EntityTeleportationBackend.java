@@ -60,7 +60,7 @@ public class EntityTeleportationBackend {
 
         if (capOptional.isPresent()) {
             EntityPosAndDimModule capability = capOptional.orElseThrow(RuntimeException::new);
-            entitySavedPastPos = capability.getNonBZPos();
+            entitySavedPastPos = capability.getNonBZPos().orElse(null);
         }
 
         BlockPos finalSpawnPos = entity.blockPosition();
@@ -247,7 +247,7 @@ public class EntityTeleportationBackend {
             if(lazyOptional.isPresent()) {
                 EntityPosAndDimModule capability = lazyOptional.orElseThrow(RuntimeException::new);
                 capability.setNonBZDim(entity.level().dimension().location());
-                capability.setNonBZPos(entity.position());
+                capability.setNonBZPos(Optional.of(entity.position()));
             }
             else {
                 Bumblezone.LOGGER.error("Bumblezone entity pos/dim cap was not found for given entity: {}, {}, {}, {}, at {} which has the internal dimension of: {} and is coming from: {}",

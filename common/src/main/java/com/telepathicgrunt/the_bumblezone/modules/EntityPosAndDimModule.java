@@ -1,20 +1,34 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Optional;
+
 public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
+    public static final Codec<EntityPosAndDimModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+            ResourceLocation.CODEC.fieldOf("nonBZDimension").orElse(new ResourceLocation(BzDimensionConfigs.defaultDimension)).forGetter(module -> module.nonBZDimension),
+            Vec3.CODEC.optionalFieldOf("nonBZPosition").forGetter(module -> module.nonBZPosition)
+    ).apply(instance, EntityPosAndDimModule::new));
 
-    public static final ModuleSerializer<EntityPosAndDimModule> SERIALIZER = new Serializer();
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "entity_pos_and_dim");
+    private ResourceLocation nonBZDimension;
+    private Optional<Vec3> nonBZPosition;
 
-    private ResourceLocation nonBZDimension = new ResourceLocation(BzDimensionConfigs.defaultDimension);
-    private Vec3 nonBZPosition = null;
+    public EntityPosAndDimModule(ResourceLocation nonBZDimension, Optional<Vec3> nonBZPosition) {
+        this.nonBZDimension = nonBZDimension;
+        this.nonBZPosition = nonBZPosition;
+    }
+
+    public EntityPosAndDimModule() {
+        this.nonBZDimension = new ResourceLocation(BzDimensionConfigs.defaultDimension);
+        this.nonBZPosition = Optional.empty();
+    }
 
     public void setNonBZDim(ResourceLocation incomingDim) {
         if (incomingDim.equals(Bumblezone.MOD_DIMENSION_ID)) {
@@ -30,11 +44,11 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
         return nonBZDimension;
     }
 
-    public void setNonBZPos(Vec3 incomingPos) {
+    public void setNonBZPos(Optional<Vec3> incomingPos) {
         nonBZPosition = incomingPos;
     }
 
-    public Vec3 getNonBZPos() {
+    public Optional<Vec3> getNonBZPos() {
         return nonBZPosition;
     }
 
@@ -43,42 +57,12 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     }
 
     @Override
-    public ModuleSerializer<EntityPosAndDimModule> serializer() {
-        return SERIALIZER;
+    public Codec<EntityPosAndDimModule> codec() {
+        return CODEC;
     }
 
-    private static final class Serializer implements ModuleSerializer<EntityPosAndDimModule> {
-
-        @Override
-        public ResourceLocation id() {
-            return new ResourceLocation(Bumblezone.MODID, "entity_dim_component");
-        }
-
-        @Override
-        public void read(EntityPosAndDimModule module, CompoundTag tag) {
-            module.setNonBZDim(new ResourceLocation(tag.getString("non_bz_dimensiontype_namespace"), tag.getString("non_bz_dmensiontype_path")));
-            if (tag.contains("non_bz_position_x") && tag.contains("non_bz_position_y") && tag.contains("non_bz_position_z")) {
-                module.setNonBZPos(new Vec3(tag.getDouble("non_bz_position_x"), tag.getDouble("non_bz_position_y"), tag.getDouble("non_bz_position_z")));
-            }
-            else {
-                module.setNonBZPos(null);
-            }
-        }
-
-        @Override
-        public void write(CompoundTag tag, EntityPosAndDimModule module) {
-            tag.putString("non_bz_dimensiontype_namespace", module.getNonBZDim().getNamespace());
-            tag.putString("non_bz_dmensiontype_path", module.getNonBZDim().getPath());
-            if (module.getNonBZPos() != null) {
-                tag.putDouble("non_bz_position_x", module.getNonBZPos().x());
-                tag.putDouble("non_bz_position_y", module.getNonBZPos().y());
-                tag.putDouble("non_bz_position_z", module.getNonBZPos().z());
-            }
-        }
-
-        @Override
-        public void onPlayerCopy(EntityPosAndDimModule oldModule, EntityPosAndDimModule thisModule, ServerPlayer player, boolean isPersistent) {
-            ModuleSerializer.super.onPlayerCopy(oldModule, thisModule, player, true);
-        }
+    @Override
+    public ResourceLocation id() {
+        return ID;
     }
 }

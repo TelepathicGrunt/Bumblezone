@@ -2,22 +2,21 @@ package com.telepathicgrunt.the_bumblezone.modules.base.fabric;
 
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
-import com.telepathicgrunt.the_bumblezone.modules.fabric.ModuleComponent;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
+import net.fabricmc.fabric.impl.attachment.AttachmentRegistryImpl;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
 import java.util.Optional;
 
 public class ModuleHelperImpl {
-    public static <T extends Module<T>> ModuleHolder<T> createHolder(ModuleSerializer<T> serializer) {
-        return FabricModuleHolder.of(serializer);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T extends Module<T>> Optional<T> getModule(Entity entity, ModuleHolder<T> holder) {
-        if (holder instanceof FabricModuleHolder<T> fabricHolder) {
-            ModuleComponent<T> component = fabricHolder.key().getNullable(entity);
-            return Optional.ofNullable(component).map(ModuleComponent::module);
+    public static <T extends Module<T>> Optional<T> getModule(Entity entity, ModuleHolder<T> moduleHolder) {
+        AttachmentType<T> attachmentType = (AttachmentType<T>) AttachmentRegistryImpl.get(moduleHolder.id());
+        if (attachmentType != null) {
+            if (!entity.hasAttached(attachmentType)) {
+                entity.setAttached(attachmentType, attachmentType.initializer().get());
+            }
+            return Optional.ofNullable(entity.getAttached(attachmentType));
         }
         return Optional.empty();
     }

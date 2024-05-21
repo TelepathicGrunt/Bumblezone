@@ -28,9 +28,6 @@
         "modmenu": [
             "com.telepathicgrunt.the_bumblezone.configs.fabric.ModMenuCompat"
         ],
-        "cardinal-components-entity": [
-            "com.telepathicgrunt.the_bumblezone.modules.fabric.ComponentInitializer"
-        ],
         "emi": [
             "com.telepathicgrunt.the_bumblezone.modcompat.EMICompat"
         ],
@@ -50,13 +47,5 @@
         "minecraft": ">=1.20.4",
         "fabric": ">=0.95.3",
         "midnightlib": ">=1.4.0"
-    },
-    "custom": {
-        "cardinal-components": [
-            "the_bumblezone:entity_dim_component",
-            "the_bumblezone:original_flying_speed",
-            "the_bumblezone:living_entity_data",
-            "the_bumblezone:player_data"
-        ]
     }
 }

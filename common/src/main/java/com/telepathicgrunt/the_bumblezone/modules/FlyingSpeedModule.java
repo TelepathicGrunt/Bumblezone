@@ -1,46 +1,42 @@
 package com.telepathicgrunt.the_bumblezone.modules;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.modules.base.Module;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleSerializer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
 public class FlyingSpeedModule implements Module<FlyingSpeedModule> {
+    public static final Codec<FlyingSpeedModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+            Codec.FLOAT.fieldOf("originalFlyingSpeed").orElse(0.2F).forGetter(module -> module.originalFlyingSpeed)
+    ).apply(instance, FlyingSpeedModule::new));
 
-    public static final ModuleSerializer<FlyingSpeedModule> SERIALIZER = new Serializer();
+    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "original_flying_speed");
+    private float originalFlyingSpeed;
 
-    private float originalSpeed = 0.2f;
+    public FlyingSpeedModule(float originalFlyingSpeed) {
+        this.originalFlyingSpeed = originalFlyingSpeed;
+    }
+
+    public FlyingSpeedModule() {
+        this.originalFlyingSpeed = 0.2F;
+    }
 
     public void setOriginalFlyingSpeed(float originalSpeed) {
-        this.originalSpeed = originalSpeed;
+        this.originalFlyingSpeed = originalSpeed;
     }
 
     public float getOriginalFlyingSpeed() {
-        return originalSpeed;
+        return originalFlyingSpeed;
     }
 
     @Override
-    public ModuleSerializer<FlyingSpeedModule> serializer() {
-        return SERIALIZER;
+    public Codec<FlyingSpeedModule> codec() {
+        return CODEC;
     }
 
-    private static final class Serializer implements ModuleSerializer<FlyingSpeedModule> {
-
-        @Override
-        public ResourceLocation id() {
-            return new ResourceLocation(Bumblezone.MODID, "original_flying_speed");
-        }
-
-        @Override
-        public void read(FlyingSpeedModule module, CompoundTag tag) {
-            module.setOriginalFlyingSpeed(tag.getFloat("original_flying_speed"));
-        }
-
-        @Override
-        public void write(CompoundTag tag, FlyingSpeedModule module) {
-            tag.putFloat("original_flying_speed", module.getOriginalFlyingSpeed());
-        }
-
+    @Override
+    public ResourceLocation id() {
+        return ID;
     }
 }

@@ -4,20 +4,20 @@ import com.telepathicgrunt.the_bumblezone.modules.EntityPosAndDimModule;
 import com.telepathicgrunt.the_bumblezone.modules.FlyingSpeedModule;
 import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
-import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
+import net.minecraft.resources.ResourceLocation;
 
 public class ModuleRegistry {
 
-    public static final ModuleHolder<FlyingSpeedModule> FLYING_SPEED = ModuleHelper.createHolder(FlyingSpeedModule.SERIALIZER);
-    public static final ModuleHolder<LivingEntityDataModule> LIVING_ENTITY_DATA = ModuleHelper.createHolder(LivingEntityDataModule.SERIALIZER);
-    public static final ModuleHolder<EntityPosAndDimModule> ENTITY_POS_AND_DIM = ModuleHelper.createHolder(EntityPosAndDimModule.SERIALIZER);
-    public static final ModuleHolder<PlayerDataModule> PLAYER_DATA = ModuleHelper.createHolder(PlayerDataModule.SERIALIZER);
+    public static final ModuleHolder<FlyingSpeedModule> FLYING_SPEED = new ModuleHolder<>(FlyingSpeedModule.ID, FlyingSpeedModule.CODEC, FlyingSpeedModule::new);
+    public static final ModuleHolder<LivingEntityDataModule> LIVING_ENTITY_DATA = new ModuleHolder<>(LivingEntityDataModule.ID, LivingEntityDataModule.CODEC, LivingEntityDataModule::new);
+    public static final ModuleHolder<EntityPosAndDimModule> ENTITY_POS_AND_DIM = new ModuleHolder<>(EntityPosAndDimModule.ID, EntityPosAndDimModule.CODEC, EntityPosAndDimModule::new);
+    public static final ModuleHolder<PlayerDataModule> PLAYER_DATA = new ModuleHolder<>(PlayerDataModule.ID, PlayerDataModule.CODEC, PlayerDataModule::new);
 
     public static void register(ModuleRegistrar registrar) {
-        registrar.registerLivingEntityModule(FLYING_SPEED, FlyingSpeedModule::new, false);
-        registrar.registerLivingEntityModule(LIVING_ENTITY_DATA, LivingEntityDataModule::new, false);
-        registrar.registerLivingEntityModule(ENTITY_POS_AND_DIM, EntityPosAndDimModule::new, true);
-        registrar.registerPlayerModule(PLAYER_DATA, PlayerDataModule::new, true);
+        registrar.registerLivingEntityModule(FLYING_SPEED, false);
+        registrar.registerLivingEntityModule(LIVING_ENTITY_DATA, false);
+        registrar.registerLivingEntityModule(ENTITY_POS_AND_DIM, true);
+        registrar.registerPlayerModule(PLAYER_DATA, true);
     }
 }

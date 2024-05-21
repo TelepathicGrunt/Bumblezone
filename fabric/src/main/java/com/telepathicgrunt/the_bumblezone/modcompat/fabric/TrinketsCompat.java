@@ -32,10 +32,10 @@ public class TrinketsCompat implements ModCompat {
 	@Override
 	public int getNumberOfMatchingEquippedItemsInCustomSlots(Entity entity, Predicate<ItemStack> itemStackPredicate) {
 		if (entity instanceof LivingEntity livingEntity) {
-			Optional<TrinketComponent> optionalTrinketComponent = TrinketsApi.getTrinketComponent(livingEntity);
-			if (optionalTrinketComponent.isPresent()) {
-				return optionalTrinketComponent.get().getEquipped(itemStackPredicate).size();
-			}
+//			Optional<TrinketComponent> optionalTrinketComponent = TrinketsApi.getTrinketComponent(livingEntity);
+//			if (optionalTrinketComponent.isPresent()) {
+//				return optionalTrinketComponent.get().getEquipped(itemStackPredicate).size();
+//			}
 		}
 
 		return 0;

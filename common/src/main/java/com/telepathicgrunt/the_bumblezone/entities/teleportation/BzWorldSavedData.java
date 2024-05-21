@@ -239,7 +239,7 @@ public class BzWorldSavedData extends SavedData {
 			}
 
 			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
-				capability.setNonBZPos(entity.position());
+				capability.setNonBZPos(Optional.of(entity.position()));
 				capability.setNonBZDim(entity.level().dimension().location());
 
 				// Prevent crash due to mojang bug that makes mod's json dimensions not exist upload first creation of world on server. A restart fixes this.
@@ -303,7 +303,7 @@ public class BzWorldSavedData extends SavedData {
 
 		if(destination.dimension().equals(BzDimension.BZ_WORLD_KEY)) {
 			ModuleHelper.getModule(entity, ModuleRegistry.ENTITY_POS_AND_DIM).ifPresent(capability -> {
-				capability.setNonBZPos(entity.position());
+				capability.setNonBZPos(Optional.of(entity.position()));
 				capability.setNonBZDim(entity.level().dimension().location());
 			});
 		}

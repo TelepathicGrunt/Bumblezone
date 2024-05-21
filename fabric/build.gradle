@@ -27,11 +27,6 @@ dependencies {
     modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
     modImplementation("com.teamresourceful.resourcefullib:resourcefullib-fabric-${rootProject.resourcefullib}")
 
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}")
-
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
@@ -47,7 +42,9 @@ dependencies {
     modCompileOnly("maven.modrinth:sodium:${rootProject.sodium}")
     //modRuntimeOnly("maven.modrinth:sodium:${rootProject.sodium}")
 
-    modCompileOnly("dev.emi:trinkets:${rootProject.trinkets}")
+    modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${rootProject.cardinal_components}") { transitive false }
+    modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${rootProject.cardinal_components}") { transitive false }
+    modCompileOnly("dev.emi:trinkets:${rootProject.trinkets}") { transitive false }
     modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}")
     modCompileOnly("curse.maven:restricted_portals-228266:${rootProject.restricted_portals_file_id}")
 

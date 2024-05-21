@@ -148,14 +148,6 @@ allprojects {
             }
         }
         maven {
-            name = 'Ladysnake Mods'
-            url = 'https://maven.ladysnake.org/releases'
-            content {
-                includeGroup 'io.github.ladysnake'
-                includeGroupByRegex 'dev\\.onyxstudios.*'
-            }
-        }
-        maven {
             url = 'https://nexus.resourcefulbees.com/repository/maven-public/'
             content {
                 includeGroup 'com.telepathicgrunt'
@@ -224,6 +216,13 @@ allprojects {
             url = 'https://maven.cafeteria.dev/releases/'
             content {
                 includeGroup 'me.luligabi'
+            }
+        }
+        maven {
+            name = "Ladysnake Mods"
+            url = 'https://maven.ladysnake.org/releases'
+            content {
+                includeGroup 'dev.onyxstudios.cardinal-components-api'
             }
         }
     }

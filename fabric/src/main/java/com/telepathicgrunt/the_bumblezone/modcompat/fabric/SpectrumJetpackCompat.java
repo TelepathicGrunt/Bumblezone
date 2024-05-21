@@ -37,25 +37,25 @@ public class SpectrumJetpackCompat implements ModCompat {
     @Override
     public void restrictFlight(Entity entity, double extraGravity) {
         if (SPECTRUM_JETPACKS != null && entity instanceof Player player) {
-            TrinketsApi.getTrinketComponent(player).ifPresent(trinketComponent -> {
-
-                List<Tuple<SlotReference, ItemStack>> trinketComponentEquipped = trinketComponent
-                        .getEquipped(itemStack -> itemStack.is(SPECTRUM_JETPACKS));
-
-                if (trinketComponentEquipped.size() > 0) {
-                    for (Tuple<SlotReference, ItemStack> itemStackTuple : trinketComponentEquipped) {
-                        if (!player.getCooldowns().isOnCooldown(itemStackTuple.getB().getItem())) {
-                            if (player instanceof ServerPlayer serverPlayer) {
-                                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
-                                        .withStyle(ChatFormatting.ITALIC)
-                                        .withStyle(ChatFormatting.RED), true);
-                            }
-                        }
-
-                        player.getCooldowns().addCooldown(itemStackTuple.getB().getItem(), 40);
-                    }
-                }
-            });
+//            TrinketsApi.getTrinketComponent(player).ifPresent(trinketComponent -> {
+//
+//                List<Tuple<SlotReference, ItemStack>> trinketComponentEquipped = trinketComponent
+//                        .getEquipped(itemStack -> itemStack.is(SPECTRUM_JETPACKS));
+//
+//                if (trinketComponentEquipped.size() > 0) {
+//                    for (Tuple<SlotReference, ItemStack> itemStackTuple : trinketComponentEquipped) {
+//                        if (!player.getCooldowns().isOnCooldown(itemStackTuple.getB().getItem())) {
+//                            if (player instanceof ServerPlayer serverPlayer) {
+//                                serverPlayer.displayClientMessage(Component.translatable("system.the_bumblezone.denied_jetpack")
+//                                        .withStyle(ChatFormatting.ITALIC)
+//                                        .withStyle(ChatFormatting.RED), true);
+//                            }
+//                        }
+//
+//                        player.getCooldowns().addCooldown(itemStackTuple.getB().getItem(), 40);
+//                    }
+//                }
+//            });
         }
     }
 }
