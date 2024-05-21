@@ -312,7 +312,7 @@ for (subdir, dirs, files) in os.walk(path, topdown=True):
                 lootTable = json.loads(file.read())
 
                 def setPotionComponent(objectToModify):
-                    if "Potion" in objectToModify["nbt"]:
+                    if "nbt" in objectToModify.keys() and "Potion" in objectToModify["nbt"]:
                         if match := re.search("\\\"([\w:]+)\\\"", objectToModify["nbt"], re.IGNORECASE):
                             potionType = match.group(1)
                             if ":" not in potionType:
@@ -339,7 +339,8 @@ for (subdir, dirs, files) in os.walk(path, topdown=True):
                                         ]
                                     }
                                 }
-                            del objectToModify["tag"]
+                            if "tag" in objectToModify:
+                                del objectToModify["tag"]
                                 
                 def updateItemNames(objectToModify):
                     if "icon" in objectToModify and "item" in objectToModify["icon"]:
@@ -349,8 +350,9 @@ for (subdir, dirs, files) in os.walk(path, topdown=True):
                         setPotionComponent(itemIcon)
                     if "location" in objectToModify:
                         structureLocation = objectToModify["location"]
-                        structureLocation["structures"] = structureLocation["structure"]
-                        del structureLocation["structure"]
+                        if "structures" in structureLocation:
+                            structureLocation["structures"] = structureLocation["structure"]
+                            del structureLocation["structure"]
                         
                 traverseAndModify(lootTable, [updateItemNames])
 
