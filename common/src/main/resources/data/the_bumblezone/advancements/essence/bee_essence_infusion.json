@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:structures/enter_throne_pillar",
   "display": {
     "icon": {
-      "item": "the_bumblezone:essence_of_the_bees"
+      "id": "the_bumblezone:essence_of_the_bees"
     },
     "title": {
       "translate": "advancements.the_bumblezone.bee_essence_infusion.title"
@@ -23,7 +23,9 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:essence_of_the_bees"]
+          "items": [
+            "the_bumblezone:essence_of_the_bees"
+          ]
         }
       }
     }

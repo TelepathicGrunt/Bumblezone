@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_bucket/royal_jelly_block_piston",
   "display": {
     "icon": {
-      "item": "the_bumblezone:windy_air"
+      "id": "the_bumblezone:windy_air"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_windy_air.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:windy_air"]
+            "items": [
+              "the_bumblezone:windy_air"
+            ]
           }
         ]
       }

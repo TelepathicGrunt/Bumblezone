@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:structures/enter_cell_maze",
   "display": {
     "icon": {
-      "item": "the_bumblezone:crystalline_flower"
+      "id": "the_bumblezone:crystalline_flower"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enter_garden.title"

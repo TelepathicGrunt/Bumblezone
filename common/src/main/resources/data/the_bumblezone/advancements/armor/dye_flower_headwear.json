@@ -2,8 +2,8 @@
   "parent": "the_bumblezone:armor/craft_flower_headwear",
   "display": {
     "icon": {
-      "item": "the_bumblezone:flower_headwear",
-      "nbt": "{\"display\":{\"color\":1604059}}"
+      "nbt": "{\"display\":{\"color\":1604059}}",
+      "id": "the_bumblezone:flower_headwear"
     },
     "title": {
       "translate": "advancements.the_bumblezone.dye_flower_headwear.title"
@@ -26,7 +26,9 @@
         "recipe_id": "minecraft:armor_dye",
         "ingredients": [
           {
-            "items": [ "the_bumblezone:flower_headwear" ],
+            "items": [
+              "the_bumblezone:flower_headwear"
+            ],
             "count": 1
           }
         ]

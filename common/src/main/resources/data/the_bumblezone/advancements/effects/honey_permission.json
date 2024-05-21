@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/getting_protection",
   "display": {
     "icon": {
-      "item": "minecraft:honey_bottle"
+      "id": "minecraft:honey_bottle"
     },
     "title": {
       "translate": "advancements.the_bumblezone.honey_permission.title"

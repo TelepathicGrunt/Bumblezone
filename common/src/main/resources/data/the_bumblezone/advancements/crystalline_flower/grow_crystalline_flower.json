@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:structures/enter_garden",
   "display": {
     "icon": {
-      "item": "the_bumblezone:crystalline_flower"
+      "id": "the_bumblezone:crystalline_flower"
     },
     "title": {
       "translate": "advancements.the_bumblezone.grow_crystalline_flower.title"

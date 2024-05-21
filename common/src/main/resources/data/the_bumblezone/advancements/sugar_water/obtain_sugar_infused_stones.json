@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:sugar_water/consume_sugar_water_bottle",
   "display": {
     "icon": {
-      "item": "the_bumblezone:sugar_infused_cobblestone"
+      "id": "the_bumblezone:sugar_infused_cobblestone"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_sugar_infused_stones.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:sugar_infused_stone"]
+            "items": [
+              "the_bumblezone:sugar_infused_stone"
+            ]
           }
         ]
       }
@@ -34,7 +36,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:sugar_infused_cobblestone"]
+            "items": [
+              "the_bumblezone:sugar_infused_cobblestone"
+            ]
           }
         ]
       }

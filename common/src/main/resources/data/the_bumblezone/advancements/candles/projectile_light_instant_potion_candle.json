@@ -2,8 +2,8 @@
   "parent": "the_bumblezone:candles/multi_potion_potion_candle",
   "display": {
     "icon": {
-      "item": "the_bumblezone:potion_candle",
-      "nbt": "{\"BlockEntityTag\":{\"color\":11101546}}"
+      "nbt": "{\"BlockEntityTag\":{\"color\":11101546}}",
+      "id": "the_bumblezone:potion_candle"
     },
     "title": {
       "translate": "advancements.the_bumblezone.projectile_light_instant_potion_candle.title"

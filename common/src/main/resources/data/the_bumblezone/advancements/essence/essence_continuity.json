@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:essence/essence_radiance",
   "display": {
     "icon": {
-      "item": "the_bumblezone:essence_continuity"
+      "id": "the_bumblezone:essence_continuity"
     },
     "title": {
       "translate": "advancements.the_bumblezone.essence_continuity.title"
@@ -23,7 +23,9 @@
       "trigger": "the_bumblezone:essence_event_reward",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:essence_continuity"]
+          "items": [
+            "the_bumblezone:essence_continuity"
+          ]
         }
       }
     }

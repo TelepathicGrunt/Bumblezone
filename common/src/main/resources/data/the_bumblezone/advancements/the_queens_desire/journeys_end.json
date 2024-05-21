@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_queens_desire/crazy_trader",
   "display": {
     "icon": {
-      "item": "the_bumblezone:essence_of_the_bees"
+      "id": "the_bumblezone:essence_of_the_bees"
     },
     "title": {
       "translate": "advancements.the_bumblezone.the_queens_desire.journeys_end.title"

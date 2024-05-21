@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:combs_and_wax/carve_ancient_wax",
   "display": {
     "icon": {
-      "item": "the_bumblezone:luminescent_wax_channel_red"
+      "id": "the_bumblezone:luminescent_wax_channel_red"
     },
     "title": {
       "translate": "advancements.the_bumblezone.carve_luminescent_wax.title"
@@ -22,7 +22,7 @@
     "luminescent_wax_channels": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:luminescent_wax/channels",
           "is_tag": true
         }
@@ -31,7 +31,7 @@
     "luminescent_wax_corners": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:luminescent_wax/corners",
           "is_tag": true
         }
@@ -40,7 +40,7 @@
     "luminescent_wax_nodes": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:luminescent_wax/nodes",
           "is_tag": true
         }

@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:pollen_puff/bee_drop_pollen_puff",
   "display": {
     "icon": {
-      "item": "the_bumblezone:pollen_puff"
+      "id": "the_bumblezone:pollen_puff"
     },
     "title": {
       "translate": "advancements.the_bumblezone.pollen_puff_pollinate_bee.title"

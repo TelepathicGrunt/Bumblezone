@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:tools/craft_honey_compass",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_compass"
+      "id": "the_bumblezone:honey_compass"
     },
     "title": {
       "translate": "advancements.the_bumblezone.honey_compass_use.title"

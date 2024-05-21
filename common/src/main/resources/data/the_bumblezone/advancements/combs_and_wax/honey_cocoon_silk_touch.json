@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:combs_and_wax/comb_cutter_extra_drops",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_cocoon"
+      "id": "the_bumblezone:honey_cocoon"
     },
     "title": {
       "translate": "advancements.the_bumblezone.honey_cocoon_silk_touch.title"

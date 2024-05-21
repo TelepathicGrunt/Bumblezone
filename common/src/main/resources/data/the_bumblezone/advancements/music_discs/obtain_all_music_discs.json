@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:teleportation/teleport_out_of_bumblezone",
   "display": {
     "icon": {
-      "item": "the_bumblezone:music_disc_honey_bee_rat_faced_boy"
+      "id": "the_bumblezone:music_disc_honey_bee_rat_faced_boy"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_all_music_discs.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:music_disc_honey_bee_rat_faced_boy"]
+            "items": [
+              "the_bumblezone:music_disc_honey_bee_rat_faced_boy"
+            ]
           }
         ]
       }
@@ -34,7 +36,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"]
+            "items": [
+              "the_bumblezone:music_disc_flight_of_the_bumblebee_rimsky_korsakov"
+            ]
           }
         ]
       }
@@ -44,7 +48,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:music_disc_la_bee_da_loca"]
+            "items": [
+              "the_bumblezone:music_disc_la_bee_da_loca"
+            ]
           }
         ]
       }
@@ -54,7 +60,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:music_disc_bee_laxing_with_the_hom_bees"]
+            "items": [
+              "the_bumblezone:music_disc_bee_laxing_with_the_hom_bees"
+            ]
           }
         ]
       }

@@ -2,8 +2,8 @@
   "parent": "the_bumblezone:structures/enter_cell_maze",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_compass",
-      "nbt": "{\"Locked\": 1b}"
+      "nbt": "{\"Locked\": 1b}",
+      "id": "the_bumblezone:honey_compass"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_throne_honey_compass.title"
@@ -25,7 +25,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:honey_compass"],
+            "items": [
+              "the_bumblezone:honey_compass"
+            ],
             "nbt": "{\"CustomName\": \"item.the_bumblezone.honey_compass_throne_structure\"}"
           }
         ]

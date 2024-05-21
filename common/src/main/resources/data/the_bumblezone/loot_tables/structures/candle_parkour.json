@@ -190,8 +190,8 @@
           "weight": 1,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:strong_leaping\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:strong_leaping"
             }
           ]
         },
@@ -201,8 +201,8 @@
           "weight": 1,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:slow_falling\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:slow_falling"
             }
           ]
         }
@@ -212,9 +212,9 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:structures/sempiternal_sanctum/compasses",
           "type": "minecraft:loot_table",
-          "weight": 1
+          "weight": 1,
+          "value": "the_bumblezone:structures/sempiternal_sanctum/compasses"
         }
       ]
     }

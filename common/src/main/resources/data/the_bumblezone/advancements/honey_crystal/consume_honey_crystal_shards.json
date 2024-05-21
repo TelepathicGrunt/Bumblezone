@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/beenergized_maxed",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_crystal_shards"
+      "id": "the_bumblezone:honey_crystal_shards"
     },
     "title": {
       "translate": "advancements.the_bumblezone.consume_honey_crystal_shards.title"
@@ -23,7 +23,9 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:honey_crystal_shards"]
+          "items": [
+            "the_bumblezone:honey_crystal_shards"
+          ]
         }
       }
     }

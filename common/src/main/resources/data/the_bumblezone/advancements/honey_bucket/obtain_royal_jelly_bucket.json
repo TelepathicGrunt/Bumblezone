@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_bucket/drink_royal_jelly_bottle",
   "display": {
     "icon": {
-      "item": "the_bumblezone:royal_jelly_bucket"
+      "id": "the_bumblezone:royal_jelly_bucket"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_royal_jelly_bucket.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": [ "the_bumblezone:royal_jelly_bucket" ]
+            "items": [
+              "the_bumblezone:royal_jelly_bucket"
+            ]
           }
         ]
       }

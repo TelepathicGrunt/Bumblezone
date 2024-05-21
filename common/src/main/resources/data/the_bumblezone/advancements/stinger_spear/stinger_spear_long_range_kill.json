@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:stinger_spear/stinger_spear_paralyze_boss",
   "display": {
     "icon": {
-      "item": "the_bumblezone:stinger_spear"
+      "id": "the_bumblezone:stinger_spear"
     },
     "title": {
       "translate": "advancements.the_bumblezone.stinger_spear_long_range_kill.title"

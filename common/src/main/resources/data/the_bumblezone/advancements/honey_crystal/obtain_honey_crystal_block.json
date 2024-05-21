@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_crystal/consume_honey_crystal_shards",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_crystal"
+      "id": "the_bumblezone:honey_crystal"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_honey_crystal_block.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:honey_crystal"]
+            "items": [
+              "the_bumblezone:honey_crystal"
+            ]
           }
         ]
       }

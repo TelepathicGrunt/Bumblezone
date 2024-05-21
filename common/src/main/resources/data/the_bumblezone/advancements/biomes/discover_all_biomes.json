@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:music_discs/obtain_all_music_discs",
   "display": {
     "icon": {
-      "item": "minecraft:spyglass"
+      "id": "minecraft:spyglass"
     },
     "title": {
       "translate": "advancements.the_bumblezone.discover_all_biomes.title"

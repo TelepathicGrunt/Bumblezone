@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:tools/obtain_throne_honey_compass",
   "display": {
     "icon": {
-      "item": "the_bumblezone:bee_queen_spawn_egg"
+      "id": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enter_throne_pillar.title"

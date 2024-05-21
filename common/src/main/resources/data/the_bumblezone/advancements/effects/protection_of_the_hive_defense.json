@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/honey_permission",
   "display": {
     "icon": {
-      "item": "minecraft:bee_spawn_egg"
+      "id": "minecraft:bee_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.protection_of_the_hive_defense.title"
@@ -22,7 +22,9 @@
     "protection_of_the_hive_defense": {
       "trigger": "the_bumblezone:protection_of_the_hive_defense",
       "conditions": {
-        "entity": [[]]
+        "entity": [
+          []
+        ]
       }
     }
   },

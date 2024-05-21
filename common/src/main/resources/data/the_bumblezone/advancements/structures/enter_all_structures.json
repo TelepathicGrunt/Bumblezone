@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:music_discs/obtain_all_music_discs",
   "display": {
     "icon": {
-      "item": "minecraft:filled_map"
+      "id": "minecraft:filled_map"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enter_all_structures.title"

@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:teleportation/teleport_to_bumblezone_piston",
   "display": {
     "icon": {
-      "item": "minecraft:ender_pearl"
+      "id": "minecraft:ender_pearl"
     },
     "title": {
       "translate": "advancements.the_bumblezone.teleport_to_bumblezone_pearl.title"

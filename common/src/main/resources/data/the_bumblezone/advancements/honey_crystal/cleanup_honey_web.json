@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_crystal/cleanup_sticky_honey_residue",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_web"
+      "id": "the_bumblezone:honey_web"
     },
     "title": {
       "translate": "advancements.the_bumblezone.cleanup_honey_web.title"

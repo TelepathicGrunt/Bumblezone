@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/protection_of_the_hive_defense",
   "display": {
     "icon": {
-      "item": "minecraft:bee_spawn_egg"
+      "id": "minecraft:bee_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.bee_hit_wrath_of_the_hive.title"
@@ -22,7 +22,9 @@
     "bee_hit_wrath_of_the_hive": {
       "trigger": "the_bumblezone:bee_hit_wrath_of_the_hive",
       "conditions": {
-        "entity": [[]]
+        "entity": [
+          []
+        ]
       }
     }
   },

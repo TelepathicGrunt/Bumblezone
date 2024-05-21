@@ -220,8 +220,8 @@
           "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:strong_leaping\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:strong_leaping"
             }
           ]
         },
@@ -231,8 +231,8 @@
           "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:slow_falling\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:slow_falling"
             }
           ]
         },
@@ -270,8 +270,16 @@
               }
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Explosion:{Colors:[I;16028160], FadeColors:[I;9664512], Trail:1b, Flicker:1b, Type:4b}}"
+              "function": "minecraft:set_firework_explosion",
+              "color": [
+                16028160
+              ],
+              "fade_colors": [
+                9664512
+              ],
+              "trail": true,
+              "twinkle": true,
+              "shape": "creeper"
             }
           ]
         },
@@ -289,8 +297,16 @@
               }
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Explosion:{Colors:[I;9664512], FadeColors:[I;16028160], Trail:1b, Flicker:1b, Type:4b}}"
+              "function": "minecraft:set_firework_explosion",
+              "color": [
+                9664512
+              ],
+              "fade_colors": [
+                16028160
+              ],
+              "trail": true,
+              "twinkle": true,
+              "shape": "creeper"
             }
           ]
         },
@@ -326,9 +342,9 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:structures/sempiternal_sanctum/compasses",
           "type": "minecraft:loot_table",
-          "weight": 1
+          "weight": 1,
+          "value": "the_bumblezone:structures/sempiternal_sanctum/compasses"
         }
       ]
     }

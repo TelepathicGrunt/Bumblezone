@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:pollen_pile/hide_in_pollen_pile",
   "display": {
     "icon": {
-      "item": "the_bumblezone:pile_of_pollen_suspicious"
+      "id": "the_bumblezone:pile_of_pollen_suspicious"
     },
     "title": {
       "translate": "advancements.the_bumblezone.brush_pollen_pollen_suspicious.title"

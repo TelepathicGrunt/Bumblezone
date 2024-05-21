@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:teleportation/teleport_out_of_bumblezone",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honeycomb_brood_block"
+      "id": "the_bumblezone:honeycomb_brood_block"
     },
     "title": {
       "translate": "advancements.the_bumblezone.getting_protection.title"

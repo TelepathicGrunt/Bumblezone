@@ -2,8 +2,22 @@
   "parent": "the_bumblezone:tools/bee_stinger_paralysis",
   "display": {
     "icon": {
-      "item": "minecraft:potion",
-      "nbt": "{\"Potion\":\"minecraft:long_poison\"}"
+      "nbt": "{\"Potion\":\"minecraft:long_poison\"}",
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "custom_effects": [
+            {
+              "id": "minecraft:Potion",
+              "amplifier": 1,
+              "duration": 20,
+              "ambient": false,
+              "show_particles": true,
+              "show_icon": true
+            }
+          ]
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.brew_bee_stinger.title"

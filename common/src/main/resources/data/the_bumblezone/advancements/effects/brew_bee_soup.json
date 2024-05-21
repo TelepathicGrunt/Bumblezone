@@ -2,8 +2,22 @@
   "parent": "the_bumblezone:effects/consume_bee_soup",
   "display": {
     "icon": {
-      "item": "minecraft:potion",
-      "nbt": "{\"Potion\":\"the_bumblezone:neurotoxin\"}"
+      "nbt": "{\"Potion\":\"the_bumblezone:neurotoxin\"}",
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "custom_effects": [
+            {
+              "id": "minecraft:Potion",
+              "amplifier": 1,
+              "duration": 20,
+              "ambient": false,
+              "show_particles": true,
+              "show_icon": true
+            }
+          ]
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.brew_bee_soup.title"

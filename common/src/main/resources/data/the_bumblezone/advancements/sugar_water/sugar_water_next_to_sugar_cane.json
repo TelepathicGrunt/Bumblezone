@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/beenergized_maxed",
   "display": {
     "icon": {
-      "item": "the_bumblezone:sugar_water_bucket"
+      "id": "the_bumblezone:sugar_water_bucket"
     },
     "title": {
       "translate": "advancements.the_bumblezone.sugar_water_next_to_sugar_cane.title"

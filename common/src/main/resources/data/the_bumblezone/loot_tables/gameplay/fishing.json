@@ -7,13 +7,12 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "name": "the_bumblezone:gameplay/fishing/junk",
           "type": "minecraft:loot_table",
           "quality": -4,
-          "weight": 75
+          "weight": 75,
+          "value": "the_bumblezone:gameplay/fishing/junk"
         },
         {
-          "name": "the_bumblezone:gameplay/fishing/treasure",
           "type": "minecraft:loot_table",
           "quality": 2,
           "weight": 5,
@@ -28,7 +27,8 @@
                 }
               }
             }
-          ]
+          ],
+          "value": "the_bumblezone:gameplay/fishing/treasure"
         }
       ]
     }

@@ -2,8 +2,22 @@
   "parent": "the_bumblezone:honey_crystal/obtain_glistering_honey_crystal_block",
   "display": {
     "icon": {
-      "item": "minecraft:potion",
-      "nbt": "{\"Potion\":\"minecraft:luck\"}"
+      "nbt": "{\"Potion\":\"minecraft:luck\"}",
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "custom_effects": [
+            {
+              "id": "minecraft:Potion",
+              "amplifier": 1,
+              "duration": 20,
+              "ambient": false,
+              "show_particles": true,
+              "show_icon": true
+            }
+          ]
+        }
+      }
     },
     "title": {
       "translate": "advancements.the_bumblezone.brew_glistering_honey_crystal_block.title"

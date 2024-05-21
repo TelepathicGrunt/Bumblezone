@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:teleportation/teleport_out_of_bumblezone",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_compass"
+      "id": "the_bumblezone:honey_compass"
     },
     "title": {
       "translate": "advancements.the_bumblezone.craft_honey_compass.title"
@@ -30,7 +30,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:honey_compass"]
+            "items": [
+              "the_bumblezone:honey_compass"
+            ]
           }
         ]
       }

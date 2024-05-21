@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:root",
   "display": {
     "icon": {
-      "item": "minecraft:enchanted_book"
+      "id": "minecraft:enchanted_book"
     },
     "title": {
       "translate": "advancements.the_bumblezone.wiki.title"

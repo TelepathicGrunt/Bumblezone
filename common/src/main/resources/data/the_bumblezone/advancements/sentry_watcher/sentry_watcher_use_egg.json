@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:combs_and_wax/carve_luminescent_wax",
   "display": {
     "icon": {
-      "item": "the_bumblezone:sentry_watcher_spawn_egg"
+      "id": "the_bumblezone:sentry_watcher_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.sentry_watcher_use_egg.title"

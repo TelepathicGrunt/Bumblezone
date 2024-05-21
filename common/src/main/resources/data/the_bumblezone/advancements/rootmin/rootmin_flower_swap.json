@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_slime/honey_slime_harvest",
   "display": {
     "icon": {
-      "item": "the_bumblezone:rootmin_spawn_egg"
+      "id": "the_bumblezone:rootmin_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.rootmin_flower_swap.title"

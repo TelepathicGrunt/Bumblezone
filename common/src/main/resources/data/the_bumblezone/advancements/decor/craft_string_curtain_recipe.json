@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/beenergized_maxed",
   "display": {
     "icon": {
-      "item": "the_bumblezone:string_curtain_white"
+      "id": "the_bumblezone:string_curtain_white"
     },
     "title": {
       "translate": "advancements.the_bumblezone.craft_string_curtain_recipe.title"

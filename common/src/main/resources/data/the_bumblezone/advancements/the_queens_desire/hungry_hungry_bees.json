@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_queens_desire/peak_inefficiency",
   "display": {
     "icon": {
-      "item": "the_bumblezone:bee_queen_spawn_egg"
+      "id": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.the_queens_desire.hungry_hungry_bees.title"

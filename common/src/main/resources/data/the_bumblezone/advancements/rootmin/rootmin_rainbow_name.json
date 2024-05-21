@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:rootmin/rootmin_flower_swap",
   "display": {
     "icon": {
-      "item": "the_bumblezone:rootmin_spawn_egg"
+      "id": "the_bumblezone:rootmin_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.rootmin_rainbow_name.title"

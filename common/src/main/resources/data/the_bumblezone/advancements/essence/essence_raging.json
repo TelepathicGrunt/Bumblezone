@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:structures/enter_sempiternal_sanctum",
   "display": {
     "icon": {
-      "item": "the_bumblezone:essence_raging"
+      "id": "the_bumblezone:essence_raging"
     },
     "title": {
       "translate": "advancements.the_bumblezone.essence_raging.title"
@@ -23,7 +23,9 @@
       "trigger": "the_bumblezone:essence_event_reward",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:essence_raging"]
+          "items": [
+            "the_bumblezone:essence_raging"
+          ]
         }
       }
     }

@@ -56,14 +56,14 @@
         },
         {
           "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
           "weight": 10,
           "functions": [
             {
               "function": "the_bumblezone:tag_item_removals",
               "tag": "the_bumblezone:structures/disallowed_flowers_in_cocoon_loot"
             }
-          ]
+          ],
+          "value": "the_bumblezone:structures/flowers"
         },
         {
           "name": "minecraft:honeycomb",
@@ -517,9 +517,9 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:structures/sempiternal_sanctum/compasses",
           "type": "minecraft:loot_table",
-          "weight": 1
+          "weight": 1,
+          "value": "the_bumblezone:structures/sempiternal_sanctum/compasses"
         }
       ]
     }

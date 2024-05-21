@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:tools/honey_compass_use",
   "display": {
     "icon": {
-      "item": "minecraft:honeycomb"
+      "id": "minecraft:honeycomb"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enter_cell_maze.title"

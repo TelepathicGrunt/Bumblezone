@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:candles/light_soul_super_candle",
   "display": {
     "icon": {
-      "item": "the_bumblezone:potion_candle"
+      "id": "the_bumblezone:potion_candle"
     },
     "title": {
       "translate": "advancements.the_bumblezone.multi_potion_potion_candle.title"

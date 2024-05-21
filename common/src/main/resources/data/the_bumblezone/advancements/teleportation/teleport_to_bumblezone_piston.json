@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:teleportation/is_near_beehive",
   "display": {
     "icon": {
-      "item": "minecraft:piston"
+      "id": "minecraft:piston"
     },
     "title": {
       "translate": "advancements.the_bumblezone.teleport_to_bumblezone_piston.title"

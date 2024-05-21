@@ -142,8 +142,8 @@
           "weight": 2,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:strong_strength\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:strong_strength"
             }
           ]
         },
@@ -153,8 +153,8 @@
           "weight": 2,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:long_poison\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:long_poison"
             }
           ]
         },
@@ -164,8 +164,8 @@
           "weight": 2,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:regeneration\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:regeneration"
             }
           ]
         },
@@ -175,8 +175,8 @@
           "weight": 2,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{Potion:\"minecraft:awkward\"}"
+              "function": "minecraft:set_potion",
+              "id": "minecraft:awkward"
             }
           ]
         },

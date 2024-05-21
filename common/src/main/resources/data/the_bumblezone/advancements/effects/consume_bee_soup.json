@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:combs_and_wax/comb_cutter_extra_drops",
   "display": {
     "icon": {
-      "item": "the_bumblezone:bee_soup"
+      "id": "the_bumblezone:bee_soup"
     },
     "title": {
       "translate": "advancements.the_bumblezone.consume_bee_soup.title"
@@ -23,7 +23,9 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:bee_soup"]
+          "items": [
+            "the_bumblezone:bee_soup"
+          ]
         }
       }
     }

@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_bucket/honey_bucket_bee_grow",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_bucket"
+      "id": "the_bumblezone:honey_bucket"
     },
     "title": {
       "translate": "advancements.the_bumblezone.honey_bucket_brood.title"

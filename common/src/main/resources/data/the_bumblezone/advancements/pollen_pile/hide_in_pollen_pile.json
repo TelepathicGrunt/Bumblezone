@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:pollen_pile/fall_onto_pollen_pile",
   "display": {
     "icon": {
-      "item": "the_bumblezone:pile_of_pollen"
+      "id": "the_bumblezone:pile_of_pollen"
     },
     "title": {
       "translate": "advancements.the_bumblezone.hide_in_pollen_pile.title"
@@ -18,7 +18,6 @@
   "rewards": {
     "experience": 5
   },
-
   "criteria": {
     "strong_hidden": {
       "trigger": "minecraft:effects_changed",

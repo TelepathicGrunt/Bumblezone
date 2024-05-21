@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:sugar_water/sugar_water_next_to_sugar_cane",
   "display": {
     "icon": {
-      "item": "the_bumblezone:sugar_water_bottle"
+      "id": "the_bumblezone:sugar_water_bottle"
     },
     "title": {
       "translate": "advancements.the_bumblezone.consume_sugar_water_bottle.title"
@@ -23,7 +23,9 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:sugar_water_bottle"]
+          "items": [
+            "the_bumblezone:sugar_water_bottle"
+          ]
         }
       }
     }

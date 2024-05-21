@@ -2,8 +2,8 @@
   "parent": "the_bumblezone:stinger_spear/stinger_spear_paralyzing",
   "display": {
     "icon": {
-      "item": "the_bumblezone:stinger_spear",
-      "nbt": "{\"Enchantments\":[{\"id\":\"the_bumblezone:neurotoxin\",\"lvl\":1}]}"
+      "nbt": "{\"Enchantments\":[{\"id\":\"the_bumblezone:neurotoxin\",\"lvl\":1}]}",
+      "id": "the_bumblezone:stinger_spear"
     },
     "title": {
       "translate": "advancements.the_bumblezone.stinger_spear_paralyze_boss.title"

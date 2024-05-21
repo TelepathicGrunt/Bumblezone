@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:decor/craft_string_curtain_recipe",
   "display": {
     "icon": {
-      "item": "the_bumblezone:string_curtain_orange"
+      "id": "the_bumblezone:string_curtain_orange"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_all_string_curtains.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_black"]
+            "items": [
+              "the_bumblezone:string_curtain_black"
+            ]
           }
         ]
       }
@@ -34,7 +36,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_blue"]
+            "items": [
+              "the_bumblezone:string_curtain_blue"
+            ]
           }
         ]
       }
@@ -44,7 +48,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_brown"]
+            "items": [
+              "the_bumblezone:string_curtain_brown"
+            ]
           }
         ]
       }
@@ -54,7 +60,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_cyan"]
+            "items": [
+              "the_bumblezone:string_curtain_cyan"
+            ]
           }
         ]
       }
@@ -64,7 +72,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_gray"]
+            "items": [
+              "the_bumblezone:string_curtain_gray"
+            ]
           }
         ]
       }
@@ -74,7 +84,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_green"]
+            "items": [
+              "the_bumblezone:string_curtain_green"
+            ]
           }
         ]
       }
@@ -84,7 +96,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_light_blue"]
+            "items": [
+              "the_bumblezone:string_curtain_light_blue"
+            ]
           }
         ]
       }
@@ -94,7 +108,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_light_gray"]
+            "items": [
+              "the_bumblezone:string_curtain_light_gray"
+            ]
           }
         ]
       }
@@ -104,7 +120,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_lime"]
+            "items": [
+              "the_bumblezone:string_curtain_lime"
+            ]
           }
         ]
       }
@@ -114,7 +132,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_magenta"]
+            "items": [
+              "the_bumblezone:string_curtain_magenta"
+            ]
           }
         ]
       }
@@ -124,7 +144,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_orange"]
+            "items": [
+              "the_bumblezone:string_curtain_orange"
+            ]
           }
         ]
       }
@@ -134,7 +156,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_pink"]
+            "items": [
+              "the_bumblezone:string_curtain_pink"
+            ]
           }
         ]
       }
@@ -144,7 +168,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_purple"]
+            "items": [
+              "the_bumblezone:string_curtain_purple"
+            ]
           }
         ]
       }
@@ -154,7 +180,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_red"]
+            "items": [
+              "the_bumblezone:string_curtain_red"
+            ]
           }
         ]
       }
@@ -164,7 +192,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_white"]
+            "items": [
+              "the_bumblezone:string_curtain_white"
+            ]
           }
         ]
       }
@@ -174,7 +204,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:string_curtain_yellow"]
+            "items": [
+              "the_bumblezone:string_curtain_yellow"
+            ]
           }
         ]
       }

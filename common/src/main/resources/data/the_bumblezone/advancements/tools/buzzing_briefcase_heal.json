@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:tools/buzzing_briefcase_full",
   "display": {
     "icon": {
-      "item": "the_bumblezone:buzzing_briefcase"
+      "id": "the_bumblezone:buzzing_briefcase"
     },
     "title": {
       "translate": "advancements.the_bumblezone.buzzing_briefcase_heal.title"

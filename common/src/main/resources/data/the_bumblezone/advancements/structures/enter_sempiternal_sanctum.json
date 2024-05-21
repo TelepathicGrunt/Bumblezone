@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:essence/bee_essence_infusion",
   "display": {
     "icon": {
-      "item": "the_bumblezone:luminescent_wax_corner_white"
+      "id": "the_bumblezone:luminescent_wax_corner_white"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enter_sempiternal_sanctum.title"

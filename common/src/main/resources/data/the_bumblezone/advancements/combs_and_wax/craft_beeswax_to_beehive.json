@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:combs_and_wax/comb_cutter_tool",
   "display": {
     "icon": {
-      "item": "the_bumblezone:beehive_beeswax"
+      "id": "the_bumblezone:beehive_beeswax"
     },
     "title": {
       "translate": "advancements.the_bumblezone.craft_beeswax_to_beehive.title"

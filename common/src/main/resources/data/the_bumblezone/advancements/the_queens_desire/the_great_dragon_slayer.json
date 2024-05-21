@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:the_queens_desire/otherworldly_mites",
   "display": {
     "icon": {
-      "item": "the_bumblezone:bee_queen_spawn_egg"
+      "id": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.the_queens_desire.the_great_dragon_slayer.title"

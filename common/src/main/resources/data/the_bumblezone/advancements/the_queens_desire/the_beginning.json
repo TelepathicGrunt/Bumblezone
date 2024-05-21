@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:structures/enter_throne_pillar",
   "display": {
     "icon": {
-      "item": "the_bumblezone:bee_queen_spawn_egg"
+      "id": "the_bumblezone:bee_queen_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.the_queens_desire.the_beginning.title"

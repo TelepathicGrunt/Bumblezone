@@ -1,8 +1,8 @@
 {
   "display": {
     "icon": {
-      "item": "the_bumblezone:honeycomb_brood_block",
-      "nbt": "{\"isCreativeTabIcon\":1b}"
+      "nbt": "{\"isCreativeTabIcon\":1b}",
+      "id": "the_bumblezone:honeycomb_brood_block"
     },
     "title": {
       "translate": "advancements.the_bumblezone.root.title"

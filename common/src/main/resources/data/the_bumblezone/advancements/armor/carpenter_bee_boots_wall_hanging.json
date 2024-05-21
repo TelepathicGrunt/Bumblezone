@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:armor/stingless_bee_helmet_super_sight",
   "display": {
     "icon": {
-      "item": "the_bumblezone:carpenter_bee_boots_2"
+      "id": "the_bumblezone:carpenter_bee_boots_2"
     },
     "title": {
       "translate": "advancements.the_bumblezone.carpenter_bee_boots_wall_hanging.title"

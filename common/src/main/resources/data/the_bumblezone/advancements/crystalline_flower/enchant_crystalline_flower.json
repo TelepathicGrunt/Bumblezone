@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:crystalline_flower/grow_crystalline_flower",
   "display": {
     "icon": {
-      "item": "the_bumblezone:crystalline_flower"
+      "id": "the_bumblezone:crystalline_flower"
     },
     "title": {
       "translate": "advancements.the_bumblezone.enchant_crystalline_flower.title"

@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:rootmin/rootmin_flower_swap",
   "display": {
     "icon": {
-      "item": "the_bumblezone:dirt_pellet"
+      "id": "the_bumblezone:dirt_pellet"
     },
     "title": {
       "translate": "advancements.the_bumblezone.dirt_pellet_return_to_sender.title"

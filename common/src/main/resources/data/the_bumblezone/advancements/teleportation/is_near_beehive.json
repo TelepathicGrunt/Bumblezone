@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:root",
   "display": {
     "icon": {
-      "item": "minecraft:bee_nest"
+      "id": "minecraft:bee_nest"
     },
     "title": {
       "translate": "advancements.the_bumblezone.is_near_beehive.title"

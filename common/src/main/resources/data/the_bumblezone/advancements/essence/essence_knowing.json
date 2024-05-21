@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:essence/essence_raging",
   "display": {
     "icon": {
-      "item": "the_bumblezone:essence_knowing"
+      "id": "the_bumblezone:essence_knowing"
     },
     "title": {
       "translate": "advancements.the_bumblezone.essence_knowing.title"
@@ -23,7 +23,9 @@
       "trigger": "the_bumblezone:essence_event_reward",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:essence_knowing"]
+          "items": [
+            "the_bumblezone:essence_knowing"
+          ]
         }
       }
     }

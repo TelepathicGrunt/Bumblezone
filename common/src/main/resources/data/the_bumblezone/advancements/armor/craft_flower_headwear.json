@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/beenergized_maxed",
   "display": {
     "icon": {
-      "item": "the_bumblezone:flower_headwear"
+      "id": "the_bumblezone:flower_headwear"
     },
     "title": {
       "translate": "advancements.the_bumblezone.craft_flower_headwear.title"
@@ -30,7 +30,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:flower_headwear"]
+            "items": [
+              "the_bumblezone:flower_headwear"
+            ]
           }
         ]
       }

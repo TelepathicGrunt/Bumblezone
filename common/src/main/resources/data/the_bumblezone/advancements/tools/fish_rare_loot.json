@@ -2,8 +2,8 @@
   "parent": "the_bumblezone:combs_and_wax/honey_cocoon_silk_touch",
   "display": {
     "icon": {
-      "item": "minecraft:fishing_rod",
-      "nbt": "{\"Enchantments\":[{\"id\":\"luck_of_the_sea\",\"lvl\":3}]}"
+      "nbt": "{\"Enchantments\":[{\"id\":\"luck_of_the_sea\",\"lvl\":3}]}",
+      "id": "minecraft:fishing_rod"
     },
     "title": {
       "translate": "advancements.the_bumblezone.fish_rare_loot.title"

@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:bees/variant_bee_name",
   "display": {
     "icon": {
-      "item": "the_bumblezone:variant_bee_spawn_egg"
+      "id": "the_bumblezone:variant_bee_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.variant_bee_briefcase_capture.title"

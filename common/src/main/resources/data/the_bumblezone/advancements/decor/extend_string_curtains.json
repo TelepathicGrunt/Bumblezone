@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:decor/obtain_all_string_curtains",
   "display": {
     "icon": {
-      "item": "the_bumblezone:string_curtain_yellow"
+      "id": "the_bumblezone:string_curtain_yellow"
     },
     "title": {
       "translate": "advancements.the_bumblezone.extend_string_curtains.title"

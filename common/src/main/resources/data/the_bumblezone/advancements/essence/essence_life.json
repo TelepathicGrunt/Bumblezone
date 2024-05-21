@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:essence/essence_calming",
   "display": {
     "icon": {
-      "item": "the_bumblezone:essence_life"
+      "id": "the_bumblezone:essence_life"
     },
     "title": {
       "translate": "advancements.the_bumblezone.essence_life.title"
@@ -23,7 +23,9 @@
       "trigger": "the_bumblezone:essence_event_reward",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:essence_life"]
+          "items": [
+            "the_bumblezone:essence_life"
+          ]
         }
       }
     }

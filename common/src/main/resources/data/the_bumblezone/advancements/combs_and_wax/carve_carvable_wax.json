@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:effects/beenergized_maxed",
   "display": {
     "icon": {
-      "item": "the_bumblezone:carvable_wax"
+      "id": "the_bumblezone:carvable_wax"
     },
     "title": {
       "translate": "advancements.the_bumblezone.carve_wax.title"
@@ -22,7 +22,7 @@
     "carve_wax_1": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -34,7 +34,7 @@
     "carve_wax_2": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -46,7 +46,7 @@
     "carve_wax_3": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -58,7 +58,7 @@
     "carve_wax_4": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -70,7 +70,7 @@
     "carve_wax_5": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -82,7 +82,7 @@
     "carve_wax_6": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -94,7 +94,7 @@
     "carve_wax_7": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -106,7 +106,7 @@
     "carve_wax_8": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {
@@ -118,7 +118,7 @@
     "carve_wax_9": {
       "trigger": "the_bumblezone:carve_wax",
       "conditions": {
-        "block":{
+        "block": {
           "resourcelocation": "the_bumblezone:carvable_wax",
           "is_tag": false,
           "state": {

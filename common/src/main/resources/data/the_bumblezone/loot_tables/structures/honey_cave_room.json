@@ -101,7 +101,6 @@
         },
         {
           "type": "minecraft:loot_table",
-          "name": "the_bumblezone:structures/flowers",
           "weight": 15,
           "functions": [
             {
@@ -116,7 +115,8 @@
                 "type": "minecraft:uniform"
               }
             }
-          ]
+          ],
+          "value": "the_bumblezone:structures/flowers"
         },
         {
           "name": "the_bumblezone:filled_porous_honeycomb_block",
@@ -469,9 +469,9 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:structures/sempiternal_sanctum/compasses",
           "type": "minecraft:loot_table",
-          "weight": 1
+          "weight": 1,
+          "value": "the_bumblezone:structures/sempiternal_sanctum/compasses"
         }
       ]
     }

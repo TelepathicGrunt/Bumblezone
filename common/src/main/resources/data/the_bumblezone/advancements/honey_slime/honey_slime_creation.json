@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_bucket/obtain_honey_bucket",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_slime_spawn_egg"
+      "id": "the_bumblezone:honey_slime_spawn_egg"
     },
     "title": {
       "translate": "advancements.the_bumblezone.honey_slime_creation.title"

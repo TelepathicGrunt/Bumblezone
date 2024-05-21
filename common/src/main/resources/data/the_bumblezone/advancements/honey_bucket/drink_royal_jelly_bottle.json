@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:structures/enter_throne_pillar",
   "display": {
     "icon": {
-      "item": "the_bumblezone:royal_jelly_bottle"
+      "id": "the_bumblezone:royal_jelly_bottle"
     },
     "title": {
       "translate": "advancements.the_bumblezone.drink_royal_jelly_bottle.title"
@@ -23,7 +23,9 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": ["the_bumblezone:royal_jelly_bottle"]
+          "items": [
+            "the_bumblezone:royal_jelly_bottle"
+          ]
         }
       }
     }

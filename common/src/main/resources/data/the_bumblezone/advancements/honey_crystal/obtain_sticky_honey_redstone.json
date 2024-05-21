@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_crystal/obtain_sticky_honey_residue",
   "display": {
     "icon": {
-      "item": "the_bumblezone:sticky_honey_redstone"
+      "id": "the_bumblezone:sticky_honey_redstone"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_sticky_honey_redstone.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:sticky_honey_redstone"]
+            "items": [
+              "the_bumblezone:sticky_honey_redstone"
+            ]
           }
         ]
       }

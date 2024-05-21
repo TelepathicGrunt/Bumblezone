@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_crystal_shield/obtain_honey_crystal_shield",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_crystal_shield"
+      "id": "the_bumblezone:honey_crystal_shield"
     },
     "title": {
       "translate": "advancements.the_bumblezone.honey_crystal_shield_block_ineffectively.title"

@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_crystal_shield/honey_crystal_shield_block_ineffectively",
   "display": {
     "icon": {
-      "item": "the_bumblezone:honey_crystal_shield"
+      "id": "the_bumblezone:honey_crystal_shield"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_maxed_honey_crystal_shield.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:honey_crystal_shield"],
+            "items": [
+              "the_bumblezone:honey_crystal_shield"
+            ],
             "nbt": "{\"ShieldLevel\":9}"
           }
         ]

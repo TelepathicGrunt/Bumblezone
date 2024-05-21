@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_crystal/consume_honey_crystal_shards",
   "display": {
     "icon": {
-      "item": "the_bumblezone:sticky_honey_residue"
+      "id": "the_bumblezone:sticky_honey_residue"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_sticky_honey_residue.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:sticky_honey_residue"]
+            "items": [
+              "the_bumblezone:sticky_honey_residue"
+            ]
           }
         ]
       }

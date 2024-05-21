@@ -209,9 +209,9 @@
       "rolls": 1,
       "entries": [
         {
-          "name": "the_bumblezone:structures/sempiternal_sanctum/compasses",
           "type": "minecraft:loot_table",
-          "weight": 1
+          "weight": 1,
+          "value": "the_bumblezone:structures/sempiternal_sanctum/compasses"
         }
       ]
     }

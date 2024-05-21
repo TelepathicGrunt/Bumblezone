@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:honey_crystal/cleanup_honey_web",
   "display": {
     "icon": {
-      "item": "the_bumblezone:redstone_honey_web"
+      "id": "the_bumblezone:redstone_honey_web"
     },
     "title": {
       "translate": "advancements.the_bumblezone.trigger_redstone_honey_web.title"

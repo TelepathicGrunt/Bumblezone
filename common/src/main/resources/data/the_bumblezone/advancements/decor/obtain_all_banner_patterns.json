@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:music_discs/obtain_all_music_discs",
   "display": {
     "icon": {
-      "item": "the_bumblezone:banner_pattern_bee"
+      "id": "the_bumblezone:banner_pattern_bee"
     },
     "title": {
       "translate": "advancements.the_bumblezone.obtain_all_banner_patterns.title"
@@ -24,7 +24,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_bee"]
+            "items": [
+              "the_bumblezone:banner_pattern_bee"
+            ]
           }
         ]
       }
@@ -34,7 +36,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_honeycombs"]
+            "items": [
+              "the_bumblezone:banner_pattern_honeycombs"
+            ]
           }
         ]
       }
@@ -44,7 +48,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_swords"]
+            "items": [
+              "the_bumblezone:banner_pattern_swords"
+            ]
           }
         ]
       }
@@ -54,7 +60,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_sun"]
+            "items": [
+              "the_bumblezone:banner_pattern_sun"
+            ]
           }
         ]
       }
@@ -64,7 +72,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_pluses"]
+            "items": [
+              "the_bumblezone:banner_pattern_pluses"
+            ]
           }
         ]
       }
@@ -74,7 +84,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_eyes"]
+            "items": [
+              "the_bumblezone:banner_pattern_eyes"
+            ]
           }
         ]
       }
@@ -84,7 +96,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_peace"]
+            "items": [
+              "the_bumblezone:banner_pattern_peace"
+            ]
           }
         ]
       }
@@ -94,7 +108,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["the_bumblezone:banner_pattern_arrows"]
+            "items": [
+              "the_bumblezone:banner_pattern_arrows"
+            ]
           }
         ]
       }

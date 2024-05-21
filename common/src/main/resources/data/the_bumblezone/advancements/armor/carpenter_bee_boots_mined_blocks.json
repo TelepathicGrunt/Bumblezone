@@ -2,7 +2,7 @@
   "parent": "the_bumblezone:armor/carpenter_bee_boots_wall_hanging",
   "display": {
     "icon": {
-      "item": "the_bumblezone:carpenter_bee_boots_1"
+      "id": "the_bumblezone:carpenter_bee_boots_1"
     },
     "title": {
       "translate": "advancements.the_bumblezone.carpenter_bee_boots_mined_blocks.title"
