@@ -10,6 +10,7 @@ advancements_folder = os.path.join('advancements')
 configured_feature_folder = os.path.join('worldgen', 'configured_feature')
 placed_feature_folder = os.path.join('worldgen', 'placed_feature')
 processor_list_folder = os.path.join('worldgen', 'processor_list')
+recipes_folder = os.path.join('recipes')
 
 def createFile(input_path, output_path, regex_list):
     file_content = ''
@@ -25,6 +26,8 @@ def createFile(input_path, output_path, regex_list):
             jsonFile1.write(file_content)
 
 def traverseAndModify(dictionary, modifiers):  
+    for modifier in modifiers:
+        modifier(dictionary)
     for key, value in dictionary.items():
         if isinstance(value, dict):
             traverseAndModify(value, modifiers)
@@ -461,6 +464,64 @@ for (subdir, dirs, files) in os.walk(path, topdown=True):
 
             with open(filepath, 'w') as file:
                 json.dump(processorList, file, indent = 2)
+            continue
+        else:
+            continue
+
+# Recipes Updating
+path = os.path.join(data_folder, recipes_folder)
+for (subdir, dirs, files) in os.walk(path, topdown=True):
+    for file in files:
+        directory = subdir + os.sep
+        filepath = directory + file
+
+        if filepath.endswith(".json"):
+            recipesList = {}
+            with open(filepath, 'r') as file:
+                recipesList = json.loads(file.read())
+
+                def setPotionComponent(objectToModify):
+                    if "nbt" in objectToModify.keys() and "Potion" in objectToModify["nbt"]:
+                        if match := re.search("\\\"([\w:]+)\\\"", objectToModify["nbt"], re.IGNORECASE):
+                            potionType = match.group(1)
+                            if ":" not in potionType:
+                                potionType = "minecraft:" + potionType
+
+                            if potionType in acceptedBasePotions:
+                                objectToModify["components"] = {
+                                    "minecraft:potion_contents": {
+                                        "potion": potionType
+                                    }
+                                }
+                            else:
+                                objectToModify["components"] = {
+                                    "minecraft:potion_contents": {
+                                        "custom_effects": [
+                                            {
+                                                "id": potionType,
+                                                "amplifier": 1,
+                                                "duration": 20,
+                                                "ambient": False,
+                                                "show_particles": True,
+                                                "show_icon": True
+                                            }
+                                        ]
+                                    }
+                                }
+                            if "tag" in objectToModify:
+                                del objectToModify["tag"]
+                                
+                def updateItemNames(objectToModify):
+                    if "result" in objectToModify and "item" in objectToModify["result"]:
+                        itemIcon = objectToModify["result"]
+                        itemIcon["id"] = itemIcon["item"]
+                        del itemIcon["item"]
+                        setPotionComponent(itemIcon)
+
+                traverseAndModify(recipesList, [setPotionComponent, updateItemNames])
+
+            with open(filepath, 'w') as file:
+                json.dump(recipesList, file, indent = 2)
             continue
         else:
             continue

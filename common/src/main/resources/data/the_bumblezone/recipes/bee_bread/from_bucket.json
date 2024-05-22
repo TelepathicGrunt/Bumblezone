@@ -17,7 +17,7 @@
     }
   ],
   "result": {
-    "item": "the_bumblezone:bee_bread",
-    "count": 3
+    "count": 3,
+    "id": "the_bumblezone:bee_bread"
   }
 }

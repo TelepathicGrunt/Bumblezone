@@ -20,7 +20,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:honey_bottle",
-    "count": 4
+    "count": 4,
+    "id": "minecraft:honey_bottle"
   }
 }

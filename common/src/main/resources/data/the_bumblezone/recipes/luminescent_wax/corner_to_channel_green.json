@@ -2,14 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "group": "the_bumblezone:luminescent_wax_channel_green",
-  "pattern": ["www"],
+  "pattern": [
+    "www"
+  ],
   "key": {
     "w": {
       "item": "the_bumblezone:luminescent_wax_corner_green"
     }
   },
   "result": {
-    "item": "the_bumblezone:luminescent_wax_channel_green",
-    "count": 3
+    "count": 3,
+    "id": "the_bumblezone:luminescent_wax_channel_green"
   }
 }

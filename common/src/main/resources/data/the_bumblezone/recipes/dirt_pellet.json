@@ -11,7 +11,7 @@
     }
   ],
   "result": {
-    "item": "the_bumblezone:dirt_pellet",
-    "count": 8
+    "count": 8,
+    "id": "the_bumblezone:dirt_pellet"
   }
 }
