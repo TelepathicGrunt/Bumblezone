@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.BeeEntityInvoker;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.EntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
@@ -105,8 +106,8 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         ItemStack briefcaseStack = menu.getItems().get(0);
-        if (!briefcaseStack.isEmpty() && !briefcaseStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe().equals(this.cachedBriefcaseTag)) {
-            this.cachedBriefcaseTag = briefcaseStack.getComponents().get(DataComponents.CUSTOM_DATA).getUnsafe();
+        if (!briefcaseStack.isEmpty() && !briefcaseStack.getComponents().get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe().equals(this.cachedBriefcaseTag)) {
+            this.cachedBriefcaseTag = briefcaseStack.getComponents().get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).getUnsafe();
 
             List<Entity> beesStored = BuzzingBriefcase.getBeesStored(inventory.player.level(), briefcaseStack, false);
             if (isDiffFoundInBeeList(beesStored)) {
