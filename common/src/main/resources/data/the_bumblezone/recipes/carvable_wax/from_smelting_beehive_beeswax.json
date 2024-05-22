@@ -5,7 +5,10 @@
   "ingredient": {
     "item": "the_bumblezone:beehive_beeswax"
   },
-  "result": "the_bumblezone:carvable_wax",
+  "result": {
+    "id": "the_bumblezone:carvable_wax",
+    "count": 1
+  },
   "experience": 0.08,
   "cookingtime": 160
 }

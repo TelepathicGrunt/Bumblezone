@@ -5,7 +5,10 @@
   "ingredient": {
     "item": "the_bumblezone:honey_crystal_shards"
   },
-  "result": "the_bumblezone:sticky_honey_residue",
+  "result": {
+    "id": "the_bumblezone:sticky_honey_residue",
+    "count": 1
+  },
   "experience": 0.25,
   "cookingtime": 125
 }

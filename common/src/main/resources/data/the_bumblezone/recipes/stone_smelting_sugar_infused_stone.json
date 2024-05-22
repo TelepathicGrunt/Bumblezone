@@ -5,7 +5,9 @@
   "ingredient": {
     "item": "the_bumblezone:sugar_infused_stone"
   },
-  "result": "minecraft:stone",
+  "result": {
+    "id": "minecraft:stone"
+  },
   "experience": 0.05,
   "cookingtime": 50
 }

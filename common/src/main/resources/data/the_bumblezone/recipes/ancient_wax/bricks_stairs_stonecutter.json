@@ -1,8 +1,10 @@
 {
   "type": "minecraft:stonecutting",
-  "count": 1,
   "ingredient": {
     "item": "the_bumblezone:ancient_wax_bricks"
   },
-  "result": "the_bumblezone:ancient_wax_bricks_stairs"
+  "result": {
+    "id": "the_bumblezone:ancient_wax_bricks_stairs",
+    "count": 1
+  }
 }

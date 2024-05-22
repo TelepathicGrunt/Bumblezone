@@ -5,7 +5,9 @@
   "ingredient": {
     "item": "the_bumblezone:sugar_infused_cobblestone"
   },
-  "result": "minecraft:cobblestone",
+  "result": {
+    "id": "minecraft:cobblestone"
+  },
   "experience": 0.05,
   "cookingtime": 50
 }
