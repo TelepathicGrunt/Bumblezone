@@ -8,10 +8,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:red_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:white_concrete"
           }
         }
@@ -22,10 +22,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:orange_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:white_concrete"
           }
         }

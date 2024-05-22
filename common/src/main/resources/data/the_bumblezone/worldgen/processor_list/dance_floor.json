@@ -5,10 +5,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:yellow_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:beehive_beeswax"
           }
         }
@@ -19,10 +19,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:black_concrete"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:black_concrete"
           }
         }
@@ -33,10 +33,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:yellow_concrete"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:yellow_concrete"
           }
         }
@@ -47,10 +47,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:lime_concrete"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:lime_concrete"
           }
         }
@@ -61,10 +61,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:magenta_concrete"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:magenta_concrete"
           }
         }
@@ -75,10 +75,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:red_concrete"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:red_concrete"
           }
         }
@@ -89,10 +89,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:light_blue_concrete"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:light_blue_concrete"
           }
         }
@@ -103,10 +103,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:orange_concrete"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:orange_concrete"
           }
         }

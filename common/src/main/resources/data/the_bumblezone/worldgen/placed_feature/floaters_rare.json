@@ -19,7 +19,11 @@
     },
     {
       "type": "the_bumblezone:fixed_offset",
-      "offset": [8, 0, 8]
+      "offset": [
+        8,
+        0,
+        8
+      ]
     },
     {
       "type": "minecraft:height_range",
@@ -38,7 +42,11 @@
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:matching_blocks",
-        "offset": [0, 0, 0],
+        "offset": [
+          0,
+          0,
+          0
+        ],
         "blocks": "minecraft:air"
       }
     },

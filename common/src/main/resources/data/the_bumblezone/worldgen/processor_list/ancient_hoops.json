@@ -135,10 +135,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:red_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:ancient_wax_bricks"
           }
         }

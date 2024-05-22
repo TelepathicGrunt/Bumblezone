@@ -17,7 +17,10 @@
           },
           "location_predicate": {
             "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
-            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+            "blocks_to_not_match": [
+              "minecraft:air",
+              "the_bumblezone:sugar_water_block"
+            ]
           }
         },
         {
@@ -30,7 +33,10 @@
           },
           "location_predicate": {
             "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
-            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+            "blocks_to_not_match": [
+              "minecraft:air",
+              "the_bumblezone:sugar_water_block"
+            ]
           }
         },
         {
@@ -43,7 +49,10 @@
           },
           "location_predicate": {
             "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
-            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+            "blocks_to_not_match": [
+              "minecraft:air",
+              "the_bumblezone:sugar_water_block"
+            ]
           }
         },
         {
@@ -56,7 +65,10 @@
           },
           "location_predicate": {
             "predicate_type": "the_bumblezone:blocks_not_match_rule_test",
-            "blocks_to_not_match": [ "minecraft:air", "the_bumblezone:sugar_water_block" ]
+            "blocks_to_not_match": [
+              "minecraft:air",
+              "the_bumblezone:sugar_water_block"
+            ]
           }
         },
         {

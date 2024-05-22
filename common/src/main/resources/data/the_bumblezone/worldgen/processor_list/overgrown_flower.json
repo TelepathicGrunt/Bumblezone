@@ -5,10 +5,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "the_bumblezone:carvable_wax"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "uncarved"

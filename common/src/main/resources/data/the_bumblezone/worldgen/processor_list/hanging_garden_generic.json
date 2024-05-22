@@ -91,10 +91,10 @@
       "direction": "up",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:yellow_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"

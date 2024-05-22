@@ -34,7 +34,7 @@
           "weight": 75
         }
       ],
-      "chance_to_override_with_tagged_mobs":  0.222,
+      "chance_to_override_with_tagged_mobs": 0.222,
       "override_mobs_to_pick_from": "#the_bumblezone:structure_spawner_mobs/spider_infested_bee_dungeon_rare_spawner_type",
       "processor_type": "the_bumblezone:spawner_randomizing_processor"
     },

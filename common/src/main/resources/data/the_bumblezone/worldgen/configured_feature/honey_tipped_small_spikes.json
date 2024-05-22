@@ -9,10 +9,8 @@
     ],
     "height_range": {
       "type": "minecraft:uniform",
-      "value": {
-        "max_inclusive": 12,
-        "min_inclusive": 4
-      }
+      "max_inclusive": 12,
+      "min_inclusive": 4
     }
   }
 }

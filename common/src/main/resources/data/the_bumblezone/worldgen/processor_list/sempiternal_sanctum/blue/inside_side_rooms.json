@@ -66,7 +66,10 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:deepslate"
+            "Name": "minecraft:deepslate",
+            "Properties": {
+              "axis": "y"
+            }
           },
           "input_predicate": {
             "block": "minecraft:deepslate_emerald_ore",
@@ -118,7 +121,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:deepslate_goal_ore"
+            "Name": "minecraft:deepslate_gold_ore"
           },
           "input_predicate": {
             "block": "minecraft:deepslate",

@@ -53,10 +53,10 @@
       "direction": "up",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:black_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:chain",
             "Properties": {
               "axis": "y"
@@ -70,10 +70,10 @@
       "direction": "up",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:red_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"
@@ -87,17 +87,15 @@
       "direction": "up",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 43,
-          "min_inclusive": 40
-        }
+        "max_inclusive": 43,
+        "min_inclusive": 40
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:orange_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"
@@ -111,17 +109,15 @@
       "direction": "up",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 33,
-          "min_inclusive": 30
-        }
+        "max_inclusive": 33,
+        "min_inclusive": 30
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:yellow_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"
@@ -135,17 +131,15 @@
       "direction": "up",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 23,
-          "min_inclusive": 20
-        }
+        "max_inclusive": 23,
+        "min_inclusive": 20
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:lime_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"
@@ -159,17 +153,15 @@
       "direction": "up",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 14,
-          "min_inclusive": 12
-        }
+        "max_inclusive": 14,
+        "min_inclusive": 12
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:cyan_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"
@@ -183,17 +175,15 @@
       "direction": "up",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 8,
-          "min_inclusive": 7
-        }
+        "max_inclusive": 8,
+        "min_inclusive": 7
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:blue_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"
@@ -207,17 +197,15 @@
       "direction": "up",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 5,
-          "min_inclusive": 4
-        }
+        "max_inclusive": 5,
+        "min_inclusive": 4
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:purple_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"
@@ -231,17 +219,15 @@
       "direction": "up",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 3,
-          "min_inclusive": 2
-        }
+        "max_inclusive": 3,
+        "min_inclusive": 2
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:pink_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "chains"

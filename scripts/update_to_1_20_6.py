@@ -7,6 +7,9 @@ data_folder = os.path.join('..', 'common', 'src', 'main', 'resources', 'data', '
 
 loot_tables_folder = os.path.join('loot_tables')
 advancements_folder = os.path.join('advancements')
+configured_feature_folder = os.path.join('worldgen', 'configured_feature')
+placed_feature_folder = os.path.join('worldgen', 'placed_feature')
+processor_list_folder = os.path.join('worldgen', 'processor_list')
 
 def createFile(input_path, output_path, regex_list):
     file_content = ''
@@ -354,10 +357,110 @@ for (subdir, dirs, files) in os.walk(path, topdown=True):
                             structureLocation["structures"] = structureLocation["structure"]
                             del structureLocation["structure"]
                         
-                traverseAndModify(lootTable, [updateItemNames])
+                traverseAndModify(lootTable, [setPotionComponent, updateItemNames])
 
             with open(filepath, 'w') as file:
                 json.dump(lootTable, file, indent = 2)
+            continue
+        else:
+            continue
+
+# Configured Feature Updating
+path = os.path.join(data_folder, configured_feature_folder)
+for (subdir, dirs, files) in os.walk(path, topdown=True):
+    for file in files:
+        directory = subdir + os.sep
+        filepath = directory + file
+
+        if filepath.endswith(".json"):
+            configuredFeature = {}
+            with open(filepath, 'r') as file:
+                configuredFeature = json.loads(file.read())
+
+                def updateUniform(objectToModify):
+                    if "type" in objectToModify and \
+                        "minecraft:uniform" in objectToModify["type"] and \
+                        "value" in objectToModify and \
+                        "max_inclusive" in objectToModify["value"] and \
+                        "min_inclusive" in objectToModify["value"]:
+
+                        maxInclusive = objectToModify["value"]["max_inclusive"]
+                        minInclusive = objectToModify["value"]["min_inclusive"]
+                        objectToModify["max_inclusive"] = maxInclusive
+                        objectToModify["min_inclusive"] = minInclusive
+                        del objectToModify["value"]
+                        
+                traverseAndModify(configuredFeature, [updateUniform])
+
+            with open(filepath, 'w') as file:
+                json.dump(configuredFeature, file, indent = 2)
+            continue
+        else:
+            continue
+
+
+# Placed Feature Updating
+path = os.path.join(data_folder, placed_feature_folder)
+for (subdir, dirs, files) in os.walk(path, topdown=True):
+    for file in files:
+        directory = subdir + os.sep
+        filepath = directory + file
+
+        if filepath.endswith(".json"):
+            placedFeature = {}
+            with open(filepath, 'r') as file:
+                placedFeature = json.loads(file.read())
+
+                def updateUniform(objectToModify):
+                    if "type" in objectToModify and \
+                        "minecraft:uniform" in objectToModify["type"] and \
+                        "value" in objectToModify and \
+                        "max_inclusive" in objectToModify["value"] and \
+                        "min_inclusive" in objectToModify["value"]:
+
+                        maxInclusive = objectToModify["value"]["max_inclusive"]
+                        minInclusive = objectToModify["value"]["min_inclusive"]
+                        objectToModify["max_inclusive"] = maxInclusive
+                        objectToModify["min_inclusive"] = minInclusive
+                        del objectToModify["value"]
+                        
+                traverseAndModify(placedFeature, [updateUniform])
+
+            with open(filepath, 'w') as file:
+                json.dump(placedFeature, file, indent = 2)
+            continue
+        else:
+            continue
+
+# Processor List Updating
+path = os.path.join(data_folder, processor_list_folder)
+for (subdir, dirs, files) in os.walk(path, topdown=True):
+    for file in files:
+        directory = subdir + os.sep
+        filepath = directory + file
+
+        if filepath.endswith(".json"):
+            processorList = {}
+            with open(filepath, 'r') as file:
+                processorList = json.loads(file.read())
+
+                def updateUniform(objectToModify):
+                    if "type" in objectToModify and \
+                        "minecraft:uniform" in objectToModify["type"] and \
+                        "value" in objectToModify and \
+                        "max_inclusive" in objectToModify["value"] and \
+                        "min_inclusive" in objectToModify["value"]:
+
+                        maxInclusive = objectToModify["value"]["max_inclusive"]
+                        minInclusive = objectToModify["value"]["min_inclusive"]
+                        objectToModify["max_inclusive"] = maxInclusive
+                        objectToModify["min_inclusive"] = minInclusive
+                        del objectToModify["value"]
+                        
+                traverseAndModify(processorList, [updateUniform])
+
+            with open(filepath, 'w') as file:
+                json.dump(processorList, file, indent = 2)
             continue
         else:
             continue

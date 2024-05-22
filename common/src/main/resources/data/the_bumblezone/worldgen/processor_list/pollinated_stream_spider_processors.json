@@ -22,10 +22,10 @@
       "pillar_processor_list": "the_bumblezone:pollinated_stream_processors",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:red_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:honeycomb_block"
           }
         }
@@ -36,18 +36,16 @@
       "direction": "down",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 6,
-          "min_inclusive": 4
-        }
+        "max_inclusive": 6,
+        "min_inclusive": 4
       },
       "pillar_processor_list": "the_bumblezone:pollinated_stream_processors",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:orange_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:honeycomb_block"
           }
         }
@@ -76,7 +74,7 @@
           "weight": 100
         }
       ],
-      "chance_to_override_with_tagged_mobs":  0.222,
+      "chance_to_override_with_tagged_mobs": 0.222,
       "override_mobs_to_pick_from": "#the_bumblezone:structure_spawner_mobs/pollinated_stream_rare_spawner_type",
       "processor_type": "the_bumblezone:spawner_randomizing_processor"
     },

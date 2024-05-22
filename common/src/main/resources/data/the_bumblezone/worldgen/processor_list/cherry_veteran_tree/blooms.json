@@ -95,17 +95,15 @@
       "direction": "down",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 4,
-          "min_inclusive": 2
-        }
+        "max_inclusive": 4,
+        "min_inclusive": 2
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:pink_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:cherry_leaves",
             "Properties": {
               "distance": "1",
@@ -121,17 +119,15 @@
       "direction": "down",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 6,
-          "min_inclusive": 3
-        }
+        "max_inclusive": 6,
+        "min_inclusive": 3
       },
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:purple_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:cherry_leaves",
             "Properties": {
               "distance": "1",

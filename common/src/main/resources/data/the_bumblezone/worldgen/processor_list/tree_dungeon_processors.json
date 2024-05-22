@@ -30,18 +30,16 @@
       "direction": "down",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 10,
-          "min_inclusive": 8
-        }
+        "max_inclusive": 10,
+        "min_inclusive": 8
       },
       "pillar_processor_list": "the_bumblezone:tree_dungeon_processors",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:red_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:porous_honeycomb_block"
           }
         }
@@ -52,18 +50,16 @@
       "direction": "down",
       "pillar_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 10,
-          "min_inclusive": 8
-        }
+        "max_inclusive": 10,
+        "min_inclusive": 8
       },
       "pillar_processor_list": "the_bumblezone:tree_dungeon_processors",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:orange_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:dirt"
           }
         }
@@ -170,8 +166,6 @@
             "predicate_type": "minecraft:always_true"
           }
         },
-
-
         {
           "output_state": {
             "Name": "minecraft:pink_petals",
@@ -240,8 +234,6 @@
             "predicate_type": "minecraft:always_true"
           }
         },
-
-
         {
           "output_state": {
             "Name": "minecraft:pink_petals",
@@ -310,8 +302,6 @@
             "predicate_type": "minecraft:always_true"
           }
         },
-
-
         {
           "output_state": {
             "Name": "minecraft:pink_petals",
@@ -380,7 +370,6 @@
             "predicate_type": "minecraft:always_true"
           }
         },
-
         {
           "output_state": {
             "Name": "minecraft:podzol"
@@ -459,10 +448,8 @@
       "processor_type": "minecraft:capped",
       "limit": {
         "type": "minecraft:uniform",
-        "value": {
-          "min_inclusive": 1,
-          "max_inclusive": 3
-        }
+        "max_inclusive": 3,
+        "min_inclusive": 1
       },
       "delegate": {
         "processor_type": "minecraft:rule",

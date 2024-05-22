@@ -9,16 +9,18 @@
       "type": "minecraft:random_offset",
       "xz_spread": {
         "type": "minecraft:uniform",
-        "value": {
-          "min_inclusive": -3,
-          "max_inclusive": 3
-        }
+        "max_inclusive": 3,
+        "min_inclusive": -3
       },
       "y_spread": 0
     },
     {
       "type": "the_bumblezone:fixed_offset",
-      "offset": [8, 0, 8]
+      "offset": [
+        8,
+        0,
+        8
+      ]
     },
     {
       "type": "minecraft:height_range",

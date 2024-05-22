@@ -21,16 +21,18 @@
       "type": "minecraft:random_offset",
       "xz_spread": {
         "type": "minecraft:uniform",
-        "value": {
-          "min_inclusive": -3,
-          "max_inclusive": 3
-        }
+        "max_inclusive": 3,
+        "min_inclusive": -3
       },
       "y_spread": 0
     },
     {
       "type": "the_bumblezone:fixed_offset",
-      "offset": [8, 0, 8]
+      "offset": [
+        8,
+        0,
+        8
+      ]
     },
     {
       "type": "the_bumblezone:roofed_dimension_surface_placement",
@@ -41,7 +43,11 @@
       "type": "minecraft:block_predicate_filter",
       "predicate": {
         "type": "minecraft:matching_blocks",
-        "offset": [0, -1, 0],
+        "offset": [
+          0,
+          -1,
+          0
+        ],
         "blocks": [
           "minecraft:grass_block",
           "the_bumblezone:filled_porous_honeycomb_block",

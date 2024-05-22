@@ -5,13 +5,13 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "grate"
             }
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:carvable_wax",
             "Properties": {
               "carving": "grate"
@@ -25,10 +25,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "the_bumblezone:beehive_beeswax"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:beehive_beeswax"
           }
         }
@@ -39,10 +39,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "the_bumblezone:sugar_infused_cobblestone"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "the_bumblezone:sugar_infused_cobblestone"
           }
         }

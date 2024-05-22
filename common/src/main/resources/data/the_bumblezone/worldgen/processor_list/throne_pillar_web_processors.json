@@ -24,7 +24,9 @@
     },
     {
       "processor_type": "the_bumblezone:replace_air_processor",
-      "blocks_to_always_replace": ["the_bumblezone:honey_web"]
+      "blocks_to_always_replace": [
+        "the_bumblezone:honey_web"
+      ]
     },
     {
       "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
@@ -36,7 +38,7 @@
     },
     {
       "processor_type": "the_bumblezone:noise_replace_with_properties_processor",
-      "output_block": "the_bumblezone:structure_void",
+      "output_block": "minecraft:structure_void",
       "input_block": "the_bumblezone:honey_web",
       "threshold": 0.25,
       "xz_scale": 0.3,

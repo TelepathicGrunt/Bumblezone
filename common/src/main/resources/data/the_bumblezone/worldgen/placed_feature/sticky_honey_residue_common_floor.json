@@ -9,10 +9,8 @@
       "count": 1,
       "height_range": {
         "type": "minecraft:uniform",
-        "value": {
-          "max_inclusive": 60,
-          "min_inclusive": 40
-        }
+        "max_inclusive": 60,
+        "min_inclusive": 40
       },
       "allow_underwater": false,
       "type": "the_bumblezone:random_3d_cluster_placement"

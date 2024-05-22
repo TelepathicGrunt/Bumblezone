@@ -59,10 +59,8 @@
       },
       "branch_horizontal_length": {
         "type": "minecraft:uniform",
-        "value": {
-          "min_inclusive": 2,
-          "max_inclusive": 5
-        }
+        "max_inclusive": 5,
+        "min_inclusive": 2
       },
       "branch_start_offset_from_top": {
         "min_inclusive": -6,
@@ -70,10 +68,8 @@
       },
       "branch_end_offset_from_top": {
         "type": "minecraft:uniform",
-        "value": {
-          "min_inclusive": -1,
-          "max_inclusive": 0
-        }
+        "max_inclusive": 0,
+        "min_inclusive": -1
       }
     },
     "foliage_placer": {

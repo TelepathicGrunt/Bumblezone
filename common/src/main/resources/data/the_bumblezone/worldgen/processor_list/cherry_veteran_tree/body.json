@@ -58,10 +58,10 @@
       "pillar_processor_list": "the_bumblezone:cherry_veteran_tree/blooms",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:brown_stained_glass"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:rooted_dirt"
           }
         }
@@ -72,10 +72,10 @@
       "direction": "down",
       "pillar_trigger_and_replacements": [
         {
-          "trigger" : {
+          "trigger": {
             "Name": "minecraft:mangrove_roots"
           },
-          "replacement" : {
+          "replacement": {
             "Name": "minecraft:mangrove_roots"
           }
         }
