@@ -42,34 +42,6 @@ def traverseAndModify(dictionary, modifiers):
 
 #--------------------------------------------------------------------------------------------
 
-"""
-        {
-          "name": "minecraft:magenta_banner",
-          "functions": [
-            {
-              "function": "set_nbt",
-              "tag": "{BlockEntityTag:{Patterns:[{Pattern:bri,Color:15},{Pattern:ss,Color:2},{Pattern:gru,Color:15},{Pattern:gru,Color:2},{Pattern:mr,Color:15},{Pattern:br,Color:2},{Pattern:br,Color:15},{Pattern:bl,Color:2},{Pattern:bl,Color:15},{Pattern:bts,Color:2},{Pattern:gru,Color:10},{Pattern:bts,Color:15}]}}"
-            }
-          ]
-        },
-
-        
-        {
-          "name": "minecraft:magenta_banner",
-          "functions": [
-            {
-              "function": "minecraft:set_banner_pattern",
-              "patterns": [
-                {
-                  "pattern": "minecraft:base",
-                  "color": "lime"
-                }
-              ]
-            }
-          ]
-        },
-""" and None
-
 # Loot Table Updating
 acceptedBasePotions = {
     "minecraft:water",
