@@ -28,7 +28,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:ancient_hoops"
+                "structures": "the_bumblezone:ancient_hoops"
               }
             }
           }
@@ -44,7 +44,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:ancient_shrine"
+                "structures": "the_bumblezone:ancient_shrine"
               }
             }
           }
@@ -60,7 +60,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:battle_cubes"
+                "structures": "the_bumblezone:battle_cubes"
               }
             }
           }
@@ -76,7 +76,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:bee_house"
+                "structures": "the_bumblezone:bee_house"
               }
             }
           }
@@ -92,7 +92,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:candle_parkour"
+                "structures": "the_bumblezone:candle_parkour"
               }
             }
           }
@@ -108,7 +108,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:cannon_range"
+                "structures": "the_bumblezone:cannon_range"
               }
             }
           }
@@ -124,7 +124,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:cell_maze"
+                "structures": "the_bumblezone:cell_maze"
               }
             }
           }
@@ -140,7 +140,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:cherry_veteran_tree"
+                "structures": "the_bumblezone:cherry_veteran_tree"
               }
             }
           }
@@ -156,7 +156,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:dance_floor"
+                "structures": "the_bumblezone:dance_floor"
               }
             }
           }
@@ -172,7 +172,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:hanging_garden"
+                "structures": "the_bumblezone:hanging_garden"
               }
             }
           }
@@ -188,7 +188,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:hive_temple"
+                "structures": "the_bumblezone:hive_temple"
               }
             }
           }
@@ -204,7 +204,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:honey_cave_room"
+                "structures": "the_bumblezone:honey_cave_room"
               }
             }
           }
@@ -220,7 +220,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:honey_fountain"
+                "structures": "the_bumblezone:honey_fountain"
               }
             }
           }
@@ -236,7 +236,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:honey_slime_ranch"
+                "structures": "the_bumblezone:honey_slime_ranch"
               }
             }
           }
@@ -252,7 +252,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:honitel"
+                "structures": "the_bumblezone:honitel"
               }
             }
           }
@@ -268,7 +268,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:ice_monolith"
+                "structures": "the_bumblezone:ice_monolith"
               }
             }
           }
@@ -284,7 +284,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:overgrown_flower"
+                "structures": "the_bumblezone:overgrown_flower"
               }
             }
           }
@@ -300,7 +300,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:pirate_ship"
+                "structures": "the_bumblezone:pirate_ship"
               }
             }
           }
@@ -316,7 +316,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:pollinated_stream"
+                "structures": "the_bumblezone:pollinated_stream"
               }
             }
           }
@@ -332,7 +332,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:sempiternal_sanctum_red"
+                "structures": "the_bumblezone:sempiternal_sanctum_red"
               }
             }
           }
@@ -348,7 +348,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:sempiternal_sanctum_purple"
+                "structures": "the_bumblezone:sempiternal_sanctum_purple"
               }
             }
           }
@@ -364,7 +364,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:sempiternal_sanctum_blue"
+                "structures": "the_bumblezone:sempiternal_sanctum_blue"
               }
             }
           }
@@ -380,7 +380,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:sempiternal_sanctum_green"
+                "structures": "the_bumblezone:sempiternal_sanctum_green"
               }
             }
           }
@@ -396,7 +396,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:sempiternal_sanctum_yellow"
+                "structures": "the_bumblezone:sempiternal_sanctum_yellow"
               }
             }
           }
@@ -412,7 +412,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:sempiternal_sanctum_white"
+                "structures": "the_bumblezone:sempiternal_sanctum_white"
               }
             }
           }
@@ -428,7 +428,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:stinger_spear_shrine"
+                "structures": "the_bumblezone:stinger_spear_shrine"
               }
             }
           }
@@ -444,7 +444,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:subway"
+                "structures": "the_bumblezone:subway"
               }
             }
           }
@@ -460,7 +460,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:throne_pillar"
+                "structures": "the_bumblezone:throne_pillar"
               }
             }
           }

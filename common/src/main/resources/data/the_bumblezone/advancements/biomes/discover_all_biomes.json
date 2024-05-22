@@ -28,7 +28,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "the_bumblezone:hive_pillar"
+                "biomes": "the_bumblezone:hive_pillar"
               }
             }
           }
@@ -44,7 +44,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "the_bumblezone:hive_wall"
+                "biomes": "the_bumblezone:hive_wall"
               }
             }
           }
@@ -60,7 +60,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "the_bumblezone:pollinated_fields"
+                "biomes": "the_bumblezone:pollinated_fields"
               }
             }
           }
@@ -76,7 +76,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "the_bumblezone:pollinated_pillar"
+                "biomes": "the_bumblezone:pollinated_pillar"
               }
             }
           }
@@ -92,7 +92,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "the_bumblezone:sugar_water_floor"
+                "biomes": "the_bumblezone:sugar_water_floor"
               }
             }
           }
@@ -108,7 +108,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "the_bumblezone:crystal_canyon"
+                "biomes": "the_bumblezone:crystal_canyon"
               }
             }
           }
@@ -124,7 +124,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "the_bumblezone:floral_meadow"
+                "biomes": "the_bumblezone:floral_meadow"
               }
             }
           }

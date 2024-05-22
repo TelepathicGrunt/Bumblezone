@@ -28,7 +28,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:throne_pillar"
+                "structures": "the_bumblezone:throne_pillar"
               }
             }
           }

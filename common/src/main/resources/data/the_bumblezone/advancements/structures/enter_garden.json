@@ -28,7 +28,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "the_bumblezone:hanging_garden"
+                "structures": "the_bumblezone:hanging_garden"
               }
             }
           }

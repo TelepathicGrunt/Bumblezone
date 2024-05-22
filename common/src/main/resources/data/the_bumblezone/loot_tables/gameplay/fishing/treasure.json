@@ -206,7 +206,7 @@
                 {
                   "condition": "minecraft:location_check",
                   "predicate": {
-                    "biome": "the_bumblezone:crystal_canyon"
+                    "biomes": "the_bumblezone:crystal_canyon"
                   }
                 }
               ]

@@ -94,7 +94,7 @@
                 {
                   "condition": "minecraft:location_check",
                   "predicate": {
-                    "biome": "the_bumblezone:floral_meadow"
+                    "biomes": "the_bumblezone:floral_meadow"
                   }
                 }
               ]
@@ -112,7 +112,7 @@
                 {
                   "condition": "minecraft:location_check",
                   "predicate": {
-                    "biome": "the_bumblezone:crystal_canyon"
+                    "biomes": "the_bumblezone:crystal_canyon"
                   }
                 }
               ]
