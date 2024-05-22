@@ -14,7 +14,7 @@ public class ModuleHelperImpl {
         AttachmentType<T> attachmentType = (AttachmentType<T>) AttachmentRegistryImpl.get(moduleHolder.id());
         if (attachmentType != null) {
             if (!entity.hasAttached(attachmentType)) {
-                entity.setAttached(attachmentType, attachmentType.initializer().get());
+                entity.setAttached(attachmentType, moduleHolder.factory().get());
             }
             return Optional.ofNullable(entity.getAttached(attachmentType));
         }

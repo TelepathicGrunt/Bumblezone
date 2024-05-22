@@ -29,6 +29,10 @@
       "required": false
     },
     {
+      "id": "bosses_of_mass_destruction:void_lily",
+      "required": false
+    },
+    {
       "id": "botania:pure_daisy",
       "required": false
     },

@@ -53,6 +53,8 @@ public class RoyalJellyFluidBlock extends BzLiquidBlock {
                 .setValue(BOTTOM_LEVEL, 0)
                 .setValue(FALLING, false)
                 .setValue(ABOVE_FLUID, false));
+
+        baseFluid.setBlock(() -> this);
     }
 
     @Override

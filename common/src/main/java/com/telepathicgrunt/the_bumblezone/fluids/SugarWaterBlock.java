@@ -32,6 +32,7 @@ public class SugarWaterBlock extends BzLiquidBlock {
                 .replaceable()
                 .sound(SoundType.EMPTY)
                 .pushReaction(PushReaction.DESTROY));
+        baseFluid.setBlock(() -> this);
     }
 
     @Override

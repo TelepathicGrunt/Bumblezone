@@ -21,7 +21,7 @@ public class RoyalJellyFluidType {
                 .canConvertToSource(false)
                 .fallDistanceModifier(0.15f)
                 .motionScale(0.0115)
-                .rarity(Rarity.UNCOMMON)
+                .rarity(Rarity.RARE)
                 .viscosity(5000)
                 .density(2000)
                 .temperature(300)
