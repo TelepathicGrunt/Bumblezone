@@ -314,8 +314,13 @@
           "weight": 12,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },
@@ -328,8 +333,13 @@
               "function": "minecraft:enchant_randomly"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },
@@ -339,8 +349,13 @@
           "weight": 12,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },
@@ -353,8 +368,13 @@
               "function": "minecraft:enchant_randomly"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },
@@ -364,8 +384,13 @@
           "weight": 12,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },
@@ -378,8 +403,13 @@
               "function": "minecraft:enchant_randomly"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },
@@ -389,8 +419,13 @@
           "weight": 12,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },
@@ -403,8 +438,13 @@
               "function": "minecraft:enchant_randomly"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"display\": {\"color\":16701501}}"
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": {
+                  "rgb": 16701501,
+                  "show_in_tooltip": false
+                }
+              }
             }
           ]
         },

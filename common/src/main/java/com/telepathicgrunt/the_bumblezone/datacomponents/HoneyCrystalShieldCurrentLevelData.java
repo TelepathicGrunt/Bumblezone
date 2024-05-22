@@ -9,7 +9,7 @@ import net.minecraft.util.ExtraCodecs;
 
 public record HoneyCrystalShieldCurrentLevelData(int currentLevel) {
     public static final Codec<HoneyCrystalShieldCurrentLevelData> DIRECT_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            ExtraCodecs.POSITIVE_INT.fieldOf("currentLevel").forGetter(HoneyCrystalShieldCurrentLevelData::currentLevel)
+            ExtraCodecs.POSITIVE_INT.fieldOf("currentLevel").orElse(1).forGetter(HoneyCrystalShieldCurrentLevelData::currentLevel)
     ).apply(instance, HoneyCrystalShieldCurrentLevelData::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, HoneyCrystalShieldCurrentLevelData> DIRECT_STREAM_CODEC = StreamCodec.composite(

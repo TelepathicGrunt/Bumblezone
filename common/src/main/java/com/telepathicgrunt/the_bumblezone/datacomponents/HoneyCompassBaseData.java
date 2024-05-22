@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public record HoneyCompassBaseData(String compassType, Optional<String> customName, Optional<String> customDescription) {
     public static final Codec<HoneyCompassBaseData> DIRECT_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codec.STRING.fieldOf("compassType").forGetter(HoneyCompassBaseData::compassType),
+            Codec.STRING.fieldOf("compassType").orElse("").forGetter(HoneyCompassBaseData::compassType),
             Codec.STRING.optionalFieldOf("customName").forGetter(HoneyCompassBaseData::customName),
             Codec.STRING.optionalFieldOf("customDescription").forGetter(HoneyCompassBaseData::customDescription)
     ).apply(instance, HoneyCompassBaseData::new));

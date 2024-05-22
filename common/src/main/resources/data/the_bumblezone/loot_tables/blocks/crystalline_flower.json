@@ -10,24 +10,10 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:copy_nbt",
+              "function": "minecraft:copy_components",
               "source": "block_entity",
-              "ops": [
-                {
-                  "source": "tier",
-                  "target": "BlockEntityTag.tier",
-                  "op": "replace"
-                },
-                {
-                  "source": "xp",
-                  "target": "BlockEntityTag.xp",
-                  "op": "replace"
-                },
-                {
-                  "source": "guid",
-                  "target": "BlockEntityTag.guid",
-                  "op": "replace"
-                }
+              "include": [
+                "minecraft:block_entity_data"
               ]
             },
             {

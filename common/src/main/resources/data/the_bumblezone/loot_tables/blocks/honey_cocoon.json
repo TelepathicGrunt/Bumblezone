@@ -13,18 +13,10 @@
               "type": "minecraft:item",
               "functions": [
                 {
-                  "function": "minecraft:copy_name",
-                  "source": "block_entity"
-                },
-                {
-                  "function": "minecraft:copy_nbt",
+                  "function": "minecraft:copy_components",
                   "source": "block_entity",
-                  "ops": [
-                    {
-                      "source": "Items",
-                      "target": "BlockEntityTag.Items",
-                      "op": "replace"
-                    }
+                  "include": [
+                    "minecraft:block_entity_data"
                   ]
                 },
                 {

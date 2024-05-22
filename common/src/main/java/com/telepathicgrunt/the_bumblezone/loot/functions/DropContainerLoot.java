@@ -22,10 +22,10 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class DropContainerItems extends LootItemConditionalFunction {
-    public static final MapCodec<DropContainerItems> CODEC = RecordCodecBuilder.mapCodec(instance -> DropContainerItems.commonFields(instance).apply(instance, DropContainerItems::new));
+public class DropContainerLoot extends LootItemConditionalFunction {
+    public static final MapCodec<DropContainerLoot> CODEC = RecordCodecBuilder.mapCodec(instance -> DropContainerLoot.commonFields(instance).apply(instance, DropContainerLoot::new));
 
-    public DropContainerItems(List<LootItemCondition> itemConditions) {
+    public DropContainerLoot(List<LootItemCondition> itemConditions) {
         super(itemConditions);
     }
 

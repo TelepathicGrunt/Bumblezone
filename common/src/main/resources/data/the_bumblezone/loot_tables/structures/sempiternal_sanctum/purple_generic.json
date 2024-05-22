@@ -185,8 +185,12 @@
           "weight": 6,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"ShieldLevel\":5}"
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_crystal_shield_current_level_data": {
+                  "currentLevel": 5
+                }
+              }
             },
             {
               "function": "minecraft:enchant_with_levels",
@@ -201,8 +205,12 @@
           "weight": 5,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"ShieldLevel\":6}"
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_crystal_shield_current_level_data": {
+                  "currentLevel": 6
+                }
+              }
             },
             {
               "function": "minecraft:enchant_with_levels",
@@ -217,8 +225,12 @@
           "weight": 4,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"ShieldLevel\":7}"
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_crystal_shield_current_level_data": {
+                  "currentLevel": 7
+                }
+              }
             },
             {
               "function": "minecraft:enchant_with_levels",
@@ -233,8 +245,12 @@
           "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"ShieldLevel\":8}"
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_crystal_shield_current_level_data": {
+                  "currentLevel": 8
+                }
+              }
             },
             {
               "function": "minecraft:enchant_with_levels",
@@ -249,8 +265,12 @@
           "weight": 2,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"ShieldLevel\":9}"
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_crystal_shield_current_level_data": {
+                  "currentLevel": 9
+                }
+              }
             },
             {
               "function": "minecraft:enchant_with_levels",
@@ -265,8 +285,12 @@
           "weight": 1,
           "functions": [
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{\"ShieldLevel\":10}"
+              "function": "minecraft:set_components",
+              "components": {
+                "the_bumblezone:honey_crystal_shield_current_level_data": {
+                  "currentLevel": 10
+                }
+              }
             },
             {
               "function": "minecraft:enchant_with_levels",

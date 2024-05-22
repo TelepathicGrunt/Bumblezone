@@ -6,6 +6,7 @@
       "components": {
         "minecraft:potion_contents": {
           "potion": "the_bumblezone:neurotoxin"
+        }
       }
     },
     "title": {
