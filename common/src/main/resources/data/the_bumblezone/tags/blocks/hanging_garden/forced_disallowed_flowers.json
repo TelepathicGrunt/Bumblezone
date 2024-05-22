@@ -120,6 +120,10 @@
       "required": false
     },
     {
+      "id": "bosses_of_mass_destruction:void_lily",
+      "required": false
+    },
+    {
       "id": "botania:gray_mystical_flower",
       "required": false
     },

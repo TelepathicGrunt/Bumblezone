@@ -2,7 +2,7 @@
   "type": "minecraft:spring_feature",
   "config": {
     "state": {
-      "Name": "the_bumblezone:sugar_water",
+      "Name": "the_bumblezone:sugar_water_still",
       "Properties": {
         "falling": "true"
       }
