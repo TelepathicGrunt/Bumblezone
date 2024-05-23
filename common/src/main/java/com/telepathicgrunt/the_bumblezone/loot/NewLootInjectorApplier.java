@@ -65,7 +65,7 @@ public final class NewLootInjectorApplier {
         stingerLootTable.getRandomItems(((LootContextAccessor)context).getParams(), newItems::add);
         originalLoot.addAll(newItems);
 
-        if(context.hasParam(LootContextParams.THIS_ENTITY)) {
+        if (context.hasParam(LootContextParams.THIS_ENTITY)) {
             Entity entity = context.getParam(LootContextParams.THIS_ENTITY);
             if (entity != null) {
                 ((EntityLootDropInterface)entity).thebumblezone_performedEntityDrops();

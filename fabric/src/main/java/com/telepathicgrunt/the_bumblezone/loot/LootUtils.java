@@ -22,7 +22,8 @@ public class LootUtils {
         }
 
         ResourceLocation resourceLocation = minecraftServer
-                .registryAccess()
+                .reloadableRegistries()
+                .get()
                 .registryOrThrow(Registries.LOOT_TABLE)
                 .getKey(lootTable);
 

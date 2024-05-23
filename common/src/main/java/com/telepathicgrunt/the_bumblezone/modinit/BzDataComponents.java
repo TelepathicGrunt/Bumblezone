@@ -60,10 +60,10 @@ public class BzDataComponents {
             "crystal_cannon_data", () -> buildSyncPersistentComponentRegistryFriendly(CrystalCannonData.DIRECT_CODEC, CrystalCannonData.DIRECT_STREAM_CODEC));
 
     public static final RegistryEntry<DataComponentType<CustomData>> BEE_CANNON_DATA = DATA_COMPONENT_TYPE.register(
-            "bee_cannon_data", () -> buildSyncPersistentComponent(CustomData.CODEC_WITH_ID, CustomData.STREAM_CODEC));
+            "bee_cannon_data", () -> buildSyncPersistentComponent(CustomData.CODEC, CustomData.STREAM_CODEC));
 
     public static final RegistryEntry<DataComponentType<CustomData>> BUZZING_BRIEFCASE_DATA = DATA_COMPONENT_TYPE.register(
-            "buzzing_briefcase_data", () -> buildSyncPersistentComponent(CustomData.CODEC_WITH_ID, CustomData.STREAM_CODEC));
+            "buzzing_briefcase_data", () -> buildSyncPersistentComponent(CustomData.CODEC, CustomData.STREAM_CODEC));
 
     public static final RegistryEntry<DataComponentType<HoneyCompassBaseData>> HONEY_COMPASS_BASE_DATA = DATA_COMPONENT_TYPE.register(
             "honey_compass_base_data", () -> buildSyncPersistentComponentRegistryFriendly(HoneyCompassBaseData.DIRECT_CODEC, HoneyCompassBaseData.DIRECT_STREAM_CODEC));

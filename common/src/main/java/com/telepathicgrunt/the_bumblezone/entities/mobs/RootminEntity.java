@@ -774,7 +774,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
 
    @Override
    protected EntityDimensions getDefaultDimensions(Pose pose) {
-      EntityDimensions defaultDimensions = this.getDefaultDimensions(pose);
+      EntityDimensions defaultDimensions = super.getDefaultDimensions(pose);
       return defaultDimensions.withEyeHeight(defaultDimensions.height() - 0.575f).scale(this.getScale());
    }
 

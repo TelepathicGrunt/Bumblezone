@@ -35,6 +35,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.UUID;
 
 public class BeeCannon extends Item implements ItemExtension {
     public static final String TAG_BEES = "BeesStored";
@@ -93,7 +94,7 @@ public class BeeCannon extends Item implements ItemExtension {
 
                 bees.forEach(bee -> {
                     bee.moveTo(playerEyePos.x(),
-                            playerEyePos.y(),
+                            playerEyePos.y() - 0.5D,
                             playerEyePos.z(),
                             player.getYRot(),
                             player.getXRot());
@@ -176,16 +177,26 @@ public class BeeCannon extends Item implements ItemExtension {
 
     public static boolean tryAddBee(ItemStack beeCannonItem, Entity bee) {
         if (getNumberOfBees(beeCannonItem) < MAX_NUMBER_OF_BEES && beeCannonItem.has(BzDataComponents.BEE_CANNON_DATA.get())) {
+            String beeTypeRL = bee.getEncodeId();
+            if (beeTypeRL == null) {
+                return false;
+            }
+
             CompoundTag cannonTag = beeCannonItem.get(BzDataComponents.BEE_CANNON_DATA.get()).copyTag();
             ListTag beeList = cannonTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
             CompoundTag beeTag = new CompoundTag();
 
-            bee.save(beeTag);
             bee.stopRiding();
             bee.ejectPassengers();
+            beeTag.putString("id", beeTypeRL);
+            bee.saveWithoutId(beeTag);
 
+            UUID uUID = bee.getUUID();
+            bee.load(beeTag);
+            bee.setUUID(uUID);
             beeTag.remove("UUID");
             beeList.add(beeTag);
+            cannonTag.put(TAG_BEES, beeList);
 
             bee.discard();
             beeCannonItem.set(BzDataComponents.BEE_CANNON_DATA.get(), CustomData.of(cannonTag));

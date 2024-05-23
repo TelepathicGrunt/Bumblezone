@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.entities.mobs;
 
 import com.telepathicgrunt.the_bumblezone.entities.controllers.HoneySlimeMoveController;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeAngerAttackingGoal;
+import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeBreedGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFaceRandomGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeFloatGoal;
 import com.telepathicgrunt.the_bumblezone.entities.goals.HoneySlimeHopGoal;
@@ -101,7 +102,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
       this.goalSelector.addGoal(1, new HoneySlimeFloatGoal(this));
       this.targetSelector.addGoal(1, new HoneySlimeRevengeGoal(this));
       this.targetSelector.addGoal(1, new HoneySlimeAngerAttackingGoal(this));
-      this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+      this.goalSelector.addGoal(2, new HoneySlimeBreedGoal(this, 1.0D));
       this.goalSelector.addGoal(3, new HoneySlimeTemptGoal(this));
       this.goalSelector.addGoal(4, new HoneySlimeHopGoal(this));
       this.goalSelector.addGoal(4, new HoneySlimeFaceRandomGoal(this));

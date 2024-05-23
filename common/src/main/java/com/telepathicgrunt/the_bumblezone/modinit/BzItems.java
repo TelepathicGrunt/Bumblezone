@@ -169,8 +169,8 @@ public class BzItems {
     public static final RegistryEntry<Item> POLLEN_PUFF = ITEMS.register("pollen_puff", () -> new PollenPuff(new Item.Properties().stacksTo(16)));
     public static final RegistryEntry<Item> DIRT_PELLET = ITEMS.register("dirt_pellet", () -> new DirtPellet(new Item.Properties().stacksTo(16)));
     public static final RegistryEntry<HoneyCrystalShards> HONEY_CRYSTAL_SHARDS = ITEMS.register("honey_crystal_shards", () -> new HoneyCrystalShards(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.15F).build())));
-    public static final RegistryEntry<Item> BEE_STINGER = ITEMS.register("bee_stinger", () -> new BeeStinger(new Item.Properties().durability(220)));
-    public static final RegistryEntry<Item> STINGER_SPEAR = ITEMS.register("stinger_spear", () -> new StingerSpearItem(new Item.Properties().attributes(StingerSpearItem.createAttributes()).rarity(Rarity.UNCOMMON)));
+    public static final RegistryEntry<Item> BEE_STINGER = ITEMS.register("bee_stinger", () -> new BeeStinger(new Item.Properties()));
+    public static final RegistryEntry<Item> STINGER_SPEAR = ITEMS.register("stinger_spear", () -> new StingerSpearItem(new Item.Properties().durability(220).attributes(StingerSpearItem.createAttributes()).rarity(Rarity.UNCOMMON)));
     public static final RegistryEntry<Item> BEE_CANNON = ITEMS.register("bee_cannon", () -> new BeeCannon(new Item.Properties().durability(50).stacksTo(1)));
     public static final RegistryEntry<Item> CRYSTAL_CANNON = ITEMS.register("crystal_cannon", () -> new CrystalCannon(new Item.Properties().rarity(Rarity.UNCOMMON).durability(80).stacksTo(1)));
     public static final RegistryEntry<Item> HONEY_CRYSTAL_SHIELD = ITEMS.register("honey_crystal_shield", () -> new HoneyCrystalShield(new Item.Properties().rarity(Rarity.UNCOMMON), 40));

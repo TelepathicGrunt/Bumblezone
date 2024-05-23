@@ -40,6 +40,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BuzzingBriefcase extends Item {
     public static final String TAG_BEES = "BeesStored";
@@ -277,10 +278,13 @@ public class BuzzingBriefcase extends Item {
                     else {
                         beeList.remove(i);
                         i--;
+                        removeFromList = true;
                     }
                 }
             }
-            briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(briefcaseTag));
+            if (removeFromList) {
+                briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(briefcaseTag));
+            }
             return beesStored;
         }
         return new ObjectArrayList<>();
@@ -335,16 +339,26 @@ public class BuzzingBriefcase extends Item {
 
     public static boolean tryAddBee(ItemStack briefcaseItem, Entity bee) {
         if (getNumberOfBees(briefcaseItem) < MAX_NUMBER_OF_BEES) {
+            String beeTypeRL = bee.getEncodeId();
+            if (beeTypeRL == null) {
+                return false;
+            }
+
             CompoundTag briefcaseTag = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get()).copyTag();
             ListTag beeList = briefcaseTag.getList(TAG_BEES, ListTag.TAG_COMPOUND);
             CompoundTag beeTag = new CompoundTag();
 
-            bee.save(beeTag);
             bee.stopRiding();
             bee.ejectPassengers();
+            beeTag.putString("id", beeTypeRL);
+            bee.saveWithoutId(beeTag);
 
+            UUID uUID = bee.getUUID();
+            bee.load(beeTag);
+            bee.setUUID(uUID);
             beeTag.remove("UUID");
             beeList.add(beeTag);
+            briefcaseTag.put(TAG_BEES, beeList);
 
             bee.discard();
 
@@ -352,7 +366,9 @@ public class BuzzingBriefcase extends Item {
                 briefcaseTag.putInt(TAG_VARANT_BEES, briefcaseTag.getInt(TAG_VARANT_BEES) + 1);
             }
 
-            briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), CustomData.of(briefcaseTag));
+            CustomData customData1 = CustomData.of(briefcaseTag);
+            briefcaseItem.set(BzDataComponents.BUZZING_BRIEFCASE_DATA.get(), customData1);
+            CustomData customData2 = briefcaseItem.get(BzDataComponents.BUZZING_BRIEFCASE_DATA.get());
             return true;
         }
         return false;

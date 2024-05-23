@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:enchantable/trident",
+    "the_bumblezone:stinger_spear"
+  ]
+}
