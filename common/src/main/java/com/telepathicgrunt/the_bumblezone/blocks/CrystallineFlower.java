@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.mixin.entities.LivingEntityAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDamageSources;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzParticles;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;

@@ -7,6 +7,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.PotionCandleBlockEntity;
 import com.telepathicgrunt.the_bumblezone.mixin.containers.ShapedRecipePatternAccessor;
+import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzRecipes;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -176,7 +177,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         amplifier.set(amplifier.get() / potionEffectsFound.get());
 
         // Resistance level 5 or higher is 100% damage immunity.
-        if (chosenEffect == MobEffects.DAMAGE_RESISTANCE && amplifier.get() > 4) {
+        if (chosenEffect.equals(MobEffects.DAMAGE_RESISTANCE.value()) && amplifier.get() > 4) {
             amplifier.set(4);
         }
 
@@ -206,26 +207,25 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
                                                      int outputCount) {
         ItemStack resultStack = getResultStack(outputCount);
 
-        CustomData customData = resultStack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (customData != null) {
-            CompoundTag blockEntityTag = customData.copyTag();
-            blockEntityTag.putInt(PotionCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
-            blockEntityTag.putInt(PotionCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
-            blockEntityTag.putInt(PotionCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
-            blockEntityTag.putString(PotionCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
-            blockEntityTag.putBoolean(PotionCandleBlockEntity.INFINITE_TAG, false);
-            blockEntityTag.putInt(PotionCandleBlockEntity.RANGE_TAG, 3 + (splashCount * 2));
-            if (chosenEffect.isInstantenous()) {
-                blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, 1);
-            }
-            else if (chosenEffect == MobEffects.NIGHT_VISION) {
-                setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
-            }
-            else {
-                setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
-            }
-            resultStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(blockEntityTag));
+        CustomData customData = resultStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        CompoundTag blockEntityTag = customData.copyTag();
+        blockEntityTag.putString("id", BzBlockEntities.POTION_CANDLE.getId().toString());
+        blockEntityTag.putInt(PotionCandleBlockEntity.COLOR_TAG, chosenEffect.getColor());
+        blockEntityTag.putInt(PotionCandleBlockEntity.AMPLIFIER_TAG, amplifier.intValue());
+        blockEntityTag.putInt(PotionCandleBlockEntity.MAX_DURATION_TAG, maxDuration.intValue());
+        blockEntityTag.putString(PotionCandleBlockEntity.STATUS_EFFECT_TAG, BuiltInRegistries.MOB_EFFECT.getKey(chosenEffect).toString());
+        blockEntityTag.putBoolean(PotionCandleBlockEntity.INFINITE_TAG, false);
+        blockEntityTag.putInt(PotionCandleBlockEntity.RANGE_TAG, 3 + (splashCount * 2));
+        if (chosenEffect.isInstantenous()) {
+            blockEntityTag.putInt(PotionCandleBlockEntity.LINGER_TIME_TAG, 1);
         }
+        else if (chosenEffect.equals(MobEffects.NIGHT_VISION.value())) {
+            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_NIGHT_VISION_LINGER_TIME);
+        }
+        else {
+            setLingerTime(chosenEffect, lingerCount, blockEntityTag, PotionCandleBlockEntity.DEFAULT_LINGER_TIME);
+        }
+        resultStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(blockEntityTag));
         return resultStack;
     }
 

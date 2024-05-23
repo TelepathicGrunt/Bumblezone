@@ -8,14 +8,12 @@ Honey Crystal Shield now can have Mending.
 
 note: add explicit quick charge for cannons 
 
-note: redo armor tick
+note: redo armor tick on neo
 
-note: stingless bee helmet bee riding
+note: fix crystalline flower drop data
 
-note: enchantment testing
+note: fix neurotoxin stinger spear not aggroing
 
 note: honey compass testing
-
-note: briefcase and cannon testing
 
 Note: reimplement custom registries

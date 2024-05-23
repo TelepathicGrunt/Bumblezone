@@ -103,7 +103,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity enemy, LivingEntity user) {
         int durabilityDecrease = 1;
 
-        if (enemy.getType().is(EntityTypeTags.UNDEAD)) {
+        if (!enemy.getType().is(EntityTypeTags.UNDEAD)) {
             int potentPoisonLevel = EnchantmentHelper.getItemEnchantmentLevel(BzEnchantments.POTENT_POISON.get(), itemStack);
             enemy.addEffect(new MobEffectInstance(
                     MobEffects.POISON,

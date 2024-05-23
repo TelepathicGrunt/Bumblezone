@@ -1,6 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;

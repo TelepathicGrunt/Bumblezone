@@ -95,8 +95,12 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         if (this.guid.isEmpty()) {
             this.guid = java.util.UUID.randomUUID().toString();
         }
-        this.bookSlotItems = ItemStack.parse(provider, compoundTag.getCompound(BOOK_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
-        this.consumeSlotItems = ItemStack.parse(provider, compoundTag.getCompound(CONSUME_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
+        if (compoundTag.contains(BOOK_SLOT_ITEMS)) {
+            this.bookSlotItems = ItemStack.parse(provider, compoundTag.getCompound(BOOK_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
+        }
+        if (compoundTag.contains(CONSUME_SLOT_ITEMS)) {
+            this.consumeSlotItems = ItemStack.parse(provider, compoundTag.getCompound(CONSUME_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
+        }
     }
 
     @Override
