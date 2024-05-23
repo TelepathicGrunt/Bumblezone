@@ -127,9 +127,8 @@ public class StinglessBeeHelmet extends BeeArmor {
         if (hasBeeRider || hasWrath) {
             if (hasWrath ||
                 player.isUnderWater() ||
-                player.isHurt() ||
                 player.isShiftKeyDown() ||
-                (beeWearablesCount < 4 && (beeWearablesCount * 600L) + beeRiderStartTime < level.getGameTime()))
+                (beeWearablesCount < 4 && ((beeWearablesCount * 600L) + beeRiderStartTime) < level.getGameTime()))
             {
                 ejectAllBeeRiders(player);
 
@@ -204,7 +203,7 @@ public class StinglessBeeHelmet extends BeeArmor {
 
     public static Vec3 beeRidingOffset(Vec3 offset, Entity vehicle, Entity rider) {
         if (vehicle instanceof Player && rider instanceof Bee) {
-            return offset.add(0, 0.3d, 0);
+            return offset.add(0, 0, 0);
         }
         return offset;
     }

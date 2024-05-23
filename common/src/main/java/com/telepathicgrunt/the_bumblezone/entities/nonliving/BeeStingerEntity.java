@@ -6,6 +6,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -49,19 +50,19 @@ public class BeeStingerEntity extends AbstractArrow {
 
     private void makeParticle(int particlesToSpawn) {
         if (particlesToSpawn > 0) {
-            double red = 0.3d;
-            double green = 0.3d;
-            double blue = 0.3d;
+            float red = 0.3F;
+            float green = 0.3F;
+            float blue = 0.3F;
 
             for(int i = 0; i < particlesToSpawn; ++i) {
                 this.level().addParticle(
-                        ParticleTypes.EFFECT,
+                        ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, red, green, blue),
                         this.getRandomX(0.5D),
                         this.getRandomY(),
                         this.getRandomZ(0.5D),
-                        red,
-                        green,
-                        blue);
+                        0.0,
+                        0.0,
+                        0.0);
             }
         }
     }
@@ -78,7 +79,7 @@ public class BeeStingerEntity extends AbstractArrow {
                     MobEffects.POISON,
                     120,
                     0,
-                    true,
+                    false,
                     true,
                     true));
 
@@ -107,7 +108,7 @@ public class BeeStingerEntity extends AbstractArrow {
                         BzEffects.PARALYZED.holder(),
                         Math.min(BzGeneralConfigs.paralyzedMaxTickDuration, 100),
                         0,
-                        true,
+                        false,
                         true,
                         true));
 

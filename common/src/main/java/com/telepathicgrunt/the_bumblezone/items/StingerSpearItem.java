@@ -109,7 +109,7 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
                     MobEffects.POISON,
                     100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
                     potentPoisonLevel, // 0, 1, 2, 3
-                    true,
+                    false,
                     true,
                     true));
 

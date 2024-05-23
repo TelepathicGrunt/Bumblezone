@@ -109,8 +109,12 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         compoundTag.putInt(TIER_TAG, this.xpTier);
         compoundTag.putInt(XP_TAG, this.currentXp);
         compoundTag.putString(GUID_TAG, this.guid);
-        compoundTag.put(BOOK_SLOT_ITEMS, this.bookSlotItems.save(provider));
-        compoundTag.put(CONSUME_SLOT_ITEMS, this.consumeSlotItems.save(provider));
+        if (!this.bookSlotItems.isEmpty()) {
+            compoundTag.put(BOOK_SLOT_ITEMS, this.bookSlotItems.save(provider));
+        }
+        if (!this.consumeSlotItems.isEmpty()) {
+            compoundTag.put(CONSUME_SLOT_ITEMS, this.consumeSlotItems.save(provider));
+        }
     }
 
     @Override

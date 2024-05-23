@@ -7,6 +7,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
@@ -29,18 +30,14 @@ public class UniquifyIfHasItems extends LootItemConditionalFunction {
 
     @Override
     public ItemStack run(ItemStack itemStack, LootContext lootContext) {
+        ItemContainerContents itemContainerContents = itemStack.get(DataComponents.CONTAINER);
+        if (itemContainerContents == null || itemContainerContents.nonEmptyStream().findAny().isEmpty()) {
+            return itemStack;
+        }
+
         CompoundTag tag = new CompoundTag();
-        CustomData customData = itemStack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (customData != null && !customData.isEmpty()) {
-            tag = customData.copyTag();
-        }
-
-        if (tag.size() != 1 && !tag.contains("UUID") && tag.hasUUID("items") && !tag.getList("Items", 10).isEmpty()) {
-            tag.putString("UUID", UUID.randomUUID().toString());
-        }
-
-        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, customData);
-
+        tag.putString("UUID", UUID.randomUUID().toString());
+        itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         return itemStack;
     }
 }

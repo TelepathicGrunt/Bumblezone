@@ -176,7 +176,9 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
         tag.putInt("throwcooldown", getThrowCooldown());
         tag.putInt("beespawncooldown", getBeeSpawnCooldown());
         tag.putInt("bonusTradetime", getRemainingBonusTradeTime());
-        tag.put("bonusTradeitem", getBonusTradeItem().save(this.level().registryAccess(), new CompoundTag()));
+        if (!getBonusTradeItem().isEmpty()) {
+            tag.put("bonusTradeitem", getBonusTradeItem().save(this.level().registryAccess(), new CompoundTag()));
+        }
         tag.putBoolean("isSpecialDay", getIsSpecialDay());
         this.addPersistentAngerSaveData(tag);
     }

@@ -5,6 +5,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -50,19 +51,19 @@ public class HoneyCrystalShardEntity extends AbstractArrow {
 
     private void makeParticle(int particlesToSpawn) {
         if (particlesToSpawn > 0) {
-            double red = 0.8d;
-            double green = 0.6d;
-            double blue = 0.1d;
+            float red = 0.8F;
+            float green = 0.6F;
+            float blue = 0.1F;
 
             for(int i = 0; i < particlesToSpawn; ++i) {
                 this.level().addParticle(
-                        ParticleTypes.EFFECT,
+                        ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, red, green, blue),
                         this.getRandomX(0.5D),
                         this.getRandomY(),
                         this.getRandomZ(0.5D),
-                        red,
-                        green,
-                        blue);
+                        0,
+                        0,
+                        0);
             }
         }
     }

@@ -30,7 +30,7 @@ public class PotentPoisonEnchantment extends Enchantment {
                     MobEffects.POISON,
                     100 + 100 * (level - ((level - 1) / 2)), // 200, 300, 300 duration
                     ((level - 1) / 2), // 0, 0, 1 level poison
-                    true,
+                    false,
                     true,
                     true));
         }

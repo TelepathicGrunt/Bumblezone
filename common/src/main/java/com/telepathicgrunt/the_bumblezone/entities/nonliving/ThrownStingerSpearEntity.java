@@ -143,7 +143,7 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
                     MobEffects.POISON,
                     100 + 100 * (potentPoisonLevel - ((potentPoisonLevel - 1) / 2)),
                     potentPoisonLevel, // 0, 1, 2, 3 level poison if
-                    true,
+                    false,
                     true,
                     true));
 

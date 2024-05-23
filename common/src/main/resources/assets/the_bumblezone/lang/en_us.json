@@ -667,6 +667,8 @@
   "essence.the_bumblezone.white_essence_event": "Essence of Continuity - §cLose§f in %s",
 
   "container.the_bumblezone.honey_cocoon": "Honey Cocoon",
+  "container.the_bumblezone.honey_cocoon.item_count": "%s x%s",
+  "container.the_bumblezone.honey_cocoon.more": "and %s more...",
   "container.the_bumblezone.crystalline_flower": "Consume and Enchant",
   "container.the_bumblezone.crystalline_flower.level": "Level: %s",
   "container.the_bumblezone.crystalline_flower.level_star": "★",

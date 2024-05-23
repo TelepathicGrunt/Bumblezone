@@ -40,6 +40,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -364,36 +365,25 @@ public class HoneyCocoon extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
-        CustomData customData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-        if (!customData.isEmpty()) {
-            if (customData.contains("LootTable")) {
-                tooltip.add(Component.literal("???????"));
+    public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
+        if (itemStack.has(DataComponents.CONTAINER_LOOT)) {
+            return;
+        }
+
+        int i = 0;
+        int j = 0;
+
+        for(ItemStack itemStack2 : itemStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).nonEmptyItems()) {
+            ++j;
+            if (i <= 4) {
+                ++i;
+                list.add(Component.translatable("container.the_bumblezone.honey_cocoon.item_count", itemStack2.getHoverName(), itemStack2.getCount()));
             }
+        }
 
-            if (customData.contains("Items")) {
-                NonNullList<ItemStack> nonnulllist = NonNullList.withSize(27, ItemStack.EMPTY);
-                ContainerHelper.loadAllItems(customData.copyTag(), nonnulllist, tooltipContext.registries());
-                int i = 0;
-                int j = 0;
-
-                for (ItemStack itemstack : nonnulllist) {
-                    if (!itemstack.isEmpty()) {
-                        ++j;
-                        if (i <= 4) {
-                            ++i;
-                            MutableComponent mutablecomponent = itemstack.getHoverName().copy();
-                            mutablecomponent.append(" x").append(String.valueOf(itemstack.getCount()));
-                            tooltip.add(mutablecomponent);
-                        }
-                    }
-                }
-
-                if (j - i > 0) {
-                    tooltip.add((Component.translatable("container.shulkerBox.more", j - i)).withStyle(ChatFormatting.ITALIC));
-                }
-            }
+        if (j - i > 0) {
+            list.add(Component.translatable("container.the_bumblezone.honey_cocoon.more", j - i).withStyle(ChatFormatting.ITALIC));
         }
     }
 

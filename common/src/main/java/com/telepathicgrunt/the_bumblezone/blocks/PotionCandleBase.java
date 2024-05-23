@@ -11,6 +11,7 @@ import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -294,7 +295,7 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
 
                 //number of particles in this tick
                 for (int i = 0; i < random.nextInt(3); ++i) {
-                    this.spawnEffectParticles(level, random, position, colorRGB.x(), colorRGB.y(), colorRGB.z());
+                    this.spawnEffectParticles(level, random, position, (float) colorRGB.x(), (float) colorRGB.y(), (float) colorRGB.z());
                 }
             }
         }
@@ -302,14 +303,15 @@ public class PotionCandleBase extends BaseEntityBlock implements SimpleWaterlogg
     }
 
 
-    private void spawnEffectParticles(Level level, RandomSource random, BlockPos position, double red, double green, double blue) {
-        level.addParticle(ParticleTypes.EFFECT,
+    private void spawnEffectParticles(Level level, RandomSource random, BlockPos position, float red, float green, float blue) {
+        level.addParticle(
+                ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, red, green, blue),
                 position.getX() + 0.4d + (random.nextDouble() * 0.2d),
                 position.getY() + 0.7d + (random.nextDouble() * 0.2d),
                 position.getZ() + 0.4d + (random.nextDouble() * 0.2d),
-                red,
-                green,
-                blue);
+                0,
+                0,
+                0);
     }
 
     @Override
