@@ -1,4 +1,4 @@
-package com.telepathicgrunt.the_bumblezone.mixin.util;
+package com.telepathicgrunt.the_bumblezone.mixin.fabric.util;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.FileUtil;

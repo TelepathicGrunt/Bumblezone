@@ -43,6 +43,7 @@
     "item.ItemStackMixin",
     "item.ProjectileWeaponItemMixin",
     "item.RecordItemMixin",
-    "loot.LootTableMixin"
+    "loot.LootTableMixin",
+    "util.FileUtilMixin"
   ]
 }

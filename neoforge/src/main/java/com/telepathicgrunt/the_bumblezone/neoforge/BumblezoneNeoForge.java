@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.modules.neoforge.NeoForgeModuleInitial
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 @Mod(Bumblezone.MODID)
 public class BumblezoneNeoForge {
@@ -26,5 +27,7 @@ public class BumblezoneNeoForge {
 
         IEventBus eventBus = NeoForge.EVENT_BUS;
         NeoForgeEventManager.init(modEventBus, eventBus);
+
+        NeoForgeMod.enableProperFilenameValidation();
     }
 }
