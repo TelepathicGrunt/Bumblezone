@@ -2,7 +2,6 @@ package com.telepathicgrunt.the_bumblezone.enchantments;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
-import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.AbstractArrowAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.MobAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
@@ -13,8 +12,6 @@ import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHelper;
 import com.telepathicgrunt.the_bumblezone.modules.registry.ModuleRegistry;
-import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
-import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EntityTypeTags;
@@ -29,28 +26,18 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.Optional;
 
-public class NeurotoxinsEnchantment extends BzEnchantment {
+public class NeurotoxinsEnchantment extends Enchantment {
 
     public NeurotoxinsEnchantment() {
         super(Enchantment.definition(
                 BzTags.NEUROTOXIN_ENCHANTABLE,
                 1,
                 BzGeneralConfigs.neurotoxinMaxLevel,
-                Enchantment.dynamicCost(14, 1),
+                Enchantment.dynamicCost(14, 3),
                 Enchantment.constantCost(50),
                 6,
                 EquipmentSlot.MAINHAND)
         );
-    }
-
-    @Override
-    public boolean canEnchant(ItemStack stack) {
-        return stack.getItem() instanceof StingerSpearItem;
-    }
-
-    @Override
-    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack) {
-        return OptionalBoolean.of(this.canEnchant(stack));
     }
 
     public static void entityHurtEvent(EntityAttackedEvent event) {

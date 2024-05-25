@@ -4,9 +4,7 @@ import com.telepathicgrunt.the_bumblezone.events.player.PlayerBreakSpeedEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
-import com.telepathicgrunt.the_bumblezone.platform.BzEnchantment;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
-import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -28,7 +26,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CombCutterEnchantment extends BzEnchantment {
+public class CombCutterEnchantment extends Enchantment {
     private static final GeneralUtils.Lazy<Set<Block>> TARGET_BLOCKS = new GeneralUtils.Lazy<>();
     private static final GeneralUtils.Lazy<Set<Block>> LESSER_TARGET_BLOCKS = new GeneralUtils.Lazy<>();
 
@@ -37,8 +35,8 @@ public class CombCutterEnchantment extends BzEnchantment {
                 BzTags.COMB_CUTTER_ENCHANTABLE,
                 5,
                 1,
-                Enchantment.dynamicCost(10, 1),
-                Enchantment.constantCost(13),
+                Enchantment.constantCost(1),
+                Enchantment.constantCost(24),
                 1,
                 EquipmentSlot.MAINHAND)
         );
@@ -111,14 +109,9 @@ public class CombCutterEnchantment extends BzEnchantment {
     }
 
     @Override
-    public boolean canEnchant(ItemStack stack) {
-        return PlatformHooks.isToolAction(stack, ShearsItem.class, "shears_carve") ||
-                PlatformHooks.isToolAction(stack, SwordItem.class, "sword_dig") ||
-                stack.is(Items.BOOK);
-    }
-
-    @Override
-    public OptionalBoolean bz$canApplyAtEnchantingTable(ItemStack stack) {
-        return OptionalBoolean.of(this.canEnchant(stack));
+    public boolean canEnchant(ItemStack itemStack) {
+        return PlatformHooks.isToolAction(itemStack, ShearsItem.class, "shears_carve") ||
+                PlatformHooks.isToolAction(itemStack, SwordItem.class, "sword_dig") ||
+                super.canEnchant(itemStack);
     }
 }
