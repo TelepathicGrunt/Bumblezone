@@ -17,3 +17,5 @@ note: fix neurotoxin stinger spear not aggroing
 note: honey compass testing
 
 Note: reimplement custom registries
+
+note: fix neo runs

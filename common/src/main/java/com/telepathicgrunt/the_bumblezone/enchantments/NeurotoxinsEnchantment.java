@@ -4,6 +4,7 @@ import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.AbstractArrowAccessor;
+import com.telepathicgrunt.the_bumblezone.mixin.entities.MobAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEnchantments;
@@ -106,6 +107,11 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
                         false,
                         true,
                         true));
+
+                if (attacker instanceof LivingEntity livingAttacker) {
+                    livingEntity.setLastHurtByMob(livingAttacker);
+                    ((MobAccessor)livingEntity).getTargetSelector().tick();
+                }
 
                 if (itemStack.is(BzItems.STINGER_SPEAR.get()) && attacker instanceof ServerPlayer serverPlayer) {
                     BzCriterias.STINGER_SPEAR_PARALYZING_TRIGGER.get().trigger(serverPlayer);
