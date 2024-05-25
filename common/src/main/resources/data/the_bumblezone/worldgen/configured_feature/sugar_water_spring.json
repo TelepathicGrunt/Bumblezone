@@ -10,7 +10,7 @@
       "Properties": {
         "falling": "true"
       },
-      "Name": "the_bumblezone:sugar_water"
+      "Name": "the_bumblezone:sugar_water_still"
     },
     "requires_block_below": true
   },
