@@ -12,6 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -97,7 +99,13 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         this.xpTier = compoundTag.getInt(TIER_TAG);
         this.currentXp = Math.min(compoundTag.getInt(XP_TAG), getMaxXpForTier(this.xpTier));
         if (compoundTag.contains(UUID_TAG)) {
-            this.uuid = compoundTag.getUUID(UUID_TAG);
+            if (compoundTag.getTagType(UUID_TAG) == Tag.TAG_STRING) {
+                this.uuid = UUID.fromString(compoundTag.getString(UUID_TAG));
+            }
+            else {
+                this.uuid = compoundTag.getUUID(UUID_TAG);
+            }
+
             if (this.uuid.compareTo(CrystallineFlowerData.DEFAULT_UUID) == 0) {
                 this.uuid = java.util.UUID.randomUUID();
             }
