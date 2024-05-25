@@ -1,7 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
-import com.teamresourceful.resourcefullib.common.registry.RegistryEntry;
-import com.teamresourceful.resourcefullib.common.registry.ResourcefulRegistry;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

@@ -2,9 +2,7 @@ package com.telepathicgrunt.the_bumblezone.items.essence;
 
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceAbilityData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceCooldownData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.KnowingEssenceStructureData;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.FoxAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
@@ -14,7 +12,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

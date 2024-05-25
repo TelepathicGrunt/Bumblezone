@@ -7,7 +7,6 @@ import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.datacomponents.BumbleBeeChestplateData;
 import com.telepathicgrunt.the_bumblezone.items.BumbleBeeChestplate;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;

@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.entities.nonliving.DirtPelletEntity;
-import com.telepathicgrunt.the_bumblezone.entities.nonliving.PollenPuffEntity;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -15,7 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.DispenserBlock;
 
 public class DirtPellet extends Item implements ProjectileItem {
     public DirtPellet(Properties properties) {

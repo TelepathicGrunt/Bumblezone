@@ -1,16 +1,11 @@
 package com.telepathicgrunt.the_bumblezone.client.items;
 
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassTargetData;
-import com.telepathicgrunt.the_bumblezone.items.HoneyCompass;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

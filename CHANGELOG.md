@@ -5,11 +5,12 @@ Ported to 1.20.6. Might be buggy... Please report issues
 
 
 
-note: redo armor tick on neo
 
 note: honey compass testing
 
 Note: beehemoth testing
+
+note: redo armor tick on neo
 
 note: load resourcefulbees datapack if mod is present
 

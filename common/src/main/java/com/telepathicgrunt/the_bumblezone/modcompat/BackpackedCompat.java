@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 
 public class BackpackedCompat implements ModCompat {

@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modules.base;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Contract;

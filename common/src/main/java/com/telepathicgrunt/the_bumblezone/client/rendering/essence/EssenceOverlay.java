@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzClientConfigs;
-import com.telepathicgrunt.the_bumblezone.datacomponents.AbilityEssenceActivityData;
 import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;

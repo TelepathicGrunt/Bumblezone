@@ -5,9 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ExtraCodecs;
-
-import java.util.Optional;
 
 public record AbilityEssenceActivityData(boolean isInInventory, boolean isActive, boolean isLocked) {
     public static final Codec<AbilityEssenceActivityData> DIRECT_CODEC = RecordCodecBuilder.create((instance) -> instance.group(

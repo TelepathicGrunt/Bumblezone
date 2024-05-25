@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.modules.FlyingSpeedModule;
 import com.telepathicgrunt.the_bumblezone.modules.LivingEntityDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.PlayerDataModule;
 import com.telepathicgrunt.the_bumblezone.modules.base.ModuleHolder;
-import net.minecraft.resources.ResourceLocation;
 
 public class ModuleRegistry {
 

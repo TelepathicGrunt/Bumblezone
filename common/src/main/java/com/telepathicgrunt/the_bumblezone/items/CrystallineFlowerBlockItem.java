@@ -2,15 +2,11 @@ package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.datacomponents.CrystallineFlowerData;
-import com.telepathicgrunt.the_bumblezone.datacomponents.StinglessBeeHelmetData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
