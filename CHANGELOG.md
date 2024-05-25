@@ -9,6 +9,9 @@ Fixed Honey Slimes not turning to face each other when breeding.
 ##### Items:
 Stingless Bee Helmets will not eject bee passenger from head if player is hurt or attacked anymore.
 
+##### Enchantments:
+Fixed Neurotoxins not angering neutral mobs on hit with a weapon with this enchantment.
+
 ##### Dimension:
 Fixed Sugar Water waterfalls not spawning as they should.
 

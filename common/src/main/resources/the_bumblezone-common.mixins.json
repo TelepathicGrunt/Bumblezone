@@ -51,6 +51,7 @@
     "entities.LightningBoltMixin",
     "entities.LivingEntityAccessor",
     "entities.LivingEntityMixin",
+    "entities.MobAccessor",
     "entities.MobSpawnLocationMixin",
     "entities.PlayerAdvancementsAccessor",
     "entities.PlayerMixin",
