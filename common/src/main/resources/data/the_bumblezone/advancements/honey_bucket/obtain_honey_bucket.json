@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "the_bumblezone:buckets/honey"
+            "items": "#the_bumblezone:buckets/honey"
           }
         ]
       }

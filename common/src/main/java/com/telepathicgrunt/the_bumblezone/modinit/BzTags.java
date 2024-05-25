@@ -207,6 +207,9 @@ public class BzTags {
     public static final TagKey<Enchantment> ITEM_WITH_TELEPORT_ENCHANT = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/any_item_right_clicked_beehive_with_enchant"));
     public static final TagKey<Enchantment> ITEM_WITH_TELEPORT_ENCHANT_CROUCHING = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/any_item_right_clicked_beehive_with_enchant_crouching"));
     public static final TagKey<Enchantment> ENCHANT_SPECIAL_DEDICATED_COMPAT = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "dimension_teleportation/enchant_special_dedicated_compat"));
+    public static final TagKey<Enchantment> ENCHANTABLES_BEE_CANNON_FORCED_ALLOWED = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "enchantables/bee_cannon_forced_allowed"));
+    public static final TagKey<Enchantment> ENCHANTABLES_CRYSTAL_CANNON_FORCED_ALLOWED = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "enchantables/crystal_cannon_forced_allowed"));
+    public static final TagKey<Enchantment> ENCHANTABLES_HONEY_CRYSTAL_SHIELD_FORCED_DISALLOWED = TagKey.create(Registries.ENCHANTMENT, new ResourceLocation(Bumblezone.MODID, "enchantables/honey_crystal_shield_forced_disallowed"));
 
     public static final TagKey<DamageType> COSMIC_CRYSTAL_RESISTANT_TO = TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(Bumblezone.MODID, "cosmic_crystal_resistant_to"));
 

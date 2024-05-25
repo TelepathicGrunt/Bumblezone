@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.blocks.blockentities.CrystallineFlowerBlockEntity;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.datacomponents.CrystallineFlowerData;
 import com.telepathicgrunt.the_bumblezone.entities.BeeAggression;
 import com.telepathicgrunt.the_bumblezone.menus.CrystallineFlowerMenu;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ExperienceOrbAccessor;
@@ -21,7 +22,6 @@ import com.telepathicgrunt.the_bumblezone.utils.PlatformHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -39,7 +39,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameRules;
@@ -227,7 +226,7 @@ public class CrystallineFlower extends BaseEntityBlock {
             if (level.players().stream().noneMatch(p ->
                 p.containerMenu instanceof CrystallineFlowerMenu crystallineFlowerMenu &&
                 crystallineFlowerMenu.crystallineFlowerBlockEntity != null &&
-                crystallineFlowerMenu.crystallineFlowerBlockEntity.getGUID().equals(crystallineFlowerBlockEntity.getGUID())))
+                crystallineFlowerMenu.crystallineFlowerBlockEntity.getUUID().equals(crystallineFlowerBlockEntity.getUUID())))
             {
                 if (level.isClientSide) {
                     return InteractionResult.SUCCESS;
@@ -438,16 +437,10 @@ public class CrystallineFlower extends BaseEntityBlock {
     @Override
     public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
-        CustomData customData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-        if (!customData.isEmpty()) {
-            if (customData.contains(CrystallineFlowerBlockEntity.TIER_TAG)) {
-                int tier = customData.getUnsafe().getInt(CrystallineFlowerBlockEntity.TIER_TAG);
-                if (tier != 0) {
-                    int xp = customData.getUnsafe().getInt(CrystallineFlowerBlockEntity.XP_TAG);
-                    tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_1", tier).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
-                    tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_2", xp).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
-                }
-            }
+        CrystallineFlowerData flowerData = itemStack.getOrDefault(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData());
+        if (flowerData.uuid().compareTo(CrystallineFlowerData.DEFAULT_UUID) != 0 && flowerData.tier() != 0) {
+            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_1", flowerData.tier()).withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
+            tooltip.add(Component.translatable("item.the_bumblezone.crystalline_flower_info_2", flowerData.experience()).withStyle(ChatFormatting.DARK_PURPLE).withStyle(ChatFormatting.ITALIC));
         }
     }
 

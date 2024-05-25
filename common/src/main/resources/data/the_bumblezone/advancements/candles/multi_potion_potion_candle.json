@@ -25,10 +25,10 @@
         "recipe_id": "the_bumblezone:potion_candle/from_string_and_carvable_wax",
         "ingredients": [
           {
-            "tag": "the_bumblezone:advancements/potion_candle_valid_potions"
+            "items": "#the_bumblezone:advancements/potion_candle_valid_potions"
           },
           {
-            "tag": "the_bumblezone:advancements/potion_candle_valid_potions"
+            "items": "#the_bumblezone:advancements/potion_candle_valid_potions"
           }
         ]
       }
@@ -39,10 +39,10 @@
         "recipe_id": "the_bumblezone:potion_candle/from_super_candles",
         "ingredients": [
           {
-            "tag": "the_bumblezone:advancements/potion_candle_valid_potions"
+            "items": "#the_bumblezone:advancements/potion_candle_valid_potions"
           },
           {
-            "tag": "the_bumblezone:advancements/potion_candle_valid_potions"
+            "items": "#the_bumblezone:advancements/potion_candle_valid_potions"
           }
         ]
       }

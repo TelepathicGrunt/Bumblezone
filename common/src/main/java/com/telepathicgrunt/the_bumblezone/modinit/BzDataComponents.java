@@ -13,6 +13,7 @@ import com.telepathicgrunt.the_bumblezone.datacomponents.BumbleBeeChestplateData
 import com.telepathicgrunt.the_bumblezone.datacomponents.CarpenterBeeBootsHangingData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.CarpenterBeeBootsMiningData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.CrystalCannonData;
+import com.telepathicgrunt.the_bumblezone.datacomponents.CrystallineFlowerData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyBeeLeggingsData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassBaseData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCompassStateData;
@@ -34,6 +35,9 @@ import net.minecraft.world.item.component.CustomData;
 public class BzDataComponents {
 
     public static final ResourcefulRegistry<DataComponentType<?>> DATA_COMPONENT_TYPE = ResourcefulRegistries.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Bumblezone.MODID);
+
+    public static final RegistryEntry<DataComponentType<CrystallineFlowerData>> CRYSTALLINE_FLOWER_DATA = DATA_COMPONENT_TYPE.register(
+            "crystalline_flower_data", () -> buildSyncPersistentComponentRegistryFriendly(CrystallineFlowerData.DIRECT_CODEC, CrystallineFlowerData.DIRECT_STREAM_CODEC));
 
     public static final RegistryEntry<DataComponentType<StinglessBeeHelmetData>> STINGLESS_BEE_HELMET_DATA = DATA_COMPONENT_TYPE.register(
             "stingless_bee_helmet_data", () -> buildSyncPersistentComponentRegistryFriendly(StinglessBeeHelmetData.DIRECT_CODEC, StinglessBeeHelmetData.DIRECT_STREAM_CODEC));

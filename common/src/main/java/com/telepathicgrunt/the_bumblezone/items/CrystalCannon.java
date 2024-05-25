@@ -1,12 +1,15 @@
 package com.telepathicgrunt.the_bumblezone.items;
 
 import com.telepathicgrunt.the_bumblezone.datacomponents.CrystalCannonData;
+import com.telepathicgrunt.the_bumblezone.mixin.enchantments.EnchantmentAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzSounds;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.TriState;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -20,6 +23,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -32,6 +36,7 @@ import org.joml.Vector3f;
 import java.util.function.Predicate;
 
 public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension {
+
     public CrystalCannon(Properties properties) {
         super(properties.component(BzDataComponents.CRYSTAL_CANNON_DATA.get(), new CrystalCannonData()));
     }
@@ -229,5 +234,10 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     @Override
     public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.BOW;
+    }
+
+    @Override
+    public TriState bz$canEnchant(ItemStack itemstack, Enchantment enchantment) {
+        return ((EnchantmentAccessor)enchantment).getBuiltInRegistryHolder().is(BzTags.ENCHANTABLES_CRYSTAL_CANNON_FORCED_ALLOWED) ? TriState.ALLOW : TriState.PASS;
     }
 }

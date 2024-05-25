@@ -3,15 +3,19 @@ package com.telepathicgrunt.the_bumblezone.items;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldCurrentLevelData;
 import com.telepathicgrunt.the_bumblezone.datacomponents.HoneyCrystalShieldDefinedLevelsData;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
+import com.telepathicgrunt.the_bumblezone.mixin.enchantments.EnchantmentAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.items.PlayerDamageShieldInvoker;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.ItemExtension;
+import com.telepathicgrunt.the_bumblezone.utils.TriState;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -143,29 +148,34 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         DamageSources damageSources = player.level().damageSources();
 
         // checks for explosion and player
-        if (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)) {
-            if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
-                if (player instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.get().trigger(serverPlayer);
-                }
-
-                if (source.is(DamageTypeTags.IS_EXPLOSION) && player.isBlocking()) {
-                    // damage our shield greatly and 1 damage hit player to show shield weakness
-                    player.hurt(damageSources.generic(), 1);
-                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
-                }
-                else if (source.is(DamageTypeTags.IS_FIRE)) {
-                    if(source.is(DamageTypeTags.IS_PROJECTILE)){
-                        ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
-                    }
-                    else{
-                        ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
-                        return false; //continue the damaging
-                    }
-                }
-
-                return true;
+        if (player.getUseItem().getItem() instanceof HoneyCrystalShield &&
+            player.isBlocking() &&
+            (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)))
+        {
+            if (player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.get().trigger(serverPlayer);
             }
+
+            if (source.is(DamageTypeTags.IS_EXPLOSION)) {
+                // damage our shield greatly and do player screen shake
+                player.indicateDamage(0, 0);
+                ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
+            }
+            else if (source.is(DamageTypeTags.IS_FIRE) && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
+                }
+                else {
+                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
+                    return false; //continue the damaging
+                }
+            }
+
+            if (player instanceof ServerPlayer) {
+                player.awardStat(Stats.ITEM_USED.get(player.getUseItem().getItem()));
+            }
+
+            return true;
         }
 
         return false;
@@ -195,5 +205,10 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
             playerEntity.getCooldowns().addCooldown(BzItems.HONEY_CRYSTAL_SHIELD.get(), 100);
             livingEntity.level().broadcastEntityEvent(playerEntity, (byte)30);
         }
+    }
+
+    @Override
+    public TriState bz$canEnchant(ItemStack itemstack, Enchantment enchantment) {
+        return ((EnchantmentAccessor)enchantment).getBuiltInRegistryHolder().is(BzTags.ENCHANTABLES_HONEY_CRYSTAL_SHIELD_FORCED_DISALLOWED) ? TriState.DENY : TriState.PASS;
     }
 }

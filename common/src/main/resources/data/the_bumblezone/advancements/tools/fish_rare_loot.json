@@ -65,7 +65,7 @@
           }
         ],
         "item": {
-          "tag": "the_bumblezone:music_discs",
+          "items": "#the_bumblezone:music_discs",
           "count": 1
         }
       }

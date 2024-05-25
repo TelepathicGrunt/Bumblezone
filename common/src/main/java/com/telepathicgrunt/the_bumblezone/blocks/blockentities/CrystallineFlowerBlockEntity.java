@@ -2,12 +2,16 @@ package com.telepathicgrunt.the_bumblezone.blocks.blockentities;
 
 import com.telepathicgrunt.the_bumblezone.blocks.CrystallineFlower;
 import com.telepathicgrunt.the_bumblezone.configs.BzGeneralConfigs;
+import com.telepathicgrunt.the_bumblezone.datacomponents.CrystallineFlowerData;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.utils.GeneralUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -20,13 +24,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.UUID;
+
 public class CrystallineFlowerBlockEntity extends BlockEntity {
     public static final String TIER_TAG = "tier";
     public static final String XP_TAG = "xp";
-    public static final String GUID_TAG = "guid";
+    public static final String UUID_TAG = "guid";
     private int xpTier = 1;
     private int currentXp = 0;
-    private String guid = java.util.UUID.randomUUID().toString();
+    private UUID uuid = java.util.UUID.randomUUID();
 
     public static final String BOOK_SLOT_ITEMS = "bookItems";
     public static final String CONSUME_SLOT_ITEMS = "consumeItems";
@@ -57,12 +63,12 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         this.currentXp = currentXp;
     }
 
-    public String getGUID() {
-        return this.guid;
+    public UUID getUUID() {
+        return this.uuid;
     }
 
-    public void setGUID(String guid) {
-        this.guid = guid;
+    public void setGUID(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public ItemStack getBookSlotItems() {
@@ -91,9 +97,14 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
         super.loadAdditional(compoundTag, provider);
         this.xpTier = compoundTag.getInt(TIER_TAG);
         this.currentXp = Math.min(compoundTag.getInt(XP_TAG), getMaxXpForTier(this.xpTier));
-        this.guid = compoundTag.getString(GUID_TAG);
-        if (this.guid.isEmpty()) {
-            this.guid = java.util.UUID.randomUUID().toString();
+        if (compoundTag.contains(UUID_TAG)) {
+            this.uuid = compoundTag.getUUID(UUID_TAG);
+            if (this.uuid.compareTo(CrystallineFlowerData.DEFAULT_UUID) == 0) {
+                this.uuid = java.util.UUID.randomUUID();
+            }
+        }
+        else {
+            this.uuid = java.util.UUID.randomUUID();
         }
         if (compoundTag.contains(BOOK_SLOT_ITEMS)) {
             this.bookSlotItems = ItemStack.parse(provider, compoundTag.getCompound(BOOK_SLOT_ITEMS)).orElse(ItemStack.EMPTY);
@@ -112,7 +123,7 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
     private void saveFieldsToTag(CompoundTag compoundTag, HolderLookup.Provider provider) {
         compoundTag.putInt(TIER_TAG, this.xpTier);
         compoundTag.putInt(XP_TAG, this.currentXp);
-        compoundTag.putString(GUID_TAG, this.guid);
+        compoundTag.putUUID(UUID_TAG, this.uuid);
         if (!this.bookSlotItems.isEmpty()) {
             compoundTag.put(BOOK_SLOT_ITEMS, this.bookSlotItems.save(provider));
         }
@@ -301,5 +312,32 @@ public class CrystallineFlowerBlockEntity extends BlockEntity {
             }
         }
         return totalXpNeeded;
+    }
+
+    @Override
+    protected void applyImplicitComponents(BlockEntity.DataComponentInput dataComponentInput) {
+        super.applyImplicitComponents(dataComponentInput);
+        CrystallineFlowerData crystallineFlowerData = dataComponentInput.getOrDefault(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), new CrystallineFlowerData());
+
+        this.xpTier = crystallineFlowerData.tier();
+        this.currentXp = crystallineFlowerData.experience();
+        if (crystallineFlowerData.uuid().compareTo(CrystallineFlowerData.DEFAULT_UUID) != 0) {
+            this.uuid = crystallineFlowerData.uuid();
+        }
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+        CrystallineFlowerData crystallineFlowerData = new CrystallineFlowerData(this.xpTier, this.currentXp, this.uuid);
+        builder.set(BzDataComponents.CRYSTALLINE_FLOWER_DATA.get(), crystallineFlowerData);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag compoundTag) {
+        compoundTag.remove(TIER_TAG);
+        compoundTag.remove(XP_TAG);
+        compoundTag.remove(UUID_TAG);
+        super.removeComponentsFromTag(compoundTag);
     }
 }

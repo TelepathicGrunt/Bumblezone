@@ -25,11 +25,16 @@
       "conditions": {
         "items": [
           {
-            "enchantments": [
-              {
-                "enchantment": "the_bumblezone:comb_cutter"
-              }
-            ]
+            "predicates": {
+              "minecraft:enchantments": [
+                {
+                  "enchantment": "the_bumblezone:comb_cutter",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
           }
         ]
       }

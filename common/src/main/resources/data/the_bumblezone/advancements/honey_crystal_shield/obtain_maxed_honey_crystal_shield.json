@@ -24,10 +24,12 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "the_bumblezone:honey_crystal_shield"
-            ],
-            "nbt": "{\"ShieldLevel\":9}"
+            "items": "the_bumblezone:honey_crystal_shield",
+            "components": {
+              "the_bumblezone:honey_crystal_shield_current_level_data": {
+                "currentLevel": 10
+              }
+            }
           }
         ]
       }
