@@ -10,6 +10,7 @@ import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -167,29 +168,34 @@ public class HoneyCrystalShield extends BzShieldItem implements ItemExtension {
         DamageSources damageSources = player.level().damageSources();
 
         // checks for explosion and player
-        if (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)) {
-            if (player.getUseItem().getItem() instanceof HoneyCrystalShield) {
-                if (player instanceof ServerPlayer serverPlayer) {
-                    BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.get().trigger(serverPlayer);
-                }
-
-                if (source.is(DamageTypeTags.IS_EXPLOSION) && player.isBlocking()) {
-                    // damage our shield greatly and 1 damage hit player to show shield weakness
-                    player.hurt(damageSources.generic(), 1);
-                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
-                }
-                else if (source.is(DamageTypeTags.IS_FIRE)) {
-                    if(source.is(DamageTypeTags.IS_PROJECTILE)){
-                        ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
-                    }
-                    else{
-                        ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
-                        return false; //continue the damaging
-                    }
-                }
-
-                return true;
+        if (player.getUseItem().getItem() instanceof HoneyCrystalShield &&
+            player.isBlocking() &&
+            (source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_FIRE)))
+        {
+            if (player instanceof ServerPlayer serverPlayer) {
+                BzCriterias.HONEY_CRYSTAL_SHIELD_BLOCK_INEFFECTIVELY_TRIGGER.get().trigger(serverPlayer);
             }
+
+            if (source.is(DamageTypeTags.IS_EXPLOSION)) {
+                // damage our shield greatly and do player screen shake
+                player.indicateDamage(0, 0);
+                ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 3, 18));
+            }
+            else if (source.is(DamageTypeTags.IS_FIRE) && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                if(source.is(DamageTypeTags.IS_PROJECTILE)){
+                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 6, 3));
+                }
+                else{
+                    ((PlayerDamageShieldInvoker) player).callHurtCurrentlyUsedShield(Math.max(player.getUseItem().getMaxDamage() / 100, 3));
+                    return false; //continue the damaging
+                }
+            }
+
+            if (player instanceof ServerPlayer) {
+                player.awardStat(Stats.ITEM_USED.get(player.getUseItem().getItem()));
+            }
+
+            return true;
         }
 
         return false;

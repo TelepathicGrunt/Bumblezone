@@ -6,8 +6,14 @@ Fixed some typoes in structure processor files that would've caused the processo
 ##### Entities:
 Fixed Honey Slimes not turning to face each other when breeding.
 
+Fixed issue where Beehemoth model was straighter than it should've been when in sitting pose.
+
 ##### Items:
 Stingless Bee Helmets will not eject bee passenger from head if player is hurt or attacked anymore.
+
+Honey Crystal Shield now does not get heavy damage from blocking fire sources if the defender has Fire Resistance effect on.
+
+Fixed blocking damage with Honey Crystal Shield not incrementing the use stat for the shield.
 
 ##### Enchantments:
 Fixed Neurotoxins not angering neutral mobs on hit with a weapon with this enchantment.
