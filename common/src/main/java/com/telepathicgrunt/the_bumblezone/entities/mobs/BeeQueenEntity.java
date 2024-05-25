@@ -269,7 +269,7 @@ public class BeeQueenEntity extends Animal implements NeutralMob {
             Vec3 sideVect = Vec3.directionFromRotation(0, this.getVisualRotationYInDegrees() - 90);
             moveFunction.accept(passenger,
                     vec3.x() + sideVect.x() - (forwardVect.x() * 0.5d),
-                    vec3.y() + passenger.getVehicleAttachmentPoint(this).y() + 0.2d,
+                    vec3.y() + 0.2d - passenger.getVehicleAttachmentPoint(this).y(),
                     vec3.z() + sideVect.z() - (forwardVect.z() * 0.5d));
         }
     }

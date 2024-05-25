@@ -531,7 +531,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             Vec3 vec3 = this.getPassengerRidingPosition(passenger);
             moveFunction.accept(passenger,
                     vec3.x,
-                    vec3.y + 0.225d + passenger.getVehicleAttachmentPoint(this).y(),
+                    vec3.y + 0.25d - passenger.getVehicleAttachmentPoint(this).y(),
                     vec3.z);
 
             double currentSpeed = getDeltaMovement().length();

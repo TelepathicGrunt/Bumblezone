@@ -260,14 +260,8 @@ public class BeehemothModel extends EntityModel<BeehemothEntity> {
         THORAX.xRot = 0;
 
         float swayingMotion2 = Mth.sin(ageInTicks * 0.18F);
-        if(isSitting) {
-            FACE.xRot = (swayingMotion2 + 20) * (float) Math.PI * 0.001F;
-            ABDOMEN.xRot = (swayingMotion2 - 20) * (float) Math.PI * 0.001F;
-        }
-        else {
-            FACE.xRot = (swayingMotion2 + 40) * (float) Math.PI * 0.0025F;
-            ABDOMEN.xRot = (swayingMotion2 - 40) * (float) Math.PI * 0.0025F;
-        }
+        FACE.xRot = (swayingMotion2 + 40) * (float) Math.PI * 0.0025F;
+        ABDOMEN.xRot = (swayingMotion2 - 40) * (float) Math.PI * 0.0025F;
     }
 
 
