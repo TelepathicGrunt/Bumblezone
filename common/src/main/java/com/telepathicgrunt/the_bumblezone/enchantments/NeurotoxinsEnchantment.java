@@ -127,7 +127,7 @@ public class NeurotoxinsEnchantment extends BzEnchantment {
                         false,
                         true,
                         true));
-                
+
                 if (attacker instanceof LivingEntity livingAttacker) {
                     livingEntity.setLastHurtByMob(livingAttacker);
                     ((MobAccessor)livingEntity).getTargetSelector().tick();
