@@ -115,7 +115,6 @@ public class StinglessBeeHelmet extends BeeArmor {
         if(hasBeeRider || hasWrath) {
             if (hasWrath ||
                 player.isUnderWater() ||
-                player.isHurt() ||
                 player.isShiftKeyDown() ||
                 (beeWearablesCount < 4 && beeRidingTimer > beeWearablesCount * 600))
             {

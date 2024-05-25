@@ -118,7 +118,7 @@
         },
         {
           "output_state": {
-            "Name": "minecraft:deepslate_goal_ore"
+            "Name": "minecraft:deepslate_gold_ore"
           },
           "input_predicate": {
             "block": "minecraft:deepslate",
