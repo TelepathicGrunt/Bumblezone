@@ -12,6 +12,11 @@ Stingless Bee Helmets will not eject bee passenger from head if player is hurt o
 ##### Dimension:
 Fixed Sugar Water waterfalls not spawning as they should.
 
+##### Lang:
+uk_ua.json updated by Unroman!
+
+zh_cn.json updated by TskimiSeiran!
+
 
 ### **(V.7.4.8 Changes) (1.20.4 Minecraft)**
 
