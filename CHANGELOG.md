@@ -1,3 +1,18 @@
+### **(V.7.4.9 Changes) (1.20.4 Minecraft)**
+
+##### Structures:
+Fixed some typoes in structure processor files that would've caused the processor to not fully function correctly.
+
+##### Entities:
+Fixed Honey Slimes not turning to face each other when breeding.
+
+##### Items:
+Stingless Bee Helmets will not eject bee passenger from head if player is hurt or attacked anymore.
+
+##### Dimension:
+Fixed Sugar Water waterfalls not spawning as they should.
+
+
 ### **(V.7.4.8 Changes) (1.20.4 Minecraft)**
 
 ##### Items:
