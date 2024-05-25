@@ -14,7 +14,7 @@
   "death.attack.sentry_watcher_crushing.player": "%1$s розчавлено до смерті сторожовиком",
   "death.attack.cosmic_crystal": "%1$s знищено силою космічного кристала",
   "death.attack.cosmic_crystal.player": "%1$s знищено силою космічного кристала",
-  
+
   "block.the_bumblezone.porous_honeycomb_block": "Пористий стільниковий блок",
   "block.the_bumblezone.filled_porous_honeycomb_block": "Заповнений пористий стільниковий блок",
   "block.the_bumblezone.empty_honeycomb_brood_block": "Порожній стільниковий розплідник",
@@ -115,7 +115,7 @@
   "block.the_bumblezone.infinity_barrier": "Нескінченний бар'єр",
   "block.the_bumblezone.sugar_water_bubble_column_block": "Колона бульбашок цукрової води",
   "block.the_bumblezone.dense_bubble_block": "Щільний бульбашковий блок",
-  
+
   "block.minecraft.banner.the_bumblezone.bee.red": "Червона бджола",
   "block.minecraft.banner.the_bumblezone.bee.orange": "Помаранчева бджола",
   "block.minecraft.banner.the_bumblezone.bee.yellow": "Жовта бджола",
@@ -132,7 +132,7 @@
   "block.minecraft.banner.the_bumblezone.bee.gray": "Сіра бджола",
   "block.minecraft.banner.the_bumblezone.bee.light_gray": "Світло-сіра бджола",
   "block.minecraft.banner.the_bumblezone.bee.white": "Біла бджола",
-  
+
   "block.minecraft.banner.the_bumblezone.honeycombs.red": "Червоні медові стільники",
   "block.minecraft.banner.the_bumblezone.honeycombs.orange": "Помаранчеві медові стільники",
   "block.minecraft.banner.the_bumblezone.honeycombs.yellow": "Жовті медові стільники",
@@ -149,7 +149,7 @@
   "block.minecraft.banner.the_bumblezone.honeycombs.gray": "Сірі медові стільники",
   "block.minecraft.banner.the_bumblezone.honeycombs.light_gray": "Світло-сірі медові стільники",
   "block.minecraft.banner.the_bumblezone.honeycombs.white": "Білі медові стільники",
-  
+
   "block.minecraft.banner.the_bumblezone.swords.red": "Червоні мечі",
   "block.minecraft.banner.the_bumblezone.swords.orange": "Помаранчеві мечі",
   "block.minecraft.banner.the_bumblezone.swords.yellow": "Жовті мечі",
@@ -166,7 +166,7 @@
   "block.minecraft.banner.the_bumblezone.swords.gray": "Сірі мечі",
   "block.minecraft.banner.the_bumblezone.swords.light_gray": "Світло-сірі мечі",
   "block.minecraft.banner.the_bumblezone.swords.white": "Білі мечі",
-  
+
   "block.minecraft.banner.the_bumblezone.sun.red": "Червоне сонце",
   "block.minecraft.banner.the_bumblezone.sun.orange": "Помаранчеве сонце",
   "block.minecraft.banner.the_bumblezone.sun.yellow": "Жовте сонце",
@@ -183,7 +183,7 @@
   "block.minecraft.banner.the_bumblezone.sun.gray": "Сіре сонце",
   "block.minecraft.banner.the_bumblezone.sun.light_gray": "Світло-сіре сонце",
   "block.minecraft.banner.the_bumblezone.sun.white": "Біле сонце",
-  
+
   "block.minecraft.banner.the_bumblezone.pluses.red": "Червоні плюси",
   "block.minecraft.banner.the_bumblezone.pluses.orange": "Помаранчеві плюси",
   "block.minecraft.banner.the_bumblezone.pluses.yellow": "Жовті плюси",
@@ -200,7 +200,7 @@
   "block.minecraft.banner.the_bumblezone.pluses.gray": "Сірі плюси",
   "block.minecraft.banner.the_bumblezone.pluses.light_gray": "Світло-сірі плюси",
   "block.minecraft.banner.the_bumblezone.pluses.white": "Білі плюси",
-  
+
   "block.minecraft.banner.the_bumblezone.peace.red": "Червоний спокій",
   "block.minecraft.banner.the_bumblezone.peace.orange": "Помаранчевий спокій",
   "block.minecraft.banner.the_bumblezone.peace.yellow": "Жовтий спокій",
@@ -217,7 +217,7 @@
   "block.minecraft.banner.the_bumblezone.peace.gray": "Сірий спокій",
   "block.minecraft.banner.the_bumblezone.peace.light_gray": "Світло-сірий спокій",
   "block.minecraft.banner.the_bumblezone.peace.white": "Білий спокій",
-  
+
   "block.minecraft.banner.the_bumblezone.eyes.red": "Червоні очі",
   "block.minecraft.banner.the_bumblezone.eyes.orange": "Помаранчеві очі",
   "block.minecraft.banner.the_bumblezone.eyes.yellow": "Жовті очі",
@@ -234,7 +234,7 @@
   "block.minecraft.banner.the_bumblezone.eyes.gray": "Сірі очі",
   "block.minecraft.banner.the_bumblezone.eyes.light_gray": "Світло-сірі очі",
   "block.minecraft.banner.the_bumblezone.eyes.white": "Білі очі",
-  
+
   "block.minecraft.banner.the_bumblezone.arrows.red": "Червоні стріли",
   "block.minecraft.banner.the_bumblezone.arrows.orange": "Помаранчеві стріли",
   "block.minecraft.banner.the_bumblezone.arrows.yellow": "Жовті стріли",
@@ -251,17 +251,17 @@
   "block.minecraft.banner.the_bumblezone.arrows.gray": "Сірі стріли",
   "block.minecraft.banner.the_bumblezone.arrows.light_gray": "Світло-сірі стріли",
   "block.minecraft.banner.the_bumblezone.arrows.white": "Білі стріли",
-  
+
   "fluid.the_bumblezone.sugar_water_still": "Цукрова вода",
   "fluid.the_bumblezone.sugar_water_flowing": "Цукрова вода",
   "fluid.the_bumblezone.honey_fluid_still": "Рідкий мед",
   "fluid.the_bumblezone.honey_fluid_flowing": "Рідкий мед",
   "fluid.the_bumblezone.royal_jelly_fluid_flowing": "Маточне молоко",
-  
+
   "fluid_type.the_bumblezone.sugar_water": "Цукрова вода",
   "fluid_type.the_bumblezone.honey": "Рідкий мед",
   "fluid_type.the_bumblezone.royal_jelly": "Маточне молоко",
-  
+
   "item.the_bumblezone.sugar_water_bucket": "Відро цукрової води",
   "item.the_bumblezone.sugar_water_bottle": "Пляшка цукрової води",
   "item.the_bumblezone.honey_bucket": "Відро меду",
@@ -311,6 +311,8 @@
   "item.the_bumblezone.music_disc_radiance_renren.desc": "РенРен — Radiance",
   "item.the_bumblezone.music_disc_life_renren": "Платівка",
   "item.the_bumblezone.music_disc_life_renren.desc": "РенРен — Life",
+  "item.the_bumblezone.music_disc_a_last_first_last": "Платівка",
+  "item.the_bumblezone.music_disc_a_last_first_last.desc": "Punpudle — A Last First Last",
   "item.the_bumblezone.pollen_puff": "Пилкова кулька",
   "item.the_bumblezone.dirt_pellet": "Ґрунтова пелета",
   "item.the_bumblezone.bee_bread": "Бджолиний хліб",
@@ -338,6 +340,7 @@
   "item.the_bumblezone.honey_compass_structure": "Медовий компас — Стільниковий лабіринт",
   "item.the_bumblezone.honey_compass_structure_loading": "Медовий компас — Пошук структури...",
   "item.the_bumblezone.honey_compass_structure_failed": "Медовий компас — Не вдалося знайти положення структури...",
+  "item.the_bumblezone.honey_compass_structure_creative": "Медовий компас — новий компас створено",
   "item.the_bumblezone.honey_compass_structure_wrong_dimension": "Медовий компас — Неправильний вимір для пошуку структури...",
   "item.the_bumblezone.honey_compass_structure_failed_description": "ПКМ, щоб повторити пошук.",
   "item.the_bumblezone.honey_compass_block": "Медовий компас — %s",
@@ -411,7 +414,7 @@
   "item.the_bumblezone.crystalline_flower_info_2": "Досвід: %s",
   "item.the_bumblezone.crystalline_flower_cannot_place": "Недостатньо велика кімната для квітки!",
   "item.the_bumblezone.essence_raging": "Есенція люті",
-  "item.the_bumblezone.essence_raging_description_1": "Вбивайте виділених мобів, щоб збільшити силу!",
+  "item.the_bumblezone.essence_raging_description_1": "Убивайте підсвічених мобів задля збільшеної сили!",
   "item.the_bumblezone.essence_raging_description_2": "Скидає силу при будь-якому вбивстві з максимальною силою.",
   "item.the_bumblezone.essence_knowing": "Есенція знання",
   "item.the_bumblezone.essence_knowing_description_1": "Знання знають усе...",
@@ -449,7 +452,7 @@
   "item.the_bumblezone.essence_radiance_chestplate_text": "  %s%s",
   "item.the_bumblezone.essence_radiance_leggings_text": "  %s%s",
   "item.the_bumblezone.essence_radiance_boots_text": "  %s%s",
-  
+
   "item.minecraft.potion.effect.neurotoxin": "Зілля нейротоксину",
   "item.minecraft.potion.effect.long_neurotoxin": "Зілля нейротоксину",
   "item.minecraft.splash_potion.effect.neurotoxin": "Вибухове зілля нейротоксину",
@@ -458,7 +461,7 @@
   "item.minecraft.lingering_potion.effect.long_neurotoxin": "Осідальне зілля нейротоксину",
   "item.minecraft.tipped_arrow.effect.neurotoxin": "Стріла нейротоксину",
   "item.minecraft.tipped_arrow.effect.long_neurotoxin": "Стріла нейротоксину",
-  
+
   "entity.the_bumblezone.rootmin": "Кореневик",
   "entity.the_bumblezone.variant_bee": "Різновид бджоли",
   "entity.the_bumblezone.honey_slime": "Медовий слимак",
@@ -490,7 +493,7 @@
   "entity.the_bumblezone.bee_queen.thanksgiving_trade_performed": "Щасливого Дня подяки!",
   "entity.the_bumblezone.bee_queen.easter_trade_performed": "Щасливого Великодня!",
   "entity.the_bumblezone.bee_queen.new_year_trade_performed": "З новим роком!",
-  
+
   "enchantment.the_bumblezone.comb_cutter": "Медоріз",
   "enchantment.the_bumblezone.comb_cutter.desc": "Швидше добуває стільники, вулики, гнізда та воскові блоки. \nПодвоює здобич із будь-яких бджолиних гнізд або вуликів.",
   "enchantment_lore.the_bumblezone:comb_cutter.description": "Швидше добуває стільники, вулики, гнізда та воскові блоки. Подвоює здобич із будь-яких бджолиних гнізд або вуликів.",
@@ -500,9 +503,9 @@
   "enchantment_lore.the_bumblezone:potent_poison.description": "Накладає отруєння, коли вдаряєте не немертвого моба. Вищий рівень збільшує тривалість та рівень отруєння.",
   "enchantment_lore_forge.the_bumblezone:potent_poison.description": "Накладає отруєння, коли вдаряєте не немертвого моба. Вищий рівень збільшує тривалість та рівень отруєння.",
   "enchantment.the_bumblezone.neurotoxins": "Нейротоксини",
-  "enchantment.the_bumblezone.neurotoxins.desc": "Шанс завдати паралічу не немертвим мобам. \nВище здоров'я мобів зменшує шанс паралічу.",
-  "enchantment_lore.the_bumblezone:neurotoxins.description": "Шанс завдати паралічу не немертвим мобам. Вище здоров'я мобів зменшує шанс паралічу.",
-  "enchantment_lore_forge.the_bumblezone:neurotoxins.description": "Шанс завдати паралічу не немертвим мобам. Вище здоров'я мобів зменшує шанс паралічу.",
+  "enchantment.the_bumblezone.neurotoxins.desc": "Шанс завдати паралічу живим істотами. \nВище здоров'я зменшує шанс паралічу.",
+  "enchantment_lore.the_bumblezone:neurotoxins.description": "Шанс завдати паралічу живим істотами. Вище здоров'я зменшує шанс паралічу.",
+  "enchantment_lore_forge.the_bumblezone:neurotoxins.description": "Шанс завдати паралічу живим істотами. Вище здоров'я зменшує шанс паралічу.",
 
   "biome.the_bumblezone.sugar_water_floor": "Цукрова водяна гладінь",
   "biome.the_bumblezone.hive_wall": "Стіна вулика",
@@ -512,7 +515,7 @@
   "biome.the_bumblezone.crystal_canyon": "Кристалічний каньйон",
   "biome.the_bumblezone.floral_meadow": "Квіткові луки",
   "biome.the_bumblezone.howling_constructs": "Ревучі конструкції",
-  
+
   "structure.the_bumblezone.ancient_hoops": "Стародавні обручі",
   "structure.the_bumblezone.ancient_shrine": "Стародавнє святилище",
   "structure.the_bumblezone.battle_cubes": "Бойові куби",
@@ -541,7 +544,7 @@
   "structure.the_bumblezone.stinger_spear_shrine": "Святиня жалосписа",
   "structure.the_bumblezone.subway": "Метро",
   "structure.the_bumblezone.throne_pillar": "Тронний стовп",
-  
+
   "effect.the_bumblezone.wrath_of_the_hive": "Гнів вулика",
   "effect.the_bumblezone.protection_of_the_hive": "Захист вулика",
   "effect.the_bumblezone.beenergized": "Бджолорійність",
@@ -606,11 +609,11 @@
   "subtitles.block.the_bumblezone.crystalline_flower.use": "Кристалічна квітка чарує",
   "subtitles.block.the_bumblezone.honey_crystal_block.chime": "Медовий кристал дзвенить",
   "subtitles.block.the_bumblezone.windy_air.blows": "Вітер дує",
-  
+
   "key.categories.the_bumblezone": "The Bumblezone",
   "key.the_bumblezone.beehemoth_down": "Джміль: летіти вниз",
   "key.the_bumblezone.beehemoth_up": "Джміль: летіти вгору",
-  
+
   "stat.the_bumblezone.carpenter_bee_boots_mined_blocks": "Bz: Чоботи тесляра видобули блоків",
   "stat.the_bumblezone.carpenter_bee_boots_wall_hang_time": "Bz: Час носіння чобіт тесляра",
   "stat.the_bumblezone.stingless_bee_helmet_bee_rider": "Bz: Час носіння бджолиного шолома",
@@ -626,7 +629,7 @@
   "stat.the_bumblezone.calming_event_defeated": "Bz: Переможено в події есенції спокою",
   "stat.the_bumblezone.knowing_event_defeated": "Bz: Переможено в події есенції знання",
   "stat.the_bumblezone.continuity_event_defeated": "Bz: Переможено в події есенції безперервності",
-  
+
   "system.the_bumblezone.teleporting_into_bz": "Телепортування до Бджолиного виміру...",
   "system.the_bumblezone.teleporting_out_of_bz": "Телепортування з Бджолиного виміру...",
   "system.the_bumblezone.missing_dimension": "Будь ласка, перезапустіть сервер. Бджолиний вимір неможливо створити. Можливо через цю помилку?: %s",
@@ -653,7 +656,8 @@
   "system.the_bumblezone.denied_jet_boots": "Антитехнічні чари активовано — реактивні чоботи вимкнено",
   "system.the_bumblezone.denied_mek_jetpack_module": "Антитехнічні чари активовано — реактивний модуль",
   "system.the_bumblezone.denied_mek_grav_module": "Антитехнічні чари активовано — гравітаційний модуль",
-  
+  "system.the_bumblezone.royal_jelly_bottle.cannot_take_from_source_block": "Не марнуйте рідину! Використайте відро натомість!",
+
   "essence.the_bumblezone.missing_essence_effect": "Спершу вам потрібно спожити есенцію бджіл...",
   "essence.the_bumblezone.red_essence_event": "§cЕсенція люті§f — §cПоразка§f за %s",
   "essence.the_bumblezone.purple_essence_event": "§dЕсенція знання§f — §6Перемога§f за %s",
@@ -661,7 +665,7 @@
   "essence.the_bumblezone.green_essence_event": "§aЕсенція життя§f — §cПоразка§f за %s",
   "essence.the_bumblezone.yellow_essence_event": "§eЕсенція сяйва§f — §cПоразка§f за %s",
   "essence.the_bumblezone.white_essence_event": "Есенція безперервності — §cПоразка§f за %s",
-  
+
   "container.the_bumblezone.honey_cocoon": "Медовий кокон",
   "container.the_bumblezone.crystalline_flower": "Споживайте й зачаровуйте",
   "container.the_bumblezone.crystalline_flower.level": "Рівень: %s",
@@ -669,7 +673,7 @@
   "container.the_bumblezone.crystalline_flower.tier_cost": "Ціна: %s",
   "container.the_bumblezone.crystalline_flower.tier_cost_arrow": "↓%s",
   "container.the_bumblezone.crystalline_flower.too_many_enchants": "Ліміт чарів — 3",
-  
+
   "buzzing_briefcase.the_bumblezone.bee_typing.normal": "Звичайна",
   "buzzing_briefcase.the_bumblezone.bee_typing.unknown": "Невідома",
   "buzzing_briefcase.the_bumblezone.bee_typing.redtail_bee": "Червонохвоста бджола",
@@ -687,7 +691,8 @@
   "buzzing_briefcase.the_bumblezone.bee_typing.enby_bee": "Небінарна бджола",
   "buzzing_briefcase.the_bumblezone.bee_typing.reverse_bee": "Зворотня бджола",
   "buzzing_briefcase.the_bumblezone.bee_typing.neapolitan_bee": "Неаполітанська бджола",
-  
+  "buzzing_briefcase.the_bumblezone.bee_typing.rainbow_bee": "Веселкова бджола",
+
   "command.the_bumblezone.invalid_data_arg": "Аргумент даних недійсний. Будь ласка, виберіть один із запропонованих варіантів.",
   "command.the_bumblezone.invalid_entity_arg": "Аргумент сутності відсутність для цього запиту даних. Будь ласка, виберіть одну сутність із запропонованих варіантів.",
   "command.the_bumblezone.data_change_success": "Дані про обраних гравців успішно змінено!",
@@ -986,7 +991,7 @@
   "the_bumblezone.honey_slime_spawn_egg.description": " Яйце, яке викликає пасивних медових слимаків, яких можна використати для ферми пляшок меду, шляхом використання скляних пляшок на дорослих медових слимаках. \n\nМожна приманити та розмножити цукром. Дитинчата виростуть із часом. Якщо дорослий помирає, він розділяється на кількох дитинчат або на крихітних слимаків, якщо з дорослого вже зібрали мед. При вбивстві, сусідні медові слимаки приєднаються, щоб помститися вам! \n\n Медового слимака також можна створити використовуючи відро меду на крихітних чи звичайного розміру слимаках! \n\n Цього моба для The Bumblezone пожертвував Bagel, творець Buzzier bees! Особлива подяка йому!",
   "the_bumblezone.variant_bee_spawn_egg.description": " Яйце, яке викликає бджолу з іншим скіном! Ці бджоли точнісінько такі ж, як звичайні. Просто мають інший вигляд.",
   "the_bumblezone.beehemoth_spawn_egg.description": " Яйце, яке викликає джмеля, гігантську бджолу! Джмеля можна приручити предметами на кшталт відер чи пляшок меду, або ж іншими бджолиними предметами. Однак, вони будуть слідувати за вами, якщо триматимете відра меду. Якщо ви нагодуєте їх, ви зрештою зможете їх приручити, надягти сідло та покататися! Чим більше ви годуєте та катаєтеся на них, тим більша ваша дружба, що робить джмелів швидшими та збільшує їх здоров'я. Коли дружба досягла максимуму, джміль стане маткою та зможе літати на максимальній швидкості! Однак, дружба зменшуватиметься, якщо джміль отримуватиме шкоду з будь-якого джерела та якщо ви втратите дружбу, джміль стане диким і нещасним. :( Цього моба для The Bumblezone пожертвували Aranaira, Alexthe666 та Nooby з моду Carrier Bees! Особлива подяка їм!",
-  "the_bumblezone.bee_queen_spawn_egg.description": " Яйце, яке викликає бджолину матку, величезну пасивну бджолу, яка хоче торгуватися! Клацніть ПКМ утримуючи предмети чи скиньте їх перед нею, щоб торгувати. Спробуйте різні предмети, щоб побачити, що можна отримати в залежності від того, що ви даєте! Матка може попросити певні предмети, як тимчасовий бонусний торг, що надає додаткову нагороду (все ще можна виконувати звичайні торги з іншими предметами).\n Після першої успішної торгівлі ви отримаєте гілку досягнень «Бажання королеви», яка дає нагороду за кожне завершене досягнення. \n\n Після завершення всіх завдань, відвідайте бджолину матку і клацніть ПКМ із порожньою рукою, щоб скинути завдання й отримати нагороду!",
+  "the_bumblezone.bee_queen_spawn_egg.description": " Яйце, яке викликає бджолину матку, величезну пасивну бджолу, яка хоче торгуватися! Клацніть ПКМ утримуючи предмети чи скиньте їх перед нею, щоб торгувати. Спробуйте різні предмети, щоб побачити, що можна отримати в залежності від того, що ви даєте! Матка може попросити певні предмети, як тимчасовий бонусний торг, що надає додаткову нагороду (все ще можна виконувати звичайні торги з іншими предметами).\n Після першої успішної торгівлі ви отримаєте гілку досягнень «Бажання королеви», яка дає пляшки маточного молока за кожне завершене досягнення. \n\n Після завершення всіх завдань, відвідайте бджолину матку і клацніть ПКМ із порожньою рукою, щоб скинути завдання й отримати нагороду!",
   "the_bumblezone.rootmin_spawn_egg.description": " Яйце, яке викликає кореневика! Напівворожого моба, що ховається у вигляді трав'яного блока й буде стріляти в будь-кого, хто не одягнений у бджолине спорядження. Ви можете замінити квітку, яку він тримає на своїй голові, на іншу малу чи високу, клацнувши ПКМ!",
   "the_bumblezone.sentry_watcher_spawn_egg.description": " Яйце, яке можна змайструвати та яке викликає сторожовика. Гігантську неживу бджолину статую, що реагуватиме на кожну не бджолину живу сутність попереду неї. Він не реагуватиме на гравця, який викликав його яйцем. Він завдає величезної шкоди зі швидкістю й додаткової шкоди, коли притискає мобів до стіни. Подвійне клацання ПКМ по спостерігачеві перетворить його назад у яйце. Сторожовики, що з'явилися разом із вічним святилищем, вибухнуть, щойно покинуть структуру чи якимось чином загинуть у ній. У цій структурі. він також буде пробивати блоки на своєму шляху, якщо вони не мають високого показника загальної вибухостійкості.",
   "the_bumblezone.porous_honeycomb_block.description": " Стільниковий блок з отворами! Ви можете зберігати мед у цьому блоці за допомогою пляшок чи відер меду. Запилені бджоли будуть наповнювати ці блоки медом при дотику!",
@@ -1004,10 +1009,10 @@
   "the_bumblezone.sugar_water_bottle.description": " Пляшка цукрової води. Її можна отримати при використанні пляшки на цукровій воді. \n\nЯкщо випити, вона відновить дуже мало голоду чи надасть квапливість на короткий проміжок часу. \n\nМожна згодувати стільниковому розпліднику, щоб із малим шансом виростити личинку. Можна також згодувати бджолами, щоб зцілити їх, та з малим шансом видалити ефект гніву вулика.",
   "the_bumblezone.sugar_water_still.description": " Рідина, що є водою настояною цукром. Будь-які моби в ній сповільнюються трохи сильніше ніж в звичайній воді. Цю рідину можна знайти в Бджолиному вимірі, зробити поєднавши відро води з цукром чи отримати із заповненого водою медового кристала.\n Загалом, цукрова вода матиме дуже схожі властивості, як і звичайна, тому що рідина має теґ води. Це означає, що ви можете зволожувати рілля чи тримати корал живим із цією рідиною. \n\n\n Ця рідина зцілить будь-яку бджолу при дотику, якщо бджола не отримує шкоду. Крім того, ця рідина виростить цукрову тростину набагато швидше, якщо розлити її поруч із рослиною (цей ефект можна скласти до 4 разів). \n\n Коли ця рідина вступає в контакт із будь-якою іншою рідиною, яка має теґ лави, ця речовина перетвориться на зацукрований кругляк або зацукровані кам'яні блоки.",
   "the_bumblezone.honey_fluid_still.description": " Смачний мед! Він тече дуже повільно та значно сповільнює мобів. \n\n Можна зачерпнути відром або скляною пляшкою. Зцілить будь-яку поранену бджолу, що залетить у цю рідину. \n\n Коли ця рідина вступає в контакт із будь-якою іншою рідиною, що не є ні медом, ні лавою, вона перетвориться в блискучі медові кристали. Якщо ця речовина торкається лави, вона перетвориться в зацукрований камінь чи кругляк.",
-  "the_bumblezone.royal_jelly_bucket.description": " Відро, яке недбало тримає надзвичайно рідкісний і цінний вид меду, створений бджолиною маткою! \n\n Можна згодувати бджолам, щоб надати надзвичайно високий та шалено тривалий ефект бджолорійності (й також перетворює джмелів на маток). Якщо повернути його бджолиній матці, можна отримати надзвичайно цінні нагороди! \n\n Можна отримати при використанні порожніх відер на рідинному маточному молоці чи створити з 4 пляшок маточного молока та відра. Можна використовувати в роздавачах!",
-  "the_bumblezone.royal_jelly_bottle.description": " Супер надзвичайний різновид меду від бджолиної матки, створений по рецепту, що передається з покоління в покоління! \n\nПиття цього предмета відновить велику кількість голоду. Надасть швидкість 2, стрибучість 4, повільне падіння 1 та бджолорійність 2! Воно також видалить ефекти отруєння, слабкості та уповільнення. \n\n Ви можете повернути цей предмет назад бджолиній матці, щоб отримати куди цінніші нагороди! \n\n Можна згодувати бджолам, щоб надати надзвичайно високий та шалено тривалий ефект бджолорійності (й також надає високі очки дружби з джмелями).",
-  "the_bumblezone.royal_jelly_fluid_still.description": " Спеціально зварений мед бджіл-маток! Він тече дуже повільно та значно сповільнює мобів. \n\n Можна зачерпнути відром або скляною пляшкою. Зцілить будь-яку поранену бджолу, що залетить у цю рідину та надасть їй ефекти бджолорійності та регенерації. \n\n Коли ця рідина вступає в контакт із будь-якою іншою рідиною, що не є ні медом, ні лавою, вона перетвориться в блискучі медові кристали. Якщо ця речовина торкається лави, вона перетвориться в зацукрований камінь чи кругляк.",
-  "the_bumblezone.royal_jelly_block.description": " Затверділа форма маточного молока! Вона має ті ж властивості, що й звичайний медовий блок, за винятком того, що його можна лише «тягнути» поршнями, але не штовхати. Подумайте трохи й подивіться, які дивовижні рухомі редстоунові будівлі ви можете зробити з цього!",
+  "the_bumblezone.royal_jelly_bucket.description": " Відро, яке недбало тримає надзвичайно рідкісний і цінний вид меду, створений бджолиною маткою! \n\n Можна згодувати бджолам, щоб надати надзвичайно високий та шалено тривалий ефект бджолорійності (й також перетворює джмелів на маток). Якщо повернути його бджолиній матці, можна отримати надзвичайно цінні нагороди! \n\n Можна отримати при використанні порожніх відер на рідинному маточному молоці чи створити з 4 пляшок маточного молока та відра. Можна використовувати в роздавачах!\n\n Тече швидше в теплих біомах і повільніше в холодних. Перетворюється на блискучі медові кристалічні блоки в надтеплих вимірах, таких як Незер. \n\n Версію в пляшці можна отримати, виконавши будь-яке з досягнень «Бажання королеви». Бджолина матка дозволяє скинути лінію досягнень, коли вона повністю завершена, щоб отримати більше винагород у вигляді пляшок.",
+  "the_bumblezone.royal_jelly_bottle.description": " Супер надзвичайний різновид меду від бджолиної матки, створений по рецепту, що передається з покоління в покоління! Можна отримати, виконавши будь-яке з досягнень «Бажання королеви». Бджолина матка дозволяє скинути лінію досягнень, коли вона повністю завершена, щоб отримати більше винагород у вигляді пляшок. \n\nПиття цього предмета відновить велику кількість голоду. Надасть швидкість 2, стрибучість 4, повільне падіння 1 та бджолорійність 2! Воно також видалить ефекти отруєння, слабкості та уповільнення. \n\n Ви можете повернути цей предмет назад бджолиній матці, щоб отримати куди цінніші нагороди! \n\n Можна згодувати бджолам, щоб надати надзвичайно високий та шалено тривалий ефект бджолорійності (й також надає високі очки дружби з джмелями).",
+  "the_bumblezone.royal_jelly_fluid_still.description": " Спеціально зварений мед бджіл-маток! Він тече дуже повільно та значно сповільнює мобів. \n\n Можна зачерпнути відром або скляною пляшкою. Зцілить будь-яку поранену бджолу, що залетить у цю рідину та надасть їй ефекти бджолорійності та регенерації. \n\n Коли ця рідина вступає в контакт із будь-якою іншою рідиною, що не є ні медом, ні лавою, вона перетвориться в блискучі медові кристали. Якщо ця речовина торкається лави, вона перетвориться в зацукрований камінь чи кругляк.\n\n Версію в пляшці можна отримати, виконавши будь-яке з досягнень «Бажання королеви». Бджолина матка дозволяє скинути лінію досягнень, коли вона повністю завершена, щоб отримати більше винагород у вигляді пляшок.",
+  "the_bumblezone.royal_jelly_block.description": " Затверділа форма маточного молока! Вона має ті ж властивості, що й звичайний медовий блок, за винятком того, що його можна лише «тягнути» поршнями, але не штовхати. Подумайте трохи й подивіться, які дивовижні рухомі редстоунові будівлі ви можете зробити з цього!\n\n Версію в пляшці можна отримати, виконавши будь-яке з досягнень «Бажання королеви». Бджолина матка дозволяє скинути лінію досягнень, коли вона повністю завершена, щоб отримати більше винагород у вигляді пляшок.",
   "the_bumblezone.honey_crystal_shield.description": " Створений з уламків медового кристала. Цей щит спершу дуже слабкий, але стає міцнішим із лагодженням за допомогою уламків медового кристала на ковадлі. На максимальному рівні, цей щит має приблизно вдвічі більшу міцність ніж звичайний. \n\nОднак, цей щит завжди отримує велику шкоду при блокуванні вибухів або вогняної шкоди. \n\n Цей щит ненадовго сповільнить будь-якого моба, що завдає фізичної шкоди щиту й тим більше, цей щит можна зачарувати на незламність, прокляття прив'язування та зникнення (без лагодження для збереження балансу).",
   "the_bumblezone.pile_of_pollen.description": " Велика купа пилку! Створюється коли пилкова кулька влучає в блок. Удача збільшує кількість добутих пилкових кульок! Але шовковий дотик, при повному стосі пилку, добуває купу, як предмет. \n\n Пилкова купа сповільнює мобів у собі та виділяє тонну частинок. Вона також запилює будь-яку не запилену бджолу, що літає над пилком або змушує панд чхати.\n\n Щільна купа цього блока також приховує вас від злих бджіл, при повному вкритті! З неї також можна виділити редстоуновий сигнал за допомогою редстоунового компаратора. \n\n На останок, цей блок блокує вібрації та зупиняє виявлення скалкового сенсора.",
   "the_bumblezone.pile_of_pollen_suspicious.description": " Велика купа пилку, що здається дивною... Вона має ті ж властивості, що й звичайна, але має дещо більше... Очистьте її щіткою й подивіться, що ви знайдете!",
@@ -1035,6 +1040,7 @@
   "the_bumblezone.music_disc_knowing_renren.description": " Розпочніть свою вечірку з цією композицією! Цю рідкісну платівку можна отримати від мандрівного крамаря чи з певних структур Бджолиного виміру! Ця композиція зветься «Knowing» від РенРена",
   "the_bumblezone.music_disc_radiance_renren.description": " Відчуйте енергію, коли послухаєте! Цю рідкісну платівку можна отримати від мандрівного крамаря чи з певних структур Бджолиного виміру! Ця композиція зветься «Radiance» від РенРена",
   "the_bumblezone.music_disc_life_renren.description": " Класика серед кореневиків! Цю рідкісну платівку можна отримати від мандрівного крамаря чи з певних структур Бджолиного виміру! Ця композиція зветься «Life» від РенРена",
+  "the_bumblezone.music_disc_a_last_first_last.description": " Фінальна пісня шоу! Цю рідкісну платівку можна отримати від мандрівного крамаря чи певних структур Бджолиного виміру! Ця композиція зветься «A Last First Last» від Punpudle",
   "the_bumblezone.bee_stinger.description": " Звичайний подарунок від бджолиної матки! Можна використати, як боєприпас малої шкоди для лука та арбалета, але який має шанс накласти на живого моба ефект отруєння, слабкості, уповільнення чи паралічу.\n\n Можна використати у варильних стійках, як інгредієнт, щоб приготувати тривале зілля отруєння! \n\n Можна клацнути ПКМ по бджолі без жала, щоб повернути їй жало.",
   "the_bumblezone.stinger_spear.description": " Крихкий, але метальний смертоносний спис із бджолиним жалом! Можна лагодити кременем або бджолиними жалами та який можна зачарувати. Він завжди завдає слабке отруєння на живих мобів у яких улучить",
   "the_bumblezone.honey_compass.description": " Настояний медом компас, що при клацанні ПКМ по вуликах і бджолиних гніздах, був вказувати на їх положення! Коли ви клацнете ПКМ по повітрю в Бджолиному вимірі, він, здається, вкаже на якусь структуру...",
@@ -1130,7 +1136,7 @@
   "the_bumblezone.windy_air.description": " Вітряний блок, що дує сутності в певний бік. \n\nУтримання цього предмета покаже всі блоки вітряного повітря поблизу. Бджолина матка дасть вам цей предмет, якщо ви торгуватимете з нею обладунками та інструментами Бджолиного виміру.",
   "the_bumblezone.heavy_air.description": " Блок із великою ваговою присутністю, що тягне сутностей униз і вимикає більшість можливостей польоту. \n\nПредметна форма доступна лише командою чи в меню творчості. Утримання цього предмета покаже всі блоки тяжкого повітря поблизу.",
   "the_bumblezone.essence_of_the_bees.description": " Споживний скарб кінця гри із гілки досягнень «Бажання королеви» від бджолиної матки! Ви можете відчути сильну, але ласкаву ауру, що випромінюється із самої есенції... При споживанні, ви миттєво отримаєте наступні бонуси:\n\nМожливість входу до стільникового лабіринту без отримання ефекту гніву вулика.\n\nМожливість входу до тронного стопка без отримання втоми поблизу бджолиної матки.\n\nВхід у рідкий мед надає ефект регенерації.\n\nВхід у бджолине молоко надає короткочасний ефект бджолорійності та сильніший ефект регенерації.\n\nВулики та бджолині гнізда можна добувати, мед збирати пляшками чи зістригати медові стільники не розлютивши бджіл. Багаття більше не потрібне!\n\nМедові слимаки більше не злитимуться коли ви збиратимете їх мед.\n\nЗауважте: Ефект залишиться на гравці навіть після смерті, якщо ви не зміните це у файлі конфігурації.",
-  "the_bumblezone.essence_raging.description": " Кінцевий предмет із червоного вічного святилища! Ця есенція випромінює бажання гніву та руйнування. \n\nУтримування в неробочій руці підсвітить найближчих монстрів. Убивство підсвічених монстрів дасть ефект сили. Чим довший ланцюг убитих підсвічених мобів, тим сильніший ефект. Досягає максимум 7, а потім обнуляється. Також скидається якщо між убивствами пройшло занадто багато часу.\n\nПереходить в режим відновлення, коли вичерпується енергія й потребує 30 хвилин, щоб перезарядитися в інвентарі того, хто спожив есенцію бджіл у минулому.",
+  "the_bumblezone.essence_raging.description": " Кінцевий предмет із червоного вічного святилища! Ця есенція випромінює бажання гніву та руйнування. \n\nУтримування в неробочій руці підсвітить найближчих монстрів. Убивство підсвічених монстрів дасть ефект сили. Чим довший ланцюг убитих підсвічених мобів, тим сильніший ефект. Досягає максимум 7, а потім обнуляється. Також скидається, якщо вбити непідсвіченого моба або якщо між убивствами пройшло занадто багато часу.\n\nПереходить в режим відновлення, коли вичерпується енергія й потребує 30 хвилин, щоб перезарядитися в інвентарі того, хто спожив есенцію бджіл у минулому.",
   "the_bumblezone.essence_knowing.description": " Кінцевий предмет із фіолетового вічного святилища! Ця есенція дарує знання, що виходять за межі смертного розуму.\n\nУтримування в неробочій руці підсвітить найближчих монстрів та живих сутностей на великій дистанції. Певні блоки-сутності, такі як: скрині, спавнери чи підозрілі блоки також підсвітяться. Вона також повідомить вам ім'я будь-якої структури, якщо ви в ній! \n\nПереходить в режим відновлення, коли вичерпується енергія й потребує 15 хвилин, щоб перезарядитися в інвентарі того, хто спожив есенцію бджіл у минулому.",
   "the_bumblezone.essence_calming.description": " Кінцевий предмет із синього вічного святилища! Ця есенція приносить спокій, якого ніколи раніше не відчували, всім, хто перебуває в її присутності.\n\nУтримування в неробочій руці змусить багатьох монстрів більше не злитися на того, хто тримає. Цей ефект утрачається, якщо утримувача поранено будь-яким модом або ж коли утримувач ударить гравця чи моба. Сила предмета також швидко вичерпується під час бігу. \n\nПереходить в режим відновлення, коли вичерпується енергія й потребує 10 хвилин, щоб перезарядитися в інвентарі того, хто спожив есенцію бджіл у минулому.",
   "the_bumblezone.essence_life.description": " Кінцевий предмет із зеленого вічного святилища! Ця есенція змушує життя процвітати з неймовірною швидкістю.\n\nУтримування в неробочій руці виростить культури та рослини поблизу швидше. Також лікує союзників і приручних тварин утримувача, що знаходяться поблизу, й також зцілить від ефектів висушування та отруєння. \n\nПереходить в режим відновлення, коли вичерпується енергія й потребує 10 хвилин, щоб перезарядитися в інвентарі того, хто спожив есенцію бджіл у минулому.",
@@ -1154,6 +1160,9 @@
   "the_bumblezone.midnightconfig.broodBlocksBeeSpawnCapacity": "Продуктивність бджолиних розплідників",
   "the_bumblezone.midnightconfig.pileOfPollenHyperFireSpread": "Гіпершвидке поширення вогню при горінні пилку",
   "the_bumblezone.midnightconfig.superCandlesBurnsMobs": "Суперсвічки та пахучі свічки підпалюють мобів",
+  "the_bumblezone.midnightconfig.enchantmentsComment": "§o§6    Секція зачарувань",
+  "the_bumblezone.midnightconfig.neurotoxinMaxLevel": "Максимальний рівень нейротоксинів",
+  "the_bumblezone.midnightconfig.paralyzedMaxTickDuration": "Максимальна тривалість тактів паралічу",
   "the_bumblezone.midnightconfig.dimensionComment": "§o§6    Секція виміру",
   "the_bumblezone.midnightconfig.enableInitialWelcomeMessage": "Показати вітальне повідомлення Бджолиного виміру",
   "the_bumblezone.midnightconfig.fogBrightnessPercentage": "Відсоток яскравості туману",
@@ -1166,6 +1175,7 @@
   "the_bumblezone.midnightconfig.forceBumblezoneOriginMobToOverworldCenter": "Переносити моба з Бджолиного виміру в центр Верхнього світу",
   "the_bumblezone.midnightconfig.dungeonsComment": "§o§6    Секція підземель",
   "the_bumblezone.midnightconfig.beeDungeonRarity": "Рідкість бджолиного підземелля",
+  "the_bumblezone.midnightconfig.treeDungeonRarity": "Рідкість підземелля на дереві",
   "the_bumblezone.midnightconfig.spiderInfestedBeeDungeonRarity": "Рідкість зараженого павуком бджолиного підземелля",
   "the_bumblezone.midnightconfig.spawnerRateSpiderBeeDungeon": "Ймовірність появи павучого бджолиного підземелля",
   "the_bumblezone.midnightconfig.brewingRecipeComment": "§o§6    Секція рецептів варення",
@@ -1184,6 +1194,8 @@
   "the_bumblezone.midnightconfig.beeLootInjection": "Впровадження бджолиної здобичі",
   "the_bumblezone.midnightconfig.moddedBeeLootInjection": "Впровадження модифікованої бджолиної здобичі",
   "the_bumblezone.midnightconfig.nearbyBeesPerPlayerInBz": "Бджіл довкола на гравця в Бджолиному вимірі",
+  "the_bumblezone.midnightconfig.musicDiscComment": "§o§6    Секція платівок",
+  "the_bumblezone.midnightconfig.allowWanderingTraderMusicDiscsTrades": "Дозволити мандрівному крамарю торгувати платівками",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthFlightOfTheBumblebee": "Тривалість платівки «Flight Of The Bumblebee»",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthHoneyBee": "Тривалість платівки «Honey Bee»",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthLaBeeDaLoca": "Тривалість платівки «La Bee-da Loca»",
@@ -1192,14 +1204,19 @@
   "the_bumblezone.midnightconfig.musicDiscTimeLengthKnowing": "Тривалість платівки «Knowing»",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthRadiance": "Тривалість платівки «Radiance»",
   "the_bumblezone.midnightconfig.musicDiscTimeLengthLife": "Тривалість платівки «Life»",
+  "the_bumblezone.midnightconfig.musicDiscTimeAFirstALast": "Тривалість платівки «A Last First Last»",
   "the_bumblezone.midnightconfig.modCompatComment": "§o§6    Секція сумісності модів",
+  "the_bumblezone.midnightconfig.alternativeFluidToReplaceHoneyFluid": "Альтернативна рідина, щоб замінити медову рідину",
   "the_bumblezone.midnightconfig.allowFriendsAndFoesBeekeeperTradesCompat": "Дозволити сумісність торгів пасічника з Friends And Foes",
   "the_bumblezone.midnightconfig.allowGoodallBottledBeesRevivingEmptyBroodBlock": "Дозволити сумісніть наповнення розплідників бджолою в пляшці з Goodall",
+  "the_bumblezone.midnightconfig.allowLootrCompat": "Дозволити коконам зі здобиччю бути сумісними з Lootr",
   "the_bumblezone.midnightconfig.clientComment": "§o§6    Секція клієнта",
+  "the_bumblezone.midnightconfig.useBackupModelForVariantBee": "Використовувати резервну модель для різновидної бджоли",
   "the_bumblezone.midnightconfig.playWrathOfHiveEffectMusic": "Програвати музику ефекту гніву вулика",
   "the_bumblezone.midnightconfig.playSempiternalSanctumMusic": "Програвати музику вічного святилища",
   "the_bumblezone.midnightconfig.renderBeeQueenBonusTradeItem": "Показувати предмет, який хоче бджолина матка",
   "the_bumblezone.midnightconfig.fogThickness": "Товщина туману",
+  "the_bumblezone.midnightconfig.disableEssenceBlockShaders": "Вимкнути шейдери блока есенції",
   "the_bumblezone.midnightconfig.crystallineFlowerComment": "§o§6    Секція кристалічної квітки",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeItemEntities": "Споживання предмета-сутності",
   "the_bumblezone.midnightconfig.crystallineFlowerConsumeExperienceOrbEntities": "Споживання сфер досвіду",
@@ -1218,19 +1235,24 @@
   "the_bumblezone.midnightconfig.knowingEssenceHighlightUncommonItems": "Підсвічувати незвичайні предмети",
   "the_bumblezone.midnightconfig.knowingEssenceHighlightRareItems": "Підсвічувати рідкісні предмети",
   "the_bumblezone.midnightconfig.knowingEssenceHighlightEpicItems": "Підсвічувати епічні предмети",
+  "the_bumblezone.midnightconfig.knowingEssenceStructureNameClient": "Показати назви структур (Клієнт)",
+  "the_bumblezone.midnightconfig.knowingEssenceStructureNameServer": "Показати назви структур (Сервер)",
   "the_bumblezone.midnightconfig.knowingEssenceStructureNameXCoord": "X координата назви",
   "the_bumblezone.midnightconfig.knowingEssenceStructureNameYCoord": "Y координата назви",
   "the_bumblezone.midnightconfig.radianceEssenceComment": "§o§6    Клієнтські конфігурації есенції сяйва",
   "the_bumblezone.midnightconfig.radianceEssenceArmorDurability": "Показувати міцність обладунку",
   "the_bumblezone.midnightconfig.radianceEssenceArmorDurabilityXCoord": "X координата міцності",
   "the_bumblezone.midnightconfig.radianceEssenceArmorDurabilityYCoord": "Y координата міцності",
+  "the_bumblezone.midnightconfig.essenceItemsClientComment": "§o§6    Клієнтська конфігурація предметів есенції",
+  "the_bumblezone.midnightconfig.essenceItemHUDVisualEffectLayers": "Кількість шарів візуального ефекту",
+  "the_bumblezone.midnightconfig.essenceItemHUDVisualEffectSpeed": "Швидкість обертання візуального ефекту",
   "the_bumblezone.midnightconfig.essenceComment": "§o§6    Конфігурація есенції",
   "the_bumblezone.midnightconfig.keepEssenceOfTheBeesOnRespawning": "Зберігати есенцію бджіл при відродженні",
   "the_bumblezone.midnightconfig.repeatableEssenceEvents": "Можна повторити подію есенції після перемоги",
   "the_bumblezone.midnightconfig.cosmicCrystalHealth": "Максимальне здоров'я космічного кристала",
   "the_bumblezone.midnightconfig.ragingEssenceAbilityUse": "Використання здатності есенції люті (на секунду)",
   "the_bumblezone.midnightconfig.ragingEssenceCooldown": "Відновлення есенції люті",
-  "the_bumblezone.midnightconfig.ragingEssenceStrengthLevels": "Рівні сили для сили люті",
+  "the_bumblezone.midnightconfig.ragingEssenceStrengthLevels": "Рівні сили есенції люті",
   "the_bumblezone.midnightconfig.knowingEssenceAbilityUse": "Використання здатності есенції знання",
   "the_bumblezone.midnightconfig.knowingEssenceCooldown": "Відновлення есенції знання",
   "the_bumblezone.midnightconfig.calmingEssenceAbilityUse": "Використання здатності есенції спокою (на секунду)",
@@ -1332,13 +1354,13 @@
   "tag.item.the_bumblezone.essence.calming_drowned_bonus_held_item": "Предмети потопельників на арені есенції спокою",
   "tag.item.the_bumblezone.essence_items": "Предмети есенції",
   "tag.item.the_bumblezone.banner_patterns": "Шаблони стягів Бджолиного виміру",
-  
+
   "tag.fluid.the_bumblezone.convertible_to_sugar_water": "Перетворює на цукрову воду",
   "tag.fluid.the_bumblezone.honey": "Медові рідини",
   "tag.fluid.the_bumblezone.royal_jelly": "Рідини маточного молока",
   "tag.fluid.the_bumblezone.special_honey_like": "Особливі, схожі на мед, рідини",
   "tag.fluid.the_bumblezone.sugar_water": "Рідини цукрової води",
-  
+
   "tag.entity_type.the_bumblezone.queens_desire.fighting_the_swarm_silverfish": "Лусківниці",
   "tag.entity_type.the_bumblezone.queens_desire.otherworldly_mites_endermite": "Ендермайти",
   "tag.entity_type.the_bumblezone.queens_desire.terror_fangs_cave_spider": "Печерні павуки",
