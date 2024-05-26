@@ -5,7 +5,6 @@ import com.telepathicgrunt.the_bumblezone.entities.nonliving.ThrownStingerSpearE
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityAttackedEvent;
 import com.telepathicgrunt.the_bumblezone.items.StingerSpearItem;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.ThrownTridentAccessor;
-import com.telepathicgrunt.the_bumblezone.mixin.entities.AbstractArrowAccessor;
 import com.telepathicgrunt.the_bumblezone.mixin.entities.MobAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCriterias;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
