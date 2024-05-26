@@ -29,6 +29,7 @@ public class HoneyFluidType {
                 .tickRate(30)
                 .still(HoneyFluidClientProperties.HONEY_FLUID_STILL_TEXTURE)
                 .flowing(HoneyFluidClientProperties.HONEY_FLUID_FLOWING_TEXTURE)
+                .overlay(HoneyFluidClientProperties.HONEY_FLUID_FLOWING_TEXTURE)
                 .sounds("bucket_fill", SoundEvents.BUCKET_FILL)
                 .sounds("bucket_empty", SoundEvents.BUCKET_EMPTY)
                 .sounds("fluid_vaporize", SoundEvents.FIRE_EXTINGUISH);

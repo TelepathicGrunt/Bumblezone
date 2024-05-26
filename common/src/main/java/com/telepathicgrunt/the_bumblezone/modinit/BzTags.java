@@ -119,12 +119,12 @@ public class BzTags {
     public static final TagKey<Item> NEUROTOXIN_ENCHANTABLE = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/neurotoxin"));
     public static final TagKey<Item> POTENT_POISON_ENCHANTABLE = TagKey.create(Registries.ITEM, new ResourceLocation(Bumblezone.MODID, "enchantable/potent_poison"));
 
-    public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "honey"));
+    public static final TagKey<Fluid> HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("c", "honey"));
     public static final TagKey<Fluid> BZ_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey"));
     public static final TagKey<Fluid> ROYAL_JELLY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "royal_jelly"));
     public static final TagKey<Fluid> SPECIAL_HONEY_LIKE = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "special_honey_like"));
-    public static final TagKey<Fluid> VISUAL_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "visual/honey"));
-    public static final TagKey<Fluid> VISUAL_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(getPlatformTagNamespace(), "visual/water"));
+    public static final TagKey<Fluid> VISUAL_HONEY_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("c", "visual/honey"));
+    public static final TagKey<Fluid> VISUAL_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation("c", "visual/water"));
     public static final TagKey<Fluid> SUGAR_WATER_FLUID = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "sugar_water"));
     public static final TagKey<Fluid> CONVERTIBLE_TO_SUGAR_WATER = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "convertible_to_sugar_water"));
     public static final TagKey<Fluid> HONEY_BEE_BOOTS_REMOVES_POLLEN_FLUIDS = TagKey.create(Registries.FLUID, new ResourceLocation(Bumblezone.MODID, "honey_bee_leggings/removes_pollen"));
@@ -228,9 +228,4 @@ public class BzTags {
     public static final TagKey<BannerPattern> PATTERN_ITEM_EYES = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/eyes"));
     public static final TagKey<BannerPattern> PATTERN_ITEM_PEACE = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/peace"));
     public static final TagKey<BannerPattern> PATTERN_ITEM_ARROWS = TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(Bumblezone.MODID, "pattern_item/arrows"));
-
-    @ExpectPlatform
-    public static String getPlatformTagNamespace() {
-        throw new NotImplementedException("BzTags.getPlatformTagNamespace");
-    }
 }
