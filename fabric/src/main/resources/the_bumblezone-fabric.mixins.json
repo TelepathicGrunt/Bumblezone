@@ -39,7 +39,6 @@
     "fluid.BzBucketItemMixin",
     "fluid.BzLiquidBlockMixin",
     "item.BucketItemAccessor",
-    "item.InventoryMixin",
     "item.ItemStackMixin",
     "item.ProjectileWeaponItemMixin",
     "item.RecordItemMixin",

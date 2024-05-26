@@ -12,6 +12,7 @@ import com.telepathicgrunt.the_bumblezone.packets.BumbleBeeChestplateFlyingPacke
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -38,11 +39,6 @@ public class BumbleBeeChestplate extends BeeArmor {
         if (itemStack.get(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get()) == null) {
             itemStack.set(BzDataComponents.BUMBLEBEE_CHESTPLATE_DATA.get(), new BumbleBeeChestplateData());
         }
-    }
-
-    // Runs on NeoForge
-    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
-        this.bz$onArmorTick(itemstack, world, player);
     }
 
     @Override

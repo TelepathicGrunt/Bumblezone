@@ -49,11 +49,6 @@ public class StinglessBeeHelmet extends BeeArmor {
         }
     }
 
-    // Runs on Forge
-    public void onArmorTick(ItemStack itemstack, Level world, Player player) {
-        this.bz$onArmorTick(itemstack, world, player);
-    }
-
     @Override
     public void bz$onArmorTick(ItemStack itemStack, Level level, Player player) {
         StinglessBeeHelmetData beeHelmetData = itemStack.get(BzDataComponents.STINGLESS_BEE_HELMET_DATA.get());

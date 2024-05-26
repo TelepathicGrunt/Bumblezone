@@ -46,11 +46,6 @@ public class HoneyBeeLeggings extends BeeArmor {
         }
     }
 
-    // Runs on Forge
-    public void onArmorTick(ItemStack itemstack, Level level, Player player) {
-        this.bz$onArmorTick(itemstack, level, player);
-    }
-
     @Override
     public void bz$onArmorTick(ItemStack itemstack, Level level, Player player) {
         if (player.isSpectator()) {

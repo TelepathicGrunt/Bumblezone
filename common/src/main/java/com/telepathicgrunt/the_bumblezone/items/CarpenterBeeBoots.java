@@ -56,11 +56,6 @@ public class CarpenterBeeBoots extends BeeArmor implements ItemExtension {
         }
     }
 
-    // Runs on Forge
-    public void onArmorTick(ItemStack itemstack, Level level, Player player) {
-        this.bz$onArmorTick(itemstack, level, player);
-    }
-
     @Override
     public void bz$onArmorTick(ItemStack itemStack, Level level, Player player) {
         if (player.isSpectator()) {
