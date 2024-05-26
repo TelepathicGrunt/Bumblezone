@@ -26,6 +26,9 @@ uk_ua.json updated by Unroman!
 
 zh_cn.json updated by TskimiSeiran!
 
+##### Mod Compat:
+Added special textures for Bumblezone Music Discs to be used when put into Adornment's Jukeboxes.
+
 
 ### **(V.7.3.8 Changes) (1.20.1 Minecraft)**
 
