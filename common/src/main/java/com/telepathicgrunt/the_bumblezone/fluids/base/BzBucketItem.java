@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,9 +20,15 @@ public class BzBucketItem extends BucketItem implements FluidGetter {
     protected final FluidData info;
 
     public BzBucketItem(FluidData info, Properties properties) {
-        super(info.still().get(), properties); //This gets replaced in a mixin because of the suppliers.
+        super(info.still().get(), properties);
         info.setBucket(() -> this);
         this.info = info;
+    }
+
+    @NotNull
+    @Override
+    public FlowingFluid getFluid() {
+        return info.still().get();
     }
 
     @Override

@@ -36,7 +36,6 @@
     "entity.ServerPlayerMixin",
     "entity.WalkNodeEvaluatorMixin",
     "fabricapi.BiomeModificationContextImplMixin",
-    "fluid.BzBucketItemMixin",
     "fluid.BzLiquidBlockMixin",
     "item.BucketItemAccessor",
     "item.ItemStackMixin",

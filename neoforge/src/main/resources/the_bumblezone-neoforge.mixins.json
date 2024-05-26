@@ -10,7 +10,6 @@
     "effect.WrathOfTheHiveEffectMixin",
     "entity.EntityMixin",
     "item.BzArrowItemMixin",
-    "item.BzBucketItemMixin",
     "item.ItemExtensionMixin",
     "item.PotionCandleRecipeMixin"
   ],
