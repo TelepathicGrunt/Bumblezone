@@ -27,7 +27,7 @@ uk_ua.json updated by Unroman!
 zh_cn.json updated by TskimiSeiran!
 
 ##### Mod Compat:
-Added special textures for Bumblezone Music Discs to be used when put into Adornment's Jukeboxes.
+Added special textures for Bumblezone Music Discs to be used when put into Amendments's Jukeboxes.
 
 
 ### **(V.7.4.8 Changes) (1.20.4 Minecraft)**
