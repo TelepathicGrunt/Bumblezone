@@ -540,7 +540,7 @@ public class HoneyCompass extends Item {
     }
 
     public static void setCompassStateData(HoneyCompassStateData honeyCompassStateData, boolean locked, Optional<UUID> searchId, boolean isLoading, boolean isFailed, boolean locatedSpecialStructure, ItemStack itemStack) {
-        if (!honeyCompassStateData.isDifferent(locked, searchId, isLoading, isFailed, locatedSpecialStructure)) {
+        if (honeyCompassStateData.isDifferent(locked, searchId, isLoading, isFailed, locatedSpecialStructure)) {
             itemStack.set(BzDataComponents.HONEY_COMPASS_STATE_DATA.get(),
                     new HoneyCompassStateData(locked, searchId, isLoading, isFailed, locatedSpecialStructure));
         }

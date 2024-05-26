@@ -119,13 +119,13 @@ public class HoneyCompassLocateStructure extends LootItemConditionalFunction {
     private void setCompassFoundLocationData(WeakReference<ItemStack> itemStackWeakReference, LootContext lootContext, BlockPos blockPos) {
         ItemStack itemStack = itemStackWeakReference.get();
         if (itemStack != null && blockPos != null) {
-            HoneyCompassStateData newHoneyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
-            HoneyCompassBaseData newHoneyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
-            HoneyCompassTargetData newHoneyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
+            HoneyCompassStateData oldHoneyCompassStateData = itemStack.get(BzDataComponents.HONEY_COMPASS_STATE_DATA.get());
+            HoneyCompassBaseData oldHoneyCompassBaseData = itemStack.get(BzDataComponents.HONEY_COMPASS_BASE_DATA.get());
+            HoneyCompassTargetData oldHoneyCompassTargetData = itemStack.get(BzDataComponents.HONEY_COMPASS_TARGET_DATA.get());
 
-            HoneyCompass.setCompassStateData(newHoneyCompassStateData, newHoneyCompassStateData.locked(), Optional.empty(), false, false, newHoneyCompassStateData.locatedSpecialStructure(), itemStack);
-            HoneyCompass.setCompassBaseData(newHoneyCompassBaseData, "structure", itemStack);
-            HoneyCompass.setCompassTargetData(newHoneyCompassTargetData, Optional.empty(), Optional.empty(), Optional.of(blockPos), Optional.of(lootContext.getLevel().dimension()), itemStack);
+            HoneyCompass.setCompassStateData(oldHoneyCompassStateData, oldHoneyCompassStateData.locked(), Optional.empty(), false, false, oldHoneyCompassStateData.locatedSpecialStructure(), itemStack);
+            HoneyCompass.setCompassBaseData(oldHoneyCompassBaseData, "structure", itemStack);
+            HoneyCompass.setCompassTargetData(oldHoneyCompassTargetData, Optional.empty(), Optional.empty(), Optional.of(blockPos), Optional.of(lootContext.getLevel().dimension()), itemStack);
         }
     }
 }
