@@ -89,6 +89,7 @@ import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -290,8 +291,8 @@ public class NeoForgeEventManager {
         }
     }
 
-    private static void onPickupItem(PlayerEvent.ItemPickupEvent event) {
-        PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(event.getEntity(), event.getStack()));
+    private static void onPickupItem(ItemEntityPickupEvent.Post event) {
+        PlayerPickupItemEvent.EVENT.invoke(new PlayerPickupItemEvent(event.getPlayer(), event.getItemEntity().getItem()));
     }
 
     private static void onGrantAdvancement(AdvancementEvent.AdvancementEarnEvent event) {

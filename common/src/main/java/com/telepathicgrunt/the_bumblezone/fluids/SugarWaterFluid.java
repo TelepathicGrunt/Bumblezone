@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
-import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzFluid;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
@@ -35,7 +35,7 @@ import net.minecraft.world.level.material.Fluids;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LEVEL_FLOWING;
 
-public abstract class SugarWaterFluid extends BzFlowingFluid {
+public abstract class SugarWaterFluid extends BzFluid {
 
     protected SugarWaterFluid(FluidData properties, boolean source) {
         super(properties, source);

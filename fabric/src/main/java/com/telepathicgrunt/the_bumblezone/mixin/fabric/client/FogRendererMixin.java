@@ -5,7 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.dimension.BzDimensionSpecialEffects;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
-import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -39,7 +39,7 @@ public class FogRendererMixin {
     private static void bumblezone$onModifyFogColor(Camera camera, float partialTicks, ClientLevel level, int renderDistance, float bossColorModifier, CallbackInfo ci) {
         FluidState state = level.getFluidState(camera.getBlockPosition());
         if (camera.getPosition().y < (double)((float)camera.getBlockPosition().getY() + state.getHeight(level, camera.getBlockPosition()))) {
-            if (state.getType() instanceof BzFlowingFluid bzFluid) {
+            if (state.getType() instanceof BzFluid bzFluid) {
                 ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties());
                 if (properties != null) {
                     Optional<Vector3f> fogColor = properties.modifyFogColor(camera, partialTicks, level, renderDistance, bossColorModifier, new Vector3f(fogRed, fogGreen, fogBlue));
@@ -57,7 +57,7 @@ public class FogRendererMixin {
     private static void bumblezone$onRenderFog(Camera camera, FogRenderer.FogMode fogMode, float renderDistance, boolean bl, float partialTicks, CallbackInfo ci) {
         FluidState state = camera.getEntity().level().getFluidState(camera.getBlockPosition());
         if (camera.getPosition().y < (double)((float)camera.getBlockPosition().getY() + state.getHeight(camera.getEntity().level(), camera.getBlockPosition()))) {
-            if (state.getType() instanceof BzFlowingFluid bzFluid) {
+            if (state.getType() instanceof BzFluid bzFluid) {
                 ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties());
                 if (properties != null) {
                     float start = RenderSystem.getShaderFogStart();

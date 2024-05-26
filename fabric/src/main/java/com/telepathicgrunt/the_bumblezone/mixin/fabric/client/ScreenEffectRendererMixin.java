@@ -2,7 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabric.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.telepathicgrunt.the_bumblezone.events.client.BlockRenderedOnScreenEvent;
-import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzFluid;
 import com.telepathicgrunt.the_bumblezone.fluids.base.ClientFluidProperties;
 import com.telepathicgrunt.the_bumblezone.platform.BzEntityHooks;
 import net.minecraft.client.Minecraft;
@@ -21,7 +21,7 @@ public abstract class ScreenEffectRendererMixin {
     @Inject(method = "renderScreenEffect", at = @At("HEAD"))
     private static void bumblezone$renderFluidOverlay(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci) {
         if (minecraft.player instanceof BzEntityHooks hook) {
-            if (hook.bz$getFluidOnEyes().getType() instanceof BzFlowingFluid bzFluid) {
+            if (hook.bz$getFluidOnEyes().getType() instanceof BzFluid bzFluid) {
                 ClientFluidProperties properties = ClientFluidProperties.get(bzFluid.info().properties());
                 properties.fluidOverlay(minecraft, poseStack);
             }

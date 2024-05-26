@@ -66,6 +66,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.CalmingEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.ContinuityEssence;
 import com.telepathicgrunt.the_bumblezone.items.essence.RagingEssence;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModdedBeesBeesSpawning;
+import com.telepathicgrunt.the_bumblezone.modinit.BzArmorMaterials;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
 import com.telepathicgrunt.the_bumblezone.modinit.BzCommands;
@@ -191,6 +192,7 @@ public class Bumblezone {
         BzDimension.DENSITY_FUNCTIONS.init();
         BzBlockEntities.BLOCK_ENTITIES.init();
         BzCriterias.CRITERION_TRIGGERS.init();
+        BzArmorMaterials.ARMOR_MATERIAL.init();
         BzPlacements.PLACEMENT_MODIFIER.init();
         BzProcessors.STRUCTURE_PROCESSOR.init();
         BzCreativeTabs.CREATIVE_MODE_TABS.init();

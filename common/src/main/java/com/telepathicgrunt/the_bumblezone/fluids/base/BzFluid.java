@@ -1,5 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.fluids.base;
 
+import com.teamresourceful.resourcefullib.common.fluid.ResourcefulFlowingFluid;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,11 +25,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public abstract class BzFlowingFluid extends FlowingFluid {
+public abstract class BzFluid extends ResourcefulFlowingFluid {
 
     private final FluidData info;
 
-    public BzFlowingFluid(FluidData info, boolean source) {
+    public BzFluid(FluidData info, boolean source) {
+        super(info);
         this.info = info;
         if (source) {
             info.setStill(() -> this);
@@ -111,7 +113,7 @@ public abstract class BzFlowingFluid extends FlowingFluid {
         return event == null ? Optional.of(SoundEvents.BUCKET_FILL) : Optional.of(event);
     }
 
-    public static class Source extends BzFlowingFluid {
+    public static class Source extends BzFluid {
         public Source(FluidData info) {
             super(info, true);
         }
@@ -127,7 +129,7 @@ public abstract class BzFlowingFluid extends FlowingFluid {
         }
     }
 
-    public static class Flowing extends BzFlowingFluid {
+    public static class Flowing extends BzFluid {
         public Flowing(FluidData info) {
             super(info, false);
             this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 7));

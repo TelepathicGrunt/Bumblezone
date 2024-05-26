@@ -1,7 +1,7 @@
 package com.telepathicgrunt.the_bumblezone.fluids;
 
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
-import com.telepathicgrunt.the_bumblezone.fluids.base.BzFlowingFluid;
+import com.telepathicgrunt.the_bumblezone.fluids.base.BzFluid;
 import com.telepathicgrunt.the_bumblezone.mixin.blocks.FlowingFluidAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzItems;
@@ -32,7 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.ABOVE_FLUID;
 import static com.telepathicgrunt.the_bumblezone.fluids.HoneyFluidBlock.BOTTOM_LEVEL;
 
-public abstract class HoneyFluid extends BzFlowingFluid {
+public abstract class HoneyFluid extends BzFluid {
 
     protected HoneyFluid(FluidData properties, boolean source) {
         super(properties, source);
