@@ -19,7 +19,7 @@ public class BzBucketItem extends BucketItem implements FluidGetter {
     protected final FluidData info;
 
     public BzBucketItem(FluidData info, Properties properties) {
-        super("neoforge".equals(ArchitecturyTarget.getCurrentTarget()) ? Fluids.FLOWING_WATER : info.still().get(), properties); //This gets replaced in a mixin because of the suppliers.
+        super(info.still().get(), properties); //This gets replaced in a mixin because of the suppliers.
         info.setBucket(() -> this);
         this.info = info;
     }
