@@ -309,6 +309,9 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static int musicDiscTimeAFirstALast = 652;
 
+    @Entry
+    public static int musicDiscDrowningInDespair = 570;
+
 
     @Comment
     public static Comment modCompatComment;
@@ -493,6 +496,7 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.musicDiscTimeLengthRadiance = musicDiscTimeLengthRadiance;
         BzGeneralConfigs.musicDiscTimeLengthLife = musicDiscTimeLengthLife;
         BzGeneralConfigs.musicDiscTimeAFirstALast = musicDiscTimeAFirstALast;
+        BzGeneralConfigs.musicDiscDrowningInDespair = musicDiscDrowningInDespair;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;

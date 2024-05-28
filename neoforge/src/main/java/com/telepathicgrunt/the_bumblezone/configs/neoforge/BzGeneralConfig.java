@@ -42,6 +42,7 @@ public class BzGeneralConfig {
     public static ModConfigSpec.IntValue musicDiscTimeLengthRadiance;
     public static ModConfigSpec.IntValue musicDiscTimeLengthLife;
     public static ModConfigSpec.IntValue musicDiscTimeAFirstALast;
+    public static ModConfigSpec.IntValue musicDiscDrowningInDespair;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeItemEntities;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeExperienceOrbEntities;
     public static ModConfigSpec.BooleanValue crystallineFlowerConsumeItemUI;
@@ -399,6 +400,13 @@ public class BzGeneralConfig {
                 .translation("the_bumblezone.config.musicDiscTimeAFirstALast")
                 .defineInRange("musicDiscTimeAFirstALast", 652, 0 , 1000000);
 
+        musicDiscDrowningInDespair = builder
+                .comment(" \n-----------------------------------------------------\n",
+                        " How long in seconds this music disc will be playing music.",
+                        " This is used for the server to know when to make Allays stop dancing when Jukebox stops playing this music disc.\n")
+                .translation("the_bumblezone.config.musicdiscdrowningindespair")
+                .defineInRange("musicDiscDrowningInDespair", 570, 0 , 1000000);
+
         builder.pop();
 
         builder.push("Essence Options");
@@ -547,6 +555,7 @@ public class BzGeneralConfig {
         BzGeneralConfigs.musicDiscTimeLengthRadiance = musicDiscTimeLengthRadiance.get();
         BzGeneralConfigs.musicDiscTimeLengthLife = musicDiscTimeLengthLife.get();
         BzGeneralConfigs.musicDiscTimeAFirstALast = musicDiscTimeAFirstALast.get();
+        BzGeneralConfigs.musicDiscDrowningInDespair = musicDiscDrowningInDespair.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemEntities = crystallineFlowerConsumeItemEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeExperienceOrbEntities = crystallineFlowerConsumeExperienceOrbEntities.get();
         BzGeneralConfigs.crystallineFlowerConsumeItemUI = crystallineFlowerConsumeItemUI.get();
