@@ -12,6 +12,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.ChannelAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -128,12 +129,16 @@ public class MusicHandler {
     // CLIENT-SIDED
     public static void playStopSempiternalSanctumMusic(Player entity, ResourceLocation resourceLocation, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        SoundEvent soundEvent = BuiltInRegistries.SOUND_EVENT.get(resourceLocation);
-        if (soundEvent != BzSounds.SEMPITERNAL_SANCTUM.get()) {
+
+        if (SEMPITERNAL_SANCTUM_MUSIC == null && ESSENCE_EVENT_MUSIC != null) {
             return;
         }
 
-        if (play && (SEMPITERNAL_SANCTUM_MUSIC == null || !isMusicPlaying(minecraftClient, SEMPITERNAL_SANCTUM_MUSIC))) {
+        if (BzSounds.SEMPITERNAL_SANCTUM.get().getLocation().compareTo(resourceLocation) != 0 == play && SEMPITERNAL_SANCTUM_MUSIC != null) {
+            BUMBLEZONE_MUSIC_PLAYING = false;
+            addMusicFade(SEMPITERNAL_SANCTUM_MUSIC, 500, false, (m) -> false);
+        }
+        else if (BzSounds.SEMPITERNAL_SANCTUM.get().getLocation().compareTo(resourceLocation) == 0 && play && (SEMPITERNAL_SANCTUM_MUSIC == null || !isMusicPlaying(minecraftClient, SEMPITERNAL_SANCTUM_MUSIC))) {
             if (ANGRY_BEE_MUSIC != null && isMusicPlaying(minecraftClient, ANGRY_BEE_MUSIC)) {
                 return;
             }
@@ -160,16 +165,12 @@ public class MusicHandler {
                 });
             }
         }
-        else if (!play && SEMPITERNAL_SANCTUM_MUSIC != null) {
-            BUMBLEZONE_MUSIC_PLAYING = false;
-            addMusicFade(SEMPITERNAL_SANCTUM_MUSIC, 500, false, (m) -> false);
-        }
     }
 
     public static void playStopEssenceEventMusic(Player entity, ResourceLocation resourceLocation, boolean play) {
         Minecraft minecraftClient = Minecraft.getInstance();
-        SoundEvent soundEvent = BuiltInRegistries.SOUND_EVENT.get(resourceLocation);
-        if (soundEvent == null || !GeneralUtils.isInTag(BuiltInRegistries.SOUND_EVENT, BzTags.ESSENCE_EVENT_MUSIC, soundEvent)) {
+        SoundEvent soundEvent = minecraftClient.level.registryAccess().registryOrThrow(Registries.SOUND_EVENT).get(resourceLocation);
+        if (soundEvent == null || !GeneralUtils.isInTag(minecraftClient.level.registryAccess().registryOrThrow(Registries.SOUND_EVENT), BzTags.ESSENCE_EVENT_MUSIC, soundEvent)) {
             return;
         }
 

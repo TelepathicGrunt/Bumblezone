@@ -1,5 +1,9 @@
 ### **(V.7.3.9 Changes) (1.20.1 Minecraft)**
 
+##### Music:
+Added a new song by punpudle called Drowning in Despair!
+ A music disc was made for it and the song will play for the Blue Sempiternal Sanctum's essence event!
+
 ##### Structures:
 Fixed some typoes in structure processor files that would've caused the processor to not fully function correctly.
 

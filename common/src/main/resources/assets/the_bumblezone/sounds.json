@@ -63,6 +63,15 @@
       }
     ]
   },
+  "music.calming_event": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/drowning_in_despair_stereo",
+        "stream": true,
+        "volume": 1
+      }
+    ]
+  },
   "music.continuity_event": {
     "sounds": [
       {
@@ -149,6 +158,14 @@
     "sounds": [
       {
         "name": "the_bumblezone:music/a_last_first_last_mono",
+        "stream": true
+      }
+    ]
+  },
+  "music_disc.drowning_in_despair_mono": {
+    "sounds": [
+      {
+        "name": "the_bumblezone:music/drowning_in_despair_mono",
         "stream": true
       }
     ]
