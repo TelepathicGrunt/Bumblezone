@@ -1,4 +1,4 @@
-### **(V.7.4.9 Changes) (1.20.4 Minecraft)**
+### **(V.7.5.0 Changes) (1.20.4 Minecraft)**
 
 ##### Music:
 Added a new song by punpudle called Drowning in Despair!
