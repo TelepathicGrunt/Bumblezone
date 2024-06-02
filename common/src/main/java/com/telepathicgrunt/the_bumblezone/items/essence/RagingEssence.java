@@ -98,7 +98,7 @@ public class RagingEssence extends AbilityEssenceItem {
     }
 
     public static List<UUID> getCurrentTargets(ItemStack itemStack) {
-        return itemStack.get(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get()).currentTargets();
+        return new ArrayList<>(itemStack.get(BzDataComponents.RAGING_ESSENCE_CURRENT_TARGET_DATA.get()).currentTargets());
     }
 
     @Override

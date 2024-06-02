@@ -16,6 +16,6 @@ public record AbilityEssenceAbilityData(int abilityUseRemaining) {
             AbilityEssenceAbilityData::new);
 
     public AbilityEssenceAbilityData() {
-        this(0);
+        this(-1);
     }
 }

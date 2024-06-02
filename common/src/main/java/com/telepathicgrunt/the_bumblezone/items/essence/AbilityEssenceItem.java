@@ -35,7 +35,8 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         super(properties
                 .component(BzDataComponents.ABILITY_ESSENCE_ABILITY_DATA.get(), new AbilityEssenceAbilityData())
                 .component(BzDataComponents.ABILITY_ESSENCE_COOLDOWN_DATA.get(), new AbilityEssenceCooldownData())
-                .component(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData()));
+                .component(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData())
+                .component(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData()));
         this.cooldownTickLength = cooldownTickLength;
         this.abilityUseAmount = abilityUseAmount;
     }
@@ -50,6 +51,9 @@ public abstract class AbilityEssenceItem extends Item implements ItemExtension {
         }
         if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get()) == null) {
             itemStack.set(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get(), new AbilityEssenceActivityData());
+        }
+        if (itemStack.get(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get()) == null) {
+            itemStack.set(BzDataComponents.ABILITY_ESSENCE_LAST_CHARGE_DATA.get(), new AbilityEssenceLastChargeData());
         }
     }
 

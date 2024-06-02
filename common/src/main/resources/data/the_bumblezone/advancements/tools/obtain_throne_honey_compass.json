@@ -28,7 +28,11 @@
             "items": [
               "the_bumblezone:honey_compass"
             ],
-            "nbt": "{\"CustomName\": \"item.the_bumblezone.honey_compass_throne_structure\"}"
+            "components": {
+              "the_bumblezone:honey_compass_base_data": {
+                "customName": "item.the_bumblezone.honey_compass_throne_structure"
+              }
+            }
           }
         ]
       }
