@@ -27,7 +27,7 @@ public class FluidClientOverlay {
         BlockState state = clientPlayerEntity.level().getBlockState(BlockPos.containing(clientPlayerEntity.getEyePosition(1)));
         if (state.is(BzFluids.HONEY_FLUID_BLOCK.get()) || state.is(BzFluids.ROYAL_JELLY_FLUID_BLOCK.get())) {
             if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                double yOffset = Math.abs(clientPlayerEntity.getEyePosition(1).y()) - Math.abs(((int)clientPlayerEntity.getEyePosition(1).y()));
+                double yOffset = Math.abs(clientPlayerEntity.getEyePosition(1).y() - Math.floor(clientPlayerEntity.getEyePosition(1).y()));
                 if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                     return false;
                 }
