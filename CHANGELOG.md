@@ -1,3 +1,9 @@
+### **(V.7.5.1 Changes) (1.20.4 Minecraft)**
+
+##### Fluids:
+Fixed fog and screen overlay for Honey Fluid/Royal Jelly Fluid when inside them below y = 0.
+
+
 ### **(V.7.5.0 Changes) (1.20.4 Minecraft)**
 
 ##### Music:
