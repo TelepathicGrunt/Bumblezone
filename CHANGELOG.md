@@ -1,5 +1,8 @@
 ### **(V.7.5.1 Changes) (1.20.4 Minecraft)**
 
+##### Items:
+Fixed Life Essence not growing crops if laid out a certain way in relation to player.
+
 ##### Fluids:
 Fixed fog and screen overlay for Honey Fluid/Royal Jelly Fluid when inside them below y = 0.
 
