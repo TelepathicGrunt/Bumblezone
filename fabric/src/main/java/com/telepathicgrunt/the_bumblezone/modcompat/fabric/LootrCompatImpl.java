@@ -1,21 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.fabric;
 
-import com.telepathicgrunt.the_bumblezone.blocks.blockentities.HoneyCocoonBlockEntity;
-import com.telepathicgrunt.the_bumblezone.modcompat.LootrCompat;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
-import net.zestyblaze.lootr.api.LootrAPI;
-
 public class LootrCompatImpl {
 //    public static MenuProvider getCocoonMenu(ServerPlayer player, HoneyCocoonBlockEntity blockEntity) {
 //        return LootrAPI.getModdedMenu(blockEntity.getLevel(), blockEntity.getBlockEntityUuid(), blockEntity.getBlockPos(), player, blockEntity, (lootPlayer, inventory, table, seed) -> LootrCompat.unpackLootTable(blockEntity, lootPlayer, inventory, table, seed), blockEntity::getLootTable, blockEntity::getLootSeed, LootrCompat::menuBuilder);

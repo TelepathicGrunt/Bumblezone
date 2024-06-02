@@ -75,7 +75,7 @@ public class BzModCompatibilityConfig {
 			allowHoneyFluidTanksFeedingCompat = builder
 					.comment(" \n-----------------------------------------------------\n",
 							" Will let you feed any item that has a Forge fluid attachmentType attached and has",
-							" any fluid that is tagged forge:fluid/honey inside. This works alongside the bee_feeding item tag.",
+							" any fluid that is tagged c:honey inside. This works alongside the bee_feeding item tag.",
 							" An item can still be fed even if bee_feeding tag doesn't have the item as long as the",
 							" item fit the above conditions with the fluid attachmentType and this config is set to true.\n")
 					.translation("the_bumblezone.config.allowhoneyfluidtanksfeedingcompat")

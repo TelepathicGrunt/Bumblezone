@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.mixin.fabric.entity;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import com.telepathicgrunt.the_bumblezone.platform.BzEntityHooks;
@@ -83,19 +84,10 @@ public abstract class EntityMixin implements BzEntityHooks {
     }
 
     @Inject(method = "updateFluidOnEyes()V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;"),
-            cancellable = true)
-    private void bumblezone$markEyesInFluid2(CallbackInfo ci) {
-        double eyeHeight = this.getEyeY() - 0.11111111F;
-        BlockPos blockPos = BlockPos.containing(this.getX(), eyeHeight, this.getZ());
-        FluidState fluidState = this.level.getFluidState(blockPos);
+            at = @At(value = "INVOKE", target = "Ljava/util/stream/Stream;forEach(Ljava/util/function/Consumer;)V"))
+    private void bumblezone$markEyesInFluid2(CallbackInfo ci, @Local FluidState fluidState) {
         if (fluidState.is(BzTags.SPECIAL_HONEY_LIKE)) {
-            double fluidHeight = (float)blockPos.getY() + fluidState.getHeight(this.level, blockPos);
-            if (fluidHeight > eyeHeight) {
-                fluidState.getTags().forEach(this.fluidOnEyes::add);
-                this.bz$eyeFluidState = fluidState;
-                ci.cancel();
-            }
+            this.bz$eyeFluidState = fluidState;
         }
     }
 

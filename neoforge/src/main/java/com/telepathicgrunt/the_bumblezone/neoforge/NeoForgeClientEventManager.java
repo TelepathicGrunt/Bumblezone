@@ -14,7 +14,6 @@ import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
@@ -85,8 +84,6 @@ public class NeoForgeClientEventManager {
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterEntityRenderers);
         modEventBus.addListener(NeoForgeClientEventManager::onEntityLayers);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterDimensionEffects);
-
-        RegisterClientFluidPropertiesEvent.EVENT.invoke(new RegisterClientFluidPropertiesEvent((info, properties) -> {}));
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {

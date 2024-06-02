@@ -11,7 +11,7 @@ public class HoneyFluidType {
     public static FluidProperties.Builder create() {
 
         return FluidProperties.builder()
-                .supportsBloating(true)
+                .supportsBoating(true)
                 .canHydrate(false)
                 .canDrown(true)
                 .canExtinguish(true)

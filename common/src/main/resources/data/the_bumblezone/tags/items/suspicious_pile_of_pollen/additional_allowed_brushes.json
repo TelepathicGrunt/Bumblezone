@@ -2,11 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "c:brushes",
-      "required": false
-    },
-    {
-      "id": "forge:tools/brushes",
+      "id": "c:tools/brushes",
       "required": false
     }
   ]

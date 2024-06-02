@@ -1,7 +1,6 @@
 package com.telepathicgrunt.the_bumblezone.modinit;
 
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import org.apache.commons.lang3.NotImplementedException;
 
 public class BzTags {
     // Sole purpose is to initalize the tag wrappers at mod startup

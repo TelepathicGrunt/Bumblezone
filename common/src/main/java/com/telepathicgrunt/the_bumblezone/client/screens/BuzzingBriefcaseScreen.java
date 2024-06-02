@@ -355,7 +355,7 @@ public class BuzzingBriefcaseScreen extends AbstractContainerScreen<BuzzingBrief
                 }
 
                 if (GeneralUtilsClient.isAdvancedToolTipActive()) {
-                    toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_registry_name", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType())).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+                    toolTipComponents.add(Component.translatable("item.the_bumblezone.buzzing_briefcase_bee_registry_name", BuiltInRegistries.ENTITY_TYPE.getKey(beeState.beeEntity().getType()).toString()).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
                 }
 
                 guiGraphics.renderTooltip(

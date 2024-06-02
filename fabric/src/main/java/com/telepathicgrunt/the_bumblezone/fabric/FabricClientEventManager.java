@@ -6,7 +6,6 @@ import com.telepathicgrunt.the_bumblezone.events.client.ClientSetupEnqueuedEvent
 import com.telepathicgrunt.the_bumblezone.events.client.ClientTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
@@ -17,10 +16,7 @@ import com.telepathicgrunt.the_bumblezone.events.client.RegisterKeyMappingEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterMenuScreenEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterRenderTypeEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterShaderEvent;
-import com.telepathicgrunt.the_bumblezone.fluids.fabric.BiomeColorFluidRenderHandler;
-import com.telepathicgrunt.the_bumblezone.fluids.fabric.HoneyFluidRenderHandler;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
-import com.telepathicgrunt.the_bumblezone.modinit.BzFluids;
 import com.telepathicgrunt.the_bumblezone.platform.BlockExtension;
 import com.telepathicgrunt.the_bumblezone.utils.OptionalBoolean;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -54,16 +50,6 @@ public class FabricClientEventManager {
                         }
                     }
                 });
-
-        RegisterClientFluidPropertiesEvent.EVENT.invoke(new RegisterClientFluidPropertiesEvent(
-                (info, properties) -> {
-                    if (info.block().get() == BzFluids.HONEY_FLUID_BLOCK.get() || info.block().get() == BzFluids.ROYAL_JELLY_FLUID_BLOCK.get()) {
-                        fluidHandler.register(info.still().get(), info.flowing().get(), new HoneyFluidRenderHandler(properties));
-                    }
-                    else {
-                        fluidHandler.register(info.still().get(), info.flowing().get(), new BiomeColorFluidRenderHandler(properties));
-                    }
-                }));
 
         FabricArmorRenderer.setupArmor();
         RegisterEntityRenderersEvent.EVENT.invoke(new RegisterEntityRenderersEvent(EntityRendererRegistry::register));

@@ -33,9 +33,6 @@ import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicC
 import com.telepathicgrunt.the_bumblezone.client.rendering.cosmiccrystal.CosmicCrystalRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.electricring.ElectricRingRenderer;
-import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.HoneyFluidClientProperties;
-import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.RoyalJellyClientProperties;
-import com.telepathicgrunt.the_bumblezone.client.rendering.fluids.SugarWaterClientProperties;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardModel;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeycrystalshard.HoneyCrystalShardRenderer;
 import com.telepathicgrunt.the_bumblezone.client.rendering.honeyslime.HoneySlimeRendering;
@@ -64,7 +61,6 @@ import com.telepathicgrunt.the_bumblezone.events.client.KeyInputEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterArmorProviderEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockColorEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterBlockEntityRendererEvent;
-import com.telepathicgrunt.the_bumblezone.events.client.RegisterClientFluidPropertiesEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterDimensionEffectsEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEffectRenderersEvent;
 import com.telepathicgrunt.the_bumblezone.events.client.RegisterEntityLayersEvent;
@@ -85,6 +81,7 @@ import com.telepathicgrunt.the_bumblezone.items.essence.AbilityEssenceItem;
 import com.telepathicgrunt.the_bumblezone.mixin.client.ClientLevelAccessor;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlockEntities;
 import com.telepathicgrunt.the_bumblezone.modinit.BzBlocks;
+import com.telepathicgrunt.the_bumblezone.modinit.BzClientFluids;
 import com.telepathicgrunt.the_bumblezone.modinit.BzDataComponents;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEffects;
 import com.telepathicgrunt.the_bumblezone.modinit.BzEntities;
@@ -175,12 +172,13 @@ public class BumblezoneClient {
         BlockRenderedOnScreenEvent.EVENT.addListener(PileOfPollenRenderer::pileOfPollenOverlay);
         KeyInputEvent.EVENT.addListener(BeehemothControls::keyInput);
         RegisterMenuScreenEvent.EVENT.addListener(BumblezoneClient::registerScreens);
-        RegisterClientFluidPropertiesEvent.EVENT.addListener(BumblezoneClient::onRegisterClientFluidProperties);
         RegisterItemPropertiesEvent.EVENT.addListener(BumblezoneClient::registerItemProperties);
         RegisterRenderTypeEvent.EVENT.addListener(BumblezoneClient::registerRenderTypes);
         RegisterArmorProviderEvent.EVENT.addListener(BumblezoneClient::registerArmorProviders);
         RegisterEffectRenderersEvent.EVENT.addListener(BumblezoneClient::registerEffectRenderers);
         RegisterBlockEntityRendererEvent.EVENT.addListener(BumblezoneClient::registerBlockEntityRenderers);
+
+        BzClientFluids.CLIENT_FLUIDS.init();
     }
 
     public static void clientSetup(ClientSetupEnqueuedEvent event) {
@@ -210,12 +208,6 @@ public class BumblezoneClient {
         event.register(BzItems.HONEY_BEE_LEGGINGS_2.get(), BeeArmorModelProvider::new);
         event.register(BzItems.CARPENTER_BEE_BOOTS_1.get(), BeeArmorModelProvider::new);
         event.register(BzItems.CARPENTER_BEE_BOOTS_2.get(), BeeArmorModelProvider::new);
-    }
-
-    public static void onRegisterClientFluidProperties(RegisterClientFluidPropertiesEvent event) {
-        event.register(BzFluids.HONEY_FLUID_TYPE.get(), HoneyFluidClientProperties::create);
-        event.register(BzFluids.ROYAL_JELLY_FLUID_TYPE.get(), RoyalJellyClientProperties::create);
-        event.register(BzFluids.SUGAR_WATER_FLUID_TYPE.get(), SugarWaterClientProperties::create);
     }
 
     public static void registerKeyBinding(RegisterKeyMappingEvent event) {

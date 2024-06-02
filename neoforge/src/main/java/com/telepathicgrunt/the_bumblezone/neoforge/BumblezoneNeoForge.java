@@ -7,6 +7,7 @@ import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzBiomeModifiers;
 import com.telepathicgrunt.the_bumblezone.modinit.neoforge.BzGlobalLootModifier;
 import com.telepathicgrunt.the_bumblezone.modules.neoforge.NeoForgeModuleInitializer;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
@@ -14,8 +15,8 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 @Mod(Bumblezone.MODID)
 public class BumblezoneNeoForge {
 
-    public BumblezoneNeoForge(IEventBus modEventBus) {
-        BzConfigHandler.setup(modEventBus);
+    public BumblezoneNeoForge(ModContainer modContainer, IEventBus modEventBus) {
+        BzConfigHandler.setup(modContainer, modEventBus);
 
         NeoForgeModuleInitializer.init();
 

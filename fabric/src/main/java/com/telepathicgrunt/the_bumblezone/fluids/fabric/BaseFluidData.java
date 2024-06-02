@@ -2,6 +2,7 @@ package com.telepathicgrunt.the_bumblezone.fluids.fabric;
 
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidData;
 import com.teamresourceful.resourcefullib.common.fluid.data.FluidProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -15,10 +16,17 @@ public class BaseFluidData implements FluidData {
     private Supplier<? extends FlowingFluid> flowingFluid;
     private Supplier<? extends BucketItem> bucket;
     private Supplier<? extends LiquidBlock> block;
+    private final ResourceLocation id;
     private final FluidProperties properties;
 
-    public BaseFluidData(FluidProperties properties) {
+    public BaseFluidData(ResourceLocation id, FluidProperties properties) {
+        this.id = id;
         this.properties = properties;
+    }
+
+    @Override
+    public ResourceLocation id() {
+        return id;
     }
 
     @Override
