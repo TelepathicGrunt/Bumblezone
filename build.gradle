@@ -58,9 +58,9 @@ subprojects {
         File changeLog = rootProject.file("CHANGELOG.md")
         String changeLogText = changeLog.exists() ? changeLog.text : ""
 
-        if (env.MODRINTH) {
+        if (env.MODRINTH_TOKEN) {
             modrinth {
-                token = env.MODRINTH
+                token = env.MODRINTH_TOKEN
                 versionName = "The Bumblezone"
                 versionNumber = "${project.version}"
                 changelog = changeLogText

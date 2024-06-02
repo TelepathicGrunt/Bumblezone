@@ -36,8 +36,7 @@ dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-neoforge-${rootProject.athena}")))
-
-    modRuntimeOnly(modCompileOnly("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${rootProject.resourcefullib}"))
+    modRuntimeOnly(modCompileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-neoforge-${rootProject.resourcefullib}")))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }

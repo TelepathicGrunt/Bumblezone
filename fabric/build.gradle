@@ -25,9 +25,8 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
     modImplementation("maven.modrinth:midnightlib:${rootProject.midnightlib}")
-    modImplementation("com.teamresourceful.resourcefullib:resourcefullib-fabric-${rootProject.resourcefullib}")
-
     modRuntimeOnly(modCompileOnly(include("earth.terrarium.athena:athena-fabric-${rootProject.athena}")))
+    modRuntimeOnly(modCompileOnly(include("com.teamresourceful.resourcefullib:resourcefullib-fabric-${rootProject.resourcefullib}")))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
