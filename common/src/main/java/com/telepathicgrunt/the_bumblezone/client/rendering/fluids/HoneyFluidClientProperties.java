@@ -30,7 +30,7 @@ public class HoneyFluidClientProperties {
                     Entity entity = camera.getEntity();
                     BlockState state = level.getBlockState(entity != null ? BlockPos.containing(entity.getEyePosition(1)) : camera.getBlockPosition());
                     if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                        double yEye = entity != null ? entity.getEyePosition(1).y() : camera.getPosition().y();
+                        double yEye = Math.abs(entity != null ? entity.getEyePosition(1).y() : camera.getPosition().y());
                         double yOffset = yEye - ((int)yEye);
                         if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                             return fogColor;
@@ -54,7 +54,7 @@ public class HoneyFluidClientProperties {
                     if (entity != null) {
                         BlockState state = entity.level().getBlockState(BlockPos.containing(entity.getEyePosition(1)));
                         if (state.hasProperty(HoneyFluidBlock.BOTTOM_LEVEL)) {
-                            double yEye = entity.getEyePosition(1).y();
+                            double yEye = Math.abs(entity.getEyePosition(1).y());
                             double yOffset = yEye - ((int)yEye);
                             if (state.getValue(HoneyFluidBlock.BOTTOM_LEVEL) / 8D > yOffset + 0.1) {
                                 return;
