@@ -6,10 +6,3 @@ Ported to 1.20.6. Might be buggy... Please report issues
 ##### Mod Compat:
 Added special textures for Bumblezone Music Discs to be used when put into Adornment's Jukeboxes.
 
-
-note: load resourcefulbees and other mod compat datapack if mod is present
-
-note: fix fluids once resourcefullib updates
-
-Note: reimplement custom registries when resourcefullib supports them
-
