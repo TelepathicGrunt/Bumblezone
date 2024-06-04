@@ -1,3 +1,10 @@
+### **(V.7.4.2 Changes) (1.20.1 Minecraft)**
+
+##### Dimension:
+Added `the_bumblezone:fog_adjusting_effects` mob effect tag to allow specifying what mob effect changes the fog in Bumblezone.
+ By default, this has Blindness and Darkness. This new addition now fixes those two to properly set the fog distance in Bumblezone dimension.
+
+
 ### **(V.7.4.1 Changes) (1.20.1 Minecraft)**
 
 ##### Items:
