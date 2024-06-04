@@ -3,9 +3,13 @@ package com.telepathicgrunt.the_bumblezone.client.neoforge;
 import com.mojang.blaze3d.shaders.FogShape;
 import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.FogType;
 import net.neoforged.neoforge.client.event.ViewportEvent;
@@ -18,6 +22,12 @@ public class DimensionFog {
                 DimensionSpecialEffects.forType(player.level().dimensionType()).isFoggyAt(player.getBlockX(), player.getBlockZ()) &&
                 player.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
             {
+                for (Holder<MobEffect> mobEffectHolder : BuiltInRegistries.MOB_EFFECT.getTagOrEmpty(BzTags.FOG_ADJUSTING_EFFECTS)) {
+                    if (player.hasEffect(mobEffectHolder.value())) {
+                        return;
+                    }
+                }
+
                 float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
                 float distanceRationAdjuster = 1;
                 if (event.getFarPlaneDistance() > 352) {

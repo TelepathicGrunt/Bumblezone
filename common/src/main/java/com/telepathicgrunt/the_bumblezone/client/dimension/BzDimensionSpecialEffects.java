@@ -3,8 +3,14 @@ package com.telepathicgrunt.the_bumblezone.client.dimension;
 import com.mojang.blaze3d.shaders.FogShape;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
@@ -54,6 +60,15 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
     }
 
     public static void fogThicknessAdjustments(float renderDistance, FogRenderer.FogData fogData) {
+        Player player = Minecraft.getInstance().player;
+        if (player != null) {
+            for (Holder<MobEffect> mobEffectHolder : BuiltInRegistries.MOB_EFFECT.getTagOrEmpty(BzTags.FOG_ADJUSTING_EFFECTS)) {
+                if (player.hasEffect(mobEffectHolder.value())) {
+                    return;
+                }
+            }
+        }
+
         float distanceRationAdjuster = 1;
         if (renderDistance > 352) {
             distanceRationAdjuster = Math.min(renderDistance / 352, 1.25F);
