@@ -1,6 +1,5 @@
 package com.telepathicgrunt.the_bumblezone.mixin.fabric.client;
 
-import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.client.dimension.BzDimensionSpecialEffects;
 import com.telepathicgrunt.the_bumblezone.client.utils.GeneralUtilsClient;
 import net.minecraft.client.Camera;
@@ -29,13 +28,14 @@ public class FogRendererMixin {
                                                       Entity entity,
                                                       FogRenderer.FogData fogData)
     {
-        if (mode == FogRenderer.FogMode.FOG_TERRAIN &&
-                fogType == FogType.NONE &&
-                thickFog &&
-                GeneralUtilsClient.getClientPlayer() != null &&
-                GeneralUtilsClient.getClientPlayer().level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
-        {
-            BzDimensionSpecialEffects.fogThicknessAdjustments(fogEnd, fogData);
-        }
+        BzDimensionSpecialEffects.fogThicknessAdjustments(
+                GeneralUtilsClient.getClientPlayer(),
+                fogEnd,
+                thickFog,
+                mode,
+                fogType,
+                (newFogStart) -> fogData.start = newFogStart,
+                (newFogEnd) -> fogData.end = newFogEnd,
+                (newFogShape) -> fogData.shape = newFogShape);
     }
 }

@@ -1,11 +1,20 @@
 package com.telepathicgrunt.the_bumblezone.client.dimension;
 
 import com.mojang.blaze3d.shaders.FogShape;
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzDimensionConfigs;
 import com.telepathicgrunt.the_bumblezone.effects.WrathOfTheHiveEffect;
+import com.telepathicgrunt.the_bumblezone.modinit.BzTags;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.function.Consumer;
 
 public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
     public BzDimensionSpecialEffects() {
@@ -53,17 +62,41 @@ public class BzDimensionSpecialEffects extends DimensionSpecialEffects {
                         ((int)(Math.min(Math.max(Math.min((0.001f * colorFactor) * (colorFactor * colorFactor), 0.9f) - REDDISH_FOG_TINT * 1.9f, 0)*255, 255))));
     }
 
-    public static void fogThicknessAdjustments(float renderDistance, FogRenderer.FogData fogData) {
-        float distanceRationAdjuster = 1;
-        if (renderDistance > 352) {
-            distanceRationAdjuster = Math.min(renderDistance / 352, 1.25F);
+    public static boolean fogThicknessAdjustments(
+            Player player,
+            float renderDistance,
+            boolean thickFog,
+            FogRenderer.FogMode fogMode,
+            FogType fogType,
+            Consumer<Float> setFogStart,
+            Consumer<Float> setFogEnd,
+            Consumer<FogShape> setFogShape)
+    {
+        if (fogMode == FogRenderer.FogMode.FOG_TERRAIN &&
+            fogType == FogType.NONE &&
+            thickFog &&
+            player != null &&
+            player.level().dimension().location().equals(Bumblezone.MOD_DIMENSION_ID))
+        {
+            for (Holder<MobEffect> mobEffectHolder : BuiltInRegistries.MOB_EFFECT.getTagOrEmpty(BzTags.FOG_ADJUSTING_EFFECTS)) {
+                if (player.hasEffect(mobEffectHolder)) {
+                    return false;
+                }
+            }
+
+            float distanceRationAdjuster = 1;
+            if (renderDistance > 352) {
+                distanceRationAdjuster = Math.min(renderDistance / 352, 1.25F);
+            } else if (renderDistance < 126) {
+                distanceRationAdjuster = Math.max(renderDistance / 126, 0.75F);
+            }
+            float fogStart = (float) (renderDistance / ((BzDimensionConfigs.fogThickness * distanceRationAdjuster * 0.3f) + 0.00001D));
+            setFogStart.accept(Math.min(renderDistance, fogStart));
+            setFogEnd.accept(Math.max(renderDistance, fogStart));
+            setFogShape.accept(FogShape.CYLINDER);
+            return true;
         }
-        else if (renderDistance < 126) {
-            distanceRationAdjuster = Math.max(renderDistance / 126, 0.75F);
-        }
-        float fogStart = (float) (renderDistance / ((BzDimensionConfigs.fogThickness * distanceRationAdjuster * 0.3f) + 0.00001D));
-        fogData.start = Math.min(renderDistance, fogStart);
-        fogData.end = Math.max(renderDistance, fogStart);
-        fogData.shape = FogShape.CYLINDER;
+
+        return false;
     }
 }
