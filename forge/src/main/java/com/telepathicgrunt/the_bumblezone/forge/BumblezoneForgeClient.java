@@ -81,7 +81,7 @@ public class BumblezoneForgeClient {
         forgeBus.addListener(BumblezoneForgeClient::onScreenRendering);
         forgeBus.addListener(BumblezoneForgeClient::onBeforeBlockOutlineRendering);
         forgeBus.addListener(BumblezoneForgeClient::onGuiRendering);
-        forgeBus.addListener(EventPriority.LOWEST, true, DimensionFog::fogThicknessAdjustments);
+        forgeBus.addListener(EventPriority.HIGHEST, true, DimensionFog::fogThicknessAdjustments);
 
         modBus.addListener(BumblezoneForgeClient::onClientSetup);
         modBus.addListener(BumblezoneForgeClient::onRegisterParticles);
