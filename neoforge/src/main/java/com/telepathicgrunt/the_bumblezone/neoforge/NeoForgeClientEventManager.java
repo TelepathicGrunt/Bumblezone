@@ -73,7 +73,7 @@ public class NeoForgeClientEventManager {
         eventBus.addListener(NeoForgeClientEventManager::onScreenRendering);
         eventBus.addListener(NeoForgeClientEventManager::onBeforeBlockOutlineRendering);
         eventBus.addListener(NeoForgeClientEventManager::onGuiRendering);
-        eventBus.addListener(EventPriority.LOWEST, true, DimensionFog::fogThicknessAdjustments);
+        eventBus.addListener(EventPriority.HIGHEST, true, DimensionFog::fogThicknessAdjustments);
 
         modEventBus.addListener(NeoForgeClientEventManager::onClientSetup);
         modEventBus.addListener(NeoForgeClientEventManager::onRegisterParticles);
