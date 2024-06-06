@@ -106,31 +106,6 @@ public class HoneySlimeBreedGoal extends Goal {
      * Spawns a baby animal of the same type.
      */
     protected void spawnBaby() {
-        AgeableMob childEntity = this.slime.getBreedOffspring((ServerLevel)this.world, this.nearbyMate);
-        if (childEntity != null) {
-            ServerPlayer serverPlayer = this.slime.getLoveCause();
-            if (serverPlayer == null && this.nearbyMate.getLoveCause() != null) {
-                serverPlayer = this.nearbyMate.getLoveCause();
-            }
-
-            if (serverPlayer != null) {
-                serverPlayer.awardStat(Stats.ANIMALS_BRED);
-                CriteriaTriggers.BRED_ANIMALS.trigger(serverPlayer, this.slime, this.nearbyMate, childEntity);
-            }
-
-            this.slime.setAge(6000);
-            this.nearbyMate.setAge(6000);
-            this.slime.resetLove();
-            this.nearbyMate.resetLove();
-            childEntity.setAge(-24000);
-            childEntity.moveTo(this.slime.getX(), this.slime.getY(), this.slime.getZ(), 0.0F, 0.0F);
-
-            PlatformHooks.finalizeSpawn(childEntity, (ServerLevelAccessor) world, null, MobSpawnType.BREEDING);
-            this.world.addFreshEntity(childEntity);
-            this.world.broadcastEntityEvent(this.slime, (byte) 18);
-            if (this.world.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-                this.world.addFreshEntity(new ExperienceOrb(this.world, this.slime.getX(), this.slime.getY(), this.slime.getZ(), this.slime.getRandom().nextInt(7) + 1));
-            }
-        }
+        this.slime.spawnChildFromBreeding((ServerLevel)this.world, this.nearbyMate);
     }
 }
