@@ -1,9 +1,12 @@
 package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 
+import com.telepathicgrunt.the_bumblezone.Bumblezone;
 import com.telepathicgrunt.the_bumblezone.configs.BzModCompatibilityConfigs;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModChecker;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,6 +26,14 @@ public class BuzzierBeesCompat implements ModCompat {
         if (bottledBee.isPresent() && BzModCompatibilityConfigs.allowBeeBottleRevivingEmptyBroodBlock) {
             setupDispenserCompat(bottledBee.get()); // adds compatibility with bottled bee in dispensers
         }
+
+        Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
+                addBuiltinDataPacks.add(
+                        new ResourceLocation(Bumblezone.MODID, "buzzier_bees_compat"),
+                        Component.literal("Bumblezone - Buzzier Bees Compat"),
+                        AddBuiltinDataPacks.PackMode.FORCE_ENABLED
+                )
+        );
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.buzzierBeesPresent = true;

@@ -76,6 +76,9 @@ public class NeoForgeModChecker {
 
             modid = "tropicraft";
             loadupModCompat(modid, () -> new TropicraftCompat());
+
+            modid = "tokenenchanter";
+            loadupModCompat(modid, () -> new TokenEnchanterCompat());
         }
         catch (Throwable e) {
             printErrorToLogs("classloading " + modid + " and so, mod compat done afterwards broke");

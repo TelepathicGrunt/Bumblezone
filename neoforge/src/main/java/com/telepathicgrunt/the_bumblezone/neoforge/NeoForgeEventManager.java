@@ -19,6 +19,7 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.FinishUseItemEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
@@ -216,6 +217,19 @@ public class NeoForgeEventManager {
                     PackSource.BUILT_IN,
                     mode == AddBuiltinResourcePacks.PackMode.FORCE_ENABLED,
                     Pack.Position.BOTTOM
+                );
+            }));
+        }
+
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            AddBuiltinDataPacks.EVENT.invoke(new AddBuiltinDataPacks((id, displayName, mode) -> {
+                event.addPackFinders(
+                        new ResourceLocation(id.getNamespace(), "datapacks/" + id.getPath()),
+                        PackType.CLIENT_RESOURCES,
+                        displayName,
+                        PackSource.BUILT_IN,
+                        mode == AddBuiltinDataPacks.PackMode.FORCE_ENABLED,
+                        Pack.Position.BOTTOM
                 );
             }));
         }

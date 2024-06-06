@@ -36,6 +36,7 @@ import com.telepathicgrunt.the_bumblezone.events.entity.EntitySpawnEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTickEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityTravelingToDimensionEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityVisibilityEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
@@ -107,6 +108,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
 public class Bumblezone {
 
     // Note to self:
@@ -155,6 +160,7 @@ public class Bumblezone {
         ServerGoingToStartEvent.EVENT.addListener(Bumblezone::serverAboutToStart);
         RegisterReloadListenerEvent.EVENT.addListener(Bumblezone::registerDatapackListener);
         AddBuiltinResourcePacks.EVENT.addListener(Bumblezone::setupBuiltInResourcePack);
+        AddBuiltinDataPacks.EVENT.addListener(Bumblezone::setupBuiltInDataPack);
         SetupEvent.EVENT.addListener(Bumblezone::setup);
         RegisterDataSerializersEvent.EVENT.addListener(Bumblezone::registerDataSerializers);
         FinalSetupEvent.EVENT.addListener(Bumblezone::onFinalSetup); //run after all mods
@@ -247,5 +253,10 @@ public class Bumblezone {
                 Component.literal("Bumblezone - Anti Trypophobia"),
                 AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );
+    }
+
+    public static final List<Consumer<AddBuiltinDataPacks>> MOD_COMPAT_DATAPACKS = new ArrayList<>();
+    private static void setupBuiltInDataPack(final AddBuiltinDataPacks event) {
+        MOD_COMPAT_DATAPACKS.forEach(consumer -> consumer.accept(event));
     }
 }

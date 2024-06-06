@@ -9,6 +9,7 @@ import com.telepathicgrunt.the_bumblezone.events.RegisterCommandsEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterVillagerTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.RegisterWanderingTradesEvent;
 import com.telepathicgrunt.the_bumblezone.events.entity.EntityDeathEvent;
+import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinDataPacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.AddBuiltinResourcePacks;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.DatapackSyncEvent;
 import com.telepathicgrunt.the_bumblezone.events.lifecycle.FinalSetupEvent;
@@ -57,6 +58,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.EmptyItemFluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.impl.resource.loader.ResourceManagerHelperImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.Util;
@@ -122,6 +124,17 @@ public class FabricEventManager {
             ModContainer container = getModPack(id);
             ResourceManagerHelper.registerBuiltinResourcePack(
                     new ResourceLocation(container.getMetadata().getId(), id.getPath()),
+                    container,
+                    displayName,
+                    toType(mode)
+            );
+        }));
+
+        AddBuiltinDataPacks.EVENT.invoke(new AddBuiltinDataPacks((id, displayName, mode) -> {
+            ModContainer container = getModPack(id);
+            ResourceManagerHelperImpl.registerBuiltinResourcePack(
+                    new ResourceLocation(container.getMetadata().getId(), id.getPath()),
+                    "datapacks/" + id.getPath(),
                     container,
                     displayName,
                     toType(mode)
@@ -230,6 +243,14 @@ public class FabricEventManager {
     }
 
     private static ResourcePackActivationType toType(AddBuiltinResourcePacks.PackMode mode) {
+        return switch (mode) {
+            case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
+            case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;
+            case FORCE_ENABLED -> ResourcePackActivationType.ALWAYS_ENABLED;
+        };
+    }
+
+    private static ResourcePackActivationType toType(AddBuiltinDataPacks.PackMode mode) {
         return switch (mode) {
             case USER_CONTROLLED -> ResourcePackActivationType.NORMAL;
             case ENABLED_BY_DEFAULT -> ResourcePackActivationType.DEFAULT_ENABLED;

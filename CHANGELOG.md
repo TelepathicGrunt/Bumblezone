@@ -7,6 +7,9 @@ Fixed breeding Honey Slime not counting towards the Bee Queen advancement for br
 Added `the_bumblezone:fog_adjusting_effects` mob effect tag to allow specifying what mob effect changes the fog in Bumblezone.
  By default, this has Blindness and Darkness. This new addition now fixes those two to properly set the fog distance in Bumblezone dimension.
 
+##### Mod Compat:
+Reimplemented some mod compat through internal datapacks.
+
 
 ### **(V.7.5.0 Changes) (1.20.6 Minecraft)**
 
