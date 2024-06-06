@@ -37,10 +37,6 @@
       "required": false
     },
     {
-      "id": "botania:hydroangeas",
-      "required": false
-    },
-    {
       "id": "broglisplants:deadly_nightshade_block",
       "required": false
     },
