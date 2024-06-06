@@ -58,6 +58,10 @@
       "required": false
     },
     {
+      "id": "farmersdelight:wild_rice",
+      "required": false
+    },
+    {
       "id": "ferdinandsflowers:devils_claw_vine",
       "required": false
     },
