@@ -232,6 +232,10 @@
       "required": false
     },
     {
+      "id": "farmersdelight:wild_rice",
+      "required": false
+    },
+    {
       "id": "ferdinandsflowers:parodia_muricata",
       "required": false
     },
