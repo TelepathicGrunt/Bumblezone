@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -214,7 +215,12 @@ public class StickyHoneyRedstone extends StickyHoneyResidue {
      */
     protected int computeRedstoneStrength(BlockState blockstate, Level world, BlockPos pos) {
 
-        AABB axisalignedbb = getShape(blockstate, world, pos, null).bounds().move(pos);
+        VoxelShape voxelShape = getShape(blockstate, world, pos, null);
+        if (voxelShape.isEmpty()) {
+            return 0;
+        }
+
+        AABB axisalignedbb = voxelShape.bounds().move(pos);
         List<? extends Entity> list = world.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 
         if (!list.isEmpty()) {

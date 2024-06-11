@@ -1,3 +1,11 @@
+### **(V.7.5.2 Changes) (1.20.6 Minecraft)**
+
+##### Blocks:
+Fixed crash when touching impossible no-side blockstate for Sticky Honey Redstone (debug world)
+
+Fixed Honey Web causing log spam when touched in Debug World.
+
+
 ### **(V.7.5.1 Changes) (1.20.6 Minecraft)**
 
 ##### Entities:

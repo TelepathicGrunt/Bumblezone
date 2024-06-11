@@ -156,11 +156,11 @@ public class RedstoneHoneyWeb extends HoneyWeb {
         int currentPower = this.calculateTargetStrength(level, blockState, blockPos);
         if (blockState.getValue(POWER) != currentPower) {
             if (level.getBlockState(blockPos) == blockState) {
-                level.setBlock(blockPos, blockState.setValue(POWER, currentPower), 3);
-            }
-
-            for(Direction direction : Direction.values()) {
-                level.updateNeighborsAt(blockPos.relative(direction), this);
+                if (level.setBlock(blockPos, blockState.setValue(POWER, currentPower), 3)) {
+                    for (Direction direction : Direction.values()) {
+                        level.updateNeighborsAt(blockPos.relative(direction), this);
+                    }
+                }
             }
         }
     }
