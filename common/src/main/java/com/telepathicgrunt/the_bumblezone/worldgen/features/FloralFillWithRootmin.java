@@ -95,6 +95,18 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
 
                     Entity spawningEntity = BzEntities.ROOTMIN.get().create(level.getLevel());
                     if (spawningEntity instanceof RootminEntity rootmin) {
+                        Optional<HolderSet.Named<Block>> optionalRootminBlocks = BuiltInRegistries.BLOCK.getTag(config.rootminFlowerTag);
+                        List<Block> rootminBlockList = GeneralUtils.convertHoldersetToList(optionalRootminBlocks);
+                        rootminBlockList.removeIf(block -> block.defaultBlockState().is(context.config().disallowedRootminFlowerTag));
+                        BlockState chosenRootminFlower;
+
+                        if (blockList.isEmpty()) {
+                            chosenRootminFlower = Blocks.AIR.defaultBlockState();
+                        }
+                        else {
+                            chosenRootminFlower = blockList.get(randomSource.nextInt(blockList.size())).defaultBlockState();
+                        }
+
                         rootmin.finalizeSpawn(
                                 level,
                                 level.getCurrentDifficultyAt(mutable),
@@ -102,7 +114,7 @@ public class FloralFillWithRootmin extends Feature<FloralFillWithRootminConfig> 
                                 null);
 
                         rootmin.setPersistenceRequired();
-                        rootmin.setFlowerBlock(chosenFlower);
+                        rootmin.setFlowerBlock(chosenRootminFlower);
                         rootmin.moveTo(
                                 (double)mutable.getX() + 0.5D,
                                 mutable.getY(),
