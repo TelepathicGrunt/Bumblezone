@@ -1,3 +1,15 @@
+### **(V.7.5.3 Changes) (1.20.4 Minecraft)**
+
+##### Blocks:
+Fixed crash when touching impossible no-side blockstate for Sticky Honey Redstone (debug world)
+
+Fixed Honey Web causing log spam when touched in Debug World.
+
+##### Entities:
+Added `the_bumblezone:biomes/floral_meadow_rootmin_flowers` and `the_bumblezone:biomes/disallowed_floral_meadow_rootmin_flowers`
+block tags to allow changing what flowers Rootmins can spawn with in Floral Meadow without changing the flowers that are placed in that biome.
+
+
 ### **(V.7.5.2 Changes) (1.20.4 Minecraft)**
 
 ##### Entities:
