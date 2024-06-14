@@ -142,6 +142,5 @@ publishing {
 task buildAndRelease{}
 tasks.build.mustRunAfter tasks.clean
 tasks.publish.mustRunAfter tasks.build
-tasks.curseforge.mustRunAfter tasks.publish
-tasks.modrinth.mustRunAfter tasks.publish
-tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish, tasks.curseforge, tasks.modrinth)
+tasks.publishMods.mustRunAfter tasks.publish
+tasks.buildAndRelease.dependsOn(tasks.clean, tasks.build, tasks.publish, tasks.publishMods)

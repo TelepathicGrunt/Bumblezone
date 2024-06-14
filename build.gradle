@@ -2,8 +2,7 @@ plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.6-SNAPSHOT" apply false
     id 'io.github.juuxel.loom-vineflower' version '1.11.0' apply false
-    id "com.modrinth.minotaur" version "2.+"
-    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 }
 
 architectury {
@@ -12,8 +11,7 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
-    apply plugin: "com.modrinth.minotaur"
-    apply plugin: "com.matthewprenger.cursegradle"
+    apply plugin: "me.modmuss50.mod-publish-plugin"
 
     version = "${rootProject.mod_version}+${rootProject.minecraft_version}-${name}"
 
@@ -56,67 +54,48 @@ subprojects {
     if (uploadSettings != null && uploadDependencies != null) {
 
         File changeLog = rootProject.file("CHANGELOG.md")
-        String changeLogText = changeLog.exists() ? changeLog.text : ""
+        String changelogText = changeLog.exists() ? changeLog.text : ""
 
-        if (env.MODRINTH_TOKEN) {
-            modrinth {
-                token = env.MODRINTH_TOKEN
-                versionName = "The Bumblezone"
-                versionNumber = "${project.version}"
-                changelog = changeLogText
-                projectId = uploadSettings["modrinth-id"]
+        publishMods {
+            file = tasks.remapJar.archiveFile
+            type = STABLE
+            changelog = changelogText
 
-                gameVersions = ["${rootProject.minecraft_version}"]
-                loaders = [name]
-                versionType = "RELEASE"
+            displayName = "The Bumblezone v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
+            version = "${project.version}"
+            modLoaders.add(name)
 
-                uploadFile = tasks.remapJar
+            if (env.CURSEFORGEKEY) {
+                curseforge {
+                    accessToken = env.CURSEFORGEKEY
+                    projectId = uploadSettings["curse-id"]
+                    minecraftVersions.add(rootProject.minecraft_version)
 
-                dependencies {
-                    def optionalContainer = getOptional()
-                    def requiredContainer = getRequired()
-                    uploadDependencies.each { dep, required ->
-                        if (required) {
-                            requiredContainer.project(dep)
-                        }
-                        else {
-                            optionalContainer.project(dep)
+                    if (uploadDependencies.size() > 0) {
+                        uploadDependencies.each { dep, required ->
+                            if (required) {
+                                requires(dep)
+                            }
+                            else {
+                                optional(dep)
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if (env.CURSEFORGEKEY) {
-            curseforge {
-                apiKey = env.CURSEFORGEKEY
-                project { proj ->
-                    id = uploadSettings["curse-id"]
-                    changelogType = "markdown"
-                    changelog = changeLogText
-                    releaseType = "release"
+            if (env.MODRINTH_TOKEN) {
+                modrinth {
+                    accessToken = env.MODRINTH_TOKEN
+                    projectId = uploadSettings["modrinth-id"]
+                    minecraftVersions.add(rootProject.minecraft_version)
 
-                    addGameVersion("${rootProject.minecraft_version}")
-                    if (name == "neoforge") {
-                        addGameVersion("NeoForge")
-                    }
-                    else {
-                        addGameVersion(name.capitalize())
-                    }
-
-                    mainArtifact(tasks.remapJar) {
-                        displayName = "The Bumblezone v${rootProject.mod_version} (${rootProject.minecraft_version} MC ${name.capitalize()})"
-                    }
-
-                    if (uploadDependencies.size() > 0) {
-                        relations {
-                            uploadDependencies.each { dep, required ->
-                                if (required) {
-                                    requiredDependency(dep)
-                                }
-                                else {
-                                    optionalDependency(dep)
-                                }
+                    dependencies {
+                        uploadDependencies.each { dep, required ->
+                            if (required) {
+                                requires(dep)
+                            } else {
+                                optional(dep)
                             }
                         }
                     }
