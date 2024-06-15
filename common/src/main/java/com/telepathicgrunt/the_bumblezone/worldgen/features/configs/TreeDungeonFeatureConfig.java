@@ -13,7 +13,7 @@ public class TreeDungeonFeatureConfig extends NbtFeatureConfig implements Featur
     public static final Codec<TreeDungeonFeatureConfig> CODEC = RecordCodecBuilder.create((configInstance) -> configInstance.group(
             ResourceLocation.CODEC.fieldOf("tree_configured_feature").forGetter(nbtFeatureConfig -> nbtFeatureConfig.treeConfiguredFeature),
             ResourceLocation.CODEC.fieldOf("processors").forGetter(nbtFeatureConfig -> nbtFeatureConfig.processor),
-            ResourceLocation.CODEC.fieldOf("post_processors").orElse(ResourceLocation.fromNamespaceAndPath("minecraft:empty")).forGetter(nbtFeatureConfig -> nbtFeatureConfig.postProcessor),
+            ResourceLocation.CODEC.fieldOf("post_processors").orElse(ResourceLocation.fromNamespaceAndPath("minecraft", "empty")).forGetter(nbtFeatureConfig -> nbtFeatureConfig.postProcessor),
             Codec.mapPair(ResourceLocation.CODEC.fieldOf("resourcelocation"), ExtraCodecs.POSITIVE_INT.fieldOf("weight")).codec().listOf().fieldOf("nbt_entries").forGetter(nbtFeatureConfig -> nbtFeatureConfig.nbtResourcelocationsAndWeights),
             Codec.INT.fieldOf("structure_y_offset").orElse(0).forGetter(nbtFeatureConfig -> nbtFeatureConfig.structureYOffset)
     ).apply(configInstance, TreeDungeonFeatureConfig::new));

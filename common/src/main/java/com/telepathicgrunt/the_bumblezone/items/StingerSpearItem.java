@@ -41,16 +41,16 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
     public static @NotNull ItemAttributeModifiers createAttributes() {
         return ItemAttributeModifiers.builder()
                 .add(Attributes.ATTACK_DAMAGE,
-                    new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", BASE_DAMAGE, AttributeModifier.Operation.ADD_VALUE),
+                    new AttributeModifier(BASE_ATTACK_DAMAGE_ID, BASE_DAMAGE, AttributeModifier.Operation.ADD_VALUE),
                     EquipmentSlotGroup.MAINHAND)
                 .add(Attributes.ATTACK_SPEED,
-                    new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -1F, AttributeModifier.Operation.ADD_VALUE),
+                    new AttributeModifier(BASE_ATTACK_SPEED_ID, -1F, AttributeModifier.Operation.ADD_VALUE),
                     EquipmentSlotGroup.MAINHAND)
                 .build();
     }
 
     @Override
-    public int getUseDuration(ItemStack itemStack) {
+    public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
         return 50000;
     }
 
@@ -65,11 +65,11 @@ public class StingerSpearItem extends TridentItem implements ItemExtension {
     @Override
     public void releaseUsing(ItemStack itemStack, Level level, LivingEntity livingEntity, int currentDuration) {
         if (livingEntity instanceof Player player) {
-            int remainingDuration = this.getUseDuration(itemStack) - currentDuration;
+            int remainingDuration = this.getUseDuration(itemStack, player) - currentDuration;
             if (remainingDuration >= 10) {
                 if (!level.isClientSide) {
                     itemStack.hurtAndBreak(1, player, livingEntity.getUsedItemHand()  == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-                    ThrownStingerSpearEntity thrownStingerSpear = new ThrownStingerSpearEntity(level, player, itemStack);
+                    ThrownStingerSpearEntity thrownStingerSpear = new ThrownStingerSpearEntity(level, player, itemStack, itemStack);
                     thrownStingerSpear.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 3.0F, 1.0F);
                     if (player.getAbilities().instabuild) {
                         thrownStingerSpear.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;

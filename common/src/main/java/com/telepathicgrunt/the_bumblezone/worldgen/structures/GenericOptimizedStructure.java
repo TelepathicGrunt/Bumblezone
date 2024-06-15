@@ -19,6 +19,8 @@ import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 
 import java.util.Optional;
 
@@ -34,7 +36,8 @@ public class GenericOptimizedStructure extends Structure {
                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
                     Codec.intRange(1, 100).optionalFieldOf("valid_biome_radius_check").forGetter(structure -> structure.biomeRadius),
                     Codec.intRange(1, 100).optionalFieldOf("min_y_limit").forGetter(structure -> structure.minYLimit),
-                    Codec.BOOL.fieldOf("disable_bound_checks").orElse(false).forGetter(structure -> structure.disableBoundChecks)
+                    Codec.BOOL.fieldOf("disable_bound_checks").orElse(false).forGetter(structure -> structure.disableBoundChecks),
+                    LiquidSettings.CODEC.optionalFieldOf("liquid_settings", JigsawStructure.DEFAULT_LIQUID_SETTINGS).forGetter(structure -> structure.liquidSettings)
             ).apply(instance, GenericOptimizedStructure::new));
 
     private final Holder<StructureTemplatePool> startPool;
@@ -46,6 +49,7 @@ public class GenericOptimizedStructure extends Structure {
     public final Optional<Integer> biomeRadius;
     public final Optional<Integer> minYLimit;
     public final boolean disableBoundChecks;
+    public final LiquidSettings liquidSettings;
 
     public GenericOptimizedStructure(StructureSettings config,
                                      Holder<StructureTemplatePool> startPool,
@@ -56,7 +60,8 @@ public class GenericOptimizedStructure extends Structure {
                                      int maxDistanceFromCenter,
                                      Optional<Integer> biomeRadius,
                                      Optional<Integer> minYLimit,
-                                     boolean disableBoundChecks)
+                                     boolean disableBoundChecks,
+                                     LiquidSettings liquidSettings)
     {
         super(config);
         this.startPool = startPool;
@@ -68,6 +73,7 @@ public class GenericOptimizedStructure extends Structure {
         this.biomeRadius = biomeRadius;
         this.minYLimit = minYLimit;
         this.disableBoundChecks = disableBoundChecks;
+        this.liquidSettings = liquidSettings;
     }
 
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
@@ -111,7 +117,8 @@ public class GenericOptimizedStructure extends Structure {
                 this.maxDistanceFromCenter,
                 minYLimit,
                 (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces),
-                this.disableBoundChecks);
+                this.disableBoundChecks,
+                this.liquidSettings);
     }
 
     @Override

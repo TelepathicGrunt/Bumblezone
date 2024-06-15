@@ -14,6 +14,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class BeeStinger extends BzArrowItem {
     public BeeStinger(Properties properties) {
@@ -21,11 +22,11 @@ public class BeeStinger extends BzArrowItem {
     }
 
     @Override
-    public AbstractArrow createArrow(@NotNull Level level, ItemStack stack, @NotNull LivingEntity livingEntity) {
-        if (!stack.is(BzItems.CRYSTAL_CANNON.get()) && livingEntity instanceof ServerPlayer serverPlayer) {
+    public AbstractArrow createArrow(@NotNull Level level, ItemStack stack, LivingEntity livingEntity, @Nullable ItemStack itemStack2) {
+        if (itemStack2 != null && !itemStack2.is(BzItems.CRYSTAL_CANNON.get()) && livingEntity instanceof ServerPlayer serverPlayer) {
             PlayerDataHandler.onBeeStingerFired(serverPlayer);
         }
-        return new BeeStingerEntity(level, livingEntity, BzItems.BEE_STINGER.get().getDefaultInstance());
+        return new BeeStingerEntity(level, livingEntity, stack, itemStack2);
     }
 
     @Override

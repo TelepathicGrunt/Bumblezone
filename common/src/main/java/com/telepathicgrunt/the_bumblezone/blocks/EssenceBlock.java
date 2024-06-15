@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
@@ -59,7 +60,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
             new StructurePlaceSettings()
                 .setRotation(Rotation.NONE)
                 .setMirror(Mirror.NONE)
-                .setKeepLiquids(false)
+                .setLiquidSettings(LiquidSettings.IGNORE_WATERLOGGING)
                 .setIgnoreEntities(true)
                 .setKnownShape(true)
                 .addProcessor(new BlockIgnoreProcessor(List.of(
@@ -77,7 +78,7 @@ public abstract class EssenceBlock extends BaseEntityBlock implements BlockExten
             new StructurePlaceSettings()
                 .setRotation(Rotation.NONE)
                 .setMirror(Mirror.NONE)
-                .setKeepLiquids(false)
+                    .setLiquidSettings(LiquidSettings.IGNORE_WATERLOGGING)
                 .setIgnoreEntities(false)
                 .setKnownShape(true)
                 .addProcessor(new BlockIgnoreProcessor(List.of(

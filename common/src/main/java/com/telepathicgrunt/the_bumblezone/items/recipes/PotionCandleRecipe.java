@@ -29,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -127,7 +128,7 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider provider) {
         MobEffect chosenEffect;
         List<MobEffect> effects = new ArrayList<>();
         AtomicInteger maxDuration = new AtomicInteger();
@@ -136,8 +137,8 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         int splashCount = 0;
         int lingerCount = 0;
 
-        for(int j = 0; j < inv.getContainerSize(); ++j) {
-            ItemStack itemStack = inv.getItem(j);
+        for(int j = 0; j < craftingInput.size(); ++j) {
+            ItemStack itemStack = craftingInput.getItem(j);
             if (itemStack.is(Items.POTION) || itemStack.is(Items.SPLASH_POTION) || itemStack.is(Items.LINGERING_POTION)) {
                 itemStack.get(DataComponents.POTION_CONTENTS).getAllEffects().forEach(me -> {
                    effects.add(me.getEffect().value());
@@ -268,16 +269,16 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer inv, Level level) {
+    public boolean matches(CraftingInput craftingInput, Level level) {
         boolean shapedMatch = false;
 
-        for(int column = 0; column <= inv.getWidth() - this.width; ++column) {
-            for(int row = 0; row <= inv.getHeight() - this.height; ++row) {
-                if (this.matches(inv, column, row, true)) {
+        for(int column = 0; column <= craftingInput.width() - this.width; ++column) {
+            for(int row = 0; row <= craftingInput.height() - this.height; ++row) {
+                if (this.matches(craftingInput, column, row, true)) {
                     shapedMatch = true;
                 }
 
-                if (this.matches(inv, column, row, false)) {
+                if (this.matches(craftingInput, column, row, false)) {
                     shapedMatch = true;
                 }
             }
@@ -285,13 +286,13 @@ public class PotionCandleRecipe extends CustomRecipe implements CraftingRecipe {
         return shapedMatch;
     }
 
-    private boolean matches(CraftingContainer craftingInventory, int width, int height, boolean mirrored) {
+    private boolean matches(CraftingInput craftingInput, int width, int height, boolean mirrored) {
         int potionCount = 0;
         List<ItemStack> secondaryIngredientsFound = new ArrayList<>();
         List<MobEffectInstance> mobEffects = new ObjectArrayList<>();
-        for(int column = 0; column < craftingInventory.getWidth(); ++column) {
-            for(int row = 0; row < craftingInventory.getHeight(); ++row) {
-                ItemStack itemStack = craftingInventory.getItem(column + row * craftingInventory.getWidth());
+        for(int column = 0; column < craftingInput.width(); ++column) {
+            for(int row = 0; row < craftingInput.height(); ++row) {
+                ItemStack itemStack = craftingInput.getItem(column + row * craftingInput.width());
                 int k = column - width;
                 int l = row - height;
                 Ingredient ingredient = null;

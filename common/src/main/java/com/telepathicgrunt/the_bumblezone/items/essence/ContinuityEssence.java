@@ -44,6 +44,7 @@ import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -146,11 +147,11 @@ public class ContinuityEssence extends AbilityEssenceItem {
         BlockPos oldPosition = serverPlayer.blockPosition();
         ResourceKey<Level> respawnDimension = serverPlayer.getRespawnDimension();
         BlockPos respawningLinkedPosition = serverPlayer.getRespawnPosition();
-        float respawnAngle = serverPlayer.getRespawnAngle();
-        boolean forcedRespawn = serverPlayer.isRespawnForced();
 
         ServerLevel desiredDestination = server.getLevel(respawnDimension);
-        Optional<Vec3> optionalRespawnPoint = desiredDestination != null && respawningLinkedPosition != null ? Player.findRespawnPositionAndUseSpawnBlock(desiredDestination, respawningLinkedPosition, respawnAngle, forcedRespawn, true) : Optional.empty();
+        Optional<Vec3> optionalRespawnPoint = desiredDestination != null && respawningLinkedPosition != null ?
+                Optional.of(serverPlayer.findRespawnPositionAndUseSpawnBlock(true, DimensionTransition.DO_NOTHING).pos()) : Optional.empty();
+
         ServerLevel finalDestination = desiredDestination != null && optionalRespawnPoint.isPresent() ? desiredDestination : server.overworld();
 
         if (optionalRespawnPoint.isEmpty() && respawningLinkedPosition != null) {

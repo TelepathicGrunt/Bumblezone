@@ -38,13 +38,13 @@ public class ThrownStingerSpearEntity extends AbstractArrow {
     public int clientSideReturnSpearTickCount;
 
     public ThrownStingerSpearEntity(EntityType<? extends ThrownStingerSpearEntity> entityType, Level level) {
-        super(entityType, level, DEFAULT_SPEAR_STACK);
+        super(entityType, level);
     }
 
-    public ThrownStingerSpearEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
-        super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), livingEntity, level, itemStack);
-        this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(itemStack));
-        this.entityData.set(ID_FOIL, itemStack.hasFoil());
+    public ThrownStingerSpearEntity(Level level, LivingEntity livingEntity, ItemStack ammo, ItemStack weaponItem) {
+        super(BzEntities.THROWN_STINGER_SPEAR_ENTITY.get(), livingEntity, level, ammo, weaponItem);
+        this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(weaponItem));
+        this.entityData.set(ID_FOIL, weaponItem.hasFoil());
     }
 
     @Override

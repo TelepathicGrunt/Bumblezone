@@ -23,7 +23,7 @@ import java.util.Optional;
 public final class NewLootInjectorApplier {
     private NewLootInjectorApplier() {}
 
-    public static final ResourceKey<LootTable> VANILLA_FISHING_LOOT_TABLE_RK = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("minecraft:gameplay/fishing"));
+    public static final ResourceKey<LootTable> VANILLA_FISHING_LOOT_TABLE_RK = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("minecraft", "gameplay/fishing"));
     public static final ResourceLocation BZ_DIMENSION_FISHING_LOOT_TABLE_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "gameplay/fishing");
     public static final ResourceLocation STINGER_DROP_LOOT_TABLE_RL = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "entities/bee_stinger_drops");
 

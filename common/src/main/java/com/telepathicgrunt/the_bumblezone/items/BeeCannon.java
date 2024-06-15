@@ -62,7 +62,7 @@ public class BeeCannon extends Item implements ItemExtension {
 
             int numberOfBees = getNumberOfBees(mutableBeeCannon);
             int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, beeCannon);
-            int remainingDuration = this.getUseDuration(mutableBeeCannon) - currentDuration;
+            int remainingDuration = this.getUseDuration(mutableBeeCannon, livingEntity) - currentDuration;
             if (remainingDuration >= 20 - (quickCharge * 3) && numberOfBees > 0) {
                 List<Entity> bees = tryReleaseBees(level, mutableBeeCannon);
                 if (bees.isEmpty()) {
@@ -238,7 +238,7 @@ public class BeeCannon extends Item implements ItemExtension {
     }
 
     @Override
-    public int getUseDuration(ItemStack itemStack) {
+    public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
         return 72000;
     }
 

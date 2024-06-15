@@ -17,8 +17,8 @@ public class HoneyCrystalShards extends BzArrowItem {
     }
 
     @Override
-    public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity livingEntity) {
-        return new HoneyCrystalShardEntity(level, livingEntity, stack.copyWithCount(1));
+    public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity livingEntity, ItemStack weapon) {
+        return new HoneyCrystalShardEntity(level, livingEntity, stack.copyWithCount(1), weapon);
     }
 
     @Override

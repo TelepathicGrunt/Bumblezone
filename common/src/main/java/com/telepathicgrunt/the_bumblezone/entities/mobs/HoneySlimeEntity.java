@@ -428,8 +428,8 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
    }
 
    @Override
-   public boolean canBeLeashed(Player player) {
-      return !this.isLeashed() && this.lastHurtByPlayer != player;
+   public boolean canBeLeashed() {
+      return !this.isLeashed();
    }
 
    protected void alterSquishAmount() {
@@ -463,7 +463,7 @@ public class HoneySlimeEntity extends Animal implements NeutralMob {
       return !this.isBaby();
    }
 
-   protected void jumpFromGround() {
+   public void jumpFromGround() {
       Vec3 vec3d = this.getDeltaMovement();
       if(this.isAngry()) {
          this.setDeltaMovement(vec3d.x * 5, this.getJumpPower() * 1.3f, vec3d.z * 5);

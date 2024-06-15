@@ -64,6 +64,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -154,7 +155,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             return null;
         }
 
-        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(dimensionString));
+        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(dimensionString));
     }
 
     public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
@@ -366,7 +367,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(compoundTag.getString("essenceControllerDimension"))));
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compoundTag.getString("essenceControllerDimension"))));
         }
         if (compoundTag.contains("prevCosmicCrystalState")) {
             this.setCosmicCrystalState(CosmicCrystalState.valueOf(compoundTag.getString("prevCosmicCrystalState")));
@@ -1402,7 +1403,7 @@ public class CosmicCrystalEntity extends LivingEntity {
         if (damageAmount >= 30) {
             damageAmount = 2;
         }
-        else if (damageAmount >= 10 && !damageSource.isIndirect() && !damageSource.is(BzTags.COSMIC_CRYSTAL_RESISTANT_TO)) {
+        else if (damageAmount >= 10 && damageSource.isDirect() && !damageSource.is(BzTags.COSMIC_CRYSTAL_RESISTANT_TO)) {
             damageAmount = 2;
         }
         else if (damageAmount > 1) {
@@ -1517,8 +1518,12 @@ public class CosmicCrystalEntity extends LivingEntity {
         return true;
     }
 
+    public boolean shouldDropExperience() {
+        return false;
+    }
+
     @Override
-    protected void dropExperience() {}
+    protected void dropExperience(Entity entity) {}
 
     @Override
     public HumanoidArm getMainArm() {
@@ -1572,16 +1577,8 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    protected void handleNetherPortal() { }
-
-    @Override
     public boolean isCurrentlyGlowing() {
         return true;
-    }
-
-    @Override
-    public boolean canChangeDimensions() {
-        return super.canChangeDimensions() && this.getEssenceController() == null;
     }
 
     @Override
@@ -1590,8 +1587,16 @@ public class CosmicCrystalEntity extends LivingEntity {
     }
 
     @Override
-    public Entity changeDimension(ServerLevel serverLevel) {
-        return this;
+    public boolean canChangeDimensions(Level fromLevel, Level toLevel) {
+        return super.canChangeDimensions(fromLevel, toLevel) && this.getEssenceController() == null;
+    }
+
+    @Override
+    public Entity changeDimension(DimensionTransition dimensionTransition) {
+        if (this.getEssenceController() != null) {
+            return this;
+        }
+        return super.changeDimension(dimensionTransition);
     }
 
     private boolean laserHurtAttack(LivingEntity livingEntity) {

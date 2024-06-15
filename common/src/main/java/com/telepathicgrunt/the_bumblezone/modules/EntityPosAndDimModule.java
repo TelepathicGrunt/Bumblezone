@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     public static final Codec<EntityPosAndDimModule> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            ResourceLocation.CODEC.fieldOf("nonBZDimension").orElse(ResourceLocation.fromNamespaceAndPath(BzDimensionConfigs.defaultDimension)).forGetter(module -> module.nonBZDimension),
+            ResourceLocation.CODEC.fieldOf("nonBZDimension").orElse(ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension)).forGetter(module -> module.nonBZDimension),
             Vec3.CODEC.optionalFieldOf("nonBZPosition").forGetter(module -> module.nonBZPosition)
     ).apply(instance, EntityPosAndDimModule::new));
 
@@ -26,13 +26,13 @@ public class EntityPosAndDimModule implements Module<EntityPosAndDimModule> {
     }
 
     public EntityPosAndDimModule() {
-        this.nonBZDimension = ResourceLocation.fromNamespaceAndPath(BzDimensionConfigs.defaultDimension);
+        this.nonBZDimension = ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension);
         this.nonBZPosition = Optional.empty();
     }
 
     public void setNonBZDim(ResourceLocation incomingDim) {
         if (incomingDim.equals(Bumblezone.MOD_DIMENSION_ID)) {
-            this.nonBZDimension = ResourceLocation.fromNamespaceAndPath(BzDimensionConfigs.defaultDimension);
+            this.nonBZDimension = ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension);
             Bumblezone.LOGGER.error("Error: The non-bz dimension passed in to be stored was bz dimension. Please contact mod creator to let them know of this issue.");
         }
         else {

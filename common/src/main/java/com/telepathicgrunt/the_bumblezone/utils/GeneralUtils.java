@@ -514,8 +514,8 @@ public class GeneralUtils {
             return;
         }
         BoundingBox boundingBox = structurePlaceSettings.getBoundingBox();
-        ArrayList<BlockPos> list2 = Lists.newArrayListWithCapacity(structurePlaceSettings.shouldKeepLiquids() ? list.size() : 0);
-        ArrayList<BlockPos> list3 = Lists.newArrayListWithCapacity(structurePlaceSettings.shouldKeepLiquids() ? list.size() : 0);
+        ArrayList<BlockPos> list2 = Lists.newArrayListWithCapacity(structurePlaceSettings.shouldApplyWaterlogging() ? list.size() : 0);
+        ArrayList<BlockPos> list3 = Lists.newArrayListWithCapacity(structurePlaceSettings.shouldApplyWaterlogging() ? list.size() : 0);
         ArrayList<Pair<BlockPos, CompoundTag>> list4 = Lists.newArrayListWithCapacity(list.size());
         int j = Integer.MAX_VALUE;
         int k = Integer.MAX_VALUE;
@@ -528,7 +528,7 @@ public class GeneralUtils {
             BlockEntity blockEntity;
             BlockPos blockPos3 = structureBlockInfo.pos();
             if (boundingBox != null && !boundingBox.isInside(blockPos3)) continue;
-            FluidState fluidState = structurePlaceSettings.shouldKeepLiquids() ? serverLevelAccessor.getFluidState(blockPos3) : null;
+            FluidState fluidState = structurePlaceSettings.shouldApplyWaterlogging() ? serverLevelAccessor.getFluidState(blockPos3) : null;
             BlockState blockState = structureBlockInfo.state().mirror(structurePlaceSettings.getMirror()).rotate(structurePlaceSettings.getRotation());
             if (structureBlockInfo.nbt() != null) {
                 blockEntity = serverLevelAccessor.getBlockEntity(blockPos3);

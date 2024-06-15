@@ -20,6 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
@@ -266,15 +267,12 @@ public class ElectricRingEntity extends Entity {
     }
 
     @Override
-    protected void handleNetherPortal() { }
-
-    @Override
-    public boolean canChangeDimensions() {
+    public boolean canChangeDimensions(Level fromLevel, Level toLevel) {
         return false;
     }
 
     @Override
-    public Entity changeDimension(ServerLevel serverLevel) {
+    public Entity changeDimension(DimensionTransition dimensionTransition) {
         return this;
     }
 
@@ -302,7 +300,7 @@ public class ElectricRingEntity extends Entity {
             NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(compoundTag.getString("essenceControllerDimension"))));
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compoundTag.getString("essenceControllerDimension"))));
         }
     }
 

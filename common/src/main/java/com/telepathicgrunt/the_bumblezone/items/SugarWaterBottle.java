@@ -49,7 +49,7 @@ public class SugarWaterBottle extends Item {
      * How long it takes to use or consume an item
      */
     @Override
-    public int getUseDuration(ItemStack itemStack) {
+    public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
         return 40;
     }
 

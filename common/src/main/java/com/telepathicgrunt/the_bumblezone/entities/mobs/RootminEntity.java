@@ -71,6 +71,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
@@ -381,7 +382,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
          NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
       }
       if (compoundTag.contains("essenceControllerDimension")) {
-         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(compoundTag.getString("essenceControllerDimension"))));
+         this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compoundTag.getString("essenceControllerDimension"))));
       }
    }
 
@@ -736,7 +737,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
-   protected void dropAllDeathLoot(DamageSource damageSource) {
+   protected void dropAllDeathLoot(ServerLevel level, DamageSource damageSource) {
       BlockState flower = this.getFlowerBlock();
       Entity sourceEntity = damageSource.getEntity() == null ? this : damageSource.getEntity();
       if (flower != null) {
@@ -751,7 +752,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
             this.spawnAtLocation(flowerDrop, 0.5f);
          }
       }
-      super.dropAllDeathLoot(damageSource);
+      super.dropAllDeathLoot(level, damageSource);
    }
 
    @Override
@@ -788,16 +789,16 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
-   public boolean canChangeDimensions() {
-      return super.canChangeDimensions() && this.getEssenceController() == null;
+   public boolean canChangeDimensions(Level fromLevel, Level toLevel) {
+      return super.canChangeDimensions(fromLevel, toLevel) && this.getEssenceController() == null;
    }
 
    @Override
-   public Entity changeDimension(ServerLevel serverLevel) {
+   public Entity changeDimension(DimensionTransition dimensionTransition) {
       if (this.getEssenceController() != null) {
          return this;
       }
-      return super.changeDimension(serverLevel);
+      return super.changeDimension(dimensionTransition);
    }
 
    @Override
@@ -812,7 +813,7 @@ public class RootminEntity extends PathfinderMob implements Enemy {
    }
 
    @Override
-   public boolean canBeLeashed(Player player) {
+   public boolean canBeLeashed() {
       return false;
    }
 

@@ -35,6 +35,7 @@ import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.phys.AABB;
@@ -69,7 +70,8 @@ public class OptimizedJigsawManager {
             Optional<Heightmap.Types> heightmapType,
             int maxDistanceFromCenter,
             BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster,
-            boolean ignoreBounds
+            boolean ignoreBounds,
+            LiquidSettings liquidSettings
     ) {
         return assembleJigsawStructure(
                 context,
@@ -82,7 +84,8 @@ public class OptimizedJigsawManager {
                 maxDistanceFromCenter,
                 Optional.empty(),
                 structureBoundsAdjuster,
-                ignoreBounds
+                ignoreBounds,
+                liquidSettings
         );
     }
 
@@ -97,7 +100,8 @@ public class OptimizedJigsawManager {
             int maxDistanceFromCenter,
             Optional<Integer> minYLimit,
             BiConsumer<StructurePiecesBuilder, List<PoolElementStructurePiece>> structureBoundsAdjuster,
-            boolean ignoreBounds
+            boolean ignoreBounds,
+            LiquidSettings liquidSettings
     ) {
         // Get a random orientation for the starting piece
         WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
@@ -129,7 +133,8 @@ public class OptimizedJigsawManager {
                 startPos,
                 startPieceBlueprint.getGroundLevelDelta(),
                 rotation,
-                startPieceBlueprint.getBoundingBox(context.structureTemplateManager(), startPos, rotation)
+                startPieceBlueprint.getBoundingBox(context.structureTemplateManager(), startPos, rotation),
+                liquidSettings
         );
 
         // Store center position of starting piece's bounding box
@@ -182,7 +187,7 @@ public class OptimizedJigsawManager {
 
                 while (!assembler.availablePieces.isEmpty()) {
                     Entry entry = assembler.availablePieces.removeFirst();
-                    assembler.generatePiece(entry.piece, entry.boxOctreeMutableObject, entry.topYLimit, entry.depth, doBoundaryAdjustments, context.heightAccessor());
+                    assembler.generatePiece(entry.piece, entry.boxOctreeMutableObject, entry.topYLimit, entry.depth, doBoundaryAdjustments, context.heightAccessor(), liquidSettings);
                 }
             }
 
@@ -245,7 +250,8 @@ public class OptimizedJigsawManager {
                                   int minY, 
                                   int depth,
                                   boolean doBoundaryAdjustments,
-                                  LevelHeightAccessor heightLimitView
+                                  LevelHeightAccessor heightLimitView,
+                                  LiquidSettings liquidSettings
         ) {
             // Collect data from params regarding piece to process
             StructurePoolElement pieceBlueprint = piece.getElement();
@@ -265,7 +271,7 @@ public class OptimizedJigsawManager {
                 BlockPos jigsawBlockTargetPos = jigsawBlockPos.relative(direction);
 
                 // Get the jigsaw block's piece pool
-                ResourceLocation jigsawBlockPool = ResourceLocation.fromNamespaceAndPath(jigsawBlock.nbt().getString("pool"));
+                ResourceLocation jigsawBlockPool = ResourceLocation.tryParse(jigsawBlock.nbt().getString("pool"));
                 Optional<StructureTemplatePool> poolOptional = this.poolRegistry.getOptional(jigsawBlockPool);
 
                 // Only continue if we are using the jigsaw pattern registry and if it is not empty
@@ -295,12 +301,12 @@ public class OptimizedJigsawManager {
 
                 // Process the pool pieces, randomly choosing different pieces from the pool to spawn
                 if (depth != this.maxDepth) {
-                    StructurePoolElement generatedPiece = this.processList(new ArrayList<>(((StructurePoolAccessor)poolOptional.get()).getRawTemplates()), doBoundaryAdjustments, jigsawBlock, jigsawBlockTargetPos, pieceMinY, jigsawBlockPos, octreeToUse, piece, depth, targetPieceBoundsTop, heightLimitView);
+                    StructurePoolElement generatedPiece = this.processList(new ArrayList<>(((StructurePoolAccessor)poolOptional.get()).getRawTemplates()), doBoundaryAdjustments, jigsawBlock, jigsawBlockTargetPos, pieceMinY, jigsawBlockPos, octreeToUse, piece, depth, targetPieceBoundsTop, heightLimitView, liquidSettings);
                     if (generatedPiece != null) continue; // Stop here since we've already generated the piece
                 }
 
                 // Process the fallback pieces in the event none of the pool pieces work
-                this.processList(new ArrayList<>(((StructurePoolAccessor)fallbackOptional.value()).getRawTemplates()), doBoundaryAdjustments, jigsawBlock, jigsawBlockTargetPos, pieceMinY, jigsawBlockPos, octreeToUse, piece, depth, targetPieceBoundsTop, heightLimitView);
+                this.processList(new ArrayList<>(((StructurePoolAccessor)fallbackOptional.value()).getRawTemplates()), doBoundaryAdjustments, jigsawBlock, jigsawBlockTargetPos, pieceMinY, jigsawBlockPos, octreeToUse, piece, depth, targetPieceBoundsTop, heightLimitView, liquidSettings);
             }
         }
 
@@ -320,7 +326,8 @@ public class OptimizedJigsawManager {
                 PoolElementStructurePiece piece,
                 int depth,
                 int targetPieceBoundsTop,
-                LevelHeightAccessor heightLimitView
+                LevelHeightAccessor heightLimitView,
+                LiquidSettings liquidSettings
         ) {
             StructureTemplatePool.Projection piecePlacementBehavior = piece.getElement().getProjection();
             boolean isPieceRigid = piecePlacementBehavior == StructureTemplatePool.Projection.RIGID;
@@ -360,7 +367,7 @@ public class OptimizedJigsawManager {
                                 return 0;
                             }
                             else {
-                                ResourceLocation candidateTargetPool = ResourceLocation.fromNamespaceAndPath(pieceCandidateJigsawBlock.nbt().getString("pool"));
+                                ResourceLocation candidateTargetPool = ResourceLocation.tryParse(pieceCandidateJigsawBlock.nbt().getString("pool"));
                                 Optional<StructureTemplatePool> candidateTargetPoolOptional = this.poolRegistry.getOptional(candidateTargetPool);
                                 Optional<StructureTemplatePool> candidateTargetFallbackOptional = candidateTargetPoolOptional.flatMap((structureTemplatePool) -> Optional.of(structureTemplatePool.getFallback().value()));
                                 int tallestCandidateTargetPoolPieceHeight = candidateTargetPoolOptional.map((p_242842_1_) -> p_242842_1_.getMaxSize(this.structureTemplateManager)).orElse(0);
@@ -451,7 +458,8 @@ public class OptimizedJigsawManager {
                                         adjustedCandidateJigsawBlockRelativePos,
                                         groundLevelDelta,
                                         rotation,
-                                        adjustedCandidateBoundingBox
+                                        adjustedCandidateBoundingBox,
+                                        liquidSettings
                                 );
 
                                 // Determine actual y-value for the new jigsaw block

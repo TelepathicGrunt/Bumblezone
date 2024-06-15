@@ -11,9 +11,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -39,12 +41,12 @@ public class ItemStackSmeltingRecipe extends SmeltingRecipe {
     }
 
     @Override
-    public boolean matches(Container container, Level level) {
-        return this.ingredient.test(container.getItem(0));
+    public boolean matches(SingleRecipeInput craftingInput, Level level) {
+        return this.ingredient.test(craftingInput.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(Container container, HolderLookup.Provider provider) {
+    public ItemStack assemble(SingleRecipeInput craftingInput, HolderLookup.Provider provider) {
         return this.result.copy();
     }
 

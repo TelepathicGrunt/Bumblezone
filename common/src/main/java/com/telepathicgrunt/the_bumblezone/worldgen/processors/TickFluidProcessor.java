@@ -13,11 +13,11 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
-public class WaterloggingFixProcessor extends StructureProcessor {
+public class TickFluidProcessor extends StructureProcessor {
 
-    public static final MapCodec<WaterloggingFixProcessor> CODEC = MapCodec.unit(WaterloggingFixProcessor::new);
+    public static final MapCodec<TickFluidProcessor> CODEC = MapCodec.unit(TickFluidProcessor::new);
 
-    private WaterloggingFixProcessor() { }
+    private TickFluidProcessor() { }
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader, BlockPos pos, BlockPos pos2, StructureTemplate.StructureBlockInfo infoIn1, StructureTemplate.StructureBlockInfo infoIn2, StructurePlaceSettings settings) {
@@ -39,6 +39,6 @@ public class WaterloggingFixProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return BzProcessors.WATERLOGGING_FIX_PROCESSOR.get();
+        return BzProcessors.TICK_FLUID_PROCESSOR.get();
     }
 }

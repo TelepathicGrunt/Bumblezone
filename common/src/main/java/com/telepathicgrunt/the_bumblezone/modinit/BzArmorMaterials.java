@@ -53,7 +53,7 @@ public class BzArmorMaterials {
             defenseMap.put(type, enumMap.get(type));
         }
 
-        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(layerName)));
+        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(ResourceLocation.tryParse(layerName)));
 
         return new ArmorMaterial(defenseMap, enchantmentValue, equipSound, repairIngredient, layers, toughness, knockback);
     }

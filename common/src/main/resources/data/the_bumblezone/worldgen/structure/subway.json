@@ -6,6 +6,7 @@
   "biomes": "#the_bumblezone:has_structure/subway",
   "step": "surface_structures",
   "terrain_adaptation": "none",
+  "liquid_settings": "ignore_waterlogging",
   "start_height": {
     "absolute": 39
   },

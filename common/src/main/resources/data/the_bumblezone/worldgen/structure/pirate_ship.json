@@ -6,6 +6,7 @@
   "biomes": "#the_bumblezone:has_structure/pirate_ship",
   "step": "surface_structures",
   "terrain_adaptation": "beard_box",
+  "liquid_settings": "ignore_waterlogging",
   "start_height": {
     "absolute": 34
   },

@@ -24,7 +24,7 @@ import com.telepathicgrunt.the_bumblezone.worldgen.processors.SpiderInfestedBeeD
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.StrongerWaterloggingProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.TagIgnoreProcessor;
 import com.telepathicgrunt.the_bumblezone.worldgen.processors.TagReplaceProcessor;
-import com.telepathicgrunt.the_bumblezone.worldgen.processors.WaterloggingFixProcessor;
+import com.telepathicgrunt.the_bumblezone.worldgen.processors.TickFluidProcessor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
@@ -49,7 +49,7 @@ public class BzProcessors {
     public static final RegistryEntry<StructureProcessorType<TagIgnoreProcessor>> TAG_IGNORE_PROCESSOR = STRUCTURE_PROCESSOR.register("tag_ignore_processor", () -> () -> TagIgnoreProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<BlockMergeOverridesProcessor>> BLOCK_MERGE_OVERRIDES_PROCESSOR = STRUCTURE_PROCESSOR.register("block_merge_overrides_processor", () -> () -> BlockMergeOverridesProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<StrongerWaterloggingProcessor>> STRONGER_WATERLOGGING_PROCESSOR = STRUCTURE_PROCESSOR.register("stronger_waterlogging_processor", () -> () -> StrongerWaterloggingProcessor.CODEC);
-    public static final RegistryEntry<StructureProcessorType<WaterloggingFixProcessor>> WATERLOGGING_FIX_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> WaterloggingFixProcessor.CODEC);
+    public static final RegistryEntry<StructureProcessorType<TickFluidProcessor>> TICK_FLUID_PROCESSOR = STRUCTURE_PROCESSOR.register("waterlogging_fix_processor", () -> () -> TickFluidProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<ArenaSpecialBlockHandlerProcessor>> ARENA_SPECIAL_BLOCK_HANDLER_PROCESSOR = STRUCTURE_PROCESSOR.register("arena_special_block_handler_processor", () -> () -> ArenaSpecialBlockHandlerProcessor.CODEC);
     public static final RegistryEntry<StructureProcessorType<ReplaceHoneyProcessor>> REPLACE_HONEY_PROCESSOR = STRUCTURE_PROCESSOR.register("replace_honey_processor", () -> () -> ReplaceHoneyProcessor.CODEC);
 }

@@ -131,7 +131,7 @@ public class CrystallineFlower extends BaseEntityBlock {
             livingEntity.makeStuckInBlock(state, new Vec3(0.95F, 2, 0.95F));
             entity.fallDistance = fallDistance;
 
-            if (!level.isClientSide &&
+            if (!level.isClientSide() &&
                 (livingEntity.xOld != livingEntity.getX() ||
                 livingEntity.yOld != livingEntity.getY() ||
                 livingEntity.zOld != livingEntity.getZ()))
@@ -150,7 +150,7 @@ public class CrystallineFlower extends BaseEntityBlock {
                     {
                         BlockEntity blockEntity = level.getBlockEntity(pos);
                         if (blockEntity instanceof CrystallineFlowerBlockEntity crystallineFlowerBlockEntity && !crystallineFlowerBlockEntity.isMaxTier()) {
-                            int reward = PlatformHooks.getXpDrop(livingEntity, null, livingEntity.getExperienceReward());
+                            int reward = PlatformHooks.getXpDrop(livingEntity, null, livingEntity.getExperienceReward((ServerLevel) level, null));
                             ExperienceOrb.award((ServerLevel) level, livingEntity.position(), reward);
                         }
                     }

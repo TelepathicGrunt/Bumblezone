@@ -126,7 +126,7 @@ public class PotionCandleBlockEntity extends BlockEntity {
         super.loadAdditional(compoundTag, provider);
         this.color = compoundTag.contains(COLOR_TAG) ? compoundTag.getInt(COLOR_TAG) : DEFAULT_COLOR;
         if (compoundTag.contains(STATUS_EFFECT_TAG) && !compoundTag.getString(STATUS_EFFECT_TAG).trim().equals("")) {
-            this.mobEffect = BuiltInRegistries.MOB_EFFECT.getHolder(ResourceLocation.fromNamespaceAndPath(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
+            this.mobEffect = BuiltInRegistries.MOB_EFFECT.getHolder(ResourceLocation.tryParse(compoundTag.getString(STATUS_EFFECT_TAG))).orElse(null);
         }
         else {
             this.mobEffect = null;

@@ -7,6 +7,7 @@
   "step": "surface_structures",
   "project_start_to_heightmap": "WORLD_SURFACE_WG",
   "terrain_adaptation": "none",
+  "liquid_settings": "ignore_waterlogging",
   "start_height": {
     "absolute": -8
   },

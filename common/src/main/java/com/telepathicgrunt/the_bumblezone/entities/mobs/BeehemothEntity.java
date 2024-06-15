@@ -79,6 +79,7 @@ import java.util.UUID;
 
 public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Saddleable, PlayerRideable {
 
+    private static final ResourceLocation FRIENDSHIP_HEALTH_BOOST = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Friendship Health Boost");
     private static final EntityDataAccessor<Boolean> SADDLED = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> QUEEN = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> FRIENDSHIP = SynchedEntityData.defineId(BeehemothEntity.class, EntityDataSerializers.INT);
@@ -182,7 +183,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
     }
 
     @Override
-    public void equipSaddle(SoundSource soundSource) {
+    public void equipSaddle(ItemStack saddle, SoundSource soundSource) {
         this.entityData.set(SADDLED, true);
         if (soundSource != null) {
             this.level().playSound(null, this, SoundEvents.HORSE_SADDLE, soundSource, 0.5F, 1.0F);
@@ -230,7 +231,7 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
         boolean doNothingWithCurrentHealth = false;
         AttributeInstance attributeInstance = this.getAttribute(Attributes.MAX_HEALTH);
         if (attributeInstance != null) {
-            AttributeModifier attributeModifier = attributeInstance.getModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID);
+            AttributeModifier attributeModifier = attributeInstance.getModifier(FRIENDSHIP_HEALTH_BOOST);
 
             if (attributeModifier != null) {
                 if (attributeModifier.amount() == healthBoost) {
@@ -242,8 +243,11 @@ public class BeehemothEntity extends TamableAnimal implements FlyingAnimal, Sadd
             }
 
             if (!doNothingWithCurrentHealth) {
-                attributeInstance.removeModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID);
-                attributeInstance.addTransientModifier(new AttributeModifier(FRIENDSHIP_HEALTH_BOOST_ATTRIBUTE_UUID, "Friendship Health Boost", healthBoost, AttributeModifier.Operation.ADD_VALUE));
+                attributeInstance.removeModifier(FRIENDSHIP_HEALTH_BOOST);
+                attributeInstance.addTransientModifier(new AttributeModifier(
+                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "Friendship Health Boost"),
+                        healthBoost,
+                        AttributeModifier.Operation.ADD_VALUE));
 
                 if (oldHealthBoost < healthBoost) {
                     this.heal(healthBoost - oldHealthBoost);

@@ -52,7 +52,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
 
             ListTag tagList = data.getList("randomize_trades", Tag.TAG_STRING);
             for (int i = 0; i < tagList.size(); i++) {
-                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(tagList.getString(i)));
+                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(tagList.getString(i)));
                 RandomizeTradeRowInput wantEntry = new RandomizeTradeRowInput(Optional.of(tagKey));
                 parsedData.add(wantEntry);
             }

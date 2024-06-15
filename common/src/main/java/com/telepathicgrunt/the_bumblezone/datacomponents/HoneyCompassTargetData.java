@@ -35,7 +35,7 @@ public record HoneyCompassTargetData(Optional<String> targetBlock, Optional<Stri
     }
 
     public Optional<Block> getStoredBlock() {
-        return targetBlock.flatMap(block -> BuiltInRegistries.BLOCK.getOptional(ResourceLocation.fromNamespaceAndPath(block)));
+        return targetBlock.flatMap(block -> BuiltInRegistries.BLOCK.getOptional(ResourceLocation.tryParse(block)));
     }
 
     public boolean isDifferent(Optional<String> targetBlock, Optional<String> targetStructureTag, Optional<BlockPos> targetPos, Optional<ResourceKey<Level>> targetDimension) {

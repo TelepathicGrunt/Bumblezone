@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -80,11 +81,11 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer craftingContainer, Level level) {
+    public boolean matches(CraftingInput craftingInput, Level level) {
         StackedContents stackedContents = new StackedContents();
         int i = 0;
-        for (int j = 0; j < craftingContainer.getContainerSize(); ++j) {
-            ItemStack itemStack = craftingContainer.getItem(j);
+        for (int j = 0; j < craftingInput.size(); ++j) {
+            ItemStack itemStack = craftingInput.getItem(j);
             if (itemStack.isEmpty()) continue;
             ++i;
             stackedContents.accountStack(itemStack, 1);
@@ -93,7 +94,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput recipeInput, HolderLookup.Provider provider) {
         return this.result.copy();
     }
 
@@ -103,16 +104,16 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
-        NonNullList<ItemStack> remainingInv = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput craftingInput) {
+        NonNullList<ItemStack> remainingInv = NonNullList.withSize(craftingInput.size(), ItemStack.EMPTY);
         int containerOutput = PlatformHooks.hasCraftingRemainder(this.result) ? this.result.getCount() : 0;
 
         for(int i = 0; i < remainingInv.size(); ++i) {
-            ItemStack craftingInput = inv.getItem(i);
-            ItemStack craftingContainer = PlatformHooks.getCraftingRemainder(craftingInput);
+            ItemStack itemStack = craftingInput.getItem(i);
+            ItemStack craftingContainer = PlatformHooks.getCraftingRemainder(itemStack);
             ItemStack recipeContainer = PlatformHooks.getCraftingRemainder(this.result);
-            if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(craftingInput.getItem())) {
-                craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(craftingInput.getItem()).getDefaultInstance();
+            if (craftingContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(itemStack.getItem())) {
+                craftingContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(itemStack.getItem()).getDefaultInstance();
             }
             if (recipeContainer.isEmpty() && HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.containsKey(this.result.getItem())) {
                 recipeContainer = HARDCODED_EDGECASES_WITHOUT_CONTAINERS_SET.get(this.result.getItem()).getDefaultInstance();
@@ -121,7 +122,7 @@ public class ContainerCraftingRecipe implements CraftingRecipe {
             if (!craftingContainer.isEmpty()) {
                 if(containerOutput > 0 &&
                     (this.result.getItem() == craftingContainer.getItem() ||
-                    recipeContainer.getItem() == craftingInput.getItem() ||
+                    recipeContainer.getItem() == itemStack.getItem() ||
                     recipeContainer.getItem() == craftingContainer.getItem()))
                 {
                     containerOutput--;

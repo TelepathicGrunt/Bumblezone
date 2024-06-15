@@ -991,7 +991,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
             this.minorHorizontalCollision = false;
          }
 
-         this.setOnGroundWithKnownMovement(this.verticalCollisionBelow, collision);
+         this.setOnGroundWithMovement(this.verticalCollisionBelow, collision);
          BlockPos blockPos = this.getOnPosLegacy();
          BlockState blockState = this.level().getBlockState(blockPos);
          this.checkFallDamage(collision.y, this.onGround(), blockState, blockPos);
@@ -1243,7 +1243,7 @@ public class SentryWatcherEntity extends Entity implements Enemy {
    }
 
    @Override
-   public boolean canChangeDimensions() {
+   public boolean canChangeDimensions(Level toLevel, Level fromLevel) {
       return false;
    }
 

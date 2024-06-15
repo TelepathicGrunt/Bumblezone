@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -58,10 +59,10 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer craftingContainer, Level level) {
+    public boolean matches(CraftingInput craftingContainer, Level level) {
         StackedContents stackedContents = new StackedContents();
         int i = 0;
-        for (int j = 0; j < craftingContainer.getContainerSize(); ++j) {
+        for (int j = 0; j < craftingContainer.size(); ++j) {
             ItemStack itemStack = craftingContainer.getItem(j);
             if (itemStack.isEmpty()) continue;
             ++i;
@@ -76,9 +77,9 @@ public class NbtKeepingShapelessRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput craftingContainer, HolderLookup.Provider provider) {
         ItemStack resultItem = this.result.copy();
-        for (ItemStack input : craftingContainer.getItems()) {
+        for (ItemStack input : craftingContainer.items()) {
             if (input.is(this.itemToKeepNbtOf)) {
                 resultItem = input.transmuteCopy(resultItem.getItem(), 1);
                 break;

@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 
 import java.util.Optional;
 
@@ -112,7 +113,8 @@ public class HoneyCaveRoomStructure extends Structure {
                 this.projectStartToHeightmap,
                 this.maxDistanceFromCenter,
                 (structurePiecesBuilder, pieces) -> GeneralUtils.centerAllPieces(centerPos, pieces),
-                false);
+                false,
+                LiquidSettings.IGNORE_WATERLOGGING);
     }
 
     @Override

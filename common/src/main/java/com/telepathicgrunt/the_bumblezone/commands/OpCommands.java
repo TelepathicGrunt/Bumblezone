@@ -235,7 +235,7 @@ public class OpCommands {
                         false));
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
                     if (killedString != null) {
-                        ResourceLocation rl = ResourceLocation.fromNamespaceAndPath(killedString);
+                        ResourceLocation rl = ResourceLocation.tryParse(killedString);
                         ModuleHelper.getModule(targetPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
                             int killed = capability.mobsKilledTracker.getOrDefault(rl, 0);
                             String translationKey;

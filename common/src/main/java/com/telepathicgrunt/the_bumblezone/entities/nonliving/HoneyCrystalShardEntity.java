@@ -19,21 +19,18 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class HoneyCrystalShardEntity extends AbstractArrow {
-    private static final ItemStack DEFAULT_HONEY_CRYSTAL_SHARD_STACK = new ItemStack(BzItems.HONEY_CRYSTAL_SHARDS.get());
-
     public HoneyCrystalShardEntity(EntityType<? extends HoneyCrystalShardEntity> entityType, Level level) {
-        super(entityType, level, DEFAULT_HONEY_CRYSTAL_SHARD_STACK);
+        super(entityType, level);
         this.setBaseDamage(4);
-        this.setKnockback(1);
         this.setCritArrow(true);
     }
 
-    public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity, ItemStack itemStack) {
-        super(BzEntities.HONEY_CRYSTAL_SHARD.get(), livingEntity, level, itemStack);
+    public HoneyCrystalShardEntity(Level level, LivingEntity livingEntity, ItemStack ammo, @Nullable ItemStack weapon) {
+        super(BzEntities.HONEY_CRYSTAL_SHARD.get(), livingEntity, level, ammo, weapon);
         this.setBaseDamage(4);
-        this.setKnockback(1);
         this.setCritArrow(true);
     }
 

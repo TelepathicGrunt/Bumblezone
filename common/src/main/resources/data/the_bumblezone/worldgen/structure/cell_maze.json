@@ -6,6 +6,7 @@
   "biomes": "#the_bumblezone:has_structure/cell_maze",
   "step": "surface_structures",
   "terrain_adaptation": "bury",
+  "liquid_settings": "ignore_waterlogging",
   "start_height": {
     "absolute": 40
   },

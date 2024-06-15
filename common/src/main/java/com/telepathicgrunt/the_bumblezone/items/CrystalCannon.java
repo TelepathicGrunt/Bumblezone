@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -94,11 +95,11 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
 
             int numberOfCrystals = getNumberOfCrystals(mutableCrystalCannon);
             int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, mutableCrystalCannon);
-            int remainingDuration = this.getUseDuration(mutableCrystalCannon) - currentDuration;
+            int remainingDuration = this.getUseDuration(mutableCrystalCannon, livingEntity) - currentDuration;
             if (remainingDuration >= 20 - (quickCharge * 3) && numberOfCrystals > 0) {
                 int crystalsToSpawn = getAndClearStoredCrystals(level, mutableCrystalCannon);
                 for (int crystalIndex = 0; crystalIndex < crystalsToSpawn; crystalIndex++) {
-                    AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity);
+                    AbstractArrow newCrystal = BzItems.HONEY_CRYSTAL_SHARDS.get().createArrow(level, crystalCannon, livingEntity, mutableCrystalCannon);
 
                     double weaponDamage = newCrystal.getBaseDamage();
                     int power = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, crystalCannon);
@@ -226,7 +227,7 @@ public class CrystalCannon extends ProjectileWeaponItem implements ItemExtension
     }
 
     @Override
-    public int getUseDuration(ItemStack itemStack) {
+    public int getUseDuration(ItemStack itemStack, LivingEntity livingEntity) {
         return 72000;
     }
 

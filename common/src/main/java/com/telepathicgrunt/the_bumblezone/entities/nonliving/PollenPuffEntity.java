@@ -43,6 +43,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.Portal;
 import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -106,7 +107,6 @@ public class PollenPuffEntity extends ThrowableItemProjectile {
             BlockPos blockpos = raytraceresult.getBlockPos();
             BlockState blockstate = this.level().getBlockState(blockpos);
             if (blockstate.is(BzTags.FLOWERS_ALLOWED_BY_POLLEN_PUFF) && !blockstate.is(BzTags.FLOWERS_FORCED_DISALLOWED_FROM_POLLEN_PUFF)) {
-                this.handleInsidePortal(blockpos);
                 this.onHit(raytraceresult);
             }
             else if (blockstate.getFluidState().is(FluidTags.WATER)) {

@@ -177,7 +177,7 @@ public class EntityTeleportationHookup {
 
             ServerLevel serverWorld = worldKey == null ? null : minecraftServer.getLevel(worldKey);
             if (serverWorld == null) {
-                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(BzDimensionConfigs.defaultDimension)));
+                serverWorld = minecraftServer.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension)));
             }
             BzWorldSavedData.queueEntityToTeleport(livingEntity, serverWorld.dimension());
         }
@@ -392,7 +392,7 @@ public class EntityTeleportationHookup {
         }
 
         if (BzDimensionConfigs.onlyOverworldHivesTeleports) {
-            ResourceLocation defaultDimRL = ResourceLocation.fromNamespaceAndPath(BzDimensionConfigs.defaultDimension);
+            ResourceLocation defaultDimRL = ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension);
             ResourceKey<Level> worldKey = ResourceKey.create(Registries.DIMENSION, defaultDimRL);
             return level.dimension().equals(worldKey);
         }
@@ -526,7 +526,7 @@ public class EntityTeleportationHookup {
             if (capability.getNonBZDim().equals(Bumblezone.MOD_DIMENSION_ID) || BzDimensionConfigs.forceExitToOverworld) {
                 //Go to default dimension instead
                 //update stored dimension
-                capability.setNonBZDim(ResourceLocation.fromNamespaceAndPath(BzDimensionConfigs.defaultDimension));
+                capability.setNonBZDim(ResourceLocation.tryParse(BzDimensionConfigs.defaultDimension));
             }
         });
     }
