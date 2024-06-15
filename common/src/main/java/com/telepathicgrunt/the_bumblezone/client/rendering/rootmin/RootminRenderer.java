@@ -37,8 +37,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
-    private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/rootmin.png");
-    private static final ResourceLocation GRASS = new ResourceLocation(Bumblezone.MODID, "textures/entity/rootmin_grass.png");
+    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin.png");
+    private static final ResourceLocation GRASS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/rootmin_grass.png");
 
     public RootminRenderer(EntityRendererProvider.Context context) {
         super(context, new RootminModel(context.bakeLayer(RootminModel.LAYER_LOCATION)), 0.7F);

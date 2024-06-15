@@ -14,7 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public record MobEffectClientSyncPacket(int entityId, ResourceLocation effectRl, byte effectAmplifier, int effectDurationTicks, byte flags) implements Packet<MobEffectClientSyncPacket> {
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "mob_effect_client_sync");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "mob_effect_client_sync");
     public static final ClientboundPacketType<MobEffectClientSyncPacket> TYPE = new MobEffectClientSyncPacket.Handler();
 
     private static final int FLAG_AMBIENT = 1;

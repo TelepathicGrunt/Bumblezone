@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 
 public class EssenceOverlay {
-    private static final ResourceLocation TEXTURE_OVERLAY_1 = new ResourceLocation(Bumblezone.MODID, "textures/misc/active_essence_overlay.png");
+    private static final ResourceLocation TEXTURE_OVERLAY_1 = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/active_essence_overlay.png");
 
     public static void essenceItemOverlay(Player player, GuiGraphics guiGraphics) {
         if (BzClientConfigs.essenceItemHUDVisualEffectLayers == 0) {

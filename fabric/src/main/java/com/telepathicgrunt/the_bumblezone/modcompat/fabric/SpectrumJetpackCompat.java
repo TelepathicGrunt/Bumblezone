@@ -15,7 +15,7 @@ public class SpectrumJetpackCompat implements ModCompat {
     private static TagKey<Item> SPECTRUM_JETPACKS;
 
     public SpectrumJetpackCompat() {
-        SPECTRUM_JETPACKS = TagKey.create(Registries.ITEM, new ResourceLocation("spectrumjetpacks", "jetpacks"));
+        SPECTRUM_JETPACKS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("spectrumjetpacks", "jetpacks"));
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.createJetpackPresent = true;

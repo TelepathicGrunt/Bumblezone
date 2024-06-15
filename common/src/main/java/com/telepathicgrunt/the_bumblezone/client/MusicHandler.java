@@ -45,7 +45,7 @@ public class MusicHandler {
     private static SoundInstance ANGRY_BEE_MUSIC = null;
     private static SoundInstance SEMPITERNAL_SANCTUM_MUSIC = null;
     private static SoundInstance ESSENCE_EVENT_MUSIC = null;
-    private static final ResourceLocation BIOME_MUSIC = new ResourceLocation(Bumblezone.MODID, "biome_music");
+    private static final ResourceLocation BIOME_MUSIC = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "biome_music");
     public static boolean BUMBLEZONE_MUSIC_PLAYING = false;
 
     public static void tickMusicFader(PlayerTickEvent event) {

@@ -11,7 +11,7 @@ public class LivingEntityDataModule implements Module<LivingEntityDataModule> {
             Codec.INT.fieldOf("missedParalysis").forGetter(module -> module.missedParalysis)
     ).apply(instance, LivingEntityDataModule::new));
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "living_entity_data");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "living_entity_data");
     private int missedParalysis;
 
     public LivingEntityDataModule(int missedParalysis) {

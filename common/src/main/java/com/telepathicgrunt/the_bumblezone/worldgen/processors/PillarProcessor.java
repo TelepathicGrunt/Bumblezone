@@ -31,7 +31,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PillarProcessor extends StructureProcessor {
-    private static final ResourceLocation EMPTY_RL = new ResourceLocation("minecraft", "empty");
+    private static final ResourceLocation EMPTY_RL = ResourceLocation.fromNamespaceAndPath("minecraft", "empty");
 
     public static final MapCodec<PillarProcessor> CODEC  = RecordCodecBuilder.mapCodec((instance) -> instance.group(
             Codec.mapPair(BlockState.CODEC.fieldOf("trigger"), BlockState.CODEC.fieldOf("replacement"))

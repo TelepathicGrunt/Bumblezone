@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 public class QueenTradesEMICategory extends EmiRecipeCategory {
 
 	public QueenTradesEMICategory() {
-		super(new ResourceLocation(Bumblezone.MODID, "queen_trades"), new EmiTexture(new ResourceLocation(Bumblezone.MODID, "textures/gui/bee_queen_trades.png"), 0, 0, 16, 16, 16, 16, 16, 16));
+		super(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_trades"), new EmiTexture(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/bee_queen_trades.png"), 0, 0, 16, 16, 16, 16, 16, 16));
 	}
 
 	public Component getName() {

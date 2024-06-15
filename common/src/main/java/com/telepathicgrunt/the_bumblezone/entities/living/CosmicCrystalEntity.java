@@ -154,7 +154,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             return null;
         }
 
-        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(dimensionString));
+        return ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(dimensionString));
     }
 
     public void setEssenceControllerDimension(ResourceKey<Level> essenceControllerDimension) {
@@ -366,7 +366,7 @@ public class CosmicCrystalEntity extends LivingEntity {
             NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(compoundTag.getString("essenceControllerDimension"))));
         }
         if (compoundTag.contains("prevCosmicCrystalState")) {
             this.setCosmicCrystalState(CosmicCrystalState.valueOf(compoundTag.getString("prevCosmicCrystalState")));

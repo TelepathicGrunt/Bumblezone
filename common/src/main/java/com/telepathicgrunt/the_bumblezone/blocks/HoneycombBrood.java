@@ -70,7 +70,7 @@ public class HoneycombBrood extends ProperFacingBlock {
 
     public static final MapCodec<HoneycombBrood> CODEC = Block.simpleCodec(HoneycombBrood::new);
 
-    private static final ResourceLocation HONEY_TREAT = new ResourceLocation("productivebees:honey_treat");
+    private static final ResourceLocation HONEY_TREAT = ResourceLocation.fromNamespaceAndPath("productivebees:honey_treat");
     public static final IntegerProperty STAGE = BlockStateProperties.AGE_3;
 
     public HoneycombBrood() {

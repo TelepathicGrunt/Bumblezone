@@ -25,7 +25,7 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         extends EntityRenderer<PurpleSpikeEntity>
         implements RenderLayerParent<PurpleSpikeEntity, M>
 {
-    private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/purple_spike.png");
+    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/purple_spike.png");
     protected final PurpleSpikeModel<PurpleSpikeEntity> model;
     protected final List<RenderLayer<PurpleSpikeEntity, M>> layers = Lists.newArrayList();
 

@@ -26,7 +26,7 @@ import java.util.List;
 public record QueenMainTradesSyncPacket(List<Pair<MainTradeRowInput, WeightedRandomList<WeightedTradeResult>>> recipeViewerMainTrades) implements Packet<QueenMainTradesSyncPacket> {
     public static Gson gson = new GsonBuilder().create();
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "queen_main_trades_sync_packet");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_main_trades_sync_packet");
     public static final ClientboundPacketType<QueenMainTradesSyncPacket> TYPE = new QueenMainTradesSyncPacket.Handler();
 
     public static void sendToClient(DatapackSyncEvent event) {

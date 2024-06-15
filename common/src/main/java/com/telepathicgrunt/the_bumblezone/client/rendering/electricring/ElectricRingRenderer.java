@@ -26,9 +26,9 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         extends EntityRenderer<ElectricRingEntity>
         implements RenderLayerParent<ElectricRingEntity, M>
 {
-    static final ResourceLocation SKIN_1 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_1.png");
-    static final ResourceLocation SKIN_2 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_2.png");
-    static final ResourceLocation SKIN_3 = new ResourceLocation(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_3.png");
+    static final ResourceLocation SKIN_1 = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_1.png");
+    static final ResourceLocation SKIN_2 = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_2.png");
+    static final ResourceLocation SKIN_3 = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/electric_ring/electric_ring_3.png");
     protected final ElectricRingModel<ElectricRingEntity> model;
     protected final List<RenderLayer<ElectricRingEntity, M>> layers = Lists.newArrayList();
 

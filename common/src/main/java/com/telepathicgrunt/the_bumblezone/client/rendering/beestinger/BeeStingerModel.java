@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 
 // Made with Blockbench 4.1.3
 public class BeeStingerModel extends Model {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "bee_stinger"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "bee_stinger"), "main");
     private final ModelPart root;
 
     public BeeStingerModel(ModelPart modelPart) {

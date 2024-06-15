@@ -30,14 +30,14 @@ public class QueenTradesJEICategory implements IRecipeCategory<JEIQueenTradesInf
     private final IDrawable tagIcon;
 
     public QueenTradesJEICategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createDrawable(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
+        this.background = guiHelper.createDrawable(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, RECIPE_WIDTH, RECIPE_HEIGHT);
         this.localizedName = Component.translatable("the_bumblezone.recipe_viewers.bee_queen_trades");
 
-        DrawableBuilder iconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/bee_queen_trades.png"), 0, 0, 16, 16);
+        DrawableBuilder iconBuilder = new DrawableBuilder(ResourceLocation.fromNamespaceAndPath("the_bumblezone", "textures/gui/bee_queen_trades.png"), 0, 0, 16, 16);
         iconBuilder.setTextureSize(16, 16);
         this.icon = iconBuilder.build();
 
-        DrawableBuilder tagIconBuilder = new DrawableBuilder(new ResourceLocation("the_bumblezone", "textures/gui/tag_icon.png"), 0, 0, 16, 16);
+        DrawableBuilder tagIconBuilder = new DrawableBuilder(ResourceLocation.fromNamespaceAndPath("the_bumblezone", "textures/gui/tag_icon.png"), 0, 0, 16, 16);
         tagIconBuilder.setTextureSize(16, 16);
         this.tagIcon = tagIconBuilder.build();
     }

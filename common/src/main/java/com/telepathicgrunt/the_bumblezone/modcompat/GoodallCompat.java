@@ -16,7 +16,7 @@ public class GoodallCompat implements ModCompat {
     private static Optional<Item> BOTTLED_BEE;
 
     public GoodallCompat() {
-        BOTTLED_BEE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("goodall", "bottled_bee"));
+        BOTTLED_BEE = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("goodall", "bottled_bee"));
 
         if (BOTTLED_BEE.isPresent() && BzModCompatibilityConfigs.allowGoodallBottledBeesRevivingEmptyBroodBlock) {
             setupDispenserCompat(BOTTLED_BEE.get()); // adds compatibility with bottled bee in dispensers

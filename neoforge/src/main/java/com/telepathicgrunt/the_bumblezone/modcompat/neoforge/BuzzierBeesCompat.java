@@ -18,7 +18,7 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 public class BuzzierBeesCompat implements ModCompat {
-    private static final ResourceLocation BEE_BOTTLE_RL = new ResourceLocation("buzzier_bees", "bee_bottle");
+    private static final ResourceLocation BEE_BOTTLE_RL = ResourceLocation.fromNamespaceAndPath("buzzier_bees", "bee_bottle");
 
     public BuzzierBeesCompat() {
         Optional<Item> bottledBee = BuiltInRegistries.ITEM.getOptional(BEE_BOTTLE_RL);
@@ -29,7 +29,7 @@ public class BuzzierBeesCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
                 addBuiltinDataPacks.add(
-                        new ResourceLocation(Bumblezone.MODID, "buzzier_bees_compat"),
+                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "buzzier_bees_compat"),
                         Component.literal("Bumblezone - Buzzier Bees Compat"),
                         AddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )

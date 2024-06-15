@@ -149,7 +149,7 @@ public class BzCustomBucketItem extends BzBucketItem {
                     Vec3 targetPos = hitResult != null ? hitResult.getLocation() : new Vec3(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 
                     LootTable sugarWaterEvaporateLootTable = world.registryAccess().registryOrThrow(Registries.LOOT_TABLE)
-                            .get(new ResourceLocation(Bumblezone.MODID, "fluids/sugar_water_evaporates"));
+                            .get(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "fluids/sugar_water_evaporates"));
 
                     if (sugarWaterEvaporateLootTable != null) {
                         LootParams lootParams = new LootParams.Builder(serverLevel)

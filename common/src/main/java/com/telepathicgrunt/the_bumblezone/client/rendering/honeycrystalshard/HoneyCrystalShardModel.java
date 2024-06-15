@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class HoneyCrystalShardModel extends Model {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "honey_crystal_shard"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "honey_crystal_shard"), "main");
     private final ModelPart root;
 
     public HoneyCrystalShardModel(ModelPart modelPart) {

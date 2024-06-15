@@ -211,7 +211,7 @@ public class NeoForgeEventManager {
         if (event.getPackType() == PackType.CLIENT_RESOURCES) {
             AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
                 event.addPackFinders(
-                    new ResourceLocation(id.getNamespace(), "resourcepacks/" + id.getPath()),
+                    ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "resourcepacks/" + id.getPath()),
                     PackType.CLIENT_RESOURCES,
                     displayName,
                     PackSource.BUILT_IN,
@@ -224,7 +224,7 @@ public class NeoForgeEventManager {
         if (event.getPackType() == PackType.SERVER_DATA) {
             AddBuiltinDataPacks.EVENT.invoke(new AddBuiltinDataPacks((id, displayName, mode) -> {
                 event.addPackFinders(
-                        new ResourceLocation(id.getNamespace(), "datapacks/" + id.getPath()),
+                        ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "datapacks/" + id.getPath()),
                         PackType.CLIENT_RESOURCES,
                         displayName,
                         PackSource.BUILT_IN,

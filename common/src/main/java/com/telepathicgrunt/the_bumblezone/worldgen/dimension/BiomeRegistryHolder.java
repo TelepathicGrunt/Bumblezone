@@ -8,7 +8,7 @@ import net.minecraft.world.level.biome.Biome;
 
 public class BiomeRegistryHolder {
     public static Registry<Biome> BIOME_REGISTRY;
-    private static final ResourceLocation EMPTY_RL = new ResourceLocation("b", "empty");
+    private static final ResourceLocation EMPTY_RL = ResourceLocation.fromNamespaceAndPath("b", "empty");
 
     public static void setupBiomeRegistry(MinecraftServer server) {
         BIOME_REGISTRY = server.registryAccess().registry(Registries.BIOME).get();

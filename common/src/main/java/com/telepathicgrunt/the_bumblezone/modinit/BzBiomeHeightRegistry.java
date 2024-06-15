@@ -12,7 +12,7 @@ import java.util.Map;
 public final class BzBiomeHeightRegistry {
     private BzBiomeHeightRegistry() {}
 
-    public static final ResourceKey<Registry<BiomeTerrain>> BIOME_HEIGHT_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Bumblezone.MODID, "biome_height"));
+    public static final ResourceKey<Registry<BiomeTerrain>> BIOME_HEIGHT_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "biome_height"));
 //    public static final CustomRegistry<BiomeTerrain> BIOME_HEIGHT = ResourcefulRegistr.of(Bumblezone.MODID, BiomeTerrain.class, BIOME_HEIGHT_KEY, false, false, true);
 //
 //    public static final RegistryEntry<BiomeTerrain> HIVE_PILLAR = BIOME_HEIGHT.register("hive_pillar", () -> new BiomeTerrain(22f, 0.35f));
@@ -39,7 +39,7 @@ public final class BzBiomeHeightRegistry {
         private Map<ResourceLocation, BiomeTerrain> map = new HashMap<>();
 
         public Supplier<BiomeTerrain> register(String id, Supplier<BiomeTerrain> supplier) {
-            map.put(new ResourceLocation(Bumblezone.MODID, id), supplier.get());
+            map.put(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, id), supplier.get());
             return supplier;
         }
 

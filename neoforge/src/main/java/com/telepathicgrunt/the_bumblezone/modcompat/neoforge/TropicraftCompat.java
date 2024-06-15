@@ -20,7 +20,7 @@ public class TropicraftCompat implements ModCompat {
     protected static Optional<EntityType<?>> TROPIBEE;
 
     public TropicraftCompat() {
-        TROPIBEE = BuiltInRegistries.ENTITY_TYPE.getOptional(new ResourceLocation("tropicraft", "tropibee"));
+        TROPIBEE = BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.fromNamespaceAndPath("tropicraft", "tropibee"));
 
         // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.tropicraftPresent = true;

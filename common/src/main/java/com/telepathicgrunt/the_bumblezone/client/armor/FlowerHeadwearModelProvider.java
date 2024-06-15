@@ -18,7 +18,7 @@ public class FlowerHeadwearModelProvider implements ArmorModelProvider {
 
     @Override
     public ResourceLocation getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
-        return new ResourceLocation(Bumblezone.MODID, "textures/models/armor/flower_headwear_layer.png");
+        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/models/armor/flower_headwear_layer.png");
     }
 
     @Override

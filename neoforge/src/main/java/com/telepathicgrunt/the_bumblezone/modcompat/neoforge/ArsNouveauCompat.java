@@ -3,8 +3,8 @@ package com.telepathicgrunt.the_bumblezone.modcompat.neoforge;
 import com.telepathicgrunt.the_bumblezone.modcompat.ModCompat;
 
 public class ArsNouveauCompat implements ModCompat {
-//	private static final ResourceLocation SPELL_PROJ_RL = new ResourceLocation("ars_nouveau", "spell_proj");
-//	private static final ResourceLocation SPELL_FOLLOW_PROJ_RL = new ResourceLocation("ars_nouveau", "follow_proj");
+//	private static final ResourceLocation SPELL_PROJ_RL = ResourceLocation.fromNamespaceAndPath("ars_nouveau", "spell_proj");
+//	private static final ResourceLocation SPELL_FOLLOW_PROJ_RL = ResourceLocation.fromNamespaceAndPath("ars_nouveau", "follow_proj");
 //
 //	protected static final Set<AbstractCastMethod> ALLOWED_CAST_METHODS = Sets.newHashSet(
 //		MethodProjectile.INSTANCE,

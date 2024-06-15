@@ -15,8 +15,8 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 public class ForbiddenArcanusCompat implements ModCompat {
-    protected static final ResourceLocation BEE_BUCKET_RL = new ResourceLocation("forbidden_arcanus", "edelwood_bee_bucket");
-    protected static final ResourceLocation EMPTY_BUCKET_RL = new ResourceLocation("forbidden_arcanus", "edelwood_bucket");
+    protected static final ResourceLocation BEE_BUCKET_RL = ResourceLocation.fromNamespaceAndPath("forbidden_arcanus", "edelwood_bee_bucket");
+    protected static final ResourceLocation EMPTY_BUCKET_RL = ResourceLocation.fromNamespaceAndPath("forbidden_arcanus", "edelwood_bucket");
 
     public ForbiddenArcanusCompat() {
         Optional<Item> bucketBee = BuiltInRegistries.ITEM.getOptional(BEE_BUCKET_RL);

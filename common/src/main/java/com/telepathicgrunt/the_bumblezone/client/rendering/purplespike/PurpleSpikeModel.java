@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "purple_spike"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "purple_spike"), "main");
     private final ModelPart topSpike;
     private final ModelPart bottomSpike;
 

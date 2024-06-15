@@ -11,7 +11,7 @@ public class JeedCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
                 addBuiltinDataPacks.add(
-                        new ResourceLocation(Bumblezone.MODID, "jeed_effects_compat"),
+                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "jeed_effects_compat"),
                         Component.literal("Bumblezone - JEED Compat"),
                         AddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )

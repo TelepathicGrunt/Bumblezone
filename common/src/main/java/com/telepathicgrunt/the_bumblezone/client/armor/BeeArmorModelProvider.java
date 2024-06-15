@@ -22,10 +22,10 @@ public class BeeArmorModelProvider implements ArmorModelProvider {
     @Override
     public ResourceLocation getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
         if (stack.getItem() instanceof BeeArmor beeArmor && beeArmor.hasTransTexture()) {
-            return new ResourceLocation(Bumblezone.MODID, "textures/models/armor/trans_bee_material_layer_" + variant + ".png");
+            return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/models/armor/trans_bee_material_layer_" + variant + ".png");
         }
         else {
-            return new ResourceLocation(Bumblezone.MODID, "textures/models/armor/bee_material_layer_" + variant + ".png");
+            return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/models/armor/bee_material_layer_" + variant + ".png");
         }
     }
 

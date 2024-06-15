@@ -25,14 +25,14 @@ public class ProductiveBeesCompat implements ModCompat {
 //
 //    private static final Lazy<List<String>> ALL_BEES = Lazy.of(() -> BeeReloadListener.INSTANCE.getData().keySet().stream().filter(e -> BzModCompatibilityConfigs.allowedBees.contains(e)).toList());
 //
-//    public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation("productivebees", "solitary_overworld_nests"));
+//    public static final TagKey<Block> SOLITARY_OVERWORLD_NESTS_TAG = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("productivebees", "solitary_overworld_nests"));
 //
 //    protected static Optional<Item> BEE_CAGE;
 //    protected static Optional<Item> STURDY_BEE_CAGE;
 //
 //    public ProductiveBeesCompat() {
-//        BEE_CAGE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("productivebees", "bee_cage"));
-//        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("productivebees", "sturdy_bee_cage"));
+//        BEE_CAGE = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("productivebees", "bee_cage"));
+//        STURDY_BEE_CAGE = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("productivebees", "sturdy_bee_cage"));
 //
 //        if (BEE_CAGE.isPresent() && BzModCompatibilityConfigs.allowProductiveBeesBeeCageRevivingEmptyBroodBlock) {
 //            setupDispenserCompat(BEE_CAGE.get()); // adds compatibility with bee cage in dispensers

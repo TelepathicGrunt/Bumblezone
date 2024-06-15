@@ -24,7 +24,7 @@ public class TokenEnchanterCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
                 addBuiltinDataPacks.add(
-                        new ResourceLocation(Bumblezone.MODID, "enchanted_token_compat"),
+                        ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "enchanted_token_compat"),
                         Component.literal("Bumblezone - Token Enchanter Compat"),
                         AddBuiltinDataPacks.PackMode.FORCE_ENABLED
                 )

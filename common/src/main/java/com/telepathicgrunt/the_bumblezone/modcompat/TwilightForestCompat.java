@@ -19,7 +19,7 @@ import java.util.EnumSet;
 
 public class TwilightForestCompat implements ModCompat {
 	private static final String ENDER_BOW_ATTACHED_TAG = "twilightforest:ender";
-	private static final ResourceLocation ENDER_BOW_RL = new ResourceLocation("twilightforest", "ender_bow");
+	private static final ResourceLocation ENDER_BOW_RL = ResourceLocation.fromNamespaceAndPath("twilightforest", "ender_bow");
 
 	public TwilightForestCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup

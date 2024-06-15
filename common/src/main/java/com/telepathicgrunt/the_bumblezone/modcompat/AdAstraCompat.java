@@ -21,10 +21,10 @@ public class AdAstraCompat implements ModCompat {
 	private static Item JET_FEET = null;
 
 	public AdAstraCompat() {
-		JET_HELMET = BuiltInRegistries.ITEM.get(new ResourceLocation("ad_astra", "jet_suit_helmet"));
-		JET_CHEST = BuiltInRegistries.ITEM.get(new ResourceLocation("ad_astra", "jet_suit"));
-		JET_LEGS = BuiltInRegistries.ITEM.get(new ResourceLocation("ad_astra", "jet_suit_pants"));
-		JET_FEET = BuiltInRegistries.ITEM.get(new ResourceLocation("ad_astra", "jet_suit_boots"));
+		JET_HELMET = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit_helmet"));
+		JET_CHEST = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit"));
+		JET_LEGS = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit_pants"));
+		JET_FEET = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("ad_astra", "jet_suit_boots"));
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.adAstraPresent = true;

@@ -21,7 +21,7 @@ public class SwapItemFrameContents {
             if (!BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.equals(checkedFluidConfig)) {
 
                 checkedFluidConfig = BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid;
-                Optional<Fluid> fluid = BuiltInRegistries.FLUID.getOptional(new ResourceLocation(BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid));
+                Optional<Fluid> fluid = BuiltInRegistries.FLUID.getOptional(ResourceLocation.fromNamespaceAndPath(BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid));
                 if (fluid.isPresent()) {
                     Optional<Item> itemOptional = BuiltInRegistries.ITEM.stream()
                             .filter(item -> item instanceof BucketItem bucketItem && PlatformHooks.getBucketItemFluid(bucketItem) == fluid.get())

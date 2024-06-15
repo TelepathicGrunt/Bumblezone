@@ -79,7 +79,7 @@ public class EssenceBlockBlue extends EssenceBlock {
 
     @Override
     public ResourceLocation getArenaNbt() {
-        return new ResourceLocation(Bumblezone.MODID, "essence/blue_arena");
+        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/blue_arena");
     }
 
     @Override

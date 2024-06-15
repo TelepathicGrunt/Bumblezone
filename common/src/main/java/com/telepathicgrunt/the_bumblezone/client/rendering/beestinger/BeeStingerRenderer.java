@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class BeeStingerRenderer extends EntityRenderer<BeeStingerEntity> {
-    public static final ResourceLocation BEE_STINGER_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/bee_stinger.png");
+    public static final ResourceLocation BEE_STINGER_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_stinger.png");
     private final BeeStingerModel model;
 
     public BeeStingerRenderer(EntityRendererProvider.Context context) {

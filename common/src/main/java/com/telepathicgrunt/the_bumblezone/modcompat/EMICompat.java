@@ -53,10 +53,10 @@ public class EMICompat implements EmiPlugin {
             addInfo(registry, BzFluids.HONEY_FLUID.get());
         }
 
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "potion_candle/from_super_candles"))
+        registry.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_super_candles"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, true));
 
-        registry.getRecipeManager().byKey(new ResourceLocation(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
+        registry.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "potion_candle/from_string_and_carvable_wax"))
                 .ifPresent(recipe -> registerExtraRecipes(recipe, registry, false));
 
         registry.addCategory(QUEEN_TRADES);
@@ -105,7 +105,7 @@ public class EMICompat implements EmiPlugin {
                         new EmiCraftingRecipe(
                                 craftingRecipe.getIngredients().stream().map(EmiIngredient::of).toList(),
                                 EmiStack.of(craftingRecipe.getResultItem(RegistryAccess.EMPTY)),
-                                new ResourceLocation(baseRecipe.id().getNamespace(), baseRecipe.id().getPath() + "_" + i),
+                                ResourceLocation.fromNamespaceAndPath(baseRecipe.id().getNamespace(), baseRecipe.id().getPath() + "_" + i),
                                 false));
             }
         }
@@ -115,7 +115,7 @@ public class EMICompat implements EmiPlugin {
         registry.addRecipe(new EmiInfoRecipe(
                 List.of(EmiIngredient.of(Ingredient.of(new ItemStack(item)))),
                 List.of(Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.ITEM.getKey(item).getPath() + ".description")),
-                new ResourceLocation(Bumblezone.MODID, BuiltInRegistries.ITEM.getKey(item).getPath() + "_info")
+                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, BuiltInRegistries.ITEM.getKey(item).getPath() + "_info")
         ));
     }
 
@@ -123,7 +123,7 @@ public class EMICompat implements EmiPlugin {
         registry.addRecipe(new EmiInfoRecipe(
                 List.of(EmiStack.of(fluid)),
                 List.of(Component.translatable(Bumblezone.MODID + "." + BuiltInRegistries.FLUID.getKey(fluid).getPath() + ".description")),
-                new ResourceLocation(Bumblezone.MODID, BuiltInRegistries.FLUID.getKey(fluid).getPath() + "_info")
+                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, BuiltInRegistries.FLUID.getKey(fluid).getPath() + "_info")
         ));
     }
 }

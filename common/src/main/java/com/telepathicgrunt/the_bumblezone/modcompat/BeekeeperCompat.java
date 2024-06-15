@@ -16,7 +16,7 @@ public class BeekeeperCompat implements ModCompat {
 
     public BeekeeperCompat() {
         if(BzModCompatibilityConfigs.allowBeekeeperTradesCompat) {
-            BEEKEEPER = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(new ResourceLocation("bk", "beekeeper"));
+            BEEKEEPER = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(ResourceLocation.fromNamespaceAndPath("bk", "beekeeper"));
             RegisterVillagerTradesEvent.EVENT.addListener(BeekeeperCompat::setupBeekeeperTrades);
         }
 

@@ -17,7 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.Bee;
 
 public class BackupVariantBeeModel<T extends Bee> extends AgeableListModel<T> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "variant_bee"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "variant_bee"), "main");
 
     private static final String BONE = "bone";
     private static final String STINGER = "stinger";

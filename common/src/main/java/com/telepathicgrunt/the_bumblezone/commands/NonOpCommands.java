@@ -193,13 +193,13 @@ public class NonOpCommands {
                 case QUEENS_DESIRED_KILLED_ENTITY_COUNTER -> {
                     if (killedString != null) {
                         ModuleHelper.getModule(serverPlayer, ModuleRegistry.PLAYER_DATA).ifPresent(capability -> {
-                            ResourceLocation rl = new ResourceLocation(killedString);
+                            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath(killedString);
                             int killed = capability.mobsKilledTracker.getOrDefault(rl, 0);
                             String translationKey;
-                            if (rl.equals(new ResourceLocation("minecraft", "ender_dragon"))) {
+                            if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "ender_dragon"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_ender_dragon";
                             }
-                            else if (rl.equals(new ResourceLocation("minecraft", "wither"))) {
+                            else if (rl.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "wither"))) {
                                 translationKey = "command.the_bumblezone.queens_desired_killed_entity_counter_wither";
                             }
                             else {

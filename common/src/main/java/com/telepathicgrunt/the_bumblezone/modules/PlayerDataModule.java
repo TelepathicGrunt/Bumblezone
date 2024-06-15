@@ -29,7 +29,7 @@ public class PlayerDataModule implements Module<PlayerDataModule> {
             Codec.unboundedMap(ResourceLocation.CODEC, Codec.INT).fieldOf("mobsKilledTracker").forGetter(module -> module.mobsKilledTracker)
     ).apply(instance, PlayerDataModule::new));
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "player_data");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "player_data");
 
     public boolean isBeeEssenced;
     public boolean gottenWelcomed;

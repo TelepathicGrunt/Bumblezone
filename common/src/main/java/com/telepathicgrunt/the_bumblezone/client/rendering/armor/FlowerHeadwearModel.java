@@ -23,7 +23,7 @@ import net.minecraft.world.item.component.DyedItemColor;
 
 public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
 
-    public static final ModelLayerLocation FLOWER_HEADWEAR_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "flower_headwear"), "flower_headwear");
+    public static final ModelLayerLocation FLOWER_HEADWEAR_LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "flower_headwear"), "flower_headwear");
 
     protected final EquipmentSlot slot;
     public LivingEntity entityLiving;

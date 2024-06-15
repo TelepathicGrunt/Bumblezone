@@ -233,7 +233,7 @@ public class EssenceBlockEntity extends BlockEntity {
     }
 
     public ResourceLocation getSavedNbtLocation() {
-        return new ResourceLocation(Bumblezone.MODID, "essence/saved_area/" +
+        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "essence/saved_area/" +
                 this.getBlockPos().getX() + "_" +
                 this.getBlockPos().getY() + "_" +
                 this.getBlockPos().getZ() + "_" +

@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 
 public class BeehemothRenderer extends MobRenderer<BeehemothEntity, BeehemothModel> {
-    private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/beehemoth.png");
+    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/beehemoth.png");
 
     public BeehemothRenderer(EntityRendererProvider.Context context) {
         super(context, new BeehemothModel(context.bakeLayer(BeehemothModel.LAYER_LOCATION)), 0.4F);

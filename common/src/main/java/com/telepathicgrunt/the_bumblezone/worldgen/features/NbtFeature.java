@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class NbtFeature <T extends NbtFeatureConfig> extends Feature<T> {
 
-    private static final ResourceLocation EMPTY = new ResourceLocation("minecraft", "empty");
+    private static final ResourceLocation EMPTY = ResourceLocation.fromNamespaceAndPath("minecraft", "empty");
 
     public NbtFeature(Codec<T> configFactory) {
         super(configFactory);

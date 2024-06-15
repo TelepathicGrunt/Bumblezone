@@ -149,7 +149,7 @@ public class BumblezoneClient {
     });
 
     public static void init() {
-        FactoryManager.register(new ResourceLocation(Bumblezone.MODID, "connected"), ConnectedBlockModel.FACTORY);
+        FactoryManager.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "connected"), ConnectedBlockModel.FACTORY);
         PlayerTickEvent.CLIENT_EVENT.addListener(MusicHandler::tickMusicFader);
 
         RegisterParticleEvent.EVENT.addListener(BumblezoneClient::onParticleSetup);
@@ -231,7 +231,7 @@ public class BumblezoneClient {
         // Allows shield to use the blocking json file for offset
         event.register(
                 BzItems.HONEY_CRYSTAL_SHIELD.get(),
-                new ResourceLocation("blocking"),
+                ResourceLocation.fromNamespaceAndPath("blocking"),
                 (itemStack, world, livingEntity, integer) ->
                         livingEntity != null &&
                                 livingEntity.isUsingItem() &&
@@ -241,7 +241,7 @@ public class BumblezoneClient {
         // Correct model when about to throw
         event.register(
                 BzItems.STINGER_SPEAR.get(),
-                new ResourceLocation("throwing"),
+                ResourceLocation.fromNamespaceAndPath("throwing"),
                 (itemStack, world, livingEntity, integer) ->
                         livingEntity != null &&
                                 livingEntity.isUsingItem() &&
@@ -251,13 +251,13 @@ public class BumblezoneClient {
         // Allows honey compass to render the correct texture
         event.register(
                 BzItems.HONEY_COMPASS.get(),
-                new ResourceLocation("angle"),
+                ResourceLocation.fromNamespaceAndPath("angle"),
                 HoneyCompassItemProperty.getClampedItemPropertyFunction());
 
         // Correct model when about to fire
         event.register(
                 BzItems.BEE_CANNON.get(),
-                new ResourceLocation("primed"),
+                ResourceLocation.fromNamespaceAndPath("primed"),
                 (itemStack, world, livingEntity, int1) ->
                         livingEntity != null &&
                                 livingEntity.isUsingItem() &&
@@ -266,7 +266,7 @@ public class BumblezoneClient {
 
         event.register(
                 BzItems.CRYSTAL_CANNON.get(),
-                new ResourceLocation("primed"),
+                ResourceLocation.fromNamespaceAndPath("primed"),
                 (itemStack, world, livingEntity, int1) ->
                         livingEntity != null &&
                                 livingEntity.isUsingItem() &&
@@ -276,7 +276,7 @@ public class BumblezoneClient {
         // Correct model based on bees
         event.register(
                 BzItems.BEE_CANNON.get(),
-                new ResourceLocation("bee_count"),
+                ResourceLocation.fromNamespaceAndPath("bee_count"),
                 (itemStack, world, livingEntity, int1) ->
                         BeeCannon.getNumberOfBees(itemStack) / 10f
         );
@@ -284,7 +284,7 @@ public class BumblezoneClient {
         // Correct model based on crystals
         event.register(
                 BzItems.CRYSTAL_CANNON.get(),
-                new ResourceLocation("crystal_count"),
+                ResourceLocation.fromNamespaceAndPath("crystal_count"),
                 (itemStack, world, livingEntity, int1) ->
                         CrystalCannon.getNumberOfCrystals(itemStack) / 10f
         );
@@ -293,7 +293,7 @@ public class BumblezoneClient {
         // Correct model based on crystals
         event.register(
                 BzItems.CRYSTAL_CANNON.get(),
-                new ResourceLocation("crystal_count"),
+                ResourceLocation.fromNamespaceAndPath("crystal_count"),
                 (itemStack, world, livingEntity, int1) ->
                         CrystalCannon.getNumberOfCrystals(itemStack) / 10f
         );
@@ -302,7 +302,7 @@ public class BumblezoneClient {
         // Show different stage for creative menu icon
         event.register(
                 BzItems.HONEYCOMB_BROOD.get(),
-                new ResourceLocation("is_creative_tab_icon"),
+                ResourceLocation.fromNamespaceAndPath("is_creative_tab_icon"),
                 (itemStack, world, livingEntity, integer) ->
                         itemStack.getComponents().has(DataComponents.CUSTOM_DATA) &&
                         itemStack.getComponents().get(DataComponents.CUSTOM_DATA).contains("isCreativeTabIcon") &&
@@ -313,7 +313,7 @@ public class BumblezoneClient {
         // Correct model based on pollen on leggings
         event.register(
                 BzItems.HONEY_BEE_LEGGINGS_1.get(),
-                new ResourceLocation("pollen"),
+                ResourceLocation.fromNamespaceAndPath("pollen"),
                 (itemStack, world, livingEntity, int1) ->
                         HoneyBeeLeggings.isPollinated(itemStack) ? 1f : 0f
         );
@@ -322,7 +322,7 @@ public class BumblezoneClient {
         // Correct model based on pollen on leggings
         event.register(
                 BzItems.HONEY_BEE_LEGGINGS_2.get(),
-                new ResourceLocation("pollen"),
+                ResourceLocation.fromNamespaceAndPath("pollen"),
                 (itemStack, world, livingEntity, int1) ->
                         HoneyBeeLeggings.isPollinated(itemStack) ? 1f : 0f
         );
@@ -340,7 +340,7 @@ public class BumblezoneClient {
     private static void registerEssenceItemProperty(RegisterItemPropertiesEvent event, Item item) {
         event.register(
             item,
-            new ResourceLocation("state"),
+            ResourceLocation.fromNamespaceAndPath("state"),
             (itemStack, world, livingEntity, integer) -> {
                 if (itemStack.getItem() instanceof AbilityEssenceItem abilityEssenceItem) {
                     AbilityEssenceActivityData abilityEssenceActivityData = itemStack.get(BzDataComponents.ABILITY_ESSENCE_ACTIVITY_DATA.get());
@@ -463,12 +463,12 @@ public class BumblezoneClient {
     }
 
     public static void registerDimensionEffects(RegisterDimensionEffectsEvent event) {
-        event.register(new ResourceLocation(Bumblezone.MODID, "dimension_special_effects"), new BzDimensionSpecialEffects());
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "dimension_special_effects"), new BzDimensionSpecialEffects());
     }
 
     public static void registerShaders(RegisterShaderEvent event) {
         event.register(
-            new ResourceLocation(Bumblezone.MODID, "rendertype_bumblezone_essence"),
+            ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "rendertype_bumblezone_essence"),
             EssenceBlockEntityRenderer.POSITION_COLOR_NORMAL,
             (safeShader) -> EssenceBlockEntityRenderer.SAFE_SHADER_INSTANCE = safeShader
         );

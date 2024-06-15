@@ -18,7 +18,7 @@ import java.util.EnumSet;
 
 public class DragonEnchantsCompat implements ModCompat {
 	private static final String END_STEP_ENCHANT_ATTACHED_TAG = "dragonenchants:end_step";
-	private static final ResourceLocation END_STEP_RL = new ResourceLocation("dragonenchants", "end_step");
+	private static final ResourceLocation END_STEP_RL = ResourceLocation.fromNamespaceAndPath("dragonenchants", "end_step");
 
 	public DragonEnchantsCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup

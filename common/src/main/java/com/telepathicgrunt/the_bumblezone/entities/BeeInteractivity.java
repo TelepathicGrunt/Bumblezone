@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class BeeInteractivity {
 
-    private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = new ResourceLocation("productivebees", "honey_treat");
+    private static final ResourceLocation PRODUCTIVE_BEES_HONEY_TREAT = ResourceLocation.fromNamespaceAndPath("productivebees", "honey_treat");
 
     @Nullable
     public static InteractionResult onEntityInteractEvent(@Nullable InteractionResult result, PlayerEntityInteractEvent event) {

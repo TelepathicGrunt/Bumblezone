@@ -95,7 +95,7 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 
 	@Override
 	public void addWidgets(WidgetHolder widgets) {
-		widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
+		widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/queen_trades_layout.png"), 0, 0, getDisplayWidth(), getDisplayHeight(), 0, 0));
 
 		widgets.add(new SlotWidget(input, 5, 5));
 		widgets.add(new SlotWidget(visualOutputs, 63, 5));
@@ -103,10 +103,10 @@ public class EMIQueenTradesInfo implements EmiRecipe {
 		widgets.add(new TextWidget(Component.translatable("the_bumblezone.recipe_viewers.queen_trade_xp", getXpReward()).getVisualOrderText(), 100,  11, 0xFF404040, false));
 
 		if (this.getInputTag() != null) {
-			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
+			widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 11, 11, 16, 16, 0, 0, 16, 16, 16, 16));
 		}
 		if (this.getOutputTag() != null) {
-			widgets.add(new TextureWidget(new ResourceLocation(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
+			widgets.add(new TextureWidget(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/tag_icon.png"), 69, 11, 16, 16, 0, 0, 16, 16, 16, 16));
 		}
 
 		double percentValue = (double)(getWeight()) / (getGroupWeight()) * 100;

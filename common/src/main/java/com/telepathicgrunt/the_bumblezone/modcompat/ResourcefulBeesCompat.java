@@ -34,15 +34,15 @@ import java.util.Optional;
 
 public class ResourcefulBeesCompat implements ModCompat {
 
-    public static final TagKey<Block> SPAWNS_IN_BEE_DUNGEONS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawns_in_bee_dungeons"));
-    public static final TagKey<Block> SPAWNS_IN_SPIDER_INFESTED_BEE_DUNGEONS_TAG = TagKey.create(Registries.BLOCK, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawns_in_spider_infested_bee_dungeons"));
-    public static final TagKey<EntityType<?>> SPAWNABLE_FROM_BROOD_BLOCK_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_brood_block"));
-    public static final TagKey<EntityType<?>> SPAWNABLE_FROM_CHUNK_CREATION_TAG = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(Bumblezone.MODID, "resourcefulbees/spawnable_from_chunk_creation"));
+    public static final TagKey<Block> SPAWNS_IN_BEE_DUNGEONS_TAG = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourcefulbees/spawns_in_bee_dungeons"));
+    public static final TagKey<Block> SPAWNS_IN_SPIDER_INFESTED_BEE_DUNGEONS_TAG = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourcefulbees/spawns_in_spider_infested_bee_dungeons"));
+    public static final TagKey<EntityType<?>> SPAWNABLE_FROM_BROOD_BLOCK_TAG = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourcefulbees/spawnable_from_brood_block"));
+    public static final TagKey<EntityType<?>> SPAWNABLE_FROM_CHUNK_CREATION_TAG = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourcefulbees/spawnable_from_chunk_creation"));
 
     private static Optional<Item> BEE_JAR;
 
     public ResourcefulBeesCompat() {
-        BEE_JAR = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("resourcefulbees", "bee_jar"));
+        BEE_JAR = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("resourcefulbees", "bee_jar"));
 
         if (BEE_JAR.isPresent() && BzModCompatibilityConfigs.allowResourcefulBeesBeeJarRevivingEmptyBroodBlock) {
             setupDispenserCompat(BEE_JAR.get()); // adds compatibility with bee jars in dispensers
@@ -50,7 +50,7 @@ public class ResourcefulBeesCompat implements ModCompat {
 
         Bumblezone.MOD_COMPAT_DATAPACKS.add(addBuiltinDataPacks ->
             addBuiltinDataPacks.add(
-                new ResourceLocation(Bumblezone.MODID, "resourcefulbees_compat"),
+                ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourcefulbees_compat"),
                 Component.literal("Bumblezone - Resourceful Bees Compat"),
                 AddBuiltinDataPacks.PackMode.FORCE_ENABLED
             )

@@ -26,9 +26,9 @@ import java.util.function.Function;
 
 public class HoneyFluidClientProperties {
 
-    public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid/still");
-    public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid/flow");
-    public static final ResourceLocation HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/honey_fluid/flow_diagonal");
+    public static final ResourceLocation HONEY_FLUID_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/still");
+    public static final ResourceLocation HONEY_FLUID_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow");
+    public static final ResourceLocation HONEY_FLUID_FLOWING_DIAGONAL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/honey_fluid/flow_diagonal");
 
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {

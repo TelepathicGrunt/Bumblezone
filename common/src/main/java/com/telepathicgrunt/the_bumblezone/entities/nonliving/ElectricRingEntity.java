@@ -302,7 +302,7 @@ public class ElectricRingEntity extends Entity {
             NbtUtils.readBlockPos(compoundTag, "essenceControllerBlockPos").ifPresent(this::setEssenceControllerBlockPos);
         }
         if (compoundTag.contains("essenceControllerDimension")) {
-            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compoundTag.getString("essenceControllerDimension"))));
+            this.setEssenceControllerDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(compoundTag.getString("essenceControllerDimension"))));
         }
     }
 

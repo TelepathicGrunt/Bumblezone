@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 // Exported for Minecraft version 1.17 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 public class StingerSpearModel extends Model {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "stinger_spear"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "stinger_spear"), "main");
     private final ModelPart root;
 
     public StingerSpearModel(ModelPart modelPart) {

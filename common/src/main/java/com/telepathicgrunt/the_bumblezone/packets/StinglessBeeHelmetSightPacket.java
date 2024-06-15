@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public record StinglessBeeHelmetSightPacket(byte giveAdvancement) implements Packet<StinglessBeeHelmetSightPacket> {
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "stingless_bee_helmet_sight");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "stingless_bee_helmet_sight");
     public static final ServerboundPacketType<StinglessBeeHelmetSightPacket> TYPE = new StinglessBeeHelmetSightPacket.Handler();
 
     public static void sendToServer(boolean giveAdvancement) {

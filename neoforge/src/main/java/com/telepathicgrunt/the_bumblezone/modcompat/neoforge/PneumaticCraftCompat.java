@@ -19,7 +19,7 @@ public class PneumaticCraftCompat implements ModCompat {
 	public static Item PNEUMATIC_BOOTS;
 
 	public PneumaticCraftCompat() {
-		PNEUMATIC_BOOTS = BuiltInRegistries.ITEM.get(new ResourceLocation("pneumaticcraft", "pneumatic_boots"));
+		PNEUMATIC_BOOTS = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("pneumaticcraft", "pneumatic_boots"));
 
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
 		ModChecker.pneumaticCraftPresent = true;

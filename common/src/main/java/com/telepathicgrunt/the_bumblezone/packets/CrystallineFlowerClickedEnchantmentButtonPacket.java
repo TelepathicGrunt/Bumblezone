@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 public record CrystallineFlowerClickedEnchantmentButtonPacket(int containerId, ResourceLocation clickedButton) implements Packet<CrystallineFlowerClickedEnchantmentButtonPacket> {
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower_clicked_enchantment_button_packet");
     public static final ServerboundPacketType<CrystallineFlowerClickedEnchantmentButtonPacket> TYPE = new CrystallineFlowerClickedEnchantmentButtonPacket.Handler();
 
     public static void sendToServer(int containIdIn, ResourceLocation ClickedButtonIn) {

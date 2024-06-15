@@ -31,8 +31,8 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 
 	private static final long RANDOM_SEED = 31100L;
 	private static final Random RANDOM = new Random(RANDOM_SEED);
-	public static final ResourceLocation BASE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/base_background.png");
-	public static final ResourceLocation BEE_TEXTURE = new ResourceLocation(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
+	public static final ResourceLocation BASE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/base_background.png");
+	public static final ResourceLocation BEE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
 
 	public static final VertexFormat POSITION_COLOR_NORMAL = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder()
 			.put("Position", DefaultVertexFormat.ELEMENT_POSITION)

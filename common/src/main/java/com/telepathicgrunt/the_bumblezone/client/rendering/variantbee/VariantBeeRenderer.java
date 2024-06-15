@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Bee;
 
 public class VariantBeeRenderer extends BeeRenderer {
-    private static final ResourceLocation VANILLA_BEE_TEXTURE = new ResourceLocation("minecraft", "textures/entity/bee/bee.png");
+    private static final ResourceLocation VANILLA_BEE_TEXTURE = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/bee/bee.png");
 
     public VariantBeeRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -29,7 +29,7 @@ public class VariantBeeRenderer extends BeeRenderer {
                 type = "_nectar";
 
             String path = String.format("textures/entity/bee_variants/%s/bee%s.png", variant, type);
-            return new ResourceLocation(Bumblezone.MODID, path);
+            return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, path);
         }
 
         return VANILLA_BEE_TEXTURE;

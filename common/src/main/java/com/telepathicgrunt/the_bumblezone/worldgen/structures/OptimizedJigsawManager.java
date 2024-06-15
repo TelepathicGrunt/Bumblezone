@@ -265,7 +265,7 @@ public class OptimizedJigsawManager {
                 BlockPos jigsawBlockTargetPos = jigsawBlockPos.relative(direction);
 
                 // Get the jigsaw block's piece pool
-                ResourceLocation jigsawBlockPool = new ResourceLocation(jigsawBlock.nbt().getString("pool"));
+                ResourceLocation jigsawBlockPool = ResourceLocation.fromNamespaceAndPath(jigsawBlock.nbt().getString("pool"));
                 Optional<StructureTemplatePool> poolOptional = this.poolRegistry.getOptional(jigsawBlockPool);
 
                 // Only continue if we are using the jigsaw pattern registry and if it is not empty
@@ -360,7 +360,7 @@ public class OptimizedJigsawManager {
                                 return 0;
                             }
                             else {
-                                ResourceLocation candidateTargetPool = new ResourceLocation(pieceCandidateJigsawBlock.nbt().getString("pool"));
+                                ResourceLocation candidateTargetPool = ResourceLocation.fromNamespaceAndPath(pieceCandidateJigsawBlock.nbt().getString("pool"));
                                 Optional<StructureTemplatePool> candidateTargetPoolOptional = this.poolRegistry.getOptional(candidateTargetPool);
                                 Optional<StructureTemplatePool> candidateTargetFallbackOptional = candidateTargetPoolOptional.flatMap((structureTemplatePool) -> Optional.of(structureTemplatePool.getFallback().value()));
                                 int tallestCandidateTargetPoolPieceHeight = candidateTargetPoolOptional.map((p_242842_1_) -> p_242842_1_.getMaxSize(this.structureTemplateManager)).orElse(0);

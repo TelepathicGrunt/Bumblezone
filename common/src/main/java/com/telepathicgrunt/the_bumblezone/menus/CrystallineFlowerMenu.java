@@ -624,7 +624,7 @@ public class CrystallineFlowerMenu extends AbstractContainerMenu {
                             );
                         }).toList();
 
-                ResourceLocation selectedEnchant = this.selectedEnchantment == null ? new ResourceLocation("minecraft", "empty") : this.selectedEnchantment;
+                ResourceLocation selectedEnchant = this.selectedEnchantment == null ? ResourceLocation.fromNamespaceAndPath("minecraft", "empty") : this.selectedEnchantment;
                 CrystallineFlowerEnchantmentPacket.sendToClient(serverPlayer, this.containerId, availableEnchantmentsSkeletons, selectedEnchant);
             }
         }

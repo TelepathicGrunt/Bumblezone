@@ -31,7 +31,7 @@ public interface ArmorModelProvider {
     }
 
     default ResourceLocation getArmorTexture(Entity entity, ItemStack stack, EquipmentSlot slot, ArmorMaterial.Layer type) {
-        return new ResourceLocation("minecraft", "textures/models/armor/leather_layer_1.png");
+        return ResourceLocation.fromNamespaceAndPath("minecraft", "textures/models/armor/leather_layer_1.png");
     }
 
     @NotNull HumanoidModel<?> getModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> original);

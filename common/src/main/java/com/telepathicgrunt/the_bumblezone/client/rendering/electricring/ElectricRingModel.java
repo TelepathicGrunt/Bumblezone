@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "electric_ring"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "electric_ring"), "main");
     private final ModelPart ring;
     private final ModelPart side;
 

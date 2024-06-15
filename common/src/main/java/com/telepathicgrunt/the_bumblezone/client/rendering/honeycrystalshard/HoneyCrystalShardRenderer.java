@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class HoneyCrystalShardRenderer extends EntityRenderer<HoneyCrystalShardEntity> {
-    public static final ResourceLocation HONEY_CRYSTAL_SHARD_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/honey_crystal_shard.png");
+    public static final ResourceLocation HONEY_CRYSTAL_SHARD_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/honey_crystal_shard.png");
     private final HoneyCrystalShardModel model;
 
     public HoneyCrystalShardRenderer(EntityRendererProvider.Context context) {

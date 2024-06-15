@@ -123,7 +123,7 @@ public class FabricEventManager {
         AddBuiltinResourcePacks.EVENT.invoke(new AddBuiltinResourcePacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
             ResourceManagerHelper.registerBuiltinResourcePack(
-                    new ResourceLocation(container.getMetadata().getId(), id.getPath()),
+                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
                     container,
                     displayName,
                     toType(mode)
@@ -133,7 +133,7 @@ public class FabricEventManager {
         AddBuiltinDataPacks.EVENT.invoke(new AddBuiltinDataPacks((id, displayName, mode) -> {
             ModContainer container = getModPack(id);
             ResourceManagerHelperImpl.registerBuiltinResourcePack(
-                    new ResourceLocation(container.getMetadata().getId(), id.getPath()),
+                    ResourceLocation.fromNamespaceAndPath(container.getMetadata().getId(), id.getPath()),
                     "datapacks/" + id.getPath(),
                     container,
                     displayName,
@@ -212,9 +212,9 @@ public class FabricEventManager {
 
     public static void lateInit() {
         if (PlatformHooks.isModLoaded("resourcefulbees") && BzModCompatibilityConfigs.spawnResourcefulBeesHoneycombVeins) {
-            BiomeModifications.create(new ResourceLocation(Bumblezone.MODID, "resourceful_bees_compat"))
+            BiomeModifications.create(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "resourceful_bees_compat"))
                 .add(ModificationPhase.ADDITIONS,
-                    (context) -> context.hasTag(TagKey.create(Registries.BIOME, new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID))),
+                    (context) -> context.hasTag(TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID))),
                     (context) -> {
                         for (Holder<PlacedFeature> placedFeatureHolder : getPlacedFeaturesByTag(context, BzTags.RESOURCEFUL_BEES_COMBS)) {
                             FeatureConfiguration featureConfiguration = placedFeatureHolder.value().feature().value().config();

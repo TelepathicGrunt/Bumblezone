@@ -29,7 +29,7 @@ public class ReplaceHoneyProcessor extends StructureProcessor {
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader worldView, BlockPos pos, BlockPos blockPos, StructureTemplate.StructureBlockInfo structureBlockInfoLocal, StructureTemplate.StructureBlockInfo structureBlockInfoWorld, StructurePlaceSettings structurePlacementData) {
         BlockState structureState = structureBlockInfoWorld.state();
         if (!structureState.getFluidState().isEmpty() && structureState.getFluidState().is(BzTags.BZ_HONEY_FLUID) && !BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid.isEmpty() && cachedAlternativeFluid != Fluids.EMPTY) {
-            ResourceLocation newFluidRl = new ResourceLocation(BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid);
+            ResourceLocation newFluidRl = ResourceLocation.fromNamespaceAndPath(BzModCompatibilityConfigs.alternativeFluidToReplaceHoneyFluid);
             Fluid newFluid = !BuiltInRegistries.FLUID.getKey(cachedAlternativeFluid).equals(newFluidRl) ? BuiltInRegistries.FLUID.get(newFluidRl) : cachedAlternativeFluid;
             if (newFluid != null) {
                 cachedAlternativeFluid = newFluid;

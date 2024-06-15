@@ -13,10 +13,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class SugarWaterClientProperties {
 
-    public static final ResourceLocation FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/sugar_water_still");
-    public static final ResourceLocation FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/sugar_water_flow");
-    public static final ResourceLocation FLUID_OVERLAY_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/sugar_water_overlay");
-    public static final ResourceLocation TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
+    public static final ResourceLocation FLUID_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water_still");
+    public static final ResourceLocation FLUID_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water_flow");
+    public static final ResourceLocation FLUID_OVERLAY_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/sugar_water_overlay");
+    public static final ResourceLocation TEXTURE_UNDERWATER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/misc/sugar_water_underwater.png");
 
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {

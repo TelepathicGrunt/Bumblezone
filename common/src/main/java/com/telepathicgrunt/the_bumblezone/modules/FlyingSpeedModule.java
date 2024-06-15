@@ -11,7 +11,7 @@ public class FlyingSpeedModule implements Module<FlyingSpeedModule> {
             Codec.FLOAT.fieldOf("originalFlyingSpeed").orElse(0.2F).forGetter(module -> module.originalFlyingSpeed)
     ).apply(instance, FlyingSpeedModule::new));
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "original_flying_speed");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "original_flying_speed");
     private float originalFlyingSpeed;
 
     public FlyingSpeedModule(float originalFlyingSpeed) {

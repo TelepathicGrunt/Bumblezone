@@ -32,7 +32,7 @@ public class BumblezoneAPI {
     /**
      * ID of the dimension for Bumblezone
      */
-    public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
+    public static final ResourceLocation MOD_DIMENSION_ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID);
 
     // Requiem mod uses this method
     /**

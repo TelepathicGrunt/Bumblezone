@@ -17,7 +17,7 @@ public class CreateJetpackCompat implements ModCompat {
     private static Item JETPACK;
 
     public CreateJetpackCompat() {
-        JETPACK = BuiltInRegistries.ITEM.get(new ResourceLocation("create_jetpack", "jetpack"));
+        JETPACK = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("create_jetpack", "jetpack"));
 
        // Keep at end so it is only set to true if no exceptions was thrown during setup
         ModChecker.createJetpackPresent = true;

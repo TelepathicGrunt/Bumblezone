@@ -42,11 +42,11 @@ public class PotionOfBeesCompat implements ModCompat {
     private static Optional<Item> LINGERING_POTION_OF_BEES;
 
     public PotionOfBeesCompat() {
-        POTION_OF_BEES = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("potionofbees", "potion_of_bees"));
-        SPLASH_POTION_OF_BEES = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("potionofbees", "splash_potion_of_bees"));
-        LINGERING_POTION_OF_BEES = BuiltInRegistries.ITEM.getOptional(new ResourceLocation("potionofbees", "lingering_potion_of_bees"));
-        SPLASH_POTION_OF_BEES_ENTITY = BuiltInRegistries.ENTITY_TYPE.getOptional(new ResourceLocation("potionofbees", "splash_potion_of_bees"));
-        LINGERING_POTION_OF_BEES_ENTITY = BuiltInRegistries.ENTITY_TYPE.getOptional(new ResourceLocation("potionofbees", "lingering_potion_of_bees"));
+        POTION_OF_BEES = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("potionofbees", "potion_of_bees"));
+        SPLASH_POTION_OF_BEES = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("potionofbees", "splash_potion_of_bees"));
+        LINGERING_POTION_OF_BEES = BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("potionofbees", "lingering_potion_of_bees"));
+        SPLASH_POTION_OF_BEES_ENTITY = BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.fromNamespaceAndPath("potionofbees", "splash_potion_of_bees"));
+        LINGERING_POTION_OF_BEES_ENTITY = BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.fromNamespaceAndPath("potionofbees", "lingering_potion_of_bees"));
 
         if (POTION_OF_BEES.isPresent() && BzModCompatibilityConfigs.allowPotionOfBeesRevivingEmptyBroodBlock) {
             setupDispenserCompat(POTION_OF_BEES.get()); // adds compatibility with bee potions in dispensers

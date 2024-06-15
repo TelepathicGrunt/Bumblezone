@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recipeViewerRandomizerTrades) implements Packet<QueenRandomizerTradesSyncPacket> {
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "queen_randomize_trades_sync_packet");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_randomize_trades_sync_packet");
     public static final ClientboundPacketType<QueenRandomizerTradesSyncPacket> TYPE = new QueenRandomizerTradesSyncPacket.Handler();
 
     public static void sendToClient(DatapackSyncEvent event) {
@@ -52,7 +52,7 @@ public record QueenRandomizerTradesSyncPacket(List<RandomizeTradeRowInput> recip
 
             ListTag tagList = data.getList("randomize_trades", Tag.TAG_STRING);
             for (int i = 0; i < tagList.size(); i++) {
-                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, new ResourceLocation(tagList.getString(i)));
+                TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(tagList.getString(i)));
                 RandomizeTradeRowInput wantEntry = new RandomizeTradeRowInput(Optional.of(tagKey));
                 parsedData.add(wantEntry);
             }

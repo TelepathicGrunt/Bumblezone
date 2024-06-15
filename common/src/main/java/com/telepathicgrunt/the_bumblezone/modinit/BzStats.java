@@ -29,7 +29,7 @@ public class BzStats {
     public static final RegistryEntry<ResourceLocation> CONTINUITY_EVENT_DEFEATED_RL = CUSTOM_STAT.register("continuity_event_defeated", () -> makeRL("continuity_event_defeated"));
 
     private static ResourceLocation makeRL(String key) {
-        return new ResourceLocation(Bumblezone.MODID, key);
+        return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, key);
     }
 
     public static void initStatEntries() {

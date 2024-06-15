@@ -19,7 +19,7 @@ public class ReliquaryCompat implements ModCompat {
 	public static Item RENDING_GALE;
 
 	public ReliquaryCompat() {
-		RENDING_GALE = BuiltInRegistries.ITEM.get(new ResourceLocation("reliquary", "rending_gale"));
+		RENDING_GALE = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("reliquary", "rending_gale"));
 
 		IEventBus eventBus = NeoForge.EVENT_BUS;
 		eventBus.addListener(ReliquaryCompat::onRendingGaleItemUse);

@@ -25,8 +25,8 @@ import org.joml.Vector3f;
 // CLIENT-SIDED
 public class PileOfPollenRenderer {
 
-    private static final ResourceLocation TEXTURE_POLLEN = new ResourceLocation(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen.png");
-    private static final ResourceLocation TEXTURE_POLLEN_SUSPICIOUS = new ResourceLocation(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen_suspicious_1.png");
+    private static final ResourceLocation TEXTURE_POLLEN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen.png");
+    private static final ResourceLocation TEXTURE_POLLEN_SUSPICIOUS = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/pile_of_pollen/pile_of_pollen_suspicious_1.png");
 
     public static boolean pileOfPollenOverlay(BlockRenderedOnScreenEvent event) {
         BlockState blockState = event.state();

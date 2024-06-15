@@ -16,7 +16,7 @@ public class FriendsAndFoesCompat implements ModCompat {
 
     public FriendsAndFoesCompat() {
         if(BzModCompatibilityConfigs.allowFriendsAndFoesBeekeeperTradesCompat) {
-            BEEKEEPER = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(new ResourceLocation("friendsandfoes", "beekeeper"));
+            BEEKEEPER = BuiltInRegistries.VILLAGER_PROFESSION.getOptional(ResourceLocation.fromNamespaceAndPath("friendsandfoes", "beekeeper"));
             RegisterVillagerTradesEvent.EVENT.addListener(FriendsAndFoesCompat::setupFriendsAndFoesTrades);
         }
 

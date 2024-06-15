@@ -21,7 +21,7 @@ import net.minecraft.util.Mth;
 
 public class BeehemothModel extends EntityModel<BeehemothEntity> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Bumblezone.MODID, "beehemoth"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "beehemoth"), "main");
     private final ModelPart ROOT;
     protected final ModelPart SADDLE;
     protected final ModelPart CROWN;

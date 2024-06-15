@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.EnumSet;
 
 public class JonnTrophiesCompat implements ModCompat {
-	private static final ResourceLocation TROPHY_RL = new ResourceLocation("trophymanager", "trophy");
+	private static final ResourceLocation TROPHY_RL = ResourceLocation.fromNamespaceAndPath("trophymanager", "trophy");
 
 	public JonnTrophiesCompat() {
 		// Keep at end so it is only set to true if no exceptions was thrown during setup
@@ -47,7 +47,7 @@ public class JonnTrophiesCompat implements ModCompat {
 //			return false;
 //		}
 //
-//		ResourceLocation entityRL = new ResourceLocation(entityType);
+//		ResourceLocation entityRL = ResourceLocation.fromNamespaceAndPath(entityType);
 //		return BeeAggression.isBeelikeEntityType(BuiltInRegistries.ENTITY_TYPE.get(entityRL));
 	}
 }

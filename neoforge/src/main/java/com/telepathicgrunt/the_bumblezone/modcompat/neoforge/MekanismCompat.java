@@ -26,14 +26,14 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import java.util.EnumSet;
 
 public class MekanismCompat implements ModCompat {
-	final DeferredHolder<ModuleData<?>, ModuleData<?>> JETPACK_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, new ResourceLocation("mekanism", "jetpack_unit"));
-	final DeferredHolder<ModuleData<?>, ModuleData<?>> GRAV_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, new ResourceLocation("mekanism", "gravitational_modulating_unit"));
+	final DeferredHolder<ModuleData<?>, ModuleData<?>> JETPACK_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack_unit"));
+	final DeferredHolder<ModuleData<?>, ModuleData<?>> GRAV_UNIT = DeferredHolder.create(MekanismAPI.MODULE_REGISTRY_NAME, ResourceLocation.fromNamespaceAndPath("mekanism", "gravitational_modulating_unit"));
 	public static Item JETPACK;
 	public static Item JETPACK_ARMORED;
 
 	public MekanismCompat() {
-		JETPACK = BuiltInRegistries.ITEM.get(new ResourceLocation("mekanism", "jetpack"));
-		JETPACK_ARMORED = BuiltInRegistries.ITEM.get(new ResourceLocation("mekanism", "jetpack_armored"));
+		JETPACK = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack"));
+		JETPACK_ARMORED = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("mekanism", "jetpack_armored"));
 
 		IEventBus forgeBus = NeoForge.EVENT_BUS;
 		forgeBus.addListener(MekanismCompat::isMekaToolTeleporting);

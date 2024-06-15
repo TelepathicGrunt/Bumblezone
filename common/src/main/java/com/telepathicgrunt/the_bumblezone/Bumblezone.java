@@ -119,7 +119,7 @@ public class Bumblezone {
     // -Dmixin.debug.export=true for mixin dump of transformed classes.
 
     public static final String MODID = "the_bumblezone";
-    public static final ResourceLocation MOD_DIMENSION_ID = new ResourceLocation(Bumblezone.MODID, Bumblezone.MODID);
+    public static final ResourceLocation MOD_DIMENSION_ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, Bumblezone.MODID);
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
@@ -227,9 +227,9 @@ public class Bumblezone {
     }
 
     private static void registerDataSerializers(RegisterDataSerializersEvent event) {
-        event.register(new ResourceLocation(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
-        event.register(new ResourceLocation(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
-        event.register(new ResourceLocation(Bumblezone.MODID, "cosmic_crystal_state"), CosmicCrystalEntity.COSMIC_CRYSTAL_STATE_SERIALIZER);
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queen_pose"), BeeQueenEntity.QUEEN_POSE_SERIALIZER);
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "rootmin_pose"), RootminEntity.ROOTMIN_POSE_SERIALIZER);
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "cosmic_crystal_state"), CosmicCrystalEntity.COSMIC_CRYSTAL_STATE_SERIALIZER);
     }
 
     private static void onFinalSetup(final FinalSetupEvent event) {
@@ -237,8 +237,8 @@ public class Bumblezone {
     }
 
     public static void registerDatapackListener(final RegisterReloadListenerEvent event) {
-        event.register(new ResourceLocation(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
-        event.register(new ResourceLocation(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "queens_trades"), QueensTradeManager.QUEENS_TRADE_MANAGER);
+        event.register(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "pollen_puff"), PollenPuffEntityPollinateManager.POLLEN_PUFF_ENTITY_POLLINATE_MANAGER);
     }
 
     private static void serverAboutToStart(final ServerGoingToStartEvent event) {
@@ -249,7 +249,7 @@ public class Bumblezone {
 
     private static void setupBuiltInResourcePack(final AddBuiltinResourcePacks event) {
         event.add(
-                new ResourceLocation(MODID, "anti_tropophobia"),
+                ResourceLocation.fromNamespaceAndPath(MODID, "anti_tropophobia"),
                 Component.literal("Bumblezone - Anti Trypophobia"),
                 AddBuiltinResourcePacks.PackMode.USER_CONTROLLED
         );

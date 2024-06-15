@@ -25,9 +25,9 @@ import org.joml.Vector3f;
 import java.util.function.Function;
 
 public class RoyalJellyClientProperties {
-    public static final ResourceLocation ROYAL_JELLY_FLUID_STILL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/royal_jelly_fluid/still");
-    public static final ResourceLocation ROYAL_JELLY_FLUID_FLOWING_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/royal_jelly_fluid/flow");
-    public static final ResourceLocation ROYAL_JELLY_FLUID_FLOWING_DIAGONAL_TEXTURE = new ResourceLocation(Bumblezone.MODID, "block/royal_jelly_fluid/flow_diagonal");
+    public static final ResourceLocation ROYAL_JELLY_FLUID_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/royal_jelly_fluid/still");
+    public static final ResourceLocation ROYAL_JELLY_FLUID_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/royal_jelly_fluid/flow");
+    public static final ResourceLocation ROYAL_JELLY_FLUID_FLOWING_DIAGONAL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "block/royal_jelly_fluid/flow_diagonal");
 
     public static ClientFluidProperties create() {
         return new ClientFluidProperties() {

@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public record BumbleBeeChestplateFlyingPacket(byte isFlying) implements Packet<BumbleBeeChestplateFlyingPacket> {
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "bumblebee_chestplate_flying");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "bumblebee_chestplate_flying");
     public static final ServerboundPacketType<BumbleBeeChestplateFlyingPacket> TYPE = new BumbleBeeChestplateFlyingPacket.Handler();
 
     public static void sendToServer(boolean isFlying) {

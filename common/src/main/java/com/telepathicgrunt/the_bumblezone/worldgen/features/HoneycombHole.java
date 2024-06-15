@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public class HoneycombHole extends Feature<NbtFeatureConfig> {
 
-    private static final ResourceLocation EMPTY = new ResourceLocation("minecraft", "empty");
+    private static final ResourceLocation EMPTY = ResourceLocation.fromNamespaceAndPath("minecraft", "empty");
 
     public HoneycombHole(Codec<NbtFeatureConfig> configFactory) {
         super(configFactory);

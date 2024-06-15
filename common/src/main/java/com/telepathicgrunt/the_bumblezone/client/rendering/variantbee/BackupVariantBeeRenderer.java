@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class BackupVariantBeeRenderer extends MobRenderer<VariantBeeEntity, BackupVariantBeeModel<VariantBeeEntity>> {
-    private static final ResourceLocation VANILLA_BEE_TEXTURE = new ResourceLocation("minecraft", "textures/entity/bee/bee.png");
+    private static final ResourceLocation VANILLA_BEE_TEXTURE = ResourceLocation.fromNamespaceAndPath("minecraft", "textures/entity/bee/bee.png");
 
     public BackupVariantBeeRenderer(EntityRendererProvider.Context context) {
         super(context, new BackupVariantBeeModel<>(context.bakeLayer(BackupVariantBeeModel.LAYER_LOCATION)), 0.4f);
@@ -28,7 +28,7 @@ public class BackupVariantBeeRenderer extends MobRenderer<VariantBeeEntity, Back
                 type = "_nectar";
 
             String path = String.format("textures/entity/bee_variants/%s/bee%s.png", variant, type);
-            return new ResourceLocation(Bumblezone.MODID, path);
+            return ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, path);
         }
 
         return VANILLA_BEE_TEXTURE;

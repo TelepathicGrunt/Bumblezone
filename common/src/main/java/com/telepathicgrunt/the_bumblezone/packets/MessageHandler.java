@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 public class MessageHandler {
 
     //setup channel to send packages through
-    public static final Network DEFAULT_CHANNEL = new Network(new ResourceLocation(Bumblezone.MODID, "networking"), 1);
+    public static final Network DEFAULT_CHANNEL = new Network(ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "networking"), 1);
 
     /*
      * Register the channel so it exists

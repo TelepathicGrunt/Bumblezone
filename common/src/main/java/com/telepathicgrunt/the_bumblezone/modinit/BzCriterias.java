@@ -16,9 +16,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
 public class BzCriterias {
-    public static final ResourceLocation QUEENS_DESIRE_ROOT_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_queens_desire/the_beginning");
-    public static final ResourceLocation QUEENS_DESIRE_FINAL_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "the_queens_desire/journeys_end");
-    public static final ResourceLocation IS_NEAR_BEEHIVE_ADVANCEMENT = new ResourceLocation(Bumblezone.MODID, "teleportation/is_near_beehive");
+    public static final ResourceLocation QUEENS_DESIRE_ROOT_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "the_queens_desire/the_beginning");
+    public static final ResourceLocation QUEENS_DESIRE_FINAL_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "the_queens_desire/journeys_end");
+    public static final ResourceLocation IS_NEAR_BEEHIVE_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "teleportation/is_near_beehive");
 
     public static final ResourcefulRegistry<CriterionTrigger<?>> CRITERION_TRIGGERS = ResourcefulRegistries.create(BuiltInRegistries.TRIGGER_TYPES, Bumblezone.MODID);
 

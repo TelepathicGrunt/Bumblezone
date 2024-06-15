@@ -28,7 +28,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         extends EntityRenderer<SentryWatcherEntity>
         implements RenderLayerParent<SentryWatcherEntity, M>
 {
-    private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/sentry_watcher.png");
+    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher.png");
     protected final SentryWatcherModel model;
     protected final List<RenderLayer<SentryWatcherEntity, M>> layers = Lists.newArrayList();
 
@@ -97,7 +97,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
     }
 
     static class EyeLayerRenderer<T extends Entity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-        private static final ResourceLocation EYES = new ResourceLocation(Bumblezone.MODID, "textures/entity/sentry_watcher_eyes.png");
+        private static final ResourceLocation EYES = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/sentry_watcher_eyes.png");
         private static final RenderType RENDER_TYPE_EYES = RenderType.eyes(EYES);
         protected SentryWatcherModel model;
 

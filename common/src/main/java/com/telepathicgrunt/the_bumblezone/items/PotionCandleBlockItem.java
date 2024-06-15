@@ -39,7 +39,7 @@ public class PotionCandleBlockItem extends BlockItem {
             int color = blockEntityTag.contains(PotionCandleBlockEntity.COLOR_TAG) ? blockEntityTag.getInt(PotionCandleBlockEntity.COLOR_TAG) : PotionCandleBlockEntity.DEFAULT_COLOR;
             potionCandleBlockEntity.setColor(color);
 
-            ResourceLocation rl = new ResourceLocation(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
+            ResourceLocation rl = ResourceLocation.fromNamespaceAndPath(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
             Optional<Holder.Reference<MobEffect>> optionalMobEffectReference = BuiltInRegistries.MOB_EFFECT.getHolder(rl);
             optionalMobEffectReference.ifPresent(potionCandleBlockEntity::setMobEffect);
         }
@@ -57,7 +57,7 @@ public class PotionCandleBlockItem extends BlockItem {
         if (customData != null && !customData.isEmpty()) {
             CompoundTag blockEntityTag = customData.copyTag();
             if (blockEntityTag.contains(PotionCandleBlockEntity.STATUS_EFFECT_TAG)) {
-                ResourceLocation rl = new ResourceLocation(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
+                ResourceLocation rl = ResourceLocation.fromNamespaceAndPath(blockEntityTag.getString(PotionCandleBlockEntity.STATUS_EFFECT_TAG));
                 Optional<MobEffect> mobEffect = BuiltInRegistries.MOB_EFFECT.getOptional(rl);
                 if (mobEffect.isPresent()) {
                     components.add(formatComponent(Component.translatable("item.the_bumblezone.potion_candle.status_effect", mobEffect.get().getDisplayName())));

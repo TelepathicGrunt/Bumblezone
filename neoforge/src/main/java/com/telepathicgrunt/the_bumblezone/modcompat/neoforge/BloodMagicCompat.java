@@ -19,7 +19,7 @@ public class BloodMagicCompat implements ModCompat {
 	public static Item AIR_SIGIL;
 
 	public BloodMagicCompat() {
-		AIR_SIGIL = BuiltInRegistries.ITEM.get(new ResourceLocation("bloodmagic", "airsigil"));
+		AIR_SIGIL = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("bloodmagic", "airsigil"));
 
 		IEventBus eventBus = NeoForge.EVENT_BUS;
 		eventBus.addListener(BloodMagicCompat::onAirSigilItemUse);

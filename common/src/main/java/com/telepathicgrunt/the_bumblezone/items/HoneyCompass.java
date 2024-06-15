@@ -292,7 +292,7 @@ public class HoneyCompass extends Item {
         InteractionResultHolder<ItemStack> interactionResult = null;
         if (isFailed && targetStructureTag.isPresent()) {
             if (level instanceof ServerLevel serverLevel && serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
-                TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, new ResourceLocation(targetStructureTag.get()));
+                TagKey<Structure> structureTagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(targetStructureTag.get()));
                 Optional<HolderSet.Named<Structure>> optional = serverLevel.registryAccess().registry(Registries.STRUCTURE).flatMap(registry -> registry.getTag(structureTagKey));
                 boolean structureExists = optional.isPresent() && optional.get().stream().anyMatch(structureHolder -> !serverLevel.getChunkSource().getGeneratorState().getPlacementsForStructure(structureHolder).isEmpty());
                 if (structureExists) {

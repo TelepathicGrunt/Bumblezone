@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Matrix4f;
 
 public class FluidClientOverlay {
-    private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
-    private static final ResourceLocation ROYAL_JELLY_TEXTURE_UNDERWATER = new ResourceLocation(Bumblezone.MODID + ":textures/misc/royal_jelly_fluid_underwater.png");
+    private static final ResourceLocation HONEY_TEXTURE_UNDERWATER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID + ":textures/misc/honey_fluid_underwater.png");
+    private static final ResourceLocation ROYAL_JELLY_TEXTURE_UNDERWATER = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID + ":textures/misc/royal_jelly_fluid_underwater.png");
 
     public static boolean renderHoneyOverlay(Player clientPlayerEntity, PoseStack matrixStack) {
         BlockState state = clientPlayerEntity.level().getBlockState(BlockPos.containing(clientPlayerEntity.getEyePosition(1)));

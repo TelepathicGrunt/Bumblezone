@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class DimensionTeleportingScreen {
     private static final Component DOWNLOADING_BUMBLEZONE_TERRAIN_TEXT = Component.translatable("system.the_bumblezone.entering_dimension");
-    private static final ResourceLocation BZ_BACKGROUND_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/gui/dimension_teleporting_background.png");
+    private static final ResourceLocation BZ_BACKGROUND_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/dimension_teleporting_background.png");
 
     public static void renderScreenAndText(ReceivingLevelScreen screen, GuiGraphics guiGraphics) {
         Tesselator tesselator = Tesselator.getInstance();

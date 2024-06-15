@@ -32,8 +32,8 @@ import org.joml.Matrix4f;
 import java.util.HashSet;
 
 public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEntity, CosmicCrystalModel<CosmicCrystalEntity>> {
-    private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
-    private static final ResourceLocation LASER_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/cosmic_crystal_laser.png");
+    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal.png");
+    private static final ResourceLocation LASER_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/cosmic_crystal_laser.png");
 
     public CosmicCrystalRenderer(EntityRendererProvider.Context context) {
         super(context, new CosmicCrystalModel<>(context.bakeLayer(CosmicCrystalModel.LAYER_LOCATION)), 0.7F);

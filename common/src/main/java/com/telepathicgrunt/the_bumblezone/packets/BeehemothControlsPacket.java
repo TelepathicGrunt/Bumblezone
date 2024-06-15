@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 public record BeehemothControlsPacket(byte upPressed, byte downPressed) implements Packet<BeehemothControlsPacket> {
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "beehemoth_controls");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "beehemoth_controls");
     public static final ServerboundPacketType<BeehemothControlsPacket> TYPE = new Handler();
 
     /**

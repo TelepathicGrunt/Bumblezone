@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public record CrystallineFlowerEnchantmentPacket(int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, ResourceLocation selectedResourceLocation) implements Packet<CrystallineFlowerEnchantmentPacket> {
     public static final Gson GSON = new GsonBuilder().create();
 
-    public static final ResourceLocation ID = new ResourceLocation(Bumblezone.MODID, "crystalline_flower_enchantment");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "crystalline_flower_enchantment");
     public static final ClientboundPacketType<CrystallineFlowerEnchantmentPacket> TYPE = new CrystallineFlowerEnchantmentPacket.Handler();
 
     public static void sendToClient(ServerPlayer player, int containerId, List<EnchantmentSkeleton> enchantmentSkeletons, ResourceLocation selectedResourceLocation) {
@@ -58,7 +58,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
                 if (GeneralUtilsClient.getClientPlayer() != null && GeneralUtilsClient.getClientPlayer().containerMenu.containerId == message.containerId) {
                     Map<ResourceLocation, EnchantmentSkeleton> map = new HashMap<>();
                     for (EnchantmentSkeleton enchantmentSkeleton : message.enchantmentSkeletons()) {
-                        map.put(new ResourceLocation(enchantmentSkeleton.namespace, enchantmentSkeleton.path), enchantmentSkeleton);
+                        map.put(ResourceLocation.fromNamespaceAndPath(enchantmentSkeleton.namespace, enchantmentSkeleton.path), enchantmentSkeleton);
                     }
                     CrystallineFlowerScreen.enchantmentsAvailable = map;
 
@@ -70,7 +70,7 @@ public record CrystallineFlowerEnchantmentPacket(int containerId, List<Enchantme
                     }).collect(Collectors.toList());
 
                     if (GeneralUtilsClient.getClientPlayer().containerMenu instanceof CrystallineFlowerMenu crystallineFlowerMenu) {
-                        crystallineFlowerMenu.selectedEnchantment = message.selectedResourceLocation().equals(new ResourceLocation("minecraft", "empty")) ? null : message.selectedResourceLocation();
+                        crystallineFlowerMenu.selectedEnchantment = message.selectedResourceLocation().equals(ResourceLocation.fromNamespaceAndPath("minecraft", "empty")) ? null : message.selectedResourceLocation();
                     }
                 }
             };

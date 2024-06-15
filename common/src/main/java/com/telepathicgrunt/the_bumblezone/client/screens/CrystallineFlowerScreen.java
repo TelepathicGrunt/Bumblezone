@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class CrystallineFlowerScreen extends AbstractContainerScreen<CrystallineFlowerMenu> {
-    private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
+    private static final ResourceLocation CONTAINER_BACKGROUND = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/gui/container/crystallized_flower.png");
     private static final Pattern SPLIT_WITH_COMBINING_CHARS = Pattern.compile("(\\p{M}+|\\P{M}\\p{M}*)"); // {M} is any kind of 'mark' http://stackoverflow.com/questions/29110887/detect-any-combining-character-in-java/29111105
 
     private static final int MENU_HEIGHT = 126;
@@ -161,7 +161,7 @@ public class CrystallineFlowerScreen extends AbstractContainerScreen<Crystalline
                 boolean isCurse = enchantmentSkeleton.isCurse;
                 boolean isTreasure = enchantmentSkeleton.isTreasure;
                 int row = enchantmentsAvailableSortedList.indexOf(selectedEnchant) - this.startIndex;
-                if (new ResourceLocation(enchantmentSkeleton.namespace, enchantmentSkeleton.path).equals(this.menu.selectedEnchantment)) {
+                if (ResourceLocation.fromNamespaceAndPath(enchantmentSkeleton.namespace, enchantmentSkeleton.path).equals(this.menu.selectedEnchantment)) {
                     RenderSystem.enableDepthTest();
                     guiGraphics.blit(CONTAINER_BACKGROUND, rowStartX - 2, rowStartY - 2 + row * ENCHANTMENT_SECTION_HEIGHT, ENCHANTMENT_SELECTED_U_TEXTURE, ENCHANTMENT_SELECTED_V_TEXTURE, ENCHANTMENT_SECTION_WIDTH + 1, ENCHANTMENT_SECTION_HEIGHT, 256, 256);
                     drawEnchantmentText(

@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class StingerSpearRenderer extends EntityRenderer<ThrownStingerSpearEntity> {
-    public static final ResourceLocation STINGER_SPEAR_LOCATION = new ResourceLocation(Bumblezone.MODID, "textures/entity/stinger_spear.png");
+    public static final ResourceLocation STINGER_SPEAR_LOCATION = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/stinger_spear.png");
     private final StingerSpearModel model;
 
     public StingerSpearRenderer(EntityRendererProvider.Context context) {

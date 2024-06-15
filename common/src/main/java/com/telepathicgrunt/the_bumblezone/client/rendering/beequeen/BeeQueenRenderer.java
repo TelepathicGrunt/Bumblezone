@@ -15,8 +15,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 
 public class BeeQueenRenderer extends MobRenderer<BeeQueenEntity, BeeQueenModel> {
-    private static final ResourceLocation SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/bee_queen.png");
-    private static final ResourceLocation ANGRY_SKIN = new ResourceLocation(Bumblezone.MODID, "textures/entity/bee_queen_angry.png");
+    private static final ResourceLocation SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_queen.png");
+    private static final ResourceLocation ANGRY_SKIN = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/entity/bee_queen_angry.png");
     private final ItemInHandRenderer itemRenderer;
 
     public BeeQueenRenderer(EntityRendererProvider.Context context) {
