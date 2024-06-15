@@ -91,11 +91,11 @@ public class BeeQueenModel extends HierarchicalModel<BeeQueenEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
         float scale = 2.6f;
         poseStack.scale(scale, scale, scale);
         poseStack.translate(0, -0.92, 0);
-        this.root().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        this.root().render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
     }
 
     @Override

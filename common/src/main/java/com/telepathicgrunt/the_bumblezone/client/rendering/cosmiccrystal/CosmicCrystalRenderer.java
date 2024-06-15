@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -133,7 +134,7 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
                 }
             }
 
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, packedLight, overlayCoords, red, green, blue, bl2 ? 0.15f : 1.0f);
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, packedLight, overlayCoords, FastColor.ARGB32.colorFromFloat(red, green, blue, bl2 ? 0.15f : 1.0f));
         }
 
         if (!cosmicCrystalEntity.isSpectator()) {
@@ -305,13 +306,12 @@ public class CosmicCrystalRenderer extends LivingEntityRenderer<CosmicCrystalEnt
 
     private static void vertex(VertexConsumer vertexConsumer, PoseStack.Pose pose, float x, float y, float z, int red, int green, int blue, float ux, float uz) {
         vertexConsumer
-                .vertex(pose, x, y, z)
-                .color(red, green, blue, 255)
-                .uv(ux, uz)
-                .overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(0xF000F0)
-                .normal(pose, 0.0f, 1.0f, 0.0f)
-                .endVertex();
+                .addVertex(pose, x, y, z)
+                .setColor(red, green, blue, 255)
+                .setUv(ux, uz)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
+                .setLight(0xF000F0)
+                .setNormal(pose, 0.0f, 1.0f, 0.0f);
     }
 
     @Override

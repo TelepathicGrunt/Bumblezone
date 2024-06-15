@@ -34,10 +34,11 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 	public static final ResourceLocation BASE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/base_background.png");
 	public static final ResourceLocation BEE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Bumblezone.MODID, "textures/block/essence/bee_icon_background.png");
 
-	public static final VertexFormat POSITION_COLOR_NORMAL = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder()
-			.put("Position", DefaultVertexFormat.ELEMENT_POSITION)
-			.put("Color", DefaultVertexFormat.ELEMENT_COLOR)
-			.put("Normal", DefaultVertexFormat.ELEMENT_NORMAL).build());
+	public static final VertexFormat POSITION_COLOR_NORMAL = VertexFormat.builder()
+			.add("Position", VertexFormatElement.POSITION)
+			.add("Color", VertexFormatElement.COLOR)
+			.add("Normal", VertexFormatElement.NORMAL)
+			.build();
 	
 	public static ShaderInstance SAFE_SHADER_INSTANCE = null;
 	public final RenderType.CompositeRenderType ESSENCE_RENDER_TYPE =
@@ -94,14 +95,13 @@ public class EssenceBlockEntityRenderer implements BlockEntityRenderer<EssenceBl
 
 	private static void addPortalVertex(VertexConsumer vertexConsumer, Matrix4f mat, float x, float y, float z, float red, float green, float blue, Vec3i normal) {
 		vertexConsumer
-				.vertex(mat, x, y, z)
-				.color(red, green, blue, 1)
-				.normal(
+				.addVertex(mat, x, y, z)
+				.setColor(red, green, blue, 1)
+				.setNormal(
 					normal.getX(),
 					normal.getY(),
 					normal.getZ()
-				)
-				.endVertex();
+				);
 	}
 
 	protected RenderType getType() {

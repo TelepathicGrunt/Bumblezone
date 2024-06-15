@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,7 +65,7 @@ public class PurpleSpikeRenderer<M extends EntityModel<PurpleSpikeEntity>>
         RenderType renderType = this.getRenderType(ringEntity, bl, bl2, bl3);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, 0, 1.0f, 1.0f, 1.0f, bl2 ? 0.15f : 1.0f);
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, 0, FastColor.ARGB32.colorFromFloat(1.0f, 1.0f, 1.0f, bl2 ? 0.15f : 1.0f));
         }
         if (!ringEntity.isSpectator()) {
             for (RenderLayer<PurpleSpikeEntity, M> renderLayer : this.layers) {

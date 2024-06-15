@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Sheep;
@@ -123,12 +124,10 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
                 int firstDye = offset % dyeColors;
                 int secondDye = (offset + 1) % dyeColors;
                 float theColorThingy = ((float)(rootminEntity.tickCount % speed) + partialTicks) / 25.0f;
-                float[] fs = Sheep.getColorArray(DyeColor.byId(firstDye));
-                float[] gs = Sheep.getColorArray(DyeColor.byId(secondDye));
-                float red = fs[0] * (1.0f - theColorThingy) + gs[0] * theColorThingy;
-                float green = fs[1] * (1.0f - theColorThingy) + gs[1] * theColorThingy;
-                float blue = fs[2] * (1.0f - theColorThingy) + gs[2] * theColorThingy;
-                ((Model) this.model).renderToBuffer(stack, vertexConsumer, packedLight, p, red, green, blue, bl2 ? 0.15f : 1.0f);
+                int fs = Sheep.getColor(DyeColor.byId(firstDye));
+                int gs = Sheep.getColor(DyeColor.byId(secondDye));
+                int color = FastColor.ARGB32.lerp(theColorThingy, fs, gs);
+                ((Model) this.model).renderToBuffer(stack, vertexConsumer, packedLight, p, color);
             }
             else {
                 int biomeColor = rootminEntity.level().getBlockTint(rootminEntity.blockPosition(), BiomeColors.GRASS_COLOR_RESOLVER);
@@ -138,10 +137,11 @@ public class RootminRenderer extends MobRenderer<RootminEntity, RootminModel> {
                         vertexConsumer,
                         packedLight,
                         p,
-                        GeneralUtils.getRed(biomeColor) / 255f,
-                        GeneralUtils.getGreen(biomeColor) / 255f,
-                        GeneralUtils.getBlue(biomeColor) / 255f,
-                        bl2 ? 0.15f : 1.0f);
+                        FastColor.ARGB32.colorFromFloat(
+                            GeneralUtils.getRed(biomeColor) / 255f,
+                            GeneralUtils.getGreen(biomeColor) / 255f,
+                            GeneralUtils.getBlue(biomeColor) / 255f,
+                            bl2 ? 0.15f : 1.0f));
             }
         }
     }

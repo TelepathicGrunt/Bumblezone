@@ -274,12 +274,12 @@ public class HoneyFluidRendering {
     }
 
     private static void vertex(VertexConsumer vertexConsumer, double x, double y, double z, float r, float g, float b, float u, float v, int uv2) {
-        vertexConsumer.vertex(x, y, z).color(r, g, b, 1.0F).uv(u, v).uv2(uv2).normal(0.0F, 1.0F, 0.0F).endVertex();
+        vertexConsumer.addVertex((float) x, (float) y, (float) z).setColor(r, g, b, 1.0F).setUv(u, v).setLight(uv2).setNormal(0.0F, 1.0F, 0.0F);
     }
 
 
     private static void downVertex(VertexConsumer vertexConsumer, double d, double e, double f, float g, float h, float i, float j, float k, int l) {
-        vertexConsumer.vertex(d, e, f).color(g, h, i, 1.0F).uv(j, k).uv2(l).normal(0.0F, -1.0F, 0.0F).endVertex();
+        vertexConsumer.addVertex((float) d, (float) e, (float) f).setColor(g, h, i, 1.0F).setUv(j, k).setLight(l).setNormal(0.0F, -1.0F, 0.0F);
     }
 
     private static boolean isNeighborSameFluid(FluidState fluidState, FluidState fluidState2) {

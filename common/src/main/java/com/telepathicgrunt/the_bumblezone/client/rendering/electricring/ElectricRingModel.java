@@ -55,8 +55,8 @@ public class ElectricRingModel<T extends ElectricRingEntity> extends EntityModel
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        ring.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        side.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
+        ring.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
+        side.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
     }
 }

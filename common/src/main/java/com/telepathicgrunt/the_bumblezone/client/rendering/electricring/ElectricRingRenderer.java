@@ -84,7 +84,7 @@ public class ElectricRingRenderer<M extends EntityModel<ElectricRingEntity>>
         RenderType renderType = this.getRenderType(ringEntity, bodyVisible, hidden, glowing);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, packedLight, 0, 1.0f, 1.0f, 1.0f, 1.0f);
+            this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, 0, 0xFFFFFFFF);
         }
         if (!ringEntity.isSpectator()) {
             for (RenderLayer<ElectricRingEntity, M> renderLayer : this.layers) {

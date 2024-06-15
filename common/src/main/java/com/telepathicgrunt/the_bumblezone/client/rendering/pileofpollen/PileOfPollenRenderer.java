@@ -67,7 +67,6 @@ public class PileOfPollenRenderer {
 
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, blockState.is(BzBlocks.PILE_OF_POLLEN_SUSPICIOUS.get()) ? TEXTURE_POLLEN_SUSPICIOUS : TEXTURE_POLLEN);
-            BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             float opacity = 1f;
@@ -88,26 +87,26 @@ public class PileOfPollenRenderer {
             float smallYOffset = playerPosition.y() * 0.33f;
 
             Matrix4f matrix4f = matrixStack.last().pose();
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(pitchPlus4 - smallXZOffset, yawPlus4 - playerPosition.y()).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(pitch - smallXZOffset, yawPlus4 - playerPosition.y()).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(pitch - smallXZOffset, yaw - playerPosition.y()).endVertex();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(pitchPlus4 - smallXZOffset, yaw - playerPosition.y()).endVertex();
-            BufferUploader.drawWithShader(bufferbuilder.end());
+            BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferbuilder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(pitchPlus4 - smallXZOffset, yawPlus4 - playerPosition.y());
+            bufferbuilder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(pitch - smallXZOffset, yawPlus4 - playerPosition.y());
+            bufferbuilder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(pitch - smallXZOffset, yaw - playerPosition.y());
+            bufferbuilder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(pitchPlus4 - smallXZOffset, yaw - playerPosition.y());
+            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
             RenderSystem.setShaderColor(brightness * redStrength, brightness * greenStrength, brightness * blueStrength, opacity * 0.33f);
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(pitchPlus4 - playerPosition.x(), yawPlus4 - smallYOffset).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(pitch - playerPosition.x(), yawPlus4 - smallYOffset).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(pitch - playerPosition.x(), yaw - smallYOffset).endVertex();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(pitchPlus4 - playerPosition.x(), yaw - smallYOffset).endVertex();
-            BufferUploader.drawWithShader(bufferbuilder.end());
+            bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferbuilder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.x(), yawPlus4 - smallYOffset);
+            bufferbuilder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(pitch - playerPosition.x(), yawPlus4 - smallYOffset);
+            bufferbuilder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(pitch - playerPosition.x(), yaw - smallYOffset);
+            bufferbuilder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.x(), yaw - smallYOffset);
+            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
             RenderSystem.setShaderColor(brightness * redStrength, brightness * greenStrength, brightness * blueStrength, opacity * 0.33f);
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -0.5F).uv(pitchPlus4 - playerPosition.z(), yawPlus4 - smallYOffset).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -0.5F).uv(pitch - playerPosition.z(), yawPlus4 - smallYOffset).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, 1.0F, -0.5F).uv(pitch - playerPosition.z(), yaw - smallYOffset).endVertex();
-            bufferbuilder.vertex(matrix4f, -1.0F, 1.0F, -0.5F).uv(pitchPlus4 - playerPosition.z(), yaw - smallYOffset).endVertex();
-            BufferUploader.drawWithShader(bufferbuilder.end());
+            bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferbuilder.addVertex(matrix4f, -1.0F, -1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.z(), yawPlus4 - smallYOffset);
+            bufferbuilder.addVertex(matrix4f, 1.0F, -1.0F, -0.5F).setUv(pitch - playerPosition.z(), yawPlus4 - smallYOffset);
+            bufferbuilder.addVertex(matrix4f, 1.0F, 1.0F, -0.5F).setUv(pitch - playerPosition.z(), yaw - smallYOffset);
+            bufferbuilder.addVertex(matrix4f, -1.0F, 1.0F, -0.5F).setUv(pitchPlus4 - playerPosition.z(), yaw - smallYOffset);
+            BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
             RenderSystem.disableBlend();
             return true;
         }

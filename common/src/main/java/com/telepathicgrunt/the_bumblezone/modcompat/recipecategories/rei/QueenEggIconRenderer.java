@@ -27,13 +27,12 @@ public class QueenEggIconRenderer extends DisplayRenderer {
 		graphics.pose().pushPose();
 		Matrix4f matrix = graphics.pose().last().pose();
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
-		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		bufferBuilder.vertex(matrix, bounds.getCenterX() - 8, bounds.getCenterY() - 8, 0).uv(0, 0).endVertex();
-		bufferBuilder.vertex(matrix, bounds.getCenterX() - 8, bounds.getCenterY() + 8, 0).uv(0, 1).endVertex();
-		bufferBuilder.vertex(matrix, bounds.getCenterX() + 8, bounds.getCenterY() + 8, 0).uv(1, 1).endVertex();
-		bufferBuilder.vertex(matrix, bounds.getCenterX() + 8, bounds.getCenterY() - 8, 0).uv(1, 0).endVertex();
-		BufferUploader.drawWithShader(bufferBuilder.end());
+		BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+		bufferBuilder.addVertex(matrix, bounds.getCenterX() - 8, bounds.getCenterY() - 8, 0).setUv(0, 0);
+		bufferBuilder.addVertex(matrix, bounds.getCenterX() - 8, bounds.getCenterY() + 8, 0).setUv(0, 1);
+		bufferBuilder.addVertex(matrix, bounds.getCenterX() + 8, bounds.getCenterY() + 8, 0).setUv(1, 1);
+		bufferBuilder.addVertex(matrix, bounds.getCenterX() + 8, bounds.getCenterY() - 8, 0).setUv(1, 0);
+		BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
 		graphics.pose().popPose();
 	}
 

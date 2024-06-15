@@ -28,7 +28,7 @@ public class BeeStingerRenderer extends EntityRenderer<BeeStingerEntity> {
         poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(float2, beeStingerEntity.yRotO, beeStingerEntity.getYRot()) - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(float2, beeStingerEntity.xRotO, beeStingerEntity.getXRot()) + 90.0F));
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(multiBufferSource, this.model.renderType(this.getTextureLocation(beeStingerEntity)), false, false);
-        this.model.renderToBuffer(poseStack, vertexconsumer, int1, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.renderToBuffer(poseStack, vertexconsumer, int1, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
         poseStack.popPose();
         super.render(beeStingerEntity, float1, float2, poseStack, multiBufferSource, int1);
     }

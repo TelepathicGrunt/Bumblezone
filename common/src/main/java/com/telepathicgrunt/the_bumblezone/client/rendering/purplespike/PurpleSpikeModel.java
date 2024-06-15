@@ -64,8 +64,8 @@ public class PurpleSpikeModel<T extends PurpleSpikeEntity> extends EntityModel<T
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        topSpike.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        bottomSpike.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int packedColor) {
+        topSpike.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
+        bottomSpike.render(poseStack, vertexConsumer, packedLight, packedOverlay, packedColor);
     }
 }

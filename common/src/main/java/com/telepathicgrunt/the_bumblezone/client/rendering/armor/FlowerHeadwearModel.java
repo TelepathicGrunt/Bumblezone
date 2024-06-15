@@ -16,6 +16,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -35,31 +36,31 @@ public class FlowerHeadwearModel extends HumanoidModel<LivingEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int light, int overlay, float r, float g, float b, float a) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int light, int overlay, int packedColor) {
         setAllVisible(false);
 
         if (slot == EquipmentSlot.HEAD && this.entityLiving != null) {
             head.visible = true;
             hat.visible = true;
 
-            float red;
-            float green;
-            float blue;
+            int red;
+            int green;
+            int blue;
             ItemStack stack = this.entityLiving.getItemBySlot(slot);
             if (stack.getItem() instanceof FlowerHeadwearHelmet flowerHeadwearHelmet)
             {
                 int color = DyedItemColor.getOrDefault(stack, FlowerHeadwearColoring.DEFAULT_COLOR);
-                red = GeneralUtils.getRed(color) / 255f;
-                green = GeneralUtils.getGreen(color) / 255f;
-                blue = GeneralUtils.getBlue(color) / 255f;
+                red = GeneralUtils.getRed(color);
+                green = GeneralUtils.getGreen(color);
+                blue = GeneralUtils.getBlue(color);
             }
             else {
-                red = GeneralUtils.getRed(FlowerHeadwearColoring.DEFAULT_COLOR) / 255f;
-                green = GeneralUtils.getGreen(FlowerHeadwearColoring.DEFAULT_COLOR) / 255f;
-                blue = GeneralUtils.getBlue(FlowerHeadwearColoring.DEFAULT_COLOR) / 255f;
+                red = GeneralUtils.getRed(FlowerHeadwearColoring.DEFAULT_COLOR);
+                green = GeneralUtils.getGreen(FlowerHeadwearColoring.DEFAULT_COLOR);
+                blue = GeneralUtils.getBlue(FlowerHeadwearColoring.DEFAULT_COLOR);
             }
 
-            head.render(poseStack, buffer, light, overlay, red, green, blue, 1);
+            head.render(poseStack, buffer, light, overlay, FastColor.ARGB32.color(red, green, blue, 1));
         }
     }
 

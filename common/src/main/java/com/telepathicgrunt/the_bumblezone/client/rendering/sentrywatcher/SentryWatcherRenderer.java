@@ -68,7 +68,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         RenderType renderType = this.getRenderType(sentryWatcherEntity, true, false, glowing);
         if (renderType != null) {
             VertexConsumer vertexConsumer = multiBufferSource.getBuffer(renderType);
-            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+            ((Model)this.model).renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 0XFFFFFFFF);
         }
         if (!sentryWatcherEntity.isSpectator()) {
             for (RenderLayer<SentryWatcherEntity, M> renderLayer : this.layers) {
@@ -109,7 +109,7 @@ public class SentryWatcherRenderer<M extends EntityModel<SentryWatcherEntity>>
         public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, T entity, float f, float g, float h, float j, float k, float l) {
             if (entity instanceof SentryWatcherEntity sentryWatcherEntity && sentryWatcherEntity.hasActivated()) {
                 VertexConsumer vertexConsumer = multiBufferSource.getBuffer(this.renderType());
-                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_SKY, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_SKY, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
             }
         }
 
