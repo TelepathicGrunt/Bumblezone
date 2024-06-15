@@ -282,36 +282,6 @@ public class BzConfig extends MidnightConfig {
     @Entry
     public static boolean allowWanderingTraderMusicDiscsTrades = true;
 
-    @Entry
-    public static int musicDiscTimeLengthFlightOfTheBumblebee = 84;
-
-    @Entry
-    public static int musicDiscTimeLengthHoneyBee = 216;
-
-    @Entry
-    public static int musicDiscTimeLengthLaBeeDaLoca = 176;
-
-    @Entry
-    public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;
-
-    @Entry
-    public static int musicDiscTimeLengthBeeWareOfTheTemple = 371;
-
-    @Entry
-    public static int musicDiscTimeLengthKnowing = 251;
-
-    @Entry
-    public static int musicDiscTimeLengthRadiance = 106;
-
-    @Entry
-    public static int musicDiscTimeLengthLife = 86;
-
-    @Entry
-    public static int musicDiscTimeAFirstALast = 652;
-
-    @Entry
-    public static int musicDiscDrowningInDespair = 570;
-
 
     @Comment
     public static Comment modCompatComment;
@@ -487,16 +457,6 @@ public class BzConfig extends MidnightConfig {
         BzGeneralConfigs.beeSoupBrewingRecipe = beeSoupBrewingRecipe;
         BzGeneralConfigs.nearbyBeesPerPlayerInBz = nearbyBeesPerPlayerInBz;
         BzGeneralConfigs.allowWanderingTraderMusicDiscsTrades = allowWanderingTraderMusicDiscsTrades;
-        BzGeneralConfigs.musicDiscTimeLengthFlightOfTheBumblebee = musicDiscTimeLengthFlightOfTheBumblebee;
-        BzGeneralConfigs.musicDiscTimeLengthHoneyBee = musicDiscTimeLengthHoneyBee;
-        BzGeneralConfigs.musicDiscTimeLengthLaBeeDaLoca = musicDiscTimeLengthLaBeeDaLoca;
-        BzGeneralConfigs.musicDiscTimeLengthBeeLaxingWithTheHomBees = musicDiscTimeLengthBeeLaxingWithTheHomBees;
-        BzGeneralConfigs.musicDiscTimeLengthBeeWareOfTheTemple = musicDiscTimeLengthBeeWareOfTheTemple;
-        BzGeneralConfigs.musicDiscTimeLengthKnowing = musicDiscTimeLengthKnowing;
-        BzGeneralConfigs.musicDiscTimeLengthRadiance = musicDiscTimeLengthRadiance;
-        BzGeneralConfigs.musicDiscTimeLengthLife = musicDiscTimeLengthLife;
-        BzGeneralConfigs.musicDiscTimeAFirstALast = musicDiscTimeAFirstALast;
-        BzGeneralConfigs.musicDiscDrowningInDespair = musicDiscDrowningInDespair;
         BzGeneralConfigs.keepEssenceOfTheBeesOnRespawning = keepEssenceOfTheBeesOnRespawning;
         BzGeneralConfigs.repeatableEssenceEvents = repeatableEssenceEvents;
         BzGeneralConfigs.cosmicCrystalHealth = cosmicCrystalHealth;

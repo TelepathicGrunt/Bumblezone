@@ -1,0 +1,8 @@
+{
+  "comparator_output": 11,
+  "description": {
+    "translate": "jukebox_song.the_bumblezone.bee_ware_of_the_temple"
+  },
+  "length_in_seconds": 371.0,
+  "sound_event": "the_bumblezone:music_disc.bee_ware_of_the_temple"
+}

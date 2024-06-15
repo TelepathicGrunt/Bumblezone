@@ -43,16 +43,6 @@ public class BzGeneralConfigs {
     public static boolean superCandlesBurnsMobs = true;
     public static boolean keepEssenceOfTheBeesOnRespawning = true;
     public static boolean allowWanderingTraderMusicDiscsTrades = true;
-    public static int musicDiscTimeLengthFlightOfTheBumblebee = 216;
-    public static int musicDiscTimeLengthHoneyBee = 216;
-    public static int musicDiscTimeLengthBeeLaxingWithTheHomBees = 300;
-    public static int musicDiscTimeLengthLaBeeDaLoca = 176;
-    public static int musicDiscTimeLengthBeeWareOfTheTemple = 371;
-    public static int musicDiscTimeLengthKnowing = 251;
-    public static int musicDiscTimeLengthRadiance = 106;
-    public static int musicDiscTimeLengthLife = 86;
-    public static int musicDiscTimeAFirstALast = 652;
-    public static int musicDiscDrowningInDespair = 570;
     public static boolean crystallineFlowerConsumeItemEntities = true;
     public static boolean crystallineFlowerConsumeExperienceOrbEntities = true;
     public static boolean crystallineFlowerConsumeItemUI = true;

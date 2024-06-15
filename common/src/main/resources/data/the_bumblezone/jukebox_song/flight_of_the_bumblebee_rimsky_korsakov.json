@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "jukebox_song.the_bumblezone.flight_of_the_bumblebee_rimsky_korsakov"
+  },
+  "length_in_seconds": 84.0,
+  "sound_event": "the_bumblezone:music_disc.flight_of_the_bumblebee_rimsky_korsakov"
+}

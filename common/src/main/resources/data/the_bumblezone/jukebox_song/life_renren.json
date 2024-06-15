@@ -1,0 +1,8 @@
+{
+  "comparator_output": 8,
+  "description": {
+    "translate": "jukebox_song.the_bumblezone.life_renren"
+  },
+  "length_in_seconds": 86.0,
+  "sound_event": "the_bumblezone:music_disc.life_renren"
+}

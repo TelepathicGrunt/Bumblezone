@@ -1,0 +1,8 @@
+{
+  "comparator_output": 12,
+  "description": {
+    "translate": "jukebox_song.the_bumblezone.bee_laxing_with_the_hom_bees"
+  },
+  "length_in_seconds": 300.0,
+  "sound_event": "the_bumblezone:music_disc.bee_laxing_with_the_hom_bees"
+}
